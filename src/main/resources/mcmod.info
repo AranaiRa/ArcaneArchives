@@ -1,0 +1,16 @@
+[
+{
+  "modid": "arcanearchives",
+  "name": "Arcane Archives",
+  "description": "A magical method for modular storage and automation.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["AranaiRa", "Lenyeto"],
+  "credits": "Lenyeto's Server Group for testing.",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

@@ -1,0 +1,7 @@
+Changelog:
+Build 2760:
+	LexManos: Fix --mods and --modListFile arguments not making it past LaunchWrapper.
+
+Build 2759:
+	LexManos: Remove BlamingTransformer (#5115)
+
