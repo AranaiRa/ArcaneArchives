@@ -31,11 +31,19 @@ public class ArcaneArchives
     public static final String VERSION = "0.1";
 
     private static Logger logger;
+    
+    @Mod.Instance(MODID)
+    public static ArcaneArchives Instance;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
         logger = event.getModLog();
+    }
+    
+    private void clientPreInit()
+    {
+    	OBJLoader.INSTANCE.addDomain(MODID);
     }
 
     @EventHandler
@@ -74,7 +82,7 @@ public class ArcaneArchives
         	//B3DLoader.INSTANCE.addDomain(MODID.toLowerCase());
         	OBJLoader.INSTANCE.addDomain(MODID.toLowerCase());
         	
-        	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(radiantResonator), 0, new ModelResourceLocation(new ResourceLocation(MODID, "crystalmatrixcore"), "inventory"));
+        	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(radiantResonator), 0, new ModelResourceLocation(new ResourceLocation(MODID, "radiantresonator.obj"), "normal"));
         }
     }
 }
