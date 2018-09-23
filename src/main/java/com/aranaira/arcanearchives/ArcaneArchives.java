@@ -82,7 +82,7 @@ public class ArcaneArchives
         	//B3DLoader.INSTANCE.addDomain(MODID.toLowerCase());
         	OBJLoader.INSTANCE.addDomain(MODID.toLowerCase());
         	
-        	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(radiantResonator), 0, new ModelResourceLocation(new ResourceLocation(MODID, "radiantresonator.obj"), "normal"));
+        	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(radiantResonator), 0, new ModelResourceLocation(new ResourceLocation(MODID, "radiantresonator.obj"), "inventory"));
         }
     }
 }
