@@ -4,21 +4,32 @@
         "textures": {
             "all": "matrixcore_crystal_big"
         },
-        "model": "arcanearchives:radiantresonator.obj"
+        "model": "arcanearchives:radiantresonator.obj",
+        "scale": 0.375
      },
     "variants": {
         "normal": [{}],
         "inventory": [{
-            "model": "arcanearchives:radiantresonator.obj",
-            "transform": "forge:default-block"
+            
+            "transform" : 
+            {
+                "thirdperson":
+                {
+                    "translation": [0, 5, 5],
+                    "scale":0.375
+                },
+                "gui": {
+                    "scale":0.375
+                }
+            }
         }],
         "facing": {
-            "down": {"x": 90},
-            "up": {"x": 270},
-            "north": {"y": 180},
+            "down": {"x": 90, "scale":0.375},
+            "up": {"x": 270, "scale":0.375},
+            "north": {"y": 180, "scale":0.375},
             "south": {},
-            "west": {"y": 90},
-            "east": {"y": 270}
+            "west": {"y": 90, "scale":0.375},
+            "east": {"y": 270, "scale":0.375}
         }
     }
 }
