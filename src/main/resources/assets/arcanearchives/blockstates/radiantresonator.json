@@ -1,0 +1,24 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": {
+            "all": "matrixcore_crystal_big"
+        },
+        "model": "arcanearchives:radiantresonator.obj"
+     },
+    "variants": {
+        "normal": [{}],
+        "inventory": [{
+            "model": "arcanearchives:radiantresonator.obj",
+            "transform": "forge:default-block"
+        }],
+        "facing": {
+            "down": {"x": 90},
+            "up": {"x": 270},
+            "north": {"y": 180},
+            "south": {},
+            "west": {"y": 90},
+            "east": {"y": 270}
+        }
+    }
+}
