@@ -1,7 +1,7 @@
 # 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
-# File Created: 23.09.2018 23:22:06
+# File Created: 25.09.2018 07:44:05
 
-newmtl 09___Default
+newmtl mat_ArcaneArchives_Master
 	Ns 10.0000
 	Ni 1.5000
 	d 1.0000
@@ -12,8 +12,8 @@ newmtl 09___Default
 	Kd 0.5882 0.5882 0.5882
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka textures\radiantresonator_base.png
-	map_Kd textures\radiantresonator_base.png
+	map_Ka textures\tex_arcanearchives_master.png
+	map_Kd textures\tex_arcanearchives_master.png
 
 newmtl 07___Default
 	Ns 10.0000
