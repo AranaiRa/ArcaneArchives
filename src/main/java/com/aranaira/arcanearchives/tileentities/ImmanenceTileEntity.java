@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.tileentities;
 
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 
@@ -18,5 +19,18 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+		compound.setUniqueId("playerId", NetworkID);
+		
+		return super.writeToNBT(compound);
+	}
 	
+	@Override
+	public void readFromNBT(NBTTagCompound compound) {
+		NetworkID = compound.getUniqueId("playerId");
+		
+		super.readFromNBT(compound);
+	}
 }

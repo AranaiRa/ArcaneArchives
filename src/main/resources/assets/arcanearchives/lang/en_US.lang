@@ -1,0 +1,10 @@
+#Creative Tab
+itemGroup.arcanearchives.creativeTab=Arcane Archives
+
+#Items
+item.Raw Quartz.name=Raw Quartz
+
+#Blocks
+tile.arcanearchives:RadiantResonator.name=Radiant Resonator
+tile.arcanearchives:RawQuartz.name=Raw Quartz
+tile.arcanearchives:MatrixCore.name=Crystal Matrix Core

@@ -7,6 +7,7 @@ import com.aranaira.arcanearchives.blocks.RawQuartz;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -17,9 +18,6 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 	
 	@Override
 	public void update() {
-		//ArcaneArchives.logger.info("TEST");
-		
-		
 		if (TicksUntilCrystalGrowth > 0)
 		{
 			TicksUntilCrystalGrowth -= (1 + BonusTicks);
@@ -36,7 +34,6 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 			}
 		}
 		
-		//ArcaneArchives.logger.info(NetworkID);
 		
 		super.update();
 	}
@@ -46,4 +43,5 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 	{
 	    return (oldState.getBlock() != newSate.getBlock());
 	}
+	
 }

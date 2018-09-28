@@ -3,11 +3,14 @@ package com.aranaira.arcanearchives;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.b3d.B3DLoader;
@@ -25,6 +28,7 @@ import org.apache.logging.log4j.Logger;
 import com.aranaira.arcanearchives.blocks.MatrixCore;
 import com.aranaira.arcanearchives.blocks.RadiantResonator;
 import com.aranaira.arcanearchives.blocks.RawQuartz;
+import com.aranaira.arcanearchives.commands.ArcaneArchivesCommand;
 import com.aranaira.arcanearchives.items.RawQuartzItem;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.MatrixCoreTileEntity;
@@ -58,8 +62,17 @@ public class ArcaneArchives
     {
         // some example code
         logger.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
+        ClientCommandHandler.instance.registerCommand(new ArcaneArchivesCommand());
     }
-    
+
+    //Creative Tab to register
+    public static final CreativeTabs TAB_AA = new CreativeTabs(MODID + ".creativeTab") {
+			@Override
+			public ItemStack getTabIconItem() {
+				return new ItemStack(rawQuartz);
+			}
+	};
+	
     //Blocks to be Registered
     public static Block radiantResonator = new RadiantResonator();
     public static Block rawQuartz = new RawQuartz();
@@ -69,6 +82,8 @@ public class ArcaneArchives
     
     //Items to be Registered
     public static Item rawQuartzItem = new RawQuartzItem();
+    
+    
     
     @Mod.EventBusSubscriber(modid = MODID)
     public static class Registration

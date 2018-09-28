@@ -3,8 +3,10 @@ package com.aranaira.arcanearchives.blocks;
 import java.util.Random;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.data.AAWorldSavedData;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
+import com.aranaira.arcanearchives.util.NetworkHelper;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -40,7 +42,7 @@ public class RadiantResonator extends Block
 		setRegistryName("RadiantResonator");
 		setDefaultState(this.blockState.getBaseState().withProperty(FACING,  EnumFacing.NORTH));
 		setUnlocalizedName(ArcaneArchives.MODID + ":" + name);
-		setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
+		setCreativeTab(ArcaneArchives.TAB_AA);
 	}
 	
 	@Override
@@ -50,9 +52,20 @@ public class RadiantResonator extends Block
 		
 		tileEntityInstance.NetworkID = placer.getUniqueID();
 		
+		NetworkHelper.getArcaneArchivesNetwork(placer.getUniqueID()).AddBlockToNetwork(name, pos);
+		
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 	}
 
+	@Override
+	public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state) {
+		if (tileEntityInstance != null)
+		{
+			NetworkHelper.getArcaneArchivesNetwork(tileEntityInstance.NetworkID).RemoveBlockFromNetwork(pos);
+		}
+		super.onBlockDestroyedByPlayer(worldIn, pos, state);
+	}
+	
 	@Override
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
 		// TODO Auto-generated method stub

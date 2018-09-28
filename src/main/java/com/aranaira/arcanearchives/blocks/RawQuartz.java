@@ -18,7 +18,7 @@ public class RawQuartz extends Block {
 		setLightLevel(16/16f);
 		//setDefaultState(this.blockState.getBaseState().withProperty(FACING,  EnumFacing.NORTH));
 		setUnlocalizedName(ArcaneArchives.MODID + ":" + name);
-		setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
+		setCreativeTab(ArcaneArchives.TAB_AA);
 		// TODO Auto-generated constructor stub
 	}
 	

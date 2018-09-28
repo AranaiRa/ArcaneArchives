@@ -4,10 +4,8 @@ import java.util.Random;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
-import com.aranaira.arcanearchives.tileentities.MatrixCoreTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
 import com.aranaira.arcanearchives.util.NetworkHelper;
-import com.aranaira.arcanearchives.util.Placeable;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -29,26 +27,17 @@ import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.common.property.Properties;
 
-public class MatrixCore extends Block {
-
-	public static final PropertyDirection FACING = PropertyDirection.create("facing");
-	
+public class ImmanenceBaseBlock extends Block
+{
+	public static String name;
 	public static ImmanenceTileEntity tileEntityInstance;
 	
-	public static final String name = "MatrixCore";
-	
-	public MatrixCore() {
-		super(Material.ROCK);
-		setRegistryName("MatrixCore");
-		setLightLevel(16/16f);
+	public ImmanenceBaseBlock(String name) 
+	{
+		super(Material.IRON);
+		setRegistryName(name);
 		setUnlocalizedName(ArcaneArchives.MODID + ":" + name);
 		setCreativeTab(ArcaneArchives.TAB_AA);
-		
-	}
-	
-	@Override
-	public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
-		return Placeable.CanPlaceSize(worldIn, pos, 3, 4);
 	}
 	
 	@Override
@@ -56,25 +45,31 @@ public class MatrixCore extends Block {
 			ItemStack stack) {
 		// TODO Auto-generated method stub
 		
-		tileEntityInstance.NetworkID = placer.getUniqueID();
-		
-		NetworkHelper.getArcaneArchivesNetwork(placer.getUniqueID()).AddBlockToNetwork(name, pos);
+		if (tileEntityInstance != null)
+		{
+			tileEntityInstance.NetworkID = placer.getUniqueID();
+			
+			NetworkHelper.getArcaneArchivesNetwork(placer.getUniqueID()).AddBlockToNetwork(name, pos);
+		}
 		
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 	}
-
+	
 	@Override
 	public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state) {
-		
-		NetworkHelper.getArcaneArchivesNetwork(tileEntityInstance.NetworkID).RemoveBlockFromNetwork(pos);
-		
+		if (tileEntityInstance != null)
+		{
+			NetworkHelper.getArcaneArchivesNetwork(tileEntityInstance.NetworkID).RemoveBlockFromNetwork(pos);
+		}
 		super.onBlockDestroyedByPlayer(worldIn, pos, state);
 	}
+
 	@Override
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
 		// TODO Auto-generated method stub
 		super.updateTick(worldIn, pos, state, rand);
 	}
+	
 	@Override
 	public boolean hasTileEntity(IBlockState state)
 	{
@@ -84,7 +79,7 @@ public class MatrixCore extends Block {
 	@Override
 	public TileEntity createTileEntity(World world, IBlockState state)
 	{
-		tileEntityInstance = new MatrixCoreTileEntity();
+		tileEntityInstance = new RadiantResonatorTileEntity();
 		return tileEntityInstance;
 	}
 	
@@ -107,44 +102,10 @@ public class MatrixCore extends Block {
      }
 
      @Override
-     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
-     {
-         return this.getDefaultState().withProperty(FACING, getFacingFromEntity(world, pos, placer));
-     }
-
-     @Override
-     public IBlockState getStateFromMeta(int meta)
-     {
-         return this.getDefaultState().withProperty(FACING, EnumFacing.getFront(meta));
-     }
-
-     @Override
-     public int getMetaFromState(IBlockState state)
-     {
-         return state.getValue(FACING).getIndex();
-     }
-
-     /*
-     @Override
-     public IBlockState getExtendedState(IBlockState state, IBlockAccess world, BlockPos pos)
-     {
-         //Only return an IExtendedBlockState from this method and createState(), otherwise block placement might break!
-         //B3DLoader.B3DState newState = new B3DLoader.B3DState(null, counter);
-         return ((IExtendedBlockState) state).withProperty(Properties.AnimationProperty, newState);
-     }
-     */
-
-     @Override
      public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
      {
          
          return false;
-     }
-
-     @Override
-     public BlockStateContainer createBlockState()
-     {
-         return new ExtendedBlockState(this, new IProperty[]{FACING}, new IUnlistedProperty[]{Properties.AnimationProperty});
      }
 
      public static EnumFacing getFacingFromEntity(World worldIn, BlockPos clickedBlock, EntityLivingBase entityIn)

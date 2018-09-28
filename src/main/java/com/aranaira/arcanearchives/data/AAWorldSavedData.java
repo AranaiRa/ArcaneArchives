@@ -21,6 +21,11 @@ public class AAWorldSavedData extends WorldSavedData
 	public AAWorldSavedData() {
 		super(ID);
 	}
+	
+	public AAWorldSavedData(String id)
+	{
+		super(id);
+	}
 
 	public ArcaneArchivesNetwork getNetwork(EntityPlayer player)
 	{

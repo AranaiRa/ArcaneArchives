@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
+
+import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.BlockPos;
@@ -14,11 +18,26 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	private UUID playerId;
 	private AAWorldSavedData parent;
 	
-	private Map<String, BlockPos> blocks = new HashMap<>();
+	private Map<BlockPos, String> blocks = new HashMap<>();
 
 	private ArcaneArchivesNetwork()
 	{
 		
+	}
+	
+	public Map<BlockPos, String> getBlocks()
+	{
+		return blocks;
+	}
+	
+	public void AddBlockToNetwork(String blockName, BlockPos blockpos)
+	{
+		blocks.put(blockpos, blockName);
+	}
+	
+	public void RemoveBlockFromNetwork(BlockPos blockpos)
+	{
+		blocks.remove(blockpos);
 	}
 	
 	@Override
@@ -27,17 +46,20 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		tagCompound.setUniqueId("playerId", playerId);
 		NBTTagList blockData = new NBTTagList();
 		
-		for (String blockname : blocks.keySet())
+		for (BlockPos blockpos : blocks.keySet())
 		{
 			NBTTagCompound nbttagc = new NBTTagCompound();
-			nbttagc.setString("name", blockname);
-			nbttagc.setLong("blockpos", this.blocks.get(blockname).toLong());
+			nbttagc.setLong("blockpos", blockpos.toLong());
+			nbttagc.setString("name", this.blocks.get(blockpos));
+			blockData.appendTag(nbttagc);
 		}
 		
 		tagCompound.setTag("blocks", blockData);
 		
+		
 		return tagCompound;
 	}
+	
 
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt) {
@@ -46,7 +68,15 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		for (int i = 0; i < blocks.tagCount(); i++)
 		{
 			NBTTagCompound data = blocks.getCompoundTagAt(i);
-			this.blocks.put(data.getString("name"), BlockPos.fromLong(data.getLong("blockpos")));
+			BlockPos pos = BlockPos.fromLong(data.getLong("blockpos"));
+			String str = data.getString("name");
+			
+			//TODO: GET A BETTER WAY OF DOING THIS | DONT EVEN KNOW IF THIS WORKS
+			if (Block.getBlockById(Block.getStateId(Minecraft.getMinecraft().world.getBlockState(pos))).getRegistryName().toString() != str)
+			{
+				continue;
+			}
+			this.blocks.put(BlockPos.fromLong(data.getLong("blockpos")), data.getString("name"));
 		}
 	}
 
