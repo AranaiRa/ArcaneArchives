@@ -31,18 +31,20 @@ import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.common.property.Properties;
 
-public class RadiantResonator extends Block 
+public class RadiantResonator extends BlockTemplate 
 {
 	public static final PropertyDirection FACING = PropertyDirection.create("facing");
 	public static final String name = "RadiantResonator";
 	public static ImmanenceTileEntity tileEntityInstance;
-	public RadiantResonator() 
+	public RadiantResonator(String name) 
 	{
-		super(Material.IRON);
-		setRegistryName("RadiantResonator");
-		setDefaultState(this.blockState.getBaseState().withProperty(FACING,  EnumFacing.NORTH));
-		setUnlocalizedName(ArcaneArchives.MODID + ":" + name);
-		setCreativeTab(ArcaneArchives.TAB_AA);
+		super(name, Material.IRON);
+	}
+	
+	@Override
+	public boolean hasOBJModel()
+	{
+		return true;
 	}
 	
 	@Override

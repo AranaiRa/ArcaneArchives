@@ -27,17 +27,14 @@ import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.common.property.Properties;
 
-public class ImmanenceBaseBlock extends Block
+public class ImmanenceBaseBlock extends BlockTemplate
 {
 	public static String name;
 	public static ImmanenceTileEntity tileEntityInstance;
 	
 	public ImmanenceBaseBlock(String name) 
 	{
-		super(Material.IRON);
-		setRegistryName(name);
-		setUnlocalizedName(ArcaneArchives.MODID + ":" + name);
-		setCreativeTab(ArcaneArchives.TAB_AA);
+		super(name, Material.IRON);
 	}
 	
 	@Override

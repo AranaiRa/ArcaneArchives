@@ -29,7 +29,7 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 				TicksUntilCrystalGrowth = 200;
 				if (!world.isRemote)
 				{
-					world.setBlockState(pos.add(0, 1, 0), Block.getStateById(Block.getIdFromBlock(ArcaneArchives.rawQuartz)), 3);
+					//world.setBlockState(pos.add(0, 1, 0), Block.getStateById(Block.getIdFromBlock(ArcaneArchives.rawQuartz)), 3);
 				}
 			}
 		}

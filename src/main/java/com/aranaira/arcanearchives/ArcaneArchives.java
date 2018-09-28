@@ -18,7 +18,9 @@ import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -29,7 +31,9 @@ import com.aranaira.arcanearchives.blocks.MatrixCore;
 import com.aranaira.arcanearchives.blocks.RadiantResonator;
 import com.aranaira.arcanearchives.blocks.RawQuartz;
 import com.aranaira.arcanearchives.commands.ArcaneArchivesCommand;
+import com.aranaira.arcanearchives.init.ItemLibrary;
 import com.aranaira.arcanearchives.items.RawQuartzItem;
+import com.aranaira.arcanearchives.proxy.CommonProxy;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.MatrixCoreTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
@@ -40,16 +44,33 @@ public class ArcaneArchives
     public static final String MODID = "arcanearchives";
     public static final String NAME = "Arcane Archives";
     public static final String VERSION = "0.1";
+    public static final String COMMON_PROXY = "com.aranaira.arcanearchives.proxy.CommonProxy";
+    public static final String CLIENT_PROXY = "com.aranaira.arcanearchives.proxy.ClientProxy";
 
     public static Logger logger;
     
     @Mod.Instance(MODID)
     public static ArcaneArchives Instance;
+    
+    @SidedProxy(clientSide = CLIENT_PROXY, serverSide = COMMON_PROXY)
+    public static CommonProxy proxy;
 
     @EventHandler
-    public void preInit(FMLPreInitializationEvent event)
+    public static void preInit(FMLPreInitializationEvent event)
     {
         logger = event.getModLog();
+    }
+    
+    @EventHandler
+    public static void init(FMLInitializationEvent event)
+    {
+        ClientCommandHandler.instance.registerCommand(new ArcaneArchivesCommand());
+    }
+    
+    @EventHandler
+    public static void postInit(FMLPostInitializationEvent event)
+    {
+        
     }
     
     private void clientPreInit()
@@ -57,31 +78,20 @@ public class ArcaneArchives
     	OBJLoader.INSTANCE.addDomain(MODID);
     }
 
-    @EventHandler
-    public void init(FMLInitializationEvent event)
-    {
-        // some example code
-        logger.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
-        ClientCommandHandler.instance.registerCommand(new ArcaneArchivesCommand());
-    }
-
     //Creative Tab to register
     public static final CreativeTabs TAB_AA = new CreativeTabs(MODID + ".creativeTab") {
 			@Override
 			public ItemStack getTabIconItem() {
-				return new ItemStack(rawQuartz);
+				return new ItemStack(ItemLibrary.RAW_RADIANT_QUARTZ);
 			}
 	};
-	
+	/*
     //Blocks to be Registered
     public static Block radiantResonator = new RadiantResonator();
     public static Block rawQuartz = new RawQuartz();
     public static Block matrixCore = new MatrixCore();
     public static TileEntity radiantResonatorTileEntity = new RadiantResonatorTileEntity();
     public static TileEntity matrixCoreTileEntity = new MatrixCoreTileEntity();
-    
-    //Items to be Registered
-    public static Item rawQuartzItem = new RawQuartzItem();
     
     
     
@@ -109,8 +119,6 @@ public class ArcaneArchives
         	RegisterBlockItem(rawQuartz, event);
         	RegisterBlockItem(radiantResonator, event);
         	RegisterBlockItem(matrixCore, event);
-        	
-        	event.getRegistry().register(rawQuartzItem);
 
         	logger.info("Registered Items!");
         }
@@ -132,5 +140,5 @@ public class ArcaneArchives
     public static void RegisterBlockItem(Block block, RegistryEvent.Register<Item> event)
     {
     	event.getRegistry().register(new ItemBlock(block).setRegistryName(block.getRegistryName()).setUnlocalizedName(block.getUnlocalizedName()));
-    }
+    }*/
 }
