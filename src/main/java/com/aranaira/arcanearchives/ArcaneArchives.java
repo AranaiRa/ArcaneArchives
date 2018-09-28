@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
@@ -21,7 +22,13 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import org.apache.logging.log4j.Logger;
 
+import com.aranaira.arcanearchives.blocks.MatrixCore;
 import com.aranaira.arcanearchives.blocks.RadiantResonator;
+import com.aranaira.arcanearchives.blocks.RawQuartz;
+import com.aranaira.arcanearchives.items.RawQuartzItem;
+import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
+import com.aranaira.arcanearchives.tileentities.MatrixCoreTileEntity;
+import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
 
 @Mod(modid = ArcaneArchives.MODID, name = ArcaneArchives.NAME, version = ArcaneArchives.VERSION)
 public class ArcaneArchives
@@ -30,7 +37,7 @@ public class ArcaneArchives
     public static final String NAME = "Arcane Archives";
     public static final String VERSION = "0.1";
 
-    private static Logger logger;
+    public static Logger logger;
     
     @Mod.Instance(MODID)
     public static ArcaneArchives Instance;
@@ -54,9 +61,14 @@ public class ArcaneArchives
     }
     
     //Blocks to be Registered
-    static Block radiantResonator = new RadiantResonator();
+    public static Block radiantResonator = new RadiantResonator();
+    public static Block rawQuartz = new RawQuartz();
+    public static Block matrixCore = new MatrixCore();
+    public static TileEntity radiantResonatorTileEntity = new RadiantResonatorTileEntity();
+    public static TileEntity matrixCoreTileEntity = new MatrixCoreTileEntity();
     
     //Items to be Registered
+    public static Item rawQuartzItem = new RawQuartzItem();
     
     @Mod.EventBusSubscriber(modid = MODID)
     public static class Registration
@@ -65,16 +77,29 @@ public class ArcaneArchives
         public static void registerBlocks(RegistryEvent.Register<Block> event)
         {
         	event.getRegistry().register(radiantResonator);
+        	event.getRegistry().register(rawQuartz);
+        	event.getRegistry().register(matrixCore);
+        	
+
+        	//event.getRegistry().register(radiantResonatorTileEntity);
+        	TileEntity.register("radiantResonatorTileEntity", radiantResonatorTileEntity.getClass());
+        	TileEntity.register("matrixCrystalTileEntity", matrixCoreTileEntity.getClass());
+        	
         	logger.info("Registered Blocks!");
         }
         
         @SubscribeEvent
         public static void registerItems(RegistryEvent.Register<Item> event)
         {
-        	event.getRegistry().register(new ItemBlock(radiantResonator).setRegistryName(radiantResonator.getRegistryName()).setUnlocalizedName(radiantResonator.getUnlocalizedName()));
+        	RegisterBlockItem(rawQuartz, event);
+        	RegisterBlockItem(radiantResonator, event);
+        	RegisterBlockItem(matrixCore, event);
+        	
+        	event.getRegistry().register(rawQuartzItem);
 
         	logger.info("Registered Items!");
         }
+        
         
         @SubscribeEvent
         public static void registerModels(ModelRegistryEvent event)
@@ -83,6 +108,14 @@ public class ArcaneArchives
         	OBJLoader.INSTANCE.addDomain(MODID.toLowerCase());
         	
         	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(radiantResonator), 0, new ModelResourceLocation(new ResourceLocation(MODID, "radiantresonator.obj"), "inventory"));
+        	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(rawQuartz), 0, new ModelResourceLocation(new ResourceLocation(MODID, "rawquartz.obj"), "inventory"));
+        	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(matrixCore), 0, new ModelResourceLocation(new ResourceLocation(MODID, "crystalmatrixcore.obj"), "inventory"));
         }
+    }
+    
+    //Shorter method for registering block items.
+    public static void RegisterBlockItem(Block block, RegistryEvent.Register<Item> event)
+    {
+    	event.getRegistry().register(new ItemBlock(block).setRegistryName(block.getRegistryName()).setUnlocalizedName(block.getUnlocalizedName()));
     }
 }
