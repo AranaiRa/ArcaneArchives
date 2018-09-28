@@ -1,6 +1,9 @@
 package com.aranaira.arcanearchives.blocks;
 
+import java.util.Random;
+
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
 
 import net.minecraft.block.Block;
@@ -12,6 +15,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -29,7 +33,7 @@ public class RadiantResonator extends Block
 {
 	public static final PropertyDirection FACING = PropertyDirection.create("facing");
 	public static final String name = "RadiantResonator";
-	
+	public static ImmanenceTileEntity tileEntityInstance;
 	public RadiantResonator() 
 	{
 		super(Material.IRON);
@@ -39,7 +43,22 @@ public class RadiantResonator extends Block
 		setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
 	}
 	
-	/*
+	@Override
+	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
+			ItemStack stack) {
+		// TODO Auto-generated method stub
+		
+		tileEntityInstance.NetworkID = placer.getUniqueID();
+		
+		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
+	}
+
+	@Override
+	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+		// TODO Auto-generated method stub
+		super.updateTick(worldIn, pos, state, rand);
+	}
+	
 	@Override
 	public boolean hasTileEntity(IBlockState state)
 	{
@@ -49,9 +68,10 @@ public class RadiantResonator extends Block
 	@Override
 	public TileEntity createTileEntity(World world, IBlockState state)
 	{
-		return new RadiantResonatorTileEntity();
+		tileEntityInstance = new RadiantResonatorTileEntity();
+		return tileEntityInstance;
 	}
-	*/
+	
 	 @Override
      public boolean isOpaqueCube(IBlockState state)
      {
