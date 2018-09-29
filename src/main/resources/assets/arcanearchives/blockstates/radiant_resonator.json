@@ -4,7 +4,8 @@
         "textures": {
             
         },
-        "model": "arcanearchives:radiant_resonator.obj"
+        "model": "arcanearchives:radiant_resonator.obj",
+        "custom": { "flip-v": true }
      },
     "variants": {
         "normal": [{}],

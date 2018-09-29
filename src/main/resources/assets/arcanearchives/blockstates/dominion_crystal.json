@@ -4,7 +4,7 @@
         "textures": {
             
         },
-        "model": "arcanearchives:matrix_crystal_core.obj",
+        "model": "arcanearchives:dominion_crystal.obj",
         "custom": { "flip-v": true }
      },
     "variants": {

@@ -34,8 +34,6 @@ import net.minecraftforge.common.property.Properties;
 public class MatrixCrystalCore extends BlockTemplate {
 
 	public static final PropertyDirection FACING = PropertyDirection.create("facing");
-	
-	
 
 	public static final String name = "matrix_crystal_core";
 	

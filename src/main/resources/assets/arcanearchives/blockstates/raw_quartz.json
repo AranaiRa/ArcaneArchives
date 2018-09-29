@@ -4,7 +4,8 @@
         "textures": {
             
         },
-        "model": "arcanearchives:raw_quartz.obj"
+        "model": "arcanearchives:raw_quartz.obj",
+        "custom": { "flip-v": true }
      },
     "variants": {
         "normal": [{}],
