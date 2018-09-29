@@ -48,7 +48,7 @@ public class RegistryHandler
 		{
 			if(((BlockTemplate)block).hasOBJModel())
 			{
-		    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(new ResourceLocation(ArcaneArchives.MODID, block.getRegistryName()+".obj"), "inventory"));
+		    	//ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(new ResourceLocation(ArcaneArchives.MODID, block.getRegistryName()+".obj"), "inventory"));
 		    	ArcaneArchives.logger.info("&&&&&&&& Setting up " + block.getRegistryName() + " with OBJ model");
 			}
 			else

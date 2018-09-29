@@ -20,6 +20,7 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 	public RadiantResonatorTileEntity()
 	{
 		super("radiant_resonator_tile_entity");
+		ImmanenceDrain = 20;
 	}
 	
 	@Override

@@ -35,7 +35,6 @@ public class RadiantResonator extends BlockTemplate
 {
 	public static final PropertyDirection FACING = PropertyDirection.create("facing");
 	public static final String name = "radiant_resonator";
-	public static ImmanenceTileEntity tileEntityInstance;
 	public RadiantResonator() 
 	{
 		super(name, Material.IRON);

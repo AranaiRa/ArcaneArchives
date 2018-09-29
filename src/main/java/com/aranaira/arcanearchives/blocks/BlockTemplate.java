@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.blocks;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.BlockLibrary;
 import com.aranaira.arcanearchives.init.ItemLibrary;
+import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.util.IHasModel;
 
 import net.minecraft.block.Block;
@@ -11,7 +12,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 
 public class BlockTemplate extends Block implements IHasModel {
-	
+
+	public static ImmanenceTileEntity tileEntityInstance;
 	public BlockTemplate(String name, Material materialIn) {
 		super(materialIn);
 		setUnlocalizedName(name);

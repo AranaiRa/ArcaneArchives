@@ -35,7 +35,6 @@ public class MatrixCrystalCore extends BlockTemplate {
 
 	public static final PropertyDirection FACING = PropertyDirection.create("facing");
 	
-	public static ImmanenceTileEntity tileEntityInstance;
 	
 
 	public static final String name = "matrix_crystal_core";

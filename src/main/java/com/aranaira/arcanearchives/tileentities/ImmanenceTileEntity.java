@@ -12,6 +12,7 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 {
 	public UUID NetworkID; //UUID of network owner
 	public int ImmanenceDrain; //Immanence cost to operate the device
+	public int ImmanenceGeneration; //Immanence that is given to the network with this device
 	public int NetworkPriority; //What order the device's Immanence is paid for
 	public boolean IsDrainPaid; //Whether the device's Immanence needs have been covered
 	public boolean IsProtected; //Whether the device is currently indestructable
@@ -39,5 +40,10 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 		NetworkID = compound.getUniqueId("playerId");
 		
 		super.readFromNBT(compound);
+	}
+	
+	public int GetNetImmanence()
+	{
+		return ImmanenceGeneration - ImmanenceDrain;
 	}
 }
