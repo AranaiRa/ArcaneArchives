@@ -6,6 +6,8 @@ import net.minecraft.util.ITickable;
 
 import java.util.UUID;
 
+import com.aranaira.arcanearchives.init.BlockLibrary;
+
 public class ImmanenceTileEntity extends TileEntity implements ITickable
 {
 	public UUID NetworkID; //UUID of network owner
@@ -13,6 +15,11 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 	public int NetworkPriority; //What order the device's Immanence is paid for
 	public boolean IsDrainPaid; //Whether the device's Immanence needs have been covered
 	public boolean IsProtected; //Whether the device is currently indestructable
+	
+	public ImmanenceTileEntity(String name)
+	{
+		BlockLibrary.TILE_ENTITIES.put(name, this);
+	}
 	
 	@Override
 	public void update() {

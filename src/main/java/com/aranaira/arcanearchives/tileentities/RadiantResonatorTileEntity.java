@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.tileentities;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.RadiantResonator;
 import com.aranaira.arcanearchives.blocks.RawQuartz;
+import com.aranaira.arcanearchives.init.BlockLibrary;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -15,6 +16,11 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 {
 	public int TicksUntilCrystalGrowth = 200;
 	public int BonusTicks; //How many bonus ticks the Resonator simulates based on supplied Immanence
+	
+	public RadiantResonatorTileEntity()
+	{
+		super("radiant_resonator_tile_entity");
+	}
 	
 	@Override
 	public void update() {
@@ -29,7 +35,7 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 				TicksUntilCrystalGrowth = 200;
 				if (!world.isRemote)
 				{
-					//world.setBlockState(pos.add(0, 1, 0), Block.getStateById(Block.getIdFromBlock(ArcaneArchives.rawQuartz)), 3);
+					world.setBlockState(pos.add(0, 1, 0), Block.getStateById(Block.getIdFromBlock(BlockLibrary.RAW_QUARTZ)), 3);
 				}
 			}
 		}

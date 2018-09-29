@@ -72,10 +72,10 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 			String str = data.getString("name");
 			
 			//TODO: GET A BETTER WAY OF DOING THIS | DONT EVEN KNOW IF THIS WORKS
-			if (Block.getBlockById(Block.getStateId(Minecraft.getMinecraft().world.getBlockState(pos))).getRegistryName().toString() != str)
-			{
-				continue;
-			}
+			//if (Block.getBlockById(Block.getStateId(Minecraft.getMinecraft().world.getBlockState(pos))).getRegistryName().toString() != str)
+			//{
+			//	continue;
+			//}
 			this.blocks.put(BlockPos.fromLong(data.getLong("blockpos")), data.getString("name"));
 		}
 	}

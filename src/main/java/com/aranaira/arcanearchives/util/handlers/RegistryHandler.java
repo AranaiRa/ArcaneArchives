@@ -9,6 +9,7 @@ import com.aranaira.arcanearchives.util.IHasModel;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
@@ -31,6 +32,11 @@ public class RegistryHandler
 	public static void onBlockRegister(RegistryEvent.Register<Block> event)
 	{
 		event.getRegistry().registerAll(BlockLibrary.BLOCKS.toArray(new Block[0]));
+		
+		for (String name : BlockLibrary.TILE_ENTITIES.keySet())
+		{
+			TileEntity.register(name, BlockLibrary.TILE_ENTITIES.get(name).getClass());
+		}
 	}
 	
 	@SubscribeEvent

@@ -37,7 +37,10 @@ public class MatrixCrystalCore extends BlockTemplate {
 	
 	public static ImmanenceTileEntity tileEntityInstance;
 	
-	public MatrixCrystalCore(String name) {
+
+	public static final String name = "matrix_crystal_core";
+	
+	public MatrixCrystalCore() {
 		super(name, Material.ROCK);
 		setLightLevel(16/16f);
 	}

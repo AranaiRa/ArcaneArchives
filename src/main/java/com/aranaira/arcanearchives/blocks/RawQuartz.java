@@ -18,7 +18,8 @@ import net.minecraft.world.IBlockAccess;
 public class RawQuartz extends BlockTemplate {
 
 	//public static final PropertyDirection FACING = PropertyDirection.create("facing");
-	public RawQuartz(String name) {
+	public static final String name = "raw_quartz";
+	public RawQuartz() {
 		super(name, Material.ROCK);
 		setLightLevel(16/16f);
 		//setDefaultState(this.blockState.getBaseState().withProperty(FACING,  EnumFacing.NORTH));

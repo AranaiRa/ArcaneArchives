@@ -36,7 +36,6 @@ public class AAWorldSavedData extends WorldSavedData
 	{
 		if (!arcaneArchivesNetworks.containsKey(playerID))
 		{
-			//Blood Magic uses MakeDirty()
 			arcaneArchivesNetworks.put(playerID, ArcaneArchivesNetwork.newNetwork(playerID).setParent(this));
 		}
 		return arcaneArchivesNetworks.get(playerID);

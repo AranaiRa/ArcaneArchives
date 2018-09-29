@@ -34,9 +34,9 @@ import net.minecraftforge.common.property.Properties;
 public class RadiantResonator extends BlockTemplate 
 {
 	public static final PropertyDirection FACING = PropertyDirection.create("facing");
-	public static final String name = "RadiantResonator";
+	public static final String name = "radiant_resonator";
 	public static ImmanenceTileEntity tileEntityInstance;
-	public RadiantResonator(String name) 
+	public RadiantResonator() 
 	{
 		super(name, Material.IRON);
 	}
