@@ -1,7 +1,10 @@
 # 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
-# File Created: 27.09.2018 22:08:55
+# File Created: 27.09.2018 22:12:16
 
 newmtl mat_ArcaneArchives_Master
+map_Kd arcanearchives:blocks/tex_arcanearchives_master
+
+newmtl mat_ArcaneArchives_TextRing
 	Ns 10.0000
 	Ni 1.5000
 	d 1.0000
@@ -12,5 +15,5 @@ newmtl mat_ArcaneArchives_Master
 	Kd 0.5882 0.5882 0.5882
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka textures\tex_arcanearchives_master.png
-	map_Kd textures\tex_arcanearchives_master.png
+	map_Ka textures\matrixcore_crystal_ring.png
+	map_Kd textures\matrixcore_crystal_ring.png

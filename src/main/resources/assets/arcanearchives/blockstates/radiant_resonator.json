@@ -4,7 +4,7 @@
         "textures": {
             
         },
-        "model": "arcanearchives:rawquartz.obj"
+        "model": "arcanearchives:radiant_resonator.obj"
      },
     "variants": {
         "normal": [{}],

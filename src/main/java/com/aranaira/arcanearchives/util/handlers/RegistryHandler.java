@@ -14,10 +14,11 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@EventBusSubscriber(modid = ArcaneArchives.MODID)
+@Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class RegistryHandler
 {
 	@SubscribeEvent
@@ -42,13 +43,12 @@ public class RegistryHandler
 			if(((BlockTemplate)block).hasOBJModel())
 			{
 		    	ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(new ResourceLocation(ArcaneArchives.MODID, block.getRegistryName()+".obj"), "inventory"));
-		    	ArcaneArchives.logger.info("&&&&&&&& Setting up " + block.getRegistryName() + " with OBJ model &&&&&&&");
+		    	ArcaneArchives.logger.info("&&&&&&&& Setting up " + block.getRegistryName() + " with OBJ model");
 			}
 			else
 			{
-				ArcaneArchives.logger.info("&&&&&&&& Setting up " + block.getRegistryName() + " &&&&&&&");
-			}
-				
+				ArcaneArchives.logger.info("&&&&&&&& Setting up " + block.getRegistryName());
+			}		
 		}
     }
 	

@@ -27,7 +27,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import org.apache.logging.log4j.Logger;
 
-import com.aranaira.arcanearchives.blocks.MatrixCore;
+import com.aranaira.arcanearchives.blocks.MatrixCrystalCore;
 import com.aranaira.arcanearchives.blocks.RadiantResonator;
 import com.aranaira.arcanearchives.blocks.RawQuartz;
 import com.aranaira.arcanearchives.commands.ArcaneArchivesCommand;

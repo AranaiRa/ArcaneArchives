@@ -22,32 +22,35 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.common.property.Properties;
 
-public class MatrixCore extends Block {
+public class MatrixCrystalCore extends BlockTemplate {
 
 	public static final PropertyDirection FACING = PropertyDirection.create("facing");
 	
 	public static ImmanenceTileEntity tileEntityInstance;
 	
-	public static final String name = "MatrixCore";
-	
-	public MatrixCore() {
-		super(Material.ROCK);
-		setRegistryName("MatrixCore");
+	public MatrixCrystalCore(String name) {
+		super(name, Material.ROCK);
 		setLightLevel(16/16f);
-		setUnlocalizedName(ArcaneArchives.MODID + ":" + name);
-		setCreativeTab(ArcaneArchives.TAB_AA);
-		
 	}
 	
 	@Override
-	public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
+	public boolean hasOBJModel()
+	{
+		return true;
+	}
+	
+	@Override
+	public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
+	{
 		return Placeable.CanPlaceSize(worldIn, pos, 3, 4);
 	}
 	
@@ -58,7 +61,7 @@ public class MatrixCore extends Block {
 		
 		tileEntityInstance.NetworkID = placer.getUniqueID();
 		
-		NetworkHelper.getArcaneArchivesNetwork(placer.getUniqueID()).AddBlockToNetwork(name, pos);
+		NetworkHelper.getArcaneArchivesNetwork(placer.getUniqueID()).AddBlockToNetwork(this.getRegistryName().toString(), pos);
 		
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 	}

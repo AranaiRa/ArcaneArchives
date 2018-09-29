@@ -4,7 +4,7 @@
         "textures": {
             
         },
-        "model": "arcanearchives:radiantresonator.obj"
+        "model": "arcanearchives:matrix_crystal_core.obj"
      },
     "variants": {
         "normal": [{}],

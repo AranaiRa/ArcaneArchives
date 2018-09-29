@@ -2,7 +2,7 @@
 # File Created: 25.09.2018 07:44:05
 
 newmtl mat_ArcaneArchives_Master
-map_Kd arcanearchives:tex_arcanearchives_master
+map_Kd arcanearchives:blocks/tex_arcanearchives_master
 
 newmtl 07___Default
 	Ns 10.0000
