@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.blocks.BlockTemplate;
 import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.util.NetworkHelper;
+import com.aranaira.arcanearchives.util.PasteBinHelper;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -54,6 +55,31 @@ public class ArcaneArchivesCommand extends CommandBase
 				sender.sendMessage(new TextComponentString(">Immanence Drain : " + ITS.ImmanenceDrain));
 				sender.sendMessage(new TextComponentString(">Immanence Gen   : " + ITS.ImmanenceGeneration));
 				sender.sendMessage(new TextComponentString(">Immanence Paid  : " + ITS.IsDrainPaid));
+			}
+		}
+		else if (args[0].compareTo("structure") == 0)
+		{
+			if (args.length < 2)
+			{
+				sender.sendMessage(new TextComponentString("Valid Commands : import <pastebin-code>| export"));
+				return;
+			}
+			if (args[1].compareTo("import") == 0)
+			{
+				if (args.length < 3)
+				{
+					String pastebin_link = args[2];
+					
+				}
+			}
+			else if(args[1].compareTo("export") == 0)
+			{
+				String t = PasteBinHelper.PostToPasteBin("TEST");
+				sender.sendMessage(new TextComponentString(t));
+			}
+			else
+			{
+				
 			}
 		}
 	}
