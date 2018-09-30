@@ -19,6 +19,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -165,5 +166,11 @@ public class RadiantResonator extends BlockTemplate
          }
 
          return entityIn.getHorizontalFacing().getOpposite();
+     }
+     
+     @Override
+     public BlockRenderLayer getBlockLayer()
+     {
+    	 return BlockRenderLayer.CUTOUT;
      }
 }

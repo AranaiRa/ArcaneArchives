@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.aranaira.arcanearchives.blocks.StorageRawQuartz;
 import com.aranaira.arcanearchives.blocks.BlockTemplate;
 import com.aranaira.arcanearchives.blocks.DominionCrystal;
 import com.aranaira.arcanearchives.blocks.MatrixCrystalCore;
@@ -35,6 +36,7 @@ public class BlockLibrary {
 	public static final Block MATRIX_DISTILLATE = new MatrixDistillate(); //TODO: Check if Thaumcraft is loaded 
 	
 	//Blocks
+	public static final Block STORAGE_RAW_QUARTZ = new StorageRawQuartz();
 	public static final Block RADIANT_RESONATOR = new RadiantResonator();
 	public static final Block RAW_QUARTZ = new RawQuartz();
 	public static final Block DOMINION_CRYSTAL = new DominionCrystal();
