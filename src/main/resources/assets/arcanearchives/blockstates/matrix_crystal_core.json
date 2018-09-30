@@ -5,7 +5,10 @@
             
         },
         "model": "arcanearchives:matrix_crystal_core.obj",
-        "custom": { "flip-v": true }
+        "custom": { "flip-v": true },
+        "elements": {
+            "shade" : false
+        }
      },
     "variants": {
         "normal": [{}],

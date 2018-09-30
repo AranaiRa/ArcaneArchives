@@ -54,6 +54,7 @@ public class RegistryHandler
 			else
 			{
 				ArcaneArchives.logger.info("&&&&&&&& Setting up " + block.getRegistryName());
+				ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(new ResourceLocation(ArcaneArchives.MODID, block.getRegistryName().toString()), "inventory"));
 			}		
 		}
     }

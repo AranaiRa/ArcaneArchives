@@ -175,4 +175,10 @@ public class RadiantResonator extends BlockTemplate
 
          return entityIn.getHorizontalFacing().getOpposite();
      }
+     
+     @Override
+     public BlockRenderLayer getBlockLayer()
+     {
+    	 return BlockRenderLayer.CUTOUT;
+     }
 }
