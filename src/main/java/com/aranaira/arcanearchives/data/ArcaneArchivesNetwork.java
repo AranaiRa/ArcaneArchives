@@ -42,7 +42,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	
 	public void UpdateImmanence()
 	{
-		//CurrentImmanence = 0;
+		CurrentImmanence = 0;
 		int TotalGeneration = 0;
 		int TotalDrain = 0;
 		
@@ -64,7 +64,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 				ITE.IsDrainPaid = false;
 			}
 		}
-		
+		CurrentImmanence = TotalGeneration - TotalDrain;
 		NeedsToBeUpdated = false;
 	}
 	
@@ -75,38 +75,38 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	
 	public void AddBlockToNetwork(String blockName, ImmanenceTileEntity tileEntityInstance)
 	{
-		if (!tileEntityInstance.hasBeenAddedToNetwork)
+		if (IsBlockPosAvailable(tileEntityInstance.blockpos))
 		{
+			ArcaneArchives.logger.info(tileEntityInstance.toString());
 			blocks.put(tileEntityInstance, blockName);
 			tileEntityInstance.hasBeenAddedToNetwork = true;
+			NeedsToBeUpdated = true;
+			UpdateImmanence();
 		}
-		NeedsToBeUpdated = true;
-		//UpdateImmanence();
+	}
+	
+	public boolean IsBlockPosAvailable(BlockPos pos)
+	{
+		for (ImmanenceTileEntity ITE : blocks.keySet())
+		{
+			if (ITE.blockpos == pos)
+				return false;
+		}
+		
+		return true;
 	}
 	
 	public void RemoveBlockFromNetwork(ImmanenceTileEntity ITE)
 	{
 		blocks.remove(ITE);
 		NeedsToBeUpdated = true;
-		//UpdateImmanence();
+		UpdateImmanence();
 	}
 	
 	@Override
 	public NBTTagCompound serializeNBT() {
 		NBTTagCompound tagCompound = new NBTTagCompound();
 		tagCompound.setUniqueId("playerId", playerId);
-		//NBTTagList blockData = new NBTTagList();
-		//
-		//for (ImmanenceTileEntity ITE : blocks.keySet())
-		//{
-		//	NBTTagCompound nbttagc = new NBTTagCompound();
-		//	nbttagc.setLong("blockpos", blockpos.toLong());
-		//	nbttagc.setString("name", this.blocks.get(blockpos));
-		//	blockData.appendTag(nbttagc);
-		//}
-		
-		//tagCompound.setTag("blocks", blockData);
-		
 		
 		return tagCompound;
 	}
@@ -115,20 +115,6 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt) {
 		this.playerId = nbt.getUniqueId("playerId");
-		//NBTTagList blocks = nbt.getTagList("blocks", 10);
-		//for (int i = 0; i < blocks.tagCount(); i++)
-		//{
-		//	NBTTagCompound data = blocks.getCompoundTagAt(i);
-		//	BlockPos pos = BlockPos.fromLong(data.getLong("blockpos"));
-		//	String str = data.getString("name");
-		//	
-		//	//TODO: Currently only works in overworld.
-		//	if (Block.getBlockById(Block.getStateId(Minecraft.getMinecraft().world.getBlockState(pos))).getRegistryName().toString() != str)
-		//	{
-		//		continue;
-		//	}
-		//	this.blocks.put(BlockPos.fromLong(data.getLong("blockpos")), data.getString("name"));
-		//}
 	}
 
 	public static ArcaneArchivesNetwork newNetwork(UUID playerID) {

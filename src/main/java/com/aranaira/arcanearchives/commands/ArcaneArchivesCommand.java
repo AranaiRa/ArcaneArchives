@@ -44,7 +44,7 @@ public class ArcaneArchivesCommand extends CommandBase
 		sender.sendMessage(new TextComponentString("Blocks on your network:"));
 		for (ImmanenceTileEntity ITS : network.getBlocks().keySet())
 		{
-			sender.sendMessage(new TextComponentString("Block : " + ITS.name + " @ " + ITS.blockpos.toString()));
+			sender.sendMessage(new TextComponentString("Block : " + ITS.name + " @ " + ITS.blockpos.toString() + " D: " + ITS.Dimension));
 			sender.sendMessage(new TextComponentString(">Immanence Drain : " + ITS.ImmanenceDrain));
 			sender.sendMessage(new TextComponentString(">Immanence Gen   : " + ITS.ImmanenceGeneration));
 			sender.sendMessage(new TextComponentString(">Immanence Paid  : " + ITS.IsDrainPaid));

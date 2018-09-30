@@ -25,6 +25,15 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 	
 	@Override
 	public void update() {
+		if (IsDrainPaid)
+		{
+			//Doubles speed if drain is paid.
+			BonusTicks = 1;
+		}
+		else
+		{
+			BonusTicks = 0;
+		}
 		if (TicksUntilCrystalGrowth > 0)
 		{
 			TicksUntilCrystalGrowth -= (1 + BonusTicks);

@@ -61,10 +61,12 @@ public class MatrixCrystalCore extends BlockTemplate {
 		// TODO Auto-generated method stub
 		
 		tileEntityInstance.NetworkID = placer.getUniqueID();
+		tileEntityInstance.Dimension = worldIn.getWorldType().getId();
 		tileEntityInstance.blockpos = pos;
 		tileEntityInstance.name = name;
-		
-		NetworkHelper.getArcaneArchivesNetwork(placer.getUniqueID()).AddBlockToNetwork(this.getRegistryName().toString(), tileEntityInstance);
+
+		if (!worldIn.isRemote)
+			NetworkHelper.getArcaneArchivesNetwork(placer.getUniqueID()).AddBlockToNetwork(this.getRegistryName().toString(), tileEntityInstance);
 		
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 	}

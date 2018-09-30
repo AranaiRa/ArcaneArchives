@@ -26,6 +26,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.b3d.B3DLoader;
+import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
@@ -52,10 +53,11 @@ public class RadiantResonator extends BlockTemplate
 		// TODO Auto-generated method stub
 		
 		tileEntityInstance.NetworkID = placer.getUniqueID();
+		tileEntityInstance.Dimension = worldIn.getWorldType().getId();
 		tileEntityInstance.blockpos = pos;
 		tileEntityInstance.name = name;
-		
-		NetworkHelper.getArcaneArchivesNetwork(placer.getUniqueID()).AddBlockToNetwork(name, tileEntityInstance);
+		if (!worldIn.isRemote)
+			NetworkHelper.getArcaneArchivesNetwork(placer.getUniqueID()).AddBlockToNetwork(name, tileEntityInstance);
 		
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 	}
