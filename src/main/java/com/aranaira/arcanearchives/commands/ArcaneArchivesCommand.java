@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.commands;
 
 import com.aranaira.arcanearchives.blocks.BlockTemplate;
 import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
+import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.util.NetworkHelper;
 
 import net.minecraft.block.Block;
@@ -41,12 +42,12 @@ public class ArcaneArchivesCommand extends CommandBase
 		ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(sender.getCommandSenderEntity().getUniqueID());
 		sender.sendMessage(new TextComponentString("Net Immanence : " + network.GetImmanence()));
 		sender.sendMessage(new TextComponentString("Blocks on your network:"));
-		for (BlockPos pos : network.getBlocks().keySet())
+		for (ImmanenceTileEntity ITS : network.getBlocks().keySet())
 		{
-			sender.sendMessage(new TextComponentString("Block : " + network.getBlocks().get(pos) + " @ " + pos.toString()));
-			sender.sendMessage(new TextComponentString(">Immanence Drain : " + ((BlockTemplate)Block.getBlockById(Block.getStateId(DimensionManager.getWorld(0).getBlockState(pos)))).tileEntityInstance.ImmanenceDrain));
-			sender.sendMessage(new TextComponentString(">Immanence Gen   : " + ((BlockTemplate)Block.getBlockById(Block.getStateId(DimensionManager.getWorld(0).getBlockState(pos)))).tileEntityInstance.ImmanenceGeneration));
-			sender.sendMessage(new TextComponentString(">Immanence Paid  : " + ((BlockTemplate)Block.getBlockById(Block.getStateId(DimensionManager.getWorld(0).getBlockState(pos)))).tileEntityInstance.IsDrainPaid));
+			sender.sendMessage(new TextComponentString("Block : " + ITS.name + " @ " + ITS.blockpos.toString()));
+			sender.sendMessage(new TextComponentString(">Immanence Drain : " + ITS.ImmanenceDrain));
+			sender.sendMessage(new TextComponentString(">Immanence Gen   : " + ITS.ImmanenceGeneration));
+			sender.sendMessage(new TextComponentString(">Immanence Paid  : " + ITS.IsDrainPaid));
 		}
 	}
 }

@@ -62,8 +62,10 @@ public class MatrixCrystalCore extends BlockTemplate {
 		// TODO Auto-generated method stub
 		
 		tileEntityInstance.NetworkID = placer.getUniqueID();
+		tileEntityInstance.blockpos = pos;
+		tileEntityInstance.name = name;
 		
-		NetworkHelper.getArcaneArchivesNetwork(placer.getUniqueID()).AddBlockToNetwork(this.getRegistryName().toString(), pos);
+		NetworkHelper.getArcaneArchivesNetwork(placer.getUniqueID()).AddBlockToNetwork(this.getRegistryName().toString(), tileEntityInstance);
 		
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 	}
@@ -71,7 +73,7 @@ public class MatrixCrystalCore extends BlockTemplate {
 	@Override
 	public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state) {
 		
-		NetworkHelper.getArcaneArchivesNetwork(tileEntityInstance.NetworkID).RemoveBlockFromNetwork(pos);
+		NetworkHelper.getArcaneArchivesNetwork(tileEntityInstance.NetworkID).RemoveBlockFromNetwork(tileEntityInstance);
 		
 		super.onBlockDestroyedByPlayer(worldIn, pos, state);
 	}

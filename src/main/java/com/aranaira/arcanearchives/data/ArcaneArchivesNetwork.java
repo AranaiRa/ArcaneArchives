@@ -21,7 +21,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	private UUID playerId;
 	private AAWorldSavedData parent;
 	
-	private Map<BlockPos, String> blocks = new HashMap<>();
+	private Map<ImmanenceTileEntity, String> blocks = new HashMap<>();
 	private ImmanenceTileEntity MatrixCoreInstance;
 	private int CurrentImmanence;
 	private boolean NeedsToBeUpdated = true;
@@ -46,46 +46,43 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		int TotalGeneration = 0;
 		int TotalDrain = 0;
 		
-		for (BlockPos pos : blocks.keySet())
+		for (ImmanenceTileEntity ITE : blocks.keySet())
 		{
-			if (Block.getBlockById(Block.getStateId(DimensionManager.getWorld(0).getBlockState(pos))).getClass() == BlockTemplate.class)
-				TotalGeneration += ((BlockTemplate)Block.getBlockById(Block.getStateId(DimensionManager.getWorld(0).getBlockState(pos)))).tileEntityInstance.ImmanenceGeneration;
+			TotalGeneration += ITE.ImmanenceGeneration;
 		}
 		
-		for (BlockPos pos : blocks.keySet())
+		for (ImmanenceTileEntity ITE : blocks.keySet())
 		{
-			if (Block.getBlockById(Block.getStateId(DimensionManager.getWorld(0).getBlockState(pos))).getClass() != BlockTemplate.class)
-				continue;
-			int tmpDrain = ((BlockTemplate)Block.getBlockById(Block.getStateId(DimensionManager.getWorld(0).getBlockState(pos)))).tileEntityInstance.ImmanenceDrain;
+			int tmpDrain = ITE.ImmanenceDrain;
 			if (TotalGeneration > (TotalDrain + tmpDrain))
 			{
 				TotalDrain += tmpDrain;
-				((BlockTemplate)Block.getBlockById(Block.getStateId(DimensionManager.getWorld(0).getBlockState(pos)))).tileEntityInstance.IsDrainPaid = true;
+				ITE.IsDrainPaid = true;
 			}
 			else
 			{
-				((BlockTemplate)Block.getBlockById(Block.getStateId(DimensionManager.getWorld(0).getBlockState(pos)))).tileEntityInstance.IsDrainPaid = false;
+				ITE.IsDrainPaid = false;
 			}
 		}
 		
 		NeedsToBeUpdated = false;
 	}
 	
-	public Map<BlockPos, String> getBlocks()
+	public Map<ImmanenceTileEntity, String> getBlocks()
 	{
 		return blocks;
 	}
 	
-	public void AddBlockToNetwork(String blockName, BlockPos blockpos)
+	public void AddBlockToNetwork(String blockName, ImmanenceTileEntity tileEntityInstance)
 	{
-		blocks.put(blockpos, blockName);
+		blocks.put(tileEntityInstance, blockName);
 		NeedsToBeUpdated = true;
 		//UpdateImmanence();
 	}
 	
-	public void RemoveBlockFromNetwork(BlockPos blockpos)
+	public void RemoveBlockFromNetwork(ImmanenceTileEntity ITE)
 	{
-		blocks.remove(blockpos);
+		blocks.remove(ITE);
 		NeedsToBeUpdated = true;
 		//UpdateImmanence();
 	}
@@ -94,17 +91,17 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	public NBTTagCompound serializeNBT() {
 		NBTTagCompound tagCompound = new NBTTagCompound();
 		tagCompound.setUniqueId("playerId", playerId);
-		NBTTagList blockData = new NBTTagList();
+		//NBTTagList blockData = new NBTTagList();
+		//
+		//for (ImmanenceTileEntity ITE : blocks.keySet())
+		//{
+		//	NBTTagCompound nbttagc = new NBTTagCompound();
+		//	nbttagc.setLong("blockpos", blockpos.toLong());
+		//	nbttagc.setString("name", this.blocks.get(blockpos));
+		//	blockData.appendTag(nbttagc);
+		//}
 		
-		for (BlockPos blockpos : blocks.keySet())
-		{
-			NBTTagCompound nbttagc = new NBTTagCompound();
-			nbttagc.setLong("blockpos", blockpos.toLong());
-			nbttagc.setString("name", this.blocks.get(blockpos));
-			blockData.appendTag(nbttagc);
-		}
-		
-		tagCompound.setTag("blocks", blockData);
+		//tagCompound.setTag("blocks", blockData);
 		
 		
 		return tagCompound;
@@ -114,20 +111,20 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt) {
 		this.playerId = nbt.getUniqueId("playerId");
-		NBTTagList blocks = nbt.getTagList("blocks", 10);
-		for (int i = 0; i < blocks.tagCount(); i++)
-		{
-			NBTTagCompound data = blocks.getCompoundTagAt(i);
-			BlockPos pos = BlockPos.fromLong(data.getLong("blockpos"));
-			String str = data.getString("name");
-			
-			//TODO: Currently only works in overworld.
-			if (Block.getBlockById(Block.getStateId(Minecraft.getMinecraft().world.getBlockState(pos))).getRegistryName().toString() != str)
-			{
-				continue;
-			}
-			this.blocks.put(BlockPos.fromLong(data.getLong("blockpos")), data.getString("name"));
-		}
+		//NBTTagList blocks = nbt.getTagList("blocks", 10);
+		//for (int i = 0; i < blocks.tagCount(); i++)
+		//{
+		//	NBTTagCompound data = blocks.getCompoundTagAt(i);
+		//	BlockPos pos = BlockPos.fromLong(data.getLong("blockpos"));
+		//	String str = data.getString("name");
+		//	
+		//	//TODO: Currently only works in overworld.
+		//	if (Block.getBlockById(Block.getStateId(Minecraft.getMinecraft().world.getBlockState(pos))).getRegistryName().toString() != str)
+		//	{
+		//		continue;
+		//	}
+		//	this.blocks.put(BlockPos.fromLong(data.getLong("blockpos")), data.getString("name"));
+		//}
 	}
 
 	public static ArcaneArchivesNetwork newNetwork(UUID playerID) {
