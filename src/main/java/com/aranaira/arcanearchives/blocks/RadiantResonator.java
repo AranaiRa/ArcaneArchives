@@ -19,6 +19,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -39,6 +40,7 @@ public class RadiantResonator extends BlockTemplate
 	public RadiantResonator() 
 	{
 		super(name, Material.IRON);
+		HasTileEntity = true;
 	}
 	
 	@Override
@@ -52,22 +54,12 @@ public class RadiantResonator extends BlockTemplate
 			ItemStack stack) {
 		// TODO Auto-generated method stub
 		
-		tileEntityInstance.NetworkID = placer.getUniqueID();
-		tileEntityInstance.Dimension = worldIn.getWorldType().getId();
-		tileEntityInstance.blockpos = pos;
 		tileEntityInstance.name = name;
-		if (!worldIn.isRemote)
-			NetworkHelper.getArcaneArchivesNetwork(placer.getUniqueID()).AddBlockToNetwork(name, tileEntityInstance);
-		
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 	}
 
 	@Override
 	public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state) {
-		if (tileEntityInstance != null)
-		{
-			NetworkHelper.getArcaneArchivesNetwork(tileEntityInstance.NetworkID).RemoveBlockFromNetwork(tileEntityInstance);
-		}
 		super.onBlockDestroyedByPlayer(worldIn, pos, state);
 	}
 	

@@ -41,6 +41,7 @@ public class MatrixCrystalCore extends BlockTemplate {
 	public MatrixCrystalCore() {
 		super(name, Material.ROCK);
 		setLightLevel(16/16f);
+		HasTileEntity = true;
 	}
 	
 	@Override
@@ -60,21 +61,13 @@ public class MatrixCrystalCore extends BlockTemplate {
 			ItemStack stack) {
 		// TODO Auto-generated method stub
 		
-		tileEntityInstance.NetworkID = placer.getUniqueID();
-		tileEntityInstance.Dimension = worldIn.getWorldType().getId();
-		tileEntityInstance.blockpos = pos;
 		tileEntityInstance.name = name;
-
-		if (!worldIn.isRemote)
-			NetworkHelper.getArcaneArchivesNetwork(placer.getUniqueID()).AddBlockToNetwork(this.getRegistryName().toString(), tileEntityInstance);
 		
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 	}
 
 	@Override
 	public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state) {
-		
-		NetworkHelper.getArcaneArchivesNetwork(tileEntityInstance.NetworkID).RemoveBlockFromNetwork(tileEntityInstance);
 		
 		super.onBlockDestroyedByPlayer(worldIn, pos, state);
 	}
