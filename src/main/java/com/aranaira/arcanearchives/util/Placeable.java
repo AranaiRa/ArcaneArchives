@@ -21,8 +21,8 @@ public class Placeable
 	//These are redundant, but names are self-explanatory, so they are left for the time being.
 	public static boolean isAreaClear(World worldIn, BlockPos pos, int Width, int Height)
 	{
-		for (int x = 0; x < Width; x++)
-			for (int z = 0; z < Width; z++)
+		for (int x = -(Width/2); x < Width/2; x++)
+			for (int z = -(Width/2); z < Width/2; z++)
 				for (int y = 0; y < Height; y++)
 					if (!isAirAtOffset(worldIn, pos, x, y, z))
 						return false;
