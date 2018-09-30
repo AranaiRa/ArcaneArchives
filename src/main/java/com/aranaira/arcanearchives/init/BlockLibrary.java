@@ -6,7 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 import com.aranaira.arcanearchives.blocks.BlockTemplate;
+import com.aranaira.arcanearchives.blocks.DominionCrystal;
 import com.aranaira.arcanearchives.blocks.MatrixCrystalCore;
+import com.aranaira.arcanearchives.blocks.MatrixDistillate;
+import com.aranaira.arcanearchives.blocks.MatrixRepository;
+import com.aranaira.arcanearchives.blocks.MatrixReservoir;
+import com.aranaira.arcanearchives.blocks.MatrixStorage;
 import com.aranaira.arcanearchives.blocks.RadiantResonator;
 import com.aranaira.arcanearchives.blocks.RawQuartz;
 import com.aranaira.arcanearchives.tileentities.MatrixCoreTileEntity;
@@ -24,10 +29,15 @@ public class BlockLibrary {
 	
 	//Matrices
 	public static final Block MATRIX_CRYSTAL_CORE = new MatrixCrystalCore();
+	public static final Block MATRIX_REPOSITORY = new MatrixRepository();
+	public static final Block MATRIX_RESERVOIR = new MatrixReservoir();
+	public static final Block MATRIX_STORAGE = new MatrixStorage();
+	public static final Block MATRIX_DISTILLATE = new MatrixDistillate(); //TODO: Check if Thaumcraft is loaded 
 	
 	//Blocks
 	public static final Block RADIANT_RESONATOR = new RadiantResonator();
 	public static final Block RAW_QUARTZ = new RawQuartz();
+	public static final Block DOMINION_CRYSTAL = new DominionCrystal();
 	
 	//Tile Entities
 	public static final TileEntity RADIANT_RESONATOR_TILE_ENTITY = new RadiantResonatorTileEntity();
