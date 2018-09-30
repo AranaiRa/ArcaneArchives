@@ -21,6 +21,7 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 	public String name;
 	public BlockPos blockpos;
 	public boolean hasBeenAddedToNetwork = false;
+	public int Dimension;
 	
 	public ImmanenceTileEntity(String name)
 	{
@@ -38,6 +39,7 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 		compound.setUniqueId("playerId", NetworkID);
 		compound.setString("name", name);
 		compound.setLong("blockpos", blockpos.toLong());
+		compound.setInteger("dim", Dimension);
 		return super.writeToNBT(compound);
 	}
 	
@@ -46,6 +48,7 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 		NetworkID = compound.getUniqueId("playerId");
 		name = compound.getString("name");
 		blockpos = BlockPos.fromLong(compound.getLong("blockpos"));
+		Dimension = compound.getInteger("dim");
 		NetworkHelper.getArcaneArchivesNetwork(NetworkID).AddBlockToNetwork(name, this);
 		super.readFromNBT(compound);
 	}

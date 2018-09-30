@@ -7,6 +7,7 @@ import com.aranaira.arcanearchives.data.AAWorldSavedData;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
 import com.aranaira.arcanearchives.util.NetworkHelper;
+import com.aranaira.arcanearchives.util.Placeable;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -27,6 +28,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.b3d.B3DLoader;
+import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
@@ -39,6 +41,8 @@ public class RadiantResonator extends BlockTemplate
 	public RadiantResonator() 
 	{
 		super(name, Material.IRON);
+		HasTileEntity = true;
+		PlaceLimit = 3;
 	}
 	
 	@Override
@@ -52,21 +56,25 @@ public class RadiantResonator extends BlockTemplate
 			ItemStack stack) {
 		// TODO Auto-generated method stub
 		
-		tileEntityInstance.NetworkID = placer.getUniqueID();
-		tileEntityInstance.blockpos = pos;
 		tileEntityInstance.name = name;
-		
-		NetworkHelper.getArcaneArchivesNetwork(placer.getUniqueID()).AddBlockToNetwork(name, tileEntityInstance);
-		
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 	}
 
 	@Override
+	public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
+	{
+		//NOTE : There may be a better way to get the player information for who is trying to place it.
+		//NOTE : If another player is closer to the block being placed it will go under that other player's network.
+		EntityPlayer EP = worldIn.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 100, false);
+		if (EP != null)
+			if (NetworkHelper.getArcaneArchivesNetwork(EP.getUniqueID()).CountBlocks(this) < PlaceLimit)
+				return true;
+		
+		return false;
+	}
+	
+	@Override
 	public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state) {
-		if (tileEntityInstance != null)
-		{
-			NetworkHelper.getArcaneArchivesNetwork(tileEntityInstance.NetworkID).RemoveBlockFromNetwork(tileEntityInstance);
-		}
 		super.onBlockDestroyedByPlayer(worldIn, pos, state);
 	}
 	

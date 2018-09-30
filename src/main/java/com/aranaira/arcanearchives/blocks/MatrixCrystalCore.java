@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.blocks;
 
 import java.util.Random;
+import java.util.UUID;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
@@ -41,6 +42,8 @@ public class MatrixCrystalCore extends BlockTemplate {
 	public MatrixCrystalCore() {
 		super(name, Material.ROCK);
 		setLightLevel(16/16f);
+		HasTileEntity = true;
+		PlaceLimit = 1;
 	}
 	
 	@Override
@@ -49,10 +52,35 @@ public class MatrixCrystalCore extends BlockTemplate {
 		return true;
 	}
 	
+	
+	
 	@Override
 	public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
 	{
-		return Placeable.CanPlaceSize(worldIn, pos, 3, 4);
+		//NOTE : There may be a better way to get the player information for who is trying to place it.
+		//NOTE : If another player is closer to the block being placed it will go under that other player's network.
+		boolean canPlace;
+		EntityPlayer EP = worldIn.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 100, false);
+		if (EP != null)
+			if (NetworkHelper.getArcaneArchivesNetwork(EP.getUniqueID()).CountBlocks(this) < PlaceLimit)
+			{
+				ArcaneArchives.logger.info(NetworkHelper.getArcaneArchivesNetwork(EP.getUniqueID()).CountBlocks(this));
+				canPlace = true;
+			}
+			else
+				canPlace = false;
+		else
+			canPlace = false;
+		
+		if (canPlace)
+			if (Placeable.CanPlaceSize(worldIn, pos, 3, 4))
+				canPlace = true;
+			else
+				canPlace = false;
+		
+		ArcaneArchives.logger.info(canPlace);
+		
+		return canPlace;
 	}
 	
 	@Override
@@ -60,19 +88,13 @@ public class MatrixCrystalCore extends BlockTemplate {
 			ItemStack stack) {
 		// TODO Auto-generated method stub
 		
-		tileEntityInstance.NetworkID = placer.getUniqueID();
-		tileEntityInstance.blockpos = pos;
 		tileEntityInstance.name = name;
-		
-		NetworkHelper.getArcaneArchivesNetwork(placer.getUniqueID()).AddBlockToNetwork(this.getRegistryName().toString(), tileEntityInstance);
 		
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 	}
 
 	@Override
 	public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state) {
-		
-		NetworkHelper.getArcaneArchivesNetwork(tileEntityInstance.NetworkID).RemoveBlockFromNetwork(tileEntityInstance);
 		
 		super.onBlockDestroyedByPlayer(worldIn, pos, state);
 	}

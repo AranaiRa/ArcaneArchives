@@ -1,15 +1,17 @@
 package com.aranaira.arcanearchives.util;
 
+import com.aranaira.arcanearchives.blocks.BlockTemplate;
+
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class Placeable 
 {
-	public static boolean CanPlaceLimit(int limit, Block block)
+	public static boolean CanPlaceLimit(int limit, BlockTemplate block)
 	{
-		//TODO : Add way to get other blocks of that type on the network.
-		//TODO : Print max amount if they are over that amount.
+		//if (block.PlaceLimit > )
+		
 		return true;
 	}
 	
