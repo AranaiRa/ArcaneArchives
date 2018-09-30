@@ -75,7 +75,11 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	
 	public void AddBlockToNetwork(String blockName, ImmanenceTileEntity tileEntityInstance)
 	{
-		blocks.put(tileEntityInstance, blockName);
+		if (!tileEntityInstance.hasBeenAddedToNetwork)
+		{
+			blocks.put(tileEntityInstance, blockName);
+			tileEntityInstance.hasBeenAddedToNetwork = true;
+		}
 		NeedsToBeUpdated = true;
 		//UpdateImmanence();
 	}

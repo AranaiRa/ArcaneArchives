@@ -2,4 +2,4 @@
 # File Created: 29.09.2018 03:55:59
 
 newmtl mat_arcanearchives_master
-    map_Kd arcanearchives:blocks/tex_arcanearchives_master
+map_Kd arcanearchives:blocks/tex_arcanearchives_master

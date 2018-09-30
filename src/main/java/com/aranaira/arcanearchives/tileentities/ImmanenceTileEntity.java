@@ -20,6 +20,7 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 	public boolean IsProtected; //Whether the device is currently indestructable
 	public String name;
 	public BlockPos blockpos;
+	public boolean hasBeenAddedToNetwork = false;
 	
 	public ImmanenceTileEntity(String name)
 	{
