@@ -37,17 +37,24 @@ public class ArcaneArchivesCommand extends CommandBase
 
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-		//TODO : Add more commands and handle subcommands
-		sender.sendMessage(new TextComponentString("UUID : " + sender.getCommandSenderEntity().getUniqueID().toString()));
-		ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(sender.getCommandSenderEntity().getUniqueID());
-		sender.sendMessage(new TextComponentString("Net Immanence : " + network.GetImmanence()));
-		sender.sendMessage(new TextComponentString("Blocks on your network:"));
-		for (ImmanenceTileEntity ITS : network.getBlocks().keySet())
+		if (args.length == 0)
 		{
-			sender.sendMessage(new TextComponentString("Block : " + ITS.name + " @ " + ITS.blockpos.toString() + " D: " + ITS.Dimension));
-			sender.sendMessage(new TextComponentString(">Immanence Drain : " + ITS.ImmanenceDrain));
-			sender.sendMessage(new TextComponentString(">Immanence Gen   : " + ITS.ImmanenceGeneration));
-			sender.sendMessage(new TextComponentString(">Immanence Paid  : " + ITS.IsDrainPaid));
+			sender.sendMessage(new TextComponentString("Type /AA help for available commands!"));
+			return;
+		}
+		if (args[0].compareTo("network") == 0)
+		{
+			sender.sendMessage(new TextComponentString("UUID : " + sender.getCommandSenderEntity().getUniqueID().toString()));
+			ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(sender.getCommandSenderEntity().getUniqueID());
+			sender.sendMessage(new TextComponentString("Net Immanence : " + network.GetImmanence()));
+			sender.sendMessage(new TextComponentString("Blocks on your network:"));
+			for (ImmanenceTileEntity ITS : network.getBlocks().keySet())
+			{
+				sender.sendMessage(new TextComponentString("Block : " + ITS.name + " @ " + ITS.blockpos.toString() + " D: " + ITS.Dimension));
+				sender.sendMessage(new TextComponentString(">Immanence Drain : " + ITS.ImmanenceDrain));
+				sender.sendMessage(new TextComponentString(">Immanence Gen   : " + ITS.ImmanenceGeneration));
+				sender.sendMessage(new TextComponentString(">Immanence Paid  : " + ITS.IsDrainPaid));
+			}
 		}
 	}
 }

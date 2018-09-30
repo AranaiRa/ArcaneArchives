@@ -40,6 +40,17 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		return CurrentImmanence;
 	}
 	
+	public int CountBlocks(BlockTemplate block)
+	{
+		int tmpCount = 0;
+		for (ImmanenceTileEntity ITE : blocks.keySet())
+		{
+			if (ITE.name == block.refName)
+				tmpCount++;
+		}
+		return tmpCount;
+	}
+	
 	public void UpdateImmanence()
 	{
 		CurrentImmanence = 0;
@@ -75,9 +86,8 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	
 	public void AddBlockToNetwork(String blockName, ImmanenceTileEntity tileEntityInstance)
 	{
-		if (IsBlockPosAvailable(tileEntityInstance.blockpos))
+		if (IsBlockPosAvailable(tileEntityInstance.blockpos, tileEntityInstance.Dimension))
 		{
-			ArcaneArchives.logger.info(tileEntityInstance.toString());
 			blocks.put(tileEntityInstance, blockName);
 			tileEntityInstance.hasBeenAddedToNetwork = true;
 			NeedsToBeUpdated = true;
@@ -85,11 +95,11 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		}
 	}
 	
-	public boolean IsBlockPosAvailable(BlockPos pos)
+	public boolean IsBlockPosAvailable(BlockPos pos, int dimID)
 	{
 		for (ImmanenceTileEntity ITE : blocks.keySet())
 		{
-			if (ITE.blockpos == pos)
+			if (ITE.blockpos == pos && ITE.Dimension == dimID)
 				return false;
 		}
 		

@@ -21,12 +21,14 @@ public class BlockTemplate extends Block implements IHasModel {
 
 	public static ImmanenceTileEntity tileEntityInstance;
 	public static boolean HasTileEntity;
+	public int PlaceLimit = -1;
+	public String refName;
 	public BlockTemplate(String name, Material materialIn) {
 		super(materialIn);
 		setUnlocalizedName(name);
 		setRegistryName(name);
 		setCreativeTab(ArcaneArchives.TAB_AA);
-		
+		refName = name;
 		BlockLibrary.BLOCKS.add(this);
 		ItemLibrary.ITEMS.add(new ItemBlock(this).setRegistryName(this.getRegistryName()));
 		
@@ -51,9 +53,8 @@ public class BlockTemplate extends Block implements IHasModel {
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 		if (HasTileEntity)
 		{
-
 			tileEntityInstance.NetworkID = placer.getUniqueID();
-			tileEntityInstance.Dimension = worldIn.getWorldType().getId();
+			tileEntityInstance.Dimension = worldIn.provider.getDimension();
 			tileEntityInstance.blockpos = pos;
 			if (!worldIn.isRemote)
 				NetworkHelper.getArcaneArchivesNetwork(placer.getUniqueID()).AddBlockToNetwork(tileEntityInstance.name, tileEntityInstance);
