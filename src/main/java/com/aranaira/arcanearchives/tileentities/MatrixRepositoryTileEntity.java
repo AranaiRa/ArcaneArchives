@@ -5,6 +5,7 @@ import com.aranaira.arcanearchives.util.handlers.ConfigHandler;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -14,8 +15,8 @@ public class MatrixRepositoryTileEntity extends ImmanenceTileEntity {
 	public MatrixRepositoryTileEntity() {
 		super("matrix_repository_tile_entity");
 		ImmanenceDrain = ConfigHandler.values.iRepositoryMatrixDrain;
-		Inventory = new ItemStack[ConfigHandler.values.iRepositoryMatrixItemCap];
 		IsInventory = true;
+		MaxItems = ConfigHandler.values.iRepositoryMatrixItemCap;
 	}
 
 	@Override

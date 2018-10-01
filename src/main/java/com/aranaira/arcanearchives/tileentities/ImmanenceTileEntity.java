@@ -5,6 +5,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.UUID;
@@ -26,7 +27,7 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 	public boolean hasBeenAddedToNetwork = false;
 	public int Dimension;
 	//BLOOD MAGIC uses NonNullList<ItemStack>
-	public ItemStack[] Inventory;
+	public NonNullList<ItemStack> Inventory;
 	public boolean IsInventory = false;
 	public int MaxItems;
 	
@@ -34,6 +35,7 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 	{
 		this.name = name;
 		BlockLibrary.TILE_ENTITIES.put(name, this);
+		Inventory = NonNullList.create();
 	}
 	
 	@Override
@@ -45,12 +47,9 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 	public int GetTotalItems()
 	{
 		int tmp = 0;
-		for (int i = 0; i < Inventory.length; i++)
+		for (ItemStack item : Inventory)
 		{
-			if (Inventory[i] != null)
-			{
-				tmp += Inventory[i].getCount();
-			}
+			tmp += item.getCount();
 		}
 		return tmp;
 	}
@@ -58,60 +57,39 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 	//Returns true if item was successful at adding to inventory, false if full.
 	public boolean AddItem(ItemStack item)
 	{
-		if (GetTotalItems() > MaxItems + item.getCount())
+		if (item.isEmpty() || !IsDrainPaid || (GetTotalItems() + item.getCount() > MaxItems))
 			return false;
-		for (int i = 0; i < Inventory.length; i++)
+		
+		for (ItemStack itemStack : Inventory)
 		{
-			if (Inventory[i] != null)
+			//TODO : Check for too many items in the block.
+			if (itemStack.getUnlocalizedName().compareTo(item.getUnlocalizedName()) == 0)
 			{
-				//TODO : Check for too many items in the block.
-				if (Inventory[i].getUnlocalizedName().compareTo(item.getUnlocalizedName()) == 0)
-				{
-					Inventory[i].setCount(Inventory[i].getCount() + item.getCount());
-					return true;
-				}
-			}
-		}
-		for (int i = 0; i < Inventory.length; i++)
-		{
-			if (Inventory[i] == null)
-			{
-				Inventory[i] = item;
+				itemStack.setCount(itemStack.getCount() + item.getCount());
 				return true;
 			}
 		}
-		return false;
+		
+		return Inventory.add(item);
 	}
 	
 	//Returns true if it was successful at removing the item, false if there is no such item in inventory.
 	public boolean RemoveItem(ItemStack item)
 	{
-		for (int i = 0; i < Inventory.length; i++)
+		if (!IsDrainPaid)
+			return false;
+		for (ItemStack itemStack : Inventory)
 		{
-			if (Inventory[i] != null)
+			if (itemStack.getUnlocalizedName().compareTo(item.getUnlocalizedName()) == 0)
 			{
-				//TODO : Check for too many items in the block.
-				if (Inventory[i].getUnlocalizedName().compareTo(item.getUnlocalizedName()) == 0)
+				if (itemStack.getCount() > 64)
 				{
-					if (Inventory[i].getCount() > 64)
-					{
-						ItemStack s = Inventory[i].copy();
-						Inventory[i].setCount(Inventory[i].getCount() - s.getMaxStackSize());
-						s.setCount(s.getMaxStackSize());
-						return true;
-					}
+					itemStack.setCount(itemStack.getCount() - item.getMaxStackSize());
+					return true;
 				}
 			}
 		}
-		for (int i = 0; i < Inventory.length; i++)
-		{
-			if (Inventory[i] == item)
-			{
-				Inventory[i] = null;
-				return true;
-			}
-		}
-		return false;
+		return Inventory.remove(item);
 	}
 	
 	
@@ -123,17 +101,14 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 		compound.setLong("blockpos", blockpos.toLong());
 		compound.setInteger("dim", Dimension);
 		NBTTagList tags = new NBTTagList();
-		for (int i = 0; i < Inventory.length; i++)
+		for (ItemStack item : Inventory) 
 		{
-			if (Inventory[i] != null && !Inventory[i].isEmpty())
-			{
-				NBTTagCompound data = new NBTTagCompound();
-				Inventory[i].writeToNBT(data);
-				tags.appendTag(data);
-			}
+			NBTTagCompound data = new NBTTagCompound();
+			item.writeToNBT(data);
+			tags.appendTag(data);
 		}
 		compound.setTag("inventory", tags);
-		compound.setInteger("invsize", Inventory.length);
+		compound.setInteger("invsize", MaxItems);
 		return super.writeToNBT(compound);
 	}
 	
@@ -143,12 +118,12 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 		name = compound.getString("name");
 		blockpos = BlockPos.fromLong(compound.getLong("blockpos"));
 		Dimension = compound.getInteger("dim");
-		Inventory = new ItemStack[compound.getInteger("invsize")];
+		MaxItems = compound.getInteger("invsize");
 		NBTTagList tags = compound.getTagList("inventory", 10);
 		for (int i = 0; i < tags.tagCount(); i++)
 		{
 			NBTTagCompound data = tags.getCompoundTagAt(i);
-			Inventory[i] = new ItemStack(data);
+			Inventory.add(new ItemStack(data));
 		}
 		NetworkHelper.getArcaneArchivesNetwork(NetworkID).AddBlockToNetwork(name, this);
 		super.readFromNBT(compound);

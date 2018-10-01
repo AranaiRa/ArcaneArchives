@@ -16,6 +16,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.common.DimensionManager;
@@ -52,6 +53,7 @@ public class ArcaneArchivesCommand extends CommandBase
 			sender.sendMessage(new TextComponentString("UUID : " + sender.getCommandSenderEntity().getUniqueID().toString()));
 			ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(sender.getCommandSenderEntity().getUniqueID());
 			sender.sendMessage(new TextComponentString("Net Immanence : " + network.GetImmanence()));
+			sender.sendMessage(new TextComponentString("Items : " + network.GetTotalItems() + "/" + network.GetTotalSpace()));
 			sender.sendMessage(new TextComponentString("Blocks on your network:"));
 			for (ImmanenceTileEntity ITS : network.getBlocks().keySet())
 			{
@@ -110,12 +112,11 @@ public class ArcaneArchivesCommand extends CommandBase
 						sender.sendMessage(new TextComponentString("Falure!"));
 				else if (args[1].compareTo("list") == 0)
 				{
-					for (ItemStack[] isList : network.GetItemsOnNetwork())
+					for (NonNullList<ItemStack> isList : network.GetItemsOnNetwork())
 					{
-						for (int i = 0; i < isList.length; i++)
+						for (ItemStack item : isList)
 						{
-							if (isList[i] != null && !isList[i].isEmpty())
-								sender.sendMessage(new TextComponentString(isList[i].getDisplayName() + " # " + isList[i].getCount()));
+							sender.sendMessage(new TextComponentString(item.getDisplayName() + " # " + item.getCount()));
 						}
 					}
 				}

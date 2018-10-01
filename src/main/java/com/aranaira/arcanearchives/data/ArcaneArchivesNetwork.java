@@ -18,6 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -85,9 +86,9 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		NeedsToBeUpdated = false;
 	}
 	
-	public List<ItemStack[]> GetItemsOnNetwork()
+	public List<NonNullList<ItemStack>> GetItemsOnNetwork()
 	{
-		List<ItemStack[]> inventories = new ArrayList<ItemStack[]>();
+		List<NonNullList<ItemStack>> inventories = new ArrayList<>();
 		
 		for (ImmanenceTileEntity ITE : blocks.keySet())
 		{
@@ -220,6 +221,34 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		ArcaneArchivesNetwork network = new ArcaneArchivesNetwork();
 		network.deserializeNBT(data);
 		return network;
+	}
+
+	public int GetTotalItems() {
+		int tmp = 0;
+		
+		for (ImmanenceTileEntity ITE : blocks.keySet())
+		{
+			if (ITE.IsInventory)
+			{
+				tmp += ITE.GetTotalItems();
+			}
+		}
+		
+		return tmp;
+	}
+
+	public int GetTotalSpace() {
+		int tmp = 0;
+		
+		for (ImmanenceTileEntity ITE : blocks.keySet())
+		{
+			if (ITE.IsInventory)
+			{
+				tmp += ITE.MaxItems;
+			}
+		}
+		
+		return tmp;
 	}
 
 }
