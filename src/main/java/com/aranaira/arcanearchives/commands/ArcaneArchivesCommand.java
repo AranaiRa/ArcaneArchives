@@ -68,8 +68,14 @@ public class ArcaneArchivesCommand extends CommandBase
 			{
 				if (args.length < 3)
 				{
+					sender.sendMessage(new TextComponentString("Command Usage : /AA structure import <pastebin-code>"));
+
+				}
+				else
+				{
 					String pastebin_link = args[2];
-					
+					String t = PasteBinHelper.ReadFromPasteBin(pastebin_link);
+					sender.sendMessage(new TextComponentString(t));
 				}
 			}
 			else if(args[1].compareTo("export") == 0)

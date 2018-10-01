@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.util;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -12,10 +13,12 @@ import javax.net.ssl.HttpsURLConnection;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 
@@ -65,12 +68,9 @@ public class PasteBinHelper
 					StringBuilder stringBuilder = new StringBuilder();
 					String line = null;
 					while ((line = reader.readLine()) != null)
-					{
 						stringBuilder.append(line);
-					}
-					if (line == null)
-						return "An issue had occured";
-			    	return line;
+					
+			    	return stringBuilder.toString();
 			    } finally {
 			        instream.close();
 			    }
@@ -81,6 +81,44 @@ public class PasteBinHelper
 		}
 		
 		
+		
+		return "";
+	}
+	
+	//Read a string from pastebin, s will be the last bit of the url.
+	//Example https://pastebin.com/raw/FTLHDhcF it would take in the FTLHDhcf
+	public static String ReadFromPasteBin(String s)
+	{
+		HttpClient httpclient = HttpClients.createDefault();
+		
+		try {
+			HttpResponse response = httpclient.execute(new HttpPost("https://pastebin.com/raw/" + s));
+			HttpEntity entity = response.getEntity();
+			
+			if (entity != null)
+			{
+				InputStream instream = entity.getContent();
+				try {
+					BufferedReader reader = new BufferedReader(new InputStreamReader(instream));
+					StringBuilder stringBuilder = new StringBuilder();
+					String line = null;
+					while ((line = reader.readLine()) != null)
+					{
+						stringBuilder.append(line);
+					}
+					
+					return stringBuilder.toString();
+				}
+				finally
+				{
+					instream.close();
+				}
+			}
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		return "";
 	}

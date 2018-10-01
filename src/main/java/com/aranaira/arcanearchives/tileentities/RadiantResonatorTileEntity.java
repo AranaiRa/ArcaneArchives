@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.RadiantResonator;
 import com.aranaira.arcanearchives.blocks.RawQuartz;
 import com.aranaira.arcanearchives.init.BlockLibrary;
+import com.aranaira.arcanearchives.util.handlers.ConfigHandler;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -20,23 +21,17 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 	public RadiantResonatorTileEntity()
 	{
 		super("radiant_resonator_tile_entity");
-		ImmanenceDrain = 20;
+		ImmanenceDrain = ConfigHandler.values.iRadiantResonatorDrain;
+		BonusTicks = ConfigHandler.values.iRadiantResonatorBonusTicks;
 	}
 	
 	@Override
 	public void update() {
-		if (IsDrainPaid)
-		{
-			//Doubles speed if drain is paid.
-			BonusTicks = 1;
-		}
-		else
-		{
-			BonusTicks = 0;
-		}
 		if (TicksUntilCrystalGrowth > 0)
 		{
-			TicksUntilCrystalGrowth -= (1 + BonusTicks);
+			TicksUntilCrystalGrowth--;
+			if (IsDrainPaid)
+				TicksUntilCrystalGrowth -= BonusTicks;
 		}
 		else
 		{
