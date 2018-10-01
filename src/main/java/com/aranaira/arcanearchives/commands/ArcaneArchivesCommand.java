@@ -1,5 +1,7 @@
 package com.aranaira.arcanearchives.commands;
 
+import java.util.List;
+
 import com.aranaira.arcanearchives.blocks.BlockTemplate;
 import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
@@ -11,6 +13,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
@@ -86,6 +90,35 @@ public class ArcaneArchivesCommand extends CommandBase
 			else
 			{
 				
+			}
+		}
+		//Just for testing of what is in the network
+		else if (args[0].compareTo("inventory") == 0)
+		{
+			ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(sender.getCommandSenderEntity().getUniqueID());
+			if (args.length > 1)
+			{
+				if (args[1].compareTo("put") == 0)
+					if (network.AddItemToNetwork((EntityPlayer)sender.getCommandSenderEntity()))
+						sender.sendMessage(new TextComponentString("Added item to network!"));
+					else
+						sender.sendMessage(new TextComponentString("Could not add item to network!"));
+				else if (args[1].compareTo("take") == 0)
+					if (network.RemoveItemFromNetwork((EntityPlayer)sender.getCommandSenderEntity()))
+						sender.sendMessage(new TextComponentString("Success!"));
+					else
+						sender.sendMessage(new TextComponentString("Falure!"));
+				else if (args[1].compareTo("list") == 0)
+				{
+					for (ItemStack[] isList : network.GetItemsOnNetwork())
+					{
+						for (int i = 0; i < isList.length; i++)
+						{
+							if (isList[i] != null && !isList[i].isEmpty())
+								sender.sendMessage(new TextComponentString(isList[i].getDisplayName() + " # " + isList[i].getCount()));
+						}
+					}
+				}
 			}
 		}
 	}

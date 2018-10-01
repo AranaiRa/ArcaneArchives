@@ -1,6 +1,8 @@
 package com.aranaira.arcanearchives.data;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -10,8 +12,12 @@ import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -77,6 +83,56 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		}
 		CurrentImmanence = TotalGeneration - TotalDrain;
 		NeedsToBeUpdated = false;
+	}
+	
+	public List<ItemStack[]> GetItemsOnNetwork()
+	{
+		List<ItemStack[]> inventories = new ArrayList<ItemStack[]>();
+		
+		for (ImmanenceTileEntity ITE : blocks.keySet())
+		{
+			if (ITE.IsInventory)
+			{
+				inventories.add(ITE.Inventory);
+			}
+		}
+		
+		return inventories;
+	}
+	
+	//For testing
+	public boolean AddItemToNetwork(EntityPlayer PE)
+	{
+		//ItemStack i = PE.getHeldItem(EnumHand.MAIN_HAND);
+		ItemStack i = PE.inventory.getStackInSlot(0);
+		for (ImmanenceTileEntity ITE : blocks.keySet())
+		{
+			if (ITE.IsInventory)
+			{
+				if (ITE.AddItem(i))
+				{
+					PE.inventory.removeStackFromSlot(0);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public boolean RemoveItemFromNetwork(EntityPlayer PE) {
+		for (ImmanenceTileEntity ITE : blocks.keySet())
+		{
+			if (ITE.IsInventory)
+			{
+				ItemStack s;
+				if ((s = ITE.RemoveRandomItem()) != null)
+				{
+					PE.inventory.setInventorySlotContents(0, s);
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	
 	public Map<ImmanenceTileEntity, String> getBlocks()
@@ -165,4 +221,5 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		network.deserializeNBT(data);
 		return network;
 	}
+
 }

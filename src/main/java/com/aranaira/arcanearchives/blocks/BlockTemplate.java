@@ -19,8 +19,8 @@ import net.minecraft.world.World;
 
 public class BlockTemplate extends Block implements IHasModel {
 
-	public static ImmanenceTileEntity tileEntityInstance;
-	public static boolean HasTileEntity;
+	public ImmanenceTileEntity tileEntityInstance;
+	public boolean HasTileEntity;
 	public int PlaceLimit = -1;
 	public String refName;
 	public BlockTemplate(String name, Material materialIn) {
@@ -65,7 +65,7 @@ public class BlockTemplate extends Block implements IHasModel {
 	@Override
 	public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state) {
 		
-		if (tileEntityInstance != null)
+		if (!worldIn.isRemote && tileEntityInstance != null)
 			NetworkHelper.getArcaneArchivesNetwork(tileEntityInstance.NetworkID).RemoveBlockFromNetwork(tileEntityInstance);
 		
 		super.onBlockDestroyedByPlayer(worldIn, pos, state);

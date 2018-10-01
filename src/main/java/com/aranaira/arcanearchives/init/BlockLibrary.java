@@ -5,18 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.aranaira.arcanearchives.blocks.StorageRawQuartz;
-import com.aranaira.arcanearchives.blocks.BlockTemplate;
-import com.aranaira.arcanearchives.blocks.DominionCrystal;
-import com.aranaira.arcanearchives.blocks.MatrixCrystalCore;
-import com.aranaira.arcanearchives.blocks.MatrixDistillate;
-import com.aranaira.arcanearchives.blocks.MatrixRepository;
-import com.aranaira.arcanearchives.blocks.MatrixReservoir;
-import com.aranaira.arcanearchives.blocks.MatrixStorage;
-import com.aranaira.arcanearchives.blocks.RadiantResonator;
-import com.aranaira.arcanearchives.blocks.RawQuartz;
-import com.aranaira.arcanearchives.tileentities.MatrixCoreTileEntity;
-import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
+import com.aranaira.arcanearchives.blocks.*;
+import com.aranaira.arcanearchives.tileentities.*;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -44,4 +34,5 @@ public class BlockLibrary {
 	//Tile Entities
 	public static final TileEntity RADIANT_RESONATOR_TILE_ENTITY = new RadiantResonatorTileEntity();
 	public static final TileEntity MATRIX_CORE_TILE_ENTITY = new MatrixCoreTileEntity();
+	public static final TileEntity MATRIX_REPOSITORY_TILE_ENTITY = new MatrixRepositoryTileEntity();
 }

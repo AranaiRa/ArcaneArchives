@@ -133,16 +133,6 @@ public class RadiantResonator extends BlockTemplate
          return state.getValue(FACING).getIndex();
      }
 
-     /*
-     @Override
-     public IBlockState getExtendedState(IBlockState state, IBlockAccess world, BlockPos pos)
-     {
-         //Only return an IExtendedBlockState from this method and createState(), otherwise block placement might break!
-         //B3DLoader.B3DState newState = new B3DLoader.B3DState(null, counter);
-         return ((IExtendedBlockState) state).withProperty(Properties.AnimationProperty, newState);
-     }
-     */
-
      @Override
      public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
      {
