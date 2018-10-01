@@ -20,6 +20,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.common.DimensionManager;
+import scala.actors.threadpool.Arrays;
 
 public class ArcaneArchivesCommand extends CommandBase 
 {
@@ -32,7 +33,32 @@ public class ArcaneArchivesCommand extends CommandBase
 
 	@Override
 	public String getUsage(ICommandSender sender) {
-		return null;
+		return "/arcanearchives help";
+	}
+	//commands
+	//arcanearchives
+		//inventory
+			//put
+			//take
+			//list
+		//structure
+			//import
+			//export
+		//network
+	@Override
+	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos targetPos) {
+		if (args.length == 0)
+		{
+			return Arrays.asList((new String[] {"inventory", "structure", "network"}));
+		}
+		else if (args.length == 1)
+		{
+			if (args[0].compareTo("inventory") == 0)
+				return Arrays.asList((new String[] {"put", "take", "list", "search"}));
+			else if (args[0].compareTo("structure") == 0)
+				return Arrays.asList((new String[] {"import", "export"}));
+		}
+		return super.getTabCompletions(server, sender, args, targetPos);
 	}
 	
 	@Override
@@ -118,6 +144,26 @@ public class ArcaneArchivesCommand extends CommandBase
 						{
 							sender.sendMessage(new TextComponentString(item.getDisplayName() + " # " + item.getCount()));
 						}
+					}
+				}
+				else if (args[1].compareTo("search") == 0 && args.length > 2)
+				{
+					boolean hasFoundResults = false;
+					sender.sendMessage(new TextComponentString("Search Results:"));
+					for (NonNullList<ItemStack> isList : network.GetItemsOnNetwork())
+					{
+						for (ItemStack item : isList)
+						{
+							if (item.getUnlocalizedName().toLowerCase().contains(args[2].toLowerCase()))
+							{
+								sender.sendMessage(new TextComponentString(item.getDisplayName() + " # " + item.getCount()));
+								hasFoundResults = true;
+							}
+						}
+					}
+					if (!hasFoundResults)
+					{
+						sender.sendMessage(new TextComponentString("No Results!"));
 					}
 				}
 			}
