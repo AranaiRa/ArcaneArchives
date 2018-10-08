@@ -1,6 +1,6 @@
 {
    "parent": "block/cube_all",
    "textures": {
-       "all": "arcanearchives:blocks/tex_arcanearchives_raw_quartz"
+       "all": "arcanearchives:blocks/block_storage_rawquartz"
    }
 }

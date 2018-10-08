@@ -1,0 +1,33 @@
+item.item_rawquartz.name=Raw Radiant Quartz
+item.item_cutquartz.name=Shaped Radiant Quartz
+item.item_tomeofrequisition.name=Tome of Requisition
+
+tile.storage_raw_quartz.name=Raw Radiant Quartz Block
+tile.storage_cut_quartz.name=Shaped Radiant Quartz Block
+tile.raw_quartz.name=Raw Radiant Quartz
+
+tile.radiant_resonator.name=Radiant Resonator
+
+tile.matrix_crystal_core.name=Crystal Matrix Core
+tile.matrix_repository.name=Repository Matrix
+tile.matrix_storage.name=Storage Matrix
+tile.matrix_reservoir.name=Reservoir Matrix
+tile.matrix_distillate.name=Distillate Matrix
+
+tile.dominion_crystal.name=Dominion Crystal
+
+entity.spirit_crown_01.name=Crown Mote
+entity.spirit_crown_02.name=Crown Juve
+entity.spirit_crown_03.name=Crown Eld
+entity.spirit_matter_01.name=Matter Mote
+entity.spirit_matter_02.name=Matter Juve
+entity.spirit_matter_03.name=Matter Eld
+entity.spirit_power_01.name=Power Mote
+entity.spirit_power_02.name=Power Juve
+entity.spirit_power_03.name=Power Eld
+entity.spirit_space_01.name=Space Mote
+entity.spirit_space_02.name=Space Juve
+entity.spirit_space_03.name=Space Eld
+entity.spirit_time_01.name=Time Mote
+entity.spirit_time_02.name=Time Juve
+entity.spirit_time_03.name=Time Eld

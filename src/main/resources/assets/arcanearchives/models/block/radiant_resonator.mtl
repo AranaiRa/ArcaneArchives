@@ -2,7 +2,7 @@
 # File Created: 29.09.2018 06:38:37
 
 newmtl mat_ArcaneArchives_Master
-map_Kd arcanearchives:blocks/tex_arcanearchives_master
+map_Kd arcanearchives:blocks/block_arcanearchives_master
 
 newmtl mat_minecraft_bars
 map_Kd minecraft:blocks/iron_bars

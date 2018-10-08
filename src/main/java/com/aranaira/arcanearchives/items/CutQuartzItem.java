@@ -15,11 +15,11 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class RawQuartzItem extends ItemTemplate
+public class CutQuartzItem extends ItemTemplate
 {
-	public static final String NAME = "item_rawquartz";
+	public static final String NAME = "item_cutquartz";
 	
-	public RawQuartzItem()
+	public CutQuartzItem()
 	{
 		super(NAME);
 	}

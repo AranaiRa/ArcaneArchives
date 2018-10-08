@@ -15,8 +15,10 @@ import net.minecraft.world.World;
 
 public class TomeOfRequisitionItem extends ItemTemplate {
 
-	public TomeOfRequisitionItem(String name) {
-		super(name);
+	public static final String NAME = "item_tomeofrequisition";
+	
+	public TomeOfRequisitionItem() {
+		super(NAME);
 	}
 
 	@Override

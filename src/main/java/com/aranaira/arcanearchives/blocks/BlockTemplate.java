@@ -31,8 +31,6 @@ public class BlockTemplate extends Block implements IHasModel {
 		refName = name;
 		BlockLibrary.BLOCKS.add(this);
 		ItemLibrary.ITEMS.add(new ItemBlock(this).setRegistryName(this.getRegistryName()));
-		
-		
 	}
 	
 	public boolean hasOBJModel()

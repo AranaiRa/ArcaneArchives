@@ -27,6 +27,7 @@ public class BlockLibrary {
 	
 	//Blocks
 	public static final Block STORAGE_RAW_QUARTZ = new StorageRawQuartz();
+	public static final Block STORAGE_CUT_QUARTZ = new StorageCutQuartz();
 	public static final Block RADIANT_RESONATOR = new RadiantResonator();
 	public static final Block RAW_QUARTZ = new RawQuartz();
 	public static final Block DOMINION_CRYSTAL = new DominionCrystal();
