@@ -16,6 +16,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.b3d.B3DLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -24,6 +25,8 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+
+import javax.annotation.Nonnull;
 
 import org.apache.logging.log4j.Logger;
 
@@ -48,6 +51,21 @@ public class ArcaneArchives
     public static final String CLIENT_PROXY = "com.aranaira.arcanearchives.proxy.ClientProxy";
 
     public static Logger logger;
+    
+    @Nonnull
+    private static final ArcaneArchives INSTANCE = new ArcaneArchives();
+    
+    private ArcaneArchives()
+    {
+    	
+    }
+    
+    @Nonnull
+    @Mod.InstanceFactory
+    public static ArcaneArchives instance()
+    {
+    	return INSTANCE;
+    }
     
     @Mod.Instance(MODID)
     public static ArcaneArchives Instance;

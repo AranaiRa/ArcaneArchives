@@ -12,6 +12,7 @@ import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -249,6 +250,31 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		}
 		
 		return tmp;
+	}
+
+	public List<ItemStack> GetAllItemsOnNetwork() {
+		List<ItemStack> all_the_items = new ArrayList<>();
+		List<NonNullList<ItemStack>> all_items = GetItemsOnNetwork();
+		boolean added;
+		for (NonNullList<ItemStack> list : all_items)
+		{
+			for (ItemStack is : list)
+			{
+				added = false;
+				for (ItemStack i : all_the_items)
+				{
+					if (is.getUnlocalizedName() == i.getUnlocalizedName())
+					{
+						i.setCount(is.getCount());
+						added = true;
+						break;
+					}
+				}
+				if (!added)
+					all_the_items.add(is);
+			}
+		}
+		return all_the_items;
 	}
 
 }

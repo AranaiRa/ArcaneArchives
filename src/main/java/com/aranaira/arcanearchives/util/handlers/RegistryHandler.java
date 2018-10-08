@@ -78,4 +78,10 @@ public class RegistryHandler
 			}
 		}
 	}
+	
+	//@SubscribeEvent
+	//public static void onGUIRegister(GUIRegistryEvent event)
+	//{
+	//	
+	//}
 }

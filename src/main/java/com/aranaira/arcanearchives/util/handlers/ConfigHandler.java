@@ -29,7 +29,8 @@ public class ConfigHandler
 	
 	public static class ConfigGeneral
 	{
-		//@Config.Comment({)
+		@Config.Comment({ "General Config" })
+		public boolean bJarvisModeEnabled = false;
 	}
 	
 	public static class ConfigValues
