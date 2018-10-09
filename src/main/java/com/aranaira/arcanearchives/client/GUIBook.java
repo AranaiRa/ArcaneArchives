@@ -11,6 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -24,6 +25,18 @@ public class GUIBook extends GuiScreen {
 	private final int ImageHeight = 256, ImageWidth = 256, ImageScale = 256;
 	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/tex_hud_lectern_items.png");
 
+	private GenericButton Tab1;
+	private GenericButton Tab2;
+	private GenericButton Tab3;
+	
+	private GenericButton TopButton1;
+	private GenericButton TopButton2;
+	private GenericButton TopButton3;
+	private GenericButton TopButton4;
+	
+	private GenericButton ClearCrafting;
+	
+	private Slot slot;
 
 	public GUIBook()
 	{
@@ -34,14 +47,29 @@ public class GUIBook extends GuiScreen {
 	public void initGui() 
 	{
 		buttonList.clear();
-		int offLeft = (width - ImageWidth) / 2;
-		int offTop = 0;
+		int offLeft = (width - ImageWidth) / 2 - 3;
+		int offTop = -16;
+
+		buttonList.add(TopButton1 = new GenericButton(offLeft + (285 - 140) + (14 / 3), 44 + offTop, 14, 12, ""));
+		buttonList.add(TopButton2 = new GenericButton(offLeft + (303 - 140) + (14 / 3), 44 + offTop, 14, 12, ""));
+		buttonList.add(TopButton3 = new GenericButton(offLeft + (321 - 140) + (14 / 3), 44 + offTop, 14, 12, ""));
+		buttonList.add(TopButton4 = new GenericButton(offLeft + (339 - 140) + (14 / 3), 44 + offTop, 14, 12, ""));
+
+		buttonList.add(Tab3 = new GenericButton(offLeft + (375 - 140) + (15 / 3), 124 + offTop, 15, 40, ""));
+		buttonList.add(Tab2 = new GenericButton(offLeft + (374 - 140) + (20 / 3), 40 + offTop, 20, 40, ""));
+		buttonList.add(Tab1 = new GenericButton(offLeft + (375 - 140) + (15 / 3), 82 + offTop, 15, 40, ""));
+		
+
+		buttonList.add(ClearCrafting = new GenericButton(offLeft + (259 - 140) + (10 / 3), 116 + offTop, 10, 10, ""));
 	}
 
 	@Override
 	public void updateScreen() 
 	{
-		
+		for (GuiButton button : buttonList)
+		{
+			button.visible = true;
+		}
 	}
 
 	@Override
@@ -61,6 +89,8 @@ public class GUIBook extends GuiScreen {
 		offLeft += 1;
 
 		GlStateManager.disableLighting();
+		
+		
 
 		for (int y = 0; y < 2; y++)
 		{
@@ -70,11 +100,11 @@ public class GUIBook extends GuiScreen {
 				{
 					ItemStack s = NetworkHelper.getArcaneArchivesNetwork(Minecraft.getMinecraft().player.getUniqueID()).GetAllItemsOnNetwork().get(x + y * 9);
 					this.itemRender.renderItemAndEffectIntoGUI(s, offLeft + 45 + (20 * x), 40 + (18 * y) + topOffset);
-					//this.string
-					this.fontRenderer.drawString(Integer.toString(s.getCount()), offLeft + 45 + (20 * x), 40 + (18 * y) + topOffset, 1);
+					this.itemRender.renderItemOverlayIntoGUI(fontRenderer, s, offLeft + 45 + (20 * x), 40 + (18 * y) + topOffset, null);
 				}
 				else
 					this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(0)), offLeft + 45 + (20 * x), 40 + (18 * y) + topOffset);
+				
 			}
 		}
 		/*
@@ -164,7 +194,10 @@ public class GUIBook extends GuiScreen {
 		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(8)), offLeft + (311 - 140), (355 - 130) + topOffset);
 		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(9)), offLeft + (329 - 140), (355 - 130) + topOffset);
 
-
+		//this.itemRender.renderItemOverlayIntoGUI(fontRenderer, new ItemStack(Block.getBlockById(8)), offLeft + (329 - 140), (355 - 130), "");
+		
+		fontRenderer.drawString("Search", offLeft + 186 - 140, (154 - 130) + topOffset + 4, 0x000000);
+		
 		GlStateManager.enableLighting();
 		
 		super.drawScreen(parWidth, parHeight, particle);
@@ -183,6 +216,38 @@ public class GUIBook extends GuiScreen {
 	@Override
 	protected void actionPerformed(GuiButton button) {
 		//Within the if statements write your button actions (if you have buttons)
+		if (button == Tab1)
+		{
+			
+		}
+		if (button == Tab2)
+		{
+			
+		}
+		if (button == Tab3)
+		{
+			
+		}
+		if (button == ClearCrafting)
+		{
+			
+		}
+		if (button == TopButton1)
+		{
+			
+		}
+		if (button == TopButton2)
+		{
+			
+		}
+		if (button == TopButton3)
+		{
+			
+		}
+		if (button == TopButton4)
+		{
+			
+		}
 	}
 
 	@Override
