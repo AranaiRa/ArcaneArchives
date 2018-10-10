@@ -1,19 +1,31 @@
 package com.aranaira.arcanearchives.client;
 
 import java.awt.Color;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.util.NetworkHelper;
+import com.sun.jna.platform.win32.WinUser.INPUT;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ContainerWorkbench;
+import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import scala.Int;
@@ -36,11 +48,40 @@ public class GUIBook extends GuiScreen {
 	
 	private GenericButton ClearCrafting;
 	
-	private Slot slot;
+	private List<Slot> mSlots = new ArrayList<Slot>();
+	
+	private ItemStack HeldItem = null;
+	
+	private InventoryCrafting mInventoryCrafting;
+	private final ContainerWorkbench eventHandler;
+	
+	private boolean isEnteringText = false;
+	private String SearchText = "";
 
 	public GUIBook()
 	{
+		//NO IDEA WHAT IM DOING
+		eventHandler = new ContainerWorkbench(mc.player.inventory, mc.world, new BlockPos(0,0,0));
+		mInventoryCrafting = new InventoryCrafting(eventHandler, 3, 3);
 		
+		int i = 35;
+		
+		
+		for (int y = 2; y > -1; y--)
+		{
+			for (int x = 8; x > -1; x--)
+			{
+				mSlots.add(new Slot(mc.player.inventory, i, 45 + (18 * x), 167 + (18 * y)));
+				i--;
+			}
+		}
+		
+		for (int x = 8; x > -1; x--)
+		{
+			mSlots.add(new Slot(mc.player.inventory, i, 45 + (18 * x), 225));
+			i--;
+		}
+
 	}
 
 	@Override
@@ -73,7 +114,7 @@ public class GUIBook extends GuiScreen {
 	}
 
 	@Override
-	public void drawScreen(int parWidth, int parHeight, float particle) 
+	public void drawScreen(int mouseX, int mouseY, float partialTicks) 
 	{
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.enableColorMaterial();
@@ -91,14 +132,22 @@ public class GUIBook extends GuiScreen {
 		GlStateManager.disableLighting();
 		
 		
-
+		List<ItemStack> listOfItems;
+		if (SearchText != "")
+		{
+			listOfItems = NetworkHelper.getArcaneArchivesNetwork(Minecraft.getMinecraft().player.getUniqueID()).GetFilteredItems(SearchText);
+		}
+		else
+		{
+			listOfItems = NetworkHelper.getArcaneArchivesNetwork(Minecraft.getMinecraft().player.getUniqueID()).GetAllItemsOnNetwork();
+		}
 		for (int y = 0; y < 2; y++)
 		{
 			for (int x = 0; x < 8; x++)
 			{
-				if (NetworkHelper.getArcaneArchivesNetwork(Minecraft.getMinecraft().player.getUniqueID()).GetAllItemsOnNetwork().size() > (x + y * 9))
+				if (listOfItems.size() > (x + y * 9))
 				{
-					ItemStack s = NetworkHelper.getArcaneArchivesNetwork(Minecraft.getMinecraft().player.getUniqueID()).GetAllItemsOnNetwork().get(x + y * 9);
+					ItemStack s = listOfItems.get(x + y * 9);
 					this.itemRender.renderItemAndEffectIntoGUI(s, offLeft + 45 + (20 * x), 40 + (18 * y) + topOffset);
 					this.itemRender.renderItemOverlayIntoGUI(fontRenderer, s, offLeft + 45 + (20 * x), 40 + (18 * y) + topOffset, null);
 				}
@@ -107,110 +156,324 @@ public class GUIBook extends GuiScreen {
 				
 			}
 		}
-		/*
-		//Top Matrix Inventory
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(1)), offLeft + (185 - 140), (170 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(2)), offLeft + (205 - 140), (170 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(3)), offLeft + (222 - 140), (170 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(4)), offLeft + (239 - 140), (170 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(5)), offLeft + (258 - 140), (170 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(6)), offLeft + (275 - 140), (170 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(7)), offLeft + (294 - 140), (170 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(8)), offLeft + (312 - 140), (170 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(9)), offLeft + (330 - 140), (170 - 130) + topOffset);
-		//Second Bottom Matrix Inventory
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(1)), offLeft + (185 - 140), (206 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(2)), offLeft + (203 - 140), (206 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(3)), offLeft + (221 - 140), (206 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(4)), offLeft + (239 - 140), (206 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(5)), offLeft + (257 - 140), (206 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(6)), offLeft + (275 - 140), (206 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(7)), offLeft + (294 - 140), (206 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(8)), offLeft + (312 - 140), (206 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(9)), offLeft + (330 - 140), (206 - 130) + topOffset);
-		//Bottom Matrix Inventory
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(1)), offLeft + (185 - 140), (188 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(2)), offLeft + (203 - 140), (188 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(3)), offLeft + (221 - 140), (188 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(4)), offLeft + (239 - 140), (188 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(5)), offLeft + (257 - 140), (188 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(6)), offLeft + (275 - 140), (188 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(7)), offLeft + (293 - 140), (188 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(8)), offLeft + (312 - 140), (188 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(9)), offLeft + (330 - 140), (188 - 130) + topOffset);
-		*/
+		
 		//Crafting Area
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(1)), offLeft + (203 - 140), (228 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(2)), offLeft + (221 - 140), (228 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(3)), offLeft + (239 - 140), (228 - 130) + topOffset);
+		this.itemRender.renderItemAndEffectIntoGUI(mInventoryCrafting.getStackInRowAndColumn(0, 0), offLeft + 63, 98 + topOffset);
+		this.itemRender.renderItemOverlayIntoGUI(fontRenderer, mInventoryCrafting.getStackInRowAndColumn(0, 0), offLeft + 63, 98 + topOffset, null);
+		this.itemRender.renderItemAndEffectIntoGUI(mInventoryCrafting.getStackInRowAndColumn(1, 0), offLeft + 81, 98 + topOffset);
+		this.itemRender.renderItemOverlayIntoGUI(fontRenderer, mInventoryCrafting.getStackInRowAndColumn(1, 0), offLeft + 81, 98 + topOffset, null);
+		this.itemRender.renderItemAndEffectIntoGUI(mInventoryCrafting.getStackInRowAndColumn(2, 0), offLeft + 99, 98 + topOffset);
+		this.itemRender.renderItemOverlayIntoGUI(fontRenderer, mInventoryCrafting.getStackInRowAndColumn(2, 0), offLeft + 99, 98 + topOffset, null);
 
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(4)), offLeft + (221 - 140), (246 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(5)), offLeft + (203 - 140), (246 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(6)), offLeft + (239 - 140), (246 - 130) + topOffset);
+		this.itemRender.renderItemAndEffectIntoGUI(mInventoryCrafting.getStackInRowAndColumn(0, 1), offLeft + 63, 116 + topOffset);
+		this.itemRender.renderItemOverlayIntoGUI(fontRenderer, mInventoryCrafting.getStackInRowAndColumn(0, 1), offLeft + 63, 116 + topOffset, null);
+		this.itemRender.renderItemAndEffectIntoGUI(mInventoryCrafting.getStackInRowAndColumn(1, 1), offLeft + 81, 116 + topOffset);
+		this.itemRender.renderItemOverlayIntoGUI(fontRenderer, mInventoryCrafting.getStackInRowAndColumn(1, 1), offLeft + 81, 116 + topOffset, null);
+		this.itemRender.renderItemAndEffectIntoGUI(mInventoryCrafting.getStackInRowAndColumn(2, 1), offLeft + 99, 116 + topOffset);
+		this.itemRender.renderItemOverlayIntoGUI(fontRenderer, mInventoryCrafting.getStackInRowAndColumn(2, 1), offLeft + 99, 116 + topOffset, null);
 
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(7)), offLeft + (203 - 140), (264 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(8)), offLeft + (221 - 140), (264 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(9)), offLeft + (238 - 140), (264 - 130) + topOffset);
+		this.itemRender.renderItemAndEffectIntoGUI(mInventoryCrafting.getStackInRowAndColumn(0, 2), offLeft + 63, 134 + topOffset);
+		this.itemRender.renderItemOverlayIntoGUI(fontRenderer, mInventoryCrafting.getStackInRowAndColumn(0, 2), offLeft + 63, 134 + topOffset, null);
+		this.itemRender.renderItemAndEffectIntoGUI(mInventoryCrafting.getStackInRowAndColumn(1, 2), offLeft + 81, 134 + topOffset);
+		this.itemRender.renderItemOverlayIntoGUI(fontRenderer, mInventoryCrafting.getStackInRowAndColumn(1, 2), offLeft + 81, 134 + topOffset, null);
+		this.itemRender.renderItemAndEffectIntoGUI(mInventoryCrafting.getStackInRowAndColumn(2, 2), offLeft + 99, 134 + topOffset);
+		this.itemRender.renderItemOverlayIntoGUI(fontRenderer, mInventoryCrafting.getStackInRowAndColumn(2, 2), offLeft + 99, 134 + topOffset, null);
 		//Crafting Area Result
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(1)), offLeft + (311 - 140), (246 - 130) + topOffset);
-		//Third Lowest
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(1)), offLeft + (185 - 140), (297 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(2)), offLeft + (203 - 140), (297 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(3)), offLeft + (221 - 140), (297 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(4)), offLeft + (239 - 140), (297 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(5)), offLeft + (257 - 140), (297 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(6)), offLeft + (275 - 140), (297 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(7)), offLeft + (294 - 140), (297 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(8)), offLeft + (312 - 140), (297 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(9)), offLeft + (329 - 140), (297 - 130) + topOffset);
-		//Second Lowest
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(1)), offLeft + (185 - 140), (315 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(2)), offLeft + (203 - 140), (315 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(3)), offLeft + (221 - 140), (315 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(4)), offLeft + (239 - 140), (315 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(5)), offLeft + (257 - 140), (315 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(6)), offLeft + (275 - 140), (315 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(7)), offLeft + (293 - 140), (315 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(8)), offLeft + (311 - 140), (315 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(9)), offLeft + (329 - 140), (315 - 130) + topOffset);
-		//Bottom Inventory
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(1)), offLeft + (185 - 140), (332 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(2)), offLeft + (203 - 140), (332 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(3)), offLeft + (221 - 140), (332 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(4)), offLeft + (238 - 140), (332 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(5)), offLeft + (257 - 140), (332 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(6)), offLeft + (275 - 140), (332 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(7)), offLeft + (293 - 140), (332 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(8)), offLeft + (311 - 140), (332 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(9)), offLeft + (329 - 140), (332 - 130) + topOffset);
-		//Hot Bar
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(1)), offLeft + (185 - 140), (355 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(2)), offLeft + (203 - 140), (355 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(3)), offLeft + (221 - 140), (355 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(4)), offLeft + (239 - 140), (355 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(5)), offLeft + (257 - 140), (355 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(6)), offLeft + (275 - 140), (355 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(7)), offLeft + (293 - 140), (355 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(8)), offLeft + (311 - 140), (355 - 130) + topOffset);
-		this.itemRender.renderItemAndEffectIntoGUI(new ItemStack(Block.getBlockById(9)), offLeft + (329 - 140), (355 - 130) + topOffset);
+		IRecipe ir = CraftingManager.findMatchingRecipe(mInventoryCrafting, mc.world);
+		if (ir != null)
+		{
+			this.itemRender.renderItemAndEffectIntoGUI(ir.getCraftingResult(mInventoryCrafting), offLeft + 171, 116 + topOffset);
+			this.itemRender.renderItemOverlayIntoGUI(fontRenderer, ir.getCraftingResult(mInventoryCrafting), offLeft + 171, 116 + topOffset, null);
+			
+		}
+		
 
+		for (Slot s : mSlots)
+		{
+			this.itemRender.renderItemAndEffectIntoGUI(s.inventory.getStackInSlot(s.getSlotIndex()), offLeft + s.xPos, topOffset + s.yPos);
+			this.itemRender.renderItemOverlayIntoGUI(fontRenderer, s.inventory.getStackInSlot(s.getSlotIndex()), offLeft + s.xPos, topOffset + s.yPos, null);
+		}
+		
 		//this.itemRender.renderItemOverlayIntoGUI(fontRenderer, new ItemStack(Block.getBlockById(8)), offLeft + (329 - 140), (355 - 130), "");
 		
-		fontRenderer.drawString("Search", offLeft + 186 - 140, (154 - 130) + topOffset + 4, 0x000000);
+		if (SearchText == "")
+			fontRenderer.drawString("Search", offLeft + 186 - 140, (154 - 130) + topOffset + 4, 0x000000);
+		else
+			fontRenderer.drawString(SearchText, offLeft + 186 - 140, (154 - 130) + topOffset + 4, 0x000000);
+		
+		if (HeldItem != null)
+		{
+			this.itemRender.renderItemAndEffectIntoGUI(HeldItem, mouseX, mouseY);
+			this.itemRender.renderItemOverlayIntoGUI(fontRenderer, HeldItem, mouseX, mouseY, null);
+		}
+		
 		
 		GlStateManager.enableLighting();
 		
-		super.drawScreen(parWidth, parHeight, particle);
+		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 	@Override
 	protected void keyTyped(char typedChar, int keyCode){
-		if (keyCode == 1 || keyCode == this.mc.gameSettings.keyBindInventory.getKeyCode())
-			Minecraft.getMinecraft().player.closeScreen();
+		ArcaneArchives.logger.info(keyCode);
+		if (isEnteringText)
+		{
+			if (keyCode == 14)
+			{
+				if (SearchText.length() > 0)
+					SearchText = SearchText.substring(0, SearchText.length() - 1);
+			}
+			else if (keyCode == 1 || keyCode == 28)
+			{
+				isEnteringText = false;
+			}
+			else
+				SearchText += typedChar;
+		}
+		else
+			if (keyCode == 1 || keyCode == this.mc.gameSettings.keyBindInventory.getKeyCode())
+				Minecraft.getMinecraft().player.closeScreen();
 	}
 	@Override
 	protected void mouseClickMove(int parMouseX, int parMouseY, int parLastButtonClicked, long parTimeSinceMouseClick) 
 	{ 
 		
+	}
+	
+	@Override
+	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+
+		int offLeft = (int) ((width - ImageWidth) / 2.0F) + 1;
+		int offTop = 10;
+		int topOffset = 3;
+		
+		
+		
+		//ArcaneArchives.logger.info();
+		if (mouseButton == 0)
+		{
+
+			if (mouseX > offLeft + 46 && mouseX < offLeft + 46 + 88 && mouseY > topOffset + 28 && mouseY < topOffset + 28 + 10)
+			{
+				isEnteringText = true;
+			}
+			//else
+			//{
+			//	isEnteringText = false;
+			//}
+			
+			for (Slot s : mSlots)
+			{
+				if (mouseX > offLeft + s.xPos && mouseY > s.yPos + topOffset && mouseX < offLeft + s.xPos + 16 && mouseY < s.yPos + topOffset + 16)
+				{
+					ItemStack slotStack = s.inventory.getStackInSlot(s.getSlotIndex());
+					if (isShiftKeyDown())
+					{
+						if (!slotStack.isEmpty())
+						{
+							if (NetworkHelper.getArcaneArchivesNetwork(mc.player.getUniqueID()).AddItemToNetwork(slotStack))
+								SlotSetItem(s, new ItemStack(Block.getBlockById(0)));
+						}
+						super.mouseClicked(mouseX, mouseY, mouseButton);
+					}
+					if (HeldItem == null)
+					{
+						if (!slotStack.isEmpty())
+						{
+							HeldItem = slotStack;
+							SlotSetItem(s, new ItemStack(Block.getBlockById(0)));
+						}
+					}
+					else
+					{
+						if (slotStack.isEmpty())
+						{
+							SlotSetItem(s, HeldItem);
+							HeldItem = null;
+						}
+						else
+						{
+							if (ItemStack.areItemStackTagsEqual(HeldItem, slotStack))
+							{
+								if (slotStack.getCount() + HeldItem.getCount() > HeldItem.getMaxStackSize())
+								{
+									int temp = HeldItem.getMaxStackSize() - slotStack.getCount();
+									slotStack.setCount(HeldItem.getMaxStackSize());
+									HeldItem.setCount(HeldItem.getCount() - temp);
+								}
+								else
+								{
+									slotStack.setCount(slotStack.getCount() + HeldItem.getCount());
+									HeldItem = null;
+								}
+							}
+							else
+							{
+								ItemStack temp = slotStack;
+								SlotSetItem(s, HeldItem);
+								HeldItem = temp;
+							}
+						}
+					}
+					super.mouseClicked(mouseX, mouseY, mouseButton);
+					
+					
+				}
+			}
+			
+			if (mouseX > offLeft + 45 && mouseY > 43 && mouseX < offLeft + 45 + (20 * 8) + 16 && mouseY < 43 + (18 * 2) + 16)
+			{
+				if (HeldItem != null)
+				{
+					//Place item in the network.
+					if (NetworkHelper.getArcaneArchivesNetwork(mc.player.getUniqueID()).AddItemToNetwork(HeldItem))
+						HeldItem = null;
+				}
+				else
+				{
+					//Pick up item.
+					Slot slot = null;
+					for (Slot s : mSlots) 
+					{
+						if (s.inventory.getStackInSlot(s.getSlotIndex()).isEmpty())
+						{
+							slot = s;
+							break;
+						}
+					}
+					for (int y = 0; y < 2; y++)
+					{
+						if (HeldItem != null && !isShiftKeyDown())
+							break;
+						for (int x = 0; x < 8; x++)
+						{
+							if (HeldItem != null && !isShiftKeyDown())
+								break;
+							if (NetworkHelper.getArcaneArchivesNetwork(Minecraft.getMinecraft().player.getUniqueID()).GetAllItemsOnNetwork().size() > (x + y * 9))
+							{
+								ItemStack s = NetworkHelper.getArcaneArchivesNetwork(Minecraft.getMinecraft().player.getUniqueID()).GetAllItemsOnNetwork().get(x + y * 9);
+								if (isShiftKeyDown())
+								{
+									if (slot != null)
+									{
+										if (mouseX > offLeft + 45 + (20 * x) && mouseY > 43 + (18 * y) && mouseX < offLeft + 45 + (20 * x) + 16 && mouseY < 43 + (18 * y) + 16)
+										{
+											slot.inventory.setInventorySlotContents(slot.getSlotIndex(), NetworkHelper.getArcaneArchivesNetwork(mc.player.getUniqueID()).RemoveItemFromNetwork(s));
+											super.mouseClicked(mouseX, mouseY, mouseButton);
+										}
+									}
+									else
+										super.mouseClicked(mouseX, mouseY, mouseButton);
+								}
+								else
+									if (mouseX > offLeft + 45 + (20 * x) && mouseY > 43 + (18 * x) && mouseX < offLeft + 45 + (20 * 8) + 16 && mouseY < 43 + (18 * y) + 16)
+									{
+										HeldItem = NetworkHelper.getArcaneArchivesNetwork(mc.player.getUniqueID()).RemoveItemFromNetwork(s);
+										super.mouseClicked(mouseX, mouseY, mouseButton);
+									}
+							}
+							
+						}
+					}
+				}
+			}
+			else
+			{
+				//if (HeldItem != null)
+				//	mc.player.entityDropItem(HeldItem, 5);
+			}
+			for (int y = 0; y < 3; y++)
+			{
+				for (int x = 0; x < 3; x++)
+				{
+					ItemStack slotItem = mInventoryCrafting.getStackInRowAndColumn(x, y);
+					if (mouseX > offLeft + 63 + (18 * x) && mouseX < offLeft + 63 + (18 * x) + 16 && mouseY > topOffset + 98 + (18 * y) && mouseY < topOffset + 98 + (18 * y) + 16)
+					{
+						if (HeldItem == null)
+						{
+							
+							if (slotItem.isEmpty())
+								super.mouseClicked(mouseX, mouseY, mouseButton);
+							HeldItem = slotItem;
+							mInventoryCrafting.setInventorySlotContents(y * 3 + x, new ItemStack(Block.getBlockById(0)));
+							super.mouseClicked(mouseX, mouseY, mouseButton);
+						}
+						else
+						{
+							if (mInventoryCrafting.getStackInRowAndColumn(x, y).isEmpty())
+							{
+								mInventoryCrafting.setInventorySlotContents(y * 3 + x, HeldItem);
+								HeldItem = null;
+							}
+							else
+							{
+								if (ItemStack.areItemStackTagsEqual(HeldItem, slotItem))
+								{
+									if (slotItem.getCount() < 64)
+									{
+										if (slotItem.getCount() + HeldItem.getCount() > HeldItem.getMaxStackSize())
+										{
+											int temp = HeldItem.getMaxStackSize() - slotItem.getCount();
+											slotItem.setCount(64);
+											HeldItem.setCount(HeldItem.getCount() - temp);
+										}
+										else
+										{
+											slotItem.setCount(slotItem.getCount() + HeldItem.getCount());
+											HeldItem = null;
+										}
+									}
+								}
+								else
+								{
+									ItemStack temp = slotItem;
+									mInventoryCrafting.setInventorySlotContents(y * 3 + x, HeldItem);
+									HeldItem = temp;
+								}
+							}
+							super.mouseClicked(mouseX, mouseY, mouseButton);
+						}
+					}
+				}
+			}
+	
+			IRecipe ir = CraftingManager.findMatchingRecipe(mInventoryCrafting, mc.world);
+			if (mouseX > offLeft + 171 && mouseX < offLeft + 171 + 16 && mouseY > topOffset + 116 && mouseY < topOffset + 116 + 16)
+			{
+				if (ir == null)
+					super.mouseClicked(mouseX, mouseY, mouseButton);
+				else
+				{
+					if (HeldItem == null)
+					{
+						HeldItem = ir.getCraftingResult(mInventoryCrafting);
+						for (int x = 0; x < 9; x++)
+						{
+							mInventoryCrafting.decrStackSize(x, 1);
+						}
+						super.mouseClicked(mouseX, mouseY, mouseButton);
+					}
+					else if (ItemStack.areItemStackTagsEqual(HeldItem, ir.getCraftingResult(mInventoryCrafting)))
+					{
+						if (HeldItem.getMaxStackSize() >= HeldItem.getCount() + ir.getCraftingResult(mInventoryCrafting).getCount())
+						{
+							HeldItem.setCount(HeldItem.getCount() + ir.getCraftingResult(mInventoryCrafting).getCount());
+							for (int x = 0; x < 9; x++)
+							{
+								mInventoryCrafting.decrStackSize(x, 1);
+							}
+						}
+						super.mouseClicked(mouseX, mouseY, mouseButton);
+					}
+				}
+			}
+			fontRenderer.drawString("Search", offLeft + 186 - 140, (154 - 130) + topOffset + 4, 0x000000);
+		}
+		super.mouseClicked(mouseX, mouseY, mouseButton);
+	}
+	
+	private void SlotSetItem(Slot s, ItemStack i)
+	{
+		s.inventory.setInventorySlotContents(s.getSlotIndex(), i);
 	}
 
 	@Override
@@ -253,7 +516,13 @@ public class GUIBook extends GuiScreen {
 	@Override
 	public void onGuiClosed() 
 	{ 
-		
+		if (HeldItem != null)
+		{
+			if (!NetworkHelper.getArcaneArchivesNetwork(mc.player.getUniqueID()).AddItemToNetwork(HeldItem))
+			{
+				mc.player.entityDropItem(HeldItem, 5);
+			}
+		}
 	}
 
 	@Override

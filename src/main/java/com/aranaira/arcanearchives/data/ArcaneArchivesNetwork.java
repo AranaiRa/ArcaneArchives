@@ -120,6 +120,21 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		}
 		return false;
 	}
+	
+	public boolean AddItemToNetwork(ItemStack itemStack) 
+	{
+		for (ImmanenceTileEntity ITE : blocks.keySet())
+		{
+			if (ITE.IsInventory)
+			{
+				if (ITE.AddItem(itemStack))
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
 	public boolean RemoveItemFromNetwork(EntityPlayer PE) {
 		for (ImmanenceTileEntity ITE : blocks.keySet())
@@ -135,6 +150,23 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 			}
 		}
 		return false;
+	}
+
+	public ItemStack RemoveItemFromNetwork(ItemStack stack) {
+
+		for (ImmanenceTileEntity ITE : blocks.keySet())
+		{
+			if (ITE.IsInventory)
+			{
+				ItemStack s;
+				if ((s = ITE.RemoveItem(stack)) != null)
+				{
+					return s;
+				}
+			}
+		}
+		
+		return null;
 	}
 	
 	public Map<ImmanenceTileEntity, String> getBlocks()
@@ -277,4 +309,31 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		return all_the_items;
 	}
 
+	public List<ItemStack> GetFilteredItems(String s)
+	{
+		List<ItemStack> all_the_items = new ArrayList<>();
+		List<NonNullList<ItemStack>> all_items = GetItemsOnNetwork();
+		boolean added;
+		for (NonNullList<ItemStack> list : all_items)
+		{
+			for (ItemStack is : list)
+			{
+				if (!is.getDisplayName().toLowerCase().contains(s.toLowerCase()))
+					continue;
+				added = false;
+				for (ItemStack i : all_the_items)
+				{
+					if (is.getUnlocalizedName() == i.getUnlocalizedName())
+					{
+						i.setCount(is.getCount());
+						added = true;
+						break;
+					}
+				}
+				if (!added)
+					all_the_items.add(is);
+			}
+		}
+		return all_the_items;
+	}
 }
