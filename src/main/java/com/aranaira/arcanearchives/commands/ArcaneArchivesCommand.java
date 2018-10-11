@@ -120,53 +120,5 @@ public class ArcaneArchivesCommand extends CommandBase
 				
 			}
 		}
-		//Just for testing of what is in the network
-		else if (args[0].compareTo("inventory") == 0)
-		{
-			ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(sender.getCommandSenderEntity().getUniqueID());
-			if (args.length > 1)
-			{
-				if (args[1].compareTo("put") == 0)
-					if (network.AddItemToNetwork((EntityPlayer)sender.getCommandSenderEntity()))
-						sender.sendMessage(new TextComponentString("Added item to network!"));
-					else
-						sender.sendMessage(new TextComponentString("Could not add item to network!"));
-				else if (args[1].compareTo("take") == 0)
-					if (network.RemoveItemFromNetwork((EntityPlayer)sender.getCommandSenderEntity()))
-						sender.sendMessage(new TextComponentString("Success!"));
-					else
-						sender.sendMessage(new TextComponentString("Falure!"));
-				else if (args[1].compareTo("list") == 0)
-				{
-					for (NonNullList<ItemStack> isList : network.GetItemsOnNetwork())
-					{
-						for (ItemStack item : isList)
-						{
-							sender.sendMessage(new TextComponentString(item.getDisplayName() + " # " + item.getCount()));
-						}
-					}
-				}
-				else if (args[1].compareTo("search") == 0 && args.length > 2)
-				{
-					boolean hasFoundResults = false;
-					sender.sendMessage(new TextComponentString("Search Results:"));
-					for (NonNullList<ItemStack> isList : network.GetItemsOnNetwork())
-					{
-						for (ItemStack item : isList)
-						{
-							if (item.getUnlocalizedName().toLowerCase().contains(args[2].toLowerCase()))
-							{
-								sender.sendMessage(new TextComponentString(item.getDisplayName() + " # " + item.getCount()));
-								hasFoundResults = true;
-							}
-						}
-					}
-					if (!hasFoundResults)
-					{
-						sender.sendMessage(new TextComponentString("No Results!"));
-					}
-				}
-			}
-		}
 	}
 }

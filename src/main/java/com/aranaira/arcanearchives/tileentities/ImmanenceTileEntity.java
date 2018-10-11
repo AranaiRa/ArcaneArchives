@@ -12,6 +12,7 @@ import java.util.UUID;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.BlockLibrary;
+import com.aranaira.arcanearchives.util.ItemComparison;
 import com.aranaira.arcanearchives.util.NetworkHelper;
 
 public class ImmanenceTileEntity extends TileEntity implements ITickable
@@ -80,20 +81,71 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 			return null;
 		for (ItemStack itemStack : Inventory)
 		{
+			if (ItemComparison.AreItemsEqual(itemStack, item))
+			{
+				if (itemStack.getCount() > itemStack.getMaxStackSize())
+				{
+					ItemStack temp = itemStack.copy();
+					temp.setCount(item.getMaxStackSize());
+					itemStack.setCount(itemStack.getCount() - item.getMaxStackSize());
+					
+					return temp;
+				}
+				else
+				{
+					if (Inventory.remove(itemStack))
+						return itemStack;
+				}
+			}
+		}
+		return null;
+	}
+
+	public ItemStack RemoveItemCount(ItemStack item, int count_needed) {
+		if (!IsDrainPaid)
+			return null;
+		for (ItemStack itemStack : Inventory)
+		{
+			if (ItemComparison.AreItemsEqual(itemStack, item))
+			{
+				if (itemStack.getCount() > count_needed)
+				{
+					ItemStack temp = itemStack.copy();
+					temp.setCount(count_needed);
+					itemStack.setCount(itemStack.getCount() - count_needed);
+					
+					return temp;
+				}
+				else
+				{
+					if (Inventory.remove(itemStack))
+						return itemStack;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public ItemStack RemoveHalfItem(ItemStack item)
+	{
+		if (!IsDrainPaid)
+			return null;
+		for (ItemStack itemStack : Inventory)
+		{
 			if (itemStack.getUnlocalizedName().compareTo(item.getUnlocalizedName()) == 0)
 			{
-				if (itemStack.getCount() > 64)
+				if (itemStack.getCount() > itemStack.getMaxStackSize())
 				{
-					itemStack.setCount(itemStack.getCount() - item.getMaxStackSize());
-					return itemStack;
+					ItemStack temp = itemStack.copy();
+					temp.setCount(itemStack.getMaxStackSize()/2);
+					itemStack.setCount(itemStack.getCount() - item.getMaxStackSize()/2);
+					return temp;
 				}
 			}
 		}
 		Inventory.remove(item);
 		return item;
 	}
-	
-	
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {

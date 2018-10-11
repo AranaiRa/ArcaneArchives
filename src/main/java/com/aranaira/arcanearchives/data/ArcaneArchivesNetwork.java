@@ -9,11 +9,13 @@ import java.util.UUID;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.BlockTemplate;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
+import com.aranaira.arcanearchives.util.ItemComparison;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -102,49 +104,14 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		return inventories;
 	}
 	
-	//For testing
-	public boolean AddItemToNetwork(EntityPlayer PE)
-	{
-		//ItemStack i = PE.getHeldItem(EnumHand.MAIN_HAND);
-		ItemStack i = PE.inventory.getStackInSlot(0);
-		for (ImmanenceTileEntity ITE : blocks.keySet())
-		{
-			if (ITE.IsInventory)
-			{
-				if (ITE.AddItem(i))
-				{
-					PE.inventory.removeStackFromSlot(0);
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-	
 	public boolean AddItemToNetwork(ItemStack itemStack) 
 	{
 		for (ImmanenceTileEntity ITE : blocks.keySet())
 		{
 			if (ITE.IsInventory)
 			{
-				if (ITE.AddItem(itemStack))
+				if (ITE.AddItem(itemStack.copy()))
 				{
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	public boolean RemoveItemFromNetwork(EntityPlayer PE) {
-		for (ImmanenceTileEntity ITE : blocks.keySet())
-		{
-			if (ITE.IsInventory)
-			{
-				ItemStack s;
-				if ((s = ITE.RemoveRandomItem()) != null)
-				{
-					PE.inventory.setInventorySlotContents(0, s);
 					return true;
 				}
 			}
@@ -153,20 +120,56 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	}
 
 	public ItemStack RemoveItemFromNetwork(ItemStack stack) {
-
+		int count_needed = stack.getCount();
+		ItemStack to_return = stack.copy();
+		to_return.setCount(0); //Could cause issues
+		if (stack.getCount() > stack.getMaxStackSize())
+		{
+			count_needed = stack.getMaxStackSize();
+		}
 		for (ImmanenceTileEntity ITE : blocks.keySet())
 		{
 			if (ITE.IsInventory)
 			{
 				ItemStack s;
-				if ((s = ITE.RemoveItem(stack)) != null)
+				if ((s = ITE.RemoveItemCount(stack, count_needed)) != null)
 				{
-					return s;
+					to_return.setCount(s.getCount() + to_return.getCount());
+					count_needed -= s.getCount();
+					if (count_needed == 0)
+						return to_return;
 				}
 			}
 		}
 		
-		return null;
+		return new ItemStack(Blocks.AIR);
+	}
+	
+	public ItemStack RemoveHalfStackFromNetwork(ItemStack stack)
+	{
+		int count_needed = stack.getCount() / 2;
+		ItemStack to_return = stack.copy();
+		to_return.setCount(0); //Could cause issues
+		if (stack.getCount() > stack.getMaxStackSize())
+		{
+			count_needed = stack.getMaxStackSize() / 2;
+		}
+		for (ImmanenceTileEntity ITE : blocks.keySet())
+		{
+			if (ITE.IsInventory)
+			{
+				ItemStack s;
+				if ((s = ITE.RemoveItemCount(stack, count_needed)) != null)
+				{
+					to_return.setCount(s.getCount() + to_return.getCount());
+					count_needed -= s.getCount();
+					if (count_needed == 0)
+						return to_return;
+				}
+			}
+		}
+		
+		return new ItemStack(Blocks.AIR);
 	}
 	
 	public Map<ImmanenceTileEntity, String> getBlocks()
@@ -295,15 +298,15 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 				added = false;
 				for (ItemStack i : all_the_items)
 				{
-					if (is.getUnlocalizedName() == i.getUnlocalizedName())
+					if (ItemComparison.AreItemsEqual(is, i))
 					{
-						i.setCount(is.getCount());
+						i.setCount(i.getCount() + is.getCount());
 						added = true;
 						break;
 					}
 				}
 				if (!added)
-					all_the_items.add(is);
+					all_the_items.add(is.copy());
 			}
 		}
 		return all_the_items;

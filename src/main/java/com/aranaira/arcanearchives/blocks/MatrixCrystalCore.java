@@ -44,6 +44,8 @@ public class MatrixCrystalCore extends BlockTemplate {
 		setLightLevel(16/16f);
 		HasTileEntity = true;
 		PlaceLimit = 1;
+		Width = 3;
+		Height = 4;
 	}
 	
 	@Override

@@ -8,6 +8,7 @@ import java.util.List;
 import org.lwjgl.opengl.GL11;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.util.ItemComparison;
 import com.aranaira.arcanearchives.util.NetworkHelper;
 import com.sun.jna.platform.win32.WinUser.INPUT;
 
@@ -16,6 +17,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerWorkbench;
 import net.minecraft.inventory.InventoryCrafting;
@@ -37,48 +39,59 @@ public class GUIBook extends GuiScreen {
 	private final int ImageHeight = 256, ImageWidth = 256, ImageScale = 256;
 	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/tex_hud_lectern_items.png");
 
+	//Buttons to switch interface.
 	private GenericButton Tab1;
 	private GenericButton Tab2;
 	private GenericButton Tab3;
 	
+	//Sorting buttons.
 	private GenericButton TopButton1;
 	private GenericButton TopButton2;
 	private GenericButton TopButton3;
 	private GenericButton TopButton4;
 	
+	//Clears the crafting area and puts the items back into the storage if possible.
 	private GenericButton ClearCrafting;
 	
-	private List<Slot> mSlots = new ArrayList<Slot>();
+	//List of the slots for the player's inventory.
+	private List<AASlot> mSlots = new ArrayList<AASlot>();
 	
+	//The currently held item in the GUI.
 	private ItemStack HeldItem = null;
 	
+	//The crafting inventory required for crafting.
 	private InventoryCrafting mInventoryCrafting;
+	
+	//Required for the crafting inventory, dont ask me.
 	private final ContainerWorkbench eventHandler;
 	
+	//If the player is currently entering text into the search bar.
 	private boolean isEnteringText = false;
+	
+	//The search bar's text used for filtering the list of items on the network.
 	private String SearchText = "";
 
 	public GUIBook()
 	{
-		//NO IDEA WHAT IM DOING
+		//Creating the handler and crafting inventory.
 		eventHandler = new ContainerWorkbench(mc.player.inventory, mc.world, new BlockPos(0,0,0));
 		mInventoryCrafting = new InventoryCrafting(eventHandler, 3, 3);
 		
+		//Creates the slots for the players inventory.
 		int i = 35;
-		
-		
+		//Inventory.
 		for (int y = 2; y > -1; y--)
 		{
 			for (int x = 8; x > -1; x--)
 			{
-				mSlots.add(new Slot(mc.player.inventory, i, 45 + (18 * x), 167 + (18 * y)));
+				mSlots.add(new AASlot(mc.player.inventory, i, 45 + (18 * x), 167 + (18 * y)));
 				i--;
 			}
 		}
-		
+		//Hotbar.
 		for (int x = 8; x > -1; x--)
 		{
-			mSlots.add(new Slot(mc.player.inventory, i, 45 + (18 * x), 225));
+			mSlots.add(new AASlot(mc.player.inventory, i, 45 + (18 * x), 225));
 			i--;
 		}
 
@@ -87,6 +100,7 @@ public class GUIBook extends GuiScreen {
 	@Override
 	public void initGui() 
 	{
+		//Adds the buttons to the interface.
 		buttonList.clear();
 		int offLeft = (width - ImageWidth) / 2 - 3;
 		int offTop = -16;
@@ -107,6 +121,7 @@ public class GUIBook extends GuiScreen {
 	@Override
 	public void updateScreen() 
 	{
+		//Sets the GUI Buttons to be usable.
 		for (GuiButton button : buttonList)
 		{
 			button.visible = true;
@@ -131,7 +146,7 @@ public class GUIBook extends GuiScreen {
 
 		GlStateManager.disableLighting();
 		
-		
+		//Pulls the list of items to be displayed.
 		List<ItemStack> listOfItems;
 		if (SearchText != "")
 		{
@@ -141,6 +156,8 @@ public class GUIBook extends GuiScreen {
 		{
 			listOfItems = NetworkHelper.getArcaneArchivesNetwork(Minecraft.getMinecraft().player.getUniqueID()).GetAllItemsOnNetwork();
 		}
+		
+		//Renders the networks inventory, that has been filtered.
 		for (int y = 0; y < 2; y++)
 		{
 			for (int x = 0; x < 8; x++)
@@ -158,48 +175,73 @@ public class GUIBook extends GuiScreen {
 		}
 		
 		//Crafting Area
-		this.itemRender.renderItemAndEffectIntoGUI(mInventoryCrafting.getStackInRowAndColumn(0, 0), offLeft + 63, 98 + topOffset);
-		this.itemRender.renderItemOverlayIntoGUI(fontRenderer, mInventoryCrafting.getStackInRowAndColumn(0, 0), offLeft + 63, 98 + topOffset, null);
-		this.itemRender.renderItemAndEffectIntoGUI(mInventoryCrafting.getStackInRowAndColumn(1, 0), offLeft + 81, 98 + topOffset);
-		this.itemRender.renderItemOverlayIntoGUI(fontRenderer, mInventoryCrafting.getStackInRowAndColumn(1, 0), offLeft + 81, 98 + topOffset, null);
-		this.itemRender.renderItemAndEffectIntoGUI(mInventoryCrafting.getStackInRowAndColumn(2, 0), offLeft + 99, 98 + topOffset);
-		this.itemRender.renderItemOverlayIntoGUI(fontRenderer, mInventoryCrafting.getStackInRowAndColumn(2, 0), offLeft + 99, 98 + topOffset, null);
-
-		this.itemRender.renderItemAndEffectIntoGUI(mInventoryCrafting.getStackInRowAndColumn(0, 1), offLeft + 63, 116 + topOffset);
-		this.itemRender.renderItemOverlayIntoGUI(fontRenderer, mInventoryCrafting.getStackInRowAndColumn(0, 1), offLeft + 63, 116 + topOffset, null);
-		this.itemRender.renderItemAndEffectIntoGUI(mInventoryCrafting.getStackInRowAndColumn(1, 1), offLeft + 81, 116 + topOffset);
-		this.itemRender.renderItemOverlayIntoGUI(fontRenderer, mInventoryCrafting.getStackInRowAndColumn(1, 1), offLeft + 81, 116 + topOffset, null);
-		this.itemRender.renderItemAndEffectIntoGUI(mInventoryCrafting.getStackInRowAndColumn(2, 1), offLeft + 99, 116 + topOffset);
-		this.itemRender.renderItemOverlayIntoGUI(fontRenderer, mInventoryCrafting.getStackInRowAndColumn(2, 1), offLeft + 99, 116 + topOffset, null);
-
-		this.itemRender.renderItemAndEffectIntoGUI(mInventoryCrafting.getStackInRowAndColumn(0, 2), offLeft + 63, 134 + topOffset);
-		this.itemRender.renderItemOverlayIntoGUI(fontRenderer, mInventoryCrafting.getStackInRowAndColumn(0, 2), offLeft + 63, 134 + topOffset, null);
-		this.itemRender.renderItemAndEffectIntoGUI(mInventoryCrafting.getStackInRowAndColumn(1, 2), offLeft + 81, 134 + topOffset);
-		this.itemRender.renderItemOverlayIntoGUI(fontRenderer, mInventoryCrafting.getStackInRowAndColumn(1, 2), offLeft + 81, 134 + topOffset, null);
-		this.itemRender.renderItemAndEffectIntoGUI(mInventoryCrafting.getStackInRowAndColumn(2, 2), offLeft + 99, 134 + topOffset);
-		this.itemRender.renderItemOverlayIntoGUI(fontRenderer, mInventoryCrafting.getStackInRowAndColumn(2, 2), offLeft + 99, 134 + topOffset, null);
+		for (int x = 0; x < 3; x++)
+		{
+			for (int y = 0; y < 3; y++)
+			{
+				this.itemRender.renderItemAndEffectIntoGUI(mInventoryCrafting.getStackInRowAndColumn(x, y), offLeft + 63 + (18 * x), 98 + (18 * y) + topOffset);
+				this.itemRender.renderItemOverlayIntoGUI(fontRenderer, mInventoryCrafting.getStackInRowAndColumn(x, y), offLeft + 63 + (18 * x), 98 + (18 * y)  + topOffset, null);
+			}
+		}
+		
 		//Crafting Area Result
 		IRecipe ir = CraftingManager.findMatchingRecipe(mInventoryCrafting, mc.world);
 		if (ir != null)
 		{
 			this.itemRender.renderItemAndEffectIntoGUI(ir.getCraftingResult(mInventoryCrafting), offLeft + 171, 116 + topOffset);
 			this.itemRender.renderItemOverlayIntoGUI(fontRenderer, ir.getCraftingResult(mInventoryCrafting), offLeft + 171, 116 + topOffset, null);
-			
 		}
 		
-
-		for (Slot s : mSlots)
+		//Render the slots for the players inventory.
+		for (AASlot s : mSlots)
 		{
-			this.itemRender.renderItemAndEffectIntoGUI(s.inventory.getStackInSlot(s.getSlotIndex()), offLeft + s.xPos, topOffset + s.yPos);
-			this.itemRender.renderItemOverlayIntoGUI(fontRenderer, s.inventory.getStackInSlot(s.getSlotIndex()), offLeft + s.xPos, topOffset + s.yPos, null);
+			RenderSlot(mouseX, mouseY, s, offLeft, topOffset);
 		}
 		
-		//this.itemRender.renderItemOverlayIntoGUI(fontRenderer, new ItemStack(Block.getBlockById(8)), offLeft + (329 - 140), (355 - 130), "");
-		
+		//Decides what to display if the player has typed something in the search bar.
 		if (SearchText == "")
 			fontRenderer.drawString("Search", offLeft + 186 - 140, (154 - 130) + topOffset + 4, 0x000000);
 		else
 			fontRenderer.drawString(SearchText, offLeft + 186 - 140, (154 - 130) + topOffset + 4, 0x000000);
+
+		//Render Tooltips for the players Inventory.
+		for (AASlot s : mSlots)
+		{
+			RenderSlotTooltip(mouseX, mouseY, s, offLeft, topOffset);
+		}
+		
+		//Render Network Inventory Tooltips.
+		for (int y = 0; y < 2; y++)
+		{
+			for (int x = 0; x < 8; x++)
+			{
+				if (listOfItems.size() > (x + y * 9))
+				{
+					ItemStack s = listOfItems.get(x + y * 9);
+					if (mouseX > offLeft + 45 + (20 * x) && mouseX < offLeft + 45 + (20 * x) + 16 && mouseY > topOffset + 40 + (18 * y) && mouseY < topOffset + 40 + (18 * y) + 16)
+						this.renderToolTip(s, mouseX, mouseY);
+				}
+				
+			}
+		}
+		
+		//Crafting Area Tooltips
+		for (int x = 0; x < 3; x++)
+		{
+			for (int y = 0; y < 3; y++)
+			{
+				if (!mInventoryCrafting.getStackInRowAndColumn(x, y).isEmpty())
+					if (mouseX > offLeft + 63 + (18 * x) && mouseX < offLeft + 63 + (18 * x) + 16 && mouseY > 98 + (18 * y) + topOffset && mouseY < 98 + (18 * y) + topOffset + 16)
+						this.renderToolTip(mInventoryCrafting.getStackInRowAndColumn(x, y), mouseX, mouseY);
+			}
+		}
+		
+		//Crafting Result Tooltip
+		if (ir != null)
+		{
+			if (mouseX > offLeft + 171 && mouseX < offLeft + 171 + 16 && mouseY > topOffset + 116 && mouseY < topOffset + 116 + 16)
+				this.renderToolTip(ir.getCraftingResult(mInventoryCrafting), mouseX, mouseY);
+		}
 		
 		if (HeldItem != null)
 		{
@@ -207,14 +249,13 @@ public class GUIBook extends GuiScreen {
 			this.itemRender.renderItemOverlayIntoGUI(fontRenderer, HeldItem, mouseX, mouseY, null);
 		}
 		
-		
 		GlStateManager.enableLighting();
 		
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 	@Override
 	protected void keyTyped(char typedChar, int keyCode){
-		ArcaneArchives.logger.info(keyCode);
+		//ArcaneArchives.logger.info(keyCode);
 		if (isEnteringText)
 		{
 			if (keyCode == 14)
@@ -227,7 +268,11 @@ public class GUIBook extends GuiScreen {
 				isEnteringText = false;
 			}
 			else
-				SearchText += typedChar;
+			{
+				if (Character.isLetterOrDigit(typedChar))
+					SearchText += typedChar;
+			}
+				
 		}
 		else
 			if (keyCode == 1 || keyCode == this.mc.gameSettings.keyBindInventory.getKeyCode())
@@ -245,81 +290,62 @@ public class GUIBook extends GuiScreen {
 		int offLeft = (int) ((width - ImageWidth) / 2.0F) + 1;
 		int offTop = 10;
 		int topOffset = 3;
+
+		HandleNetworkInventorySpace(mouseX, mouseY, offLeft, topOffset, mouseButton);
+		HandlePlayerInventorySpace(mouseX, mouseY, offLeft, topOffset, mouseButton);
+		HandleCraftingInventorySpace(mouseX, mouseY, offLeft, topOffset, mouseButton);
 		
-		
-		
-		//ArcaneArchives.logger.info();
 		if (mouseButton == 0)
 		{
-
+			//Checks Text Box Bounds
 			if (mouseX > offLeft + 46 && mouseX < offLeft + 46 + 88 && mouseY > topOffset + 28 && mouseY < topOffset + 28 + 10)
 			{
 				isEnteringText = true;
 			}
-			//else
-			//{
-			//	isEnteringText = false;
-			//}
-			
-			for (Slot s : mSlots)
-			{
-				if (mouseX > offLeft + s.xPos && mouseY > s.yPos + topOffset && mouseX < offLeft + s.xPos + 16 && mouseY < s.yPos + topOffset + 16)
-				{
-					ItemStack slotStack = s.inventory.getStackInSlot(s.getSlotIndex());
-					if (isShiftKeyDown())
-					{
-						if (!slotStack.isEmpty())
-						{
-							if (NetworkHelper.getArcaneArchivesNetwork(mc.player.getUniqueID()).AddItemToNetwork(slotStack))
-								SlotSetItem(s, new ItemStack(Block.getBlockById(0)));
-						}
-						super.mouseClicked(mouseX, mouseY, mouseButton);
-					}
-					if (HeldItem == null)
-					{
-						if (!slotStack.isEmpty())
-						{
-							HeldItem = slotStack;
-							SlotSetItem(s, new ItemStack(Block.getBlockById(0)));
-						}
-					}
-					else
-					{
-						if (slotStack.isEmpty())
-						{
-							SlotSetItem(s, HeldItem);
-							HeldItem = null;
-						}
-						else
-						{
-							if (ItemStack.areItemStackTagsEqual(HeldItem, slotStack))
-							{
-								if (slotStack.getCount() + HeldItem.getCount() > HeldItem.getMaxStackSize())
-								{
-									int temp = HeldItem.getMaxStackSize() - slotStack.getCount();
-									slotStack.setCount(HeldItem.getMaxStackSize());
-									HeldItem.setCount(HeldItem.getCount() - temp);
-								}
-								else
-								{
-									slotStack.setCount(slotStack.getCount() + HeldItem.getCount());
-									HeldItem = null;
-								}
-							}
-							else
-							{
-								ItemStack temp = slotStack;
-								SlotSetItem(s, HeldItem);
-								HeldItem = temp;
-							}
-						}
-					}
-					super.mouseClicked(mouseX, mouseY, mouseButton);
-					
-					
-				}
-			}
-			
+		}
+		
+		super.mouseClicked(mouseX, mouseY, mouseButton);
+	}
+	
+	
+	//Helper Functons
+	private void SlotSetItem(Slot s, ItemStack i)
+	{
+		s.inventory.setInventorySlotContents(s.getSlotIndex(), i);
+	}
+	
+	private boolean InsideStorage(int mouseX, int mouseY)
+	{
+		int offLeft = (int) ((width - ImageWidth) / 2.0F) + 1;
+		int offTop = 10;
+		int topOffset = 3;
+		if (mouseX > offLeft + 45 && mouseY > 43 && mouseX < offLeft + 45 + (20 * 8) + 16 && mouseY < 43 + (18 * 2) + 16)
+		{
+			return true;
+		}
+		return false;
+	}
+
+	private void RenderSlot(int mouseX, int mouseY, Slot s, int offLeft, int topOffset)
+	{
+		this.itemRender.renderItemAndEffectIntoGUI(s.inventory.getStackInSlot(s.getSlotIndex()), offLeft + s.xPos, s.yPos + topOffset);
+		this.itemRender.renderItemOverlayIntoGUI(fontRenderer, s.inventory.getStackInSlot(s.getSlotIndex()), offLeft + s.xPos, s.yPos + topOffset, null);
+	}
+	
+	private void RenderSlotTooltip(int mouseX, int mouseY, Slot s, int offLeft, int topOffset)
+	{
+		if (s.inventory.getStackInSlot(s.getSlotIndex()).isEmpty())
+			return;
+		if (mouseX > s.xPos + offLeft && mouseX < s.xPos + offLeft + 16 && mouseY > s.yPos + topOffset && mouseY < s.yPos + topOffset + 16)
+		{
+			this.renderToolTip(s.inventory.getStackInSlot(s.getSlotIndex()), mouseX, mouseY);
+		}
+	}
+	
+	private void HandleNetworkInventorySpace(int mouseX, int mouseY, int offLeft, int topOffset, int mouseButton)
+	{
+		switch (mouseButton) {
+		case 0:
 			if (mouseX > offLeft + 45 && mouseY > 43 && mouseX < offLeft + 45 + (20 * 8) + 16 && mouseY < 43 + (18 * 2) + 16)
 			{
 				if (HeldItem != null)
@@ -332,7 +358,7 @@ public class GUIBook extends GuiScreen {
 				{
 					//Pick up item.
 					Slot slot = null;
-					for (Slot s : mSlots) 
+					for (AASlot s : mSlots) 
 					{
 						if (s.inventory.getStackInSlot(s.getSlotIndex()).isEmpty())
 						{
@@ -358,17 +384,17 @@ public class GUIBook extends GuiScreen {
 										if (mouseX > offLeft + 45 + (20 * x) && mouseY > 43 + (18 * y) && mouseX < offLeft + 45 + (20 * x) + 16 && mouseY < 43 + (18 * y) + 16)
 										{
 											slot.inventory.setInventorySlotContents(slot.getSlotIndex(), NetworkHelper.getArcaneArchivesNetwork(mc.player.getUniqueID()).RemoveItemFromNetwork(s));
-											super.mouseClicked(mouseX, mouseY, mouseButton);
+											return;
 										}
 									}
 									else
-										super.mouseClicked(mouseX, mouseY, mouseButton);
+										return;
 								}
 								else
 									if (mouseX > offLeft + 45 + (20 * x) && mouseY > 43 + (18 * x) && mouseX < offLeft + 45 + (20 * 8) + 16 && mouseY < 43 + (18 * y) + 16)
 									{
 										HeldItem = NetworkHelper.getArcaneArchivesNetwork(mc.player.getUniqueID()).RemoveItemFromNetwork(s);
-										super.mouseClicked(mouseX, mouseY, mouseButton);
+										return;
 									}
 							}
 							
@@ -381,6 +407,176 @@ public class GUIBook extends GuiScreen {
 				//if (HeldItem != null)
 				//	mc.player.entityDropItem(HeldItem, 5);
 			}
+		case 1:
+			if (HeldItem != null)
+			{
+				if (InsideStorage(mouseX, mouseY))
+				{
+					ItemStack temp = HeldItem.copy();
+					temp.setCount(1);
+					if (NetworkHelper.getArcaneArchivesNetwork(mc.player.getUniqueID()).AddItemToNetwork(temp))
+					{
+						if (HeldItem.getCount() > 1)
+							HeldItem.setCount(HeldItem.getCount() - 1);
+						else
+							HeldItem = null;
+					}
+				}
+			}
+			else
+			{
+				if (InsideStorage(mouseX, mouseY))
+				{
+					for (int y = 0; y < 2; y++)
+					{
+						for (int x = 0; x < 8; x++)
+						{
+							if (HeldItem != null)
+								break;
+							if (NetworkHelper.getArcaneArchivesNetwork(Minecraft.getMinecraft().player.getUniqueID()).GetAllItemsOnNetwork().size() > (x + y * 9))
+							{
+								ItemStack s = NetworkHelper.getArcaneArchivesNetwork(Minecraft.getMinecraft().player.getUniqueID()).GetAllItemsOnNetwork().get(x + y * 9);
+								
+								if (mouseX > offLeft + 45 + (20 * x) && mouseY > 43 + (18 * x) && mouseX < offLeft + 45 + (20 * 8) + 16 && mouseY < 43 + (18 * y) + 16)
+								{
+									HeldItem = NetworkHelper.getArcaneArchivesNetwork(mc.player.getUniqueID()).RemoveHalfStackFromNetwork(s);
+									return;
+								}
+							}
+							
+						}
+					}
+				}
+			}
+		default:
+			return;
+		}
+		
+	}
+	
+	private void HandlePlayerInventorySpace(int mouseX, int mouseY, int offLeft, int topOffset, int mouseButton)
+	{
+		switch (mouseButton) {
+		case 0:
+			for (AASlot s : mSlots)
+			{
+				if (s.Contains(mouseX, mouseY, offLeft, topOffset))
+				{
+					ItemStack slotStack = s.inventory.getStackInSlot(s.getSlotIndex());
+					if (isShiftKeyDown())
+					{
+						if (!slotStack.isEmpty())
+						{
+							if (NetworkHelper.getArcaneArchivesNetwork(mc.player.getUniqueID()).AddItemToNetwork(slotStack.copy()))
+								SlotSetItem(s, new ItemStack(Block.getBlockById(0)));
+						}
+						return;
+					}
+					else
+						if (HeldItem == null)
+						{
+							if (!slotStack.isEmpty())
+							{
+								HeldItem = slotStack;
+								SlotSetItem(s, new ItemStack(Block.getBlockById(0)));
+							}
+						}
+						else
+						{
+							if (slotStack.isEmpty())
+							{
+								SlotSetItem(s, HeldItem);
+								HeldItem = null;
+							}
+							else
+							{
+								if (ItemComparison.AreItemsEqual(HeldItem, slotStack))
+								{
+									if (slotStack.getCount() + HeldItem.getCount() > HeldItem.getMaxStackSize())
+									{
+										int temp = HeldItem.getMaxStackSize() - slotStack.getCount();
+										slotStack.setCount(HeldItem.getMaxStackSize());
+										HeldItem.setCount(HeldItem.getCount() - temp);
+									}
+									else
+									{
+										slotStack.setCount(slotStack.getCount() + HeldItem.getCount());
+										HeldItem = null;
+									}
+								}
+								else
+								{
+									ItemStack temp = slotStack;
+									SlotSetItem(s, HeldItem);
+									HeldItem = temp;
+								}
+							}
+						}
+					return;
+					
+					
+				}
+			}
+			return;
+		case 1:
+			if (HeldItem == null)
+			{
+				for (AASlot s : mSlots)
+				{
+					if (s.Contains(mouseX, mouseY, offLeft, topOffset))
+					{
+						ItemStack temp = s.getStack().copy();
+						temp.setCount(s.getStack().getCount() / 2);
+						s.getStack().setCount(s.getStack().getCount() - temp.getCount());
+						HeldItem = temp;
+					}
+				}
+			}
+			else
+			{
+				for (AASlot s : mSlots)
+				{
+					if (s.Contains(mouseX, mouseY, offLeft, topOffset))
+					{
+						if (ItemComparison.AreItemsEqual(s.getStack(), HeldItem))
+						{
+							if (s.getStack().getMaxStackSize() > s.getStack().getCount())
+							{
+								s.getStack().setCount(s.getStack().getCount() + 1);
+								HeldItem.setCount(HeldItem.getCount() - 1);
+								if (HeldItem.isEmpty())
+								{
+									HeldItem = null;
+								}
+								return;
+							}
+						}
+						else
+						{
+							if (s.getStack().isEmpty())
+							{
+								ItemStack temp = HeldItem.copy();
+								temp.setCount(1);
+								s.inventory.setInventorySlotContents(s.getSlotIndex(), temp);
+								HeldItem.setCount(HeldItem.getCount() - 1);
+								if (HeldItem.isEmpty())
+									HeldItem = null;
+								return;
+							}
+						}
+					}
+				}
+			}
+			return;
+		default:
+			return;
+		}
+	}
+	
+	private void HandleCraftingInventorySpace(int mouseX, int mouseY, int offLeft, int topOffset, int mouseButton)
+	{
+		switch (mouseButton) {
+		case 0:
 			for (int y = 0; y < 3; y++)
 			{
 				for (int x = 0; x < 3; x++)
@@ -388,14 +584,18 @@ public class GUIBook extends GuiScreen {
 					ItemStack slotItem = mInventoryCrafting.getStackInRowAndColumn(x, y);
 					if (mouseX > offLeft + 63 + (18 * x) && mouseX < offLeft + 63 + (18 * x) + 16 && mouseY > topOffset + 98 + (18 * y) && mouseY < topOffset + 98 + (18 * y) + 16)
 					{
+						if (isShiftKeyDown())
+						{
+							
+						}
 						if (HeldItem == null)
 						{
 							
 							if (slotItem.isEmpty())
-								super.mouseClicked(mouseX, mouseY, mouseButton);
+								return;
 							HeldItem = slotItem;
 							mInventoryCrafting.setInventorySlotContents(y * 3 + x, new ItemStack(Block.getBlockById(0)));
-							super.mouseClicked(mouseX, mouseY, mouseButton);
+							return;
 						}
 						else
 						{
@@ -430,17 +630,17 @@ public class GUIBook extends GuiScreen {
 									HeldItem = temp;
 								}
 							}
-							super.mouseClicked(mouseX, mouseY, mouseButton);
+							return;
 						}
 					}
 				}
 			}
-	
+			
 			IRecipe ir = CraftingManager.findMatchingRecipe(mInventoryCrafting, mc.world);
 			if (mouseX > offLeft + 171 && mouseX < offLeft + 171 + 16 && mouseY > topOffset + 116 && mouseY < topOffset + 116 + 16)
 			{
 				if (ir == null)
-					super.mouseClicked(mouseX, mouseY, mouseButton);
+					return;
 				else
 				{
 					if (HeldItem == null)
@@ -450,7 +650,7 @@ public class GUIBook extends GuiScreen {
 						{
 							mInventoryCrafting.decrStackSize(x, 1);
 						}
-						super.mouseClicked(mouseX, mouseY, mouseButton);
+						return;
 					}
 					else if (ItemStack.areItemStackTagsEqual(HeldItem, ir.getCraftingResult(mInventoryCrafting)))
 					{
@@ -462,18 +662,82 @@ public class GUIBook extends GuiScreen {
 								mInventoryCrafting.decrStackSize(x, 1);
 							}
 						}
-						super.mouseClicked(mouseX, mouseY, mouseButton);
+						return;
 					}
 				}
 			}
-			fontRenderer.drawString("Search", offLeft + 186 - 140, (154 - 130) + topOffset + 4, 0x000000);
+		case 1:
+			if (HeldItem != null)
+			{
+				for (int y = 0; y < 3; y++)
+				{
+					for (int x = 0; x < 3; x++)
+					{
+						if (mouseX > offLeft + 63 + (18 * x) && mouseX < offLeft + 63 + (18 * x) + 16 && mouseY > topOffset + 98 + (18 * y) && mouseY < topOffset + 98 + (18 * y) + 16)
+						{
+							if (mInventoryCrafting.getStackInRowAndColumn(x, y).isEmpty())
+							{
+								ItemStack temp = HeldItem.copy();
+								temp.setCount(1);
+								mInventoryCrafting.setInventorySlotContents(y * 3 + x, temp);
+								HeldItem.setCount(HeldItem.getCount() - 1);
+								if (HeldItem.getCount() == 0)
+								{
+									HeldItem = null;
+								}
+							}
+							else
+							{
+								if (ItemStack.areItemStackTagsEqual(HeldItem, mInventoryCrafting.getStackInRowAndColumn(x, y)))
+								{
+									if (mInventoryCrafting.getStackInRowAndColumn(x, y).getCount() < mInventoryCrafting.getStackInRowAndColumn(x, y).getMaxStackSize())
+									{
+										mInventoryCrafting.getStackInRowAndColumn(x, y).setCount(mInventoryCrafting.getStackInRowAndColumn(x, y).getCount() + 1);
+										HeldItem.setCount(HeldItem.getCount() - 1);
+										if (HeldItem.getCount() == 0)
+										{
+											HeldItem = null;
+										}
+									}
+								}
+							}
+							return;
+						}
+					}
+				}
+			}
+			else
+			{
+				for (int y = 0; y < 3; y++)
+				{
+					for (int x = 0; x < 3; x++)
+					{
+						ItemStack slotItem = mInventoryCrafting.getStackInRowAndColumn(x, y);
+						if (mouseX > offLeft + 63 + (18 * x) && mouseX < offLeft + 63 + (18 * x) + 16 && mouseY > topOffset + 98 + (18 * y) && mouseY < topOffset + 98 + (18 * y) + 16)
+						{
+							if (slotItem.isEmpty())
+								return;
+							if (slotItem.getCount() == 1)
+							{
+								HeldItem = slotItem;
+								mInventoryCrafting.setInventorySlotContents(y * 3 + x, new ItemStack(Block.getBlockById(0)));
+								return;
+							}
+							ItemStack temp = slotItem.copy();
+							temp.setCount(temp.getCount() / 2);
+							//mInventoryCrafting.setInventorySlotContents(y * 3 + x, new ItemStack(Block.getBlockById(0)));
+							slotItem.setCount(slotItem.getCount() - temp.getCount());
+							mInventoryCrafting.setInventorySlotContents(y * 3 + x, slotItem);
+							HeldItem = temp;
+							return;
+						}
+					}
+				}
+			}
+			return;
+		default:
+			return;
 		}
-		super.mouseClicked(mouseX, mouseY, mouseButton);
-	}
-	
-	private void SlotSetItem(Slot s, ItemStack i)
-	{
-		s.inventory.setInventorySlotContents(s.getSlotIndex(), i);
 	}
 
 	@Override
@@ -493,7 +757,17 @@ public class GUIBook extends GuiScreen {
 		}
 		if (button == ClearCrafting)
 		{
-			
+			for (int x = 0; x < 3; x++)
+			{
+				for (int y = 0; y < 3; y++)
+				{
+					
+					if (NetworkHelper.getArcaneArchivesNetwork(mc.player.getUniqueID()).AddItemToNetwork(mInventoryCrafting.getStackInRowAndColumn(x, y)))
+					{
+						mInventoryCrafting.setInventorySlotContents(y * 3 + x, new ItemStack(Blocks.AIR));
+					}
+				}
+			}
 		}
 		if (button == TopButton1)
 		{
