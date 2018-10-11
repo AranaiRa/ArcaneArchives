@@ -31,6 +31,7 @@ public class BlockLibrary {
 	public static final Block RADIANT_RESONATOR = new RadiantResonator();
 	public static final Block RAW_QUARTZ = new RawQuartz();
 	public static final Block DOMINION_CRYSTAL = new DominionCrystal();
+	public static final Block GEMCUTTERS_TABLE = new GemcuttersTable();
 	
 	//Tile Entities
 	public static final TileEntity RADIANT_RESONATOR_TILE_ENTITY = new RadiantResonatorTileEntity();

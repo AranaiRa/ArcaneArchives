@@ -1,3 +1,5 @@
+itemGroup.arcanearchives.creativeTab=Arcane Archives
+
 item.item_rawquartz.name=Raw Radiant Quartz
 item.item_cutquartz.name=Shaped Radiant Quartz
 item.item_tomeofrequisition.name=Tome of Requisition
@@ -15,6 +17,7 @@ tile.matrix_reservoir.name=Reservoir Matrix
 tile.matrix_distillate.name=Distillate Matrix
 
 tile.dominion_crystal.name=Dominion Crystal
+tile.gemcutters_table.name=Gemcutter's Table
 
 entity.spirit_crown_01.name=Crown Mote
 entity.spirit_crown_02.name=Crown Juve

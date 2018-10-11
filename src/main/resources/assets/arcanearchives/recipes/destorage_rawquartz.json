@@ -1,0 +1,15 @@
+{
+    "_comment": [
+        "Revert raw radiant quartz from its storage block"
+    ],
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {   
+            "item": "arcanearchives:storage_raw_quartz"
+        }
+    ],
+    "result": {
+        "item": "arcanearchives:item_rawquartz",
+        "count": 9
+    }
+}

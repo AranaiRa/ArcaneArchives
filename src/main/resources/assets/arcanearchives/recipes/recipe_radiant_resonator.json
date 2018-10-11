@@ -1,0 +1,30 @@
+{
+    "_comment": [
+        "Craft a Radiant Resonator"
+    ],
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "GIG",
+        "WBW",
+        "W W"
+    ],
+    "key": {
+        "G": {
+            "item": "minecraft:gold_ingot"
+        },
+        "I": {
+            "item": "minecraft:iron_bars"
+        },
+        "B": {
+            "item": "minecraft:water_bucket"
+        },
+        "W": {
+            "type": "forge:ore_dict",
+            "ore": "logWood"
+        }
+    },
+    "result": {
+        "item": "arcanearchives:radiant_resonator"
+        }
+    }
+}
