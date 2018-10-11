@@ -4,6 +4,12 @@ item.item_rawquartz.name=Raw Radiant Quartz
 item.item_cutquartz.name=Shaped Radiant Quartz
 item.item_tomeofrequisition.name=Tome of Requisition
 
+item.item_component_containmentfield.name=Containment Field
+item.item_component_materialinterface.name=Material Interface
+item.item_component_matrixbrace.name=Matrix Brace
+item.item_component_radiantdust.name=Radiant Dust
+item.item_component_scintillatinginlay.name=Scintillating Inlay
+
 tile.storage_raw_quartz.name=Raw Radiant Quartz Block
 tile.storage_cut_quartz.name=Shaped Radiant Quartz Block
 tile.raw_quartz.name=Raw Radiant Quartz
