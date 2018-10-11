@@ -74,10 +74,10 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 	}
 	
 	//Returns true if it was successful at removing the item, false if there is no such item in inventory.
-	public boolean RemoveItem(ItemStack item)
+	public ItemStack RemoveItem(ItemStack item)
 	{
 		if (!IsDrainPaid)
-			return false;
+			return null;
 		for (ItemStack itemStack : Inventory)
 		{
 			if (itemStack.getUnlocalizedName().compareTo(item.getUnlocalizedName()) == 0)
@@ -85,11 +85,12 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 				if (itemStack.getCount() > 64)
 				{
 					itemStack.setCount(itemStack.getCount() - item.getMaxStackSize());
-					return true;
+					return itemStack;
 				}
 			}
 		}
-		return Inventory.remove(item);
+		Inventory.remove(item);
+		return item;
 	}
 	
 	
