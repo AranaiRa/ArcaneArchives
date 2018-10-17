@@ -28,6 +28,8 @@ public class BlockLibrary {
 	//Blocks
 	public static final Block STORAGE_RAW_QUARTZ = new StorageRawQuartz();
 	public static final Block STORAGE_CUT_QUARTZ = new StorageCutQuartz();
+	public static final Block RADIANT_CHEST = new RadiantChest();
+	public static final Block RADIANT_CRAFTING_TABLE = new RadiantCraftingTable();
 	public static final Block RADIANT_LANTERN = new RadiantLantern();
 	public static final Block RADIANT_RESONATOR = new RadiantResonator();
 	public static final Block RAW_QUARTZ = new RawQuartz();

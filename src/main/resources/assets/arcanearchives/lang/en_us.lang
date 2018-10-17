@@ -2,6 +2,7 @@ itemGroup.arcanearchives.creativeTab=Arcane Archives
 
 item.item_rawquartz.name=Raw Radiant Quartz
 item.item_cutquartz.name=Shaped Radiant Quartz
+item.item_manifest.name=Manifest
 item.item_tomeofrequisition.name=Tome of Requisition
 
 item.item_component_containmentfield.name=Containment Field
@@ -14,6 +15,9 @@ tile.storage_raw_quartz.name=Raw Radiant Quartz Block
 tile.storage_cut_quartz.name=Shaped Radiant Quartz Block
 tile.raw_quartz.name=Raw Radiant Quartz
 
+tile.radiant_crafting_table.name=Radiant Crafting Table
+tile.radiant_chest.name=Radiant Chest
+tile.radiant_lantern.name=Radiant Lantern
 tile.radiant_resonator.name=Radiant Resonator
 
 tile.matrix_crystal_core.name=Crystal Matrix Core
