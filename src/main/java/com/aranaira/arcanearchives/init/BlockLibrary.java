@@ -35,6 +35,8 @@ public class BlockLibrary {
 	public static final Block RAW_QUARTZ = new RawQuartz();
 	public static final Block DOMINION_CRYSTAL = new DominionCrystal();
 	public static final Block GEMCUTTERS_TABLE = new GemcuttersTable();
+	//Fix for dynamic material base on block its extending.
+	public static final Block ACCESSOR = new AccessorBlock(Material.GLASS);
 	
 	//Tile Entities
 	public static final TileEntity RADIANT_RESONATOR_TILE_ENTITY = new RadiantResonatorTileEntity();
