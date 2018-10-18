@@ -100,7 +100,7 @@ public class ArcaneArchives
     public static final CreativeTabs TAB_AA = new CreativeTabs(MODID + ".creativeTab") {
 			@Override
 			public ItemStack getTabIconItem() {
-				return new ItemStack(ItemLibrary.RAW_RADIANT_QUARTZ);
+				return new ItemStack(ItemLibrary.TOME_OF_REQUISITION);
 			}
 	};
 }
