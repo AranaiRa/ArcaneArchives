@@ -28,9 +28,9 @@
                         "scale": 0.42
                     },
                     "ground": {
-                        "translation": [0, 0, 0],
+                        "translation": [-0.25, 0, 0],
                         "rotation": [ { "y": 0}, {"x": 0}, {"z": 0} ],
-                        "scale": 1.0
+                        "scale": 0.5
                     }
                 }
         }],

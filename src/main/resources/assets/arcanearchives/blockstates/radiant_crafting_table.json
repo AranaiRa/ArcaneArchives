@@ -4,7 +4,7 @@
         "textures": {
             
         },
-        "model": "arcanearchives:radiant_lantern.obj",
+        "model": "arcanearchives:radiant_crafting_table.obj",
         "custom": { "flip-v": true }
      },
     "variants": {
@@ -15,7 +15,7 @@
                     "firstperson": {
                         "translation": [0, 0, 0],
                         "rotation": [ { "y": 45}, {"x": 0}, {"z": 0} ],
-                        "scale": 1.0
+                        "scale": 0.5
                     },
                     "thirdperson": {
                         "translation": [0.02, 0.05, -0.05],
@@ -23,9 +23,9 @@
                         "scale": 1.0
                     },
                     "gui": {
-                        "translation": [0.05, 0.08, 0],
+                        "translation": [-0.1, -0.2, 0],
                         "rotation": [ { "y": 45}, {"x": 30}, {"z": 0} ],
-                        "scale": 0.9
+                        "scale": 0.85
                     },
                     "ground": {
                         "translation": [0, 0, 0],
