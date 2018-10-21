@@ -24,6 +24,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import javax.annotation.Nonnull;
@@ -33,6 +34,7 @@ import org.apache.logging.log4j.Logger;
 import com.aranaira.arcanearchives.blocks.MatrixCrystalCore;
 import com.aranaira.arcanearchives.blocks.RadiantResonator;
 import com.aranaira.arcanearchives.blocks.RawQuartz;
+import com.aranaira.arcanearchives.client.AAGuiHandler;
 import com.aranaira.arcanearchives.commands.ArcaneArchivesCommand;
 import com.aranaira.arcanearchives.init.ItemLibrary;
 import com.aranaira.arcanearchives.items.RawQuartzItem;
@@ -76,7 +78,9 @@ public class ArcaneArchives
     @EventHandler
     public static void preInit(FMLPreInitializationEvent event)
     {
+    	
         logger = event.getModLog();
+        NetworkRegistry.INSTANCE.registerGuiHandler(INSTANCE, new AAGuiHandler());
     }
     
     @EventHandler

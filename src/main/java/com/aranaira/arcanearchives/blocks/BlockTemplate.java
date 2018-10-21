@@ -79,10 +79,29 @@ public class BlockTemplate extends Block implements IHasModel {
 							continue;
 						AccessorBlock temp = new AccessorBlock(this.blockMaterial);
 						temp.Parent = this;
-						worldIn.setBlockState(pos.add(x, y, z), temp.getBlockState().getBaseState());
 						temp.setUnlocalizedName(getUnlocalizedName());
+						worldIn.setBlockState(pos.add(x, y, z), temp.getBlockState().getBaseState());
 						Accessors.add(temp);
 					}
+		}
+		else if (Height > 1 && Width == 1)
+		{
+			for (int y = 1; y < Height + 1; y++)
+			{
+				AccessorBlock temp = new AccessorBlock(this.blockMaterial);
+				temp.Parent = this;
+				temp.setUnlocalizedName(getUnlocalizedName());
+				worldIn.setBlockState(pos.add(0, y, 0), temp.getBlockState().getBaseState());
+				Accessors.add(temp);
+			}
+		}
+		else if (Height == 1 && Width == 2)
+		{
+			AccessorBlock temp = new AccessorBlock(this.blockMaterial);
+			temp.Parent = this;
+			temp.setUnlocalizedName(getUnlocalizedName());
+			worldIn.setBlockState(pos.add(1, 0, 0), temp.getBlockState().getBaseState());
+			Accessors.add(temp);
 		}
 	}
 	

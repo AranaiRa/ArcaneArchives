@@ -54,8 +54,6 @@ public class MatrixCrystalCore extends BlockTemplate {
 		return true;
 	}
 	
-	
-	
 	@Override
 	public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
 	{
@@ -80,15 +78,14 @@ public class MatrixCrystalCore extends BlockTemplate {
 			else
 				canPlace = false;
 		
-		ArcaneArchives.logger.info(canPlace);
+		//ArcaneArchives.logger.info(canPlace);
 		
 		return canPlace;
 	}
 	
 	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
-			ItemStack stack) {
-		// TODO Auto-generated method stub
+	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) 
+	{
 		
 		tileEntityInstance.name = name;
 		
@@ -202,4 +199,6 @@ public class MatrixCrystalCore extends BlockTemplate {
      {
     	 return BlockRenderLayer.CUTOUT;
      }
+     
+     
 }

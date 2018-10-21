@@ -46,16 +46,17 @@ public class RegistryHandler
 
 		for(Block block : BlockLibrary.BLOCKS)
 		{
-			if(((BlockTemplate)block).hasOBJModel())
-			{
-		    	//ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(new ResourceLocation(ArcaneArchives.MODID, block.getRegistryName()+".obj"), "inventory"));
-		    	ArcaneArchives.logger.info("&&&&&&&& Setting up " + block.getRegistryName() + " with OBJ model");
-			}
-			else
-			{
-				ArcaneArchives.logger.info("&&&&&&&& Setting up " + block.getRegistryName());
-				ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(new ResourceLocation(ArcaneArchives.MODID, block.getRegistryName().toString()), "inventory"));
-			}		
+			if (block instanceof BlockTemplate)
+				if(((BlockTemplate)block).hasOBJModel())
+				{
+			    	//ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(new ResourceLocation(ArcaneArchives.MODID, block.getRegistryName()+".obj"), "inventory"));
+			    	ArcaneArchives.logger.info("&&&&&&&& Setting up " + block.getRegistryName() + " with OBJ model");
+				}
+				else
+				{
+					ArcaneArchives.logger.info("&&&&&&&& Setting up " + block.getRegistryName());
+					ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(new ResourceLocation(ArcaneArchives.MODID, block.getRegistryName().toString()), "inventory"));
+				}		
 		}
     }
 	

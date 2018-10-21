@@ -8,6 +8,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 
+import java.util.Iterator;
 import java.util.UUID;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
@@ -27,7 +28,6 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 	public BlockPos blockpos;
 	public boolean hasBeenAddedToNetwork = false;
 	public int Dimension;
-	//BLOOD MAGIC uses NonNullList<ItemStack>
 	public NonNullList<ItemStack> Inventory;
 	public boolean IsInventory = false;
 	public int MaxItems;
@@ -55,23 +55,47 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 		return tmp;
 	}
 	
-	//Returns true if item was successful at adding to inventory, false if full.
-	public boolean AddItem(ItemStack item)
+	public ItemStack InsertItem(ItemStack item, boolean simulate)
 	{
-		if (item.isEmpty() || !IsDrainPaid || (GetTotalItems() + item.getCount() > MaxItems))
-			return false;
+		//Creates a copy of the item that can safely be edited.
+		ItemStack temp = item.copy();
 		
+		//Returns the itemstack if this tile entity cannot have items inserted.
+		if (item.isEmpty() || !IsDrainPaid || (GetTotalItems() >= MaxItems))
+			return temp;
+		
+		//Sets the amount of free space in the network.
+		int maxCanAdd = MaxItems - GetTotalItems();
+		
+		//If the amount of free space is greater than the itemstack item count, then it brings it down to that amount.
+		if (maxCanAdd > temp.getCount())
+			maxCanAdd = temp.getCount();
+		
+		//Tries to find the same item in the network, so that it will consolidate the itemstack.
 		for (ItemStack itemStack : Inventory)
 		{
-			//TODO : Check for too many items in the block.
-			if (itemStack.getUnlocalizedName().compareTo(item.getUnlocalizedName()) == 0)
+			if (ItemComparison.AreItemsEqual(temp, itemStack))
 			{
-				itemStack.setCount(itemStack.getCount() + item.getCount());
-				return true;
+				//Adds the item count to the one in the network, and removes the remainder from the one that will be returned.
+				if (!simulate)
+					itemStack.setCount(itemStack.getCount() + maxCanAdd);
+				temp.setCount(temp.getCount() - maxCanAdd);
+				return temp;
 			}
 		}
 		
-		return Inventory.add(item);
+		//If the item is not found, create a copy that will be added to the network.
+		ItemStack temp_add = temp.copy();
+		
+		//Sets the itemstack count for the proper amount to be added to the inventory then adds the itemstack to the inventory.
+		temp_add.setCount(maxCanAdd);
+		if (!simulate)
+			Inventory.add(temp_add);
+		
+		//Reduces the returned stack to the remainder of items. Then returns that itemstack.
+		temp.setCount(temp.getCount() - maxCanAdd);
+		
+		return temp;
 	}
 	
 	//Returns true if it was successful at removing the item, false if there is no such item in inventory.
@@ -101,9 +125,9 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 		return null;
 	}
 
-	public ItemStack RemoveItemCount(ItemStack item, int count_needed) {
+	public ItemStack RemoveItemCount(ItemStack item, int count_needed, boolean simulate) {
 		if (!IsDrainPaid)
-			return null;
+			return ItemStack.EMPTY;
 		for (ItemStack itemStack : Inventory)
 		{
 			if (ItemComparison.AreItemsEqual(itemStack, item))
@@ -112,41 +136,28 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 				{
 					ItemStack temp = itemStack.copy();
 					temp.setCount(count_needed);
-					itemStack.setCount(itemStack.getCount() - count_needed);
+					if (!simulate)
+						itemStack.setCount(itemStack.getCount() - count_needed);
 					
 					return temp;
 				}
 				else
 				{
-					if (Inventory.remove(itemStack))
-						return itemStack;
+					if (!simulate)
+					{
+						if (Inventory.remove(itemStack))
+							return itemStack.copy();
+					}
+					else
+					{
+						return itemStack.copy();
+					}
 				}
 			}
 		}
-		return null;
+		return ItemStack.EMPTY;
 	}
 	
-	public ItemStack RemoveHalfItem(ItemStack item)
-	{
-		if (!IsDrainPaid)
-			return null;
-		for (ItemStack itemStack : Inventory)
-		{
-			if (itemStack.getUnlocalizedName().compareTo(item.getUnlocalizedName()) == 0)
-			{
-				if (itemStack.getCount() > itemStack.getMaxStackSize())
-				{
-					ItemStack temp = itemStack.copy();
-					temp.setCount(itemStack.getMaxStackSize()/2);
-					itemStack.setCount(itemStack.getCount() - item.getMaxStackSize()/2);
-					return temp;
-				}
-			}
-		}
-		Inventory.remove(item);
-		return item;
-	}
-
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setUniqueId("playerId", NetworkID);
@@ -173,10 +184,13 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 		Dimension = compound.getInteger("dim");
 		MaxItems = compound.getInteger("invsize");
 		NBTTagList tags = compound.getTagList("inventory", 10);
-		for (int i = 0; i < tags.tagCount(); i++)
+		Iterator itr = tags.iterator();
+		while(itr.hasNext())
 		{
-			NBTTagCompound data = tags.getCompoundTagAt(i);
-			Inventory.add(new ItemStack(data));
+			NBTTagCompound data = (NBTTagCompound)itr.next();
+			ItemStack temp = new ItemStack(data);
+			if (!temp.isEmpty())
+				Inventory.add(temp);
 		}
 		NetworkHelper.getArcaneArchivesNetwork(NetworkID).AddBlockToNetwork(name, this);
 		super.readFromNBT(compound);
@@ -185,35 +199,5 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 	public int GetNetImmanence()
 	{
 		return ImmanenceGeneration - ImmanenceDrain;
-	}
-
-	public ItemStack RemoveRandomItem() {
-		for (ItemStack is : Inventory)
-		{
-			if (is != null)
-			{
-				this.RemoveItem(is);
-				if (is.getCount() > 64)
-				{
-					ItemStack item = is.copy();
-					item.setCount(64);
-				}
-				return is;
-			}
-		}
-		return null;
-	}
-	
-	//TODO : DOES NOT COMPARE NBT DATA RIGHT NOW
-	public boolean HasItem(ItemStack s)
-	{
-		for (ItemStack itemStack : Inventory)
-		{
-			if (itemStack.getUnlocalizedName() == s.getUnlocalizedName())
-			{
-				return true;
-			}
-		}
-		return false;
 	}
 }

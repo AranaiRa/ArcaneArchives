@@ -41,6 +41,7 @@ public class GemcuttersTable extends BlockTemplate
 	public GemcuttersTable() 
 	{
 		super(name, Material.IRON);
+		this.Width = 2;
 	}
 	
 	@Override

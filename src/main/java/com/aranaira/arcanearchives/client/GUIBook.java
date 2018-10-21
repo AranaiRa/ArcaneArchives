@@ -32,7 +32,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import scala.Int;
 
-/** @author SoggyMustache's GUI Creator (http://tools.soggymustache.net)*/
+
 public class GUIBook extends GuiScreen {
 
 	Minecraft mc = Minecraft.getMinecraft();
@@ -351,8 +351,8 @@ public class GUIBook extends GuiScreen {
 				if (HeldItem != null)
 				{
 					//Place item in the network.
-					if (NetworkHelper.getArcaneArchivesNetwork(mc.player.getUniqueID()).AddItemToNetwork(HeldItem))
-						HeldItem = null;
+					//if (NetworkHelper.getArcaneArchivesNetwork(mc.player.getUniqueID()).AddItemToNetwork(HeldItem))
+					//	HeldItem = null;
 				}
 				else
 				{
@@ -414,13 +414,13 @@ public class GUIBook extends GuiScreen {
 				{
 					ItemStack temp = HeldItem.copy();
 					temp.setCount(1);
-					if (NetworkHelper.getArcaneArchivesNetwork(mc.player.getUniqueID()).AddItemToNetwork(temp))
-					{
+					//if (NetworkHelper.getArcaneArchivesNetwork(mc.player.getUniqueID()).AddItemToNetwork(temp))
+					//{
 						if (HeldItem.getCount() > 1)
 							HeldItem.setCount(HeldItem.getCount() - 1);
 						else
 							HeldItem = null;
-					}
+					//}
 				}
 			}
 			else
@@ -467,7 +467,7 @@ public class GUIBook extends GuiScreen {
 					{
 						if (!slotStack.isEmpty())
 						{
-							if (NetworkHelper.getArcaneArchivesNetwork(mc.player.getUniqueID()).AddItemToNetwork(slotStack.copy()))
+							//if (NetworkHelper.getArcaneArchivesNetwork(mc.player.getUniqueID()).AddItemToNetwork(slotStack.copy()))
 								SlotSetItem(s, new ItemStack(Block.getBlockById(0)));
 						}
 						return;
@@ -739,6 +739,8 @@ public class GUIBook extends GuiScreen {
 			return;
 		}
 	}
+	
+	
 
 	@Override
 	protected void actionPerformed(GuiButton button) {
@@ -762,7 +764,7 @@ public class GUIBook extends GuiScreen {
 				for (int y = 0; y < 3; y++)
 				{
 					
-					if (NetworkHelper.getArcaneArchivesNetwork(mc.player.getUniqueID()).AddItemToNetwork(mInventoryCrafting.getStackInRowAndColumn(x, y)))
+					//if (NetworkHelper.getArcaneArchivesNetwork(mc.player.getUniqueID()).AddItemToNetwork(mInventoryCrafting.getStackInRowAndColumn(x, y)))
 					{
 						mInventoryCrafting.setInventorySlotContents(y * 3 + x, new ItemStack(Blocks.AIR));
 					}
@@ -792,7 +794,7 @@ public class GUIBook extends GuiScreen {
 	{ 
 		if (HeldItem != null)
 		{
-			if (!NetworkHelper.getArcaneArchivesNetwork(mc.player.getUniqueID()).AddItemToNetwork(HeldItem))
+			//if (!NetworkHelper.getArcaneArchivesNetwork(mc.player.getUniqueID()).AddItemToNetwork(HeldItem))
 			{
 				mc.player.entityDropItem(HeldItem, 5);
 			}

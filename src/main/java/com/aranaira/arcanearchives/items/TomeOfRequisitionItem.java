@@ -2,6 +2,8 @@ package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.GUIBook;
+import com.aranaira.arcanearchives.client.GUIBookContainer;
+import com.aranaira.arcanearchives.client.NetworkContainer;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,30 +25,18 @@ public class TomeOfRequisitionItem extends ItemTemplate {
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-		//!?!?!?! WHAT IS THE MOD OBJECT ITS TALKING ABOUT
-		//Minecraft.getMinecraft().player.openGui(ArcaneArchives.instance(), 0, worldIn, (int)playerIn.posX, (int)playerIn.posY, (int)playerIn.posZ);
-		Minecraft.getMinecraft().displayGuiScreen(new GUIBook());
-		ArcaneArchives.logger.info("TEST");
-		
+		playerIn.openGui(ArcaneArchives.instance(), 0, worldIn, (int)playerIn.posX, (int)playerIn.posY, (int)playerIn.posZ);
 		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}
 	
 	@Override
 	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand,
 			EnumFacing facing, float hitX, float hitY, float hitZ) {
-		// TODO Auto-generated method stub
-		//Minecraft.getMinecraft().displayGuiScreen(new GUIBook());
-		ArcaneArchives.logger.info("TEST");
 		return EnumActionResult.SUCCESS;
-		//player.display
-		//return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
 	}
 	
 	@Override
-	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX,
-			float hitY, float hitZ, EnumHand hand) {
-		// TODO Auto-generated method stub
-		ArcaneArchives.logger.info("TEST");
+	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
 		return super.onItemUseFirst(player, world, pos, side, hitX, hitY, hitZ, hand);
 	}
 }

@@ -20,6 +20,7 @@ public class MatrixRepository extends BlockTemplate {
 		super(name, Material.GLASS);
 		setLightLevel(16/16f);
 		HasTileEntity = true;
+		this.Height = 3;
 	}
 	
 	@Override
