@@ -29,7 +29,7 @@ public class GUIBookContainer extends GuiContainer
 {
 	Minecraft mc = Minecraft.getMinecraft();
 	private final int ImageHeight = 256, ImageWidth = 256, ImageScale = 256;
-	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/tex_hud_lectern_items.png");
+	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/requisition_items.png");
 
 	//Buttons to switch interface.
 	private GenericButton Tab1;
