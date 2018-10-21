@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
-import com.aranaira.arcanearchives.client.GUIBook.GenericButton;
 import com.aranaira.arcanearchives.util.NetworkHelper;
 
 import net.minecraft.block.Block;
@@ -23,6 +22,8 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GUIBookContainer extends GuiContainer 
 {
@@ -192,5 +193,14 @@ public class GUIBookContainer extends GuiContainer
 	public void onGuiClosed() {
 		container.onContainerClosed(mc.player);
 		super.onGuiClosed();
+	}
+	
+
+	@SideOnly(Side.CLIENT)
+   	static class GenericButton extends GuiButton
+   	{
+		public GenericButton(int x, int y, int width, int height, String text) {
+			super(1, x, y, width, height, text);
+		}
 	}
 }

@@ -202,8 +202,6 @@ public class NetworkContainer extends Container
 				}
 				else
 				{
-					ArcaneArchives.logger.info(networkItemHandler.getStackInSlot(modifiedSlotID).getUnlocalizedName());
-					ArcaneArchives.logger.info(modifiedSlotID);
 					if (player.world.isRemote)
 						player.inventory.setItemStack(NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID()).ExtractItem(networkItemHandler.getStackInSlot(modifiedSlotID), networkItemHandler.getStackInSlot(modifiedSlotID).getCount(), true));
 					else

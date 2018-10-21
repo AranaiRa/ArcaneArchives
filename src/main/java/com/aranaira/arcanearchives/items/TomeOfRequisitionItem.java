@@ -1,7 +1,6 @@
 package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.client.GUIBook;
 import com.aranaira.arcanearchives.client.GUIBookContainer;
 import com.aranaira.arcanearchives.client.NetworkContainer;
 
@@ -30,8 +29,8 @@ public class TomeOfRequisitionItem extends ItemTemplate {
 	}
 	
 	@Override
-	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand,
-			EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		player.openGui(ArcaneArchives.instance(), 0, worldIn, (int)player.posX, (int)player.posY, (int)player.posZ);
 		return EnumActionResult.SUCCESS;
 	}
 	

@@ -64,7 +64,6 @@ public class MatrixCrystalCore extends BlockTemplate {
 		if (EP != null)
 			if (NetworkHelper.getArcaneArchivesNetwork(EP.getUniqueID()).CountBlocks(this) < PlaceLimit)
 			{
-				ArcaneArchives.logger.info(NetworkHelper.getArcaneArchivesNetwork(EP.getUniqueID()).CountBlocks(this));
 				canPlace = true;
 			}
 			else
