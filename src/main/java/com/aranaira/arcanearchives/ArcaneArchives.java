@@ -40,6 +40,7 @@ import com.aranaira.arcanearchives.proxy.CommonProxy;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.MatrixCoreTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
+import com.aranaira.arcanearchives.util.handlers.RegistryHandler;
 
 @Mod(modid = ArcaneArchives.MODID, name = ArcaneArchives.NAME, version = ArcaneArchives.VERSION)
 public class ArcaneArchives
@@ -77,18 +78,21 @@ public class ArcaneArchives
     public static void preInit(FMLPreInitializationEvent event)
     {
         logger = event.getModLog();
+        proxy.preInit();
+        RegistryHandler.preInitRegistries();
     }
     
     @EventHandler
     public static void init(FMLInitializationEvent event)
     {
         ClientCommandHandler.instance.registerCommand(new ArcaneArchivesCommand());
+        proxy.postInit();
     }
     
     @EventHandler
     public static void postInit(FMLPostInitializationEvent event)
     {
-        
+        proxy.postInit();
     }
     
     private void clientPreInit()

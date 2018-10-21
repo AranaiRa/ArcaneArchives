@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.util.handlers;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.BlockTemplate;
 import com.aranaira.arcanearchives.init.BlockLibrary;
+import com.aranaira.arcanearchives.init.EntityLibrary;
 import com.aranaira.arcanearchives.init.ItemLibrary;
 import com.aranaira.arcanearchives.util.IHasModel;
 
@@ -77,6 +78,12 @@ public class RegistryHandler
 				((IHasModel)block).registerModels();
 			}
 		}
+	}
+	
+	public static void preInitRegistries()
+	{
+		ArcaneArchives.logger.info("&&&&&&&& Running preInitRegistries()");
+		EntityLibrary.registerEntities();
 	}
 	
 	//@SubscribeEvent
