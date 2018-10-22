@@ -103,7 +103,11 @@ public class GUIBookContainer extends GuiContainer
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 		// TODO Auto-generated method stub
-		
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GlStateManager.enableColorMaterial();
+		this.mc.getTextureManager().bindTexture(GUITextures);
+
+		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, ImageScale,ImageScale,ImageScale,ImageScale);
 	}
 
 	@Override
@@ -111,25 +115,10 @@ public class GUIBookContainer extends GuiContainer
 		// TODO Auto-generated method stub
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.enableColorMaterial();
-		this.mc.getTextureManager().bindTexture(GUITextures);
-
-		//Adjust these values to move locations of elements without individual adjustment
-		int offLeft = (int) ((width - ImageWidth) / 2.0F) - 1;
-		int offTop = 108;
-		int topOffset = 103;
-
-		drawModalRectWithCustomSizedTexture(offLeft, offTop, 0, 0, ImageScale,ImageScale,ImageScale,ImageScale);
-		
-		offLeft += 1;
 
 		GlStateManager.disableLighting();
 		
 
-		//Decides what to display if the player has typed something in the search bar.
-		if (SearchText.compareTo("") == 0)
-			fontRenderer.drawString("Search", offLeft + 186 - 140, (154 - 130) + topOffset + 4, 0x000000);
-		else
-			fontRenderer.drawString(SearchText, offLeft + 186 - 140, (154 - 130) + topOffset + 4, 0x000000);
 
 		
 		
@@ -138,6 +127,16 @@ public class GUIBookContainer extends GuiContainer
 		GlStateManager.enableLighting();
 		
 		this.renderHoveredToolTip(mouseX, mouseY);
+		
+
+		String temp = fontRenderer.trimStringToWidth(SearchText, 6 * 15, true);
+		
+		//Decides what to display if the player has typed something in the search bar.
+		if (SearchText.equals(""))
+			fontRenderer.drawString("Search", 	guiLeft + 46, 20 + guiTop, 0x000000);
+		else
+			fontRenderer.drawString(temp, guiLeft + 46, 20 + guiTop, 0x000000);
+		
 	}
 
 	@Override
@@ -161,6 +160,8 @@ public class GUIBookContainer extends GuiContainer
 			{
 				if (Character.isLetterOrDigit(typedChar))
 					SearchText += typedChar;
+				else if (typedChar == ' ')
+					SearchText += typedChar;
 			}
 				
 		}
@@ -172,15 +173,11 @@ public class GUIBookContainer extends GuiContainer
 
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
-
-		int offLeft = (int) ((width - ImageWidth) / 2.0F) - 1;
-		int offTop = 108;
-		int topOffset = 103;
-
+		
 		if (mouseButton == 0)
 		{
 			//Checks Text Box Bounds
-			if (mouseX > offLeft + 46 && mouseX < offLeft + 46 + 88 && mouseY > topOffset + 28 && mouseY < topOffset + 28 + 10)
+			if (mouseX > guiLeft + 46 && mouseX < guiLeft + 46 + 88 && mouseY > guiTop + 20 && mouseY < guiTop + 30)
 			{
 				isEnteringText = true;
 			}

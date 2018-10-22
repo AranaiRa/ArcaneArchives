@@ -48,7 +48,7 @@ public class NetworkContainer extends Container
 		{
 			for (int x = 8; x > -1; x--)
 			{
-				this.addSlotToContainer(new AASlotItemHandler(networkItemHandler, j, 45 + (18 * x), 40 + (18 * y), Minecraft.getMinecraft().player.getUniqueID()));
+				this.addSlotToContainer(new AASlotItemHandler(networkItemHandler, j, 45 + (18 * x), 33 + (18 * y), Minecraft.getMinecraft().player.getUniqueID()));
 				j--;
 			}
 		}
@@ -70,12 +70,12 @@ public class NetworkContainer extends Container
 			for (int y = 0; y < 3; y++)
 			{
 				eventHandler.inventorySlots.get(y * 3 + x + 1).xPos = 63 + (18 * x);
-				eventHandler.inventorySlots.get(y * 3 + x + 1).yPos = 98 + (18 * y);
+				eventHandler.inventorySlots.get(y * 3 + x + 1).yPos = 91 + (18 * y);
 			}
 		}
 		
 		eventHandler.inventorySlots.get(0).xPos = 171;
-		eventHandler.inventorySlots.get(0).yPos = 116;
+		eventHandler.inventorySlots.get(0).yPos = 109;
 		
 		
 		
@@ -91,7 +91,7 @@ public class NetworkContainer extends Container
 		{
 			for (int x = 8; x > -1; x--)
 			{
-				this.addSlotToContainer(new Slot(Minecraft.getMinecraft().player.inventory, i, 45 + (18 * x), 167 + (18 * y)));
+				this.addSlotToContainer(new Slot(Minecraft.getMinecraft().player.inventory, i, 45 + (18 * x), 160 + (18 * y)));
 				
 				i--;
 			}
@@ -99,7 +99,7 @@ public class NetworkContainer extends Container
 		//Hotbar.
 		for (int x = 8; x > -1; x--)
 		{
-			this.addSlotToContainer(new Slot(Minecraft.getMinecraft().player.inventory, i, 45 + (18 * x), 225));
+			this.addSlotToContainer(new Slot(Minecraft.getMinecraft().player.inventory, i, 45 + (18 * x), 218));
 			i--;
 		}
 	}
