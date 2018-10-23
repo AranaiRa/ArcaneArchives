@@ -7,11 +7,11 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class ModelEntityGeneric extends ModelBase
+public class ModelSpiritGeneric extends ModelBase
 {
 	public ModelRenderer box;
 	
-	public ModelEntityGeneric()
+	public ModelSpiritGeneric()
 	{
 		this.box = new ModelRenderer(null, 16, 16);
 		this.box.addBox(0, 0, 0, 16, 16, 16, 0);

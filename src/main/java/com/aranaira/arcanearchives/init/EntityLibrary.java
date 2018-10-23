@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.entity.EntityGeneric;
+import com.aranaira.arcanearchives.entity.SpiritGeneric;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
@@ -14,7 +14,7 @@ public class EntityLibrary
 {
 	public static void registerEntities()
 	{
-		registerEntity("spiritGeneric", EntityGeneric.class, 120, 50, 3451490, 3451490);
+		registerEntity("spiritGeneric", SpiritGeneric.class, 120, 50, 3451490, 3451490);
 	}
 	
 	private static void registerEntity(String name, Class<? extends Entity> entity, int id, int range, int color1, int color2)

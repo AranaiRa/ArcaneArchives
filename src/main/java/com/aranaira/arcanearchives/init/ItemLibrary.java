@@ -17,6 +17,14 @@ public class ItemLibrary {
 	public static final Item TOME_OF_ARCANA = new TomeOfArcanaItem();
 	public static final Item TOME_OF_REQUISITION = new TomeOfRequisitionItem();
 	
+	//ENCHAINMENT
+	public static final Item ENCHAINMENT_LATTICE = new EnchainmentLatticeItem();
+	public static final Item ENCHAINMENT_SLIVER = new EnchainmentSliverItem();
+	public static final Item ENCHAINMENT_FRAGMENT = new EnchainmentFragmentItem();
+	public static final Item ENCHAINMENT_SHARD = new EnchainmentShardItem();
+	public static final Item ENCHAINMENT_GEM = new EnchainmentGemItem();
+	public static final Item ENCHAINMENT_PRISM = new EnchainmentPrismItem();
+	
 	//CRAFTING COMPONENTS
 	public static final Item COMPONENT_CONTAINMENTFIELD = new ComponentContainmentFieldItem();
 	public static final Item COMPONENT_MATRIXBRACE = new ComponentMatrixBraceItem();

@@ -50,9 +50,9 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 	}
 	
 	@Override
-	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate)
+	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState)
 	{
-	    return (oldState.getBlock() != newSate.getBlock());
+	    return (oldState.getBlock() != newState.getBlock());
 	}
 	
 }

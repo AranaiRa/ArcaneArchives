@@ -1,0 +1,23 @@
+{
+    "_comment": [
+        "Craft a Sliver of Enchainment"
+    ],
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " B ",
+        "BQB",
+        " B "
+    ],
+    "key": {
+        "B": {
+            "item": "minecraft:iron_bars"
+        },
+        "Q": {
+            "item": "arcanearchives:item_cutquartz"
+        }
+    },
+    "result": {
+        "item": "arcanearchives:item_enchainmentsliver"
+        }
+    }
+}

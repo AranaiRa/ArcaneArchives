@@ -12,6 +12,13 @@ item.item_component_matrixbrace.name=Matrix Brace
 item.item_component_radiantdust.name=Radiant Dust
 item.item_component_scintillatinginlay.name=Scintillating Inlay
 
+item.item_enchainmentlattice.name=Enchainment Lattice
+item.item_enchainmentsliver.name=Sliver of Enchainment
+item.item_enchainmentfragment.name=Fragment of Enchainment
+item.item_enchainmentshard.name=Shard of Enchainment
+item.item_enchainmentgem.name=Gem of Enchainment
+item.item_enchainmentprism.name=Prism of Enchainment
+
 tile.storage_raw_quartz.name=Raw Radiant Quartz Block
 tile.storage_cut_quartz.name=Shaped Radiant Quartz Block
 tile.raw_quartz.name=Raw Radiant Quartz
@@ -30,6 +37,7 @@ tile.matrix_distillate.name=Distillate Matrix
 tile.dominion_crystal.name=Dominion Crystal
 tile.gemcutters_table.name=Gemcutter's Table
 
+entity.spiritGeneric.name=Perfectly Generic Spirit
 entity.spirit_crown_01.name=Crown Mote
 entity.spirit_crown_02.name=Crown Juve
 entity.spirit_crown_03.name=Crown Eld

@@ -30,20 +30,23 @@ public class ConfigHandler
 	public static class ConfigGeneral
 	{
 		@Config.Comment({ "General Config" })
-		public boolean bJarvisModeEnabled = false;
+		public static boolean bJarvisModeEnabled = false;
+		
+		@Config.Comment({ "Whether Gems of Enchainment require you to do a minigame to capture a spirit or not. If this option is set to false, Spirit Yokes will be disabled." })
+		public static boolean bDoSpiritCaptureMinigame = false;
 	}
 	
 	public static class ConfigValues
 	{
 
 		@Config.Comment({ "Amount of Drain Each Block Takes From The Network" })
-		public int iRadiantResonatorDrain = 20;
-		public int iRepositoryMatrixDrain = 80;
+		public static int iRadiantResonatorDrain = 20;
+		public static int iRepositoryMatrixDrain = 80;
 		
 		@Config.Comment({ "The Amount of Bonus Ticks Blocks Get if Their Drain is Met" })
-		public int iRadiantResonatorBonusTicks = 1;
+		public static int iRadiantResonatorBonusTicks = 1;
 		
 		@Config.Comment({ "The Amount of Items Each Repository Can Hold" })
-		public int iRepositoryMatrixItemCap = 256;
+		public static int iRepositoryMatrixItemCap = 256;
 	}
 }
