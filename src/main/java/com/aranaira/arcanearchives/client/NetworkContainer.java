@@ -150,6 +150,12 @@ public class NetworkContainer extends Container
 		}
 	}
 	
+	public void SetSearchString(String s)
+	{
+		networkItemHandler.setSearchString(s);;
+	}
+	
+	
 	@Override
 	public boolean canInteractWith(EntityPlayer playerIn) {
 		// TODO Auto-generated method stub
@@ -177,41 +183,37 @@ public class NetworkContainer extends Container
 	public void putStackInSlot(int slotID, ItemStack stack) 
 	{
 		
-		//super.putStackInSlot(slotID, stack);
 	}
 	
 	@Override
-	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player) {
-
-		
+	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player) 
+	{
 		if (slotId < 27)
 		{
-			//ArcaneArchives.logger.info("PRESSED INSIDE NETWORK INVENTORY!");
-			//ArcaneArchives.logger.info(dragType);
-			//ArcaneArchives.logger.info(clickTypeIn);
 			int modifiedSlotID = 26 - slotId;
 			
 			if (clickTypeIn == ClickType.PICKUP || clickTypeIn == ClickType.PICKUP_ALL)
 			{
 				if (!player.inventory.getItemStack().isEmpty())
 				{
-					if (player.world.isRemote)
-						player.inventory.setItemStack(NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID()).InsertItem(player.inventory.getItemStack(), true));
-					else
-						player.inventory.setItemStack(NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID()).InsertItem(player.inventory.getItemStack(), false));
+					player.inventory.setItemStack(NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID()).InsertItem(player.inventory.getItemStack(), player.world.isRemote));
 				}
 				else
 				{
-					if (player.world.isRemote)
-						player.inventory.setItemStack(NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID()).ExtractItem(networkItemHandler.getStackInSlot(modifiedSlotID), networkItemHandler.getStackInSlot(modifiedSlotID).getCount(), true));
-					else
-						player.inventory.setItemStack(NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID()).ExtractItem(networkItemHandler.getStackInSlot(modifiedSlotID), networkItemHandler.getStackInSlot(modifiedSlotID).getCount(), false));
+					player.inventory.setItemStack(NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID()).ExtractItem(networkItemHandler.getStackInSlot(modifiedSlotID), networkItemHandler.getStackInSlot(modifiedSlotID).getCount(), player.world.isRemote));
 				}
 			}
 			else if (clickTypeIn == ClickType.QUICK_MOVE)
 			{
-				
+				player.inventory.addItemStackToInventory(NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID()).ExtractItem(networkItemHandler.getStackInSlot(modifiedSlotID), networkItemHandler.getStackInSlot(modifiedSlotID).getCount(), player.world.isRemote));
 			}
+			
+			return player.inventory.getItemStack();
+		}
+		
+		if (clickTypeIn == ClickType.QUICK_MOVE)
+		{
+			this.inventorySlots.get(slotId).inventory.setInventorySlotContents(this.inventorySlots.get(slotId).getSlotIndex(), NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID()).InsertItem(this.inventorySlots.get(slotId).getStack(), player.world.isRemote));
 			
 			return player.inventory.getItemStack();
 		}

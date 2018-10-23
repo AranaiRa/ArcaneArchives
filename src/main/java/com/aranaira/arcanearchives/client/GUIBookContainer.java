@@ -163,7 +163,7 @@ public class GUIBookContainer extends GuiContainer
 				else if (typedChar == ' ')
 					SearchText += typedChar;
 			}
-				
+			container.SetSearchString(SearchText);
 		}
 		else
 			if (keyCode == 1 || keyCode == this.mc.gameSettings.keyBindInventory.getKeyCode())
