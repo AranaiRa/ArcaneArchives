@@ -14,7 +14,7 @@ public class EntityLibrary
 {
 	public static void registerEntities()
 	{
-		registerEntity("spiritGeneric", SpiritGeneric.class, 120, 50, 3451490, 3451490);
+		registerEntity("spiritGeneric", SpiritGeneric.class, 120, 50, 3451490, 16776924);
 	}
 	
 	private static void registerEntity(String name, Class<? extends Entity> entity, int id, int range, int color1, int color2)

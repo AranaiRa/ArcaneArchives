@@ -1,49 +1,39 @@
 package com.aranaira.arcanearchives.entity.render;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.client.render.EntityOBJModel;
 import com.aranaira.arcanearchives.entity.SpiritGeneric;
-import com.aranaira.arcanearchives.entity.model.ModelSpiritGeneric;
 
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 
-public class RenderSpiritGeneric extends RenderLiving<SpiritGeneric>//EntityOBJModel<EntityGeneric>
-{
-	public static final ResourceLocation TEXTURES = new ResourceLocation(ArcaneArchives.MODID+":textures/blocks/block_storage_rawquartz.png");
+public class RenderSpiritGeneric extends EntityOBJModel<SpiritGeneric> {
 	
-	public RenderSpiritGeneric(RenderManager rendermanagerIn) {
-		super(rendermanagerIn, new ModelSpiritGeneric(), 0.5F);
-	}
-
-	@Override
-	protected ResourceLocation getEntityTexture(SpiritGeneric entity) {
-		return TEXTURES;
-	}
-	
-	@Override
-	protected void applyRotations(SpiritGeneric entity, float p_77043_2_, float yaw, float partialTicks)
+	public RenderSpiritGeneric(RenderManager renderManager)
 	{
-		super.applyRotations(entity, p_77043_2_, yaw, partialTicks);
+		super(renderManager);
+		ArcaneArchives.logger.info("beep boop, running the OBJ model model");
 	}
 	
-	//Below is for EntityOBJModel
-	/*protected RenderEntityGeneric(RenderManager renderManager) {
-		super(renderManager);
-	}
-
 	@Override
-	protected ResourceLocation[] getEntityModels() {
+	protected ResourceLocation[] getEntityModels()
+	{
 		return new ResourceLocation[] {
-			new ResourceLocation(ArcaneArchives.MODID, "")
+			new ResourceLocation(ArcaneArchives.MODID, "entity/spiritmatter/mote/head.obj"),
+			new ResourceLocation(ArcaneArchives.MODID, "entity/spiritmatter/mote/jaw.obj"),
+			new ResourceLocation(ArcaneArchives.MODID, "entity/spiritmatter/mote/tail.obj"),
+			new ResourceLocation(ArcaneArchives.MODID, "entity/spiritmatter/mote/arm_left.obj"),
+			new ResourceLocation(ArcaneArchives.MODID, "entity/spiritmatter/mote/arm_right.obj"),
 		};
 	}
-
+	
 	@Override
-	protected boolean preRender(EntityGeneric entity, int model, BufferBuilder buffer, double x, double y, double z,
-			float entityYaw, float partialTicks) {
-		// TODO Auto-generated method stub
-		return false;
-	}*/
+	protected boolean preRender(SpiritGeneric entity, int model, BufferBuilder buffer, double x, double y, double z, float entityYaw, float partialTicks)
+	{
+		GlStateManager.rotate(180, 1, 0, 0);
+		
+		return true;
+	}
 }

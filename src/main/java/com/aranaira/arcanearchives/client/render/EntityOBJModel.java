@@ -2,10 +2,10 @@ package com.aranaira.arcanearchives.client.render;
 
 import java.util.List;
 
-import javax.annotation.Nullable;
-
 import org.lwjgl.opengl.GL11;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.client.model.BakedEntityModel;
 import com.aranaira.arcanearchives.proxy.ClientProxy;
 
 import net.minecraft.client.Minecraft;
@@ -19,9 +19,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
@@ -62,7 +60,7 @@ public abstract class EntityOBJModel<T extends Entity> extends Render<T> {
 				model = this.retexture(i, model);
 				IBakedModel bakedModel = model.bake(model.getDefaultState(), DefaultVertexFormats.ITEM, ModelLoader.defaultTextureGetter());
 				if (bakedModel instanceof OBJBakedModel && model instanceof OBJModel) {
-					//this.bakedModels[i] = new BakedMWItem((OBJModel) model, ((OBJBakedModel) bakedModel).getState(), DefaultVertexFormats.ITEM, ClientProxy.getTextures((OBJModel) model));
+					this.bakedModels[i] = new BakedEntityModel((OBJModel) model, ((OBJBakedModel) bakedModel).getState(), DefaultVertexFormats.ITEM, ClientProxy.getTextures((OBJModel) model));
 				}
 			}
 		}
@@ -98,12 +96,13 @@ public abstract class EntityOBJModel<T extends Entity> extends Render<T> {
 				//if (att == null)
 				//	GlStateManager.rotate(-(entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks), 1.0F, 0.0F, 0.0F);
 
-				for(EnumFacing side : EnumFacing.values()) {
+				/*for(EnumFacing side : EnumFacing.VALUES) {
 					List<BakedQuad> quads = this.bakedModels[i].getQuads(null, side, 0);
+					ArcaneArchives.logger.info("&&&&&&& quads length: "+quads.size());
 					if(!quads.isEmpty()) 
 						for(BakedQuad quad : quads)
 							LightUtil.renderQuadColor(buffer, quad, color == -1 ? color : color | -16777216);
-				}
+				}*/
 				List<BakedQuad> quads = this.bakedModels[i].getQuads(null, null, 0);
 				if(!quads.isEmpty()) {
 					for(BakedQuad quad : quads) 

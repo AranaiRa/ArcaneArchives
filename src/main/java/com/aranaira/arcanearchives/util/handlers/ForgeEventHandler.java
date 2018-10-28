@@ -21,16 +21,14 @@ public class ForgeEventHandler
 	@SubscribeEvent
 	public static void onEntityHurt(LivingAttackEvent event)
 	{
-		ArcaneArchives.logger.info("DEBUG: bring the owwies");
 		if(event.getEntityLiving() instanceof SpiritGeneric)
 		{
 			if(event.getSource() == DamageSource.OUT_OF_WORLD)
 			{
-				ArcaneArchives.logger.info("DEBUG: fine. i guess.");
+				
 			}
 			else if(event.isCancelable())
 			{
-				ArcaneArchives.logger.info("DEBUG: lol no.");
 				event.setCanceled(true);
 			}
 		}
