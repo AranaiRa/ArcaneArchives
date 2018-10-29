@@ -11,6 +11,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderSpiritGeneric extends EntityOBJModel<SpiritGeneric> {
 	
+	float animTime;
+	
 	public RenderSpiritGeneric(RenderManager renderManager)
 	{
 		super(renderManager);
@@ -33,6 +35,13 @@ public class RenderSpiritGeneric extends EntityOBJModel<SpiritGeneric> {
 	protected boolean preRender(SpiritGeneric entity, int model, BufferBuilder buffer, double x, double y, double z, float entityYaw, float partialTicks)
 	{
 		GlStateManager.rotate(180, 1, 0, 0);
+		
+		animTime += partialTicks * 0.005f;
+		
+		if(model == 1)
+		{
+			GlStateManager.rotate(60*(float)Math.sin(animTime), 1, 0, 0);
+		}
 		
 		return true;
 	}
