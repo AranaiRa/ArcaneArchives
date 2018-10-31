@@ -1,16 +1,22 @@
 package com.aranaira.arcanearchives.proxy;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.util.handlers.RenderHandler;
 import com.google.common.collect.ImmutableMap;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.obj.OBJModel;
 import net.minecraftforge.client.model.obj.OBJModel.Material;
+import net.minecraftforge.client.model.obj.OBJModel.OBJBakedModel;
+import net.minecraftforge.common.model.IModelState;
 import net.minecraftforge.fml.common.FMLLog;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ClientProxy extends CommonProxy
 {
@@ -25,6 +31,26 @@ public class ClientProxy extends CommonProxy
 	{
 		super.preInit();
 		RenderHandler.registerEntityRenderers();
+	}
+	
+	@SubscribeEvent
+	public void modelBake(ModelBakeEvent event)
+	{
+		for(ModelResourceLocation modelLocation : event.getModelRegistry().getKeys())
+		{
+			ArcaneArchives.logger.info("&&&&&&& doing model bake for "+event.getModelRegistry().getObject(modelLocation));
+			
+			if(modelLocation.getResourceDomain().equals(ArcaneArchives.MODID))
+			{
+				if(event.getModelRegistry().getObject(modelLocation) instanceof OBJBakedModel)
+				{
+					OBJBakedModel model = (OBJBakedModel) event.getModelRegistry().getObject(modelLocation);
+					IModelState state = model.getState();
+					
+					//event.getModelRegistry().putObject(modelLocation, new OBJBakedModel(model.getModel(), state, DefaultVertexFormats.ITEM, getTextures(model.getModel())));
+				}
+			}
+		}
 	}
 	
 	public static ImmutableMap<String, TextureAtlasSprite> getTextures(OBJModel model) {
