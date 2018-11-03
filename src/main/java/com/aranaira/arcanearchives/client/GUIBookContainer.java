@@ -84,7 +84,7 @@ public class GUIBookContainer extends GuiContainer
 		buttonList.add(Tab1 = new GenericButton(offLeft + (375 - 140) + (15 / 3), 82 + offTop, 15, 40, ""));
 		
 
-		buttonList.add(ClearCrafting = new GenericButton(offLeft + (259 - 140) + (10 / 3), 116 + offTop, 10, 10, ""));
+		buttonList.add(ClearCrafting = new GenericButton(offLeft + (259 - 140) + (10 / 3), 116 + offTop, 7, 7, ""));
 	}
 	
 	@Override
