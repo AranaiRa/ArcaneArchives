@@ -2,15 +2,4 @@
 # File Created: 27.10.2018 21:59:00
 
 newmtl mat_spirit_matter
-	Ns 10.0000
-	Ni 1.5000
-	d 1.0000
-	Tr 0.0000
-	Tf 1.0000 1.0000 1.0000 
-	illum 2
-	Ka 0.5880 0.5880 0.5880
-	Kd 0.5880 0.5880 0.5880
-	Ks 0.0000 0.0000 0.0000
-	Ke 0.0000 0.0000 0.0000
-	map_Ka textures\matterspirit2.psd
-	map_Kd textures\matterspirit2.psd
+map_Kd arcanearchives:blocks/entity_matter_0102

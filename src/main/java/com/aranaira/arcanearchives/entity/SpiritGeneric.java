@@ -1,5 +1,7 @@
 package com.aranaira.arcanearchives.entity;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
+
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -28,6 +30,8 @@ import scala.Int;
 
 public class SpiritGeneric extends EntityCreature {
 
+	private float animTime = 0;
+	public SpiritAnimState animState = SpiritAnimState.IDLE_IN;
 	public boolean hasBeenProcessed = false;
 	
 	public SpiritGeneric(World worldIn) {
@@ -53,11 +57,41 @@ public class SpiritGeneric extends EntityCreature {
 		return hasBeenProcessed;
 	}
 	
+	public SpiritAnimState getAnimState()
+	{
+		return animState;
+	}
+	
+	public void setAnimState(SpiritAnimState state)
+	{
+		animState = state;
+	}
+	
+	public float getAnimTime()
+	{
+		return animTime;
+	}
+	
+	public void addAnimTime(float delta)
+	{
+		animTime += delta;
+	}
+	
+	public void resetAnimTime()
+	{
+		animTime = 0;
+	}
+	
 	@Override
 	protected void applyEntityAttributes() 
 	{
 		super.applyEntityAttributes();
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(Int.MaxValue());
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.625D);
+	}
+	
+	public enum SpiritAnimState
+	{
+		IDLE_IN, IDLE_OUT
 	}
 }

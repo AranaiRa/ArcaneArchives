@@ -37,10 +37,9 @@ public class MathHelper {
 		}
 		else
 		{
-			prog /= 2;
-			if(prog < 1) return delta/2 * prog * prog + startValue;
-			prog--;
-			return -delta/2 * (prog * (prog - 2) - 1) + startValue;
+			prog = time / (duration / 2);
+			if(prog < 1) return (delta / 2) * prog * prog + startValue;
+			return -delta / 2 * ((--prog)*(prog-2) - 1) + startValue;
 		}
 	}
 	
