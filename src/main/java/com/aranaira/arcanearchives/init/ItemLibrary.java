@@ -13,7 +13,10 @@ public class ItemLibrary {
 	
 	public static final Item RAW_RADIANT_QUARTZ = new RawQuartzItem();
 	public static final Item CUT_RADIANT_QUARTZ = new CutQuartzItem();
+	public static final Item GEOMANCY_PENDULUM = new GeomancyPendulumItem();
+	public static final Item GEOMANTIC_MAP = new GeomanticMapItem();
 	public static final Item MANIFEST = new ManifestItem();
+	public static final Item RADIANT_BUCKET = new RadiantBucketItem();
 	public static final Item TOME_OF_ARCANA = new TomeOfArcanaItem();
 	public static final Item TOME_OF_REQUISITION = new TomeOfRequisitionItem();
 	
