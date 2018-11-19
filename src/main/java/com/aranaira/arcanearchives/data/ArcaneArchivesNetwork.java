@@ -1,6 +1,8 @@
 package com.aranaira.arcanearchives.data;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +57,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	public int CountBlocks(BlockTemplate block)
 	{
 		int tmpCount = 0;
-		for (ImmanenceTileEntity ITE : blocks.keySet())
+		for (ImmanenceTileEntity ITE : GetTileEntitiesByPriority())
 		{
 			if (ITE.name == block.refName)
 				tmpCount++;
@@ -69,12 +71,12 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		int TotalGeneration = 0;
 		int TotalDrain = 0;
 		
-		for (ImmanenceTileEntity ITE : blocks.keySet())
+		for (ImmanenceTileEntity ITE : GetTileEntitiesByPriority())
 		{
 			TotalGeneration += ITE.ImmanenceGeneration;
 		}
 		
-		for (ImmanenceTileEntity ITE : blocks.keySet())
+		for (ImmanenceTileEntity ITE : GetTileEntitiesByPriority())
 		{
 			int tmpDrain = ITE.ImmanenceDrain;
 			if (TotalGeneration > (TotalDrain + tmpDrain))
@@ -95,7 +97,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	{
 		List<NonNullList<ItemStack>> inventories = new ArrayList<>();
 		
-		for (ImmanenceTileEntity ITE : blocks.keySet())
+		for (ImmanenceTileEntity ITE : GetTileEntitiesByPriority())
 		{
 			if (ITE.IsInventory)
 			{
@@ -111,7 +113,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		
 		ItemStack temp = itemStack.copy();
 		
-		for (ImmanenceTileEntity ITE : blocks.keySet())
+		for (ImmanenceTileEntity ITE : GetTileEntitiesByPriority())
 		{
 			if (ITE.IsInventory)
 			{
@@ -133,7 +135,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		{
 			count_needed = stack.getMaxStackSize();
 		}
-		for (ImmanenceTileEntity ITE : blocks.keySet())
+		for (ImmanenceTileEntity ITE : GetTileEntitiesByPriority())
 		{
 			if (ITE.IsInventory)
 			{
@@ -151,6 +153,24 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		return to_return;
 	}
 	
+	public List<ImmanenceTileEntity> GetTileEntitiesByPriority()
+	{
+		List<ImmanenceTileEntity> tempList = new ArrayList<ImmanenceTileEntity>();
+		tempList.addAll(blocks.keySet());
+		Collections.sort(tempList, new Comparator<ImmanenceTileEntity>()
+		{
+			@Override
+			public int compare(ImmanenceTileEntity o1, ImmanenceTileEntity o2)
+			{
+				if (o1.NetworkPriority > o2.NetworkPriority)
+					return 1;
+				else
+					return -1;
+			}
+		});
+		return tempList;
+	}
+	
 	public ItemStack RemoveItemFromNetwork(ItemStack stack) {
 		int count_needed = stack.getCount();
 		ItemStack to_return = stack.copy();
@@ -159,7 +179,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		{
 			count_needed = stack.getMaxStackSize();
 		}
-		for (ImmanenceTileEntity ITE : blocks.keySet())
+		for (ImmanenceTileEntity ITE : GetTileEntitiesByPriority())
 		{
 			if (ITE.IsInventory)
 			{
@@ -186,7 +206,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		{
 			count_needed = stack.getMaxStackSize() / 2;
 		}
-		for (ImmanenceTileEntity ITE : blocks.keySet())
+		for (ImmanenceTileEntity ITE : GetTileEntitiesByPriority())
 		{
 			if (ITE.IsInventory)
 			{
@@ -294,7 +314,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	public int GetTotalItems() {
 		int tmp = 0;
 		
-		for (ImmanenceTileEntity ITE : blocks.keySet())
+		for (ImmanenceTileEntity ITE : GetTileEntitiesByPriority())
 		{
 			if (ITE.IsInventory)
 			{
@@ -308,7 +328,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	public int GetTotalSpace() {
 		int tmp = 0;
 		
-		for (ImmanenceTileEntity ITE : blocks.keySet())
+		for (ImmanenceTileEntity ITE : GetTileEntitiesByPriority())
 		{
 			if (ITE.IsInventory)
 			{
@@ -371,18 +391,4 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		}
 		return all_the_items;
 	}
-	/*
-	public Container GetItemsContainerFiltered(String s)
-	{
-		List<ItemStack> filteredItems = GetFilteredItems(s);
-		
-		NetworkContainer c = new NetworkContainer();
-		
-		for (ItemStack is : filteredItems)
-		{
-			
-		}
-	}
-	*/
-
 }

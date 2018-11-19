@@ -10,6 +10,7 @@ import com.aranaira.arcanearchives.util.NetworkHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
@@ -36,11 +37,13 @@ public class NetworkContainer extends Container
 	private EntityPlayer player;
 	
 	
-	public NetworkContainer()
+	public NetworkContainer(EntityPlayer player)
 	{
+		this.player = player;
+		InventoryPlayer playerInventory = player.inventory;
 		//int i = 45;
 
-		networkItemHandler = new NetworkItemHandler(Minecraft.getMinecraft().player.getUniqueID());
+		networkItemHandler = new NetworkItemHandler(player.getUniqueID());
 		//127 higher?
 		
 		int j = 26;
@@ -48,7 +51,7 @@ public class NetworkContainer extends Container
 		{
 			for (int x = 8; x > -1; x--)
 			{
-				this.addSlotToContainer(new AASlotItemHandler(networkItemHandler, j, 46 + (18 * x), 33 + (18 * y), Minecraft.getMinecraft().player.getUniqueID()));
+				this.addSlotToContainer(new AASlotItemHandler(networkItemHandler, j, 46 + (18 * x), 33 + (18 * y), player.getUniqueID()));
 				j--;
 			}
 		}
@@ -61,9 +64,8 @@ public class NetworkContainer extends Container
 			}
 		}
 		
-		eventHandler = new ContainerWorkbench(Minecraft.getMinecraft().player.inventory, Minecraft.getMinecraft().player.world, new BlockPos(0,0,0));
+		eventHandler = new ContainerWorkbench(playerInventory, player.world, new BlockPos(0,0,0));
 		mInventoryCrafting = new InventoryCrafting(eventHandler, 3, 3);
-		player = Minecraft.getMinecraft().player;
 		
 		for (int x = 0; x < 3; x++)
 		{
@@ -91,7 +93,7 @@ public class NetworkContainer extends Container
 		{
 			for (int x = 8; x > -1; x--)
 			{
-				this.addSlotToContainer(new Slot(Minecraft.getMinecraft().player.inventory, i, 46 + (18 * x), 160 + (18 * y)));
+				this.addSlotToContainer(new Slot(playerInventory, i, 46 + (18 * x), 160 + (18 * y)));
 				
 				i--;
 			}
@@ -99,53 +101,7 @@ public class NetworkContainer extends Container
 		//Hotbar.
 		for (int x = 8; x > -1; x--)
 		{
-			this.addSlotToContainer(new Slot(Minecraft.getMinecraft().player.inventory, i, 46 + (18 * x), 218));
-			i--;
-		}
-	}
-	
-	public NetworkContainer(EntityPlayer player)
-	{
-		this.player = player;
-		
-		eventHandler = new ContainerWorkbench(player.inventory, player.world, new BlockPos(0,0,0));
-		mInventoryCrafting = new InventoryCrafting(eventHandler, 3, 3);
-
-
-		networkItemHandler = new NetworkItemHandler(player.getUniqueID());
-		//127 higher?
-		
-		int j = 26;
-		for (int y = 2; y > -1; y--)
-		{
-			for (int x = 8; x > -1; x--)
-			{
-				this.addSlotToContainer(new AASlotItemHandler(networkItemHandler, j, 45 + (18 * x), 40 + (18 * y), player.getUniqueID()));
-				j--;
-			}
-		}
-
-		for (int i = 0; i < 10; i++)
-		{
-			this.addSlotToContainer(eventHandler.inventorySlots.get(i));
-		}
-		
-		//Creates the slots for the players inventory.
-		int i = 35;
-		//Inventory.
-		for (int y = 2; y > -1; y--)
-		{
-			for (int x = 8; x > -1; x--)
-			{
-				this.addSlotToContainer(new Slot(player.inventory, i, 45 + (18 * x), 167 + (18 * y)));
-				
-				i--;
-			}
-		}
-		//Hotbar.
-		for (int x = 8; x > -1; x--)
-		{
-			this.addSlotToContainer(new Slot(player.inventory, i, 45 + (18 * x), 225));
+			this.addSlotToContainer(new Slot(playerInventory, i, 46 + (18 * x), 218));
 			i--;
 		}
 	}

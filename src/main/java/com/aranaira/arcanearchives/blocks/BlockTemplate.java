@@ -24,7 +24,6 @@ import net.minecraft.world.World;
 public class BlockTemplate extends Block implements IHasModel {
 
 	public ImmanenceTileEntity tileEntityInstance;
-	public boolean HasTileEntity;
 	public int PlaceLimit = -1;
 	public String refName;
 	
@@ -60,7 +59,7 @@ public class BlockTemplate extends Block implements IHasModel {
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
-		if (HasTileEntity)
+		if (hasTileEntity(getDefaultState()) && tileEntityInstance != null)
 		{
 			tileEntityInstance.NetworkID = placer.getUniqueID();
 			tileEntityInstance.Dimension = worldIn.provider.getDimension();

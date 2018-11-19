@@ -37,13 +37,15 @@ public class ConfigHandler
 	{
 
 		@Config.Comment({ "Amount of Drain Each Block Takes From The Network" })
-		public int iRadiantResonatorDrain = 20;
-		public int iRepositoryMatrixDrain = 80;
+		public int iRadiantResonatorDrain 	= 20;
+		public int iRepositoryMatrixDrain 	= 80;
+		public int iStorageMatrixDrain		= 80;
 		
 		@Config.Comment({ "The Amount of Bonus Ticks Blocks Get if Their Drain is Met" })
 		public int iRadiantResonatorBonusTicks = 1;
 		
 		@Config.Comment({ "The Amount of Items Each Repository Can Hold" })
 		public int iRepositoryMatrixItemCap = 256;
+		public int iStorageMatrixItemCap	= 256;
 	}
 }

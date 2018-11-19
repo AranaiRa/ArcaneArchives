@@ -25,7 +25,6 @@ public class AccessorBlock extends Block
 		setUnlocalizedName("accessorBlock");
 		setRegistryName("accessorBlock");
 		BlockLibrary.BLOCKS.add(this);
-		
 	}
 	
 	@Override

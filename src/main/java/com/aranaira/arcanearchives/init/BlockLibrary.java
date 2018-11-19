@@ -42,4 +42,6 @@ public class BlockLibrary {
 	public static final TileEntity RADIANT_RESONATOR_TILE_ENTITY = new RadiantResonatorTileEntity();
 	public static final TileEntity MATRIX_CORE_TILE_ENTITY = new MatrixCoreTileEntity();
 	public static final TileEntity MATRIX_REPOSITORY_TILE_ENTITY = new MatrixRepositoryTileEntity();
+	public static final TileEntity ACCESSOR_TILE_ENTITY = new AccessorTileEntity();
+	public static final TileEntity RADIANT_CHEST_TILE_ENTITY = new RadiantChestTileEntity();
 }

@@ -41,7 +41,6 @@ public class RadiantResonator extends BlockTemplate
 	public RadiantResonator() 
 	{
 		super(name, Material.IRON);
-		HasTileEntity = true;
 		PlaceLimit = 3;
 	}
 	

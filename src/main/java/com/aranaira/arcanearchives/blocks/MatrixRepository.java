@@ -19,7 +19,6 @@ public class MatrixRepository extends BlockTemplate {
 	{
 		super(name, Material.GLASS);
 		setLightLevel(16/16f);
-		HasTileEntity = true;
 		this.Height = 3;
 	}
 	
@@ -30,7 +29,8 @@ public class MatrixRepository extends BlockTemplate {
 	}
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
+    public boolean isOpaqueCube(IBlockState state) 
+    {
         return false;
     }
 
@@ -49,8 +49,8 @@ public class MatrixRepository extends BlockTemplate {
 	
 
 	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
-			ItemStack stack) {
+	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) 
+	{
 		// TODO Auto-generated method stub
 		
 		tileEntityInstance.name = name;
