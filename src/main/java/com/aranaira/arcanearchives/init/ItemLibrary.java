@@ -17,6 +17,9 @@ public class ItemLibrary {
 	public static final Item GEOMANTIC_MAP = new GeomanticMapItem();
 	public static final Item MANIFEST = new ManifestItem();
 	public static final Item RADIANT_BUCKET = new RadiantBucketItem();
+	public static final Item SCEPTER_ABDUCTION = new ScepterAbductionItem();
+	public static final Item SCEPTER_MANIPULATION = new ScepterManipulationItem();
+	public static final Item SCEPTER_TRANSLOCATION = new ScepterTranslocationItem();
 	public static final Item TOME_OF_ARCANA = new TomeOfArcanaItem();
 	public static final Item TOME_OF_REQUISITION = new TomeOfRequisitionItem();
 	

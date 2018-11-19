@@ -5,6 +5,10 @@ item.item_cutquartz.name=Shaped Radiant Quartz
 item.item_geomancypendulum.name=Geomancy Pendulum
 item.item_geomanticmap.name=Geomantic Map
 item.item_manifest.name=Manifest
+item.item_radiantbucket.name=Radiant Bucket
+item.item_scepterabduction.name=Scepter of Abduction
+item.item_sceptermanipulation.name=Scepter of Requisition
+item.item_sceptertranslocation.name=Scepter of Translocation
 item.item_tomeofarcana.name=Tome of Arcana
 item.item_tomeofrequisition.name=Tome of Requisition
 
