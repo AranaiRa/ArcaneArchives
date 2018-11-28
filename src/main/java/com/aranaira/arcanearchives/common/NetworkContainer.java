@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.client;
+package com.aranaira.arcanearchives.common;
 
 import java.util.ArrayList;
 import java.util.List;

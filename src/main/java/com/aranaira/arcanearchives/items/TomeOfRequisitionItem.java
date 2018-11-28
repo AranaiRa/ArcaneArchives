@@ -1,8 +1,8 @@
 package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.client.GUIBookContainer;
-import com.aranaira.arcanearchives.client.NetworkContainer;
+import com.aranaira.arcanearchives.common.GUIBookContainer;
+import com.aranaira.arcanearchives.common.NetworkContainer;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;

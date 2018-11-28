@@ -10,8 +10,9 @@ import java.util.UUID;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.BlockTemplate;
-import com.aranaira.arcanearchives.client.NetworkContainer;
+import com.aranaira.arcanearchives.common.NetworkContainer;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
+import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.ItemComparison;
 
 import net.minecraft.block.Block;
@@ -32,13 +33,14 @@ import net.minecraftforge.common.util.INBTSerializable;
 
 public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 {
-	private UUID playerId;
-	private AAWorldSavedData parent;
+	private UUID mPlayerId;
+	private AAWorldSavedData mParent;
 	
-	private Map<ImmanenceTileEntity, String> blocks = new HashMap<>();
-	private ImmanenceTileEntity MatrixCoreInstance;
-	private int CurrentImmanence;
-	private boolean NeedsToBeUpdated = true;
+	private Map<ImmanenceTileEntity, String> mNetworkBlocks = new HashMap<>();
+	private List<RadiantChestTileEntity> mRadiantChests = new ArrayList<>();
+
+	private int mCurrentImmanence;
+	private boolean mNeedsToBeUpdated = true;
 
 	private ArcaneArchivesNetwork()
 	{
@@ -47,11 +49,11 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	
 	public int GetImmanence()
 	{
-		if (NeedsToBeUpdated)
+		if (mNeedsToBeUpdated)
 		{
 			UpdateImmanence();
 		}
-		return CurrentImmanence;
+		return mCurrentImmanence;
 	}
 	
 	public int CountBlocks(BlockTemplate block)
@@ -67,7 +69,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	
 	public void UpdateImmanence()
 	{
-		CurrentImmanence = 0;
+		mCurrentImmanence = 0;
 		int TotalGeneration = 0;
 		int TotalDrain = 0;
 		
@@ -89,8 +91,8 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 				ITE.IsDrainPaid = false;
 			}
 		}
-		CurrentImmanence = TotalGeneration - TotalDrain;
-		NeedsToBeUpdated = false;
+		mCurrentImmanence = TotalGeneration - TotalDrain;
+		mNeedsToBeUpdated = false;
 	}
 	
 	public List<NonNullList<ItemStack>> GetItemsOnNetwork()
@@ -156,7 +158,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	public List<ImmanenceTileEntity> GetTileEntitiesByPriority()
 	{
 		List<ImmanenceTileEntity> tempList = new ArrayList<ImmanenceTileEntity>();
-		tempList.addAll(blocks.keySet());
+		tempList.addAll(mNetworkBlocks.keySet());
 		Collections.sort(tempList, new Comparator<ImmanenceTileEntity>()
 		{
 			@Override
@@ -171,7 +173,8 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		return tempList;
 	}
 	
-	public ItemStack RemoveItemFromNetwork(ItemStack stack) {
+	public ItemStack RemoveItemFromNetwork(ItemStack stack) 
+	{
 		int count_needed = stack.getCount();
 		ItemStack to_return = stack.copy();
 		to_return.setCount(0); //Could cause issues
@@ -226,23 +229,39 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	
 	public Map<ImmanenceTileEntity, String> getBlocks()
 	{
-		return blocks;
+		return mNetworkBlocks;
 	}
 	
 	public void AddBlockToNetwork(String blockName, ImmanenceTileEntity tileEntityInstance)
 	{
+		if (tileEntityInstance instanceof RadiantChestTileEntity)
+		{
+			AddRadiantChest((RadiantChestTileEntity)tileEntityInstance);
+			tileEntityInstance.hasBeenAddedToNetwork = true;
+			return;
+		}
 		if (IsBlockPosAvailable(tileEntityInstance.blockpos, tileEntityInstance.Dimension))
 		{
-			blocks.put(tileEntityInstance, blockName);
+			mNetworkBlocks.put(tileEntityInstance, blockName);
 			tileEntityInstance.hasBeenAddedToNetwork = true;
-			NeedsToBeUpdated = true;
+			mNeedsToBeUpdated = true;
 			UpdateImmanence();
 		}
 	}
 	
+	public void AddRadiantChest(RadiantChestTileEntity RCTE)
+	{
+		mRadiantChests.add(RCTE);
+	}
+	
+	public List<RadiantChestTileEntity> GetRadiantChests()
+	{
+		return mRadiantChests;
+	}
+	
 	public boolean IsBlockPosAvailable(BlockPos pos, int dimID)
 	{
-		for (ImmanenceTileEntity ITE : blocks.keySet())
+		for (ImmanenceTileEntity ITE : mNetworkBlocks.keySet())
 		{
 			if (ITE.blockpos == pos && ITE.Dimension == dimID)
 				return false;
@@ -253,32 +272,36 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	
 	public void RemoveBlockFromNetwork(ImmanenceTileEntity ITE)
 	{
-		blocks.remove(ITE);
-		NeedsToBeUpdated = true;
+		mNetworkBlocks.remove(ITE);
+		mNeedsToBeUpdated = true;
 		UpdateImmanence();
 	}
 	
 	@Override
-	public NBTTagCompound serializeNBT() {
+	public NBTTagCompound serializeNBT() 
+	{
 		NBTTagCompound tagCompound = new NBTTagCompound();
-		tagCompound.setUniqueId("playerId", playerId);
+		tagCompound.setUniqueId("playerId", mPlayerId);
 		
 		return tagCompound;
 	}
 	
 
 	@Override
-	public void deserializeNBT(NBTTagCompound nbt) {
-		this.playerId = nbt.getUniqueId("playerId");
+	public void deserializeNBT(NBTTagCompound nbt) 
+	{
+		mPlayerId = nbt.getUniqueId("playerId");
 	}
 
-	public static ArcaneArchivesNetwork newNetwork(UUID playerID) {
+	public static ArcaneArchivesNetwork newNetwork(UUID playerID) 
+	{
 		ArcaneArchivesNetwork network = new ArcaneArchivesNetwork();
-		network.playerId = playerID;
+		network.mPlayerId = playerID;
 		return network;
 	}
 
-	public void MarkUnsaved() {
+	public void MarkUnsaved() 
+	{
 		if (getParent() != null)
 		{
 			getParent().markDirty();
@@ -291,27 +314,30 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	
 	public AAWorldSavedData getParent()
 	{
-		return parent;
+		return mParent;
 	}
 	
 	public ArcaneArchivesNetwork setParent(AAWorldSavedData parent)
 	{
-		this.parent = parent;
+		mParent = parent;
 		MarkUnsaved();
 		return this;
 	}
 
-	public UUID getPlayerID() {
-		return playerId;
+	public UUID getPlayerID() 
+	{
+		return mPlayerId;
 	}
 
-	public static ArcaneArchivesNetwork fromNBT(NBTTagCompound data) {
+	public static ArcaneArchivesNetwork fromNBT(NBTTagCompound data) 
+	{
 		ArcaneArchivesNetwork network = new ArcaneArchivesNetwork();
 		network.deserializeNBT(data);
 		return network;
 	}
 
-	public int GetTotalItems() {
+	public int GetTotalItems() 
+	{
 		int tmp = 0;
 		
 		for (ImmanenceTileEntity ITE : GetTileEntitiesByPriority())
@@ -325,7 +351,8 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		return tmp;
 	}
 
-	public int GetTotalSpace() {
+	public int GetTotalSpace() 
+	{
 		int tmp = 0;
 		
 		for (ImmanenceTileEntity ITE : GetTileEntitiesByPriority())
@@ -339,7 +366,8 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		return tmp;
 	}
 
-	public List<ItemStack> GetAllItemsOnNetwork() {
+	public List<ItemStack> GetAllItemsOnNetwork() 
+	{
 		List<ItemStack> all_the_items = new ArrayList<>();
 		List<NonNullList<ItemStack>> all_items = GetItemsOnNetwork();
 		boolean added;

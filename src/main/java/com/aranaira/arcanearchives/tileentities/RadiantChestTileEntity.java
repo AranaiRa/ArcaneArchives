@@ -23,13 +23,17 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class RadiantChestTileEntity extends TileEntity implements ITickable 
+public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITickable 
 {
-	private final IItemHandler inventory = new ItemStackHandler(54);
+	private String mName = "";
+	private final IItemHandler mInventory = new ItemStackHandler(54);
 	
 	public RadiantChestTileEntity() 
 	{
-		BlockLibrary.TILE_ENTITIES.put("radiantchest", this);
+		super("radiantchest");
+		this.ImmanenceDrain = 0;
+		this.ImmanenceGeneration = 0;
+		this.IsInventory = false;
 	}
 	
 	@Override
@@ -42,7 +46,7 @@ public class RadiantChestTileEntity extends TileEntity implements ITickable
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) 
 	{
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(inventory);
+			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(mInventory);
 		return super.getCapability(capability, facing);
 	}
 	
@@ -58,7 +62,7 @@ public class RadiantChestTileEntity extends TileEntity implements ITickable
 	{
 		super.readFromNBT(compound);
 		// Inventory
-		CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(inventory, null, compound.getTagList("inventory", NBT.TAG_COMPOUND));
+		CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(mInventory, null, compound.getTagList("inventory", NBT.TAG_COMPOUND));
 	}
 
 	@Override
@@ -66,8 +70,13 @@ public class RadiantChestTileEntity extends TileEntity implements ITickable
 	{
 		super.writeToNBT(compound);
 		// Inventory
-		compound.setTag("inventory", CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(inventory, null));
+		compound.setTag("inventory", CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(mInventory, null));
 		
 		return compound;
+	}
+	
+	public String getName()
+	{
+		return mName;
 	}
 }

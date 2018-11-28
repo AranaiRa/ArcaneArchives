@@ -7,6 +7,7 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.BlockLibrary;
 import com.aranaira.arcanearchives.init.ItemLibrary;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
+import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.IHasModel;
 import com.aranaira.arcanearchives.util.NetworkHelper;
 
@@ -57,15 +58,22 @@ public class BlockTemplate extends Block implements IHasModel {
 	}
 
 	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) 
+	{
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
+
 		if (hasTileEntity(getDefaultState()) && tileEntityInstance != null)
 		{
 			tileEntityInstance.NetworkID = placer.getUniqueID();
 			tileEntityInstance.Dimension = worldIn.provider.getDimension();
 			tileEntityInstance.blockpos = pos;
 			if (!worldIn.isRemote)
-				NetworkHelper.getArcaneArchivesNetwork(placer.getUniqueID()).AddBlockToNetwork(tileEntityInstance.name, tileEntityInstance);
+			{
+				if (tileEntityInstance instanceof RadiantChestTileEntity)
+					NetworkHelper.getArcaneArchivesNetwork(placer.getUniqueID()).AddRadiantChest((RadiantChestTileEntity)tileEntityInstance);
+				else
+					NetworkHelper.getArcaneArchivesNetwork(placer.getUniqueID()).AddBlockToNetwork(tileEntityInstance.name, tileEntityInstance);
+			}
 		}
 		
 		if (Height > 1 && Width == 3)

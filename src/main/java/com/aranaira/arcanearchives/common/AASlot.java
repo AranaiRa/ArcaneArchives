@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.client;
+package com.aranaira.arcanearchives.common;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;

@@ -1,15 +1,17 @@
 package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.client.AAGuiHandler;
+import com.aranaira.arcanearchives.common.AAGuiHandler;
 import com.aranaira.arcanearchives.common.ContainerRadiantChest;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
+import com.aranaira.arcanearchives.util.NetworkHelper;
 
 import net.minecraft.block.BlockChest;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
@@ -31,7 +33,6 @@ public class RadiantChest extends BlockTemplate implements IItemHandler, ITileEn
 
 	public static final String NAME = "radiant_chest"; 
 	
-	RadiantChestTileEntity mChestTEInstance;
 	
 	public RadiantChest() {
 		super(NAME, Material.GLASS);
@@ -71,8 +72,6 @@ public class RadiantChest extends BlockTemplate implements IItemHandler, ITileEn
 		return true;
 	}
 	
-	
-	
 	@Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
     {
@@ -94,16 +93,15 @@ public class RadiantChest extends BlockTemplate implements IItemHandler, ITileEn
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		mChestTEInstance = new RadiantChestTileEntity();
-		return mChestTEInstance;
+	public TileEntity createNewTileEntity(World worldIn, int meta) 
+	{
+		return tileEntityInstance = new RadiantChestTileEntity();
 	}
 
 	@Override
 	public TileEntity createTileEntity(World world, IBlockState state) 
 	{
-		mChestTEInstance = new RadiantChestTileEntity();
-		return mChestTEInstance;
+		return tileEntityInstance = new RadiantChestTileEntity();
 	}
 
 	@Override

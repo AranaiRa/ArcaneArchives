@@ -1,6 +1,7 @@
-package com.aranaira.arcanearchives.client;
+package com.aranaira.arcanearchives.common;
 
-import com.aranaira.arcanearchives.common.ContainerRadiantChest;
+import com.aranaira.arcanearchives.client.GUIManifest;
+import com.aranaira.arcanearchives.client.GUIRadiantChest;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 
 import net.minecraft.client.gui.inventory.GuiChest;
@@ -15,6 +16,7 @@ public class AAGuiHandler implements IGuiHandler
 {
 	public static final int TOME_OF_REQUISITION = 0;
 	public static final int RADIANT_CHEST = 1;
+	public static final int MANIFEST = 2;
 	
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -25,6 +27,8 @@ public class AAGuiHandler implements IGuiHandler
 			//return new NetworkCraftingContainer(player.inventory, world, new BlockPos(0, 0, 0));
 		case RADIANT_CHEST:
 			return new ContainerRadiantChest((RadiantChestTileEntity) world.getTileEntity(new BlockPos(x, y, z)), player.inventory);
+		case MANIFEST:
+			return new ContainerManifest(player);
 		default:
 			return null;
 		}
@@ -41,6 +45,8 @@ public class AAGuiHandler implements IGuiHandler
 		case RADIANT_CHEST:
 			//return new GUIRadiantChest(new ContainerChest(player.inventory, (IInventory) player.openContainer, player));
 			return new GUIRadiantChest(new ContainerRadiantChest((RadiantChestTileEntity) world.getTileEntity(new BlockPos(x, y, z)), player.inventory));
+		case MANIFEST:
+			return new GUIManifest(player, new ContainerManifest(player));
 		default:
 			return null;
 		}
