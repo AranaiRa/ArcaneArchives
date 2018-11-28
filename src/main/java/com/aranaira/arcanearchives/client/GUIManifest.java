@@ -44,7 +44,7 @@ public class GUIManifest extends GuiContainer
 		GlStateManager.enableColorMaterial();
 		this.mc.getTextureManager().bindTexture(GUITextures);
 
-		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, 255,255,255,255);
+		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, 256,256,256,256);
 	}
 	
 	@Override
