@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.blocks;
 import java.util.Random;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.common.AAGuiHandler;
 import com.aranaira.arcanearchives.data.AAWorldSavedData;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
@@ -10,6 +11,7 @@ import com.aranaira.arcanearchives.util.NetworkHelper;
 import com.aranaira.arcanearchives.util.Placeable;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
@@ -33,8 +35,9 @@ import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.common.property.Properties;
+import net.minecraftforge.items.IItemHandler;
 
-public class GemcuttersTable extends BlockTemplate 
+public class GemcuttersTable extends BlockTemplate
 {
 	public static final PropertyDirection FACING = PropertyDirection.create("facing");
 	public static final String name = "gemcutters_table";
@@ -62,6 +65,20 @@ public class GemcuttersTable extends BlockTemplate
 		
 		return false;
 	}*/
+	
+	@Override
+	public boolean hasTileEntity(IBlockState state)
+	{
+		return true;
+	}
+	
+	@Override
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) 
+	{
+		playerIn.openGui(ArcaneArchives.Instance, AAGuiHandler.GEMCUTTERS_TABLE, worldIn, pos.getX(), pos.getY(), pos.getZ());
+		
+		return true;
+	}
 	
 	 @Override
      public boolean isOpaqueCube(IBlockState state)
@@ -97,13 +114,6 @@ public class GemcuttersTable extends BlockTemplate
      public int getMetaFromState(IBlockState state)
      {
          return state.getValue(FACING).getIndex();
-     }
-
-     @Override
-     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
-     {
-         
-         return false;
      }
 
      @Override
