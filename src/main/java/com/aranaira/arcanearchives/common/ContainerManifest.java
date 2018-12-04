@@ -23,6 +23,7 @@ public class ContainerManifest extends Container
 
 	public ContainerManifest(EntityPlayer playerIn)
 	{
+		
 		ArcaneArchivesNetwork aanetwork = NetworkHelper.getArcaneArchivesNetwork(playerIn.getUniqueID());
 		
 		List<RadiantChestTileEntity> networkChests = aanetwork.GetRadiantChests();
@@ -37,14 +38,11 @@ public class ContainerManifest extends Container
 			{
 				if (!networkChests.get(i).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).getStackInSlot(j).isEmpty())
 				{
-					ArcaneArchives.logger.info("FOUND ITEM");
 					itemSlotsList.add(j);
 					correspondingItemHandler.add(networkChests.get(i).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null));
 				}
 			}
 		}
-		
-		ArcaneArchives.logger.info(itemSlotsList.peek() == null);
 		
 		for (int y = 0; y < 9; y++)
 		{
@@ -64,4 +62,5 @@ public class ContainerManifest extends Container
 		return true;
 	}
 
+	
 }
