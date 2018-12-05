@@ -30,26 +30,6 @@ public class ContainerGemcuttersTable extends Container
 		ArcaneArchives.logger.info("inv null? "+playerInventory.equals(null));
 		ArcaneArchives.logger.info("te null? "+GCTTE.equals(null));
 		
-		//crafting output
-		
-		//selector
-		for (int y = 0; y > -1; y--)
-		{
-			for (int x = 6; x > -1; x--)
-			{
-				this.addSlotToContainer(new SlotItemHandler(GCTTE.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null), 9 * y + x, x * 18 + 41, y * 18 + 70));
-			}
-		}
-		
-		//internal storage
-		for (int y = 1; y > -1; y--)
-		{
-			for (int x = 8; x > -1; x--)
-			{
-				this.addSlotToContainer(new SlotItemHandler(GCTTE.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null), 9 * y + x, x * 18 + 23, y * 18 + 105));
-			}
-		}
-		
 		//player inventory
 		int i = 35;
 		//Inventory
@@ -61,11 +41,36 @@ public class ContainerGemcuttersTable extends Container
 				i--;
 			}
 		}
-		//Hotbar.
+		//hotbar
 		for (int x = 8; x > -1; x--)
 		{
 			this.addSlotToContainer(new Slot(playerInventory, i, 23 + (18 * x), 224));
 			i--;
+		}
+
+		i = 25;
+		//crafting output
+		this.addSlotToContainer(new SlotItemHandler(GCTTE.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null), i, 95, 18));
+		i--;
+		
+		//selector
+		for (int y = 0; y > -1; y--)
+		{
+			for (int x = 6; x > -1; x--)
+			{
+				this.addSlotToContainer(new SlotItemHandler(GCTTE.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null), i, x * 18 + 41, y * 18 + 70));
+				i--;
+			}
+		}
+		
+		//internal storage
+		for (int y = 1; y > -1; y--)
+		{
+			for (int x = 8; x > -1; x--)
+			{
+				this.addSlotToContainer(new SlotItemHandler(GCTTE.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null), 9 * y + x, x * 18 + 23, y * 18 + 105));
+				i--;
+			}
 		}
 	}
 	

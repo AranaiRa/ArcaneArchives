@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.common;
+package com.aranaira.arcanearchives.client;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
+import com.aranaira.arcanearchives.common.NetworkContainer;
 import com.aranaira.arcanearchives.util.NetworkHelper;
 
 import net.minecraft.block.Block;

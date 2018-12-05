@@ -82,6 +82,13 @@ public class GemcuttersTable extends BlockTemplate implements ITileEntityProvide
 		return true;
 	}
 	
+	@Override
+	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) 
+	{
+		tileEntityInstance.name = name;
+		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
+	}
+	
 	 @Override
      public boolean isOpaqueCube(IBlockState state)
      {

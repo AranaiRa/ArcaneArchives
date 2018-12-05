@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.common;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.client.GUIBookContainer;
 import com.aranaira.arcanearchives.client.GUIGemcuttersTable;
 import com.aranaira.arcanearchives.client.GUIManifest;
 import com.aranaira.arcanearchives.client.GUIRadiantChest;
