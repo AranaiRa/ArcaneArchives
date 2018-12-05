@@ -5,7 +5,9 @@ import java.util.Random;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.common.AAGuiHandler;
 import com.aranaira.arcanearchives.data.AAWorldSavedData;
+import com.aranaira.arcanearchives.tileentities.GemcuttersTableTileEntity;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
+import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
 import com.aranaira.arcanearchives.util.NetworkHelper;
 import com.aranaira.arcanearchives.util.Placeable;
@@ -37,7 +39,7 @@ import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.common.property.Properties;
 import net.minecraftforge.items.IItemHandler;
 
-public class GemcuttersTable extends BlockTemplate
+public class GemcuttersTable extends BlockTemplate implements ITileEntityProvider
 {
 	public static final PropertyDirection FACING = PropertyDirection.create("facing");
 	public static final String name = "gemcutters_table";
@@ -147,4 +149,16 @@ public class GemcuttersTable extends BlockTemplate
      {
     	 return BlockRenderLayer.CUTOUT;
      }
+
+ 	@Override
+ 	public TileEntity createNewTileEntity(World worldIn, int meta) 
+ 	{
+ 		return tileEntityInstance = new GemcuttersTableTileEntity();
+ 	}
+
+ 	@Override
+ 	public TileEntity createTileEntity(World world, IBlockState state) 
+ 	{
+ 		return tileEntityInstance = new GemcuttersTableTileEntity();
+ 	}
 }

@@ -71,8 +71,6 @@ public class GUIRadiantChest extends GuiContainer {
 		GlStateManager.enableLighting();
 		
 		this.renderHoveredToolTip(mouseX, mouseY);
-		
-		
 	}
 	
 	@Override

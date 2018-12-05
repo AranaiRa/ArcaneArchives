@@ -7,11 +7,13 @@ import java.util.Queue;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
+import com.aranaira.arcanearchives.tileentities.GemcuttersTableTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.NetworkHelper;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -20,41 +22,50 @@ import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerGemcuttersTable extends Container 
 {
-
-	public ContainerGemcuttersTable(EntityPlayer playerIn)
+	public ContainerGemcuttersTable(GemcuttersTableTileEntity GCTTE, IInventory playerInventory)
 	{
-		ArcaneArchivesNetwork aanetwork = NetworkHelper.getArcaneArchivesNetwork(playerIn.getUniqueID());
+		//ArcaneArchivesNetwork aanetwork = NetworkHelper.getArcaneArchivesNetwork(playerIn.getUniqueID());
 		
-		List<RadiantChestTileEntity> networkChests = aanetwork.GetRadiantChests();
+		ArcaneArchives.logger.info("^^^^NULL CHECKS");
+		ArcaneArchives.logger.info("inv null? "+playerInventory.equals(null));
+		ArcaneArchives.logger.info("te null? "+GCTTE.equals(null));
 		
-		Queue<Integer> itemSlotsList = new LinkedList<>();
-		Queue<IItemHandler> correspondingItemHandler = new LinkedList<>();
-
+		//crafting output
 		
-		for (int i = 0; i < networkChests.size(); i++)
+		//selector
+		for (int y = 0; y > -1; y--)
 		{
-			for (int j = 0; j < networkChests.get(i).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).getSlots(); j++)
+			for (int x = 6; x > -1; x--)
 			{
-				if (!networkChests.get(i).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).getStackInSlot(j).isEmpty())
-				{
-					ArcaneArchives.logger.info("FOUND ITEM");
-					itemSlotsList.add(j);
-					correspondingItemHandler.add(networkChests.get(i).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null));
-				}
+				this.addSlotToContainer(new SlotItemHandler(GCTTE.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null), 9 * y + x, x * 18 + 41, y * 18 + 70));
 			}
 		}
 		
-		ArcaneArchives.logger.info(itemSlotsList.peek() == null);
-		
-		for (int y = 0; y < 9; y++)
+		//internal storage
+		for (int y = 1; y > -1; y--)
 		{
-			for (int x = 0; x < 9; x++)
+			for (int x = 8; x > -1; x--)
 			{
-				if (itemSlotsList.peek() == null)
-					return;
-				this.addSlotToContainer(new SlotItemHandler(correspondingItemHandler.poll(), itemSlotsList.poll(), x * 18 + 12, y * 18 + 30));
-				
+				this.addSlotToContainer(new SlotItemHandler(GCTTE.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null), 9 * y + x, x * 18 + 23, y * 18 + 105));
 			}
+		}
+		
+		//player inventory
+		int i = 35;
+		//Inventory
+		for (int y = 2; y > -1; y--)
+		{
+			for (int x = 8; x > -1; x--)
+			{
+				this.addSlotToContainer(new Slot(playerInventory, i, 23 + (18 * x), 166 + (18 * y)));
+				i--;
+			}
+		}
+		//Hotbar.
+		for (int x = 8; x > -1; x--)
+		{
+			this.addSlotToContainer(new Slot(playerInventory, i, 23 + (18 * x), 224));
+			i--;
 		}
 	}
 	

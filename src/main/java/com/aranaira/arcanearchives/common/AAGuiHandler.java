@@ -1,9 +1,10 @@
 package com.aranaira.arcanearchives.common;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.GUIGemcuttersTable;
 import com.aranaira.arcanearchives.client.GUIManifest;
 import com.aranaira.arcanearchives.client.GUIRadiantChest;
-import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
+import com.aranaira.arcanearchives.tileentities.*;
 
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,39 +23,47 @@ public class AAGuiHandler implements IGuiHandler
 	
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+		ArcaneArchives.logger.info("^^^^SERVER GUI ELEMENT");
+		ArcaneArchives.logger.info("id:"+ID+"\nplayer:"+player+"\nworld:"+world+"\nx:"+x+" y:"+y+" z:"+z);
 		switch (ID)
 		{
-		case TOME_OF_REQUISITION:
-			return new NetworkContainer(player);
-			//return new NetworkCraftingContainer(player.inventory, world, new BlockPos(0, 0, 0));
-		case RADIANT_CHEST:
-			return new ContainerRadiantChest((RadiantChestTileEntity) world.getTileEntity(new BlockPos(x, y, z)), player.inventory);
-		case MANIFEST:
-			return new ContainerManifest(player);
-		case GEMCUTTERS_TABLE:
-			return new ContainerGemcuttersTable(player);
-		default:
-			return null;
+			case TOME_OF_REQUISITION:
+				return new NetworkContainer(player);
+				//return new NetworkCraftingContainer(player.inventory, world, new BlockPos(0, 0, 0));
+			case RADIANT_CHEST:
+				return new ContainerRadiantChest((RadiantChestTileEntity) world.getTileEntity(new BlockPos(x, y, z)), player.inventory);
+			case MANIFEST:
+				return new ContainerManifest(player);
+			case GEMCUTTERS_TABLE:
+				return new ContainerGemcuttersTable((GemcuttersTableTileEntity) world.getTileEntity(new BlockPos(x, y, z)), player.inventory);
+			default:
+			{
+				ArcaneArchives.logger.info("^RETURNED NULL");
+				return null;
+			}
 		}
 	}
 
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+		ArcaneArchives.logger.info("^^^^CLIENT GUI ELEMENT");
+		ArcaneArchives.logger.info("^START");
+		ArcaneArchives.logger.info("id:"+ID+"\nplayer:"+player+"\nworld:"+world+"\nx:"+x+" y:"+y+" z:"+z);
 		switch (ID)
 		{
-		case TOME_OF_REQUISITION:
-			//Create and return a new GUI.
-			return new GUIBookContainer(new NetworkContainer(player));
-			//return new GUIBookContainer(new NetworkCraftingContainer(player.inventory, world, new BlockPos(0, 0, 0)));
-		case RADIANT_CHEST:
-			//return new GUIRadiantChest(new ContainerChest(player.inventory, (IInventory) player.openContainer, player));
-			return new GUIRadiantChest(new ContainerRadiantChest((RadiantChestTileEntity) world.getTileEntity(new BlockPos(x, y, z)), player.inventory));
-		case MANIFEST:
-			return new GUIManifest(player, new ContainerManifest(player));
-		case GEMCUTTERS_TABLE:
-			return new GUIGemcuttersTable(player, new ContainerGemcuttersTable(player));
-		default:
-			return null;
+			case TOME_OF_REQUISITION:
+				return new GUIBookContainer(new NetworkContainer(player));
+			case RADIANT_CHEST:
+				return new GUIRadiantChest(new ContainerRadiantChest((RadiantChestTileEntity) world.getTileEntity(new BlockPos(x, y, z)), player.inventory));
+			case MANIFEST:
+				return new GUIManifest(player, new ContainerManifest(player));
+			case GEMCUTTERS_TABLE:
+				return new GUIGemcuttersTable(player, new ContainerGemcuttersTable((GemcuttersTableTileEntity) world.getTileEntity(new BlockPos(x, y, z)), player.inventory));
+			default:
+			{
+				ArcaneArchives.logger.info("^RETURNED NULL");
+				return null;
+			}
 		}
 	}
 
