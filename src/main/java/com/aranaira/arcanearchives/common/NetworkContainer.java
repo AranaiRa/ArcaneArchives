@@ -16,12 +16,14 @@ import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerWorkbench;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryCraftResult;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class NetworkContainer extends Container 
@@ -108,7 +110,7 @@ public class NetworkContainer extends Container
 	
 	public void SetSearchString(String s)
 	{
-		networkItemHandler.setSearchString(s);;
+		networkItemHandler.setSearchString(s);
 	}
 	
 	
@@ -120,31 +122,36 @@ public class NetworkContainer extends Container
 	
 	@Override
 	public void detectAndSendChanges() {
-		IRecipe ir = CraftingManager.findMatchingRecipe(mInventoryCrafting, player.world);
-		
-		//This is probably a terrible way to go about this, but MEH.
-		if (ir != null)
-		{
-			eventHandler.inventorySlots.get(0).inventory.setInventorySlotContents(eventHandler.inventorySlots.get(0).getSlotIndex(), ir.getCraftingResult(mInventoryCrafting));;
-		}
-		else
-		{
-			eventHandler.inventorySlots.get(0).inventory.setInventorySlotContents(eventHandler.inventorySlots.get(0).getSlotIndex(), new ItemStack(Blocks.AIR));
-		}
+		eventHandler.detectAndSendChanges();
 		
 		super.detectAndSendChanges();
 	}
 	
 	@Override
+	public void onCraftMatrixChanged(IInventory inventoryIn) {
+		eventHandler.onCraftMatrixChanged(inventoryIn);
+		super.onCraftMatrixChanged(inventoryIn);
+	}
+	
+	@Override
+	protected void slotChangedCraftingGrid(World p_192389_1_, EntityPlayer p_192389_2_, InventoryCrafting p_192389_3_,
+			InventoryCraftResult p_192389_4_) {
+		super.slotChangedCraftingGrid(p_192389_1_, p_192389_2_, p_192389_3_, p_192389_4_);
+	}
+	
+	
+	
+	@Override
 	public void putStackInSlot(int slotID, ItemStack stack) 
 	{
-		
+		//Not sure if this really does anything.
+		super.putStackInSlot(slotID, stack);
 	}
 	
 	@Override
 	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player) 
 	{
-		if (slotId < 27)
+		if (slotId < 27 && slotId > -1)
 		{
 			int modifiedSlotID = 26 - slotId;
 			

@@ -5,6 +5,7 @@ import com.aranaira.arcanearchives.common.AAGuiHandler;
 import com.aranaira.arcanearchives.common.ContainerRadiantChest;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.NetworkHelper;
+import com.aranaira.arcanearchives.util.handlers.AATickHandler;
 
 import net.minecraft.block.BlockChest;
 import net.minecraft.block.ITileEntityProvider;
@@ -23,6 +24,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.ILockableContainer;
@@ -67,6 +69,17 @@ public class RadiantChest extends BlockTemplate implements IItemHandler, ITileEn
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) 
 	{
+		if (AATickHandler.GetInstance().mIsDrawingLine)
+		{
+			Vec3d bpos = new Vec3d(pos.getX(), pos.getY(), pos.getZ());
+			ArcaneArchives.logger.info(bpos);
+			if (AATickHandler.GetInstance().mBlockPosition.equals(bpos))
+			{
+				AATickHandler.GetInstance().mIsDrawingLine = false;
+			}
+		}
+		
+
 		playerIn.openGui(ArcaneArchives.Instance, AAGuiHandler.RADIANT_CHEST, worldIn, pos.getX(), pos.getY(), pos.getZ());
 		
 		return true;

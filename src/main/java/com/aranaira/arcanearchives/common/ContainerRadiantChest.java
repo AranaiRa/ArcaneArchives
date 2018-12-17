@@ -18,11 +18,12 @@ public class ContainerRadiantChest extends Container {
 
 	public ContainerRadiantChest(RadiantChestTileEntity RCTE, IInventory playerInventory)
 	{
+		
 		for (int y = 5; y > -1; y--)
 		{
 			for (int x = 8; x > -1; x--)
 			{
-				this.addSlotToContainer(new SlotItemHandler(RCTE.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null), 9 * y + x, x * 18 + 16, y * 18 + 16));
+				this.addSlotToContainer(new SlotItemHandler((AAItemStackHandler)RCTE.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null), 9 * y + x, x * 18 + 16, y * 18 + 16));
 			}
 		}
 		
@@ -144,5 +145,6 @@ public class ContainerRadiantChest extends Container {
 		return stack;
 	}
     */
+	
 	
 }

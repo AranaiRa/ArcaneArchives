@@ -72,6 +72,11 @@ public class AccessorBlock extends Block
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) 
     {
+    	if (Parent == null)
+    	{
+    		return false;
+    	}
+    	
     	return Parent.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
     }
 }
