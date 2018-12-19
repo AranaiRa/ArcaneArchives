@@ -99,6 +99,7 @@ public class BlockTemplate extends Block implements IHasModel {
 				temp.Parent = this;
 				temp.setUnlocalizedName(getUnlocalizedName());
 				worldIn.setBlockState(pos.add(0, y, 0), temp.getBlockState().getBaseState());
+				
 				Accessors.add(temp);
 			}
 		}

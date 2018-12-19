@@ -82,6 +82,24 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 	{
 		return mName;
 	}
+
+	public void setContents(ItemStack[] chestContents, ItemStack[] secondaryChestContents, boolean secondaryChest) 
+	{
+		for (int i = 0; i < chestContents.length; i++)
+		{
+			mInventory.insertItem(i, chestContents[i], false);
+		}
+		if (secondaryChest)
+			for (int i = 0; i < secondaryChestContents.length; i++)
+			{
+				mInventory.insertItem(i + 27, secondaryChestContents[i], false);
+			}
+	}
+
+	public void setFacing(EnumFacing chestFacing) {
+	
+		
+	}
 	
 	
 }

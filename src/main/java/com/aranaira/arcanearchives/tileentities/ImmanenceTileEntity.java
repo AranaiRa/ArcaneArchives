@@ -31,6 +31,7 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 	public NonNullList<ItemStack> Inventory;
 	public boolean IsInventory = false;
 	public int MaxItems;
+	private byte facing;
 	
 	public ImmanenceTileEntity(String name)
 	{
