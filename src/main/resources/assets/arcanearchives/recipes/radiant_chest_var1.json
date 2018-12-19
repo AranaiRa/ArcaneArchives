@@ -1,0 +1,27 @@
+{
+    "_comment": [
+        "Craft Radiant Chest from planks"
+    ],
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        "www",
+        "wqw",
+        "www"
+    ],
+    "key":
+    {
+        "w":
+        {
+            "type": "forge:ore_dict",
+            "ore": "plankWood"
+        },
+        "q":
+        {
+            "item": "arcanearchives:item_rawquartz"
+        }
+    },
+    "result": {
+        "item": "arcanearchives:radiant_chest"
+    }
+}
