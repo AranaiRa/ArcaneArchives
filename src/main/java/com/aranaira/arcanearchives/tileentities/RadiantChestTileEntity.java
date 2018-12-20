@@ -100,6 +100,4 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 	
 		
 	}
-	
-	
 }
