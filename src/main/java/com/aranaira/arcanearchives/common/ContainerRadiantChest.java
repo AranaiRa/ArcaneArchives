@@ -67,8 +67,8 @@ public class ContainerRadiantChest extends Container {
 		return true;
 	}
 
-	//@Override
-	public ItemStack atransferStackInSlot(EntityPlayer playerIn, int index) {
+	@Override
+	public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
 		ItemStack stack = ItemStack.EMPTY;
 		final Slot slot = inventorySlots.get(index);
 		
@@ -108,8 +108,8 @@ public class ContainerRadiantChest extends Container {
 		super.putStackInSlot(slotID, stack);
 	}
 	
-	@Override
-    public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
+	//@Override
+    public ItemStack aslotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
     {
 		if (slotId > 53)
 		{
