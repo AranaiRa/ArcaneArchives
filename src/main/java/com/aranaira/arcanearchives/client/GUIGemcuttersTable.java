@@ -23,9 +23,6 @@ public class GUIGemcuttersTable extends GuiContainer
 	public GUIGemcuttersTable(EntityPlayer player, ContainerGemcuttersTable container)
 	{
 		super(container);
-		
-		
-		
 		this.xSize = 206;
 		this.ySize = 254;
 		
