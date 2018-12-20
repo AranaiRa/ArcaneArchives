@@ -47,5 +47,8 @@ public class ConfigHandler
 		@Config.Comment({ "The Amount of Items Each Repository Can Hold" })
 		public int iRepositoryMatrixItemCap = 256;
 		public int iStorageMatrixItemCap	= 256;
+		
+		@Config.Comment({ "The Amount of Items Each Slot in a Radiant Chest Can Hold Compared to 64 (multiplier)" })
+		public static int iRadiantChestMultiplier = 4;
 	}
 }

@@ -2,21 +2,27 @@ package com.aranaira.arcanearchives.common;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.SlotItemHandler;
 
-public class AASlot extends Slot 
+public class AASlot extends SlotItemHandler 
 {
-
-	public AASlot(IInventory inventoryIn, int index, int xPosition, int yPosition) {
-		super(inventoryIn, index, xPosition, yPosition);
-		// TODO Auto-generated constructor stub
-	}
-
-	public boolean Contains(int mouseX, int mouseY, int offLeft, int topOffset)
+	private int mSlotStackLimit = 64;
+	
+	public AASlot(IItemHandler itemHandler, int index, int xPosition, int yPosition)
+    {
+		super(itemHandler, index, xPosition, yPosition);
+    }
+	
+	public AASlot(IItemHandler itemHandler, int index, int xPosition, int yPosition, int slotLimit)
 	{
-		if (mouseX > offLeft + xPos && mouseY > yPos + topOffset && mouseX < offLeft + xPos + 16 && mouseY < yPos + topOffset + 16)
-		{
-			return true;
-		}
-		return false;
+		super(itemHandler, index, xPosition, yPosition);
+		mSlotStackLimit = slotLimit;
+	}
+	
+	@Override
+	public int getSlotStackLimit() {
+		// TODO Auto-generated method stub
+		return mSlotStackLimit;
 	}
 }

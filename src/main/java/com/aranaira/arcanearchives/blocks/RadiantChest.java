@@ -12,6 +12,7 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -31,7 +32,7 @@ import net.minecraft.world.ILockableContainer;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
 
-public class RadiantChest extends BlockTemplate implements IItemHandler, ITileEntityProvider{
+public class RadiantChest extends BlockTemplate implements ITileEntityProvider{
 
 	public static final String NAME = "radiant_chest"; 
 	
@@ -64,7 +65,6 @@ public class RadiantChest extends BlockTemplate implements IItemHandler, ITileEn
 	{
 		return true;
 	}
-	
 	
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) 
@@ -100,12 +100,6 @@ public class RadiantChest extends BlockTemplate implements IItemHandler, ITileEn
     }
 
 	@Override
-	public ItemStack getStackInSlot(int index) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) 
 	{
 		return tileEntityInstance = new RadiantChestTileEntity();
@@ -116,29 +110,17 @@ public class RadiantChest extends BlockTemplate implements IItemHandler, ITileEn
 	{
 		return tileEntityInstance = new RadiantChestTileEntity();
 	}
-
+	
 	@Override
-	public int getSlots() {
+	public boolean canEntityDestroy(IBlockState state, IBlockAccess world, BlockPos pos, Entity entity) {
 		// TODO Auto-generated method stub
-		return 54;
+		return super.canEntityDestroy(state, world, pos, entity);
 	}
-
+	
 	@Override
-	public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean canBeReplacedByLeaves(IBlockState state, IBlockAccess world, BlockPos pos) {
+		return false;
 	}
-
-	@Override
-	public ItemStack extractItem(int slot, int amount, boolean simulate) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int getSlotLimit(int slot) {
-		// TODO Auto-generated method stub
-		return 64;
-	}
+	
 	
 }
