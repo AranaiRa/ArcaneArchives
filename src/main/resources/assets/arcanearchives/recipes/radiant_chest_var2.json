@@ -1,0 +1,13 @@
+{
+    "_comment": [
+        "Craft Radiant Chest from Chest"
+    ],
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {   "item": "arcanearchives:item_rawquartz" },
+        {   "item": "minecraft:chest" }
+    ],
+    "result": {
+        "item": "arcanearchives:radiant_chest"
+    }
+}
