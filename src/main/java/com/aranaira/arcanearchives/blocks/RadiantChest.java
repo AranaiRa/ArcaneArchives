@@ -7,6 +7,7 @@ import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.NetworkHelper;
 import com.aranaira.arcanearchives.util.handlers.AATickHandler;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -27,6 +28,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.ILockableContainer;
 import net.minecraft.world.World;
@@ -40,6 +42,7 @@ public class RadiantChest extends BlockTemplate implements ITileEntityProvider{
 	public RadiantChest() {
 		super(NAME, Material.GLASS);
 		setLightLevel(16/16f);
+		setResistance(6000F);
 	}
 
     @Override
@@ -121,6 +124,4 @@ public class RadiantChest extends BlockTemplate implements ITileEntityProvider{
 	public boolean canBeReplacedByLeaves(IBlockState state, IBlockAccess world, BlockPos pos) {
 		return false;
 	}
-	
-	
 }
