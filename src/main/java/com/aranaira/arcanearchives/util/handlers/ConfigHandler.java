@@ -46,6 +46,9 @@ public class ConfigHandler
 		@Config.Comment({ "The Amount of Bonus Ticks Blocks Get if Their Drain is Met" })
 		public int iRadiantResonatorBonusTicks = 1;
 		
+		@Config.Comment({ "The Amount of Ticks it Takes for a Radiant Resonantor to Create Raw Quartz" })
+		public int iRadiantResonatorTickTime = 6000;
+		
 		@Config.Comment({ "The Amount of Items Each Repository Can Hold" })
 		public int iRepositoryMatrixItemCap = 256;
 		public int iStorageMatrixItemCap	= 256;

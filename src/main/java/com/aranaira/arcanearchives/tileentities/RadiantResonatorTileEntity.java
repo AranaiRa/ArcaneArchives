@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 
 public class RadiantResonatorTileEntity extends ImmanenceTileEntity 
 {
-	public int TicksUntilCrystalGrowth = 200;
+	public int TicksUntilCrystalGrowth = ConfigHandler.values.iRadiantResonatorTickTime;
 	public int BonusTicks; //How many bonus ticks the Resonator simulates based on supplied Immanence
 	
 	public RadiantResonatorTileEntity()
@@ -27,17 +27,18 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 	
 	@Override
 	public void update() {
-		if (TicksUntilCrystalGrowth > 0)
+		if (Block.getIdFromBlock(world.getBlockState(pos.add(0, 1, 0)).getBlock()) == 0)
 		{
-			TicksUntilCrystalGrowth--;
-			if (IsDrainPaid)
-				TicksUntilCrystalGrowth -= BonusTicks;
-		}
-		else
-		{
-			if (Block.getIdFromBlock(world.getBlockState(pos.add(0, 1, 0)).getBlock()) == 0)
+			if (TicksUntilCrystalGrowth > 0)
 			{
-				TicksUntilCrystalGrowth = 200;
+				TicksUntilCrystalGrowth--;
+				if (IsDrainPaid)
+					TicksUntilCrystalGrowth -= BonusTicks;
+			}
+			else
+			{
+				
+				TicksUntilCrystalGrowth = ConfigHandler.values.iRadiantResonatorTickTime;
 				if (!world.isRemote)
 				{
 					world.setBlockState(pos.add(0, 1, 0), Block.getStateById(Block.getIdFromBlock(BlockLibrary.RAW_QUARTZ)), 3);
