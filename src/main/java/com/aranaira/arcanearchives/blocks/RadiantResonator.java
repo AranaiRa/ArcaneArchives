@@ -8,6 +8,7 @@ import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
 import com.aranaira.arcanearchives.util.NetworkHelper;
 import com.aranaira.arcanearchives.util.Placeable;
+import com.aranaira.arcanearchives.util.handlers.ConfigHandler;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -18,6 +19,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
@@ -41,7 +43,7 @@ public class RadiantResonator extends BlockTemplate
 	public RadiantResonator() 
 	{
 		super(name, Material.IRON);
-		PlaceLimit = 3;
+		PlaceLimit = ConfigHandler.values.iRadiantResonatorLimit;
 	}
 	
 	@Override
@@ -74,6 +76,10 @@ public class RadiantResonator extends BlockTemplate
 	
 	@Override
 	public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state) {
+		if (worldIn.getBlockState(pos.add(0, 1, 0)).getBlock() instanceof RawQuartz)
+		{
+			worldIn.destroyBlock(pos.add(0, 1, 0), true);
+		}
 		super.onBlockDestroyedByPlayer(worldIn, pos, state);
 	}
 	

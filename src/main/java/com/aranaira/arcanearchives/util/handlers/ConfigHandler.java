@@ -35,6 +35,8 @@ public class ConfigHandler
 	
 	public static class ConfigValues
 	{
+		@Config.Comment({ "Amount of Blocks Able to be Placed by a Player" })
+		public int iRadiantResonatorLimit = 3;
 
 		@Config.Comment({ "Amount of Drain Each Block Takes From The Network" })
 		public int iRadiantResonatorDrain 	= 20;
