@@ -86,7 +86,7 @@ public class ArcaneArchives
     @EventHandler
     public static void init(FMLInitializationEvent event)
     {
-        ClientCommandHandler.instance.registerCommand(new ArcaneArchivesCommand());
+        //ClientCommandHandler.instance.registerCommand(new ArcaneArchivesCommand());
     }
     
     @EventHandler

@@ -1,9 +1,12 @@
 package com.aranaira.arcanearchives.tileentities;
 
+import java.util.Iterator;
+
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.common.AAItemStackHandler;
 import com.aranaira.arcanearchives.common.ContainerRadiantChest;
 import com.aranaira.arcanearchives.init.BlockLibrary;
+import com.aranaira.arcanearchives.util.LargeItemNBTUtil;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -65,7 +68,17 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 	{
 		super.readFromNBT(compound);
 		// Inventory
-		CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(mInventory, null, compound.getTagList("inventory", NBT.TAG_COMPOUND));
+		//CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(mInventory, null, compound.getTagList("inventory", NBT.TAG_COMPOUND));
+		NBTTagList tags = compound.getTagList("inventory", 10);
+		Iterator itr = tags.iterator();
+		int i = 0;
+		while (itr.hasNext())
+		{
+			NBTTagCompound data = (NBTTagCompound)itr.next();
+			ItemStack temp = LargeItemNBTUtil.readFromNBT(data);
+			mInventory.insertItem(i, temp, false);
+			i++;
+		}
 	}
 
 	@Override
@@ -73,7 +86,16 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 	{
 		super.writeToNBT(compound);
 		// Inventory
-		compound.setTag("inventory", CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(mInventory, null));
+		//compound.setTag("inventory", CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(mInventory, null));
+		
+		NBTTagList tags = new NBTTagList();
+		for (int i = 0; i < mInventory.getSlots(); i++)
+		{
+			NBTTagCompound data = new NBTTagCompound();
+			LargeItemNBTUtil.writeToNBT(data, mInventory.getStackInSlot(i));
+			tags.appendTag(data);
+		}
+		compound.setTag("inventory", tags);
 		
 		return compound;
 	}
