@@ -27,6 +27,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.b3d.B3DLoader;
@@ -69,7 +70,13 @@ public class RadiantResonator extends BlockTemplate
 		EntityPlayer EP = worldIn.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 100, false);
 		if (EP != null)
 			if (NetworkHelper.getArcaneArchivesNetwork(EP.getUniqueID()).CountBlocks(this) < PlaceLimit)
+			{
 				return true;
+			}
+			else
+			{
+				EP.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.toomanyplaced.resonator"), true);
+			}
 		
 		return false;
 	}
