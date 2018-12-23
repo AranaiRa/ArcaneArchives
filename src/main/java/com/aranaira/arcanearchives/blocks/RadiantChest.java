@@ -75,7 +75,7 @@ public class RadiantChest extends BlockTemplate implements ITileEntityProvider{
 		if (AATickHandler.GetInstance().mIsDrawingLine)
 		{
 			Vec3d bpos = new Vec3d(pos.getX(), pos.getY(), pos.getZ());
-			ArcaneArchives.logger.info(bpos);
+
 			if (AATickHandler.GetInstance().mBlockPosition.equals(bpos))
 			{
 				AATickHandler.GetInstance().mIsDrawingLine = false;
@@ -91,6 +91,16 @@ public class RadiantChest extends BlockTemplate implements ITileEntityProvider{
 	@Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
     {
+		if (AATickHandler.GetInstance().mIsDrawingLine)
+		{
+			Vec3d bpos = new Vec3d(pos.getX(), pos.getY(), pos.getZ());
+
+			if (AATickHandler.GetInstance().mBlockPosition.equals(bpos))
+			{
+				AATickHandler.GetInstance().mIsDrawingLine = false;
+			}
+		}
+		
         TileEntity tileentity = worldIn.getTileEntity(pos);
 
         if (tileentity instanceof IInventory)
