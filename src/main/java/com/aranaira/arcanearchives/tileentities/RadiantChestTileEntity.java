@@ -100,4 +100,16 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 	
 		
 	}
+	
+	public boolean Contains(ItemStack item)
+	{
+		for (int i = 0; i < 54; i++)
+		{
+			if (ItemStack.areItemsEqual(item, mInventory.getStackInSlot(i)))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 }
