@@ -93,12 +93,7 @@ public class ContainerManifest extends Container
 		{
 			for (int x = 0; x < 9; x++)
 			{
-				if (ItemList.size() < i + 1)
-					break;
-				if (ItemList.get(i).isEmpty())
-					break;
 				this.addSlotToContainer(new SlotItemHandler(mManifestItemHandler, i, x * 18 + 12, y * 18 + 30));
-				ArcaneArchives.logger.info("Added " + ItemList.get(i).getDisplayName());
 				i++;
 			}
 		}
@@ -114,6 +109,8 @@ public class ContainerManifest extends Container
 	@Override
 	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player) 
 	{
+		if (mManifestItemHandler.getStackInSlot(slotId).isEmpty())
+			return ItemStack.EMPTY;
 		RadiantChestTileEntity RCTE = null;
 		for (RadiantChestTileEntity rcte : networkChests)
 		{
@@ -128,10 +125,15 @@ public class ContainerManifest extends Container
 			return ItemStack.EMPTY;
 		
 		BlockPos bp = RCTE.blockpos;
-		//Change this to be a button;
+		
 		AATickHandler.GetInstance().mBlockPosition = new Vec3d(bp.getX(), bp.getY(), bp.getZ());
 		AATickHandler.GetInstance().mIsDrawingLine = true;
 		
 		return ItemStack.EMPTY;
+	}
+
+	public void SetSearchString(String SearchText) 
+	{
+		mManifestItemHandler.setSearchText(SearchText);
 	}
 }

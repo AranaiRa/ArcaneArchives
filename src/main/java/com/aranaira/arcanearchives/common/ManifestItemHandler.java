@@ -14,6 +14,7 @@ public class ManifestItemHandler implements IItemHandlerModifiable
 	private List<ItemStack> mItemStacks;
 	//Keeps track of all items in the item handler. (Used for when we have a scroll bar implemented);
 	private List<ItemStack> mAllItemStacks;
+	private String mSearchText = "";
 
 	public ManifestItemHandler(UUID playerID)
 	{
@@ -39,7 +40,39 @@ public class ManifestItemHandler implements IItemHandlerModifiable
 	@Override
 	public ItemStack getStackInSlot(int slot) 
 	{
-		return mItemStacks.get(slot);
+		if (mSearchText == "")
+		{
+			if (slot > mItemStacks.size() - 1)
+				return ItemStack.EMPTY;
+			
+			return mItemStacks.get(slot);
+		}
+		else
+		{
+			List<ItemStack> s = filteredResults();
+			
+			if (slot > s.size() - 1)
+				return ItemStack.EMPTY;
+			
+			return filteredResults().get(slot);
+		}
+			
+	}
+	
+	public List<ItemStack> filteredResults()
+	{
+		
+		List<ItemStack> temp = new ArrayList();
+		
+		for (ItemStack s : mItemStacks)
+		{
+			if (s.getUnlocalizedName().contains(mSearchText))
+			{
+				temp.add(s);
+			}
+		}
+		
+		return temp;
 	}
 
 	@Override
@@ -65,4 +98,8 @@ public class ManifestItemHandler implements IItemHandlerModifiable
 		
 	}
 
+	public void setSearchText(String s)
+	{
+		mSearchText = s;
+	}
 }
