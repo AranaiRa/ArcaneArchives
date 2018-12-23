@@ -66,7 +66,7 @@ public class ManifestItemHandler implements IItemHandlerModifiable
 		
 		for (ItemStack s : mItemStacks)
 		{
-			if (s.getUnlocalizedName().contains(mSearchText))
+			if (s.getDisplayName().toLowerCase().contains(mSearchText.toLowerCase()))
 			{
 				temp.add(s);
 			}

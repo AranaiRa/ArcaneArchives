@@ -109,8 +109,11 @@ public class ContainerManifest extends Container
 	@Override
 	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player) 
 	{
+		if (slotId < 0)
+			return ItemStack.EMPTY;
 		if (mManifestItemHandler.getStackInSlot(slotId).isEmpty())
 			return ItemStack.EMPTY;
+		
 		RadiantChestTileEntity RCTE = null;
 		for (RadiantChestTileEntity rcte : networkChests)
 		{
