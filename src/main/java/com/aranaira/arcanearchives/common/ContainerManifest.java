@@ -54,7 +54,6 @@ public class ContainerManifest extends Container
 					return -1;
 			}
 		});
-		ArcaneArchives.logger.info("Sorted chests by distance.");
 		
 		for (int i = 0; i < networkChests.size(); i++)
 		{
@@ -80,7 +79,6 @@ public class ContainerManifest extends Container
 				}
 			}
 		}
-		ArcaneArchives.logger.info("Added item contents.");
 
 		
 		for (int i = 0; i < ItemList.size(); i++)
@@ -97,7 +95,6 @@ public class ContainerManifest extends Container
 				i++;
 			}
 		}
-		ArcaneArchives.logger.info("Added slots.");
 	}
 	
 	@Override
