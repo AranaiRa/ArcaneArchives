@@ -1,5 +1,12 @@
 {
+    "forge_marker": 1,
+    "defaults": {
+        "textures": {
+            "all": "arcanearchives:blocks/block_storage_rawquartz"
+        }
+    },
     "variants": {
-        "normal": { "model": "arcanearchives:storage_raw_quartz" }
+        "normal":    { "model": "arcanearchives:storage_raw_quartz" },
+        "inventory": { "model": "arcanearchives:storage_raw_quartz" }
     }
 }

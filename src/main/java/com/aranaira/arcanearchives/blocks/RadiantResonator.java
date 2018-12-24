@@ -45,6 +45,7 @@ public class RadiantResonator extends BlockTemplate
 	{
 		super(name, Material.IRON);
 		PlaceLimit = ConfigHandler.values.iRadiantResonatorLimit;
+		setHardness(2.1f);
 	}
 	
 	@Override

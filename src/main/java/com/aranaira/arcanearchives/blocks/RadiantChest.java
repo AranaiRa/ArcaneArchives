@@ -42,6 +42,7 @@ public class RadiantChest extends BlockTemplate implements ITileEntityProvider{
 	public RadiantChest() {
 		super(NAME, Material.GLASS);
 		setLightLevel(16/16f);
+		setHardness(2.1f);
 		setResistance(6000F);
 	}
 
