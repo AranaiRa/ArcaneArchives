@@ -6,7 +6,11 @@
         }
     },
     "variants": {
-        "normal":    { "model": "arcanearchives:storage_cut_quartz" },
-        "inventory": { "model": "arcanearchives:storage_cut_quartz" }
+        "normal": {
+            "model": "cube_all"
+        },
+        "inventory": {
+            "model": "cube_all"
+        }
     }
 }

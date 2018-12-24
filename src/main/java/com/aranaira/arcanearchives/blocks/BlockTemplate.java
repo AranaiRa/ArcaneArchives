@@ -19,6 +19,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -36,7 +37,7 @@ public class BlockTemplate extends Block implements IHasModel {
 	public BlockTemplate(String name, Material materialIn) {
 		super(materialIn);
 		setUnlocalizedName(name);
-		setRegistryName(name);
+		setRegistryName(new ResourceLocation(ArcaneArchives.MODID, name));
 		setCreativeTab(ArcaneArchives.TAB_AA);
 		refName = name;
 		BlockLibrary.BLOCKS.add(this);
