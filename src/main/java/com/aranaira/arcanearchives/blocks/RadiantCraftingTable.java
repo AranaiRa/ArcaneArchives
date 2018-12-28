@@ -13,7 +13,8 @@ public class RadiantCraftingTable extends BlockTemplate{
 	public RadiantCraftingTable() {
 		super(NAME, Material.GLASS);
 		setLightLevel(16/16f);
-		setHardness(2.1f);
+		setHardness(1.7f);
+		setHarvestLevel("pickaxe", 0);
 	}
 
     @Override
