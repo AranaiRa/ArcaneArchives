@@ -92,6 +92,8 @@ public class RadiantChest extends BlockTemplate implements ITileEntityProvider{
 	@Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
     {
+		NetworkHelper.getArcaneArchivesNetwork(((RadiantChestTileEntity)worldIn.getTileEntity(pos)).NetworkID).RemoveBlockFromNetwork(tileEntityInstance);;
+		
 		if (AATickHandler.GetInstance().mIsDrawingLine)
 		{
 			Vec3d bpos = new Vec3d(pos.getX(), pos.getY(), pos.getZ());

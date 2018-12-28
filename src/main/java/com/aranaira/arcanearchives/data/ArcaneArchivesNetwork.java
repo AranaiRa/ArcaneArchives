@@ -272,6 +272,11 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	
 	public void RemoveBlockFromNetwork(ImmanenceTileEntity ITE)
 	{
+		if (ITE instanceof RadiantChestTileEntity)
+		{
+			mRadiantChests.remove(ITE);
+			return;
+		}
 		mNetworkBlocks.remove(ITE);
 		mNeedsToBeUpdated = true;
 		UpdateImmanence();
