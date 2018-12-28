@@ -22,5 +22,6 @@ public class StorageCutQuartz extends BlockTemplate {
 		super(name, Material.ROCK);
 		setLightLevel(16/16f);
 		setHardness(2.1f);
+		setHarvestLevel("pickaxe", 0);
 	}
 }

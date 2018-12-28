@@ -44,6 +44,7 @@ public class RadiantChest extends BlockTemplate implements ITileEntityProvider{
 		setLightLevel(16/16f);
 		setHardness(2.1f);
 		setResistance(6000F);
+		setHarvestLevel("axe", 0);
 	}
 
     @Override

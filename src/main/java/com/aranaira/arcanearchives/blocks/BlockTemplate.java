@@ -43,6 +43,7 @@ public class BlockTemplate extends Block implements IHasModel {
 		BlockLibrary.BLOCKS.add(this);
 		ItemLibrary.ITEMS.add(new ItemBlock(this).setRegistryName(this.getRegistryName()));
 		Accessors = new ArrayList<AccessorBlock>();
+		setHarvestLevel("pickaxe", 0);
 	}
 	
 	public boolean hasOBJModel()

@@ -14,6 +14,7 @@ public class RadiantLantern extends BlockTemplate{
 		super(NAME, Material.GLASS);
 		setLightLevel(16/16f);
 		setHardness(0.3f);
+		setHarvestLevel("pickaxe", 0);
 	}
 
     @Override
