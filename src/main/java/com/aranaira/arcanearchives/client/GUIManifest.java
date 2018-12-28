@@ -38,7 +38,7 @@ public class GUIManifest extends GuiContainer
 		
 		mContainer = container;
 		
-		this.xSize 	= 202;
+		this.xSize 	= 184;
 		this.ySize = 224;
 		
 	}
