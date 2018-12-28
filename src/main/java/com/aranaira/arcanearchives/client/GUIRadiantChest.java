@@ -27,7 +27,7 @@ public class GUIRadiantChest extends GuiContainer {
 
 
 	Minecraft mc = Minecraft.getMinecraft();
-	private final int ImageHeight = 253, ImageWidth = 210, ImageScale = 256;
+	private final int ImageHeight = 253, ImageWidth = 192, ImageScale = 256;
 	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/radiantchest.png");
 	
 	@Override
