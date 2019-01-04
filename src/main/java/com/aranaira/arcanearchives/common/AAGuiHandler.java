@@ -24,8 +24,8 @@ public class AAGuiHandler implements IGuiHandler
 	
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		ArcaneArchives.logger.info("^^^^SERVER GUI ELEMENT");
-		ArcaneArchives.logger.info("id:"+ID+"\nplayer:"+player+"\nworld:"+world+"\nx:"+x+" y:"+y+" z:"+z);
+		//ArcaneArchives.logger.info("^^^^SERVER GUI ELEMENT");
+		//ArcaneArchives.logger.info("id:"+ID+"\nplayer:"+player+"\nworld:"+world+"\nx:"+x+" y:"+y+" z:"+z);
 		switch (ID)
 		{
 			case TOME_OF_REQUISITION:
@@ -34,7 +34,7 @@ public class AAGuiHandler implements IGuiHandler
 			case RADIANT_CHEST:
 				return new ContainerRadiantChest((RadiantChestTileEntity) world.getTileEntity(new BlockPos(x, y, z)), player.inventory);
 			case MANIFEST:
-				return new ContainerManifest(player);
+				return new ContainerManifest(player, true);
 			case GEMCUTTERS_TABLE:
 				return new ContainerGemcuttersTable((GemcuttersTableTileEntity) world.getTileEntity(new BlockPos(x, y, z)), player.inventory);
 			default:
@@ -47,9 +47,9 @@ public class AAGuiHandler implements IGuiHandler
 
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		ArcaneArchives.logger.info("^^^^CLIENT GUI ELEMENT");
-		ArcaneArchives.logger.info("^START");
-		ArcaneArchives.logger.info("id:"+ID+"\nplayer:"+player+"\nworld:"+world+"\nx:"+x+" y:"+y+" z:"+z);
+		//ArcaneArchives.logger.info("^^^^CLIENT GUI ELEMENT");
+		//ArcaneArchives.logger.info("^START");
+		//ArcaneArchives.logger.info("id:"+ID+"\nplayer:"+player+"\nworld:"+world+"\nx:"+x+" y:"+y+" z:"+z);
 		switch (ID)
 		{
 			case TOME_OF_REQUISITION:
@@ -57,7 +57,7 @@ public class AAGuiHandler implements IGuiHandler
 			case RADIANT_CHEST:
 				return new GUIRadiantChest(new ContainerRadiantChest((RadiantChestTileEntity) world.getTileEntity(new BlockPos(x, y, z)), player.inventory));
 			case MANIFEST:
-				return new GUIManifest(player, new ContainerManifest(player));
+				return new GUIManifest(player, new ContainerManifest(player, false));
 			case GEMCUTTERS_TABLE:
 				return new GUIGemcuttersTable(player, new ContainerGemcuttersTable((GemcuttersTableTileEntity) world.getTileEntity(new BlockPos(x, y, z)), player.inventory));
 			default:

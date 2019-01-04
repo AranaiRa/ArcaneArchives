@@ -1,33 +1,41 @@
 package com.aranaira.arcanearchives.common;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.util.RadiantChestPlaceHolder;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
 public class ManifestItemHandler implements IItemHandlerModifiable 
 {
+	public static ManifestItemHandler mInstance = new ManifestItemHandler();
+	
 	private UUID mPlayerID;
-	private List<ItemStack> mItemStacks;
-	//Keeps track of all items in the item handler. (Used for when we have a scroll bar implemented);
-	private List<ItemStack> mAllItemStacks;
+	public List<ItemStack> mItemStacks;
 	private String mSearchText = "";
+	public List<RadiantChestPlaceHolder> mChests;
+	//TODO setup to set this variable again.
+	public EntityPlayer mPlayer = null;
 
-	public ManifestItemHandler(UUID playerID)
+	public ManifestItemHandler()
 	{
-		mPlayerID = playerID;
+		mChests = new ArrayList();
 		mItemStacks= new ArrayList();
-		mAllItemStacks = new ArrayList();
 	}
 	
 	//Returns the slot number of the item added.
 	public void AddItemStack(ItemStack item)
 	{
-		mAllItemStacks.add(item);
-		//TODO Rework for scroll bar
+		if (mPlayer == null)
+			ArcaneArchives.logger.info("mPlayer is Null!");
 		mItemStacks.add(item);
 	}
 	
@@ -40,11 +48,10 @@ public class ManifestItemHandler implements IItemHandlerModifiable
 	@Override
 	public ItemStack getStackInSlot(int slot) 
 	{
-		if (mSearchText == "")
+		if (mSearchText.equals(""))
 		{
 			if (slot > mItemStacks.size() - 1)
 				return ItemStack.EMPTY;
-			
 			return mItemStacks.get(slot);
 		}
 		else
@@ -101,5 +108,42 @@ public class ManifestItemHandler implements IItemHandlerModifiable
 	public void setSearchText(String s)
 	{
 		mSearchText = s;
+	}
+	
+	public void Clear()
+	{
+		mChests = new ArrayList();
+		mItemStacks= new ArrayList();
+		mSearchText = "";
+	}
+
+	public void SortChests()
+	{
+		
+		
+		mChests.sort(new Comparator<RadiantChestPlaceHolder>() {
+			
+			@Override
+			public int compare(final RadiantChestPlaceHolder rcte1, final RadiantChestPlaceHolder rcte2)
+			{
+				int posX = 0;
+				int posY = 0;
+				int posZ = 0;
+				if (mPlayer != null)
+				{
+					posX = (int) mPlayer.posX;
+					posY = (int) mPlayer.posY;
+					posZ = (int) mPlayer.posZ;
+				}
+				double rcte1Dist = rcte1.mPos.getDistance((int)posX, (int)posY, (int)posZ);
+				double rcte2Dist = rcte2.mPos.getDistance((int)posX, (int)posY, (int)posZ);
+				if (rcte1Dist == rcte2Dist)
+					return 0;
+				else if (rcte1Dist > rcte2Dist)
+					return 1;
+				else
+					return -1;
+			}
+		});
 	}
 }

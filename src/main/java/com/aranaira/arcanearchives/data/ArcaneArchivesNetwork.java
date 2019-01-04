@@ -10,6 +10,8 @@ import java.util.UUID;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.BlockTemplate;
+import com.aranaira.arcanearchives.common.ContainerManifest;
+import com.aranaira.arcanearchives.common.ManifestItemHandler;
 import com.aranaira.arcanearchives.common.NetworkContainer;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
@@ -41,10 +43,13 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 
 	private int mCurrentImmanence;
 	private boolean mNeedsToBeUpdated = true;
+	
+	public ManifestItemHandler mManifestItemHandler = null;
 
-	private ArcaneArchivesNetwork()
+	private ArcaneArchivesNetwork(UUID id)
 	{
-		
+		mPlayerId = id;
+		mManifestItemHandler = new ManifestItemHandler();
 	}
 	
 	public int GetImmanence()
@@ -296,12 +301,12 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	public void deserializeNBT(NBTTagCompound nbt) 
 	{
 		mPlayerId = nbt.getUniqueId("playerId");
+		mManifestItemHandler = new ManifestItemHandler();
 	}
 
 	public static ArcaneArchivesNetwork newNetwork(UUID playerID) 
 	{
-		ArcaneArchivesNetwork network = new ArcaneArchivesNetwork();
-		network.mPlayerId = playerID;
+		ArcaneArchivesNetwork network = new ArcaneArchivesNetwork(playerID);
 		return network;
 	}
 
@@ -336,7 +341,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 
 	public static ArcaneArchivesNetwork fromNBT(NBTTagCompound data) 
 	{
-		ArcaneArchivesNetwork network = new ArcaneArchivesNetwork();
+		ArcaneArchivesNetwork network = new ArcaneArchivesNetwork(null);
 		network.deserializeNBT(data);
 		return network;
 	}

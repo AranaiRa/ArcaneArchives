@@ -15,6 +15,7 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
@@ -83,7 +84,6 @@ public class RadiantChest extends BlockTemplate implements ITileEntityProvider{
 				AATickHandler.GetInstance().mIsDrawingLine = false;
 			}
 		}
-		
 
 		playerIn.openGui(ArcaneArchives.Instance, AAGuiHandler.RADIANT_CHEST, worldIn, pos.getX(), pos.getY(), pos.getZ());
 		

@@ -26,6 +26,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
 
 import javax.annotation.Nonnull;
 
@@ -38,6 +39,8 @@ import com.aranaira.arcanearchives.commands.ArcaneArchivesCommand;
 import com.aranaira.arcanearchives.common.AAGuiHandler;
 import com.aranaira.arcanearchives.init.ItemLibrary;
 import com.aranaira.arcanearchives.items.RawQuartzItem;
+import com.aranaira.arcanearchives.packets.AAPacketHandler;
+import com.aranaira.arcanearchives.packets.PacketNetworkInteraction;
 import com.aranaira.arcanearchives.proxy.CommonProxy;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.MatrixCoreTileEntity;
@@ -81,6 +84,8 @@ public class ArcaneArchives
     	
         logger = event.getModLog();
         NetworkRegistry.INSTANCE.registerGuiHandler(INSTANCE, new AAGuiHandler());
+        
+        AAPacketHandler.registerPackets();
     }
     
     @EventHandler
