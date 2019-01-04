@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.blocks;
 
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
@@ -16,6 +17,7 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -46,6 +48,13 @@ public class MatrixCrystalCore extends BlockTemplate {
 		Width = 3;
 		Height = 4;
 	}
+
+    @Override
+    public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
+    {
+    	tooltip.add("§c§lUNIMPLEMENTED§r");
+    	tooltip.add("§c§oUsing this item may crash your game!§r");
+    }
 	
 	@Override
 	public boolean hasOBJModel()

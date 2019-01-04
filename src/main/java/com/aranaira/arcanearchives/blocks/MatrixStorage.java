@@ -1,10 +1,13 @@
 package com.aranaira.arcanearchives.blocks;
 
+import java.util.List;
+
 import com.aranaira.arcanearchives.tileentities.MatrixRepositoryTileEntity;
 import com.aranaira.arcanearchives.tileentities.MatrixStorageTileEntity;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -21,6 +24,13 @@ public class MatrixStorage extends BlockTemplate {
 		setLightLevel(16/16f);
 		this.Height = 3;
 	}
+
+    @Override
+    public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
+    {
+    	tooltip.add("§c§lUNIMPLEMENTED§r");
+    	tooltip.add("§c§oUsing this item may crash your game!§r");
+    }
 	
 	@Override
 	public boolean hasOBJModel()

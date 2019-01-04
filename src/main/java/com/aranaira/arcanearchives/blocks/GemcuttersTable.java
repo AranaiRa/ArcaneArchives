@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.blocks;
 
+import java.util.List;
 import java.util.Random;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
@@ -19,6 +20,7 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -48,6 +50,13 @@ public class GemcuttersTable extends BlockTemplate implements ITileEntityProvide
 		super(name, Material.IRON);
 		this.Width = 2;
 	}
+
+    @Override
+    public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
+    {
+    	tooltip.add("§c§lUNIMPLEMENTED§r");
+    	tooltip.add("§c§oUsing this item may crash your game!§r");
+    }
 	
 	@Override
 	public boolean hasOBJModel()

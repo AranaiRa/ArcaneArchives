@@ -1,10 +1,13 @@
 package com.aranaira.arcanearchives.items;
 
+import java.util.List;
+
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.GUIBookContainer;
 import com.aranaira.arcanearchives.common.NetworkContainer;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -21,6 +24,13 @@ public class TomeOfRequisitionItem extends ItemTemplate {
 	public TomeOfRequisitionItem() {
 		super(NAME);
 	}
+
+    @Override
+    public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
+    {
+    	tooltip.add("§c§lUNIMPLEMENTED§r");
+    	tooltip.add("§c§oUsing this item may crash your game!§r");
+    }
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {

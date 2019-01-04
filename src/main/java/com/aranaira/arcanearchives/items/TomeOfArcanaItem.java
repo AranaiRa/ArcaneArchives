@@ -1,8 +1,11 @@
 package com.aranaira.arcanearchives.items;
 
+import java.util.List;
+
 import com.aranaira.arcanearchives.ArcaneArchives;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -22,4 +25,11 @@ public class TomeOfArcanaItem extends ItemTemplate
 	{
 		super(NAME);
 	}
+
+    @Override
+    public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
+    {
+    	tooltip.add("§c§lUNIMPLEMENTED§r");
+    	tooltip.add("§c§oUsing this item may crash your game!§r");
+    }
 }
