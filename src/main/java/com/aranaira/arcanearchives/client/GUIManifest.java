@@ -4,7 +4,9 @@ import java.io.IOException;
 
 import org.lwjgl.opengl.GL11;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.common.ContainerManifest;
+import com.aranaira.arcanearchives.util.handlers.AATickHandler;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -31,6 +33,14 @@ public class GUIManifest extends GuiContainer
 	
 	private int mTextTopOffset = 14;
 	private int mTextLeftOffset = 13;
+
+	private int mEndTrackingLeftOffset = 67;
+	private int mEndTrackingTopOffset = 202;
+	
+	private int mEndTrackingButtonLeftOffset = 65;
+	private int mEndTrackingButtonTopOffset = 200;
+	private int mEndTrackingButtonWidth = 54;
+	private int mEndTrackingButtonHeight = 14;
 	
 	public GUIManifest(EntityPlayer player, ContainerManifest container)
 	{
@@ -55,6 +65,8 @@ public class GUIManifest extends GuiContainer
 			fontRenderer.drawString("Search", 	guiLeft + mTextLeftOffset, mTextTopOffset + guiTop, 0x000000);
 		else
 			fontRenderer.drawString(temp, guiLeft + mTextLeftOffset, mTextTopOffset + guiTop, 0x000000);
+		
+		fontRenderer.drawString("End Track", guiLeft + mEndTrackingLeftOffset, mEndTrackingTopOffset + guiTop, 0x000000);
 	}
 	
 	
@@ -128,6 +140,11 @@ public class GUIManifest extends GuiContainer
 			else
 			{
 				mIsEnteringText = false;
+			}
+			
+			if (mouseX > guiLeft + mEndTrackingButtonLeftOffset && mouseX < guiLeft + mEndTrackingButtonLeftOffset + mEndTrackingButtonWidth && mouseY > guiTop + mEndTrackingButtonTopOffset && mouseY < guiTop + mEndTrackingButtonTopOffset + mEndTrackingButtonHeight)
+			{
+				AATickHandler.GetInstance().mIsDrawingLine = false;
 			}
 		}
 		
