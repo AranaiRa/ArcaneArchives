@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.command.CommandHandler;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -91,7 +92,8 @@ public class ArcaneArchives
     @EventHandler
     public static void init(FMLInitializationEvent event)
     {
-        //ClientCommandHandler.instance.registerCommand(new ArcaneArchivesCommand());
+    	
+        ClientCommandHandler.instance.registerCommand(new ArcaneArchivesCommand());
     }
     
     @EventHandler
