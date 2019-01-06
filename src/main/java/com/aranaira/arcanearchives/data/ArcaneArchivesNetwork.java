@@ -35,6 +35,12 @@ import net.minecraftforge.common.util.INBTSerializable;
 
 public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 {
+	public boolean mShared = false;
+	public UUID mSharedPlayer = null;
+	
+	public HashMap<String, UUID> pendingInvites = new HashMap();
+	
+	
 	private UUID mPlayerId;
 	private AAWorldSavedData mParent;
 	
@@ -50,6 +56,12 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	{
 		mPlayerId = id;
 		mManifestItemHandler = new ManifestItemHandler();
+	}
+	
+	public void ShareWith(UUID targetNetwork)
+	{
+		mShared = true;
+		mSharedPlayer = targetNetwork;
 	}
 	
 	public int GetImmanence()
@@ -428,5 +440,20 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 			}
 		}
 		return all_the_items;
+	}
+
+	public void Invite(String name, UUID uuid) 
+	{
+		
+		pendingInvites.put(name, uuid);
+	}
+	
+	public boolean Accept(String name)
+	{
+		if (!pendingInvites.containsKey(name))
+			return false;
+		mShared = true;
+		mSharedPlayer = pendingInvites.get(name);
+		return true;
 	}
 }
