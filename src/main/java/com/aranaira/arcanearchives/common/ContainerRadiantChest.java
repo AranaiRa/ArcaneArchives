@@ -16,6 +16,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ILockableContainer;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -26,9 +27,18 @@ public class ContainerRadiantChest extends Container {
 
     private int dragMode = -1;
     private final Set<Slot> dragSlots = Sets.<Slot>newHashSet();
+    
+    public String mName;
+    
+    public int mDimension;
+    public BlockPos mPos;
 	
 	public ContainerRadiantChest(RadiantChestTileEntity RCTE, IInventory playerInventory)
 	{
+		mName = RCTE.mName;
+		mPos = RCTE.getPos();
+		mDimension = RCTE.getWorld().provider.getDimension();
+		
 		for (int y = 5; y > -1; y--)
 		{
 			for (int x = 8; x > -1; x--)

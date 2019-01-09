@@ -2,6 +2,8 @@ package com.aranaira.arcanearchives.tileentities;
 
 import java.util.Iterator;
 
+import javax.annotation.Nullable;
+
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.common.AAItemStackHandler;
 import com.aranaira.arcanearchives.common.ContainerRadiantChest;
@@ -17,11 +19,14 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityLockableLoot;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants.NBT;
@@ -31,7 +36,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITickable 
 {
-	private String mName = "";
+	public String mName = "";
 	private final IItemHandler mInventory = new AAItemStackHandler(54);
 	
 	public RadiantChestTileEntity() 
@@ -79,6 +84,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 			mInventory.insertItem(i, temp, false);
 			i++;
 		}
+		mName = compound.getString("name");
 	}
 
 	@Override
@@ -96,6 +102,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 			tags.appendTag(data);
 		}
 		compound.setTag("inventory", tags);
+		compound.setString("name", mName);
 		
 		return compound;
 	}
@@ -134,4 +141,28 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 		}
 		return false;
 	}
+	
+	@Override
+	public NBTTagCompound getUpdateTag() {
+		NBTTagCompound tag = super.getUpdateTag();
+		tag.setString("name", mName);
+		return tag;
+	}
+	
+	@Override
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+		mName = pkt.getNbtCompound().getString("name");
+		super.onDataPacket(net, pkt);
+	}
+	
+
+    @Nullable
+    public SPacketUpdateTileEntity getUpdatePacket()
+    {
+    	NBTTagCompound compound = new NBTTagCompound();
+    	compound.setString("name", mName);
+    	SPacketUpdateTileEntity spute = new SPacketUpdateTileEntity(pos, 0, compound);
+        return spute;
+    }
+    
 }
