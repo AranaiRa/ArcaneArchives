@@ -11,6 +11,6 @@ public class ItemComparison
 		ItemStack tempB = stackB.copy();
 		tempB.setCount(1);
 		
-		return ItemStack.areItemsEqual(tempA, tempB);
+		return ItemStack.areItemsEqual(tempA, tempB) && ItemStack.areItemStackTagsEqual(tempA, tempB);
 	}
 }
