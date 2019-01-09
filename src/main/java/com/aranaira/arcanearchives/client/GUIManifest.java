@@ -53,11 +53,11 @@ public class GUIManifest extends GuiContainer
 		this.ySize = 224;
 		
 	}
-	
+
+	// TODO Have it be noticable when you are entering in the text box.
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) 
 	{
-		// TODO Auto-generated method stub
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		
 		this.renderHoveredToolTip(mouseX, mouseY);
