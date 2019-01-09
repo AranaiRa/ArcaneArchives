@@ -77,7 +77,7 @@ public class AccessorBlock extends Block
     		return false;
     	}
     	
-    	return Parent.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+    	return Parent.onBlockActivated(worldIn, Parent.pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
     }
 }
 
