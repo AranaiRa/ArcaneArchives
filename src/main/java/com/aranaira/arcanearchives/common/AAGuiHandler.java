@@ -55,7 +55,7 @@ public class AAGuiHandler implements IGuiHandler
 			case TOME_OF_REQUISITION:
 				return new GUIBookContainer(new NetworkContainer(player));
 			case RADIANT_CHEST:
-				return new GUIRadiantChest(new ContainerRadiantChest((RadiantChestTileEntity) world.getTileEntity(new BlockPos(x, y, z)), player.inventory));
+				return new GUIRadiantChest(new ContainerRadiantChest((RadiantChestTileEntity) world.getTileEntity(new BlockPos(x, y, z)), player.inventory), player.getUniqueID());
 			case MANIFEST:
 				return new GUIManifest(player, new ContainerManifest(player, false));
 			case GEMCUTTERS_TABLE:

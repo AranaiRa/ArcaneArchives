@@ -34,6 +34,9 @@ public class RawQuartzItem extends ItemTemplate
 	@Override
 	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) 
 	{
+		if (!player.isSneaking())
+			return EnumActionResult.PASS;
+		
 		ItemStack itemstack = player.getHeldItem(hand);
 		
 		//TODO Make it so you need to be sneaking.
@@ -44,8 +47,6 @@ public class RawQuartzItem extends ItemTemplate
 		{
 			return EnumActionResult.FAIL;
 		}
-
-		ArcaneArchives.logger.info("HAS DETECTED CHEST!");
 		
 		BlockPos secondaryChestPos = new BlockPos(0, 0, 0);
 		boolean secondaryChest = false;

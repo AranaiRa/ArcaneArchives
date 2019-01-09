@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.packets;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.packets.PacketChangeRadiantChestNameClient.PacketChangeRadiantChestNameClientHandler;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -21,6 +22,8 @@ public class AAPacketHandler
 
         registerPacks(PacketNetworkInteraction.PacketNetworkInteractionHandler.class, PacketNetworkInteraction.class, Side.SERVER);
         registerPacks(PacketNetworkListResponse.PacketNetworkListResponseHandler.class, PacketNetworkListResponse.class, Side.CLIENT);
+        registerPacks(SetRadiantChestName.SetRadiantChestNameHandler.class, SetRadiantChestName.class, Side.SERVER);
+        registerPacks(PacketChangeRadiantChestNameClient.PacketChangeRadiantChestNameClientHandler.class, PacketChangeRadiantChestNameClient.class, Side.CLIENT);
 	}
 	
 	

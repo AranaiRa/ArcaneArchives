@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.client;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
@@ -58,6 +59,8 @@ public class GUIManifest extends GuiContainer
 	{
 		// TODO Auto-generated method stub
 		super.drawScreen(mouseX, mouseY, partialTicks);
+		
+		this.renderHoveredToolTip(mouseX, mouseY);
 
 		String temp = fontRenderer.trimStringToWidth(mSearchText, 6 * 15, true);
 
@@ -69,7 +72,18 @@ public class GUIManifest extends GuiContainer
 		fontRenderer.drawString("End Track", guiLeft + mEndTrackingLeftOffset, mEndTrackingTopOffset + guiTop, 0x000000);
 	}
 	
+	@Override
+	protected void renderHoveredToolTip(int p_191948_1_, int p_191948_2_) {
+		super.renderHoveredToolTip(p_191948_1_, p_191948_2_);
+	}
 	
+	//TODO Figure out how to display what chest the item is in.
+	@Override
+	public List<String> getItemToolTip(ItemStack p_191927_1_) {
+		List<String> ls = super.getItemToolTip(p_191927_1_);
+		//ls.add("TEST");
+		return ls;
+	}
 	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) 
