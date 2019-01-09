@@ -79,5 +79,40 @@ public class ContainerGemcuttersTable extends Container
 		// TODO Auto-generated method stub
 		return true;
 	}
+	
 
+	@Override
+	public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
+		ItemStack stack = ItemStack.EMPTY;
+		final Slot slot = inventorySlots.get(index);
+		
+
+		if (slot != null && slot.getHasStack())
+		{
+			final ItemStack slotStack = slot.getStack();
+			stack = slotStack.copy();
+			
+			//Chest inventory
+			if (index < 36)
+			{
+				if (!mergeItemStack(slotStack, 36, 62, true)) return ItemStack.EMPTY;
+			}
+			//Players inventory
+			else
+			{
+				if (!mergeItemStack(slotStack, 0, 36, true)) return ItemStack.EMPTY;
+			}
+			
+			if (slotStack.isEmpty())
+			{
+				slot.putStack(ItemStack.EMPTY);
+			}
+			else
+			{
+				slot.onSlotChanged();
+			}
+		}
+		
+		return stack;
+	}
 }
