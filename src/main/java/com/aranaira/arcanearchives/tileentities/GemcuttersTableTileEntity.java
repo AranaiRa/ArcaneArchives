@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.common.ContainerRadiantChest;
+import com.aranaira.arcanearchives.common.GCTItemHandler;
 import com.aranaira.arcanearchives.init.BlockLibrary;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,7 +27,7 @@ import net.minecraftforge.items.ItemStackHandler;
 public class GemcuttersTableTileEntity extends ImmanenceTileEntity implements ITickable 
 {
 	private String mName = "";
-	private final IItemHandler mInventory = new ItemStackHandler(54);
+	private final IItemHandler mInventory = new GCTItemHandler(54);
 	
 	public GemcuttersTableTileEntity() 
 	{

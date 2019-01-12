@@ -39,6 +39,7 @@ import com.aranaira.arcanearchives.blocks.RawQuartz;
 import com.aranaira.arcanearchives.commands.ArcaneArchivesCommand;
 import com.aranaira.arcanearchives.common.AAGuiHandler;
 import com.aranaira.arcanearchives.init.ItemLibrary;
+import com.aranaira.arcanearchives.init.RecipeLibrary;
 import com.aranaira.arcanearchives.items.RawQuartzItem;
 import com.aranaira.arcanearchives.packets.AAPacketHandler;
 import com.aranaira.arcanearchives.packets.PacketNetworkInteraction;
@@ -92,7 +93,7 @@ public class ArcaneArchives
     @EventHandler
     public static void init(FMLInitializationEvent event)
     {
-    	
+    	RecipeLibrary.RegisterGCTRecipes();
         //ClientCommandHandler.instance.registerCommand(new ArcaneArchivesCommand());
     }
     
