@@ -28,8 +28,7 @@ public class MatrixStorage extends BlockTemplate {
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
     {
-    	tooltip.add("§c§lUNIMPLEMENTED§r");
-    	tooltip.add("§c§oUsing this item may crash your game!§r");
+    	//TODO: Add real tooltip
     }
 	
 	@Override
