@@ -52,4 +52,7 @@ entity.spirit_time_01.name=Time Mote
 entity.spirit_time_02.name=Time Juve
 entity.spirit_time_03.name=Time Eld
 
+arcanearchives.text.manifest.endtrackingbutton=End Tracking
+arcanearchives.text.matrixcore.importradiant=Import Radiant Storage
+
 arcanearchives.error.toomanyplaced.resonator=You have reached your Radiant Resonator placement limit!
