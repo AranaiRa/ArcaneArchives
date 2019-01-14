@@ -28,18 +28,19 @@ public class RecipeLibrary
 	
 	public static void RegisterGCTRecipes()
 	{
+		GemCuttersTableRecipe.addRecipe(COMPONENT_RADIANTDUST_RECIPE);
 		GemCuttersTableRecipe.addRecipe(CUT_RADIANT_QUARTZ_RECIPE);
+
+		GemCuttersTableRecipe.addRecipe(RADIANT_LANTERN_RECIPE);
 		
 		GemCuttersTableRecipe.addRecipe(COMPONENT_CONTAINMENTFIELD_RECIPE);
 		GemCuttersTableRecipe.addRecipe(COMPONENT_MATERIALINTERFACE_RECIPE);
 		GemCuttersTableRecipe.addRecipe(COMPONENT_MATRIXBRACE_RECIPE);
-		GemCuttersTableRecipe.addRecipe(COMPONENT_RADIANTDUST_RECIPE);
 		GemCuttersTableRecipe.addRecipe(COMPONENT_SCINTILLATINGINLAY_RECIPE);
 
 		GemCuttersTableRecipe.addRecipe(MATRIX_CORE_RECIPE);
 		GemCuttersTableRecipe.addRecipe(MATRIX_STORAGE_RECIPE);
 		GemCuttersTableRecipe.addRecipe(MATRIX_REPOSITORY_RECIPE);
 
-		GemCuttersTableRecipe.addRecipe(RADIANT_LANTERN_RECIPE);
 	}
 }

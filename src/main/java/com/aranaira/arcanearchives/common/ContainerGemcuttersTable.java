@@ -26,11 +26,15 @@ import net.minecraftforge.items.SlotItemHandler;
 public class ContainerGemcuttersTable extends Container 
 {
 	GemcuttersTableTileEntity mTileEntity;
+	boolean isServer;
 	
-	public ContainerGemcuttersTable(GemcuttersTableTileEntity GCTTE, IInventory playerInventory)
+	public ContainerGemcuttersTable(GemcuttersTableTileEntity GCTTE, IInventory playerInventory, boolean serverSide)
 	{
+		isServer = serverSide;
 		//ArcaneArchivesNetwork aanetwork = NetworkHelper.getArcaneArchivesNetwork(playerIn.getUniqueID());
 		mTileEntity = GCTTE;
+		
+		getItemHandler().isServer = serverSide;
 		
 		ArcaneArchives.logger.info("^^^^NULL CHECKS");
 		ArcaneArchives.logger.info("inv null? "+playerInventory.equals(null));
@@ -101,7 +105,7 @@ public class ContainerGemcuttersTable extends Container
 			//Chest inventory
 			if (index < 36)
 			{
-				if (!mergeItemStack(slotStack, 36, 62, true)) return ItemStack.EMPTY;
+				if (!mergeItemStack(slotStack, 45, 62, true)) return ItemStack.EMPTY;
 			}
 			//Players inventory
 			else
@@ -123,28 +127,30 @@ public class ContainerGemcuttersTable extends Container
 	}
 	
 	@Override
+	protected boolean mergeItemStack(ItemStack stack, int startIndex, int endIndex, boolean reverseDirection) {
+		boolean temp = super.mergeItemStack(stack, startIndex, endIndex, reverseDirection);
+		this.getItemHandler().updateOutput();
+		return temp;
+	}
+	
+	@Override
 	public void detectAndSendChanges() {
-		NonNullList<ItemStack> tempList = NonNullList.create();
-		for (int i = 46; i < 62; i++)
-		{
-			tempList.add(this.getSlot(i).getStack());
-		}
-		if (RecipeLibrary.COMPONENT_SCINTILLATINGINLAY_RECIPE.matchesRecipe(tempList))
-		{
-			//ArcaneArchives.logger.info("Valid Recipe");
-		}
 		super.detectAndSendChanges();
 	}
 	
 	@Override
 	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player) 
 	{
-		ArcaneArchives.logger.info(slotId);
 		if (slotId <= 43 && slotId >= 37)
 		{
-			((GCTItemHandler)mTileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).mRecipe = GemCuttersTableRecipe.GetRecipe(mTileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).getStackInSlot(slotId - 25));
+			getItemHandler().setRecipe(this.getSlot(slotId).getStack());
 		}
 			
 		return super.slotClick(slotId, dragType, clickTypeIn, player);
+	}
+	
+	public GCTItemHandler getItemHandler()
+	{
+		return ((GCTItemHandler)mTileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null));
 	}
 }

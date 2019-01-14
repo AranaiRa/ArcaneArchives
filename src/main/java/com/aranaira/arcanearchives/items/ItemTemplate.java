@@ -21,4 +21,6 @@ public class ItemTemplate extends Item implements IHasModel {
 	public void registerModels() {
 		ArcaneArchives.proxy.registerItemRenderer(this, 0, "inventory");
 	}
+	
+	
 }

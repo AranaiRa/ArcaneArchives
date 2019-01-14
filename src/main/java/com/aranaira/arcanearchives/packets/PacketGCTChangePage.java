@@ -2,31 +2,32 @@ package com.aranaira.arcanearchives.packets;
 
 import java.nio.charset.Charset;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.common.GCTItemHandler;
+import com.aranaira.arcanearchives.tileentities.GemcuttersTableTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.items.CapabilityItemHandler;
 
-public class PacketChangeRadiantChestNameClient implements IMessage 
-{
+public class PacketGCTChangePage implements IMessage {
+
 	private int mDimension;
-	private String mName;
+	private boolean mNext;
 	private BlockPos mPos;
 	
-	public PacketChangeRadiantChestNameClient() {}
+	public PacketGCTChangePage() {}
 	
-	public PacketChangeRadiantChestNameClient(BlockPos pos, int dimension, String name)
+	public PacketGCTChangePage(BlockPos pos, int dimension, boolean next)
 	{
 		mDimension = dimension;
-		mName = name;
+		mNext = next;
 		mPos = pos;
 	}
 	
@@ -34,7 +35,7 @@ public class PacketChangeRadiantChestNameClient implements IMessage
 	public void fromBytes(ByteBuf buf) 
 	{
 		mDimension = buf.readInt();
-		mName = (String) buf.readCharSequence(buf.readInt(), Charset.defaultCharset());
+		mNext = buf.readBoolean();
 		mPos = new BlockPos(buf.readInt(), buf.readInt(), buf.readInt());
 	}
 
@@ -42,31 +43,34 @@ public class PacketChangeRadiantChestNameClient implements IMessage
 	public void toBytes(ByteBuf buf) 
 	{
 		buf.writeInt(mDimension);
-		buf.writeInt(mName.length());
-		buf.writeCharSequence(mName, Charset.defaultCharset());
+		buf.writeBoolean(mNext);
 		buf.writeInt(mPos.getX());
 		buf.writeInt(mPos.getY());
 		buf.writeInt(mPos.getZ());
 	}
-	
-	public static class PacketChangeRadiantChestNameClientHandler implements IMessageHandler<PacketChangeRadiantChestNameClient, IMessage>
+
+	public static class PacketGCTChangePageHandler implements IMessageHandler<PacketGCTChangePage, IMessage>
 	{
-		public IMessage onMessage(final PacketChangeRadiantChestNameClient message, final MessageContext ctx) 
+		public IMessage onMessage(final PacketGCTChangePage message, final MessageContext ctx) 
 		{
 		    FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> processMessage(message, ctx));
 	
 		    return null;
 		}
 		
-		private void processMessage(PacketChangeRadiantChestNameClient message, MessageContext ctx)
+		private void processMessage(PacketGCTChangePage message, MessageContext ctx)
 		{
 			if (Minecraft.getMinecraft().world.provider.getDimension() == message.mDimension)
 			{
 				TileEntity te = Minecraft.getMinecraft().world.getTileEntity(message.mPos);
-				if (te instanceof RadiantChestTileEntity)
+				if (te instanceof GemcuttersTableTileEntity)
 			    {
-			    	((RadiantChestTileEntity) te).mName = message.mName;
-			    	((RadiantChestTileEntity) te).markDirty();
+					if (message.mNext)
+						((GCTItemHandler)((GemcuttersTableTileEntity) te).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).nextPage();
+					else
+
+						((GCTItemHandler)((GemcuttersTableTileEntity) te).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).prevPage();
+			    	((GemcuttersTableTileEntity) te).markDirty();
 			    	te.updateContainingBlockInfo();
 			    }
 			}

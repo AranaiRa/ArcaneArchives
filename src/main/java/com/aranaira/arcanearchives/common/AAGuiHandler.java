@@ -36,7 +36,7 @@ public class AAGuiHandler implements IGuiHandler
 			case MANIFEST:
 				return new ContainerManifest(player, true);
 			case GEMCUTTERS_TABLE:
-				return new ContainerGemcuttersTable((GemcuttersTableTileEntity) world.getTileEntity(new BlockPos(x, y, z)), player.inventory);
+				return new ContainerGemcuttersTable((GemcuttersTableTileEntity) world.getTileEntity(new BlockPos(x, y, z)), player.inventory, true);
 			default:
 			{
 				ArcaneArchives.logger.info("^RETURNED NULL");
@@ -59,7 +59,7 @@ public class AAGuiHandler implements IGuiHandler
 			case MANIFEST:
 				return new GUIManifest(player, new ContainerManifest(player, false));
 			case GEMCUTTERS_TABLE:
-				return new GUIGemcuttersTable(player, new ContainerGemcuttersTable((GemcuttersTableTileEntity) world.getTileEntity(new BlockPos(x, y, z)), player.inventory));
+				return new GUIGemcuttersTable(player, new ContainerGemcuttersTable((GemcuttersTableTileEntity) world.getTileEntity(new BlockPos(x, y, z)), player.inventory, false));
 			default:
 			{
 				ArcaneArchives.logger.info("^RETURNED NULL");

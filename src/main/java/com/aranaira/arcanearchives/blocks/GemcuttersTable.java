@@ -45,6 +45,8 @@ public class GemcuttersTable extends BlockTemplate implements ITileEntityProvide
 {
 	public static final PropertyDirection FACING = PropertyDirection.create("facing");
 	public static final String name = "gemcutters_table";
+	private TileEntity tileEntityInstance;
+	
 	public GemcuttersTable() 
 	{
 		super(name, Material.IRON);
@@ -93,7 +95,6 @@ public class GemcuttersTable extends BlockTemplate implements ITileEntityProvide
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) 
 	{
-		tileEntityInstance.name = name;
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 	}
 	
