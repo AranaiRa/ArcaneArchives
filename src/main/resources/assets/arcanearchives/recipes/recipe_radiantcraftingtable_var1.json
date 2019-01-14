@@ -1,0 +1,13 @@
+{
+    "_comment": [
+        "Craft Radiant Crafting Table from Crafting Table"
+    ],
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {   "item": "arcanearchives:item_rawquartz" },
+        {   "item": "minecraft:crafting_table" }
+    ],
+    "result": {
+        "item": "arcanearchives:radiant_crafting_table"
+    }
+}

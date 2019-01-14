@@ -1,0 +1,29 @@
+{
+    "_comment": [
+        "Craft a Tome of Requisition"
+    ],
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "SLN",
+        "SMM",
+        "SLN"
+    ],
+    "key": {
+        "S": {
+            "item": "minecraft:string"
+        },
+        "L": {
+            "item": "minecraft:leather"
+        },
+        "N": {
+            "item": "minecraft:gold_nugget"
+        },
+        "M": {
+            "item": "arcanearchives:item_manifest"
+        }
+    },
+    "result": {
+        "item": "arcanearchives:item_tomeofrequisition"
+        }
+    }
+}

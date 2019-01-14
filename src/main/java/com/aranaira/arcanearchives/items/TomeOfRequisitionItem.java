@@ -28,8 +28,8 @@ public class TomeOfRequisitionItem extends ItemTemplate {
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
     {
-    	tooltip.add("§c§lUNIMPLEMENTED§r");
-    	tooltip.add("§c§oUsing this item may crash your game!§r");
+    	tooltip.add("§c§oThe recipe for this item is temporary.§r");
+    	tooltip.add("§c§oIt will be changed in a later version.§r");
     }
 
 	@Override
