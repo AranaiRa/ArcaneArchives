@@ -45,6 +45,10 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 		// TODO Auto-generated method stub
 		
 	}
+
+	public UUID GetNetworkID () {
+		return NetworkID;
+	}
 	
 	public int GetTotalItems()
 	{
