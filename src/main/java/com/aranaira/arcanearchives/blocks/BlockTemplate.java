@@ -133,7 +133,7 @@ public class BlockTemplate extends Block implements IHasModel {
 	public void DestroyChildren(World worldIn)
 	{
 		if (!worldIn.isRemote && tileEntityInstance != null)
-			NetworkHelper.getArcaneArchivesNetwork(tileEntityInstance.NetworkID).RemoveBlockFromNetwork(tileEntityInstance);
+			NetworkHelper.getArcaneArchivesNetwork(tileEntityInstance.NetworkID).triggerUpdate();
 		for (AccessorBlock b : Accessors)
 		{
 			try 

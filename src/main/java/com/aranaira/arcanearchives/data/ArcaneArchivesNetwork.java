@@ -174,18 +174,12 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	
 	public List<ImmanenceTileEntity> GetTileEntitiesByPriority()
 	{
-		List<ImmanenceTileEntity> tempList = new ArrayList<ImmanenceTileEntity>();
-		tempList.addAll(mNetworkBlocks.keySet());
-		Collections.sort(tempList, new Comparator<ImmanenceTileEntity>()
-		{
-			@Override
-			public int compare(ImmanenceTileEntity o1, ImmanenceTileEntity o2)
-			{
-				if (o1.NetworkPriority > o2.NetworkPriority)
-					return 1;
-				else
-					return -1;
-			}
+		List<ImmanenceTileEntity> tempList = new ArrayList<>(getBlocks().keySet());
+		tempList.sort((o1, o2) -> {
+			if (o1.NetworkPriority > o2.NetworkPriority)
+				return 1;
+			else
+				return -1;
 		});
 		return tempList;
 	}
@@ -243,9 +237,18 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		
 		return new ItemStack(Blocks.AIR);
 	}
+
+	public void cleanNetworkBlocks ()
+	{
+		Map<ImmanenceTileEntity, String> temp = new HashMap<>(mNetworkBlocks);
+		temp.keySet().forEach((ite) -> {
+			if (ite.isInvalid()) mNetworkBlocks.remove(ite);
+		});
+	}
 	
 	public Map<ImmanenceTileEntity, String> getBlocks()
 	{
+		cleanNetworkBlocks();
 		return mNetworkBlocks;
 	}
 	
@@ -278,7 +281,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	
 	public boolean IsBlockPosAvailable(BlockPos pos, int dimID)
 	{
-		for (ImmanenceTileEntity ITE : mNetworkBlocks.keySet())
+		for (ImmanenceTileEntity ITE : getBlocks().keySet())
 		{
 			if (ITE.blockpos == pos && ITE.Dimension == dimID)
 				return false;
@@ -287,15 +290,9 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		return true;
 	}
 	
-	public void RemoveBlockFromNetwork(ImmanenceTileEntity ITE)
+	public void triggerUpdate ()
 	{
-		if (ITE instanceof RadiantChestTileEntity)
-		{
-			mRadiantChests.remove(ITE);
-			return;
-		}
-		mNetworkBlocks.remove(ITE);
-		mNeedsToBeUpdated = true;
+		cleanNetworkBlocks();
 		UpdateImmanence();
 	}
 	
