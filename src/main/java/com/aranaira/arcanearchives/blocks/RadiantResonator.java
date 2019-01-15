@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.blocks;
 
+import java.util.Map;
 import java.util.Random;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
@@ -36,6 +37,9 @@ import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.common.property.Properties;
+import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.world.ExplosionEvent;
+import net.minecraftforge.fml.common.eventhandler.Event;
 
 public class RadiantResonator extends BlockTemplate 
 {
@@ -82,16 +86,26 @@ public class RadiantResonator extends BlockTemplate
 		
 		return false;
 	}
-	
-	@Override
-	public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state) {
-		if (worldIn.getBlockState(pos.add(0, 1, 0)).getBlock() instanceof RawQuartz)
+
+	public void onBlockDestroyed (World worldIn, BlockPos pos, IBlockState state, Event event) {
+		if (event instanceof BlockEvent.BreakEvent && worldIn.getBlockState(pos.up()).getBlock() instanceof RawQuartz)
 		{
-			worldIn.destroyBlock(pos.add(0, 1, 0), true);
+			worldIn.destroyBlock(pos.up(), true);
 		}
-		super.onBlockDestroyedByPlayer(worldIn, pos, state);
+
+        TileEntity te = worldIn.getTileEntity(pos);
+
+		if (te == null) return; // some sort of logging message here about unlinked tile entities. can that even happen?
+
+        RadiantResonatorTileEntity ite = (RadiantResonatorTileEntity) te;
+
+        Map<ImmanenceTileEntity, String> networkBlocks = NetworkHelper.getArcaneArchivesNetwork(ite.GetNetworkID()).getBlocks();
+
+        if (networkBlocks.containsKey(ite)) {
+            networkBlocks.remove(ite);
+        }
 	}
-	
+
 	@Override
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
 		// TODO Auto-generated method stub
