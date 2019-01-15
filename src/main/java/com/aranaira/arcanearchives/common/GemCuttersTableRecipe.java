@@ -4,22 +4,29 @@ import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.util.ItemComparison;
+import com.aranaira.arcanearchives.util.ItemStackConsolidator;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.NonNullList;
+import net.minecraft.world.World;
 
 //Referenced Immersive Engineering
 //https://github.com/BluSunrize/ImmersiveEngineering/blob/e3e8cf65dadb2762cb343cc5f31d9bf9a29f2188/src/main/java/blusunrize/immersiveengineering/api/crafting/BlueprintCraftingRecipe.java#L3
 public class GemCuttersTableRecipe 
 {
-	protected List<ItemStack> mInput;
-	protected ItemStack mOutput;
+	private List<ItemStack> mInput;
+	private ItemStack mOutput;
 	
-	protected static Dictionary<ItemStack, GemCuttersTableRecipe> RecipeList = new Hashtable();
+	protected static LinkedHashMap<ItemStack, GemCuttersTableRecipe> RecipeList = new LinkedHashMap();
 	
 	//protected static List<GemCuttersTableRecipe> RecipeList = new ArrayList();
 	
@@ -34,11 +41,23 @@ public class GemCuttersTableRecipe
 	
 	public static void addRecipe(GemCuttersTableRecipe recipe)
 	{
+		//LORE TAG STUFF DOES NOT CURRENTLY WORK : REVISIT IT
+		NBTTagCompound nbt = new NBTTagCompound();
+		NBTTagCompound lore = new NBTTagCompound();
+		lore.setString("Lore", "TEST");
+		NBTTagCompound lore2 = new NBTTagCompound();
+		lore.setString("Lore2", "TEST2");
+		NBTTagList Lore = new NBTTagList();
+		NBTTagCompound Display = new NBTTagCompound();
+		Lore.appendTag(lore);
+		Lore.appendTag(lore2);
+		Display.setTag("Lore", Lore);
+		nbt.setTag("display", Display);
+		recipe.mOutput.setTagCompound(nbt);
 		RecipeList.put(recipe.mOutput, recipe);
-		//for (ItemStack is : recipe.mInput)
-		//{
-		//	ValidInputs.add
-		//}
+		//recipe.mOutput.getTagCompound().getTagList("Lore", 8);
+		
+
 		ValidInputs.addAll(recipe.mInput);
 	}
 	
@@ -47,17 +66,17 @@ public class GemCuttersTableRecipe
 		return RecipeList.get(item);
 	}
 	
-	public boolean matchesRecipe(NonNullList<ItemStack> query)
+	public boolean matchesRecipe(NonNullList<ItemStack> raw)
 	{
 		for (ItemStack is : mInput)
 		{
 			boolean hasFailed = true;
 			int count = is.getCount();
+			NonNullList<ItemStack> query = ItemStackConsolidator.ConsolidateItems(raw);
 			for (int i = 0; i < query.size(); i++)
 			{
 				if (ItemComparison.AreItemsEqual(query.get(i), is))
 				{
-					//GONNA HAVE TO REWORK THIS
 					if (query.get(i).getCount() >= count)
 						hasFailed = false;
 				}
@@ -69,10 +88,23 @@ public class GemCuttersTableRecipe
 		return true;
 	}
 	
+	public ItemStack getOutput()
+	{
+		return mOutput.copy();
+	}
+	
+	public List<ItemStack> getInput()
+	{
+		return new ArrayList(mInput);
+	}
+	
 	public void consumeInput(NonNullList<ItemStack> query)
 	{
 		List<ItemStack> temp = new ArrayList();
-		temp.addAll(mInput);
+		for (ItemStack s : mInput)
+		{
+			temp.add(s.copy());
+		}
 		for (ItemStack i : query)
 		{
 			for (ItemStack is : temp)

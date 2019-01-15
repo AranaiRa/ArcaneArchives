@@ -31,4 +31,5 @@ public class ComponentScintillatingInlayItem extends ItemTemplate
     {
     	//TODO: Add real tooltip
     }
+    
 }

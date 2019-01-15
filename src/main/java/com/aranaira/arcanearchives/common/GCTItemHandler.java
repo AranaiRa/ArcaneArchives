@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.common;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Enumeration;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 
@@ -13,8 +14,12 @@ import net.minecraftforge.items.ItemStackHandler;
 public class GCTItemHandler extends ItemStackHandler 
 {
 	NonNullList<ItemStack> GCTInventory;
-	GemCuttersTableRecipe mRecipe = null;
+	public GemCuttersTableRecipe mRecipe = null;
 	boolean mIsRecipeMet = false;
+	int mPageNumber = 0;
+	public boolean isServer = false;
+	
+	
 	
 	public GCTItemHandler(int slotCount)
 	{
@@ -22,6 +27,11 @@ public class GCTItemHandler extends ItemStackHandler
 		GCTInventory = NonNullList.withSize(18, ItemStack.EMPTY);
 	}
 
+	public boolean getRecipeStatus()
+	{
+		return mIsRecipeMet;
+	}
+	
 	@Override
 	public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) 
 	{
@@ -50,9 +60,11 @@ public class GCTItemHandler extends ItemStackHandler
 			{
 				tempList.add(getStackInSlot(i));
 			}
-			mRecipe.consumeInput(GCTInventory);
+			if (!simulate)
+				mRecipe.consumeInput(tempList);
+			ItemStack s = super.extractItem(slot, amount, simulate);
 			updateOutput();
-			return super.extractItem(slot, amount, simulate);
+			return s;
 		}
 		ItemStack s = super.extractItem(slot, amount, simulate);
 		updateOutput();
@@ -63,18 +75,29 @@ public class GCTItemHandler extends ItemStackHandler
 	public ItemStack getStackInSlot(int slot) {
 		if (slot >= 18 && slot != 25)
 		{
-			if (slot - 17 <= GemCuttersTableRecipe.RecipeList.size())
-				return Collections.list(GemCuttersTableRecipe.RecipeList.keys()).get(slot - 18);
+			if (slot - 17 + mPageNumber * 7<= GemCuttersTableRecipe.RecipeList.size())
+				return (ItemStack) (new ArrayList(GemCuttersTableRecipe.RecipeList.keySet())).get(slot - 18 + mPageNumber * 7);
 			return ItemStack.EMPTY;
 		}
 		return super.getStackInSlot(slot);
 	}
 	
-	private void updateOutput()
+	public void nextPage()
+	{
+		if (GemCuttersTableRecipe.RecipeList.size() > (mPageNumber + 1) * 7)
+			mPageNumber++;
+	}
+	
+	public void prevPage()
+	{
+		if (mPageNumber > 0)
+			mPageNumber--;
+	}
+	
+	void updateOutput()
 	{
 		if (mRecipe != null)
 		{
-			ArcaneArchives.logger.info(mRecipe.mOutput.getDisplayName());
 			NonNullList<ItemStack> tempList = NonNullList.create();
 			for (int i = 0; i < 18; i++)
 			{
@@ -82,7 +105,7 @@ public class GCTItemHandler extends ItemStackHandler
 			}
 			if (mRecipe.matchesRecipe(tempList))
 			{
-				this.stacks.set(25, mRecipe.mOutput.copy());
+				this.stacks.set(25, mRecipe.getOutput());
 				mIsRecipeMet = true;
 			}
 			else
@@ -91,5 +114,21 @@ public class GCTItemHandler extends ItemStackHandler
 				mIsRecipeMet = false;
 			}
 		}
+	}
+
+	public int getPage() 
+	{
+		return mPageNumber;
+	}
+	
+	public void setPage(int page)
+	{
+		mPageNumber = page;
+	}
+
+	public void setRecipe(ItemStack itemStack) 
+	{
+		mRecipe = GemCuttersTableRecipe.GetRecipe(itemStack);
+		updateOutput();
 	}
 }

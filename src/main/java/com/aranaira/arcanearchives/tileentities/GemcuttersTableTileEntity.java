@@ -1,5 +1,7 @@
 package com.aranaira.arcanearchives.tileentities;
 
+import javax.annotation.Nullable;
+
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.common.ContainerRadiantChest;
 import com.aranaira.arcanearchives.common.GCTItemHandler;
@@ -13,6 +15,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityLockableLoot;
 import net.minecraft.util.EnumFacing;
@@ -24,14 +28,14 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class GemcuttersTableTileEntity extends ImmanenceTileEntity implements ITickable 
+public class GemcuttersTableTileEntity extends TileEntity implements ITickable 
 {
-	private String mName = "";
+	private String mName = "gemcutterstable";
 	private final IItemHandler mInventory = new GCTItemHandler(54);
 	
 	public GemcuttersTableTileEntity() 
 	{
-		super("gemcutterstable");
+		BlockLibrary.TILE_ENTITIES.put(mName, this);
 	}
 	
 	@Override
@@ -77,4 +81,45 @@ public class GemcuttersTableTileEntity extends ImmanenceTileEntity implements IT
 	{
 		return mName;
 	}
+	
+	
+	
+	@Override
+	public NBTTagCompound getUpdateTag() {
+		NBTTagCompound tag = super.getUpdateTag();
+		if (((GCTItemHandler)this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).mRecipe != null)
+		{
+			NBTTagCompound item = ((GCTItemHandler)this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).mRecipe.getOutput().writeToNBT(tag);
+			tag.setTag("recipe", item);
+		}
+		tag.setInteger("page", ((GCTItemHandler)this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).getPage());
+		return tag;
+	}
+	
+	@Override
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) 
+	{
+		if (pkt.getNbtCompound().hasKey("recipe"))
+			((GCTItemHandler)this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).setRecipe(new ItemStack((NBTTagCompound) pkt.getNbtCompound().getTag("recipe")));
+		((GCTItemHandler)this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).setPage(pkt.getNbtCompound().getInteger("page"));
+		super.onDataPacket(net, pkt);
+	}
+	
+
+    @Nullable
+    public SPacketUpdateTileEntity getUpdatePacket()
+    {
+    	NBTTagCompound compound = new NBTTagCompound();
+    	
+    	if (((GCTItemHandler)this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).mRecipe != null)
+		{
+			NBTTagCompound item = ((GCTItemHandler)this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).mRecipe.getOutput().writeToNBT(compound);
+			compound.setTag("recipe", item);
+		}
+    	
+		compound.setInteger("page", ((GCTItemHandler)this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).getPage());
+    	
+    	SPacketUpdateTileEntity spute = new SPacketUpdateTileEntity(pos, 0, compound);
+        return spute;
+    }
 }

@@ -38,7 +38,7 @@ public class AAGuiHandler implements IGuiHandler
 			case MANIFEST:
 				return new ContainerManifest(player, true);
 			case GEMCUTTERS_TABLE:
-				return new ContainerGemcuttersTable((GemcuttersTableTileEntity) world.getTileEntity(new BlockPos(x, y, z)), player.inventory);
+				return new ContainerGemcuttersTable((GemcuttersTableTileEntity) world.getTileEntity(new BlockPos(x, y, z)), player.inventory, true);
 			case RADIANT_CRAFTING_TABLE:
 				return new ContainerRadiantCraftingTable((RadiantCraftingTableTileEntity) world.getTileEntity(new BlockPos(x, y, z)), player.inventory);
 			default:
@@ -63,7 +63,7 @@ public class AAGuiHandler implements IGuiHandler
 			case MANIFEST:
 				return new GUIManifest(player, new ContainerManifest(player, false));
 			case GEMCUTTERS_TABLE:
-				return new GUIGemcuttersTable(player, new ContainerGemcuttersTable((GemcuttersTableTileEntity) world.getTileEntity(new BlockPos(x, y, z)), player.inventory));
+				return new GUIGemcuttersTable(player, new ContainerGemcuttersTable((GemcuttersTableTileEntity) world.getTileEntity(new BlockPos(x, y, z)), player.inventory, false));
 			case RADIANT_CRAFTING_TABLE:
 				return new GUIRadiantCraftingTable(player, new ContainerRadiantCraftingTable((RadiantCraftingTableTileEntity) world.getTileEntity(new BlockPos(x, y, z)), player.inventory));
 			default:
