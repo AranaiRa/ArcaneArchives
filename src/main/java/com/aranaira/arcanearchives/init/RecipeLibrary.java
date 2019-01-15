@@ -22,7 +22,7 @@ public class RecipeLibrary
 	
 	public static GemCuttersTableRecipe MATRIX_CORE_RECIPE = new GemCuttersTableRecipe(Arrays.asList(new ItemStack(ItemLibrary.CUT_RADIANT_QUARTZ, 60), new ItemStack(Blocks.LOG, 12), new ItemStack(ItemLibrary.COMPONENT_SCINTILLATINGINLAY, 12), new ItemStack(BlockLibrary.RADIANT_LANTERN, 4), new ItemStack(Blocks.BOOKSHELF, 8)), new ItemStack(BlockLibrary.MATRIX_CRYSTAL_CORE, 1));
 	public static GemCuttersTableRecipe MATRIX_STORAGE_RECIPE = new GemCuttersTableRecipe(Arrays.asList(new ItemStack(ItemLibrary.COMPONENT_MATRIXBRACE, 2), new ItemStack(ItemLibrary.COMPONENT_MATERIALINTERFACE, 1), new ItemStack(ItemLibrary.CUT_RADIANT_QUARTZ, 24)), new ItemStack(BlockLibrary.MATRIX_STORAGE, 1));
-	public static GemCuttersTableRecipe MATRIX_REPOSITORY_RECIPE = new GemCuttersTableRecipe(Arrays.asList(new ItemStack(BlockLibrary.MATRIX_STORAGE, 1), new ItemStack(ItemLibrary.COMPONENT_MATRIXBRACE, 2)), new ItemStack(BlockLibrary.MATRIX_REPOSITORY, 1));
+	public static GemCuttersTableRecipe MATRIX_REPOSITORY_RECIPE = new GemCuttersTableRecipe(Arrays.asList(new ItemStack(BlockLibrary.MATRIX_STORAGE, 1), new ItemStack(ItemLibrary.COMPONENT_MATERIALINTERFACE, 2)), new ItemStack(BlockLibrary.MATRIX_REPOSITORY, 1));
 	
 	public static GemCuttersTableRecipe RADIANT_LANTERN_RECIPE = new GemCuttersTableRecipe(Arrays.asList(new ItemStack(ItemLibrary.RAW_RADIANT_QUARTZ, 1), new ItemStack(Items.GOLD_NUGGET, 1)), new ItemStack(BlockLibrary.RADIANT_LANTERN, 16));
 	
