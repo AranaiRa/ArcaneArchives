@@ -45,4 +45,5 @@ public class BlockLibrary {
 	public static final TileEntity ACCESSOR_TILE_ENTITY = new AccessorTileEntity();
 	public static final TileEntity RADIANT_CHEST_TILE_ENTITY = new RadiantChestTileEntity();
 	public static final TileEntity GEMCUTTERS_TABLE_TILE_ENTITY = new GemcuttersTableTileEntity();
+	public static final TileEntity RADIANT_CRAFTING_TABLE_TILE_ENTITY = new RadiantCraftingTableTileEntity();
 }

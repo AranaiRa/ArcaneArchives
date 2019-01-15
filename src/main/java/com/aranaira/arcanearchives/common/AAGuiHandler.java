@@ -5,6 +5,7 @@ import com.aranaira.arcanearchives.client.GUIBookContainer;
 import com.aranaira.arcanearchives.client.GUIGemcuttersTable;
 import com.aranaira.arcanearchives.client.GUIManifest;
 import com.aranaira.arcanearchives.client.GUIRadiantChest;
+import com.aranaira.arcanearchives.client.GUIRadiantCraftingTable;
 import com.aranaira.arcanearchives.tileentities.*;
 
 import net.minecraft.client.gui.inventory.GuiChest;
@@ -21,6 +22,7 @@ public class AAGuiHandler implements IGuiHandler
 	public static final int RADIANT_CHEST = 1;
 	public static final int MANIFEST = 2;
 	public static final int GEMCUTTERS_TABLE = 3;
+	public static final int RADIANT_CRAFTING_TABLE = 4;
 	
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -37,6 +39,8 @@ public class AAGuiHandler implements IGuiHandler
 				return new ContainerManifest(player, true);
 			case GEMCUTTERS_TABLE:
 				return new ContainerGemcuttersTable((GemcuttersTableTileEntity) world.getTileEntity(new BlockPos(x, y, z)), player.inventory);
+			case RADIANT_CRAFTING_TABLE:
+				return new ContainerRadiantCraftingTable((RadiantCraftingTableTileEntity) world.getTileEntity(new BlockPos(x, y, z)), player.inventory);
 			default:
 			{
 				ArcaneArchives.logger.info("^RETURNED NULL");
@@ -60,6 +64,8 @@ public class AAGuiHandler implements IGuiHandler
 				return new GUIManifest(player, new ContainerManifest(player, false));
 			case GEMCUTTERS_TABLE:
 				return new GUIGemcuttersTable(player, new ContainerGemcuttersTable((GemcuttersTableTileEntity) world.getTileEntity(new BlockPos(x, y, z)), player.inventory));
+			case RADIANT_CRAFTING_TABLE:
+				return new GUIRadiantCraftingTable(player, new ContainerRadiantCraftingTable((RadiantCraftingTableTileEntity) world.getTileEntity(new BlockPos(x, y, z)), player.inventory));
 			default:
 			{
 				ArcaneArchives.logger.info("^RETURNED NULL");
