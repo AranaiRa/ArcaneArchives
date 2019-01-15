@@ -28,6 +28,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.b3d.B3DLoader;
@@ -85,11 +86,20 @@ public class RadiantResonator extends BlockTemplate
 	
 	@Override
 	public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state) {
-		if (worldIn.getBlockState(pos.add(0, 1, 0)).getBlock() instanceof RawQuartz)
+		if (worldIn.getBlockState(pos.up()).getBlock() instanceof RawQuartz)
 		{
-			worldIn.destroyBlock(pos.add(0, 1, 0), true);
+			worldIn.destroyBlock(pos.up(), true);
 		}
 		super.onBlockDestroyedByPlayer(worldIn, pos, state);
+	}
+
+	@Override
+	public void onBlockDestroyedByExplosion(World worldIn, BlockPos pos, Explosion explosion) {
+		if (worldIn.getBlockState(pos.up()).getBlock() instanceof RawQuartz)
+		{
+			worldIn.destroyBlock(pos.up(), false);
+		}
+		super.onBlockDestroyedByExplosion(worldIn, pos, explosion);
 	}
 	
 	@Override
