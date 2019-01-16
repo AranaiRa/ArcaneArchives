@@ -9,7 +9,7 @@ import java.util.Queue;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
 import com.aranaira.arcanearchives.packets.AAPacketHandler;
-import com.aranaira.arcanearchives.packets.PacketNetworkListResponse;
+import com.aranaira.arcanearchives.packets.PacketRadiantChestsListResponse;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.ItemComparison;
 import com.aranaira.arcanearchives.util.NetworkHelper;
@@ -78,7 +78,7 @@ public class ContainerManifest extends Container
 				mAANetwork.mManifestItemHandler.mChests.add(new RadiantChestPlaceHolder(networkChests.get(i).getPos(), items));
 			}
 			
-			PacketNetworkListResponse message = new PacketNetworkListResponse(playerIn.getUniqueID(), ItemList, mAANetwork.mManifestItemHandler.mChests);
+			PacketRadiantChestsListResponse message = new PacketRadiantChestsListResponse(playerIn.getUniqueID(), ItemList, mAANetwork.mManifestItemHandler.mChests);
 			
 			AAPacketHandler.CHANNEL.sendTo(message, (EntityPlayerMP) playerIn);
 		}
@@ -97,7 +97,6 @@ public class ContainerManifest extends Container
 	
 	@Override
 	public boolean canInteractWith(EntityPlayer playerIn) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
