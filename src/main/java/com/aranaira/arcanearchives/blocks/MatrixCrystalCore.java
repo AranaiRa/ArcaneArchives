@@ -75,8 +75,7 @@ public class MatrixCrystalCore extends BlockTemplate {
 	@Override
 	public TileEntity createTileEntity(World world, IBlockState state)
 	{
-		tileEntityInstance = new MatrixCoreTileEntity();
-		return tileEntityInstance;
+		return new MatrixCoreTileEntity();
 	}
 	
 	 @Override

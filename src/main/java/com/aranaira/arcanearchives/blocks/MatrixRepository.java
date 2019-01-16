@@ -52,7 +52,6 @@ public class MatrixRepository extends BlockTemplate {
 	@Override
 	public TileEntity createTileEntity(World world, IBlockState state)
 	{
-		tileEntityInstance = new MatrixRepositoryTileEntity();
-		return tileEntityInstance;
+		return new MatrixRepositoryTileEntity();
 	}
 }
