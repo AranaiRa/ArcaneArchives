@@ -38,7 +38,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	public boolean mShared = false;
 	public UUID mSharedPlayer = null;
 	
-	public HashMap<String, UUID> pendingInvites = new HashMap();
+	public HashMap<String, UUID> pendingInvites = new HashMap<>();
 	
 	
 	private UUID mPlayerId;
