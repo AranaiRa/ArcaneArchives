@@ -50,7 +50,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 	@Override
 	public void update() 
 	{
-		
+		super.update();
 	}
 
 	@Override
