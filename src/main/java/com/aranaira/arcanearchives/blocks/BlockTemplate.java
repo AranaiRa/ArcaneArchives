@@ -6,6 +6,7 @@ import java.util.List;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.BlockLibrary;
 import com.aranaira.arcanearchives.init.ItemLibrary;
+import com.aranaira.arcanearchives.items.ItemBlockTemplate;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.IHasModel;
@@ -41,11 +42,11 @@ public class BlockTemplate extends Block implements IHasModel {
 		setCreativeTab(ArcaneArchives.TAB_AA);
 		refName = name;
 		BlockLibrary.BLOCKS.add(this);
-		ItemLibrary.ITEMS.add(new ItemBlock(this).setRegistryName(this.getRegistryName()));
+		ItemLibrary.ITEMS.add(new ItemBlockTemplate(this));
 		Accessors = new ArrayList<AccessorBlock>();
 		setHarvestLevel("pickaxe", 0);
 	}
-	
+
 	public boolean hasOBJModel()
 	{
 		return false;
