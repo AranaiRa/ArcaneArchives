@@ -75,7 +75,7 @@ public class ContainerManifest extends Container
 							ItemList.add(s.copy());
 					}
 				}
-				mAANetwork.mManifestItemHandler.mChests.add(new RadiantChestPlaceHolder(networkChests.get(i).blockpos, items));
+				mAANetwork.mManifestItemHandler.mChests.add(new RadiantChestPlaceHolder(networkChests.get(i).getPos(), items));
 			}
 			
 			PacketNetworkListResponse message = new PacketNetworkListResponse(playerIn.getUniqueID(), ItemList, mAANetwork.mManifestItemHandler.mChests);
