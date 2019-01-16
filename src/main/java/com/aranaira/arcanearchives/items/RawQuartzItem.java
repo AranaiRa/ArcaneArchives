@@ -83,39 +83,38 @@ public class RawQuartzItem extends ItemTemplate
 			
 			EnumFacing chestFacing = EnumFacing.DOWN;
 			
-			if (te != null)
-			{
-				if (te instanceof TileEntityChest)
-				{
-					if (((TileEntityChest) te).numPlayersUsing > 0)
-						return EnumActionResult.FAIL;
-					IBlockState chestState = world.getBlockState(pos);
-					chestFacing = chestState.getValue(BlockChest.FACING);
-					chestContents = new ItemStack[((TileEntityChest) te).getSizeInventory()];
-					for (int i = 0; i < chestContents.length; i++)
-					{
-						chestContents[i] = ((TileEntityChest)te).getStackInSlot(i);
-					}
-					
-					if (secondaryChest)
-					{
-						TileEntity ste = world.getTileEntity(secondaryChestPos);
+			if (te instanceof TileEntityChest)
+            {
+                if (((TileEntityChest) te).numPlayersUsing > 0)
+                    return EnumActionResult.FAIL;
+                IBlockState chestState = world.getBlockState(pos);
+                chestFacing = chestState.getValue(BlockChest.FACING);
+                chestContents = new ItemStack[((TileEntityChest) te).getSizeInventory()];
+                for (int i = 0; i < chestContents.length; i++)
+                {
+                    chestContents[i] = ((TileEntityChest)te).getStackInSlot(i);
+                }
+
+                if (secondaryChest)
+                {
+                    TileEntity ste = world.getTileEntity(secondaryChestPos);
+
+                    if (ste != null) {
 						secondaryChestContents = new ItemStack[((TileEntityChest) ste).getSizeInventory()];
-						for (int i = 0; i < secondaryChestContents.length; i++)
-						{
-							secondaryChestContents[i] = ((TileEntityChest)ste).getStackInSlot(i);
+						for (int i = 0; i < secondaryChestContents.length; i++) {
+							secondaryChestContents[i] = ((TileEntityChest) ste).getStackInSlot(i);
 						}
 					}
-				}
-				else
-				{
-					return EnumActionResult.FAIL;
-				}
-			}
-			
+                }
+            }
+            else
+            {
+                return EnumActionResult.FAIL;
+            }
+
 			te.updateContainingBlockInfo();
-			if (te instanceof TileEntityChest)
-				((TileEntityChest) te).checkForAdjacentChests();
+
+            ((TileEntityChest) te).checkForAdjacentChests();
 			
 			world.removeTileEntity(pos);
 			world.setBlockToAir(pos);
