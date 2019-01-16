@@ -63,14 +63,8 @@ public class RadiantCraftingTable extends BlockTemplate implements ITileEntityPr
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta) 
+	public TileEntity createNewTileEntity(World worldIn, int meta)
 	{
-		return tileEntityInstance = new RadiantCraftingTableTileEntity();
-	}
-
-	@Override
-	public TileEntity createTileEntity(World world, IBlockState state) 
-	{
-		return tileEntityInstance = new RadiantCraftingTableTileEntity();
+		return new RadiantCraftingTableTileEntity();
 	}
 }

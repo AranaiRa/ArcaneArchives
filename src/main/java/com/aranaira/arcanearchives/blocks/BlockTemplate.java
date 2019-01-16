@@ -64,20 +64,6 @@ public class BlockTemplate extends Block implements IHasModel {
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) 
 	{
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
-
-		if (hasTileEntity(getDefaultState()) && tileEntityInstance != null)
-		{
-			tileEntityInstance.NetworkID = placer.getUniqueID();
-			tileEntityInstance.Dimension = worldIn.provider.getDimension();
-			tileEntityInstance.blockpos = pos;
-			if (!worldIn.isRemote)
-			{
-				if (tileEntityInstance instanceof RadiantChestTileEntity)
-					NetworkHelper.getArcaneArchivesNetwork(placer.getUniqueID()).AddRadiantChest((RadiantChestTileEntity)tileEntityInstance);
-				else
-					NetworkHelper.getArcaneArchivesNetwork(placer.getUniqueID()).AddBlockToNetwork(tileEntityInstance.name, tileEntityInstance);
-			}
-		}
 		
 		if (Height > 1 && Width == 3)
 		{
@@ -119,8 +105,6 @@ public class BlockTemplate extends Block implements IHasModel {
 
 	@Override
 	public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state) {
-		
-		
 		DestroyChildren(worldIn);
 		
 		super.onBlockDestroyedByPlayer(worldIn, pos, state);

@@ -55,35 +55,7 @@ public class RadiantResonator extends BlockTemplate
 	{
 		return true;
 	}
-	
-	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
-			ItemStack stack) {
-		// TODO Auto-generated method stub
-		
-		tileEntityInstance.name = name;
-		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
-	}
 
-	@Override
-	public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
-	{
-		//NOTE : There may be a better way to get the player information for who is trying to place it.
-		//NOTE : If another player is closer to the block being placed it will go under that other player's network.
-		EntityPlayer EP = worldIn.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 100, false);
-		if (EP != null)
-			if (NetworkHelper.getArcaneArchivesNetwork(EP.getUniqueID()).CountBlocks(this) < PlaceLimit)
-			{
-				return true;
-			}
-			else
-			{
-				EP.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.toomanyplaced.resonator"), true);
-			}
-		
-		return false;
-	}
-	
 	@Override
 	public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state) {
 		if (worldIn.getBlockState(pos.up()).getBlock() instanceof RawQuartz)
@@ -117,8 +89,7 @@ public class RadiantResonator extends BlockTemplate
 	@Override
 	public TileEntity createTileEntity(World world, IBlockState state)
 	{
-		tileEntityInstance = new RadiantResonatorTileEntity();
-		return tileEntityInstance;
+		return new RadiantResonatorTileEntity();
 	}
 	
 	 @Override

@@ -55,15 +55,4 @@ public class MatrixRepository extends BlockTemplate {
 		tileEntityInstance = new MatrixRepositoryTileEntity();
 		return tileEntityInstance;
 	}
-	
-
-	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) 
-	{
-		// TODO Auto-generated method stub
-		
-		tileEntityInstance.name = name;
-		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
-	}
-
 }

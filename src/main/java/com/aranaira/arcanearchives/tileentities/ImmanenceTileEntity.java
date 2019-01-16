@@ -1,5 +1,8 @@
 package com.aranaira.arcanearchives.tileentities;
 
+import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
+import com.aranaira.arcanearchives.util.TileHelper;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -15,10 +18,11 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.BlockLibrary;
 import com.aranaira.arcanearchives.util.ItemComparison;
 import com.aranaira.arcanearchives.util.NetworkHelper;
+import net.minecraft.world.World;
 
 public class ImmanenceTileEntity extends TileEntity implements ITickable
 {
-	public UUID NetworkID; //UUID of network owner
+	public UUID NetworkID = null; //UUID of network owner
 	public int ImmanenceDrain; //Immanence cost to operate the device
 	public int ImmanenceGeneration; //Immanence that is given to the network with this device
 	public int NetworkPriority; //What order the device's Immanence is paid for
@@ -43,7 +47,36 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		
+		if (!world.isRemote && GetNetworkID() == null && getPos() != BlockPos.ORIGIN) {
+			UUID newId = TileHelper.getNetworkIdForPos(getPos());
+			if (newId == null) {
+				// Handle that
+				return;
+			}
+
+			EntityPlayer owner = world.getPlayerEntityByUUID(newId);
+			if (owner == null) {
+				// Handle that
+
+			} else {
+				SetNetworkID(newId);
+				Dimension = owner.dimension;
+				ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(newId);
+
+				// Any custom handling of name (like the matrix core) should be done here
+				network.AddTileToNetwork(this);
+			}
+		}
+	}
+
+	public UUID GetNetworkID ()
+	{
+		return NetworkID;
+	}
+
+	private void SetNetworkID (UUID newId)
+	{
+		this.NetworkID = newId;
 	}
 	
 	public int GetTotalItems()
@@ -162,8 +195,8 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setUniqueId("playerId", NetworkID);
-		compound.setString("name", name);
-		compound.setLong("blockpos", blockpos.toLong());
+		//compound.setString("name", name);
+		compound.setLong("blockpos", getPos().toLong());
 		compound.setInteger("dim", Dimension);
 		NBTTagList tags = new NBTTagList();
 		for (ItemStack item : Inventory) 
@@ -180,7 +213,7 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		NetworkID = compound.getUniqueId("playerId");
-		name = compound.getString("name");
+		//name = compound.getString("name");
 		blockpos = BlockPos.fromLong(compound.getLong("blockpos"));
 		Dimension = compound.getInteger("dim");
 		MaxItems = compound.getInteger("invsize");
@@ -193,7 +226,7 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 			if (!temp.isEmpty())
 				Inventory.add(temp);
 		}
-		NetworkHelper.getArcaneArchivesNetwork(NetworkID).AddBlockToNetwork(name, this);
+		NetworkHelper.getArcaneArchivesNetwork(NetworkID).AddTileToNetwork(this);
 		super.readFromNBT(compound);
 	}
 	

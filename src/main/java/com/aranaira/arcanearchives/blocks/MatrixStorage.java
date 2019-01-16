@@ -52,15 +52,6 @@ public class MatrixStorage extends BlockTemplate {
 	@Override
 	public TileEntity createTileEntity(World world, IBlockState state)
 	{
-		tileEntityInstance = new MatrixStorageTileEntity();
-		return tileEntityInstance;
-	}
-	
-
-	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) 
-	{
-		tileEntityInstance.name = name;
-		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
+		return new MatrixStorageTileEntity();
 	}
 }

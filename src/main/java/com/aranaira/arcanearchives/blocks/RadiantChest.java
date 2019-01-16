@@ -116,17 +116,11 @@ public class RadiantChest extends BlockTemplate implements ITileEntityProvider{
     }
 
 	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta) 
+	public TileEntity createNewTileEntity(World worldIn, int meta)
 	{
-		return tileEntityInstance = new RadiantChestTileEntity();
+		return new RadiantChestTileEntity();
 	}
 
-	@Override
-	public TileEntity createTileEntity(World world, IBlockState state) 
-	{
-		return tileEntityInstance = new RadiantChestTileEntity();
-	}
-	
 	@Override
 	public boolean canEntityDestroy(IBlockState state, IBlockAccess world, BlockPos pos, Entity entity) {
 		// TODO Auto-generated method stub

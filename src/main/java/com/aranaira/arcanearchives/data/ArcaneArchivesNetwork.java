@@ -43,8 +43,11 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	
 	private UUID mPlayerId;
 	private AAWorldSavedData mParent;
-	
-	private Map<ImmanenceTileEntity, String> mNetworkBlocks = new HashMap<>();
+
+	private List<ImmanenceTileEntity> mNetworkTiles = new ArrayList<>();
+
+	// This is better stored as a list.
+	// private Map<ImmanenceTileEntity, String> mNetworkBlocks = new HashMap<>();
 	private List<RadiantChestTileEntity> mRadiantChests = new ArrayList<>();
 
 	private int mCurrentImmanence;
@@ -73,12 +76,12 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		return mCurrentImmanence;
 	}
 	
-	public int CountBlocks(BlockTemplate block)
+	public int CountTileEntities(Class clazz)
 	{
 		int tmpCount = 0;
 		for (ImmanenceTileEntity ITE : GetTileEntitiesByPriority())
 		{
-			if (ITE.name == block.refName)
+			if (ITE.getClass().equals(clazz))
 				tmpCount++;
 		}
 		return tmpCount;
@@ -174,7 +177,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	
 	public List<ImmanenceTileEntity> GetTileEntitiesByPriority()
 	{
-		List<ImmanenceTileEntity> tempList = new ArrayList<>(getBlocks().keySet());
+		List<ImmanenceTileEntity> tempList = new ArrayList<>(getBlocks());
 		tempList.sort((o1, o2) -> {
 			if (o1.NetworkPriority > o2.NetworkPriority)
 				return 1;
@@ -238,32 +241,31 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		return new ItemStack(Blocks.AIR);
 	}
 
-	public void cleanNetworkBlocks ()
+	public void cleanNetworkTiles ()
 	{
-		mNetworkBlocks.keySet().removeIf(ImmanenceTileEntity::isInvalid);
+		mNetworkTiles.removeIf(ImmanenceTileEntity::isInvalid);
 	}
 	
-	public Map<ImmanenceTileEntity, String> getBlocks()
+	public List<ImmanenceTileEntity> getBlocks()
 	{
-		cleanNetworkBlocks();
-		return mNetworkBlocks;
+		cleanNetworkTiles();
+		return mNetworkTiles;
 	}
 	
-	public void AddBlockToNetwork(String blockName, ImmanenceTileEntity tileEntityInstance)
+	public void AddTileToNetwork(ImmanenceTileEntity tileEntityInstance)
 	{
 		if (tileEntityInstance instanceof RadiantChestTileEntity)
 		{
-			AddRadiantChest((RadiantChestTileEntity)tileEntityInstance);
+			mRadiantChests.add((RadiantChestTileEntity)tileEntityInstance);
 			tileEntityInstance.hasBeenAddedToNetwork = true;
-			return;
 		}
-		if (IsBlockPosAvailable(tileEntityInstance.blockpos, tileEntityInstance.Dimension))
-		{
-			mNetworkBlocks.put(tileEntityInstance, blockName);
+		else {
+			mNetworkTiles.add(tileEntityInstance);
 			tileEntityInstance.hasBeenAddedToNetwork = true;
-			mNeedsToBeUpdated = true;
-			UpdateImmanence();
 		}
+
+		mNeedsToBeUpdated = true;
+		UpdateImmanence();
 	}
 	
 	public void AddRadiantChest(RadiantChestTileEntity RCTE)
@@ -275,8 +277,13 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	{
 		return mRadiantChests;
 	}
-	
-	public boolean IsBlockPosAvailable(BlockPos pos, int dimID)
+
+	/**
+	 *
+	 * 	This is basically useless. It's only ever triggered after the TE is made
+	 * 	and the spot is always eligible.
+	 *
+	 * public boolean IsBlockPosAvailable(BlockPos pos, int dimID)
 	{
 		for (ImmanenceTileEntity ITE : getBlocks().keySet())
 		{
@@ -285,11 +292,11 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		}
 		
 		return true;
-	}
+	} **/
 	
 	public void triggerUpdate ()
 	{
-		cleanNetworkBlocks();
+		cleanNetworkTiles();
 		UpdateImmanence();
 	}
 	
