@@ -240,10 +240,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 
 	public void cleanNetworkBlocks ()
 	{
-		Map<ImmanenceTileEntity, String> temp = new HashMap<>(mNetworkBlocks);
-		temp.keySet().forEach((ite) -> {
-			if (ite.isInvalid()) mNetworkBlocks.remove(ite);
-		});
+		mNetworkBlocks.keySet().removeIf(ImmanenceTileEntity::isInvalid);
 	}
 	
 	public Map<ImmanenceTileEntity, String> getBlocks()
