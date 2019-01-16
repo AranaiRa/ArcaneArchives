@@ -38,7 +38,6 @@ public class ContainerRadiantCraftingTable extends Container
 	
 	@Override
 	public boolean canInteractWith(EntityPlayer playerIn) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 }

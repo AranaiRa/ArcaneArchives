@@ -21,12 +21,11 @@ import org.lwjgl.opengl.GL11;
 public class ManifestRenderer extends TileEntityItemStackRenderer 
 {
 	public ManifestRenderer() {
-		// TODO Auto-generated constructor stub
+
 	}
 	
 	@Override
 	public void renderByItem(ItemStack itemStackIn) {
-		// TODO Auto-generated method stub
 		super.renderByItem(itemStackIn);
 	}
 	
