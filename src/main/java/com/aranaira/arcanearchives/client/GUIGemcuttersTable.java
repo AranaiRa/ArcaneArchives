@@ -61,7 +61,6 @@ public class GUIGemcuttersTable extends GuiContainer
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) 
 	{
-		// TODO Auto-generated method stub
 		super.drawScreen(mouseX, mouseY, partialTicks);
 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

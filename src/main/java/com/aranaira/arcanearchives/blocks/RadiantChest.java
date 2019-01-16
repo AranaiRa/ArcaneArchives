@@ -123,7 +123,6 @@ public class RadiantChest extends BlockTemplate implements ITileEntityProvider{
 
 	@Override
 	public boolean canEntityDestroy(IBlockState state, IBlockAccess world, BlockPos pos, Entity entity) {
-		// TODO Auto-generated method stub
 		return super.canEntityDestroy(state, world, pos, entity);
 	}
 	

@@ -30,7 +30,6 @@ public class ArcaneArchivesCommand extends CommandBase
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "ArcaneArchives";
 	}
 

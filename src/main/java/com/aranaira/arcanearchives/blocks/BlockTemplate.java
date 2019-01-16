@@ -56,7 +56,6 @@ public class BlockTemplate extends Block implements IHasModel {
 	public void registerModels()
 	{
 		ArcaneArchives.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory");
-		// TODO Auto-generated method stub
 		
 	}
 

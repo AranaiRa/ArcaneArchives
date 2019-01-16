@@ -62,7 +62,6 @@ public class MatrixCrystalCore extends BlockTemplate {
 	
 	@Override
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-		// TODO Auto-generated method stub
 		super.updateTick(worldIn, pos, state, rand);
 	}
 	@Override

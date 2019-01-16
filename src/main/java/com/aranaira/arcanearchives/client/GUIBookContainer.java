@@ -103,7 +103,6 @@ public class GUIBookContainer extends GuiContainer
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-		// TODO Auto-generated method stub
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.enableColorMaterial();
 		this.mc.getTextureManager().bindTexture(GUITextures);
@@ -113,7 +112,6 @@ public class GUIBookContainer extends GuiContainer
 
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		// TODO Auto-generated method stub
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.enableColorMaterial();
 

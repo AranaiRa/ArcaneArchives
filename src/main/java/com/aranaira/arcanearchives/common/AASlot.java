@@ -22,7 +22,6 @@ public class AASlot extends SlotItemHandler
 	
 	@Override
 	public int getSlotStackLimit() {
-		// TODO Auto-generated method stub
 		return mSlotStackLimit;
 	}
 }

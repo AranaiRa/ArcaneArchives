@@ -16,7 +16,6 @@ public class AAItemStackHandler extends ItemStackHandler
 		super(i);
 	}
 	
-	//TODO Add in config for slot limit multiplier.
 	@Override
 	public int getSlotLimit(int slot) {
 		return 64 * ConfigHandler.ConfigValues.iRadiantChestMultiplier;
@@ -35,7 +34,6 @@ public class AAItemStackHandler extends ItemStackHandler
 	
 	@Override
 	public ItemStack extractItem(int slot, int amount, boolean simulate) {
-		// TODO Auto-generated method stub
 		return super.extractItem(slot, amount, simulate);
 	}
 }
