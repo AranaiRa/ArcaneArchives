@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.BlockTemplate;
@@ -45,10 +46,6 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	private AAWorldSavedData mParent;
 
 	private List<ImmanenceTileEntity> mNetworkTiles = new ArrayList<>();
-
-	// This is better stored as a list.
-	// private Map<ImmanenceTileEntity, String> mNetworkBlocks = new HashMap<>();
-	private List<RadiantChestTileEntity> mRadiantChests = new ArrayList<>();
 
 	private int mCurrentImmanence;
 	private boolean mNeedsToBeUpdated = true;
@@ -254,46 +251,18 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	
 	public void AddTileToNetwork(ImmanenceTileEntity tileEntityInstance)
 	{
-		if (tileEntityInstance instanceof RadiantChestTileEntity)
-		{
-			mRadiantChests.add((RadiantChestTileEntity)tileEntityInstance);
-			tileEntityInstance.hasBeenAddedToNetwork = true;
-		}
-		else {
-			mNetworkTiles.add(tileEntityInstance);
-			tileEntityInstance.hasBeenAddedToNetwork = true;
-		}
+		mNetworkTiles.add(tileEntityInstance);
+		tileEntityInstance.hasBeenAddedToNetwork = true;
 
 		mNeedsToBeUpdated = true;
 		UpdateImmanence();
 	}
 	
-	public void AddRadiantChest(RadiantChestTileEntity RCTE)
-	{
-		mRadiantChests.add(RCTE);
-	}
-	
 	public List<RadiantChestTileEntity> GetRadiantChests()
 	{
-		return mRadiantChests;
+		return mNetworkTiles.stream().filter((k) -> k instanceof RadiantChestTileEntity).map((k) -> (RadiantChestTileEntity) k).collect(Collectors.toList());
 	}
 
-	/**
-	 *
-	 * 	This is basically useless. It's only ever triggered after the TE is made
-	 * 	and the spot is always eligible.
-	 *
-	 * public boolean IsBlockPosAvailable(BlockPos pos, int dimID)
-	{
-		for (ImmanenceTileEntity ITE : getBlocks().keySet())
-		{
-			if (ITE.blockpos == pos && ITE.Dimension == dimID)
-				return false;
-		}
-		
-		return true;
-	} **/
-	
 	public void triggerUpdate ()
 	{
 		cleanNetworkTiles();
