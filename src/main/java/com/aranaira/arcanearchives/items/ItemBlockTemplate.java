@@ -56,7 +56,8 @@ public class ItemBlockTemplate extends ItemBlock {
                 player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.toomanyplaced.core"), true);
                 return EnumActionResult.FAIL;
             } else {
-                if (!Placeable.CanPlaceSize(world, pos, MatrixCrystalCore.getWidth(), MatrixCrystalCore.getHeight())) {
+                // We right clicked on teh block beneath where the core will go
+                if (!Placeable.CanPlaceSize(world, pos.up(), MatrixCrystalCore.getWidth(), MatrixCrystalCore.getHeight())) {
                     player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.notenoughspace.core"), true);
                     return EnumActionResult.FAIL;
                 }
