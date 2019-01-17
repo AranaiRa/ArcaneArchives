@@ -83,6 +83,11 @@ public class ItemBlockTemplate extends ItemBlock {
             TileHelper.markPosition(player.getUniqueID(), pos);
         }
 
+        if (block instanceof MatrixCrystalCore)
+        {
+            Placeable.ReplaceBlocks(world, pos, MatrixCrystalCore.getWidth(), MatrixCrystalCore.getHeight());
+        }
+
         return res;
     }
 }

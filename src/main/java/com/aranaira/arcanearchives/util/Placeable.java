@@ -33,4 +33,12 @@ public class Placeable
 
 		return true;
 	}
+
+	public static void ReplaceBlocks (World worldIn, BlockPos pos, int Width, int Height)
+	{
+		for (BlockPos pos2 : GetPositions(pos, Width, Height))
+		{
+			worldIn.setBlockToAir(pos2);
+		}
+	}
 }
