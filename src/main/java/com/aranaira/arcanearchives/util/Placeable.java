@@ -8,13 +8,6 @@ import net.minecraft.world.World;
 
 public class Placeable 
 {
-	public static boolean CanPlaceLimit(int limit, BlockTemplate block)
-	{
-		//if (block.PlaceLimit > )
-		
-		return true;
-	}
-	
 	public static boolean CanPlaceSize(World worldIn, BlockPos pos, int Width, int Height)
 	{
 		return isAreaClear(worldIn, pos, Width, Height);
@@ -23,16 +16,18 @@ public class Placeable
 	//These are redundant, but names are self-explanatory, so they are left for the time being.
 	public static boolean isAreaClear(World worldIn, BlockPos pos, int Width, int Height)
 	{
-		for (int x = -(Width/2); x < Width/2; x++)
-			for (int z = -(Width/2); z < Width/2; z++)
-				for (int y = 0; y < Height; y++)
-					if (!isAirAtOffset(worldIn, pos, x, y, z))
-						return false;
+		BlockPos posA = pos.up().add(-(Width/2), Height, (Width/2));
+		BlockPos posB = pos.up().add(Width/2, 0, -(Width/2));
+		Iterable<BlockPos> positions = BlockPos.getAllInBox(posB, posA); // unsure of the order of these
+
+		for (BlockPos pos2 : positions)
+		{
+			if (!worldIn.isAirBlock(pos2))
+			{
+				return false;
+			}
+		}
+
 		return true;
-	}
-	
-	private static boolean isAirAtOffset(World worldIn, BlockPos pos, int offsetX, int offsetY, int offsetZ)
-	{
-		return (Block.getIdFromBlock(worldIn.getBlockState(pos.add(offsetX, offsetY, offsetZ)).getBlock()) == 0);
 	}
 }
