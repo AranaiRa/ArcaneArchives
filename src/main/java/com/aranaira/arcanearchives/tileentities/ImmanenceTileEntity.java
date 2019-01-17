@@ -212,7 +212,6 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setUniqueId("playerId", NetworkID);
-		//compound.setString("name", name);
 		compound.setLong("blockpos", getPos().toLong());
 		compound.setInteger("dim", Dimension);
 		NBTTagList tags = new NBTTagList();
@@ -230,8 +229,6 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		NetworkID = compound.getUniqueId("playerId");
-		//name = compound.getString("name");
-		blockpos = BlockPos.fromLong(compound.getLong("blockpos"));
 		Dimension = compound.getInteger("dim");
 		MaxItems = compound.getInteger("invsize");
 		NBTTagList tags = compound.getTagList("inventory", 10);
