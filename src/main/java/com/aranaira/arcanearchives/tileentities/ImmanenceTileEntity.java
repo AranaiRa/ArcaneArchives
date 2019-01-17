@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
 import com.aranaira.arcanearchives.util.TileHelper;
+import javafx.util.Pair;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -29,12 +30,13 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 	public boolean IsDrainPaid; //Whether the device's Immanence needs have been covered
 	public boolean IsProtected; //Whether the device is currently indestructable
 	public String name;
-	public BlockPos blockpos;
 	public boolean hasBeenAddedToNetwork = false;
 	public int Dimension;
 	public NonNullList<ItemStack> Inventory;
 	public boolean IsInventory = false;
 	public int MaxItems;
+	public int Width;
+	public int Height;
 	private byte facing;
 	
 	public ImmanenceTileEntity(String name)
@@ -66,6 +68,22 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 				network.AddTileToNetwork(this);
 			}
 		}
+	}
+
+	public void setWidthAndHeight (Pair<Integer, Integer> values)
+	{
+		this.Width = values.getKey();
+		this.Height = values.getValue();
+	}
+
+	public void setWidthAndHeight (int width, int height)
+	{
+		this.Width = width;
+		this.Height = height;
+	}
+
+	public boolean hasAccessors () {
+		return this.Width != 1 && this.Height != 1;
 	}
 
 	public UUID GetNetworkID ()

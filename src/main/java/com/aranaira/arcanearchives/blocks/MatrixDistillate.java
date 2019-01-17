@@ -16,7 +16,7 @@ public class MatrixDistillate extends BlockTemplate {
 	{
 		super(name, Material.GLASS);
 		setLightLevel(16/16f);
-		this.Height = 3;
+		setHeight(3);
 	}
 
     @Override

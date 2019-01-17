@@ -12,6 +12,7 @@ import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.IHasModel;
 import com.aranaira.arcanearchives.util.NetworkHelper;
 
+import javafx.util.Pair;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -29,22 +30,57 @@ public class BlockTemplate extends Block implements IHasModel {
 	public ImmanenceTileEntity tileEntityInstance;
 	public int PlaceLimit = -1;
 	public String refName;
-	
+
 	public List<AccessorBlock> Accessors;
-	public int Width = 1;
-	public int Height = 1;
+	private static int Width = 1;
+	private static int Height = 1;
 	BlockPos pos;
-	
+
 	public BlockTemplate(String name, Material materialIn) {
 		super(materialIn);
 		setUnlocalizedName(name);
 		setRegistryName(new ResourceLocation(ArcaneArchives.MODID, name));
 		setCreativeTab(ArcaneArchives.TAB_AA);
-		refName = name;
 		BlockLibrary.BLOCKS.add(this);
 		ItemLibrary.ITEMS.add(new ItemBlockTemplate(this));
-		Accessors = new ArrayList<AccessorBlock>();
+		Accessors = new ArrayList<>();
 		setHarvestLevel("pickaxe", 0);
+	}
+
+	public static int getWidth ()
+	{
+		return Width;
+	}
+
+	public static int getHeight ()
+	{
+		return Height;
+	}
+
+	public static void setWidth (int width)
+	{
+		Width = width;
+	}
+
+	public static void setHeight (int height)
+	{
+		Height = height;
+	}
+
+	public static void setWidthAndHeight (Pair<Integer, Integer> values)
+	{
+		Width = values.getKey();
+		Height = values.getValue();
+	}
+
+	public static void setWidthAndHeight (int width, int height)
+	{
+		Width = width;
+		Height = height;
+	}
+
+	public static Pair<Integer, Integer> getWidthAndHeight () {
+		return new Pair<>(Width, Height);
 	}
 
 	public boolean hasOBJModel()
