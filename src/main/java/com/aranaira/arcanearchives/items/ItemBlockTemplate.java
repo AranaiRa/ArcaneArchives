@@ -56,7 +56,7 @@ public class ItemBlockTemplate extends ItemBlock {
                 player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.toomanyplaced.core"), true);
                 return EnumActionResult.FAIL;
             } else {
-                if (!Placeable.CanPlaceSize(world, pos, 3, 4)) {
+                if (!Placeable.CanPlaceSize(world, pos, MatrixCrystalCore.getWidth(), MatrixCrystalCore.getHeight())) {
                     player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.notenoughspace.core"), true);
                     return EnumActionResult.FAIL;
                 }
