@@ -6,6 +6,7 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 
 public class RadiantChestPlaceHolder
 {
@@ -29,5 +30,10 @@ public class RadiantChestPlaceHolder
 			}
 		}
 		return false;
+	}
+	
+	public Vec3d GetPosition()
+	{
+		return new Vec3d(mPos.getX(), mPos.getY(), mPos.getZ());
 	}
 }
