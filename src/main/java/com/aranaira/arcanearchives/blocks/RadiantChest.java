@@ -75,13 +75,13 @@ public class RadiantChest extends BlockTemplate implements ITileEntityProvider{
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) 
 	{
-		if (AATickHandler.GetInstance().mIsDrawingLine)
+		for (Vec3d vec : AATickHandler.GetInstance().mBlockPositions)
 		{
 			Vec3d bpos = new Vec3d(pos.getX(), pos.getY(), pos.getZ());
-
-			if (AATickHandler.GetInstance().mBlockPosition.equals(bpos))
+			
+			if (vec.equals(bpos))
 			{
-				AATickHandler.GetInstance().mIsDrawingLine = false;
+				AATickHandler.GetInstance().mBlockPositionsToRemove.add(bpos);
 			}
 		}
 
@@ -95,13 +95,14 @@ public class RadiantChest extends BlockTemplate implements ITileEntityProvider{
     {
 		NetworkHelper.getArcaneArchivesNetwork(((RadiantChestTileEntity)worldIn.getTileEntity(pos)).NetworkID).triggerUpdate();
 
-		if (AATickHandler.GetInstance().mIsDrawingLine)
+
+		for (Vec3d vec : AATickHandler.GetInstance().mBlockPositions)
 		{
 			Vec3d bpos = new Vec3d(pos.getX(), pos.getY(), pos.getZ());
-
-			if (AATickHandler.GetInstance().mBlockPosition.equals(bpos))
+			
+			if (vec.equals(bpos))
 			{
-				AATickHandler.GetInstance().mIsDrawingLine = false;
+				AATickHandler.GetInstance().mBlockPositionsToRemove.add(bpos);
 			}
 		}
 		

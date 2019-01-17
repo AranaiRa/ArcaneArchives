@@ -9,6 +9,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import com.aranaira.arcanearchives.*;
 import com.aranaira.arcanearchives.util.RenderHelper;
 
@@ -16,7 +20,8 @@ import com.aranaira.arcanearchives.util.RenderHelper;
 public class AATickHandler 
 {
 	private static AATickHandler mInstance;
-	public Vec3d mBlockPosition;
+	public List<Vec3d> mBlockPositions = new ArrayList();
+	public List<Vec3d> mBlockPositionsToRemove = new ArrayList();
 	public boolean mIsDrawingLine;
 	
 	private AATickHandler()
@@ -31,13 +36,21 @@ public class AATickHandler
 		return mInstance;
 	}
 	
+	public void clearChests()
+	{
+		mBlockPositionsToRemove.addAll(mBlockPositions);
+	}
+	
 	@SubscribeEvent
 	public static void renderOverlay(RenderWorldLastEvent event)
 	{
-			if (mInstance != null && mInstance.mBlockPosition != null && mInstance.mIsDrawingLine == true)
-			{
-				RenderHelper.drawRay(Minecraft.getMinecraft().player.getPositionVector(), mInstance.mBlockPosition, 15);
-			}
+		if (mInstance != null && mInstance.mBlockPositions.size() > 0)
+		{
+			RenderHelper.drawRays(Minecraft.getMinecraft().player.getPositionVector(), mInstance.mBlockPositions, 15);
+			
+			mInstance.mBlockPositions.removeAll(mInstance.mBlockPositionsToRemove);
+			mInstance.mBlockPositionsToRemove = new ArrayList();
+		}
 	}
 	
 	@SubscribeEvent
