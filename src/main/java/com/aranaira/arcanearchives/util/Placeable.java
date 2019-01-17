@@ -4,12 +4,13 @@ import com.aranaira.arcanearchives.blocks.BlockTemplate;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class Placeable 
 {
-	public static Iterable<BlockPos> GetPositions (BlockPos pos, int Width, int Height)
+	public static Iterable<BlockPos> GetPositions (BlockPos pos, int Width, int Height, EnumFacing facing)
 	{
 		BlockPos posA = pos.add(-(Width/2), Height, (Width/2));
 		BlockPos posB = pos.add(Width/2, 0, -(Width/2));
@@ -17,10 +18,10 @@ public class Placeable
 		return BlockPos.getAllInBox(posB, posA); // unsure of the order of these
 	}
 
-	public static boolean CanPlaceSize(World worldIn, BlockPos pos, int Width, int Height)
+	public static boolean CanPlaceSize(World worldIn, BlockPos pos, int Width, int Height, EnumFacing facing)
 	{
 		// These need to be generated properly with facing
-		for (BlockPos pos2 : GetPositions(pos, Width, Height))
+		for (BlockPos pos2 : GetPositions(pos, Width, Height, facing))
 		{
 			IBlockState state = worldIn.getBlockState(pos2);
 			Block block = state.getBlock();
@@ -34,9 +35,9 @@ public class Placeable
 		return true;
 	}
 
-	public static void ReplaceBlocks (World worldIn, BlockPos pos, int Width, int Height)
+	public static void ReplaceBlocks (World worldIn, BlockPos pos, int Width, int Height, EnumFacing facing)
 	{
-		for (BlockPos pos2 : GetPositions(pos, Width, Height))
+		for (BlockPos pos2 : GetPositions(pos, Width, Height, facing))
 		{
 			worldIn.setBlockToAir(pos2);
 		}

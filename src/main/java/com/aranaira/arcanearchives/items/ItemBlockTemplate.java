@@ -57,7 +57,7 @@ public class ItemBlockTemplate extends ItemBlock {
                 return EnumActionResult.FAIL;
             } else {
                 // We right clicked on teh block beneath where the core will go
-                if (!Placeable.CanPlaceSize(world, pos.up(), MatrixCrystalCore.getWidth(), MatrixCrystalCore.getHeight())) {
+                if (!Placeable.CanPlaceSize(world, pos.up(), MatrixCrystalCore.getWidth(), MatrixCrystalCore.getHeight(), facing)) {
                     player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.notenoughspace.core"), true);
                     return EnumActionResult.FAIL;
                 }
@@ -70,6 +70,9 @@ public class ItemBlockTemplate extends ItemBlock {
     @Override
     public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, IBlockState newState) {
         boolean res = super.placeBlockAt(stack, player, world, pos, side, hitX, hitY, hitZ, newState);
+
+        float yaw = player.rotationYaw;
+        EnumFacing direction = EnumFacing.fromAngle(yaw);
 
         if (player instanceof FakePlayer) {
             // We need to do something to handle this at some point. Perhaps just a warning?
@@ -85,7 +88,7 @@ public class ItemBlockTemplate extends ItemBlock {
 
         if (block instanceof MatrixCrystalCore)
         {
-            Placeable.ReplaceBlocks(world, pos, MatrixCrystalCore.getWidth(), MatrixCrystalCore.getHeight());
+            Placeable.ReplaceBlocks(world, pos, MatrixCrystalCore.getWidth(), MatrixCrystalCore.getHeight(), direction);
         }
 
         return res;
