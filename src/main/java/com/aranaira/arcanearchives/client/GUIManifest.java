@@ -83,7 +83,6 @@ public class GUIManifest extends GuiContainer
 	@Override
 	public List<String> getItemToolTip(ItemStack p_191927_1_) {
 		List<String> ls = super.getItemToolTip(p_191927_1_);
-		//ls.add("TEST");
 		return ls;
 	}
 	
@@ -159,7 +158,7 @@ public class GUIManifest extends GuiContainer
 			
 			if (mouseX > guiLeft + mEndTrackingButtonLeftOffset && mouseX < guiLeft + mEndTrackingButtonLeftOffset + mEndTrackingButtonWidth && mouseY > guiTop + mEndTrackingButtonTopOffset && mouseY < guiTop + mEndTrackingButtonTopOffset + mEndTrackingButtonHeight)
 			{
-				AATickHandler.GetInstance().mIsDrawingLine = false;
+				AATickHandler.GetInstance().clearChests();
 			}
 		}
 		
