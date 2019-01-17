@@ -20,6 +20,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -92,7 +93,6 @@ public class BlockTemplate extends Block implements IHasModel {
 	public void registerModels()
 	{
 		ArcaneArchives.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory");
-		
 	}
 
 	@Override
@@ -135,8 +135,14 @@ public class BlockTemplate extends Block implements IHasModel {
 			worldIn.setBlockState(pos.add(1, 0, 0), temp.getBlockState().getBaseState());
 			Accessors.add(temp);
 		}
+
+		if (!worldIn.isRemote) {
+			TileEntity te = worldIn.getTileEntity(pos);
+			if (te instanceof ImmanenceTileEntity) {
+				((ImmanenceTileEntity) te).setWidthAndHeight(getWidthAndHeight());
+			}
+		}
 	}
-	
 
 	@Override
 	public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state) {
