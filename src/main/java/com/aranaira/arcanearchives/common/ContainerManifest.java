@@ -105,10 +105,8 @@ public class ContainerManifest extends Container
 	{
 		if (mServerSide)
 			return ItemStack.EMPTY;
-		for (ItemStack s : ManifestItemHandler.mInstance.mItemStacks)
-		{
-			ArcaneArchives.logger.info(s.getDisplayName());
-		}
+		
+		AATickHandler.GetInstance().clearChests();
 		
 		if (slotId < 0)
 			return ItemStack.EMPTY;
@@ -122,18 +120,9 @@ public class ContainerManifest extends Container
 		{
 			if (rcph.Contains(ManifestItemHandler.mInstance.getStackInSlot(slotId)))
 			{
-				RCPH = rcph;
-				break;
+				AATickHandler.GetInstance().mBlockPositions.add(rcph.GetPosition());
 			}
 		}
-		
-		if (RCPH == null)
-			return ItemStack.EMPTY;
-		
-		BlockPos bp = RCPH.mPos;
-		
-		AATickHandler.GetInstance().mBlockPosition = new Vec3d(bp.getX(), bp.getY(), bp.getZ());
-		AATickHandler.GetInstance().mIsDrawingLine = true;
 		
 		return ItemStack.EMPTY;
 	}
