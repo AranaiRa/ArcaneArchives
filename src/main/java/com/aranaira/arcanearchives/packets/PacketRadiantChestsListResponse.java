@@ -22,15 +22,15 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class PacketNetworkListResponse implements IMessage
+public class PacketRadiantChestsListResponse implements IMessage
 {
 	List<ItemStack> mItems;
 	List<RadiantChestPlaceHolder> mChests;
 	UUID mPlayerID;
 	
-	public PacketNetworkListResponse() {}
+	public PacketRadiantChestsListResponse() {}
 	
-	public PacketNetworkListResponse(UUID playerId, List<ItemStack> items, List<RadiantChestPlaceHolder> chests)
+	public PacketRadiantChestsListResponse(UUID playerId, List<ItemStack> items, List<RadiantChestPlaceHolder> chests)
 	{
 		mPlayerID = playerId;
 		mItems = items;
@@ -103,18 +103,18 @@ public class PacketNetworkListResponse implements IMessage
 		}
 	}
 
-	public static class PacketNetworkListResponseHandler implements IMessageHandler<PacketNetworkListResponse, IMessage>
+	public static class PacketRadiantChestsListResponseHandler implements IMessageHandler<PacketRadiantChestsListResponse, IMessage>
 	{
 
 		@Override 
-		public IMessage onMessage(final PacketNetworkListResponse message, final MessageContext ctx) 
+		public IMessage onMessage(final PacketRadiantChestsListResponse message, final MessageContext ctx) 
 		{
 		    FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> processMessage(message, ctx));
 
 		    return null;
 		}
 		
-		private void processMessage(PacketNetworkListResponse message, MessageContext ctx)
+		private void processMessage(PacketRadiantChestsListResponse message, MessageContext ctx)
 		{
 			//Bodgey Code
 			//ManifestItemHandler mManifestItemHandler = NetworkHelper.getArcaneArchivesNetwork(message.mPlayerID).mManifestItemHandler;

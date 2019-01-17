@@ -41,7 +41,6 @@ public class ManifestItemHandler implements IItemHandlerModifiable
 	
 	@Override
 	public int getSlots() {
-		// TODO Auto-generated method stub
 		return 81;
 	}
 

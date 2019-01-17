@@ -46,7 +46,6 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 	
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
 		if (!world.isRemote && GetNetworkID() == null && getPos() != BlockPos.ORIGIN) {
 			UUID newId = TileHelper.getNetworkIdForPos(getPos());
 			if (newId == null) {

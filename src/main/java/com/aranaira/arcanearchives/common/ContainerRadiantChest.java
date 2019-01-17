@@ -73,7 +73,6 @@ public class ContainerRadiantChest extends Container {
 	@Override
 	public boolean canInteractWith(EntityPlayer playerIn) 
 	{
-		// TODO Auto-generated method stub
 		return true;
 	}
 
@@ -114,7 +113,6 @@ public class ContainerRadiantChest extends Container {
 	
 	@Override
 	public void putStackInSlot(int slotID, ItemStack stack) {
-		// TODO Auto-generated method stub
 		super.putStackInSlot(slotID, stack);
 	}
 	

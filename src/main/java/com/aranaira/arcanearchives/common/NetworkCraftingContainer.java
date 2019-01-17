@@ -9,7 +9,6 @@ public class NetworkCraftingContainer extends ContainerWorkbench {
 
 	public NetworkCraftingContainer(InventoryPlayer playerInventory, World worldIn, BlockPos posIn) {
 		super(playerInventory, worldIn, posIn);
-		// TODO Auto-generated constructor stub
 	}
 
 }

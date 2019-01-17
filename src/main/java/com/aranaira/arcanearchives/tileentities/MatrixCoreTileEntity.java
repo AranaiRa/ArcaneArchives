@@ -31,7 +31,6 @@ public class MatrixCoreTileEntity extends ImmanenceTileEntity
 	
 	@Override
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-		// TODO Auto-generated method stub
 		super.onDataPacket(net, pkt);
 	}
 }

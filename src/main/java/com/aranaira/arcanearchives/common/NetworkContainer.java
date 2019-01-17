@@ -115,8 +115,8 @@ public class NetworkContainer extends Container
 	
 	
 	@Override
-	public boolean canInteractWith(EntityPlayer playerIn) {
-		// TODO Auto-generated method stub
+	public boolean canInteractWith(EntityPlayer playerIn) 
+	{
 		return true;
 	}
 	

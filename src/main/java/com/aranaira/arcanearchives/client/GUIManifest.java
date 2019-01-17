@@ -54,7 +54,6 @@ public class GUIManifest extends GuiContainer
 		
 	}
 
-	// TODO Have it be noticable when you are entering in the text box.
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) 
 	{
@@ -67,7 +66,10 @@ public class GUIManifest extends GuiContainer
 		if (mSearchText.equals(""))
 			fontRenderer.drawString("Search", 	guiLeft + mTextLeftOffset, mTextTopOffset + guiTop, 0x000000);
 		else
-			fontRenderer.drawString(temp, guiLeft + mTextLeftOffset, mTextTopOffset + guiTop, 0x000000);
+			if (mIsEnteringText)
+				fontRenderer.drawString(temp, guiLeft + mTextLeftOffset, mTextTopOffset + guiTop, 0x4363ff);
+			else
+				fontRenderer.drawString(temp, guiLeft + mTextLeftOffset, mTextTopOffset + guiTop, 0x000000);
 		
 		fontRenderer.drawString("End Track", guiLeft + mEndTrackingLeftOffset, mEndTrackingTopOffset + guiTop, 0x000000);
 	}
@@ -104,7 +106,6 @@ public class GUIManifest extends GuiContainer
 	
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
-		// TODO Auto-generated method stub
 		super.actionPerformed(button);
 	}
 	
