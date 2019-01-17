@@ -10,9 +10,8 @@ import com.aranaira.arcanearchives.items.ItemBlockTemplate;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.IHasModel;
-import com.aranaira.arcanearchives.util.NetworkHelper;
+import com.aranaira.arcanearchives.util.Tuple;
 
-import javafx.util.Pair;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -68,10 +67,10 @@ public class BlockTemplate extends Block implements IHasModel {
 		Height = height;
 	}
 
-	public static void setWidthAndHeight (Pair<Integer, Integer> values)
+	public static void setWidthAndHeight (Tuple<Integer, Integer> values)
 	{
-		Width = values.getKey();
-		Height = values.getValue();
+		Width = values.val1;
+		Height = values.val2;
 	}
 
 	public static void setWidthAndHeight (int width, int height)
@@ -80,8 +79,8 @@ public class BlockTemplate extends Block implements IHasModel {
 		Height = height;
 	}
 
-	public static Pair<Integer, Integer> getWidthAndHeight () {
-		return new Pair<>(Width, Height);
+	public static Tuple<Integer, Integer> getWidthAndHeight () {
+		return new Tuple<>(Width, Height);
 	}
 
 	public boolean hasOBJModel()

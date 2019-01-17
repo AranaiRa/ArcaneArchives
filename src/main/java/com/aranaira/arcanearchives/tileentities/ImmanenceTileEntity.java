@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
 import com.aranaira.arcanearchives.util.TileHelper;
-import javafx.util.Pair;
+import com.aranaira.arcanearchives.util.Tuple;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -70,10 +70,10 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 		}
 	}
 
-	public void setWidthAndHeight (Pair<Integer, Integer> values)
+	public void setWidthAndHeight (Tuple<Integer, Integer> values)
 	{
-		this.Width = values.getKey();
-		this.Height = values.getValue();
+		this.Width = values.val1;
+		this.Height = values.val2;
 	}
 
 	public void setWidthAndHeight (int width, int height)
