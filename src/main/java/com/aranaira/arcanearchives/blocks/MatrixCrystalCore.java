@@ -5,6 +5,7 @@ import java.util.Random;
 import java.util.UUID;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.common.AAGuiHandler;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.MatrixCoreTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
@@ -125,8 +126,10 @@ public class MatrixCrystalCore extends BlockTemplate {
      @Override
      public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
      {
-         
-         return false;
+    	 if (player.getUniqueID() != ((ImmanenceTileEntity)world.getTileEntity(pos)).NetworkID)
+    		 return false;
+    	 player.openGui(ArcaneArchives.Instance, AAGuiHandler.TOME_OF_REQUISITION, world, pos.getX(), pos.getY(), pos.getZ());
+         return true;
      }
 
      @Override
