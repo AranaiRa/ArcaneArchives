@@ -1,8 +1,7 @@
 package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
-import com.aranaira.arcanearchives.util.TileHelper;
-import com.aranaira.arcanearchives.util.Tuple;
+import com.aranaira.arcanearchives.util.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -17,8 +16,6 @@ import java.util.UUID;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.BlockLibrary;
-import com.aranaira.arcanearchives.util.ItemComparison;
-import com.aranaira.arcanearchives.util.NetworkHelper;
 import net.minecraft.world.World;
 
 public class ImmanenceTileEntity extends TileEntity implements ITickable
@@ -35,8 +32,7 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 	public NonNullList<ItemStack> Inventory;
 	public boolean IsInventory = false;
 	public int MaxItems;
-	public int Width;
-	public int Height;
+	public Placeable.Size size;
 	private byte facing;
 	
 	public ImmanenceTileEntity(String name)
@@ -70,20 +66,18 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 		}
 	}
 
-	public void setWidthAndHeight (Tuple<Integer, Integer> values)
+	public void setSize (Placeable.Size newSize)
 	{
-		this.Width = values.val1;
-		this.Height = values.val2;
+		this.size = newSize;
 	}
 
-	public void setWidthAndHeight (int width, int height)
+	public Placeable.Size getSize ()
 	{
-		this.Width = width;
-		this.Height = height;
+		return this.size;
 	}
 
 	public boolean hasAccessors () {
-		return this.Width != 1 && this.Height != 1;
+		return this.size.hasAccessors();
 	}
 
 	public UUID GetNetworkID ()

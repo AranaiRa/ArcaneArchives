@@ -45,7 +45,7 @@ public class MatrixCrystalCore extends BlockTemplate {
 		super(name, Material.ROCK);
 		setLightLevel(16/16f);
 		PlaceLimit = 1;
-		setWidthAndHeight(3, 4);
+		setSize(3, 4, 3);
 	}
 
     @Override

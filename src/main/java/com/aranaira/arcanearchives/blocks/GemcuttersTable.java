@@ -50,7 +50,7 @@ public class GemcuttersTable extends BlockTemplate implements ITileEntityProvide
 	public GemcuttersTable() 
 	{
 		super(name, Material.IRON);
-		setWidth(2);
+		setSize(2, 1, 1);
 	}
 
     @Override

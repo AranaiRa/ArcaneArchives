@@ -10,6 +10,7 @@ import com.aranaira.arcanearchives.items.ItemBlockTemplate;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.IHasModel;
+import com.aranaira.arcanearchives.util.Placeable;
 import com.aranaira.arcanearchives.util.Tuple;
 
 import net.minecraft.block.Block;
@@ -32,8 +33,7 @@ public class BlockTemplate extends Block implements IHasModel {
 	public String refName;
 
 	public List<AccessorBlock> Accessors;
-	private static int Width = 1;
-	private static int Height = 1;
+	private static Placeable.Size size;
 	BlockPos pos;
 
 	public BlockTemplate(String name, Material materialIn) {
@@ -47,40 +47,16 @@ public class BlockTemplate extends Block implements IHasModel {
 		setHarvestLevel("pickaxe", 0);
 	}
 
-	public static int getWidth ()
-	{
-		return Width;
+	public static Placeable.Size getSize () {
+		return size;
 	}
 
-	public static int getHeight ()
-	{
-		return Height;
+	public static void setSize (int w, int h, int l) {
+		size = new Placeable.Size(w, h, l);
 	}
 
-	public static void setWidth (int width)
-	{
-		Width = width;
-	}
-
-	public static void setHeight (int height)
-	{
-		Height = height;
-	}
-
-	public static void setWidthAndHeight (Tuple<Integer, Integer> values)
-	{
-		Width = values.val1;
-		Height = values.val2;
-	}
-
-	public static void setWidthAndHeight (int width, int height)
-	{
-		Width = width;
-		Height = height;
-	}
-
-	public static Tuple<Integer, Integer> getWidthAndHeight () {
-		return new Tuple<>(Width, Height);
+	public static void setSize (Placeable.Size newSize) {
+		size = newSize;
 	}
 
 	public boolean hasOBJModel()
@@ -99,7 +75,7 @@ public class BlockTemplate extends Block implements IHasModel {
 	{
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 		
-		if (Height > 1 && Width == 3)
+		if (size.height > 1 && size.width == 3)
 		{
 			for (int x = -1; x < 2; x++)
 				for (int z = -1; z < 2; z++)
@@ -114,9 +90,9 @@ public class BlockTemplate extends Block implements IHasModel {
 						Accessors.add(temp);
 					}
 		}
-		else if (Height > 1 && Width == 1)
+		else if (size.height > 1 && size.width == 1)
 		{
-			for (int y = 1; y < Height + 1; y++)
+			for (int y = 1; y < size.height + 1; y++)
 			{
 				AccessorBlock temp = new AccessorBlock(this.blockMaterial);
 				temp.Parent = this;
@@ -126,7 +102,7 @@ public class BlockTemplate extends Block implements IHasModel {
 				Accessors.add(temp);
 			}
 		}
-		else if (Height == 1 && Width == 2)
+		else if (size.height == 1 && size.width == 2)
 		{
 			AccessorBlock temp = new AccessorBlock(this.blockMaterial);
 			temp.Parent = this;
@@ -138,7 +114,7 @@ public class BlockTemplate extends Block implements IHasModel {
 		if (!worldIn.isRemote) {
 			TileEntity te = worldIn.getTileEntity(pos);
 			if (te instanceof ImmanenceTileEntity) {
-				((ImmanenceTileEntity) te).setWidthAndHeight(getWidthAndHeight());
+				((ImmanenceTileEntity) te).setSize(getSize());
 			}
 		}
 	}
