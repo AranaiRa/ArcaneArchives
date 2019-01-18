@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.items;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.BlockTemplate;
 import com.aranaira.arcanearchives.blocks.MatrixCrystalCore;
 import com.aranaira.arcanearchives.blocks.RadiantResonator;
@@ -14,6 +15,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -79,14 +81,15 @@ public class ItemBlockTemplate extends ItemBlock {
             // We need to do something to handle this at some point. Perhaps just a warning?
             // i.e., using a mechanical activator to place the block means it will have no
             // network information.
+            ArcaneArchives.logger.error(String.format("TileEntity placed by FakePlayer at %d,%d,%d is invalid and not linked to the network.", pos.getX(), pos.getY(), pos.getZ()));
         }
 
         if (!world.isRemote) return res;
 
-        if (block.hasTileEntity(newState)) {
-            ImmanenceTileEntity ite = (ImmanenceTileEntity) world.getTileEntity(pos);
+        TileEntity te = world.getTileEntity(pos);
 
-            assert ite != null;
+        if (block.hasTileEntity(newState) && te instanceof ImmanenceTileEntity) {
+            ImmanenceTileEntity ite = (ImmanenceTileEntity) te;
 
 			UUID newId = player.getUniqueID();
 			ite.SetNetworkID(newId);
