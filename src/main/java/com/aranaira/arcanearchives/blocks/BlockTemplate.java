@@ -1,40 +1,29 @@
 package com.aranaira.arcanearchives.blocks;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.BlockLibrary;
 import com.aranaira.arcanearchives.init.ItemLibrary;
 import com.aranaira.arcanearchives.items.ItemBlockTemplate;
-import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
-import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.IHasModel;
 import com.aranaira.arcanearchives.util.Placeable;
-import com.aranaira.arcanearchives.util.Tuple;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
 public class BlockTemplate extends Block implements IHasModel {
 
-	public ImmanenceTileEntity tileEntityInstance;
-	public int PlaceLimit = -1;
-	public String refName;
-
-	public List<AccessorBlock> Accessors;
-	private static Placeable.Size size;
-	BlockPos pos;
+	public int placeLimit;
+	public Placeable.Size size;
+	Class entityClass;
 
 	public BlockTemplate(String name, Material materialIn) {
 		super(materialIn);
@@ -43,21 +32,45 @@ public class BlockTemplate extends Block implements IHasModel {
 		setCreativeTab(ArcaneArchives.TAB_AA);
 		BlockLibrary.BLOCKS.add(this);
 		ItemLibrary.ITEMS.add(new ItemBlockTemplate(this));
-		Accessors = new ArrayList<>();
 		setHarvestLevel("pickaxe", 0);
 	}
 
-	public static Placeable.Size getSize () {
+	public ITextComponent getNameComponent () {
+		return new TextComponentTranslation(String.format("tile.%s.name", getUnlocalizedName()));
+	}
+
+	public void setEntityClass (Class clazz) {
+		this.entityClass = clazz;
+	}
+
+	public Class getEntityClass () {
+		return this.entityClass;
+	}
+
+	public int getPlaceLimit () {
+		return placeLimit;
+	}
+
+	public void setPlaceLimit (int newPlaceLimit) {
+		placeLimit = newPlaceLimit;
+	}
+
+	public Placeable.Size getSize () {
 		return size;
 	}
 
-	public static void setSize (int w, int h, int l) {
+	public void setSize (int w, int h, int l) {
 		size = new Placeable.Size(w, h, l);
 	}
 
-	public static void setSize (Placeable.Size newSize) {
+	public void setSize (Placeable.Size newSize) {
 		size = newSize;
 	}
+
+	public boolean hasAccessors () {
+		return size.hasAccessors();
+	}
+
 
 	public boolean hasOBJModel()
 	{
@@ -75,7 +88,7 @@ public class BlockTemplate extends Block implements IHasModel {
 	{
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 		
-		if (size.height > 1 && size.width == 3)
+		/*if (size.height > 1 && size.width == 3)
 		{
 			for (int x = -1; x < 2; x++)
 				for (int z = -1; z < 2; z++)
@@ -109,14 +122,7 @@ public class BlockTemplate extends Block implements IHasModel {
 			temp.setUnlocalizedName(getUnlocalizedName());
 			worldIn.setBlockState(pos.add(1, 0, 0), temp.getBlockState().getBaseState());
 			Accessors.add(temp);
-		}
-
-		if (!worldIn.isRemote) {
-			TileEntity te = worldIn.getTileEntity(pos);
-			if (te instanceof ImmanenceTileEntity) {
-				((ImmanenceTileEntity) te).setSize(getSize());
-			}
-		}
+		}*/
 	}
 
 	@Override
