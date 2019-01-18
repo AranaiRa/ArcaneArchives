@@ -2,20 +2,14 @@ package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.BlockTemplate;
-import com.aranaira.arcanearchives.blocks.MatrixCrystalCore;
-import com.aranaira.arcanearchives.blocks.RadiantResonator;
 import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
 import com.aranaira.arcanearchives.tileentities.AATileEntity;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
-import com.aranaira.arcanearchives.tileentities.MatrixCoreTileEntity;
-import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
 import com.aranaira.arcanearchives.util.NetworkHelper;
 import com.aranaira.arcanearchives.util.Placeable;
-import com.aranaira.arcanearchives.util.handlers.ConfigHandler;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -34,7 +28,7 @@ import java.util.UUID;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class ItemBlockTemplate extends ItemBlock {
-    BlockTemplate blockTemplate;
+    private BlockTemplate blockTemplate;
 
     public ItemBlockTemplate (@Nonnull BlockTemplate block) {
         super(block);
@@ -54,14 +48,18 @@ public class ItemBlockTemplate extends ItemBlock {
 
         ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID());
 
-        if (blockTemplate.getPlaceLimit() != -1)  {
+        int placeLimit = blockTemplate.getPlaceLimit();
+
+        if (placeLimit != -1)  {
             Class c = blockTemplate.getEntityClass();
             if (c == null) {
                 player.sendMessage(new TextComponentTranslation("arcanearchives.error.invaliditemblock"));
                 return EnumActionResult.FAIL;
             }
 
-            if (network.CountTileEntities(blockTemplate.getEntityClass()) >= blockTemplate.getPlaceLimit()) {
+            int count = network.CountTileEntities(blockTemplate.getEntityClass());
+
+            if (count > placeLimit || count == 1 && placeLimit == 1) {
                 player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.toomanyplaced", blockTemplate.getPlaceLimit(), blockTemplate.getNameComponent()), true);
                 return EnumActionResult.FAIL;
             }
@@ -88,8 +86,9 @@ public class ItemBlockTemplate extends ItemBlock {
 
         TileEntity te = world.getTileEntity(pos);
         BlockTemplate block = (BlockTemplate) ((ItemBlockTemplate) stack.getItem()).getBlock();
+        ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID());
 
-        if (block.hasTileEntity(newState) && te instanceof AATileEntity) {
+        if (te instanceof AATileEntity) {
             if (player instanceof FakePlayer) {
                 ArcaneArchives.logger.error(String.format("TileEntity placed by FakePlayer at %d,%d,%d is invalid and not linked to the network.", pos.getX(), pos.getY(), pos.getZ()));
             } else {
@@ -100,7 +99,6 @@ public class ItemBlockTemplate extends ItemBlock {
                     UUID newId = player.getUniqueID();
                     ite.SetNetworkID(newId);
                     ite.Dimension = player.dimension;
-                    ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(newId);
 
                     // Any custom handling of name (like the matrix core) should be done here
                     network.AddTileToNetwork(ite);

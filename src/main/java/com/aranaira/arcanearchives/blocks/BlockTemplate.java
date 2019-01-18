@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 
 public class BlockTemplate extends Block implements IHasModel {
 
-	public int placeLimit;
+	public int placeLimit = -1;
 	public Placeable.Size size;
 	Class entityClass;
 
@@ -36,7 +36,7 @@ public class BlockTemplate extends Block implements IHasModel {
 	}
 
 	public ITextComponent getNameComponent () {
-		return new TextComponentTranslation(String.format("tile.%s.name", getUnlocalizedName()));
+		return new TextComponentTranslation(String.format("%s.name", getUnlocalizedName()));
 	}
 
 	public void setEntityClass (Class clazz) {
@@ -68,9 +68,8 @@ public class BlockTemplate extends Block implements IHasModel {
 	}
 
 	public boolean hasAccessors () {
-		return size.hasAccessors();
+		return size != null && size.hasAccessors();
 	}
-
 
 	public boolean hasOBJModel()
 	{

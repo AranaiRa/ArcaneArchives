@@ -48,6 +48,7 @@ public class RadiantResonator extends BlockTemplate
 		setPlaceLimit(ConfigHandler.values.iRadiantResonatorLimit);
 		setHardness(1.1f);
 		setHarvestLevel("axe", 0);
+		setEntityClass(RadiantResonatorTileEntity.class);
 	}
 	
 	@Override
