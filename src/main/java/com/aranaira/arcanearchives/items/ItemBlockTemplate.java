@@ -4,11 +4,11 @@ import com.aranaira.arcanearchives.blocks.BlockTemplate;
 import com.aranaira.arcanearchives.blocks.MatrixCrystalCore;
 import com.aranaira.arcanearchives.blocks.RadiantResonator;
 import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
+import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.MatrixCoreTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
 import com.aranaira.arcanearchives.util.NetworkHelper;
 import com.aranaira.arcanearchives.util.Placeable;
-import com.aranaira.arcanearchives.util.TileHelper;
 import com.aranaira.arcanearchives.util.handlers.ConfigHandler;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,6 +24,7 @@ import net.minecraftforge.common.util.FakePlayer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.UUID;
 
 @ParametersAreNonnullByDefault
 public class ItemBlockTemplate extends ItemBlock {
@@ -83,7 +84,17 @@ public class ItemBlockTemplate extends ItemBlock {
         if (!world.isRemote) return res;
 
         if (block.hasTileEntity(newState)) {
-            TileHelper.markPosition(player.getUniqueID(), pos);
+            ImmanenceTileEntity ite = (ImmanenceTileEntity) world.getTileEntity(pos);
+
+            assert ite != null;
+
+			UUID newId = player.getUniqueID();
+			ite.SetNetworkID(newId);
+			ite.Dimension = player.dimension;
+            ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(newId);
+
+            // Any custom handling of name (like the matrix core) should be done here
+            network.AddTileToNetwork(ite);
         }
 
         if (block instanceof MatrixCrystalCore)

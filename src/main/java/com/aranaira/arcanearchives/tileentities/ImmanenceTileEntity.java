@@ -44,26 +44,6 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 	
 	@Override
 	public void update() {
-		if (!world.isRemote && GetNetworkID() == null && getPos() != BlockPos.ORIGIN) {
-			UUID newId = TileHelper.getNetworkIdForPos(getPos());
-			if (newId == null) {
-				// Handle that
-				return;
-			}
-
-			EntityPlayer owner = world.getPlayerEntityByUUID(newId);
-			if (owner == null) {
-				// Handle that
-
-			} else {
-				SetNetworkID(newId);
-				Dimension = owner.dimension;
-				ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(newId);
-
-				// Any custom handling of name (like the matrix core) should be done here
-				network.AddTileToNetwork(this);
-			}
-		}
 	}
 
 	public void setSize (Placeable.Size newSize)
@@ -85,7 +65,7 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 		return NetworkID;
 	}
 
-	private void SetNetworkID (UUID newId)
+	public void SetNetworkID(UUID newId)
 	{
 		this.NetworkID = newId;
 	}
@@ -206,7 +186,6 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setUniqueId("playerId", NetworkID);
-		compound.setLong("blockpos", getPos().toLong());
 		compound.setInteger("dim", Dimension);
 		NBTTagList tags = new NBTTagList();
 		for (ItemStack item : Inventory) 
