@@ -95,7 +95,6 @@ public class RadiantChest extends BlockTemplate implements ITileEntityProvider{
     {
 		NetworkHelper.getArcaneArchivesNetwork(((RadiantChestTileEntity)worldIn.getTileEntity(pos)).NetworkID).triggerUpdate();
 
-
 		for (Vec3d vec : AATickHandler.GetInstance().mBlockPositions)
 		{
 			Vec3d bpos = new Vec3d(pos.getX(), pos.getY(), pos.getZ());

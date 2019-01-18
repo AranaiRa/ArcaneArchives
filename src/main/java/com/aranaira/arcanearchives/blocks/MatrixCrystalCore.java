@@ -44,7 +44,7 @@ public class MatrixCrystalCore extends BlockTemplate {
 	public MatrixCrystalCore() {
 		super(name, Material.ROCK);
 		setLightLevel(16/16f);
-		PlaceLimit = 1;
+		setPlaceLimit(1);
 		setSize(3, 4, 3);
 	}
 
