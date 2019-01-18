@@ -5,14 +5,17 @@ import com.aranaira.arcanearchives.blocks.BlockTemplate;
 import com.aranaira.arcanearchives.blocks.MatrixCrystalCore;
 import com.aranaira.arcanearchives.blocks.RadiantResonator;
 import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
+import com.aranaira.arcanearchives.tileentities.AATileEntity;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.MatrixCoreTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
 import com.aranaira.arcanearchives.util.NetworkHelper;
 import com.aranaira.arcanearchives.util.Placeable;
 import com.aranaira.arcanearchives.util.handlers.ConfigHandler;
+import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -29,9 +32,14 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.UUID;
 
 @ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class ItemBlockTemplate extends ItemBlock {
+    BlockTemplate blockTemplate;
+
     public ItemBlockTemplate (@Nonnull BlockTemplate block) {
         super(block);
+
+        this.blockTemplate = block;
 
         assert block.getRegistryName() != null;
 
@@ -46,22 +54,21 @@ public class ItemBlockTemplate extends ItemBlock {
 
         ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID());
 
-        if (block instanceof RadiantResonator) {
-            if (network.CountTileEntities(RadiantResonatorTileEntity.class) >= ConfigHandler.values.iRadiantResonatorLimit) {
-                player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.toomanyplaced.resonator"), true);
-            return EnumActionResult.FAIL;
-            }
-        }
-
-        if (block instanceof MatrixCrystalCore) {
-            // PlaceLimit is defined as 1
-            if (network.CountTileEntities(MatrixCoreTileEntity.class) == 1) {
-                player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.toomanyplaced.core"), true);
+        if (blockTemplate.getPlaceLimit() != -1)  {
+            Class c = blockTemplate.getEntityClass();
+            if (c == null) {
+                player.sendMessage(new TextComponentTranslation("arcanearchives.error.invaliditemblock"));
                 return EnumActionResult.FAIL;
-            } else {
-                // We right clicked on teh block beneath where the core will go
-                if (!Placeable.CanPlaceSize(world, pos.up(), MatrixCrystalCore.getSize(), facing)) {
-                    player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.notenoughspace.core"), true);
+            }
+
+            if (network.CountTileEntities(blockTemplate.getEntityClass()) >= blockTemplate.getPlaceLimit()) {
+                player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.toomanyplaced", blockTemplate.getPlaceLimit(), blockTemplate.getNameComponent()), true);
+                return EnumActionResult.FAIL;
+            }
+
+            if (blockTemplate.hasAccessors()) {
+                if (!Placeable.CanPlaceSize(world, pos.up(), blockTemplate.getSize(), facing)) {
+                    player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.notenoughspace", blockTemplate.getNameComponent()), true);
                     return EnumActionResult.FAIL;
                 }
             }
@@ -74,35 +81,41 @@ public class ItemBlockTemplate extends ItemBlock {
     public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, IBlockState newState) {
         boolean res = super.placeBlockAt(stack, player, world, pos, side, hitX, hitY, hitZ, newState);
 
+        if (!(stack.getItem() instanceof ItemBlockTemplate) || !world.isRemote) return res;
+
         float yaw = player.rotationYaw;
-        EnumFacing direction = EnumFacing.fromAngle(yaw);
-
-        if (player instanceof FakePlayer) {
-            // We need to do something to handle this at some point. Perhaps just a warning?
-            // i.e., using a mechanical activator to place the block means it will have no
-            // network information.
-            ArcaneArchives.logger.error(String.format("TileEntity placed by FakePlayer at %d,%d,%d is invalid and not linked to the network.", pos.getX(), pos.getY(), pos.getZ()));
-        }
-
-        if (!world.isRemote) return res;
+        EnumFacing facing = EnumFacing.fromAngle(yaw);
 
         TileEntity te = world.getTileEntity(pos);
+        BlockTemplate block = (BlockTemplate) ((ItemBlockTemplate) stack.getItem()).getBlock();
 
-        if (block.hasTileEntity(newState) && te instanceof ImmanenceTileEntity) {
-            ImmanenceTileEntity ite = (ImmanenceTileEntity) te;
+        if (block.hasTileEntity(newState) && te instanceof AATileEntity) {
+            if (player instanceof FakePlayer) {
+                ArcaneArchives.logger.error(String.format("TileEntity placed by FakePlayer at %d,%d,%d is invalid and not linked to the network.", pos.getX(), pos.getY(), pos.getZ()));
+            } else {
+                // If it's a network tile entity
+                if (te instanceof ImmanenceTileEntity) {
+                    ImmanenceTileEntity ite = (ImmanenceTileEntity) te;
 
-			UUID newId = player.getUniqueID();
-			ite.SetNetworkID(newId);
-			ite.Dimension = player.dimension;
-            ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(newId);
+                    UUID newId = player.getUniqueID();
+                    ite.SetNetworkID(newId);
+                    ite.Dimension = player.dimension;
+                    ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(newId);
 
-            // Any custom handling of name (like the matrix core) should be done here
-            network.AddTileToNetwork(ite);
+                    // Any custom handling of name (like the matrix core) should be done here
+                    network.AddTileToNetwork(ite);
+                }
+
+                // Store its size
+                AATileEntity ate = (AATileEntity) te;
+                ate.setSize(block.getSize());
+                ate.setFacing(facing);
+            }
         }
 
-        if (block instanceof MatrixCrystalCore)
+        if (block.hasAccessors())
         {
-            Placeable.ReplaceBlocks(world, pos, MatrixCrystalCore.getSize(), direction);
+            Placeable.ReplaceBlocks(world, pos, block.getSize(), facing);
         }
 
         return res;

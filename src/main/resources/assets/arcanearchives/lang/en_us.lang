@@ -55,6 +55,6 @@ entity.spirit_time_03.name=Time Eld
 arcanearchives.text.manifest.endtrackingbutton=End Tracking
 arcanearchives.text.matrixcore.importradiant=Import Radiant Storage
 
-arcanearchives.error.toomanyplaced.resonator=You have reached your Radiant Resonator placement limit!
-arcanearchives.error.toomanyplaced.core=You can only have one Matrix Crystal Core!
-arcanearchives.error.notenoughspace.core=Not enough space to place the Matrix Crystal Core!
+arcanearchives.error.toomanyplaced=You can only have %d %s!
+arcanearchives.error.notenoughspace=Not enough space to place the %s!
+arcanearchives.error.invaliditemblock=Tried to place an invalid item with a place limit but no entity class.
