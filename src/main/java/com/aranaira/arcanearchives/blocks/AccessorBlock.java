@@ -16,10 +16,7 @@ import net.minecraft.world.World;
 
 public class AccessorBlock extends Block 
 {
-	BlockTemplate Parent;
-	BlockPos pos;
-	
-	public AccessorBlock(Material materialIn) 
+	public AccessorBlock(Material materialIn)
 	{
 		super(materialIn);
 		setUnlocalizedName("accessorBlock");
@@ -30,9 +27,7 @@ public class AccessorBlock extends Block
 	@Override
 	public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state) 
 	{
-		Parent.RemoveChild(this);
-		Parent.DestroyChildren(worldIn);
-		worldIn.destroyBlock(Parent.pos, true);
+		//worldIn.destroyBlock(Parent.pos, true);
 		super.onBlockDestroyedByPlayer(worldIn, pos, state);
 	}
 
@@ -51,9 +46,6 @@ public class AccessorBlock extends Block
     @Override
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) 
     {
-
-    	this.pos = pos;
-    	
     	super.onBlockAdded(worldIn, pos, state);
     }
     
@@ -72,12 +64,7 @@ public class AccessorBlock extends Block
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) 
     {
-    	if (Parent == null)
-    	{
-    		return false;
-    	}
-    	
-    	return Parent.onBlockActivated(worldIn, Parent.pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+    	return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
     }
     
     

@@ -128,14 +128,13 @@ public class BlockTemplate extends Block implements IHasModel {
 	
 	public void RemoveChild(AccessorBlock b)
 	{
-		Accessors.remove(b);
 	}
 	
 	public void DestroyChildren(World worldIn)
 	{
 		/*if (!worldIn.isRemote && hasTileEntity(getDefaultState()))
 			NetworkHelper.getArcaneArchivesNetwork(tileEntityInstance.NetworkID).triggerUpdate();*/
-		for (AccessorBlock b : Accessors)
+		/*fr (AccessorBlock b : Accessors)
 		{
 			try 
 			{
@@ -145,12 +144,11 @@ public class BlockTemplate extends Block implements IHasModel {
 			{
 				
 			}
-		}
+		}*/
 	}
 	
 	@Override
 	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
-		this.pos = pos;
 		super.onBlockAdded(worldIn, pos, state);
 	}
 }
