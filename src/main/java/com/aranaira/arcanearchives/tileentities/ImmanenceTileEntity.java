@@ -9,16 +9,13 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.BlockPos;
 
 import java.util.Iterator;
 import java.util.UUID;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.BlockLibrary;
-import net.minecraft.world.World;
 
-public class ImmanenceTileEntity extends TileEntity implements ITickable
+public class ImmanenceTileEntity extends AATileEntity implements ITickable
 {
 	public UUID NetworkID = null; //UUID of network owner
 	public int ImmanenceDrain; //Immanence cost to operate the device
@@ -44,20 +41,6 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 	
 	@Override
 	public void update() {
-	}
-
-	public void setSize (Placeable.Size newSize)
-	{
-		this.size = newSize;
-	}
-
-	public Placeable.Size getSize ()
-	{
-		return this.size;
-	}
-
-	public boolean hasAccessors () {
-		return this.size.hasAccessors();
 	}
 
 	public UUID GetNetworkID ()

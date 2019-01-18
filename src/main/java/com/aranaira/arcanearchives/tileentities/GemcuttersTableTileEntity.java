@@ -28,7 +28,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class GemcuttersTableTileEntity extends TileEntity implements ITickable 
+public class GemcuttersTableTileEntity extends AATileEntity implements ITickable
 {
 	private String mName = "gemcutterstable";
 	private final IItemHandler mInventory = new GCTItemHandler(54);
