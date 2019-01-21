@@ -11,7 +11,9 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.UUID;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
@@ -34,11 +36,13 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 	public int MaxItems;
 	public Placeable.Size size;
 	private byte facing;
+	public List<BlockPos> mAccessors;
 	
 	public ImmanenceTileEntity(String name)
 	{
 		this.name = name;
 		BlockLibrary.TILE_ENTITIES.put(name, this);
+		mAccessors = new ArrayList();
 		Inventory = NonNullList.create();
 	}
 	
@@ -220,5 +224,10 @@ public class ImmanenceTileEntity extends TileEntity implements ITickable
 	public int GetNetImmanence()
 	{
 		return ImmanenceGeneration - ImmanenceDrain;
+	}
+
+	public void AddAccessor(BlockPos pos) 
+	{
+		mAccessors.add(pos);
 	}
 }

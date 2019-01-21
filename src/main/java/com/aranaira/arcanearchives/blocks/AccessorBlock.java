@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.init.BlockLibrary;
 import com.aranaira.arcanearchives.tileentities.AccessorTileEntity;
+import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -16,23 +17,21 @@ import net.minecraft.world.World;
 
 public class AccessorBlock extends Block 
 {
-	BlockTemplate Parent;
-	BlockPos pos;
-	
 	public AccessorBlock(Material materialIn) 
 	{
 		super(materialIn);
-		setUnlocalizedName("accessorBlock");
-		setRegistryName("accessorBlock");
+		setUnlocalizedName("accessorblock");
+		setRegistryName("accessorblock");
 		BlockLibrary.BLOCKS.add(this);
 	}
 	
 	@Override
 	public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state) 
 	{
-		Parent.RemoveChild(this);
-		Parent.DestroyChildren(worldIn);
-		worldIn.destroyBlock(Parent.pos, true);
+		//((ImmanenceTileEntity)worldIn.getTileEntity(((AccessorTileEntity)worldIn.getTileEntity(pos)).ParentPos)).DestroyChildren();
+		//Parent.RemoveChild(this);
+		//Parent.DestroyChildren(worldIn);
+		//worldIn.destroyBlock(Parent.pos, true);
 		super.onBlockDestroyedByPlayer(worldIn, pos, state);
 	}
 
@@ -52,7 +51,7 @@ public class AccessorBlock extends Block
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) 
     {
 
-    	this.pos = pos;
+    	//this.pos = pos;
     	
     	super.onBlockAdded(worldIn, pos, state);
     }
@@ -72,12 +71,13 @@ public class AccessorBlock extends Block
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) 
     {
-    	if (Parent == null)
+    	
+    	if (((AccessorTileEntity)worldIn.getTileEntity(pos)).ParentPos == null)
     	{
     		return false;
     	}
     	
-    	return Parent.onBlockActivated(worldIn, Parent.pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+    	return worldIn.getBlockState(((AccessorTileEntity)worldIn.getTileEntity(pos)).ParentPos).getBlock().onBlockActivated(worldIn, ((AccessorTileEntity)worldIn.getTileEntity(pos)).ParentPos, state, playerIn, hand, facing, hitX, hitY, hitZ);
     }
     
     

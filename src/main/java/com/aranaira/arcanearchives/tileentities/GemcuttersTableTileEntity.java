@@ -1,5 +1,8 @@
 package com.aranaira.arcanearchives.tileentities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Nullable;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
@@ -7,6 +10,7 @@ import com.aranaira.arcanearchives.common.ContainerRadiantChest;
 import com.aranaira.arcanearchives.common.GCTItemHandler;
 import com.aranaira.arcanearchives.init.BlockLibrary;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -22,6 +26,7 @@ import net.minecraft.tileentity.TileEntityLockableLoot;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants.NBT;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -32,6 +37,7 @@ public class GemcuttersTableTileEntity extends TileEntity implements ITickable
 {
 	private String mName = "gemcutterstable";
 	private final IItemHandler mInventory = new GCTItemHandler(54);
+	public List<BlockPos> mAccessors = new ArrayList();
 	
 	public GemcuttersTableTileEntity() 
 	{
@@ -65,6 +71,11 @@ public class GemcuttersTableTileEntity extends TileEntity implements ITickable
 		super.readFromNBT(compound);
 		// Inventory
 		CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(mInventory, null, compound.getTagList("inventory", NBT.TAG_COMPOUND));
+		
+
+		if (compound.hasKey("recipe"))
+			((GCTItemHandler)this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).setRecipe(new ItemStack((NBTTagCompound) compound.getTag("recipe")));
+		((GCTItemHandler)this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).setPage(compound.getInteger("page"));
 	}
 
 	@Override
@@ -73,6 +84,14 @@ public class GemcuttersTableTileEntity extends TileEntity implements ITickable
 		super.writeToNBT(compound);
 		// Inventory
 		compound.setTag("inventory", CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(mInventory, null));
+		
+		NBTTagCompound tag = super.getUpdateTag();
+		if (((GCTItemHandler)this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).mRecipe != null)
+		{
+			NBTTagCompound item = ((GCTItemHandler)this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).mRecipe.getOutput().writeToNBT(tag);
+			tag.setTag("recipe", item);
+		}
+		tag.setInteger("page", ((GCTItemHandler)this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).getPage());
 		
 		return compound;
 	}
@@ -99,6 +118,7 @@ public class GemcuttersTableTileEntity extends TileEntity implements ITickable
 	@Override
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) 
 	{
+		ArcaneArchives.logger.info(Minecraft.getMinecraft().player.getDisplayNameString());
 		if (pkt.getNbtCompound().hasKey("recipe"))
 			((GCTItemHandler)this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).setRecipe(new ItemStack((NBTTagCompound) pkt.getNbtCompound().getTag("recipe")));
 		((GCTItemHandler)this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).setPage(pkt.getNbtCompound().getInteger("page"));
