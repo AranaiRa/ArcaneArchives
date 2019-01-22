@@ -1,34 +1,32 @@
 package com.aranaira.arcanearchives.packets;
 
-import java.nio.charset.Charset;
-
 import com.aranaira.arcanearchives.common.GCTItemHandler;
 import com.aranaira.arcanearchives.tileentities.GemcuttersTableTileEntity;
-import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.items.CapabilityItemHandler;
 
-public class PacketGCTChangePage implements IMessage 
+public class PacketGCTChangeRecipe implements IMessage 
 {
-
 	private int mDimension;
-	private boolean mNext;
 	private BlockPos mPos;
+	private ItemStack mRecipeItem;
 	
-	public PacketGCTChangePage() {}
+	public PacketGCTChangeRecipe() {}
 	
-	public PacketGCTChangePage(BlockPos pos, int dimension, boolean next)
+	public PacketGCTChangeRecipe(BlockPos pos, int dimension, ItemStack item)
 	{
 		mDimension = dimension;
-		mNext = next;
+		mRecipeItem = item;
 		mPos = pos;
 	}
 	
@@ -36,7 +34,7 @@ public class PacketGCTChangePage implements IMessage
 	public void fromBytes(ByteBuf buf) 
 	{
 		mDimension = buf.readInt();
-		mNext = buf.readBoolean();
+		mRecipeItem = ByteBufUtils.readItemStack(buf);
 		mPos = new BlockPos(buf.readInt(), buf.readInt(), buf.readInt());
 	}
 
@@ -44,34 +42,31 @@ public class PacketGCTChangePage implements IMessage
 	public void toBytes(ByteBuf buf) 
 	{
 		buf.writeInt(mDimension);
-		buf.writeBoolean(mNext);
+		ByteBufUtils.writeItemStack(buf, mRecipeItem);
 		buf.writeInt(mPos.getX());
 		buf.writeInt(mPos.getY());
 		buf.writeInt(mPos.getZ());
 	}
 
-	public static class PacketGCTChangePageHandler implements IMessageHandler<PacketGCTChangePage, IMessage>
+	public static class PacketGCTChangeRecipeHandler implements IMessageHandler<PacketGCTChangeRecipe, IMessage>
 	{
-		public IMessage onMessage(final PacketGCTChangePage message, final MessageContext ctx) 
+		public IMessage onMessage(final PacketGCTChangeRecipe message, final MessageContext ctx) 
 		{
 		    FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> processMessage(message, ctx));
 	
 		    return null;
 		}
 		
-		private void processMessage(PacketGCTChangePage message, MessageContext ctx)
+		private void processMessage(PacketGCTChangeRecipe message, MessageContext ctx)
 		{
 			if (Minecraft.getMinecraft().world.provider.getDimension() == message.mDimension)
 			{
 				TileEntity te = Minecraft.getMinecraft().world.getTileEntity(message.mPos);
 				if (te instanceof GemcuttersTableTileEntity)
 			    {
-					if (message.mNext)
-						((GCTItemHandler)((GemcuttersTableTileEntity) te).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).nextPage();
-					else
-
-						((GCTItemHandler)((GemcuttersTableTileEntity) te).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).prevPage();
-			    	((GemcuttersTableTileEntity) te).markDirty();
+					((GCTItemHandler)((GemcuttersTableTileEntity) te).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).setRecipe(message.mRecipeItem);;
+			    	
+					((GemcuttersTableTileEntity) te).markDirty();
 			    	te.updateContainingBlockInfo();
 			    }
 			}

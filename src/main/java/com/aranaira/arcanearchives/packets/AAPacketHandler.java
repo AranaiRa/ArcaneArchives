@@ -25,6 +25,7 @@ public class AAPacketHandler
         registerPacks(SetRadiantChestName.SetRadiantChestNameHandler.class, SetRadiantChestName.class, Side.SERVER);
         registerPacks(PacketChangeRadiantChestNameClient.PacketChangeRadiantChestNameClientHandler.class, PacketChangeRadiantChestNameClient.class, Side.CLIENT);
         registerPacks(PacketGCTChangePage.PacketGCTChangePageHandler.class, PacketGCTChangePage.class, Side.SERVER);
+        registerPacks(PacketGCTChangeRecipe.PacketGCTChangeRecipeHandler.class, PacketGCTChangeRecipe.class, Side.CLIENT);
 	}
 	
 	

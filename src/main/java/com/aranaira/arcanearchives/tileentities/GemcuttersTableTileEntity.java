@@ -104,7 +104,8 @@ public class GemcuttersTableTileEntity extends AATileEntity implements ITickable
 	
 	
 	@Override
-	public NBTTagCompound getUpdateTag() {
+	public NBTTagCompound getUpdateTag() 
+	{
 		NBTTagCompound tag = super.getUpdateTag();
 		if (((GCTItemHandler)this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).mRecipe != null)
 		{

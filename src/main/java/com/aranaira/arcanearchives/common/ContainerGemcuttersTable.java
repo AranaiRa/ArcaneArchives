@@ -8,6 +8,8 @@ import java.util.Queue;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
 import com.aranaira.arcanearchives.init.RecipeLibrary;
+import com.aranaira.arcanearchives.packets.AAPacketHandler;
+import com.aranaira.arcanearchives.packets.PacketGCTChangeRecipe;
 import com.aranaira.arcanearchives.tileentities.GemcuttersTableTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.NetworkHelper;
@@ -19,6 +21,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -143,8 +146,10 @@ public class ContainerGemcuttersTable extends Container
 		if (slotId <= 43 && slotId >= 37)
 		{
 			getItemHandler().setRecipe(this.getSlot(slotId).getStack());
+			if (isServer)
+				AAPacketHandler.CHANNEL.sendToAll(new PacketGCTChangeRecipe(mTileEntity.getPos(), mTileEntity.getWorld().provider.getDimension(), this.getSlot(slotId).getStack()));
 		}
-			
+		
 		return super.slotClick(slotId, dragType, clickTypeIn, player);
 	}
 	
