@@ -18,15 +18,8 @@ public class ArcaneArchives
 	public static final String MODID = "arcanearchives";
 	public static final String NAME = "Arcane Archives";
 	public static final String VERSION = "0.1";
-	//Creative Tab to register
-	public static final CreativeTabs TAB_AA = new CreativeTabs(MODID + ".creativeTab")
-	{
-		@Override
-		public ItemStack createIcon()
-		{
-			return new ItemStack(ItemLibrary.TOME_OF_REQUISITION);
-		}
-	};
+	public static final CreativeTabAA TAB = new CreativeTabAA();
+
 	public static Logger logger;
 	@Mod.Instance(MODID)
 	public static ArcaneArchives instance;
