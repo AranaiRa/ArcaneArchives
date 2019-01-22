@@ -52,7 +52,7 @@
                 "transform": {
                     "rotation": {"y": 180}
                 }
-            },
+            }
         }
     }
 }
