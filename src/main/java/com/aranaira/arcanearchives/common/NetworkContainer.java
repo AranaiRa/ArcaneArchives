@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.common;
 
 import com.aranaira.arcanearchives.util.NetworkHelper;
+import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.*;
@@ -8,15 +9,19 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class NetworkContainer extends Container
 {
 	//The crafting inventory required for crafting.
-	public InventoryCrafting mInventoryCrafting;
+	private InventoryCrafting mInventoryCrafting;
 
 	//Required for the crafting inventory, dont ask me.
 	private final ContainerWorkbench eventHandler;
 
-	public NetworkItemHandler networkItemHandler;
+	private NetworkItemHandler networkItemHandler;
 
 	private EntityPlayer player;
 

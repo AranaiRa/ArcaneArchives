@@ -25,8 +25,7 @@ public class AASlotItemHandler extends SlotItemHandler
 	{
 		if(stack.isEmpty()) return false;
 
-		if(NetworkHelper.getArcaneArchivesNetwork(playerUUID).GetTotalSpace() > 0) return true;
-		else return false;
+		return NetworkHelper.getArcaneArchivesNetwork(playerUUID).GetTotalSpace() > 0;
 	}
 
 

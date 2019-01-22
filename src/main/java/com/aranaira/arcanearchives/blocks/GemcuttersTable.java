@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.blocks;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.common.AAGuiHandler;
 import com.aranaira.arcanearchives.tileentities.GemcuttersTableTileEntity;
+import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -17,8 +18,12 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class GemcuttersTable extends BlockTemplate implements ITileEntityProvider
 {
 	public static final String name = "gemcutters_table";
@@ -30,7 +35,7 @@ public class GemcuttersTable extends BlockTemplate implements ITileEntityProvide
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
+	public void addInformation(ItemStack stack, @Nonnull World worldIn, List<String> tooltip, ITooltipFlag flagIn)
 	{
 		//TODO: Add real tooltip
 	}

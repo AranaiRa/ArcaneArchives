@@ -15,8 +15,10 @@ import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,22 +44,25 @@ public class ContainerManifest extends Container
 		{
 			mAANetwork.mManifestItemHandler.Clear();
 			networkChests = mAANetwork.GetRadiantChests();
-			for(int i = 0; i < networkChests.size(); i++)
+			for(RadiantChestTileEntity networkChest : networkChests)
 			{
 				List<ItemStack> items = new ArrayList<>();
-				for(int j = 0; j < networkChests.get(i).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).getSlots(); j++)
+				IItemHandler handler = networkChest.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+				if (handler == null) throw new RuntimeException(); // TODO: Handle this
+
+				for(int j = 0; j < handler.getSlots(); j++)
 				{
-					if(!networkChests.get(i).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).getStackInSlot(j).isEmpty())
+					if(!handler.getStackInSlot(j).isEmpty())
 					{
-						ItemStack s = networkChests.get(i).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).getStackInSlot(j);
+						ItemStack s = handler.getStackInSlot(j);
 						items.add(s);
 						boolean added = false;
 
-						for(int k = 0; k < ItemList.size(); k++)
+						for(ItemStack aItemList : ItemList)
 						{
-							if(ItemComparison.AreItemsEqual(ItemList.get(k), s))
+							if(ItemComparison.AreItemsEqual(aItemList, s))
 							{
-								ItemList.get(k).grow(s.getCount());
+								aItemList.grow(s.getCount());
 								added = true;
 							}
 						}
@@ -65,7 +70,7 @@ public class ContainerManifest extends Container
 						if(!added) ItemList.add(s.copy());
 					}
 				}
-				mAANetwork.mManifestItemHandler.mChests.add(new RadiantChestPlaceHolder(networkChests.get(i).getPos(), items));
+				mAANetwork.mManifestItemHandler.mChests.add(new RadiantChestPlaceHolder(networkChest.getPos(), items));
 			}
 
 			PacketRadiantChestsListResponse message = new PacketRadiantChestsListResponse(playerIn.getUniqueID(), ItemList, mAANetwork.mManifestItemHandler.mChests);
@@ -86,12 +91,13 @@ public class ContainerManifest extends Container
 
 
 	@Override
-	public boolean canInteractWith(EntityPlayer playerIn)
+	public boolean canInteractWith(@Nonnull EntityPlayer playerIn)
 	{
 		return true;
 	}
 
 	@Override
+	@Nonnull
 	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
 	{
 		if(mServerSide) return ItemStack.EMPTY;

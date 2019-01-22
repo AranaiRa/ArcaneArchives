@@ -263,8 +263,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 
 	public static ArcaneArchivesNetwork newNetwork(UUID playerID)
 	{
-		ArcaneArchivesNetwork network = new ArcaneArchivesNetwork(playerID);
-		return network;
+		return new ArcaneArchivesNetwork(playerID);
 	}
 
 	public void MarkUnsaved()

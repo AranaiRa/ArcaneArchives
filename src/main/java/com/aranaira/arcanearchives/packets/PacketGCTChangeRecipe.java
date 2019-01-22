@@ -65,10 +65,13 @@ public class PacketGCTChangeRecipe implements IMessage
 				TileEntity te = Minecraft.getMinecraft().world.getTileEntity(message.mPos);
 				if(te instanceof GemcuttersTableTileEntity)
 				{
-					((GCTItemHandler) ((GemcuttersTableTileEntity) te).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).setRecipe(message.mRecipeItem);
+					// Needs a null check on the capability
+					((GCTItemHandler) te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).setRecipe(message.mRecipeItem);
 					;
 
-					((GemcuttersTableTileEntity) te).markDirty();
+					// Same as PAcketGCTChangePage
+
+					te.markDirty();
 					te.updateContainingBlockInfo();
 				}
 			}

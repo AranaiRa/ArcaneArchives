@@ -1,12 +1,16 @@
 package com.aranaira.arcanearchives.common;
 
 import com.aranaira.arcanearchives.util.NetworkHelper;
+import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.UUID;
 
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class NetworkItemHandler implements IItemHandlerModifiable
 {
 

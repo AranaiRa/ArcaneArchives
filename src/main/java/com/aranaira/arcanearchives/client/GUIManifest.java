@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
+import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.util.List;
 
@@ -73,10 +74,11 @@ public class GUIManifest extends GuiContainer
 
 	//TODO Figure out how to display what chest the item is in.
 	@Override
+	@Nonnull
 	public List<String> getItemToolTip(ItemStack p_191927_1_)
 	{
-		List<String> ls = super.getItemToolTip(p_191927_1_);
-		return ls;
+		// List<String> ls =
+		return super.getItemToolTip(p_191927_1_);
 	}
 
 	@Override
@@ -138,13 +140,7 @@ public class GUIManifest extends GuiContainer
 		if(mouseButton == 0)
 		{
 			//Checks Text Box Bounds
-			if(mouseX > guiLeft + mTextLeftOffset && mouseX < guiLeft + mTextLeftOffset + 88 && mouseY > guiTop + mTextTopOffset && mouseY < guiTop + mTextTopOffset + 10)
-			{
-				mIsEnteringText = true;
-			} else
-			{
-				mIsEnteringText = false;
-			}
+			mIsEnteringText = mouseX > guiLeft + mTextLeftOffset && mouseX < guiLeft + mTextLeftOffset + 88 && mouseY > guiTop + mTextTopOffset && mouseY < guiTop + mTextTopOffset + 10;
 
 			if(mouseX > guiLeft + mEndTrackingButtonLeftOffset && mouseX < guiLeft + mEndTrackingButtonLeftOffset + mEndTrackingButtonWidth && mouseY > guiTop + mEndTrackingButtonTopOffset && mouseY < guiTop + mEndTrackingButtonTopOffset + mEndTrackingButtonHeight)
 			{

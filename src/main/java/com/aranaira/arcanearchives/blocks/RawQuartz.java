@@ -9,6 +9,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
+import javax.annotation.Nonnull;
+
 public class RawQuartz extends BlockTemplate
 {
 
@@ -45,6 +47,7 @@ public class RawQuartz extends BlockTemplate
 	}
 
 	@Override
+	@Nonnull
 	@SuppressWarnings("deprecation")
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
 	{
@@ -52,7 +55,7 @@ public class RawQuartz extends BlockTemplate
 	}
 
 	@Override
-	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
+	public void getDrops(@Nonnull NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, @Nonnull IBlockState state, int fortune)
 	{
 		drops.add(new ItemStack(ItemLibrary.RAW_RADIANT_QUARTZ, 1));
 	}

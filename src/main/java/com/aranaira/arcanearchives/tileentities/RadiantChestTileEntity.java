@@ -13,6 +13,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Iterator;
 
@@ -36,7 +37,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 	}
 
 	@Override
-	public <T> T getCapability(Capability<T> capability, EnumFacing facing)
+	public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing facing)
 	{
 		if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(mInventory);
@@ -44,7 +45,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 	}
 
 	@Override
-	public boolean hasCapability(Capability<?> capability, EnumFacing facing)
+	public boolean hasCapability(@Nonnull Capability<?> capability, EnumFacing facing)
 	{
 		if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) return true;
 		return super.hasCapability(capability, facing);
@@ -70,6 +71,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 	}
 
 	@Override
+	@Nonnull
 	public NBTTagCompound writeToNBT(NBTTagCompound compound)
 	{
 		super.writeToNBT(compound);
@@ -125,6 +127,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 	}
 
 	@Override
+	@Nonnull
 	public NBTTagCompound getUpdateTag()
 	{
 		NBTTagCompound tag = super.getUpdateTag();
@@ -145,8 +148,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 	{
 		NBTTagCompound compound = new NBTTagCompound();
 		compound.setString("name", mName);
-		SPacketUpdateTileEntity spute = new SPacketUpdateTileEntity(pos, 0, compound);
-		return spute;
+		return new SPacketUpdateTileEntity(pos, 0, compound);
 	}
 
 }

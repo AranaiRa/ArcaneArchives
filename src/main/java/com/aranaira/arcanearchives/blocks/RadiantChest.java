@@ -20,6 +20,9 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
+
 public class RadiantChest extends BlockTemplate implements ITileEntityProvider
 {
 
@@ -80,32 +83,39 @@ public class RadiantChest extends BlockTemplate implements ITileEntityProvider
 	}
 
 	@Override
+	@ParametersAreNonnullByDefault
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
 	{
-		NetworkHelper.getArcaneArchivesNetwork(((RadiantChestTileEntity) worldIn.getTileEntity(pos)).NetworkID).triggerUpdate();
-
-		for(Vec3d vec : AATickHandler.GetInstance().mBlockPositions)
+		TileEntity te = worldIn.getTileEntity(pos);
+		if (!(te instanceof RadiantChestTileEntity)) {
+			// There needs to be an error emssage here TODO
+		} else
 		{
-			Vec3d bpos = new Vec3d(pos.getX(), pos.getY(), pos.getZ());
+			NetworkHelper.getArcaneArchivesNetwork(((RadiantChestTileEntity) te).NetworkID).triggerUpdate();
 
-			if(vec.equals(bpos))
+			for(Vec3d vec : AATickHandler.GetInstance().mBlockPositions)
 			{
-				AATickHandler.GetInstance().mBlockPositionsToRemove.add(bpos);
+				Vec3d bpos = new Vec3d(pos.getX(), pos.getY(), pos.getZ());
+
+				if(vec.equals(bpos))
+				{
+					AATickHandler.GetInstance().mBlockPositionsToRemove.add(bpos);
+				}
 			}
-		}
 
-		TileEntity tileentity = worldIn.getTileEntity(pos);
+			TileEntity tileentity = worldIn.getTileEntity(pos);
 
-		if(tileentity instanceof IInventory)
-		{
-			InventoryHelper.dropInventoryItems(worldIn, pos, (IInventory) tileentity);
-			worldIn.updateComparatorOutputLevel(pos, this);
+			if(tileentity instanceof IInventory)
+			{
+				InventoryHelper.dropInventoryItems(worldIn, pos, (IInventory) tileentity);
+				worldIn.updateComparatorOutputLevel(pos, this);
+			}
 		}
 		super.breakBlock(worldIn, pos, state);
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta)
+	public TileEntity createNewTileEntity(@Nonnull World worldIn, int meta)
 	{
 		return new RadiantChestTileEntity();
 	}
@@ -117,6 +127,7 @@ public class RadiantChest extends BlockTemplate implements ITileEntityProvider
 	}
 
 	@Override
+	@ParametersAreNonnullByDefault
 	public boolean canBeReplacedByLeaves(IBlockState state, IBlockAccess world, BlockPos pos)
 	{
 		return false;

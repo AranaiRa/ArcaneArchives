@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.common.AAGuiHandler;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.MatrixCoreTileEntity;
+import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.IBlockState;
@@ -17,9 +18,13 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.Random;
 
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class MatrixCrystalCore extends BlockTemplate
 {
 	public static final PropertyDirection FACING = PropertyDirection.create("facing");
@@ -36,7 +41,7 @@ public class MatrixCrystalCore extends BlockTemplate
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
+	public void addInformation(ItemStack stack, @Nonnull World worldIn, List<String> tooltip, ITooltipFlag flagIn)
 	{
 		//TODO: Add real tooltip
 	}
@@ -90,8 +95,11 @@ public class MatrixCrystalCore extends BlockTemplate
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
 	{
-		if(player.getUniqueID() != ((ImmanenceTileEntity) world.getTileEntity(pos)).NetworkID) return false;
-		player.openGui(ArcaneArchives.instance, AAGuiHandler.TOME_OF_REQUISITION, world, pos.getX(), pos.getY(), pos.getZ());
+		TileEntity te = world.getTileEntity(pos);
+		if (te instanceof ImmanenceTileEntity) {
+			if (!((ImmanenceTileEntity) te).NetworkID.equals(player.getUniqueID())) return false;
+			player.openGui(ArcaneArchives.instance, AAGuiHandler.TOME_OF_REQUISITION, world, pos.getX(), pos.getY(), pos.getZ());
+		}
 		return true;
 	}
 

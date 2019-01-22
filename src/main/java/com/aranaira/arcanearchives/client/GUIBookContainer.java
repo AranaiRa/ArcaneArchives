@@ -17,6 +17,7 @@ import java.util.List;
 
 public class GUIBookContainer extends GuiContainer
 {
+	// TODO: This could cause problems if the class is ever loaded in a server context without the Minecraft class
 	Minecraft mc = Minecraft.getMinecraft();
 	private final int ImageHeight = 256, ImageWidth = 256, ImageScale = 256;
 	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/requisition_items.png");
@@ -161,13 +162,7 @@ public class GUIBookContainer extends GuiContainer
 		if(mouseButton == 0)
 		{
 			//Checks Text Box Bounds
-			if(mouseX > guiLeft + 46 && mouseX < guiLeft + 46 + 88 && mouseY > guiTop + 20 && mouseY < guiTop + 30)
-			{
-				isEnteringText = true;
-			} else
-			{
-				isEnteringText = false;
-			}
+			isEnteringText = mouseX > guiLeft + 46 && mouseX < guiLeft + 46 + 88 && mouseY > guiTop + 20 && mouseY < guiTop + 30;
 		}
 
 		super.mouseClicked(mouseX, mouseY, mouseButton);

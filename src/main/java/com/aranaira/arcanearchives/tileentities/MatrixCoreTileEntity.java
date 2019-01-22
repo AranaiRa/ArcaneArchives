@@ -6,6 +6,9 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
+@ParametersAreNonnullByDefault
 public class MatrixCoreTileEntity extends ImmanenceTileEntity
 {
 	public MatrixCoreTileEntity()

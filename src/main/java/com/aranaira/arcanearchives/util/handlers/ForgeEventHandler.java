@@ -23,10 +23,12 @@ public class ForgeEventHandler
 		{
 			RadiantChestTileEntity rcte = (RadiantChestTileEntity) w.getTileEntity(event.getPos());
 
+			// null check
 			AAItemStackHandler handler = (AAItemStackHandler) rcte.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
 
 			boolean allSlotsEmpty = true;
 
+			// null check
 			for(int i = 0; i < handler.getSlots(); i++)
 			{
 				if(!handler.getStackInSlot(i).isEmpty())

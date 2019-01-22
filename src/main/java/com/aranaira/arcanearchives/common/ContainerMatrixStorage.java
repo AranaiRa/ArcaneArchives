@@ -6,6 +6,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 
+import javax.annotation.Nonnull;
+
 public class ContainerMatrixStorage extends Container
 {
 	MatrixStorageTileEntity mTileEntity;
@@ -15,13 +17,14 @@ public class ContainerMatrixStorage extends Container
 		//ArcaneArchivesNetwork aanetwork = NetworkHelper.getArcaneArchivesNetwork(playerIn.getUniqueID());
 		mTileEntity = MSTE;
 
+		// Againn, nonnull by default
 		ArcaneArchives.logger.info("^^^^NULL CHECKS");
 		ArcaneArchives.logger.info("inv null? " + playerInventory.equals(null));
 		ArcaneArchives.logger.info("te null? " + MSTE.equals(null));
 	}
 
 	@Override
-	public boolean canInteractWith(EntityPlayer playerIn)
+	public boolean canInteractWith(@Nonnull EntityPlayer playerIn)
 	{
 		return true;
 	}

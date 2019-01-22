@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.tileentities;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.common.GCTItemHandler;
 import com.aranaira.arcanearchives.init.BlockLibrary;
+import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -16,10 +17,14 @@ import net.minecraftforge.common.util.Constants.NBT;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
 
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class GemcuttersTableTileEntity extends AATileEntity implements ITickable
 {
 	private String mName = "gemcutterstable";
@@ -38,7 +43,7 @@ public class GemcuttersTableTileEntity extends AATileEntity implements ITickable
 	}
 
 	@Override
-	public <T> T getCapability(Capability<T> capability, EnumFacing facing)
+	public <T> T getCapability(Capability<T> capability, @Nonnull EnumFacing facing)
 	{
 		if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(mInventory);
@@ -46,7 +51,7 @@ public class GemcuttersTableTileEntity extends AATileEntity implements ITickable
 	}
 
 	@Override
-	public boolean hasCapability(Capability<?> capability, EnumFacing facing)
+	public boolean hasCapability(Capability<?> capability, @Nonnull EnumFacing facing)
 	{
 		if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) return true;
 		return super.hasCapability(capability, facing);
@@ -60,6 +65,7 @@ public class GemcuttersTableTileEntity extends AATileEntity implements ITickable
 		CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(mInventory, null, compound.getTagList("inventory", NBT.TAG_COMPOUND));
 
 
+		// TODO: Null checks
 		if(compound.hasKey("recipe"))
 			((GCTItemHandler) this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).setRecipe(new ItemStack((NBTTagCompound) compound.getTag("recipe")));
 		((GCTItemHandler) this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).setPage(compound.getInteger("page"));
@@ -70,15 +76,15 @@ public class GemcuttersTableTileEntity extends AATileEntity implements ITickable
 	{
 		super.writeToNBT(compound);
 		// Inventory
-		compound.setTag("inventory", CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(mInventory, null));
+		compound.setTag("inventory", CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(mInventory, null)); // TODO: Null check
 
 		NBTTagCompound tag = super.getUpdateTag();
-		if(((GCTItemHandler) this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).mRecipe != null)
+		if(((GCTItemHandler) this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).mRecipe != null) // TODO here
 		{
-			NBTTagCompound item = ((GCTItemHandler) this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).mRecipe.getOutput().writeToNBT(tag);
+			NBTTagCompound item = ((GCTItemHandler) this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).mRecipe.getOutput().writeToNBT(tag); // TODO here
 			tag.setTag("recipe", item);
 		}
-		tag.setInteger("page", ((GCTItemHandler) this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).getPage());
+		tag.setInteger("page", ((GCTItemHandler) this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).getPage()); // TODO here
 
 		return compound;
 	}

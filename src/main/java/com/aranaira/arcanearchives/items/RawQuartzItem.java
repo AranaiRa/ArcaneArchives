@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.items;
 import com.aranaira.arcanearchives.init.BlockLibrary;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.NetworkHelper;
+import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.BlockChest;
 import net.minecraft.block.BlockWorkbench;
 import net.minecraft.block.state.IBlockState;
@@ -16,6 +17,10 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class RawQuartzItem extends ItemTemplate
 {
 	public static final String NAME = "item_rawquartz";

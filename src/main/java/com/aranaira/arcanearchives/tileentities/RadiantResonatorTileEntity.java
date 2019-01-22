@@ -7,6 +7,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 {
 	public int TicksUntilCrystalGrowth = ConfigHandler.values.iRadiantResonatorTickTime;
@@ -44,6 +46,7 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 	}
 
 	@Override
+	@ParametersAreNonnullByDefault
 	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate)
 	{
 		return (oldState.getBlock() != newSate.getBlock());

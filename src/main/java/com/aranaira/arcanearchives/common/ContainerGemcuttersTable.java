@@ -13,10 +13,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
+import javax.annotation.Nonnull;
+
 public class ContainerGemcuttersTable extends Container
 {
-	GemcuttersTableTileEntity mTileEntity;
-	boolean isServer;
+	private GemcuttersTableTileEntity mTileEntity;
+	private boolean isServer;
 
 	public ContainerGemcuttersTable(GemcuttersTableTileEntity GCTTE, IInventory playerInventory, boolean serverSide)
 	{
@@ -27,8 +29,8 @@ public class ContainerGemcuttersTable extends Container
 		getItemHandler().isServer = serverSide;
 
 		ArcaneArchives.logger.info("^^^^NULL CHECKS");
-		ArcaneArchives.logger.info("inv null? " + playerInventory.equals(null));
-		ArcaneArchives.logger.info("te null? " + GCTTE.equals(null));
+		// IntelliJ says this is always false: ArcaneArchives.logger.info("inv null? " + playerInventory.equals(null));
+		// And this too: ArcaneArchives.logger.info("te null? " + GCTTE.equals(null));
 
 		//player inventory
 		int i = 35;
@@ -75,13 +77,14 @@ public class ContainerGemcuttersTable extends Container
 	}
 
 	@Override
-	public boolean canInteractWith(EntityPlayer playerIn)
+	public boolean canInteractWith(@Nonnull EntityPlayer playerIn)
 	{
 		return true;
 	}
 
 
 	@Override
+	@Nonnull
 	public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
 	{
 		ItemStack stack = ItemStack.EMPTY;
@@ -131,6 +134,7 @@ public class ContainerGemcuttersTable extends Container
 	}
 
 	@Override
+	@Nonnull
 	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
 	{
 		if(slotId <= 43 && slotId >= 37)

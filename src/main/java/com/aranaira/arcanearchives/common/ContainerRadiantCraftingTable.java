@@ -6,6 +6,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 
+import javax.annotation.Nonnull;
+
 public class ContainerRadiantCraftingTable extends Container
 {
 	RadiantCraftingTableTileEntity mTileEntity;
@@ -21,7 +23,7 @@ public class ContainerRadiantCraftingTable extends Container
 	}
 
 	@Override
-	public boolean canInteractWith(EntityPlayer playerIn)
+	public boolean canInteractWith(@Nonnull EntityPlayer playerIn)
 	{
 		return true;
 	}

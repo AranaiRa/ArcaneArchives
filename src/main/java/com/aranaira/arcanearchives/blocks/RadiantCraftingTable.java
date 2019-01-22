@@ -13,6 +13,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 public class RadiantCraftingTable extends BlockTemplate implements ITileEntityProvider
 {
 
@@ -62,7 +64,7 @@ public class RadiantCraftingTable extends BlockTemplate implements ITileEntityPr
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta)
+	public TileEntity createNewTileEntity(@Nonnull World worldIn, int meta)
 	{
 		return new RadiantCraftingTableTileEntity();
 	}

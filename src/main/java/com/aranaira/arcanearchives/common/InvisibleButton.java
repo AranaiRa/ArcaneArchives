@@ -3,10 +3,12 @@ package com.aranaira.arcanearchives.common;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 
+import javax.annotation.Nonnull;
+
 public class InvisibleButton extends GuiButton
 {
 
-	public InvisibleButton(int buttonId, int x, int y, int widthIn, int heightIn, String buttonText)
+	public InvisibleButton(int buttonId, int x, int y, int widthIn, int heightIn, @Nonnull String buttonText)
 	{
 		super(buttonId, x, y, widthIn, heightIn, buttonText);
 	}

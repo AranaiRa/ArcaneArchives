@@ -2,25 +2,29 @@ package com.aranaira.arcanearchives.common;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.util.RadiantChestPlaceHolder;
+import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class ManifestItemHandler implements IItemHandlerModifiable
 {
 	public static ManifestItemHandler mInstance = new ManifestItemHandler();
 
 	private UUID mPlayerID;
-	public List<ItemStack> mItemStacks;
+	private List<ItemStack> mItemStacks;
 	private String mSearchText = "";
 	public List<RadiantChestPlaceHolder> mChests;
 	//TODO setup to set this variable again.
-	public EntityPlayer mPlayer = null;
+	EntityPlayer mPlayer = null;
 
 	public ManifestItemHandler()
 	{

@@ -6,6 +6,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
+import javax.annotation.Nonnull;
+
 public class RadiantLantern extends BlockTemplate
 {
 
@@ -40,6 +42,7 @@ public class RadiantLantern extends BlockTemplate
 	}
 
 	@Override
+	@Nonnull
 	@SuppressWarnings("deprecation")
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
 	{

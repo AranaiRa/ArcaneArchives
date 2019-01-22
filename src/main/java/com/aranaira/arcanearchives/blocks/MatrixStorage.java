@@ -16,6 +16,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
 public class MatrixStorage extends BlockTemplate
@@ -74,6 +75,7 @@ public class MatrixStorage extends BlockTemplate
 	}
 
 	@Override
+	@ParametersAreNonnullByDefault
 	public TileEntity createTileEntity(World world, IBlockState state)
 	{
 		return new MatrixStorageTileEntity();

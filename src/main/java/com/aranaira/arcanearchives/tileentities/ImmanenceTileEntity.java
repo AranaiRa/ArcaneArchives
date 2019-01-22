@@ -11,10 +11,12 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+
 
 public class ImmanenceTileEntity extends AATileEntity implements ITickable
 {
@@ -160,6 +162,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	}
 
 	@Override
+	@Nonnull
 	public NBTTagCompound writeToNBT(NBTTagCompound compound)
 	{
 		compound.setUniqueId("playerId", NetworkID);
@@ -177,6 +180,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	}
 
 	@Override
+	@Nonnull
 	public void readFromNBT(NBTTagCompound compound)
 	{
 		NetworkID = compound.getUniqueId("playerId");

@@ -1,11 +1,16 @@
 package com.aranaira.arcanearchives.common;
 
+import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.items.ItemStackHandler;
 
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class GCTItemHandler extends ItemStackHandler
 {
 	NonNullList<ItemStack> GCTInventory;

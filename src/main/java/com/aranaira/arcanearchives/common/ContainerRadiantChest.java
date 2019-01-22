@@ -14,6 +14,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
+import javax.annotation.Nonnull;
 import java.util.Set;
 
 public class ContainerRadiantChest extends Container
@@ -39,7 +40,7 @@ public class ContainerRadiantChest extends Container
 		{
 			for(int x = 8; x > -1; x--)
 			{
-				this.addSlotToContainer(new SlotItemHandler((AAItemStackHandler) RCTE.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null), 9 * y + x, x * 18 + 16, y * 18 + 16));
+				this.addSlotToContainer(new SlotItemHandler(RCTE.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null), 9 * y + x, x * 18 + 16, y * 18 + 16));
 			}
 		}
 
@@ -67,12 +68,13 @@ public class ContainerRadiantChest extends Container
 	}
 
 	@Override
-	public boolean canInteractWith(EntityPlayer playerIn)
+	public boolean canInteractWith(@Nonnull EntityPlayer playerIn)
 	{
 		return true;
 	}
 
 	@Override
+	@Nonnull
 	public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
 	{
 		ItemStack stack = ItemStack.EMPTY;
@@ -108,7 +110,7 @@ public class ContainerRadiantChest extends Container
 	}
 
 	@Override
-	public void putStackInSlot(int slotID, ItemStack stack)
+	public void putStackInSlot(int slotID, @Nonnull ItemStack stack)
 	{
 		super.putStackInSlot(slotID, stack);
 	}
@@ -120,6 +122,7 @@ public class ContainerRadiantChest extends Container
 	}
 
 	//@Override
+	@Nonnull
 	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
 	{
 		ItemStack itemstack = ItemStack.EMPTY;
@@ -516,7 +519,8 @@ public class ContainerRadiantChest extends Container
 	}
     */
 
-	protected boolean mergeItemStack2(ItemStack stack, int startIndex, int endIndex, boolean reverseDirection)
+	// PArameters are always 0, 54 and true
+	private boolean mergeItemStack2(ItemStack stack, int startIndex, int endIndex, boolean reverseDirection)
 	{
 		boolean flag = false;
 		int i = startIndex;

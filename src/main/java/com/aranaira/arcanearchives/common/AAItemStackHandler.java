@@ -4,6 +4,8 @@ import com.aranaira.arcanearchives.util.handlers.ConfigHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
 
+import javax.annotation.Nonnull;
+
 public class AAItemStackHandler extends ItemStackHandler
 {
 
@@ -19,7 +21,7 @@ public class AAItemStackHandler extends ItemStackHandler
 	}
 
 	@Override
-	protected int getStackLimit(int slot, ItemStack stack)
+	protected int getStackLimit(int slot, @Nonnull ItemStack stack)
 	{
 		if(stack.getMaxStackSize() == 1)
 		{
@@ -30,6 +32,7 @@ public class AAItemStackHandler extends ItemStackHandler
 	}
 
 	@Override
+	@Nonnull
 	public ItemStack extractItem(int slot, int amount, boolean simulate)
 	{
 		return super.extractItem(slot, amount, simulate);

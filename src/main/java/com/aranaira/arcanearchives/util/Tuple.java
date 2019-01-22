@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.util;
 import javax.annotation.Nonnull;
 import java.io.Serializable;
 
+@SuppressWarnings("WeakerAccess")
 public class Tuple<T, U> implements Serializable
 {
 	public final T val1;

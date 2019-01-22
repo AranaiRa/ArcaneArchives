@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.render;
+package com.aranaira.arcanearchives.client.render;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;

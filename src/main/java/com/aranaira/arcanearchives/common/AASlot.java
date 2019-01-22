@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.common;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
+@SuppressWarnings("unused") // TODO
 public class AASlot extends SlotItemHandler
 {
 	private int mSlotStackLimit = 64;

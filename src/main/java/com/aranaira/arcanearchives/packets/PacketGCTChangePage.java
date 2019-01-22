@@ -64,12 +64,14 @@ public class PacketGCTChangePage implements IMessage
 				TileEntity te = Minecraft.getMinecraft().world.getTileEntity(message.mPos);
 				if(te instanceof GemcuttersTableTileEntity)
 				{
+					// These don't need to be cast because there's an instanceof check previous and the methods are
+					// there by default. There should be null checks on the capability return though TODO
 					if(message.mNext)
-						((GCTItemHandler) ((GemcuttersTableTileEntity) te).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).nextPage();
+						((GCTItemHandler) te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).nextPage();
 					else
 
-						((GCTItemHandler) ((GemcuttersTableTileEntity) te).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).prevPage();
-					((GemcuttersTableTileEntity) te).markDirty();
+						((GCTItemHandler) te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).prevPage();
+					te.markDirty();
 					te.updateContainingBlockInfo();
 				}
 			}
