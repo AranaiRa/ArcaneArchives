@@ -30,9 +30,9 @@ import net.minecraftforge.common.property.Properties;
 
 public class BlockTemplate extends BlockDirectional implements IHasModel
 {
-	public int placeLimit = -1;
+	private int placeLimit = -1;
 	public Placeable.Size size;
-	Class entityClass;
+	private Class entityClass;
 
 	public BlockTemplate(String name, Material materialIn)
 	{
@@ -55,7 +55,7 @@ public class BlockTemplate extends BlockDirectional implements IHasModel
 		return this.entityClass;
 	}
 
-	public void setEntityClass(Class clazz)
+	void setEntityClass(Class clazz)
 	{
 		this.entityClass = clazz;
 	}
@@ -65,7 +65,7 @@ public class BlockTemplate extends BlockDirectional implements IHasModel
 		return placeLimit;
 	}
 
-	public void setPlaceLimit(int newPlaceLimit)
+	void setPlaceLimit(int newPlaceLimit)
 	{
 		placeLimit = newPlaceLimit;
 	}
@@ -80,7 +80,7 @@ public class BlockTemplate extends BlockDirectional implements IHasModel
 		size = newSize;
 	}
 
-	public void setSize(int w, int h, int l)
+	void setSize(int w, int h, int l)
 	{
 		size = new Placeable.Size(w, h, l);
 	}
