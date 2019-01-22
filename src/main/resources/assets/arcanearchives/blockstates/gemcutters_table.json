@@ -37,10 +37,22 @@
         "facing": {
             "down": {},
             "up": {},
-            "north": {},
-            "south": {},
+            "north": {
+                "transform": {
+                    "rotation": {"y": -90}
+                }
+            },
+            "south":  {
+                "transform": {
+                    "rotation": {"y": 90}
+                }
+            },
             "west": {},
-            "east": {}
+            "east":  {
+                "transform": {
+                    "rotation": {"y": 180}
+                }
+            },
         }
     }
 }
