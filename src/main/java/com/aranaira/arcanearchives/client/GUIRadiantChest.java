@@ -1,184 +1,169 @@
 package com.aranaira.arcanearchives.client;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
-import org.lwjgl.opengl.GL11;
-
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.common.ContainerRadiantChest;
 import com.aranaira.arcanearchives.packets.AAPacketHandler;
 import com.aranaira.arcanearchives.packets.SetRadiantChestName;
-
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.opengl.GL11;
 
-public class GUIRadiantChest extends GuiContainer {
+import java.io.IOException;
+import java.util.UUID;
+
+public class GUIRadiantChest extends GuiContainer
+{
 
 	Minecraft mc = Minecraft.getMinecraft();
 	private final int ImageHeight = 253, ImageWidth = 192, ImageScale = 256;
 	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/radiantchest.png");
-	
+
 	private int mNameTextLeftOffset = 53;
 	private int mNameTextTopOffset = 238;
-	
+
 	private int mNameTextWidth = 88;
 	private int mNameTextHeight = 10;
-	
+
 	private boolean mTextEnteringMode = false;
-	
+
 	ContainerRadiantChest mContainer;
 	UUID mPlayerID;
-	
+
 	private String mNameField;
-	
-	public GUIRadiantChest(Container inventorySlotsIn, UUID playerID) 
+
+	public GUIRadiantChest(Container inventorySlotsIn, UUID playerID)
 	{
 		super(inventorySlotsIn);
-		
-		
+
+
 		mPlayerID = playerID;
-		
+
 		mContainer = (ContainerRadiantChest) inventorySlotsIn;
 
 		mNameField = mContainer.mName;
-				
+
 		this.xSize = ImageWidth;
 		this.ySize = ImageHeight;
 	}
 
 
-	
-	
 	@Override
-	public void initGui() {
+	public void initGui()
+	{
 		super.initGui();
-		
+
 		buttonList.clear();
 		int offLeft = (width - ImageWidth) / 2 - 3;
 		int offTop = 108;
 
 	}
-	
+
 	@Override
-	public void updateScreen() 
+	public void updateScreen()
 	{
 		super.updateScreen();
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) 
+	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.enableColorMaterial();
 		this.mc.getTextureManager().bindTexture(GUITextures);
 
-		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, ImageScale,ImageScale,ImageScale,ImageScale);
+		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, ImageScale, ImageScale, ImageScale, ImageScale);
 	}
 
 	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) 
+	public void drawScreen(int mouseX, int mouseY, float partialTicks)
 	{
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.enableColorMaterial();
 
 		GlStateManager.disableLighting();
-		
+
 		super.drawScreen(mouseX, mouseY, partialTicks);
-		
+
 		GlStateManager.enableLighting();
-		
+
 		this.renderHoveredToolTip(mouseX, mouseY);
-		
+
 		fontRenderer.drawString(mNameField, guiLeft + mNameTextLeftOffset, guiTop + mNameTextTopOffset, 0x000000);
 	}
-	
+
 	@Override
-	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException 
+	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
 	{
-		if (mouseButton == 0)
+		if(mouseButton == 0)
 		{
-			if (mouseX > guiLeft + mNameTextLeftOffset && mouseX < guiLeft + mNameTextLeftOffset + mNameTextWidth && mouseY > guiTop + mNameTextTopOffset && mouseY < guiTop + mNameTextTopOffset + mNameTextHeight)
+			if(mouseX > guiLeft + mNameTextLeftOffset && mouseX < guiLeft + mNameTextLeftOffset + mNameTextWidth && mouseY > guiTop + mNameTextTopOffset && mouseY < guiTop + mNameTextTopOffset + mNameTextHeight)
 			{
 				mTextEnteringMode = true;
-			}
-			else
+			} else
 			{
-				if (mTextEnteringMode)
+				if(mTextEnteringMode)
 				{
 					mTextEnteringMode = false;
-					if (!mContainer.mName.equals(mNameField))
+					if(!mContainer.mName.equals(mNameField))
 					{
 						AAPacketHandler.CHANNEL.sendToServer(new SetRadiantChestName(mContainer.mPos, mNameField, mPlayerID, mContainer.mDimension));
 						ArcaneArchives.logger.info("SENT PACKET");
 					}
-						
+
 					//BlockPos pos, String name, UUID uuid, int dimensionID
 				}
 			}
 		}
-		
-		
+
+
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 	}
-	
+
 
 	@Override
-	protected void keyTyped(char typedChar, int keyCode){
+	protected void keyTyped(char typedChar, int keyCode)
+	{
 		//If the user is currently entering text into the search bar.
-		if (mTextEnteringMode)
+		if(mTextEnteringMode)
 		{
 			//Backspace
-			if (keyCode == 14)
+			if(keyCode == 14)
 			{
-				if (mNameField.length() > 0)
-					mNameField = mNameField.substring(0, mNameField.length() - 1);
+				if(mNameField.length() > 0) mNameField = mNameField.substring(0, mNameField.length() - 1);
 			}
 			//Escape and Enter
-			else if (keyCode == 1)
+			else if(keyCode == 1)
 			{
 				mTextEnteringMode = false;
 				mNameField = mContainer.mName;
-			}
-			else if (keyCode == 28)
+			} else if(keyCode == 28)
 			{
 				mTextEnteringMode = false;
-				if (!mContainer.mName.equals(mNameField))
+				if(!mContainer.mName.equals(mNameField))
 					AAPacketHandler.CHANNEL.sendToServer(new SetRadiantChestName(mContainer.mPos, mNameField, mPlayerID, mContainer.mDimension));
 			}
 			//Anything else.
 			else
 			{
-				if (Character.isLetterOrDigit(typedChar))
-					mNameField += typedChar;
-				else if (typedChar == ' ')
-					mNameField += typedChar;
+				if(Character.isLetterOrDigit(typedChar)) mNameField += typedChar;
+				else if(typedChar == ' ') mNameField += typedChar;
 			}
-		}
-		else
-			if (keyCode == 1 || keyCode == this.mc.gameSettings.keyBindInventory.getKeyCode())
-				Minecraft.getMinecraft().player.closeScreen();
+		} else if(keyCode == 1 || keyCode == this.mc.gameSettings.keyBindInventory.getKeyCode())
+			Minecraft.getMinecraft().player.closeScreen();
 	}
-	
-/*
-	private int mNameTextLeftOffset = 53;
-	private int mNameTextTopOffset = 238;
-	
-	private int mNameTextWidth = 88;
-	private int mNameTextHeight = 10;
-	*/
+
+	/*
+		private int mNameTextLeftOffset = 53;
+		private int mNameTextTopOffset = 238;
+
+		private int mNameTextWidth = 88;
+		private int mNameTextHeight = 10;
+		*/
 	@Override
-	public void onGuiClosed() 
+	public void onGuiClosed()
 	{
 		this.inventorySlots.onContainerClosed(mc.player);
 		super.onGuiClosed();

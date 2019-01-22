@@ -4,7 +4,6 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.BlockLibrary;
 import com.aranaira.arcanearchives.init.ItemLibrary;
 import com.aranaira.arcanearchives.items.ItemBlockTemplate;
-import com.aranaira.arcanearchives.tileentities.AATileEntity;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.util.IHasModel;
 import com.aranaira.arcanearchives.util.Placeable;
@@ -113,14 +112,14 @@ public class BlockTemplate extends BlockDirectional implements IHasModel
 	}
 
 	@Override
-	public int getMetaFromState (IBlockState state)
+	public int getMetaFromState(IBlockState state)
 	{
 		return state.getValue(FACING).getIndex();
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public IBlockState getStateFromMeta (int meta)
+	public IBlockState getStateFromMeta(int meta)
 	{
 		return getDefaultState().withProperty(FACING, EnumFacing.byIndex(meta & 7));
 	}
@@ -128,7 +127,7 @@ public class BlockTemplate extends BlockDirectional implements IHasModel
 	@Override
 	protected BlockStateContainer createBlockState()
 	{
-		if (hasTileEntity(getDefaultState()))
+		if(hasTileEntity(getDefaultState()))
 		{
 			return new ExtendedBlockState(this, new IProperty[]{FACING}, new IUnlistedProperty[]{Properties.AnimationProperty});
 		}
@@ -141,7 +140,7 @@ public class BlockTemplate extends BlockDirectional implements IHasModel
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
 	{
 		TileEntity te = worldIn.getTileEntity(pos);
-		if (te instanceof ImmanenceTileEntity)
+		if(te instanceof ImmanenceTileEntity)
 		{
 			((ImmanenceTileEntity) te).SetNetworkID(placer.getUniqueID());
 		}

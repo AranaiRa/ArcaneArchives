@@ -3,25 +3,26 @@
 
 package com.aranaira.arcanearchives.data;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.storage.WorldSavedData;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 public class AAWorldSavedData extends WorldSavedData
 {
 	public static final String ID = "Archane-Archives-Network";
-	
+
 	private Map<UUID, ArcaneArchivesNetwork> arcaneArchivesNetworks = new HashMap<>();
-	
-	public AAWorldSavedData() {
+
+	public AAWorldSavedData()
+	{
 		super(ID);
 	}
-	
+
 	public AAWorldSavedData(String id)
 	{
 		super(id);
@@ -31,21 +32,22 @@ public class AAWorldSavedData extends WorldSavedData
 	{
 		return getNetwork(player.getUniqueID());
 	}
-	
+
 	public ArcaneArchivesNetwork getNetwork(UUID playerID)
 	{
-		if (!arcaneArchivesNetworks.containsKey(playerID))
+		if(!arcaneArchivesNetworks.containsKey(playerID))
 		{
 			arcaneArchivesNetworks.put(playerID, ArcaneArchivesNetwork.newNetwork(playerID).setParent(this));
 		}
 		return arcaneArchivesNetworks.get(playerID);
 	}
-	
+
 	@Override
-	public void readFromNBT(NBTTagCompound tagCompound) {
+	public void readFromNBT(NBTTagCompound tagCompound)
+	{
 		NBTTagList networkData = tagCompound.getTagList("networkData", 10);
-		
-		for (int i = 0; i < networkData.tagCount(); i++)
+
+		for(int i = 0; i < networkData.tagCount(); i++)
 		{
 			NBTTagCompound data = networkData.getCompoundTagAt(i);
 			ArcaneArchivesNetwork network = ArcaneArchivesNetwork.fromNBT(data);
@@ -55,16 +57,17 @@ public class AAWorldSavedData extends WorldSavedData
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
+	public NBTTagCompound writeToNBT(NBTTagCompound tagCompound)
+	{
 		NBTTagList networkData = new NBTTagList();
-		
-		for (ArcaneArchivesNetwork network : arcaneArchivesNetworks.values())
+
+		for(ArcaneArchivesNetwork network : arcaneArchivesNetworks.values())
 		{
 			networkData.appendTag(network.serializeNBT());
 		}
-		
+
 		tagCompound.setTag("networkData", networkData);
-		
+
 		return tagCompound;
 	}
 

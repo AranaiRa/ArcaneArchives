@@ -1,16 +1,16 @@
 package com.aranaira.arcanearchives.init;
 
+import com.aranaira.arcanearchives.items.*;
+import net.minecraft.item.Item;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import com.aranaira.arcanearchives.items.*;
-
-import net.minecraft.item.Item;
-
-public class ItemLibrary {
+public class ItemLibrary
+{
 
 	public static final List<Item> ITEMS = new ArrayList<Item>();
-	
+
 	public static final Item RAW_RADIANT_QUARTZ = new RawQuartzItem();
 	public static final Item CUT_RADIANT_QUARTZ = new CutQuartzItem();
 	public static final Item GEOMANCY_PENDULUM = new GeomancyPendulumItem();
@@ -22,7 +22,7 @@ public class ItemLibrary {
 	public static final Item SCEPTER_TRANSLOCATION = new ScepterTranslocationItem();
 	public static final Item TOME_OF_ARCANA = new TomeOfArcanaItem();
 	public static final Item TOME_OF_REQUISITION = new TomeOfRequisitionItem();
-	
+
 	//CRAFTING COMPONENTS
 	public static final Item COMPONENT_CONTAINMENTFIELD = new ComponentContainmentFieldItem();
 	public static final Item COMPONENT_MATRIXBRACE = new ComponentMatrixBraceItem();

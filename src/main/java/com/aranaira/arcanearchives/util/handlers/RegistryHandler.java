@@ -32,33 +32,31 @@ public class RegistryHandler
 	public static void onBlockRegister(RegistryEvent.Register<Block> event)
 	{
 		event.getRegistry().registerAll(BlockLibrary.BLOCKS.toArray(new Block[0]));
-		
-		for (String name : BlockLibrary.TILE_ENTITIES.keySet())
+
+		for(String name : BlockLibrary.TILE_ENTITIES.keySet())
 		{
 			TileEntity.register(name, BlockLibrary.TILE_ENTITIES.get(name).getClass());
 		}
 	}
-	
+
 	@SubscribeEvent
-    public static void registerModels(ModelRegistryEvent event)
-    {
-    	OBJLoader.INSTANCE.addDomain(ArcaneArchives.MODID.toLowerCase());
+	public static void registerModels(ModelRegistryEvent event)
+	{
+		OBJLoader.INSTANCE.addDomain(ArcaneArchives.MODID.toLowerCase());
 
 		for(Block block : BlockLibrary.BLOCKS)
 		{
-			if (block instanceof BlockTemplate)
-				if(((BlockTemplate)block).hasOBJModel())
-				{
-			    	ArcaneArchives.logger.info("&&&&&&&& Setting up " + block.getRegistryName() + " with OBJ model");
-				}
-				else
-				{
-					ArcaneArchives.logger.info("&&&&&&&& Setting up " + block.getRegistryName());
-					ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName(), "inventory"));
-				}		
+			if(block instanceof BlockTemplate) if(((BlockTemplate) block).hasOBJModel())
+			{
+				ArcaneArchives.logger.info("&&&&&&&& Setting up " + block.getRegistryName() + " with OBJ model");
+			} else
+			{
+				ArcaneArchives.logger.info("&&&&&&&& Setting up " + block.getRegistryName());
+				ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName(), "inventory"));
+			}
 		}
-    }
-	
+	}
+
 	@SubscribeEvent
 	public static void onModelRegister(ModelRegistryEvent event)
 	{
@@ -66,19 +64,19 @@ public class RegistryHandler
 		{
 			if(item instanceof IHasModel)
 			{
-				((IHasModel)item).registerModels();
+				((IHasModel) item).registerModels();
 			}
 		}
-		
+
 		for(Block block : BlockLibrary.BLOCKS)
 		{
 			if(block instanceof IHasModel)
 			{
-				((IHasModel)block).registerModels();
+				((IHasModel) block).registerModels();
 			}
 		}
 	}
-	
+
 	//@SubscribeEvent
 	//public static void onGUIRegister(GUIRegistryEvent event)
 	//{

@@ -21,16 +21,20 @@ public class CommonProxy
 		AAPacketHandler.registerPackets();
 	}
 
-    public void init(FMLInitializationEvent event)
-    {
-    	RecipeLibrary.RegisterGCTRecipes();
-    }
+	public void init(FMLInitializationEvent event)
+	{
+		RecipeLibrary.RegisterGCTRecipes();
+	}
 
-    public void postInit(FMLPostInitializationEvent event)
+	public void postInit(FMLPostInitializationEvent event)
 	{
 	}
 
-	public void registerItemRenderer(Item item, int meta, String id) {}
-	
-	public void registerBlockRenderer(Block block, int meta, String id) {}
+	public void registerItemRenderer(Item item, int meta, String id)
+	{
+	}
+
+	public void registerBlockRenderer(Block block, int meta, String id)
+	{
+	}
 }

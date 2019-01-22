@@ -8,7 +8,8 @@ import net.minecraft.item.ItemStack;
 @MethodsReturnNonnullByDefault
 public class CreativeTabAA extends CreativeTabs
 {
-	CreativeTabAA () {
+	CreativeTabAA()
+	{
 		super(ArcaneArchives.MODID);
 	}
 

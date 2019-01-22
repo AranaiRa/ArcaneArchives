@@ -1,44 +1,26 @@
 package com.aranaira.arcanearchives.common;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
-import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.util.NetworkHelper;
-
-import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.inventory.ClickType;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ContainerWorkbench;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryCraftResult;
-import net.minecraft.inventory.InventoryCrafting;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.items.SlotItemHandler;
 
-public class NetworkContainer extends Container 
+public class NetworkContainer extends Container
 {
 	//The crafting inventory required for crafting.
 	public InventoryCrafting mInventoryCrafting;
-	
+
 	//Required for the crafting inventory, dont ask me.
 	private final ContainerWorkbench eventHandler;
-	
+
 	public NetworkItemHandler networkItemHandler;
-	
+
 	private EntityPlayer player;
-	
-	
+
+
 	public NetworkContainer(EntityPlayer player)
 	{
 		this.player = player;
@@ -47,140 +29,139 @@ public class NetworkContainer extends Container
 
 		networkItemHandler = new NetworkItemHandler(player.getUniqueID());
 		//127 higher?
-		
+
 		int j = 26;
-		for (int y = 2; y > -1; y--)
+		for(int y = 2; y > -1; y--)
 		{
-			for (int x = 8; x > -1; x--)
+			for(int x = 8; x > -1; x--)
 			{
 				this.addSlotToContainer(new AASlotItemHandler(networkItemHandler, j, 46 + (18 * x), 33 + (18 * y), player.getUniqueID()));
 				j--;
 			}
 		}
-		
-		for (int y = 0; y < 2; y++)
+
+		for(int y = 0; y < 2; y++)
 		{
-			for (int x = 0; x < 8; x++)
+			for(int x = 0; x < 8; x++)
 			{
 				Slot temp = new Slot(mInventoryCrafting, x, x, x);
 			}
 		}
-		
-		eventHandler = new ContainerWorkbench(playerInventory, player.world, new BlockPos(0,0,0));
+
+		eventHandler = new ContainerWorkbench(playerInventory, player.world, new BlockPos(0, 0, 0));
 		mInventoryCrafting = new InventoryCrafting(eventHandler, 3, 3);
-		
-		for (int x = 0; x < 3; x++)
+
+		for(int x = 0; x < 3; x++)
 		{
-			for (int y = 0; y < 3; y++)
+			for(int y = 0; y < 3; y++)
 			{
 				eventHandler.inventorySlots.get(y * 3 + x + 1).xPos = 64 + (18 * x);
 				eventHandler.inventorySlots.get(y * 3 + x + 1).yPos = 91 + (18 * y);
 			}
 		}
-		
+
 		eventHandler.inventorySlots.get(0).xPos = 171;
 		eventHandler.inventorySlots.get(0).yPos = 109;
-		
-		
-		
-		for (int i = 0; i < 10; i++)
+
+
+		for(int i = 0; i < 10; i++)
 		{
 			this.addSlotToContainer(eventHandler.inventorySlots.get(i));
 		}
-		
+
 		//Creates the slots for the players inventory.
 		int i = 35;
 		//Inventory.
-		for (int y = 2; y > -1; y--)
+		for(int y = 2; y > -1; y--)
 		{
-			for (int x = 8; x > -1; x--)
+			for(int x = 8; x > -1; x--)
 			{
 				this.addSlotToContainer(new Slot(playerInventory, i, 46 + (18 * x), 160 + (18 * y)));
-				
+
 				i--;
 			}
 		}
 		//Hotbar.
-		for (int x = 8; x > -1; x--)
+		for(int x = 8; x > -1; x--)
 		{
 			this.addSlotToContainer(new Slot(playerInventory, i, 46 + (18 * x), 218));
 			i--;
 		}
 	}
-	
+
 	public void SetSearchString(String s)
 	{
 		networkItemHandler.setSearchString(s);
 	}
-	
-	
+
+
 	@Override
-	public boolean canInteractWith(EntityPlayer playerIn) 
+	public boolean canInteractWith(EntityPlayer playerIn)
 	{
 		return true;
 	}
-	
+
 	@Override
-	public void detectAndSendChanges() {
+	public void detectAndSendChanges()
+	{
 		eventHandler.detectAndSendChanges();
-		
+
 		super.detectAndSendChanges();
 	}
-	
+
 	@Override
-	public void onCraftMatrixChanged(IInventory inventoryIn) {
+	public void onCraftMatrixChanged(IInventory inventoryIn)
+	{
 		eventHandler.onCraftMatrixChanged(inventoryIn);
 		super.onCraftMatrixChanged(inventoryIn);
 	}
-	
+
 	@Override
-	protected void slotChangedCraftingGrid(World p_192389_1_, EntityPlayer p_192389_2_, InventoryCrafting p_192389_3_,
-			InventoryCraftResult p_192389_4_) {
+	protected void slotChangedCraftingGrid(
+			World p_192389_1_, EntityPlayer p_192389_2_, InventoryCrafting p_192389_3_, InventoryCraftResult p_192389_4_)
+	{
 		super.slotChangedCraftingGrid(p_192389_1_, p_192389_2_, p_192389_3_, p_192389_4_);
 	}
-	
-	
-	
+
+
 	@Override
-	public void putStackInSlot(int slotID, ItemStack stack) 
+	public void putStackInSlot(int slotID, ItemStack stack)
 	{
 		//Not sure if this really does anything.
 		super.putStackInSlot(slotID, stack);
 	}
-	
+
 	@Override
-	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player) 
+	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
 	{
-		if (slotId < 27 && slotId > -1)
+		if(slotId < 27 && slotId > -1)
 		{
 			int modifiedSlotID = 26 - slotId;
-			
-			if (clickTypeIn == ClickType.PICKUP || clickTypeIn == ClickType.PICKUP_ALL)
+
+			if(clickTypeIn == ClickType.PICKUP || clickTypeIn == ClickType.PICKUP_ALL)
 			{
-				if (!player.inventory.getItemStack().isEmpty())
+				if(!player.inventory.getItemStack().isEmpty())
 				{
 					player.inventory.setItemStack(NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID()).InsertItem(player.inventory.getItemStack(), player.world.isRemote));
-				}
-				else
+				} else
 				{
 					player.inventory.setItemStack(NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID()).ExtractItem(networkItemHandler.getStackInSlot(modifiedSlotID), networkItemHandler.getStackInSlot(modifiedSlotID).getCount(), player.world.isRemote));
 				}
-			}
-			else if (clickTypeIn == ClickType.QUICK_MOVE)
+			} else if(clickTypeIn == ClickType.QUICK_MOVE)
 			{
 				player.inventory.addItemStackToInventory(NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID()).ExtractItem(networkItemHandler.getStackInSlot(modifiedSlotID), networkItemHandler.getStackInSlot(modifiedSlotID).getCount(), player.world.isRemote));
 			}
-			
+
 			return player.inventory.getItemStack();
 		}
-		
-		if (clickTypeIn == ClickType.QUICK_MOVE)
+
+		if(clickTypeIn == ClickType.QUICK_MOVE)
 		{
 			this.inventorySlots.get(slotId).inventory.setInventorySlotContents(this.inventorySlots.get(slotId).getSlotIndex(), NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID()).InsertItem(this.inventorySlots.get(slotId).getStack(), player.world.isRemote));
-			
+
 			return player.inventory.getItemStack();
 		}
-		
+
 		return super.slotClick(slotId, dragType, clickTypeIn, player);
 	}
 }

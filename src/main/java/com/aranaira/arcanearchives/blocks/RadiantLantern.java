@@ -6,39 +6,43 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
-public class RadiantLantern extends BlockTemplate{
+public class RadiantLantern extends BlockTemplate
+{
 
-	public static final String NAME = "radiant_lantern"; 
-	
-	public RadiantLantern() {
+	public static final String NAME = "radiant_lantern";
+
+	public RadiantLantern()
+	{
 		super(NAME, Material.GLASS);
-		setLightLevel(16/16f);
+		setLightLevel(16 / 16f);
 		setHardness(0.3f);
 		setHarvestLevel("pickaxe", 0);
 	}
 
-    @Override
+	@Override
 	@SuppressWarnings("deprecation")
-    public boolean isFullCube(IBlockState state) {
-        return false;
-    }
+	public boolean isFullCube(IBlockState state)
+	{
+		return false;
+	}
 
-    @Override
+	@Override
 	@SuppressWarnings("deprecation")
-    public boolean isOpaqueCube(IBlockState state) {
-        return false;
-    }
-	
+	public boolean isOpaqueCube(IBlockState state)
+	{
+		return false;
+	}
+
 	@Override
 	public boolean hasOBJModel()
 	{
 		return true;
 	}
 
-    @Override
+	@Override
 	@SuppressWarnings("deprecation")
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
-    {
-    	return new AxisAlignedBB(0.35, 0.0, 0.35, 0.65, 1.0, 0.65);
+	{
+		return new AxisAlignedBB(0.35, 0.0, 0.35, 0.65, 1.0, 0.65);
 	}
 }

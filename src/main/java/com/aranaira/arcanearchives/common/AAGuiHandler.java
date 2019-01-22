@@ -1,24 +1,14 @@
 package com.aranaira.arcanearchives.common;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.client.GUIBookContainer;
-import com.aranaira.arcanearchives.client.GUIGemcuttersTable;
-import com.aranaira.arcanearchives.client.GUIManifest;
-import com.aranaira.arcanearchives.client.GUIMatrixRepository;
-import com.aranaira.arcanearchives.client.GUIMatrixStorage;
-import com.aranaira.arcanearchives.client.GUIRadiantChest;
-import com.aranaira.arcanearchives.client.GUIRadiantCraftingTable;
+import com.aranaira.arcanearchives.client.*;
 import com.aranaira.arcanearchives.tileentities.*;
-
-import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ContainerChest;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 
-public class AAGuiHandler implements IGuiHandler 
+public class AAGuiHandler implements IGuiHandler
 {
 	public static final int TOME_OF_REQUISITION = 0;
 	public static final int RADIANT_CHEST = 1;
@@ -28,16 +18,17 @@ public class AAGuiHandler implements IGuiHandler
 	public static final int MATRIX_STORAGE = 5;
 	public static final int MATRIX_REPOSITORY = 6;
 	public static final int MATRIX_RESERVOIR = 6;
-	
+
 	@Override
-	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
+	{
 		//ArcaneArchives.logger.info("^^^^SERVER GUI ELEMENT");
 		//ArcaneArchives.logger.info("id:"+ID+"\nplayer:"+player+"\nworld:"+world+"\nx:"+x+" y:"+y+" z:"+z);
-		switch (ID)
+		switch(ID)
 		{
 			case TOME_OF_REQUISITION:
 				return new NetworkContainer(player);
-				//return new NetworkCraftingContainer(player.inventory, world, new BlockPos(0, 0, 0));
+			//return new NetworkCraftingContainer(player.inventory, world, new BlockPos(0, 0, 0));
 			case RADIANT_CHEST:
 				return new ContainerRadiantChest((RadiantChestTileEntity) world.getTileEntity(new BlockPos(x, y, z)), player.inventory);
 			case MANIFEST:
@@ -59,11 +50,12 @@ public class AAGuiHandler implements IGuiHandler
 	}
 
 	@Override
-	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
+	{
 		//ArcaneArchives.logger.info("^^^^CLIENT GUI ELEMENT");
 		//ArcaneArchives.logger.info("^START");
 		//ArcaneArchives.logger.info("id:"+ID+"\nplayer:"+player+"\nworld:"+world+"\nx:"+x+" y:"+y+" z:"+z);
-		switch (ID)
+		switch(ID)
 		{
 			case TOME_OF_REQUISITION:
 				return new GUIBookContainer(new NetworkContainer(player));

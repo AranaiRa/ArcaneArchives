@@ -1,9 +1,6 @@
 package com.aranaira.arcanearchives;
 
-import com.aranaira.arcanearchives.init.ItemLibrary;
 import com.aranaira.arcanearchives.proxy.CommonProxy;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
