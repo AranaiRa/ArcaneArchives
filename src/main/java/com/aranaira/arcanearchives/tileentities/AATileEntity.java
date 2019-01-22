@@ -1,5 +1,4 @@
 package com.aranaira.arcanearchives.tileentities;
-
 import com.aranaira.arcanearchives.util.Placeable;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;

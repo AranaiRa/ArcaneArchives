@@ -95,33 +95,6 @@ public class MatrixCrystalCore extends BlockTemplate {
          return false;
      }
 
-     @Override
-     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
-     {
-         return this.getDefaultState().withProperty(FACING, getFacingFromEntity(world, pos, placer));
-     }
-
-     @Override
-     public IBlockState getStateFromMeta(int meta)
-     {
-         return this.getDefaultState().withProperty(FACING, EnumFacing.getFront(meta));
-     }
-
-     @Override
-     public int getMetaFromState(IBlockState state)
-     {
-         return state.getValue(FACING).getIndex();
-     }
-
-     /*
-     @Override
-     public IBlockState getExtendedState(IBlockState state, IBlockAccess world, BlockPos pos)
-     {
-         //Only return an IExtendedBlockState from this method and createState(), otherwise block placement might break!
-         //B3DLoader.B3DState newState = new B3DLoader.B3DState(null, counter);
-         return ((IExtendedBlockState) state).withProperty(Properties.AnimationProperty, newState);
-     }
-     */
 
      @Override
      public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
@@ -132,11 +105,7 @@ public class MatrixCrystalCore extends BlockTemplate {
          return true;
      }
 
-     @Override
-     public BlockStateContainer createBlockState()
-     {
-         return new ExtendedBlockState(this, new IProperty[]{FACING}, new IUnlistedProperty[]{Properties.AnimationProperty});
-     }
+
 
      public static EnumFacing getFacingFromEntity(World worldIn, BlockPos clickedBlock, EntityLivingBase entityIn)
      {

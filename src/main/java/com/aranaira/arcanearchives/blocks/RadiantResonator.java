@@ -40,7 +40,6 @@ import net.minecraftforge.common.property.Properties;
 
 public class RadiantResonator extends BlockTemplate 
 {
-	public static final PropertyDirection FACING = PropertyDirection.create("facing");
 	public static final String name = "radiant_resonator";
 	public RadiantResonator() 
 	{
@@ -110,57 +109,6 @@ public class RadiantResonator extends BlockTemplate
          return false;
      }
 
-     @Override
-     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
-     {
-         return this.getDefaultState().withProperty(FACING, getFacingFromEntity(world, pos, placer));
-     }
-
-     @Override
-     public IBlockState getStateFromMeta(int meta)
-     {
-         return this.getDefaultState().withProperty(FACING, EnumFacing.getFront(meta));
-     }
-
-     @Override
-     public int getMetaFromState(IBlockState state)
-     {
-         return state.getValue(FACING).getIndex();
-     }
-
-     @Override
-     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
-     {
-         
-         return false;
-     }
-
-     @Override
-     public BlockStateContainer createBlockState()
-     {
-         return new ExtendedBlockState(this, new IProperty[]{FACING}, new IUnlistedProperty[]{Properties.AnimationProperty});
-     }
-
-     public static EnumFacing getFacingFromEntity(World worldIn, BlockPos clickedBlock, EntityLivingBase entityIn)
-     {
-         if (MathHelper.abs((float) entityIn.posX - (float) clickedBlock.getX()) < 2.0F && MathHelper.abs((float) entityIn.posZ - (float) clickedBlock.getZ()) < 2.0F)
-         {
-             double d0 = entityIn.posY + (double) entityIn.getEyeHeight();
-
-             if (d0 - (double) clickedBlock.getY() > 2.0D)
-             {
-                 return EnumFacing.UP;
-             }
-
-             if ((double) clickedBlock.getY() - d0 > 0.0D)
-             {
-                 return EnumFacing.DOWN;
-             }
-         }
-
-         return entityIn.getHorizontalFacing().getOpposite();
-     }
-     
      @Override
      public BlockRenderLayer getBlockLayer()
      {

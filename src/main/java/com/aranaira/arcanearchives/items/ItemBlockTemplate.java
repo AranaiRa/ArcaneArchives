@@ -79,41 +79,46 @@ public class ItemBlockTemplate extends ItemBlock {
     public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, IBlockState newState) {
         boolean res = super.placeBlockAt(stack, player, world, pos, side, hitX, hitY, hitZ, newState);
 
-        if (!(stack.getItem() instanceof ItemBlockTemplate) || !world.isRemote) return res;
-
-        float yaw = player.rotationYaw;
-        EnumFacing facing = EnumFacing.fromAngle(yaw);
-
-        TileEntity te = world.getTileEntity(pos);
-        BlockTemplate block = (BlockTemplate) ((ItemBlockTemplate) stack.getItem()).getBlock();
-        ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID());
-
-        if (te instanceof AATileEntity) {
-            if (player instanceof FakePlayer) {
-                ArcaneArchives.logger.error(String.format("TileEntity placed by FakePlayer at %d,%d,%d is invalid and not linked to the network.", pos.getX(), pos.getY(), pos.getZ()));
-            } else {
-                // If it's a network tile entity
-                if (te instanceof ImmanenceTileEntity) {
-                    ImmanenceTileEntity ite = (ImmanenceTileEntity) te;
-
-                    UUID newId = player.getUniqueID();
-                    ite.SetNetworkID(newId);
-                    ite.Dimension = player.dimension;
-
-                    // Any custom handling of name (like the matrix core) should be done here
-                    network.AddTileToNetwork(ite);
-                }
-
-                // Store its size
-                AATileEntity ate = (AATileEntity) te;
-                ate.setSize(block.getSize());
-                ate.setFacing(facing);
-            }
-        }
-
-        if (block.hasAccessors())
+        if (stack.getItem() instanceof ItemBlockTemplate & !world.isRemote)
         {
-            Placeable.ReplaceBlocks(world, pos, block.getSize(), facing);
+            TileEntity te = world.getTileEntity(pos);
+            BlockTemplate block = (BlockTemplate) ((ItemBlockTemplate) stack.getItem()).getBlock();
+            ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID());
+
+            float yaw = player.rotationYaw;
+            EnumFacing facing = EnumFacing.getDirectionFromEntityLiving(pos, player).getOpposite();
+
+            if(te instanceof AATileEntity)
+            {
+                if(player instanceof FakePlayer)
+                {
+                    ArcaneArchives.logger.error(String.format("TileEntity placed by FakePlayer at %d,%d,%d is invalid and not linked to the network.", pos.getX(), pos.getY(), pos.getZ()));
+                } else
+                {
+                    // If it's a network tile entity
+                    if(te instanceof ImmanenceTileEntity)
+                    {
+                        ImmanenceTileEntity ite = (ImmanenceTileEntity) te;
+
+                        UUID newId = player.getUniqueID();
+                        ite.SetNetworkID(newId);
+                        ite.Dimension = player.dimension;
+
+                        // Any custom handling of name (like the matrix core) should be done here
+                        network.AddTileToNetwork(ite);
+                    }
+
+                    // Store its size
+                    AATileEntity ate = (AATileEntity) te;
+                    ate.setSize(block.getSize());
+                    ate.setFacing(facing);
+                }
+            }
+
+            if(block.hasAccessors())
+            {
+                Placeable.ReplaceBlocks(world, pos, block.getSize(), facing);
+            }
         }
 
         return res;
