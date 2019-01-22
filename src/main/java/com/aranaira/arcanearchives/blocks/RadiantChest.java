@@ -85,7 +85,7 @@ public class RadiantChest extends BlockTemplate implements ITileEntityProvider{
 			}
 		}
 
-		playerIn.openGui(ArcaneArchives.Instance, AAGuiHandler.RADIANT_CHEST, worldIn, pos.getX(), pos.getY(), pos.getZ());
+		playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.RADIANT_CHEST, worldIn, pos.getX(), pos.getY(), pos.getZ());
 		
 		return true;
 	}
