@@ -16,12 +16,12 @@ public class GemCuttersTableRecipe
 	private List<ItemStack> mInput;
 	private ItemStack mOutput;
 
-	protected static LinkedHashMap<ItemStack, GemCuttersTableRecipe> RecipeList = new LinkedHashMap();
+	protected static LinkedHashMap<ItemStack, GemCuttersTableRecipe> RecipeList = new LinkedHashMap<>();
 
 	//protected static List<GemCuttersTableRecipe> RecipeList = new ArrayList();
 
 	//For use of shift clicking items in.
-	public static Set<ItemStack> ValidInputs = new HashSet();
+	public static Set<ItemStack> ValidInputs = new HashSet<>();
 
 	public GemCuttersTableRecipe(List<ItemStack> input, ItemStack output)
 	{
@@ -83,12 +83,12 @@ public class GemCuttersTableRecipe
 
 	public List<ItemStack> getInput()
 	{
-		return new ArrayList(mInput);
+		return new ArrayList<>(mInput);
 	}
 
 	public void consumeInput(NonNullList<ItemStack> query)
 	{
-		List<ItemStack> temp = new ArrayList();
+		List<ItemStack> temp = new ArrayList<>();
 		for(ItemStack s : mInput)
 		{
 			temp.add(s.copy());

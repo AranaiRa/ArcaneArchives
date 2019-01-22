@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.commands;
 
 import com.aranaira.arcanearchives.util.NetworkHelper;
+import com.google.common.collect.Lists;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -10,7 +11,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import scala.actors.threadpool.Arrays;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class ArcaneArchivesCommand extends CommandBase
 {
@@ -32,18 +35,19 @@ public class ArcaneArchivesCommand extends CommandBase
 	{
 		if(args.length == 0)
 		{
-			return Arrays.asList(new String[]{"network"});
+			return Lists.newArrayList("network");
 		} else if(args.length == 1)
 		{
-			return Arrays.asList(new String[]{"invite", "accept"});
+			return Lists.newArrayList("invite", "accept");
 		} else if(args.length == 2)
 		{
 			if(args[1].compareTo("invite") == 0)
 			{
-				return Arrays.asList(server.getPlayerList().getOnlinePlayerNames());
-			} else if(args[1].compareTo("accept") == 0)
+				return Lists.newArrayList(server.getPlayerList().getOnlinePlayerNames());
+			} else if(args[1].compareTo("accept") == 0 && sender.getCommandSenderEntity() != null)
 			{
-				return (List<String>) (NetworkHelper.getArcaneArchivesNetwork(sender.getCommandSenderEntity().getUniqueID()).pendingInvites.keySet());
+				Set<String> invites = NetworkHelper.getArcaneArchivesNetwork(sender.getCommandSenderEntity().getUniqueID()).pendingInvites.keySet();
+				return new ArrayList<>(invites);
 			}
 		}
 		return super.getTabCompletions(server, sender, args, targetPos);

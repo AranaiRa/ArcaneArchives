@@ -24,7 +24,7 @@ public class GemcuttersTableTileEntity extends AATileEntity implements ITickable
 {
 	private String mName = "gemcutterstable";
 	private final IItemHandler mInventory = new GCTItemHandler(54);
-	public List<BlockPos> mAccessors = new ArrayList();
+	public List<BlockPos> mAccessors = new ArrayList<>();
 
 	public GemcuttersTableTileEntity()
 	{

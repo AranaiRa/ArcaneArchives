@@ -69,7 +69,9 @@ public class GCTItemHandler extends ItemStackHandler
 		if(slot >= 18 && slot != 25)
 		{
 			if(slot - 17 + mPageNumber * 7 <= GemCuttersTableRecipe.RecipeList.size())
-				return (ItemStack) (new ArrayList(GemCuttersTableRecipe.RecipeList.keySet())).get(slot - 18 + mPageNumber * 7);
+				// TODO: .keySet() returns a set which by default has no specified order, this code could fail in
+				// some implementations of Java or on some systems.
+				return new ArrayList<>(GemCuttersTableRecipe.RecipeList.keySet()).get(slot - 18 + mPageNumber * 7);
 			return ItemStack.EMPTY;
 		}
 		return super.getStackInSlot(slot);

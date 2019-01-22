@@ -24,8 +24,8 @@ public class ManifestItemHandler implements IItemHandlerModifiable
 
 	public ManifestItemHandler()
 	{
-		mChests = new ArrayList();
-		mItemStacks = new ArrayList();
+		mChests = new ArrayList<>();
+		mItemStacks = new ArrayList<>();
 	}
 
 	//Returns the slot number of the item added.
@@ -62,7 +62,7 @@ public class ManifestItemHandler implements IItemHandlerModifiable
 	public List<ItemStack> filteredResults()
 	{
 
-		List<ItemStack> temp = new ArrayList();
+		List<ItemStack> temp = new ArrayList<>();
 
 		for(ItemStack s : mItemStacks)
 		{
@@ -106,8 +106,8 @@ public class ManifestItemHandler implements IItemHandlerModifiable
 
 	public void Clear()
 	{
-		mChests = new ArrayList();
-		mItemStacks = new ArrayList();
+		mChests.clear();
+		mItemStacks.clear();
 		mSearchText = "";
 	}
 

@@ -23,8 +23,8 @@ import java.util.List;
 public class ContainerManifest extends Container
 {
 
-	List<RadiantChestTileEntity> networkChests;
-	List<ItemStack> ItemList = new ArrayList<>();
+	private List<RadiantChestTileEntity> networkChests = new ArrayList<>();
+	private List<ItemStack> ItemList = new ArrayList<>();
 	EntityPlayer mPlayer;
 	private boolean mServerSide;
 	private ArcaneArchivesNetwork mAANetwork;
@@ -44,7 +44,7 @@ public class ContainerManifest extends Container
 			networkChests = mAANetwork.GetRadiantChests();
 			for(int i = 0; i < networkChests.size(); i++)
 			{
-				List<ItemStack> items = new ArrayList();
+				List<ItemStack> items = new ArrayList<>();
 				for(int j = 0; j < networkChests.get(i).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).getSlots(); j++)
 				{
 					if(!networkChests.get(i).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).getStackInSlot(j).isEmpty())
@@ -101,8 +101,7 @@ public class ContainerManifest extends Container
 		if(slotId < 0) return ItemStack.EMPTY;
 		if(ManifestItemHandler.mInstance.getStackInSlot(slotId).isEmpty()) return ItemStack.EMPTY;
 
-
-		RadiantChestPlaceHolder RCPH = null;
+		// unused: RadiantChestPlaceHolder RCPH = null;
 		for(RadiantChestPlaceHolder rcph : ManifestItemHandler.mInstance.mChests)
 		{
 			if(rcph.Contains(ManifestItemHandler.mInstance.getStackInSlot(slotId)))

@@ -71,7 +71,7 @@ public class GUIGemcuttersTable extends GuiContainer
 					break;
 				}
 			}
-			List<String> mRecipeInput = new ArrayList();
+			List<String> mRecipeInput = new ArrayList<>();
 			if(mCGCT.getItemHandler().getRecipeStatus())
 			{
 				mRecipeInput.add("�2" + mCGCT.getItemHandler().mRecipe.getOutput().getDisplayName());

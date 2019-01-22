@@ -17,8 +17,8 @@ import java.util.List;
 public class AATickHandler
 {
 	private static AATickHandler mInstance;
-	public List<Vec3d> mBlockPositions = new ArrayList();
-	public List<Vec3d> mBlockPositionsToRemove = new ArrayList();
+	public List<Vec3d> mBlockPositions = new ArrayList<>();
+	public List<Vec3d> mBlockPositionsToRemove = new ArrayList<>();
 	public boolean mIsDrawingLine;
 
 	private AATickHandler()
@@ -45,7 +45,7 @@ public class AATickHandler
 			RenderHelper.drawRays(Minecraft.getMinecraft().player.getPositionVector(), mInstance.mBlockPositions, 15);
 
 			mInstance.mBlockPositions.removeAll(mInstance.mBlockPositionsToRemove);
-			mInstance.mBlockPositionsToRemove = new ArrayList();
+			mInstance.mBlockPositionsToRemove.clear();
 		}
 	}
 

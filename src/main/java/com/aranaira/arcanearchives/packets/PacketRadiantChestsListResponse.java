@@ -18,9 +18,9 @@ import java.util.UUID;
 
 public class PacketRadiantChestsListResponse implements IMessage
 {
-	List<ItemStack> mItems;
-	List<RadiantChestPlaceHolder> mChests;
-	UUID mPlayerID;
+	private List<ItemStack> mItems = new ArrayList<>();
+	private List<RadiantChestPlaceHolder> mChests = new ArrayList<>();
+	private UUID mPlayerID;
 
 	public PacketRadiantChestsListResponse()
 	{
@@ -36,10 +36,9 @@ public class PacketRadiantChestsListResponse implements IMessage
 	@Override
 	public void fromBytes(ByteBuf buf)
 	{
-		mPlayerID.fromString((String) buf.readCharSequence(buf.readInt(), Charset.defaultCharset()));
-		mChests = new ArrayList();
-
-		mItems = new ArrayList();
+		mPlayerID = UUID.fromString((String) buf.readCharSequence(buf.readInt(), Charset.defaultCharset()));
+		mChests.clear();
+		mItems.clear();
 		int i = buf.readInt();
 		for(int j = 0; j < i; j++)
 		{
@@ -50,7 +49,7 @@ public class PacketRadiantChestsListResponse implements IMessage
 		i = buf.readInt();
 		for(int j = 0; j < i; j++)
 		{
-			List<ItemStack> items = new ArrayList();
+			List<ItemStack> items = new ArrayList<>();
 			int x = buf.readInt();
 			int y = buf.readInt();
 			int z = buf.readInt();
@@ -116,14 +115,18 @@ public class PacketRadiantChestsListResponse implements IMessage
 			//ManifestItemHandler mManifestItemHandler = NetworkHelper.getArcaneArchivesNetwork(message.mPlayerID).mManifestItemHandler;
 			ManifestItemHandler.mInstance.Clear();
 
-			for(ItemStack s : message.mItems)
+			// Simplified this a bit
+			message.mItems.forEach(ManifestItemHandler.mInstance::AddItemStack);
+			ManifestItemHandler.mInstance.mChests.addAll(message.mChests);
+
+			/* for(ItemStack s : message.mItems)
 			{
 				ManifestItemHandler.mInstance.AddItemStack(s);
 			}
 			for(RadiantChestPlaceHolder rcte : message.mChests)
 			{
 				ManifestItemHandler.mInstance.mChests.add(rcte);
-			}
+			} */
 			ManifestItemHandler.mInstance.SortChests();
 		}
 	}
