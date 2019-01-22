@@ -85,9 +85,6 @@ public class ItemBlockTemplate extends ItemBlock {
             BlockTemplate block = (BlockTemplate) ((ItemBlockTemplate) stack.getItem()).getBlock();
             ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID());
 
-            float yaw = player.rotationYaw;
-            EnumFacing facing = EnumFacing.getDirectionFromEntityLiving(pos, player).getOpposite();
-
             if(te instanceof AATileEntity)
             {
                 if(player instanceof FakePlayer)
@@ -111,13 +108,12 @@ public class ItemBlockTemplate extends ItemBlock {
                     // Store its size
                     AATileEntity ate = (AATileEntity) te;
                     ate.setSize(block.getSize());
-                    ate.setFacing(facing);
                 }
-            }
 
-            if(block.hasAccessors())
-            {
-                Placeable.ReplaceBlocks(world, pos, block.getSize(), facing);
+                if(block.hasAccessors())
+                {
+                    Placeable.ReplaceBlocks(world, pos, block.getSize(), ((AATileEntity) te).getFacing(world));
+                }
             }
         }
 

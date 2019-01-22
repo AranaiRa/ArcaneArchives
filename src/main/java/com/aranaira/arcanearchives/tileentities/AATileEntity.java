@@ -1,11 +1,13 @@
 package com.aranaira.arcanearchives.tileentities;
+import com.aranaira.arcanearchives.blocks.BlockTemplate;
 import com.aranaira.arcanearchives.util.Placeable;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.world.World;
 
 public class AATileEntity extends TileEntity {
     public Placeable.Size size;
-    public EnumFacing facing = EnumFacing.WEST;
 
     public void setSize (Placeable.Size newSize)
 	{
@@ -22,13 +24,9 @@ public class AATileEntity extends TileEntity {
 		return this.size.hasAccessors();
 	}
 
-	public EnumFacing getFacing ()
+	public EnumFacing getFacing (World world)
 	{
-		return this.facing;
-	}
-
-	public void setFacing (EnumFacing facing)
-	{
-		this.facing = facing;
+		IBlockState state = world.getBlockState(getPos());
+		return state.getValue(BlockTemplate.FACING);
 	}
 }
