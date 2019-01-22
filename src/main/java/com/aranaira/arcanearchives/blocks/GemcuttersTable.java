@@ -56,6 +56,12 @@ public class GemcuttersTable extends BlockTemplate implements ITileEntityProvide
 		
 		return true;
 	}
+
+	@Override
+	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand)
+	{
+		return getDefaultState().withProperty(FACING, EnumFacing.fromAngle(placer.rotationYaw-90));
+	}
 	
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) 
