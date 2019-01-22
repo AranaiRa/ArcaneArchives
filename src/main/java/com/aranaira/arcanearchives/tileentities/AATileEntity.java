@@ -6,7 +6,7 @@ import net.minecraft.util.EnumFacing;
 
 public class AATileEntity extends TileEntity {
     public Placeable.Size size;
-    public EnumFacing facing;
+    public EnumFacing facing = EnumFacing.WEST;
 
     public void setSize (Placeable.Size newSize)
 	{

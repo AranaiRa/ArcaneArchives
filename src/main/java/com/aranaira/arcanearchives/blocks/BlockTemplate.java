@@ -4,29 +4,26 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.BlockLibrary;
 import com.aranaira.arcanearchives.init.ItemLibrary;
 import com.aranaira.arcanearchives.items.ItemBlockTemplate;
+import com.aranaira.arcanearchives.tileentities.AATileEntity;
 import com.aranaira.arcanearchives.util.IHasModel;
 import com.aranaira.arcanearchives.util.Placeable;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.World;
-
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
+import net.minecraft.world.IBlockAccess;
 
 public class BlockTemplate extends Block implements IHasModel
 {
-	public static final PropertyDirection FACING = BlockHorizontal.FACING;
+	public static final PropertyEnum<EnumFacing> FACING = PropertyEnum.create("facing", EnumFacing.class);
 
 	public int placeLimit = -1;
 	public Placeable.Size size;
@@ -100,11 +97,30 @@ public class BlockTemplate extends Block implements IHasModel
 	}
 
 	@Override
-	@ParametersAreNonnullByDefault
-	@Nonnull
-	@SuppressWarnings("deprecation")
-	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand)
+	public int getMetaFromState(IBlockState state) {
+		return 0;
+	}
+
+	@Override
+	public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
+		TileEntity tile = world.getTileEntity(pos);
+		if (tile instanceof AATileEntity) {
+			return state.withProperty(FACING, ((AATileEntity) tile).getFacing());
+		}
+
+		return state;
+	}
+
+	@Override
+	protected BlockStateContainer createBlockState()
 	{
-		return this.getStateFromMeta(meta).withProperty(FACING, placer.getHorizontalFacing().getOpposite());
+		if (hasTileEntity(getDefaultState()))
+		{
+			return new BlockStateContainer(this, FACING);
+		}
+
+		return new BlockStateContainer(this);
 	}
 }
+
+
