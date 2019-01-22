@@ -5,6 +5,7 @@ import com.aranaira.arcanearchives.init.BlockLibrary;
 import com.aranaira.arcanearchives.init.ItemLibrary;
 import com.aranaira.arcanearchives.items.ItemBlockTemplate;
 import com.aranaira.arcanearchives.tileentities.AATileEntity;
+import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.util.IHasModel;
 import com.aranaira.arcanearchives.util.Placeable;
 import net.minecraft.block.Block;
@@ -12,7 +13,9 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -20,6 +23,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 
 public class BlockTemplate extends Block implements IHasModel
 {
@@ -120,6 +124,14 @@ public class BlockTemplate extends Block implements IHasModel
 		}
 
 		return new BlockStateContainer(this);
+	}
+	
+	@Override
+	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) 
+	{
+		((ImmanenceTileEntity) worldIn.getTileEntity(pos)).SetNetworkID(placer.getUniqueID());
+		
+		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 	}
 }
 
