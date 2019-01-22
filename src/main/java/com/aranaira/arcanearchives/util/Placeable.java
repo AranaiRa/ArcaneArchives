@@ -40,6 +40,8 @@ public class Placeable
 	{
 		for (BlockPos pos2 : GetPositions(pos, size, facing))
 		{
+			if (pos2.equals(pos)) continue;
+
 			worldIn.setBlockToAir(pos2);
 		}
 	}
