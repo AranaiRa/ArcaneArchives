@@ -128,7 +128,7 @@ public class MatrixCrystalCore extends BlockTemplate {
      }
      
      @Override
-     public BlockRenderLayer getBlockLayer()
+     public BlockRenderLayer getRenderLayer()
      {
     	 return BlockRenderLayer.CUTOUT;
      }

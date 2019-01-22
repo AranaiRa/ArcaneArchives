@@ -37,7 +37,7 @@ public class BlockTemplate extends BlockDirectional implements IHasModel
 	public BlockTemplate(String name, Material materialIn)
 	{
 		super(materialIn);
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setRegistryName(new ResourceLocation(ArcaneArchives.MODID, name));
 		setCreativeTab(ArcaneArchives.TAB_AA);
 		BlockLibrary.BLOCKS.add(this);
@@ -47,7 +47,7 @@ public class BlockTemplate extends BlockDirectional implements IHasModel
 
 	public ITextComponent getNameComponent()
 	{
-		return new TextComponentTranslation(String.format("%s.name", getUnlocalizedName()));
+		return new TextComponentTranslation(String.format("%s.name", getTranslationKey()));
 	}
 
 	public Class getEntityClass()
@@ -114,9 +114,10 @@ public class BlockTemplate extends BlockDirectional implements IHasModel
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
 	public IBlockState getStateFromMeta (int meta)
 	{
-		return getDefaultState().withProperty(FACING, EnumFacing.getFront(meta & 7));
+		return getDefaultState().withProperty(FACING, EnumFacing.byIndex(meta & 7));
 	}
 
 	@Override

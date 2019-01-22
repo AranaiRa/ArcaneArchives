@@ -20,15 +20,9 @@ public class AccessorBlock extends Block
 	public AccessorBlock(Material materialIn)
 	{
 		super(materialIn);
-		setUnlocalizedName("accessorblock");
+		setTranslationKey("accessorblock");
 		setRegistryName("accessorblock");
 		BlockLibrary.BLOCKS.add(this);
-	}
-	
-	@Override
-	public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state) 
-	{
-		super.onBlockDestroyedByPlayer(worldIn, pos, state);
 	}
 
 	@Override

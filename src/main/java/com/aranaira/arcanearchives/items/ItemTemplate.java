@@ -10,7 +10,7 @@ public class ItemTemplate extends Item implements IHasModel {
 
 	public ItemTemplate(String name)
 	{
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setRegistryName(name);
 		setCreativeTab(ArcaneArchives.TAB_AA);
 		

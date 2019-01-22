@@ -398,7 +398,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 				added = false;
 				for (ItemStack i : all_the_items)
 				{
-					if (is.getUnlocalizedName() == i.getUnlocalizedName())
+					if (is.getTranslationKey() == i.getTranslationKey())
 					{
 						i.setCount(is.getCount());
 						added = true;

@@ -88,7 +88,7 @@ public class GemcuttersTable extends BlockTemplate implements ITileEntityProvide
      }
 
      @Override
-     public BlockRenderLayer getBlockLayer()
+     public BlockRenderLayer getRenderLayer()
      {
     	 return BlockRenderLayer.CUTOUT;
      }
