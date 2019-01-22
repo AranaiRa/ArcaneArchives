@@ -105,33 +105,9 @@ public class MatrixCrystalCore extends BlockTemplate {
          return true;
      }
 
-
-
-     public static EnumFacing getFacingFromEntity(World worldIn, BlockPos clickedBlock, EntityLivingBase entityIn)
-     {
-         if (MathHelper.abs((float) entityIn.posX - (float) clickedBlock.getX()) < 2.0F && MathHelper.abs((float) entityIn.posZ - (float) clickedBlock.getZ()) < 2.0F)
-         {
-             double d0 = entityIn.posY + (double) entityIn.getEyeHeight();
-
-             if (d0 - (double) clickedBlock.getY() > 2.0D)
-             {
-                 return EnumFacing.UP;
-             }
-
-             if ((double) clickedBlock.getY() - d0 > 0.0D)
-             {
-                 return EnumFacing.DOWN;
-             }
-         }
-
-         return entityIn.getHorizontalFacing().getOpposite();
-     }
-     
      @Override
      public BlockRenderLayer getRenderLayer()
      {
     	 return BlockRenderLayer.CUTOUT;
      }
-     
-     
 }
