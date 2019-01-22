@@ -28,8 +28,8 @@ public class TomeOfRequisitionItem extends ItemTemplate {
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
     {
-    	tooltip.add("§c§oThe recipe for this item is temporary.§r");
-    	tooltip.add("§c§oIt will be changed in a later version.§r");
+    	tooltip.add("ï¿½cï¿½oThe recipe for this item is temporary.ï¿½r");
+    	tooltip.add("ï¿½cï¿½oIt will be changed in a later version.ï¿½r");
     }
 
 	@Override

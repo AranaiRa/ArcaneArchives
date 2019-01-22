@@ -49,13 +49,15 @@ public class RadiantChest extends BlockTemplate implements ITileEntityProvider{
 	}
 
     @Override
-    public boolean isFullCube(IBlockState state) 
+	@SuppressWarnings("deprecation")
+    public boolean isFullCube(IBlockState state)
     {
         return false;
     }
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) 
+	@SuppressWarnings("deprecation")
+    public boolean isOpaqueCube(IBlockState state)
     {
         return false;
     }

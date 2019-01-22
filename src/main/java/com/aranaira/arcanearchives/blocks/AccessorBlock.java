@@ -26,13 +26,15 @@ public class AccessorBlock extends Block
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
 	public EnumBlockRenderType getRenderType(IBlockState state) 
 	{
 		return EnumBlockRenderType.INVISIBLE;
 	}
 
     @Override
-    public boolean isOpaqueCube(IBlockState state) 
+	@SuppressWarnings("deprecation")
+    public boolean isOpaqueCube(IBlockState state)
     {
         return false;
     }
@@ -44,7 +46,8 @@ public class AccessorBlock extends Block
     }
     
     @Override
-    public boolean hasTileEntity() 
+	@SuppressWarnings("deprecation")
+    public boolean hasTileEntity()
     {
     	return true;
     }

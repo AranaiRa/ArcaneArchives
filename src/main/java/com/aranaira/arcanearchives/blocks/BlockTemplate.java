@@ -8,6 +8,7 @@ import com.aranaira.arcanearchives.tileentities.AATileEntity;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.util.IHasModel;
 import com.aranaira.arcanearchives.util.Placeable;
+import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -28,6 +29,10 @@ import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.common.property.Properties;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class BlockTemplate extends BlockDirectional implements IHasModel
 {
 	private int placeLimit = -1;
@@ -39,7 +44,7 @@ public class BlockTemplate extends BlockDirectional implements IHasModel
 		super(materialIn);
 		setTranslationKey(name);
 		setRegistryName(new ResourceLocation(ArcaneArchives.MODID, name));
-		setCreativeTab(ArcaneArchives.TAB_AA);
+		setCreativeTab(ArcaneArchives.TAB);
 		BlockLibrary.BLOCKS.add(this);
 		ItemLibrary.ITEMS.add(new ItemBlockTemplate(this));
 		setHarvestLevel("pickaxe", 0);

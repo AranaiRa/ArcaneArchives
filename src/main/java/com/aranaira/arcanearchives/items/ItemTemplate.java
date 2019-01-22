@@ -12,7 +12,7 @@ public class ItemTemplate extends Item implements IHasModel {
 	{
 		setTranslationKey(name);
 		setRegistryName(name);
-		setCreativeTab(ArcaneArchives.TAB_AA);
+		setCreativeTab(ArcaneArchives.TAB);
 		
 		ItemLibrary.ITEMS.add(this);
 	}

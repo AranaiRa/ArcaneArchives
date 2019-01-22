@@ -22,8 +22,8 @@ public class MatrixReservoir extends BlockTemplate {
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
     {
-    	tooltip.add("§c§lUNIMPLEMENTED§r");
-    	tooltip.add("§c§oUsing this item may crash your game!§r");
+    	tooltip.add("ï¿½cï¿½lUNIMPLEMENTEDï¿½r");
+    	tooltip.add("ï¿½cï¿½oUsing this item may crash your game!ï¿½r");
     }
 	
 	@Override
@@ -33,6 +33,7 @@ public class MatrixReservoir extends BlockTemplate {
 	}
 
     @Override
+	@SuppressWarnings("deprecation")
     public boolean isOpaqueCube(IBlockState state) {
         return false;
     }

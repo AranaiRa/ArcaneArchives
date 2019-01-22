@@ -70,18 +70,21 @@ public class GemcuttersTable extends BlockTemplate implements ITileEntityProvide
 	}
 	
 	 @Override
+	 @SuppressWarnings("deprecation")
      public boolean isOpaqueCube(IBlockState state)
      {
          return false;
      }
 
      @Override
+	 @SuppressWarnings("deprecation")
      public boolean isFullCube(IBlockState state)
      {
          return false;
      }
 
      @Override
+	 @SuppressWarnings("deprecation")
      public boolean causesSuffocation(IBlockState state)
      {
          return false;

@@ -32,11 +32,13 @@ public class RadiantCraftingTable extends BlockTemplate implements ITileEntityPr
 	}
 
     @Override
+	@SuppressWarnings("deprecation")
     public boolean isFullCube(IBlockState state) {
         return false;
     }
 
     @Override
+	@SuppressWarnings("deprecation")
     public boolean isOpaqueCube(IBlockState state) {
         return false;
     }

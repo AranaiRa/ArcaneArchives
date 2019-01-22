@@ -18,11 +18,13 @@ public class RadiantLantern extends BlockTemplate{
 	}
 
     @Override
+	@SuppressWarnings("deprecation")
     public boolean isFullCube(IBlockState state) {
         return false;
     }
 
     @Override
+	@SuppressWarnings("deprecation")
     public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
@@ -34,6 +36,7 @@ public class RadiantLantern extends BlockTemplate{
 	}
 
     @Override
+	@SuppressWarnings("deprecation")
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
     	return new AxisAlignedBB(0.35, 0.0, 0.35, 0.65, 1.0, 0.65);

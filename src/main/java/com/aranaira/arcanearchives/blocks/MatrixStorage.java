@@ -63,6 +63,7 @@ public class MatrixStorage extends BlockTemplate {
 	}
 
     @Override
+	@SuppressWarnings("deprecation")
     public boolean isOpaqueCube(IBlockState state) 
     {
         return false;
