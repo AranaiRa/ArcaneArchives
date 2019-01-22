@@ -6,26 +6,34 @@ import com.aranaira.arcanearchives.init.ItemLibrary;
 import com.aranaira.arcanearchives.items.ItemBlockTemplate;
 import com.aranaira.arcanearchives.util.IHasModel;
 import com.aranaira.arcanearchives.util.Placeable;
-
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
-public class BlockTemplate extends Block implements IHasModel {
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
+
+public class BlockTemplate extends Block implements IHasModel
+{
+	public static final PropertyDirection FACING = BlockHorizontal.FACING;
 
 	public int placeLimit = -1;
 	public Placeable.Size size;
 	Class entityClass;
 
-	public BlockTemplate(String name, Material materialIn) {
+	public BlockTemplate(String name, Material materialIn)
+	{
 		super(materialIn);
 		setUnlocalizedName(name);
 		setRegistryName(new ResourceLocation(ArcaneArchives.MODID, name));
@@ -35,39 +43,48 @@ public class BlockTemplate extends Block implements IHasModel {
 		setHarvestLevel("pickaxe", 0);
 	}
 
-	public ITextComponent getNameComponent () {
+	public ITextComponent getNameComponent()
+	{
 		return new TextComponentTranslation(String.format("%s.name", getUnlocalizedName()));
 	}
 
-	public void setEntityClass (Class clazz) {
-		this.entityClass = clazz;
-	}
-
-	public Class getEntityClass () {
+	public Class getEntityClass()
+	{
 		return this.entityClass;
 	}
 
-	public int getPlaceLimit () {
+	public void setEntityClass(Class clazz)
+	{
+		this.entityClass = clazz;
+	}
+
+	public int getPlaceLimit()
+	{
 		return placeLimit;
 	}
 
-	public void setPlaceLimit (int newPlaceLimit) {
+	public void setPlaceLimit(int newPlaceLimit)
+	{
 		placeLimit = newPlaceLimit;
 	}
 
-	public Placeable.Size getSize () {
+	public Placeable.Size getSize()
+	{
 		return size;
 	}
 
-	public void setSize (int w, int h, int l) {
-		size = new Placeable.Size(w, h, l);
-	}
-
-	public void setSize (Placeable.Size newSize) {
+	public void setSize(Placeable.Size newSize)
+	{
 		size = newSize;
 	}
 
-	public boolean hasAccessors () {
+	public void setSize(int w, int h, int l)
+	{
+		size = new Placeable.Size(w, h, l);
+	}
+
+	public boolean hasAccessors()
+	{
 		return size != null && size.hasAccessors();
 	}
 
@@ -83,13 +100,11 @@ public class BlockTemplate extends Block implements IHasModel {
 	}
 
 	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) 
+	@ParametersAreNonnullByDefault
+	@Nonnull
+	@SuppressWarnings("deprecation")
+	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand)
 	{
-		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
-	}
-	
-	@Override
-	public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state) {
-		super.onBlockDestroyedByPlayer(worldIn, pos, state);
+		return this.getStateFromMeta(meta).withProperty(FACING, placer.getHorizontalFacing().getOpposite());
 	}
 }

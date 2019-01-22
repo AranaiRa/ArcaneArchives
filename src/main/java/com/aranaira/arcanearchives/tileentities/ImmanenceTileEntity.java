@@ -1,12 +1,9 @@
 package com.aranaira.arcanearchives.tileentities;
 
-import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
 import com.aranaira.arcanearchives.util.*;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 
@@ -16,6 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.aranaira.arcanearchives.init.BlockLibrary;
+import net.minecraft.util.math.BlockPos;
 
 public class ImmanenceTileEntity extends AATileEntity implements ITickable
 {
@@ -39,7 +37,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	{
 		this.name = name;
 		BlockLibrary.TILE_ENTITIES.put(name, this);
-		mAccessors = new ArrayList();
+		mAccessors = new ArrayList<>();
 		Inventory = NonNullList.create();
 	}
 	
