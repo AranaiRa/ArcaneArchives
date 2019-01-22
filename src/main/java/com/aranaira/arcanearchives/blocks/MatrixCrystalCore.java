@@ -101,7 +101,7 @@ public class MatrixCrystalCore extends BlockTemplate {
      {
     	 if (player.getUniqueID() != ((ImmanenceTileEntity)world.getTileEntity(pos)).NetworkID)
     		 return false;
-    	 player.openGui(ArcaneArchives.Instance, AAGuiHandler.TOME_OF_REQUISITION, world, pos.getX(), pos.getY(), pos.getZ());
+    	 player.openGui(ArcaneArchives.instance, AAGuiHandler.TOME_OF_REQUISITION, world, pos.getX(), pos.getY(), pos.getZ());
          return true;
      }
 

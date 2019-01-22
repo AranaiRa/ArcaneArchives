@@ -44,7 +44,7 @@ public class MatrixRepository extends BlockTemplate {
 			}
 		}
 
-		playerIn.openGui(ArcaneArchives.Instance, AAGuiHandler.MATRIX_REPOSITORY, worldIn, pos.getX(), pos.getY(), pos.getZ());
+		playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.MATRIX_REPOSITORY, worldIn, pos.getX(), pos.getY(), pos.getZ());
 		
 		return true;
 	}

@@ -31,7 +31,7 @@ public class ManifestItem extends ItemTemplate
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) 
 	{
-		playerIn.openGui(ArcaneArchives.instance(), AAGuiHandler.MANIFEST, worldIn, (int)playerIn.posX, (int)playerIn.posY, (int)playerIn.posZ);
+		playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.MANIFEST, worldIn, (int)playerIn.posX, (int)playerIn.posY, (int)playerIn.posZ);
 		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}
 }

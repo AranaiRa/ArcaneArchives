@@ -45,7 +45,7 @@ public class MatrixStorage extends BlockTemplate {
 			}
 		}
 
-		playerIn.openGui(ArcaneArchives.Instance, AAGuiHandler.MATRIX_STORAGE, worldIn, pos.getX(), pos.getY(), pos.getZ());
+		playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.MATRIX_STORAGE, worldIn, pos.getX(), pos.getY(), pos.getZ());
 		
 		return true;
 	}
