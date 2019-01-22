@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.init.BlockLibrary;
 import com.aranaira.arcanearchives.tileentities.AccessorTileEntity;
+import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -19,15 +20,14 @@ public class AccessorBlock extends Block
 	public AccessorBlock(Material materialIn)
 	{
 		super(materialIn);
-		setUnlocalizedName("accessorBlock");
-		setRegistryName("accessorBlock");
+		setUnlocalizedName("accessorblock");
+		setRegistryName("accessorblock");
 		BlockLibrary.BLOCKS.add(this);
 	}
 	
 	@Override
 	public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state) 
 	{
-		//worldIn.destroyBlock(Parent.pos, true);
 		super.onBlockDestroyedByPlayer(worldIn, pos, state);
 	}
 
@@ -66,7 +66,5 @@ public class AccessorBlock extends Block
     {
     	return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
     }
-    
-    
 }
 
