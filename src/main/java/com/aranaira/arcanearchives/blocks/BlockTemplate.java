@@ -1,25 +1,28 @@
 package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
 import com.aranaira.arcanearchives.init.BlockLibrary;
 import com.aranaira.arcanearchives.init.ItemLibrary;
 import com.aranaira.arcanearchives.items.ItemBlockTemplate;
+import com.aranaira.arcanearchives.tileentities.AATileEntity;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.util.IHasModel;
-import com.aranaira.arcanearchives.util.Placeable;
+import com.aranaira.arcanearchives.util.NetworkHelper;
+import com.aranaira.arcanearchives.util.Size;
+import com.google.common.collect.Lists;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -28,16 +31,20 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.common.property.Properties;
+import net.minecraftforge.common.util.FakePlayer;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.List;
+import java.util.UUID;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public class BlockTemplate extends Block implements IHasModel
 {
 	private int placeLimit = -1;
-	public Placeable.Size size;
+	public Size size;
 	private Class entityClass;
 
 	public BlockTemplate(String name, Material materialIn)
@@ -76,19 +83,19 @@ public class BlockTemplate extends Block implements IHasModel
 		placeLimit = newPlaceLimit;
 	}
 
-	public Placeable.Size getSize()
+	public Size getSize()
 	{
 		return size;
 	}
 
-	public void setSize(Placeable.Size newSize)
+	public void setSize(Size newSize)
 	{
 		size = newSize;
 	}
 
 	void setSize(int w, int h, int l)
 	{
-		size = new Placeable.Size(w, h, l);
+		size = new Size(w, h, l);
 	}
 
 	public boolean hasAccessors()
