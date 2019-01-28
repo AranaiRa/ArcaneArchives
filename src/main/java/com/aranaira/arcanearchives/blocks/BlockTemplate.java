@@ -108,23 +108,124 @@ public class BlockTemplate extends Block implements IHasModel
 		return false;
 	}
 
+	@Nonnull
+	public EnumFacing getFacing(World world, BlockPos pos)
+	{
+		IBlockState state = world.getBlockState(pos);
+		if(state.getBlock() instanceof BlockDirectionalTemplate)
+		{
+			return state.getValue(BlockDirectionalTemplate.FACING);
+		} else
+		{
+			return EnumFacing.WEST;
+		}
+	}
+
 	@Override
 	public void registerModels()
 	{
 		ArcaneArchives.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory");
 	}
 
-	// TODO: Check to see if this is actually necessary
-	@Override
-	public void onBlockPlacedBy(@Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityLivingBase placer, @Nonnull ItemStack stack)
+	public List<BlockPos> calculateAccessors(World world, BlockPos pos) {
+		return calculateAccessors(world, pos, null);
+	}
+
+	// This always includes the parent location
+	public List<BlockPos> calculateAccessors(World world, BlockPos pos, @Nullable EnumFacing facing)
 	{
-		TileEntity te = worldIn.getTileEntity(pos);
-		if(te instanceof ImmanenceTileEntity)
+		Size size = getSize();
+
+		if (facing == null) facing = getFacing(world, pos);
+
+		EnumFacing curOffset = EnumFacing.fromAngle(facing.getHorizontalAngle() - 90);
+
+		BlockPos start = pos;
+		BlockPos stop;
+
+		if(size.width == 2)
 		{
-			((ImmanenceTileEntity) te).SetNetworkID(placer.getUniqueID());
+			stop = pos.offset(curOffset, 1);
+		}
+		else
+		{
+			int steps = (size.width - 1) / 2;
+
+			stop = pos.offset(curOffset, steps);
+			start = pos.offset(curOffset.getOpposite(), steps);
 		}
 
-		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
+		if (size.length == 2)
+		{
+			stop = stop.offset(facing, 1);
+		}
+		else
+		{
+			int steps = (size.length - 1) / 2;
+
+			stop = stop.offset(facing, steps);
+			start = start.offset(facing.getOpposite(), steps);
+		}
+
+		// for height, we move up the required number of steps;
+		for(int i = 1; i < size.height; i++)
+		{
+			stop = stop.up();
+		}
+
+		ArcaneArchives.logger.info(String.format("Start: %s, stop: %s", start.toString(), stop.toString()));
+
+		List<BlockPos> output = Lists.newArrayList(BlockPos.getAllInBox(start, stop));
+		output.removeIf((f) -> f.equals(pos));
+
+		return output;
+	}
+
+
+	// TODO: Check to see if this is actually necessary
+	@Override
+	public void onBlockPlacedBy(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityLivingBase placer, @Nonnull ItemStack stack)
+	{
+		super.onBlockPlacedBy(world, pos, state, placer, stack);
+
+		TileEntity te = world.getTileEntity(pos);
+		ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(placer.getUniqueID());
+
+		if(te instanceof AATileEntity)
+		{
+			if(placer instanceof FakePlayer)
+			{
+				ArcaneArchives.logger.error(String.format("TileEntity placed by FakePlayer at %d,%d,%d is invalid and not linked to the network.", pos.getX(), pos.getY(), pos.getZ()));
+			} else
+			{
+				// If it's a network tile entity
+				if(te instanceof ImmanenceTileEntity)
+				{
+					ImmanenceTileEntity ite = (ImmanenceTileEntity) te;
+
+					UUID newId = placer.getUniqueID();
+					ite.SetNetworkID(newId);
+					ite.Dimension = placer.dimension;
+
+					// Any custom handling of name (like the matrix core) should be done here
+					network.AddTileToNetwork(ite);
+				}
+
+				// Store its size
+				AATileEntity ate = (AATileEntity) te;
+				ate.setSize(this.getSize());
+			}
+		}
+
+		// The item block has already taken care of to make sure that the points can be replaced.
+		if(this.hasAccessors())
+		{
+			for(BlockPos point : calculateAccessors(world, pos))
+			{
+				ArcaneArchives.logger.info((world.isAirBlock(point)) ? "Air block here" : "Hm, not air?");
+				world.setBlockState(point, Blocks.STONE.getDefaultState());
+			}
+		}
 	}
 
 	@Override

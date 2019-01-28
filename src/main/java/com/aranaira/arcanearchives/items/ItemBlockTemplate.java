@@ -1,18 +1,14 @@
 package com.aranaira.arcanearchives.items;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.BlockTemplate;
 import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
-import com.aranaira.arcanearchives.tileentities.AATileEntity;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.util.NetworkHelper;
-import com.aranaira.arcanearchives.util.Placeable;
 import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -23,7 +19,7 @@ import net.minecraftforge.common.util.FakePlayer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.UUID;
+import java.util.List;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
@@ -56,76 +52,53 @@ public class ItemBlockTemplate extends ItemBlock
 
 		if(placeLimit != -1)
 		{
-			/*if(c == null)
+			boolean count = false;
+
+			// For some weird reason there's a chance the tile entity for this block has already been created
+			// which, in the case of the Matrix, means another cannot be placed. It's always after the
+			// initial placement, though.
+			// TODO: Work out why this is happening and removing this hunk of "patchiness".
+			List<ImmanenceTileEntity> tiles = network.FetchTileEntities(blockTemplate.getEntityClass());
+			if(tiles.size() >= placeLimit)
 			{
-				player.sendMessage(new TextComponentTranslation("arcanearchives.error.invaliditemblock"));
-				return EnumActionResult.FAIL;
-			} always false */
+				count = (placeLimit != 1) || tiles.size() == 1 && tiles.get(0).getPos() != pos.up();
+			}
 
-			int count = network.CountTileEntities(blockTemplate.getEntityClass());
-
-			if(count >= placeLimit || count == 1 && placeLimit == 1)
+			if(count)
 			{
 				player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.toomanyplaced", blockTemplate.getPlaceLimit(), blockTemplate.getNameComponent()), true);
 				return EnumActionResult.FAIL;
 			}
+		}
 
-			if(blockTemplate.hasAccessors())
+		if(blockTemplate.hasAccessors())
+		{
+			boolean safe = true;
+
+			EnumFacing dir = EnumFacing.getDirectionFromEntityLiving(pos, player).getOpposite();
+			if(dir == EnumFacing.UP || dir == EnumFacing.DOWN)
 			{
-				if(!Placeable.CanPlaceSize(world, pos.up(), blockTemplate.getSize(), facing))
+				dir = EnumFacing.fromAngle(player.rotationYaw).getOpposite();
+			}
+
+			for(BlockPos point : blockTemplate.calculateAccessors(world, pos.up(), dir))
+			{
+				IBlockState newState = world.getBlockState(point);
+				Block newBlock = newState.getBlock();
+				if(!newBlock.isAir(newState, world, point) && !newBlock.isReplaceable(world, point))
 				{
-					player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.notenoughspace", blockTemplate.getNameComponent()), true);
-					return EnumActionResult.FAIL;
+					safe = false;
+					break;
 				}
+			}
+
+			if(!safe)
+			{
+				player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.notenoughspace", blockTemplate.getNameComponent()), true);
+				return EnumActionResult.FAIL;
 			}
 		}
 
 		return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
-	}
-
-	@Override
-	public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, IBlockState newState)
-	{
-		boolean res = super.placeBlockAt(stack, player, world, pos, side, hitX, hitY, hitZ, newState);
-
-		if(stack.getItem() instanceof ItemBlockTemplate & !world.isRemote)
-		{
-			TileEntity te = world.getTileEntity(pos);
-			BlockTemplate block = (BlockTemplate) ((ItemBlockTemplate) stack.getItem()).getBlock();
-			ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID());
-
-			if(te instanceof AATileEntity)
-			{
-				if(player instanceof FakePlayer)
-				{
-					ArcaneArchives.logger.error(String.format("TileEntity placed by FakePlayer at %d,%d,%d is invalid and not linked to the network.", pos.getX(), pos.getY(), pos.getZ()));
-				} else
-				{
-					// If it's a network tile entity
-					if(te instanceof ImmanenceTileEntity)
-					{
-						ImmanenceTileEntity ite = (ImmanenceTileEntity) te;
-
-						UUID newId = player.getUniqueID();
-						ite.SetNetworkID(newId);
-						ite.Dimension = player.dimension;
-
-						// Any custom handling of name (like the matrix core) should be done here
-						network.AddTileToNetwork(ite);
-					}
-
-					// Store its size
-					AATileEntity ate = (AATileEntity) te;
-					ate.setSize(block.getSize());
-				}
-
-				if(block.hasAccessors())
-				{
-					Placeable.ReplaceBlocks(world, pos, block.getSize(), ((AATileEntity) te).getFacing(world));
-				}
-			}
-		}
-
-		return res;
 	}
 }

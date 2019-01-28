@@ -1,9 +1,8 @@
 package com.aranaira.arcanearchives.tileentities;
 
-import com.aranaira.arcanearchives.init.BlockLibrary;
 import com.aranaira.arcanearchives.util.ItemComparison;
 import com.aranaira.arcanearchives.util.NetworkHelper;
-import com.aranaira.arcanearchives.util.Placeable;
+import com.aranaira.arcanearchives.util.Size;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -31,7 +30,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	public NonNullList<ItemStack> Inventory;
 	public boolean IsInventory = false;
 	public int MaxItems;
-	public Placeable.Size size;
+	public Size size;
 	private byte facing;
 	public List<BlockPos> mAccessors;
 

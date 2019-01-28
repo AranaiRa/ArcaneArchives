@@ -1,10 +1,12 @@
 package com.aranaira.arcanearchives.tileentities;
 
-import com.aranaira.arcanearchives.init.BlockLibrary;
+import com.aranaira.arcanearchives.util.Size;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
+
+import javax.annotation.Nullable;
 
 @MethodsReturnNonnullByDefault
 public class AccessorTileEntity extends AATileEntity

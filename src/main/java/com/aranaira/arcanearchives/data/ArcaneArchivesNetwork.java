@@ -52,6 +52,15 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		return mCurrentImmanence;
 	}
 
+	public List<ImmanenceTileEntity> FetchTileEntities (Class clazz) {
+		List<ImmanenceTileEntity> temp = new ArrayList<>();
+		getBlocks().forEach((f) -> {
+			if (f.getClass().equals(clazz)) temp.add(f);
+		});
+
+		return temp;
+	}
+
 	public int CountTileEntities(Class clazz)
 	{
 		int tmpCount = 0;
