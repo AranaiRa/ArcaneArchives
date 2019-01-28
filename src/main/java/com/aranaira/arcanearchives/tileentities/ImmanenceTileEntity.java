@@ -47,6 +47,11 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	{
 	}
 
+	public boolean isActive () {
+		// TODO: in a later version, functionality for initial registration delay
+		return true;
+	}
+
 	public UUID GetNetworkID()
 	{
 		return NetworkID;

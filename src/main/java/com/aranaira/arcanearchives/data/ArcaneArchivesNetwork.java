@@ -10,10 +10,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.util.INBTSerializable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
@@ -218,9 +215,16 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		mNetworkTiles.removeIf(ImmanenceTileEntity::isInvalid);
 	}
 
-	public List<ImmanenceTileEntity> getBlocks()
+	public List<ImmanenceTileEntity> getBlocks () {
+		return getBlocks(false);
+	}
+
+	public List<ImmanenceTileEntity> getBlocks(boolean started)
 	{
 		cleanNetworkTiles();
+		if (!started) {
+			return mNetworkTiles.stream().filter(ImmanenceTileEntity::isActive).collect(Collectors.toList());
+		}
 		return mNetworkTiles;
 	}
 
