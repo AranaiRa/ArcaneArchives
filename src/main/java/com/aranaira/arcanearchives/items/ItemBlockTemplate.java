@@ -61,7 +61,11 @@ public class ItemBlockTemplate extends ItemBlock
 			List<ImmanenceTileEntity> tiles = network.FetchTileEntities(blockTemplate.getEntityClass());
 			if(tiles.size() >= placeLimit)
 			{
-				count = (placeLimit != 1) || tiles.size() == 1 && tiles.get(0).getPos() != pos.up();
+				count = true;
+
+				if (placeLimit == 1 && tiles.size() == 1 && tiles.get(0).getPos().equals(pos.up())) {
+					count = false;
+				}
 			}
 
 			if(count)
