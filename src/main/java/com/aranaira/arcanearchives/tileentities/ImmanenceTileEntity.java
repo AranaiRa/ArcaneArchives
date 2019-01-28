@@ -26,7 +26,6 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	public int NetworkPriority; //What order the device's Immanence is paid for
 	public boolean IsDrainPaid; //Whether the device's Immanence needs have been covered
 	public boolean IsProtected; //Whether the device is currently indestructable
-	public String name;
 	public boolean hasBeenAddedToNetwork = false;
 	public int Dimension;
 	public NonNullList<ItemStack> Inventory;
@@ -38,8 +37,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 
 	public ImmanenceTileEntity(String name)
 	{
-		this.name = name;
-		BlockLibrary.TILE_ENTITIES.put(name, this);
+		setName(name);
 		mAccessors = new ArrayList<>();
 		Inventory = NonNullList.create();
 	}

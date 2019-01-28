@@ -6,16 +6,12 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BlockLibrary
 {
 
 	public static final List<Block> BLOCKS = new ArrayList<Block>();
-	public static final Map<String, TileEntity> TILE_ENTITIES = new HashMap<>();
 
 	//Matrices
 	public static final Block MATRIX_CRYSTAL_CORE = new MatrixCrystalCore();
@@ -37,7 +33,7 @@ public class BlockLibrary
 	//Fix for dynamic material base on block its extending.
 	public static final Block ACCESSOR = new AccessorBlock(Material.GLASS);
 
-	//Tile Entities
+	// Tile Entities. TODO: Don't forget to update the RegistryHandler when adding new ones.
 	public static final TileEntity RADIANT_RESONATOR_TILE_ENTITY = new RadiantResonatorTileEntity();
 	public static final TileEntity MATRIX_CORE_TILE_ENTITY = new MatrixCoreTileEntity();
 	public static final TileEntity MATRIX_REPOSITORY_TILE_ENTITY = new MatrixRepositoryTileEntity();
@@ -45,4 +41,5 @@ public class BlockLibrary
 	public static final TileEntity RADIANT_CHEST_TILE_ENTITY = new RadiantChestTileEntity();
 	public static final TileEntity GEMCUTTERS_TABLE_TILE_ENTITY = new GemcuttersTableTileEntity();
 	public static final TileEntity RADIANT_CRAFTING_TABLE_TILE_ENTITY = new RadiantCraftingTableTileEntity();
+	public static final TileEntity MATRIX_STORAGE_TILE_ENTITY = new MatrixStorageTileEntity();
 }

@@ -7,14 +7,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 
 @MethodsReturnNonnullByDefault
-public class AccessorTileEntity extends TileEntity
+public class AccessorTileEntity extends AATileEntity
 {
 	public BlockPos ParentPos;
 
 	public AccessorTileEntity()
 	{
 		super();
-		BlockLibrary.TILE_ENTITIES.put("accessor", this);
+		setName("accessor");
 	}
 
 	@Override

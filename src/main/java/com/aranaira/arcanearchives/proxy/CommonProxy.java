@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.common.AAGuiHandler;
 import com.aranaira.arcanearchives.init.RecipeLibrary;
 import com.aranaira.arcanearchives.packets.AAPacketHandler;
+import com.aranaira.arcanearchives.util.handlers.RegistryHandler;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -24,6 +25,7 @@ public class CommonProxy
 	public void init(FMLInitializationEvent event)
 	{
 		RecipeLibrary.RegisterGCTRecipes();
+		RegistryHandler.registerTileEntities();
 	}
 
 	public void postInit(FMLPostInitializationEvent event)

@@ -27,13 +27,13 @@ import java.util.List;
 @MethodsReturnNonnullByDefault
 public class GemcuttersTableTileEntity extends AATileEntity implements ITickable
 {
-	private String mName = "gemcutterstable";
 	private final IItemHandler mInventory = new GCTItemHandler(54);
 	public List<BlockPos> mAccessors = new ArrayList<>();
 
 	public GemcuttersTableTileEntity()
 	{
-		BlockLibrary.TILE_ENTITIES.put(mName, this);
+		super();
+		setName("gemcutterstable");
 	}
 
 	@Override
@@ -88,12 +88,6 @@ public class GemcuttersTableTileEntity extends AATileEntity implements ITickable
 
 		return compound;
 	}
-
-	public String getName()
-	{
-		return mName;
-	}
-
 
 	@Override
 	public NBTTagCompound getUpdateTag()
