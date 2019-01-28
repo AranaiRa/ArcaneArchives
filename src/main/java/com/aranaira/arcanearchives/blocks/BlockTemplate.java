@@ -138,10 +138,12 @@ public class BlockTemplate extends Block implements IHasModel
 
 		if (facing == null) facing = getFacing(world, pos);
 
-		EnumFacing curOffset = EnumFacing.fromAngle(facing.getHorizontalAngle() - 90);
+		EnumFacing curOffset = EnumFacing.fromAngle(facing.getHorizontalAngle() - ((size.width == size.length) ? 90 : 180));
 
 		BlockPos start = pos;
 		BlockPos stop;
+
+
 
 		if(size.width == 2)
 		{
