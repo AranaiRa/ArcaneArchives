@@ -8,16 +8,15 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class MatrixDistillate extends BlockTemplate
+public class MatrixDistillate extends BlockDirectionalTemplate
 {
-
 	public static final String name = "matrix_distillate";
 
 	public MatrixDistillate()
 	{
 		super(name, Material.GLASS);
 		setLightLevel(16 / 16f);
-		setSize(1, 3, 1);
+		setSize(3, 3, 1);
 	}
 
 	@Override
@@ -39,5 +38,4 @@ public class MatrixDistillate extends BlockTemplate
 	{
 		return false;
 	}
-
 }

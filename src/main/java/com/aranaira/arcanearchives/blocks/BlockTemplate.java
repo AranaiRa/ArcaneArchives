@@ -8,6 +8,7 @@ import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.util.IHasModel;
 import com.aranaira.arcanearchives.util.Placeable;
 import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -33,7 +34,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class BlockTemplate extends BlockDirectional implements IHasModel
+public class BlockTemplate extends Block implements IHasModel
 {
 	private int placeLimit = -1;
 	public Placeable.Size size;
@@ -106,36 +107,6 @@ public class BlockTemplate extends BlockDirectional implements IHasModel
 		ArcaneArchives.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory");
 	}
 
-	@Override
-	public IBlockState getStateForPlacement(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull EnumFacing facing, float hitX, float hitY, float hitZ, int meta, @Nonnull EntityLivingBase placer, @Nonnull EnumHand hand)
-	{
-		return getDefaultState().withProperty(FACING, EnumFacing.getDirectionFromEntityLiving(pos, placer).getOpposite());
-	}
-
-	@Override
-	public int getMetaFromState(IBlockState state)
-	{
-		return state.getValue(FACING).getIndex();
-	}
-
-	@Override
-	@SuppressWarnings("deprecation")
-	public IBlockState getStateFromMeta(int meta)
-	{
-		return getDefaultState().withProperty(FACING, EnumFacing.byIndex(meta & 7));
-	}
-
-	@Override
-	protected BlockStateContainer createBlockState()
-	{
-		if(hasTileEntity(getDefaultState()))
-		{
-			return new ExtendedBlockState(this, new IProperty[]{FACING}, new IUnlistedProperty[]{Properties.AnimationProperty});
-		}
-
-		return new ExtendedBlockState(this, new IProperty[]{FACING}, new IUnlistedProperty[]{});
-	}
-
 	// TODO: Check to see if this is actually necessary
 	@Override
 	public void onBlockPlacedBy(@Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityLivingBase placer, @Nonnull ItemStack stack)
@@ -147,6 +118,17 @@ public class BlockTemplate extends BlockDirectional implements IHasModel
 		}
 
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
+	}
+
+	@Override
+	protected BlockStateContainer createBlockState()
+	{
+		if(hasTileEntity(getDefaultState()))
+		{
+			return new ExtendedBlockState(this, new IProperty[]{}, new IUnlistedProperty[]{Properties.AnimationProperty});
+		}
+
+		return new ExtendedBlockState(this, new IProperty[]{}, new IUnlistedProperty[]{});
 	}
 }
 

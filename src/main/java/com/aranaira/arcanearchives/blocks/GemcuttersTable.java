@@ -24,7 +24,7 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class GemcuttersTable extends BlockTemplate implements ITileEntityProvider
+public class GemcuttersTable extends BlockDirectionalTemplate implements ITileEntityProvider
 {
 	public static final String name = "gemcutters_table";
 
