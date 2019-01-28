@@ -8,7 +8,7 @@ import net.minecraft.world.IBlockAccess;
 
 import javax.annotation.Nonnull;
 
-public class RadiantLantern extends BlockDirectionalTemplate
+public class RadiantLantern extends BlockTemplate
 {
 
 	public static final String NAME = "radiant_lantern";
@@ -19,7 +19,6 @@ public class RadiantLantern extends BlockDirectionalTemplate
 		setLightLevel(16 / 16f);
 		setHardness(0.3f);
 		setHarvestLevel("pickaxe", 0);
-		setSize(2, 2, 4);
 	}
 
 	@Override
