@@ -25,7 +25,7 @@ import java.util.Random;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class MatrixCrystalCore extends BlockTemplate
+public class MatrixCrystalCore extends BlockDirectionalTemplate
 {
 	public static final PropertyDirection FACING = PropertyDirection.create("facing");
 

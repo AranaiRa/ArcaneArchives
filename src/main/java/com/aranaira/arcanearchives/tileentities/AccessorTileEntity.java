@@ -15,6 +15,7 @@ public class AccessorTileEntity extends AATileEntity
 	{
 		super();
 		setName("accessor");
+		setSize(new Size(1, 1, 1));
 	}
 
 	@Override
@@ -29,5 +30,17 @@ public class AccessorTileEntity extends AATileEntity
 	{
 		if(compound.hasKey("pos")) ParentPos = BlockPos.fromLong(compound.getLong("pos"));
 		super.readFromNBT(compound);
+	}
+
+	public BlockPos getParentPos()
+	{
+		return ParentPos;
+	}
+
+	@Nullable
+	public AATileEntity getParent () {
+		TileEntity te = world.getTileEntity(getParentPos());
+		if (te instanceof AATileEntity) return (AATileEntity) te;
+		return null;
 	}
 }
