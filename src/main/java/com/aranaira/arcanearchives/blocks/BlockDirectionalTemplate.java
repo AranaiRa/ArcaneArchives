@@ -14,8 +14,6 @@ import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.common.property.Properties;
 
-import javax.annotation.Nonnull;
-
 public class BlockDirectionalTemplate extends BlockTemplate
 {
 	public static final PropertyDirection FACING = PropertyDirection.create("facing");
@@ -26,9 +24,9 @@ public class BlockDirectionalTemplate extends BlockTemplate
 	}
 
 	@Override
-	public IBlockState getStateForPlacement(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull EnumFacing facing, float hitX, float hitY, float hitZ, int meta, @Nonnull EntityLivingBase placer, @Nonnull EnumHand hand)
+	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand)
 	{
-		return getDefaultState().withProperty(FACING, EnumFacing.getDirectionFromEntityLiving(pos, placer).getOpposite());
+		return getDefaultState().withProperty(FACING, EnumFacing.fromAngle(placer.rotationYaw - 90));
 	}
 
 	@Override
