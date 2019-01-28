@@ -64,7 +64,7 @@ public class ItemBlockTemplate extends ItemBlock
 
 			int count = network.CountTileEntities(blockTemplate.getEntityClass());
 
-			if(count > placeLimit || count == 1 && placeLimit == 1)
+			if(count >= placeLimit || count == 1 && placeLimit == 1)
 			{
 				player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.toomanyplaced", blockTemplate.getPlaceLimit(), blockTemplate.getNameComponent()), true);
 				return EnumActionResult.FAIL;

@@ -14,7 +14,7 @@ public class MatrixCoreTileEntity extends ImmanenceTileEntity
 	public MatrixCoreTileEntity()
 	{
 		super("matrix_core_tile_entity");
-		ImmanenceGeneration = 200;
+		ImmanenceGeneration = Integer.MAX_VALUE;
 	}
 
 	@Override
