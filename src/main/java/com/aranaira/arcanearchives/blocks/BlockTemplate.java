@@ -6,6 +6,7 @@ import com.aranaira.arcanearchives.init.BlockLibrary;
 import com.aranaira.arcanearchives.init.ItemLibrary;
 import com.aranaira.arcanearchives.items.ItemBlockTemplate;
 import com.aranaira.arcanearchives.tileentities.AATileEntity;
+import com.aranaira.arcanearchives.tileentities.AccessorTileEntity;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.util.IHasModel;
 import com.aranaira.arcanearchives.util.NetworkHelper;
@@ -236,8 +237,13 @@ public class BlockTemplate extends Block implements IHasModel
 		{
 			for(BlockPos point : calculateAccessors(world, pos))
 			{
-				ArcaneArchives.logger.info((world.isAirBlock(point)) ? "Air block here" : "Hm, not air?");
-				world.setBlockState(point, Blocks.STONE.getDefaultState());
+				world.setBlockState(point, BlockLibrary.ACCESSOR.fromBlock(this));
+				TileEntity ate = world.getTileEntity(point);
+				if (ate != null) {
+					((AccessorTileEntity) ate).setParent(pos);
+				} else {
+					ArcaneArchives.logger.info("TileEntity not created yet :(");
+				}
 			}
 		}
 	}

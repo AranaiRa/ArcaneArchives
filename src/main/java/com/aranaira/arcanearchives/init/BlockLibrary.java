@@ -39,12 +39,14 @@ public class BlockLibrary
 
 	static
 	{
-		List<Block> blocks = Arrays.asList(MATRIX_CRYSTAL_CORE, MATRIX_REPOSITORY, MATRIX_RESERVOIR, MATRIX_STORAGE, MATRIX_DISTILLATE, STORAGE_RAW_QUARTZ, STORAGE_CUT_QUARTZ, RADIANT_CHEST, RADIANT_CRAFTING_TABLE, RADIANT_LANTERN, RADIANT_RESONATOR, RAW_QUARTZ, DOMINION_CRYSTAL, GEMCUTTERS_TABLE, ACCESSOR);
-		for (int i = 0; i < blocks.size(); i++) {
-			BLOCK_BIMAP.put(i, (BlockTemplate) blocks.get(i));
+		int index = 0;
+		for (BlockTemplate block : Arrays.asList(MATRIX_CRYSTAL_CORE, MATRIX_REPOSITORY, MATRIX_RESERVOIR, MATRIX_STORAGE, MATRIX_DISTILLATE, STORAGE_RAW_QUARTZ, STORAGE_CUT_QUARTZ, RADIANT_CHEST, RADIANT_CRAFTING_TABLE, RADIANT_LANTERN, RADIANT_RESONATOR, RAW_QUARTZ, DOMINION_CRYSTAL, GEMCUTTERS_TABLE, ACCESSOR)) {
+			// We're only indexing what has accessors
+			if (block.hasAccessors()) {
+				BLOCK_BIMAP.put(index, block);
+				index++;
+			}
 		}
-
-		// Accessor is included in the BiMap in the unlikely event that we use it for anything else.
 	}
 
 	// Tile Entities. TODO: Don't forget to update the RegistryHandler when adding new ones.

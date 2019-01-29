@@ -4,11 +4,14 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.BlockLibrary;
 import com.aranaira.arcanearchives.tileentities.AccessorTileEntity;
 import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockFaceShape;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,6 +24,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.property.ExtendedBlockState;
+import net.minecraftforge.common.property.IUnlistedProperty;
+import net.minecraftforge.common.property.Properties;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -31,17 +37,41 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 @SuppressWarnings("deprecation")
 // TODO: Are there issues with deriving from this?
-public class AccessorBlock extends BlockTemplate
+// TODO: Break textures
+// TODO: Breaking parent = children
+// TODO: Breaking child = parent + all other children
+// TODO: WAILA, TUMAT, TOP, etc support
+public class AccessorBlock extends BlockTemplate implements ITileEntityProvider
 {
-	// TODO: I doubt we'll ever exceed the 255 value but it seems worthwhile to have enough space
-	public static final PropertyInteger TYPE = PropertyInteger.create("type", 0, 255);
+	public static final PropertyInteger TYPE = PropertyInteger.create("type", 0, 15);
 
 	public AccessorBlock()
 	{
 		super("accessorblock", Material.ROCK);
 		setTranslationKey("accessorblock");
-		setRegistryName(new ResourceLocation(ArcaneArchives.MODID, "accessorblock"));
 		BlockLibrary.BLOCKS.add(this);
+	}
+
+	public IBlockState fromBlock (BlockTemplate block) {
+		return getDefaultState().withProperty(TYPE, block.getAccessorId());
+	}
+
+	@Override
+	public int getMetaFromState(IBlockState state)
+	{
+		return state.getValue(TYPE);
+	}
+
+	@Override
+	public IBlockState getStateFromMeta(int meta)
+	{
+		return getDefaultState().withProperty(TYPE, meta);
+	}
+
+	@Override
+	protected BlockStateContainer createBlockState()
+	{
+		return new ExtendedBlockState(this, new IProperty[]{TYPE}, new IUnlistedProperty[]{});
 	}
 
 	@Override
@@ -91,12 +121,6 @@ public class AccessorBlock extends BlockTemplate
 	public boolean hasTileEntity()
 	{
 		return true;
-	}
-
-	@Override
-	public TileEntity createTileEntity(World world, IBlockState state)
-	{
-		return new AccessorTileEntity();
 	}
 
 	@Override
@@ -276,6 +300,13 @@ public class AccessorBlock extends BlockTemplate
 	public int getComparatorInputOverride(IBlockState blockState, World worldIn, BlockPos pos)
 	{
 		return getBlock(blockState).getComparatorInputOverride(blockState, worldIn, pos);
+	}
+
+	@Nullable
+	@Override
+	public TileEntity createNewTileEntity(World worldIn, int meta)
+	{
+		return new AccessorTileEntity();
 	}
 }
 
