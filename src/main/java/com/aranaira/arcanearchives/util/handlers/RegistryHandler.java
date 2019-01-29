@@ -83,23 +83,10 @@ public class RegistryHandler
 
 	public static void registerTileEntities()
 	{
-		List<TileEntity> entities = Arrays.asList(
-				BlockLibrary.RADIANT_RESONATOR_TILE_ENTITY,
-				BlockLibrary.MATRIX_CORE_TILE_ENTITY,
-				BlockLibrary.MATRIX_REPOSITORY_TILE_ENTITY,
-				BlockLibrary.ACCESSOR_TILE_ENTITY,
-				BlockLibrary.RADIANT_CHEST_TILE_ENTITY,
-				BlockLibrary.GEMCUTTERS_TABLE_TILE_ENTITY,
-				BlockLibrary.RADIANT_CRAFTING_TABLE_TILE_ENTITY,
-				BlockLibrary.MATRIX_STORAGE_TILE_ENTITY
-		);
-
-		entities.forEach((f) -> {
-			AATileEntity entity = (AATileEntity) f;
-			GameRegistry.registerTileEntity(f.getClass(), new ResourceLocation(ArcaneArchives.MODID, entity.getName()));
-			ArcaneArchives.logger.info(String.format("Registered tile entity: %s", entity.getName()));
-
-		});
+		for (AATileEntity tile : BlockLibrary.TILES) {
+			GameRegistry.registerTileEntity(tile.getClass(), new ResourceLocation(ArcaneArchives.MODID, tile.getName()));
+			ArcaneArchives.logger.info(String.format("Registered tile entity: %s", tile.getName()));
+		}
 	}
 
 	//@SubscribeEvent

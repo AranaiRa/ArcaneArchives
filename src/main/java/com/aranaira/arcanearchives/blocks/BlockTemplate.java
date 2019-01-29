@@ -58,6 +58,18 @@ public class BlockTemplate extends Block implements IHasModel
 		setHarvestLevel("pickaxe", 0);
 	}
 
+	public static BlockTemplate getByType (int type) {
+		return BlockLibrary.BLOCK_BIMAP.get(type);
+	}
+
+	public static int getByBlock (BlockTemplate block) {
+		return BlockLibrary.BLOCK_BIMAP.inverse().get(block);
+	}
+
+	public int getAccessorId () {
+		return BlockLibrary.BLOCK_BIMAP.inverse().get(this);
+	}
+
 	public ITextComponent getNameComponent()
 	{
 		return new TextComponentTranslation(String.format("%s.name", getTranslationKey()));
