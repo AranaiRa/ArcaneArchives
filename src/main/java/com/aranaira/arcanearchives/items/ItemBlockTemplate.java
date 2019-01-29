@@ -63,11 +63,7 @@ public class ItemBlockTemplate extends ItemBlock
 		{
 			boolean safe = true;
 
-			EnumFacing dir = EnumFacing.getDirectionFromEntityLiving(pos, player).getOpposite();
-			if(dir == EnumFacing.UP || dir == EnumFacing.DOWN)
-			{
-				dir = EnumFacing.fromAngle(player.rotationYaw).getOpposite();
-			}
+			EnumFacing dir = EnumFacing.fromAngle(player.rotationYaw - 90);
 
 			for(BlockPos point : blockTemplate.calculateAccessors(world, pos.up(), dir))
 			{
