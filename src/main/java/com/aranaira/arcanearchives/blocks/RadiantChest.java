@@ -57,13 +57,6 @@ public class RadiantChest extends BlockTemplate implements ITileEntityProvider
 	{
 		return true;
 	}
-
-	@Override
-	public boolean hasTileEntity(IBlockState state)
-	{
-		return true;
-	}
-
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{

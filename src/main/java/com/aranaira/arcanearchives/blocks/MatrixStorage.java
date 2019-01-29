@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.common.AAGuiHandler;
 import com.aranaira.arcanearchives.tileentities.MatrixStorageTileEntity;
 import com.aranaira.arcanearchives.util.handlers.AATickHandler;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -16,10 +17,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
-public class MatrixStorage extends BlockTemplate
+public class MatrixStorage extends BlockTemplate implements ITileEntityProvider
 {
 
 	public static final String name = "matrix_storage";
@@ -67,16 +69,9 @@ public class MatrixStorage extends BlockTemplate
 	{
 		return false;
 	}
-
+	@Nullable
 	@Override
-	public boolean hasTileEntity(IBlockState state)
-	{
-		return true;
-	}
-
-	@Override
-	@ParametersAreNonnullByDefault
-	public TileEntity createTileEntity(World world, IBlockState state)
+	public TileEntity createNewTileEntity(World worldIn, int meta)
 	{
 		return new MatrixStorageTileEntity();
 	}

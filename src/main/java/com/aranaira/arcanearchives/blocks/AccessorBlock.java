@@ -41,6 +41,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 // TODO: Breaking parent = children
 // TODO: Breaking child = parent + all other children
 // TODO: WAILA, TUMAT, TOP, etc support
+// TODO: Capabilities
 public class AccessorBlock extends BlockTemplate implements ITileEntityProvider
 {
 	public static final PropertyInteger TYPE = PropertyInteger.create("type", 0, 15);
@@ -115,12 +116,6 @@ public class AccessorBlock extends BlockTemplate implements ITileEntityProvider
 	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
 	{
 		super.onBlockAdded(worldIn, pos, state);
-	}
-
-	@Override
-	public boolean hasTileEntity()
-	{
-		return true;
 	}
 
 	@Override
