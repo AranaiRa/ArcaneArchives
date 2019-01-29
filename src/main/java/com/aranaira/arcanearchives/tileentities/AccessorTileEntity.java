@@ -15,7 +15,9 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @MethodsReturnNonnullByDefault // TODO: Make sure this extending from AATileEntity doesn't cause ongoing issues
@@ -102,5 +104,28 @@ public class AccessorTileEntity extends AATileEntity
 		AATileEntity tile = getParentTile();
 
 		if (tile != null) tile.breakBlock();
+	}
+
+	@Override
+	public void breakBlock(@Nullable IBlockState state, boolean harvest)
+	{
+		super.breakBlock(state, harvest);
+	}
+
+	@Override
+	public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing)
+	{
+		AATileEntity parent = getParentTile();
+		if (parent != null) return parent.hasCapability(capability, facing);
+		return false;
+	}
+
+	@Nullable
+	@Override
+	public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing)
+	{
+		AATileEntity parent = getParentTile();
+		if (parent != null) return parent.getCapability(capability, facing);
+		return null;
 	}
 }

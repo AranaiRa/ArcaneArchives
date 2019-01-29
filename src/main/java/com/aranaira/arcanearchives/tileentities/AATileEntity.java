@@ -9,16 +9,14 @@ import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
 public class AATileEntity extends TileEntity
 {
-	private boolean breaking = false;
-
 	public String name;
 	public Size size;
+	private boolean breaking = false;
 
 	public Size getSize()
 	{
@@ -51,29 +49,34 @@ public class AATileEntity extends TileEntity
 		return EnumFacing.WEST;
 	}
 
-	public void breakBlock () {
+	public void breakBlock()
+	{
 		breakBlock(null, true);
 	}
 
-	public void breakBlock (@Nullable IBlockState state, boolean harvest) {
-		if (breaking) return;
+	public void breakBlock(@Nullable IBlockState state, boolean harvest)
+	{
+		if(breaking) return;
 
 		breaking = true;
 
 		Block block = (state == null) ? world.getBlockState(getPos()).getBlock() : state.getBlock();
 		EnumFacing facing = null;
 
-		if (block instanceof BlockDirectionalTemplate && state != null) {
+		if(block instanceof BlockDirectionalTemplate && state != null)
+		{
 			facing = state.getValue(BlockDirectionalTemplate.FACING);
 		}
-		if (block instanceof BlockTemplate) {
-			for (BlockPos point : ((BlockTemplate) block).calculateAccessors(world, getPos(), facing)) {
+		if(block instanceof BlockTemplate)
+		{
+			for(BlockPos point : ((BlockTemplate) block).calculateAccessors(world, getPos(), facing))
+			{
 				world.removeTileEntity(point);
 				world.setBlockState(point, Blocks.AIR.getDefaultState());
 			}
 
 			// Is this enough to properly break the center?
-			if (harvest)
+			if(harvest)
 			{
 				world.destroyBlock(getPos(), true);
 			}
