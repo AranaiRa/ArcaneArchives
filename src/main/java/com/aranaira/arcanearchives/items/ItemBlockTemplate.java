@@ -39,11 +39,11 @@ public class ItemBlockTemplate extends ItemBlock
 	}
 
 	@Override
-	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand)
 	{
-		if(player instanceof FakePlayer)
+		if(world.isRemote || player instanceof FakePlayer)
 		{
-			// Deal with this someway
+			return EnumActionResult.FAIL;
 		}
 
 		ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID());
@@ -58,17 +58,7 @@ public class ItemBlockTemplate extends ItemBlock
 			// which, in the case of the Matrix, means another cannot be placed. It's always after the
 			// initial placement, though.
 			// TODO: Work out why this is happening and removing this hunk of "patchiness".
-			List<ImmanenceTileEntity> tiles = network.FetchTileEntities(blockTemplate.getEntityClass());
-			if(tiles.size() >= placeLimit)
-			{
-				count = true;
-
-				if (placeLimit == 1 && tiles.size() == 1 && tiles.get(0).getPos().equals(pos.up())) {
-					count = false;
-				}
-			}
-
-			if(count)
+			if(network.CountTileEntities(blockTemplate.getEntityClass()) >= placeLimit)
 			{
 				player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.toomanyplaced", blockTemplate.getPlaceLimit(), blockTemplate.getNameComponent()), true);
 				return EnumActionResult.FAIL;
@@ -103,6 +93,6 @@ public class ItemBlockTemplate extends ItemBlock
 			}
 		}
 
-		return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
+		return super.onItemUseFirst(player, world, pos, side, hitX, hitY, hitZ, hand);
 	}
 }
