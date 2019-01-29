@@ -77,6 +77,12 @@ public class ItemBlockTemplate extends ItemBlock
 
 			for(BlockPos point : blockTemplate.calculateAccessors(world, pos.up(), dir))
 			{
+				if (point.getY() > world.getHeight())
+				{
+					safe = false;
+					break;
+				}
+
 				IBlockState newState = world.getBlockState(point);
 				Block newBlock = newState.getBlock();
 				if(!newBlock.isAir(newState, world, point) && !newBlock.isReplaceable(world, point))
