@@ -14,12 +14,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
 @MethodsReturnNonnullByDefault // TODO: Make sure this extending from AATileEntity doesn't cause ongoing issues
 public class AccessorTileEntity extends AATileEntity
 {
+	private boolean breaking = false;
 	private BlockPos parent = BlockPos.ORIGIN;
 
 	public AccessorTileEntity()
@@ -89,5 +91,16 @@ public class AccessorTileEntity extends AATileEntity
 		Block block = world.getBlockState(getParent()).getBlock();
 		if (block instanceof BlockTemplate) return (BlockTemplate) block;
 		return null;
+	}
+
+	@Override
+	public void breakBlock () {
+		if (breaking) return;
+
+		breaking = true;
+
+		AATileEntity tile = getParentTile();
+
+		if (tile != null) tile.breakBlock();
 	}
 }

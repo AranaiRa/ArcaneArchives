@@ -176,21 +176,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		{
 			count_needed = stack.getMaxStackSize();
 		}
-		for(ImmanenceTileEntity ITE : GetTileEntitiesByPriority())
-		{
-			if(ITE.IsInventory)
-			{
-				ItemStack s;
-				if((s = ITE.RemoveItemCount(stack, count_needed, false)) != null)
-				{
-					to_return.setCount(s.getCount() + to_return.getCount());
-					count_needed -= s.getCount();
-					if(count_needed == 0) return to_return;
-				}
-			}
-		}
-
-		return new ItemStack(Blocks.AIR);
+		return getItemStack(stack, count_needed, to_return);
 	}
 
 	public ItemStack RemoveHalfStackFromNetwork(ItemStack stack)
@@ -202,6 +188,11 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		{
 			count_needed = stack.getMaxStackSize() / 2;
 		}
+		return getItemStack(stack, count_needed, to_return);
+	}
+
+	private ItemStack getItemStack(ItemStack stack, int count_needed, ItemStack to_return)
+	{
 		for(ImmanenceTileEntity ITE : GetTileEntitiesByPriority())
 		{
 			if(ITE.IsInventory)

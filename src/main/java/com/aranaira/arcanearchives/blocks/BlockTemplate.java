@@ -28,6 +28,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
@@ -156,8 +157,6 @@ public class BlockTemplate extends Block implements IHasModel
 		BlockPos start = pos;
 		BlockPos stop;
 
-
-
 		if(size.width == 2)
 		{
 			stop = pos.offset(curOffset, 1);
@@ -188,16 +187,12 @@ public class BlockTemplate extends Block implements IHasModel
 			stop = stop.up();
 		}
 
-		ArcaneArchives.logger.info(String.format("Start: %s, stop: %s", start.toString(), stop.toString()));
-
 		List<BlockPos> output = Lists.newArrayList(BlockPos.getAllInBox(start, stop));
 		output.removeIf((f) -> f.equals(pos));
 
 		return output;
 	}
 
-
-	// TODO: Check to see if this is actually necessary
 	@Override
 	public void onBlockPlacedBy(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityLivingBase placer, @Nonnull ItemStack stack)
 	{
@@ -247,6 +242,21 @@ public class BlockTemplate extends Block implements IHasModel
 			}
 		}
 	}
+
+	@Override
+	public void breakBlock(World world, BlockPos pos, IBlockState state)
+	{
+		if (hasAccessors())
+		{
+			TileEntity te = world.getTileEntity(pos);
+			if(te instanceof AATileEntity)
+			{
+				((AATileEntity) te).breakBlock(state, false);
+			}
+		}
+		super.breakBlock(world, pos, state);
+	}
+
 
 	@Override
 	protected BlockStateContainer createBlockState()

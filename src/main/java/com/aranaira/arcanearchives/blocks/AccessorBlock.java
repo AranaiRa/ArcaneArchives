@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.BlockLibrary;
+import com.aranaira.arcanearchives.tileentities.AATileEntity;
 import com.aranaira.arcanearchives.tileentities.AccessorTileEntity;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.ITileEntityProvider;
@@ -50,11 +51,23 @@ public class AccessorBlock extends BlockTemplate implements ITileEntityProvider
 	{
 		super("accessorblock", Material.ROCK);
 		setTranslationKey("accessorblock");
-		BlockLibrary.BLOCKS.add(this);
 	}
 
 	public IBlockState fromBlock (BlockTemplate block) {
 		return getDefaultState().withProperty(TYPE, block.getAccessorId());
+	}
+
+	@Override
+	// Called before the tile entity itself is removed
+	public void breakBlock(World world, BlockPos pos, IBlockState state)
+	{
+		TileEntity te = world.getTileEntity(pos);
+		if(te instanceof AccessorTileEntity)
+		{
+			((AccessorTileEntity) te).breakBlock();
+		}
+
+		super.breakBlock(world, pos, state);
 	}
 
 	@Override
