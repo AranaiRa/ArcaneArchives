@@ -52,12 +52,6 @@ public class ItemBlockTemplate extends ItemBlock
 
 		if(placeLimit != -1)
 		{
-			boolean count = false;
-
-			// For some weird reason there's a chance the tile entity for this block has already been created
-			// which, in the case of the Matrix, means another cannot be placed. It's always after the
-			// initial placement, though.
-			// TODO: Work out why this is happening and removing this hunk of "patchiness".
 			if(network.CountTileEntities(blockTemplate.getEntityClass()) >= placeLimit)
 			{
 				player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.toomanyplaced", blockTemplate.getPlaceLimit(), blockTemplate.getNameComponent()), true);
