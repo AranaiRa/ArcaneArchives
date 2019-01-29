@@ -17,23 +17,23 @@ public class BlockLibrary
 	public static final List<BlockTemplate> BLOCKS = new ArrayList<>();
 
 	//Matrices
-	public static final BlockTemplate MATRIX_CRYSTAL_CORE = new MatrixCrystalCore();
-	public static final BlockTemplate MATRIX_REPOSITORY = new MatrixRepository();
-	public static final BlockTemplate MATRIX_RESERVOIR = new MatrixReservoir();
-	public static final BlockTemplate MATRIX_STORAGE = new MatrixStorage();
-	public static final BlockTemplate MATRIX_DISTILLATE = new MatrixDistillate(); //TODO: Check if Thaumcraft is loaded
+	public static final MatrixCrystalCore MATRIX_CRYSTAL_CORE = new MatrixCrystalCore();
+	public static final MatrixRepository MATRIX_REPOSITORY = new MatrixRepository();
+	public static final MatrixReservoir MATRIX_RESERVOIR = new MatrixReservoir();
+	public static final MatrixStorage MATRIX_STORAGE = new MatrixStorage();
+	public static final MatrixDistillate MATRIX_DISTILLATE = new MatrixDistillate(); //TODO: Check if Thaumcraft is loaded
 
 	//Blocks
-	public static final BlockTemplate STORAGE_RAW_QUARTZ = new StorageRawQuartz();
-	public static final BlockTemplate STORAGE_CUT_QUARTZ = new StorageCutQuartz();
-	public static final BlockTemplate RADIANT_CHEST = new RadiantChest();
-	public static final BlockTemplate RADIANT_CRAFTING_TABLE = new RadiantCraftingTable();
-	public static final BlockTemplate RADIANT_LANTERN = new RadiantLantern();
-	public static final BlockTemplate RADIANT_RESONATOR = new RadiantResonator();
-	public static final BlockTemplate RAW_QUARTZ = new RawQuartz();
-	public static final BlockTemplate DOMINION_CRYSTAL = new DominionCrystal();
-	public static final BlockTemplate GEMCUTTERS_TABLE = new GemcuttersTable();
-	public static final BlockTemplate ACCESSOR = new AccessorBlock();
+	public static final StorageRawQuartz STORAGE_RAW_QUARTZ = new StorageRawQuartz();
+	public static final StorageCutQuartz STORAGE_CUT_QUARTZ = new StorageCutQuartz();
+	public static final RadiantChest RADIANT_CHEST = new RadiantChest();
+	public static final RadiantCraftingTable RADIANT_CRAFTING_TABLE = new RadiantCraftingTable();
+	public static final RadiantLantern RADIANT_LANTERN = new RadiantLantern();
+	public static final RadiantResonator RADIANT_RESONATOR = new RadiantResonator();
+	public static final RawQuartz RAW_QUARTZ = new RawQuartz();
+	public static final DominionCrystal DOMINION_CRYSTAL = new DominionCrystal();
+	public static final GemcuttersTable GEMCUTTERS_TABLE = new GemcuttersTable();
+	public static final AccessorBlock ACCESSOR = new AccessorBlock();
 
 	public static final BiMap<Integer, BlockTemplate> BLOCK_BIMAP = HashBiMap.create();
 
