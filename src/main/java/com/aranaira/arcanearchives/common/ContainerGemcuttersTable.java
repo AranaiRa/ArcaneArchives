@@ -3,7 +3,7 @@ package com.aranaira.arcanearchives.common;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.packets.AAPacketHandler;
 import com.aranaira.arcanearchives.packets.PacketGCTChangeRecipe;
-import com.aranaira.arcanearchives.tileentities.GemcuttersTableTileEntity;
+import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
@@ -17,10 +17,10 @@ import javax.annotation.Nonnull;
 
 public class ContainerGemcuttersTable extends Container
 {
-	private GemcuttersTableTileEntity mTileEntity;
+	private GemCuttersTableTileEntity mTileEntity;
 	private boolean isServer;
 
-	public ContainerGemcuttersTable(GemcuttersTableTileEntity GCTTE, IInventory playerInventory, boolean serverSide)
+	public ContainerGemcuttersTable(GemCuttersTableTileEntity GCTTE, IInventory playerInventory, boolean serverSide)
 	{
 		isServer = serverSide;
 		//ArcaneArchivesNetwork aanetwork = NetworkHelper.getArcaneArchivesNetwork(playerIn.getUniqueID());

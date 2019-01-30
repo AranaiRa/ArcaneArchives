@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.common.AAGuiHandler;
-import com.aranaira.arcanearchives.tileentities.GemcuttersTableTileEntity;
+import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -24,11 +24,11 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class GemcuttersTable extends BlockDirectionalTemplate implements ITileEntityProvider
+public class GemCuttersTable extends BlockDirectionalTemplate implements ITileEntityProvider
 {
 	public static final String name = "gemcutters_table";
 
-	public GemcuttersTable()
+	public GemCuttersTable()
 	{
 		super(name, Material.IRON);
 		setSize(2, 1, 1);
@@ -96,6 +96,6 @@ public class GemcuttersTable extends BlockDirectionalTemplate implements ITileEn
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta)
 	{
-		return new GemcuttersTableTileEntity();
+		return new GemCuttersTableTileEntity();
 	}
 }

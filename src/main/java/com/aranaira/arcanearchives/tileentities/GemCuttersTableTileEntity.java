@@ -25,12 +25,12 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class GemcuttersTableTileEntity extends AATileEntity implements ITickable
+public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 {
 	private final IItemHandler mInventory = new GCTItemHandler(54);
 	public List<BlockPos> mAccessors = new ArrayList<>();
 
-	public GemcuttersTableTileEntity()
+	public GemCuttersTableTileEntity()
 	{
 		super();
 		setName("gemcutterstable");

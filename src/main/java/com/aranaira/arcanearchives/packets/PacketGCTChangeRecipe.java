@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.packets;
 
 import com.aranaira.arcanearchives.common.GCTItemHandler;
-import com.aranaira.arcanearchives.tileentities.GemcuttersTableTileEntity;
+import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -63,7 +63,7 @@ public class PacketGCTChangeRecipe implements IMessage
 			if(Minecraft.getMinecraft().world.provider.getDimension() == message.mDimension)
 			{
 				TileEntity te = Minecraft.getMinecraft().world.getTileEntity(message.mPos);
-				if(te instanceof GemcuttersTableTileEntity)
+				if(te instanceof GemCuttersTableTileEntity)
 				{
 					// Needs a null check on the capability
 					((GCTItemHandler) te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).setRecipe(message.mRecipeItem);

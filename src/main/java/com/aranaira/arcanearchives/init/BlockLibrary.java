@@ -4,12 +4,8 @@ import com.aranaira.arcanearchives.blocks.*;
 import com.aranaira.arcanearchives.tileentities.*;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.tileentity.TileEntity;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 public class BlockLibrary
 {
@@ -32,7 +28,7 @@ public class BlockLibrary
 	public static final RadiantResonator RADIANT_RESONATOR = new RadiantResonator();
 	public static final RawQuartz RAW_QUARTZ = new RawQuartz();
 	public static final DominionCrystal DOMINION_CRYSTAL = new DominionCrystal();
-	public static final GemcuttersTable GEMCUTTERS_TABLE = new GemcuttersTable();
+	public static final GemCuttersTable GEMCUTTERS_TABLE = new GemCuttersTable();
 	public static final AccessorBlock ACCESSOR = new AccessorBlock();
 
 	public static final BiMap<Integer, BlockTemplate> BLOCK_BIMAP = HashBiMap.create();
@@ -55,7 +51,7 @@ public class BlockLibrary
 	public static final AATileEntity MATRIX_REPOSITORY_TILE_ENTITY = new MatrixRepositoryTileEntity();
 	public static final AATileEntity ACCESSOR_TILE_ENTITY = new AccessorTileEntity();
 	public static final AATileEntity RADIANT_CHEST_TILE_ENTITY = new RadiantChestTileEntity();
-	public static final AATileEntity GEMCUTTERS_TABLE_TILE_ENTITY = new GemcuttersTableTileEntity();
+	public static final AATileEntity GEMCUTTERS_TABLE_TILE_ENTITY = new GemCuttersTableTileEntity();
 	public static final AATileEntity RADIANT_CRAFTING_TABLE_TILE_ENTITY = new RadiantCraftingTableTileEntity();
 	public static final AATileEntity MATRIX_STORAGE_TILE_ENTITY = new MatrixStorageTileEntity();
 

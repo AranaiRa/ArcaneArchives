@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.packets;
 
 import com.aranaira.arcanearchives.common.GCTItemHandler;
-import com.aranaira.arcanearchives.tileentities.GemcuttersTableTileEntity;
+import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
@@ -62,7 +62,7 @@ public class PacketGCTChangePage implements IMessage
 			if(Minecraft.getMinecraft().world.provider.getDimension() == message.mDimension)
 			{
 				TileEntity te = Minecraft.getMinecraft().world.getTileEntity(message.mPos);
-				if(te instanceof GemcuttersTableTileEntity)
+				if(te instanceof GemCuttersTableTileEntity)
 				{
 					// These don't need to be cast because there's an instanceof check previous and the methods are
 					// there by default. There should be null checks on the capability return though TODO
