@@ -34,7 +34,7 @@ tile.matrix_reservoir.name=Reservoir Matrix
 tile.matrix_distillate.name=Distillate Matrix
 
 tile.dominion_crystal.name=Dominion Crystal
-tile.gemcutters_table.name=Gemcutter's Table
+tile.gemcutters_table.name=Gem Cutter's Table
 
 entity.spirit_crown_01.name=Crown Mote
 entity.spirit_crown_02.name=Crown Juve
