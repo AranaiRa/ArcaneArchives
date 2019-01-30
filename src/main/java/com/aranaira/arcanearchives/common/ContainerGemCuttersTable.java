@@ -2,7 +2,6 @@ package com.aranaira.arcanearchives.common;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.packets.AAPacketHandler;
-import com.aranaira.arcanearchives.packets.PacketGCTChangeRecipe;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;
@@ -10,27 +9,25 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
 
-public class ContainerGemcuttersTable extends Container
+public class ContainerGemCuttersTable extends Container
 {
 	private GemCuttersTableTileEntity mTileEntity;
 	private boolean isServer;
+	private IInventory playerInventory;
 
-	public ContainerGemcuttersTable(GemCuttersTableTileEntity GCTTE, IInventory playerInventory, boolean serverSide)
+	public ContainerGemCuttersTable(GemCuttersTableTileEntity GCTTE, IInventory playerInventory, boolean serverSide)
 	{
-		isServer = serverSide;
-		//ArcaneArchivesNetwork aanetwork = NetworkHelper.getArcaneArchivesNetwork(playerIn.getUniqueID());
 		mTileEntity = GCTTE;
-
-		getItemHandler().isServer = serverSide;
-
-		ArcaneArchives.logger.info("^^^^NULL CHECKS");
-		// IntelliJ says this is always false: ArcaneArchives.logger.info("inv null? " + playerInventory.equals(null));
-		// And this too: ArcaneArchives.logger.info("te null? " + GCTTE.equals(null));
+		isServer = serverSide;
+		this.playerInventory = playerInventory;
 
 		//player inventory
 		int i = 35;
@@ -50,27 +47,27 @@ public class ContainerGemcuttersTable extends Container
 			i--;
 		}
 
-		i = 25;
+		IItemHandler GCTTE_IH = GCTTE.getInventory();
+
 		//crafting output - 0
-		this.addSlotToContainer(new SlotItemHandler(GCTTE.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null), i, 95, 18));
-		i--;
+		this.addSlotToContainer(new SlotItemHandler(GCTTE_IH, 18, 95, 18));
 
 		//selector - 1 - 8
-		for(int y = 0; y > -1; y--)
 		{
+			int y = 0;
+
 			for(int x = 6; x > -1; x--)
 			{
-				this.addSlotToContainer(new SlotItemHandler(GCTTE.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null), i, x * 18 + 41, y * 18 + 70));
-				i--;
+				this.addSlotToContainer(new SlotRecipeHandler(x, x * 18 + 41, y * 18 + 70, GCTTE));
 			}
 		}
 
-		//internal storage - 9 - 25
+		i = 17;
 		for(int y = 1; y > -1; y--)
 		{
 			for(int x = 8; x > -1; x--)
 			{
-				this.addSlotToContainer(new SlotItemHandler(GCTTE.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null), 9 * y + x, x * 18 + 23, y * 18 + 105));
+				this.addSlotToContainer(new SlotItemHandler(GCTTE_IH, i, x * 18 + 23, y * 18 + 105));
 				i--;
 			}
 		}
@@ -89,7 +86,6 @@ public class ContainerGemcuttersTable extends Container
 	{
 		ItemStack stack = ItemStack.EMPTY;
 		final Slot slot = inventorySlots.get(index);
-
 
 		if(slot != null && slot.getHasStack())
 		{
@@ -123,7 +119,7 @@ public class ContainerGemcuttersTable extends Container
 	protected boolean mergeItemStack(ItemStack stack, int startIndex, int endIndex, boolean reverseDirection)
 	{
 		boolean temp = super.mergeItemStack(stack, startIndex, endIndex, reverseDirection);
-		this.getItemHandler().updateOutput();
+		this.getTile().updateOutput();
 		return temp;
 	}
 
@@ -137,18 +133,37 @@ public class ContainerGemcuttersTable extends Container
 	@Nonnull
 	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
 	{
-		if(slotId <= 43 && slotId >= 37)
+		if (!player.world.isRemote)
 		{
-			getItemHandler().setRecipe(this.getSlot(slotId).getStack());
-			if(isServer)
-				AAPacketHandler.CHANNEL.sendToAll(new PacketGCTChangeRecipe(mTileEntity.getPos(), mTileEntity.getWorld().provider.getDimension(), this.getSlot(slotId).getStack()));
+			if(slotId <= 43 && slotId >= 37)
+			{
+				this.getTile().setRecipe(getSlot(slotId).getStack());
+				this.getTile().updateOutput();
+			}
 		}
 
-		return super.slotClick(slotId, dragType, clickTypeIn, player);
+		return ItemStack.EMPTY;
 	}
 
-	public GCTItemHandler getItemHandler()
-	{
-		return ((GCTItemHandler) mTileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null));
+	public GemCuttersTableTileEntity getTile () {
+		return mTileEntity;
+	}
+
+	public boolean getRecipeStatus () {
+		GemCuttersTableRecipe recipe = getTile().getRecipe();
+		if (recipe == null) return false;
+
+		NonNullList<ItemStack> raw = NonNullList.create();
+		ItemStackHandler inventory = getTile().getInventory();
+		for (int i = 0; i < inventory.getSlots(); i++)
+		{
+			raw.add(inventory.getStackInSlot(i));
+		}
+
+		for (int i = 0; i < playerInventory.getSizeInventory(); i++) {
+			raw.add(playerInventory.getStackInSlot(i));
+		}
+
+		return recipe.matchesRecipe(raw);
 	}
 }

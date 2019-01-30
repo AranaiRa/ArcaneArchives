@@ -1,6 +1,8 @@
 package com.aranaira.arcanearchives.client;
 
-import com.aranaira.arcanearchives.common.ContainerGemcuttersTable;
+import com.aranaira.arcanearchives.common.ContainerGemCuttersTable;
+import com.aranaira.arcanearchives.common.GemCuttersTableRecipe;
+import com.aranaira.arcanearchives.common.GemCuttersTableRecipeList;
 import com.aranaira.arcanearchives.common.InvisibleButton;
 import com.aranaira.arcanearchives.util.ItemComparison;
 import net.minecraft.client.gui.GuiButton;
@@ -9,6 +11,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
@@ -20,12 +23,12 @@ public class GUIGemCuttersTable extends GuiContainer
 
 	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/gemcutterstable.png");
 
-	ContainerGemcuttersTable mCGCT;
+	ContainerGemCuttersTable mCGCT;
 
 	private InvisibleButton PrevPageButton;
 	private InvisibleButton NextPageButton;
 
-	public GUIGemCuttersTable(EntityPlayer player, ContainerGemcuttersTable container)
+	public GUIGemCuttersTable(EntityPlayer player, ContainerGemCuttersTable container)
 	{
 		super(container);
 		mCGCT = container;
@@ -41,8 +44,8 @@ public class GUIGemCuttersTable extends GuiContainer
 
 		this.buttonList.clear();
 
-		this.PrevPageButton = new InvisibleButton(0, guiLeft + 26, guiTop + 69, 10, 18, null);
-		this.NextPageButton = new InvisibleButton(1, guiLeft + 170, guiTop + 69, 10, 18, null);
+		this.PrevPageButton = new InvisibleButton(0, guiLeft + 26, guiTop + 69, 10, 18, "");
+		this.NextPageButton = new InvisibleButton(1, guiLeft + 170, guiTop + 69, 10, 18, "");
 
 		PrevPageButton.visible = false;
 		NextPageButton.visible = false;
@@ -60,36 +63,41 @@ public class GUIGemCuttersTable extends GuiContainer
 		GlStateManager.enableColorMaterial();
 		this.mc.getTextureManager().bindTexture(GUITextures);
 
-		if(mCGCT.getItemHandler().mRecipe != null)
+		GemCuttersTableRecipe recipe = mCGCT.getTile().getRecipe();
+
+		if(recipe != null)
 		{
-			for(int i = 18; i < 25; i++)
+			ItemStack output = recipe.getOutput();
+
+			for(int i = 0; i < 8; i++)
 			{
-				//ArcaneArchives.logger.info(mCGCT.getItemHandler().mRecipe.getOutput().getDisplayName());
-				if(ItemComparison.AreItemsEqual(mCGCT.getItemHandler().getStackInSlot(i), mCGCT.getItemHandler().mRecipe.getOutput()))
+				int actualIndex = i + mCGCT.getTile().getPage() * 7;
+				if(ItemComparison.AreItemsEqual(GemCuttersTableRecipeList.getOutputByIndex(actualIndex), output))
 				{
-					this.drawTexturedModalRect(guiLeft + (i - 18) * 18 + 39, guiTop + 68, 206, 0, 20, 20);
+					this.drawTexturedModalRect(guiLeft + i * 18 + 39, guiTop + 68, 206, 0, 20, 20);
 					break;
 				}
 			}
 			List<String> mRecipeInput = new ArrayList<>();
-			if(mCGCT.getItemHandler().getRecipeStatus())
+			if(mCGCT.getRecipeStatus())
 			{
-				mRecipeInput.add("�2" + mCGCT.getItemHandler().mRecipe.getOutput().getDisplayName());
+				// Valid
+				mRecipeInput.add(TextFormatting.GREEN + output.getDisplayName());
 			} else
 			{
-				mRecipeInput.add("�4" + mCGCT.getItemHandler().mRecipe.getOutput().getDisplayName());
+				// Invalid
+				mRecipeInput.add(TextFormatting.RED + output.getDisplayName());
 			}
 
-			for(ItemStack item : mCGCT.getItemHandler().mRecipe.getInput())
+			for(ItemStack item : recipe.getInput())
 			{
-				mRecipeInput.add("�2" + item.getDisplayName() + " : " + item.getCount());
+				mRecipeInput.add(TextFormatting.GREEN + item.getDisplayName() + " : " + item.getCount());
 			}
 
 			this.drawHoveringText(mRecipeInput, guiLeft + 206, guiTop);
 		}
 
 		this.renderHoveredToolTip(mouseX, mouseY);
-
 
 	}
 
@@ -114,11 +122,11 @@ public class GUIGemCuttersTable extends GuiContainer
 	{
 		if(button.id == 0)
 		{
-			mCGCT.getItemHandler().prevPage();
+			mCGCT.getTile().previousPage();
 		}
 		if(button.id == 1)
 		{
-			mCGCT.getItemHandler().nextPage();
+			mCGCT.getTile().nextPage();
 		}
 		super.actionPerformed(button);
 	}

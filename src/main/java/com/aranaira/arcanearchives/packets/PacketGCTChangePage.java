@@ -1,11 +1,13 @@
 package com.aranaira.arcanearchives.packets;
 
-import com.aranaira.arcanearchives.common.GCTItemHandler;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -14,38 +16,35 @@ import net.minecraftforge.items.CapabilityItemHandler;
 
 public class PacketGCTChangePage implements IMessage
 {
-
-	private int mDimension;
-	private boolean mNext;
 	private BlockPos mPos;
+	private int page;
+	private int dimension;
 
-	public PacketGCTChangePage()
-	{
+	public PacketGCTChangePage () {
+
 	}
 
-	public PacketGCTChangePage(BlockPos pos, int dimension, boolean next)
+	public PacketGCTChangePage(BlockPos pos, int page, int dimension)
 	{
-		mDimension = dimension;
-		mNext = next;
-		mPos = pos;
+		this.page = page;
+		this.mPos = pos;
+		this.dimension = dimension;
 	}
 
 	@Override
 	public void fromBytes(ByteBuf buf)
 	{
-		mDimension = buf.readInt();
-		mNext = buf.readBoolean();
-		mPos = new BlockPos(buf.readInt(), buf.readInt(), buf.readInt());
+		this.page = buf.readInt();
+		this.mPos = BlockPos.fromLong(buf.readLong());
+		this.dimension = buf.readInt();
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf)
 	{
-		buf.writeInt(mDimension);
-		buf.writeBoolean(mNext);
-		buf.writeInt(mPos.getX());
-		buf.writeInt(mPos.getY());
-		buf.writeInt(mPos.getZ());
+		buf.writeInt(this.page);
+		buf.writeLong(this.mPos.toLong());
+		buf.writeInt(this.dimension);
 	}
 
 	public static class PacketGCTChangePageHandler implements IMessageHandler<PacketGCTChangePage, IMessage>
@@ -59,22 +58,15 @@ public class PacketGCTChangePage implements IMessage
 
 		private void processMessage(PacketGCTChangePage message, MessageContext ctx)
 		{
-			if(Minecraft.getMinecraft().world.provider.getDimension() == message.mDimension)
-			{
-				TileEntity te = Minecraft.getMinecraft().world.getTileEntity(message.mPos);
-				if(te instanceof GemCuttersTableTileEntity)
-				{
-					// These don't need to be cast because there's an instanceof check previous and the methods are
-					// there by default. There should be null checks on the capability return though TODO
-					if(message.mNext)
-						((GCTItemHandler) te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).nextPage();
-					else
-
-						((GCTItemHandler) te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)).prevPage();
-					te.markDirty();
-					te.updateContainingBlockInfo();
+			MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+			if (server != null) {
+				World world = DimensionManager.getWorld(message.dimension);
+				TileEntity te = world.getTileEntity(message.mPos);
+				if (te instanceof GemCuttersTableTileEntity) {
+					((GemCuttersTableTileEntity) te).setPage(message.page);
 				}
 			}
 		}
 	}
 }
+

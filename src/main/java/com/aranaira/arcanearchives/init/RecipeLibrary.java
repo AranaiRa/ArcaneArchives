@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.init;
 
 import com.aranaira.arcanearchives.common.GemCuttersTableRecipe;
+import com.aranaira.arcanearchives.common.GemCuttersTableRecipeList;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -26,19 +27,19 @@ public class RecipeLibrary
 
 	public static void RegisterGCTRecipes()
 	{
-		GemCuttersTableRecipe.addRecipe(COMPONENT_RADIANTDUST_RECIPE);
-		GemCuttersTableRecipe.addRecipe(CUT_RADIANT_QUARTZ_RECIPE);
+		GemCuttersTableRecipeList.addRecipe(COMPONENT_RADIANTDUST_RECIPE);
+		GemCuttersTableRecipeList.addRecipe(CUT_RADIANT_QUARTZ_RECIPE);
 
-		GemCuttersTableRecipe.addRecipe(RADIANT_LANTERN_RECIPE);
+		GemCuttersTableRecipeList.addRecipe(RADIANT_LANTERN_RECIPE);
 
-		GemCuttersTableRecipe.addRecipe(COMPONENT_CONTAINMENTFIELD_RECIPE);
-		GemCuttersTableRecipe.addRecipe(COMPONENT_MATERIALINTERFACE_RECIPE);
-		GemCuttersTableRecipe.addRecipe(COMPONENT_MATRIXBRACE_RECIPE);
-		GemCuttersTableRecipe.addRecipe(COMPONENT_SCINTILLATINGINLAY_RECIPE);
+		GemCuttersTableRecipeList.addRecipe(COMPONENT_CONTAINMENTFIELD_RECIPE);
+		GemCuttersTableRecipeList.addRecipe(COMPONENT_MATERIALINTERFACE_RECIPE);
+		GemCuttersTableRecipeList.addRecipe(COMPONENT_MATRIXBRACE_RECIPE);
+		GemCuttersTableRecipeList.addRecipe(COMPONENT_SCINTILLATINGINLAY_RECIPE);
 
-		GemCuttersTableRecipe.addRecipe(MATRIX_CORE_RECIPE);
-		GemCuttersTableRecipe.addRecipe(MATRIX_STORAGE_RECIPE);
-		GemCuttersTableRecipe.addRecipe(MATRIX_REPOSITORY_RECIPE);
+		GemCuttersTableRecipeList.addRecipe(MATRIX_CORE_RECIPE);
+		GemCuttersTableRecipeList.addRecipe(MATRIX_STORAGE_RECIPE);
+		GemCuttersTableRecipeList.addRecipe(MATRIX_REPOSITORY_RECIPE);
 
 	}
 }

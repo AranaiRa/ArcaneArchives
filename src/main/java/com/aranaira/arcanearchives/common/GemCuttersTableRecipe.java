@@ -2,82 +2,80 @@ package com.aranaira.arcanearchives.common;
 
 import com.aranaira.arcanearchives.util.ItemComparison;
 import com.aranaira.arcanearchives.util.ItemStackConsolidator;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.NonNullList;
+import scala.xml.dtd.EMPTY;
 
+import javax.annotation.Nonnull;
 import java.util.*;
+import java.util.stream.Collectors;
 
 //Referenced Immersive Engineering
 //https://github.com/BluSunrize/ImmersiveEngineering/blob/e3e8cf65dadb2762cb343cc5f31d9bf9a29f2188/src/main/java/blusunrize/immersiveengineering/api/crafting/BlueprintCraftingRecipe.java#L3
 public class GemCuttersTableRecipe
 {
-	private List<ItemStack> mInput;
+	public static final GemCuttersTableRecipe EMPTY = new GemCuttersTableRecipe(new ArrayList<>(), ItemStack.EMPTY);
+
 	private ItemStack mOutput;
+	private List<ItemStack> mInput;
 
-	protected static LinkedHashMap<ItemStack, GemCuttersTableRecipe> RecipeList = new LinkedHashMap<>();
-
-	//protected static List<GemCuttersTableRecipe> RecipeList = new ArrayList();
-
-	//For use of shift clicking items in.
-	public static Set<ItemStack> ValidInputs = new HashSet<>();
-
-	public GemCuttersTableRecipe(List<ItemStack> input, ItemStack output)
+	// Use ItemStack.EMPTY over null.
+	public GemCuttersTableRecipe(@Nonnull List<ItemStack> input, @Nonnull ItemStack output)
 	{
-		mInput = input;
-		mOutput = output;
+		// Make sure we're keeping copies of things
+		// Also, set this up so we can sanitize it later if we need to stet values to one
+		// although I believe a recipe can contain more than one of an item?
+		mInput = input.stream().map(ItemStack::copy).collect(Collectors.toList());
+		mOutput = output.copy();
 	}
 
-	public static void addRecipe(GemCuttersTableRecipe recipe)
-	{
-		//LORE TAG STUFF DOES NOT CURRENTLY WORK : REVISIT IT
-		NBTTagCompound nbt = new NBTTagCompound();
-		NBTTagCompound lore = new NBTTagCompound();
-		lore.setString("Lore", "TEST");
-		NBTTagCompound lore2 = new NBTTagCompound();
-		lore.setString("Lore2", "TEST2");
-		NBTTagList Lore = new NBTTagList();
-		NBTTagCompound Display = new NBTTagCompound();
-		Lore.appendTag(lore);
-		Lore.appendTag(lore2);
-		Display.setTag("Lore", Lore);
-		nbt.setTag("display", Display);
-		recipe.mOutput.setTagCompound(nbt);
-		RecipeList.put(recipe.mOutput, recipe);
-		//recipe.mOutput.getTagCompound().getTagList("Lore", 8);
-
-
-		ValidInputs.addAll(recipe.mInput);
-	}
-
-	public static GemCuttersTableRecipe GetRecipe(ItemStack item)
-	{
-		return RecipeList.get(item);
+	public boolean isEmpty () {
+		return this == EMPTY;
 	}
 
 	public boolean matchesRecipe(NonNullList<ItemStack> raw)
 	{
-		for(ItemStack is : mInput)
+		if (isEmpty()) return false;
+
+		List<ItemStack> available = ItemStackConsolidator.ConsolidatedItems(raw);
+		List<ItemStack> requirements = getInput();
+
+		Set<Integer> usedIndexes = new HashSet<>();
+
+		int foundItems = 0;
+
+		// Praise be to the lord that these requirements are always of single counts
+		for(ItemStack requirement : requirements)
 		{
-			boolean hasFailed = true;
-			int count = is.getCount();
-			NonNullList<ItemStack> query = ItemStackConsolidator.ConsolidateItems(raw);
-			for(int i = 0; i < query.size(); i++)
+			for(int i = 0; i < available.size(); i++)
 			{
-				if(ItemComparison.AreItemsEqual(query.get(i), is))
+				ItemStack avail = available.get(i);
+				if(usedIndexes.contains(i)) continue;
+				if(ItemComparison.AreItemsEqual(requirement, avail))
 				{
-					if(query.get(i).getCount() >= count) hasFailed = false;
+					if(requirement.getCount() == 1)
+					{
+						usedIndexes.add(i);
+					} else
+					{
+						requirement.setCount(requirement.getCount() - 1);
+					}
+					usedIndexes.add(i);
+					foundItems++;
 				}
 			}
-			if(hasFailed) return false;
 		}
-
-		return true;
+		return foundItems == requirements.size();
 	}
-
+	@Nonnull
 	public ItemStack getOutput()
 	{
+		if (mOutput == null || mOutput.isEmpty()) return ItemStack.EMPTY;
+
 		return mOutput.copy();
 	}
 
@@ -86,6 +84,8 @@ public class GemCuttersTableRecipe
 		return new ArrayList<>(mInput);
 	}
 
+	// Clarify
+	// This could use code from the recipe list
 	public void consumeInput(NonNullList<ItemStack> query)
 	{
 		List<ItemStack> temp = new ArrayList<>();
