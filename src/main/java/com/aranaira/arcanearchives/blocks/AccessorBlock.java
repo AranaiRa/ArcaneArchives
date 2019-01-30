@@ -37,12 +37,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 @SuppressWarnings("deprecation")
-// TODO: Are there issues with deriving from this?
 // TODO: Break textures
-// TODO: Breaking parent = children
-// TODO: Breaking child = parent + all other children
 // TODO: WAILA, TUMAT, TOP, etc support
-// TODO: Capabilities
 public class AccessorBlock extends BlockTemplate implements ITileEntityProvider
 {
 	public static final PropertyInteger TYPE = PropertyInteger.create("type", 0, 15);
