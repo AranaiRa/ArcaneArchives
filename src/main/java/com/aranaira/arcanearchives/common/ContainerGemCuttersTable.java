@@ -139,10 +139,11 @@ public class ContainerGemCuttersTable extends Container
 			{
 				this.getTile().setRecipe(getSlot(slotId).getStack());
 				this.getTile().updateOutput();
+				return ItemStack.EMPTY;
 			}
 		}
 
-		return ItemStack.EMPTY;
+		return super.slotClick(slotId, dragType, clickTypeIn, player);
 	}
 
 	public GemCuttersTableTileEntity getTile () {
