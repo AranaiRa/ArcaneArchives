@@ -84,7 +84,7 @@ public class AAGuiHandler implements IGuiHandler
 				return new GUIRadiantChest(new ContainerRadiantChest((RadiantChestTileEntity) te, player.inventory), player.getUniqueID());
 
 			case GEMCUTTERS_TABLE:
-				return new GUIGemcuttersTable(player, new ContainerGemcuttersTable((GemCuttersTableTileEntity) te, player.inventory, false));
+				return new GUIGemCuttersTable(player, new ContainerGemcuttersTable((GemCuttersTableTileEntity) te, player.inventory, false));
 			case RADIANT_CRAFTING_TABLE:
 				return new GUIRadiantCraftingTable(player, new ContainerRadiantCraftingTable((RadiantCraftingTableTileEntity) te, player.inventory));
 			case MATRIX_STORAGE:

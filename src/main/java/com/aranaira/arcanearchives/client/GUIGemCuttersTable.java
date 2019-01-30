@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GUIGemcuttersTable extends GuiContainer
+public class GUIGemCuttersTable extends GuiContainer
 {
 
 	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/gemcutterstable.png");
@@ -25,7 +25,7 @@ public class GUIGemcuttersTable extends GuiContainer
 	private InvisibleButton PrevPageButton;
 	private InvisibleButton NextPageButton;
 
-	public GUIGemcuttersTable(EntityPlayer player, ContainerGemcuttersTable container)
+	public GUIGemCuttersTable(EntityPlayer player, ContainerGemcuttersTable container)
 	{
 		super(container);
 		mCGCT = container;
