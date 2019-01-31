@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 public class ItemStackConsolidator
 {
+	@Deprecated
 	public static NonNullList<ItemStack> ConsolidateItems(NonNullList<ItemStack> list)
 	{
 		NonNullList<ItemStack> tempList = NonNullList.create();
@@ -70,36 +71,4 @@ public class ItemStackConsolidator
 		return output;
 	}
 
-	public static class Workaround<T>
-	{
-		T term;
-		BiFunction<T, T, Boolean> comparator = null;
-
-		Workaround (T term, BiFunction<T, T, Boolean> comparator) {
-			this.term = term;
-			this.comparator = comparator;
-		}
-
-		Workaround(T term)
-		{
-			this.term = term;
-		}
-
-		public boolean matches(T otherTerm)
-		{
-			if (this.comparator != null) {
-				return comparator.apply(this.term, otherTerm);
-			}
-			return this.term == otherTerm;
-		}
-
-		public void update (T newTerm)
-		{
-			this.term = newTerm;
-		}
-
-		public T getTerm () {
-			return this.term;
-		}
-	}
 }
