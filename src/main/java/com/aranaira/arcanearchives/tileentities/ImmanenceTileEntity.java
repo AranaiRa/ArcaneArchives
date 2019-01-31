@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.util.ItemComparison;
-import com.aranaira.arcanearchives.util.NetworkHelper;
+import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.util.Size;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -196,7 +196,10 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 			ItemStack temp = new ItemStack(data);
 			if(!temp.isEmpty()) Inventory.add(temp);
 		}
-		NetworkHelper.getArcaneArchivesNetwork(NetworkID).AddTileToNetwork(this);
+		if (!world.isRemote)
+		{
+			NetworkHelper.getArcaneArchivesNetwork(NetworkID).AddTileToNetwork(this);
+		}
 		super.readFromNBT(compound);
 	}
 

@@ -9,7 +9,7 @@ import com.aranaira.arcanearchives.tileentities.AATileEntity;
 import com.aranaira.arcanearchives.tileentities.AccessorTileEntity;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.util.IHasModel;
-import com.aranaira.arcanearchives.util.NetworkHelper;
+import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.util.Size;
 import com.google.common.collect.Lists;
 import mcp.MethodsReturnNonnullByDefault;
@@ -19,7 +19,6 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -28,7 +27,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
@@ -198,46 +196,51 @@ public class BlockTemplate extends Block implements IHasModel
 	{
 		super.onBlockPlacedBy(world, pos, state, placer, stack);
 
-		TileEntity te = world.getTileEntity(pos);
-		ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(placer.getUniqueID());
-
-		if(te instanceof AATileEntity)
+		if (!world.isRemote)
 		{
-			if(placer instanceof FakePlayer)
+			TileEntity te = world.getTileEntity(pos);
+			ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(placer.getUniqueID());
+
+			if(te instanceof AATileEntity)
 			{
-				ArcaneArchives.logger.error(String.format("TileEntity placed by FakePlayer at %d,%d,%d is invalid and not linked to the network.", pos.getX(), pos.getY(), pos.getZ()));
-			} else
-			{
-				// If it's a network tile entity
-				if(te instanceof ImmanenceTileEntity)
+				if(placer instanceof FakePlayer)
 				{
-					ImmanenceTileEntity ite = (ImmanenceTileEntity) te;
+					ArcaneArchives.logger.error(String.format("TileEntity placed by FakePlayer at %d,%d,%d is invalid and not linked to the network.", pos.getX(), pos.getY(), pos.getZ()));
+				} else
+				{
+					// If it's a network tile entity
+					if(te instanceof ImmanenceTileEntity)
+					{
+						ImmanenceTileEntity ite = (ImmanenceTileEntity) te;
 
-					UUID newId = placer.getUniqueID();
-					ite.SetNetworkID(newId);
-					ite.Dimension = placer.dimension;
+						UUID newId = placer.getUniqueID();
+						ite.SetNetworkID(newId);
+						ite.Dimension = placer.dimension;
 
-					// Any custom handling of name (like the matrix core) should be done here
-					network.AddTileToNetwork(ite);
+						// Any custom handling of name (like the matrix core) should be done here
+						network.AddTileToNetwork(ite);
+					}
+
+					// Store its size
+					AATileEntity ate = (AATileEntity) te;
+					ate.setSize(this.getSize());
 				}
-
-				// Store its size
-				AATileEntity ate = (AATileEntity) te;
-				ate.setSize(this.getSize());
 			}
-		}
 
-		// The item block has already taken care of to make sure that the points can be replaced.
-		if(this.hasAccessors())
-		{
-			for(BlockPos point : calculateAccessors(world, pos))
+			// The item block has already taken care of to make sure that the points can be replaced.
+			if(this.hasAccessors())
 			{
-				world.setBlockState(point, BlockLibrary.ACCESSOR.fromBlock(this));
-				TileEntity ate = world.getTileEntity(point);
-				if (ate != null) {
-					((AccessorTileEntity) ate).setParent(pos);
-				} else {
-					ArcaneArchives.logger.info("TileEntity not created yet :(");
+				for(BlockPos point : calculateAccessors(world, pos))
+				{
+					world.setBlockState(point, BlockLibrary.ACCESSOR.fromBlock(this));
+					TileEntity ate = world.getTileEntity(point);
+					if(ate != null)
+					{
+						((AccessorTileEntity) ate).setParent(pos);
+					} else
+					{
+						ArcaneArchives.logger.info("TileEntity not created yet :(");
+					}
 				}
 			}
 		}
@@ -246,7 +249,7 @@ public class BlockTemplate extends Block implements IHasModel
 	@Override
 	public void breakBlock(World world, BlockPos pos, IBlockState state)
 	{
-		if (hasAccessors())
+		if (hasAccessors() && !world.isRemote)
 		{
 			TileEntity te = world.getTileEntity(pos);
 			if(te instanceof AATileEntity)

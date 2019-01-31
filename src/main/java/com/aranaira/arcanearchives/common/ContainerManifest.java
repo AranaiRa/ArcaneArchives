@@ -1,14 +1,16 @@
 package com.aranaira.arcanearchives.common;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.data.ArcaneArchivesClientNetwork;
 import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
 import com.aranaira.arcanearchives.packets.AAPacketHandler;
 import com.aranaira.arcanearchives.packets.PacketRadiantChestsListResponse;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.ItemComparison;
-import com.aranaira.arcanearchives.util.NetworkHelper;
+import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.util.RadiantChestPlaceHolder;
 import com.aranaira.arcanearchives.util.handlers.AATickHandler;
+import com.google.common.graph.Network;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.ClickType;
@@ -29,8 +31,8 @@ public class ContainerManifest extends Container
 	private List<ItemStack> ItemList = new ArrayList<>();
 	EntityPlayer mPlayer;
 	private boolean mServerSide;
-	private ArcaneArchivesNetwork mAANetwork;
-
+	private ArcaneArchivesClientNetwork mClientNetwork;
+	private ArcaneArchivesNetwork mNetwork;
 
 	public ContainerManifest(EntityPlayer playerIn, boolean ServerSide)
 	{
@@ -38,12 +40,11 @@ public class ContainerManifest extends Container
 		mServerSide = ServerSide;
 
 		mPlayer = playerIn;
-		mAANetwork = NetworkHelper.getArcaneArchivesNetwork(playerIn.getUniqueID());
-		ManifestItemHandler.mInstance.mPlayer = playerIn;
 		if(ServerSide)
 		{
-			mAANetwork.mManifestItemHandler.Clear();
-			networkChests = mAANetwork.GetRadiantChests();
+			mNetwork = NetworkHelper.getArcaneArchivesNetwork(playerIn.getUniqueID());
+			mNetwork.mManifestItemHandler.Clear();
+			networkChests = mNetwork.GetRadiantChests();
 			for(RadiantChestTileEntity networkChest : networkChests)
 			{
 				List<ItemStack> items = new ArrayList<>();
@@ -70,25 +71,26 @@ public class ContainerManifest extends Container
 						if(!added) ItemList.add(s.copy());
 					}
 				}
-				mAANetwork.mManifestItemHandler.mChests.add(new RadiantChestPlaceHolder(networkChest.getPos(), items));
+				mNetwork.mManifestItemHandler.mChests.add(new RadiantChestPlaceHolder(networkChest.getPos(), items));
 			}
 
-			PacketRadiantChestsListResponse message = new PacketRadiantChestsListResponse(playerIn.getUniqueID(), ItemList, mAANetwork.mManifestItemHandler.mChests);
+			PacketRadiantChestsListResponse message = new PacketRadiantChestsListResponse(playerIn.getUniqueID(), ItemList, mNetwork.mManifestItemHandler.mChests);
 
 			AAPacketHandler.CHANNEL.sendTo(message, (EntityPlayerMP) playerIn);
 		}
+
+		mClientNetwork = NetworkHelper.getArcaneArchivesClientNetwork(mPlayer.getUniqueID());
 
 		int i = 0;
 		for(int y = 0; y < 9; y++)
 		{
 			for(int x = 0; x < 9; x++)
 			{
-				this.addSlotToContainer(new SlotItemHandler(ManifestItemHandler.mInstance, i, x * 18 + 12, y * 18 + 30));
+				this.addSlotToContainer(new SlotItemHandler(mClientNetwork.getManifestHandler(), i, x * 18 + 12, y * 18 + 30));
 				i++;
 			}
 		}
 	}
-
 
 	@Override
 	public boolean canInteractWith(@Nonnull EntityPlayer playerIn)
@@ -108,9 +110,10 @@ public class ContainerManifest extends Container
 		if(ManifestItemHandler.mInstance.getStackInSlot(slotId).isEmpty()) return ItemStack.EMPTY;
 
 		// unused: RadiantChestPlaceHolder RCPH = null;
-		for(RadiantChestPlaceHolder rcph : ManifestItemHandler.mInstance.mChests)
+		// TODO: RCPH handler
+		for(RadiantChestPlaceHolder rcph : mClientNetwork.getManifestHandler().mChests)
 		{
-			if(rcph.Contains(ManifestItemHandler.mInstance.getStackInSlot(slotId)))
+			if(rcph.Contains(mClientNetwork.getManifestHandler().getStackInSlot(slotId)))
 			{
 				AATickHandler.GetInstance().mBlockPositions.add(rcph.GetPosition());
 			}

@@ -3,7 +3,8 @@ package com.aranaira.arcanearchives.blocks;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.common.AAGuiHandler;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
-import com.aranaira.arcanearchives.util.NetworkHelper;
+import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.util.DropHelper;
 import com.aranaira.arcanearchives.util.handlers.AATickHandler;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -19,15 +20,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 public class RadiantChest extends BlockTemplate implements ITileEntityProvider
 {
-
 	public static final String NAME = "radiant_chest";
-
 
 	public RadiantChest()
 	{
@@ -60,15 +61,7 @@ public class RadiantChest extends BlockTemplate implements ITileEntityProvider
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
-		for(Vec3d vec : AATickHandler.GetInstance().mBlockPositions)
-		{
-			Vec3d bpos = new Vec3d(pos.getX(), pos.getY(), pos.getZ());
-
-			if(vec.equals(bpos))
-			{
-				AATickHandler.GetInstance().mBlockPositionsToRemove.add(bpos);
-			}
-		}
+		RemoveChestLines(pos);
 
 		playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.RADIANT_CHEST, worldIn, pos.getX(), pos.getY(), pos.getZ());
 
@@ -79,32 +72,34 @@ public class RadiantChest extends BlockTemplate implements ITileEntityProvider
 	@ParametersAreNonnullByDefault
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
 	{
-		TileEntity te = worldIn.getTileEntity(pos);
-		if (!(te instanceof RadiantChestTileEntity)) {
-			// There needs to be an error emssage here TODO
-		} else
+		RemoveChestLines(pos);
+
+		if (!worldIn.isRemote)
 		{
-			NetworkHelper.getArcaneArchivesNetwork(((RadiantChestTileEntity) te).NetworkID).triggerUpdate();
-
-			for(Vec3d vec : AATickHandler.GetInstance().mBlockPositions)
+			TileEntity te = worldIn.getTileEntity(pos);
+			if(te instanceof RadiantChestTileEntity)
 			{
-				Vec3d bpos = new Vec3d(pos.getX(), pos.getY(), pos.getZ());
+				NetworkHelper.getArcaneArchivesNetwork(((RadiantChestTileEntity) te).NetworkID).triggerUpdate();
 
-				if(vec.equals(bpos))
-				{
-					AATickHandler.GetInstance().mBlockPositionsToRemove.add(bpos);
-				}
-			}
-
-			TileEntity tileentity = worldIn.getTileEntity(pos);
-
-			if(tileentity instanceof IInventory)
-			{
-				InventoryHelper.dropInventoryItems(worldIn, pos, (IInventory) tileentity);
-				worldIn.updateComparatorOutputLevel(pos, this);
+				// This is never an IInventory
+				IItemHandler inv = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+				DropHelper.dropInventoryItems(worldIn, pos, inv);
 			}
 		}
 		super.breakBlock(worldIn, pos, state);
+	}
+
+	public static void RemoveChestLines(BlockPos pos)
+	{
+		for(Vec3d vec : AATickHandler.GetInstance().mBlockPositions)
+		{
+			Vec3d bpos = new Vec3d(pos.getX(), pos.getY(), pos.getZ());
+
+			if(vec.equals(bpos))
+			{
+				AATickHandler.GetInstance().mBlockPositionsToRemove.add(bpos);
+			}
+		}
 	}
 
 	@Override

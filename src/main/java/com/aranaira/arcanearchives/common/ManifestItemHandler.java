@@ -1,10 +1,13 @@
 package com.aranaira.arcanearchives.common;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.util.LargeSlotSerialization;
 import com.aranaira.arcanearchives.util.RadiantChestPlaceHolder;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -15,7 +18,7 @@ import java.util.UUID;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class ManifestItemHandler implements IItemHandlerModifiable
+public class ManifestItemHandler implements IItemHandlerModifiable, INBTSerializable<NBTTagCompound>, LargeSlotSerialization
 {
 	public static ManifestItemHandler mInstance = new ManifestItemHandler();
 
@@ -141,5 +144,19 @@ public class ManifestItemHandler implements IItemHandlerModifiable
 				else return -1;
 			}
 		});
+	}
+
+	@Override
+	public NBTTagCompound serializeNBT()
+	{
+		NBTTagCompound res = new NBTTagCompound();
+		res.setTag("inventory", serializeHandler(this));
+		return res;
+	}
+
+	@Override
+	public void deserializeNBT(NBTTagCompound nbt)
+	{
+		deserializeHandler(nbt.getTagList("inventory",10), this);
 	}
 }

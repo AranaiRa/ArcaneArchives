@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.commands;
 
-import com.aranaira.arcanearchives.util.NetworkHelper;
+import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.google.common.collect.Lists;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.command.CommandBase;
@@ -11,7 +11,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
-import scala.actors.threadpool.Arrays;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;

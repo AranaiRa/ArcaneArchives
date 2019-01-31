@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.common.AAItemStackHandler;
 import com.aranaira.arcanearchives.util.LargeItemNBTUtil;
+import com.aranaira.arcanearchives.util.LargeSlotSerialization;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -17,10 +18,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Iterator;
 
-public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITickable
+public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITickable, LargeSlotSerialization
 {
 	public String mName = "";
-	private final IItemHandler mInventory = new AAItemStackHandler(54);
+	private final AAItemStackHandler mInventory = new AAItemStackHandler(54);
 
 	public RadiantChestTileEntity()
 	{
@@ -58,15 +59,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 		// Inventory
 		//CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(mInventory, null, compound.getTagList("inventory", NBT.TAG_COMPOUND));
 		NBTTagList tags = compound.getTagList("inventory", 10);
-		Iterator itr = tags.iterator();
-		int i = 0;
-		while(itr.hasNext())
-		{
-			NBTTagCompound data = (NBTTagCompound) itr.next();
-			ItemStack temp = LargeItemNBTUtil.readFromNBT(data);
-			mInventory.insertItem(i, temp, false);
-			i++;
-		}
+		deserializeHandler(tags, mInventory);
 		mName = compound.getString("name");
 	}
 
@@ -78,14 +71,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 		// Inventory
 		//compound.setTag("inventory", CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(mInventory, null));
 
-		NBTTagList tags = new NBTTagList();
-		for(int i = 0; i < mInventory.getSlots(); i++)
-		{
-			NBTTagCompound data = new NBTTagCompound();
-			LargeItemNBTUtil.writeToNBT(data, mInventory.getStackInSlot(i));
-			tags.appendTag(data);
-		}
-		compound.setTag("inventory", tags);
+		compound.setTag("inventory", serializeHandler(mInventory));
 		compound.setString("name", mName);
 
 		return compound;

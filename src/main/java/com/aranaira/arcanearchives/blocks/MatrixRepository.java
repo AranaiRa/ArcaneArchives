@@ -3,7 +3,6 @@ package com.aranaira.arcanearchives.blocks;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.common.AAGuiHandler;
 import com.aranaira.arcanearchives.tileentities.MatrixRepositoryTileEntity;
-import com.aranaira.arcanearchives.util.handlers.AATickHandler;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -14,7 +13,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
@@ -38,15 +36,7 @@ public class MatrixRepository extends BlockTemplate implements ITileEntityProvid
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
-		for(Vec3d vec : AATickHandler.GetInstance().mBlockPositions)
-		{
-			Vec3d bpos = new Vec3d(pos.getX(), pos.getY(), pos.getZ());
-
-			if(vec.equals(bpos))
-			{
-				AATickHandler.GetInstance().mBlockPositionsToRemove.add(bpos);
-			}
-		}
+		RadiantChest.RemoveChestLines(pos);
 
 		playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.MATRIX_REPOSITORY, worldIn, pos.getX(), pos.getY(), pos.getZ());
 

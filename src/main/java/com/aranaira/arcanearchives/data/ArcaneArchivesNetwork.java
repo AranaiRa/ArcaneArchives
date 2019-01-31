@@ -1,17 +1,24 @@
 package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.common.ManifestItemHandler;
+import com.aranaira.arcanearchives.packets.AAPacketHandler;
+import com.aranaira.arcanearchives.packets.PacketClientNetworkUpdate;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
+import com.aranaira.arcanearchives.util.AACollectors;
 import com.aranaira.arcanearchives.util.ItemComparison;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 {
@@ -20,11 +27,10 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 
 	public HashMap<String, UUID> pendingInvites = new HashMap<>();
 
-
 	private UUID mPlayerId;
 	private AAWorldSavedData mParent;
 
-	private List<ImmanenceTileEntity> mNetworkTiles = new ArrayList<>();
+	private TileList<ImmanenceTileEntity> mNetworkTiles = new TileList<>();
 
 	private int mCurrentImmanence;
 	private boolean mNeedsToBeUpdated = true;
@@ -52,10 +58,12 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		return mCurrentImmanence;
 	}
 
-	public List<ImmanenceTileEntity> FetchTileEntities (Class clazz) {
-		List<ImmanenceTileEntity> temp = new ArrayList<>();
-		getBlocks().forEach((f) -> {
-			if (f.getClass().equals(clazz)) temp.add(f);
+	public TileList<ImmanenceTileEntity> FetchTileEntities(Class clazz)
+	{
+		TileList<ImmanenceTileEntity> temp = new TileList<>();
+		getBlocks().forEach((f) ->
+		{
+			if(f.getClass().equals(clazz)) temp.add(f);
 		});
 
 		return temp;
@@ -156,9 +164,9 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		return to_return;
 	}
 
-	public List<ImmanenceTileEntity> GetTileEntitiesByPriority()
+	public TileList<ImmanenceTileEntity> GetTileEntitiesByPriority()
 	{
-		List<ImmanenceTileEntity> tempList = new ArrayList<>(getBlocks());
+		TileList<ImmanenceTileEntity> tempList = new TileList<>(getBlocks());
 		tempList.sort((o1, o2) ->
 		{
 			if(o1.NetworkPriority > o2.NetworkPriority) return 1;
@@ -215,15 +223,17 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		mNetworkTiles.removeIf(ImmanenceTileEntity::isInvalid);
 	}
 
-	public List<ImmanenceTileEntity> getBlocks () {
+	public TileList<ImmanenceTileEntity> getBlocks()
+	{
 		return getBlocks(false);
 	}
 
-	public List<ImmanenceTileEntity> getBlocks(boolean started)
+	public TileList<ImmanenceTileEntity> getBlocks(boolean started)
 	{
 		cleanNetworkTiles();
-		if (!started) {
-			return mNetworkTiles.stream().filter(ImmanenceTileEntity::isActive).collect(Collectors.toList());
+		if(!started)
+		{
+			return mNetworkTiles.stream().filter(ImmanenceTileEntity::isActive).collect(AACollectors.toTileList());
 		}
 		return mNetworkTiles;
 	}
@@ -237,9 +247,9 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		UpdateImmanence();
 	}
 
-	public List<RadiantChestTileEntity> GetRadiantChests()
+	public TileList<RadiantChestTileEntity> GetRadiantChests()
 	{
-		return mNetworkTiles.stream().filter((k) -> k instanceof RadiantChestTileEntity).map((k) -> (RadiantChestTileEntity) k).collect(Collectors.toList());
+		return mNetworkTiles.stream().filter((k) -> k instanceof RadiantChestTileEntity).map((k) -> (RadiantChestTileEntity) k).collect(AACollectors.toTileList());
 	}
 
 	public void triggerUpdate()
@@ -398,5 +408,50 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		mShared = true;
 		mSharedPlayer = pendingInvites.get(name);
 		return true;
+	}
+
+	public NBTTagCompound buildSynchroniseNBT()
+	{
+		NBTTagCompound tag = new NBTTagCompound();
+		tag.setBoolean("mShared", mShared);
+		tag.setString("mOwnerId", mPlayerId.toString());
+		tag.setInteger("mCurrentImmanence", mCurrentImmanence);
+
+		tag.setTag("manifest", mManifestItemHandler.serializeNBT());
+
+		NBTTagList pendingList = new NBTTagList();
+
+		pendingInvites.forEach((key, value) ->
+		{
+			NBTTagCompound entry = new NBTTagCompound();
+			entry.setString("key", key);
+			entry.setString("value", value.toString());
+			pendingList.appendTag(entry);
+		});
+
+		tag.setTag("pendingInvites", pendingList);
+
+		/*NBTTagList tileList = new NBTTagList();
+
+		for (ImmanenceTileEntity ite : getBlocks()) {
+			NBTTagCompound iteTag = new NBTTagCompound();
+			iteTag.setInteger("dimension", ite.getWorld().provider.getDimension());
+			iteTag.setLong("pos", ite.getPos().toLong());
+			tileList.appendTag(iteTag);
+		}
+
+		tag.setTag("tiles", tileList);*/
+
+		return tag;
+	}
+
+	public void Synchronise () {
+		MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+		if (server != null)
+		{
+			EntityPlayerMP player = server.getPlayerList().getPlayerByUUID(mPlayerId);
+			IMessage packet = new PacketClientNetworkUpdate(buildSynchroniseNBT(), mPlayerId);
+			AAPacketHandler.CHANNEL.sendTo(packet, player);
+		}
 	}
 }

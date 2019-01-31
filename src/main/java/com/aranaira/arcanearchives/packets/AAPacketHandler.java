@@ -21,6 +21,7 @@ public class AAPacketHandler
 		registerPacks(SetRadiantChestName.SetRadiantChestNameHandler.class, SetRadiantChestName.class, Side.SERVER);
 		registerPacks(PacketChangeRadiantChestNameClient.PacketChangeRadiantChestNameClientHandler.class, PacketChangeRadiantChestNameClient.class, Side.CLIENT);
 		registerPacks(PacketGCTChangePage.PacketGCTChangePageHandler.class, PacketGCTChangePage.class, Side.SERVER);
+		registerPacks(PacketClientNetworkUpdate.PacketClientNetworkUpdateHandler.class, PacketClientNetworkUpdate.class, Side.CLIENT);
 	}
 
 	private static <REQ extends IMessage, REPLY extends IMessage> void registerPacks(Class<? extends IMessageHandler<REQ, REPLY>> messageHandler, Class<REQ> requestMessageType, Side side)

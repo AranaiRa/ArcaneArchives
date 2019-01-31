@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.common;
 
-import com.aranaira.arcanearchives.util.NetworkHelper;
+import com.aranaira.arcanearchives.data.NetworkHelper;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -40,7 +40,7 @@ public class NetworkContainer extends Container
 		{
 			for(int x = 8; x > -1; x--)
 			{
-				this.addSlotToContainer(new AASlotItemHandler(networkItemHandler, j, 46 + (18 * x), 33 + (18 * y), player.getUniqueID()));
+				this.addSlotToContainer(new AASlotItemHandler(networkItemHandler, j, 46 + (18 * x), 33 + (18 * y), player));
 				j--;
 			}
 		}
@@ -136,6 +136,7 @@ public class NetworkContainer extends Container
 		super.putStackInSlot(slotID, stack);
 	}
 
+	// TODO: Lots of client crashes
 	@Override
 	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
 	{

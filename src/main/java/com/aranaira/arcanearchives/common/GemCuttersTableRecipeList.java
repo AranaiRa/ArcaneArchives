@@ -1,16 +1,11 @@
 package com.aranaira.arcanearchives.common;
 
-import com.aranaira.arcanearchives.util.Collection;
+import com.aranaira.arcanearchives.util.AACollectors;
 import com.aranaira.arcanearchives.util.ItemComparison;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class GemCuttersTableRecipeList
 {
@@ -31,7 +26,7 @@ public class GemCuttersTableRecipeList
 	// I'm not sure if using order is important
 	public static List<ItemStack> getKeys()
 	{
-		return RecipeList.stream().map(GemCuttersTableRecipe::getOutput).collect(Collection.toImmutableList());
+		return RecipeList.stream().map(GemCuttersTableRecipe::getOutput).collect(AACollectors.toImmutableList());
 	}
 
 	public static ItemStack getOutputByIndex (int index) {
