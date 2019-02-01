@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -10,7 +11,10 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
@@ -28,10 +32,11 @@ public class TomeOfRequisitionItem extends ItemTemplate
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
 	{
-		tooltip.add("�c�oThe recipe for this item is temporary.�r");
-		tooltip.add("�c�oIt will be changed in a later version.�r");
+		tooltip.add(TextFormatting.RED+""+TextFormatting.BOLD+I18n.format("arcanearchives.tooltip.temprecipe1"));
+		tooltip.add(TextFormatting.RED+""+TextFormatting.ITALIC+I18n.format("arcanearchives.tooltip.temprecipe2"));
 	}
 
 	@Override

@@ -61,3 +61,5 @@ arcanearchives.error.invaliditemblock=Tried to place an invalid item with a plac
 
 arcanearchives.tooltip.notimplemented1=UNIMPLEMENTED
 arcanearchives.tooltip.notimplemented2=Using this item may crash your game!
+arcanearchives.tooltip.temprecipe1=The recipe for this item is temporary.
+arcanearchives.tooltip.temprecipe2=It will be changed in a later version.
