@@ -54,6 +54,10 @@ entity.spirit_time_03.name=Time Eld
 
 arcanearchives.text.manifest.endtrackingbutton=End Tracking
 arcanearchives.text.matrixcore.importradiant=Import Radiant Storage
+arcanearchives.text.matrixstorage.immanencelabel=Immanence
+arcanearchives.text.matrixstorage.storagelabel=Total Storage
+arcanearchives.text.matrixrepository.immanencelabel=Immanence
+arcanearchives.text.matrixrepository.storagelabel=Type Storage
 
 arcanearchives.error.toomanyplaced=You can only have %d %s!
 arcanearchives.error.notenoughspace=Not enough space to place the %s!
