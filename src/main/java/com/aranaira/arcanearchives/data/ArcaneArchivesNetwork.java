@@ -7,6 +7,7 @@ import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.AACollectors;
 import com.aranaira.arcanearchives.util.ItemComparison;
+import com.aranaira.arcanearchives.util.TileList;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;

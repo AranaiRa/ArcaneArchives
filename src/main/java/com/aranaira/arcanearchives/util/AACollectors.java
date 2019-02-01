@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.util;
 
-import com.aranaira.arcanearchives.data.TileList;
+import com.aranaira.arcanearchives.tileentities.AATileEntity;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 
 import java.util.*;
@@ -21,7 +21,7 @@ public class AACollectors
 		}, Collections::unmodifiableList);
 	}
 
-    public static <T extends ImmanenceTileEntity>
+    public static <T extends AATileEntity>
     Collector<T, ?, TileList<T>> toTileList() {
         return new GenericCollector<>((Supplier<TileList<T>>) TileList::new, List::add,
                                    (left, right) -> { left.addAll(right); return left; },
