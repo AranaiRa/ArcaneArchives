@@ -54,6 +54,10 @@ entity.spirit_time_03.name=Time Eld
 
 arcanearchives.text.manifest.endtrackingbutton=End Tracking
 arcanearchives.text.matrixcore.importradiant=Import Radiant Storage
+arcanearchives.text.matrixstorage.immanencelabel=Immanence
+arcanearchives.text.matrixstorage.storagelabel=Total Storage
+arcanearchives.text.matrixrepository.immanencelabel=Immanence
+arcanearchives.text.matrixrepository.storagelabel=Type Storage
 
 arcanearchives.error.toomanyplaced=You can only have %d %s!
 arcanearchives.error.notenoughspace=Not enough space to place the %s!
@@ -61,3 +65,5 @@ arcanearchives.error.invaliditemblock=Tried to place an invalid item with a plac
 
 arcanearchives.tooltip.notimplemented1=UNIMPLEMENTED
 arcanearchives.tooltip.notimplemented2=Using this item may crash your game!
+arcanearchives.tooltip.temprecipe1=The recipe for this item is temporary.
+arcanearchives.tooltip.temprecipe2=It will be changed in a later version.
