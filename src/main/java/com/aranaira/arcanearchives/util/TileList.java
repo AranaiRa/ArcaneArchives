@@ -5,18 +5,21 @@ import com.google.common.collect.Iterators;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Spliterator;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
-public class TileList<T extends AATileEntity> implements Iterable<T>, Collection<T>
+public class TileList<T extends AATileEntity> implements Iterable<T>, List<T>
 {
-	private Collection<T> reference;
+	private List<T> reference;
 
-	public TileList(Collection<T> reference)
+	public TileList () {
+		this.reference = new ArrayList<>();
+	}
+
+	public TileList(List<T> reference)
 	{
 		this.reference = reference;
 	}
@@ -40,6 +43,16 @@ public class TileList<T extends AATileEntity> implements Iterable<T>, Collection
 	{
 		return Iterators.filter(iterator(), (f) -> f != null && f.getWorld().isBlockLoaded(f.getPos()));
 	}
+
+	public Iterator<T> filterClass (Class<?> clazz) {
+		return Iterators.filter(iterator(), (f) -> f != null && f.getClass().equals(clazz));
+	}
+
+	public void cleanInvalid () {
+		this.reference.removeIf((f) -> f != null && f.isInvalid());
+	}
+
+	// Overrides -> Overrides -> OVERRIDES!
 
 	@Override
 	public int size()
@@ -65,7 +78,6 @@ public class TileList<T extends AATileEntity> implements Iterable<T>, Collection
 		return this.reference.toArray();
 	}
 
-	@Override // TODO: Cheeck
 	public <T1> T1[] toArray(T1[] a)
 	{
 		return this.reference.toArray(a);
@@ -96,6 +108,12 @@ public class TileList<T extends AATileEntity> implements Iterable<T>, Collection
 	}
 
 	@Override
+	public boolean addAll(int index, Collection<? extends T> c)
+	{
+		return this.reference.addAll(index, c);
+	}
+
+	@Override
 	public boolean removeAll(Collection<?> c)
 	{
 		return this.reference.removeAll(c);
@@ -114,9 +132,75 @@ public class TileList<T extends AATileEntity> implements Iterable<T>, Collection
 	}
 
 	@Override
+	public void replaceAll(UnaryOperator<T> operator)
+	{
+		this.reference.replaceAll(operator);
+	}
+
+	@Override
+	public void sort(Comparator<? super T> c)
+	{
+		this.reference.sort(c);
+	}
+
+	@Override
 	public void clear()
 	{
 		this.reference.clear();
+	}
+
+	@Override
+	public T get(int index)
+	{
+		return this.reference.get(index);
+	}
+
+	@Override
+	public T set(int index, T element)
+	{
+		return this.reference.set(index, element);
+	}
+
+	@Override
+	public void add(int index, T element)
+	{
+		this.reference.add(index, element);
+	}
+
+	@Override
+	public T remove(int index)
+	{
+		return this.reference.remove(index);
+	}
+
+	@Override
+	public int indexOf(Object o)
+	{
+		return this.reference.indexOf(o);
+	}
+
+	@Override
+	public int lastIndexOf(Object o)
+	{
+		return this.reference.lastIndexOf(o);
+	}
+
+	@Override
+	public ListIterator<T> listIterator()
+	{
+		return this.reference.listIterator();
+	}
+
+	@Override
+	public ListIterator<T> listIterator(int index)
+	{
+		return this.reference.listIterator(index);
+	}
+
+	@Override
+	public TileList<T> subList(int fromIndex, int toIndex)
+	{
+		return new TileList<>(this.reference.subList(fromIndex, toIndex));
 	}
 
 	@Override

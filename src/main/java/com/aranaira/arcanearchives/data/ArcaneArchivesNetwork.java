@@ -31,7 +31,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	private UUID mPlayerId;
 	private AAWorldSavedData mParent;
 
-	private TileList<ImmanenceTileEntity> mNetworkTiles = new TileList<>();
+	private TileList<ImmanenceTileEntity> mNetworkTiles = new TileList<>(new ArrayList<>());
 
 	private int mCurrentImmanence;
 	private boolean mNeedsToBeUpdated = true;
@@ -59,15 +59,10 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		return mCurrentImmanence;
 	}
 
-	public TileList<ImmanenceTileEntity> FetchTileEntities(Class clazz)
+	public Iterator<ImmanenceTileEntity> FetchTileEntities(Class clazz)
 	{
-		TileList<ImmanenceTileEntity> temp = new TileList<>();
-		getBlocks().forEach((f) ->
-		{
-			if(f.getClass().equals(clazz)) temp.add(f);
-		});
-
-		return temp;
+		cleanNetworkTiles();
+		return mNetworkTiles.filterClass(clazz);
 	}
 
 	public int CountTileEntities(Class clazz)
@@ -432,21 +427,15 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 
 		tag.setTag("pendingInvites", pendingList);
 
-		/*NBTTagList tileList = new NBTTagList();
-
-		for (ImmanenceTileEntity ite : getBlocks()) {
-			NBTTagCompound iteTag = new NBTTagCompound();
-			iteTag.setInteger("dimension", ite.getWorld().provider.getDimension());
-			iteTag.setLong("pos", ite.getPos().toLong());
-			tileList.appendTag(iteTag);
-		}
-
-		tag.setTag("tiles", tileList);*/
-
 		return tag;
 	}
 
-	public void Synchronise () {
+	public void Synchronise ()
+	{
+		SynchroniseData();
+	}
+
+	public void SynchroniseData () {
 		MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
 		if (server != null)
 		{
