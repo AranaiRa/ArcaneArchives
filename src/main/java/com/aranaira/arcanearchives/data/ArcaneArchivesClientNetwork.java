@@ -24,7 +24,6 @@ public class ArcaneArchivesClientNetwork
 	private boolean mShared = false;
 	private HashMap<String, UUID> pendingInvites = new HashMap<>();
 	private UUID mOwnerId = null;
-	private List<Tuple<Integer, BlockPos>> mNetworkTiles = new ArrayList<>();
 	private int mCurrentImmanence = 0;
 	private ManifestItemHandler mManifestHandler = null;
 

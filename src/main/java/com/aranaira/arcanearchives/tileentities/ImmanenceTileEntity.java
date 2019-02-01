@@ -46,6 +46,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	{
 	}
 
+	@Override
 	public boolean isActive () {
 		// TODO: in a later version, functionality for initial registration delay
 		return true;

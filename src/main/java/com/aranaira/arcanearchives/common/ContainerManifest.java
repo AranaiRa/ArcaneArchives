@@ -5,6 +5,7 @@ import com.aranaira.arcanearchives.data.ArcaneArchivesClientNetwork;
 import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
 import com.aranaira.arcanearchives.packets.AAPacketHandler;
 import com.aranaira.arcanearchives.packets.PacketRadiantChestsListResponse;
+import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.ItemComparison;
 import com.aranaira.arcanearchives.data.NetworkHelper;
@@ -42,11 +43,13 @@ public class ContainerManifest extends Container
 		mPlayer = playerIn;
 		if(ServerSide)
 		{
+			// This all needs to be done client side
 			mNetwork = NetworkHelper.getArcaneArchivesNetwork(playerIn.getUniqueID());
 			mNetwork.mManifestItemHandler.Clear();
-			networkChests = mNetwork.GetRadiantChests();
-			for(RadiantChestTileEntity networkChest : networkChests)
+			for(ImmanenceTileEntity ite : mNetwork.GetRadiantChests())
 			{
+				RadiantChestTileEntity networkChest = (RadiantChestTileEntity) ite;
+
 				List<ItemStack> items = new ArrayList<>();
 				IItemHandler handler = networkChest.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 				if (handler == null) throw new RuntimeException(); // TODO: Handle this
@@ -71,6 +74,7 @@ public class ContainerManifest extends Container
 						if(!added) ItemList.add(s.copy());
 					}
 				}
+				// This doesn't work
 				mNetwork.mManifestItemHandler.mChests.add(new RadiantChestPlaceHolder(networkChest.getPos(), items));
 			}
 

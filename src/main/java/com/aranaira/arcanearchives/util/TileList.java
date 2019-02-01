@@ -5,9 +5,11 @@ import com.google.common.collect.Iterators;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
@@ -24,32 +26,58 @@ public class TileList<T extends AATileEntity> implements Iterable<T>, List<T>
 		this.reference = reference;
 	}
 
-	public Iterator<T> filterDimension(int dimension)
-	{
-		return Iterators.filter(iterator(), (f) -> f != null && f.getWorld().provider.getDimension() == dimension);
+	public TileList(Supplier<List<T>> supplier) {
+		this.reference = supplier.get();
 	}
 
-	public Iterator<T> filterDimension(World world)
+	public TileListIterable<T> filterDimension(int dimension)
+	{
+		return new TileListIterable<>(Iterators.filter(iterator(), (f) -> f != null && f.getWorld().provider.getDimension() == dimension));
+	}
+
+	public TileListIterable<T> filterDimension(World world)
 	{
 		return filterDimension(world.provider.getDimension());
 	}
 
-	public Iterator<T> filterDimension(Entity entity)
+	public TileListIterable<T> filterDimension(Entity entity)
 	{
 		return filterDimension(entity.dimension);
 	}
 
-	public Iterator<T> filterLoaded()
+	public TileListIterable<T> filterLoaded()
 	{
-		return Iterators.filter(iterator(), (f) -> f != null && f.getWorld().isBlockLoaded(f.getPos()));
+		return new TileListIterable<>(Iterators.filter(iterator(), (f) -> f != null && f.getWorld().isBlockLoaded(f.getPos())));
 	}
 
-	public Iterator<T> filterClass (Class<?> clazz) {
-		return Iterators.filter(iterator(), (f) -> f != null && f.getClass().equals(clazz));
+	public TileListIterable<T> filterActive() {
+		return new TileListIterable<>(Iterators.filter(iterator(), (f) -> f != null && f.isActive()));
 	}
 
-	public void cleanInvalid () {
+	public TileListIterable<T> filterClass (Class<? extends AATileEntity> clazz) {
+		return new TileListIterable<>(Iterators.filter(iterator(), (f) -> f != null && f.getClass().equals(clazz)));
+	}
+
+	public TileList<T> cleanInvalid () {
 		this.reference.removeIf((f) -> f != null && f.isInvalid());
+		return this;
+	}
+
+	public TileList<T> sorted (Comparator<? super T> c, Supplier<? extends List<T>> supplier) {
+		TileList<T> copy = new TileList<>(supplier.get());
+		copy.addAll(this.reference);
+		copy.sort(c);
+		return copy;
+	}
+
+	@Override
+	public Iterator<T> iterator()
+	{
+		return reference.iterator();
+	}
+
+	public TileListIterable<T> iterable () {
+		return new TileListIterable<>(iterator());
 	}
 
 	// Overrides -> Overrides -> OVERRIDES!
@@ -204,12 +232,6 @@ public class TileList<T extends AATileEntity> implements Iterable<T>, List<T>
 	}
 
 	@Override
-	public Iterator<T> iterator()
-	{
-		return reference.iterator();
-	}
-
-	@Override
 	public void forEach(Consumer<? super T> action)
 	{
 		reference.forEach(action);
@@ -231,5 +253,21 @@ public class TileList<T extends AATileEntity> implements Iterable<T>, List<T>
 	public Stream<T> parallelStream()
 	{
 		return this.reference.parallelStream();
+	}
+
+	public static class TileListIterable<T> implements Iterable<T> {
+
+		Iterator<T> iter;
+
+		TileListIterable (Iterator<T> iter) {
+			this.iter = iter;
+		}
+
+		@Override
+		@Nonnull
+		public Iterator<T> iterator()
+		{
+			return this.iter;
+		}
 	}
 }

@@ -45,7 +45,7 @@ public class BlockTemplate extends Block implements IHasModel
 {
 	private int placeLimit = -1;
 	public Size size;
-	private Class entityClass;
+	private Class<? extends AATileEntity> entityClass;
 
 	public BlockTemplate(String name, Material materialIn)
 	{
@@ -75,12 +75,12 @@ public class BlockTemplate extends Block implements IHasModel
 		return new TextComponentTranslation(String.format("%s.name", getTranslationKey()));
 	}
 
-	public Class getEntityClass()
+	public Class<? extends AATileEntity> getEntityClass()
 	{
 		return this.entityClass;
 	}
 
-	void setEntityClass(Class clazz)
+	void setEntityClass(Class<? extends AATileEntity> clazz)
 	{
 		this.entityClass = clazz;
 	}

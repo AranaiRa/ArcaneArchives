@@ -1,9 +1,11 @@
 package com.aranaira.arcanearchives.data;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.AAWorldSavedData;
 import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -17,9 +19,14 @@ public class NetworkHelper
 	// TODO: This needs to be cleared whenever the player enters a new world
 	private static Map<UUID, ArcaneArchivesClientNetwork> CLIENT_MAP = new HashMap<>();
 
-	@SideOnly(Side.SERVER)
 	public static ArcaneArchivesNetwork getArcaneArchivesNetwork(UUID uuid)
 	{
+		FMLCommonHandler handler = FMLCommonHandler.instance();
+		Side effective = handler.getEffectiveSide();
+		Side delegate = handler.getSide();
+
+		ArcaneArchives.logger.info(String.format("getArcaneArchivesNetwork(%s) was called. Effective side |%s|, delegate side |%s|", uuid.toString(), (effective.isServer()) ? "SERVER" : "CLIENT", (delegate.isServer()) ? "SERVER" : "CLIENT"));
+
 		World world = DimensionManager.getWorld(0);
 		if(world == null || world.getMapStorage() == null)
 		{
@@ -37,7 +44,6 @@ public class NetworkHelper
 		return saveData.getNetwork(uuid);
 	}
 
-	@SideOnly(Side.SERVER)
 	public static ArcaneArchivesNetwork getArcaneArchivesNetwork(String uuid)
 	{
 		return getArcaneArchivesNetwork(UUID.fromString(uuid));
