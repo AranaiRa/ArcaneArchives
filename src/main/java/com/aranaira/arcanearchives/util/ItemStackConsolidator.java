@@ -1,14 +1,13 @@
 package com.aranaira.arcanearchives.util;
 
+import com.aranaira.arcanearchives.util.types.Tuple;
+import com.google.common.collect.Lists;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class ItemStackConsolidator
@@ -71,4 +70,40 @@ public class ItemStackConsolidator
 		return output;
 	}
 
+		public static List<Tuple<ItemStack, List<BlockPos>>> TupleConsolidatedItems (List<Tuple<ItemStack, BlockPos>> list) {
+		List<Tuple<ItemStack, BlockPos>> input = new ArrayList<>(list);
+		List<Tuple<ItemStack, List<BlockPos>>> output = new ArrayList<>();
+
+		if (input.size() == 0) return output;
+
+		while (input.size() != 0) {
+			Tuple<ItemStack, BlockPos> tup = input.remove(0);
+			Tuple<ItemStack, List<BlockPos>> next = new Tuple<>(tup.val1, Lists.newArrayList(tup.val2));
+			final ItemStack copy = tup.val1.copy();
+
+			List<Tuple<ItemStack, BlockPos>> matches = input.stream().filter((i) -> ItemComparison.AreItemsEqual(copy, i.val1)).collect(Collectors.toList());
+
+			if (matches.size() == 0) {
+				output.add(next);
+				continue;
+			}
+
+			input.removeAll(matches);
+
+			for (Tuple<ItemStack, BlockPos> match : matches) {
+				if ((next.val1.getCount()+match.val1.getCount()) > next.val1.getMaxStackSize()) {
+					output.add(next);
+					next = new Tuple<>(match.val1, Lists.newArrayList(match.val2));
+					continue;
+				}
+
+				next.val1.setCount(next.val1.getCount() + match.val1.getCount());
+				next.val2.add(match.val2);
+			}
+
+			output.add(next);
+		}
+
+		return output;
+	}
 }

@@ -15,13 +15,13 @@ public class AAPacketHandler
 
 	public static void registerPackets()
 	{
-
 		registerPacks(PacketNetworkInteraction.PacketNetworkInteractionHandler.class, PacketNetworkInteraction.class, Side.SERVER);
 		registerPacks(PacketRadiantChestsListResponse.PacketRadiantChestsListResponseHandler.class, PacketRadiantChestsListResponse.class, Side.CLIENT);
 		registerPacks(SetRadiantChestName.SetRadiantChestNameHandler.class, SetRadiantChestName.class, Side.SERVER);
 		registerPacks(PacketChangeRadiantChestNameClient.PacketChangeRadiantChestNameClientHandler.class, PacketChangeRadiantChestNameClient.class, Side.CLIENT);
 		registerPacks(PacketGCTChangePage.PacketGCTChangePageHandler.class, PacketGCTChangePage.class, Side.SERVER);
-		registerPacks(PacketClientNetworkUpdate.PacketClientNetworkUpdateHandler.class, PacketClientNetworkUpdate.class, Side.CLIENT);
+		registerPacks(PacketSynchronise.PacketSynchroniseResponse.PacketSynchroniseResponseHandler.class, PacketSynchronise.PacketSynchroniseResponse.class, Side.CLIENT);
+		registerPacks(PacketSynchronise.PacketSynchroniseRequest.PacketSynchroniseRequestHandler.class, PacketSynchronise.PacketSynchroniseRequest.class, Side.SERVER);
 	}
 
 	private static <REQ extends IMessage, REPLY extends IMessage> void registerPacks(Class<? extends IMessageHandler<REQ, REPLY>> messageHandler, Class<REQ> requestMessageType, Side side)

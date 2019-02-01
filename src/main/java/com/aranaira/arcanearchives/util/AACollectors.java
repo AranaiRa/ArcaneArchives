@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.util;
 
 import com.aranaira.arcanearchives.tileentities.AATileEntity;
-import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
+import com.aranaira.arcanearchives.util.types.TileList;
 
 import java.util.*;
 import java.util.function.BiConsumer;

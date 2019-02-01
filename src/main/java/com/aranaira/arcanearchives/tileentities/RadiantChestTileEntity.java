@@ -112,6 +112,10 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 		return false;
 	}
 
+	public AAItemStackHandler getInventory () {
+		return mInventory;
+	}
+
 	@Override
 	@Nonnull
 	public NBTTagCompound getUpdateTag()

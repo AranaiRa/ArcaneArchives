@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.util;
 
+import com.aranaira.arcanearchives.util.types.SlotIterable;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;

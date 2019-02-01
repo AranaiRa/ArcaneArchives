@@ -2,26 +2,31 @@ package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.common.ManifestItemHandler;
 import com.aranaira.arcanearchives.packets.AAPacketHandler;
-import com.aranaira.arcanearchives.packets.PacketClientNetworkUpdate;
+import com.aranaira.arcanearchives.packets.PacketSynchronise;
 import com.aranaira.arcanearchives.tileentities.AATileEntity;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
-import com.aranaira.arcanearchives.util.AACollectors;
-import com.aranaira.arcanearchives.util.ItemComparison;
-import com.aranaira.arcanearchives.util.TileList;
+import com.aranaira.arcanearchives.util.*;
+import com.aranaira.arcanearchives.util.types.SlotIterable;
+import com.aranaira.arcanearchives.util.types.TileList;
+import com.aranaira.arcanearchives.util.types.Tuple;
 import com.google.common.annotations.Beta;
+import com.google.common.collect.Lists;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagLong;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 import java.util.*;
+import java.util.List;
 
 public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 {
@@ -257,6 +262,10 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		return mNetworkTiles.filterClass(RadiantChestTileEntity.class);
 	}
 
+	public TileList.TileListIterable<ImmanenceTileEntity> GetLoadedRadiantChests () {
+		return mNetworkTiles.filterDynamic((f) -> f != null && f.getClass().equals(RadiantChestTileEntity.class) && f.getWorld().isBlockLoaded(f.getPos()));
+	}
+
 	public void triggerUpdate()
 	{
 		mNetworkTiles.cleanInvalid();
@@ -417,14 +426,64 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		return true;
 	}
 
-	public NBTTagCompound buildSynchroniseNBT()
+	public NBTTagCompound buildSynchroniseManifest () {
+		Map<Integer, List<Tuple<ItemStack, BlockPos>>> map = new HashMap<>();
+
+		// Step one: iterate loaded chests and get item stacks.
+
+		for (ImmanenceTileEntity ite : GetLoadedRadiantChests()) {
+			RadiantChestTileEntity chest = (RadiantChestTileEntity) ite;
+			int dimId = chest.getWorld().provider.getDimension();
+			for (ItemStack is : new SlotIterable(chest.getInventory(), true)) {
+				if (!map.containsKey(dimId)) {
+					map.put(dimId, new ArrayList<>());
+				}
+
+				map.get(dimId).add(new Tuple<>(is.copy(), chest.getPos()));
+			}
+		}
+
+		List<Integer> dimensions = Lists.newArrayList(map.keySet());
+
+		NBTTagList manifest = new NBTTagList();
+
+		for (int dimension : dimensions) {
+			// Step 2: electric beargaloo
+			List<Tuple<ItemStack, List<BlockPos>>> consolidated = ItemStackConsolidator.TupleConsolidatedItems(map.get(dimension));
+
+			NBTTagList dimensionList = new NBTTagList();
+
+			for (Tuple<ItemStack, List<BlockPos>> entry : consolidated) {
+				NBTTagCompound itemEntry = new NBTTagCompound();
+				LargeItemNBTUtil.writeToNBT(itemEntry, entry.val1);
+				NBTTagList positions = new NBTTagList();
+				for (BlockPos pos : entry.val2) {
+					positions.appendTag(new NBTTagLong(pos.toLong()));
+				}
+				itemEntry.setTag("positions", positions);
+				dimensionList.appendTag(itemEntry);
+			}
+
+			NBTTagCompound dimensionEntry = new NBTTagCompound();
+			dimensionEntry.setInteger("dimension", dimension);
+			dimensionEntry.setTag("items", dimensionList);
+			manifest.appendTag(dimensionEntry);
+		}
+
+		NBTTagCompound result = new NBTTagCompound();
+		result.setTag("manifest", manifest);
+
+		return result;
+	}
+
+	public NBTTagCompound buildSynchroniseData()
 	{
 		NBTTagCompound tag = new NBTTagCompound();
 		tag.setBoolean("mShared", mShared);
 		tag.setString("mOwnerId", mPlayerId.toString());
 		tag.setInteger("mCurrentImmanence", mCurrentImmanence);
-
-		tag.setTag("manifest", mManifestItemHandler.serializeNBT());
+		tag.setInteger("mTotalSpace", GetTotalSpace());
+		tag.setInteger("mItemCount", GetItemCount());
 
 		NBTTagList pendingList = new NBTTagList();
 
@@ -451,7 +510,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		if (server != null)
 		{
 			EntityPlayerMP player = server.getPlayerList().getPlayerByUUID(mPlayerId);
-			IMessage packet = new PacketClientNetworkUpdate(buildSynchroniseNBT(), mPlayerId);
+			IMessage packet = new PacketSynchronise.PacketSynchroniseResponse(PacketSynchronise.SynchroniseType.DATA, mPlayerId, buildSynchroniseData());
 			AAPacketHandler.CHANNEL.sendTo(packet, player);
 		}
 	}

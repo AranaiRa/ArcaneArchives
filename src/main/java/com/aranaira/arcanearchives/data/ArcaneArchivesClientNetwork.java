@@ -1,22 +1,16 @@
 package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.common.ManifestItemHandler;
-import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
-import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
-import com.aranaira.arcanearchives.util.AACollectors;
-import com.aranaira.arcanearchives.util.Tuple;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.WorldClient;
+import com.aranaira.arcanearchives.packets.AAPacketHandler;
+import com.aranaira.arcanearchives.packets.PacketSynchronise;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.common.DimensionManager;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 public class ArcaneArchivesClientNetwork
 {
@@ -25,18 +19,22 @@ public class ArcaneArchivesClientNetwork
 	private HashMap<String, UUID> pendingInvites = new HashMap<>();
 	private UUID mOwnerId = null;
 	private int mCurrentImmanence = 0;
+	private int mTotalSpace = 0;
+	private int mItemCount = 0;
 	private ManifestItemHandler mManifestHandler = null;
 
 	/* Internal values that are overwritten */
 	//private TileList<ImmanenceTileEntity> mActualTiles = new TileList<>();
 
-	public ManifestItemHandler getManifestHandler () {
-		return mManifestHandler;
-	}
-
-	ArcaneArchivesClientNetwork (UUID id) {
+	ArcaneArchivesClientNetwork(UUID id)
+	{
 		this.mOwnerId = id;
 		this.mManifestHandler = new ManifestItemHandler();
+	}
+
+	public ManifestItemHandler getManifestHandler()
+	{
+		return mManifestHandler;
 	}
 
 	public int GetImmanence()
@@ -56,31 +54,40 @@ public class ArcaneArchivesClientNetwork
 		return null;
 	}
 
-	// TODO:
-	public void deserializeNBT(NBTTagCompound tag)
+	// This requests a synchronise packet from the server
+	// but does not include the manifest info.
+	public void synchroniseData()
+	{
+		PacketSynchronise.PacketSynchroniseRequest request = new PacketSynchronise.PacketSynchroniseRequest(PacketSynchronise.SynchroniseType.DATA, mOwnerId);
+		AAPacketHandler.CHANNEL.sendToServer(request);
+	}
+
+	public void synchroniseManifest ()
+	{
+		PacketSynchronise.PacketSynchroniseRequest request = new PacketSynchronise.PacketSynchroniseRequest(PacketSynchronise.SynchroniseType.MANIFEST, mOwnerId);
+		AAPacketHandler.CHANNEL.sendToServer(request);
+	}
+
+	public void deserializeManifest (NBTTagCompound tag) {
+
+	}
+
+	public void deserializeData (NBTTagCompound tag)
 	{
 		this.mShared = tag.getBoolean("mShared");
 		this.mOwnerId = UUID.fromString(tag.getString("mOwnerId"));
 		this.mCurrentImmanence = tag.getInteger("mCurrentImmanence");
-		this.mManifestHandler.deserializeNBT(tag.getCompoundTag("maniafest"));
+		this.mTotalSpace = tag.getInteger("mTotalSpace");
+		this.mItemCount = tag.getInteger("mItemCount");
 		this.pendingInvites.clear();
 
-		for (NBTBase nbt : tag.getTagList("pendingInvites", 10)) {
-			if (!(nbt instanceof NBTTagCompound)) continue;
+		for(NBTBase nbt : tag.getTagList("pendingInvites", 10))
+		{
+			if(!(nbt instanceof NBTTagCompound)) continue;
 
 			NBTTagCompound tag2 = (NBTTagCompound) nbt;
 			this.pendingInvites.put(tag2.getString("key"), UUID.fromString(tag2.getString("")));
 		}
-
-		/*this.mNetworkTiles.clear();
-
-		for (NBTBase nbt : tag.getTagList("tiles", 10)) {
-			if (!(nbt instanceof NBTTagCompound)) continue;
-
-			NBTTagCompound tag2 = (NBTTagCompound) nbt;
-			Tuple<Integer, BlockPos> tup = new Tuple<>(tag2.getInteger("dimension"), BlockPos.fromLong(tag2.getLong("pos")));
-			this.mNetworkTiles.add(tup);
-		}*/
 	}
 
 	public UUID getPlayerID()
@@ -89,15 +96,15 @@ public class ArcaneArchivesClientNetwork
 	}
 
 	// Okay the client probably needs this
-	public int GetTotalItems()
+	public int GetItemCount()
 	{
-		return 0;
+		return mItemCount;
 	}
 
 	// And this
 	public int GetTotalSpace()
 	{
-		return 0;
+		return mTotalSpace;
 	}
 
 	// TODO

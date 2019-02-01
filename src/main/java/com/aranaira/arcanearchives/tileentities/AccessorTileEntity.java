@@ -1,11 +1,10 @@
 package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.blocks.BlockTemplate;
-import com.aranaira.arcanearchives.util.Size;
+import com.aranaira.arcanearchives.util.types.Size;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.command.InvalidBlockStateException;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -14,7 +13,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 
 import javax.annotation.Nonnull;

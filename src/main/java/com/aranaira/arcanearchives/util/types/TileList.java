@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.util;
+package com.aranaira.arcanearchives.util.types;
 
 import com.aranaira.arcanearchives.tileentities.AATileEntity;
 import com.google.common.collect.Iterators;
@@ -56,6 +56,10 @@ public class TileList<T extends AATileEntity> implements Iterable<T>, List<T>
 
 	public TileListIterable<T> filterClass (Class<? extends AATileEntity> clazz) {
 		return new TileListIterable<>(Iterators.filter(iterator(), (f) -> f != null && f.getClass().equals(clazz)));
+	}
+
+	public TileListIterable<T> filterDynamic (Predicate<T> comparator) {
+		return new TileListIterable<>(Iterators.filter(iterator(), (com.google.common.base.Predicate<T>) comparator));
 	}
 
 	public TileList<T> cleanInvalid () {

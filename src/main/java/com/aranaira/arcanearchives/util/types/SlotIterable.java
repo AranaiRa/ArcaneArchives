@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.util;
+package com.aranaira.arcanearchives.util.types;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
@@ -11,12 +11,12 @@ public class SlotIterable implements Iterable<ItemStack>
 	private boolean skipEmpty;
 	private SlotIterator iter;
 
-	SlotIterable (IItemHandler inventory) {
+	public SlotIterable (IItemHandler inventory) {
 		this.skipEmpty = true;
 		this.inventory = inventory;
 	}
 
-	SlotIterable (IItemHandler inventory, boolean skipEmpty) {
+	public SlotIterable (IItemHandler inventory, boolean skipEmpty) {
 		this.skipEmpty = skipEmpty;
 		this.inventory = inventory;
 	}
