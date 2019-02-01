@@ -18,6 +18,23 @@ item.item_component_matrixbrace.name=Matrix Brace
 item.item_component_radiantdust.name=Radiant Dust
 item.item_component_scintillatinginlay.name=Scintillating Inlay
 
+item.item_spiritsphere.name=Unaspected Planetary Orb
+item.item_spiritsphere_crown01.name=Crown Orb
+item.item_spiritsphere_crown02.name=Grand Crown Orb
+item.item_spiritsphere_crown03.name=Jupiterine Crown Orb
+item.item_spiritsphere_matter01.name=Matter Orb
+item.item_spiritsphere_matter02.name=Dense Matter Orb
+item.item_spiritsphere_matter03.name=Venusian Matter Orb
+item.item_spiritsphere_power01.name=Power Orb
+item.item_spiritsphere_power02.name=Charged Power Orb
+item.item_spiritsphere_power03.name=Martian Power Orb
+item.item_spiritsphere_space01.name=Space Orb
+item.item_spiritsphere_space02.name=Vast Space Orb
+item.item_spiritsphere_space03.name=Mercurial Space Orb
+item.item_spiritsphere_time01.name=Time Orb
+item.item_spiritsphere_time02.name=Elder Time Orb
+item.item_spiritsphere_time03.name=Saturnine Time Orb
+
 tile.storage_raw_quartz.name=Raw Radiant Quartz Block
 tile.storage_cut_quartz.name=Shaped Radiant Quartz Block
 tile.raw_quartz.name=Raw Radiant Quartz
