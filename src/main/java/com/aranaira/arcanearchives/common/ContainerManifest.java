@@ -4,7 +4,6 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.ArcaneArchivesClientNetwork;
 import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
 import com.aranaira.arcanearchives.packets.AAPacketHandler;
-import com.aranaira.arcanearchives.packets.PacketRadiantChestsListResponse;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.ItemComparison;
@@ -35,7 +34,7 @@ public class ContainerManifest extends Container
 
 	public ContainerManifest(EntityPlayer playerIn, boolean ServerSide)
 	{
-		ArcaneArchives.logger.info(playerIn.getUniqueID());
+	/*	ArcaneArchives.logger.info(playerIn.getUniqueID());
 		mServerSide = ServerSide;
 
 		mPlayer = playerIn;
@@ -91,7 +90,7 @@ public class ContainerManifest extends Container
 				this.addSlotToContainer(new SlotItemHandler(mClientNetwork.getManifestHandler(), i, x * 18 + 12, y * 18 + 30));
 				i++;
 			}
-		}
+		}*/
 	}
 
 	@Override
@@ -104,7 +103,7 @@ public class ContainerManifest extends Container
 	@Nonnull
 	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
 	{
-		if(mServerSide) return ItemStack.EMPTY;
+		/*if(mServerSide) return ItemStack.EMPTY;
 
 		AATickHandler.GetInstance().clearChests();
 
@@ -119,14 +118,14 @@ public class ContainerManifest extends Container
 			{
 				AATickHandler.GetInstance().mBlockPositions.add(rcph.GetPosition());
 			}
-		}
+		}*/
 
 		return ItemStack.EMPTY;
 	}
 
 	public void SetSearchString(String SearchText)
 	{
-		ManifestItemHandler.mInstance.setSearchText(SearchText);
+		// ManifestItemHandler.mInstance.setSearchText(SearchText);
 	}
 
 	@Override

@@ -16,6 +16,10 @@ import java.util.stream.Stream;
 
 public class TileList extends ReferenceList<ImmanenceTileEntity>
 {
+	public TileList () {
+		super(new ArrayList<>());
+	}
+
 	public TileList(List<ImmanenceTileEntity> reference)
 	{
 		super(reference);
@@ -59,6 +63,11 @@ public class TileList extends ReferenceList<ImmanenceTileEntity>
 		copy.addAll(this.reference());
 		copy.sort(c);
 		return copy;
+	}
+
+	@Override
+	public TileListIterable iterable () {
+		return new TileListIterable(iterator());
 	}
 
 	public static class TileListIterable extends ReferenceListIterable<ImmanenceTileEntity> {

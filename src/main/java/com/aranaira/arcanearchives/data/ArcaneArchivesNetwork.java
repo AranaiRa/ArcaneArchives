@@ -40,17 +40,16 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	private UUID mPlayerId;
 	private AAWorldSavedData mParent;
 
-	private TileList<ImmanenceTileEntity> mNetworkTiles = new TileList<>(ArrayList::new);
+	private TileList mNetworkTiles = new TileList(new ArrayList<>());
 
 	private int mCurrentImmanence;
 	private boolean mNeedsToBeUpdated = true;
 
-	public ManifestItemHandler mManifestItemHandler = null;
+	// ManifestItemHandler is client-only for now
 
 	private ArcaneArchivesNetwork(UUID id)
 	{
 		mPlayerId = id;
-		mManifestItemHandler = new ManifestItemHandler();
 	}
 
 	public void ShareWith(UUID targetNetwork)
@@ -68,7 +67,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		return mCurrentImmanence;
 	}
 
-	public TileList.TileListIterable<ImmanenceTileEntity> FetchTileEntities(Class<? extends AATileEntity> clazz)
+	public TileList.TileListIterable FetchTileEntities(Class<? extends AATileEntity> clazz)
 	{
 		return mNetworkTiles.filterClass(clazz);
 	}
@@ -176,13 +175,13 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		return to_return;
 	}
 
-	public TileList<ImmanenceTileEntity> GetTileEntitiesByPriority()
+	public TileList GetTileEntitiesByPriority()
 	{
 		return this.mNetworkTiles.sorted((o1, o2) ->
 		{
 			if(o1.NetworkPriority > o2.NetworkPriority) return 1;
 			else return -1;
-		}, ArrayList::new);
+		});
 	}
 
 	@Beta
@@ -232,16 +231,16 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		return new ItemStack(Blocks.AIR);
 	}
 
-	public TileList<ImmanenceTileEntity> GetTiles () {
+	public TileList GetTiles () {
 		return this.mNetworkTiles;
 	}
 
-	public TileList.TileListIterable<ImmanenceTileEntity> GetBlocks()
+	public TileList.TileListIterable GetBlocks()
 	{
 		return GetBlocks(false);
 	}
 
-	public TileList.TileListIterable<ImmanenceTileEntity> GetBlocks(boolean started)
+	public TileList.TileListIterable GetBlocks(boolean started)
 	{
 		if(!started)
 		{
@@ -269,7 +268,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		UpdateImmanence();
 	}
 
-	public TileList.TileListIterable<ImmanenceTileEntity> GetRadiantChests()
+	public TileList.TileListIterable GetRadiantChests()
 	{
 		return mNetworkTiles.filterClass(RadiantChestTileEntity.class);
 	}
@@ -294,7 +293,6 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	public void deserializeNBT(NBTTagCompound nbt)
 	{
 		mPlayerId = nbt.getUniqueId("playerId");
-		mManifestItemHandler = new ManifestItemHandler();
 	}
 
 	public static ArcaneArchivesNetwork newNetwork(UUID playerID)
@@ -449,6 +447,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 
 		NBTTagList manifest = new NBTTagList();
 
+		// TODO: Change into ManifestList
 		List<Turple<ItemStack, Integer, List<BlockPos>>> consolidated = ItemStackConsolidator.TurpleConsolidatedItems(map);
 		consolidated.sort((turp1, turp2) -> {
 			if (ItemComparison.AreItemsEqual(turp1.val1, turp2.val1) && turp1.val2.equals(turp2.val2)) return 0;

@@ -21,13 +21,6 @@ public class AACollectors
 		}, Collections::unmodifiableList);
 	}
 
-    public static <T extends AATileEntity>
-    Collector<T, ?, TileList<T>> toTileList() {
-        return new GenericCollector<>((Supplier<TileList<T>>) TileList::new, List::add,
-                                   (left, right) -> { left.addAll(right); return left; },
-                                   CH_ID);
-    }
-
     // Don't look at this
 	@SuppressWarnings("unchecked")
     private static <I, R> Function<I, R> castingIdentity() {
