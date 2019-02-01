@@ -10,6 +10,7 @@ import com.aranaira.arcanearchives.util.*;
 import com.aranaira.arcanearchives.util.types.SlotIterable;
 import com.aranaira.arcanearchives.util.types.TileList;
 import com.aranaira.arcanearchives.util.types.Tuple;
+import com.aranaira.arcanearchives.util.types.Turple;
 import com.google.common.annotations.Beta;
 import com.google.common.collect.Lists;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -427,7 +428,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	}
 
 	public NBTTagCompound buildSynchroniseManifest () {
-		Map<Integer, List<Tuple<ItemStack, BlockPos>>> map = new HashMap<>();
+		List<Turple<ItemStack, Integer, BlockPos>> map = new ArrayList<>();
 
 		// Step one: iterate loaded chests and get item stacks.
 
@@ -435,39 +436,28 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 			RadiantChestTileEntity chest = (RadiantChestTileEntity) ite;
 			int dimId = chest.getWorld().provider.getDimension();
 			for (ItemStack is : new SlotIterable(chest.getInventory(), true)) {
-				if (!map.containsKey(dimId)) {
-					map.put(dimId, new ArrayList<>());
-				}
-
-				map.get(dimId).add(new Tuple<>(is.copy(), chest.getPos()));
+				map.add(new Turple<>(is.copy(), dimId, chest.getPos()));
 			}
 		}
 
-		List<Integer> dimensions = Lists.newArrayList(map.keySet());
-
 		NBTTagList manifest = new NBTTagList();
 
-		for (int dimension : dimensions) {
-			// Step 2: electric beargaloo
-			List<Tuple<ItemStack, List<BlockPos>>> consolidated = ItemStackConsolidator.TupleConsolidatedItems(map.get(dimension));
+		List<Turple<ItemStack, Integer, List<BlockPos>>> consolidated = ItemStackConsolidator.TurpleConsolidatedItems(map);
+		consolidated.sort((turp1, turp2) -> {
+			if (ItemComparison.AreItemsEqual(turp1.val1, turp2.val1) && turp1.val2.equals(turp2.val2)) return 0;
+			return -1;
+		});
 
-			NBTTagList dimensionList = new NBTTagList();
-
-			for (Tuple<ItemStack, List<BlockPos>> entry : consolidated) {
-				NBTTagCompound itemEntry = new NBTTagCompound();
-				LargeItemNBTUtil.writeToNBT(itemEntry, entry.val1);
-				NBTTagList positions = new NBTTagList();
-				for (BlockPos pos : entry.val2) {
-					positions.appendTag(new NBTTagLong(pos.toLong()));
-				}
-				itemEntry.setTag("positions", positions);
-				dimensionList.appendTag(itemEntry);
+		for (Turple<ItemStack, Integer, List<BlockPos>> entry : consolidated) {
+			NBTTagCompound itemEntry = new NBTTagCompound();
+			LargeItemNBTUtil.writeToNBT(itemEntry, entry.val1);
+			NBTTagList positions = new NBTTagList();
+			for (BlockPos pos : entry.val3) {
+				positions.appendTag(new NBTTagLong(pos.toLong()));
 			}
-
-			NBTTagCompound dimensionEntry = new NBTTagCompound();
-			dimensionEntry.setInteger("dimension", dimension);
-			dimensionEntry.setTag("items", dimensionList);
-			manifest.appendTag(dimensionEntry);
+			itemEntry.setTag("positions", positions);
+			itemEntry.setInteger("dimension", entry.val2);
+			manifest.appendTag(itemEntry);
 		}
 
 		NBTTagCompound result = new NBTTagCompound();
