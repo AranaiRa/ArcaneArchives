@@ -3,14 +3,25 @@ package com.aranaira.arcanearchives.data;
 import com.aranaira.arcanearchives.common.ManifestItemHandler;
 import com.aranaira.arcanearchives.packets.AAPacketHandler;
 import com.aranaira.arcanearchives.packets.PacketSynchronise;
+import com.aranaira.arcanearchives.util.ItemComparison;
+import com.aranaira.arcanearchives.util.ItemStackConsolidator;
+import com.aranaira.arcanearchives.util.LargeItemNBTUtil;
+import com.aranaira.arcanearchives.util.types.ManifestList;
+import com.aranaira.arcanearchives.util.types.Turple;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagLong;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+
+import static com.aranaira.arcanearchives.common.ManifestItemHandler.ManifestEntry;
 
 public class ArcaneArchivesClientNetwork
 {
@@ -24,17 +35,23 @@ public class ArcaneArchivesClientNetwork
 	private ManifestItemHandler mManifestHandler = null;
 
 	/* Internal values that are overwritten */
+	public ManifestList manifestItems = new ManifestList(new ArrayList<>());
 	//private TileList<ImmanenceTileEntity> mActualTiles = new TileList<>();
 
 	ArcaneArchivesClientNetwork(UUID id)
 	{
 		this.mOwnerId = id;
-		this.mManifestHandler = new ManifestItemHandler();
+		this.mManifestHandler = new ManifestItemHandler(this, manifestItems);
 	}
 
 	public ManifestItemHandler getManifestHandler()
 	{
 		return mManifestHandler;
+	}
+
+	public ManifestList getManifestItems ()
+	{
+		return manifestItems;
 	}
 
 	public int GetImmanence()
@@ -69,7 +86,23 @@ public class ArcaneArchivesClientNetwork
 	}
 
 	public void deserializeManifest (NBTTagCompound tag) {
+		manifestItems.clear();
 
+		NBTTagList list = tag.getTagList("manifest", 10);
+
+		for (NBTBase base : list) {
+			NBTTagCompound itemEntry = (NBTTagCompound) base;
+			int dimension = itemEntry.getInteger("dimension");
+			List<BlockPos> positions = new ArrayList<>();
+			NBTTagList posList = itemEntry.getTagList("positions", 4);
+			for (NBTBase posBase : posList) {
+				positions.add(BlockPos.fromLong(((NBTTagLong) posBase).getLong()));
+			}
+			ItemStack stack = LargeItemNBTUtil.readFromNBT(itemEntry);
+			ManifestEntry thisEntry = new ManifestEntry(stack, dimension, positions);
+
+			manifestItems.add(thisEntry);
+		}
 	}
 
 	public void deserializeData (NBTTagCompound tag)

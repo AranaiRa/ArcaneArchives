@@ -1,7 +1,6 @@
 package com.aranaira.arcanearchives.packets;
 
 import com.aranaira.arcanearchives.common.ManifestItemHandler;
-import com.aranaira.arcanearchives.util.RadiantChestPlaceHolder;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;

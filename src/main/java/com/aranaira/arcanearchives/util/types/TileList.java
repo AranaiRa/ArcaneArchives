@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.util.types;
 
 import com.aranaira.arcanearchives.tileentities.AATileEntity;
+import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.google.common.collect.Iterators;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
@@ -13,265 +14,57 @@ import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
-public class TileList<T extends AATileEntity> implements Iterable<T>, List<T>
+public class TileList extends ReferenceList<ImmanenceTileEntity>
 {
-	private List<T> reference;
-
-	public TileList () {
-		this.reference = new ArrayList<>();
-	}
-
-	public TileList(List<T> reference)
+	public TileList(List<ImmanenceTileEntity> reference)
 	{
-		this.reference = reference;
+		super(reference);
 	}
 
-	public TileList(Supplier<List<T>> supplier) {
-		this.reference = supplier.get();
-	}
-
-	public TileListIterable<T> filterDimension(int dimension)
+	public TileListIterable filterDimension(int dimension)
 	{
-		return new TileListIterable<>(Iterators.filter(iterator(), (f) -> f != null && f.getWorld().provider.getDimension() == dimension));
+		return new TileListIterable(Iterators.filter(iterator(), (f) -> f != null && f.getWorld().provider.getDimension() == dimension));
 	}
 
-	public TileListIterable<T> filterDimension(World world)
+	public TileListIterable filterDimension(World world)
 	{
 		return filterDimension(world.provider.getDimension());
 	}
 
-	public TileListIterable<T> filterDimension(Entity entity)
+	public TileListIterable filterDimension(Entity entity)
 	{
 		return filterDimension(entity.dimension);
 	}
 
-	public TileListIterable<T> filterLoaded()
+	public TileListIterable filterLoaded()
 	{
-		return new TileListIterable<>(Iterators.filter(iterator(), (f) -> f != null && f.getWorld().isBlockLoaded(f.getPos())));
+		return new TileListIterable(Iterators.filter(iterator(), (f) -> f != null && f.getWorld().isBlockLoaded(f.getPos())));
 	}
 
-	public TileListIterable<T> filterActive() {
-		return new TileListIterable<>(Iterators.filter(iterator(), (f) -> f != null && f.isActive()));
+	public TileListIterable filterActive() {
+		return new TileListIterable(Iterators.filter(iterator(), (f) -> f != null && f.isActive()));
 	}
 
-	public TileListIterable<T> filterClass (Class<? extends AATileEntity> clazz) {
-		return new TileListIterable<>(Iterators.filter(iterator(), (f) -> f != null && f.getClass().equals(clazz)));
+	public TileListIterable filterClass (Class<? extends AATileEntity> clazz) {
+		return new TileListIterable(Iterators.filter(iterator(), (f) -> f != null && f.getClass().equals(clazz)));
 	}
 
-	public TileListIterable<T> filterDynamic (Predicate<T> comparator) {
-		return new TileListIterable<>(Iterators.filter(iterator(), (com.google.common.base.Predicate<T>) comparator));
-	}
-
-	public TileList<T> cleanInvalid () {
-		this.reference.removeIf((f) -> f != null && f.isInvalid());
+	public TileList cleanInvalid () {
+		this.reference().removeIf((f) -> f != null && f.isInvalid());
 		return this;
 	}
 
-	public TileList<T> sorted (Comparator<? super T> c, Supplier<? extends List<T>> supplier) {
-		TileList<T> copy = new TileList<>(supplier.get());
-		copy.addAll(this.reference);
+	public TileList sorted (Comparator<ImmanenceTileEntity> c) {
+		TileList copy = new TileList(new ArrayList<ImmanenceTileEntity>());
+		copy.addAll(this.reference());
 		copy.sort(c);
 		return copy;
 	}
 
-	@Override
-	public Iterator<T> iterator()
-	{
-		return reference.iterator();
-	}
-
-	public TileListIterable<T> iterable () {
-		return new TileListIterable<>(iterator());
-	}
-
-	// Overrides -> Overrides -> OVERRIDES!
-
-	@Override
-	public int size()
-	{
-		return this.reference.size();
-	}
-
-	@Override
-	public boolean isEmpty()
-	{
-		return this.reference.isEmpty();
-	}
-
-	@Override
-	public boolean contains(Object o)
-	{
-		return this.reference.contains(o);
-	}
-
-	@Override
-	public Object[] toArray()
-	{
-		return this.reference.toArray();
-	}
-
-	public <T1> T1[] toArray(T1[] a)
-	{
-		return this.reference.toArray(a);
-	}
-
-	@Override
-	public boolean add(T t)
-	{
-		return this.reference.add(t);
-	}
-
-	@Override
-	public boolean remove(Object o)
-	{
-		return this.reference.remove(o);
-	}
-
-	@Override
-	public boolean containsAll(Collection<?> c)
-	{
-		return this.reference.containsAll(c);
-	}
-
-	@Override
-	public boolean addAll(Collection<? extends T> c)
-	{
-		return this.reference.addAll(c);
-	}
-
-	@Override
-	public boolean addAll(int index, Collection<? extends T> c)
-	{
-		return this.reference.addAll(index, c);
-	}
-
-	@Override
-	public boolean removeAll(Collection<?> c)
-	{
-		return this.reference.removeAll(c);
-	}
-
-	@Override
-	public boolean removeIf(Predicate<? super T> filter)
-	{
-		return this.reference.removeIf(filter);
-	}
-
-	@Override
-	public boolean retainAll(Collection<?> c)
-	{
-		return this.reference.retainAll(c);
-	}
-
-	@Override
-	public void replaceAll(UnaryOperator<T> operator)
-	{
-		this.reference.replaceAll(operator);
-	}
-
-	@Override
-	public void sort(Comparator<? super T> c)
-	{
-		this.reference.sort(c);
-	}
-
-	@Override
-	public void clear()
-	{
-		this.reference.clear();
-	}
-
-	@Override
-	public T get(int index)
-	{
-		return this.reference.get(index);
-	}
-
-	@Override
-	public T set(int index, T element)
-	{
-		return this.reference.set(index, element);
-	}
-
-	@Override
-	public void add(int index, T element)
-	{
-		this.reference.add(index, element);
-	}
-
-	@Override
-	public T remove(int index)
-	{
-		return this.reference.remove(index);
-	}
-
-	@Override
-	public int indexOf(Object o)
-	{
-		return this.reference.indexOf(o);
-	}
-
-	@Override
-	public int lastIndexOf(Object o)
-	{
-		return this.reference.lastIndexOf(o);
-	}
-
-	@Override
-	public ListIterator<T> listIterator()
-	{
-		return this.reference.listIterator();
-	}
-
-	@Override
-	public ListIterator<T> listIterator(int index)
-	{
-		return this.reference.listIterator(index);
-	}
-
-	@Override
-	public TileList<T> subList(int fromIndex, int toIndex)
-	{
-		return new TileList<>(this.reference.subList(fromIndex, toIndex));
-	}
-
-	@Override
-	public void forEach(Consumer<? super T> action)
-	{
-		reference.forEach(action);
-	}
-
-	@Override
-	public Spliterator<T> spliterator()
-	{
-		return this.reference.spliterator();
-	}
-
-	@Override
-	public Stream<T> stream()
-	{
-		return this.reference.stream();
-	}
-
-	@Override
-	public Stream<T> parallelStream()
-	{
-		return this.reference.parallelStream();
-	}
-
-	public static class TileListIterable<T> implements Iterable<T> {
-
-		Iterator<T> iter;
-
-		TileListIterable (Iterator<T> iter) {
-			this.iter = iter;
-		}
-
-		@Override
-		@Nonnull
-		public Iterator<T> iterator()
+	public static class TileListIterable extends ReferenceListIterable<ImmanenceTileEntity> {
+		TileListIterable(Iterator<ImmanenceTileEntity> iter)
 		{
-			return this.iter;
+			super(iter);
 		}
 	}
 }

@@ -1,45 +1,39 @@
 package com.aranaira.arcanearchives.common;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.util.LargeSlotSerialization;
-import com.aranaira.arcanearchives.util.RadiantChestPlaceHolder;
+import com.aranaira.arcanearchives.data.ArcaneArchivesClientNetwork;
+import com.aranaira.arcanearchives.util.types.ManifestList;
+import com.aranaira.arcanearchives.util.types.Turple;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
+import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.UUID;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class ManifestItemHandler implements IItemHandlerModifiable, INBTSerializable<NBTTagCompound>, LargeSlotSerialization
+public class ManifestItemHandler implements IItemHandlerModifiable
 {
-	public static ManifestItemHandler mInstance = new ManifestItemHandler();
+	private ArcaneArchivesClientNetwork network;
+	private ManifestList.ManifestListIterable currentIterator;
+	private ManifestList manifest = null;
 
-	private UUID mPlayerID;
-	private List<ItemStack> mItemStacks;
-	private String mSearchText = "";
-	public List<RadiantChestPlaceHolder> mChests;
-	//TODO setup to set this variable again.
-	EntityPlayer mPlayer = null;
-
-	public ManifestItemHandler()
+	public ManifestItemHandler(ArcaneArchivesClientNetwork network, ManifestList manifest)
 	{
-		mChests = new ArrayList<>();
-		mItemStacks = new ArrayList<>();
+		this.manifest = manifest;
+		this.network = network;
 	}
 
-	//Returns the slot number of the item added.
-	public void AddItemStack(ItemStack item)
-	{
-		if(mPlayer == null) ArcaneArchives.logger.info("mPlayer is Null!");
-		mItemStacks.add(item);
+	public ManifestItemHandler(ArcaneArchivesClientNetwork network) {
+		this.network = network;
+		this.manifest = network.getManifestItems();
 	}
 
 	@Override
@@ -51,35 +45,12 @@ public class ManifestItemHandler implements IItemHandlerModifiable, INBTSerializ
 	@Override
 	public ItemStack getStackInSlot(int slot)
 	{
-		if(mSearchText.equals(""))
-		{
-			if(slot > mItemStacks.size() - 1) return ItemStack.EMPTY;
-			return mItemStacks.get(slot);
-		} else
-		{
-			List<ItemStack> s = filteredResults();
-
-			if(slot > s.size() - 1) return ItemStack.EMPTY;
-
-			return filteredResults().get(slot);
-		}
-
+		return getCurrentIterator().translate(slot).getStack();
 	}
 
-	public List<ItemStack> filteredResults()
+	public ManifestEntry getManifestEntryInSlot (int slot)
 	{
-
-		List<ItemStack> temp = new ArrayList<>();
-
-		for(ItemStack s : mItemStacks)
-		{
-			if(s.getDisplayName().toLowerCase().contains(mSearchText.toLowerCase()))
-			{
-				temp.add(s);
-			}
-		}
-
-		return temp;
+		return getCurrentIterator().translate(slot);
 	}
 
 	@Override
@@ -103,60 +74,49 @@ public class ManifestItemHandler implements IItemHandlerModifiable, INBTSerializ
 	@Override
 	public void setStackInSlot(int slot, ItemStack stack)
 	{
+	}
 
+	public ManifestList.ManifestListIterable getCurrentIterator () {
+		if (currentIterator == null) {
+			if (manifest != null)
+			{
+				currentIterator = manifest.iterable();
+			} else
+			{
+				return null;
+			}
+		}
+
+		return currentIterator;
 	}
 
 	public void setSearchText(String s)
 	{
-		mSearchText = s;
+		currentIterator = manifest.setSearchText(s);
 	}
 
 	public void Clear()
 	{
-		mChests.clear();
-		mItemStacks.clear();
-		mSearchText = "";
+		currentIterator = manifest.setSearchText(null);
 	}
 
-	public void SortChests()
-	{
+	public static class ManifestEntry extends Turple<ItemStack, Integer, List<BlockPos>> {
 
-
-		mChests.sort(new Comparator<RadiantChestPlaceHolder>()
+		public ManifestEntry(@Nonnull ItemStack val1, @Nonnull Integer val2, @Nonnull List<BlockPos> val3)
 		{
+			super(val1, val2, val3);
+		}
 
-			@Override
-			public int compare(final RadiantChestPlaceHolder rcte1, final RadiantChestPlaceHolder rcte2)
-			{
-				int posX = 0;
-				int posY = 0;
-				int posZ = 0;
-				if(mPlayer != null)
-				{
-					posX = (int) mPlayer.posX;
-					posY = (int) mPlayer.posY;
-					posZ = (int) mPlayer.posZ;
-				}
-				double rcte1Dist = rcte1.mPos.getDistance((int) posX, (int) posY, (int) posZ);
-				double rcte2Dist = rcte2.mPos.getDistance((int) posX, (int) posY, (int) posZ);
-				if(rcte1Dist == rcte2Dist) return 0;
-				else if(rcte1Dist > rcte2Dist) return 1;
-				else return -1;
-			}
-		});
-	}
+		public ItemStack getStack () {
+			return val1;
+		}
 
-	@Override
-	public NBTTagCompound serializeNBT()
-	{
-		NBTTagCompound res = new NBTTagCompound();
-		res.setTag("inventory", serializeHandler(this));
-		return res;
-	}
+		public int getDimension () {
+			return val2;
+		}
 
-	@Override
-	public void deserializeNBT(NBTTagCompound nbt)
-	{
-		deserializeHandler(nbt.getTagList("inventory",10), this);
+		public List<BlockPos> getPositions () {
+			return val3;
+		}
 	}
 }
