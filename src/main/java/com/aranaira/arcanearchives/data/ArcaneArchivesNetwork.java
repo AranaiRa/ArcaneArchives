@@ -12,6 +12,7 @@ import com.aranaira.arcanearchives.util.types.TileList;
 import com.aranaira.arcanearchives.util.types.Tuple;
 import com.aranaira.arcanearchives.util.types.Turple;
 import com.google.common.annotations.Beta;
+import com.google.common.collect.ConcurrentHashMultiset;
 import com.google.common.collect.Lists;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
@@ -69,7 +70,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 
 	public TileList.TileListIterable<ImmanenceTileEntity> FetchTileEntities(Class<? extends AATileEntity> clazz)
 	{
-		return mNetworkTiles.cleanInvalid().filterClass(clazz);
+		return mNetworkTiles.filterClass(clazz);
 	}
 
 	public int CountTileEntities(Class<? extends AATileEntity> clazz)
@@ -177,7 +178,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 
 	public TileList<ImmanenceTileEntity> GetTileEntitiesByPriority()
 	{
-		return this.mNetworkTiles.cleanInvalid().sorted((o1, o2) ->
+		return this.mNetworkTiles.sorted((o1, o2) ->
 		{
 			if(o1.NetworkPriority > o2.NetworkPriority) return 1;
 			else return -1;
@@ -246,13 +247,23 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		{
 			return mNetworkTiles.filterActive();
 		}
-		return mNetworkTiles.cleanInvalid().iterable();
+		return mNetworkTiles.iterable();
 	}
 
 	public void AddTileToNetwork(ImmanenceTileEntity tileEntityInstance)
 	{
+		if (mNetworkTiles.contains(tileEntityInstance)) return;
+
 		mNetworkTiles.add(tileEntityInstance);
 		tileEntityInstance.hasBeenAddedToNetwork = true;
+
+		mNeedsToBeUpdated = true;
+		UpdateImmanence();
+	}
+
+	public void RemoveTileFromNetwork(ImmanenceTileEntity tileEntityInstance)
+	{
+		mNetworkTiles.remove(tileEntityInstance);
 
 		mNeedsToBeUpdated = true;
 		UpdateImmanence();
@@ -263,13 +274,9 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		return mNetworkTiles.filterClass(RadiantChestTileEntity.class);
 	}
 
-	public TileList.TileListIterable<ImmanenceTileEntity> GetLoadedRadiantChests () {
-		return mNetworkTiles.filterDynamic((f) -> f != null && f.getClass().equals(RadiantChestTileEntity.class) && f.getWorld().isBlockLoaded(f.getPos()));
-	}
-
 	public void triggerUpdate()
 	{
-		mNetworkTiles.cleanInvalid();
+		//mNetworkTiles.cleanInvalid();
 		UpdateImmanence();
 	}
 
@@ -432,7 +439,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 
 		// Step one: iterate loaded chests and get item stacks.
 
-		for (ImmanenceTileEntity ite : GetLoadedRadiantChests()) {
+		for (ImmanenceTileEntity ite : GetRadiantChests()) {
 			RadiantChestTileEntity chest = (RadiantChestTileEntity) ite;
 			int dimId = chest.getWorld().provider.getDimension();
 			for (ItemStack is : new SlotIterable(chest.getInventory(), true)) {
@@ -490,9 +497,13 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		return tag;
 	}
 
-	public void Synchronise ()
+	public void Synchronise (PacketSynchronise.SynchroniseType type)
 	{
-		SynchroniseData();
+		switch (type) {
+			case DATA:
+				SynchroniseData();
+				break;
+		}
 	}
 
 	public void SynchroniseData () {
