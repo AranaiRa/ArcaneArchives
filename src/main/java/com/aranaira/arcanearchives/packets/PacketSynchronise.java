@@ -105,7 +105,7 @@ public class PacketSynchronise
 						break;
 				}
 
-				PacketSynchroniseResponse response = new PacketSynchroniseResponse(SynchroniseType.DATA, message.playerId, output);
+				PacketSynchroniseResponse response = new PacketSynchroniseResponse(message.type, message.playerId, output);
 				EntityPlayerMP player = server.getPlayerList().getPlayerByUUID(message.playerId);
 
 				if (output != null)

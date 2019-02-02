@@ -1,7 +1,10 @@
 package com.aranaira.arcanearchives.tileentities;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.util.ItemComparison;
 import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.util.handlers.AAServerTickHandler;
+import com.aranaira.arcanearchives.util.handlers.AATickHandler;
 import com.aranaira.arcanearchives.util.types.Size;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -214,7 +217,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 		mAccessors.add(pos);
 	}
 
-	@Override
+	/*@Override
 	public void invalidate()
 	{
 		super.invalidate();
@@ -231,5 +234,15 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 		if (world.isRemote) return;
 
 		NetworkHelper.getArcaneArchivesNetwork(NetworkID).RemoveTileFromNetwork(this);
+	}*/
+
+	@Override
+	public void onLoad () {
+		if (world != null && !world.isRemote) {
+			AAServerTickHandler.incomingITE(this);
+		} else if (world == null) {
+			ArcaneArchives.logger.info("crap");
+		}
+		super.onLoad();
 	}
 }

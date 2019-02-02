@@ -70,7 +70,7 @@ public class TileList extends ReferenceList<ImmanenceTileEntity>
 		return new TileListIterable(iterator());
 	}
 
-	public static class TileListIterable extends ReferenceListIterable<ImmanenceTileEntity> {
+	public class TileListIterable extends ReferenceListIterable<ImmanenceTileEntity> {
 		TileListIterable(Iterator<ImmanenceTileEntity> iter)
 		{
 			super(iter);

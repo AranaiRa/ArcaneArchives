@@ -20,7 +20,7 @@ public class AAWorldSavedData extends WorldSavedData
 {
 	public static final String ID = "Archane-Archives-Network";
 
-	private Map<UUID, ArcaneArchivesNetwork> arcaneArchivesNetworks = new HashMap<>();
+	public static Map<UUID, ArcaneArchivesNetwork> arcaneArchivesNetworks = new HashMap<>();
 
 	public AAWorldSavedData()
 	{

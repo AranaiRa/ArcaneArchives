@@ -86,20 +86,14 @@ public class ItemStackConsolidator
 
 			List<Turple<ItemStack, Integer, BlockPos>> matches = input.stream().filter((i) -> ItemComparison.AreItemsEqual(i.val1, copy) && i.val2 == copy2).collect(Collectors.toList());
 
-			if (matches.size() == 0) {
+			/*if (matches.size() == 0) {
 				output.add(next);
 				continue;
-			}
+			}*/
 
 			input.removeAll(matches);
 
 			for (Turple<ItemStack, Integer, BlockPos> match : matches) {
-				if ((next.val1.getCount()+match.val1.getCount()) > next.val1.getMaxStackSize()) {
-					output.add(next);
-					next = new Turple<>(match.val1, match.val2, Lists.newArrayList(match.val3));
-					continue;
-				}
-
 				next.val1.setCount(next.val1.getCount() + match.val1.getCount());
 				next.val3.add(match.val3);
 			}

@@ -3,11 +3,8 @@ package com.aranaira.arcanearchives.data;
 import com.aranaira.arcanearchives.common.ManifestItemHandler;
 import com.aranaira.arcanearchives.packets.AAPacketHandler;
 import com.aranaira.arcanearchives.packets.PacketSynchronise;
-import com.aranaira.arcanearchives.util.ItemComparison;
-import com.aranaira.arcanearchives.util.ItemStackConsolidator;
 import com.aranaira.arcanearchives.util.LargeItemNBTUtil;
 import com.aranaira.arcanearchives.util.types.ManifestList;
-import com.aranaira.arcanearchives.util.types.Turple;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -25,6 +22,8 @@ import static com.aranaira.arcanearchives.common.ManifestItemHandler.ManifestEnt
 
 public class ArcaneArchivesClientNetwork
 {
+	/* Internal values that are overwritten */
+	public ManifestList manifestItems = new ManifestList(new ArrayList<>());
 	/* Updated data via packet */
 	private boolean mShared = false;
 	private HashMap<String, UUID> pendingInvites = new HashMap<>();
@@ -33,9 +32,6 @@ public class ArcaneArchivesClientNetwork
 	private int mTotalSpace = 0;
 	private int mItemCount = 0;
 	private ManifestItemHandler mManifestHandler = null;
-
-	/* Internal values that are overwritten */
-	public ManifestList manifestItems = new ManifestList(new ArrayList<>());
 	//private TileList<ImmanenceTileEntity> mActualTiles = new TileList<>();
 
 	ArcaneArchivesClientNetwork(UUID id)
@@ -49,7 +45,7 @@ public class ArcaneArchivesClientNetwork
 		return mManifestHandler;
 	}
 
-	public ManifestList getManifestItems ()
+	public ManifestList getManifestItems()
 	{
 		return manifestItems;
 	}
@@ -79,23 +75,26 @@ public class ArcaneArchivesClientNetwork
 		AAPacketHandler.CHANNEL.sendToServer(request);
 	}
 
-	public void synchroniseManifest ()
+	public void synchroniseManifest()
 	{
 		PacketSynchronise.PacketSynchroniseRequest request = new PacketSynchronise.PacketSynchroniseRequest(PacketSynchronise.SynchroniseType.MANIFEST, mOwnerId);
 		AAPacketHandler.CHANNEL.sendToServer(request);
 	}
 
-	public void deserializeManifest (NBTTagCompound tag) {
+	public void deserializeManifest(NBTTagCompound tag)
+	{
 		manifestItems.clear();
 
 		NBTTagList list = tag.getTagList("manifest", 10);
 
-		for (NBTBase base : list) {
+		for(NBTBase base : list)
+		{
 			NBTTagCompound itemEntry = (NBTTagCompound) base;
 			int dimension = itemEntry.getInteger("dimension");
 			List<BlockPos> positions = new ArrayList<>();
 			NBTTagList posList = itemEntry.getTagList("positions", 4);
-			for (NBTBase posBase : posList) {
+			for(NBTBase posBase : posList)
+			{
 				positions.add(BlockPos.fromLong(((NBTTagLong) posBase).getLong()));
 			}
 			ItemStack stack = LargeItemNBTUtil.readFromNBT(itemEntry);
@@ -105,7 +104,7 @@ public class ArcaneArchivesClientNetwork
 		}
 	}
 
-	public void deserializeData (NBTTagCompound tag)
+	public void deserializeData(NBTTagCompound tag)
 	{
 		this.mShared = tag.getBoolean("mShared");
 		this.mOwnerId = UUID.fromString(tag.getString("mOwnerId"));

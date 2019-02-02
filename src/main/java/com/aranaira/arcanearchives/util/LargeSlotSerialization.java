@@ -12,8 +12,9 @@ public interface LargeSlotSerialization
 	default NBTTagList serializeHandler(IItemHandler largeHandler)
 	{
 		NBTTagList res = new NBTTagList();
-		SlotIterable iter = new SlotIterable(largeHandler, false);
+		SlotIterable iter = new SlotIterable(largeHandler);
 		for (ItemStack stack : iter) {
+			if (stack.isEmpty()) continue;
 			NBTTagCompound item = new NBTTagCompound();
 			LargeItemNBTUtil.writeToNBT(item, stack);
 			item.setInteger("slot", iter.getSlot());
