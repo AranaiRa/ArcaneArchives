@@ -193,12 +193,12 @@ public class GUIManifest extends GuiContainer
         if (slot != null)
 		{
 			ManifestEntry entry = mContainer.getEntry(slot.slotNumber);
-			if (entry != null)
+			if (entry != null && entry.getDimension() != player.dimension)
 			{
 				DimensionType dim = DimensionType.getById(entry.getDimension());
 				String name = WordUtils.capitalize(dim.getName().replace("_", " "));
 				tooltip.add("");
-				tooltip.add("" + TextFormatting.DARK_RED + TextFormatting.BOLD + I18n.format("arcanearchives.tooltip.inanotherdim", name));
+				tooltip.add("" + TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.inanotherdim", name));
 			}
 		}
 
