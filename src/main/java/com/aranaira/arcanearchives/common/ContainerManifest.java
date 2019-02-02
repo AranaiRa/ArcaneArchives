@@ -65,6 +65,8 @@ public class ContainerManifest extends Container
 
 		if(entry == null) return ItemStack.EMPTY;
 
+		if (entry.getDimension() != player.dimension) return ItemStack.EMPTY;
+
 		AATickHandler.GetInstance().mBlockPositions.addAll(entry.getVecPositions());
 
 		return ItemStack.EMPTY;
