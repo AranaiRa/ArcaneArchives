@@ -200,10 +200,10 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 			ItemStack temp = new ItemStack(data);
 			if(!temp.isEmpty()) Inventory.add(temp);
 		}
-		if (!world.isRemote)
+		/*if (!world.isRemote)
 		{
 			NetworkHelper.getArcaneArchivesNetwork(NetworkID).AddTileToNetwork(this);
-		}
+		}*/
 		super.readFromNBT(compound);
 	}
 

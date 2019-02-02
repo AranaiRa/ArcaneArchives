@@ -1,8 +1,9 @@
 package com.aranaira.arcanearchives.tileentities;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.common.AAItemStackHandler;
-import com.aranaira.arcanearchives.util.LargeItemNBTUtil;
 import com.aranaira.arcanearchives.util.LargeSlotSerialization;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -12,13 +13,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Iterator;
 
-public class RadiantChestTileEntity extends ImmanenceTileEntity implements LargeSlotSerialization
+public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITickable, LargeSlotSerialization
 {
 	public String mName = "";
 	private final AAItemStackHandler mInventory = new AAItemStackHandler(54);
@@ -53,7 +52,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements Large
 		// Inventory
 		//CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(mInventory, null, compound.getTagList("inventory", NBT.TAG_COMPOUND));
 		NBTTagList tags = compound.getTagList("radiant_inventory", 10);
-		deserializeHandler(tags, mInventory);
+		largeDeserializeHandler(tags, mInventory);
 		mName = compound.getString("name");
 	}
 
@@ -61,13 +60,20 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements Large
 	@Nonnull
 	public NBTTagCompound writeToNBT(NBTTagCompound compound)
 	{
+		super.writeToNBT(compound);
 		// Inventory
 		//compound.setTag("inventory", CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(mInventory, null));
 
-		compound.setTag("radiant_inventory", serializeHandler(mInventory));
+		compound.setTag("radiant_inventory", largeSerializeHandler(mInventory));
 		compound.setString("name", mName);
 
-		return super.writeToNBT(compound);
+		return compound;
+	}
+
+	@Override
+	public void update()
+	{
+		super.update();
 	}
 
 	public String getName()
@@ -110,24 +116,24 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements Large
 	}
 
 	@Override
-	@Nonnull
 	public NBTTagCompound getUpdateTag()
 	{
-		return writeToNBT(super.getUpdateTag());
+		return writeToNBT(new NBTTagCompound());
 	}
 
 	@Override
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
 	{
+		ArcaneArchives.logger.info(Minecraft.getMinecraft().player.getDisplayNameString());
 		readFromNBT(pkt.getNbtCompound());
 		super.onDataPacket(net, pkt);
 	}
 
-	@Nullable
-	@Override
+	@Nonnull
 	public SPacketUpdateTileEntity getUpdatePacket()
 	{
-		return new SPacketUpdateTileEntity(pos, 0, getUpdateTag());
-	}
+		NBTTagCompound compound = writeToNBT(new NBTTagCompound());
 
+		return new SPacketUpdateTileEntity(pos, 0, compound);
+	}
 }

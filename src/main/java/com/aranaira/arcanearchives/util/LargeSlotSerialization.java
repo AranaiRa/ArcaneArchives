@@ -9,7 +9,7 @@ import net.minecraftforge.items.IItemHandler;
 
 public interface LargeSlotSerialization
 {
-	default NBTTagList serializeHandler(IItemHandler largeHandler)
+	default NBTTagList largeSerializeHandler(IItemHandler largeHandler)
 	{
 		NBTTagList res = new NBTTagList();
 		SlotIterable iter = new SlotIterable(largeHandler);
@@ -24,7 +24,7 @@ public interface LargeSlotSerialization
 		return res;
 	}
 
-	default void deserializeHandler(NBTTagList tag, IItemHandler largeHandler)
+	default void largeDeserializeHandler(NBTTagList tag, IItemHandler largeHandler)
 	{
 		for (NBTBase base : tag) {
 			if (!(base instanceof NBTTagCompound)) continue;
