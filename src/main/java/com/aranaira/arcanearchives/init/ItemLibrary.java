@@ -29,4 +29,7 @@ public class ItemLibrary
 	public static final Item COMPONENT_MATERIALINTERFACE = new ComponentMaterialInterfaceItem();
 	public static final Item COMPONENT_RADIANTDUST = new ComponentRadiantDustItem();
 	public static final Item COMPONENT_SCINTILLATINGINLAY = new ComponentScintillatingInlayItem();
+	
+	//SPIRIT SPHERES
+	public static final Item SPIRIT_ORB = new SpiritOrbItem();
 }

@@ -1,7 +1,5 @@
 package com.aranaira.arcanearchives.util.types;
 
-import com.sun.org.apache.xalan.internal.xsltc.dom.FilterIterator;
-
 import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;

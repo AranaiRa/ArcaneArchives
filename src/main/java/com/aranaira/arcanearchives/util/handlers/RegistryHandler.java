@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.BlockTemplate;
 import com.aranaira.arcanearchives.init.BlockLibrary;
 import com.aranaira.arcanearchives.init.ItemLibrary;
+import com.aranaira.arcanearchives.items.ItemMultistateTemplate;
 import com.aranaira.arcanearchives.tileentities.*;
 import com.aranaira.arcanearchives.util.IHasModel;
 import com.google.common.collect.Lists;
@@ -66,6 +67,10 @@ public class RegistryHandler
 	{
 		for(Item item : ItemLibrary.ITEMS)
 		{
+			if(item instanceof ItemMultistateTemplate)
+			{
+				((ItemMultistateTemplate)item).preInit();
+			}
 			if(item instanceof IHasModel)
 			{
 				((IHasModel) item).registerModels();
