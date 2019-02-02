@@ -1,6 +1,0 @@
-{
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "arcanearchives:items/item_spiritsphere_empty"
-    }
-}

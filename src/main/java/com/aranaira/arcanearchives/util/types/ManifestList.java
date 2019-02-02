@@ -1,5 +1,8 @@
 package com.aranaira.arcanearchives.util.types;
 
+import java.util.*;
+import java.util.function.BiFunction;
+import java.util.function.Supplier;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nullable;
