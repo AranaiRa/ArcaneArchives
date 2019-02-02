@@ -80,7 +80,7 @@ public class SetRadiantChestName implements IMessage
 			{
 				if(((RadiantChestTileEntity) te).NetworkID.compareTo(message.mPlayerID) == 0)
 				{
-					((RadiantChestTileEntity) te).mName = message.mName;
+					((RadiantChestTileEntity) te).chestName = message.mName;
 					// markDirty is default to tile entity
 					te.markDirty();
 					AAPacketHandler.CHANNEL.sendToAll(new PacketChangeRadiantChestNameClient(message.mPos, message.mDimensionID, message.mName));

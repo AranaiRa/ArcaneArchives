@@ -64,7 +64,7 @@ public class PacketChangeRadiantChestNameClient implements IMessage
 				TileEntity te = Minecraft.getMinecraft().world.getTileEntity(message.mPos);
 				if(te instanceof RadiantChestTileEntity)
 				{
-					((RadiantChestTileEntity) te).mName = message.mName;
+					((RadiantChestTileEntity) te).chestName = message.mName;
 					((RadiantChestTileEntity) te).markDirty();
 					te.updateContainingBlockInfo();
 				}

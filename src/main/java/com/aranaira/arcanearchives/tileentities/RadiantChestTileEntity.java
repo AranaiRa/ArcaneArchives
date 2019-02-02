@@ -15,11 +15,10 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITickable, LargeSlotSerialization
 {
-	public String mName = "";
+	public String chestName = "";
 	private final AAItemStackHandler mInventory = new AAItemStackHandler(54);
 
 	public RadiantChestTileEntity()
@@ -53,7 +52,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 		//CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(mInventory, null, compound.getTagList("inventory", NBT.TAG_COMPOUND));
 		NBTTagList tags = compound.getTagList("radiant_inventory", 10);
 		largeDeserializeHandler(tags, mInventory);
-		mName = compound.getString("name");
+		chestName = compound.getString("chestName");
 	}
 
 	@Override
@@ -65,7 +64,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 		//compound.setTag("inventory", CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(mInventory, null));
 
 		compound.setTag("radiant_inventory", largeSerializeHandler(mInventory));
-		compound.setString("name", mName);
+		compound.setString("chestName", chestName);
 
 		return compound;
 	}
@@ -76,9 +75,9 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 		super.update();
 	}
 
-	public String getName()
+	public String getChestName()
 	{
-		return mName;
+		return chestName;
 	}
 
 	public void setContents(ItemStack[] chestContents, ItemStack[] secondaryChestContents, boolean secondaryChest)

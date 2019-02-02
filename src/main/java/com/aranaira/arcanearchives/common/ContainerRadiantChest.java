@@ -32,7 +32,7 @@ public class ContainerRadiantChest extends Container
 
 	public ContainerRadiantChest(RadiantChestTileEntity RCTE, IInventory playerInventory)
 	{
-		mName = RCTE.mName;
+		mName = RCTE.chestName;
 		mPos = RCTE.getPos();
 		mDimension = RCTE.getWorld().provider.getDimension();
 
