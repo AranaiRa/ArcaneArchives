@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.data.ArcaneArchivesClientNetwork;
 import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.util.handlers.AATickHandler;
+import com.aranaira.arcanearchives.util.types.ManifestEntry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
@@ -11,8 +12,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
-
-import com.aranaira.arcanearchives.util.types.ManifestEntry;
 
 public class ContainerManifest extends Container
 {
@@ -28,15 +27,10 @@ public class ContainerManifest extends Container
 		this.serverSide = ServerSide;
 		this.player = playerIn;
 
-		if(ServerSide)
-		{
-			serverNetwork = NetworkHelper.getArcaneArchivesNetwork(this.player);
-			handler = null;
-		} else
-		{
-			clientNetwork = NetworkHelper.getArcaneArchivesClientNetwork(this.player);
-			handler = clientNetwork.getManifestHandler();
-		}
+		if(ServerSide) return;
+
+		clientNetwork = NetworkHelper.getArcaneArchivesClientNetwork(this.player);
+		handler = clientNetwork.getManifestHandler();
 
 		int i = 0;
 		for(int y = 0; y < 9; y++)
@@ -53,6 +47,11 @@ public class ContainerManifest extends Container
 	public boolean canInteractWith(@Nonnull EntityPlayer playerIn)
 	{
 		return true;
+	}
+
+	public ManifestEntry getEntry(int slotId)
+	{
+		return handler.getManifestEntryInSlot(slotId);
 	}
 
 	@Override
