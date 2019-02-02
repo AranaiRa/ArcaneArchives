@@ -55,6 +55,7 @@ public class ManifestItemHandler implements IItemHandlerModifiable
 	@Nullable
 	public ManifestEntry getManifestEntryInSlot (int slot)
 	{
+		if (manifestActive == null) manifestActive = manifestBase.filtered();
 		return manifestActive.getEntryForSlot(slot);
 	}
 

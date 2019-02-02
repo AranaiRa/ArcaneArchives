@@ -42,12 +42,12 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 
 	@Nullable
 	public ManifestEntry getEntryForSlot (int slot) {
-		if (slot < reference().size() && slot > 0) return reference().get(slot);
+		if (slot < reference().size() && slot >= 0) return get(slot);
 		return null;
 	}
 
 	public ItemStack getItemStackForSlot (int slot) {
-		if (slot < reference().size() && slot > 0) return reference().get(slot).getStack();
+		if (slot < reference().size() && slot > 0) return get(slot).getStack();
 		return ItemStack.EMPTY;
 	}
 

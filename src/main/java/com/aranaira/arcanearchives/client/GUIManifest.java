@@ -130,8 +130,6 @@ public class GUIManifest extends GuiContainer
 			mContainer.SetSearchString(mSearchText);
 		} else if(keyCode == 1 || keyCode == this.mc.gameSettings.keyBindInventory.getKeyCode()) {
 			Minecraft.getMinecraft().player.closeScreen();
-		} else {
-			super.keyTyped(typedChar, keyCode);
 		}
 	}
 

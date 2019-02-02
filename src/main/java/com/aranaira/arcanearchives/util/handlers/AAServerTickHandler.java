@@ -15,7 +15,6 @@ import java.util.*;
 public class AAServerTickHandler
 {
 	private static final List<ImmanenceTileEntity> incomingITEs = new ArrayList<>();
-	private static final Map<UUID, ArcaneArchivesNetwork> networkMap = new HashMap<>();
 
 	public static void incomingITE(ImmanenceTileEntity entity)
 	{
@@ -36,16 +35,7 @@ public class AAServerTickHandler
 			UUID networkId = ite.GetNetworkID();
 			if(networkId == null) continue;
 
-			ArcaneArchivesNetwork network;
-
-			if(networkMap.containsKey(networkId))
-			{
-				network = networkMap.get(networkId);
-			} else
-			{
-				network = NetworkHelper.getArcaneArchivesNetwork(networkId);
-				networkMap.put(networkId, network);
-			}
+			ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(networkId);
 
 			if(!network.NetworkContainsTile(ite))
 			{

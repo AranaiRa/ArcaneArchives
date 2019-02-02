@@ -217,7 +217,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 		mAccessors.add(pos);
 	}
 
-	/*@Override
+	@Override
 	public void invalidate()
 	{
 		super.invalidate();
@@ -234,7 +234,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 		if (world.isRemote) return;
 
 		NetworkHelper.getArcaneArchivesNetwork(NetworkID).RemoveTileFromNetwork(this);
-	}*/
+	}
 
 	@Override
 	public void onLoad () {
