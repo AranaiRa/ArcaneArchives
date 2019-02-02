@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.common;
 import com.aranaira.arcanearchives.util.types.ManifestEntry;
 import com.aranaira.arcanearchives.util.types.ManifestList;
 import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
 

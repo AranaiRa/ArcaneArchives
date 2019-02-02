@@ -40,7 +40,6 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	private int mCurrentImmanence;
 	private boolean mNeedsToBeUpdated = true;
 
-
 	public ManifestList manifestItems = new ManifestList(new ArrayList<>());
 	public ManifestItemHandler mManifestHandler = null;
 
@@ -453,12 +452,6 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		}
 
 		List<ManifestEntry> consolidated = ItemStackConsolidator.ConsolidateManifest(map);
-		consolidated.sort((turp1, turp2) ->
-		{
-			if(ItemComparison.AreItemsEqual(turp1.val1, turp2.val1) && turp1.val2.equals(turp2.val2)) return 0;
-			return -1;
-		});
-
 		manifestItems.addAll(consolidated);
 	}
 

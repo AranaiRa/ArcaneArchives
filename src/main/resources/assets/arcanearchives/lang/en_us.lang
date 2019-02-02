@@ -86,3 +86,5 @@ arcanearchives.tooltip.notimplemented2=Using this item may crash your game!
 arcanearchives.tooltip.temprecipe1=The recipe for this item is temporary.
 arcanearchives.tooltip.temprecipe2=It will be changed in a later version.
 arcanearchives.tooltip.shouldnothave=This block should not be acquirable.
+
+arcanearchives.tooltip.inanotherdim=This chest is located in %s.

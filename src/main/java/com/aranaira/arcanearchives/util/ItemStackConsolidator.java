@@ -84,8 +84,9 @@ public class ItemStackConsolidator
 			Turple<ItemStack, Integer, BlockPos> tup = input.remove(0);
 			ManifestEntry next = new ManifestEntry(tup.val1, tup.val2, Lists.newArrayList(tup.val3));
 			final ItemStack copy = tup.val1.copy();
+			final int copy2 = tup.val2;
 
-			List<Turple<ItemStack, Integer, BlockPos>> matches = input.stream().filter((i) -> ItemComparison.AreItemsEqual(i.val1, copy)).collect(Collectors.toList());
+			List<Turple<ItemStack, Integer, BlockPos>> matches = input.stream().filter((i) -> ItemComparison.AreItemsEqual(i.val1, copy) && i.val2 == copy2).collect(Collectors.toList());
 
 			input.removeAll(matches);
 

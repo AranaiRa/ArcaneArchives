@@ -4,7 +4,10 @@ import com.aranaira.arcanearchives.common.ManifestItemHandler;
 import com.aranaira.arcanearchives.packets.AAPacketHandler;
 import com.aranaira.arcanearchives.packets.PacketSynchronise;
 import com.aranaira.arcanearchives.util.LargeItemNBTUtil;
+import com.aranaira.arcanearchives.util.types.ManifestEntry;
 import com.aranaira.arcanearchives.util.types.ManifestList;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -12,18 +15,20 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagLong;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import com.aranaira.arcanearchives.util.types.ManifestEntry;
-
 public class ArcaneArchivesClientNetwork
 {
 	/* Internal values that are overwritten */
 	public ManifestList manifestItems = new ManifestList(new ArrayList<>());
+
 	/* Updated data via packet */
 	private boolean mShared = false;
 	private HashMap<String, UUID> pendingInvites = new HashMap<>();
@@ -102,6 +107,19 @@ public class ArcaneArchivesClientNetwork
 
 			manifestItems.add(thisEntry);
 		}
+
+		int dim = getPlayer().dimension;
+
+		manifestItems.sort((turp1, turp2) ->
+		{
+			int comp = turp1.getStack().getDisplayName().compareToIgnoreCase(turp2.getStack().getDisplayName());
+			boolean t1 = turp1.getDimension() == dim;
+			boolean t2 = turp2.getDimension() == dim;
+			if (comp != 0) return comp;
+			if (t1 == t2) return comp;
+			if (t1) return -1;
+			return 1;
+		});
 	}
 
 	public void deserializeData(NBTTagCompound tag)
@@ -151,26 +169,9 @@ public class ArcaneArchivesClientNetwork
 		return null;
 	}
 
-	/*public void refreshTiles () {
-		mActualTiles.clear();
-
-		WorldClient world = Minecraft.getMinecraft().world;
-		int curDim = world.provider.getDimension();
-
-		for (Tuple<Integer, BlockPos> tup : mNetworkTiles) {
-			int dim = tup.val1;
-			BlockPos pos = tup.val2;
-
-			if (curDim != dim) continue;
-
-			if (world.isBlockLoaded(pos)) {
-				TileEntity te = world.getTileEntity(pos);
-				if (te instanceof ImmanenceTileEntity) {
-					mActualTiles.add((ImmanenceTileEntity) te);
-				}
-			}
-		}
-	}*/
-
+	@SideOnly(Side.CLIENT)
+	public EntityPlayer getPlayer () {
+		return Minecraft.getMinecraft().player;
+	}
 }
 
