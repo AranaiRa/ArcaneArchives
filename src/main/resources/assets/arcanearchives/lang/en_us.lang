@@ -50,6 +50,7 @@ tile.matrix_storage.name=Storage Matrix
 tile.matrix_reservoir.name=Reservoir Matrix
 tile.matrix_distillate.name=Distillate Matrix
 
+tile.accessorblock.name=Accessor
 tile.dominion_crystal.name=Dominion Crystal
 tile.gemcutters_table.name=Gem Cutter's Table
 
@@ -84,3 +85,4 @@ arcanearchives.tooltip.notimplemented1=UNIMPLEMENTED
 arcanearchives.tooltip.notimplemented2=Using this item may crash your game!
 arcanearchives.tooltip.temprecipe1=The recipe for this item is temporary.
 arcanearchives.tooltip.temprecipe2=It will be changed in a later version.
+arcanearchives.tooltip.shouldnothave=This block should not be acquirable.
