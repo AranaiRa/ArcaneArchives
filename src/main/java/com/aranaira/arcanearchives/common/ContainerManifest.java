@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.common;
 
 import com.aranaira.arcanearchives.data.ArcaneArchivesClientNetwork;
+import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.util.handlers.AATickHandler;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,12 +12,13 @@ import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
 
-import static com.aranaira.arcanearchives.common.ManifestItemHandler.ManifestEntry;
+import com.aranaira.arcanearchives.util.types.ManifestEntry;
 
 public class ContainerManifest extends Container
 {
 
 	private ArcaneArchivesClientNetwork clientNetwork = null;
+	private ArcaneArchivesNetwork serverNetwork = null;
 	private ManifestItemHandler handler;
 	private boolean serverSide;
 	private EntityPlayer player;
@@ -26,17 +28,16 @@ public class ContainerManifest extends Container
 		this.serverSide = ServerSide;
 		this.player = playerIn;
 
-		if(ServerSide) return; // all of this is done on the client
+		if(ServerSide)
+		{
+			serverNetwork = NetworkHelper.getArcaneArchivesNetwork(this.player);
+			handler = null;
+		} else
+		{
+			clientNetwork = NetworkHelper.getArcaneArchivesClientNetwork(this.player);
+			handler = clientNetwork.getManifestHandler();
+		}
 
-		clientNetwork = NetworkHelper.getArcaneArchivesClientNetwork(this.player);
-		handler = clientNetwork.getManifestHandler();
-
-		//clientNetwork.registerCallback(PacketSynchronise.SynchroniseType.MANIFEST, this, this::updateHandlerAndSlots);
-
-		/*updateHandlerAndSlots();
-	}
-
-	public void updateHandlerAndSlots () {*/
 		int i = 0;
 		for(int y = 0; y < 9; y++)
 		{

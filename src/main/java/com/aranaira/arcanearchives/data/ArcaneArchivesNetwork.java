@@ -7,13 +7,8 @@ import com.aranaira.arcanearchives.tileentities.AATileEntity;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.*;
-import com.aranaira.arcanearchives.util.types.SlotIterable;
-import com.aranaira.arcanearchives.util.types.TileList;
-import com.aranaira.arcanearchives.util.types.Tuple;
-import com.aranaira.arcanearchives.util.types.Turple;
+import com.aranaira.arcanearchives.util.types.*;
 import com.google.common.annotations.Beta;
-import com.google.common.collect.ConcurrentHashMultiset;
-import com.google.common.collect.Lists;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -45,11 +40,14 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	private int mCurrentImmanence;
 	private boolean mNeedsToBeUpdated = true;
 
-	// ManifestItemHandler is client-only for now
+
+	public ManifestList manifestItems = new ManifestList(new ArrayList<>());
+	public ManifestItemHandler mManifestHandler = null;
 
 	private ArcaneArchivesNetwork(UUID id)
 	{
 		mPlayerId = id;
+		mManifestHandler = new ManifestItemHandler(manifestItems);
 	}
 
 	public void ShareWith(UUID targetNetwork)
@@ -436,31 +434,43 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		return true;
 	}
 
-	public NBTTagCompound buildSynchroniseManifest () {
+	public void rebuildManifest ()
+	{
+		manifestItems.clear();
+
 		List<Turple<ItemStack, Integer, BlockPos>> map = new ArrayList<>();
 
-		// Step one: iterate loaded chests and get item stacks.
-
-		for (ImmanenceTileEntity ite : GetRadiantChests()) {
+		for(ImmanenceTileEntity ite : GetRadiantChests())
+		{
 			RadiantChestTileEntity chest = (RadiantChestTileEntity) ite;
 			int dimId = chest.getWorld().provider.getDimension();
-			for (ItemStack is : new SlotIterable(chest.getInventory())) {
-				if (is.isEmpty()) continue;
+			for(ItemStack is : new SlotIterable(chest.getInventory()))
+			{
+				if(is.isEmpty()) continue;
 
 				map.add(new Turple<>(is.copy(), dimId, chest.getPos()));
 			}
 		}
 
-		NBTTagList manifest = new NBTTagList();
-
-		// TODO: Change into ManifestList
-		List<Turple<ItemStack, Integer, List<BlockPos>>> consolidated = ItemStackConsolidator.TurpleConsolidatedItems(map);
-		consolidated.sort((turp1, turp2) -> {
-			if (ItemComparison.AreItemsEqual(turp1.val1, turp2.val1) && turp1.val2.equals(turp2.val2)) return 0;
+		List<ManifestEntry> consolidated = ItemStackConsolidator.ConsolidateManifest(map);
+		consolidated.sort((turp1, turp2) ->
+		{
+			if(ItemComparison.AreItemsEqual(turp1.val1, turp2.val1) && turp1.val2.equals(turp2.val2)) return 0;
 			return -1;
 		});
 
-		for (Turple<ItemStack, Integer, List<BlockPos>> entry : consolidated) {
+		manifestItems.addAll(consolidated);
+	}
+
+	public NBTTagCompound buildSynchroniseManifest () {
+		// Step one: iterate loaded chests and get item stacks.
+		rebuildManifest();
+
+		NBTTagList manifest = new NBTTagList();
+
+		// TODO: Change into ManifestList
+
+		for (ManifestEntry entry : manifestItems) {
 			NBTTagCompound itemEntry = new NBTTagCompound();
 			LargeItemNBTUtil.writeToNBT(itemEntry, entry.val1);
 			NBTTagList positions = new NBTTagList();

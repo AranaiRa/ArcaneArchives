@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import static com.aranaira.arcanearchives.common.ManifestItemHandler.ManifestEntry;
+import com.aranaira.arcanearchives.util.types.ManifestEntry;
 
 public class ArcaneArchivesClientNetwork
 {
@@ -37,7 +37,7 @@ public class ArcaneArchivesClientNetwork
 	ArcaneArchivesClientNetwork(UUID id)
 	{
 		this.mOwnerId = id;
-		this.mManifestHandler = new ManifestItemHandler(this, manifestItems);
+		this.mManifestHandler = new ManifestItemHandler(manifestItems);
 	}
 
 	public ManifestItemHandler getManifestHandler()

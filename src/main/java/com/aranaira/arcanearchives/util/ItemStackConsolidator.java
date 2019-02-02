@@ -1,8 +1,10 @@
 package com.aranaira.arcanearchives.util;
 
+import com.aranaira.arcanearchives.util.types.ManifestEntry;
 import com.aranaira.arcanearchives.util.types.Tuple;
 import com.aranaira.arcanearchives.util.types.Turple;
 import com.google.common.collect.Lists;
+import javafx.geometry.Pos;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -72,24 +74,19 @@ public class ItemStackConsolidator
 		return output;
 	}
 
-	public static List<Turple<ItemStack, Integer, List<BlockPos>>> TurpleConsolidatedItems (List<Turple<ItemStack, Integer, BlockPos>> input) {
+	public static List<ManifestEntry> ConsolidateManifest (List<Turple<ItemStack, Integer, BlockPos>> input) {
 		// It doesns't matter if we modify the original list
-		List<Turple<ItemStack, Integer, List<BlockPos>>> output = new ArrayList<>();
+		List<ManifestEntry> output = new ArrayList<>();
 
 		if (input.size() == 0) return output;
 
 		while (input.size() != 0) {
 			Turple<ItemStack, Integer, BlockPos> tup = input.remove(0);
-			Turple<ItemStack, Integer, List<BlockPos>> next = new Turple<>(tup.val1, tup.val2, Lists.newArrayList(tup.val3));
+			ManifestEntry next = new ManifestEntry(tup.val1, tup.val2, Lists.newArrayList(tup.val3));
 			final ItemStack copy = tup.val1.copy();
 			final int copy2 = tup.val2;
 
 			List<Turple<ItemStack, Integer, BlockPos>> matches = input.stream().filter((i) -> ItemComparison.AreItemsEqual(i.val1, copy) && i.val2 == copy2).collect(Collectors.toList());
-
-			/*if (matches.size() == 0) {
-				output.add(next);
-				continue;
-			}*/
 
 			input.removeAll(matches);
 

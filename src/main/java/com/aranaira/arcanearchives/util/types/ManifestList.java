@@ -1,8 +1,5 @@
 package com.aranaira.arcanearchives.util.types;
 
-import java.util.*;
-import java.util.function.BiFunction;
-import java.util.function.Supplier;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nullable;
@@ -11,8 +8,6 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.aranaira.arcanearchives.common.ManifestItemHandler.ManifestEntry;
 
 public class ManifestList extends ReferenceList<ManifestEntry>
 {
@@ -50,7 +45,7 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 	}
 
 	public ItemStack getItemStackForSlot (int slot) {
-		if (slot < reference().size() && slot > 0) return get(slot).getStack();
+		if (slot < reference().size() && slot >= 0) return get(slot).getStack();
 		return ItemStack.EMPTY;
 	}
 
