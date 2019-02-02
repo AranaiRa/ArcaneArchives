@@ -2,13 +2,23 @@ package com.aranaira.arcanearchives.client;
 
 import com.aranaira.arcanearchives.common.ContainerManifest;
 import com.aranaira.arcanearchives.util.handlers.AATickHandler;
+import com.aranaira.arcanearchives.util.types.ManifestEntry;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.DimensionType;
+import net.minecraftforge.common.DimensionManager;
+import org.apache.commons.lang3.text.WordUtils;
 import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nonnull;
@@ -37,6 +47,9 @@ public class GUIManifest extends GuiContainer
 	private int mEndTrackingButtonWidth = 54;
 	private int mEndTrackingButtonHeight = 14;
 
+	private int OTHER_DIMENSION = 0x10989898;
+	private final EntityPlayer player;
+
 	public GUIManifest(EntityPlayer player, ContainerManifest container)
 	{
 		super(container);
@@ -46,6 +59,7 @@ public class GUIManifest extends GuiContainer
 		this.xSize = 184;
 		this.ySize = 224;
 
+		this.player = player;
 	}
 
 	@Override
@@ -147,8 +161,49 @@ public class GUIManifest extends GuiContainer
 			{
 				AATickHandler.GetInstance().clearChests();
 			}
+
+			// TODO: Refresh button
 		}
 
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 	}
+
+	@Override
+    public void drawSlot(Slot slot) {
+		super.drawSlot(slot);
+
+		ManifestEntry entry = mContainer.getEntry(slot.getSlotIndex());
+		if (entry == null) return;
+
+		if (entry.getDimension() != player.dimension) {
+			GlStateManager.disableDepth();
+			drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, 0x77000000);
+		}
+	}
+
+	@Override
+	protected void renderToolTip(ItemStack stack, int x, int y)
+    {
+        FontRenderer font = stack.getItem().getFontRenderer(stack);
+        net.minecraftforge.fml.client.config.GuiUtils.preItemToolTip(stack);
+        List<String> tooltip = this.getItemToolTip(stack);
+
+        Slot slot = this.getSlotUnderMouse();
+
+        if (slot != null)
+		{
+			ManifestEntry entry = mContainer.getEntry(slot.slotNumber);
+			if (entry != null)
+			{
+				DimensionType dim = DimensionType.getById(entry.getDimension());
+				String name = WordUtils.capitalize(dim.getName().replace("_", " "));
+				tooltip.add("");
+				tooltip.add("" + TextFormatting.DARK_RED + TextFormatting.BOLD + I18n.format("arcanearchives.tooltip.inanotherdim", name));
+			}
+		}
+
+        this.drawHoveringText(tooltip, x, y, (font == null ? fontRenderer : font));
+
+        net.minecraftforge.fml.client.config.GuiUtils.postItemToolTip();
+    }
 }
