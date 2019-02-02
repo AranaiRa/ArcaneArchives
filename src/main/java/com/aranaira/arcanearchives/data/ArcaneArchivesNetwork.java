@@ -268,6 +268,10 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		UpdateImmanence();
 	}
 
+	public boolean NetworkContainsTile (ImmanenceTileEntity tileEntityInstance) {
+		return mNetworkTiles.contains(tileEntityInstance);
+	}
+
 	public TileList.TileListIterable GetRadiantChests()
 	{
 		return mNetworkTiles.filterClass(RadiantChestTileEntity.class);
@@ -440,7 +444,9 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		for (ImmanenceTileEntity ite : GetRadiantChests()) {
 			RadiantChestTileEntity chest = (RadiantChestTileEntity) ite;
 			int dimId = chest.getWorld().provider.getDimension();
-			for (ItemStack is : new SlotIterable(chest.getInventory(), true)) {
+			for (ItemStack is : new SlotIterable(chest.getInventory())) {
+				if (is.isEmpty()) continue;
+
 				map.add(new Turple<>(is.copy(), dimId, chest.getPos()));
 			}
 		}

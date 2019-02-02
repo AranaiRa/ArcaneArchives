@@ -1,10 +1,13 @@
 package com.aranaira.arcanearchives.util.types;
 
-import com.sun.org.apache.xalan.internal.xsltc.dom.FilterIterator;
+import net.minecraft.item.ItemStack;
 
-import java.util.*;
-import java.util.function.BiFunction;
-import java.util.function.Supplier;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.aranaira.arcanearchives.common.ManifestItemHandler.ManifestEntry;
 
@@ -12,7 +15,13 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 {
 	String mFilterText;
 
-	public ManifestList (List<ManifestEntry> reference) {
+	public ManifestList()
+	{
+		super(new ArrayList<>());
+	}
+
+	public ManifestList(List<ManifestEntry> reference)
+	{
 		super(reference);
 		this.mFilterText = null;
 	}
@@ -23,27 +32,34 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 		this.mFilterText = filterText;
 	}
 
-	public ManifestListIterable filtered ()
+	public ManifestList filtered()
 	{
-		return new ManifestListIterable(new FilterIterator(mFilterText));
+		if (mFilterText == null) return this;
+
+		return reference().stream().filter((entry) -> entry != null && entry.getStack().getDisplayName().compareToIgnoreCase(mFilterText) != 0).collect(Collectors.toCollection(ManifestList::new));
+
 	}
 
-	public ManifestListIterable setSearchText (String searchTerm) {
+	@Nullable
+	public ManifestEntry getEntryForSlot (int slot) {
+		if (slot < reference().size() && slot > 0) return reference().get(slot);
+		return null;
+	}
+
+	public ItemStack getItemStackForSlot (int slot) {
+		if (slot < reference().size() && slot > 0) return reference().get(slot).getStack();
+		return ItemStack.EMPTY;
+	}
+
+	public void setSearchText(String searchTerm)
+	{
 		this.mFilterText = searchTerm;
-		if (searchTerm != null)
-		{
-			return filtered();
-		}
-		else
-		{
-			return iterable();
-		}
 	}
 
 	@Override
-	public ManifestListIterable iterable ()
+	public ManifestListIterable iterable()
 	{
-		return new ManifestListIterable(iterator());
+		return new ManifestListIterable(new ManifestIterator(iterator()));
 	}
 
 	public ManifestList sorted(Comparator<ManifestEntry> c)
@@ -56,163 +72,43 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 
 	public class ManifestListIterable extends ReferenceListIterable<ManifestEntry>
 	{
-		ManifestListIterable(Iterator<ManifestEntry> iter)
-		{
-			super(iter);
-		}
-
-		ManifestListIterable(FilterIterator iter)
+		ManifestListIterable(ManifestIterator iter)
 		{
 			super(iter);
 		}
 
 		public int getSlot()
 		{
-			if(iter instanceof FilterIterator)
-			{
-				return ((FilterIterator) iter).getSlot();
-			} else
-			{
-				return -1;
-			}
-		}
-
-		public ManifestEntry translate(int slot)
-		{
-			if(iter instanceof FilterIterator)
-			{
-				return ((FilterIterator) iter).translateFiltered(slot);
-			}
-			else
-			{
-				return reference().get(slot);
-			}
+			return ((ManifestIterator) iter).getSlot();
 		}
 	}
 
-	public class FilterIterator implements ListIterator<ManifestEntry>
+	public class ManifestIterator implements Iterator<ManifestEntry>
 	{
 		private int slot = 0;
-		private int filteredSlot = 0;
-		private String filterString;
-		private BiFunction<Integer, ManifestEntry, Boolean> comparatorString = (slot, entry) -> (filterString != null && entry.getStack().getDisplayName().compareToIgnoreCase(filterString) != 0);
+		private Iterator<ManifestEntry> iter;
 
-		public FilterIterator(String filterString)
+		public ManifestIterator(Iterator<ManifestEntry> iter)
 		{
-			this.filterString = filterString;
+			this.iter = iter;
 		}
 
 		public int getSlot()
 		{
-			return filteredSlot;
-		}
-
-		public int getActualSlot()
-		{
 			return slot;
-		}
-
-		public ManifestEntry translateFiltered(int slot)
-		{
-			return everything(this::_next, this::_hasNext, (curSlot, entry) ->
-			{
-				if(curSlot == slot) return true;
-				return false;
-			}, false);
 		}
 
 		@Override
 		public boolean hasNext()
 		{
-			return everything(this::_next, this::_hasNext, comparatorString, false) != null;
-		}
-
-		public boolean _hasNext()
-		{
-			return slot < reference().size();
+			return iter.hasNext();
 		}
 
 		@Override
 		public ManifestEntry next()
 		{
-			filteredSlot++;
-			return everything(this::_next, this::_hasNext, comparatorString, true);
-		}
-
-		public ManifestEntry _next()
-		{
-			return reference().get(slot++);
-		}
-
-		@Override
-		public boolean hasPrevious()
-		{
-			return everything(this::_previous, this::_hasPrevious, comparatorString, false) != null;
-		}
-
-		public ManifestEntry everything(Supplier<ManifestEntry> supplier, Supplier<Boolean> iter, BiFunction<Integer, ManifestEntry, Boolean> compare, boolean keepSlot)
-		{
-			int last_slot = slot;
-			while(iter.get())
-			{
-				ManifestEntry entry = supplier.get();
-				if(compare.apply(slot, entry))
-				{
-					if(!keepSlot) slot = last_slot;
-					return entry;
-				}
-			}
-			slot = last_slot;
-			return null;
-		}
-
-		public boolean _hasPrevious()
-		{
-			return slot != 0;
-		}
-
-		@Override
-		public ManifestEntry previous()
-		{
-			filteredSlot--;
-			return everything(this::_previous, this::_hasPrevious, comparatorString, true);
-		}
-
-		public ManifestEntry _previous()
-		{
-			return reference().get(slot--);
-		}
-
-		@Override
-		public int nextIndex()
-		{
-			if(hasNext()) return filteredSlot + 1;
-			else return filteredSlot;
-		}
-
-		@Override
-		public int previousIndex()
-		{
-			if(hasPrevious()) return filteredSlot - 1;
-			else return 0;
-		}
-
-		@Override
-		public void remove()
-		{
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public void set(ManifestEntry manifestEntry)
-		{
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public void add(ManifestEntry manifestEntry)
-		{
-			throw new UnsupportedOperationException();
+			slot++;
+			return iter.next();
 		}
 	}
 }

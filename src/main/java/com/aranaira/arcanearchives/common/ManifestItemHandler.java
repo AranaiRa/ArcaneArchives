@@ -9,31 +9,34 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public class ManifestItemHandler implements IItemHandlerModifiable
 {
 	private ArcaneArchivesClientNetwork network;
-	private ManifestList.ManifestListIterable currentIterator;
-	private ManifestList manifest = null;
+	private ManifestList manifestBase = null;
+	private ManifestList manifestActive = null;
 
 	public ManifestItemHandler(ArcaneArchivesClientNetwork network, ManifestList manifest)
 	{
-		this.manifest = manifest;
+		this.manifestBase = manifest;
 		this.network = network;
 	}
 
 	public ManifestItemHandler(ArcaneArchivesClientNetwork network) {
 		this.network = network;
-		this.manifest = network.getManifestItems();
+		this.manifestBase = network.getManifestItems();
 	}
 
 	@Override
@@ -45,12 +48,14 @@ public class ManifestItemHandler implements IItemHandlerModifiable
 	@Override
 	public ItemStack getStackInSlot(int slot)
 	{
-		return getCurrentIterator().translate(slot).getStack();
+		if (manifestActive == null) manifestActive = manifestBase.filtered();
+		return manifestActive.getItemStackForSlot(slot);
 	}
 
+	@Nullable
 	public ManifestEntry getManifestEntryInSlot (int slot)
 	{
-		return getCurrentIterator().translate(slot);
+		return manifestActive.getEntryForSlot(slot);
 	}
 
 	@Override
@@ -76,28 +81,16 @@ public class ManifestItemHandler implements IItemHandlerModifiable
 	{
 	}
 
-	public ManifestList.ManifestListIterable getCurrentIterator () {
-		if (currentIterator == null) {
-			if (manifest != null)
-			{
-				currentIterator = manifest.iterable();
-			} else
-			{
-				return null;
-			}
-		}
-
-		return currentIterator;
-	}
-
 	public void setSearchText(String s)
 	{
-		currentIterator = manifest.setSearchText(s);
+		manifestBase.setSearchText(s);
+		manifestActive = manifestBase.filtered();
 	}
 
-	public void Clear()
+	public void clear()
 	{
-		currentIterator = manifest.setSearchText(null);
+		manifestBase.setSearchText(null);
+		manifestActive = manifestBase.filtered();
 	}
 
 	public static class ManifestEntry extends Turple<ItemStack, Integer, List<BlockPos>> {
@@ -117,6 +110,10 @@ public class ManifestItemHandler implements IItemHandlerModifiable
 
 		public List<BlockPos> getPositions () {
 			return val3;
+		}
+
+		public List<Vec3d> getVecPositions () {
+			return getPositions().stream().map((pos) -> new Vec3d(pos.getX(), pos.getY(), pos.getZ())).collect(Collectors.toList());
 		}
 	}
 }

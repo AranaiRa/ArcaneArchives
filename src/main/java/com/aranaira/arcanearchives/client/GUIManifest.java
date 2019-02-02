@@ -106,7 +106,7 @@ public class GUIManifest extends GuiContainer
 
 
 	@Override
-	protected void keyTyped(char typedChar, int keyCode)
+	protected void keyTyped(char typedChar, int keyCode) throws IOException
 	{
 		//If the user is currently entering text into the search bar.
 		if(mIsEnteringText)
@@ -128,8 +128,11 @@ public class GUIManifest extends GuiContainer
 				else if(typedChar == ' ') mSearchText += typedChar;
 			}
 			mContainer.SetSearchString(mSearchText);
-		} else if(keyCode == 1 || keyCode == this.mc.gameSettings.keyBindInventory.getKeyCode())
+		} else if(keyCode == 1 || keyCode == this.mc.gameSettings.keyBindInventory.getKeyCode()) {
 			Minecraft.getMinecraft().player.closeScreen();
+		} else {
+			super.keyTyped(typedChar, keyCode);
+		}
 	}
 
 

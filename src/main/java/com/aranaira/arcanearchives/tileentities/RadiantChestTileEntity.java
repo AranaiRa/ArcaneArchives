@@ -18,7 +18,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Iterator;
 
-public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITickable, LargeSlotSerialization
+public class RadiantChestTileEntity extends ImmanenceTileEntity implements LargeSlotSerialization
 {
 	public String mName = "";
 	private final AAItemStackHandler mInventory = new AAItemStackHandler(54);
@@ -29,12 +29,6 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 		this.ImmanenceDrain = 0;
 		this.ImmanenceGeneration = 0;
 		this.IsInventory = false;
-	}
-
-	@Override
-	public void update()
-	{
-		super.update();
 	}
 
 	@Override
@@ -58,7 +52,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 		super.readFromNBT(compound);
 		// Inventory
 		//CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(mInventory, null, compound.getTagList("inventory", NBT.TAG_COMPOUND));
-		NBTTagList tags = compound.getTagList("inventory", 10);
+		NBTTagList tags = compound.getTagList("radiant_inventory", 10);
 		deserializeHandler(tags, mInventory);
 		mName = compound.getString("name");
 	}
@@ -67,14 +61,13 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 	@Nonnull
 	public NBTTagCompound writeToNBT(NBTTagCompound compound)
 	{
-		super.writeToNBT(compound);
 		// Inventory
 		//compound.setTag("inventory", CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(mInventory, null));
 
-		compound.setTag("inventory", serializeHandler(mInventory));
+		compound.setTag("radiant_inventory", serializeHandler(mInventory));
 		compound.setString("name", mName);
 
-		return compound;
+		return super.writeToNBT(compound);
 	}
 
 	public String getName()

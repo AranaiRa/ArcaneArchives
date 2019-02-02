@@ -214,7 +214,7 @@ public class ReferenceList<T> implements Iterable<T>, List<T>
 		return this.reference.parallelStream();
 	}
 
-	public static class ReferenceListIterable<T> implements Iterable<T> {
+	public class ReferenceListIterable<T> implements Iterable<T> {
 
 		Iterator<T> iter;
 
