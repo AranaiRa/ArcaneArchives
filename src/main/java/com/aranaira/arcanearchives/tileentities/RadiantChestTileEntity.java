@@ -113,25 +113,21 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements Large
 	@Nonnull
 	public NBTTagCompound getUpdateTag()
 	{
-		NBTTagCompound tag = super.getUpdateTag();
-		tag.setString("name", mName);
-		return tag;
+		return writeToNBT(super.getUpdateTag());
 	}
 
 	@Override
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
 	{
-		mName = pkt.getNbtCompound().getString("name");
+		readFromNBT(pkt.getNbtCompound());
 		super.onDataPacket(net, pkt);
 	}
 
-
 	@Nullable
+	@Override
 	public SPacketUpdateTileEntity getUpdatePacket()
 	{
-		NBTTagCompound compound = new NBTTagCompound();
-		compound.setString("name", mName);
-		return new SPacketUpdateTileEntity(pos, 0, compound);
+		return new SPacketUpdateTileEntity(pos, 0, getUpdateTag());
 	}
 
 }
