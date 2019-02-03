@@ -152,6 +152,7 @@ public class AccessorBlock extends BlockTemplate
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
+		if (world.isRemote) return true;
 		TileEntity te = world.getTileEntity(pos);
 
 		if(te instanceof AccessorTileEntity)
