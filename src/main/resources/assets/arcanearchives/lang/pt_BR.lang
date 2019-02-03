@@ -1,0 +1,42 @@
+itemGroup.arcanearchives.creativeTab=Arquivos Arcanos
+
+item.item_rawquartz.name=Quartzo Radiante Bruto
+item.item_cutquartz.name=Quartzo Radiante Lapidado
+item.item_tomeofrequisition.name=Tomo da Requisição
+
+item.item_component_containmentfield.name=Campo de Contenção
+item.item_component_materialinterface.name=Interface de Materiais
+item.item_component_matrixbrace.name=Suporte Matricial
+item.item_component_radiantdust.name=Pó Radiante
+item.item_component_scintillatinginlay.name=Embutimento Cintilante
+
+tile.storage_raw_quartz.name=Bloco Bruto de Quartzo Radiante
+tile.storage_cut_quartz.name=Bloco Lapidado de Quartzo Radiante
+tile.raw_quartz.name=Quartzo Radiante Bruto
+
+tile.radiant_resonator.name=Ressonador Radiatne
+
+tile.matrix_crystal_core.name=Núcleo de Matriz Cristalina
+tile.matrix_repository.name=Matriz de Repositório
+tile.matrix_storage.name=Matriz de Armazenamento
+tile.matrix_reservoir.name=Matriz de Reservatório
+tile.matrix_distillate.name=Matriz de Destilação
+
+tile.dominion_crystal.name=Cristal Dominante
+tile.gemcutters_table.name=Mesa do Lapidário
+
+entity.spirit_crown_01.name=Mote - Realeza
+entity.spirit_crown_02.name=Juve - Realeza
+entity.spirit_crown_03.name=Eld - Realeza
+entity.spirit_matter_01.name=Mote - Matéria
+entity.spirit_matter_02.name=Juve - Matéria
+entity.spirit_matter_03.name=Eld - Matéria
+entity.spirit_power_01.name=Mote - Poder
+entity.spirit_power_02.name=Juve - Poder
+entity.spirit_power_03.name=Eld - Poder
+entity.spirit_space_01.name=Mote - Espaço
+entity.spirit_space_02.name=Juve - Espaço
+entity.spirit_space_03.name=Eld - Espaço
+entity.spirit_time_01.name=Mote - Tempo
+entity.spirit_time_02.name=Juve - Tempo
+entity.spirit_time_03.name=Eld - Tempo
