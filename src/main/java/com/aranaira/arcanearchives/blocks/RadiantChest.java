@@ -6,7 +6,6 @@ import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.util.DropHelper;
 import com.aranaira.arcanearchives.util.handlers.AATickHandler;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -26,7 +25,7 @@ import net.minecraftforge.items.IItemHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
-public class RadiantChest extends BlockTemplate implements ITileEntityProvider
+public class RadiantChest extends BlockTemplate
 {
 	public static final String NAME = "radiant_chest";
 
@@ -103,10 +102,10 @@ public class RadiantChest extends BlockTemplate implements ITileEntityProvider
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(@Nonnull World worldIn, int meta)
-	{
-		return new RadiantChestTileEntity();
-	}
+	public boolean hasTileEntity(IBlockState state) { return true; }
+
+	@Override
+	public TileEntity createTileEntity(World world, IBlockState state) { return new RadiantChestTileEntity(); }
 
 	@Override
 	public boolean canEntityDestroy(IBlockState state, IBlockAccess world, BlockPos pos, Entity entity)
