@@ -3,7 +3,6 @@ package com.aranaira.arcanearchives.blocks;
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
 import com.aranaira.arcanearchives.util.handlers.ConfigHandler;
 import mcp.MethodsReturnNonnullByDefault;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
@@ -12,13 +11,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class RadiantResonator extends BlockTemplate implements ITileEntityProvider
+public class RadiantResonator extends BlockTemplate
 {
 	public static final String name = "radiant_resonator";
 
@@ -90,10 +88,9 @@ public class RadiantResonator extends BlockTemplate implements ITileEntityProvid
 		return BlockRenderLayer.CUTOUT;
 	}
 
-	@Nullable
 	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta)
-	{
-		return new RadiantResonatorTileEntity();
-	}
+	public boolean hasTileEntity(IBlockState state) { return true; }
+
+	@Override
+	public TileEntity createTileEntity(World world, IBlockState state) { return new RadiantResonatorTileEntity(); }
 }

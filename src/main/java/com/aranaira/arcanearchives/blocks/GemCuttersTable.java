@@ -5,7 +5,6 @@ import com.aranaira.arcanearchives.common.AAGuiHandler;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import com.aranaira.arcanearchives.util.DropHelper;
 import mcp.MethodsReturnNonnullByDefault;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -27,7 +26,7 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class GemCuttersTable extends BlockDirectionalTemplate implements ITileEntityProvider
+public class GemCuttersTable extends BlockDirectionalTemplate
 {
 	public static final String name = "gemcutters_table";
 
@@ -45,12 +44,6 @@ public class GemCuttersTable extends BlockDirectionalTemplate implements ITileEn
 
 	@Override
 	public boolean hasOBJModel()
-	{
-		return true;
-	}
-
-	@Override
-	public boolean hasTileEntity(IBlockState state)
 	{
 		return true;
 	}
@@ -110,8 +103,11 @@ public class GemCuttersTable extends BlockDirectionalTemplate implements ITileEn
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta)
+	public boolean hasTileEntity(IBlockState state)
 	{
-		return new GemCuttersTableTileEntity();
+		return true;
 	}
+
+	@Override
+	public TileEntity createTileEntity(World world, IBlockState state) { return new GemCuttersTableTileEntity(); }
 }
