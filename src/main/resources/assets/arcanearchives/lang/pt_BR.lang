@@ -1,42 +1,90 @@
-itemGroup.arcanearchives.creativeTab=Arquivos Arcanos
+itemGroup.arcanearchives=Arquivos Arcanos
 
 item.item_rawquartz.name=Quartzo Radiante Bruto
 item.item_cutquartz.name=Quartzo Radiante Lapidado
+item.item_geomancypendulum.name=Pêndulo de Geomancia
+item.item_geomanticmap.name=Mapa Geomântico
+item.item_manifest.name=Manifesto
+item.item_radiantbucket.name=Balde Radiante
+item.item_scepterabduction.name=Cetro da Abdução
+item.item_sceptermanipulation.name=Cetro da Manipulação
+item.item_sceptertranslocation.name=Cetro da Translocação
+item.item_tomeofarcana.name=Tomo Arcano
 item.item_tomeofrequisition.name=Tomo da Requisição
 
 item.item_component_containmentfield.name=Campo de Contenção
 item.item_component_materialinterface.name=Interface de Materiais
-item.item_component_matrixbrace.name=Suporte Matricial
+item.item_component_matrixbrace.name=Suporte da Matriz
 item.item_component_radiantdust.name=Pó Radiante
 item.item_component_scintillatinginlay.name=Embutimento Cintilante
 
-tile.storage_raw_quartz.name=Bloco Bruto de Quartzo Radiante
-tile.storage_cut_quartz.name=Bloco Lapidado de Quartzo Radiante
+item.item_spiritorb.empty.name=Orbe Planetária Sem Aspecto
+item.item_spiritorb.crown_mote.name=Orbe da Coroa
+item.item_spiritorb.crown_juve.name=Orbe da Coroa Real
+item.item_spiritorb.crown_eld.name=Orbe da Coroa Jupiterina
+item.item_spiritorb.matter_mote.name=Orbe de Matéria
+item.item_spiritorb.matter_juve.name=Orbe de Matéria Densa
+item.item_spiritorb.matter_eld.name=Orbe de Matéria Venusiana
+item.item_spiritorb.power_mote.name=Orbe do Poder
+item.item_spiritorb.power_juve.name=Orbe Carregada do Poder
+item.item_spiritorb.power_eld.name=Orbe Marciana do Poder
+item.item_spiritorb.space_mote.name=Orbe Espacial
+item.item_spiritorb.space_juve.name=Orbe do Vasto Espaço
+item.item_spiritorb.space_eld.name=Orbe Mercurial do Espaço
+item.item_spiritorb.time_mote.name=Orbe do Tempo
+item.item_spiritorb.time_juve.name=Orbe do Tempo Ancião
+item.item_spiritorb.time_eld.name=Orbe Saturnina do Tempo
+
+tile.storage_raw_quartz.name=Bloco de Quartzo Radiante Bruto
+tile.storage_cut_quartz.name=Blodo de Quartzo Radiante Lapidado
 tile.raw_quartz.name=Quartzo Radiante Bruto
 
-tile.radiant_resonator.name=Ressonador Radiatne
+tile.radiant_crafting_table.name=Bancada de Trabalho Radiante
+tile.radiant_chest.name=Baú Radiante
+tile.radiant_lantern.name=Lâmpada Radiante
+tile.radiant_resonator.name=Ressoador Radiante
 
-tile.matrix_crystal_core.name=Núcleo de Matriz Cristalina
+tile.matrix_crystal_core.name=Núcleo de Matriz Cristalino
 tile.matrix_repository.name=Matriz de Repositório
 tile.matrix_storage.name=Matriz de Armazenamento
 tile.matrix_reservoir.name=Matriz de Reservatório
-tile.matrix_distillate.name=Matriz de Destilação
+tile.matrix_distillate.name=Matriz Destilada
 
-tile.dominion_crystal.name=Cristal Dominante
-tile.gemcutters_table.name=Mesa do Lapidário
+tile.accessorblock.name=Acessador
+tile.dominion_crystal.name=Cristal de Domínio
+tile.gemcutters_table.name=Mesa do Ourives
 
-entity.spirit_crown_01.name=Mote - Realeza
-entity.spirit_crown_02.name=Juve - Realeza
-entity.spirit_crown_03.name=Eld - Realeza
-entity.spirit_matter_01.name=Mote - Matéria
-entity.spirit_matter_02.name=Juve - Matéria
-entity.spirit_matter_03.name=Eld - Matéria
-entity.spirit_power_01.name=Mote - Poder
-entity.spirit_power_02.name=Juve - Poder
-entity.spirit_power_03.name=Eld - Poder
-entity.spirit_space_01.name=Mote - Espaço
-entity.spirit_space_02.name=Juve - Espaço
-entity.spirit_space_03.name=Eld - Espaço
-entity.spirit_time_01.name=Mote - Tempo
-entity.spirit_time_02.name=Juve - Tempo
-entity.spirit_time_03.name=Eld - Tempo
+entity.spirit_crown_01.name=Mote Real
+entity.spirit_crown_02.name=Juve Real
+entity.spirit_crown_03.name=Eld Real
+entity.spirit_matter_01.name=Mote de Matéria
+entity.spirit_matter_02.name=Juve de Matéria
+entity.spirit_matter_03.name=Eld de Matéria
+entity.spirit_power_01.name=Mote do Poder
+entity.spirit_power_02.name=Juve do Poder
+entity.spirit_power_03.name=Eld do Poder
+entity.spirit_space_01.name=Mote Espacial
+entity.spirit_space_02.name=Juve Espacial
+entity.spirit_space_03.name=Eld Espacial
+entity.spirit_time_01.name=Mote do Tempo
+entity.spirit_time_02.name=Juve do Tempo
+entity.spirit_time_03.name=Eld do Tempo
+
+arcanearchives.text.manifest.endtrackingbutton=Encerrar Rastreamento
+arcanearchives.text.matrixcore.importradiant=Importar Armazenamento Radiante
+arcanearchives.text.matrixstorage.immanencelabel=Imanência
+arcanearchives.text.matrixstorage.storagelabel=Armazenamento Total
+arcanearchives.text.matrixrepository.immanencelabel=Imanência
+arcanearchives.text.matrixrepository.storagelabel=Tipo de Armazenamento
+
+arcanearchives.error.toomanyplaced=Você só poder ter %d %s!
+arcanearchives.error.notenoughspace=Não há espaço suficiente para posicionar o(a) %s!
+arcanearchives.error.invaliditemblock=Não é possível colocar um item inválido com um limite de posicionamento mas sem classe de entidade.
+
+arcanearchives.tooltip.notimplemented1=NÃO IMPLEMENTADO
+arcanearchives.tooltip.notimplemented2=Aviso: usar este item pode causar crashes!
+arcanearchives.tooltip.temprecipe1=A receita para este item é temporária.
+arcanearchives.tooltip.temprecipe2=Ela será modificada em uma versão posterior.
+arcanearchives.tooltip.shouldnothave=Este bloco não deveria ser obtido.
+
+arcanearchives.tooltip.inanotherdim=O baú está localizado em %s.
