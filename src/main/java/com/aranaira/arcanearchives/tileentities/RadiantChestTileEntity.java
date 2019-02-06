@@ -50,8 +50,8 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 		super.readFromNBT(compound);
 		// Inventory
 		//CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(mInventory, null, compound.getTagList("inventory", NBT.TAG_COMPOUND));
-		NBTTagList tags = compound.getTagList("radiant_inventory", 10);
-		largeDeserializeHandler(tags, mInventory);
+		NBTTagCompound inv = compound.getCompoundTag("radiant_inventory");
+		largeDeserializeHandler(inv, mInventory);
 		chestName = compound.getString("chestName");
 	}
 

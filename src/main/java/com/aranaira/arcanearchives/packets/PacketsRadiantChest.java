@@ -10,13 +10,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,11 +27,11 @@ public class PacketsRadiantChest
 		int windowId;
 		List<ItemStack> itemStacks;
 
-		WindowItemsPacket()
+		public WindowItemsPacket()
 		{
 		}
 
-		WindowItemsPacket(int windowId, NonNullList<ItemStack> items)
+		public WindowItemsPacket(int windowId, NonNullList<ItemStack> items)
 		{
 			this.windowId = windowId;
 			this.itemStacks = items.stream().map(ItemStack::copy).collect(Collectors.toList());
@@ -44,9 +44,17 @@ public class PacketsRadiantChest
 			int i = buf.readShort();
 			this.itemStacks = NonNullList.withSize(i, ItemStack.EMPTY);
 
-			for(int j = 0; j < i; i++)
+			for(int j = 0; j < i; ++j)
 			{
-				ItemStack newStack = LargeItemNBTUtil.readFromNBT(ByteBufUtils.readTag(buf));
+				ItemStack newStack;
+				try
+				{
+					newStack = LargeItemNBTUtil.readFromBuf(buf);
+				} catch(IOException e)
+				{
+					e.printStackTrace();
+					throw new RuntimeException(String.format("Unable to read ItemStack from container WindowItemsPacket, w:%d, slot:%d", windowId, j));
+				}
 				this.itemStacks.set(j, newStack);
 			}
 		}
@@ -59,7 +67,7 @@ public class PacketsRadiantChest
 
 			for(ItemStack stack : this.itemStacks)
 			{
-				ByteBufUtils.writeTag(buf, LargeItemNBTUtil.writeToNBT(stack));
+				LargeItemNBTUtil.writeToBuf(buf, stack);
 			}
 		}
 
@@ -92,11 +100,11 @@ public class PacketsRadiantChest
 		int slot;
 		ItemStack stack = ItemStack.EMPTY;
 
-		SetSlotPacket()
+		public SetSlotPacket()
 		{
 		}
 
-		SetSlotPacket(int windowId, int slot, ItemStack item)
+		public SetSlotPacket(int windowId, int slot, ItemStack item)
 		{
 			this.windowId = windowId;
 			this.slot = slot;
@@ -108,7 +116,14 @@ public class PacketsRadiantChest
 		{
 			this.windowId = buf.readUnsignedByte();
 			this.slot = buf.readShort();
-			this.stack = LargeItemNBTUtil.readFromNBT(ByteBufUtils.readTag(buf));
+			try
+			{
+				this.stack = LargeItemNBTUtil.readFromBuf(buf);
+			} catch(IOException e)
+			{
+				e.printStackTrace();
+				throw new RuntimeException(String.format("Unable to read ItemStack from container SetSlotPacket, w:%d, slot:%d", windowId, slot));
+			}
 		}
 
 		@Override
@@ -116,7 +131,7 @@ public class PacketsRadiantChest
 		{
 			buf.writeByte(this.windowId);
 			buf.writeShort(this.slot);
-			ByteBufUtils.writeTag(buf, LargeItemNBTUtil.writeToNBT(this.stack));
+			LargeItemNBTUtil.writeToBuf(buf, this.stack);
 		}
 
 		public static class SetSlotPacketHandler implements IMessageHandler<PacketsRadiantChest.SetSlotPacket, IMessage>

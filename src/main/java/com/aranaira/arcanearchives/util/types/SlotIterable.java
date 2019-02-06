@@ -3,7 +3,6 @@ package com.aranaira.arcanearchives.util.types;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -12,7 +11,8 @@ public class SlotIterable implements Iterable<ItemStack>
 	private IItemHandler inventory;
 	private SlotIterator iter;
 
-	public SlotIterable (IItemHandler inventory) {
+	public SlotIterable(IItemHandler inventory)
+	{
 		this.inventory = inventory;
 	}
 
@@ -23,7 +23,8 @@ public class SlotIterable implements Iterable<ItemStack>
 		return iter;
 	}
 
-	public int getSlot () {
+	public int getSlot()
+	{
 		return this.iter.cursor;
 	}
 
@@ -33,7 +34,9 @@ public class SlotIterable implements Iterable<ItemStack>
 		int lastRet = -1;
 		int size = inventory.getSlots();
 
-		SlotIterator() {}
+		SlotIterator()
+		{
+		}
 
 		@Override
 		public boolean hasNext()
@@ -45,7 +48,7 @@ public class SlotIterable implements Iterable<ItemStack>
 		public ItemStack next()
 		{
 			int i = cursor;
-			if (i >= inventory.getSlots()) throw new NoSuchElementException();
+			if(i >= inventory.getSlots()) throw new NoSuchElementException();
 			cursor = i + 1;
 			return inventory.getStackInSlot(lastRet = i);
 		}

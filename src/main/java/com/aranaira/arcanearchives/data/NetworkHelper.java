@@ -22,12 +22,6 @@ public class NetworkHelper
 
 	public static ArcaneArchivesNetwork getArcaneArchivesNetwork(UUID uuid)
 	{
-		FMLCommonHandler handler = FMLCommonHandler.instance();
-		Side effective = handler.getEffectiveSide();
-		Side delegate = handler.getSide();
-
-		ArcaneArchives.logger.info(String.format("getArcaneArchivesNetwork(%s) was called. Effective side |%s|, delegate side |%s|", uuid.toString(), (effective.isServer()) ? "SERVER" : "CLIENT", (delegate.isServer()) ? "SERVER" : "CLIENT"));
-
 		World world = DimensionManager.getWorld(0);
 		if(world == null || world.getMapStorage() == null)
 		{

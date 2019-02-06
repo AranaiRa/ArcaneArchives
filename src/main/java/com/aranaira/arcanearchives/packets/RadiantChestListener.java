@@ -1,14 +1,11 @@
 package com.aranaira.arcanearchives.packets;
 
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.SlotCrafting;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.server.SPacketSetSlot;
-import net.minecraft.network.play.server.SPacketWindowItems;
 import net.minecraft.util.NonNullList;
 
 import javax.annotation.ParametersAreNonnullByDefault;

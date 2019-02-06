@@ -6,7 +6,6 @@ import com.aranaira.arcanearchives.util.handlers.ConfigHandler;
 import com.google.common.collect.Sets;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -31,15 +30,15 @@ public class ContainerRadiantChest extends Container
 		mName = RCTE.chestName;
 		mPos = RCTE.getPos();
 		mDimension = RCTE.getWorld().provider.getDimension();
+		AAItemStackHandler handler = (AAItemStackHandler) RCTE.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 
 		for(int y = 5; y > -1; y--)
 		{
 			for(int x = 8; x > -1; x--)
 			{
-				this.addSlotToContainer(new SlotItemHandler(RCTE.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null), 9 * y + x, x * 18 + 16, y * 18 + 16));
+				this.addSlotToContainer(new LargeItemStackSlot(handler, 9 * y + x, x * 18 + 16, y * 18 + 16));
 			}
 		}
-
 
 		//Creates the slots for the players inventory.
 		int i = 35;
@@ -71,10 +70,13 @@ public class ContainerRadiantChest extends Container
 		{
 			if(listener instanceof EntityPlayerMP)
 			{
-				listener = new RadiantChestListener((EntityPlayerMP) listener);
-				this.listeners.add(listener);
-				listener.sendAllContents(this, this.getInventory());
+				IContainerListener newListener = new RadiantChestListener((EntityPlayerMP) listener);
+				this.listeners.add(newListener);
+				newListener.sendAllContents(this, this.getInventory());
 				this.detectAndSendChanges();
+			} else
+			{
+				super.addListener(listener);
 			}
 		}
 	}
@@ -91,7 +93,6 @@ public class ContainerRadiantChest extends Container
 	{
 		ItemStack stack = ItemStack.EMPTY;
 		final Slot slot = inventorySlots.get(index);
-
 
 		if(slot != null && slot.getHasStack())
 		{
@@ -137,6 +138,8 @@ public class ContainerRadiantChest extends Container
 	@Nonnull
 	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
 	{
+		return super.slotClick(slotId, dragType, clickTypeIn, player);
+		/*
 		ItemStack itemstack = ItemStack.EMPTY;
 		InventoryPlayer inventoryplayer = player.inventory;
 
@@ -149,10 +152,12 @@ public class ContainerRadiantChest extends Container
 			if((j1 != 1 || this.dragEvent != 2) && j1 != this.dragEvent)
 			{
 				ResetDrag();
-			} else if(inventoryplayer.getItemStack().isEmpty())
+			}
+			else if(inventoryplayer.getItemStack().isEmpty())
 			{
 				ResetDrag();
-			} else if(this.dragEvent == 0)
+			}
+			else if(this.dragEvent == 0)
 			{
 				this.dragMode = extractDragMode(dragType);
 
@@ -306,6 +311,8 @@ public class ContainerRadiantChest extends Container
 							{
 								int k2 = dragType == 0 ? itemstack11.getCount() : 1;
 
+								// Discrepancies
+								// Slot itemStackLimit?
 								if(slotId > 53)
 								{
 									if(k2 > slot6.getItemStackLimit(itemstack11) - itemstack8.getCount())
@@ -473,7 +480,7 @@ public class ContainerRadiantChest extends Container
 			this.detectAndSendChanges();
 		}
 
-		return itemstack;
+		return itemstack;*/
 	}
 
 
@@ -642,5 +649,28 @@ public class ContainerRadiantChest extends Container
 		}
 
 		return flag;
+	}
+
+	@Override
+	public void detectAndSendChanges()
+	{
+		for(int i = 0; i < this.inventorySlots.size(); ++i)
+		{
+			ItemStack itemstack = this.inventorySlots.get(i).getStack();
+			ItemStack itemstack1 = this.inventoryItemStacks.get(i);
+
+			if(!ItemStack.areItemStacksEqual(itemstack1, itemstack))
+			{
+				boolean clientStackChanged = !ItemStack.areItemStacksEqualUsingNBTShareTag(itemstack1, itemstack);
+				itemstack1 = itemstack.isEmpty() ? ItemStack.EMPTY : itemstack.copy();
+				this.inventoryItemStacks.set(i, itemstack1);
+
+				if(clientStackChanged) {
+					for (IContainerListener listener : this.listeners) {
+							listener.sendSlotContents(this, i, itemstack1);
+					}
+				}
+			}
+		}
 	}
 }

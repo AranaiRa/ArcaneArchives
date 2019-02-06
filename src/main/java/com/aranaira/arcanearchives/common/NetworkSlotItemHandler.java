@@ -11,11 +11,11 @@ import net.minecraftforge.items.SlotItemHandler;
 import javax.annotation.Nonnull;
 import java.util.UUID;
 
-public class AASlotItemHandler extends SlotItemHandler
+public class NetworkSlotItemHandler extends SlotItemHandler
 {
 	private EntityPlayer player;
 
-	public AASlotItemHandler(IItemHandler itemHandler, int index, int xPosition, int yPosition, EntityPlayer player)
+	public NetworkSlotItemHandler(IItemHandler itemHandler, int index, int xPosition, int yPosition, EntityPlayer player)
 	{
 		super(itemHandler, index, xPosition, yPosition);
 		this.player = player;

@@ -40,7 +40,7 @@ public class NetworkContainer extends Container
 		{
 			for(int x = 8; x > -1; x--)
 			{
-				this.addSlotToContainer(new AASlotItemHandler(networkItemHandler, j, 46 + (18 * x), 33 + (18 * y), player));
+				this.addSlotToContainer(new NetworkSlotItemHandler(networkItemHandler, j, 46 + (18 * x), 33 + (18 * y), player));
 				j--;
 			}
 		}
