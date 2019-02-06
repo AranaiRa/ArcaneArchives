@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.util.handlers;
 
 import com.aranaira.arcanearchives.blocks.RadiantChest;
-import com.aranaira.arcanearchives.common.AAItemStackHandler;
+import com.aranaira.arcanearchives.inventory.handlers.AAItemStackHandler;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;

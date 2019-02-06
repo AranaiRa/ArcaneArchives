@@ -1,10 +1,11 @@
-package com.aranaira.arcanearchives.common;
+package com.aranaira.arcanearchives.inventory;
 
+import com.aranaira.arcanearchives.inventory.handlers.AAItemStackHandler;
+import com.aranaira.arcanearchives.inventory.slots.LargeItemStackSlot;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.handlers.ConfigHandler;
 import com.google.common.collect.Sets;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;

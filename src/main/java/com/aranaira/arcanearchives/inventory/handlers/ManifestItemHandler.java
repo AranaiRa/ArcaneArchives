@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.common;
+package com.aranaira.arcanearchives.inventory.handlers;
 
 import com.aranaira.arcanearchives.util.types.ManifestEntry;
 import com.aranaira.arcanearchives.util.types.ManifestList;

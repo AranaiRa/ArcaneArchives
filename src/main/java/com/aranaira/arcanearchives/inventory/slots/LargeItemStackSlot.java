@@ -1,5 +1,6 @@
-package com.aranaira.arcanearchives.common;
+package com.aranaira.arcanearchives.inventory.slots;
 
+import com.aranaira.arcanearchives.inventory.handlers.AAItemStackHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.SlotItemHandler;
 

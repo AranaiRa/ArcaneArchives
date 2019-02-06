@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.common;
+package com.aranaira.arcanearchives.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;

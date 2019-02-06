@@ -1,5 +1,6 @@
-package com.aranaira.arcanearchives.common;
+package com.aranaira.arcanearchives.inventory;
 
+import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
 import com.aranaira.arcanearchives.data.ArcaneArchivesClientNetwork;
 import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;

@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.data;
 
-import com.aranaira.arcanearchives.common.ManifestItemHandler;
+import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
 import com.aranaira.arcanearchives.packets.AAPacketHandler;
 import com.aranaira.arcanearchives.packets.PacketSynchronise;
 import com.aranaira.arcanearchives.tileentities.AATileEntity;

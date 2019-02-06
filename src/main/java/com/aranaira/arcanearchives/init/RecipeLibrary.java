@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.init;
 
-import com.aranaira.arcanearchives.common.GemCuttersTableRecipe;
-import com.aranaira.arcanearchives.common.GemCuttersTableRecipeList;
+import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipe;
+import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipeList;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;

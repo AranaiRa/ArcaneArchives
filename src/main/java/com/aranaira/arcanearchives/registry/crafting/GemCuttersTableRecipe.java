@@ -1,14 +1,9 @@
-package com.aranaira.arcanearchives.common;
+package com.aranaira.arcanearchives.registry.crafting;
 
 import com.aranaira.arcanearchives.util.ItemComparison;
 import com.aranaira.arcanearchives.util.ItemStackConsolidator;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.NonNullList;
-import scala.xml.dtd.EMPTY;
 
 import javax.annotation.Nonnull;
 import java.util.*;

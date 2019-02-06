@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.common;
+package com.aranaira.arcanearchives.registry.crafting;
 
 import com.aranaira.arcanearchives.util.AACollectors;
 import com.aranaira.arcanearchives.util.ItemComparison;

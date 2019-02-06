@@ -1,5 +1,6 @@
-package com.aranaira.arcanearchives.common;
+package com.aranaira.arcanearchives.inventory.slots;
 
+import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipeList;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;

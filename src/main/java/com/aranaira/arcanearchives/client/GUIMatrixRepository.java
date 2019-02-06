@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.client;
 
-import com.aranaira.arcanearchives.common.ContainerMatrixRepository;
+import com.aranaira.arcanearchives.inventory.ContainerMatrixRepository;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;

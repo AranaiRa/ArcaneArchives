@@ -1,9 +1,8 @@
 package com.aranaira.arcanearchives.client;
 
-import com.aranaira.arcanearchives.common.ContainerGemCuttersTable;
-import com.aranaira.arcanearchives.common.GemCuttersTableRecipe;
-import com.aranaira.arcanearchives.common.GemCuttersTableRecipeList;
-import com.aranaira.arcanearchives.common.InvisibleButton;
+import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
+import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipe;
+import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipeList;
 import com.aranaira.arcanearchives.util.ItemComparison;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
