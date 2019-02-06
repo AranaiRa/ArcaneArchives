@@ -1,14 +1,13 @@
 package com.aranaira.arcanearchives.common;
 
+import com.aranaira.arcanearchives.packets.RadiantChestListener;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.handlers.ConfigHandler;
 import com.google.common.collect.Sets;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ClickType;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -20,15 +19,12 @@ import java.util.Set;
 public class ContainerRadiantChest extends Container
 {
 
-	private int dragEvent;
-
-	private int dragMode = -1;
 	private final Set<Slot> dragSlots = Sets.<Slot>newHashSet();
-
 	public String mName;
-
 	public int mDimension;
 	public BlockPos mPos;
+	private int dragEvent;
+	private int dragMode = -1;
 
 	public ContainerRadiantChest(RadiantChestTileEntity RCTE, IInventory playerInventory)
 	{
@@ -63,8 +59,24 @@ public class ContainerRadiantChest extends Container
 			this.addSlotToContainer(new Slot(playerInventory, i, 16 + (18 * x), 200));
 			i--;
 		}
+	}
 
-
+	@Override
+	public void addListener(IContainerListener listener)
+	{
+		if(this.listeners.contains(listener))
+		{
+			throw new IllegalArgumentException("Listener already listening");
+		} else
+		{
+			if(listener instanceof EntityPlayerMP)
+			{
+				listener = new RadiantChestListener((EntityPlayerMP) listener);
+				this.listeners.add(listener);
+				listener.sendAllContents(this, this.getInventory());
+				this.detectAndSendChanges();
+			}
+		}
 	}
 
 	@Override

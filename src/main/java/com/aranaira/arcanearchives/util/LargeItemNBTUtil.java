@@ -8,6 +8,11 @@ import javax.annotation.Nonnull;
 public class LargeItemNBTUtil
 {
 	@Nonnull
+	public static NBTTagCompound writeToNBT (ItemStack item) {
+		return writeToNBT(new NBTTagCompound(), item);
+	}
+
+	@Nonnull
 	public static NBTTagCompound writeToNBT(NBTTagCompound nbt, ItemStack item)
 	{
 		item.writeToNBT(nbt);

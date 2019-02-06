@@ -216,9 +216,6 @@ public class BlockTemplate extends Block implements IHasModel
 						UUID newId = placer.getUniqueID();
 						ite.SetNetworkID(newId);
 						ite.Dimension = placer.dimension;
-
-						// Any custom handling of name (like the matrix core) should be done here
-						network.AddTileToNetwork(ite);
 					}
 
 					// Store its size

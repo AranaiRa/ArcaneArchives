@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.common;
 
 import com.aranaira.arcanearchives.util.handlers.ConfigHandler;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -8,7 +9,6 @@ import javax.annotation.Nonnull;
 
 public class AAItemStackHandler extends ItemStackHandler
 {
-
 	public AAItemStackHandler(int i)
 	{
 		super(i);

@@ -131,7 +131,6 @@ public class RawQuartzItem extends ItemTemplate
 			{
 				((RadiantChestTileEntity) te2).setContents(chestContents, secondaryChestContents, secondaryChest);
 				((RadiantChestTileEntity) te2).setFacing(chestFacing);
-				NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID()).AddTileToNetwork((RadiantChestTileEntity) te2);
 				((RadiantChestTileEntity) te2).NetworkID = player.getUniqueID();
 			}
 
