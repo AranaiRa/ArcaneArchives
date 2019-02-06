@@ -1,6 +1,8 @@
 package com.aranaira.arcanearchives.inventory;
 
 import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.inventory.handlers.NetworkItemHandler;
+import com.aranaira.arcanearchives.inventory.handlers.NetworkSlotItemHandler;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;

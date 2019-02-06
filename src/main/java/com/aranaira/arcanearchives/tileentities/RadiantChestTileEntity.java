@@ -1,8 +1,6 @@
 package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.inventory.handlers.AAItemStackHandler;
-import com.aranaira.arcanearchives.util.LargeSlotSerialization;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -12,12 +10,13 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 
-public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITickable, LargeSlotSerialization
+public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITickable
 {
-	private final AAItemStackHandler mInventory = new AAItemStackHandler(54);
+	private final ItemStackHandler mInventory = new ItemStackHandler(54);
 	public String chestName = "";
 
 	public RadiantChestTileEntity()
@@ -47,10 +46,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 	public void readFromNBT(NBTTagCompound compound)
 	{
 		super.readFromNBT(compound);
-		// Inventory
-		//CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(mInventory, null, compound.getTagList("inventory", NBT.TAG_COMPOUND));
-		NBTTagCompound inv = compound.getCompoundTag("radiant_inventory");
-		largeDeserializeHandler(inv, mInventory);
+		mInventory.deserializeNBT(compound.getCompoundTag("inventory"));
 		chestName = compound.getString("chestName");
 	}
 
@@ -59,10 +55,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 	public NBTTagCompound writeToNBT(NBTTagCompound compound)
 	{
 		super.writeToNBT(compound);
-		// Inventory
-		//compound.setTag("inventory", CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(mInventory, null));
-
-		compound.setTag("radiant_inventory", largeSerializeHandler(mInventory));
+		compound.setTag("inventory", mInventory.serializeNBT());
 		compound.setString("chestName", chestName);
 
 		return compound;
@@ -109,7 +102,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 		return false;
 	}
 
-	public AAItemStackHandler getInventory()
+	public ItemStackHandler getInventory()
 	{
 		return mInventory;
 	}

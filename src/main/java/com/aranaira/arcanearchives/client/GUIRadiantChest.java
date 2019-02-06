@@ -106,13 +106,13 @@ public class GUIRadiantChest extends GuiContainer
 					{
 						AAPacketHandler.CHANNEL.sendToServer(new SetRadiantChestName(mContainer.mPos, mNameField, mPlayerID, mContainer.mDimension));
 						ArcaneArchives.logger.info("SENT PACKET");
+						return;
 					}
 
 					//BlockPos pos, String name, UUID uuid, int dimensionID
 				}
 			}
 		}
-
 
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 	}
@@ -156,11 +156,15 @@ public class GUIRadiantChest extends GuiContainer
 
 		private int mNameTextWidth = 88;
 		private int mNameTextHeight = 10;
+
 		*/
-	@Override
+
+	// The method being overriden basically does this and there can be an NPE
+	// with it sometimes, which is annoying
+	/*@Override
 	public void onGuiClosed()
 	{
 		this.inventorySlots.onContainerClosed(mc.player);
 		super.onGuiClosed();
-	}
+	}*/
 }

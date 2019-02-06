@@ -21,6 +21,7 @@ public class PacketNetworkInteraction implements IMessage
 	public ItemStack mItem;
 	public int mAction;
 	public String mSearchText;
+
 	public PacketNetworkInteraction()
 	{
 	}

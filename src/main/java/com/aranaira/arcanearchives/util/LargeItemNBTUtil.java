@@ -35,6 +35,7 @@ public class LargeItemNBTUtil
 		return item;
 	}
 
+	@Deprecated
 	public static void writeToBuf(ByteBuf pbuf, ItemStack stack)
 	{
 		PacketBuffer buf = new PacketBuffer(pbuf);
@@ -58,6 +59,7 @@ public class LargeItemNBTUtil
 		}
 	}
 
+	@Deprecated
 	public static ItemStack readFromBuf(ByteBuf buf2) throws IOException
 	{
 		PacketBuffer buf = new PacketBuffer(buf2);

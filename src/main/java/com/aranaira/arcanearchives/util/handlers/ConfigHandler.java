@@ -34,8 +34,6 @@ public class ConfigHandler
 
 	public static class ConfigValues
 	{
-		@Config.Comment({"The Amount of Items Each Slot in a Radiant Chest Can Hold Compared to 64 (multiplier)"})
-		public static int iRadiantChestMultiplier = 4;
 		@Config.Comment({"Amount of Blocks Able to be Placed by a Player"})
 		public int iRadiantResonatorLimit = 3;
 		@Config.Comment({"Amount of Drain Each Block Takes From The Network"})

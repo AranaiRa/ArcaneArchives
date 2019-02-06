@@ -1,42 +1,35 @@
 package com.aranaira.arcanearchives.inventory;
 
-import com.aranaira.arcanearchives.inventory.handlers.AAItemStackHandler;
-import com.aranaira.arcanearchives.inventory.slots.LargeItemStackSlot;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
-import com.aranaira.arcanearchives.util.handlers.ConfigHandler;
-import com.google.common.collect.Sets;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.*;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
-import java.util.Set;
 
 public class ContainerRadiantChest extends Container
 {
-
-	private final Set<Slot> dragSlots = Sets.newHashSet();
 	public String mName;
 	public int mDimension;
 	public BlockPos mPos;
-	private int dragEvent;
-	private int dragMode = -1;
 
 	public ContainerRadiantChest(RadiantChestTileEntity RCTE, IInventory playerInventory)
 	{
 		mName = RCTE.chestName;
-		mPos = RCTE.getPos();
-		mDimension = RCTE.getWorld().provider.getDimension();
-		AAItemStackHandler handler = (AAItemStackHandler) RCTE.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+
+		IItemHandler handler = RCTE.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 
 		for(int y = 5; y > -1; y--)
 		{
 			for(int x = 8; x > -1; x--)
 			{
-				this.addSlotToContainer(new LargeItemStackSlot(handler, 9 * y + x, x * 18 + 16, y * 18 + 16));
+				this.addSlotToContainer(new SlotItemHandler(handler, 9 * y + x, x * 18 + 16, y * 18 + 16));
 			}
 		}
 
@@ -86,7 +79,7 @@ public class ContainerRadiantChest extends Container
 			//Players inventory
 			else
 			{
-				if(!mergeItemStack2(slotStack, 0, 54, true)) return ItemStack.EMPTY;
+				if(!mergeItemStack(slotStack, 0, 54, true)) return ItemStack.EMPTY;
 			}
 
 			if(slotStack.isEmpty())
@@ -101,6 +94,7 @@ public class ContainerRadiantChest extends Container
 		return stack;
 	}
 
+	/*
 	@Override
 	public void putStackInSlot(int slotID, @Nonnull ItemStack stack)
 	{
@@ -117,7 +111,7 @@ public class ContainerRadiantChest extends Container
 	@Nonnull
 	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
 	{
-		return super.slotClick(slotId, dragType, clickTypeIn, player);
+		return super.slotClick(slotId, dragType, clickTypeIn, player);*/
 		/*
 		ItemStack itemstack = ItemStack.EMPTY;
 		InventoryPlayer inventoryplayer = player.inventory;
@@ -459,9 +453,8 @@ public class ContainerRadiantChest extends Container
 			this.detectAndSendChanges();
 		}
 
-		return itemstack;*/
-	}
-
+		return itemstack;
+	}*/
 
 	//Daomephsta's code that I have referenced. 
 	//https://github.com/Daomephsta/Precision-Crafting/blob/master/src/main/java/leviathan143/precisioncrafting/common/precisiontable/ContainerPrecisionTable.java#L298-L346
@@ -518,7 +511,7 @@ public class ContainerRadiantChest extends Container
     */
 
 	// PArameters are always 0, 54 and true
-	private boolean mergeItemStack2(ItemStack stack, int startIndex, int endIndex, boolean reverseDirection)
+	/*private boolean mergeItemStack2(ItemStack stack, int startIndex, int endIndex, boolean reverseDirection)
 	{
 		boolean flag = false;
 		int i = startIndex;
@@ -549,7 +542,7 @@ public class ContainerRadiantChest extends Container
 				if(!itemstack.isEmpty() && itemstack.getItem() == stack.getItem() && (!stack.getHasSubtypes() || stack.getMetadata() == itemstack.getMetadata()) && ItemStack.areItemStackTagsEqual(stack, itemstack))
 				{
 					int j = itemstack.getCount() + stack.getCount();
-					int maxSize = Math.min(slot.getSlotStackLimit(), stack.getMaxStackSize() * ConfigHandler.ConfigValues.iRadiantChestMultiplier);
+					int maxSize = Math.min(slot.getSlotStackLimit(), stack.getMaxStackSize());
 
 					if(j <= maxSize)
 					{
@@ -653,5 +646,5 @@ public class ContainerRadiantChest extends Container
 				}
 			}
 		}
-	}
+	}*/
 }
