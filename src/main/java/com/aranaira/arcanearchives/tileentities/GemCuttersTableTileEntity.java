@@ -1,10 +1,10 @@
 package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipe;
-import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipeList;
 import com.aranaira.arcanearchives.packets.AAPacketHandler;
 import com.aranaira.arcanearchives.packets.PacketGCTChangePage;
+import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipe;
+import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipeList;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
@@ -38,21 +38,25 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 		setName("gemcutterstable");
 	}
 
-	public ItemStackHandler getInventory () {
+	public ItemStackHandler getInventory()
+	{
 		return mInventory;
 	}
 
 	@Nullable
-	public GemCuttersTableRecipe getRecipe () {
+	public GemCuttersTableRecipe getRecipe()
+	{
 		return mRecipe;
 	}
 
-	public void setRecipe(ItemStack itemStack) {
+	public void setRecipe(ItemStack itemStack)
+	{
 		mRecipe = GemCuttersTableRecipeList.GetRecipe(itemStack);
 		// "update output"
 	}
 
-	public void setRecipe (GemCuttersTableRecipe recipe) {
+	public void setRecipe(GemCuttersTableRecipe recipe)
+	{
 		mRecipe = recipe;
 	}
 
@@ -66,8 +70,9 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 		this.curPage = curPage;
 	}
 
-	public boolean nextPage () {
-		if (GemCuttersTableRecipeList.getSize() > (getPage() + 1) * RECIPE_PAGE_LIMIT)
+	public boolean nextPage()
+	{
+		if(GemCuttersTableRecipeList.getSize() > (getPage() + 1) * RECIPE_PAGE_LIMIT)
 		{
 			curPage++;
 			updateOutput();
@@ -78,10 +83,13 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 		}
 	}
 
-	public boolean previousPage () {
-		if (getPage() == 0) {
+	public boolean previousPage()
+	{
+		if(getPage() == 0)
+		{
 			return false;
-		} else {
+		} else
+		{
 			curPage--;
 			updateOutput();
 			return true;
@@ -118,7 +126,8 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 
 		ItemStack recipe = ItemStack.EMPTY;
 
-		if (compound.hasKey("recipe")) {
+		if(compound.hasKey("recipe"))
+		{
 			recipe = new ItemStack(compound.getCompoundTag("recipe"));
 		}
 
@@ -131,7 +140,7 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 	{
 		super.writeToNBT(compound);
 		compound.setTag("inventory", mInventory.serializeNBT());
-		if (getRecipe() != null)
+		if(getRecipe() != null)
 		{
 			compound.setTag("recipe", getRecipe().getOutput().writeToNBT(new NBTTagCompound()));
 		}
@@ -163,13 +172,16 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 		return new SPacketUpdateTileEntity(pos, 0, compound);
 	}
 
-	public void updateOutput () {
+	public void updateOutput()
+	{
 		SPacketUpdateTileEntity update = getUpdatePacket();
-		if (world != null && !world.isRemote) {
+		if(world != null && !world.isRemote)
+		{
 			MinecraftServer server = world.getMinecraftServer();
-			if (server != null)
+			if(server != null)
 				server.getPlayerList().sendToAllNearExcept(null, pos.getX(), pos.getY(), pos.getZ(), 128, world.provider.getDimension(), update);
-		} else if (world != null){
+		} else if(world != null)
+		{
 			PacketGCTChangePage packet = new PacketGCTChangePage(getPos(), getPage(), world.provider.getDimension());
 			AAPacketHandler.CHANNEL.sendToServer(packet);
 		}

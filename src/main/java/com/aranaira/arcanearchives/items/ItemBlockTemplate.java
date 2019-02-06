@@ -15,7 +15,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -66,7 +65,7 @@ public class ItemBlockTemplate extends ItemBlock
 
 			for(BlockPos point : blockTemplate.calculateAccessors(world, pos.up(), dir))
 			{
-				if (point.getY() > world.getHeight())
+				if(point.getY() > world.getHeight())
 				{
 					safe = false;
 					break;

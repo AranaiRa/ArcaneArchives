@@ -65,7 +65,7 @@ public class PacketChangeRadiantChestNameClient implements IMessage
 				if(te instanceof RadiantChestTileEntity)
 				{
 					((RadiantChestTileEntity) te).chestName = message.mName;
-					((RadiantChestTileEntity) te).markDirty();
+					te.markDirty();
 					te.updateContainingBlockInfo();
 				}
 			}

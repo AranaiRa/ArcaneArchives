@@ -5,7 +5,9 @@ import com.aranaira.arcanearchives.tileentities.*;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class BlockLibrary
 {
@@ -32,19 +34,6 @@ public class BlockLibrary
 	public static final AccessorBlock ACCESSOR = new AccessorBlock();
 
 	public static final BiMap<Integer, BlockTemplate> BLOCK_BIMAP = HashBiMap.create();
-
-	static
-	{
-		int index = 0;
-		for (BlockTemplate block : Arrays.asList(MATRIX_CRYSTAL_CORE, MATRIX_REPOSITORY, MATRIX_RESERVOIR, MATRIX_STORAGE, MATRIX_DISTILLATE, STORAGE_RAW_QUARTZ, STORAGE_CUT_QUARTZ, RADIANT_CHEST, RADIANT_CRAFTING_TABLE, RADIANT_LANTERN, RADIANT_RESONATOR, RAW_QUARTZ, DOMINION_CRYSTAL, GEMCUTTERS_TABLE, ACCESSOR)) {
-			// We're only indexing what has accessors
-			if (block.hasAccessors()) {
-				BLOCK_BIMAP.put(index, block);
-				index++;
-			}
-		}
-	}
-
 	// Tile Entities. TODO: Don't forget to update the RegistryHandler when adding new ones.
 	public static final AATileEntity RADIANT_RESONATOR_TILE_ENTITY = new RadiantResonatorTileEntity();
 	public static final AATileEntity MATRIX_CORE_TILE_ENTITY = new MatrixCoreTileEntity();
@@ -54,8 +43,21 @@ public class BlockLibrary
 	public static final AATileEntity GEMCUTTERS_TABLE_TILE_ENTITY = new GemCuttersTableTileEntity();
 	public static final AATileEntity RADIANT_CRAFTING_TABLE_TILE_ENTITY = new RadiantCraftingTableTileEntity();
 	public static final AATileEntity MATRIX_STORAGE_TILE_ENTITY = new MatrixStorageTileEntity();
-
 	public static final List<AATileEntity> TILES = new ArrayList<>();
+
+	static
+	{
+		int index = 0;
+		for(BlockTemplate block : Arrays.asList(MATRIX_CRYSTAL_CORE, MATRIX_REPOSITORY, MATRIX_RESERVOIR, MATRIX_STORAGE, MATRIX_DISTILLATE, STORAGE_RAW_QUARTZ, STORAGE_CUT_QUARTZ, RADIANT_CHEST, RADIANT_CRAFTING_TABLE, RADIANT_LANTERN, RADIANT_RESONATOR, RAW_QUARTZ, DOMINION_CRYSTAL, GEMCUTTERS_TABLE, ACCESSOR))
+		{
+			// We're only indexing what has accessors
+			if(block.hasAccessors())
+			{
+				BLOCK_BIMAP.put(index, block);
+				index++;
+			}
+		}
+	}
 
 	static
 	{

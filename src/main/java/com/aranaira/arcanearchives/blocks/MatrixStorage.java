@@ -58,8 +58,14 @@ public class MatrixStorage extends BlockTemplate
 	}
 
 	@Override
-	public boolean hasTileEntity(IBlockState state) { return true; }
+	public boolean hasTileEntity(IBlockState state)
+	{
+		return true;
+	}
 
 	@Override
-	public TileEntity createTileEntity(World world, IBlockState state) { return new MatrixStorageTileEntity(); }
+	public TileEntity createTileEntity(World world, IBlockState state)
+	{
+		return new MatrixStorageTileEntity();
+	}
 }

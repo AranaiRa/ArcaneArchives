@@ -19,7 +19,8 @@ public class LargeItemStackSlot extends SlotItemHandler
 
 	@Override
 	@Nonnull
-	public ItemStack getStack () {
+	public ItemStack getStack()
+	{
 		return this.handler.getStackInSlot(this.getSlotIndex());
 	}
 

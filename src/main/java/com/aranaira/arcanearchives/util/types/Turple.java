@@ -38,8 +38,7 @@ public class Turple<T, U, V> implements Serializable
 			Turple t = (Turple) o;
 			if(!val1.equals(t.val1)) return false;
 			if(!val2.equals(t.val2)) return false;
-			if(!val3.equals(t.val3)) return false;
-			return true;
+			return val3.equals(t.val3);
 		}
 		return false;
 	}

@@ -32,20 +32,22 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 
 	public ManifestList filtered()
 	{
-		if (mFilterText == null) return this;
+		if(mFilterText == null) return this;
 
 		return reference().stream().filter((entry) -> entry != null && entry.getStack().getDisplayName().compareToIgnoreCase(mFilterText) != 0).collect(Collectors.toCollection(ManifestList::new));
 
 	}
 
 	@Nullable
-	public ManifestEntry getEntryForSlot (int slot) {
-		if (slot < reference().size() && slot >= 0) return get(slot);
+	public ManifestEntry getEntryForSlot(int slot)
+	{
+		if(slot < reference().size() && slot >= 0) return get(slot);
 		return null;
 	}
 
-	public ItemStack getItemStackForSlot (int slot) {
-		if (slot < reference().size() && slot >= 0) return get(slot).getStack();
+	public ItemStack getItemStackForSlot(int slot)
+	{
+		if(slot < reference().size() && slot >= 0) return get(slot).getStack();
 		return ItemStack.EMPTY;
 	}
 

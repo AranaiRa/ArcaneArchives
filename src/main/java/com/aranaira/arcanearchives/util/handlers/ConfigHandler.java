@@ -34,25 +34,20 @@ public class ConfigHandler
 
 	public static class ConfigValues
 	{
+		@Config.Comment({"The Amount of Items Each Slot in a Radiant Chest Can Hold Compared to 64 (multiplier)"})
+		public static int iRadiantChestMultiplier = 4;
 		@Config.Comment({"Amount of Blocks Able to be Placed by a Player"})
 		public int iRadiantResonatorLimit = 3;
-
 		@Config.Comment({"Amount of Drain Each Block Takes From The Network"})
 		public int iRadiantResonatorDrain = 20;
 		public int iRepositoryMatrixDrain = 80;
 		public int iStorageMatrixDrain = 80;
-
 		@Config.Comment({"The Amount of Bonus Ticks Blocks Get if Their Drain is Met"})
 		public int iRadiantResonatorBonusTicks = 1;
-
 		@Config.Comment({"The Amount of Ticks it Takes for a Radiant Resonantor to Create Raw Quartz"})
 		public int iRadiantResonatorTickTime = 6000;
-
 		@Config.Comment({"The Amount of Items Each Repository Can Hold"})
 		public int iRepositoryMatrixItemCap = 256;
 		public int iStorageMatrixItemCap = 256;
-
-		@Config.Comment({"The Amount of Items Each Slot in a Radiant Chest Can Hold Compared to 64 (multiplier)"})
-		public static int iRadiantChestMultiplier = 4;
 	}
 }

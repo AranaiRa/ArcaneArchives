@@ -38,7 +38,7 @@ public class AAGuiHandler implements IGuiHandler
 				return new ContainerManifest(player, true);
 		}
 
-		if (!(te instanceof AATileEntity)) return null; // TODO: Handle this error somehow;
+		if(!(te instanceof AATileEntity)) return null; // TODO: Handle this error somehow;
 
 		switch(ID)
 		{
@@ -77,7 +77,7 @@ public class AAGuiHandler implements IGuiHandler
 				return new GUIManifest(player, new ContainerManifest(player, false));
 		}
 
-		if (!(te instanceof AATileEntity)) return null; // TODO: Handle this error also
+		if(!(te instanceof AATileEntity)) return null; // TODO: Handle this error also
 
 		switch(ID)
 		{

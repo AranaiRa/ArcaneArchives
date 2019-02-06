@@ -2,16 +2,14 @@ package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.common.AAGuiHandler;
-import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.DropHelper;
 import com.aranaira.arcanearchives.util.handlers.AATickHandler;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -22,7 +20,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 public class RadiantChest extends BlockTemplate
@@ -36,6 +33,19 @@ public class RadiantChest extends BlockTemplate
 		setHardness(1.7f);
 		setResistance(6000F);
 		setHarvestLevel("axe", 0);
+	}
+
+	public static void RemoveChestLines(BlockPos pos)
+	{
+		for(Vec3d vec : AATickHandler.GetInstance().mBlockPositions)
+		{
+			Vec3d bpos = new Vec3d(pos.getX(), pos.getY(), pos.getZ());
+
+			if(vec.equals(bpos))
+			{
+				AATickHandler.GetInstance().mBlockPositionsToRemove.add(bpos);
+			}
+		}
 	}
 
 	@Override
@@ -57,6 +67,7 @@ public class RadiantChest extends BlockTemplate
 	{
 		return true;
 	}
+
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
@@ -73,7 +84,7 @@ public class RadiantChest extends BlockTemplate
 	{
 		RemoveChestLines(pos);
 
-		if (!worldIn.isRemote)
+		if(!worldIn.isRemote)
 		{
 			TileEntity te = worldIn.getTileEntity(pos);
 			if(te instanceof RadiantChestTileEntity)
@@ -88,24 +99,17 @@ public class RadiantChest extends BlockTemplate
 		super.breakBlock(worldIn, pos, state);
 	}
 
-	public static void RemoveChestLines(BlockPos pos)
+	@Override
+	public boolean hasTileEntity(IBlockState state)
 	{
-		for(Vec3d vec : AATickHandler.GetInstance().mBlockPositions)
-		{
-			Vec3d bpos = new Vec3d(pos.getX(), pos.getY(), pos.getZ());
-
-			if(vec.equals(bpos))
-			{
-				AATickHandler.GetInstance().mBlockPositionsToRemove.add(bpos);
-			}
-		}
+		return true;
 	}
 
 	@Override
-	public boolean hasTileEntity(IBlockState state) { return true; }
-
-	@Override
-	public TileEntity createTileEntity(World world, IBlockState state) { return new RadiantChestTileEntity(); }
+	public TileEntity createTileEntity(World world, IBlockState state)
+	{
+		return new RadiantChestTileEntity();
+	}
 
 	@Override
 	public boolean canEntityDestroy(IBlockState state, IBlockAccess world, BlockPos pos, Entity entity)

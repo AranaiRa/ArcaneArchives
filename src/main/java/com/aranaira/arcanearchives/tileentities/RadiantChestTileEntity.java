@@ -17,8 +17,8 @@ import javax.annotation.Nonnull;
 
 public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITickable, LargeSlotSerialization
 {
-	public String chestName = "";
 	private final AAItemStackHandler mInventory = new AAItemStackHandler(54);
+	public String chestName = "";
 
 	public RadiantChestTileEntity()
 	{
@@ -109,7 +109,8 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 		return false;
 	}
 
-	public AAItemStackHandler getInventory () {
+	public AAItemStackHandler getInventory()
+	{
 		return mInventory;
 	}
 

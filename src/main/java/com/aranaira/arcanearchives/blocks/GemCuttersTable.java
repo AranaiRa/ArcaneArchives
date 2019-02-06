@@ -67,7 +67,8 @@ public class GemCuttersTable extends BlockDirectionalTemplate
 	public void breakBlock(World world, BlockPos pos, IBlockState state)
 	{
 		TileEntity te = world.getTileEntity(pos);
-		if (te instanceof GemCuttersTableTileEntity) {
+		if(te instanceof GemCuttersTableTileEntity)
+		{
 			IItemHandler inv = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 			DropHelper.dropInventoryItems(world, pos, inv);
 		}
@@ -109,5 +110,8 @@ public class GemCuttersTable extends BlockDirectionalTemplate
 	}
 
 	@Override
-	public TileEntity createTileEntity(World world, IBlockState state) { return new GemCuttersTableTileEntity(); }
+	public TileEntity createTileEntity(World world, IBlockState state)
+	{
+		return new GemCuttersTableTileEntity();
+	}
 }

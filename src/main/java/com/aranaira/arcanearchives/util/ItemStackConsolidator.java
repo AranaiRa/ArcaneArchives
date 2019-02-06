@@ -1,17 +1,14 @@
 package com.aranaira.arcanearchives.util;
 
 import com.aranaira.arcanearchives.util.types.ManifestEntry;
-import com.aranaira.arcanearchives.util.types.Tuple;
 import com.aranaira.arcanearchives.util.types.Turple;
 import com.google.common.collect.Lists;
-import javafx.geometry.Pos;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class ItemStackConsolidator
@@ -39,27 +36,32 @@ public class ItemStackConsolidator
 		return tempList;
 	}
 
-	public static List<ItemStack> ConsolidatedItems (NonNullList<ItemStack> list) {
+	public static List<ItemStack> ConsolidatedItems(NonNullList<ItemStack> list)
+	{
 		List<ItemStack> input = new ArrayList<>(list);
 		List<ItemStack> output = new ArrayList<>();
 
-		if (input.size() == 0) return output;
+		if(input.size() == 0) return output;
 
-		while (input.size() != 0) {
+		while(input.size() != 0)
+		{
 			ItemStack next = input.remove(0).copy();
 			final ItemStack copy = next.copy();
 
 			List<ItemStack> matches = input.stream().filter((i) -> ItemComparison.AreItemsEqual(copy, i)).collect(Collectors.toList());
 
-			if (matches.size() == 0) {
+			if(matches.size() == 0)
+			{
 				output.add(next.copy());
 				continue;
 			}
 
 			input.removeAll(matches);
 
-			for (ItemStack match : matches) {
-				if ((next.getCount()+match.getCount()) > next.getMaxStackSize()) {
+			for(ItemStack match : matches)
+			{
+				if((next.getCount() + match.getCount()) > next.getMaxStackSize())
+				{
 					output.add(next.copy());
 					next = match.copy();
 					continue;
@@ -74,13 +76,15 @@ public class ItemStackConsolidator
 		return output;
 	}
 
-	public static List<ManifestEntry> ConsolidateManifest (List<Turple<ItemStack, Integer, BlockPos>> input) {
+	public static List<ManifestEntry> ConsolidateManifest(List<Turple<ItemStack, Integer, BlockPos>> input)
+	{
 		// It doesns't matter if we modify the original list
 		List<ManifestEntry> output = new ArrayList<>();
 
-		if (input.size() == 0) return output;
+		if(input.size() == 0) return output;
 
-		while (input.size() != 0) {
+		while(input.size() != 0)
+		{
 			Turple<ItemStack, Integer, BlockPos> tup = input.remove(0);
 			ManifestEntry next = new ManifestEntry(tup.val1, tup.val2, Lists.newArrayList(tup.val3));
 			final ItemStack copy = tup.val1.copy();
@@ -90,7 +94,8 @@ public class ItemStackConsolidator
 
 			input.removeAll(matches);
 
-			for (Turple<ItemStack, Integer, BlockPos> match : matches) {
+			for(Turple<ItemStack, Integer, BlockPos> match : matches)
+			{
 				next.val1.setCount(next.val1.getCount() + match.val1.getCount());
 				next.val3.add(match.val3);
 			}

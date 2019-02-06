@@ -22,14 +22,14 @@ public class NetworkItemHandler implements IItemHandlerModifiable
 		playerUUID = uuid;
 	}
 
-	public void setSearchString(String s)
-	{
-		searchText = s;
-	}
-
 	public String getSearchString()
 	{
 		return searchText;
+	}
+
+	public void setSearchString(String s)
+	{
+		searchText = s;
 	}
 
 	@Override

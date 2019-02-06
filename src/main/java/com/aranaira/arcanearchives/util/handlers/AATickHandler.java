@@ -32,11 +32,6 @@ public class AATickHandler
 		return mInstance;
 	}
 
-	public void clearChests()
-	{
-		mBlockPositionsToRemove.addAll(mBlockPositions);
-	}
-
 	@SubscribeEvent
 	public static void renderOverlay(RenderWorldLastEvent event)
 	{
@@ -56,5 +51,10 @@ public class AATickHandler
 		{
 			mInstance.mIsDrawingLine = false;
 		}
+	}
+
+	public void clearChests()
+	{
+		mBlockPositionsToRemove.addAll(mBlockPositions);
 	}
 }

@@ -3,7 +3,6 @@ package com.aranaira.arcanearchives.inventory.handlers;
 import com.aranaira.arcanearchives.util.types.ManifestEntry;
 import com.aranaira.arcanearchives.util.types.ManifestList;
 import mcp.MethodsReturnNonnullByDefault;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
@@ -31,14 +30,14 @@ public class ManifestItemHandler implements IItemHandlerModifiable
 	@Override
 	public ItemStack getStackInSlot(int slot)
 	{
-		if (manifestActive == null) manifestActive = manifestBase.filtered();
+		if(manifestActive == null) manifestActive = manifestBase.filtered();
 		return manifestActive.getItemStackForSlot(slot);
 	}
 
 	@Nullable
-	public ManifestEntry getManifestEntryInSlot (int slot)
+	public ManifestEntry getManifestEntryInSlot(int slot)
 	{
-		if (manifestActive == null) manifestActive = manifestBase.filtered();
+		if(manifestActive == null) manifestActive = manifestBase.filtered();
 		return manifestActive.getEntryForSlot(slot);
 	}
 

@@ -9,7 +9,6 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
-import java.util.UUID;
 
 public class NetworkSlotItemHandler extends SlotItemHandler
 {
@@ -21,11 +20,14 @@ public class NetworkSlotItemHandler extends SlotItemHandler
 		this.player = player;
 	}
 
-	public int getTotalSpace () {
-		if (player.world.isRemote) {
+	public int getTotalSpace()
+	{
+		if(player.world.isRemote)
+		{
 			ArcaneArchivesClientNetwork network = NetworkHelper.getArcaneArchivesClientNetwork(player.getPersistentID());
 			return network.GetTotalSpace();
-		} else {
+		} else
+		{
 			ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(player.getPersistentID());
 			return network.GetTotalSpace();
 		}

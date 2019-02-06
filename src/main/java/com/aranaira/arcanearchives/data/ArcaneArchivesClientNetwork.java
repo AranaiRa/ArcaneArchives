@@ -114,9 +114,9 @@ public class ArcaneArchivesClientNetwork
 			int comp = turp1.getStack().getDisplayName().compareToIgnoreCase(turp2.getStack().getDisplayName());
 			boolean t1 = turp1.getDimension() == dim;
 			boolean t2 = turp2.getDimension() == dim;
-			if (comp != 0) return comp;
-			if (t1 == t2) return comp;
-			if (t1) return -1;
+			if(comp != 0) return comp;
+			if(t1 == t2) return comp;
+			if(t1) return -1;
 			return 1;
 		});
 	}
@@ -169,7 +169,8 @@ public class ArcaneArchivesClientNetwork
 	}
 
 	@SideOnly(Side.CLIENT)
-	public EntityPlayer getPlayer () {
+	public EntityPlayer getPlayer()
+	{
 		return Minecraft.getMinecraft().player;
 	}
 }

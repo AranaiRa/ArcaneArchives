@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.inventory;
 
-import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipe;
 import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
+import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipe;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;
@@ -132,7 +132,7 @@ public class ContainerGemCuttersTable extends Container
 	@Nonnull
 	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
 	{
-		if (!player.world.isRemote)
+		if(!player.world.isRemote)
 		{
 			if(slotId <= 43 && slotId >= 37)
 			{
@@ -145,22 +145,25 @@ public class ContainerGemCuttersTable extends Container
 		return super.slotClick(slotId, dragType, clickTypeIn, player);
 	}
 
-	public GemCuttersTableTileEntity getTile () {
+	public GemCuttersTableTileEntity getTile()
+	{
 		return mTileEntity;
 	}
 
-	public boolean getRecipeStatus () {
+	public boolean getRecipeStatus()
+	{
 		GemCuttersTableRecipe recipe = getTile().getRecipe();
-		if (recipe == null) return false;
+		if(recipe == null) return false;
 
 		NonNullList<ItemStack> raw = NonNullList.create();
 		ItemStackHandler inventory = getTile().getInventory();
-		for (int i = 0; i < inventory.getSlots(); i++)
+		for(int i = 0; i < inventory.getSlots(); i++)
 		{
 			raw.add(inventory.getStackInSlot(i));
 		}
 
-		for (int i = 0; i < playerInventory.getSizeInventory(); i++) {
+		for(int i = 0; i < playerInventory.getSizeInventory(); i++)
+		{
 			raw.add(playerInventory.getStackInSlot(i));
 		}
 

@@ -6,7 +6,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 
 import javax.annotation.Nonnull;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 //Referenced Immersive Engineering
@@ -28,13 +31,14 @@ public class GemCuttersTableRecipe
 		mOutput = output.copy();
 	}
 
-	public boolean isEmpty () {
+	public boolean isEmpty()
+	{
 		return this == EMPTY;
 	}
 
 	public boolean matchesRecipe(NonNullList<ItemStack> raw)
 	{
-		if (isEmpty()) return false;
+		if(isEmpty()) return false;
 
 		List<ItemStack> available = ItemStackConsolidator.ConsolidatedItems(raw);
 		List<ItemStack> requirements = getInput();
@@ -66,10 +70,11 @@ public class GemCuttersTableRecipe
 		}
 		return foundItems == requirements.size();
 	}
+
 	@Nonnull
 	public ItemStack getOutput()
 	{
-		if (mOutput == null || mOutput.isEmpty()) return ItemStack.EMPTY;
+		if(mOutput == null || mOutput.isEmpty()) return ItemStack.EMPTY;
 
 		return mOutput.copy();
 	}

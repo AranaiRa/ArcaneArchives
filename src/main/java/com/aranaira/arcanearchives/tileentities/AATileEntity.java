@@ -83,7 +83,8 @@ public class AATileEntity extends TileEntity
 		}
 	}
 
-	public boolean isActive () {
+	public boolean isActive()
+	{
 		return true;
 	}
 

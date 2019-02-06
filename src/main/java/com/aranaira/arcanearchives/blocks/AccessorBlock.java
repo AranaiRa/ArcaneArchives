@@ -1,8 +1,5 @@
 package com.aranaira.arcanearchives.blocks;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.init.BlockLibrary;
-import com.aranaira.arcanearchives.tileentities.AATileEntity;
 import com.aranaira.arcanearchives.tileentities.AccessorTileEntity;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.material.EnumPushReaction;
@@ -17,7 +14,6 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -25,7 +21,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.Explosion;
@@ -33,13 +28,11 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
-import net.minecraftforge.common.property.Properties;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-
 import java.util.List;
 import java.util.Random;
 
@@ -62,10 +55,11 @@ public class AccessorBlock extends BlockTemplate
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
 	{
-		tooltip.add(TextFormatting.RED+""+TextFormatting.ITALIC+I18n.format("arcanearchives.tooltip.shouldnothave"));
+		tooltip.add(TextFormatting.RED + "" + TextFormatting.ITALIC + I18n.format("arcanearchives.tooltip.shouldnothave"));
 	}
 
-	public IBlockState fromBlock (BlockTemplate block) {
+	public IBlockState fromBlock(BlockTemplate block)
+	{
 		return getDefaultState().withProperty(TYPE, block.getAccessorId());
 	}
 
@@ -152,7 +146,7 @@ public class AccessorBlock extends BlockTemplate
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
-		if (world.isRemote) return true;
+		if(world.isRemote) return true;
 		TileEntity te = world.getTileEntity(pos);
 
 		if(te instanceof AccessorTileEntity)
@@ -330,9 +324,15 @@ public class AccessorBlock extends BlockTemplate
 	}
 
 	@Override
-	public boolean hasTileEntity(IBlockState state) { return true; }
+	public boolean hasTileEntity(IBlockState state)
+	{
+		return true;
+	}
 
 	@Override
-	public TileEntity createTileEntity(World world, IBlockState state) { return new AccessorTileEntity(); }
+	public TileEntity createTileEntity(World world, IBlockState state)
+	{
+		return new AccessorTileEntity();
+	}
 }
 

@@ -2,7 +2,6 @@ package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.init.BlockLibrary;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
-import com.aranaira.arcanearchives.data.NetworkHelper;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.BlockChest;
 import net.minecraft.block.BlockWorkbench;

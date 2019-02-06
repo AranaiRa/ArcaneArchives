@@ -35,8 +35,8 @@ public class TomeOfRequisitionItem extends ItemTemplate
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
 	{
-		tooltip.add(TextFormatting.RED+""+TextFormatting.BOLD+I18n.format("arcanearchives.tooltip.temprecipe1"));
-		tooltip.add(TextFormatting.RED+""+TextFormatting.ITALIC+I18n.format("arcanearchives.tooltip.temprecipe2"));
+		tooltip.add(TextFormatting.RED + "" + TextFormatting.BOLD + I18n.format("arcanearchives.tooltip.temprecipe1"));
+		tooltip.add(TextFormatting.RED + "" + TextFormatting.ITALIC + I18n.format("arcanearchives.tooltip.temprecipe2"));
 	}
 
 	@Override

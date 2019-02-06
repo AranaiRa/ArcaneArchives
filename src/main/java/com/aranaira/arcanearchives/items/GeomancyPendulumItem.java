@@ -1,9 +1,9 @@
 package com.aranaira.arcanearchives.items;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -23,7 +23,7 @@ public class GeomancyPendulumItem extends ItemTemplate
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
 	{
-		tooltip.add(TextFormatting.RED+""+TextFormatting.BOLD+I18n.format("arcanearchives.tooltip.notimplemented1"));
-		tooltip.add(TextFormatting.RED+""+TextFormatting.ITALIC+I18n.format("arcanearchives.tooltip.notimplemented2"));
+		tooltip.add(TextFormatting.RED + "" + TextFormatting.BOLD + I18n.format("arcanearchives.tooltip.notimplemented1"));
+		tooltip.add(TextFormatting.RED + "" + TextFormatting.ITALIC + I18n.format("arcanearchives.tooltip.notimplemented2"));
 	}
 }

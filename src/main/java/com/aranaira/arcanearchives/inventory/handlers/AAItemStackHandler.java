@@ -64,7 +64,8 @@ public class AAItemStackHandler extends ItemStackHandler
 	{
 		Side side = FMLCommonHandler.instance().getEffectiveSide();
 
-		if (side == Side.CLIENT) {
+		if(side == Side.CLIENT)
+		{
 			int i = 1;
 		}
 

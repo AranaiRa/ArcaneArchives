@@ -6,7 +6,6 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
 public interface LargeSlotSerialization
@@ -17,8 +16,9 @@ public interface LargeSlotSerialization
 		ret.setInteger("count", largeHandler.getSlots());
 		NBTTagList res = new NBTTagList();
 		SlotIterable iter = new SlotIterable(largeHandler);
-		for (ItemStack stack : iter) {
-			if (stack.isEmpty()) continue;
+		for(ItemStack stack : iter)
+		{
+			if(stack.isEmpty()) continue;
 			NBTTagCompound item = new NBTTagCompound();
 			LargeItemNBTUtil.writeToNBT(item, stack);
 			item.setInteger("slot", iter.getSlot());
@@ -33,13 +33,15 @@ public interface LargeSlotSerialization
 	default void largeDeserializeHandler(NBTTagCompound tag, IItemHandlerModifiable largeHandler)
 	{
 		int count = tag.getInteger("count");
-		for (int i = 0; i < count; i++) {
+		for(int i = 0; i < count; i++)
+		{
 			largeHandler.setStackInSlot(i, ItemStack.EMPTY);
 		}
 
 		NBTTagList tags = tag.getTagList("inventory", Constants.NBT.TAG_COMPOUND);
-		for (NBTBase base : tags) {
-			if (!(base instanceof NBTTagCompound)) continue;
+		for(NBTBase base : tags)
+		{
+			if(!(base instanceof NBTTagCompound)) continue;
 
 			NBTTagCompound comp = (NBTTagCompound) base;
 

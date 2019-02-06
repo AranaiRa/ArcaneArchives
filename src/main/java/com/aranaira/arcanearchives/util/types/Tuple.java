@@ -35,8 +35,7 @@ public class Tuple<T, U> implements Serializable
 		{
 			Tuple t = (Tuple) o;
 			if(!val1.equals(t.val1)) return false;
-			if(!val2.equals(t.val2)) return false;
-			return true;
+			return val2.equals(t.val2);
 		}
 		return false;
 	}

@@ -26,26 +26,19 @@ public class GUIManifest extends GuiContainer
 {
 
 	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/manifest.png");
-
+	private final EntityPlayer player;
 	private String mSearchText = "";
-
 	private boolean mIsEnteringText = false;
-
 	private ContainerManifest mContainer;
-
 	private int mTextTopOffset = 14;
 	private int mTextLeftOffset = 13;
-
 	private int mEndTrackingLeftOffset = 67;
 	private int mEndTrackingTopOffset = 202;
-
 	private int mEndTrackingButtonLeftOffset = 65;
 	private int mEndTrackingButtonTopOffset = 200;
 	private int mEndTrackingButtonWidth = 54;
 	private int mEndTrackingButtonHeight = 14;
-
 	private int OTHER_DIMENSION = 0x10989898;
-	private final EntityPlayer player;
 
 	public GUIManifest(EntityPlayer player, ContainerManifest container)
 	{
@@ -139,7 +132,8 @@ public class GUIManifest extends GuiContainer
 				else if(typedChar == ' ') mSearchText += typedChar;
 			}
 			mContainer.SetSearchString(mSearchText);
-		} else if(keyCode == 1 || keyCode == this.mc.gameSettings.keyBindInventory.getKeyCode()) {
+		} else if(keyCode == 1 || keyCode == this.mc.gameSettings.keyBindInventory.getKeyCode())
+		{
 			Minecraft.getMinecraft().player.closeScreen();
 		}
 	}
@@ -166,13 +160,15 @@ public class GUIManifest extends GuiContainer
 	}
 
 	@Override
-    public void drawSlot(Slot slot) {
+	public void drawSlot(Slot slot)
+	{
 		super.drawSlot(slot);
 
 		ManifestEntry entry = mContainer.getEntry(slot.getSlotIndex());
-		if (entry == null) return;
+		if(entry == null) return;
 
-		if (entry.getDimension() != player.dimension) {
+		if(entry.getDimension() != player.dimension)
+		{
 			GlStateManager.disableDepth();
 			drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, 0x77000000);
 		}
@@ -180,17 +176,17 @@ public class GUIManifest extends GuiContainer
 
 	@Override
 	protected void renderToolTip(ItemStack stack, int x, int y)
-    {
-        FontRenderer font = stack.getItem().getFontRenderer(stack);
-        net.minecraftforge.fml.client.config.GuiUtils.preItemToolTip(stack);
-        List<String> tooltip = this.getItemToolTip(stack);
+	{
+		FontRenderer font = stack.getItem().getFontRenderer(stack);
+		net.minecraftforge.fml.client.config.GuiUtils.preItemToolTip(stack);
+		List<String> tooltip = this.getItemToolTip(stack);
 
-        Slot slot = this.getSlotUnderMouse();
+		Slot slot = this.getSlotUnderMouse();
 
-        if (slot != null)
+		if(slot != null)
 		{
 			ManifestEntry entry = mContainer.getEntry(slot.slotNumber);
-			if (entry != null && entry.getDimension() != player.dimension)
+			if(entry != null && entry.getDimension() != player.dimension)
 			{
 				DimensionType dim = DimensionType.getById(entry.getDimension());
 				String name = WordUtils.capitalize(dim.getName().replace("_", " "));
@@ -199,8 +195,8 @@ public class GUIManifest extends GuiContainer
 			}
 		}
 
-        this.drawHoveringText(tooltip, x, y, (font == null ? fontRenderer : font));
+		this.drawHoveringText(tooltip, x, y, (font == null ? fontRenderer : font));
 
-        net.minecraftforge.fml.client.config.GuiUtils.postItemToolTip();
-    }
+		net.minecraftforge.fml.client.config.GuiUtils.postItemToolTip();
+	}
 }

@@ -27,8 +27,8 @@ public class MatrixDistillate extends BlockDirectionalTemplate
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
 	{
-		tooltip.add(TextFormatting.RED+""+TextFormatting.BOLD+I18n.format("arcanearchives.tooltip.notimplemented1"));
-		tooltip.add(TextFormatting.RED+""+TextFormatting.ITALIC+I18n.format("arcanearchives.tooltip.notimplemented2"));
+		tooltip.add(TextFormatting.RED + "" + TextFormatting.BOLD + I18n.format("arcanearchives.tooltip.notimplemented1"));
+		tooltip.add(TextFormatting.RED + "" + TextFormatting.ITALIC + I18n.format("arcanearchives.tooltip.notimplemented2"));
 	}
 
 	@Override

@@ -18,7 +18,7 @@ import java.util.Set;
 public class ContainerRadiantChest extends Container
 {
 
-	private final Set<Slot> dragSlots = Sets.<Slot>newHashSet();
+	private final Set<Slot> dragSlots = Sets.newHashSet();
 	public String mName;
 	public int mDimension;
 	public BlockPos mPos;
@@ -644,9 +644,11 @@ public class ContainerRadiantChest extends Container
 				itemstack1 = itemstack.isEmpty() ? ItemStack.EMPTY : itemstack.copy();
 				this.inventoryItemStacks.set(i, itemstack1);
 
-				if(clientStackChanged) {
-					for (IContainerListener listener : this.listeners) {
-							listener.sendSlotContents(this, i, itemstack1);
+				if(clientStackChanged)
+				{
+					for(IContainerListener listener : this.listeners)
+					{
+						listener.sendSlotContents(this, i, itemstack1);
 					}
 				}
 			}

@@ -15,12 +15,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class NetworkContainer extends Container
 {
-	//The crafting inventory required for crafting.
-	private InventoryCrafting mInventoryCrafting;
-
 	//Required for the crafting inventory, dont ask me.
 	private final ContainerWorkbench eventHandler;
-
+	//The crafting inventory required for crafting.
+	private InventoryCrafting mInventoryCrafting;
 	private NetworkItemHandler networkItemHandler;
 
 	private EntityPlayer player;

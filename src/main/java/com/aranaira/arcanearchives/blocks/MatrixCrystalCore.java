@@ -84,8 +84,9 @@ public class MatrixCrystalCore extends BlockDirectionalTemplate
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
 	{
 		TileEntity te = world.getTileEntity(pos);
-		if (te instanceof ImmanenceTileEntity) {
-			if (!((ImmanenceTileEntity) te).NetworkID.equals(player.getUniqueID())) return false;
+		if(te instanceof ImmanenceTileEntity)
+		{
+			if(!((ImmanenceTileEntity) te).NetworkID.equals(player.getUniqueID())) return false;
 			player.openGui(ArcaneArchives.instance, AAGuiHandler.TOME_OF_REQUISITION, world, pos.getX(), pos.getY(), pos.getZ());
 		}
 		return true;
@@ -98,9 +99,15 @@ public class MatrixCrystalCore extends BlockDirectionalTemplate
 	}
 
 	@Override
-	public boolean hasTileEntity(IBlockState state) { return true; }
+	public boolean hasTileEntity(IBlockState state)
+	{
+		return true;
+	}
 
 	@Override
-	public TileEntity createTileEntity(World world, IBlockState state) { return new MatrixCoreTileEntity(); }
+	public TileEntity createTileEntity(World world, IBlockState state)
+	{
+		return new MatrixCoreTileEntity();
+	}
 
 }

@@ -108,7 +108,7 @@ public class PacketSynchronise
 				PacketSynchroniseResponse response = new PacketSynchroniseResponse(message.type, message.playerId, output);
 				EntityPlayerMP player = server.getPlayerList().getPlayerByUUID(message.playerId);
 
-				if (output != null)
+				if(output != null)
 				{
 					AAPacketHandler.CHANNEL.sendTo(response, player);
 				}

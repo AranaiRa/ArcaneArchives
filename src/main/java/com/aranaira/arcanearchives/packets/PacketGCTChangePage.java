@@ -2,7 +2,6 @@ package com.aranaira.arcanearchives.packets;
 
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -12,7 +11,6 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.minecraftforge.items.CapabilityItemHandler;
 
 public class PacketGCTChangePage implements IMessage
 {
@@ -20,7 +18,8 @@ public class PacketGCTChangePage implements IMessage
 	private int page;
 	private int dimension;
 
-	public PacketGCTChangePage () {
+	public PacketGCTChangePage()
+	{
 
 	}
 
@@ -59,10 +58,12 @@ public class PacketGCTChangePage implements IMessage
 		private void processMessage(PacketGCTChangePage message, MessageContext ctx)
 		{
 			MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-			if (server != null) {
+			if(server != null)
+			{
 				World world = DimensionManager.getWorld(message.dimension);
 				TileEntity te = world.getTileEntity(message.mPos);
-				if (te instanceof GemCuttersTableTileEntity) {
+				if(te instanceof GemCuttersTableTileEntity)
+				{
 					((GemCuttersTableTileEntity) te).setPage(message.page);
 				}
 			}

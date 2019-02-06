@@ -1,10 +1,9 @@
 package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.util.ItemComparison;
 import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.util.ItemComparison;
 import com.aranaira.arcanearchives.util.handlers.AAServerTickHandler;
-import com.aranaira.arcanearchives.util.handlers.AATickHandler;
 import com.aranaira.arcanearchives.util.types.Size;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -34,8 +33,8 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	public boolean IsInventory = false;
 	public int MaxItems;
 	public Size size;
-	private byte facing;
 	public List<BlockPos> mAccessors;
+	private byte facing;
 
 	public ImmanenceTileEntity(String name)
 	{
@@ -50,7 +49,8 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	}
 
 	@Override
-	public boolean isActive () {
+	public boolean isActive()
+	{
 		// TODO: in a later version, functionality for initial registration delay
 		return true;
 	}
@@ -222,25 +222,29 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	{
 		super.invalidate();
 
-		if (world.isRemote) return;
+		if(world.isRemote) return;
 
 		NetworkHelper.getArcaneArchivesNetwork(NetworkID).RemoveTileFromNetwork(this);
 	}
 
 	@Override
-	public void onChunkUnload () {
+	public void onChunkUnload()
+	{
 		super.onChunkUnload();
 
-		if (world.isRemote) return;
+		if(world.isRemote) return;
 
 		NetworkHelper.getArcaneArchivesNetwork(NetworkID).RemoveTileFromNetwork(this);
 	}
 
 	@Override
-	public void onLoad () {
-		if (world != null && !world.isRemote) {
+	public void onLoad()
+	{
+		if(world != null && !world.isRemote)
+		{
 			AAServerTickHandler.incomingITE(this);
-		} else if (world == null) {
+		} else if(world == null)
+		{
 			ArcaneArchives.logger.info("crap");
 		}
 		super.onLoad();

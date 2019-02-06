@@ -5,7 +5,10 @@ import com.aranaira.arcanearchives.util.ItemComparison;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.item.ItemStack;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class GemCuttersTableRecipeList
 {
@@ -14,7 +17,8 @@ public class GemCuttersTableRecipeList
 	private static List<GemCuttersTableRecipe> RecipeList = new ArrayList<>();
 	// private static LinkedHashMap<ItemStack, GemCuttersTableRecipe> RecipeList = new LinkedHashMap<>();
 
-	public static Set<ItemStack> getValidInputs () {
+	public static Set<ItemStack> getValidInputs()
+	{
 		return ValidInputs;
 	}
 
@@ -29,8 +33,9 @@ public class GemCuttersTableRecipeList
 		return RecipeList.stream().map(GemCuttersTableRecipe::getOutput).collect(AACollectors.toImmutableList());
 	}
 
-	public static ItemStack getOutputByIndex (int index) {
-		if (index < 0 || index >= getSize()) return ItemStack.EMPTY;
+	public static ItemStack getOutputByIndex(int index)
+	{
+		if(index < 0 || index >= getSize()) return ItemStack.EMPTY;
 
 		return getKeys().get(index);
 	}

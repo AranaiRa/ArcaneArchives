@@ -7,9 +7,10 @@ import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.relauncher.Side;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class AAServerTickHandler
@@ -24,7 +25,7 @@ public class AAServerTickHandler
 	@SubscribeEvent
 	public static void onServerTick(TickEvent.ServerTickEvent event)
 	{
-		if (event.phase != TickEvent.Phase.END) return;
+		if(event.phase != TickEvent.Phase.END) return;
 
 		if(incomingITEs.size() == 0) return;
 

@@ -17,11 +17,10 @@ import java.util.List;
 
 public class GUIBookContainer extends GuiContainer
 {
+	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/requisition_items.png");
+	private final int ImageHeight = 256, ImageWidth = 256, ImageScale = 256;
 	// TODO: This could cause problems if the class is ever loaded in a server context without the Minecraft class
 	Minecraft mc = Minecraft.getMinecraft();
-	private final int ImageHeight = 256, ImageWidth = 256, ImageScale = 256;
-	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/requisition_items.png");
-
 	//Buttons to switch interface.
 	private GenericButton Tab1;
 	private GenericButton Tab2;

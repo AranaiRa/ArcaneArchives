@@ -18,14 +18,12 @@ public class PacketNetworkInteraction implements IMessage
 	public static int GET_FILTERED_LIST = 3;
 
 	//TODO: Have packet get sent to the matrix core | Have that read the packet and deal with whatever it needs to do.
-
-	public PacketNetworkInteraction()
-	{
-	}
-
 	public ItemStack mItem;
 	public int mAction;
 	public String mSearchText;
+	public PacketNetworkInteraction()
+	{
+	}
 
 	public PacketNetworkInteraction(ItemStack item, int action, String searchText)
 	{

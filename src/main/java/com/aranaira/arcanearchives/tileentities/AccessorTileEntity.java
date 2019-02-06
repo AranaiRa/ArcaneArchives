@@ -31,10 +31,6 @@ public class AccessorTileEntity extends AATileEntity
 		setSize(new Size(1, 1, 1));
 	}
 
-	public void setParent (BlockPos pos) {
-		this.parent = pos;
-	}
-
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound)
 	{
@@ -62,12 +58,14 @@ public class AccessorTileEntity extends AATileEntity
 		super.readFromNBT(compound);
 	}
 
-	public boolean onBlockActivated(BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public boolean onBlockActivated(BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+	{
 		BlockPos par = getParent();
 		IBlockState parState = world.getBlockState(par);
 		Block parBlock = parState.getBlock();
 
-		if (!(parBlock instanceof BlockTemplate)) {
+		if(!(parBlock instanceof BlockTemplate))
+		{
 			return false;
 		}
 
@@ -79,29 +77,37 @@ public class AccessorTileEntity extends AATileEntity
 		return parent;
 	}
 
+	public void setParent(BlockPos pos)
+	{
+		this.parent = pos;
+	}
+
 	@Nullable
-	public AATileEntity getParentTile () {
+	public AATileEntity getParentTile()
+	{
 		TileEntity te = world.getTileEntity(getParent());
-		if (te instanceof AATileEntity) return (AATileEntity) te;
+		if(te instanceof AATileEntity) return (AATileEntity) te;
 		return null;
 	}
 
 	@Nullable
-	public BlockTemplate getParentBlock () {
+	public BlockTemplate getParentBlock()
+	{
 		Block block = world.getBlockState(getParent()).getBlock();
-		if (block instanceof BlockTemplate) return (BlockTemplate) block;
+		if(block instanceof BlockTemplate) return (BlockTemplate) block;
 		return null;
 	}
 
 	@Override
-	public void breakBlock () {
-		if (breaking) return;
+	public void breakBlock()
+	{
+		if(breaking) return;
 
 		breaking = true;
 
 		AATileEntity tile = getParentTile();
 
-		if (tile != null) tile.breakBlock();
+		if(tile != null) tile.breakBlock();
 	}
 
 	@Override
@@ -114,7 +120,7 @@ public class AccessorTileEntity extends AATileEntity
 	public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing)
 	{
 		AATileEntity parent = getParentTile();
-		if (parent != null) return parent.hasCapability(capability, facing);
+		if(parent != null) return parent.hasCapability(capability, facing);
 		return false;
 	}
 
@@ -123,7 +129,7 @@ public class AccessorTileEntity extends AATileEntity
 	public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing)
 	{
 		AATileEntity parent = getParentTile();
-		if (parent != null) return parent.getCapability(capability, facing);
+		if(parent != null) return parent.getCapability(capability, facing);
 		return null;
 	}
 }

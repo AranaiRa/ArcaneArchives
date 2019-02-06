@@ -5,7 +5,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
@@ -36,7 +35,7 @@ public class LargeItemNBTUtil
 		return item;
 	}
 
-	public static void writeToBuf (ByteBuf pbuf, ItemStack stack)
+	public static void writeToBuf(ByteBuf pbuf, ItemStack stack)
 	{
 		PacketBuffer buf = new PacketBuffer(pbuf);
 

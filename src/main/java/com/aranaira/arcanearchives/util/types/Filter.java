@@ -7,12 +7,14 @@ public class Filter<T>
 	T term = null;
 	BiFunction<T, T, Boolean> comparator = null;
 
-	Filter(T term, BiFunction<T, T, Boolean> comparator) {
+	Filter(T term, BiFunction<T, T, Boolean> comparator)
+	{
 		this.term = term;
 		this.comparator = comparator;
 	}
 
-	Filter(BiFunction <T, T, Boolean> comparator) {
+	Filter(BiFunction<T, T, Boolean> comparator)
+	{
 		this.comparator = comparator;
 	}
 
@@ -23,18 +25,20 @@ public class Filter<T>
 
 	public boolean matches(T otherTerm)
 	{
-		if (this.comparator != null) {
+		if(this.comparator != null)
+		{
 			return comparator.apply(this.term, otherTerm);
 		}
 		return this.term == otherTerm;
 	}
 
-	public void updateTerm (T newTerm)
+	public void updateTerm(T newTerm)
 	{
 		this.term = newTerm;
 	}
 
-	public T getTerm () {
+	public T getTerm()
+	{
 		return this.term;
 	}
 

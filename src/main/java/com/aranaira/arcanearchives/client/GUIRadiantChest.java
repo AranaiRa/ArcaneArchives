@@ -17,21 +17,16 @@ import java.util.UUID;
 public class GUIRadiantChest extends GuiContainer
 {
 
-	Minecraft mc = Minecraft.getMinecraft();
-	private final int ImageHeight = 253, ImageWidth = 192, ImageScale = 256;
 	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/radiantchest.png");
-
-	private int mNameTextLeftOffset = 53;
-	private int mNameTextTopOffset = 238;
-
-	private int mNameTextWidth = 88;
-	private int mNameTextHeight = 10;
-
-	private boolean mTextEnteringMode = false;
-
+	private final int ImageHeight = 253, ImageWidth = 192, ImageScale = 256;
+	Minecraft mc = Minecraft.getMinecraft();
 	ContainerRadiantChest mContainer;
 	UUID mPlayerID;
-
+	private int mNameTextLeftOffset = 53;
+	private int mNameTextTopOffset = 238;
+	private int mNameTextWidth = 88;
+	private int mNameTextHeight = 10;
+	private boolean mTextEnteringMode = false;
 	private String mNameField;
 
 	public GUIRadiantChest(Container inventorySlotsIn, UUID playerID)

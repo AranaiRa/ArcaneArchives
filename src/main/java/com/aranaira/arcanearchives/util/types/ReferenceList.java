@@ -12,11 +12,8 @@ public class ReferenceList<T> implements Iterable<T>, List<T>
 {
 	private List<T> reference;
 
-	public List<T> reference () {
-		return this.reference;
-	}
-
-	public ReferenceList() {
+	public ReferenceList()
+	{
 		this.reference = new ArrayList<>();
 	}
 
@@ -25,8 +22,14 @@ public class ReferenceList<T> implements Iterable<T>, List<T>
 		this.reference = reference;
 	}
 
-	public ReferenceList(Supplier<List<T>> supplier) {
+	public ReferenceList(Supplier<List<T>> supplier)
+	{
 		this.reference = supplier.get();
+	}
+
+	public List<T> reference()
+	{
+		return this.reference;
 	}
 
 	@Override
@@ -35,7 +38,8 @@ public class ReferenceList<T> implements Iterable<T>, List<T>
 		return reference.iterator();
 	}
 
-	public ReferenceListIterable<T> iterable () {
+	public ReferenceListIterable<T> iterable()
+	{
 		return new ReferenceListIterable<>(iterator());
 	}
 
@@ -214,11 +218,13 @@ public class ReferenceList<T> implements Iterable<T>, List<T>
 		return this.reference.parallelStream();
 	}
 
-	public class ReferenceListIterable<T> implements Iterable<T> {
+	public class ReferenceListIterable<T> implements Iterable<T>
+	{
 
 		Iterator<T> iter;
 
-		ReferenceListIterable(Iterator<T> iter) {
+		ReferenceListIterable(Iterator<T> iter)
+		{
 			this.iter = iter;
 		}
 

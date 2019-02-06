@@ -5,13 +5,11 @@ import com.aranaira.arcanearchives.blocks.BlockTemplate;
 import com.aranaira.arcanearchives.init.BlockLibrary;
 import com.aranaira.arcanearchives.init.ItemLibrary;
 import com.aranaira.arcanearchives.items.ItemMultistateTemplate;
-import com.aranaira.arcanearchives.tileentities.*;
+import com.aranaira.arcanearchives.tileentities.AATileEntity;
 import com.aranaira.arcanearchives.util.IHasModel;
-import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
@@ -20,13 +18,6 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import scala.annotation.meta.field;
-
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class RegistryHandler
@@ -69,7 +60,7 @@ public class RegistryHandler
 		{
 			if(item instanceof ItemMultistateTemplate)
 			{
-				((ItemMultistateTemplate)item).preInit();
+				((ItemMultistateTemplate) item).preInit();
 			}
 			if(item instanceof IHasModel)
 			{
@@ -88,7 +79,8 @@ public class RegistryHandler
 
 	public static void registerTileEntities()
 	{
-		for (AATileEntity tile : BlockLibrary.TILES) {
+		for(AATileEntity tile : BlockLibrary.TILES)
+		{
 			GameRegistry.registerTileEntity(tile.getClass(), new ResourceLocation(ArcaneArchives.MODID, tile.getName()));
 			ArcaneArchives.logger.info(String.format("Registered tile entity: %s", tile.getName()));
 		}

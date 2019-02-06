@@ -1,9 +1,9 @@
 package com.aranaira.arcanearchives.inventory;
 
-import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
 import com.aranaira.arcanearchives.data.ArcaneArchivesClientNetwork;
 import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
 import com.aranaira.arcanearchives.util.handlers.AATickHandler;
 import com.aranaira.arcanearchives.util.types.ManifestEntry;
 import net.minecraft.entity.player.EntityPlayer;
@@ -65,7 +65,7 @@ public class ContainerManifest extends Container
 
 		if(entry == null) return ItemStack.EMPTY;
 
-		if (entry.getDimension() != player.dimension) return ItemStack.EMPTY;
+		if(entry.getDimension() != player.dimension) return ItemStack.EMPTY;
 
 		AATickHandler.GetInstance().mBlockPositions.addAll(entry.getVecPositions());
 
