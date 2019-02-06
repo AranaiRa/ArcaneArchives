@@ -3,7 +3,6 @@ package com.aranaira.arcanearchives.blocks;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.common.AAGuiHandler;
 import com.aranaira.arcanearchives.tileentities.MatrixRepositoryTileEntity;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -16,12 +15,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
 @ParametersAreNonnullByDefault
-public class MatrixRepository extends BlockTemplate implements ITileEntityProvider
+public class MatrixRepository extends BlockTemplate
 {
 
 	public static final String name = "matrix_repository";
@@ -61,10 +59,10 @@ public class MatrixRepository extends BlockTemplate implements ITileEntityProvid
 	{
 		return false;
 	}
-	@Nullable
+
 	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta)
-	{
-		return new MatrixRepositoryTileEntity();
-	}
+	public boolean hasTileEntity(IBlockState state) { return true; }
+
+	@Override
+	public TileEntity createTileEntity(World world, IBlockState state) { return new MatrixRepositoryTileEntity(); }
 }

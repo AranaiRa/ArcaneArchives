@@ -5,7 +5,6 @@ import com.aranaira.arcanearchives.common.AAGuiHandler;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.MatrixCoreTileEntity;
 import mcp.MethodsReturnNonnullByDefault;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.IBlockState;
@@ -20,14 +19,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.Random;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class MatrixCrystalCore extends BlockDirectionalTemplate implements ITileEntityProvider
+public class MatrixCrystalCore extends BlockDirectionalTemplate
 {
 	public static final PropertyDirection FACING = PropertyDirection.create("facing");
 
@@ -99,10 +97,10 @@ public class MatrixCrystalCore extends BlockDirectionalTemplate implements ITile
 		return BlockRenderLayer.CUTOUT;
 	}
 
-	@Nullable
 	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta)
-	{
-		return new MatrixCoreTileEntity();
-	}
+	public boolean hasTileEntity(IBlockState state) { return true; }
+
+	@Override
+	public TileEntity createTileEntity(World world, IBlockState state) { return new MatrixCoreTileEntity(); }
+
 }

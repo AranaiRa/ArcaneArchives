@@ -5,7 +5,6 @@ import com.aranaira.arcanearchives.init.BlockLibrary;
 import com.aranaira.arcanearchives.tileentities.AATileEntity;
 import com.aranaira.arcanearchives.tileentities.AccessorTileEntity;
 import mcp.MethodsReturnNonnullByDefault;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -49,7 +48,7 @@ import java.util.Random;
 @SuppressWarnings("deprecation")
 // TODO: Break textures
 // TODO: WAILA, TUMAT, TOP, etc support
-public class AccessorBlock extends BlockTemplate implements ITileEntityProvider
+public class AccessorBlock extends BlockTemplate
 {
 	public static final PropertyInteger TYPE = PropertyInteger.create("type", 0, 15);
 
@@ -153,6 +152,7 @@ public class AccessorBlock extends BlockTemplate implements ITileEntityProvider
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
+		if (world.isRemote) return true;
 		TileEntity te = world.getTileEntity(pos);
 
 		if(te instanceof AccessorTileEntity)
@@ -329,11 +329,10 @@ public class AccessorBlock extends BlockTemplate implements ITileEntityProvider
 		return getBlock(blockState).getComparatorInputOverride(blockState, worldIn, pos);
 	}
 
-	@Nullable
 	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta)
-	{
-		return new AccessorTileEntity();
-	}
+	public boolean hasTileEntity(IBlockState state) { return true; }
+
+	@Override
+	public TileEntity createTileEntity(World world, IBlockState state) { return new AccessorTileEntity(); }
 }
 
