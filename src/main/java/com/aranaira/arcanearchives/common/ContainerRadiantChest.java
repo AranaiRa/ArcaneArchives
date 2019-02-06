@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.common;
 
-import com.aranaira.arcanearchives.packets.RadiantChestListener;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.handlers.ConfigHandler;
 import com.google.common.collect.Sets;
@@ -57,27 +56,6 @@ public class ContainerRadiantChest extends Container
 		{
 			this.addSlotToContainer(new Slot(playerInventory, i, 16 + (18 * x), 200));
 			i--;
-		}
-	}
-
-	@Override
-	public void addListener(IContainerListener listener)
-	{
-		if(this.listeners.contains(listener))
-		{
-			throw new IllegalArgumentException("Listener already listening");
-		} else
-		{
-			if(listener instanceof EntityPlayerMP)
-			{
-				IContainerListener newListener = new RadiantChestListener((EntityPlayerMP) listener);
-				this.listeners.add(newListener);
-				newListener.sendAllContents(this, this.getInventory());
-				this.detectAndSendChanges();
-			} else
-			{
-				super.addListener(listener);
-			}
 		}
 	}
 

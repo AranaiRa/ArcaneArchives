@@ -21,8 +21,6 @@ public class AAPacketHandler
 		registerPacks(PacketGCTChangePage.PacketGCTChangePageHandler.class, PacketGCTChangePage.class, Side.SERVER);
 		registerPacks(PacketSynchronise.PacketSynchroniseResponse.PacketSynchroniseResponseHandler.class, PacketSynchronise.PacketSynchroniseResponse.class, Side.CLIENT);
 		registerPacks(PacketSynchronise.PacketSynchroniseRequest.PacketSynchroniseRequestHandler.class, PacketSynchronise.PacketSynchroniseRequest.class, Side.SERVER);
-		registerPacks(PacketsRadiantChest.SetSlotPacket.SetSlotPacketHandler.class, PacketsRadiantChest.SetSlotPacket.class, Side.CLIENT);
-		registerPacks(PacketsRadiantChest.WindowItemsPacket.WindowItemsHandler.class, PacketsRadiantChest.WindowItemsPacket.class, Side.CLIENT);
 	}
 
 	private static <REQ extends IMessage, REPLY extends IMessage> void registerPacks(Class<? extends IMessageHandler<REQ, REPLY>> messageHandler, Class<REQ> requestMessageType, Side side)
@@ -30,5 +28,4 @@ public class AAPacketHandler
 		CHANNEL.registerMessage(messageHandler, requestMessageType, packetID, side);
 		packetID++;
 	}
-
 }
