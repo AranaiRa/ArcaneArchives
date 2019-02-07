@@ -24,8 +24,6 @@ public class AAGuiHandler implements IGuiHandler
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
 	{
-		//ArcaneArchives.logger.info("^^^^SERVER GUI ELEMENT");
-		//ArcaneArchives.logger.info("id:"+ID+"\nplayer:"+player+"\nworld:"+world+"\nx:"+x+" y:"+y+" z:"+z);
 		BlockPos pos = new BlockPos(x, y, z);
 		TileEntity te = world.getTileEntity(pos);
 
@@ -54,7 +52,7 @@ public class AAGuiHandler implements IGuiHandler
 				return new ContainerMatrixRepository((MatrixRepositoryTileEntity) te, player.inventory);
 			default:
 			{
-				ArcaneArchives.logger.info("^RETURNED NULL");
+				ArcaneArchives.logger.info(String.format("Invalid Container ID of %d was passed in; null was returned to the server", ID));
 				return null;
 			}
 		}
@@ -63,9 +61,6 @@ public class AAGuiHandler implements IGuiHandler
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
 	{
-		//ArcaneArchives.logger.info("^^^^CLIENT GUI ELEMENT");
-		//ArcaneArchives.logger.info("^START");
-		//ArcaneArchives.logger.info("id:"+ID+"\nplayer:"+player+"\nworld:"+world+"\nx:"+x+" y:"+y+" z:"+z);
 		BlockPos pos = new BlockPos(x, y, z);
 		TileEntity te = world.getTileEntity(pos);
 
@@ -94,7 +89,7 @@ public class AAGuiHandler implements IGuiHandler
 				return new GUIMatrixRepository(player, new ContainerMatrixRepository((MatrixRepositoryTileEntity) te, player.inventory));
 			default:
 			{
-				ArcaneArchives.logger.info("^RETURNED NULL");
+				ArcaneArchives.logger.info(String.format("Invalid Container ID of %d was passed in; null was returned to the client.", ID));
 				return null;
 			}
 		}

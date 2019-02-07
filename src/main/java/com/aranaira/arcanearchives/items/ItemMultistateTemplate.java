@@ -94,7 +94,7 @@ public class ItemMultistateTemplate extends ItemTemplate
 
 		for(Map.Entry<Integer, String> entry : itemMap.entrySet())
 		{
-			ArcaneArchives.logger.info("%%% Setting custom resource location for " + getRegistryName() + " variant \"" + entry.getValue() + "\"");
+			ArcaneArchives.logger.info("Setting custom resource location for " + getRegistryName() + " variant \"" + entry.getValue() + "\"");
 			ModelLoader.setCustomModelResourceLocation(this, entry.getKey(), new ModelResourceLocation(getRegistryName(), "type=" + entry.getValue()));
 		}
 	}

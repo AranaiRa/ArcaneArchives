@@ -105,7 +105,6 @@ public class GUIRadiantChest extends GuiContainer
 					if(!mContainer.mName.equals(mNameField))
 					{
 						AAPacketHandler.CHANNEL.sendToServer(new SetRadiantChestName(mContainer.mPos, mNameField, mPlayerID, mContainer.mDimension));
-						ArcaneArchives.logger.info("SENT PACKET");
 						return;
 					}
 

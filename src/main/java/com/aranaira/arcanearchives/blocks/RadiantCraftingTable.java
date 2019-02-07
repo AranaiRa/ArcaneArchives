@@ -48,7 +48,7 @@ public class RadiantCraftingTable extends BlockTemplate
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
-		ArcaneArchives.logger.info("TRYING TO OPEN GUI");
+		// ArcaneArchives.logger.info("TRYING TO OPEN GUI");
 		playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.RADIANT_CRAFTING_TABLE, worldIn, pos.getX(), pos.getY(), pos.getZ());
 
 		return true;

@@ -18,9 +18,9 @@ public class ContainerMatrixRepository extends Container
 		mTileEntity = MRTE;
 
 		// these are always nonnull at this point according to intelliJ
-		ArcaneArchives.logger.info("^^^^NULL CHECKS");
+		/*ArcaneArchives.logger.info("^^^^NULL CHECKS");
 		ArcaneArchives.logger.info("inv null? " + playerInventory.equals(null));
-		ArcaneArchives.logger.info("te null? " + MRTE.equals(null));
+		ArcaneArchives.logger.info("te null? " + MRTE.equals(null));*/
 	}
 
 	@Override

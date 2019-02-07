@@ -7,6 +7,5 @@ public class RadiantCraftingTableTileEntity extends ImmanenceTileEntity
 	public RadiantCraftingTableTileEntity()
 	{
 		super("radiantcraftingtable");
-		ArcaneArchives.logger.info("CONSTRUCTING TILE ENTITY");
 	}
 }

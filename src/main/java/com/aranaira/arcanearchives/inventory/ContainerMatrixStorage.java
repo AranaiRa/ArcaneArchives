@@ -18,9 +18,9 @@ public class ContainerMatrixStorage extends Container
 		mTileEntity = MSTE;
 
 		// Againn, nonnull by default
-		ArcaneArchives.logger.info("^^^^NULL CHECKS");
+		/*ArcaneArchives.logger.info("^^^^NULL CHECKS");
 		ArcaneArchives.logger.info("inv null? " + playerInventory.equals(null));
-		ArcaneArchives.logger.info("te null? " + MSTE.equals(null));
+		ArcaneArchives.logger.info("te null? " + MSTE.equals(null));*/
 	}
 
 	@Override

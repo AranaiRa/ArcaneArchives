@@ -116,7 +116,6 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 	@Override
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
 	{
-		ArcaneArchives.logger.info(Minecraft.getMinecraft().player.getDisplayNameString());
 		readFromNBT(pkt.getNbtCompound());
 		super.onDataPacket(net, pkt);
 	}

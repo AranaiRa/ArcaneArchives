@@ -238,7 +238,8 @@ public class BlockTemplate extends Block implements IHasModel
 						((AccessorTileEntity) ate).setParent(pos);
 					} else
 					{
-						ArcaneArchives.logger.info("TileEntity not created yet :(");
+						// TODO: Include more information
+						ArcaneArchives.logger.info("Block had TileEntity accessors but no TileEntity exists to link to it. WTF?");
 					}
 				}
 			}

@@ -43,10 +43,10 @@ public class RegistryHandler
 		{
 			if(block instanceof BlockTemplate) if(((BlockTemplate) block).hasOBJModel())
 			{
-				ArcaneArchives.logger.info("&&&&&&&& Setting up " + block.getRegistryName() + " with OBJ model");
+				// ArcaneArchives.logger.info("&&&&&&&& Setting up " + block.getRegistryName() + " with OBJ model");
 			} else
 			{
-				ArcaneArchives.logger.info("&&&&&&&& Setting up " + block.getRegistryName());
+				// ArcaneArchives.logger.info("&&&&&&&& Setting up " + block.getRegistryName());
 				// todo: null everything
 				ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName(), "inventory"));
 			}

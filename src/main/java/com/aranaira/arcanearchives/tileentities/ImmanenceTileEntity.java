@@ -245,7 +245,8 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 			AAServerTickHandler.incomingITE(this);
 		} else if(world == null)
 		{
-			ArcaneArchives.logger.info("crap");
+			// TODO: Include more information
+			ArcaneArchives.logger.info("TileEntity loaded in with a null world. WTF?");
 		}
 		super.onLoad();
 	}

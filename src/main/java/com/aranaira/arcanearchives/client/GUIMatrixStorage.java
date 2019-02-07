@@ -70,8 +70,8 @@ public class GUIMatrixStorage extends GuiContainer
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
 	{
-		ArcaneArchives.logger.info("Mouse : " + mouseX + "," + mouseY);
-		ArcaneArchives.logger.info("Thing : " + (guiLeft + 92) + "," + (guiTop + 34 + (int) (166 * mScrollbarPercent)));
+		// ArcaneArchives.logger.info("Mouse : " + mouseX + "," + mouseY);
+		// ArcaneArchives.logger.info("Thing : " + (guiLeft + 92) + "," + (guiTop + 34 + (int) (166 * mScrollbarPercent)));
 		if(mouseX > guiLeft + 92 && mouseY > guiTop + 34 + (int) (166 * mScrollbarPercent) && mouseX < guiLeft + 92 + 12 && mouseY < guiTop + 34 + (int) (166 * mScrollbarPercent) + 12)
 		{
 			mScrollbarSelected = true;

@@ -17,9 +17,9 @@ public class ContainerRadiantCraftingTable extends Container
 		//ArcaneArchivesNetwork aanetwork = NetworkHelper.getArcaneArchivesNetwork(playerIn.getUniqueID());
 		mTileEntity = RCTTE;
 
-		ArcaneArchives.logger.info("^^^^NULL CHECKS");
-		ArcaneArchives.logger.info("inv null? " + playerInventory.equals(null));
-		ArcaneArchives.logger.info("te null? " + RCTTE.equals(null));
+		// ArcaneArchives.logger.info("^^^^NULL CHECKS");
+		// ArcaneArchives.logger.info("inv null? " + playerInventory.equals(null));
+		// ArcaneArchives.logger.info("te null? " + RCTTE.equals(null));
 	}
 
 	@Override
