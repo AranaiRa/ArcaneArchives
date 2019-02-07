@@ -68,7 +68,7 @@ public class GUIGemCuttersTable extends GuiContainer
 		{
 			ItemStack output = recipe.getOutput();
 
-			for(int i = 0; i < 8; i++)
+			for(int i = 0; i < 7; i++)
 			{
 				int actualIndex = i + mCGCT.getTile().getPage() * 7;
 				if(ItemComparison.AreItemsEqual(GemCuttersTableRecipeList.getOutputByIndex(actualIndex), output))
