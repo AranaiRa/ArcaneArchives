@@ -90,7 +90,7 @@ public class GUIGemCuttersTable extends GuiContainer
 
 			for(ItemStack item : recipe.getInput())
 			{
-				mRecipeInput.add(TextFormatting.GREEN + item.getDisplayName() + " : " + item.getCount());
+				mRecipeInput.add(TextFormatting.BOLD + item.getDisplayName() + " : " + item.getCount());
 			}
 
 			this.drawHoveringText(mRecipeInput, guiLeft + 206, guiTop);
