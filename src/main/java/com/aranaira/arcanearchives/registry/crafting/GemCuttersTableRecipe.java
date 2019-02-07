@@ -92,13 +92,10 @@ public class GemCuttersTableRecipe
 			for(int j = 0; j < input.getSlots(); j++)
 			{
 				ItemStack potential = input.getStackInSlot(j);
-
-				stacks.removeIf(ItemStack::isEmpty);
+				if (potential.isEmpty()) continue;
 
 				for(int i = 0; i < stacks.size(); i++)
 				{
-					if (potential.isEmpty()) return;
-
 					ItemStack requirement = stacks.get(i);
 					if(requirement.isEmpty()) continue;
 
@@ -128,12 +125,11 @@ public class GemCuttersTableRecipe
 					}
 				}
 			}
-
-			stacks.removeIf(ItemStack::isEmpty);
 		}
 
 		public boolean match()
 		{
+			stacks.removeIf((f) -> f == null || f.isEmpty() || f.getCount() == 0);
 			return stacks.isEmpty();
 		}
 	}

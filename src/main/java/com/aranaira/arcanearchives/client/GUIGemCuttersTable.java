@@ -26,6 +26,9 @@ public class GUIGemCuttersTable extends GuiContainer
 
 	private InvisibleButton PrevPageButton;
 	private InvisibleButton NextPageButton;
+	private EntityPlayer player;
+
+	boolean recipeStatus;
 
 	public GUIGemCuttersTable(EntityPlayer player, ContainerGemCuttersTable container)
 	{
@@ -33,6 +36,7 @@ public class GUIGemCuttersTable extends GuiContainer
 		mCGCT = container;
 		this.xSize = 206;
 		this.ySize = 254;
+		this.player = player;
 
 	}
 
@@ -51,6 +55,8 @@ public class GUIGemCuttersTable extends GuiContainer
 
 		this.buttonList.add(PrevPageButton);
 		this.buttonList.add(NextPageButton);
+
+		recipeStatus = true; //mCGCT.getRecipeStatus();
 	}
 
 	@Override
@@ -63,6 +69,10 @@ public class GUIGemCuttersTable extends GuiContainer
 		this.mc.getTextureManager().bindTexture(GUITextures);
 
 		GemCuttersTableRecipe recipe = mCGCT.getTile().getRecipe();
+
+		if (player.ticksExisted % 50 == 0) {
+			//recipeStatus = mCGCT.getRecipeStatus();
+		}
 
 		if(recipe != null)
 		{
@@ -78,7 +88,7 @@ public class GUIGemCuttersTable extends GuiContainer
 				}
 			}
 			List<String> mRecipeInput = new ArrayList<>();
-			if(mCGCT.getRecipeStatus())
+			if(recipeStatus)
 			{
 				// Valid
 				mRecipeInput.add(TextFormatting.GREEN + output.getDisplayName());

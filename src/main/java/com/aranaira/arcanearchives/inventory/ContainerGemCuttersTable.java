@@ -139,7 +139,22 @@ public class ContainerGemCuttersTable extends Container
 		{
 			if(slotId <= 43 && slotId >= 37)
 			{
-				getTile().updateOutput();
+				getTile().setRecipe(getSlot(slotId).getStack());
+				return ItemStack.EMPTY;
+			}
+		}
+
+		if (!player.world.isRemote && slotId == 36)
+		{
+			GemCuttersTableRecipe recipe = getTile().getRecipe();
+			if(recipe == null) return ItemStack.EMPTY;
+
+			if(recipe.matchesRecipe(tileInventory, new InvWrapper(playerInventory)))
+			{
+				return super.slotClick(slotId, dragType, clickTypeIn, player);
+			}
+			else
+			{
 				return ItemStack.EMPTY;
 			}
 		}
