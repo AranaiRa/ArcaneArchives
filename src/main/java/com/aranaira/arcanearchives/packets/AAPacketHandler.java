@@ -18,9 +18,11 @@ public class AAPacketHandler
 		registerPacks(PacketNetworkInteraction.PacketNetworkInteractionHandler.class, PacketNetworkInteraction.class, Side.SERVER);
 		registerPacks(SetRadiantChestName.SetRadiantChestNameHandler.class, SetRadiantChestName.class, Side.SERVER);
 		registerPacks(PacketChangeRadiantChestNameClient.PacketChangeRadiantChestNameClientHandler.class, PacketChangeRadiantChestNameClient.class, Side.CLIENT);
-		registerPacks(PacketGCTChangePage.PacketGCTChangePageHandler.class, PacketGCTChangePage.class, Side.SERVER);
-		registerPacks(PacketSynchronise.PacketSynchroniseResponse.PacketSynchroniseResponseHandler.class, PacketSynchronise.PacketSynchroniseResponse.class, Side.CLIENT);
-		registerPacks(PacketSynchronise.PacketSynchroniseRequest.PacketSynchroniseRequestHandler.class, PacketSynchronise.PacketSynchroniseRequest.class, Side.SERVER);
+		registerPacks(PacketGemCutters.ChangePage.ChangePageHandler.class, PacketGemCutters.ChangePage.class, Side.SERVER);
+		registerPacks(PacketGemCutters.ChangeRecipe.ChangeRecipeHandler.class, PacketGemCutters.ChangeRecipe.class, Side.SERVER);
+		registerPacks(PacketGemCutters.Consume.ConsumeHandler.class, PacketGemCutters.Consume.class, Side.SERVER);
+		registerPacks(PacketManifest.PacketSynchroniseResponse.PacketSynchroniseResponseHandler.class, PacketManifest.PacketSynchroniseResponse.class, Side.CLIENT);
+		registerPacks(PacketManifest.PacketSynchroniseRequest.PacketSynchroniseRequestHandler.class, PacketManifest.PacketSynchroniseRequest.class, Side.SERVER);
 	}
 
 	private static <REQ extends IMessage, REPLY extends IMessage> void registerPacks(Class<? extends IMessageHandler<REQ, REPLY>> messageHandler, Class<REQ> requestMessageType, Side side)

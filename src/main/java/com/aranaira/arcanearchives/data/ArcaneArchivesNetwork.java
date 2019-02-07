@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
 import com.aranaira.arcanearchives.packets.AAPacketHandler;
-import com.aranaira.arcanearchives.packets.PacketSynchronise;
+import com.aranaira.arcanearchives.packets.PacketManifest;
 import com.aranaira.arcanearchives.tileentities.AATileEntity;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
@@ -509,7 +509,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		return tag;
 	}
 
-	public void Synchronise(PacketSynchronise.SynchroniseType type)
+	public void Synchronise(PacketManifest.SynchroniseType type)
 	{
 		switch(type)
 		{
@@ -525,7 +525,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		if(server != null)
 		{
 			EntityPlayerMP player = server.getPlayerList().getPlayerByUUID(mPlayerId);
-			IMessage packet = new PacketSynchronise.PacketSynchroniseResponse(PacketSynchronise.SynchroniseType.DATA, mPlayerId, buildSynchroniseData());
+			IMessage packet = new PacketManifest.PacketSynchroniseResponse(PacketManifest.SynchroniseType.DATA, mPlayerId, buildSynchroniseData());
 			AAPacketHandler.CHANNEL.sendTo(packet, player);
 		}
 	}

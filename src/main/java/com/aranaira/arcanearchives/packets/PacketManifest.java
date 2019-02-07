@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 import java.util.UUID;
 
-public class PacketSynchronise
+public class PacketManifest
 {
 	public enum SynchroniseType
 	{

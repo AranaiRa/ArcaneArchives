@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
 import com.aranaira.arcanearchives.packets.AAPacketHandler;
-import com.aranaira.arcanearchives.packets.PacketSynchronise;
+import com.aranaira.arcanearchives.packets.PacketManifest;
 import com.aranaira.arcanearchives.util.LargeItemNBTUtil;
 import com.aranaira.arcanearchives.util.types.ManifestEntry;
 import com.aranaira.arcanearchives.util.types.ManifestList;
@@ -75,13 +75,13 @@ public class ArcaneArchivesClientNetwork
 	// but does not include the manifest info.
 	public void synchroniseData()
 	{
-		PacketSynchronise.PacketSynchroniseRequest request = new PacketSynchronise.PacketSynchroniseRequest(PacketSynchronise.SynchroniseType.DATA, mOwnerId);
+		PacketManifest.PacketSynchroniseRequest request = new PacketManifest.PacketSynchroniseRequest(PacketManifest.SynchroniseType.DATA, mOwnerId);
 		AAPacketHandler.CHANNEL.sendToServer(request);
 	}
 
 	public void synchroniseManifest()
 	{
-		PacketSynchronise.PacketSynchroniseRequest request = new PacketSynchronise.PacketSynchroniseRequest(PacketSynchronise.SynchroniseType.MANIFEST, mOwnerId);
+		PacketManifest.PacketSynchroniseRequest request = new PacketManifest.PacketSynchroniseRequest(PacketManifest.SynchroniseType.MANIFEST, mOwnerId);
 		AAPacketHandler.CHANNEL.sendToServer(request);
 	}
 
