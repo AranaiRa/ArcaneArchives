@@ -4,33 +4,38 @@ import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
 import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipe;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
+import net.minecraftforge.items.wrapper.InvWrapper;
+import scala.xml.dtd.EMPTY;
 
 import javax.annotation.Nonnull;
 
 public class ContainerGemCuttersTable extends Container
 {
-	private GemCuttersTableTileEntity mTileEntity;
+	private GemCuttersTableTileEntity tile;
 	private boolean isServer;
 	private IInventory playerInventory;
+	private ItemStackHandler tileInventory;
+	private ItemStackHandler tileOutput;
+	private SlotOutput outputSlot;
 
-	public ContainerGemCuttersTable(GemCuttersTableTileEntity GCTTE, IInventory playerInventory, boolean serverSide)
+	public ContainerGemCuttersTable(GemCuttersTableTileEntity tile, IInventory playerInventory, boolean serverSide)
 	{
-		mTileEntity = GCTTE;
-		isServer = serverSide;
+		this.tile = tile;
+		this.isServer = serverSide;
 		this.playerInventory = playerInventory;
+		this.tileInventory = tile.getInventory();
+		this.tileOutput = tile.getOutput();
 
-		//player inventory
 		int i = 35;
-		//Inventory
 		for(int y = 2; y > -1; y--)
 		{
 			for(int x = 8; x > -1; x--)
@@ -39,17 +44,16 @@ public class ContainerGemCuttersTable extends Container
 				i--;
 			}
 		}
-		//hotbar
+
 		for(int x = 8; x > -1; x--)
 		{
 			this.addSlotToContainer(new Slot(playerInventory, i, 23 + (18 * x), 224));
 			i--;
 		}
 
-		IItemHandler GCTTE_IH = GCTTE.getInventory();
+		outputSlot = new SlotOutput(tileOutput, this, 95, 18);
 
-		//crafting output - 0
-		this.addSlotToContainer(new SlotItemHandler(GCTTE_IH, 18, 95, 18));
+		this.addSlotToContainer(outputSlot);
 
 		//selector - 1 - 8
 		{
@@ -57,7 +61,7 @@ public class ContainerGemCuttersTable extends Container
 
 			for(int x = 6; x > -1; x--)
 			{
-				this.addSlotToContainer(new SlotRecipeHandler(x, x * 18 + 41, y * 18 + 70, GCTTE));
+				this.addSlotToContainer(new SlotRecipeHandler(x, x * 18 + 41, y * 18 + 70, tile));
 			}
 		}
 
@@ -66,7 +70,7 @@ public class ContainerGemCuttersTable extends Container
 		{
 			for(int x = 8; x > -1; x--)
 			{
-				this.addSlotToContainer(new SlotItemHandler(GCTTE_IH, i, x * 18 + 23, y * 18 + 105));
+				this.addSlotToContainer(new SlotItemHandler(tileInventory, i, x * 18 + 23, y * 18 + 105));
 				i--;
 			}
 		}
@@ -77,7 +81,6 @@ public class ContainerGemCuttersTable extends Container
 	{
 		return true;
 	}
-
 
 	@Override
 	@Nonnull
@@ -136,8 +139,7 @@ public class ContainerGemCuttersTable extends Container
 		{
 			if(slotId <= 43 && slotId >= 37)
 			{
-				this.getTile().setRecipe(getSlot(slotId).getStack());
-				this.getTile().updateOutput();
+				getTile().updateOutput();
 				return ItemStack.EMPTY;
 			}
 		}
@@ -147,26 +149,75 @@ public class ContainerGemCuttersTable extends Container
 
 	public GemCuttersTableTileEntity getTile()
 	{
-		return mTileEntity;
+		return tile;
 	}
 
 	public boolean getRecipeStatus()
 	{
 		GemCuttersTableRecipe recipe = getTile().getRecipe();
-		if(recipe == null) return false;
-
-		NonNullList<ItemStack> raw = NonNullList.create();
-		ItemStackHandler inventory = getTile().getInventory();
-		for(int i = 0; i < inventory.getSlots(); i++)
+		if(recipe == null)
 		{
-			raw.add(inventory.getStackInSlot(i));
+			return false;
 		}
 
-		for(int i = 0; i < playerInventory.getSizeInventory(); i++)
+		return recipe.matchesRecipe(tileInventory, new InvWrapper(playerInventory));
+	}
+
+	public class SlotOutput extends SlotItemHandler
+	{
+		private ItemStack stack = ItemStack.EMPTY;
+		private Container cont;
+
+		SlotOutput(IItemHandler handler, Container cont, int xPosition, int yPosition)
 		{
-			raw.add(playerInventory.getStackInSlot(i));
+			super(handler, 0, xPosition, yPosition);
+			this.cont = cont;
 		}
 
-		return recipe.matchesRecipe(raw);
+		@Override
+		public boolean isItemValid(@Nonnull ItemStack stack)
+		{
+			return false;
+		}
+
+		@Override
+		public void onSlotChanged()
+		{
+		}
+
+		@Override
+		public ItemStack onTake(EntityPlayer thePlayer, ItemStack stack)
+		{
+			GemCuttersTableRecipe recipe = getTile().getRecipe();
+			if(recipe == null) return ItemStack.EMPTY;
+			GemCuttersTableTileEntity tile = getTile();
+			ItemStackHandler tileInv = tile.getInventory();
+			InvWrapper ply = new InvWrapper(playerInventory);
+
+			if(thePlayer.world.isRemote)
+			{
+				if(!recipe.matchesRecipe(tileInv, ply))
+				{
+					stack = ItemStack.EMPTY;
+				}
+			} else
+			{
+				if(!recipe.matchesRecipe(tileInv, ply))
+				{
+					stack = ItemStack.EMPTY;
+				} else if(!recipe.consume(tileInv, ply))
+				{
+					stack = ItemStack.EMPTY;
+				}
+			}
+
+			if (thePlayer instanceof EntityPlayerMP)
+			{
+				tile.updateOutput();
+				((EntityPlayerMP) thePlayer).sendAllContents(cont, cont.getInventory());
+			}
+
+			return stack;
+		}
 	}
 }

@@ -1,19 +1,17 @@
 package com.aranaira.arcanearchives.registry.crafting;
 
 import com.aranaira.arcanearchives.util.ItemComparison;
-import com.aranaira.arcanearchives.util.ItemStackConsolidator;
+import com.aranaira.arcanearchives.util.types.Tuple;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.InvWrapper;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
-//Referenced Immersive Engineering
-//https://github.com/BluSunrize/ImmersiveEngineering/blob/e3e8cf65dadb2762cb343cc5f31d9bf9a29f2188/src/main/java/blusunrize/immersiveengineering/api/crafting/BlueprintCraftingRecipe.java#L3
 public class GemCuttersTableRecipe
 {
 	public static final GemCuttersTableRecipe EMPTY = new GemCuttersTableRecipe(new ArrayList<>(), ItemStack.EMPTY);
@@ -36,39 +34,23 @@ public class GemCuttersTableRecipe
 		return this == EMPTY;
 	}
 
-	public boolean matchesRecipe(NonNullList<ItemStack> raw)
+	public boolean matchesRecipe(ItemStackHandler internal, InvWrapper playerInventory)
 	{
 		if(isEmpty()) return false;
 
-		List<ItemStack> available = ItemStackConsolidator.ConsolidatedItems(raw);
-		List<ItemStack> requirements = getInput();
+		RecipeMatcher match = new RecipeMatcher();
+		match.accept(internal);
+		match.accept(playerInventory);
 
-		Set<Integer> usedIndexes = new HashSet<>();
+		return match.match();
+	}
 
-		int foundItems = 0;
+	public boolean consume (ItemStackHandler internal, InvWrapper playerInventory) {
+		RecipeMatcher match = new RecipeMatcher(false);
+		match.accept(internal);
+		match.accept(playerInventory);
 
-		// Praise be to the lord that these requirements are always of single counts
-		for(ItemStack requirement : requirements)
-		{
-			for(int i = 0; i < available.size(); i++)
-			{
-				ItemStack avail = available.get(i);
-				if(usedIndexes.contains(i)) continue;
-				if(ItemComparison.AreItemsEqual(requirement, avail))
-				{
-					if(requirement.getCount() == 1)
-					{
-						usedIndexes.add(i);
-					} else
-					{
-						requirement.setCount(requirement.getCount() - 1);
-					}
-					usedIndexes.add(i);
-					foundItems++;
-				}
-			}
-		}
-		return foundItems == requirements.size();
+		return match.match();
 	}
 
 	@Nonnull
@@ -84,34 +66,75 @@ public class GemCuttersTableRecipe
 		return new ArrayList<>(mInput);
 	}
 
-	// Clarify
-	// This could use code from the recipe list
-	public void consumeInput(NonNullList<ItemStack> query)
+	public class RecipeMatcher
 	{
-		List<ItemStack> temp = new ArrayList<>();
-		for(ItemStack s : mInput)
+		private boolean simulate = true;
+		private List<ItemStack> stacks;
+
+		public RecipeMatcher()
 		{
-			temp.add(s.copy());
+			reset();
 		}
-		for(ItemStack i : query)
+
+		public RecipeMatcher(boolean simulate)
 		{
-			for(ItemStack is : temp)
+			this.simulate = simulate;
+			reset();
+		}
+
+		public void reset()
+		{
+			stacks = mInput.stream().map(ItemStack::copy).collect(Collectors.toList());
+		}
+
+		public void accept(IItemHandlerModifiable input)
+		{
+			for(int j = 0; j < input.getSlots(); j++)
 			{
-				if(is.isEmpty()) continue;
-				if(ItemComparison.AreItemsEqual(i, is))
+				ItemStack potential = input.getStackInSlot(j);
+
+				stacks.removeIf(ItemStack::isEmpty);
+
+				for(int i = 0; i < stacks.size(); i++)
 				{
-					if(i.getCount() >= is.getCount())
+					if (potential.isEmpty()) return;
+
+					ItemStack requirement = stacks.get(i);
+					if(requirement.isEmpty()) continue;
+
+					if(ItemComparison.AreItemsEqual(requirement, potential))
 					{
-						i.shrink(is.getCount());
-						is.shrink(is.getCount());
-					} else
-					{
-						int x = i.getCount();
-						i.shrink(x);
-						is.shrink(x);
+						// There's less needed than in the slot
+						if(requirement.getCount() == potential.getCount())
+						{
+							if(!simulate) {
+								input.setStackInSlot(j, ItemStack.EMPTY);
+							}
+							requirement.setCount(0);
+							break;
+						} else if (potential.getCount() < requirement.getCount()) {
+							int diff = requirement.getCount() - potential.getCount();
+							requirement.setCount(diff);
+							if (!simulate) {
+								input.setStackInSlot(j, ItemStack.EMPTY);
+							}
+						} else { // if (potential.getCount() > requirement.getCount()) {
+							if (!simulate) {
+								potential.shrink(requirement.getCount());
+								input.setStackInSlot(j, potential);
+							}
+							requirement.setCount(0);
+						}
 					}
 				}
 			}
+
+			stacks.removeIf(ItemStack::isEmpty);
+		}
+
+		public boolean match()
+		{
+			return stacks.isEmpty();
 		}
 	}
 }
