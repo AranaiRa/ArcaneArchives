@@ -73,6 +73,8 @@ public class RadiantChest extends BlockTemplate
 	{
 		RemoveChestLines(pos);
 
+		if (worldIn.isRemote) return true;
+
 		playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.RADIANT_CHEST, worldIn, pos.getX(), pos.getY(), pos.getZ());
 
 		return true;
