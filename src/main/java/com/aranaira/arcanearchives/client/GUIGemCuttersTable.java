@@ -8,6 +8,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
@@ -37,7 +38,12 @@ public class GUIGemCuttersTable extends GuiContainer
 		this.xSize = 206;
 		this.ySize = 254;
 		this.player = player;
+	}
 
+	@Override
+	public void drawSlot(Slot slotIn)
+	{
+		super.drawSlot(slotIn);
 	}
 
 	@Override
@@ -56,7 +62,7 @@ public class GUIGemCuttersTable extends GuiContainer
 		this.buttonList.add(PrevPageButton);
 		this.buttonList.add(NextPageButton);
 
-		recipeStatus = true; //mCGCT.getRecipeStatus();
+		recipeStatus = mCGCT.getRecipeStatus();
 	}
 
 	@Override
@@ -71,7 +77,7 @@ public class GUIGemCuttersTable extends GuiContainer
 		GemCuttersTableRecipe recipe = mCGCT.getTile().getRecipe();
 
 		if (player.ticksExisted % 50 == 0) {
-			//recipeStatus = mCGCT.getRecipeStatus();
+			recipeStatus = mCGCT.getRecipeStatus();
 		}
 
 		if(recipe != null)

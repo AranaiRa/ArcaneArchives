@@ -17,6 +17,7 @@ public class SlotRecipeHandler extends Slot
 	private final int x;
 	private final int y;
 	private final GemCuttersTableTileEntity entity;
+	private boolean dimmed = false;
 
 	public SlotRecipeHandler(int index, int xPosition, int yPosition, GemCuttersTableTileEntity entity)
 	{
@@ -25,6 +26,20 @@ public class SlotRecipeHandler extends Slot
 		this.x = xPosition;
 		this.y = yPosition;
 		this.entity = entity;
+	}
+
+	public boolean isDimmed()
+	{
+		return dimmed;
+	}
+
+	public void setDimmed() {
+		setDimmed(true);
+	}
+
+	public void setDimmed(boolean dimmed)
+	{
+		this.dimmed = dimmed;
 	}
 
 	public int getPage()
