@@ -10,9 +10,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 
 public class ContainerManifest extends Container
 {
@@ -67,7 +69,22 @@ public class ContainerManifest extends Container
 
 		if(entry.getDimension() != player.dimension) return ItemStack.EMPTY;
 
-		AATickHandler.GetInstance().mBlockPositions.addAll(entry.getVecPositions());
+		List<Vec3d> visPositions = entry.getVecPositions();
+
+		AATickHandler handler = AATickHandler.GetInstance();
+
+		/*if (handler.mBlockPositions.containsAll(visPositions)) {
+			handler.mBlockPositionsToRemove.addAll(visPositions);
+		} else {
+			List<Vec3d> discard = new ArrayList<>();
+			for (Vec3d e : visPositions) {
+				if (handler.mBlockPositions.contains(e)) {
+					discard.add(e);
+				}
+			}*/
+		handler.mBlockPositions.addAll(visPositions);
+		//handler.mBlockPositionsToRemove.addAll(discard);
+		//}
 
 		return ItemStack.EMPTY;
 	}

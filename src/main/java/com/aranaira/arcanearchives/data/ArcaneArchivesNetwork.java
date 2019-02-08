@@ -26,10 +26,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 {
@@ -441,10 +438,13 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		manifestItems.clear();
 
 		List<ManifestItemEntry> preManifest = new ArrayList<>();
+		Set<RadiantChestTileEntity> done = new HashSet<>();
 
 		for(ImmanenceTileEntity ite : GetRadiantChests())
 		{
 			RadiantChestTileEntity chest = (RadiantChestTileEntity) ite;
+			if (done.contains(chest)) continue;
+
 			int dimId = chest.getWorld().provider.getDimension();
 			for(ItemStack is : new SlotIterable(chest.getInventory()))
 			{
@@ -452,6 +452,8 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 
 				preManifest.add(new ManifestItemEntry(is.copy(), dimId, chest.getPos(), chest.getChestName()));
 			}
+
+			done.add(chest);
 		}
 
 		List<ManifestEntry> consolidated = ItemStackConsolidator.ConsolidateManifest(preManifest);

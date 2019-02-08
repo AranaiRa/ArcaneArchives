@@ -70,6 +70,12 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 		return copy;
 	}
 
+	@Override
+	public void clear()
+	{
+		super.clear();
+	}
+
 	public class ManifestListIterable extends ReferenceListIterable<ManifestEntry>
 	{
 		ManifestListIterable(ManifestIterator iter)

@@ -17,7 +17,9 @@ public class ManifestEntry
 	public int dimension;
 	public List<BlockPos> positions;
 	public List<String> names;
-	public Map<BlockPos, String> lookup = new HashMap<>();
+	public Map<BlockPos, String> lookup;
+
+	private boolean tracking = false;
 
 	public ManifestEntry(@Nonnull ItemStack val1, @Nonnull Integer val2, @Nonnull List<BlockPos> val3, @Nonnull List<String> val4)
 	{
@@ -26,9 +28,29 @@ public class ManifestEntry
 		this.positions = val3;
 		this.names = val4;
 
+		this.lookup = new HashMap<>();
+
 		assert positions.size() == names.size(); // even if the name is empty
 
-		this.lookup = IntStream.range(0, positions.size()).boxed().collect(Collectors.toMap(positions::get, names::get));
+		for (int i = 0; i < positions.size(); i++) {
+			BlockPos pos = positions.get(i);
+			String name = names.get(i);
+			if (lookup.containsKey(pos) && lookup.get(pos).equals(name)) continue;
+
+			lookup.put(pos, name);
+		}
+	}
+
+	public boolean isTracked () {
+		return tracking;
+	}
+
+	public void track () {
+		this.tracking = true;
+	}
+
+	public void untrack () {
+		this.tracking = false;
 	}
 
 	public ItemStack getStack()

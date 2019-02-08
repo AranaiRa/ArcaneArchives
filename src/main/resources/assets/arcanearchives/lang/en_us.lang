@@ -89,6 +89,7 @@ arcanearchives.tooltip.temprecipe2=It will be changed in a later version.
 arcanearchives.tooltip.shouldnothave=This block should not be acquirable.
 
 arcanearchives.tooltip.manifest.inanotherdim=This chest is located in %s.
-arcanearchives.tooltip.manifest.chestsneak=[Sneak to view chests.]
-arcanearchives.tooltip.manifest.item_entry=%s at %d,%d,%d
+arcanearchives.tooltip.manifest.chestsneak=[Hold shift to view chest locations.]
+arcanearchives.tooltip.manifest.item_entry=%s (%d,%d,%d).
 arcanearchives.tooltip.manifest.andmore=%d radiant chests weren't listed.
+arcanearchives.tooltip.manifest.clicktoshow=Click to draw a line to chests containing this item. Click again to remove, or click "Untrack All".
