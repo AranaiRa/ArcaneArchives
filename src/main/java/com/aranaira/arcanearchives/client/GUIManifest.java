@@ -22,7 +22,9 @@ import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class GUIManifest extends GuiContainer
 {
@@ -197,21 +199,25 @@ public class GUIManifest extends GuiContainer
 			}
 			else if (entry != null) {
 				tooltip.add("");
-				tooltip.add("" + TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.manifest.clicktoshow"));
+				tooltip.add("" + TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.manifest.clicktoshow", I18n.format("arcanearchives.text.manifest.endtrackingbutton")));
 			}
 			if (entry != null) {
 				if (GuiScreen.isShiftKeyDown()) {
 					tooltip.add("");
-					int limit = Math.min(10, entry.positions.size());
-					int diff = Math.max(0, entry.positions.size() - 10);
-					for (int i = 0; i < limit; i++) {
+					Set<String> used = new HashSet<>();
+					int count = 0;
+					int unnamed_count = 1;
+					for (int i = 0; i < entry.positions.size() && count < 10; i++) {
 						BlockPos pos = entry.positions.get(i);
 						String chestName = entry.names.get(i);
-						if (chestName.isEmpty()) chestName = I18n.format("arcanearchives.text.radiantchest.unnamed_chest");
-						tooltip.add(I18n.format(TextFormatting.GRAY + "arcanearchives.tooltip.manifest.item_entry", chestName, pos.getX(), pos.getY(), pos.getZ()));
+						if (chestName.isEmpty()) chestName = String.format("%s %d", I18n.format("arcanearchives.text.radiantchest.unnamed_chest"), unnamed_count++);
+						if (used.contains(chestName)) continue;
+						used.add(chestName);
+						count++;
+						tooltip.add(TextFormatting.GRAY + I18n.format("arcanearchives.tooltip.manifest.item_entry", chestName, pos.getX(), pos.getY(), pos.getZ()));
 					}
-					if (diff != 0) {
-						tooltip.add(I18n.format("arcanearchives.tooltip.manifest.andmore", diff));
+					if (used.size() == 10 && count == 10) {
+						tooltip.add(I18n.format("arcanearchives.tooltip.manifest.andmore"));
 					}
 				} else {
 					tooltip.add("" + TextFormatting.DARK_GRAY + I18n.format("arcanearchives.tooltip.manifest.chestsneak"));
