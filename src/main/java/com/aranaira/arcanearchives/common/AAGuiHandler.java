@@ -77,8 +77,7 @@ public class AAGuiHandler implements IGuiHandler
 		switch(ID)
 		{
 			case RADIANT_CHEST:
-				return new GUIRadiantChest(new ContainerRadiantChest((RadiantChestTileEntity) te, player.inventory), player.getUniqueID());
-
+				return new GUIRadiantChest(new ContainerRadiantChest((RadiantChestTileEntity) te, player.inventory), player);
 			case GEMCUTTERS_TABLE:
 				return new GUIGemCuttersTable(player, new ContainerGemCuttersTable((GemCuttersTableTileEntity) te, player.inventory, false));
 			case RADIANT_CRAFTING_TABLE:

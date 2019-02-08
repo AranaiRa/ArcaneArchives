@@ -1,18 +1,15 @@
 package com.aranaira.arcanearchives.tileentities;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.packets.AAPacketHandler;
 import com.aranaira.arcanearchives.packets.PacketGemCutters;
 import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipe;
 import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipeList;
 import mcp.MethodsReturnNonnullByDefault;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
@@ -209,29 +206,23 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 		return new SPacketUpdateTileEntity(pos, 0, compound);
 	}
 
-	public void updateOutput()
+	@Override
+	public boolean updateOutput()
 	{
-		SPacketUpdateTileEntity update = getUpdatePacket();
-		if(world != null)
-		{
-			if(!world.isRemote)
-			{
-				MinecraftServer server = world.getMinecraftServer();
-				if(server != null)
-					server.getPlayerList().sendToAllNearExcept(null, pos.getX(), pos.getY(), pos.getZ(), 128, world.provider.getDimension(), update);
-			} else
-			{
-				PacketGemCutters.ChangePage packet = new PacketGemCutters.ChangePage(getPos(), getPage(), world.provider.getDimension());
-				AAPacketHandler.CHANNEL.sendToServer(packet);
-				PacketGemCutters.ChangeRecipe packet2;
-				if (this.getRecipe() != null) {
-					packet2 = new PacketGemCutters.ChangeRecipe(this.getRecipe().getOutput(), getPos(), world.provider.getDimension());
-				} else {
-					packet2 = new PacketGemCutters.ChangeRecipe(ItemStack.EMPTY, getPos(), world.provider.getDimension());
-				}
-				AAPacketHandler.CHANNEL.sendToServer(packet2);
+		if(world == null) return false;
 
-			}
+		if (super.updateOutput()) return true;
+
+		PacketGemCutters.ChangePage packet = new PacketGemCutters.ChangePage(getPos(), getPage(), world.provider.getDimension());
+		AAPacketHandler.CHANNEL.sendToServer(packet);
+		PacketGemCutters.ChangeRecipe packet2;
+		if (this.getRecipe() != null) {
+			packet2 = new PacketGemCutters.ChangeRecipe(this.getRecipe().getOutput(), getPos(), world.provider.getDimension());
+		} else {
+			packet2 = new PacketGemCutters.ChangeRecipe(ItemStack.EMPTY, getPos(), world.provider.getDimension());
 		}
+		AAPacketHandler.CHANNEL.sendToServer(packet2);
+
+		return true;
 	}
 }

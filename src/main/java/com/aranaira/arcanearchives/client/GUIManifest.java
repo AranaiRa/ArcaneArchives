@@ -13,6 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.DimensionType;
 import org.apache.commons.lang3.text.WordUtils;
@@ -191,7 +192,23 @@ public class GUIManifest extends GuiContainer
 				DimensionType dim = DimensionType.getById(entry.getDimension());
 				String name = WordUtils.capitalize(dim.getName().replace("_", " "));
 				tooltip.add("");
-				tooltip.add("" + TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.inanotherdim", name));
+				tooltip.add("" + TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.manifest.inanotherdim", name));
+				if (player.isSneaking()) {
+					tooltip.add("");
+					int limit = Math.min(10, entry.positions.size());
+					int diff = Math.max(0, entry.positions.size() - 10);
+					for (int i = 0; i < limit; i++) {
+						BlockPos pos = entry.positions.get(i);
+						String chestName = entry.names.get(i);
+						if (chestName.isEmpty()) chestName = I18n.format("arcanearchives.text.radiantchest.unnamed_chest");
+						tooltip.add(I18n.format("arcanearchives.tooltip.manifest.item_entry", chestName, pos.getX(), pos.getY(), pos.getZ()));
+					}
+					if (diff != 0) {
+						tooltip.add(I18n.format("arcanearchives.tooltip.manifest.andmore", diff));
+					}
+				} else {
+					tooltip.add("" + TextFormatting.DARK_GRAY + I18n.format("arcanearchives.tooltip.manifest.chestsneak"));
+				}
 			}
 		}
 

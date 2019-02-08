@@ -16,8 +16,7 @@ public class AAPacketHandler
 	public static void registerPackets()
 	{
 		registerPacks(PacketNetworkInteraction.PacketNetworkInteractionHandler.class, PacketNetworkInteraction.class, Side.SERVER);
-		registerPacks(SetRadiantChestName.SetRadiantChestNameHandler.class, SetRadiantChestName.class, Side.SERVER);
-		registerPacks(PacketChangeRadiantChestNameClient.PacketChangeRadiantChestNameClientHandler.class, PacketChangeRadiantChestNameClient.class, Side.CLIENT);
+		registerPacks(PacketRadiantChest.SetName.SetNameHandler.class, PacketRadiantChest.SetName.class, Side.SERVER);
 		registerPacks(PacketGemCutters.ChangePage.ChangePageHandler.class, PacketGemCutters.ChangePage.class, Side.SERVER);
 		registerPacks(PacketGemCutters.ChangeRecipe.ChangeRecipeHandler.class, PacketGemCutters.ChangeRecipe.class, Side.SERVER);
 		registerPacks(PacketGemCutters.Consume.ConsumeHandler.class, PacketGemCutters.Consume.class, Side.SERVER);

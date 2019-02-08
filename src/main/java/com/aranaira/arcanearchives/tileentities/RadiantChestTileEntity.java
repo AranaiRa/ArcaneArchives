@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.tileentities;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
-import net.minecraft.client.Minecraft;
+import com.aranaira.arcanearchives.packets.AAPacketHandler;
+import com.aranaira.arcanearchives.packets.PacketRadiantChest;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -72,6 +72,12 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 		return chestName;
 	}
 
+	public void setChestName(String newName)
+	{
+		this.chestName = (newName == null) ? "" : newName;
+		this.updateOutput();
+	}
+
 	public void setContents(ItemStack[] chestContents, ItemStack[] secondaryChestContents, boolean secondaryChest)
 	{
 		for(int i = 0; i < chestContents.length; i++)
@@ -126,5 +132,18 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 		NBTTagCompound compound = writeToNBT(new NBTTagCompound());
 
 		return new SPacketUpdateTileEntity(pos, 0, compound);
+	}
+
+	@Override
+	public boolean updateOutput()
+	{
+		if (world == null) return false;
+
+		if (super.updateOutput()) return true;
+
+		PacketRadiantChest.SetName packet = new PacketRadiantChest.SetName(getPos(), getChestName(), world.provider.getDimension());
+		AAPacketHandler.CHANNEL.sendToServer(packet);
+
+		return true;
 	}
 }

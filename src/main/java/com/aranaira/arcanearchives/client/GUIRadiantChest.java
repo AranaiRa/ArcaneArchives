@@ -1,12 +1,12 @@
 package com.aranaira.arcanearchives.client;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.inventory.ContainerRadiantChest;
 import com.aranaira.arcanearchives.packets.AAPacketHandler;
-import com.aranaira.arcanearchives.packets.SetRadiantChestName;
+import com.aranaira.arcanearchives.packets.PacketRadiantChest;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
@@ -19,31 +19,32 @@ public class GUIRadiantChest extends GuiContainer
 
 	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/radiantchest.png");
 	private final int ImageHeight = 253, ImageWidth = 192, ImageScale = 256;
-	Minecraft mc = Minecraft.getMinecraft();
-	ContainerRadiantChest mContainer;
-	UUID mPlayerID;
+	private ContainerRadiantChest mContainer;
+
 	private int mNameTextLeftOffset = 53;
 	private int mNameTextTopOffset = 238;
 	private int mNameTextWidth = 88;
 	private int mNameTextHeight = 10;
-	private boolean mTextEnteringMode = false;
 	private String mNameField;
+	private boolean mTextEnteringMode = false;
 
-	public GUIRadiantChest(Container inventorySlotsIn, UUID playerID)
+	public GUIRadiantChest(ContainerRadiantChest inventorySlotsIn, EntityPlayer player)
 	{
 		super(inventorySlotsIn);
 
-
-		mPlayerID = playerID;
-
-		mContainer = (ContainerRadiantChest) inventorySlotsIn;
-
-		mNameField = mContainer.mName;
+		this.mContainer = inventorySlotsIn;
 
 		this.xSize = ImageWidth;
 		this.ySize = ImageHeight;
 	}
 
+	public String getName () {
+		if (mTextEnteringMode) {
+			return (mNameField == null || mNameField.isEmpty()) ? mContainer.getName() : mNameField;
+		}
+
+		return mContainer.getName();
+	}
 
 	@Override
 	public void initGui()
@@ -51,9 +52,8 @@ public class GUIRadiantChest extends GuiContainer
 		super.initGui();
 
 		buttonList.clear();
-		int offLeft = (width - ImageWidth) / 2 - 3;
-		int offTop = 108;
-
+		//int offLeft = (width - ImageWidth) / 2 - 3;
+		//int offTop = 108;
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class GUIRadiantChest extends GuiContainer
 
 		this.renderHoveredToolTip(mouseX, mouseY);
 
-		fontRenderer.drawString(mNameField, guiLeft + mNameTextLeftOffset, guiTop + mNameTextTopOffset, 0x000000);
+		fontRenderer.drawString(getName(), guiLeft + mNameTextLeftOffset, guiTop + mNameTextTopOffset, 0x000000);
 	}
 
 	@Override
@@ -102,9 +102,10 @@ public class GUIRadiantChest extends GuiContainer
 				if(mTextEnteringMode)
 				{
 					mTextEnteringMode = false;
-					if(!mContainer.mName.equals(mNameField))
+					if(!mContainer.getName().equals(mNameField))
 					{
-						AAPacketHandler.CHANNEL.sendToServer(new SetRadiantChestName(mContainer.mPos, mNameField, mPlayerID, mContainer.mDimension));
+						mContainer.setName(mNameField);
+						mNameField = "";
 						return;
 					}
 
@@ -132,38 +133,24 @@ public class GUIRadiantChest extends GuiContainer
 			else if(keyCode == 1)
 			{
 				mTextEnteringMode = false;
-				mNameField = mContainer.mName;
+				mNameField = mContainer.getName();
 			} else if(keyCode == 28)
 			{
 				mTextEnteringMode = false;
-				if(!mContainer.mName.equals(mNameField))
-					AAPacketHandler.CHANNEL.sendToServer(new SetRadiantChestName(mContainer.mPos, mNameField, mPlayerID, mContainer.mDimension));
+				if(!mContainer.getName().equals(mNameField))
+				{
+					mContainer.setName(mNameField);
+					mNameField = "";
+				}
 			}
 			//Anything else.
 			else
 			{
+				if (mNameField == null) mNameField = "";
 				if(Character.isLetterOrDigit(typedChar)) mNameField += typedChar;
 				else if(typedChar == ' ') mNameField += typedChar;
 			}
 		} else if(keyCode == 1 || keyCode == this.mc.gameSettings.keyBindInventory.getKeyCode())
 			Minecraft.getMinecraft().player.closeScreen();
 	}
-
-	/*
-		private int mNameTextLeftOffset = 53;
-		private int mNameTextTopOffset = 238;
-
-		private int mNameTextWidth = 88;
-		private int mNameTextHeight = 10;
-
-		*/
-
-	// The method being overriden basically does this and there can be an NPE
-	// with it sometimes, which is annoying
-	/*@Override
-	public void onGuiClosed()
-	{
-		this.inventorySlots.onContainerClosed(mc.player);
-		super.onGuiClosed();
-	}*/
 }

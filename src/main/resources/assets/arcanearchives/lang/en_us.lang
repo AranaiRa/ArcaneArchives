@@ -76,6 +76,7 @@ arcanearchives.text.matrixstorage.immanencelabel=Immanence
 arcanearchives.text.matrixstorage.storagelabel=Total Storage
 arcanearchives.text.matrixrepository.immanencelabel=Immanence
 arcanearchives.text.matrixrepository.storagelabel=Type Storage
+arcanearchives.text.radiantchest.unnamed_chest=Unnamed chest
 
 arcanearchives.error.toomanyplaced=You can only have %d %s!
 arcanearchives.error.notenoughspace=Not enough space to place the %s!
@@ -87,4 +88,7 @@ arcanearchives.tooltip.temprecipe1=The recipe for this item is temporary.
 arcanearchives.tooltip.temprecipe2=It will be changed in a later version.
 arcanearchives.tooltip.shouldnothave=This block should not be acquirable.
 
-arcanearchives.tooltip.inanotherdim=This chest is located in %s.
+arcanearchives.tooltip.manifest.inanotherdim=This chest is located in %s.
+arcanearchives.tooltip.manifest.chestsneak=[Sneak to view chests.]
+arcanearchives.tooltip.manifest.item_entry=%s at %d,%d,%d
+arcanearchives.tooltip.manifest.andmore=%d radiant chests weren't listed.
