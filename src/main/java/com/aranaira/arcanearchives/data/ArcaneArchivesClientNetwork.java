@@ -93,19 +93,14 @@ public class ArcaneArchivesClientNetwork
 		{
 			NBTTagCompound itemEntry = (NBTTagCompound) base;
 			int dimension = itemEntry.getInteger("dimension");
-			List<BlockPos> positions = new ArrayList<>();
-			NBTTagList posList = itemEntry.getTagList("positions", Constants.NBT.TAG_LONG);
-			for(NBTBase posBase : posList)
+			List<ManifestEntry.ItemEntry> entries = new ArrayList<>();
+			NBTTagList entryList = itemEntry.getTagList("entries", Constants.NBT.TAG_COMPOUND);
+			for(NBTBase entry : entryList)
 			{
-				positions.add(BlockPos.fromLong(((NBTTagLong) posBase).getLong()));
-			}
-			NBTTagList namesList = itemEntry.getTagList("names", Constants.NBT.TAG_STRING);
-			List<String> names = new ArrayList<>();
-			for (NBTBase name : namesList) {
-				names.add(((NBTTagString) name).getString());
+				entries.add(ManifestEntry.ItemEntry.deserializeNBT((NBTTagCompound) entry));
 			}
 			ItemStack stack = LargeItemNBTUtil.readFromNBT(itemEntry);
-			ManifestEntry thisEntry = new ManifestEntry(stack, dimension, positions, names);
+			ManifestEntry thisEntry = new ManifestEntry(stack, dimension, entries);
 
 			manifestItems.add(thisEntry);
 		}

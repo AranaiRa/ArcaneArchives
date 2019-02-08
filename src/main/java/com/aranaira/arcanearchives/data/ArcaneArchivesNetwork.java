@@ -450,7 +450,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 			{
 				if(is.isEmpty()) continue;
 
-				preManifest.add(new ManifestItemEntry(is.copy(), dimId, chest.getPos(), chest.getChestName()));
+				preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(chest.getPos(), chest.getChestName(), is.getCount())));
 			}
 
 			done.add(chest);
@@ -473,17 +473,12 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		{
 			NBTTagCompound itemEntry = new NBTTagCompound();
 			LargeItemNBTUtil.writeToNBT(itemEntry, entry.getStack());
-			NBTTagList positions = new NBTTagList();
-			for(BlockPos pos : entry.getPositions())
+			NBTTagList entries = new NBTTagList();
+			for(ManifestEntry.ItemEntry iEntry : entry.getEntries())
 			{
-				positions.appendTag(new NBTTagLong(pos.toLong()));
+				entries.appendTag(iEntry.serializeNBT());
 			}
-			NBTTagList names = new NBTTagList();
-			for (String name : entry.getNames()) {
-				names.appendTag(new NBTTagString(name));
-			}
-			itemEntry.setTag("names", names);
-			itemEntry.setTag("positions", positions);
+			itemEntry.setTag("entries", entries);
 			itemEntry.setInteger("dimension", entry.getDimension());
 			manifest.appendTag(itemEntry);
 		}
@@ -540,17 +535,15 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	}
 
 	public static class ManifestItemEntry {
-		public ItemStack val1;
-		public int val2;
-		public BlockPos val3;
-		public String val4;
+		public ItemStack stack;
+		public int dim;
+		public ManifestEntry.ItemEntry entry;
 
-		public ManifestItemEntry(@Nonnull ItemStack val1, @Nonnull Integer val2, @Nonnull BlockPos val3, @Nonnull String val4)
+		public ManifestItemEntry(ItemStack stack, int dim, ManifestEntry.ItemEntry entry)
 		{
-			this.val1 = val1;
-			this.val2 = val2;
-			this.val3 = val3;
-			this.val4 = val4;
+			this.stack = stack;
+			this.dim = dim;
+			this.entry = entry;
 		}
 	}
 }

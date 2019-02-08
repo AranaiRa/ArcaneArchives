@@ -204,20 +204,19 @@ public class GUIManifest extends GuiContainer
 			if (entry != null) {
 				if (GuiScreen.isShiftKeyDown()) {
 					tooltip.add("");
-					Set<String> used = new HashSet<>();
-					int count = 0;
+					List<ManifestEntry.ItemEntry> positions = entry.consolidateEntries(false);
 					int unnamed_count = 1;
-					for (int i = 0; i < entry.positions.size() && count < 10; i++) {
-						BlockPos pos = entry.positions.get(i);
-						String chestName = entry.names.get(i);
+					int limit = Math.min(10, positions.size());
+					int diff = Math.max(0, positions.size() - limit);
+					for (int i = 0; i < limit; i++) {
+						ManifestEntry.ItemEntry thisEntry = positions.get(i);
+						String chestName = thisEntry.getChestName();
+						BlockPos pos = thisEntry.getPosition();
 						if (chestName.isEmpty()) chestName = String.format("%s %d", I18n.format("arcanearchives.text.radiantchest.unnamed_chest"), unnamed_count++);
-						if (used.contains(chestName)) continue;
-						used.add(chestName);
-						count++;
-						tooltip.add(TextFormatting.GRAY + I18n.format("arcanearchives.tooltip.manifest.item_entry", chestName, pos.getX(), pos.getY(), pos.getZ()));
+						tooltip.add(TextFormatting.GRAY + I18n.format("arcanearchives.tooltip.manifest.item_entry", chestName, pos.getX(), pos.getY(), pos.getZ(), thisEntry.getItemCount()));
 					}
-					if (used.size() == 10 && count == 10) {
-						tooltip.add(I18n.format("arcanearchives.tooltip.manifest.andmore"));
+					if (diff > 0) {
+						tooltip.add(I18n.format("arcanearchives.tooltip.manifest.andmore", diff));
 					}
 				} else {
 					tooltip.add("" + TextFormatting.DARK_GRAY + I18n.format("arcanearchives.tooltip.manifest.chestsneak"));

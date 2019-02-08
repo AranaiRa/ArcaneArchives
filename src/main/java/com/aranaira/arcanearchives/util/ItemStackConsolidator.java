@@ -85,19 +85,18 @@ public class ItemStackConsolidator
 		while(input.size() != 0)
 		{
 			ManifestItemEntry tup = input.remove(0);
-			ManifestEntry next = new ManifestEntry(tup.val1, tup.val2, Lists.newArrayList(tup.val3), Lists.newArrayList(tup.val4));
-			final ItemStack copy = tup.val1.copy();
-			final int copy2 = tup.val2;
+			ManifestEntry next = new ManifestEntry(tup.stack, tup.dim, Lists.newArrayList(tup.entry));
+			final ItemStack copy = tup.stack.copy();
+			final int copy2 = tup.dim;
 
-			List<ManifestItemEntry> matches = input.stream().filter((i) -> ItemComparison.AreItemsEqual(i.val1, copy) && i.val2 == copy2).collect(Collectors.toList());
+			List<ManifestItemEntry> matches = input.stream().filter((i) -> ItemComparison.AreItemsEqual(i.stack, copy) && i.dim == copy2).collect(Collectors.toList());
 
 			input.removeAll(matches);
 
 			for(ManifestItemEntry match : matches)
 			{
-				next.stack.setCount(next.stack.getCount() + match.val1.getCount());
-				next.positions.add(match.val3);
-				next.names.add(match.val4);
+				next.stack.setCount(next.stack.getCount() + match.stack.getCount());
+				next.itemEntries.add(match.entry);
 			}
 
 			output.add(next);

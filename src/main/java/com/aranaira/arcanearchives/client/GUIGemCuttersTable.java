@@ -23,6 +23,8 @@ public class GUIGemCuttersTable extends GuiContainer
 
 	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/gemcutterstable.png");
 
+	private static final int OVERLAY = 0x771e3340;
+
 	ContainerGemCuttersTable mCGCT;
 
 	private InvisibleButton PrevPageButton;
