@@ -1,15 +1,15 @@
 package com.aranaira.arcanearchives.util;
 
 import com.aranaira.arcanearchives.util.types.ManifestEntry;
-import com.aranaira.arcanearchives.util.types.Turple;
 import com.google.common.collect.Lists;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.aranaira.arcanearchives.data.ArcaneArchivesNetwork.ManifestItemEntry;
 
 public class ItemStackConsolidator
 {
@@ -76,28 +76,28 @@ public class ItemStackConsolidator
 		return output;
 	}
 
-	public static List<ManifestEntry> ConsolidateManifest(List<Turple<ItemStack, Integer, BlockPos>> input)
+	public static List<ManifestEntry> ConsolidateManifest(List<ManifestItemEntry> input)
 	{
-		// It doesns't matter if we modify the original list
 		List<ManifestEntry> output = new ArrayList<>();
 
 		if(input.size() == 0) return output;
 
 		while(input.size() != 0)
 		{
-			Turple<ItemStack, Integer, BlockPos> tup = input.remove(0);
-			ManifestEntry next = new ManifestEntry(tup.val1, tup.val2, Lists.newArrayList(tup.val3));
+			ManifestItemEntry tup = input.remove(0);
+			ManifestEntry next = new ManifestEntry(tup.val1, tup.val2, Lists.newArrayList(tup.val3), Lists.newArrayList(tup.val4));
 			final ItemStack copy = tup.val1.copy();
 			final int copy2 = tup.val2;
 
-			List<Turple<ItemStack, Integer, BlockPos>> matches = input.stream().filter((i) -> ItemComparison.AreItemsEqual(i.val1, copy) && i.val2 == copy2).collect(Collectors.toList());
+			List<ManifestItemEntry> matches = input.stream().filter((i) -> ItemComparison.AreItemsEqual(i.val1, copy) && i.val2 == copy2).collect(Collectors.toList());
 
 			input.removeAll(matches);
 
-			for(Turple<ItemStack, Integer, BlockPos> match : matches)
+			for(ManifestItemEntry match : matches)
 			{
-				next.val1.setCount(next.val1.getCount() + match.val1.getCount());
-				next.val3.add(match.val3);
+				next.stack.setCount(next.stack.getCount() + match.val1.getCount());
+				next.positions.add(match.val3);
+				next.names.add(match.val4);
 			}
 
 			output.add(next);

@@ -9,12 +9,10 @@ import com.aranaira.arcanearchives.util.types.ManifestList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.nbt.NBTTagLong;
+import net.minecraft.nbt.*;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -96,13 +94,18 @@ public class ArcaneArchivesClientNetwork
 			NBTTagCompound itemEntry = (NBTTagCompound) base;
 			int dimension = itemEntry.getInteger("dimension");
 			List<BlockPos> positions = new ArrayList<>();
-			NBTTagList posList = itemEntry.getTagList("positions", 4);
+			NBTTagList posList = itemEntry.getTagList("positions", Constants.NBT.TAG_LONG);
 			for(NBTBase posBase : posList)
 			{
 				positions.add(BlockPos.fromLong(((NBTTagLong) posBase).getLong()));
 			}
+			NBTTagList namesList = itemEntry.getTagList("names", Constants.NBT.TAG_STRING);
+			List<String> names = new ArrayList<>();
+			for (NBTBase name : namesList) {
+				names.add(((NBTTagString) name).getString());
+			}
 			ItemStack stack = LargeItemNBTUtil.readFromNBT(itemEntry);
-			ManifestEntry thisEntry = new ManifestEntry(stack, dimension, positions);
+			ManifestEntry thisEntry = new ManifestEntry(stack, dimension, positions, names);
 
 			manifestItems.add(thisEntry);
 		}

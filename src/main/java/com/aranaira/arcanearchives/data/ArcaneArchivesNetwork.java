@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagLong;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -24,6 +25,7 @@ import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -438,7 +440,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	{
 		manifestItems.clear();
 
-		List<Turple<ItemStack, Integer, BlockPos>> map = new ArrayList<>();
+		List<ManifestItemEntry> preManifest = new ArrayList<>();
 
 		for(ImmanenceTileEntity ite : GetRadiantChests())
 		{
@@ -448,11 +450,11 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 			{
 				if(is.isEmpty()) continue;
 
-				map.add(new Turple<>(is.copy(), dimId, chest.getPos()));
+				preManifest.add(new ManifestItemEntry(is.copy(), dimId, chest.getPos(), chest.getChestName()));
 			}
 		}
 
-		List<ManifestEntry> consolidated = ItemStackConsolidator.ConsolidateManifest(map);
+		List<ManifestEntry> consolidated = ItemStackConsolidator.ConsolidateManifest(preManifest);
 		manifestItems.addAll(consolidated);
 	}
 
@@ -468,14 +470,19 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		for(ManifestEntry entry : manifestItems)
 		{
 			NBTTagCompound itemEntry = new NBTTagCompound();
-			LargeItemNBTUtil.writeToNBT(itemEntry, entry.val1);
+			LargeItemNBTUtil.writeToNBT(itemEntry, entry.getStack());
 			NBTTagList positions = new NBTTagList();
-			for(BlockPos pos : entry.val3)
+			for(BlockPos pos : entry.getPositions())
 			{
 				positions.appendTag(new NBTTagLong(pos.toLong()));
 			}
+			NBTTagList names = new NBTTagList();
+			for (String name : entry.getNames()) {
+				names.appendTag(new NBTTagString(name));
+			}
+			itemEntry.setTag("names", names);
 			itemEntry.setTag("positions", positions);
-			itemEntry.setInteger("dimension", entry.val2);
+			itemEntry.setInteger("dimension", entry.getDimension());
 			manifest.appendTag(itemEntry);
 		}
 
@@ -527,6 +534,21 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 			EntityPlayerMP player = server.getPlayerList().getPlayerByUUID(mPlayerId);
 			IMessage packet = new PacketManifest.PacketSynchroniseResponse(PacketManifest.SynchroniseType.DATA, mPlayerId, buildSynchroniseData());
 			AAPacketHandler.CHANNEL.sendTo(packet, player);
+		}
+	}
+
+	public static class ManifestItemEntry {
+		public ItemStack val1;
+		public int val2;
+		public BlockPos val3;
+		public String val4;
+
+		public ManifestItemEntry(@Nonnull ItemStack val1, @Nonnull Integer val2, @Nonnull BlockPos val3, @Nonnull String val4)
+		{
+			this.val1 = val1;
+			this.val2 = val2;
+			this.val3 = val3;
+			this.val4 = val4;
 		}
 	}
 }
