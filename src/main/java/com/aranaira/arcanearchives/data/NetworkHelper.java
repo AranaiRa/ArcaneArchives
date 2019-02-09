@@ -5,6 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -14,6 +15,8 @@ public class NetworkHelper
 	// TODO: This needs to be cleared whenever the player enters a new world
 	private static Map<UUID, ArcaneArchivesClientNetwork> CLIENT_MAP = new HashMap<>();
 	private static AAWorldSavedData savedData = null;
+
+	public static UUID INVALID = UUID.fromString("00000000-0000-0000-0000-000000000000");
 
 	public static void clearClientCache()
 	{
@@ -25,8 +28,11 @@ public class NetworkHelper
 		savedData = null;
 	}
 
+	@Nullable
 	public static ArcaneArchivesNetwork getArcaneArchivesNetwork(UUID uuid)
 	{
+		if (uuid == null || uuid.equals(INVALID)) return null;
+
 		if(savedData == null)
 		{
 			World world = DimensionManager.getWorld(0);
@@ -52,6 +58,8 @@ public class NetworkHelper
 
 	public static ArcaneArchivesNetwork getArcaneArchivesNetwork(String uuid)
 	{
+		if (uuid == null || uuid.isEmpty()) return null;
+
 		return getArcaneArchivesNetwork(UUID.fromString(uuid));
 	}
 
@@ -62,6 +70,8 @@ public class NetworkHelper
 
 	public static ArcaneArchivesClientNetwork getArcaneArchivesClientNetwork(UUID uuid)
 	{
+		if (uuid == null || uuid.equals(INVALID)) return null;
+
 		if(CLIENT_MAP.containsKey(uuid))
 		{
 			return CLIENT_MAP.get(uuid);
@@ -75,6 +85,8 @@ public class NetworkHelper
 
 	public static ArcaneArchivesClientNetwork getArcaneArchivesClientNetwork(String uuid)
 	{
+		if (uuid == null || uuid.isEmpty()) return null;
+
 		return getArcaneArchivesClientNetwork(UUID.fromString(uuid));
 	}
 

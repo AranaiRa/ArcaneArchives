@@ -28,6 +28,8 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 		// Only tick on the client side
 		if(world.isRemote) return;
 
+		if (NetworkID == null) return;
+
 		// This will have to be updated to hive networks TODO
 		EntityPlayer player = world.getPlayerEntityByUUID(NetworkID);
 

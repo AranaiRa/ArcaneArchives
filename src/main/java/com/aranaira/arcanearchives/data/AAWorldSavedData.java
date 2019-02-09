@@ -3,11 +3,13 @@
 
 package com.aranaira.arcanearchives.data;
 
+import com.aranaira.arcanearchives.util.handlers.AAServerTickHandler;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.storage.WorldSavedData;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,8 +40,11 @@ public class AAWorldSavedData extends WorldSavedData
 		arcaneArchivesNetworks.clear();
 	}
 
-	public ArcaneArchivesNetwork getNetwork(UUID playerID)
+	@Nullable
+	public ArcaneArchivesNetwork getNetwork(@Nullable UUID playerID)
 	{
+		if (playerID == null || playerID == NetworkHelper.INVALID) return null;
+
 		if(!arcaneArchivesNetworks.containsKey(playerID))
 		{
 			arcaneArchivesNetworks.put(playerID, ArcaneArchivesNetwork.newNetwork(playerID).setParent(this));
