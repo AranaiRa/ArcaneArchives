@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.blocks;
 
+import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
 import com.aranaira.arcanearchives.util.handlers.ConfigHandler;
 import mcp.MethodsReturnNonnullByDefault;

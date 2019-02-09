@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.blocks;
 
+import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.init.ItemLibrary;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.items;
 
+import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;

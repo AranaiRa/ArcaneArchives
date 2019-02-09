@@ -1,10 +1,10 @@
 package com.aranaira.arcanearchives.util.handlers;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.blocks.BlockTemplate;
+import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.init.BlockLibrary;
 import com.aranaira.arcanearchives.init.ItemLibrary;
-import com.aranaira.arcanearchives.items.ItemMultistateTemplate;
+import com.aranaira.arcanearchives.items.templates.ItemMultistateTemplate;
 import com.aranaira.arcanearchives.tileentities.AATileEntity;
 import com.aranaira.arcanearchives.util.IHasModel;
 import net.minecraft.block.Block;

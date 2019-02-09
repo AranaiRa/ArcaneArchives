@@ -1,9 +1,9 @@
-package com.aranaira.arcanearchives.blocks;
+package com.aranaira.arcanearchives.blocks.templates;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.BlockLibrary;
 import com.aranaira.arcanearchives.init.ItemLibrary;
-import com.aranaira.arcanearchives.items.ItemBlockTemplate;
+import com.aranaira.arcanearchives.items.templates.ItemBlockTemplate;
 import com.aranaira.arcanearchives.tileentities.AATileEntity;
 import com.aranaira.arcanearchives.tileentities.AccessorTileEntity;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
@@ -81,7 +81,7 @@ public class BlockTemplate extends Block implements IHasModel
 		return this.entityClass;
 	}
 
-	void setEntityClass(Class<? extends AATileEntity> clazz)
+	public void setEntityClass(Class<? extends AATileEntity> clazz)
 	{
 		this.entityClass = clazz;
 	}
@@ -91,7 +91,7 @@ public class BlockTemplate extends Block implements IHasModel
 		return placeLimit;
 	}
 
-	void setPlaceLimit(int newPlaceLimit)
+	public void setPlaceLimit(int newPlaceLimit)
 	{
 		placeLimit = newPlaceLimit;
 	}
@@ -106,7 +106,7 @@ public class BlockTemplate extends Block implements IHasModel
 		size = newSize;
 	}
 
-	void setSize(int w, int h, int l)
+	public void setSize(int w, int h, int l)
 	{
 		size = new Size(w, h, l);
 	}

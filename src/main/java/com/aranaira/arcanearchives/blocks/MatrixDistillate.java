@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.blocks;
 
+import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;

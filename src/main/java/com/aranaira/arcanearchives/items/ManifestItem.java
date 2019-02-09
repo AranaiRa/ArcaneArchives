@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.common.AAGuiHandler;
 import com.aranaira.arcanearchives.data.ArcaneArchivesClientNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

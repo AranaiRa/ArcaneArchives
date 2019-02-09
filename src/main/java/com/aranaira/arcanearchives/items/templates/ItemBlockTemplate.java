@@ -1,6 +1,6 @@
-package com.aranaira.arcanearchives.items;
+package com.aranaira.arcanearchives.items.templates;
 
-import com.aranaira.arcanearchives.blocks.BlockTemplate;
+import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import mcp.MethodsReturnNonnullByDefault;

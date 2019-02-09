@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.init.BlockLibrary;
+import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.BlockChest;

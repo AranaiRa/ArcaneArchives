@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items;
+package com.aranaira.arcanearchives.items.templates;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.ItemLibrary;

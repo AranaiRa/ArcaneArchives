@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.blocks;
 
+import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.tileentities.AccessorTileEntity;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.material.EnumPushReaction;

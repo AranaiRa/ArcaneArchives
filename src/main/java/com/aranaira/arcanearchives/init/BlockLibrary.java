@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.init;
 
 import com.aranaira.arcanearchives.blocks.*;
+import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.tileentities.*;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;

@@ -1,5 +1,6 @@
-package com.aranaira.arcanearchives.blocks;
+package com.aranaira.arcanearchives.blocks.templates;
 
+import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
