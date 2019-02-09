@@ -141,10 +141,7 @@ public class AATileEntity extends TileEntity
 			}
 
 			// Is this enough to properly break the center?
-			if(harvest)
-			{
-				world.destroyBlock(getPos(), true);
-			}
+			world.destroyBlock(getPos(), harvest);
 		}
 	}
 
