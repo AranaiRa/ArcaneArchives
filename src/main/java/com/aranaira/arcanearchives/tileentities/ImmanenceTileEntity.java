@@ -36,7 +36,6 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	public int MaxItems;
 	public Size size;
 	public List<BlockPos> mAccessors;
-	private byte facing;
 	private ArcaneArchivesNetwork network;
 	private ArcaneArchivesClientNetwork cNetwork;
 
