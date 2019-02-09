@@ -21,6 +21,8 @@ public class AAWorldSavedData extends WorldSavedData
 
 	private Map<UUID, ArcaneArchivesNetwork> arcaneArchivesNetworks = new HashMap<>();
 
+	// It REALLY is used.
+	@SuppressWarnings("unused")
 	public AAWorldSavedData(String id)
 	{
 		super(id);
