@@ -201,7 +201,6 @@ public class BlockTemplate extends Block implements IHasModel
 		if(!world.isRemote)
 		{
 			TileEntity te = world.getTileEntity(pos);
-			ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(placer.getUniqueID());
 
 			if(te instanceof AATileEntity)
 			{

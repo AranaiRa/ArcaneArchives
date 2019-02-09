@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.commands;
 
+import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.google.common.collect.Lists;
 import mcp.MethodsReturnNonnullByDefault;
@@ -14,9 +15,7 @@ import net.minecraft.util.text.TextComponentString;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
@@ -51,7 +50,12 @@ public class ArcaneArchivesCommand extends CommandBase
 				return Lists.newArrayList(server.getPlayerList().getOnlinePlayerNames());
 			} else if(args[1].compareTo("accept") == 0 && sender.getCommandSenderEntity() != null)
 			{
-				Set<String> invites = NetworkHelper.getArcaneArchivesNetwork(sender.getCommandSenderEntity().getUniqueID()).pendingInvites.keySet();
+				ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(sender.getCommandSenderEntity().getUniqueID());
+				Set<String> invites = new HashSet<>();
+				if (network != null)
+				{
+					invites.addAll(network.pendingInvites.keySet());
+				}
 				return new ArrayList<>(invites);
 			}
 		}
@@ -68,6 +72,9 @@ public class ArcaneArchivesCommand extends CommandBase
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
 	{
 		Entity eSender = sender.getCommandSenderEntity();
+		if (eSender == null) return; // TODO: Error here too
+		ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(eSender.getUniqueID());
+		if (network == null) return; // TODO: Probably should be an error message here
 
 		if(args.length > 0 && args[0].compareTo("network") == 0)
 		{
@@ -76,9 +83,11 @@ public class ArcaneArchivesCommand extends CommandBase
 				if(args.length > 2 && args[2].compareTo(sender.getName()) != 0)
 				{
 					EntityPlayerMP targetPlayer = server.getPlayerList().getPlayerByUsername(args[1]);
-					if(targetPlayer != null && eSender != null)
+					if(targetPlayer != null)
 					{
-						NetworkHelper.getArcaneArchivesNetwork(targetPlayer.getUniqueID()).Invite(sender.getName(), eSender.getUniqueID());
+						ArcaneArchivesNetwork tnetwork = NetworkHelper.getArcaneArchivesNetwork(targetPlayer.getUniqueID());
+						if (tnetwork != null)
+							tnetwork.Invite(sender.getName(), eSender.getUniqueID());
 					}
 				} else
 				{
@@ -86,7 +95,7 @@ public class ArcaneArchivesCommand extends CommandBase
 				}
 			} else if(args.length > 1 && args[1].compareTo("accept") == 0)
 			{
-				if(eSender != null && NetworkHelper.getArcaneArchivesNetwork(eSender.getUniqueID()).Accept(args[2]))
+				if(network.Accept(args[2]))
 				{
 					sender.sendMessage(new TextComponentString("Joined " + args[2] + "'s Network!"));
 				} else

@@ -9,26 +9,38 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class NetworkSlotItemHandler extends SlotItemHandler
 {
 	private EntityPlayer player;
+	@Nullable
+	private ArcaneArchivesNetwork network = null;
+	private ArcaneArchivesClientNetwork cNetwork = null;
 
-	public NetworkSlotItemHandler(IItemHandler itemHandler, int index, int xPosition, int yPosition, EntityPlayer player)
+	public NetworkSlotItemHandler(IItemHandler itemHandler, ArcaneArchivesNetwork network, int index, int xPosition, int yPosition, EntityPlayer player)
 	{
 		super(itemHandler, index, xPosition, yPosition);
 		this.player = player;
+		this.network = network;
+	}
+
+	public NetworkSlotItemHandler(IItemHandler itemHandler, ArcaneArchivesClientNetwork network, int index, int xPosition, int yPosition, EntityPlayer player)
+	{
+		super(itemHandler, index, xPosition, yPosition);
+		this.player = player;
+		this.cNetwork = network;
 	}
 
 	public int getTotalSpace()
 	{
 		if(player.world.isRemote)
 		{
-			ArcaneArchivesClientNetwork network = NetworkHelper.getArcaneArchivesClientNetwork(player.getPersistentID());
-			return network.GetTotalSpace();
+			return cNetwork.GetTotalSpace();
 		} else
 		{
-			ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(player.getPersistentID());
+			if (network == null) // TODO: Error
+				return 0;
 			return network.GetTotalSpace();
 		}
 	}

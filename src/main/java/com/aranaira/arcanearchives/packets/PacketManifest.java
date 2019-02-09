@@ -93,6 +93,8 @@ public class PacketManifest
 				if(server == null) return;
 
 				ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(message.playerId);
+				if (network == null) return;
+
 				NBTTagCompound output = null;
 
 				switch(message.type)

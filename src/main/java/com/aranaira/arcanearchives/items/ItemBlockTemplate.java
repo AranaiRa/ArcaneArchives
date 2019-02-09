@@ -50,7 +50,12 @@ public class ItemBlockTemplate extends ItemBlock
 
 		if(placeLimit != -1)
 		{
-			if(network.CountTileEntities(blockTemplate.getEntityClass()) >= placeLimit)
+			if(network == null)
+			{
+
+				player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.invalidnetwork"), true);
+				return EnumActionResult.FAIL;
+			} else if (network.CountTileEntities(blockTemplate.getEntityClass()) >= placeLimit)
 			{
 				player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.toomanyplaced", blockTemplate.getPlaceLimit(), blockTemplate.getNameComponent()), true);
 				return EnumActionResult.FAIL;

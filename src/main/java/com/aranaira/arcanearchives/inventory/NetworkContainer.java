@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.inventory;
 
+import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.inventory.handlers.NetworkItemHandler;
 import com.aranaira.arcanearchives.inventory.handlers.NetworkSlotItemHandler;
@@ -137,9 +138,14 @@ public class NetworkContainer extends Container
 	}
 
 	// TODO: Lots of client crashes
+	// TODO: Cope with the stack sizes
 	@Override
 	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
 	{
+		ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID());
+		if (network == null) // TODO: Error message
+			return ItemStack.EMPTY;
+
 		if(slotId < 27 && slotId > -1)
 		{
 			int modifiedSlotID = 26 - slotId;
@@ -148,14 +154,14 @@ public class NetworkContainer extends Container
 			{
 				if(!player.inventory.getItemStack().isEmpty())
 				{
-					player.inventory.setItemStack(NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID()).InsertItem(player.inventory.getItemStack(), player.world.isRemote));
+					player.inventory.setItemStack(network.InsertItem(player.inventory.getItemStack(), player.world.isRemote));
 				} else
 				{
-					player.inventory.setItemStack(NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID()).ExtractItem(networkItemHandler.getStackInSlot(modifiedSlotID), networkItemHandler.getStackInSlot(modifiedSlotID).getCount(), player.world.isRemote));
+					player.inventory.setItemStack(network.ExtractItem(networkItemHandler.getStackInSlot(modifiedSlotID), networkItemHandler.getStackInSlot(modifiedSlotID).getCount(), player.world.isRemote));
 				}
 			} else if(clickTypeIn == ClickType.QUICK_MOVE)
 			{
-				player.inventory.addItemStackToInventory(NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID()).ExtractItem(networkItemHandler.getStackInSlot(modifiedSlotID), networkItemHandler.getStackInSlot(modifiedSlotID).getCount(), player.world.isRemote));
+				player.inventory.addItemStackToInventory(network.ExtractItem(networkItemHandler.getStackInSlot(modifiedSlotID), networkItemHandler.getStackInSlot(modifiedSlotID).getCount(), player.world.isRemote));
 			}
 
 			return player.inventory.getItemStack();
@@ -163,7 +169,7 @@ public class NetworkContainer extends Container
 
 		if(clickTypeIn == ClickType.QUICK_MOVE)
 		{
-			this.inventorySlots.get(slotId).inventory.setInventorySlotContents(this.inventorySlots.get(slotId).getSlotIndex(), NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID()).InsertItem(this.inventorySlots.get(slotId).getStack(), player.world.isRemote));
+			this.inventorySlots.get(slotId).inventory.setInventorySlotContents(this.inventorySlots.get(slotId).getSlotIndex(), network.InsertItem(this.inventorySlots.get(slotId).getStack(), player.world.isRemote));
 
 			return player.inventory.getItemStack();
 		}

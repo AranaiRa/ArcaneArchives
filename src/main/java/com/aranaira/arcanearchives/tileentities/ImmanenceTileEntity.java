@@ -1,6 +1,8 @@
 package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.data.ArcaneArchivesClientNetwork;
+import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.util.ItemComparison;
 import com.aranaira.arcanearchives.util.handlers.AAServerTickHandler;
@@ -35,6 +37,8 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	public Size size;
 	public List<BlockPos> mAccessors;
 	private byte facing;
+	private ArcaneArchivesNetwork network;
+	private ArcaneArchivesClientNetwork cNetwork;
 
 	public ImmanenceTileEntity(String name)
 	{
@@ -217,6 +221,23 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 		mAccessors.add(pos);
 	}
 
+	public ArcaneArchivesClientNetwork getClientNetwork () {
+		if (cNetwork == null) {
+			cNetwork = NetworkHelper.getArcaneArchivesClientNetwork(NetworkID);
+		}
+
+		return cNetwork;
+	}
+
+	public ArcaneArchivesNetwork getNetwork () {
+		if (network == null) {
+			network = NetworkHelper.getArcaneArchivesNetwork(NetworkID);
+		}
+
+		return network;
+	}
+
+
 	@Override
 	public void invalidate()
 	{
@@ -224,7 +245,9 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 
 		if(world.isRemote) return;
 
-		NetworkHelper.getArcaneArchivesNetwork(NetworkID).RemoveTileFromNetwork(this);
+		if (getNetwork() == null) return;
+
+		network.RemoveTileFromNetwork(this);
 	}
 
 	@Override
@@ -234,7 +257,9 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 
 		if(world.isRemote) return;
 
-		NetworkHelper.getArcaneArchivesNetwork(NetworkID).RemoveTileFromNetwork(this);
+		if (getNetwork() == null) return;
+
+		network.RemoveTileFromNetwork(this);
 	}
 
 	@Override

@@ -37,6 +37,7 @@ public class AAServerTickHandler
 			if(networkId == null) continue;
 
 			ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(networkId);
+			if (network == null) continue;
 
 			if(!network.NetworkContainsTile(ite))
 			{

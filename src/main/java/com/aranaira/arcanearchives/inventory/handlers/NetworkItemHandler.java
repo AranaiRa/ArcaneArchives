@@ -1,10 +1,12 @@
 package com.aranaira.arcanearchives.inventory.handlers;
 
+import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.UUID;
@@ -16,10 +18,14 @@ public class NetworkItemHandler implements IItemHandlerModifiable
 
 	private UUID playerUUID;
 	private String searchText = "";
+	@Nullable
+	private ArcaneArchivesNetwork network;
 
 	public NetworkItemHandler(UUID uuid)
 	{
 		playerUUID = uuid;
+		// TODO: This is server-side only
+		network = NetworkHelper.getArcaneArchivesNetwork(uuid);
 	}
 
 	public String getSearchString()
@@ -41,10 +47,13 @@ public class NetworkItemHandler implements IItemHandlerModifiable
 	@Override
 	public ItemStack getStackInSlot(int slot)
 	{
+		if (network == null) // TODO: ERROR
+			return ItemStack.EMPTY;
+
 		List<ItemStack> listofItems;
 		if(searchText.compareTo("") != 0)
-			listofItems = NetworkHelper.getArcaneArchivesNetwork(playerUUID).GetFilteredItems(searchText);
-		else listofItems = NetworkHelper.getArcaneArchivesNetwork(playerUUID).GetAllItemsOnNetwork();
+			listofItems = network.GetFilteredItems(searchText);
+		else listofItems = network.GetAllItemsOnNetwork();
 
 		if(listofItems.size() > slot) return listofItems.get(slot);
 		else return ItemStack.EMPTY;
@@ -53,13 +62,18 @@ public class NetworkItemHandler implements IItemHandlerModifiable
 	@Override
 	public ItemStack insertItem(int slot, ItemStack stack, boolean simulate)
 	{
-		return NetworkHelper.getArcaneArchivesNetwork(playerUUID).InsertItem(stack.copy(), simulate);
+		if (network == null) // TODO: Error
+			return stack;
+		// TODO: This shouldn't be a copy?
+		return network.InsertItem(stack.copy(), simulate);
 	}
 
 	@Override
 	public ItemStack extractItem(int slot, int amount, boolean simulate)
 	{
-		return NetworkHelper.getArcaneArchivesNetwork(playerUUID).ExtractItem(getStackInSlot(slot), amount, simulate);
+		if (network == null) // TODO: Error
+			return ItemStack.EMPTY;
+		return network.ExtractItem(getStackInSlot(slot), amount, simulate);
 	}
 
 	@Override
