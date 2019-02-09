@@ -62,20 +62,23 @@ public class ItemBlockTemplate extends ItemBlock
 			}
 		}
 
+		BlockPos up = pos.up();
+		int height = blockTemplate.getSize().height;
+
+		if(up.getY() + height > world.getHeight())
+		{
+			player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.aboveworld", blockTemplate.getNameComponent()), true);
+			return EnumActionResult.FAIL;
+		}
+
 		if(blockTemplate.hasAccessors())
 		{
 			boolean safe = true;
 
 			EnumFacing dir = EnumFacing.fromAngle(player.rotationYaw - 90);
 
-			for(BlockPos point : blockTemplate.calculateAccessors(world, pos.up(), dir))
+			for(BlockPos point : blockTemplate.calculateAccessors(world, up, dir))
 			{
-				if(point.getY() > world.getHeight())
-				{
-					safe = false;
-					break;
-				}
-
 				IBlockState newState = world.getBlockState(point);
 				Block newBlock = newState.getBlock();
 				if(!newBlock.isAir(newState, world, point) && !newBlock.isReplaceable(world, point))

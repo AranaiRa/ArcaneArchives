@@ -80,6 +80,7 @@ arcanearchives.text.radiantchest.unnamed_chest=Unnamed chest
 
 arcanearchives.error.toomanyplaced=You can only have %d %s!
 arcanearchives.error.notenoughspace=Not enough space to place the %s!
+arcanearchives.error.aboveworld=Placing the %s would exceed the build height limit!
 arcanearchives.error.invaliditemblock=Tried to place an invalid item with a place limit but no entity class.
 arcanearchives.error.invalidnetwork=Invalid network. Whoops!
 
