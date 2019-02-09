@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.data;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
@@ -12,24 +13,39 @@ public class NetworkHelper
 {
 	// TODO: This needs to be cleared whenever the player enters a new world
 	private static Map<UUID, ArcaneArchivesClientNetwork> CLIENT_MAP = new HashMap<>();
+	private static AAWorldSavedData savedData = null;
+
+	public static void clearClientCache() {
+		CLIENT_MAP.clear();
+	}
+
+	public static void clearServerCache() {
+		savedData = null;
+	}
 
 	public static ArcaneArchivesNetwork getArcaneArchivesNetwork(UUID uuid)
 	{
-		World world = DimensionManager.getWorld(0);
-		if(world == null || world.getMapStorage() == null)
+		if (savedData == null)
 		{
-			return new AAWorldSavedData().getNetwork(uuid);
+			World world = DimensionManager.getWorld(0);
+			if(world == null || world.getMapStorage() == null)
+			{
+				ArcaneArchives.logger.error(String.format("Attempted to load a network for %s, but the world is currently null!", uuid.toString()));
+				return null;
+			}
+
+			AAWorldSavedData saveData = (AAWorldSavedData) world.getMapStorage().getOrLoadData(AAWorldSavedData.class, AAWorldSavedData.ID);
+
+			if(saveData == null)
+			{
+				saveData = new AAWorldSavedData();
+				world.getMapStorage().setData(AAWorldSavedData.ID, saveData);
+			}
+
+			savedData = saveData;
 		}
 
-		AAWorldSavedData saveData = (AAWorldSavedData) world.getMapStorage().getOrLoadData(AAWorldSavedData.class, AAWorldSavedData.ID);
-
-		if(saveData == null)
-		{
-			saveData = new AAWorldSavedData();
-			world.getMapStorage().setData(AAWorldSavedData.ID, saveData);
-		}
-
-		return saveData.getNetwork(uuid);
+		return savedData.getNetwork(uuid);
 	}
 
 	public static ArcaneArchivesNetwork getArcaneArchivesNetwork(String uuid)

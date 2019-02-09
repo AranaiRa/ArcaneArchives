@@ -20,21 +20,15 @@ public class AAWorldSavedData extends WorldSavedData
 {
 	public static final String ID = "Archane-Archives-Network";
 
-	public static Map<UUID, ArcaneArchivesNetwork> arcaneArchivesNetworks = new HashMap<>();
+	private Map<UUID, ArcaneArchivesNetwork> arcaneArchivesNetworks = new HashMap<>();
+
+	public void clearServerMap () {
+		arcaneArchivesNetworks.clear();
+	}
 
 	public AAWorldSavedData()
 	{
 		super(ID);
-	}
-
-	public AAWorldSavedData(String id)
-	{
-		super(id);
-	}
-
-	public ArcaneArchivesNetwork getNetwork(EntityPlayer player)
-	{
-		return getNetwork(player.getUniqueID());
 	}
 
 	public ArcaneArchivesNetwork getNetwork(UUID playerID)

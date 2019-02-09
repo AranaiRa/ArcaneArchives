@@ -8,6 +8,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
 import org.apache.logging.log4j.Logger;
 
 @Mod(modid = ArcaneArchives.MODID, name = ArcaneArchives.NAME, version = ArcaneArchives.VERSION)
@@ -40,5 +41,10 @@ public class ArcaneArchives
 	public static void postInit(FMLPostInitializationEvent event)
 	{
 		proxy.postInit(event);
+	}
+
+	@EventHandler
+	public static void serverStarted (FMLServerStartedEvent event) {
+		proxy.serverStarted(event);
 	}
 }
