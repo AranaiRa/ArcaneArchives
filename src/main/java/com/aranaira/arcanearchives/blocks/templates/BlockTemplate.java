@@ -98,6 +98,7 @@ public class BlockTemplate extends Block implements IHasModel
 
 	public Size getSize()
 	{
+		if (size == null) return new Size(0, 0, 0);
 		return size;
 	}
 
