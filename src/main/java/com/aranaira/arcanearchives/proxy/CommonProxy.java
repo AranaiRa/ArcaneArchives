@@ -2,7 +2,6 @@ package com.aranaira.arcanearchives.proxy;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.common.AAGuiHandler;
-import com.aranaira.arcanearchives.data.AAWorldSavedData;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.init.RecipeLibrary;
 import com.aranaira.arcanearchives.packets.AAPacketHandler;
@@ -43,7 +42,8 @@ public class CommonProxy
 	{
 	}
 
-	public void serverStarted (FMLServerStartedEvent event) {
+	public void serverStarted(FMLServerStartedEvent event)
+	{
 		NetworkHelper.clearClientCache(); // has no effect on the server
 		NetworkHelper.clearServerCache(); // has no effect on the client
 	}

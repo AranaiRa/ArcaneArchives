@@ -15,7 +15,10 @@ import net.minecraft.util.text.TextComponentString;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
@@ -52,7 +55,7 @@ public class ArcaneArchivesCommand extends CommandBase
 			{
 				ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(sender.getCommandSenderEntity().getUniqueID());
 				Set<String> invites = new HashSet<>();
-				if (network != null)
+				if(network != null)
 				{
 					invites.addAll(network.pendingInvites.keySet());
 				}
@@ -72,9 +75,9 @@ public class ArcaneArchivesCommand extends CommandBase
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
 	{
 		Entity eSender = sender.getCommandSenderEntity();
-		if (eSender == null) return; // TODO: Error here too
+		if(eSender == null) return; // TODO: Error here too
 		ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(eSender.getUniqueID());
-		if (network == null) return; // TODO: Probably should be an error message here
+		if(network == null) return; // TODO: Probably should be an error message here
 
 		if(args.length > 0 && args[0].compareTo("network") == 0)
 		{
@@ -86,8 +89,7 @@ public class ArcaneArchivesCommand extends CommandBase
 					if(targetPlayer != null)
 					{
 						ArcaneArchivesNetwork tnetwork = NetworkHelper.getArcaneArchivesNetwork(targetPlayer.getUniqueID());
-						if (tnetwork != null)
-							tnetwork.Invite(sender.getName(), eSender.getUniqueID());
+						if(tnetwork != null) tnetwork.Invite(sender.getName(), eSender.getUniqueID());
 					}
 				} else
 				{

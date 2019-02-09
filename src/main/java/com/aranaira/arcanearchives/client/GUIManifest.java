@@ -22,9 +22,7 @@ import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class GUIManifest extends GuiContainer
 {
@@ -196,29 +194,35 @@ public class GUIManifest extends GuiContainer
 				String name = WordUtils.capitalize(dim.getName().replace("_", " "));
 				tooltip.add("");
 				tooltip.add("" + TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.manifest.inanotherdim", name));
-			}
-			else if (entry != null) {
+			} else if(entry != null)
+			{
 				tooltip.add("");
 				tooltip.add("" + TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.manifest.clicktoshow", I18n.format("arcanearchives.text.manifest.endtrackingbutton")));
 			}
-			if (entry != null) {
-				if (GuiScreen.isShiftKeyDown()) {
+			if(entry != null)
+			{
+				if(GuiScreen.isShiftKeyDown())
+				{
 					tooltip.add("");
 					List<ManifestEntry.ItemEntry> positions = entry.consolidateEntries(false);
 					int unnamed_count = 1;
 					int limit = Math.min(10, positions.size());
 					int diff = Math.max(0, positions.size() - limit);
-					for (int i = 0; i < limit; i++) {
+					for(int i = 0; i < limit; i++)
+					{
 						ManifestEntry.ItemEntry thisEntry = positions.get(i);
 						String chestName = thisEntry.getChestName();
 						BlockPos pos = thisEntry.getPosition();
-						if (chestName.isEmpty()) chestName = String.format("%s %d", I18n.format("arcanearchives.text.radiantchest.unnamed_chest"), unnamed_count++);
+						if(chestName.isEmpty())
+							chestName = String.format("%s %d", I18n.format("arcanearchives.text.radiantchest.unnamed_chest"), unnamed_count++);
 						tooltip.add(TextFormatting.GRAY + I18n.format("arcanearchives.tooltip.manifest.item_entry", chestName, pos.getX(), pos.getY(), pos.getZ(), thisEntry.getItemCount()));
 					}
-					if (diff > 0) {
+					if(diff > 0)
+					{
 						tooltip.add(I18n.format("arcanearchives.tooltip.manifest.andmore", diff));
 					}
-				} else {
+				} else
+				{
 					tooltip.add("" + TextFormatting.DARK_GRAY + I18n.format("arcanearchives.tooltip.manifest.chestsneak"));
 				}
 			}

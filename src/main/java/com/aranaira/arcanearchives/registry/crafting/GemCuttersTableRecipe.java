@@ -1,15 +1,14 @@
 package com.aranaira.arcanearchives.registry.crafting;
 
 import com.aranaira.arcanearchives.util.ItemComparison;
-import com.aranaira.arcanearchives.util.types.Tuple;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
 import javax.annotation.Nonnull;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class GemCuttersTableRecipe
@@ -45,7 +44,8 @@ public class GemCuttersTableRecipe
 		return match.match();
 	}
 
-	public boolean consume (ItemStackHandler internal, InvWrapper playerInventory) {
+	public boolean consume(ItemStackHandler internal, InvWrapper playerInventory)
+	{
 		RecipeMatcher match = new RecipeMatcher(false);
 		match.accept(internal);
 		match.accept(playerInventory);
@@ -92,7 +92,7 @@ public class GemCuttersTableRecipe
 			for(int j = 0; j < input.getSlots(); j++)
 			{
 				ItemStack potential = input.getStackInSlot(j);
-				if (potential.isEmpty()) continue;
+				if(potential.isEmpty()) continue;
 
 				for(int i = 0; i < stacks.size(); i++)
 				{
@@ -104,19 +104,24 @@ public class GemCuttersTableRecipe
 						// There's less needed than in the slot
 						if(requirement.getCount() == potential.getCount())
 						{
-							if(!simulate) {
+							if(!simulate)
+							{
 								input.setStackInSlot(j, ItemStack.EMPTY);
 							}
 							requirement.setCount(0);
 							break;
-						} else if (potential.getCount() < requirement.getCount()) {
+						} else if(potential.getCount() < requirement.getCount())
+						{
 							int diff = requirement.getCount() - potential.getCount();
 							requirement.setCount(diff);
-							if (!simulate) {
+							if(!simulate)
+							{
 								input.setStackInSlot(j, ItemStack.EMPTY);
 							}
-						} else { // if (potential.getCount() > requirement.getCount()) {
-							if (!simulate) {
+						} else
+						{ // if (potential.getCount() > requirement.getCount()) {
+							if(!simulate)
+							{
 								potential.shrink(requirement.getCount());
 								input.setStackInSlot(j, potential);
 							}

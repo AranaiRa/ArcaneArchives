@@ -65,30 +65,31 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 		setRecipe(GemCuttersTableRecipeList.GetRecipe(itemStack));
 	}
 
-	public void consume (UUID playerId) {
-		EntityPlayer player = world.getPlayerEntityByUUID(playerId);
-		if (player == null) return;
-
-		GemCuttersTableRecipe recipe = getRecipe();
-		if (recipe == null) return;
-
-		InvWrapper plyInv = new InvWrapper(player.inventory);
-
-		if (!recipe.matchesRecipe(this.mInventory, plyInv)) return;
-
-		recipe.consume(this.mInventory, plyInv);
-	}
-
 	public void setRecipe(@Nullable GemCuttersTableRecipe recipe)
 	{
 		mRecipe = recipe;
-		if (recipe != null)
+		if(recipe != null)
 		{
 			setOutput(recipe.getOutput());
 		}
 		updateOutput();
 
 		// send a synchronise packet
+	}
+
+	public void consume(UUID playerId)
+	{
+		EntityPlayer player = world.getPlayerEntityByUUID(playerId);
+		if(player == null) return;
+
+		GemCuttersTableRecipe recipe = getRecipe();
+		if(recipe == null) return;
+
+		InvWrapper plyInv = new InvWrapper(player.inventory);
+
+		if(!recipe.matchesRecipe(this.mInventory, plyInv)) return;
+
+		recipe.consume(this.mInventory, plyInv);
 	}
 
 	public int getPage()
@@ -211,14 +212,16 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 	{
 		if(world == null) return false;
 
-		if (super.updateOutput()) return true;
+		if(super.updateOutput()) return true;
 
 		PacketGemCutters.ChangePage packet = new PacketGemCutters.ChangePage(getPos(), getPage(), world.provider.getDimension());
 		AAPacketHandler.CHANNEL.sendToServer(packet);
 		PacketGemCutters.ChangeRecipe packet2;
-		if (this.getRecipe() != null) {
+		if(this.getRecipe() != null)
+		{
 			packet2 = new PacketGemCutters.ChangeRecipe(this.getRecipe().getOutput(), getPos(), world.provider.getDimension());
-		} else {
+		} else
+		{
 			packet2 = new PacketGemCutters.ChangeRecipe(ItemStack.EMPTY, getPos(), world.provider.getDimension());
 		}
 		AAPacketHandler.CHANNEL.sendToServer(packet2);

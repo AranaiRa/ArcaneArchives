@@ -221,16 +221,20 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 		mAccessors.add(pos);
 	}
 
-	public ArcaneArchivesClientNetwork getClientNetwork () {
-		if (cNetwork == null) {
+	public ArcaneArchivesClientNetwork getClientNetwork()
+	{
+		if(cNetwork == null)
+		{
 			cNetwork = NetworkHelper.getArcaneArchivesClientNetwork(NetworkID);
 		}
 
 		return cNetwork;
 	}
 
-	public ArcaneArchivesNetwork getNetwork () {
-		if (network == null) {
+	public ArcaneArchivesNetwork getNetwork()
+	{
+		if(network == null)
+		{
 			network = NetworkHelper.getArcaneArchivesNetwork(NetworkID);
 		}
 
@@ -245,7 +249,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 
 		if(world.isRemote) return;
 
-		if (getNetwork() == null) return;
+		if(getNetwork() == null) return;
 
 		network.RemoveTileFromNetwork(this);
 	}
@@ -257,7 +261,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 
 		if(world.isRemote) return;
 
-		if (getNetwork() == null) return;
+		if(getNetwork() == null) return;
 
 		network.RemoveTileFromNetwork(this);
 	}

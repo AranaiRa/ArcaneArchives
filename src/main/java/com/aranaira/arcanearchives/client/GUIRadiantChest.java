@@ -1,18 +1,14 @@
 package com.aranaira.arcanearchives.client;
 
 import com.aranaira.arcanearchives.inventory.ContainerRadiantChest;
-import com.aranaira.arcanearchives.packets.AAPacketHandler;
-import com.aranaira.arcanearchives.packets.PacketRadiantChest;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
-import java.util.UUID;
 
 public class GUIRadiantChest extends GuiContainer
 {
@@ -38,8 +34,10 @@ public class GUIRadiantChest extends GuiContainer
 		this.ySize = ImageHeight;
 	}
 
-	public String getName () {
-		if (mTextEnteringMode) {
+	public String getName()
+	{
+		if(mTextEnteringMode)
+		{
 			return (mNameField == null || mNameField.isEmpty()) ? mContainer.getName() : mNameField;
 		}
 
@@ -146,7 +144,7 @@ public class GUIRadiantChest extends GuiContainer
 			//Anything else.
 			else
 			{
-				if (mNameField == null) mNameField = "";
+				if(mNameField == null) mNameField = "";
 				if(Character.isLetterOrDigit(typedChar)) mNameField += typedChar;
 				else if(typedChar == ' ') mNameField += typedChar;
 			}

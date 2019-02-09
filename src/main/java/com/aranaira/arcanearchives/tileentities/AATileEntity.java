@@ -16,7 +16,7 @@ import javax.annotation.Nullable;
 
 /**
  * The base Arcane Archives TileEntity.
- *
+ * <p>
  * The majority of functionality for actual machines is implemented in `ImmanenceTileEntity`.
  * The only direct descendents of this that are not ITEs are the Gem Cutter's Table (as it
  * does not use immanence), and the Accessor Block.

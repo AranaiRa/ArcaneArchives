@@ -26,12 +26,10 @@ public class GUIGemCuttersTable extends GuiContainer
 	private static final int OVERLAY = 0x771e3340;
 
 	ContainerGemCuttersTable mCGCT;
-
+	boolean recipeStatus;
 	private InvisibleButton PrevPageButton;
 	private InvisibleButton NextPageButton;
 	private EntityPlayer player;
-
-	boolean recipeStatus;
 
 	public GUIGemCuttersTable(EntityPlayer player, ContainerGemCuttersTable container)
 	{
@@ -78,7 +76,8 @@ public class GUIGemCuttersTable extends GuiContainer
 
 		GemCuttersTableRecipe recipe = mCGCT.getTile().getRecipe();
 
-		if (player.ticksExisted % 50 == 0) {
+		if(player.ticksExisted % 50 == 0)
+		{
 			recipeStatus = mCGCT.getRecipeStatus();
 		}
 

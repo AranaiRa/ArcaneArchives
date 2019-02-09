@@ -86,7 +86,7 @@ public class RadiantChest extends BlockTemplate
 			if(te instanceof RadiantChestTileEntity)
 			{
 				ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(((RadiantChestTileEntity) te).NetworkID);
-				if (network != null) network.triggerUpdate();
+				if(network != null) network.triggerUpdate();
 
 				// This is never an IInventory
 				IItemHandler inv = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);

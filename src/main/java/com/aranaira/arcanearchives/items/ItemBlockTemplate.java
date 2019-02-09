@@ -55,7 +55,7 @@ public class ItemBlockTemplate extends ItemBlock
 
 				player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.invalidnetwork"), true);
 				return EnumActionResult.FAIL;
-			} else if (network.CountTileEntities(blockTemplate.getEntityClass()) >= placeLimit)
+			} else if(network.CountTileEntities(blockTemplate.getEntityClass()) >= placeLimit)
 			{
 				player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.toomanyplaced", blockTemplate.getPlaceLimit(), blockTemplate.getNameComponent()), true);
 				return EnumActionResult.FAIL;

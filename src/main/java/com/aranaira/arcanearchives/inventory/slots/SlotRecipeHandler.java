@@ -33,13 +33,14 @@ public class SlotRecipeHandler extends Slot
 		return dimmed;
 	}
 
-	public void setDimmed() {
-		setDimmed(true);
-	}
-
 	public void setDimmed(boolean dimmed)
 	{
 		this.dimmed = dimmed;
+	}
+
+	public void setDimmed()
+	{
+		setDimmed(true);
 	}
 
 	public int getPage()

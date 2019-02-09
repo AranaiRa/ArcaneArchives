@@ -4,7 +4,6 @@
 package com.aranaira.arcanearchives.data;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.storage.WorldSavedData;
@@ -22,13 +21,14 @@ public class AAWorldSavedData extends WorldSavedData
 
 	private Map<UUID, ArcaneArchivesNetwork> arcaneArchivesNetworks = new HashMap<>();
 
-	public void clearServerMap () {
-		arcaneArchivesNetworks.clear();
-	}
-
 	public AAWorldSavedData()
 	{
 		super(ID);
+	}
+
+	public void clearServerMap()
+	{
+		arcaneArchivesNetworks.clear();
 	}
 
 	public ArcaneArchivesNetwork getNetwork(UUID playerID)

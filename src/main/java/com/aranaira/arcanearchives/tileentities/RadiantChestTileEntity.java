@@ -137,9 +137,9 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 	@Override
 	public boolean updateOutput()
 	{
-		if (world == null) return false;
+		if(world == null) return false;
 
-		if (super.updateOutput()) return true;
+		if(super.updateOutput()) return true;
 
 		PacketRadiantChest.SetName packet = new PacketRadiantChest.SetName(getPos(), getChestName(), world.provider.getDimension());
 		AAPacketHandler.CHANNEL.sendToServer(packet);

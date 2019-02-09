@@ -14,7 +14,6 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
-import scala.xml.dtd.EMPTY;
 
 import javax.annotation.Nonnull;
 
@@ -144,7 +143,7 @@ public class ContainerGemCuttersTable extends Container
 			}
 		}
 
-		if (!player.world.isRemote && slotId == 36)
+		if(!player.world.isRemote && slotId == 36)
 		{
 			GemCuttersTableRecipe recipe = getTile().getRecipe();
 			if(recipe == null) return ItemStack.EMPTY;
@@ -152,8 +151,7 @@ public class ContainerGemCuttersTable extends Container
 			if(recipe.matchesRecipe(tileInventory, new InvWrapper(playerInventory)))
 			{
 				return super.slotClick(slotId, dragType, clickTypeIn, player);
-			}
-			else
+			} else
 			{
 				return ItemStack.EMPTY;
 			}
@@ -226,7 +224,7 @@ public class ContainerGemCuttersTable extends Container
 				}
 			}
 
-			if (thePlayer instanceof EntityPlayerMP)
+			if(thePlayer instanceof EntityPlayerMP)
 			{
 				tile.updateOutput();
 				((EntityPlayerMP) thePlayer).sendAllContents(cont, cont.getInventory());

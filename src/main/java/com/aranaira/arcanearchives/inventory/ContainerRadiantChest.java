@@ -6,8 +6,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -16,14 +14,6 @@ import javax.annotation.Nonnull;
 public class ContainerRadiantChest extends Container
 {
 	private RadiantChestTileEntity tile;
-
-	public String getName () {
-		return tile.getChestName();
-	}
-
-	public void setName (String name) {
-		tile.setChestName(name);
-	}
 
 	public ContainerRadiantChest(RadiantChestTileEntity tile, IInventory playerInventory)
 	{
@@ -57,6 +47,16 @@ public class ContainerRadiantChest extends Container
 			this.addSlotToContainer(new Slot(playerInventory, i, 16 + (18 * x), 200));
 			i--;
 		}
+	}
+
+	public String getName()
+	{
+		return tile.getChestName();
+	}
+
+	public void setName(String name)
+	{
+		tile.setChestName(name);
 	}
 
 	@Override

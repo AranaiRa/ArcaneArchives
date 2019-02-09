@@ -47,12 +47,11 @@ public class NetworkItemHandler implements IItemHandlerModifiable
 	@Override
 	public ItemStack getStackInSlot(int slot)
 	{
-		if (network == null) // TODO: ERROR
+		if(network == null) // TODO: ERROR
 			return ItemStack.EMPTY;
 
 		List<ItemStack> listofItems;
-		if(searchText.compareTo("") != 0)
-			listofItems = network.GetFilteredItems(searchText);
+		if(searchText.compareTo("") != 0) listofItems = network.GetFilteredItems(searchText);
 		else listofItems = network.GetAllItemsOnNetwork();
 
 		if(listofItems.size() > slot) return listofItems.get(slot);
@@ -62,7 +61,7 @@ public class NetworkItemHandler implements IItemHandlerModifiable
 	@Override
 	public ItemStack insertItem(int slot, ItemStack stack, boolean simulate)
 	{
-		if (network == null) // TODO: Error
+		if(network == null) // TODO: Error
 			return stack;
 		// TODO: This shouldn't be a copy?
 		return network.InsertItem(stack.copy(), simulate);
@@ -71,7 +70,7 @@ public class NetworkItemHandler implements IItemHandlerModifiable
 	@Override
 	public ItemStack extractItem(int slot, int amount, boolean simulate)
 	{
-		if (network == null) // TODO: Error
+		if(network == null) // TODO: Error
 			return ItemStack.EMPTY;
 		return network.ExtractItem(getStackInSlot(slot), amount, simulate);
 	}

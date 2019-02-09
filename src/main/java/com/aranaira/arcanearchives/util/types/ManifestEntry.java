@@ -47,8 +47,9 @@ public class ManifestEntry
 		return itemEntries.stream().map(ItemEntry::asVec3d).collect(Collectors.toList());
 	}
 
-	public List<ItemEntry> consolidateEntries (boolean force) {
-		if (consolidated.isEmpty() || force)
+	public List<ItemEntry> consolidateEntries(boolean force)
+	{
+		if(consolidated.isEmpty() || force)
 		{
 			consolidated.clear();
 
@@ -70,46 +71,54 @@ public class ManifestEntry
 		return consolidated;
 	}
 
-	public static class ItemEntry {
+	public static class ItemEntry
+	{
 		public BlockPos entryPos;
 		public String chestName;
 		public int itemCount;
 
-		public ItemEntry (BlockPos pos, String chestName, int count) {
+		public ItemEntry(BlockPos pos, String chestName, int count)
+		{
 			this.entryPos = pos;
 			this.chestName = chestName;
 			this.itemCount = count;
 		}
 
-		public Vec3d asVec3d () {
+		public static ItemEntry deserializeNBT(NBTTagCompound tag)
+		{
+			BlockPos pos = BlockPos.fromLong(tag.getLong("entryPos"));
+			String chestName = tag.getString("chestName");
+			int itemCount = tag.getInteger("itemCount");
+			return new ItemEntry(pos, chestName, itemCount);
+		}
+
+		public Vec3d asVec3d()
+		{
 			return new Vec3d(entryPos.getX(), entryPos.getY(), entryPos.getZ());
 		}
 
-		public String getChestName () {
+		public String getChestName()
+		{
 			return chestName;
 		}
 
-		public int getItemCount () {
+		public int getItemCount()
+		{
 			return itemCount;
 		}
 
-		public BlockPos getPosition () {
+		public BlockPos getPosition()
+		{
 			return entryPos;
 		}
 
-		public NBTTagCompound serializeNBT () {
+		public NBTTagCompound serializeNBT()
+		{
 			NBTTagCompound thisEntry = new NBTTagCompound();
 			thisEntry.setInteger("itemCount", itemCount);
 			thisEntry.setLong("entryPos", entryPos.toLong());
 			thisEntry.setString("chestName", chestName);
 			return thisEntry;
-		}
-
-		public static ItemEntry deserializeNBT (NBTTagCompound tag) {
-			BlockPos pos = BlockPos.fromLong(tag.getLong("entryPos"));
-			String chestName = tag.getString("chestName");
-			int itemCount = tag.getInteger("itemCount");
-			return new ItemEntry(pos, chestName, itemCount);
 		}
 	}
 }

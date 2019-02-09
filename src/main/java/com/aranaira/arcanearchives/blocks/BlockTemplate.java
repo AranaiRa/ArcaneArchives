@@ -1,8 +1,6 @@
 package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
-import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.init.BlockLibrary;
 import com.aranaira.arcanearchives.init.ItemLibrary;
 import com.aranaira.arcanearchives.items.ItemBlockTemplate;

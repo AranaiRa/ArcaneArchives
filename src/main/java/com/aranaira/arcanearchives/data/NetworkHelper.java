@@ -15,17 +15,19 @@ public class NetworkHelper
 	private static Map<UUID, ArcaneArchivesClientNetwork> CLIENT_MAP = new HashMap<>();
 	private static AAWorldSavedData savedData = null;
 
-	public static void clearClientCache() {
+	public static void clearClientCache()
+	{
 		CLIENT_MAP.clear();
 	}
 
-	public static void clearServerCache() {
+	public static void clearServerCache()
+	{
 		savedData = null;
 	}
 
 	public static ArcaneArchivesNetwork getArcaneArchivesNetwork(UUID uuid)
 	{
-		if (savedData == null)
+		if(savedData == null)
 		{
 			World world = DimensionManager.getWorld(0);
 			if(world == null || world.getMapStorage() == null)

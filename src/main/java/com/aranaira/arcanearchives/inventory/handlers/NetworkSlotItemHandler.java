@@ -2,7 +2,6 @@ package com.aranaira.arcanearchives.inventory.handlers;
 
 import com.aranaira.arcanearchives.data.ArcaneArchivesClientNetwork;
 import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
-import com.aranaira.arcanearchives.data.NetworkHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
@@ -39,7 +38,7 @@ public class NetworkSlotItemHandler extends SlotItemHandler
 			return cNetwork.GetTotalSpace();
 		} else
 		{
-			if (network == null) // TODO: Error
+			if(network == null) // TODO: Error
 				return 0;
 			return network.GetTotalSpace();
 		}

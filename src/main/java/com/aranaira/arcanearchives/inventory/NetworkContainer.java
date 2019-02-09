@@ -3,7 +3,6 @@ package com.aranaira.arcanearchives.inventory;
 import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.inventory.handlers.NetworkItemHandler;
-import com.aranaira.arcanearchives.inventory.handlers.NetworkSlotItemHandler;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -143,7 +142,7 @@ public class NetworkContainer extends Container
 	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
 	{
 		ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID());
-		if (network == null) // TODO: Error message
+		if(network == null) // TODO: Error message
 			return ItemStack.EMPTY;
 
 		if(slotId < 27 && slotId > -1)

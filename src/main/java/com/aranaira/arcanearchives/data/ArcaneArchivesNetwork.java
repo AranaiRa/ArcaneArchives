@@ -9,23 +9,22 @@ import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.ItemComparison;
 import com.aranaira.arcanearchives.util.ItemStackConsolidator;
 import com.aranaira.arcanearchives.util.LargeItemNBTUtil;
-import com.aranaira.arcanearchives.util.types.*;
+import com.aranaira.arcanearchives.util.types.ManifestEntry;
+import com.aranaira.arcanearchives.util.types.ManifestList;
+import com.aranaira.arcanearchives.util.types.SlotIterable;
+import com.aranaira.arcanearchives.util.types.TileList;
 import com.google.common.annotations.Beta;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.nbt.NBTTagLong;
-import net.minecraft.nbt.NBTTagString;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
-import javax.annotation.Nonnull;
 import java.util.*;
 
 public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
@@ -443,7 +442,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		for(ImmanenceTileEntity ite : GetRadiantChests())
 		{
 			RadiantChestTileEntity chest = (RadiantChestTileEntity) ite;
-			if (done.contains(chest)) continue;
+			if(done.contains(chest)) continue;
 
 			int dimId = chest.getWorld().provider.getDimension();
 			for(ItemStack is : new SlotIterable(chest.getInventory()))
@@ -534,7 +533,8 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		}
 	}
 
-	public static class ManifestItemEntry {
+	public static class ManifestItemEntry
+	{
 		public ItemStack stack;
 		public int dim;
 		public ManifestEntry.ItemEntry entry;
