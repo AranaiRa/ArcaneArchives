@@ -21,6 +21,11 @@ public class AAWorldSavedData extends WorldSavedData
 
 	private Map<UUID, ArcaneArchivesNetwork> arcaneArchivesNetworks = new HashMap<>();
 
+	public AAWorldSavedData(String id)
+	{
+		super(id);
+	}
+
 	public AAWorldSavedData()
 	{
 		super(ID);
