@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.init.BlockLibrary;
 import com.aranaira.arcanearchives.util.handlers.ConfigHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -24,6 +25,15 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 	@Override
 	public void update()
 	{
+		// Only tick on the client side
+		if(world.isRemote) return;
+
+		// This will have to be updated to hive networks TODO
+		EntityPlayer player = world.getPlayerEntityByUUID(NetworkID);
+
+		// Don't tick if the player isn't online
+		if(player == null) return;
+
 		if(Block.getIdFromBlock(world.getBlockState(pos.add(0, 1, 0)).getBlock()) == 0)
 		{
 			if(TicksUntilCrystalGrowth > 0)
