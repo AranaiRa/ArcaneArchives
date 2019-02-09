@@ -8,6 +8,7 @@ import com.aranaira.arcanearchives.util.ItemComparison;
 import com.aranaira.arcanearchives.util.handlers.AAServerTickHandler;
 import com.aranaira.arcanearchives.util.types.Size;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ITickable;
@@ -16,7 +17,6 @@ import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -175,7 +175,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	@Nonnull
 	public NBTTagCompound writeToNBT(NBTTagCompound compound)
 	{
-		compound.setUniqueId("playerId", NetworkID);
+		compound.setString("playerId", NetworkID.toString());
 		compound.setInteger("dim", Dimension);
 		NBTTagList tags = new NBTTagList();
 		for(ItemStack item : Inventory)
@@ -197,17 +197,13 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 		Dimension = compound.getInteger("dim");
 		MaxItems = compound.getInteger("invsize");
 		NBTTagList tags = compound.getTagList("inventory", 10);
-		Iterator itr = tags.iterator();
-		while(itr.hasNext())
+		for(NBTBase tag : tags)
 		{
-			NBTTagCompound data = (NBTTagCompound) itr.next();
+			NBTTagCompound data = (NBTTagCompound) tag;
 			ItemStack temp = new ItemStack(data);
 			if(!temp.isEmpty()) Inventory.add(temp);
 		}
-		/*if (!world.isRemote)
-		{
-			NetworkHelper.getArcaneArchivesNetwork(NetworkID).AddTileToNetwork(this);
-		}*/
+
 		super.readFromNBT(compound);
 	}
 
