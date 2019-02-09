@@ -117,7 +117,7 @@ public class GUIRadiantChest extends GuiContainer
 
 
 	@Override
-	protected void keyTyped(char typedChar, int keyCode)
+	protected void keyTyped(char typedChar, int keyCode) throws IOException
 	{
 		//If the user is currently entering text into the search bar.
 		if(mTextEnteringMode)
@@ -149,6 +149,11 @@ public class GUIRadiantChest extends GuiContainer
 				else if(typedChar == ' ') mNameField += typedChar;
 			}
 		} else if(keyCode == 1 || keyCode == this.mc.gameSettings.keyBindInventory.getKeyCode())
+		{
 			Minecraft.getMinecraft().player.closeScreen();
+		} else {
+			super.keyTyped(typedChar, keyCode);
+		}
+
 	}
 }
