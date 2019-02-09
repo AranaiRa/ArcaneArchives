@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.tileentities;
 
+import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.init.BlockLibrary;
 import com.aranaira.arcanearchives.util.handlers.ConfigHandler;
 import net.minecraft.block.Block;
@@ -25,10 +26,10 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 	@Override
 	public void update()
 	{
-		// Only tick on the client side
-		if(world.isRemote) return;
+		super.update();
 
-		if (NetworkID == null) return;
+		// Only tick on the client side
+		if(world.isRemote || NetworkID == null || NetworkID.equals(NetworkHelper.INVALID)) return;
 
 		// This will have to be updated to hive networks TODO
 		EntityPlayer player = world.getPlayerEntityByUUID(NetworkID);
@@ -36,7 +37,7 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 		// Don't tick if the player isn't online
 		if(player == null) return;
 
-		if(Block.getIdFromBlock(world.getBlockState(pos.add(0, 1, 0)).getBlock()) == 0)
+		if(world.isAirBlock(pos.up()))
 		{
 			if(TicksUntilCrystalGrowth > 0)
 			{
@@ -46,15 +47,9 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 			{
 
 				TicksUntilCrystalGrowth = ConfigHandler.values.iRadiantResonatorTickTime;
-				if(!world.isRemote)
-				{
-					world.setBlockState(pos.add(0, 1, 0), Block.getStateById(Block.getIdFromBlock(BlockLibrary.RAW_QUARTZ)), 3);
-				}
+				world.setBlockState(pos.up(), BlockLibrary.RAW_QUARTZ.getDefaultState(), 3);
 			}
 		}
-
-
-		super.update();
 	}
 
 	@Override
