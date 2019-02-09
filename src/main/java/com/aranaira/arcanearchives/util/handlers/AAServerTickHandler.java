@@ -4,22 +4,28 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
+import net.minecraft.server.MinecraftServer;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class AAServerTickHandler
 {
 	private static final List<ImmanenceTileEntity> incomingITEs = new ArrayList<>();
+	private static final List<ImmanenceTileEntity> outgoingITEs = new ArrayList<>();
 
 	public static void incomingITE(ImmanenceTileEntity entity)
 	{
 		incomingITEs.add(entity);
+	}
+
+	public static void outgoingITE(ImmanenceTileEntity entity)
+	{
+		outgoingITEs.add(entity);
 	}
 
 	@SubscribeEvent
@@ -27,26 +33,40 @@ public class AAServerTickHandler
 	{
 		if(event.phase != TickEvent.Phase.END) return;
 
-		if(incomingITEs.size() == 0) return;
-
 		List<ImmanenceTileEntity> consumed = new ArrayList<>();
 
 		for(ImmanenceTileEntity ite : incomingITEs)
 		{
-			UUID networkId = ite.GetNetworkID();
-			if(networkId == null) continue;
-
-			ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(networkId);
-			if(network == null) continue;
-
-			if(!network.NetworkContainsTile(ite))
+			if (ite.ticks() > 30) {
+				outgoingITE(ite);
+			} else
 			{
-				network.AddTileToNetwork(ite);
+				UUID networkId = ite.NetworkID;
+				if(networkId == null || networkId.equals(NetworkHelper.INVALID))
+				{
+					ite.tick();
+					continue;
+				}
+
+				ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(networkId);
+				if(network == null) continue;
+
+				if(!network.NetworkContainsTile(ite))
+				{
+					network.AddTileToNetwork(ite);
+				}
 			}
 
 			consumed.add(ite);
 		}
 
 		incomingITEs.removeAll(consumed);
+
+		for (ImmanenceTileEntity ite : outgoingITEs)
+		{
+			ite.breakBlock(null, false);
+		}
+
+		outgoingITEs.clear();
 	}
 }

@@ -38,12 +38,23 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	public List<BlockPos> mAccessors;
 	private ArcaneArchivesNetwork network;
 	private ArcaneArchivesClientNetwork cNetwork;
+	private int ticks = 0;
 
 	public ImmanenceTileEntity(String name)
 	{
 		setName(name);
 		mAccessors = new ArrayList<>();
 		Inventory = NonNullList.create();
+	}
+
+	public void tick()
+	{
+		ticks++;
+	}
+
+	public int ticks()
+	{
+		return ticks;
 	}
 
 	@Override
