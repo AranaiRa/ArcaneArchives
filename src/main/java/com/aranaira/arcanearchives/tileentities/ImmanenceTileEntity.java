@@ -203,7 +203,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	@Nonnull
 	public void readFromNBT(NBTTagCompound compound)
 	{
-		NetworkID = compound.getUniqueId("playerId");
+		NetworkID = UUID.fromString(compound.getString("playerId"));
 		Dimension = compound.getInteger("dim");
 		MaxItems = compound.getInteger("invsize");
 		NBTTagList tags = compound.getTagList("inventory", 10);
