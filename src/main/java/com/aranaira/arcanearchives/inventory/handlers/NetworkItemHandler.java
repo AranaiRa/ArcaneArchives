@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
 import javax.annotation.Nullable;
@@ -16,16 +17,16 @@ import java.util.UUID;
 public class NetworkItemHandler implements IItemHandlerModifiable
 {
 
-	private UUID playerUUID;
+	private UUID playerUUID; //TODO: unused variable
 	private String searchText = "";
 	@Nullable
 	private ArcaneArchivesNetwork network;
 
-	public NetworkItemHandler(UUID uuid)
+	public NetworkItemHandler(UUID uuid, World world)
 	{
 		playerUUID = uuid;
 		// TODO: This is server-side only
-		network = NetworkHelper.getArcaneArchivesNetwork(uuid);
+		network = NetworkHelper.getArcaneArchivesNetwork(uuid, world);
 	}
 
 	public String getSearchString()

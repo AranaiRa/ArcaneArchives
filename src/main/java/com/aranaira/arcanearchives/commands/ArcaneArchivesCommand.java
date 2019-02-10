@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.commands;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.google.common.collect.Lists;
@@ -52,8 +53,8 @@ public class ArcaneArchivesCommand extends CommandBase
 			{
 				return Lists.newArrayList(server.getPlayerList().getOnlinePlayerNames());
 			} else if(args[1].compareTo("accept") == 0 && sender.getCommandSenderEntity() != null)
-			{
-				ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(sender.getCommandSenderEntity().getUniqueID());
+			{	//TODO: Is this client or serverside? Client may not have network data for the below.
+				ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(sender.getCommandSenderEntity().getUniqueID(), server.getWorld(0));
 				Set<String> invites = new HashSet<>();
 				if(network != null)
 				{
@@ -75,9 +76,15 @@ public class ArcaneArchivesCommand extends CommandBase
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
 	{
 		Entity eSender = sender.getCommandSenderEntity();
-		if(eSender == null) return; // TODO: Error here too
-		ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(eSender.getUniqueID());
-		if(network == null) return; // TODO: Probably should be an error message here
+		if(eSender == null) {
+			ArcaneArchives.logger.error("Found null sender executing command!");
+			return;
+		}
+		ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(eSender.getUniqueID(), server.getWorld(0));
+		if(network == null) {
+			ArcaneArchives.logger.error("Found null network executing command!");
+			return;
+		}
 
 		if(args.length > 0 && args[0].compareTo("network") == 0)
 		{
@@ -88,7 +95,7 @@ public class ArcaneArchivesCommand extends CommandBase
 					EntityPlayerMP targetPlayer = server.getPlayerList().getPlayerByUsername(args[1]);
 					if(targetPlayer != null)
 					{
-						ArcaneArchivesNetwork tnetwork = NetworkHelper.getArcaneArchivesNetwork(targetPlayer.getUniqueID());
+						ArcaneArchivesNetwork tnetwork = NetworkHelper.getArcaneArchivesNetwork(targetPlayer.getUniqueID(), server.getWorld(0));
 						if(tnetwork != null) tnetwork.Invite(sender.getName(), eSender.getUniqueID());
 					}
 				} else

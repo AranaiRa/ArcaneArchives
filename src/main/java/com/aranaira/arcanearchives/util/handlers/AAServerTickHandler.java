@@ -48,7 +48,7 @@ public class AAServerTickHandler
 					continue;
 				}
 
-				ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(networkId);
+				ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(networkId, ite.getWorld());
 				if(network == null) continue;
 
 				if(!network.NetworkContainsTile(ite))

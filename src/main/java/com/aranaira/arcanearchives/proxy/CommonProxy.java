@@ -45,6 +45,6 @@ public class CommonProxy
 	public void serverStarted(FMLServerStartedEvent event)
 	{
 		NetworkHelper.clearClientCache(); // has no effect on the server
-		NetworkHelper.clearServerCache(); // has no effect on the client
+		//NetworkHelper.clearServerCache(); // has no effect on the client and shouldn't be necessary now
 	}
 }

@@ -32,7 +32,7 @@ public class NetworkContainer extends Container
 		InventoryPlayer playerInventory = player.inventory;
 		//int i = 45;
 
-		networkItemHandler = new NetworkItemHandler(player.getUniqueID());
+		networkItemHandler = new NetworkItemHandler(player.getUniqueID(), player.getEntityWorld());
 		//127 higher?
 
 		int j = 26;
@@ -141,7 +141,8 @@ public class NetworkContainer extends Container
 	@Override
 	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
 	{
-		ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID());
+		World world = (player==null) ? this.player.getEntityWorld() : player.getEntityWorld(); //The constructor requires a non-null player, so it shouldn't be null here either.
+		ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID(), world);
 		if(network == null) // TODO: Error message
 			return ItemStack.EMPTY;
 

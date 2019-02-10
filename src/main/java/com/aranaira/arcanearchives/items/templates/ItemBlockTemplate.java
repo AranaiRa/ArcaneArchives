@@ -44,7 +44,7 @@ public class ItemBlockTemplate extends ItemBlock
 			return EnumActionResult.FAIL;
 		}
 
-		ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID());
+		ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID(), world);
 
 		int placeLimit = blockTemplate.getPlaceLimit();
 

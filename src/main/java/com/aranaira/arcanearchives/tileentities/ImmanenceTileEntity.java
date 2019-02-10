@@ -237,11 +237,11 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 		return cNetwork;
 	}
 
-	public ArcaneArchivesNetwork getNetwork()
+	public ArcaneArchivesNetwork getNetwork() //TODO: ensure method not called prior to tile entity world being set.
 	{
 		if(network == null)
 		{
-			network = NetworkHelper.getArcaneArchivesNetwork(NetworkID);
+			network = NetworkHelper.getArcaneArchivesNetwork(NetworkID, this.world);
 		}
 
 		return network;

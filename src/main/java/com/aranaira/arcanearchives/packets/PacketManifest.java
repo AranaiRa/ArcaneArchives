@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.packets;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.ArcaneArchivesClientNetwork;
 import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
@@ -12,6 +13,7 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.Side;
 
 import java.util.UUID;
 
@@ -89,11 +91,20 @@ public class PacketManifest
 			// Fired on the server
 			private void processMessage(PacketSynchroniseRequest message, MessageContext context)
 			{
-				MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-				if(server == null) return;
+				// MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
 
-				ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(message.playerId);
-				if(network == null) return;
+				//TODO: See commented line below this
+				// if (context.side== Side.CLIENT) ArcaneArchives.logger.error("Received synchronize request from wrong side");
+				MinecraftServer server = context.getServerHandler().player.getServer(); //TODO: decide if this is a better option than the above. This way
+				if(server == null) {
+					ArcaneArchives.logger.error("Server was null when processing sync packet");
+					return;
+				}
+				ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(message.playerId, server.getWorld(0));
+				if(network == null) {
+					ArcaneArchives.logger.error(() -> "Network was null when processing sync packet for " + message.playerId);
+					return;
+				}
 
 				NBTTagCompound output = null;
 
