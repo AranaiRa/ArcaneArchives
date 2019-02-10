@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.packets;
+package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import net.minecraftforge.fml.common.network.NetworkRegistry;

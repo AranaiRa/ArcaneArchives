@@ -1,8 +1,8 @@
 package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
-import com.aranaira.arcanearchives.packets.AAPacketHandler;
-import com.aranaira.arcanearchives.packets.PacketManifest;
+import com.aranaira.arcanearchives.network.AAPacketHandler;
+import com.aranaira.arcanearchives.network.PacketManifest;
 import com.aranaira.arcanearchives.tileentities.AATileEntity;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;

@@ -163,7 +163,7 @@ public class AATileEntity extends TileEntity
 	 * All derived functions should perform their own world checks for their own
 	 * tiles.
 	 *
-	 * @return *True* if the function sent a packet, indicating that no further packets
+	 * @return *True* if the function sent a packet, indicating that no further network
 	 * should be sent. *False* if the function did nothing (i.e., remote world) and
 	 * overrides should continue as normal.
 	 */

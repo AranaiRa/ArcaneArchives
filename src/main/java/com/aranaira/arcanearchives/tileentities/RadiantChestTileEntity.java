@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.tileentities;
 
-import com.aranaira.arcanearchives.packets.AAPacketHandler;
-import com.aranaira.arcanearchives.packets.PacketRadiantChest;
+import com.aranaira.arcanearchives.network.AAPacketHandler;
+import com.aranaira.arcanearchives.network.PacketRadiantChest;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;

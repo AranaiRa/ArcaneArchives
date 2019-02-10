@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.tileentities;
 
-import com.aranaira.arcanearchives.packets.AAPacketHandler;
-import com.aranaira.arcanearchives.packets.PacketGemCutters;
+import com.aranaira.arcanearchives.network.AAPacketHandler;
+import com.aranaira.arcanearchives.network.PacketGemCutters;
 import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipe;
 import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipeList;
 import mcp.MethodsReturnNonnullByDefault;
