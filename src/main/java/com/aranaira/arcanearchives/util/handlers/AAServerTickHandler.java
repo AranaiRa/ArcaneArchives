@@ -62,7 +62,7 @@ public class AAServerTickHandler
 
 		for (ImmanenceTileEntity ite : outgoingITEs)
 		{
-			ite.breakBlock(null, false);
+			ite.breakBlock();
 		}
 
 		outgoingITEs.clear();
