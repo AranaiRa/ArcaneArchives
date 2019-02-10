@@ -13,7 +13,7 @@ public class ContainerMatrixStorage extends Container
 
 	public ContainerMatrixStorage(MatrixStorageTileEntity MSTE, IInventory playerInventory)
 	{
-		//ArcaneArchivesNetwork aanetwork = NetworkHelper.getArcaneArchivesNetwork(playerIn.getUniqueID());
+		//AAServerNetwork aanetwork = NetworkHelper.getServerNetwork(playerIn.getUniqueID());
 		mTileEntity = MSTE;
 
 		// Againn, nonnull by default

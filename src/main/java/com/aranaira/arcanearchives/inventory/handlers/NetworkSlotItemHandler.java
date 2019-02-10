@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.inventory.handlers;
 
-import com.aranaira.arcanearchives.data.ArcaneArchivesClientNetwork;
-import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
+import com.aranaira.arcanearchives.data.AAClientNetwork;
+import com.aranaira.arcanearchives.data.AAServerNetwork;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
@@ -14,17 +14,17 @@ public class NetworkSlotItemHandler extends SlotItemHandler
 {
 	private EntityPlayer player;
 	@Nullable
-	private ArcaneArchivesNetwork network = null;
-	private ArcaneArchivesClientNetwork cNetwork = null;
+	private AAServerNetwork network = null;
+	private AAClientNetwork cNetwork = null;
 
-	public NetworkSlotItemHandler(IItemHandler itemHandler, ArcaneArchivesNetwork network, int index, int xPosition, int yPosition, EntityPlayer player)
+	public NetworkSlotItemHandler(IItemHandler itemHandler, AAServerNetwork network, int index, int xPosition, int yPosition, EntityPlayer player)
 	{
 		super(itemHandler, index, xPosition, yPosition);
 		this.player = player;
 		this.network = network;
 	}
 
-	public NetworkSlotItemHandler(IItemHandler itemHandler, ArcaneArchivesClientNetwork network, int index, int xPosition, int yPosition, EntityPlayer player)
+	public NetworkSlotItemHandler(IItemHandler itemHandler, AAClientNetwork network, int index, int xPosition, int yPosition, EntityPlayer player)
 	{
 		super(itemHandler, index, xPosition, yPosition);
 		this.player = player;

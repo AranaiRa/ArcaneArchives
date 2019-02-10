@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.aranaira.arcanearchives.data.ArcaneArchivesNetwork.ManifestItemEntry;
+import static com.aranaira.arcanearchives.data.AAServerNetwork.ManifestItemEntry;
 
 public class ItemStackConsolidator
 {

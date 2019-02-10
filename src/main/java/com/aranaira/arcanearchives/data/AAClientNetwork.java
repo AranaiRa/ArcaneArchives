@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-public class ArcaneArchivesClientNetwork
+public class AAClientNetwork
 {
 	/* Internal values that are overwritten */
 	public ManifestList manifestItems = new ManifestList(new ArrayList<>());
@@ -37,7 +37,7 @@ public class ArcaneArchivesClientNetwork
 	private ManifestItemHandler mManifestHandler = null;
 	//private TileList<ImmanenceTileEntity> mActualTiles = new TileList<>();
 
-	ArcaneArchivesClientNetwork(UUID id)
+	AAClientNetwork(UUID id)
 	{
 		this.mOwnerId = id;
 		this.mManifestHandler = new ManifestItemHandler(manifestItems);

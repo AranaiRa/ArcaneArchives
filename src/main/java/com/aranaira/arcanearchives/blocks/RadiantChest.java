@@ -3,7 +3,7 @@ package com.aranaira.arcanearchives.blocks;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.common.AAGuiHandler;
-import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
+import com.aranaira.arcanearchives.data.AAServerNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.DropHelper;
@@ -86,7 +86,7 @@ public class RadiantChest extends BlockTemplate
 			TileEntity te = worldIn.getTileEntity(pos);
 			if(te instanceof RadiantChestTileEntity)
 			{
-				ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(((RadiantChestTileEntity) te).NetworkID, worldIn);
+				AAServerNetwork network = NetworkHelper.getServerNetwork(((RadiantChestTileEntity) te).NetworkID, worldIn);
 				if(network != null) network.triggerUpdate();
 
 				// This is never an IInventory

@@ -13,7 +13,7 @@ public class ContainerMatrixRepository extends Container
 
 	public ContainerMatrixRepository(MatrixRepositoryTileEntity MRTE, IInventory playerInventory)
 	{
-		//ArcaneArchivesNetwork aanetwork = NetworkHelper.getArcaneArchivesNetwork(playerIn.getUniqueID());
+		//AAServerNetwork aanetwork = NetworkHelper.getServerNetwork(playerIn.getUniqueID());
 		mTileEntity = MRTE;
 
 		// these are always nonnull at this point according to intelliJ

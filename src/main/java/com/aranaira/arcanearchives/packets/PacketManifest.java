@@ -1,8 +1,8 @@
 package com.aranaira.arcanearchives.packets;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.data.ArcaneArchivesClientNetwork;
-import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
+import com.aranaira.arcanearchives.data.AAClientNetwork;
+import com.aranaira.arcanearchives.data.AAServerNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -13,7 +13,6 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.minecraftforge.fml.relauncher.Side;
 
 import java.util.UUID;
 
@@ -100,7 +99,7 @@ public class PacketManifest
 					ArcaneArchives.logger.error("Server was null when processing sync packet");
 					return;
 				}
-				ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(message.playerId, server.getWorld(0));
+				AAServerNetwork network = NetworkHelper.getServerNetwork(message.playerId, server.getWorld(0));
 				if(network == null) {
 					ArcaneArchives.logger.error(() -> "Network was null when processing sync packet for " + message.playerId);
 					return;
@@ -174,7 +173,7 @@ public class PacketManifest
 			// This arrives on the client side!
 			private void processMessage(PacketSynchroniseResponse message, MessageContext context)
 			{
-				ArcaneArchivesClientNetwork network = NetworkHelper.getArcaneArchivesClientNetwork(message.playerId);
+				AAClientNetwork network = NetworkHelper.getClientNetwork(message.playerId);
 
 				switch(message.type)
 				{

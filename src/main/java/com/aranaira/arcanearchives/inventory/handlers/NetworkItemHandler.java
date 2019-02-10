@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.inventory.handlers;
 
-import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
+import com.aranaira.arcanearchives.data.AAServerNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.item.ItemStack;
@@ -20,13 +20,13 @@ public class NetworkItemHandler implements IItemHandlerModifiable
 	private UUID playerUUID; //TODO: unused variable
 	private String searchText = "";
 	@Nullable
-	private ArcaneArchivesNetwork network;
+	private AAServerNetwork network;
 
 	public NetworkItemHandler(UUID uuid, World world)
 	{
 		playerUUID = uuid;
 		// TODO: This is server-side only
-		network = NetworkHelper.getArcaneArchivesNetwork(uuid, world);
+		network = NetworkHelper.getServerNetwork(uuid, world);
 	}
 
 	public String getSearchString()
@@ -89,12 +89,12 @@ public class NetworkItemHandler implements IItemHandlerModifiable
 		//if (stack.isEmpty())
 		//	return;
 
-		//ArcaneArchives.logger.info(NetworkHelper.getArcaneArchivesNetwork(playerUUID).GetTotalItems());
+		//ArcaneArchives.logger.info(NetworkHelper.getServerNetwork(playerUUID).GetTotalItems());
 
-		//NetworkHelper.getArcaneArchivesNetwork(playerUUID).InsertItem(stack, false);
+		//NetworkHelper.getServerNetwork(playerUUID).InsertItem(stack, false);
 
-		//NetworkHelper.getArcaneArchivesNetwork(playerUUID).InsertItem(stack, false);
+		//NetworkHelper.getServerNetwork(playerUUID).InsertItem(stack, false);
 		//ArcaneArchives.logger.info(slot);
-		//NetworkHelper.getArcaneArchivesNetwork(playerUUID).InsertItem(stack);
+		//NetworkHelper.getServerNetwork(playerUUID).InsertItem(stack);
 	}
 }

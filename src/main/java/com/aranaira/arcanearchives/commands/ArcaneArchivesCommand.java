@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.commands;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
+import com.aranaira.arcanearchives.data.AAServerNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.google.common.collect.Lists;
 import mcp.MethodsReturnNonnullByDefault;
@@ -54,7 +54,7 @@ public class ArcaneArchivesCommand extends CommandBase
 				return Lists.newArrayList(server.getPlayerList().getOnlinePlayerNames());
 			} else if(args[1].compareTo("accept") == 0 && sender.getCommandSenderEntity() != null)
 			{	//TODO: Is this client or serverside? Client may not have network data for the below.
-				ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(sender.getCommandSenderEntity().getUniqueID(), server.getWorld(0));
+				AAServerNetwork network = NetworkHelper.getServerNetwork(sender.getCommandSenderEntity().getUniqueID(), server.getWorld(0));
 				Set<String> invites = new HashSet<>();
 				if(network != null)
 				{
@@ -80,7 +80,7 @@ public class ArcaneArchivesCommand extends CommandBase
 			ArcaneArchives.logger.error("Found null sender executing command!");
 			return;
 		}
-		ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(eSender.getUniqueID(), server.getWorld(0));
+		AAServerNetwork network = NetworkHelper.getServerNetwork(eSender.getUniqueID(), server.getWorld(0));
 		if(network == null) {
 			ArcaneArchives.logger.error("Found null network executing command!");
 			return;
@@ -95,7 +95,7 @@ public class ArcaneArchivesCommand extends CommandBase
 					EntityPlayerMP targetPlayer = server.getPlayerList().getPlayerByUsername(args[1]);
 					if(targetPlayer != null)
 					{
-						ArcaneArchivesNetwork tnetwork = NetworkHelper.getArcaneArchivesNetwork(targetPlayer.getUniqueID(), server.getWorld(0));
+						AAServerNetwork tnetwork = NetworkHelper.getServerNetwork(targetPlayer.getUniqueID(), server.getWorld(0));
 						if(tnetwork != null) tnetwork.Invite(sender.getName(), eSender.getUniqueID());
 					}
 				} else

@@ -1,8 +1,8 @@
 package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.data.ArcaneArchivesClientNetwork;
-import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
+import com.aranaira.arcanearchives.data.AAClientNetwork;
+import com.aranaira.arcanearchives.data.AAServerNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.util.ItemComparison;
 import com.aranaira.arcanearchives.util.handlers.AAServerTickHandler;
@@ -36,8 +36,8 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	public int MaxItems;
 	public Size size;
 	public List<BlockPos> mAccessors;
-	private ArcaneArchivesNetwork network;
-	private ArcaneArchivesClientNetwork cNetwork;
+	private AAServerNetwork network;
+	private AAClientNetwork cNetwork;
 	private int ticks = 0;
 
 	public ImmanenceTileEntity(String name)
@@ -227,21 +227,21 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 		mAccessors.add(pos);
 	}
 
-	public ArcaneArchivesClientNetwork getClientNetwork()
+	public AAClientNetwork getClientNetwork()
 	{
 		if(cNetwork == null)
 		{
-			cNetwork = NetworkHelper.getArcaneArchivesClientNetwork(NetworkID);
+			cNetwork = NetworkHelper.getClientNetwork(NetworkID);
 		}
 
 		return cNetwork;
 	}
 
-	public ArcaneArchivesNetwork getNetwork() //TODO: ensure method not called prior to tile entity world being set.
+	public AAServerNetwork getNetwork() //TODO: ensure method not called prior to tile entity world being set.
 	{
 		if(network == null)
 		{
-			network = NetworkHelper.getArcaneArchivesNetwork(NetworkID, this.world);
+			network = NetworkHelper.getServerNetwork(NetworkID, this.world);
 		}
 
 		return network;

@@ -3,7 +3,6 @@
 
 package com.aranaira.arcanearchives.data;
 
-import com.aranaira.arcanearchives.util.handlers.AAServerTickHandler;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -21,7 +20,7 @@ public class AAWorldSavedData extends WorldSavedData
 {
 	public static final String ID = "Archane-Archives-Network";
 
-	private Map<UUID, ArcaneArchivesNetwork> arcaneArchivesNetworks = new HashMap<>();
+	private Map<UUID, AAServerNetwork> arcaneArchivesNetworks = new HashMap<>();
 
 	// It REALLY is used.
 	@SuppressWarnings("unused")
@@ -41,13 +40,13 @@ public class AAWorldSavedData extends WorldSavedData
 	}
 
 	@Nullable
-	public ArcaneArchivesNetwork getNetwork(@Nullable UUID playerID)
+	public AAServerNetwork getNetwork(@Nullable UUID playerID)
 	{
 		if (playerID == null || playerID == NetworkHelper.INVALID) return null;
 
 		if(!arcaneArchivesNetworks.containsKey(playerID))
 		{
-			arcaneArchivesNetworks.put(playerID, ArcaneArchivesNetwork.newNetwork(playerID).setParent(this));
+			arcaneArchivesNetworks.put(playerID, AAServerNetwork.newNetwork(playerID).setParent(this));
 		}
 		return arcaneArchivesNetworks.get(playerID);
 	}
@@ -60,7 +59,7 @@ public class AAWorldSavedData extends WorldSavedData
 		for(int i = 0; i < networkData.tagCount(); i++)
 		{
 			NBTTagCompound data = networkData.getCompoundTagAt(i);
-			ArcaneArchivesNetwork network = ArcaneArchivesNetwork.fromNBT(data);
+			AAServerNetwork network = AAServerNetwork.fromNBT(data);
 			network.setParent(this);
 			arcaneArchivesNetworks.put(network.getPlayerID(), network);
 		}
@@ -71,7 +70,7 @@ public class AAWorldSavedData extends WorldSavedData
 	{
 		NBTTagList networkData = new NBTTagList();
 
-		for(ArcaneArchivesNetwork network : arcaneArchivesNetworks.values())
+		for(AAServerNetwork network : arcaneArchivesNetworks.values())
 		{
 			networkData.appendTag(network.serializeNBT());
 		}

@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.inventory;
 
-import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
+import com.aranaira.arcanearchives.data.AAServerNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.inventory.handlers.NetworkItemHandler;
 import mcp.MethodsReturnNonnullByDefault;
@@ -142,7 +142,7 @@ public class NetworkContainer extends Container
 	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
 	{
 		World world = (player==null) ? this.player.getEntityWorld() : player.getEntityWorld(); //The constructor requires a non-null player, so it shouldn't be null here either.
-		ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(player.getUniqueID(), world);
+		AAServerNetwork network = NetworkHelper.getServerNetwork(player.getUniqueID(), world);
 		if(network == null) // TODO: Error message
 			return ItemStack.EMPTY;
 

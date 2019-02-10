@@ -1,11 +1,9 @@
 package com.aranaira.arcanearchives.util.handlers;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.data.ArcaneArchivesNetwork;
+import com.aranaira.arcanearchives.data.AAServerNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
-import net.minecraft.server.MinecraftServer;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -48,7 +46,7 @@ public class AAServerTickHandler
 					continue;
 				}
 
-				ArcaneArchivesNetwork network = NetworkHelper.getArcaneArchivesNetwork(networkId, ite.getWorld());
+				AAServerNetwork network = NetworkHelper.getServerNetwork(networkId, ite.getWorld());
 				if(network == null) continue;
 
 				if(!network.NetworkContainsTile(ite))

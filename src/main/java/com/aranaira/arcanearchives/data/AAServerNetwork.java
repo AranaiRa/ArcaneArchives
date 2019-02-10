@@ -27,7 +27,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 import java.util.*;
 
-public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
+public class AAServerNetwork implements INBTSerializable<NBTTagCompound>
 {
 	public boolean mShared = false;
 	public UUID mSharedPlayer = null;
@@ -41,20 +41,20 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 	private int mCurrentImmanence;
 	private boolean mNeedsToBeUpdated = true;
 
-	private ArcaneArchivesNetwork(UUID id)
+	private AAServerNetwork(UUID id)
 	{
 		mPlayerId = id;
 		mManifestHandler = new ManifestItemHandler(manifestItems);
 	}
 
-	public static ArcaneArchivesNetwork newNetwork(UUID playerID)
+	public static AAServerNetwork newNetwork(UUID playerID)
 	{
-		return new ArcaneArchivesNetwork(playerID);
+		return new AAServerNetwork(playerID);
 	}
 
-	public static ArcaneArchivesNetwork fromNBT(NBTTagCompound data)
+	public static AAServerNetwork fromNBT(NBTTagCompound data)
 	{
-		ArcaneArchivesNetwork network = new ArcaneArchivesNetwork(null);
+		AAServerNetwork network = new AAServerNetwork(null);
 		network.deserializeNBT(data);
 		return network;
 	}
@@ -323,7 +323,7 @@ public class ArcaneArchivesNetwork implements INBTSerializable<NBTTagCompound>
 		return mParent;
 	}
 
-	public ArcaneArchivesNetwork setParent(AAWorldSavedData parent)
+	public AAServerNetwork setParent(AAWorldSavedData parent)
 	{
 		mParent = parent;
 		MarkUnsaved();
