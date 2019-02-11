@@ -23,6 +23,10 @@ public class AccessorTileEntity extends AATileEntity
 {
 	private boolean breaking = false;
 	private BlockPos parent = BlockPos.ORIGIN;
+	public static class Tags {
+		public static final String POS="pos";
+		private Tags(){}
+	}
 
 	public AccessorTileEntity()
 	{
@@ -34,7 +38,7 @@ public class AccessorTileEntity extends AATileEntity
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound)
 	{
-		if(parent != BlockPos.ORIGIN) compound.setLong("pos", parent.toLong());
+		if(parent != BlockPos.ORIGIN) compound.setLong(Tags.POS, parent.toLong());
 		return super.writeToNBT(compound);
 	}
 
@@ -54,7 +58,7 @@ public class AccessorTileEntity extends AATileEntity
 	@Override
 	public void readFromNBT(NBTTagCompound compound)
 	{
-		if(compound.hasKey("pos")) parent = BlockPos.fromLong(compound.getLong("pos"));
+		if(compound.hasKey(Tags.POS)) parent = BlockPos.fromLong(compound.getLong(Tags.POS));
 		super.readFromNBT(compound);
 	}
 

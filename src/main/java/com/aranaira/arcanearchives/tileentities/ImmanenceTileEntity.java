@@ -40,6 +40,15 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	private AAClientNetwork cNetwork;
 	private int ticks = 0;
 
+
+	public static class Tags {
+		public static final String PLAYER_ID = "playerId";
+		public static final String DIM = "dim";
+		public static final String INV_SIZE = "invsize";
+		public static final String INVENTORY = "inventory";
+		private Tags() {}
+	}
+
 	public ImmanenceTileEntity(String name)
 	{
 		setName(name);
@@ -185,8 +194,8 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	@Nonnull
 	public NBTTagCompound writeToNBT(NBTTagCompound compound)
 	{
-		compound.setString("playerId", NetworkID.toString());
-		compound.setInteger("dim", Dimension);
+		compound.setString(Tags.PLAYER_ID, NetworkID.toString());
+		compound.setInteger(Tags.DIM, Dimension);
 		NBTTagList tags = new NBTTagList();
 		for(ItemStack item : Inventory)
 		{
@@ -194,8 +203,8 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 			item.writeToNBT(data);
 			tags.appendTag(data);
 		}
-		compound.setTag("inventory", tags);
-		compound.setInteger("invsize", MaxItems);
+		compound.setTag(Tags.INVENTORY, tags);
+		compound.setInteger(Tags.INV_SIZE, MaxItems);
 		return super.writeToNBT(compound);
 	}
 
@@ -203,10 +212,10 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	@Nonnull
 	public void readFromNBT(NBTTagCompound compound)
 	{
-		NetworkID = UUID.fromString(compound.getString("playerId"));
-		Dimension = compound.getInteger("dim");
-		MaxItems = compound.getInteger("invsize");
-		NBTTagList tags = compound.getTagList("inventory", 10);
+		NetworkID = UUID.fromString(compound.getString(Tags.PLAYER_ID));
+		Dimension = compound.getInteger(Tags.DIM);
+		MaxItems = compound.getInteger(Tags.INV_SIZE);
+		NBTTagList tags = compound.getTagList(Tags.INVENTORY, 10);
 		for(NBTBase tag : tags)
 		{
 			NBTTagCompound data = (NBTTagCompound) tag;
