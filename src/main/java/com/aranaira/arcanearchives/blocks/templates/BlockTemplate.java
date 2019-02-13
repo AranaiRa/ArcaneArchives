@@ -56,6 +56,7 @@ public class BlockTemplate extends Block implements IHasModel
 		setHarvestLevel("pickaxe", 0);
 	}
 
+	@Nullable
 	public static BlockTemplate getByType(int type)
 	{
 		return BlockLibrary.BLOCK_BIMAP.get(type);

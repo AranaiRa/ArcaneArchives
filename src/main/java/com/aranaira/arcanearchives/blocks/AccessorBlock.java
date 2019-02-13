@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
+import com.aranaira.arcanearchives.init.BlockLibrary;
 import com.aranaira.arcanearchives.tileentities.AccessorTileEntity;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.material.EnumPushReaction;
@@ -160,7 +161,12 @@ public class AccessorBlock extends BlockTemplate
 
 	public BlockTemplate getBlock(IBlockState state)
 	{
-		return BlockTemplate.getByType(state.getValue(TYPE));
+		BlockTemplate template = BlockTemplate.getByType(state.getValue(TYPE));
+		if (template == null) {
+			return BlockLibrary.RADIANT_RESONATOR;
+		}
+
+		return template;
 	}
 
 	/* -------------------------------- */
