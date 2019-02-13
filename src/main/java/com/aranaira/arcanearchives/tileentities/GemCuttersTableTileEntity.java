@@ -26,7 +26,16 @@ import java.util.UUID;
 @MethodsReturnNonnullByDefault
 public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 {
-	public final static int RECIPE_PAGE_LIMIT = 7;
+
+	public static class Tags {
+		//public static final String TAG_NAME = "inventory";
+		public static final String INVENTORY = "inventory";
+		public static final String OUTPUT = "output";
+		public static final String RECIPE = "recipe";
+		public static final String PAGE = "page";
+	}
+
+	public static final int RECIPE_PAGE_LIMIT = 7;
 
 	private final ItemStackHandler mInventory = new ItemStackHandler(18);
 	private final ItemStackHandler mOutput = new ItemStackHandler(1);
@@ -157,17 +166,17 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 	public void readFromNBT(NBTTagCompound compound)
 	{
 		super.readFromNBT(compound);
-		mOutput.deserializeNBT(compound.getCompoundTag("output"));
-		mInventory.deserializeNBT(compound.getCompoundTag("inventory"));
+		mOutput.deserializeNBT(compound.getCompoundTag(Tags.OUTPUT));
+		mInventory.deserializeNBT(compound.getCompoundTag(Tags.INVENTORY));
 
 		ItemStack recipe = ItemStack.EMPTY;
 
-		if(compound.hasKey("recipe"))
+		if(compound.hasKey(Tags.RECIPE))
 		{
-			recipe = new ItemStack(compound.getCompoundTag("recipe"));
+			recipe = new ItemStack(compound.getCompoundTag(Tags.RECIPE));
 		}
 
-		setPage(compound.getInteger("page"));
+		setPage(compound.getInteger(Tags.PAGE));
 		setRecipe(recipe);
 	}
 
@@ -175,13 +184,13 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 	public NBTTagCompound writeToNBT(NBTTagCompound compound)
 	{
 		super.writeToNBT(compound);
-		compound.setTag("output", mOutput.serializeNBT());
-		compound.setTag("inventory", mInventory.serializeNBT());
+		compound.setTag(Tags.OUTPUT, mOutput.serializeNBT());
+		compound.setTag(Tags.INVENTORY, mInventory.serializeNBT());
 		if(getRecipe() != null)
 		{
-			compound.setTag("recipe", getRecipe().getOutput().writeToNBT(new NBTTagCompound()));
+			compound.setTag(Tags.RECIPE, getRecipe().getOutput().writeToNBT(new NBTTagCompound()));
 		}
-		compound.setInteger("page", getPage());
+		compound.setInteger(Tags.PAGE, getPage());
 
 		return compound;
 	}
