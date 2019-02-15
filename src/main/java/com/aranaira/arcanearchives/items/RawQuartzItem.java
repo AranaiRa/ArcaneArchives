@@ -69,8 +69,6 @@ public class RawQuartzItem extends ItemTemplate
 
 			TileEntity te = world.getTileEntity(pos);
 
-			RadiantChestTileEntity newchest = new RadiantChestTileEntity();
-
 			ItemStack[] chestContents = new ItemStack[27];
 			ItemStack[] secondaryChestContents = new ItemStack[27];
 
@@ -120,7 +118,6 @@ public class RawQuartzItem extends ItemTemplate
 
 			IBlockState iblockstate = BlockRegistry.RADIANT_CHEST.getDefaultState();
 
-			world.setTileEntity(pos, newchest);
 			world.setBlockState(pos, iblockstate);
 
 			world.notifyBlockUpdate(pos, iblockstate, iblockstate, 3);
