@@ -23,7 +23,7 @@ public class GUIGemCuttersTable extends GuiContainer
 
 	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/gemcutterstable.png");
 
-	private static final int OVERLAY = 0x771e3340;
+	private static final int OVERLAY = 0xaa1e3340;
 
 	ContainerGemCuttersTable mCGCT;
 	boolean recipeStatus;
@@ -41,9 +41,19 @@ public class GUIGemCuttersTable extends GuiContainer
 	}
 
 	@Override
-	public void drawSlot(Slot slotIn)
+	public void drawSlot(Slot slot)
 	{
-		super.drawSlot(slotIn);
+		super.drawSlot(slot);
+
+		/* Code for dimming uncraftable recipes.
+
+		int slotIndex = slot.slotNumber;
+
+		if(slotIndex <= 43 && slotIndex >= 37)
+		{
+			GlStateManager.disableDepth();
+			drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, OVERLAY);
+		} */
 	}
 
 	@Override

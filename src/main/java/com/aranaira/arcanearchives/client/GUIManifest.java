@@ -40,7 +40,7 @@ public class GUIManifest extends GuiContainer
 	private int mEndTrackingButtonTopOffset = 200;
 	private int mEndTrackingButtonWidth = 54;
 	private int mEndTrackingButtonHeight = 14;
-	private int OTHER_DIMENSION = 0x10989898;
+	private int OTHER_DIMENSION = 0x77000000;
 
 	public GUIManifest(EntityPlayer player, ContainerManifest container)
 	{
@@ -172,7 +172,7 @@ public class GUIManifest extends GuiContainer
 		if(entry.getDimension() != player.dimension)
 		{
 			GlStateManager.disableDepth();
-			drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, 0x77000000);
+			drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, OTHER_DIMENSION);
 		}
 	}
 
