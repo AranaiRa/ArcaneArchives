@@ -30,7 +30,7 @@ public class RadiantChest extends BlockTemplate
 
 	public RadiantChest()
 	{
-		super(NAME, Material.GLASS, true);
+		super(NAME, Material.GLASS);
 		setLightLevel(16 / 16f);
 		setHardness(1.7f);
 		setResistance(6000F);

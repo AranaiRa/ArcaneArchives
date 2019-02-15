@@ -13,26 +13,12 @@ import java.util.List;
 
 public class SpiritOrbItem extends ItemMultistateTemplate
 {
-	public static final String NAME = "item_spiritorb";
-
 	public static ItemStack EMPTY, CROWN_MOTE, CROWN_JUVE, CROWN_ELD, MATTER_MOTE, MATTER_JUVE, MATTER_ELD, POWER_MOTE, POWER_JUVE, POWER_ELD, SPACE_MOTE, SPACE_JUVE, SPACE_ELD, TIME_MOTE, TIME_JUVE, TIME_ELD;
 
 	public SpiritOrbItem()
 	{
-		super(NAME);
-	}
+		super("item_spiritorb");
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
-	{
-		tooltip.add(TextFormatting.RED + "" + TextFormatting.BOLD + I18n.format("arcanearchives.tooltip.notimplemented1"));
-		tooltip.add(TextFormatting.RED + "" + TextFormatting.ITALIC + I18n.format("arcanearchives.tooltip.notimplemented2"));
-	}
-
-	@Override
-	public boolean preInit()
-	{
 		EMPTY = addItem(0, "empty");
 
 		CROWN_MOTE = addItem(1, "crown_mote");
@@ -54,7 +40,13 @@ public class SpiritOrbItem extends ItemMultistateTemplate
 		TIME_MOTE = addItem(13, "time_mote");
 		TIME_JUVE = addItem(14, "time_juve");
 		TIME_ELD = addItem(15, "time_eld");
+	}
 
-		return true;
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
+	{
+		tooltip.add(TextFormatting.RED + "" + TextFormatting.BOLD + I18n.format("arcanearchives.tooltip.notimplemented1"));
+		tooltip.add(TextFormatting.RED + "" + TextFormatting.ITALIC + I18n.format("arcanearchives.tooltip.notimplemented2"));
 	}
 }

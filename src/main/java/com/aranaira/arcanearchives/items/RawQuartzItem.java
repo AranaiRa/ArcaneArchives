@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.items;
 
-import com.aranaira.arcanearchives.init.BlockLibrary;
+import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import mcp.MethodsReturnNonnullByDefault;
@@ -118,7 +118,7 @@ public class RawQuartzItem extends ItemTemplate
 				world.setBlockToAir(secondaryChestPos);
 			}
 
-			IBlockState iblockstate = BlockLibrary.RADIANT_CHEST.getDefaultState();
+			IBlockState iblockstate = BlockRegistry.RADIANT_CHEST.getDefaultState();
 
 			world.setTileEntity(pos, newchest);
 			world.setBlockState(pos, iblockstate);
@@ -145,7 +145,7 @@ public class RawQuartzItem extends ItemTemplate
 		} else if((world.getBlockState(pos).getBlock() instanceof BlockWorkbench))
 		{
 			world.setBlockToAir(pos);
-			IBlockState iblockstate = BlockLibrary.RADIANT_CRAFTING_TABLE.getDefaultState();
+			IBlockState iblockstate = BlockRegistry.RADIANT_CRAFTING_TABLE.getDefaultState();
 			world.setBlockState(pos, iblockstate);
 			itemstack.shrink(1);
 		}

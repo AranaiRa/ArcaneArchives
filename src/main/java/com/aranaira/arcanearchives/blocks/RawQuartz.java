@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
-import com.aranaira.arcanearchives.init.ItemLibrary;
+import com.aranaira.arcanearchives.init.ItemRegistry;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
@@ -20,7 +20,7 @@ public class RawQuartz extends BlockTemplate
 
 	public RawQuartz()
 	{
-		super(name, Material.ROCK, true);
+		super(name, Material.ROCK);
 		setLightLevel(16 / 16f);
 		setHardness(1.4f);
 		//setDefaultState(this.blockState.getBaseState().withProperty(DIRECTION,  EnumFacing.NORTH));
@@ -58,6 +58,6 @@ public class RawQuartz extends BlockTemplate
 	@Override
 	public void getDrops(@Nonnull NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, @Nonnull IBlockState state, int fortune)
 	{
-		drops.add(new ItemStack(ItemLibrary.RAW_RADIANT_QUARTZ, 1));
+		drops.add(new ItemStack(ItemRegistry.RAW_RADIANT_QUARTZ, 1));
 	}
 }

@@ -45,6 +45,14 @@ public class GemCuttersTableRecipeList
 		return RecipeList.size();
 	}
 
+	public static void addAll (GemCuttersTableRecipe ... recipes)
+	{
+		for(GemCuttersTableRecipe recipe : recipes)
+		{
+			addRecipe(recipe);
+		}
+	}
+
 	public static void addRecipe(GemCuttersTableRecipe recipe)
 	{
 		//LORE TAG STUFF DOES NOT CURRENTLY WORK : REVISIT IT

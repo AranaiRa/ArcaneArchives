@@ -36,10 +36,7 @@ public class ClientProxy extends CommonProxy
 	@Override
 	public void registerItemRenderer(@Nonnull Item item, int meta, String id)
 	{
-		if(item.getRegistryName() != null) // TODO: error message when there's no registry name
-		{
-			ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(item.getRegistryName(), id));
-		}
+
 	}
 
 	@SubscribeEvent

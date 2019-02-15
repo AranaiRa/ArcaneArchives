@@ -1,16 +1,13 @@
 package com.aranaira.arcanearchives.blocks.templates;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.init.BlockLibrary;
-import com.aranaira.arcanearchives.init.ItemLibrary;
-import com.aranaira.arcanearchives.items.templates.ItemBlockTemplate;
+import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.tileentities.AATileEntity;
 import com.aranaira.arcanearchives.tileentities.AccessorTileEntity;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.util.IHasModel;
 import com.aranaira.arcanearchives.util.types.Size;
 import com.google.common.collect.Lists;
-import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -19,6 +16,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -34,52 +32,43 @@ import net.minecraftforge.common.util.FakePlayer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.UUID;
 
-@MethodsReturnNonnullByDefault
-@ParametersAreNonnullByDefault
 public class BlockTemplate extends Block implements IHasModel
 {
 	public Size size;
 	private int placeLimit = -1;
 	private Class<? extends AATileEntity> entityClass;
+	private ItemBlock itemBlock = null;
 
 	/**
-	 * Creates a new block and adds it to the BlockLibrary, and if createItemBlock is true,
-	 * a matching ItemBlock to the ItemLibrary
+	 * Creates a new block and adds it to the BlockRegistry, and if createItemBlock is true,
+	 * a matching ItemBlock to the ItemRegistry
 	 * @param name The name of the block, used for translation key and registry name
 	 * @param materialIn The material of the block
-	 * @param createItemBlock Whether to automatically create an ItemBlockTemplate and register it for this Block
 	 */
-	public BlockTemplate(String name, Material materialIn, boolean createItemBlock)
+	public BlockTemplate(String name, Material materialIn)
 	{
 		super(materialIn);
 		setTranslationKey(name);
 		setRegistryName(new ResourceLocation(ArcaneArchives.MODID, name));
 		setCreativeTab(ArcaneArchives.TAB);
-		BlockLibrary.BLOCKS.add(this);
-		if (createItemBlock) {
-			ItemLibrary.ITEMS.add(new ItemBlockTemplate(this));
-		}
 		setHarvestLevel("pickaxe", 0);
 	}
 
-	@Nullable
-	public static BlockTemplate getByType(int type)
+	public ItemBlock getItemBlock()
 	{
-		return BlockLibrary.BLOCK_BIMAP.get(type);
+		return itemBlock;
 	}
 
-	public static int getByBlock(BlockTemplate block)
+	public void setItemBlock(ItemBlock itemBlock)
 	{
-		return BlockLibrary.BLOCK_BIMAP.inverse().get(block);
-	}
+		this.itemBlock = itemBlock;
 
-	public int getAccessorId()
-	{
-		return BlockLibrary.BLOCK_BIMAP.inverse().get(this);
+		assert this.getRegistryName() != null;
+
+		this.itemBlock.setRegistryName(this.getRegistryName());
 	}
 
 	public ITextComponent getNameComponent()
@@ -241,7 +230,7 @@ public class BlockTemplate extends Block implements IHasModel
 			{
 				for(BlockPos point : calculateAccessors(world, pos))
 				{
-					world.setBlockState(point, BlockLibrary.ACCESSOR.fromBlock(this));
+					world.setBlockState(point, BlockRegistry.ACCESSOR.getDefaultState());
 					TileEntity ate = world.getTileEntity(point);
 					if(ate != null)
 					{

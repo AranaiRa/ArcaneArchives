@@ -20,7 +20,7 @@ public class MatrixReservoir extends BlockTemplate
 
 	public MatrixReservoir()
 	{
-		super(name, Material.GLASS, true);
+		super(name, Material.GLASS);
 		setLightLevel(16 / 16f);
 		setSize(1, 3, 1);
 	}

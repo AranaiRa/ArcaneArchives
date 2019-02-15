@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.data.NetworkHelper;
-import com.aranaira.arcanearchives.init.BlockLibrary;
+import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.util.handlers.ConfigHandler;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -46,7 +46,7 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 			{
 
 				TicksUntilCrystalGrowth = ConfigHandler.values.iRadiantResonatorTickTime;
-				world.setBlockState(pos.up(), BlockLibrary.RAW_QUARTZ.getDefaultState(), 3);
+				world.setBlockState(pos.up(), BlockRegistry.RAW_QUARTZ.getDefaultState(), 3);
 			}
 		}
 	}

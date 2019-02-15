@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.blocks.templates;
 
-import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
@@ -20,15 +19,15 @@ public class BlockDirectionalTemplate extends BlockTemplate
 	public static final PropertyDirection FACING = PropertyDirection.create("facing");
 
 	/**
-	 * Creates a new directional block and adds it to the BlockLibrary, and if createItemBlock is true,
-	 * a matching ItemBlock to the ItemLibrary. Functionally just calls {@link BlockTemplate#BlockTemplate(String, Material, boolean)}
+	 * Creates a new directional block and adds it to the BlockRegistry, and if createItemBlock is true,
+	 * a matching ItemBlock to the ItemRegistry. Functionally just calls {@link BlockTemplate#BlockTemplate(String, Material)}
 	 * @param name The name of the block, used for translation key and registry name
 	 * @param materialIn The material of the block
 	 * @param createItemBlock Whether to automatically create an ItemBlockTemplate and register it for this Block
 	 */
 	protected BlockDirectionalTemplate(String name, Material materialIn, boolean createItemBlock)
 	{
-		super(name, materialIn, createItemBlock);
+		super(name, materialIn);
 	}
 
 	@Override

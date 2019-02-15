@@ -10,7 +10,7 @@ public class StorageRawQuartz extends BlockTemplate
 
 	public StorageRawQuartz()
 	{
-		super(name, Material.ROCK, true);
+		super(name, Material.ROCK);
 		setLightLevel(16 / 16f);
 		setHardness(1.7f);
 		setHarvestLevel("pickaxe", 0);

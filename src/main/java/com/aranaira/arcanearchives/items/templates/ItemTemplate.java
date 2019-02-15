@@ -1,27 +1,27 @@
 package com.aranaira.arcanearchives.items.templates;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.init.ItemLibrary;
 import com.aranaira.arcanearchives.util.IHasModel;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.ModelLoader;
 
 public class ItemTemplate extends Item implements IHasModel
 {
+	private final String name;
 
 	public ItemTemplate(String name)
 	{
+		this.name = name;
 		setTranslationKey(name);
-		setRegistryName(name);
+		setRegistryName(new ResourceLocation(ArcaneArchives.MODID, name));
 		setCreativeTab(ArcaneArchives.TAB);
-
-		ItemLibrary.ITEMS.add(this);
 	}
 
 	@Override
 	public void registerModels()
 	{
-		ArcaneArchives.proxy.registerItemRenderer(this, 0, "inventory");
+		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
 	}
-
-
 }

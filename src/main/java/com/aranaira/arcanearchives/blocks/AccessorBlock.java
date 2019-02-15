@@ -1,17 +1,11 @@
 package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
-import com.aranaira.arcanearchives.init.BlockLibrary;
 import com.aranaira.arcanearchives.tileentities.AccessorTileEntity;
-import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
-import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockFaceShape;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -19,7 +13,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
@@ -31,28 +24,21 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.property.ExtendedBlockState;
-import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.Random;
 
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
 @SuppressWarnings("deprecation")
 // TODO: Break textures
 // TODO: WAILA, TUMAT, TOP, etc support
 public class AccessorBlock extends BlockTemplate
 {
-	public static final PropertyInteger TYPE = PropertyInteger.create("type", 0, 15);
-
 	public AccessorBlock()
 	{
-		super("accessorblock", Material.ROCK, false);
+		super("accessorblock", Material.ROCK);
 		setTranslationKey("accessorblock");
 	}
 
@@ -60,6 +46,7 @@ public class AccessorBlock extends BlockTemplate
 	public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
 		TileEntity entity = world.getTileEntity(pos);
 		if (entity instanceof AccessorTileEntity) {
+
 			Block returnBlock = ((AccessorTileEntity)entity).getParentBlock();
 			if (returnBlock != null) {
 				return new ItemStack(Item.getItemFromBlock(returnBlock), 1, this.damageDropped(state));
@@ -73,11 +60,6 @@ public class AccessorBlock extends BlockTemplate
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
 	{
 		tooltip.add(TextFormatting.RED + "" + TextFormatting.ITALIC + I18n.format("arcanearchives.tooltip.shouldnothave"));
-	}
-
-	public IBlockState fromBlock(BlockTemplate block)
-	{
-		return getDefaultState().withProperty(TYPE, block.getAccessorId());
 	}
 
 	@Override
@@ -97,24 +79,6 @@ public class AccessorBlock extends BlockTemplate
 		}
 
 		super.breakBlock(world, pos, state);
-	}
-
-	@Override
-	public int getMetaFromState(IBlockState state)
-	{
-		return state.getValue(TYPE);
-	}
-
-	@Override
-	public IBlockState getStateFromMeta(int meta)
-	{
-		return getDefaultState().withProperty(TYPE, meta);
-	}
-
-	@Override
-	protected BlockStateContainer createBlockState()
-	{
-		return new ExtendedBlockState(this, new IProperty[]{TYPE}, new IUnlistedProperty[]{});
 	}
 
 	@Override
@@ -174,16 +138,6 @@ public class AccessorBlock extends BlockTemplate
 		return super.onBlockActivated(world, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
 	}
 
-	public BlockTemplate getBlock(IBlockState state)
-	{
-		BlockTemplate template = BlockTemplate.getByType(state.getValue(TYPE));
-		if (template == null) {
-			return BlockLibrary.RADIANT_RESONATOR;
-		}
-
-		return template;
-	}
-
 	/* -------------------------------- */
 	/* Overriden calls via block state	*/
 	@Override
@@ -210,139 +164,120 @@ public class AccessorBlock extends BlockTemplate
 		return true;
 	}
 
-	// This one may need to be customised
+	private Parent getBlock (IBlockAccess world, BlockPos pos) {
+		TileEntity te = world.getTileEntity(pos);
+		if (!(te instanceof AccessorTileEntity)) return null;
+		BlockPos parent = ((AccessorTileEntity) te).getParent();
+		Block block = world.getBlockState(parent).getBlock();
+		return new Parent(block, parent);
+	}
+
+	private class Parent {
+		private Block parentBlock;
+		private BlockPos parentPos;
+
+		Parent (Block block, BlockPos pos) {
+			this.parentBlock = block;
+			this.parentPos = pos;
+		}
+
+		public Block block()
+		{
+			return parentBlock;
+		}
+
+		public BlockPos pos()
+		{
+			return parentPos;
+		}
+	}
+
 	@Override
 	public float getExplosionResistance(World world, BlockPos pos, @Nullable Entity exploder, Explosion explosion)
 	{
-		return getBlock(world.getBlockState(pos)).getExplosionResistance(exploder);
-	}
-
-	/* ---------------------------- */
-	/* Passed through to block type */
-	@Override
-	public int getLightValue(IBlockState state)
-	{
-		return getBlock(state).getLightValue(state);
+		Parent parent = getBlock(world, pos);
+		if (parent == null) return super.getExplosionResistance(world, pos, exploder, explosion);
+		return parent.block().getExplosionResistance(world, parent.pos(), exploder, explosion);
 	}
 
 	@Override
-	public boolean getUseNeighborBrightness(IBlockState state)
+	public MapColor getMapColor(IBlockState state, IBlockAccess world, BlockPos pos)
 	{
-		return getBlock(state).getUseNeighborBrightness(state);
+		Parent parent = getBlock(world, pos);
+		if (parent == null) return super.getMapColor(state, world, pos);
+		return parent.block().getMapColor(state, world, parent.pos());
 	}
 
 	@Override
-	public Material getMaterial(IBlockState state)
+	public float getBlockHardness(IBlockState blockState, World world, BlockPos pos)
 	{
-		return getBlock(state).getMaterial(state);
-	}
-
-	@Override
-	public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos)
-	{
-		return getBlock(state).getMapColor(state, worldIn, pos);
-	}
-
-	@Override
-	public boolean isBlockNormalCube(IBlockState state)
-	{
-		return getBlock(state).isBlockNormalCube(state);
-	}
-
-	@Override
-	public boolean isNormalCube(IBlockState state)
-	{
-		return getBlock(state).isNormalCube(state);
-	}
-
-	@Override
-	public boolean isFullCube(IBlockState state)
-	{
-		return getBlock(state).isFullCube(state);
-	}
-
-	@Override
-	public boolean hasCustomBreakingProgress(IBlockState state)
-	{
-		return getBlock(state).hasCustomBreakingProgress(state);
-	}
-
-	@Override
-	public float getBlockHardness(IBlockState blockState, World worldIn, BlockPos pos)
-	{
-		return getBlock(blockState).getBlockHardness(blockState, worldIn, pos);
+		Parent parent = getBlock(world, pos);
+		if (parent == null) return super.getBlockHardness(blockState, world, pos);
+		return parent.block().getBlockHardness(blockState, world, parent.pos());
 	}
 
 	@Override
 	public int getPackedLightmapCoords(IBlockState state, IBlockAccess source, BlockPos pos)
 	{
-		return getBlock(state).getPackedLightmapCoords(state, source, pos);
+		Parent parent = getBlock(source, pos);
+		if (parent == null) return super.getPackedLightmapCoords(state, source, pos);
+		return parent.block().getPackedLightmapCoords(state, source, parent.pos());
 	}
 
 	@Override
 	public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
 	{
-		return getBlock(blockState).shouldSideBeRendered(blockState, blockAccess, pos, side);
+		Parent parent = getBlock(blockAccess, pos);
+		if (parent == null) return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
+		return parent.block().shouldSideBeRendered(blockState, blockAccess, parent.pos(), side);
 	}
 
 	@Override
-	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face)
+	public BlockFaceShape getBlockFaceShape(IBlockAccess world, IBlockState state, BlockPos pos, EnumFacing face)
 	{
-		return getBlock(state).getBlockFaceShape(worldIn, state, pos, face);
+		Parent parent = getBlock(world, pos);
+		if (parent == null) return super.getBlockFaceShape(world, state, pos, face);
+		return parent.block().getBlockFaceShape(world, state, parent.pos(), face);
 	}
 
 	@Override
-	public float getPlayerRelativeBlockHardness(IBlockState state, EntityPlayer player, World worldIn, BlockPos pos)
+	public float getPlayerRelativeBlockHardness(IBlockState state, EntityPlayer player, World world, BlockPos pos)
 	{
-		return getBlock(state).getPlayerRelativeBlockHardness(state, player, worldIn, pos);
+		Parent parent = getBlock(world, pos);
+		if (parent == null) return super.getPlayerRelativeBlockHardness(state, player, world, pos);
+		return parent.block().getPlayerRelativeBlockHardness(state, player, world, parent.pos());
 	}
 
 	@Override
 	public int getWeakPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
 	{
-		return getBlock(blockState).getWeakPower(blockState, blockAccess, pos, side);
-	}
-
-	@Override
-	public boolean canProvidePower(IBlockState state)
-	{
-		return getBlock(state).canProvidePower(state);
+		Parent parent = getBlock(blockAccess, pos);
+		if (parent == null) return super.getWeakPower(blockState, blockAccess, pos, side);
+		return parent.block().getWeakPower(blockState, blockAccess, parent.pos(), side);
 	}
 
 	@Override
 	public int getStrongPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
 	{
-		return getBlock(blockState).getStrongPower(blockState, blockAccess, pos, side);
+		Parent parent = getBlock(blockAccess, pos);
+		if (parent == null) return super.getStrongPower(blockState, blockAccess, pos, side);
+		return parent.block().getStrongPower(blockState, blockAccess, parent.pos(), side);
 	}
 
 	@Override
-	public boolean eventReceived(IBlockState state, World worldIn, BlockPos pos, int id, int param)
+	public boolean eventReceived(IBlockState state, World world, BlockPos pos, int id, int param)
 	{
-		return getBlock(state).eventReceived(state, worldIn, pos, id, param);
+		Parent parent = getBlock(world, pos);
+		if (parent == null) return super.eventReceived(state, world, pos, id, param);
+		return parent.block().eventReceived(state, world, parent.pos(), id, param);
 	}
 
 	@Override
-	public EnumPushReaction getPushReaction(IBlockState state)
+	public int getComparatorInputOverride(IBlockState blockState, World world, BlockPos pos)
 	{
-		return getBlock(state).getPushReaction(state);
-	}
-
-	@Override
-	public float getAmbientOcclusionLightValue(IBlockState state)
-	{
-		return getBlock(state).getAmbientOcclusionLightValue(state);
-	}
-
-	@Override
-	public boolean hasComparatorInputOverride(IBlockState state)
-	{
-		return getBlock(state).hasComparatorInputOverride(state);
-	}
-
-	@Override
-	public int getComparatorInputOverride(IBlockState blockState, World worldIn, BlockPos pos)
-	{
-		return getBlock(blockState).getComparatorInputOverride(blockState, worldIn, pos);
+		Parent parent = getBlock(world, pos);
+		if (parent == null) return super.getComparatorInputOverride(blockState, world, pos);
+		return parent.block().getComparatorInputOverride(blockState, world, parent.pos());
 	}
 
 	@Override

@@ -27,7 +27,7 @@ public class MatrixRepository extends BlockTemplate
 
 	public MatrixRepository()
 	{
-		super(name, Material.GLASS, true);
+		super(name, Material.GLASS);
 		setLightLevel(16 / 16f);
 		setSize(1, 3, 1);
 	}
