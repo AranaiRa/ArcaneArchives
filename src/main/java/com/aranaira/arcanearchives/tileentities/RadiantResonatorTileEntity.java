@@ -3,7 +3,6 @@ package com.aranaira.arcanearchives.tileentities;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.init.BlockLibrary;
 import com.aranaira.arcanearchives.util.handlers.ConfigHandler;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
@@ -19,7 +18,7 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 	public RadiantResonatorTileEntity()
 	{
 		super("radiant_resonator_tile_entity");
-		ImmanenceDrain = ConfigHandler.values.iRadiantResonatorDrain;
+		immanenceDrain = ConfigHandler.values.iRadiantResonatorDrain;
 		BonusTicks = ConfigHandler.values.iRadiantResonatorBonusTicks;
 	}
 
@@ -29,10 +28,10 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 		super.update();
 
 		// Only tick on the client side
-		if(world.isRemote || NetworkID == null || NetworkID.equals(NetworkHelper.INVALID)) return;
+		if(world.isRemote || networkID == null || networkID.equals(NetworkHelper.INVALID)) return;
 
 		// This will have to be updated to hive networks TODO
-		EntityPlayer player = world.getPlayerEntityByUUID(NetworkID);
+		EntityPlayer player = world.getPlayerEntityByUUID(networkID);
 
 		// Don't tick if the player isn't online
 		if(player == null) return;
@@ -42,7 +41,7 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 			if(TicksUntilCrystalGrowth > 0)
 			{
 				TicksUntilCrystalGrowth--;
-				if(IsDrainPaid) TicksUntilCrystalGrowth -= BonusTicks;
+				if(isDrainPaid) TicksUntilCrystalGrowth -= BonusTicks;
 			} else
 			{
 

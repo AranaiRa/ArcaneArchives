@@ -39,7 +39,7 @@ public class AAServerTickHandler
 				outgoingITE(ite);
 			} else
 			{
-				UUID networkId = ite.NetworkID;
+				UUID networkId = ite.networkID;
 				if(networkId == null || networkId.equals(NetworkHelper.INVALID))
 				{
 					ite.tick();

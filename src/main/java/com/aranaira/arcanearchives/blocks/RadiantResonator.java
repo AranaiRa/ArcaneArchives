@@ -23,7 +23,7 @@ public class RadiantResonator extends BlockTemplate
 
 	public RadiantResonator()
 	{
-		super(name, Material.IRON);
+		super(name, Material.IRON, true);
 		setPlaceLimit(ConfigHandler.values.iRadiantResonatorLimit);
 		setHardness(1.1f);
 		setHarvestLevel("axe", 0);

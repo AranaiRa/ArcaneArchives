@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.init.BlockLibrary;
 import com.aranaira.arcanearchives.tileentities.AccessorTileEntity;
 import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -18,12 +19,14 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
@@ -49,8 +52,20 @@ public class AccessorBlock extends BlockTemplate
 
 	public AccessorBlock()
 	{
-		super("accessorblock", Material.ROCK);
+		super("accessorblock", Material.ROCK, false);
 		setTranslationKey("accessorblock");
+	}
+
+	@Override
+	public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+		TileEntity entity = world.getTileEntity(pos);
+		if (entity instanceof AccessorTileEntity) {
+			Block returnBlock = ((AccessorTileEntity)entity).getParentBlock();
+			if (returnBlock != null) {
+				return new ItemStack(Item.getItemFromBlock(returnBlock), 1, this.damageDropped(state));
+			}
+		}
+		return super.getPickBlock(state, target, world, pos, player);
 	}
 
 	@Override

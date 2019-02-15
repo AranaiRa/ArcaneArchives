@@ -30,7 +30,7 @@ public class RadiantChest extends BlockTemplate
 
 	public RadiantChest()
 	{
-		super(NAME, Material.GLASS);
+		super(NAME, Material.GLASS, true);
 		setLightLevel(16 / 16f);
 		setHardness(1.7f);
 		setResistance(6000F);
@@ -86,7 +86,7 @@ public class RadiantChest extends BlockTemplate
 			TileEntity te = worldIn.getTileEntity(pos);
 			if(te instanceof RadiantChestTileEntity)
 			{
-				AAServerNetwork network = NetworkHelper.getServerNetwork(((RadiantChestTileEntity) te).NetworkID, worldIn);
+				AAServerNetwork network = NetworkHelper.getServerNetwork(((RadiantChestTileEntity) te).networkID, worldIn);
 				if(network != null) network.triggerUpdate();
 
 				// This is never an IInventory

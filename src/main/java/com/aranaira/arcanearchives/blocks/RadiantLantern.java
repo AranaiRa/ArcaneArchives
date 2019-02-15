@@ -16,7 +16,7 @@ public class RadiantLantern extends BlockTemplate
 
 	public RadiantLantern()
 	{
-		super(NAME, Material.GLASS);
+		super(NAME, Material.GLASS, true);
 		setLightLevel(16 / 16f);
 		setHardness(0.3f);
 		setHarvestLevel("pickaxe", 0);

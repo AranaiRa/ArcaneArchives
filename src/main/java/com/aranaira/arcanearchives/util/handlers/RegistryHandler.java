@@ -9,6 +9,7 @@ import com.aranaira.arcanearchives.tileentities.AATileEntity;
 import com.aranaira.arcanearchives.util.IHasModel;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -41,14 +42,14 @@ public class RegistryHandler
 
 		for(Block block : BlockLibrary.BLOCKS)
 		{
-			if(block instanceof BlockTemplate) if(((BlockTemplate) block).hasOBJModel())
-			{
+			if(block instanceof BlockTemplate && ((BlockTemplate) block).hasOBJModel()) {
 				// ArcaneArchives.logger.info("&&&&&&&& Setting up " + block.getRegistryName() + " with OBJ model");
-			} else
-			{
+			} else {
 				// ArcaneArchives.logger.info("&&&&&&&& Setting up " + block.getRegistryName());
 				// todo: null everything
-				ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName(), "inventory"));
+				if (Item.getItemFromBlock(block) != Items.AIR) {
+					ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName(), "inventory"));
+				}
 			}
 		}
 	}

@@ -97,7 +97,7 @@ public class AAServerNetwork implements INBTSerializable<NBTTagCompound>
 
 		for(ImmanenceTileEntity ITE : GetBlocks())
 		{
-			TotalGeneration += ITE.ImmanenceGeneration;
+			TotalGeneration += ITE.immanenceGeneration;
 		}
 
 		// Avoid the priority as it creates a new list
@@ -106,14 +106,14 @@ public class AAServerNetwork implements INBTSerializable<NBTTagCompound>
 		// whenever a new tile is added, based on priority
 		for(ImmanenceTileEntity ITE : GetBlocks())
 		{
-			int tmpDrain = ITE.ImmanenceDrain;
+			int tmpDrain = ITE.immanenceDrain;
 			if(TotalGeneration > (TotalDrain + tmpDrain))
 			{
 				TotalDrain += tmpDrain;
-				ITE.IsDrainPaid = true;
+				ITE.isDrainPaid = true;
 			} else
 			{
-				ITE.IsDrainPaid = false;
+				ITE.isDrainPaid = false;
 			}
 		}
 		mCurrentImmanence = TotalGeneration - TotalDrain;
@@ -127,10 +127,10 @@ public class AAServerNetwork implements INBTSerializable<NBTTagCompound>
 
 		for(ImmanenceTileEntity ITE : GetBlocks())
 		{
-			if(ITE.IsInventory)
+			if(ITE.isInventory)
 			{
 				// Should use addAll? TODO
-				inventories.add(ITE.Inventory);
+				inventories.add(ITE.inventory);
 			}
 		}
 
@@ -145,7 +145,7 @@ public class AAServerNetwork implements INBTSerializable<NBTTagCompound>
 
 		for(ImmanenceTileEntity ITE : GetTileEntitiesByPriority())
 		{
-			if(ITE.IsInventory)
+			if(ITE.isInventory)
 			{
 				temp = ITE.InsertItem(temp, simulate);
 				if(temp.isEmpty()) return temp;
@@ -167,7 +167,7 @@ public class AAServerNetwork implements INBTSerializable<NBTTagCompound>
 		}
 		for(ImmanenceTileEntity ITE : GetTileEntitiesByPriority())
 		{
-			if(ITE.IsInventory)
+			if(ITE.isInventory)
 			{
 				ItemStack s;
 				if((s = ITE.RemoveItemCount(stack, count_needed, simulate)) != ItemStack.EMPTY)
@@ -186,7 +186,7 @@ public class AAServerNetwork implements INBTSerializable<NBTTagCompound>
 	{
 		return this.mNetworkTiles.sorted((o1, o2) ->
 		{
-			if(o1.NetworkPriority > o2.NetworkPriority) return 1;
+			if(o1.networkPriority > o2.networkPriority) return 1;
 			else return -1;
 		});
 	}
@@ -223,7 +223,7 @@ public class AAServerNetwork implements INBTSerializable<NBTTagCompound>
 	{
 		for(ImmanenceTileEntity ITE : GetTileEntitiesByPriority())
 		{
-			if(ITE.IsInventory)
+			if(ITE.isInventory)
 			{
 				ItemStack s;
 				if((s = ITE.RemoveItemCount(stack, count_needed, false)) != null)
@@ -342,7 +342,7 @@ public class AAServerNetwork implements INBTSerializable<NBTTagCompound>
 
 		for(ImmanenceTileEntity ITE : GetBlocks())
 		{
-			if(ITE.IsInventory)
+			if(ITE.isInventory)
 			{
 				tmp += ITE.GetTotalItems();
 			}
@@ -357,9 +357,9 @@ public class AAServerNetwork implements INBTSerializable<NBTTagCompound>
 
 		for(ImmanenceTileEntity ITE : GetBlocks())
 		{
-			if(ITE.IsInventory)
+			if(ITE.isInventory)
 			{
-				tmp += ITE.MaxItems;
+				tmp += ITE.maxItems;
 			}
 		}
 

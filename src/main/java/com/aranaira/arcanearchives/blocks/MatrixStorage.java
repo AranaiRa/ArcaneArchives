@@ -24,7 +24,7 @@ public class MatrixStorage extends BlockTemplate
 
 	public MatrixStorage()
 	{
-		super(name, Material.GLASS);
+		super(name, Material.GLASS, true);
 		setLightLevel(16 / 16f);
 		setSize(1, 3, 1);
 	}

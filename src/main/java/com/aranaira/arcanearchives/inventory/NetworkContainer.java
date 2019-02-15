@@ -76,7 +76,7 @@ public class NetworkContainer extends Container
 
 		//Creates the slots for the players inventory.
 		int i = 35;
-		//Inventory.
+		//inventory.
 		for(int y = 2; y > -1; y--)
 		{
 			for(int x = 8; x > -1; x--)

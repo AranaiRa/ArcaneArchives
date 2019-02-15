@@ -19,9 +19,16 @@ public class BlockDirectionalTemplate extends BlockTemplate
 {
 	public static final PropertyDirection FACING = PropertyDirection.create("facing");
 
-	protected BlockDirectionalTemplate(String name, Material materialIn)
+	/**
+	 * Creates a new directional block and adds it to the BlockLibrary, and if createItemBlock is true,
+	 * a matching ItemBlock to the ItemLibrary. Functionally just calls {@link BlockTemplate#BlockTemplate(String, Material, boolean)}
+	 * @param name The name of the block, used for translation key and registry name
+	 * @param materialIn The material of the block
+	 * @param createItemBlock Whether to automatically create an ItemBlockTemplate and register it for this Block
+	 */
+	protected BlockDirectionalTemplate(String name, Material materialIn, boolean createItemBlock)
 	{
-		super(name, materialIn);
+		super(name, materialIn, createItemBlock);
 	}
 
 	@Override

@@ -34,7 +34,7 @@ public class MatrixCrystalCore extends BlockDirectionalTemplate
 
 	public MatrixCrystalCore()
 	{
-		super(name, Material.ROCK);
+		super(name, Material.ROCK, true);
 		setLightLevel(16 / 16f);
 		setPlaceLimit(1);
 		setSize(3, 4, 3);
@@ -87,7 +87,7 @@ public class MatrixCrystalCore extends BlockDirectionalTemplate
 		TileEntity te = world.getTileEntity(pos);
 		if(te instanceof ImmanenceTileEntity)
 		{
-			if(!((ImmanenceTileEntity) te).NetworkID.equals(player.getUniqueID())) return false;
+			if(!((ImmanenceTileEntity) te).networkID.equals(player.getUniqueID())) return false;
 			player.openGui(ArcaneArchives.instance, AAGuiHandler.TOME_OF_REQUISITION, world, pos.getX(), pos.getY(), pos.getZ());
 		}
 		return true;

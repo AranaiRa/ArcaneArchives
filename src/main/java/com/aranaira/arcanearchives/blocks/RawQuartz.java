@@ -20,7 +20,7 @@ public class RawQuartz extends BlockTemplate
 
 	public RawQuartz()
 	{
-		super(name, Material.ROCK);
+		super(name, Material.ROCK, true);
 		setLightLevel(16 / 16f);
 		setHardness(1.4f);
 		//setDefaultState(this.blockState.getBaseState().withProperty(DIRECTION,  EnumFacing.NORTH));

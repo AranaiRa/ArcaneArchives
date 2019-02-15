@@ -20,7 +20,7 @@ public class DominionCrystal extends BlockTemplate
 
 	public DominionCrystal()
 	{
-		super(name, Material.GLASS);
+		super(name, Material.GLASS, true);
 		setLightLevel(16 / 16f);
 	}
 

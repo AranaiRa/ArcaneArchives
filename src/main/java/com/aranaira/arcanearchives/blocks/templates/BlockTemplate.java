@@ -17,6 +17,7 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -45,14 +46,23 @@ public class BlockTemplate extends Block implements IHasModel
 	private int placeLimit = -1;
 	private Class<? extends AATileEntity> entityClass;
 
-	public BlockTemplate(String name, Material materialIn)
+	/**
+	 * Creates a new block and adds it to the BlockLibrary, and if createItemBlock is true,
+	 * a matching ItemBlock to the ItemLibrary
+	 * @param name The name of the block, used for translation key and registry name
+	 * @param materialIn The material of the block
+	 * @param createItemBlock Whether to automatically create an ItemBlockTemplate and register it for this Block
+	 */
+	public BlockTemplate(String name, Material materialIn, boolean createItemBlock)
 	{
 		super(materialIn);
 		setTranslationKey(name);
 		setRegistryName(new ResourceLocation(ArcaneArchives.MODID, name));
 		setCreativeTab(ArcaneArchives.TAB);
 		BlockLibrary.BLOCKS.add(this);
-		ItemLibrary.ITEMS.add(new ItemBlockTemplate(this));
+		if (createItemBlock) {
+			ItemLibrary.ITEMS.add(new ItemBlockTemplate(this));
+		}
 		setHarvestLevel("pickaxe", 0);
 	}
 
@@ -137,9 +147,10 @@ public class BlockTemplate extends Block implements IHasModel
 	}
 
 	@Override
-	public void registerModels()
-	{
-		ArcaneArchives.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory");
+	public void registerModels() {
+		if (Item.getItemFromBlock(this) != Items.AIR) {
+			ArcaneArchives.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory");
+		}
 	}
 
 	public List<BlockPos> calculateAccessors(World world, BlockPos pos)
@@ -216,7 +227,7 @@ public class BlockTemplate extends Block implements IHasModel
 
 						UUID newId = placer.getUniqueID();
 						ite.SetNetworkID(newId);
-						ite.Dimension = placer.dimension;
+						ite.dimension = placer.dimension;
 					}
 
 					// Store its size

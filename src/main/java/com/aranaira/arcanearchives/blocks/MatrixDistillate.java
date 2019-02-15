@@ -19,7 +19,7 @@ public class MatrixDistillate extends BlockDirectionalTemplate
 
 	public MatrixDistillate()
 	{
-		super(name, Material.GLASS);
+		super(name, Material.GLASS, true);
 		setLightLevel(16 / 16f);
 		setSize(3, 3, 1);
 	}

@@ -9,7 +9,7 @@ import java.util.List;
 public class ItemLibrary
 {
 
-	public static final List<Item> ITEMS = new ArrayList<Item>();
+	public static final List<Item> ITEMS = new ArrayList<>();
 
 	public static final Item RAW_RADIANT_QUARTZ = new RawQuartzItem();
 	public static final Item CUT_RADIANT_QUARTZ = new CutQuartzItem();

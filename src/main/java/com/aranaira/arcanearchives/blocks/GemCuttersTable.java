@@ -33,7 +33,7 @@ public class GemCuttersTable extends BlockDirectionalTemplate
 
 	public GemCuttersTable()
 	{
-		super(name, Material.IRON);
+		super(name, Material.IRON, true);
 		setSize(2, 1, 1);
 	}
 

@@ -28,9 +28,9 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 	public RadiantChestTileEntity()
 	{
 		super("radiantchest");
-		this.ImmanenceDrain = 0;
-		this.ImmanenceGeneration = 0;
-		this.IsInventory = false;
+		this.immanenceDrain = 0;
+		this.immanenceGeneration = 0;
+		this.isInventory = false;
 	}
 
 	@Override

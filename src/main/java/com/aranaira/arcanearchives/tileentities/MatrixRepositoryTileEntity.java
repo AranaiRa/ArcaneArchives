@@ -20,9 +20,9 @@ public class MatrixRepositoryTileEntity extends ImmanenceTileEntity
 	public MatrixRepositoryTileEntity()
 	{
 		super("matrix_repository_tile_entity");
-		ImmanenceDrain = ConfigHandler.values.iRepositoryMatrixDrain;
-		IsInventory = true;
-		MaxItems = ConfigHandler.values.iRepositoryMatrixItemCap;
+		immanenceDrain = ConfigHandler.values.iRepositoryMatrixDrain;
+		isInventory = true;
+		maxItems = ConfigHandler.values.iRepositoryMatrixItemCap;
 	}
 
 	@Override
@@ -52,16 +52,16 @@ public class MatrixRepositoryTileEntity extends ImmanenceTileEntity
 		ItemStack temp = item.copy();
 
 		//Returns the itemstack if this tile entity cannot have items inserted.
-		if(item.isEmpty() || !IsDrainPaid || (GetTotalItems() >= MaxItems)) return temp;
+		if(item.isEmpty() || !isDrainPaid || (GetTotalItems() >= maxItems)) return temp;
 
 		//Sets the amount of free space in the network.
-		int maxCanAdd = MaxItems - GetTotalItems();
+		int maxCanAdd = maxItems - GetTotalItems();
 
 		//If the amount of free space is greater than the itemstack item count, then it brings it down to that amount.
 		if(maxCanAdd > temp.getCount()) maxCanAdd = temp.getCount();
 
 		//Tries to find the same item in the network, so that it will consolidate the itemstack.
-		for(ItemStack itemStack : Inventory)
+		for(ItemStack itemStack : inventory)
 		{
 			if(ItemComparison.AreItemsEqual(temp, itemStack))
 			{
@@ -77,7 +77,7 @@ public class MatrixRepositoryTileEntity extends ImmanenceTileEntity
 
 		//Sets the itemstack count for the proper amount to be added to the inventory then adds the itemstack to the inventory.
 		temp_add.setCount(maxCanAdd);
-		if(!simulate) Inventory.add(temp_add);
+		if(!simulate) inventory.add(temp_add);
 
 		return ItemStack.EMPTY;
 	}
