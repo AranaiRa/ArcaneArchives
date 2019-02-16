@@ -73,30 +73,16 @@ public class ContainerManifest extends Container
 
 		AATickHandler handler = AATickHandler.GetInstance();
 
-		/*if (handler.mBlockPositions.containsAll(visPositions)) {
-			handler.mBlockPositionsToRemove.addAll(visPositions);
-		} else {
-			List<Vec3d> discard = new ArrayList<>();
-			for (Vec3d e : visPositions) {
-				if (handler.mBlockPositions.contains(e)) {
-					discard.add(e);
-				}
-			}*/
 		handler.mBlockPositions.addAll(visPositions);
-		//handler.mBlockPositionsToRemove.addAll(discard);
-		//}
 
 		return ItemStack.EMPTY;
 	}
 
 	public void SetSearchString(String SearchText)
 	{
+		// server-side packet?
 		handler.setSearchText(SearchText);
 	}
 
-	@Override
-	public void detectAndSendChanges()
-	{
-		super.detectAndSendChanges();
-	}
+
 }

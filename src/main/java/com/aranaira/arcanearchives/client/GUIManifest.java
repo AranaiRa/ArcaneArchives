@@ -11,6 +11,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -140,6 +141,11 @@ public class GUIManifest extends GuiContainer
 		}
 	}
 
+	@Override
+	protected void handleMouseClick(Slot slotIn, int slotId, int mouseButton, ClickType type)
+	{
+		mContainer.slotClick(slotId, mouseButton, type, player);
+	}
 
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
