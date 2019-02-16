@@ -40,7 +40,7 @@ public class RadiantChest extends BlockTemplate
 	public static void RemoveChestLines(BlockPos pos)
 	{
 		Vec3d bpos = new Vec3d(pos.getX(), pos.getY(), pos.getZ());
-		AATickHandler.GetInstance().mBlockPositionsToRemove.add(bpos);
+		AATickHandler.removeLine(bpos);
 	}
 
 	@Override

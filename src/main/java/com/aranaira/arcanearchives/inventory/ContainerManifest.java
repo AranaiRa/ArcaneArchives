@@ -70,10 +70,7 @@ public class ContainerManifest extends Container
 		if(entry.getDimension() != player.dimension) return ItemStack.EMPTY;
 
 		List<Vec3d> visPositions = entry.getVecPositions();
-
-		AATickHandler handler = AATickHandler.GetInstance();
-
-		handler.mBlockPositions.addAll(visPositions);
+		visPositions.forEach(AATickHandler::addLine);
 
 		return ItemStack.EMPTY;
 	}

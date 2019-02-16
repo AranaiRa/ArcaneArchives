@@ -158,7 +158,7 @@ public class GUIManifest extends GuiContainer
 
 			if(mouseX > guiLeft + mEndTrackingButtonLeftOffset && mouseX < guiLeft + mEndTrackingButtonLeftOffset + mEndTrackingButtonWidth && mouseY > guiTop + mEndTrackingButtonTopOffset && mouseY < guiTop + mEndTrackingButtonTopOffset + mEndTrackingButtonHeight)
 			{
-				AATickHandler.GetInstance().clearChests();
+				AATickHandler.clearChests();
 			}
 
 			// TODO: Refresh button
