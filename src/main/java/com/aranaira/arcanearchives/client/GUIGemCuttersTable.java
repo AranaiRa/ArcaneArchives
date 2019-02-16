@@ -57,7 +57,7 @@ public class GUIGemCuttersTable extends GuiContainer
 			if(recipe == curRecipe)
 			{
 				wasEnabled = true;
-				GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+				GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 				GlStateManager.enableColorMaterial();
 				this.mc.getTextureManager().bindTexture(GUITextures);
 				this.drawTexturedModalRect(slot.xPos - 2, slot.yPos - 2, 206, 0, 20, 20);
