@@ -8,7 +8,9 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class AAServerTickHandler
@@ -35,7 +37,8 @@ public class AAServerTickHandler
 
 		for(ImmanenceTileEntity ite : incomingITEs)
 		{
-			if (ite.ticks() > 30) {
+			if(ite.ticks() > 30)
+			{
 				outgoingITE(ite);
 			} else
 			{
@@ -60,7 +63,7 @@ public class AAServerTickHandler
 
 		incomingITEs.removeAll(consumed);
 
-		for (ImmanenceTileEntity ite : outgoingITEs)
+		for(ImmanenceTileEntity ite : outgoingITEs)
 		{
 			ite.breakBlock();
 		}

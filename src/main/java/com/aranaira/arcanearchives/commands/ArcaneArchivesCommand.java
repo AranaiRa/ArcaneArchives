@@ -53,7 +53,7 @@ public class ArcaneArchivesCommand extends CommandBase
 			{
 				return Lists.newArrayList(server.getPlayerList().getOnlinePlayerNames());
 			} else if(args[1].compareTo("accept") == 0 && sender.getCommandSenderEntity() != null)
-			{	//TODO: Is this client or serverside? Client may not have network data for the below.
+			{    //TODO: Is this client or serverside? Client may not have network data for the below.
 				AAServerNetwork network = NetworkHelper.getServerNetwork(sender.getCommandSenderEntity().getUniqueID(), server.getWorld(0));
 				Set<String> invites = new HashSet<>();
 				if(network != null)
@@ -76,12 +76,14 @@ public class ArcaneArchivesCommand extends CommandBase
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
 	{
 		Entity eSender = sender.getCommandSenderEntity();
-		if(eSender == null) {
+		if(eSender == null)
+		{
 			ArcaneArchives.logger.error("Found null sender executing command!");
 			return;
 		}
 		AAServerNetwork network = NetworkHelper.getServerNetwork(eSender.getUniqueID(), server.getWorld(0));
-		if(network == null) {
+		if(network == null)
+		{
 			ArcaneArchives.logger.error("Found null network executing command!");
 			return;
 		}

@@ -7,17 +7,10 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IContainerListener;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -111,7 +104,8 @@ public class GUIGemCuttersTable extends GuiContainer
 		super.drawScreen(mouseX, mouseY, partialTicks);
 
 		int nextChanged = this.player.inventory.getTimesChanged();
-		if (nextChanged != this.timesChanged) {
+		if(nextChanged != this.timesChanged)
+		{
 			updateRecipeStatus();
 			this.timesChanged = nextChanged;
 		}

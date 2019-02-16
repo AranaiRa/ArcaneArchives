@@ -10,10 +10,9 @@ import java.util.UUID;
 
 public class NetworkHelper
 {
+	public static UUID INVALID = UUID.fromString("00000000-0000-0000-0000-000000000000");
 	// TODO: This needs to be cleared whenever the player enters a new world
 	private static Map<UUID, AAClientNetwork> CLIENT_MAP = new HashMap<>();
-
-	public static UUID INVALID = UUID.fromString("00000000-0000-0000-0000-000000000000");
 
 	public static void clearClientCache()
 	{
@@ -23,14 +22,16 @@ public class NetworkHelper
 	/**
 	 * Fetches an Arcane Archives server-side network fetched from the World object passed in.
 	 * Returns null if either argument is null or the requested network is invalid.
-	 * @param uuid The player/network UUID
+	 *
+	 * @param uuid  The player/network UUID
 	 * @param world The world object
 	 * @return An AAServerNetwork instance for the given id, or null if it was not found.
 	 */
 	@Nullable
 	public static AAServerNetwork getServerNetwork(UUID uuid, World world)
 	{
-		if (uuid == null || uuid.equals(INVALID)) {
+		if(uuid == null || uuid.equals(INVALID))
+		{
 			ArcaneArchives.logger.warn(() -> "Attempted to fetch an invalid archive: " + uuid);
 			ArcaneArchives.logger.warn("Trace:", new NullPointerException("UUID must be valid"));
 			// In an ideal situation, we won't need these checks, but it's useful for notifying about bugs with a
@@ -57,7 +58,7 @@ public class NetworkHelper
 
 	public static AAClientNetwork getClientNetwork(UUID uuid)
 	{
-		if (uuid == null || uuid.equals(INVALID)) return null;
+		if(uuid == null || uuid.equals(INVALID)) return null;
 
 		if(CLIENT_MAP.containsKey(uuid))
 		{

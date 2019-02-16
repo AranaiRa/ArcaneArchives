@@ -43,12 +43,15 @@ public class AccessorBlock extends BlockTemplate
 	}
 
 	@Override
-	public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+	public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player)
+	{
 		TileEntity entity = world.getTileEntity(pos);
-		if (entity instanceof AccessorTileEntity) {
+		if(entity instanceof AccessorTileEntity)
+		{
 
-			Block returnBlock = ((AccessorTileEntity)entity).getParentBlock();
-			if (returnBlock != null) {
+			Block returnBlock = ((AccessorTileEntity) entity).getParentBlock();
+			if(returnBlock != null)
+			{
 				return new ItemStack(Item.getItemFromBlock(returnBlock), 1, this.damageDropped(state));
 			}
 		}
@@ -164,39 +167,20 @@ public class AccessorBlock extends BlockTemplate
 		return true;
 	}
 
-	private Parent getBlock (IBlockAccess world, BlockPos pos) {
+	private Parent getBlock(IBlockAccess world, BlockPos pos)
+	{
 		TileEntity te = world.getTileEntity(pos);
-		if (!(te instanceof AccessorTileEntity)) return null;
+		if(!(te instanceof AccessorTileEntity)) return null;
 		BlockPos parent = ((AccessorTileEntity) te).getParent();
 		Block block = world.getBlockState(parent).getBlock();
 		return new Parent(block, parent);
-	}
-
-	private class Parent {
-		private Block parentBlock;
-		private BlockPos parentPos;
-
-		Parent (Block block, BlockPos pos) {
-			this.parentBlock = block;
-			this.parentPos = pos;
-		}
-
-		public Block block()
-		{
-			return parentBlock;
-		}
-
-		public BlockPos pos()
-		{
-			return parentPos;
-		}
 	}
 
 	@Override
 	public float getExplosionResistance(World world, BlockPos pos, @Nullable Entity exploder, Explosion explosion)
 	{
 		Parent parent = getBlock(world, pos);
-		if (parent == null) return super.getExplosionResistance(world, pos, exploder, explosion);
+		if(parent == null) return super.getExplosionResistance(world, pos, exploder, explosion);
 		return parent.block().getExplosionResistance(world, parent.pos(), exploder, explosion);
 	}
 
@@ -204,7 +188,7 @@ public class AccessorBlock extends BlockTemplate
 	public MapColor getMapColor(IBlockState state, IBlockAccess world, BlockPos pos)
 	{
 		Parent parent = getBlock(world, pos);
-		if (parent == null) return super.getMapColor(state, world, pos);
+		if(parent == null) return super.getMapColor(state, world, pos);
 		return parent.block().getMapColor(state, world, parent.pos());
 	}
 
@@ -212,7 +196,7 @@ public class AccessorBlock extends BlockTemplate
 	public float getBlockHardness(IBlockState blockState, World world, BlockPos pos)
 	{
 		Parent parent = getBlock(world, pos);
-		if (parent == null) return super.getBlockHardness(blockState, world, pos);
+		if(parent == null) return super.getBlockHardness(blockState, world, pos);
 		return parent.block().getBlockHardness(blockState, world, parent.pos());
 	}
 
@@ -220,7 +204,7 @@ public class AccessorBlock extends BlockTemplate
 	public int getPackedLightmapCoords(IBlockState state, IBlockAccess source, BlockPos pos)
 	{
 		Parent parent = getBlock(source, pos);
-		if (parent == null) return super.getPackedLightmapCoords(state, source, pos);
+		if(parent == null) return super.getPackedLightmapCoords(state, source, pos);
 		return parent.block().getPackedLightmapCoords(state, source, parent.pos());
 	}
 
@@ -228,7 +212,7 @@ public class AccessorBlock extends BlockTemplate
 	public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
 	{
 		Parent parent = getBlock(blockAccess, pos);
-		if (parent == null) return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
+		if(parent == null) return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
 		return parent.block().shouldSideBeRendered(blockState, blockAccess, parent.pos(), side);
 	}
 
@@ -236,7 +220,7 @@ public class AccessorBlock extends BlockTemplate
 	public BlockFaceShape getBlockFaceShape(IBlockAccess world, IBlockState state, BlockPos pos, EnumFacing face)
 	{
 		Parent parent = getBlock(world, pos);
-		if (parent == null) return super.getBlockFaceShape(world, state, pos, face);
+		if(parent == null) return super.getBlockFaceShape(world, state, pos, face);
 		return parent.block().getBlockFaceShape(world, state, parent.pos(), face);
 	}
 
@@ -244,7 +228,7 @@ public class AccessorBlock extends BlockTemplate
 	public float getPlayerRelativeBlockHardness(IBlockState state, EntityPlayer player, World world, BlockPos pos)
 	{
 		Parent parent = getBlock(world, pos);
-		if (parent == null) return super.getPlayerRelativeBlockHardness(state, player, world, pos);
+		if(parent == null) return super.getPlayerRelativeBlockHardness(state, player, world, pos);
 		return parent.block().getPlayerRelativeBlockHardness(state, player, world, parent.pos());
 	}
 
@@ -252,7 +236,7 @@ public class AccessorBlock extends BlockTemplate
 	public int getWeakPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
 	{
 		Parent parent = getBlock(blockAccess, pos);
-		if (parent == null) return super.getWeakPower(blockState, blockAccess, pos, side);
+		if(parent == null) return super.getWeakPower(blockState, blockAccess, pos, side);
 		return parent.block().getWeakPower(blockState, blockAccess, parent.pos(), side);
 	}
 
@@ -260,7 +244,7 @@ public class AccessorBlock extends BlockTemplate
 	public int getStrongPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
 	{
 		Parent parent = getBlock(blockAccess, pos);
-		if (parent == null) return super.getStrongPower(blockState, blockAccess, pos, side);
+		if(parent == null) return super.getStrongPower(blockState, blockAccess, pos, side);
 		return parent.block().getStrongPower(blockState, blockAccess, parent.pos(), side);
 	}
 
@@ -268,7 +252,7 @@ public class AccessorBlock extends BlockTemplate
 	public boolean eventReceived(IBlockState state, World world, BlockPos pos, int id, int param)
 	{
 		Parent parent = getBlock(world, pos);
-		if (parent == null) return super.eventReceived(state, world, pos, id, param);
+		if(parent == null) return super.eventReceived(state, world, pos, id, param);
 		return parent.block().eventReceived(state, world, parent.pos(), id, param);
 	}
 
@@ -276,7 +260,7 @@ public class AccessorBlock extends BlockTemplate
 	public int getComparatorInputOverride(IBlockState blockState, World world, BlockPos pos)
 	{
 		Parent parent = getBlock(world, pos);
-		if (parent == null) return super.getComparatorInputOverride(blockState, world, pos);
+		if(parent == null) return super.getComparatorInputOverride(blockState, world, pos);
 		return parent.block().getComparatorInputOverride(blockState, world, parent.pos());
 	}
 
@@ -290,6 +274,28 @@ public class AccessorBlock extends BlockTemplate
 	public TileEntity createTileEntity(World world, IBlockState state)
 	{
 		return new AccessorTileEntity();
+	}
+
+	private class Parent
+	{
+		private Block parentBlock;
+		private BlockPos parentPos;
+
+		Parent(Block block, BlockPos pos)
+		{
+			this.parentBlock = block;
+			this.parentPos = pos;
+		}
+
+		public Block block()
+		{
+			return parentBlock;
+		}
+
+		public BlockPos pos()
+		{
+			return parentPos;
+		}
 	}
 }
 

@@ -40,14 +40,6 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	private AAClientNetwork cNetwork;
 	private int ticks = 0;
 
-	public static class Tags {
-		public static final String PLAYER_ID = "playerId";
-		public static final String DIM = "dim";
-		public static final String INV_SIZE = "invsize";
-		public static final String INVENTORY = "inventory";
-		private Tags() {}
-	}
-
 	public ImmanenceTileEntity(String name)
 	{
 		setName(name);
@@ -210,7 +202,8 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	@Override
 	public void readFromNBT(NBTTagCompound compound)
 	{
-		if (compound.hasKey(Tags.PLAYER_ID)) {
+		if(compound.hasKey(Tags.PLAYER_ID))
+		{
 			networkID = UUID.fromString(compound.getString(Tags.PLAYER_ID));
 		}
 		dimension = compound.getInteger(Tags.DIM);
@@ -256,7 +249,6 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 		return network;
 	}
 
-
 	@Override
 	public void invalidate()
 	{
@@ -293,5 +285,17 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 			ArcaneArchives.logger.info("TileEntity loaded in with a null world. WTF?");
 		}
 		super.onLoad();
+	}
+
+	public static class Tags
+	{
+		public static final String PLAYER_ID = "playerId";
+		public static final String DIM = "dim";
+		public static final String INV_SIZE = "invsize";
+		public static final String INVENTORY = "inventory";
+
+		private Tags()
+		{
+		}
 	}
 }

@@ -11,8 +11,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -20,7 +18,6 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ContainerGemCuttersTable extends Container
@@ -176,7 +173,8 @@ public class ContainerGemCuttersTable extends Container
 	{
 		Map<GemCuttersTableRecipe, Boolean> map = new HashMap<>();
 
-		for (GemCuttersTableRecipe recipe : GemCuttersTableRecipeList.getRecipeList()) {
+		for(GemCuttersTableRecipe recipe : GemCuttersTableRecipeList.getRecipeList())
+		{
 			map.put(recipe, recipe.matchesRecipe(tileInventory, new InvWrapper(playerInventory)));
 		}
 

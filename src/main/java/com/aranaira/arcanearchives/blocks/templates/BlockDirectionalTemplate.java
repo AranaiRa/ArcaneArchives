@@ -21,8 +21,9 @@ public class BlockDirectionalTemplate extends BlockTemplate
 	/**
 	 * Creates a new directional block and adds it to the BlockRegistry, and if createItemBlock is true,
 	 * a matching ItemBlock to the ItemRegistry. Functionally just calls {@link BlockTemplate#BlockTemplate(String, Material)}
-	 * @param name The name of the block, used for translation key and registry name
-	 * @param materialIn The material of the block
+	 *
+	 * @param name            The name of the block, used for translation key and registry name
+	 * @param materialIn      The material of the block
 	 * @param createItemBlock Whether to automatically create an ItemBlockTemplate and register it for this Block
 	 */
 	protected BlockDirectionalTemplate(String name, Material materialIn, boolean createItemBlock)

@@ -19,12 +19,6 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 	private final ItemStackHandler mInventory = new ItemStackHandler(54);
 	public String chestName = "";
 
-	public static class Tags {
-		public static final String CHEST_INVENTORY = "inventory";
-		public static final String CHEST_NAME = "chestName";
-		private Tags(){}
-	}
-
 	public RadiantChestTileEntity()
 	{
 		super("radiantchest");
@@ -151,5 +145,15 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 		AAPacketHandler.CHANNEL.sendToServer(packet);
 
 		return true;
+	}
+
+	public static class Tags
+	{
+		public static final String CHEST_INVENTORY = "inventory";
+		public static final String CHEST_NAME = "chestName";
+
+		private Tags()
+		{
+		}
 	}
 }

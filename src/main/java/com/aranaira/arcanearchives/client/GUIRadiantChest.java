@@ -151,7 +151,8 @@ public class GUIRadiantChest extends GuiContainer
 		} else if(keyCode == 1 || keyCode == this.mc.gameSettings.keyBindInventory.getKeyCode())
 		{
 			Minecraft.getMinecraft().player.closeScreen();
-		} else {
+		} else
+		{
 			super.keyTyped(typedChar, keyCode);
 		}
 

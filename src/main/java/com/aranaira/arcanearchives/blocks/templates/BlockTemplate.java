@@ -45,7 +45,8 @@ public class BlockTemplate extends Block implements IHasModel
 	/**
 	 * Creates a new block and adds it to the BlockRegistry, and if createItemBlock is true,
 	 * a matching ItemBlock to the ItemRegistry
-	 * @param name The name of the block, used for translation key and registry name
+	 *
+	 * @param name       The name of the block, used for translation key and registry name
 	 * @param materialIn The material of the block
 	 */
 	public BlockTemplate(String name, Material materialIn)
@@ -98,7 +99,7 @@ public class BlockTemplate extends Block implements IHasModel
 
 	public Size getSize()
 	{
-		if (size == null) return new Size(0, 0, 0);
+		if(size == null) return new Size(0, 0, 0);
 		return size;
 	}
 
@@ -136,8 +137,10 @@ public class BlockTemplate extends Block implements IHasModel
 	}
 
 	@Override
-	public void registerModels() {
-		if (Item.getItemFromBlock(this) != Items.AIR) {
+	public void registerModels()
+	{
+		if(Item.getItemFromBlock(this) != Items.AIR)
+		{
 			ArcaneArchives.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory");
 		}
 	}

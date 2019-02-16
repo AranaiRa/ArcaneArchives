@@ -42,7 +42,7 @@ public class AAWorldSavedData extends WorldSavedData
 	@Nullable
 	public AAServerNetwork getNetwork(@Nullable UUID playerID)
 	{
-		if (playerID == null || playerID == NetworkHelper.INVALID) return null;
+		if(playerID == null || playerID == NetworkHelper.INVALID) return null;
 
 		if(!arcaneArchivesNetworks.containsKey(playerID))
 		{

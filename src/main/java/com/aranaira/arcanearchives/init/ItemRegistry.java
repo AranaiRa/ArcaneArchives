@@ -4,7 +4,6 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.items.*;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
-import com.aranaira.arcanearchives.util.IHasModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -51,7 +50,8 @@ public class ItemRegistry
 
 		Arrays.asList(RAW_RADIANT_QUARTZ, CUT_RADIANT_QUARTZ, GEOMANCY_PENDULUM, GEOMANTIC_MAP, MANIFEST, RADIANT_BUCKET, SCEPTER_ABDUCTION, SCEPTER_MANIPULATION, SCEPTER_TRANSLOCATION, TOME_OF_ARCANA, TOME_OF_REQUISITION, COMPONENT_CONTAINMENTFIELD, COMPONENT_MATRIXBRACE, COMPONENT_MATERIALINTERFACE, COMPONENT_RADIANTDUST, COMPONENT_SCINTILLATINGINLAY, SPIRIT_ORB).forEach(registry::register);
 
-		Stream.of(BlockRegistry.MATRIX_CRYSTAL_CORE, BlockRegistry.MATRIX_REPOSITORY, BlockRegistry.MATRIX_RESERVOIR, BlockRegistry.MATRIX_STORAGE, BlockRegistry.MATRIX_DISTILLATE, BlockRegistry.STORAGE_RAW_QUARTZ, BlockRegistry.STORAGE_CUT_QUARTZ, BlockRegistry.RADIANT_CHEST, BlockRegistry.RADIANT_CRAFTING_TABLE, BlockRegistry.RADIANT_LANTERN, BlockRegistry.RADIANT_RESONATOR, BlockRegistry.RAW_QUARTZ, BlockRegistry.DOMINION_CRYSTAL, BlockRegistry.GEMCUTTERS_TABLE).map(BlockTemplate::getItemBlock).forEach((block) -> {
+		Stream.of(BlockRegistry.MATRIX_CRYSTAL_CORE, BlockRegistry.MATRIX_REPOSITORY, BlockRegistry.MATRIX_RESERVOIR, BlockRegistry.MATRIX_STORAGE, BlockRegistry.MATRIX_DISTILLATE, BlockRegistry.STORAGE_RAW_QUARTZ, BlockRegistry.STORAGE_CUT_QUARTZ, BlockRegistry.RADIANT_CHEST, BlockRegistry.RADIANT_CRAFTING_TABLE, BlockRegistry.RADIANT_LANTERN, BlockRegistry.RADIANT_RESONATOR, BlockRegistry.RAW_QUARTZ, BlockRegistry.DOMINION_CRYSTAL, BlockRegistry.GEMCUTTERS_TABLE).map(BlockTemplate::getItemBlock).forEach((block) ->
+		{
 			registry.register(block);
 			ModelLoader.setCustomModelResourceLocation(block, 0, new ModelResourceLocation(block.getRegistryName(), "inventory"));
 		});
@@ -66,10 +66,13 @@ public class ItemRegistry
 	}
 
 	@SubscribeEvent
-	public static void missingMappings (RegistryEvent.MissingMappings<Item> event) {
-		for (RegistryEvent.MissingMappings.Mapping<Item> mapping : event.getMappings()) {
+	public static void missingMappings(RegistryEvent.MissingMappings<Item> event)
+	{
+		for(RegistryEvent.MissingMappings.Mapping<Item> mapping : event.getMappings())
+		{
 			ResourceLocation missingResource = mapping.key;
-			if (missingResource.getNamespace().equals(ArcaneArchives.MODID) && missingResource.getPath().equals("accessorblock")) {
+			if(missingResource.getNamespace().equals(ArcaneArchives.MODID) && missingResource.getPath().equals("accessorblock"))
+			{
 				mapping.remap(Items.AIR);
 			}
 		}

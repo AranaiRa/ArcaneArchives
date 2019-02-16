@@ -29,7 +29,8 @@ public class SlotRecipeHandler extends Slot
 		this.entity = entity;
 	}
 
-	public GemCuttersTableRecipe getRecipe () {
+	public GemCuttersTableRecipe getRecipe()
+	{
 		return GemCuttersTableRecipeList.getRecipe(getStack());
 	}
 

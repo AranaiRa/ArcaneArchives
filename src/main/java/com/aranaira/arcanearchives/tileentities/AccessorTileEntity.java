@@ -23,10 +23,6 @@ public class AccessorTileEntity extends AATileEntity
 {
 	private boolean breaking = false;
 	private BlockPos parent = BlockPos.ORIGIN;
-	public static class Tags {
-		public static final String POS="pos";
-		private Tags(){}
-	}
 
 	public AccessorTileEntity()
 	{
@@ -135,5 +131,14 @@ public class AccessorTileEntity extends AATileEntity
 		AATileEntity parent = getParentTile();
 		if(parent != null) return parent.getCapability(capability, facing);
 		return null;
+	}
+
+	public static class Tags
+	{
+		public static final String POS = "pos";
+
+		private Tags()
+		{
+		}
 	}
 }

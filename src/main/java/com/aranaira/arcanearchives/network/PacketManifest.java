@@ -95,12 +95,14 @@ public class PacketManifest
 				//TODO: See commented line below this
 				// if (context.side== Side.CLIENT) ArcaneArchives.logger.error("Received synchronize request from wrong side");
 				MinecraftServer server = context.getServerHandler().player.getServer(); //TODO: decide if this is a better option than the above. This way
-				if(server == null) {
+				if(server == null)
+				{
 					ArcaneArchives.logger.error("Server was null when processing sync packet");
 					return;
 				}
 				AAServerNetwork network = NetworkHelper.getServerNetwork(message.playerId, server.getWorld(0));
-				if(network == null) {
+				if(network == null)
+				{
 					ArcaneArchives.logger.error(() -> "Network was null when processing sync packet for " + message.playerId);
 					return;
 				}

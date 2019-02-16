@@ -141,7 +141,7 @@ public class NetworkContainer extends Container
 	@Override
 	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
 	{
-		World world = (player==null) ? this.player.getEntityWorld() : player.getEntityWorld(); //The constructor requires a non-null player, so it shouldn't be null here either.
+		World world = (player == null) ? this.player.getEntityWorld() : player.getEntityWorld(); //The constructor requires a non-null player, so it shouldn't be null here either.
 		AAServerNetwork network = NetworkHelper.getServerNetwork(player.getUniqueID(), world);
 		if(network == null) // TODO: Error message
 			return ItemStack.EMPTY;

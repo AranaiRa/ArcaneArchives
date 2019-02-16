@@ -5,7 +5,10 @@ import com.aranaira.arcanearchives.util.ItemComparison;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.item.ItemStack;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class GemCuttersTableRecipeList
 {
@@ -42,7 +45,7 @@ public class GemCuttersTableRecipeList
 		return RECIPE_LIST.size();
 	}
 
-	public static void addAll (GemCuttersTableRecipe... recipes)
+	public static void addAll(GemCuttersTableRecipe... recipes)
 	{
 		for(GemCuttersTableRecipe recipe : recipes)
 		{

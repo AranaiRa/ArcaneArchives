@@ -30,21 +30,11 @@ import java.util.UUID;
 public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 {
 
-	public static class Tags {
-		//public static final String TAG_NAME = "inventory";
-		public static final String INVENTORY = "inventory";
-		public static final String OUTPUT = "output";
-		public static final String RECIPE = "recipe";
-		public static final String PAGE = "page";
-	}
-
 	public static final int RECIPE_PAGE_LIMIT = 7;
-
 	private final GemCuttersTableItemHandler mInventory = new GemCuttersTableItemHandler(18);
 	private final ItemStackHandler mOutput = new ItemStackHandler(1);
 	private GemCuttersTableRecipe mRecipe = null;
 	private int curPage = 0;
-
 	public GemCuttersTableTileEntity()
 	{
 		super();
@@ -241,7 +231,17 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 		return true;
 	}
 
-	public static class GemCuttersTableItemHandler extends ItemStackHandler {
+	public static class Tags
+	{
+		//public static final String TAG_NAME = "inventory";
+		public static final String INVENTORY = "inventory";
+		public static final String OUTPUT = "output";
+		public static final String RECIPE = "recipe";
+		public static final String PAGE = "page";
+	}
+
+	public static class GemCuttersTableItemHandler extends ItemStackHandler
+	{
 		private List<Runnable> hooks = new ArrayList<>();
 
 		public GemCuttersTableItemHandler(int size)
@@ -249,11 +249,13 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 			super(size);
 		}
 
-		public void addHook (Runnable runnable) {
+		public void addHook(Runnable runnable)
+		{
 			this.hooks.add(runnable);
 		}
 
-		public void deleteHook (Runnable runnable) {
+		public void deleteHook(Runnable runnable)
+		{
 			this.hooks.remove(runnable);
 		}
 
