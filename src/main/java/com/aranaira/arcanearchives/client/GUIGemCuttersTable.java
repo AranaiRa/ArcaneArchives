@@ -1,22 +1,26 @@
 package com.aranaira.arcanearchives.client;
 
 import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
+import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
 import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipe;
-import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipeList;
-import com.aranaira.arcanearchives.util.ItemComparison;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IContainerListener;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextFormatting;
 import org.lwjgl.opengl.GL11;
 
+import java.awt.*;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GUIGemCuttersTable extends GuiContainer
 {
@@ -26,18 +30,23 @@ public class GUIGemCuttersTable extends GuiContainer
 	private static final int OVERLAY = 0xaa1e3340;
 
 	ContainerGemCuttersTable mCGCT;
-	boolean recipeStatus;
+	GemCuttersTableRecipe curRecipe = null;
 	private InvisibleButton PrevPageButton;
 	private InvisibleButton NextPageButton;
 	private EntityPlayer player;
+	private Map<GemCuttersTableRecipe, Boolean> RECIPE_STATUS = new HashMap<>();
+	private int timesChanged;
 
 	public GUIGemCuttersTable(EntityPlayer player, ContainerGemCuttersTable container)
 	{
 		super(container);
 		mCGCT = container;
+		container.setUpdateRecipeGUI(this::updateRecipeStatus);
 		this.xSize = 206;
 		this.ySize = 254;
 		this.player = player;
+		updateRecipeStatus();
+		this.timesChanged = this.player.inventory.getTimesChanged();
 	}
 
 	@Override
@@ -45,15 +54,29 @@ public class GUIGemCuttersTable extends GuiContainer
 	{
 		super.drawSlot(slot);
 
-		/* Code for dimming uncraftable recipes.
-
-		int slotIndex = slot.slotNumber;
-
-		if(slotIndex <= 43 && slotIndex >= 37)
+		if(slot instanceof SlotRecipeHandler)
 		{
-			GlStateManager.disableDepth();
-			drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, OVERLAY);
-		} */
+			GemCuttersTableRecipe recipe = ((SlotRecipeHandler) slot).getRecipe();
+			if(recipe == null) return;
+
+			boolean wasEnabled = false;
+
+			if(recipe == curRecipe)
+			{
+				wasEnabled = true;
+				GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+				GlStateManager.enableColorMaterial();
+				this.mc.getTextureManager().bindTexture(GUITextures);
+				this.drawTexturedModalRect(slot.xPos - 2, slot.yPos - 2, 206, 0, 20, 20);
+			}
+
+			if(!RECIPE_STATUS.get(recipe))
+			{
+				if(wasEnabled) this.mc.getTextureManager().deleteTexture(GUITextures);
+				GlStateManager.disableDepth();
+				drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, OVERLAY);
+			}
+		}
 	}
 
 	@Override
@@ -72,7 +95,14 @@ public class GUIGemCuttersTable extends GuiContainer
 		this.buttonList.add(PrevPageButton);
 		this.buttonList.add(NextPageButton);
 
-		recipeStatus = mCGCT.getRecipeStatus();
+		updateRecipeStatus();
+	}
+
+	public void updateRecipeStatus()
+	{
+		curRecipe = mCGCT.getTile().getRecipe();
+		RECIPE_STATUS.clear();
+		RECIPE_STATUS.putAll(mCGCT.updateRecipeStatus());
 	}
 
 	@Override
@@ -80,30 +110,16 @@ public class GUIGemCuttersTable extends GuiContainer
 	{
 		super.drawScreen(mouseX, mouseY, partialTicks);
 
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		GlStateManager.enableColorMaterial();
-		this.mc.getTextureManager().bindTexture(GUITextures);
-
-		GemCuttersTableRecipe recipe = mCGCT.getTile().getRecipe();
-
-		if(player.ticksExisted % 50 == 0)
-		{
-			recipeStatus = mCGCT.getRecipeStatus();
+		int nextChanged = this.player.inventory.getTimesChanged();
+		if (nextChanged != this.timesChanged) {
+			updateRecipeStatus();
+			this.timesChanged = nextChanged;
 		}
+	}
 
-		if(recipe != null)
+	/*
+			if(recipe != null)
 		{
-			ItemStack output = recipe.getOutput();
-
-			for(int i = 0; i < 7; i++)
-			{
-				int actualIndex = i + mCGCT.getTile().getPage() * 7;
-				if(ItemComparison.AreItemsEqual(GemCuttersTableRecipeList.getOutputByIndex(actualIndex), output))
-				{
-					this.drawTexturedModalRect(guiLeft + i * 18 + 39, guiTop + 68, 206, 0, 20, 20);
-					break;
-				}
-			}
 			List<String> mRecipeInput = new ArrayList<>();
 			if(recipeStatus)
 			{
@@ -122,10 +138,7 @@ public class GUIGemCuttersTable extends GuiContainer
 
 			this.drawHoveringText(mRecipeInput, guiLeft + 206, guiTop);
 		}
-
-		this.renderHoveredToolTip(mouseX, mouseY);
-
-	}
+	 */
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
@@ -157,3 +170,4 @@ public class GUIGemCuttersTable extends GuiContainer
 		super.actionPerformed(button);
 	}
 }
+

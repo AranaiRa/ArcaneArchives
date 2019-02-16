@@ -20,6 +20,9 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @ParametersAreNonnullByDefault
@@ -37,7 +40,7 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 
 	public static final int RECIPE_PAGE_LIMIT = 7;
 
-	private final ItemStackHandler mInventory = new ItemStackHandler(18);
+	private final GemCuttersTableItemHandler mInventory = new GemCuttersTableItemHandler(18);
 	private final ItemStackHandler mOutput = new ItemStackHandler(1);
 	private GemCuttersTableRecipe mRecipe = null;
 	private int curPage = 0;
@@ -48,7 +51,7 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 		setName("gemcutterstable");
 	}
 
-	public ItemStackHandler getInventory()
+	public GemCuttersTableItemHandler getInventory()
 	{
 		return mInventory;
 	}
@@ -71,7 +74,7 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 
 	public void setRecipe(ItemStack itemStack)
 	{
-		setRecipe(GemCuttersTableRecipeList.GetRecipe(itemStack));
+		setRecipe(GemCuttersTableRecipeList.getRecipe(itemStack));
 	}
 
 	public void setRecipe(@Nullable GemCuttersTableRecipe recipe)
@@ -236,5 +239,30 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 		AAPacketHandler.CHANNEL.sendToServer(packet2);
 
 		return true;
+	}
+
+	public static class GemCuttersTableItemHandler extends ItemStackHandler {
+		private List<Runnable> hooks = new ArrayList<>();
+
+		public GemCuttersTableItemHandler(int size)
+		{
+			super(size);
+		}
+
+		public void addHook (Runnable runnable) {
+			this.hooks.add(runnable);
+		}
+
+		public void deleteHook (Runnable runnable) {
+			this.hooks.remove(runnable);
+		}
+
+		@Override
+		protected void onContentsChanged(int slot)
+		{
+			super.onContentsChanged(slot);
+
+			this.hooks.stream().filter(Objects::nonNull).forEach(Runnable::run);
+		}
 	}
 }

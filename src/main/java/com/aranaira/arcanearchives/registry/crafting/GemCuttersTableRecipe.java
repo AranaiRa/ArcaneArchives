@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.registry.crafting;
 
 import com.aranaira.arcanearchives.util.ItemComparison;
+import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
@@ -64,6 +65,12 @@ public class GemCuttersTableRecipe
 	public List<ItemStack> getInput()
 	{
 		return new ArrayList<>(mInput);
+	}
+
+	@Override
+	public int hashCode()
+	{
+		return RecipeItemHelper.pack(mOutput) * mOutput.getCount();
 	}
 
 	public class RecipeMatcher

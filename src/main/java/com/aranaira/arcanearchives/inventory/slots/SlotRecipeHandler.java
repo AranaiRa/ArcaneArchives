@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.inventory.slots;
 
+import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipe;
 import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipeList;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,19 +29,8 @@ public class SlotRecipeHandler extends Slot
 		this.entity = entity;
 	}
 
-	public boolean isDimmed()
-	{
-		return dimmed;
-	}
-
-	public void setDimmed(boolean dimmed)
-	{
-		this.dimmed = dimmed;
-	}
-
-	public void setDimmed()
-	{
-		setDimmed(true);
+	public GemCuttersTableRecipe getRecipe () {
+		return GemCuttersTableRecipeList.getRecipe(getStack());
 	}
 
 	public int getPage()

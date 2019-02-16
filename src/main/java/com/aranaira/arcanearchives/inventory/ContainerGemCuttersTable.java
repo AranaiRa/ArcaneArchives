@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.inventory;
 
 import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
 import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipe;
+import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipeList;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -10,21 +11,27 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
 import javax.annotation.Nonnull;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ContainerGemCuttersTable extends Container
 {
 	private GemCuttersTableTileEntity tile;
 	private boolean isServer;
 	private IInventory playerInventory;
-	private ItemStackHandler tileInventory;
+	private GemCuttersTableTileEntity.GemCuttersTableItemHandler tileInventory;
 	private ItemStackHandler tileOutput;
 	private SlotOutput outputSlot;
+	private Runnable updateRecipeGUI;
 
 	public ContainerGemCuttersTable(GemCuttersTableTileEntity tile, IInventory playerInventory, boolean serverSide)
 	{
@@ -81,6 +88,12 @@ public class ContainerGemCuttersTable extends Container
 		return true;
 	}
 
+	public void setUpdateRecipeGUI(Runnable updateRecipeGUI)
+	{
+		this.updateRecipeGUI = updateRecipeGUI;
+		this.tileInventory.addHook(updateRecipeGUI);
+	}
+
 	@Override
 	@Nonnull
 	public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
@@ -125,12 +138,6 @@ public class ContainerGemCuttersTable extends Container
 	}
 
 	@Override
-	public void detectAndSendChanges()
-	{
-		super.detectAndSendChanges();
-	}
-
-	@Override
 	@Nonnull
 	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
 	{
@@ -165,15 +172,23 @@ public class ContainerGemCuttersTable extends Container
 		return tile;
 	}
 
-	public boolean getRecipeStatus()
+	public Map<GemCuttersTableRecipe, Boolean> updateRecipeStatus()
 	{
-		GemCuttersTableRecipe recipe = getTile().getRecipe();
-		if(recipe == null)
-		{
-			return false;
+		Map<GemCuttersTableRecipe, Boolean> map = new HashMap<>();
+
+		for (GemCuttersTableRecipe recipe : GemCuttersTableRecipeList.getRecipeList()) {
+			map.put(recipe, recipe.matchesRecipe(tileInventory, new InvWrapper(playerInventory)));
 		}
 
-		return recipe.matchesRecipe(tileInventory, new InvWrapper(playerInventory));
+		return map;
+	}
+
+	@Override
+	public void onContainerClosed(EntityPlayer playerIn)
+	{
+		super.onContainerClosed(playerIn);
+
+		this.tileInventory.deleteHook(this.updateRecipeGUI);
 	}
 
 	public class SlotOutput extends SlotItemHandler
@@ -191,11 +206,6 @@ public class ContainerGemCuttersTable extends Container
 		public boolean isItemValid(@Nonnull ItemStack stack)
 		{
 			return false;
-		}
-
-		@Override
-		public void onSlotChanged()
-		{
 		}
 
 		@Override

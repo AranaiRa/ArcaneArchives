@@ -5,32 +5,29 @@ import com.aranaira.arcanearchives.util.ItemComparison;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.item.ItemStack;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class GemCuttersTableRecipeList
 {
 	//For use of shift clicking items in.
-	private static Set<ItemStack> ValidInputs = new HashSet<>();
-	private static List<GemCuttersTableRecipe> RecipeList = new ArrayList<>();
-	// private static LinkedHashMap<ItemStack, GemCuttersTableRecipe> RecipeList = new LinkedHashMap<>();
+	private static Set<ItemStack> VALID_INPUTS = new HashSet<>();
+	private static List<GemCuttersTableRecipe> RECIPE_LIST = new ArrayList<>();
+	// private static LinkedHashMap<ItemStack, GemCuttersTableRecipe> RECIPE_LIST = new LinkedHashMap<>();
 
 	public static Set<ItemStack> getValidInputs()
 	{
-		return ValidInputs;
+		return VALID_INPUTS;
 	}
 
 	public static List<GemCuttersTableRecipe> getRecipeList()
 	{
-		return ImmutableList.copyOf(RecipeList);
+		return ImmutableList.copyOf(RECIPE_LIST);
 	}
 
 	// I'm not sure if using order is important
-	public static List<ItemStack> getKeys()
+	private static List<ItemStack> getKeys()
 	{
-		return RecipeList.stream().map(GemCuttersTableRecipe::getOutput).collect(AACollectors.toImmutableList());
+		return RECIPE_LIST.stream().map(GemCuttersTableRecipe::getOutput).collect(AACollectors.toImmutableList());
 	}
 
 	public static ItemStack getOutputByIndex(int index)
@@ -42,10 +39,10 @@ public class GemCuttersTableRecipeList
 
 	public static int getSize()
 	{
-		return RecipeList.size();
+		return RECIPE_LIST.size();
 	}
 
-	public static void addAll (GemCuttersTableRecipe ... recipes)
+	public static void addAll (GemCuttersTableRecipe... recipes)
 	{
 		for(GemCuttersTableRecipe recipe : recipes)
 		{
@@ -70,12 +67,12 @@ public class GemCuttersTableRecipeList
 		//recipe.getOutput().setTagCompound(nbt);
 		//recipe.mOutput.getTagCompound().getTagList("Lore", 8);
 
-		RecipeList.add(recipe);
-		ValidInputs.addAll(recipe.getInput());
+		RECIPE_LIST.add(recipe);
+		VALID_INPUTS.addAll(recipe.getInput());
 	}
 
-	public static GemCuttersTableRecipe GetRecipe(ItemStack item)
+	public static GemCuttersTableRecipe getRecipe(ItemStack item)
 	{
-		return RecipeList.stream().filter((recipe) -> ItemComparison.AreItemsEqual(recipe.getOutput(), item)).findFirst().orElse(null);
+		return RECIPE_LIST.stream().filter((recipe) -> ItemComparison.AreItemsEqual(recipe.getOutput(), item)).findFirst().orElse(null);
 	}
 }
