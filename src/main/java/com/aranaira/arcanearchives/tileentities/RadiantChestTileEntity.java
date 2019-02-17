@@ -22,9 +22,6 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 	public RadiantChestTileEntity()
 	{
 		super("radiantchest");
-		this.immanenceDrain = 0;
-		this.immanenceGeneration = 0;
-		this.isInventory = false;
 	}
 
 	@Override
@@ -46,7 +43,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 	public void readFromNBT(NBTTagCompound compound)
 	{
 		super.readFromNBT(compound);
-		mInventory.deserializeNBT(compound.getCompoundTag(Tags.CHEST_INVENTORY));
+		mInventory.deserializeNBT(compound.getCompoundTag(AATileEntity.Tags.INVENTORY));
 		chestName = compound.getString(Tags.CHEST_NAME);
 	}
 
@@ -55,7 +52,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 	public NBTTagCompound writeToNBT(NBTTagCompound compound)
 	{
 		super.writeToNBT(compound);
-		compound.setTag(Tags.CHEST_INVENTORY, mInventory.serializeNBT());
+		compound.setTag(AATileEntity.Tags.INVENTORY, mInventory.serializeNBT());
 		compound.setString(Tags.CHEST_NAME, chestName);
 
 		return compound;
@@ -149,7 +146,6 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 
 	public static class Tags
 	{
-		public static final String CHEST_INVENTORY = "inventory";
 		public static final String CHEST_NAME = "chestName";
 
 		private Tags()

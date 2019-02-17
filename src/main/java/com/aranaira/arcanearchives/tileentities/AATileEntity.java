@@ -183,4 +183,8 @@ public class AATileEntity extends TileEntity
 
 		return true;
 	}
+
+	public static class Tags {
+		public static final String INVENTORY = "inventory";
+	}
 }

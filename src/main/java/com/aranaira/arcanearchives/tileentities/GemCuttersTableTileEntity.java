@@ -160,7 +160,7 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 	{
 		super.readFromNBT(compound);
 		mOutput.deserializeNBT(compound.getCompoundTag(Tags.OUTPUT));
-		mInventory.deserializeNBT(compound.getCompoundTag(Tags.INVENTORY));
+		mInventory.deserializeNBT(compound.getCompoundTag(AATileEntity.Tags.INVENTORY));
 
 		ItemStack recipe = ItemStack.EMPTY;
 
@@ -178,7 +178,7 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 	{
 		super.writeToNBT(compound);
 		compound.setTag(Tags.OUTPUT, mOutput.serializeNBT());
-		compound.setTag(Tags.INVENTORY, mInventory.serializeNBT());
+		compound.setTag(AATileEntity.Tags.INVENTORY, mInventory.serializeNBT());
 		if(getRecipe() != null)
 		{
 			compound.setTag(Tags.RECIPE, getRecipe().getOutput().writeToNBT(new NBTTagCompound()));
@@ -233,8 +233,6 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 
 	public static class Tags
 	{
-		//public static final String TAG_NAME = "inventory";
-		public static final String INVENTORY = "inventory";
 		public static final String OUTPUT = "output";
 		public static final String RECIPE = "recipe";
 		public static final String PAGE = "page";

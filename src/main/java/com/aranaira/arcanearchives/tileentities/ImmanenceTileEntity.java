@@ -24,18 +24,14 @@ import java.util.UUID;
 public class ImmanenceTileEntity extends AATileEntity implements ITickable
 {
 	public UUID networkID = null; //UUID of network owner
-	public int immanenceDrain; //Immanence cost to operate the device
-	public int immanenceGeneration; //Immanence that is given to the network with this device
-	public int networkPriority; //What order the device's Immanence is paid for
-	public boolean isDrainPaid; //Whether the device's Immanence needs have been covered
-	public boolean isProtected; //Whether the device is currently indestructable
+	public int immanenceDrain = 0; //Immanence cost to operate the device
+	public int immanenceGeneration = 0; //Immanence that is given to the network with this device
+	public int networkPriority = 0; //What order the device's Immanence is paid for
+	public boolean isDrainPaid = false; //Whether the device's Immanence needs have been covered
+	public boolean isProtected = false; //Whether the device is currently indestructable
 	public boolean hasBeenAddedToNetwork = false;
 	public int dimension;
-	public NonNullList<ItemStack> inventory;
-	public boolean isInventory = false;
-	public int maxItems;
 	public Size size;
-	public List<BlockPos> mAccessors;
 	private AAServerNetwork network;
 	private AAClientNetwork cNetwork;
 	private int ticks = 0;
@@ -43,8 +39,6 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	public ImmanenceTileEntity(String name)
 	{
 		setName(name);
-		mAccessors = new ArrayList<>();
-		inventory = NonNullList.create();
 	}
 
 	public void tick()
@@ -79,7 +73,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 		this.networkID = newId;
 	}
 
-	public int GetTotalItems()
+	/*public int GetTotalItems()
 	{
 		int tmp = 0;
 		for(ItemStack item : inventory)
@@ -179,7 +173,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 			}
 		}
 		return ItemStack.EMPTY;
-	}
+	}*/
 
 	@Override
 	@Nonnull
@@ -187,15 +181,6 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	{
 		compound.setString(Tags.PLAYER_ID, networkID.toString());
 		compound.setInteger(Tags.DIM, dimension);
-		NBTTagList tags = new NBTTagList();
-		for(ItemStack item : inventory)
-		{
-			NBTTagCompound data = new NBTTagCompound();
-			item.writeToNBT(data);
-			tags.appendTag(data);
-		}
-		compound.setTag(Tags.INVENTORY, tags);
-		compound.setInteger(Tags.INV_SIZE, maxItems);
 		return super.writeToNBT(compound);
 	}
 
@@ -207,26 +192,12 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 			networkID = UUID.fromString(compound.getString(Tags.PLAYER_ID));
 		}
 		dimension = compound.getInteger(Tags.DIM);
-		maxItems = compound.getInteger(Tags.INV_SIZE);
-		NBTTagList tags = compound.getTagList(Tags.INVENTORY, 10);
-		for(NBTBase tag : tags)
-		{
-			NBTTagCompound data = (NBTTagCompound) tag;
-			ItemStack temp = new ItemStack(data);
-			if(!temp.isEmpty()) inventory.add(temp);
-		}
-
 		super.readFromNBT(compound);
 	}
 
 	public int GetNetImmanence()
 	{
 		return immanenceGeneration - immanenceDrain;
-	}
-
-	public void AddAccessor(BlockPos pos)
-	{
-		mAccessors.add(pos);
 	}
 
 	public AAClientNetwork getClientNetwork()
@@ -239,9 +210,9 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 		return cNetwork;
 	}
 
-	public AAServerNetwork getNetwork() //TODO: ensure method not called prior to tile entity world being set.
+	public AAServerNetwork getNetwork()
 	{
-		if(network == null)
+		if(network == null && networkID != null)
 		{
 			network = NetworkHelper.getServerNetwork(networkID, this.world);
 		}
@@ -291,8 +262,6 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	{
 		public static final String PLAYER_ID = "playerId";
 		public static final String DIM = "dim";
-		public static final String INV_SIZE = "invsize";
-		public static final String INVENTORY = "inventory";
 
 		private Tags()
 		{
