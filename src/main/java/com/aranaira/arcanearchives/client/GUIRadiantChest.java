@@ -118,7 +118,7 @@ public class GUIRadiantChest extends GuiContainer
 			//Backspace
 			if(keyCode == 14)
 			{
-				if(mNameField.length() > 0) mNameField = mNameField.substring(0, mNameField.length() - 1);
+				if(mNameField != null && mNameField.length() > 0) mNameField = mNameField.substring(0, mNameField.length() - 1);
 			}
 			//Escape and Enter
 			else if(keyCode == 1)
