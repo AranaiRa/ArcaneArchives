@@ -1,5 +1,7 @@
 package com.aranaira.arcanearchives.client;
 
+import com.aranaira.arcanearchives.data.AAClientNetwork;
+import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.inventory.ContainerManifest;
 import com.aranaira.arcanearchives.util.handlers.AATickHandler;
 import com.aranaira.arcanearchives.util.types.ManifestEntry;
@@ -42,6 +44,11 @@ public class GUIManifest extends GuiContainer
 	private int mEndTrackingButtonWidth = 54;
 	private int mEndTrackingButtonHeight = 14;
 	private int OTHER_DIMENSION = 0x77000000;
+
+	private int mRefreshButtonTopOffset = 199;
+	private int mRefreshButtonLeftOffset = 155;
+	private int mRefreshButtonWidth = 17;
+	private int mRefreshButtonHeight = 14;
 
 	public GUIManifest(EntityPlayer player, ContainerManifest container)
 	{
@@ -153,6 +160,12 @@ public class GUIManifest extends GuiContainer
 			if(mouseX > guiLeft + mEndTrackingButtonLeftOffset && mouseX < guiLeft + mEndTrackingButtonLeftOffset + mEndTrackingButtonWidth && mouseY > guiTop + mEndTrackingButtonTopOffset && mouseY < guiTop + mEndTrackingButtonTopOffset + mEndTrackingButtonHeight)
 			{
 				AATickHandler.clearChests();
+			}
+
+			if (mouseX > guiLeft + mRefreshButtonLeftOffset && mouseX < guiLeft + mRefreshButtonLeftOffset + mRefreshButtonWidth && mouseY > guiTop + mRefreshButtonTopOffset && mouseY < guiTop + mRefreshButtonTopOffset + mRefreshButtonHeight)
+			{
+				AAClientNetwork network = NetworkHelper.getClientNetwork(player.getUniqueID());
+				network.synchroniseManifest();
 			}
 
 			// TODO: Refresh button
