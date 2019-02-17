@@ -58,8 +58,8 @@ public class GUIManifest extends GuiContainer
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks)
 	{
+        this.drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
-
 		this.renderHoveredToolTip(mouseX, mouseY);
 
 		String temp = fontRenderer.trimStringToWidth(mSearchText, 6 * 15, true);
@@ -71,12 +71,6 @@ public class GUIManifest extends GuiContainer
 		else fontRenderer.drawString(temp, guiLeft + mTextLeftOffset, mTextTopOffset + guiTop, 0x000000);
 
 		fontRenderer.drawString("End Track", guiLeft + mEndTrackingLeftOffset, mEndTrackingTopOffset + guiTop, 0x000000);
-	}
-
-	@Override
-	protected void renderHoveredToolTip(int p_191948_1_, int p_191948_2_)
-	{
-		super.renderHoveredToolTip(p_191948_1_, p_191948_2_);
 	}
 
 	//TODO Figure out how to display what chest the item is in.

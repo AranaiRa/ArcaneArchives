@@ -63,7 +63,7 @@ public class GUIRadiantChest extends GuiContainer
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.enableColorMaterial();
 		this.mc.getTextureManager().bindTexture(GUITextures);
 
@@ -73,15 +73,8 @@ public class GUIRadiantChest extends GuiContainer
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks)
 	{
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		GlStateManager.enableColorMaterial();
-
-		GlStateManager.disableLighting();
-
+        this.drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
-
-		GlStateManager.enableLighting();
-
 		this.renderHoveredToolTip(mouseX, mouseY);
 
 		fontRenderer.drawString(getName(), guiLeft + mNameTextLeftOffset, guiTop + mNameTextTopOffset, 0x000000);

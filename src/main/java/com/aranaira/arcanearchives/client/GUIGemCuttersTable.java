@@ -101,7 +101,9 @@ public class GUIGemCuttersTable extends GuiContainer
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks)
 	{
+        this.drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
+		this.renderHoveredToolTip(mouseX, mouseY);
 
 		int nextChanged = this.player.inventory.getTimesChanged();
 		if(nextChanged != this.timesChanged)
