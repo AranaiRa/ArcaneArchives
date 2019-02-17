@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
 import com.aranaira.arcanearchives.network.AAPacketHandler;
-import com.aranaira.arcanearchives.network.PacketManifest;
+import com.aranaira.arcanearchives.network.PacketNetwork;
 import com.aranaira.arcanearchives.util.LargeItemNBTUtil;
 import com.aranaira.arcanearchives.util.types.ManifestEntry;
 import com.aranaira.arcanearchives.util.types.ManifestList;
@@ -24,13 +24,12 @@ import java.util.UUID;
 
 public class ClientNetwork
 {
-	/* Internal values that are overwritten */
+	private UUID playerId;
+
 	public ManifestList manifestItems = new ManifestList(new ArrayList<>());
 
 	/* Updated data via packet */
-	private boolean mShared = false;
 	private HashMap<String, UUID> pendingInvites = new HashMap<>();
-	private UUID mOwnerId = null;
 	private int mCurrentImmanence = 0;
 	private int mTotalSpace = 0;
 	private int mItemCount = 0;
@@ -41,9 +40,19 @@ public class ClientNetwork
 	private ManifestItemHandler mManifestHandler = null;
 	//private TileList<ImmanenceTileEntity> mActualTiles = new TileList<>();
 
+	public int getTotalResonators()
+	{
+		return totalResonators;
+	}
+
+	public int getTotalCores()
+	{
+		return totalCores;
+	}
+
 	ClientNetwork(UUID id)
 	{
-		this.mOwnerId = id;
+		this.playerId = id;
 		this.mManifestHandler = new ManifestItemHandler(manifestItems);
 	}
 
@@ -78,13 +87,13 @@ public class ClientNetwork
 	// but does not include the manifest info.
 	public void synchroniseData()
 	{
-		PacketManifest.PacketSynchroniseRequest request = new PacketManifest.PacketSynchroniseRequest(PacketManifest.SynchroniseType.DATA, mOwnerId);
+		PacketNetwork.PacketSynchroniseRequest request = new PacketNetwork.PacketSynchroniseRequest(PacketNetwork.SynchroniseType.DATA, playerId);
 		AAPacketHandler.CHANNEL.sendToServer(request);
 	}
 
 	public void synchroniseManifest()
 	{
-		PacketManifest.PacketSynchroniseRequest request = new PacketManifest.PacketSynchroniseRequest(PacketManifest.SynchroniseType.MANIFEST, mOwnerId);
+		PacketNetwork.PacketSynchroniseRequest request = new PacketNetwork.PacketSynchroniseRequest(PacketNetwork.SynchroniseType.MANIFEST, playerId);
 		AAPacketHandler.CHANNEL.sendToServer(request);
 	}
 
@@ -92,14 +101,14 @@ public class ClientNetwork
 	{
 		manifestItems.clear();
 
-		NBTTagList list = tag.getTagList("manifest", 10);
+		NBTTagList list = tag.getTagList(NetworkTags.MANIFEST, 10);
 
 		for(NBTBase base : list)
 		{
 			NBTTagCompound itemEntry = (NBTTagCompound) base;
-			int dimension = itemEntry.getInteger("dimension");
+			int dimension = itemEntry.getInteger(NetworkTags.DIMENSION);
 			List<ManifestEntry.ItemEntry> entries = new ArrayList<>();
-			NBTTagList entryList = itemEntry.getTagList("entries", Constants.NBT.TAG_COMPOUND);
+			NBTTagList entryList = itemEntry.getTagList(NetworkTags.ENTRIES, Constants.NBT.TAG_COMPOUND);
 			for(NBTBase entry : entryList)
 			{
 				entries.add(ManifestEntry.ItemEntry.deserializeNBT((NBTTagCompound) entry));
@@ -126,25 +135,26 @@ public class ClientNetwork
 
 	public void deserializeData(NBTTagCompound tag)
 	{
-		this.mShared = tag.getBoolean("mShared");
-		this.mOwnerId = UUID.fromString(tag.getString("mOwnerId"));
-		this.mCurrentImmanence = tag.getInteger("mCurrentImmanence");
-		this.mTotalSpace = tag.getInteger("mTotalSpace");
-		this.mItemCount = tag.getInteger("mItemCount");
+		this.mCurrentImmanence = tag.getInteger(NetworkTags.IMMANENCE);
+		this.mTotalSpace = tag.getInteger(NetworkTags.TOTAL_SPACE);
+		this.mItemCount = tag.getInteger(NetworkTags.ITEM_COUNT);
 		this.pendingInvites.clear();
 
-		for(NBTBase nbt : tag.getTagList("pendingInvites", 10))
+		for(NBTBase nbt : tag.getTagList(NetworkTags.INVITES_PENDING, 10))
 		{
 			if(!(nbt instanceof NBTTagCompound)) continue;
 
 			NBTTagCompound tag2 = (NBTTagCompound) nbt;
-			this.pendingInvites.put(tag2.getString("key"), UUID.fromString(tag2.getString("")));
+			this.pendingInvites.put(tag2.getString(NetworkTags.INVITE_KEY), UUID.fromString(tag2.getString(NetworkTags.INVITE_VALUE)));
 		}
+
+		this.totalCores = tag.getInteger(NetworkTags.TOTAL_CORES);
+		this.totalResonators = tag.getInteger(NetworkTags.TOTAL_RESONATORS);
 	}
 
 	public UUID getPlayerID()
 	{
-		return mOwnerId;
+		return playerId;
 	}
 
 	// Okay the client probably needs this
@@ -175,10 +185,6 @@ public class ClientNetwork
 	public EntityPlayer getPlayer()
 	{
 		return Minecraft.getMinecraft().player;
-	}
-
-	public static class Tag {
-
 	}
 }
 

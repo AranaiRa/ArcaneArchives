@@ -20,8 +20,8 @@ public class AAPacketHandler
 		registerPacks(PacketGemCutters.ChangePage.ChangePageHandler.class, PacketGemCutters.ChangePage.class, Side.SERVER);
 		registerPacks(PacketGemCutters.ChangeRecipe.ChangeRecipeHandler.class, PacketGemCutters.ChangeRecipe.class, Side.SERVER);
 		registerPacks(PacketGemCutters.Consume.ConsumeHandler.class, PacketGemCutters.Consume.class, Side.SERVER);
-		registerPacks(PacketManifest.PacketSynchroniseResponse.PacketSynchroniseResponseHandler.class, PacketManifest.PacketSynchroniseResponse.class, Side.CLIENT);
-		registerPacks(PacketManifest.PacketSynchroniseRequest.PacketSynchroniseRequestHandler.class, PacketManifest.PacketSynchroniseRequest.class, Side.SERVER);
+		registerPacks(PacketNetwork.PacketSynchroniseResponse.PacketSynchroniseResponseHandler.class, PacketNetwork.PacketSynchroniseResponse.class, Side.CLIENT);
+		registerPacks(PacketNetwork.PacketSynchroniseRequest.PacketSynchroniseRequestHandler.class, PacketNetwork.PacketSynchroniseRequest.class, Side.SERVER);
 		registerPacks(PacketRadiantCrafting.LastRecipeMessage.Handler.class, PacketRadiantCrafting.LastRecipeMessage.class, Side.CLIENT);
 	}
 

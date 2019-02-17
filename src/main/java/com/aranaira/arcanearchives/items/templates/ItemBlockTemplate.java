@@ -1,8 +1,11 @@
 package com.aranaira.arcanearchives.items.templates;
 
+import com.aranaira.arcanearchives.blocks.MatrixCrystalCore;
+import com.aranaira.arcanearchives.blocks.RadiantResonator;
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
-import com.aranaira.arcanearchives.data.ServerNetwork;
+import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.data.ServerNetwork;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -14,7 +17,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.FakePlayer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -35,25 +37,35 @@ public class ItemBlockTemplate extends ItemBlock
 	@Override
 	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand)
 	{
-		if(world.isRemote || player instanceof FakePlayer)
-		{
-			return EnumActionResult.FAIL;
-		}
-
-		ServerNetwork network = NetworkHelper.getServerNetwork(player.getUniqueID(), world);
+		int totalResonators = 0;
+		int totalCores = 0;
 
 		int placeLimit = blockTemplate.getPlaceLimit();
 
 		if(placeLimit != -1)
 		{
-			if(network == null)
+			if(world.isRemote)
 			{
+				ClientNetwork network = NetworkHelper.getClientNetwork(player.getUniqueID());
+				totalResonators = network.getTotalResonators();
+				totalCores = network.getTotalCores();
+			} else
+			{
+				ServerNetwork network = NetworkHelper.getServerNetwork(player.getUniqueID(), world);
+				if(network == null)
+				{
+					if (!world.isRemote) player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.invalidnetwork"), true);
+					return EnumActionResult.FAIL;
+				} else
+				{
+					totalResonators = network.getTotalResonators();
+					totalCores = network.getTotalCores();
+				}
+			}
 
-				player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.invalidnetwork"), true);
-				return EnumActionResult.FAIL;
-			} else if(network.CountTileEntities(blockTemplate.getEntityClass()) >= placeLimit)
+			if((blockTemplate instanceof RadiantResonator && totalResonators >= placeLimit) || blockTemplate instanceof MatrixCrystalCore && totalCores >= placeLimit)
 			{
-				player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.toomanyplaced", blockTemplate.getPlaceLimit(), blockTemplate.getNameComponent()), true);
+				if (!world.isRemote) player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.toomanyplaced", blockTemplate.getPlaceLimit(), blockTemplate.getNameComponent()), true);
 				return EnumActionResult.FAIL;
 			}
 		}
@@ -63,7 +75,7 @@ public class ItemBlockTemplate extends ItemBlock
 
 		if(up.getY() + height > world.getHeight())
 		{
-			player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.aboveworld", blockTemplate.getNameComponent()), true);
+			if (!world.isRemote) player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.aboveworld", blockTemplate.getNameComponent()), true);
 			return EnumActionResult.FAIL;
 		}
 
@@ -86,7 +98,7 @@ public class ItemBlockTemplate extends ItemBlock
 
 			if(!safe)
 			{
-				player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.notenoughspace", blockTemplate.getNameComponent()), true);
+				if (!world.isRemote) player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.notenoughspace", blockTemplate.getNameComponent()), true);
 				return EnumActionResult.FAIL;
 			}
 		}

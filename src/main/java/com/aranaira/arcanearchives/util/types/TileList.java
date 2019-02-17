@@ -43,6 +43,11 @@ public class TileList extends ReferenceList<ImmanenceTileEntity>
 		return new TileListIterable(Iterators.filter(iterator(), (f) -> f != null && f.getWorld().isBlockLoaded(f.getPos())));
 	}
 
+	public TileListIterable filterValid()
+	{
+		return new TileListIterable(Iterators.filter(iterator(), (f) -> f != null && !f.isInvalid()));
+	}
+
 	public TileListIterable filterActive()
 	{
 		return new TileListIterable(Iterators.filter(iterator(), (f) -> f != null && f.isActive()));

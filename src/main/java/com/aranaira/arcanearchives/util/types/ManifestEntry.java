@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.util.types;
 
+import com.aranaira.arcanearchives.data.NetworkTags;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
@@ -86,9 +87,9 @@ public class ManifestEntry
 
 		public static ItemEntry deserializeNBT(NBTTagCompound tag)
 		{
-			BlockPos pos = BlockPos.fromLong(tag.getLong("entryPos"));
-			String chestName = tag.getString("chestName");
-			int itemCount = tag.getInteger("itemCount");
+			BlockPos pos = BlockPos.fromLong(tag.getLong(NetworkTags.ENTRY_POS));
+			String chestName = tag.getString(NetworkTags.CHEST_NAME);
+			int itemCount = tag.getInteger(NetworkTags.ITEM_COUNT);
 			return new ItemEntry(pos, chestName, itemCount);
 		}
 
@@ -115,9 +116,9 @@ public class ManifestEntry
 		public NBTTagCompound serializeNBT()
 		{
 			NBTTagCompound thisEntry = new NBTTagCompound();
-			thisEntry.setInteger("itemCount", itemCount);
-			thisEntry.setLong("entryPos", entryPos.toLong());
-			thisEntry.setString("chestName", chestName);
+			thisEntry.setInteger(NetworkTags.ITEM_COUNT, itemCount);
+			thisEntry.setLong(NetworkTags.ENTRY_POS, entryPos.toLong());
+			thisEntry.setString(NetworkTags.CHEST_NAME, chestName);
 			return thisEntry;
 		}
 	}

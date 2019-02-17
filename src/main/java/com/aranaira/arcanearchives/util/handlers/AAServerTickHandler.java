@@ -3,9 +3,13 @@ package com.aranaira.arcanearchives.util.handlers;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.network.AAPacketHandler;
+import com.aranaira.arcanearchives.network.PacketNetwork;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.ArrayList;
@@ -69,5 +73,14 @@ public class AAServerTickHandler
 		}
 
 		outgoingITEs.clear();
+	}
+
+	@SubscribeEvent
+	public static void onPlayerLoggedIn (PlayerEvent.PlayerLoggedInEvent event) {
+		ServerNetwork network = NetworkHelper.getServerNetwork(event.player.getUniqueID(), event.player.world);
+		if (network != null)
+		{
+			network.rebuildTotals();
+		}
 	}
 }

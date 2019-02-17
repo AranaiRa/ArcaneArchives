@@ -2,10 +2,8 @@ package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
 import com.aranaira.arcanearchives.network.AAPacketHandler;
-import com.aranaira.arcanearchives.network.PacketManifest;
-import com.aranaira.arcanearchives.tileentities.AATileEntity;
-import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
-import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
+import com.aranaira.arcanearchives.network.PacketNetwork;
+import com.aranaira.arcanearchives.tileentities.*;
 import com.aranaira.arcanearchives.util.ItemComparison;
 import com.aranaira.arcanearchives.util.ItemStackConsolidator;
 import com.aranaira.arcanearchives.util.LargeItemNBTUtil;
@@ -28,9 +26,6 @@ import java.util.*;
 
 public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 {
-	public boolean mShared = false;
-	public UUID mSharedPlayer = null;
-
 	public HashMap<String, UUID> pendingInvites = new HashMap<>();
 	public ManifestList manifestItems = new ManifestList(new ArrayList<>());
 	public ManifestItemHandler mManifestHandler = null;
@@ -39,6 +34,9 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 	private TileList mNetworkTiles = new TileList(new ArrayList<>());
 	private int mCurrentImmanence;
 	private boolean mNeedsToBeUpdated = true;
+
+	private int totalCores = 0;
+	private int totalResonators = 0;
 
 	private ServerNetwork(UUID id)
 	{
@@ -60,8 +58,7 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 
 	public void ShareWith(UUID targetNetwork)
 	{
-		mShared = true;
-		mSharedPlayer = targetNetwork;
+
 	}
 
 	public int GetImmanence()
@@ -248,7 +245,7 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 		{
 			return mNetworkTiles.filterActive();
 		}
-		return mNetworkTiles.iterable();
+		return mNetworkTiles.filterValid();
 	}
 
 	public void AddTileToNetwork(ImmanenceTileEntity tileEntityInstance)
@@ -260,6 +257,10 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 
 		mNeedsToBeUpdated = true;
 		UpdateImmanence();
+
+		if (tileEntityInstance instanceof RadiantResonatorTileEntity || tileEntityInstance instanceof MatrixCoreTileEntity) {
+			rebuildTotals();
+		}
 	}
 
 	public void RemoveTileFromNetwork(ImmanenceTileEntity tileEntityInstance)
@@ -268,6 +269,10 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 
 		mNeedsToBeUpdated = true;
 		UpdateImmanence();
+
+		if (tileEntityInstance instanceof RadiantResonatorTileEntity || tileEntityInstance instanceof MatrixCoreTileEntity) {
+			rebuildTotals();
+		}
 	}
 
 	public boolean NetworkContainsTile(ImmanenceTileEntity tileEntityInstance)
@@ -420,10 +425,17 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 
 	public boolean Accept(String name)
 	{
-		if(!pendingInvites.containsKey(name)) return false;
-		mShared = true;
-		mSharedPlayer = pendingInvites.get(name);
 		return true;
+	}
+
+	public int getTotalCores()
+	{
+		return totalCores;
+	}
+
+	public int getTotalResonators()
+	{
+		return totalResonators;
 	}
 
 	public void rebuildManifest()
@@ -453,6 +465,28 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 		manifestItems.addAll(consolidated);
 	}
 
+	public void rebuildTotals () {
+		int origResonators = totalResonators;
+		int origCores = totalCores;
+
+		totalResonators = 0;
+		totalCores = 0;
+
+		for (ImmanenceTileEntity ite : GetBlocks()) {
+			if (ite instanceof RadiantResonatorTileEntity) {
+				totalResonators++;
+			} else if (ite instanceof MatrixCoreTileEntity) {
+				totalCores++;
+			}
+		}
+
+		if (origCores != totalCores || origResonators != totalResonators) {
+			if (!synchroniseData()) {
+				FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(this::synchroniseData);
+			}
+		}
+	}
+
 	public NBTTagCompound buildSynchroniseManifest()
 	{
 		// Step one: iterate loaded chests and get item stacks.
@@ -471,13 +505,13 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 			{
 				entries.appendTag(iEntry.serializeNBT());
 			}
-			itemEntry.setTag("entries", entries);
-			itemEntry.setInteger("dimension", entry.getDimension());
+			itemEntry.setTag(NetworkTags.ENTRIES, entries);
+			itemEntry.setInteger(NetworkTags.DIMENSION, entry.getDimension());
 			manifest.appendTag(itemEntry);
 		}
 
 		NBTTagCompound result = new NBTTagCompound();
-		result.setTag("manifest", manifest);
+		result.setTag(NetworkTags.MANIFEST, manifest);
 
 		return result;
 	}
@@ -485,46 +519,53 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 	public NBTTagCompound buildSynchroniseData()
 	{
 		NBTTagCompound tag = new NBTTagCompound();
-		tag.setBoolean("mShared", mShared);
-		tag.setString("mOwnerId", mPlayerId.toString());
-		tag.setInteger("mCurrentImmanence", mCurrentImmanence);
-		tag.setInteger("mTotalSpace", GetTotalSpace());
-		tag.setInteger("mItemCount", GetItemCount());
+		tag.setInteger(NetworkTags.IMMANENCE, mCurrentImmanence);
+		tag.setInteger(NetworkTags.TOTAL_SPACE, GetTotalSpace());
+		tag.setInteger(NetworkTags.ITEM_COUNT, GetItemCount());
 
 		NBTTagList pendingList = new NBTTagList();
 
 		pendingInvites.forEach((key, value) ->
 		{
 			NBTTagCompound entry = new NBTTagCompound();
-			entry.setString("key", key);
-			entry.setString("value", value.toString());
+			entry.setString(NetworkTags.INVITE_KEY, key);
+			entry.setString(NetworkTags.INVITE_VALUE, value.toString());
 			pendingList.appendTag(entry);
 		});
 
-		tag.setTag("pendingInvites", pendingList);
+		rebuildTotals();
+
+		tag.setTag(NetworkTags.INVITES_PENDING, pendingList);
+
+		tag.setInteger(NetworkTags.TOTAL_RESONATORS, totalResonators);
+		tag.setInteger(NetworkTags.TOTAL_CORES, totalCores);
 
 		return tag;
 	}
 
-	public void Synchronise(PacketManifest.SynchroniseType type)
+	public void Synchronise(PacketNetwork.SynchroniseType type)
 	{
 		switch(type)
 		{
 			case DATA:
-				SynchroniseData();
+				synchroniseData();
 				break;
 		}
 	}
 
-	public void SynchroniseData()
+	public boolean synchroniseData()
 	{
 		MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
 		if(server != null)
 		{
 			EntityPlayerMP player = server.getPlayerList().getPlayerByUUID(mPlayerId);
-			IMessage packet = new PacketManifest.PacketSynchroniseResponse(PacketManifest.SynchroniseType.DATA, mPlayerId, buildSynchroniseData());
+			if (player == null) return false;
+			IMessage packet = new PacketNetwork.PacketSynchroniseResponse(PacketNetwork.SynchroniseType.DATA, mPlayerId, buildSynchroniseData());
 			AAPacketHandler.CHANNEL.sendTo(packet, player);
+			return true;
 		}
+
+		return false;
 	}
 
 	public static class ManifestItemEntry
