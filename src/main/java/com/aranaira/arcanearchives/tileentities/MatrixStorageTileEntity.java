@@ -18,8 +18,7 @@ public class MatrixStorageTileEntity extends ImmanenceTileEntity
 	{
 		super("matrix_storage_tile_entity");
 		immanenceDrain = ConfigHandler.values.iStorageMatrixDrain;
-		isInventory = true;
-		maxItems = ConfigHandler.values.iStorageMatrixItemCap;
+		// maxItems = ConfigHandler.values.iStorageMatrixItemCap;
 	}
 
 	@Override

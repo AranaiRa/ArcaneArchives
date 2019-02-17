@@ -21,8 +21,7 @@ public class MatrixRepositoryTileEntity extends ImmanenceTileEntity
 	{
 		super("matrix_repository_tile_entity");
 		immanenceDrain = ConfigHandler.values.iRepositoryMatrixDrain;
-		isInventory = true;
-		maxItems = ConfigHandler.values.iRepositoryMatrixItemCap;
+		// maxItems = ConfigHandler.values.iRepositoryMatrixItemCap;
 	}
 
 	@Override
@@ -45,7 +44,7 @@ public class MatrixRepositoryTileEntity extends ImmanenceTileEntity
 		return (oldState.getBlock() != newSate.getBlock());
 	}
 
-	@Override
+	/*@Override
 	public ItemStack InsertItem(ItemStack item, boolean simulate)
 	{
 		//Creates a copy of the item that can safely be edited.
@@ -80,5 +79,5 @@ public class MatrixRepositoryTileEntity extends ImmanenceTileEntity
 		if(!simulate) inventory.add(temp_add);
 
 		return ItemStack.EMPTY;
-	}
+	}*/
 }

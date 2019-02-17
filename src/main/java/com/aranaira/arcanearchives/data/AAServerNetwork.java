@@ -127,11 +127,11 @@ public class AAServerNetwork implements INBTSerializable<NBTTagCompound>
 
 		for(ImmanenceTileEntity ITE : GetBlocks())
 		{
-			if(ITE.isInventory)
+			/*if(ITE.isInventory)
 			{
 				// Should use addAll? TODO
 				inventories.add(ITE.inventory);
-			}
+			}*/
 		}
 
 		return inventories;
@@ -145,11 +145,11 @@ public class AAServerNetwork implements INBTSerializable<NBTTagCompound>
 
 		for(ImmanenceTileEntity ITE : GetTileEntitiesByPriority())
 		{
-			if(ITE.isInventory)
+			/*if(ITE.isInventory)
 			{
 				temp = ITE.InsertItem(temp, simulate);
 				if(temp.isEmpty()) return temp;
-			}
+			}*/
 		}
 
 		return temp;
@@ -167,7 +167,7 @@ public class AAServerNetwork implements INBTSerializable<NBTTagCompound>
 		}
 		for(ImmanenceTileEntity ITE : GetTileEntitiesByPriority())
 		{
-			if(ITE.isInventory)
+			/*if(ITE.isInventory)
 			{
 				ItemStack s;
 				if((s = ITE.RemoveItemCount(stack, count_needed, simulate)) != ItemStack.EMPTY)
@@ -176,7 +176,7 @@ public class AAServerNetwork implements INBTSerializable<NBTTagCompound>
 					count_needed -= s.getCount();
 					if(count_needed == 0) return to_return;
 				}
-			}
+			}*/
 		}
 
 		return to_return;
@@ -223,7 +223,7 @@ public class AAServerNetwork implements INBTSerializable<NBTTagCompound>
 	{
 		for(ImmanenceTileEntity ITE : GetTileEntitiesByPriority())
 		{
-			if(ITE.isInventory)
+			/*if(ITE.isInventory)
 			{
 				ItemStack s;
 				if((s = ITE.RemoveItemCount(stack, count_needed, false)) != null)
@@ -232,15 +232,10 @@ public class AAServerNetwork implements INBTSerializable<NBTTagCompound>
 					count_needed -= s.getCount();
 					if(count_needed == 0) return to_return;
 				}
-			}
+			}*/
 		}
 
-		return new ItemStack(Blocks.AIR);
-	}
-
-	public TileList GetTiles()
-	{
-		return this.mNetworkTiles;
+		return ItemStack.EMPTY;
 	}
 
 	public TileList.TileListIterable GetBlocks()
@@ -342,10 +337,10 @@ public class AAServerNetwork implements INBTSerializable<NBTTagCompound>
 
 		for(ImmanenceTileEntity ITE : GetBlocks())
 		{
-			if(ITE.isInventory)
+			/*if(ITE.isInventory)
 			{
 				tmp += ITE.GetTotalItems();
-			}
+			}*/
 		}
 
 		return tmp;
@@ -357,10 +352,10 @@ public class AAServerNetwork implements INBTSerializable<NBTTagCompound>
 
 		for(ImmanenceTileEntity ITE : GetBlocks())
 		{
-			if(ITE.isInventory)
+			/*if(ITE.isInventory)
 			{
 				tmp += ITE.maxItems;
-			}
+			}*/
 		}
 
 		return tmp;
