@@ -12,7 +12,7 @@ public class NetworkHelper
 {
 	public static UUID INVALID = UUID.fromString("00000000-0000-0000-0000-000000000000");
 	// TODO: This needs to be cleared whenever the player enters a new world
-	private static Map<UUID, AAClientNetwork> CLIENT_MAP = new HashMap<>();
+	private static Map<UUID, ClientNetwork> CLIENT_MAP = new HashMap<>();
 
 	public static void clearClientCache()
 	{
@@ -25,10 +25,10 @@ public class NetworkHelper
 	 *
 	 * @param uuid  The player/network UUID
 	 * @param world The world object
-	 * @return An AAServerNetwork instance for the given id, or null if it was not found.
+	 * @return An ServerNetwork instance for the given id, or null if it was not found.
 	 */
 	@Nullable
-	public static AAServerNetwork getServerNetwork(UUID uuid, World world)
+	public static ServerNetwork getServerNetwork(UUID uuid, World world)
 	{
 		if(uuid == null || uuid.equals(INVALID))
 		{
@@ -56,7 +56,7 @@ public class NetworkHelper
 		return saveData.getNetwork(uuid);
 	}
 
-	public static AAClientNetwork getClientNetwork(UUID uuid)
+	public static ClientNetwork getClientNetwork(UUID uuid)
 	{
 		if(uuid == null || uuid.equals(INVALID)) return null;
 
@@ -65,7 +65,7 @@ public class NetworkHelper
 			return CLIENT_MAP.get(uuid);
 		} else
 		{
-			AAClientNetwork net = new AAClientNetwork(uuid);
+			ClientNetwork net = new ClientNetwork(uuid);
 			CLIENT_MAP.put(uuid, net);
 			return net;
 		}

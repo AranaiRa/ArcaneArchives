@@ -1,23 +1,15 @@
 package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.data.AAClientNetwork;
-import com.aranaira.arcanearchives.data.AAServerNetwork;
+import com.aranaira.arcanearchives.data.ClientNetwork;
+import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
-import com.aranaira.arcanearchives.util.ItemComparison;
 import com.aranaira.arcanearchives.util.handlers.AAServerTickHandler;
 import com.aranaira.arcanearchives.util.types.Size;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 
@@ -32,8 +24,8 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	public boolean hasBeenAddedToNetwork = false;
 	public int dimension;
 	public Size size;
-	private AAServerNetwork network;
-	private AAClientNetwork cNetwork;
+	private ServerNetwork network;
+	private ClientNetwork cNetwork;
 	private int ticks = 0;
 
 	public ImmanenceTileEntity(String name)
@@ -200,7 +192,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 		return immanenceGeneration - immanenceDrain;
 	}
 
-	public AAClientNetwork getClientNetwork()
+	public ClientNetwork getClientNetwork()
 	{
 		if(cNetwork == null)
 		{
@@ -210,7 +202,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 		return cNetwork;
 	}
 
-	public AAServerNetwork getNetwork()
+	public ServerNetwork getNetwork()
 	{
 		if(network == null && networkID != null)
 		{

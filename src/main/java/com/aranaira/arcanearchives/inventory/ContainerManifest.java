@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.inventory;
 
-import com.aranaira.arcanearchives.data.AAClientNetwork;
-import com.aranaira.arcanearchives.data.AAServerNetwork;
+import com.aranaira.arcanearchives.data.ClientNetwork;
+import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
 import com.aranaira.arcanearchives.util.handlers.AATickHandler;
@@ -19,8 +19,8 @@ import java.util.List;
 public class ContainerManifest extends Container
 {
 
-	private AAClientNetwork clientNetwork = null;
-	private AAServerNetwork serverNetwork = null;
+	private ClientNetwork clientNetwork = null;
+	private ServerNetwork serverNetwork = null;
 	private ManifestItemHandler handler;
 	private boolean serverSide;
 	private EntityPlayer player;

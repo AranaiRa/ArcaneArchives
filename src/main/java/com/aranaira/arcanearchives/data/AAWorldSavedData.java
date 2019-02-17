@@ -20,7 +20,7 @@ public class AAWorldSavedData extends WorldSavedData
 {
 	public static final String ID = "Archane-Archives-Network";
 
-	private Map<UUID, AAServerNetwork> arcaneArchivesNetworks = new HashMap<>();
+	private Map<UUID, ServerNetwork> arcaneArchivesNetworks = new HashMap<>();
 
 	// It REALLY is used.
 	@SuppressWarnings("unused")
@@ -40,13 +40,13 @@ public class AAWorldSavedData extends WorldSavedData
 	}
 
 	@Nullable
-	public AAServerNetwork getNetwork(@Nullable UUID playerID)
+	public ServerNetwork getNetwork(@Nullable UUID playerID)
 	{
 		if(playerID == null || playerID == NetworkHelper.INVALID) return null;
 
 		if(!arcaneArchivesNetworks.containsKey(playerID))
 		{
-			arcaneArchivesNetworks.put(playerID, AAServerNetwork.newNetwork(playerID).setParent(this));
+			arcaneArchivesNetworks.put(playerID, ServerNetwork.newNetwork(playerID).setParent(this));
 		}
 		return arcaneArchivesNetworks.get(playerID);
 	}
@@ -59,7 +59,7 @@ public class AAWorldSavedData extends WorldSavedData
 		for(int i = 0; i < networkData.tagCount(); i++)
 		{
 			NBTTagCompound data = networkData.getCompoundTagAt(i);
-			AAServerNetwork network = AAServerNetwork.fromNBT(data);
+			ServerNetwork network = ServerNetwork.fromNBT(data);
 			network.setParent(this);
 			arcaneArchivesNetworks.put(network.getPlayerID(), network);
 		}
@@ -70,7 +70,7 @@ public class AAWorldSavedData extends WorldSavedData
 	{
 		NBTTagList networkData = new NBTTagList();
 
-		for(AAServerNetwork network : arcaneArchivesNetworks.values())
+		for(ServerNetwork network : arcaneArchivesNetworks.values())
 		{
 			networkData.appendTag(network.serializeNBT());
 		}

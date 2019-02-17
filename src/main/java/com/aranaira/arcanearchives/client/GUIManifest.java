@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.client;
 
-import com.aranaira.arcanearchives.data.AAClientNetwork;
+import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.inventory.ContainerManifest;
 import com.aranaira.arcanearchives.util.handlers.AATickHandler;
@@ -164,7 +164,7 @@ public class GUIManifest extends GuiContainer
 
 			if (mouseX > guiLeft + mRefreshButtonLeftOffset && mouseX < guiLeft + mRefreshButtonLeftOffset + mRefreshButtonWidth && mouseY > guiTop + mRefreshButtonTopOffset && mouseY < guiTop + mRefreshButtonTopOffset + mRefreshButtonHeight)
 			{
-				AAClientNetwork network = NetworkHelper.getClientNetwork(player.getUniqueID());
+				ClientNetwork network = NetworkHelper.getClientNetwork(player.getUniqueID());
 				network.synchroniseManifest();
 			}
 

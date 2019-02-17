@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.common.AAGuiHandler;
-import com.aranaira.arcanearchives.data.AAClientNetwork;
+import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import mcp.MethodsReturnNonnullByDefault;
@@ -31,7 +31,7 @@ public class ManifestItem extends ItemTemplate
 	{
 		if(!worldIn.isRemote) return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
 
-		AAClientNetwork network = NetworkHelper.getClientNetwork(playerIn.getUniqueID());
+		ClientNetwork network = NetworkHelper.getClientNetwork(playerIn.getUniqueID());
 		network.synchroniseManifest();
 
 		playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.MANIFEST, worldIn, (int) playerIn.posX, (int) playerIn.posY, (int) playerIn.posZ);

@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-public class AAClientNetwork
+public class ClientNetwork
 {
 	/* Internal values that are overwritten */
 	public ManifestList manifestItems = new ManifestList(new ArrayList<>());
@@ -34,10 +34,14 @@ public class AAClientNetwork
 	private int mCurrentImmanence = 0;
 	private int mTotalSpace = 0;
 	private int mItemCount = 0;
+
+	private int totalResonators = 0;
+	private int totalCores = 0;
+
 	private ManifestItemHandler mManifestHandler = null;
 	//private TileList<ImmanenceTileEntity> mActualTiles = new TileList<>();
 
-	AAClientNetwork(UUID id)
+	ClientNetwork(UUID id)
 	{
 		this.mOwnerId = id;
 		this.mManifestHandler = new ManifestItemHandler(manifestItems);
@@ -171,6 +175,10 @@ public class AAClientNetwork
 	public EntityPlayer getPlayer()
 	{
 		return Minecraft.getMinecraft().player;
+	}
+
+	public static class Tag {
+
 	}
 }
 

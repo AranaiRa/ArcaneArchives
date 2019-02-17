@@ -15,7 +15,6 @@ import com.aranaira.arcanearchives.util.types.SlotIterable;
 import com.aranaira.arcanearchives.util.types.TileList;
 import com.google.common.annotations.Beta;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -27,7 +26,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 import java.util.*;
 
-public class AAServerNetwork implements INBTSerializable<NBTTagCompound>
+public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 {
 	public boolean mShared = false;
 	public UUID mSharedPlayer = null;
@@ -41,20 +40,20 @@ public class AAServerNetwork implements INBTSerializable<NBTTagCompound>
 	private int mCurrentImmanence;
 	private boolean mNeedsToBeUpdated = true;
 
-	private AAServerNetwork(UUID id)
+	private ServerNetwork(UUID id)
 	{
 		mPlayerId = id;
 		mManifestHandler = new ManifestItemHandler(manifestItems);
 	}
 
-	public static AAServerNetwork newNetwork(UUID playerID)
+	public static ServerNetwork newNetwork(UUID playerID)
 	{
-		return new AAServerNetwork(playerID);
+		return new ServerNetwork(playerID);
 	}
 
-	public static AAServerNetwork fromNBT(NBTTagCompound data)
+	public static ServerNetwork fromNBT(NBTTagCompound data)
 	{
-		AAServerNetwork network = new AAServerNetwork(null);
+		ServerNetwork network = new ServerNetwork(null);
 		network.deserializeNBT(data);
 		return network;
 	}
@@ -318,7 +317,7 @@ public class AAServerNetwork implements INBTSerializable<NBTTagCompound>
 		return mParent;
 	}
 
-	public AAServerNetwork setParent(AAWorldSavedData parent)
+	public ServerNetwork setParent(AAWorldSavedData parent)
 	{
 		mParent = parent;
 		MarkUnsaved();

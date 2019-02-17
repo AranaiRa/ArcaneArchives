@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.items.templates;
 
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
-import com.aranaira.arcanearchives.data.AAServerNetwork;
+import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
@@ -40,7 +40,7 @@ public class ItemBlockTemplate extends ItemBlock
 			return EnumActionResult.FAIL;
 		}
 
-		AAServerNetwork network = NetworkHelper.getServerNetwork(player.getUniqueID(), world);
+		ServerNetwork network = NetworkHelper.getServerNetwork(player.getUniqueID(), world);
 
 		int placeLimit = blockTemplate.getPlaceLimit();
 

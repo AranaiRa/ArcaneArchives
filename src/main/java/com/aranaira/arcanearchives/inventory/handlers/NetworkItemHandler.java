@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.inventory.handlers;
 
-import com.aranaira.arcanearchives.data.AAServerNetwork;
+import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.item.ItemStack;
@@ -20,7 +20,7 @@ public class NetworkItemHandler implements IItemHandlerModifiable
 	private UUID playerUUID; //TODO: unused variable
 	private String searchText = "";
 	@Nullable
-	private AAServerNetwork network;
+	private ServerNetwork network;
 
 	public NetworkItemHandler(UUID uuid, World world)
 	{
