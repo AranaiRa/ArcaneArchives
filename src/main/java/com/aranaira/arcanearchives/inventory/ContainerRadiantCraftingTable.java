@@ -1,8 +1,13 @@
 package com.aranaira.arcanearchives.inventory;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.inventory.handlers.InventoryCraftingPersistent;
 import com.aranaira.arcanearchives.inventory.slots.SlotCraftingFastWorkbench;
+import com.aranaira.arcanearchives.inventory.slots.SlotIRecipe;
+import com.aranaira.arcanearchives.network.AAPacketHandler;
+import com.aranaira.arcanearchives.network.PacketRadiantCrafting;
 import com.aranaira.arcanearchives.tileentities.RadiantCraftingTableTileEntity;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -19,6 +24,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.items.ItemStackHandler;
 
+import javax.annotation.Nonnull;
+import java.util.Arrays;
 import java.util.List;
 
 // nearly the same as ContainerWorkbench but uses the TileEntities inventory
@@ -33,6 +40,9 @@ public class ContainerRadiantCraftingTable extends Container
 	private final InventoryCraftResult craftResult;
 	private IRecipe lastRecipe;
 	private IRecipe lastLastRecipe;
+	private IRecipe actualLastLastRecipe;
+	private IRecipe actualLastRecipe;
+	private List<SlotIRecipe> recipeSlots = Arrays.asList(new SlotIRecipe[3]);
 
 	private RadiantCraftingTableTileEntity tile;
 
@@ -51,6 +61,15 @@ public class ContainerRadiantCraftingTable extends Container
 		this.player = player;
 
 		this.addSlotToContainer(new SlotCraftingFastWorkbench(this, playerInventory.player, this.craftMatrix, this.craftResult, 0, 136, 42));
+
+		this.recipeSlots.set(0, new SlotIRecipe(this, tile, player, 0, 174, 16));
+		this.recipeSlots.set(1, new SlotIRecipe(this, tile, player, 1, 174, 42));
+		this.recipeSlots.set(2, new SlotIRecipe(this, tile, player, 2, 174, 68));
+
+		this.addSlotToContainer(recipeSlots.get(0));
+		this.addSlotToContainer(recipeSlots.get(1));
+		this.addSlotToContainer(recipeSlots.get(2));
+
 		int i;
 		int j;
 
@@ -90,6 +109,101 @@ public class ContainerRadiantCraftingTable extends Container
 		{
 			((ContainerRadiantCraftingTable) event.getContainer()).onCraftMatrixChanged();
 		}
+	}
+
+	public void saveLastRecipe () {
+		actualLastLastRecipe = actualLastRecipe;
+		actualLastRecipe = lastRecipe;
+	}
+
+	@Override
+	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
+	{
+		if(slotId == -999) return super.slotClick(slotId, dragType, clickTypeIn, player);
+
+		Slot slot = getSlot(slotId);
+		if(!(slot instanceof SlotIRecipe)) return super.slotClick(slotId, dragType, clickTypeIn, player);
+
+		if(!world.isRemote) return ItemStack.EMPTY;
+
+		SlotIRecipe recipeSlot = (SlotIRecipe) slot;
+
+		int recipeId = recipeSlot.getRecipeIndex();
+
+		// whatever right-click is
+		if(GuiScreen.isShiftKeyDown() && dragType == 0)
+		{
+			tile.setRecipe(recipeId, null);
+		} else if(dragType == 1)
+		{
+			if(GuiScreen.isShiftKeyDown())
+			{
+				if (actualLastLastRecipe != null)
+				{
+					tile.setRecipe(recipeId, actualLastLastRecipe);
+				}
+			} else
+			{
+				IRecipe cur = CraftingManager.findMatchingRecipe(craftMatrix, world);
+				if (cur != null) {
+					tile.setRecipe(recipeId, cur);
+				} else {
+					tile.setRecipe(recipeId, actualLastRecipe);
+				}
+			}
+		} else if(dragType == 0)
+		{
+			// just a normal click
+			IRecipe recipe = tile.getRecipe(recipeId);
+			IRecipe cur = CraftingManager.findMatchingRecipe(craftMatrix, world);
+			if(recipe != cur)
+			{
+				ArcaneArchives.logger.info("Now we should put in the previous recipes");
+			}
+		}
+
+		return ItemStack.EMPTY;
+	}
+
+	@Nonnull
+	@Override
+	public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
+	{
+		ItemStack itemstack = ItemStack.EMPTY;
+		Slot slot = this.inventorySlots.get(index);
+
+		// slot that was clicked on not empty?
+		if(slot != null && slot.getHasStack())
+		{
+			ItemStack itemstack1 = slot.getStack();
+			itemstack = itemstack1.copy();
+			int end = this.inventorySlots.size();
+
+			// Is it a slot in the main inventory? (aka not player inventory)
+			if(index < 13)
+			{
+				// try to put it into the player inventory (if we have a player inventory)
+				if(!this.mergeItemStack(itemstack1, 13, end, true))
+				{
+					return ItemStack.EMPTY;
+				}
+			}
+			// Slot is in the player inventory (if it exists), transfer to main inventory
+			else if(!this.mergeItemStack(itemstack1, 3, 13, false))
+			{
+				return ItemStack.EMPTY;
+			}
+
+			if(itemstack1.isEmpty())
+			{
+				slot.putStack(ItemStack.EMPTY);
+			} else
+			{
+				slot.onSlotChanged();
+			}
+		}
+
+		return itemstack;
 	}
 
 	// update crafting
@@ -145,7 +259,7 @@ public class ContainerRadiantCraftingTable extends Container
 			{
 				entityplayermp.connection.sendPacket(new SPacketSetSlot(this.windowId, 0, itemstack));
 			}
-			// TODO: TinkerNetwork.sendTo(new LastRecipeMessage(lastRecipe), entityplayermp);
+			AAPacketHandler.CHANNEL.sendTo(new PacketRadiantCrafting.LastRecipeMessage(lastRecipe), entityplayermp);
 		}
 
 		lastLastRecipe = lastRecipe;
@@ -182,5 +296,6 @@ public class ContainerRadiantCraftingTable extends Container
 		}
 		return craftMatrix.stackList;
 	}
+
 }
 

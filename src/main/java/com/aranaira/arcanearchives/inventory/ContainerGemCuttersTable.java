@@ -191,7 +191,6 @@ public class ContainerGemCuttersTable extends Container
 
 	public class SlotOutput extends SlotItemHandler
 	{
-		private ItemStack stack = ItemStack.EMPTY;
 		private Container cont;
 
 		SlotOutput(IItemHandler handler, Container cont, int xPosition, int yPosition)

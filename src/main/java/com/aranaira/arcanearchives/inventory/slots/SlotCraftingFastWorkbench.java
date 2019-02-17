@@ -46,6 +46,7 @@ public class SlotCraftingFastWorkbench extends SlotCrafting
 		if(this.amountCrafted > 0)
 		{
 			stack.onCrafting(this.player.world, this.player, this.amountCrafted);
+			containerCraftingStation.saveLastRecipe();
 			FMLCommonHandler.instance().firePlayerCraftingEvent(this.player, stack, craftMatrix);
 		}
 
@@ -57,12 +58,9 @@ public class SlotCraftingFastWorkbench extends SlotCrafting
 	{
 		this.onCrafting(stack);
 		net.minecraftforge.common.ForgeHooks.setCraftingPlayer(thePlayer);
-		/* CHANGE BEGINS HERE */
 		NonNullList<ItemStack> nonnulllist = containerCraftingStation.getRemainingItems();
-		/* END OF CHANGE */
 		net.minecraftforge.common.ForgeHooks.setCraftingPlayer(null);
 
-		// note: craftMatrixPersistent and this.craftMatrix are the same object!
 		craftMatrixPersistent.setDoNotCallUpdates(true);
 
 		for(int i = 0; i < nonnulllist.size(); ++i)

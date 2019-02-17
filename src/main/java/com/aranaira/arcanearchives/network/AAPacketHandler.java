@@ -22,6 +22,7 @@ public class AAPacketHandler
 		registerPacks(PacketGemCutters.Consume.ConsumeHandler.class, PacketGemCutters.Consume.class, Side.SERVER);
 		registerPacks(PacketManifest.PacketSynchroniseResponse.PacketSynchroniseResponseHandler.class, PacketManifest.PacketSynchroniseResponse.class, Side.CLIENT);
 		registerPacks(PacketManifest.PacketSynchroniseRequest.PacketSynchroniseRequestHandler.class, PacketManifest.PacketSynchroniseRequest.class, Side.SERVER);
+		registerPacks(PacketRadiantCrafting.LastRecipeMessage.Handler.class, PacketRadiantCrafting.LastRecipeMessage.class, Side.CLIENT);
 	}
 
 	private static <REQ extends IMessage, REPLY extends IMessage> void registerPacks(Class<? extends IMessageHandler<REQ, REPLY>> messageHandler, Class<REQ> requestMessageType, Side side)
