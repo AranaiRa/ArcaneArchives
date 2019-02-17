@@ -34,7 +34,17 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 	{
 		if(mFilterText == null) return this;
 
-		return reference().stream().filter((entry) -> entry != null && entry.getStack().getDisplayName().compareToIgnoreCase(mFilterText) != 0).collect(Collectors.toCollection(ManifestList::new));
+		String filter = mFilterText.toLowerCase();
+
+		return reference().stream().filter((entry) -> {
+			if (entry == null) return false;
+
+			ItemStack stack = entry.getStack();
+			String display = stack.getDisplayName().toLowerCase();
+			String resource = stack.getItem().getRegistryName().toString().toLowerCase();
+
+			return display.contains(filter) || resource.contains(filter);
+		}).collect(Collectors.toCollection(ManifestList::new));
 
 	}
 
