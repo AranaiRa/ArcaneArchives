@@ -116,6 +116,7 @@ public class ContainerRadiantCraftingTable extends Container
 		actualLastRecipe = lastRecipe;
 	}
 
+	/*
 	@Override
 	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
 	{
@@ -164,6 +165,7 @@ public class ContainerRadiantCraftingTable extends Container
 
 		return ItemStack.EMPTY;
 	}
+	*/
 
 	@Nonnull
 	@Override
