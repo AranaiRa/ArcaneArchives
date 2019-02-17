@@ -4,16 +4,21 @@ import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
 import com.aranaira.arcanearchives.inventory.slots.SlotGCTOutput;
 import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
 import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipe;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GUIGemCuttersTable extends GuiContainer
@@ -68,9 +73,12 @@ public class GUIGemCuttersTable extends GuiContainer
 			{
 				dimSlot(slot, wasEnabled);
 			}
-		} else if (slot instanceof SlotGCTOutput) {
-			if (!slot.getStack().isEmpty() && curRecipe != null) {
-				if (!RECIPE_STATUS.getOrDefault(curRecipe, false)) {
+		} else if(slot instanceof SlotGCTOutput)
+		{
+			if(!slot.getStack().isEmpty() && curRecipe != null)
+			{
+				if(!RECIPE_STATUS.getOrDefault(curRecipe, false))
+				{
 					dimSlot(slot, false);
 				}
 			}
@@ -113,7 +121,7 @@ public class GUIGemCuttersTable extends GuiContainer
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks)
 	{
-        this.drawDefaultBackground();
+		this.drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		this.renderHoveredToolTip(mouseX, mouseY);
 
@@ -125,28 +133,39 @@ public class GUIGemCuttersTable extends GuiContainer
 		}
 	}
 
-	/*
-			if(recipe != null)
+	@Override
+	protected void renderToolTip(ItemStack stack, int x, int y)
+	{
+		Slot slot = this.getSlotUnderMouse();
+
+		if(slot instanceof SlotRecipeHandler)
 		{
-			List<String> mRecipeInput = new ArrayList<>();
-			if(recipeStatus)
+			FontRenderer font = stack.getItem().getFontRenderer(stack);
+			List<String> tooltip = new ArrayList<>();
+			GemCuttersTableRecipe recipe = ((SlotRecipeHandler) slot).getRecipe();
+			if(recipe != null)
 			{
-				// Valid
-				mRecipeInput.add(TextFormatting.GREEN + output.getDisplayName());
-			} else
-			{
-				// Invalid
-				mRecipeInput.add(TextFormatting.RED + output.getDisplayName());
+				if(RECIPE_STATUS.getOrDefault(recipe, false))
+				{// Valid
+					tooltip.add(TextFormatting.GREEN + stack.getDisplayName());
+				} else
+				{
+					// Invalid
+					tooltip.add(TextFormatting.RED + stack.getDisplayName());
+				}
+
+				for(ItemStack item : recipe.getInput())
+				{
+					tooltip.add(TextFormatting.BOLD + item.getDisplayName() + " : " + item.getCount());
+				}
 			}
 
-			for(ItemStack item : recipe.getInput())
-			{
-				mRecipeInput.add(TextFormatting.BOLD + item.getDisplayName() + " : " + item.getCount());
-			}
-
-			this.drawHoveringText(mRecipeInput, guiLeft + 206, guiTop);
+			this.drawHoveringText(tooltip, x, y, (font == null ? fontRenderer : font));
+		} else
+		{
+			super.renderToolTip(stack, x, y);
 		}
-	 */
+	}
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
