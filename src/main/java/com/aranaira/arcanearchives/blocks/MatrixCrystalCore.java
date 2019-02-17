@@ -34,7 +34,7 @@ public class MatrixCrystalCore extends BlockDirectionalTemplate
 
 	public MatrixCrystalCore()
 	{
-		super(name, Material.ROCK, true);
+		super(name, Material.ROCK);
 		setLightLevel(16 / 16f);
 		setPlaceLimit(1);
 		setSize(3, 4, 3);

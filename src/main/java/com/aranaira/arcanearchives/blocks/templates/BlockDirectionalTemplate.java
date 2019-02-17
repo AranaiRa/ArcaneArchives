@@ -24,9 +24,8 @@ public class BlockDirectionalTemplate extends BlockTemplate
 	 *
 	 * @param name            The name of the block, used for translation key and registry name
 	 * @param materialIn      The material of the block
-	 * @param createItemBlock Whether to automatically create an ItemBlockTemplate and register it for this Block
 	 */
-	protected BlockDirectionalTemplate(String name, Material materialIn, boolean createItemBlock)
+	protected BlockDirectionalTemplate(String name, Material materialIn)
 	{
 		super(name, materialIn);
 	}

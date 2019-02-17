@@ -123,6 +123,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 		super.onDataPacket(net, pkt);
 	}
 
+	@Override
 	@Nonnull
 	public SPacketUpdateTileEntity getUpdatePacket()
 	{

@@ -54,6 +54,7 @@ public class PacketGemCutters
 
 		public static class ChangePageHandler implements IMessageHandler<ChangePage, IMessage>
 		{
+			@Override
 			public IMessage onMessage(final ChangePage message, final MessageContext ctx)
 			{
 				FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> processMessage(message, ctx));
@@ -113,6 +114,7 @@ public class PacketGemCutters
 
 		public static class ChangeRecipeHandler implements IMessageHandler<ChangeRecipe, IMessage>
 		{
+			@Override
 			public IMessage onMessage(final ChangeRecipe message, final MessageContext ctx)
 			{
 				FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> processMessage(message, ctx));
@@ -155,6 +157,7 @@ public class PacketGemCutters
 			this.dimension = dimension;
 		}
 
+		@Override
 		public void fromBytes(ByteBuf buf)
 		{
 			this.player = UUID.fromString(ByteBufUtils.readUTF8String(buf));
@@ -172,6 +175,7 @@ public class PacketGemCutters
 
 		public static class ConsumeHandler implements IMessageHandler<Consume, IMessage>
 		{
+			@Override
 			public IMessage onMessage(final Consume message, final MessageContext ctx)
 			{
 				FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> processMessage(message, ctx));

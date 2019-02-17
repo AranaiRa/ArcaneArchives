@@ -201,6 +201,7 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 		super.onDataPacket(net, pkt);
 	}
 
+	@Override
 	@Nonnull
 	public SPacketUpdateTileEntity getUpdatePacket()
 	{

@@ -63,6 +63,7 @@ public class ItemMultistateTemplate extends ItemTemplate
 		return new ItemStack(this, 1, number);
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerModels()
 	{
