@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.client;
 
 import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
+import com.aranaira.arcanearchives.inventory.slots.SlotGCTOutput;
 import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
 import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipe;
 import net.minecraft.client.gui.GuiButton;
@@ -47,12 +48,12 @@ public class GUIGemCuttersTable extends GuiContainer
 	{
 		super.drawSlot(slot);
 
+		boolean wasEnabled = false;
+
 		if(slot instanceof SlotRecipeHandler)
 		{
 			GemCuttersTableRecipe recipe = ((SlotRecipeHandler) slot).getRecipe();
 			if(recipe == null) return;
-
-			boolean wasEnabled = false;
 
 			if(recipe == curRecipe)
 			{
@@ -65,11 +66,22 @@ public class GUIGemCuttersTable extends GuiContainer
 
 			if(!RECIPE_STATUS.get(recipe))
 			{
-				if(wasEnabled) this.mc.getTextureManager().deleteTexture(GUITextures);
-				GlStateManager.disableDepth();
-				drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, OVERLAY);
+				dimSlot(slot, wasEnabled);
+			}
+		} else if (slot instanceof SlotGCTOutput) {
+			if (!slot.getStack().isEmpty() && curRecipe != null) {
+				if (!RECIPE_STATUS.getOrDefault(curRecipe, false)) {
+					dimSlot(slot, false);
+				}
 			}
 		}
+	}
+
+	private void dimSlot(Slot slot, boolean wasEnabled)
+	{
+		if(wasEnabled) this.mc.getTextureManager().deleteTexture(GUITextures);
+		GlStateManager.disableDepth();
+		drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, OVERLAY);
 	}
 
 	@Override

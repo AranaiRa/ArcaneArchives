@@ -1,17 +1,16 @@
 package com.aranaira.arcanearchives.inventory;
 
+import com.aranaira.arcanearchives.inventory.slots.SlotGCTOutput;
 import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
 import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipe;
 import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipeList;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
@@ -24,10 +23,10 @@ public class ContainerGemCuttersTable extends Container
 {
 	private GemCuttersTableTileEntity tile;
 	private boolean isServer;
-	private IInventory playerInventory;
+	public IInventory playerInventory;
 	private GemCuttersTableTileEntity.GemCuttersTableItemHandler tileInventory;
 	private ItemStackHandler tileOutput;
-	private SlotOutput outputSlot;
+	private SlotGCTOutput outputSlot;
 	private Runnable updateRecipeGUI;
 
 	public ContainerGemCuttersTable(GemCuttersTableTileEntity tile, IInventory playerInventory, boolean serverSide)
@@ -54,7 +53,7 @@ public class ContainerGemCuttersTable extends Container
 			i--;
 		}
 
-		outputSlot = new SlotOutput(tileOutput, this, 95, 18);
+		outputSlot = new SlotGCTOutput(this, tileOutput, this, 95, 18);
 
 		this.addSlotToContainer(outputSlot);
 
@@ -189,55 +188,4 @@ public class ContainerGemCuttersTable extends Container
 		this.tileInventory.deleteHook(this.updateRecipeGUI);
 	}
 
-	public class SlotOutput extends SlotItemHandler
-	{
-		private Container cont;
-
-		SlotOutput(IItemHandler handler, Container cont, int xPosition, int yPosition)
-		{
-			super(handler, 0, xPosition, yPosition);
-			this.cont = cont;
-		}
-
-		@Override
-		public boolean isItemValid(@Nonnull ItemStack stack)
-		{
-			return false;
-		}
-
-		@Override
-		public ItemStack onTake(EntityPlayer thePlayer, ItemStack stack)
-		{
-			GemCuttersTableRecipe recipe = getTile().getRecipe();
-			if(recipe == null) return ItemStack.EMPTY;
-			GemCuttersTableTileEntity tile = getTile();
-			ItemStackHandler tileInv = tile.getInventory();
-			InvWrapper ply = new InvWrapper(playerInventory);
-
-			if(thePlayer.world.isRemote)
-			{
-				if(!recipe.matchesRecipe(tileInv, ply))
-				{
-					stack = ItemStack.EMPTY;
-				}
-			} else
-			{
-				if(!recipe.matchesRecipe(tileInv, ply))
-				{
-					stack = ItemStack.EMPTY;
-				} else if(!recipe.consume(tileInv, ply))
-				{
-					stack = ItemStack.EMPTY;
-				}
-			}
-
-			if(thePlayer instanceof EntityPlayerMP)
-			{
-				tile.updateOutput();
-				((EntityPlayerMP) thePlayer).sendAllContents(cont, cont.getInventory());
-			}
-
-			return stack;
-		}
-	}
 }
