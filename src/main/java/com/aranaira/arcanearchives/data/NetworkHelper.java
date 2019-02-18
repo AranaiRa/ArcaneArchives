@@ -33,7 +33,7 @@ public class NetworkHelper
 		if(uuid == null || uuid.equals(INVALID))
 		{
 			ArcaneArchives.logger.warn(() -> "Attempted to fetch an invalid archive: " + uuid);
-			ArcaneArchives.logger.warn("Trace:", new NullPointerException("UUID must be valid"));
+			ArcaneArchives.logger.warn("Trace:", new InvalidNetworkException("UUID must be valid"));
 			// In an ideal situation, we won't need these checks, but it's useful for notifying about bugs with a
 			// reduction in the chance of crashing the server/client
 			return null;
@@ -41,7 +41,7 @@ public class NetworkHelper
 		if(world == null || world.getMapStorage() == null)
 		{
 			ArcaneArchives.logger.error(String.format("Attempted to load a network for %s, but the world or its storage is null!", uuid.toString()));
-			ArcaneArchives.logger.warn("Trace:", new NullPointerException("World is null!"));
+			ArcaneArchives.logger.warn("Trace:", new InvalidNetworkException("World is null!"));
 			return null;
 		}
 
@@ -68,6 +68,13 @@ public class NetworkHelper
 			ClientNetwork net = new ClientNetwork(uuid);
 			CLIENT_MAP.put(uuid, net);
 			return net;
+		}
+	}
+
+	public static class InvalidNetworkException extends NullPointerException {
+		InvalidNetworkException(String s)
+		{
+			super(s);
 		}
 	}
 }
