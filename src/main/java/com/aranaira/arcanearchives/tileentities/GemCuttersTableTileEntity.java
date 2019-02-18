@@ -219,21 +219,24 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 	@Override
 	public boolean updateOutput()
 	{
-		if(world == null || world.isRemote) return false;
+		if(world == null) return false;
 
 		if(super.updateOutput()) return true;
 
-		PacketGemCutters.ChangePage packet = new PacketGemCutters.ChangePage(getPos(), getPage(), world.provider.getDimension());
-		AAPacketHandler.CHANNEL.sendToServer(packet);
-		PacketGemCutters.ChangeRecipe packet2;
-		if(this.getRecipe() != null)
+		if (world.isRemote)
 		{
-			packet2 = new PacketGemCutters.ChangeRecipe(this.getRecipe().getOutput(), getPos(), world.provider.getDimension());
-		} else
-		{
-			packet2 = new PacketGemCutters.ChangeRecipe(ItemStack.EMPTY, getPos(), world.provider.getDimension());
+			PacketGemCutters.ChangePage packet = new PacketGemCutters.ChangePage(getPos(), getPage(), world.provider.getDimension());
+			AAPacketHandler.CHANNEL.sendToServer(packet);
+			PacketGemCutters.ChangeRecipe packet2;
+			if(this.getRecipe() != null)
+			{
+				packet2 = new PacketGemCutters.ChangeRecipe(this.getRecipe().getOutput(), getPos(), world.provider.getDimension());
+			} else
+			{
+				packet2 = new PacketGemCutters.ChangeRecipe(ItemStack.EMPTY, getPos(), world.provider.getDimension());
+			}
+			AAPacketHandler.CHANNEL.sendToServer(packet2);
 		}
-		AAPacketHandler.CHANNEL.sendToServer(packet2);
 
 		return true;
 	}
