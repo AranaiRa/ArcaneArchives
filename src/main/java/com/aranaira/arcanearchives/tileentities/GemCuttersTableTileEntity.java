@@ -213,7 +213,7 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 	@Override
 	public boolean updateOutput()
 	{
-		if(world == null) return false;
+		if(world == null || world.isRemote) return false;
 
 		if(super.updateOutput()) return true;
 

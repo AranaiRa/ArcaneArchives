@@ -21,9 +21,9 @@ import java.util.Map;
 
 public class ContainerGemCuttersTable extends Container
 {
+	public IInventory playerInventory;
 	private GemCuttersTableTileEntity tile;
 	private boolean isServer;
-	public IInventory playerInventory;
 	private GemCuttersTableTileEntity.GemCuttersTableItemHandler tileInventory;
 	private ItemStackHandler tileOutput;
 	private SlotGCTOutput outputSlot;
@@ -97,7 +97,7 @@ public class ContainerGemCuttersTable extends Container
 		ItemStack stack = ItemStack.EMPTY;
 		final Slot slot = inventorySlots.get(index);
 
-		if(slot != null && slot.getHasStack())
+		if(slot != null && slot.getHasStack() && index != 36)
 		{
 			final ItemStack slotStack = slot.getStack();
 			stack = slotStack.copy();
@@ -120,6 +120,8 @@ public class ContainerGemCuttersTable extends Container
 			{
 				slot.onSlotChanged();
 			}
+		} else {
+			return ItemStack.EMPTY;
 		}
 
 		return stack;
@@ -137,16 +139,19 @@ public class ContainerGemCuttersTable extends Container
 	@Nonnull
 	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
 	{
-		if(!player.world.isRemote)
+		if(slotId <= 43 && slotId >= 37)
 		{
-			if(slotId <= 43 && slotId >= 37)
+			getTile().setRecipe(getSlot(slotId).getStack());
+
+			if (player.world.isRemote)
 			{
-				getTile().setRecipe(getSlot(slotId).getStack());
-				return ItemStack.EMPTY;
+				updateRecipeGUI.run();
 			}
+
+			return ItemStack.EMPTY;
 		}
 
-		if(!player.world.isRemote && slotId == 36)
+		if(slotId == 36)
 		{
 			GemCuttersTableRecipe recipe = getTile().getRecipe();
 			if(recipe == null) return ItemStack.EMPTY;
