@@ -180,6 +180,7 @@ public class PacketNetwork
 				switch(message.type)
 				{
 					case DATA:
+						ArcaneArchives.logger.info("[DEBUG ONLY MESSAGE] Received synchronise packet.");
 						network.deserializeData(message.data);
 						break;
 					case MANIFEST:

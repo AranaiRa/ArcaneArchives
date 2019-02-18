@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.items.templates;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.MatrixCrystalCore;
 import com.aranaira.arcanearchives.blocks.RadiantResonator;
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
@@ -101,6 +102,10 @@ public class ItemBlockTemplate extends ItemBlock
 				if (!world.isRemote) player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.notenoughspace", blockTemplate.getNameComponent()), true);
 				return EnumActionResult.FAIL;
 			}
+		}
+
+		if (placeLimit != -1 && world.isRemote) {
+			ArcaneArchives.logger.info(String.format("[DEBUG ONLY MESSAGE] Successfully placed %s, with %d total resonators and %d total cores in the client network.", blockTemplate.getLocalizedName(), totalResonators, totalCores));
 		}
 
 		return super.onItemUseFirst(player, world, pos, side, hitX, hitY, hitZ, hand);
