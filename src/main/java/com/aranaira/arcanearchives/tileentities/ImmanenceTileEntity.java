@@ -171,7 +171,9 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	@Nonnull
 	public NBTTagCompound writeToNBT(NBTTagCompound compound)
 	{
-		compound.setString(Tags.PLAYER_ID, networkID.toString());
+		if (networkID != null) {
+			compound.setString(Tags.PLAYER_ID, networkID.toString());
+		}
 		compound.setInteger(Tags.DIM, dimension);
 		return super.writeToNBT(compound);
 	}

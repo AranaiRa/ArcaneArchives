@@ -69,6 +69,8 @@ public class AAServerTickHandler
 
 		for(ImmanenceTileEntity ite : outgoingITEs)
 		{
+			if (ite.isInvalid()) continue;
+
 			ite.breakBlock();
 		}
 
