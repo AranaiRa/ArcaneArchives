@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
 import com.aranaira.arcanearchives.inventory.slots.SlotGCTOutput;
 import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
 import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipe;
+import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -28,18 +29,20 @@ public class GUIGemCuttersTable extends GuiContainer
 
 	private static final int OVERLAY = 0xaa1e3340;
 
-	ContainerGemCuttersTable mCGCT;
+	ContainerGemCuttersTable container;
 	GemCuttersTableRecipe curRecipe = null;
 	private InvisibleButton PrevPageButton;
 	private InvisibleButton NextPageButton;
 	private EntityPlayer player;
+	private GemCuttersTableTileEntity tile;
 	private Map<GemCuttersTableRecipe, Boolean> RECIPE_STATUS = new HashMap<>();
 	private int timesChanged;
 
 	public GUIGemCuttersTable(EntityPlayer player, ContainerGemCuttersTable container)
 	{
 		super(container);
-		mCGCT = container;
+		this.container = container;
+		this.tile = container.getTile();
 		container.setUpdateRecipeGUI(this::updateRecipeStatus);
 		this.xSize = 206;
 		this.ySize = 254;
@@ -113,9 +116,9 @@ public class GUIGemCuttersTable extends GuiContainer
 
 	public void updateRecipeStatus()
 	{
-		curRecipe = mCGCT.getTile().getRecipe();
+		curRecipe = container.getTile().getRecipe();
 		RECIPE_STATUS.clear();
-		RECIPE_STATUS.putAll(mCGCT.updateRecipeStatus());
+		RECIPE_STATUS.putAll(container.updateRecipeStatus());
 	}
 
 	@Override
@@ -188,11 +191,11 @@ public class GUIGemCuttersTable extends GuiContainer
 	{
 		if(button.id == 0)
 		{
-			mCGCT.getTile().previousPage();
+			container.getTile().previousPage();
 		}
 		if(button.id == 1)
 		{
-			mCGCT.getTile().nextPage();
+			container.getTile().nextPage();
 		}
 		super.actionPerformed(button);
 	}

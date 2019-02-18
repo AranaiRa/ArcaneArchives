@@ -33,7 +33,7 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 	public static final int RECIPE_PAGE_LIMIT = 7;
 	private final GemCuttersTableItemHandler mInventory = new GemCuttersTableItemHandler(18);
 	private final ItemStackHandler mOutput = new ItemStackHandler(1);
-	private GemCuttersTableRecipe mRecipe = null;
+	private GemCuttersTableRecipe recipe = null;
 	private int curPage = 0;
 	public GemCuttersTableTileEntity()
 	{
@@ -59,7 +59,7 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 	@Nullable
 	public GemCuttersTableRecipe getRecipe()
 	{
-		return mRecipe;
+		return recipe;
 	}
 
 	public void setRecipe(ItemStack itemStack)
@@ -69,14 +69,20 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 
 	public void setRecipe(@Nullable GemCuttersTableRecipe recipe)
 	{
-		mRecipe = recipe;
-		if(recipe != null)
-		{
-			setOutput(recipe.getOutput());
-		}
+		this.recipe = recipe;
+		updateRecipe();
 		updateOutput();
 
 		// send a synchronise packet
+	}
+
+	public void updateRecipe () {
+		if(recipe != null)
+		{
+			setOutput(recipe.getOutput());
+		} else {
+			setOutput(ItemStack.EMPTY);
+		}
 	}
 
 	public void consume(UUID playerId)
