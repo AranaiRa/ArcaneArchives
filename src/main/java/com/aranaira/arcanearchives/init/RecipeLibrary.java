@@ -23,7 +23,7 @@ public class RecipeLibrary
 	public static GemCuttersTableRecipe MATRIX_STORAGE_RECIPE = new GemCuttersTableRecipe(Arrays.asList(new ItemStack(ItemRegistry.COMPONENT_MATRIXBRACE, 2), new ItemStack(ItemRegistry.COMPONENT_MATERIALINTERFACE, 1), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 24)), new ItemStack(BlockRegistry.MATRIX_STORAGE, 1));
 	public static GemCuttersTableRecipe MATRIX_REPOSITORY_RECIPE = new GemCuttersTableRecipe(Arrays.asList(new ItemStack(BlockRegistry.MATRIX_STORAGE, 1), new ItemStack(ItemRegistry.COMPONENT_MATERIALINTERFACE, 2)), new ItemStack(BlockRegistry.MATRIX_REPOSITORY, 1));
 
-	public static GemCuttersTableRecipe RADIANT_LANTERN_RECIPE = new GemCuttersTableRecipe(Arrays.asList(new ItemStack(ItemRegistry.RAW_RADIANT_QUARTZ, 1), new ItemStack(Items.GOLD_NUGGET, 1)), new ItemStack(BlockRegistry.RADIANT_LANTERN, 16));
+	public static GemCuttersTableRecipe RADIANT_LANTERN_RECIPE = new GemCuttersTableRecipe(Arrays.asList(new ItemStack(ItemRegistry.RAW_RADIANT_QUARTZ, 2), new ItemStack(Items.GOLD_NUGGET, 1)), new ItemStack(BlockRegistry.RADIANT_LANTERN, 4));
 
 	public static void RegisterGCTRecipes()
 	{
