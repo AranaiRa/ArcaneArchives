@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class ManifestList extends ReferenceList<ManifestEntry>
 {
-	String mFilterText;
+	private String mFilterText;
 
 	public ManifestList()
 	{

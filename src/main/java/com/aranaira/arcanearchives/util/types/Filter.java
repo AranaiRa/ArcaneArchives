@@ -4,8 +4,8 @@ import java.util.function.BiFunction;
 
 public class Filter<T>
 {
-	T term = null;
-	BiFunction<T, T, Boolean> comparator = null;
+	private T term = null;
+	private BiFunction<T, T, Boolean> comparator = null;
 
 	Filter(T term, BiFunction<T, T, Boolean> comparator)
 	{
