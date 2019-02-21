@@ -36,7 +36,7 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 
 		String filter = mFilterText.toLowerCase();
 
-		return reference().stream().filter((entry) -> {
+		return stream().filter((entry) -> {
 			if (entry == null) return false;
 
 			ItemStack stack = entry.getStack();
@@ -51,13 +51,13 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 	@Nullable
 	public ManifestEntry getEntryForSlot(int slot)
 	{
-		if(slot < reference().size() && slot >= 0) return get(slot);
+		if(slot < size() && slot >= 0) return get(slot);
 		return null;
 	}
 
 	public ItemStack getItemStackForSlot(int slot)
 	{
-		if(slot < reference().size() && slot >= 0) return get(slot).getStack();
+		if(slot < size() && slot >= 0) return get(slot).getStack();
 		return ItemStack.EMPTY;
 	}
 
@@ -75,7 +75,7 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 	public ManifestList sorted(Comparator<ManifestEntry> c)
 	{
 		ManifestList copy = new ManifestList(new ArrayList<>(), null);
-		copy.addAll(this.reference());
+		copy.addAll(this);
 		copy.sort(c);
 		return copy;
 	}
