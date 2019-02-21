@@ -23,7 +23,7 @@ public class ItemStackConsolidator
 			boolean added = false;
 			for(ItemStack s2 : tempList)
 			{
-				if(ItemComparison.AreItemsEqual(s, s2))
+				if(ItemComparison.areStacksEqualIgnoreSize(s, s2))
 				{
 					s2.setCount(s2.getCount() + s.getCount());
 					added = true;
@@ -48,7 +48,7 @@ public class ItemStackConsolidator
 			ItemStack next = input.remove(0).copy();
 			final ItemStack copy = next.copy();
 
-			List<ItemStack> matches = input.stream().filter((i) -> ItemComparison.AreItemsEqual(copy, i)).collect(Collectors.toList());
+			List<ItemStack> matches = input.stream().filter((i) -> ItemComparison.areStacksEqualIgnoreSize(copy, i)).collect(Collectors.toList());
 
 			if(matches.size() == 0)
 			{
@@ -89,7 +89,7 @@ public class ItemStackConsolidator
 			final ItemStack copy = tup.stack.copy();
 			final int copy2 = tup.dim;
 
-			List<ManifestItemEntry> matches = input.stream().filter((i) -> ItemComparison.AreItemsEqual(i.stack, copy) && i.dim == copy2).collect(Collectors.toList());
+			List<ManifestItemEntry> matches = input.stream().filter((i) -> ItemComparison.areStacksEqualIgnoreSize(i.stack, copy) && i.dim == copy2).collect(Collectors.toList());
 
 			input.removeAll(matches);
 

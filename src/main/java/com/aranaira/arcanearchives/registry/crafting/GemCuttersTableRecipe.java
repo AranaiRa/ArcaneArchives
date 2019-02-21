@@ -106,7 +106,7 @@ public class GemCuttersTableRecipe
 					ItemStack requirement = stacks.get(i);
 					if(requirement.isEmpty()) continue;
 
-					if(ItemComparison.AreItemsEqual(requirement, potential))
+					if(ItemComparison.areStacksEqualIgnoreSize(requirement, potential))
 					{
 						// There's less needed than in the slot
 						if(requirement.getCount() == potential.getCount())
