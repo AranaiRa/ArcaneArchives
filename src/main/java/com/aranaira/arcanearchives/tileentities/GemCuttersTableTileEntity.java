@@ -219,7 +219,7 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 	@Override
 	public boolean updateOutput()
 	{
-		if(world == null) return false;
+		/*if(world == null) return false;
 
 		if(super.updateOutput()) return true;
 
@@ -236,7 +236,7 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 				packet2 = new PacketGemCutters.ChangeRecipe(ItemStack.EMPTY, getPos(), world.provider.getDimension());
 			}
 			AAPacketHandler.CHANNEL.sendToServer(packet2);
-		}
+		}*/
 
 		return true;
 	}

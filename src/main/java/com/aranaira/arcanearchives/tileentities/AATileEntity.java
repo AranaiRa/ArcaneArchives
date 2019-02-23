@@ -167,6 +167,7 @@ public class AATileEntity extends TileEntity
 	 * should be sent. *False* if the function did nothing (i.e., remote world) and
 	 * overrides should continue as normal.
 	 */
+	@Deprecated // This is actually a really bad way to do it, I've decided.
 	public boolean updateOutput()
 	{
 		if(world == null) return false;
