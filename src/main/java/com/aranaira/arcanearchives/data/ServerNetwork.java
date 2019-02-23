@@ -378,7 +378,7 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 				added = false;
 				for(ItemStack i : all_the_items)
 				{
-					if(ItemComparison.AreItemsEqual(is, i))
+					if(ItemComparison.areStacksEqualIgnoreSize(is, i))
 					{
 						i.setCount(i.getCount() + is.getCount());
 						added = true;

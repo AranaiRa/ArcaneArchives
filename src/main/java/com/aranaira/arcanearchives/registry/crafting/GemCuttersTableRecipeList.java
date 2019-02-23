@@ -76,6 +76,6 @@ public class GemCuttersTableRecipeList
 
 	public static GemCuttersTableRecipe getRecipe(ItemStack item)
 	{
-		return RECIPE_LIST.stream().filter((recipe) -> ItemComparison.AreItemsEqual(recipe.getOutput(), item)).findFirst().orElse(null);
+		return RECIPE_LIST.stream().filter((recipe) -> ItemComparison.areStacksEqualIgnoreSize(recipe.getOutput(), item)).findFirst().orElse(null);
 	}
 }

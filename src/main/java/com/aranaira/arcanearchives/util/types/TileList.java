@@ -60,14 +60,14 @@ public class TileList extends ReferenceList<ImmanenceTileEntity>
 
 	public TileList cleanInvalid()
 	{
-		this.reference().removeIf((f) -> f != null && f.isInvalid());
+		this.removeIf((f) -> f != null && f.isInvalid());
 		return this;
 	}
 
 	public TileList sorted(Comparator<ImmanenceTileEntity> c)
 	{
 		TileList copy = new TileList(new ArrayList<ImmanenceTileEntity>());
-		copy.addAll(this.reference());
+		copy.addAll(this);
 		copy.sort(c);
 		return copy;
 	}

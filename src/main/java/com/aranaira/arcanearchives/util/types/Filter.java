@@ -1,19 +1,19 @@
 package com.aranaira.arcanearchives.util.types;
 
-import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
 
 public class Filter<T>
 {
-	T term = null;
-	BiFunction<T, T, Boolean> comparator = null;
+	private T term = null;
+	private BiPredicate<T, T> comparator = null;
 
-	Filter(T term, BiFunction<T, T, Boolean> comparator)
+	Filter(T term, BiPredicate<T, T> comparator)
 	{
 		this.term = term;
 		this.comparator = comparator;
 	}
 
-	Filter(BiFunction<T, T, Boolean> comparator)
+	Filter(BiPredicate<T, T> comparator)
 	{
 		this.comparator = comparator;
 	}
@@ -27,7 +27,7 @@ public class Filter<T>
 	{
 		if(this.comparator != null)
 		{
-			return comparator.apply(this.term, otherTerm);
+			return comparator.test(this.term, otherTerm);
 		}
 		return this.term == otherTerm;
 	}
@@ -42,12 +42,12 @@ public class Filter<T>
 		return this.term;
 	}
 
-	public BiFunction<T, T, Boolean> getComparator()
+	public BiPredicate<T, T> getComparator()
 	{
 		return comparator;
 	}
 
-	public void updateComparator(BiFunction<T, T, Boolean> comparator)
+	public void updateComparator(BiPredicate<T, T> comparator)
 	{
 		this.comparator = comparator;
 	}
