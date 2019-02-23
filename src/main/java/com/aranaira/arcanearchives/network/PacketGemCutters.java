@@ -57,7 +57,7 @@ public class PacketGemCutters
 			@Override
 			public IMessage onMessage(final ChangePage message, final MessageContext ctx)
 			{
-				FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> processMessage(message, ctx));
+				//FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> processMessage(message, ctx));
 
 				return null;
 			}
@@ -117,7 +117,7 @@ public class PacketGemCutters
 			@Override
 			public IMessage onMessage(final ChangeRecipe message, final MessageContext ctx)
 			{
-				FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> processMessage(message, ctx));
+				//FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> processMessage(message, ctx));
 
 				return null;
 			}
@@ -178,7 +178,7 @@ public class PacketGemCutters
 			@Override
 			public IMessage onMessage(final Consume message, final MessageContext ctx)
 			{
-				FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> processMessage(message, ctx));
+				//FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> processMessage(message, ctx));
 
 				return null;
 			}
