@@ -18,9 +18,9 @@ public class SlotIRecipe extends Slot
 	private EntityPlayer player;
 	private int recipe;
 
-	public SlotIRecipe(ContainerRadiantCraftingTable container, RadiantCraftingTableTileEntity tile, EntityPlayer player, int recipe, int xPosition, int yPosition)
+	public SlotIRecipe(ContainerRadiantCraftingTable container, int index, RadiantCraftingTableTileEntity tile, EntityPlayer player, int recipe, int xPosition, int yPosition)
 	{
-		super(emptyInventory, 0, xPosition, yPosition);
+		super(emptyInventory, index, xPosition, yPosition);
 
 		this.container = container;
 		this.tile = tile;

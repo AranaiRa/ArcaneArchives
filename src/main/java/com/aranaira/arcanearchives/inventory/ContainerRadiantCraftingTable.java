@@ -60,14 +60,6 @@ public class ContainerRadiantCraftingTable extends Container
 
 		this.addSlotToContainer(new SlotCraftingFastWorkbench(this, playerInventory.player, this.craftMatrix, this.craftResult, 0, 136, 42));
 
-		this.recipeSlots.set(0, new SlotIRecipe(this, tile, player, 0, 174, 16));
-		this.recipeSlots.set(1, new SlotIRecipe(this, tile, player, 1, 174, 42));
-		this.recipeSlots.set(2, new SlotIRecipe(this, tile, player, 2, 174, 68));
-
-		this.addSlotToContainer(recipeSlots.get(0));
-		this.addSlotToContainer(recipeSlots.get(1));
-		this.addSlotToContainer(recipeSlots.get(2));
-
 		int i;
 		int j;
 
@@ -96,6 +88,14 @@ public class ContainerRadiantCraftingTable extends Container
 			this.addSlotToContainer(new Slot(playerInventory, index, 23 + col * 18, 173));
 			index++;
 		}
+
+		this.recipeSlots.set(0, new SlotIRecipe(this, index++, tile, player, 0, 174, 16));
+		this.recipeSlots.set(1, new SlotIRecipe(this, index++, tile, player, 1, 174, 42));
+		this.recipeSlots.set(2, new SlotIRecipe(this, index, tile, player, 2, 174, 68));
+
+		this.addSlotToContainer(recipeSlots.get(0));
+		this.addSlotToContainer(recipeSlots.get(1));
+		this.addSlotToContainer(recipeSlots.get(2));
 	}
 
 	@SubscribeEvent
@@ -263,16 +263,16 @@ public class ContainerRadiantCraftingTable extends Container
 		int end = this.inventorySlots.size();
 
 		// Is it a slot in the main inventory? (aka not player inventory)
-		if(index < 13)
+		if(index < 10)
 		{
 			// try to put it into the player inventory (if we have a player inventory)
-			if(!this.mergeItemStack(itemstack, 13, end, true))
+			if(!this.mergeItemStack(itemstack, 10, end - 3, true))
 			{
 				return ItemStack.EMPTY;
 			}
 		}
 		// Slot is in the player inventory (if it exists), transfer to main inventory
-		else if(!this.mergeItemStack(itemstack, 3, 13, false))
+		else if(!this.mergeItemStack(itemstack, 0, 9, false))
 		{
 			return ItemStack.EMPTY;
 		}
