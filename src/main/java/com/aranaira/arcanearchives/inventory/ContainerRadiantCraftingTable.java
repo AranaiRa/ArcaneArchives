@@ -1,13 +1,11 @@
 package com.aranaira.arcanearchives.inventory;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.inventory.handlers.InventoryCraftingPersistent;
 import com.aranaira.arcanearchives.inventory.slots.SlotCraftingFastWorkbench;
 import com.aranaira.arcanearchives.inventory.slots.SlotIRecipe;
 import com.aranaira.arcanearchives.network.AAPacketHandler;
 import com.aranaira.arcanearchives.network.PacketRadiantCrafting;
 import com.aranaira.arcanearchives.tileentities.RadiantCraftingTableTileEntity;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -111,101 +109,191 @@ public class ContainerRadiantCraftingTable extends Container
 		}
 	}
 
-	public void saveLastRecipe () {
+	public void saveLastRecipe()
+	{
 		actualLastLastRecipe = actualLastRecipe;
 		actualLastRecipe = lastRecipe;
 	}
 
-	/*
+	// Fix for a vanilla bug: doesn't take Slot.getMaxStackSize into account
 	@Override
-	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
+	protected boolean mergeItemStack(@Nonnull ItemStack stack, int startIndex, int endIndex, boolean useEndIndex)
 	{
-		if(slotId == -999) return super.slotClick(slotId, dragType, clickTypeIn, player);
-
-		Slot slot = getSlot(slotId);
-		if(!(slot instanceof SlotIRecipe)) return super.slotClick(slotId, dragType, clickTypeIn, player);
-
-		if(!world.isRemote) return ItemStack.EMPTY;
-
-		SlotIRecipe recipeSlot = (SlotIRecipe) slot;
-
-		int recipeId = recipeSlot.getRecipeIndex();
-
-		// whatever right-click is
-		if(GuiScreen.isShiftKeyDown() && dragType == 0)
+		boolean ret = mergeItemStackRefill(stack, startIndex, endIndex, useEndIndex);
+		if(!stack.isEmpty() && stack.getCount() > 0)
 		{
-			tile.setRecipe(recipeId, null);
-		} else if(dragType == 1)
+			ret |= mergeItemStackMove(stack, startIndex, endIndex, useEndIndex);
+		}
+		return ret;
+	}
+
+	// only refills items that are already present
+	protected boolean mergeItemStackRefill(@Nonnull ItemStack stack, int startIndex, int endIndex, boolean useEndIndex)
+	{
+		if(stack.getCount() <= 0)
 		{
-			if(GuiScreen.isShiftKeyDown())
+			return false;
+		}
+
+		boolean flag1 = false;
+		int k = startIndex;
+
+		if(useEndIndex)
+		{
+			k = endIndex - 1;
+		}
+
+		Slot slot;
+		ItemStack itemstack1;
+
+		if(stack.isStackable())
+		{
+			while(stack.getCount() > 0 && (!useEndIndex && k < endIndex || useEndIndex && k >= startIndex))
 			{
-				if (actualLastLastRecipe != null)
+				slot = this.inventorySlots.get(k);
+				itemstack1 = slot.getStack();
+
+				if(!itemstack1.isEmpty() && itemstack1.getItem() == stack.getItem() && (!stack.getHasSubtypes() || stack.getMetadata() == itemstack1.getMetadata()) && ItemStack.areItemStackTagsEqual(stack, itemstack1) && this.canMergeSlot(stack, slot))
 				{
-					tile.setRecipe(recipeId, actualLastLastRecipe);
+					int l = itemstack1.getCount() + stack.getCount();
+					int limit = Math.min(stack.getMaxStackSize(), slot.getItemStackLimit(stack));
+
+					if(l <= limit)
+					{
+						stack.setCount(0);
+						itemstack1.setCount(l);
+						slot.onSlotChanged();
+						flag1 = true;
+					} else if(itemstack1.getCount() < limit)
+					{
+						stack.shrink(limit - itemstack1.getCount());
+						itemstack1.setCount(limit);
+						slot.onSlotChanged();
+						flag1 = true;
+					}
 				}
-			} else
-			{
-				IRecipe cur = CraftingManager.findMatchingRecipe(craftMatrix, world);
-				if (cur != null) {
-					tile.setRecipe(recipeId, cur);
-				} else {
-					tile.setRecipe(recipeId, actualLastRecipe);
+
+				if(useEndIndex)
+				{
+					--k;
+				} else
+				{
+					++k;
 				}
-			}
-		} else if(dragType == 0)
-		{
-			// just a normal click
-			IRecipe recipe = tile.getRecipe(recipeId);
-			IRecipe cur = CraftingManager.findMatchingRecipe(craftMatrix, world);
-			if(recipe != cur)
-			{
-				ArcaneArchives.logger.info("Now we should put in the previous recipes");
 			}
 		}
 
-		return ItemStack.EMPTY;
+		return flag1;
 	}
-	*/
+
+	// only moves items into empty slots
+	protected boolean mergeItemStackMove(@Nonnull ItemStack stack, int startIndex, int endIndex, boolean useEndIndex)
+	{
+		if(stack.getCount() <= 0)
+		{
+			return false;
+		}
+
+		boolean flag1 = false;
+		int k;
+
+		if(useEndIndex)
+		{
+			k = endIndex - 1;
+		} else
+		{
+			k = startIndex;
+		}
+
+		while(!useEndIndex && k < endIndex || useEndIndex && k >= startIndex)
+		{
+			Slot slot = this.inventorySlots.get(k);
+			ItemStack itemstack1 = slot.getStack();
+
+			if(itemstack1.isEmpty() && slot.isItemValid(stack) && this.canMergeSlot(stack, slot)) // Forge: Make sure to respect isItemValid in the slot.
+			{
+				int limit = slot.getItemStackLimit(stack);
+				ItemStack stack2 = stack.copy();
+				if(stack2.getCount() > limit)
+				{
+					stack2.setCount(limit);
+					stack.shrink(limit);
+				} else
+				{
+					stack.setCount(0);
+				}
+				slot.putStack(stack2);
+				slot.onSlotChanged();
+				flag1 = true;
+
+				if(stack.isEmpty())
+				{
+					break;
+				}
+			}
+
+			if(useEndIndex)
+			{
+				--k;
+			} else
+			{
+				++k;
+			}
+		}
+
+
+		return flag1;
+	}
 
 	@Nonnull
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
 	{
-		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.inventorySlots.get(index);
 
-		// slot that was clicked on not empty?
-		if(slot != null && slot.getHasStack())
+		if(slot == null || !slot.getHasStack())
 		{
-			ItemStack itemstack1 = slot.getStack();
-			itemstack = itemstack1.copy();
-			int end = this.inventorySlots.size();
+			return ItemStack.EMPTY;
+		}
 
-			// Is it a slot in the main inventory? (aka not player inventory)
-			if(index < 13)
-			{
-				// try to put it into the player inventory (if we have a player inventory)
-				if(!this.mergeItemStack(itemstack1, 13, end, true))
-				{
-					return ItemStack.EMPTY;
-				}
-			}
-			// Slot is in the player inventory (if it exists), transfer to main inventory
-			else if(!this.mergeItemStack(itemstack1, 3, 13, false))
+		ItemStack original = slot.getStack().copy();
+		ItemStack itemstack = slot.getStack().copy();
+
+		// slot that was clicked on not empty?
+		int end = this.inventorySlots.size();
+
+		// Is it a slot in the main inventory? (aka not player inventory)
+		if(index < 13)
+		{
+			// try to put it into the player inventory (if we have a player inventory)
+			if(!this.mergeItemStack(itemstack, 13, end, true))
 			{
 				return ItemStack.EMPTY;
 			}
-
-			if(itemstack1.isEmpty())
-			{
-				slot.putStack(ItemStack.EMPTY);
-			} else
-			{
-				slot.onSlotChanged();
-			}
+		}
+		// Slot is in the player inventory (if it exists), transfer to main inventory
+		else if(!this.mergeItemStack(itemstack, 3, 13, false))
+		{
+			return ItemStack.EMPTY;
 		}
 
-		return itemstack;
+		slot.onSlotChanged();
+
+		if(itemstack.getCount() == original.getCount())
+		{
+			return ItemStack.EMPTY;
+		}
+
+		// update slot we pulled from
+		slot.putStack(itemstack);
+		slot.onTake(player, itemstack);
+
+		if(slot.getHasStack() && slot.getStack().isEmpty())
+		{
+			slot.putStack(ItemStack.EMPTY);
+		}
+
+		return original;
 	}
 
 	// update crafting
@@ -298,6 +386,5 @@ public class ContainerRadiantCraftingTable extends Container
 		}
 		return craftMatrix.stackList;
 	}
-
 }
 
