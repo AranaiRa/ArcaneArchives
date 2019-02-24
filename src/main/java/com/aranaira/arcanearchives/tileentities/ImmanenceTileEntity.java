@@ -107,6 +107,8 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 				}
 			}
 			tileID = newId;
+		} else if (tileID == null) {
+			this.generateTileId();
 		}
 		dimension = compound.getInteger(Tags.DIM);
 		super.readFromNBT(compound);
