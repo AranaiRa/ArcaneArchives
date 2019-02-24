@@ -1,10 +1,8 @@
 package com.aranaira.arcanearchives.tileentities;
 
-import com.aranaira.arcanearchives.util.ItemComparison;
-import com.aranaira.arcanearchives.util.handlers.ConfigHandler;
+import com.aranaira.arcanearchives.config.ConfigHandler;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

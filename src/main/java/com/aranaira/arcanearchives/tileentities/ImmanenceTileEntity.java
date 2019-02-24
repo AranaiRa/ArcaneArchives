@@ -4,7 +4,7 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
-import com.aranaira.arcanearchives.util.handlers.AAServerTickHandler;
+import com.aranaira.arcanearchives.events.ServerTickHandler;
 import com.aranaira.arcanearchives.util.types.Size;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
@@ -168,7 +168,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	{
 		if(world != null && !world.isRemote)
 		{
-			AAServerTickHandler.incomingITE(this);
+			ServerTickHandler.incomingITE(this);
 		} else if(world == null)
 		{
 			// TODO: Include more information

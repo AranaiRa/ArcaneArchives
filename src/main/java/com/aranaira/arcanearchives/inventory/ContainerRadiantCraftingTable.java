@@ -349,7 +349,7 @@ public class ContainerRadiantCraftingTable extends Container
 			{
 				entityplayermp.connection.sendPacket(new SPacketSetSlot(this.windowId, 0, itemstack));
 			}
-			AAPacketHandler.CHANNEL.sendTo(new PacketRadiantCrafting.LastRecipeMessage(lastRecipe), entityplayermp);
+			AAPacketHandler.CHANNEL.sendTo(new PacketRadiantCrafting.LastRecipe(lastRecipe), entityplayermp);
 		}
 
 		lastLastRecipe = lastRecipe;

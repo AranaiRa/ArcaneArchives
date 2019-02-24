@@ -12,15 +12,15 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketRadiantCrafting
 {
-	public static class LastRecipeMessage implements IMessage
+	public static class LastRecipe implements IMessage
 	{
 		private IRecipe recipe;
 
-		public LastRecipeMessage()
+		public LastRecipe()
 		{
 		}
 
-		public LastRecipeMessage(IRecipe recipe)
+		public LastRecipe(IRecipe recipe)
 		{
 			this.recipe = recipe;
 		}
@@ -37,18 +37,16 @@ public class PacketRadiantCrafting
 			buf.writeInt(CraftingManager.REGISTRY.getIDForObject(recipe));
 		}
 
-		public static class Handler implements IMessageHandler<LastRecipeMessage, IMessage>
+		public static class Handler extends AAPacketHandler.Handler<LastRecipe>
 		{
 			@Override
-			public IMessage onMessage(LastRecipeMessage message, MessageContext ctx)
+			public void processMessage(LastRecipe message, MessageContext ctx)
 			{
 				Container container = Minecraft.getMinecraft().player.openContainer;
 				if(container instanceof ContainerRadiantCraftingTable)
 				{
 					((ContainerRadiantCraftingTable) container).updateLastRecipeFromServer(message.recipe);
 				}
-
-				return null;
 			}
 		}
 	}

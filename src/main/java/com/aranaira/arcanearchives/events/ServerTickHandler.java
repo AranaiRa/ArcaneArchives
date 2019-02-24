@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.util.handlers;
+package com.aranaira.arcanearchives.events;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.ServerNetwork;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
-public class AAServerTickHandler
+public class ServerTickHandler
 {
 	private static final List<ImmanenceTileEntity> incomingITEs = new ArrayList<>();
 	private static final List<ImmanenceTileEntity> outgoingITEs = new ArrayList<>();

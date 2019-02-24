@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.util.handlers;
+package com.aranaira.arcanearchives.config;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import net.minecraftforge.common.config.Config;

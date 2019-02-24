@@ -3,7 +3,7 @@ package com.aranaira.arcanearchives.client;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.inventory.ContainerManifest;
-import com.aranaira.arcanearchives.util.handlers.AATickHandler;
+import com.aranaira.arcanearchives.events.LineHandler;
 import com.aranaira.arcanearchives.util.types.ManifestEntry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -159,7 +159,7 @@ public class GUIManifest extends GuiContainer
 
 			if(mouseX > guiLeft + mEndTrackingButtonLeftOffset && mouseX < guiLeft + mEndTrackingButtonLeftOffset + mEndTrackingButtonWidth && mouseY > guiTop + mEndTrackingButtonTopOffset && mouseY < guiTop + mEndTrackingButtonTopOffset + mEndTrackingButtonHeight)
 			{
-				AATickHandler.clearChests();
+				LineHandler.clearChests();
 			}
 
 			if (mouseX > guiLeft + mRefreshButtonLeftOffset && mouseX < guiLeft + mRefreshButtonLeftOffset + mRefreshButtonWidth && mouseY > guiTop + mRefreshButtonTopOffset && mouseY < guiTop + mRefreshButtonTopOffset + mRefreshButtonHeight)

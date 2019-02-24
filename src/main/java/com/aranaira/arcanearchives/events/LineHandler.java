@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.util.handlers;
+package com.aranaira.arcanearchives.events;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.util.RenderHelper;
@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Set;
 
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID, value = Side.CLIENT)
-public class AATickHandler
+public class LineHandler
 {
 	private static Set<Vec3d> mBlockPositions = new HashSet<>();
 	public static boolean mIsDrawingLine;

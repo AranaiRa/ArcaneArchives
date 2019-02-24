@@ -7,7 +7,7 @@ import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.DropHelper;
-import com.aranaira.arcanearchives.util.handlers.AATickHandler;
+import com.aranaira.arcanearchives.events.LineHandler;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -40,7 +40,7 @@ public class RadiantChest extends BlockTemplate
 	public static void RemoveChestLines(BlockPos pos)
 	{
 		Vec3d bpos = new Vec3d(pos.getX(), pos.getY(), pos.getZ());
-		AATickHandler.removeLine(bpos);
+		LineHandler.removeLine(bpos);
 	}
 
 	@Override

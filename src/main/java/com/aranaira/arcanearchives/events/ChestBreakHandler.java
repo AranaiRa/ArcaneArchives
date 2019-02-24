@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.util.handlers;
+package com.aranaira.arcanearchives.events;
 
 import com.aranaira.arcanearchives.blocks.RadiantChest;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
@@ -12,7 +12,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 @Mod.EventBusSubscriber
-public class ForgeEventHandler
+public class ChestBreakHandler
 {
 	@SubscribeEvent
 	public static void onBlockBreakEvent(BreakEvent event)
