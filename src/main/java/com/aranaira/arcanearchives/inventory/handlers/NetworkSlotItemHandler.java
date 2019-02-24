@@ -38,9 +38,10 @@ public class NetworkSlotItemHandler extends SlotItemHandler
 			return cNetwork.GetTotalSpace();
 		} else
 		{
-			if(network == null) // TODO: Error
-				return 0;
-			return network.GetTotalSpace();
+			return 0;
+			//if(network == null) // TODO: Error
+			//	return 0;
+			//return network.GetTotalSpace();
 		}
 	}
 

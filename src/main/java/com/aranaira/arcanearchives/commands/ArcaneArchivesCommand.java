@@ -98,7 +98,7 @@ public class ArcaneArchivesCommand extends CommandBase
 					if(targetPlayer != null)
 					{
 						ServerNetwork tnetwork = NetworkHelper.getServerNetwork(targetPlayer.getUniqueID(), server.getWorld(0));
-						if(tnetwork != null) tnetwork.Invite(sender.getName(), eSender.getUniqueID());
+						//if(tnetwork != null) tnetwork.Invite(sender.getName(), eSender.getUniqueID());
 					}
 				} else
 				{
@@ -106,13 +106,13 @@ public class ArcaneArchivesCommand extends CommandBase
 				}
 			} else if(args.length > 1 && args[1].compareTo("accept") == 0)
 			{
-				if(network.Accept(args[2]))
+				/*if(network.Accept(args[2]))
 				{
 					sender.sendMessage(new TextComponentString("Joined " + args[2] + "'s Network!"));
 				} else
 				{
 					sender.sendMessage(new TextComponentString("You have not received an invite to " + args[2] + "'s Network!"));
-				}
+				}*/
 			}
 		}
 
