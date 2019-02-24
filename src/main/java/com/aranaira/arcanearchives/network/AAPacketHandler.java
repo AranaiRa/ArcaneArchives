@@ -1,9 +1,11 @@
 package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 
@@ -17,8 +19,7 @@ public class AAPacketHandler
 	{
 		registerPacks(PacketNetworkInteraction.PacketNetworkInteractionHandler.class, PacketNetworkInteraction.class, Side.SERVER);
 		registerPacks(PacketRadiantChest.SetName.SetNameHandler.class, PacketRadiantChest.SetName.class, Side.SERVER);
-		registerPacks(PacketGemCutters.ChangePage.ChangePageHandler.class, PacketGemCutters.ChangePage.class, Side.SERVER);
-		registerPacks(PacketGemCutters.ChangeRecipe.ChangeRecipeHandler.class, PacketGemCutters.ChangeRecipe.class, Side.SERVER);
+		registerPacks(PacketGemCutters.ChangeRecipe.Handler.class, PacketGemCutters.ChangeRecipe.class, Side.SERVER);
 		registerPacks(PacketGemCutters.Consume.ConsumeHandler.class, PacketGemCutters.Consume.class, Side.SERVER);
 		registerPacks(PacketNetwork.PacketSynchroniseResponse.PacketSynchroniseResponseHandler.class, PacketNetwork.PacketSynchroniseResponse.class, Side.CLIENT);
 		registerPacks(PacketNetwork.PacketSynchroniseRequest.PacketSynchroniseRequestHandler.class, PacketNetwork.PacketSynchroniseRequest.class, Side.SERVER);
@@ -29,5 +30,17 @@ public class AAPacketHandler
 	{
 		CHANNEL.registerMessage(messageHandler, requestMessageType, packetID, side);
 		packetID++;
+	}
+
+	public static abstract class Handler<T extends IMessage> implements IMessageHandler<T, IMessage> {
+		@Override
+		public IMessage onMessage(T message, MessageContext ctx)
+		{
+			FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> processMessage(message, ctx));
+
+			return null;
+		}
+
+		public abstract void processMessage (T message, MessageContext ctx);
 	}
 }

@@ -19,65 +19,6 @@ import java.util.UUID;
 
 public class PacketGemCutters
 {
-	public static class ChangePage implements IMessage
-	{
-		private BlockPos mPos;
-		private int page;
-		private int dimension;
-
-		public ChangePage()
-		{
-		}
-
-		public ChangePage(BlockPos pos, int page, int dimension)
-		{
-			this.page = page;
-			this.mPos = pos;
-			this.dimension = dimension;
-		}
-
-		@Override
-		public void fromBytes(ByteBuf buf)
-		{
-			this.page = buf.readInt();
-			this.mPos = BlockPos.fromLong(buf.readLong());
-			this.dimension = buf.readInt();
-		}
-
-		@Override
-		public void toBytes(ByteBuf buf)
-		{
-			buf.writeInt(this.page);
-			buf.writeLong(this.mPos.toLong());
-			buf.writeInt(this.dimension);
-		}
-
-		public static class ChangePageHandler implements IMessageHandler<ChangePage, IMessage>
-		{
-			@Override
-			public IMessage onMessage(final ChangePage message, final MessageContext ctx)
-			{
-				//FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> processMessage(message, ctx));
-
-				return null;
-			}
-
-			private void processMessage(ChangePage message, MessageContext ctx)
-			{
-				MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-				if(server != null)
-				{
-					World world = DimensionManager.getWorld(message.dimension);
-					TileEntity te = world.getTileEntity(message.mPos);
-					if(te instanceof GemCuttersTableTileEntity)
-					{
-						((GemCuttersTableTileEntity) te).setPage(message.page);
-					}
-				}
-			}
-		}
-	}
-
 	public static class ChangeRecipe implements IMessage
 	{
 		private ItemStack stack;
@@ -112,17 +53,10 @@ public class PacketGemCutters
 			buf.writeInt(dimension);
 		}
 
-		public static class ChangeRecipeHandler implements IMessageHandler<ChangeRecipe, IMessage>
+		public static class Handler extends AAPacketHandler.Handler<ChangeRecipe>
 		{
 			@Override
-			public IMessage onMessage(final ChangeRecipe message, final MessageContext ctx)
-			{
-				//FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> processMessage(message, ctx));
-
-				return null;
-			}
-
-			private void processMessage(ChangeRecipe message, MessageContext ctx)
+			public void processMessage(ChangeRecipe message, MessageContext ctx)
 			{
 				MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
 				if(server != null)
