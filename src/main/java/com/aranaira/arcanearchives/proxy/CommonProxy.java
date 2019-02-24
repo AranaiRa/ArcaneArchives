@@ -3,16 +3,19 @@ package com.aranaira.arcanearchives.proxy;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.common.AAGuiHandler;
 import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.events.ClientTickHandler;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.RecipeLibrary;
-import com.aranaira.arcanearchives.network.AAPacketHandler;
+import com.aranaira.arcanearchives.network.NetworkHandler;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.relauncher.Side;
 
 public class CommonProxy
 {
@@ -21,7 +24,7 @@ public class CommonProxy
 		ArcaneArchives.logger = event.getModLog();
 		NetworkRegistry.INSTANCE.registerGuiHandler(ArcaneArchives.instance, new AAGuiHandler());
 
-		AAPacketHandler.registerPackets();
+		NetworkHandler.registerPackets();
 	}
 
 	public void init(FMLInitializationEvent event)
@@ -45,6 +48,20 @@ public class CommonProxy
 	public void serverStarted(FMLServerStartedEvent event)
 	{
 		NetworkHelper.clearClientCache(); // has no effect on the server
-		//NetworkHelper.clearServerCache(); // has no effect on the client and shouldn't be necessary now
+	}
+
+	public void scheduleTask (Runnable runnable, Side side) {
+		scheduleTask(runnable, 0, side);
+	}
+
+	public void scheduleTask (Runnable runnable, int delay, Side side) {
+		switch (side) {
+			case CLIENT:
+				ClientTickHandler.addRunnable(runnable, delay);
+				break;
+			case SERVER:
+				FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(runnable);
+				break;
+		}
 	}
 }

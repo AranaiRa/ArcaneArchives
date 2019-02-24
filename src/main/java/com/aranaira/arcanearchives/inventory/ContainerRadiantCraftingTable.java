@@ -3,7 +3,7 @@ package com.aranaira.arcanearchives.inventory;
 import com.aranaira.arcanearchives.inventory.handlers.InventoryCraftingPersistent;
 import com.aranaira.arcanearchives.inventory.slots.SlotCraftingFastWorkbench;
 import com.aranaira.arcanearchives.inventory.slots.SlotIRecipe;
-import com.aranaira.arcanearchives.network.AAPacketHandler;
+import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketRadiantCrafting;
 import com.aranaira.arcanearchives.tileentities.RadiantCraftingTableTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -349,7 +349,7 @@ public class ContainerRadiantCraftingTable extends Container
 			{
 				entityplayermp.connection.sendPacket(new SPacketSetSlot(this.windowId, 0, itemstack));
 			}
-			AAPacketHandler.CHANNEL.sendTo(new PacketRadiantCrafting.LastRecipe(lastRecipe), entityplayermp);
+			NetworkHandler.CHANNEL.sendTo(new PacketRadiantCrafting.LastRecipe(lastRecipe), entityplayermp);
 		}
 
 		lastLastRecipe = lastRecipe;

@@ -1,7 +1,5 @@
 package com.aranaira.arcanearchives.tileentities;
 
-import com.aranaira.arcanearchives.network.AAPacketHandler;
-import com.aranaira.arcanearchives.network.PacketGemCutters;
 import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipe;
 import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipeList;
 import mcp.MethodsReturnNonnullByDefault;
@@ -226,7 +224,7 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 		if (world.isRemote)
 		{
 			PacketGemCutters.ChangePage packet = new PacketGemCutters.ChangePage(getPos(), getPage(), world.provider.getDimension());
-			AAPacketHandler.CHANNEL.sendToServer(packet);
+			NetworkHandler.CHANNEL.sendToServer(packet);
 			PacketGemCutters.ChangeRecipe packet2;
 			if(this.getRecipe() != null)
 			{
@@ -235,7 +233,7 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 			{
 				packet2 = new PacketGemCutters.ChangeRecipe(ItemStack.EMPTY, getPos(), world.provider.getDimension());
 			}
-			AAPacketHandler.CHANNEL.sendToServer(packet2);
+			NetworkHandler.CHANNEL.sendToServer(packet2);
 		}*/
 
 		return true;

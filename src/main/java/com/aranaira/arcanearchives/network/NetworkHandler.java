@@ -10,19 +10,18 @@ import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 
 //Used Precision Crafting as a reference. https://github.com/Daomephsta/Precision-Crafting/blob/master/src/main/java/leviathan143/precisioncrafting/common/packets/PacketHandler.java
-public class AAPacketHandler
+public class NetworkHandler
 {
 	public static final SimpleNetworkWrapper CHANNEL = NetworkRegistry.INSTANCE.newSimpleChannel(ArcaneArchives.NAME);
 	private static int packetID = 0;
 
 	public static void registerPackets()
 	{
-		registerPacks(PacketNetworkInteraction.PacketNetworkInteractionHandler.class, PacketNetworkInteraction.class, Side.SERVER);
-		registerPacks(PacketRadiantChest.SetName.SetNameHandler.class, PacketRadiantChest.SetName.class, Side.SERVER);
+		registerPacks(PacketRadiantChest.SetName.Handler.class, PacketRadiantChest.SetName.class, Side.SERVER);
 		registerPacks(PacketGemCutters.ChangeRecipe.Handler.class, PacketGemCutters.ChangeRecipe.class, Side.SERVER);
-		registerPacks(PacketGemCutters.Consume.ConsumeHandler.class, PacketGemCutters.Consume.class, Side.SERVER);
-		registerPacks(PacketNetwork.PacketSynchroniseResponse.PacketSynchroniseResponseHandler.class, PacketNetwork.PacketSynchroniseResponse.class, Side.CLIENT);
-		registerPacks(PacketNetwork.PacketSynchroniseRequest.PacketSynchroniseRequestHandler.class, PacketNetwork.PacketSynchroniseRequest.class, Side.SERVER);
+		registerPacks(PacketGemCutters.Consume.Handler.class, PacketGemCutters.Consume.class, Side.SERVER);
+		registerPacks(PacketNetworks.Response.Handler.class, PacketNetworks.Response.class, Side.CLIENT);
+		registerPacks(PacketNetworks.Request.Handler.class, PacketNetworks.Request.class, Side.SERVER);
 		registerPacks(PacketRadiantCrafting.LastRecipe.Handler.class, PacketRadiantCrafting.LastRecipe.class, Side.CLIENT);
 	}
 
@@ -32,15 +31,24 @@ public class AAPacketHandler
 		packetID++;
 	}
 
-	public static abstract class Handler<T extends IMessage> implements IMessageHandler<T, IMessage> {
-		@Override
-		public IMessage onMessage(T message, MessageContext ctx)
-		{
+	public static abstract class BaseHandler<T extends IMessage> implements IMessageHandler<T, IMessage> {
+		public abstract IMessage onMessage(T message, MessageContext ctx);
+		public abstract void processMessage (T message, MessageContext ctx);
+	}
+
+	public static abstract class ServerHandler<T extends IMessage> extends BaseHandler<T> {
+		public IMessage onMessage (T message, MessageContext ctx)  {
 			FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> processMessage(message, ctx));
 
 			return null;
 		}
+	}
 
-		public abstract void processMessage (T message, MessageContext ctx);
+	public static abstract class ClientHandler<T extends IMessage> extends BaseHandler<T> {
+		public IMessage onMessage (T message, MessageContext ctx)  {
+			ArcaneArchives.proxy.scheduleTask(() -> processMessage(message, ctx), Side.CLIENT);
+
+			return null;
+		}
 	}
 }

@@ -1,8 +1,8 @@
 package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
-import com.aranaira.arcanearchives.network.AAPacketHandler;
-import com.aranaira.arcanearchives.network.PacketNetwork;
+import com.aranaira.arcanearchives.network.NetworkHandler;
+import com.aranaira.arcanearchives.network.PacketNetworks;
 import com.aranaira.arcanearchives.util.LargeItemNBTUtil;
 import com.aranaira.arcanearchives.util.types.ManifestEntry;
 import com.aranaira.arcanearchives.util.types.ManifestList;
@@ -87,14 +87,14 @@ public class ClientNetwork
 	// but does not include the manifest info.
 	public void synchroniseData()
 	{
-		PacketNetwork.PacketSynchroniseRequest request = new PacketNetwork.PacketSynchroniseRequest(PacketNetwork.SynchroniseType.DATA, playerId);
-		AAPacketHandler.CHANNEL.sendToServer(request);
+		PacketNetworks.Request request = new PacketNetworks.Request(PacketNetworks.SynchroniseType.DATA, playerId);
+		NetworkHandler.CHANNEL.sendToServer(request);
 	}
 
 	public void synchroniseManifest()
 	{
-		PacketNetwork.PacketSynchroniseRequest request = new PacketNetwork.PacketSynchroniseRequest(PacketNetwork.SynchroniseType.MANIFEST, playerId);
-		AAPacketHandler.CHANNEL.sendToServer(request);
+		PacketNetworks.Request request = new PacketNetworks.Request(PacketNetworks.SynchroniseType.MANIFEST, playerId);
+		NetworkHandler.CHANNEL.sendToServer(request);
 	}
 
 	public void deserializeManifest(NBTTagCompound tag)

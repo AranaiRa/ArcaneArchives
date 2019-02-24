@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
+import com.aranaira.arcanearchives.util.WorldUtil;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -17,6 +18,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 import java.util.UUID;
 
+@SuppressWarnings("WeakerAccess")
 public class PacketGemCutters
 {
 	public static class ChangeRecipe implements IMessage
@@ -25,11 +27,13 @@ public class PacketGemCutters
 		private BlockPos pos;
 		private int dimension;
 
+		@SuppressWarnings("unused")
 		public ChangeRecipe()
 		{
 
 		}
 
+		@SuppressWarnings("unused")
 		public ChangeRecipe(ItemStack stack, BlockPos pos, int dimension)
 		{
 			this.stack = stack;
@@ -53,20 +57,15 @@ public class PacketGemCutters
 			buf.writeInt(dimension);
 		}
 
-		public static class Handler extends AAPacketHandler.Handler<ChangeRecipe>
+		public static class Handler extends NetworkHandler.ServerHandler<ChangeRecipe>
 		{
 			@Override
 			public void processMessage(ChangeRecipe message, MessageContext ctx)
 			{
-				MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-				if(server != null)
+				GemCuttersTableTileEntity te = WorldUtil.getTileEntity(GemCuttersTableTileEntity.class, message.dimension, message.pos);
+				if(te != null)
 				{
-					World world = DimensionManager.getWorld(message.dimension);
-					TileEntity te = world.getTileEntity(message.pos);
-					if(te instanceof GemCuttersTableTileEntity)
-					{
-						((GemCuttersTableTileEntity) te).setRecipe(message.stack);
-					}
+					te.setRecipe(message.stack);
 				}
 			}
 		}
@@ -78,12 +77,13 @@ public class PacketGemCutters
 		private BlockPos pos;
 		private int dimension;
 
+		@SuppressWarnings("unused")
 		public Consume()
 		{
 
 		}
 
-
+		@SuppressWarnings("unused")
 		public Consume(EntityPlayer player, BlockPos pos, int dimension)
 		{
 			this.player = player.getPersistentID();
@@ -107,27 +107,14 @@ public class PacketGemCutters
 			buf.writeInt(dimension);
 		}
 
-		public static class ConsumeHandler implements IMessageHandler<Consume, IMessage>
+		public static class Handler extends NetworkHandler.ServerHandler<Consume>
 		{
-			@Override
-			public IMessage onMessage(final Consume message, final MessageContext ctx)
+			public void processMessage(Consume message, MessageContext ctx)
 			{
-				//FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> processMessage(message, ctx));
-
-				return null;
-			}
-
-			private void processMessage(Consume message, MessageContext ctx)
-			{
-				MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-				if(server != null)
+				GemCuttersTableTileEntity te = WorldUtil.getTileEntity(GemCuttersTableTileEntity.class, message.dimension, message.pos);
+				if(te != null)
 				{
-					World world = DimensionManager.getWorld(message.dimension);
-					TileEntity te = world.getTileEntity(message.pos);
-					if(te instanceof GemCuttersTableTileEntity)
-					{
-						((GemCuttersTableTileEntity) te).consume(message.player);
-					}
+					te.consume(message.player);
 				}
 			}
 		}

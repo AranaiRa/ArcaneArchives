@@ -36,14 +36,13 @@ public class IteRef
 		this.tile = new WeakReference<>(tile);
 	}
 
-	public ImmanenceTileEntity getTile(World world)
+	public ImmanenceTileEntity getWorldTile(World world)
 	{
-		// TODO: Handling different dimensions
-		if(world.provider.getDimension() != dimension) return null;
+		if(world.provider.getDimension() != dimension) return getServerTile();
 
 		if(tile == null || tile.get() == null)
 		{
-			tile = new WeakReference<>(WorldUtil.getTileEntity(ImmanenceTileEntity.class, world, pos));
+			tile = new WeakReference<>(WorldUtil.getTileEntity(clazz, world, pos));
 		}
 
 		return tile.get();
@@ -51,14 +50,11 @@ public class IteRef
 
 	public ImmanenceTileEntity getServerTile()
 	{
-		MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-		if(server == null) return null;
+		if (tile == null || tile.get() == null) {
+			tile = new WeakReference<>(WorldUtil.getTileEntity(clazz, dimension, pos));
+		}
 
-		World world = DimensionManager.getWorld(dimension);
-
-		if(world == null) return null;
-
-		return getTile(world);
+		return tile.get();
 	}
 
 	public boolean isValid()

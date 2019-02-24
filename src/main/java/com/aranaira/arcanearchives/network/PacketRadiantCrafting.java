@@ -7,7 +7,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketRadiantCrafting
@@ -37,7 +36,7 @@ public class PacketRadiantCrafting
 			buf.writeInt(CraftingManager.REGISTRY.getIDForObject(recipe));
 		}
 
-		public static class Handler extends AAPacketHandler.Handler<LastRecipe>
+		public static class Handler extends NetworkHandler.ClientHandler<LastRecipe>
 		{
 			@Override
 			public void processMessage(LastRecipe message, MessageContext ctx)

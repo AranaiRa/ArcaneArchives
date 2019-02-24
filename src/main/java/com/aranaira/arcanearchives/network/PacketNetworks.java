@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 import java.util.UUID;
 
-public class PacketNetwork
+public class PacketNetworks
 {
 	public enum SynchroniseType
 	{
@@ -45,18 +45,18 @@ public class PacketNetwork
 		}
 	}
 
-	public static class PacketSynchroniseRequest implements IMessage
+	public static class Request implements IMessage
 	{
 		SynchroniseType type;
 		UUID playerId;
 
-		public PacketSynchroniseRequest()
+		public Request()
 		{
 			this.type = SynchroniseType.DATA;
 			this.playerId = null;
 		}
 
-		public PacketSynchroniseRequest(SynchroniseType type, UUID playerId)
+		public Request(SynchroniseType type, UUID playerId)
 		{
 			this.type = type;
 			this.playerId = playerId;
@@ -76,30 +76,17 @@ public class PacketNetwork
 			ByteBufUtils.writeUTF8String(buf, this.playerId.toString());
 		}
 
-		public static class PacketSynchroniseRequestHandler implements IMessageHandler<PacketSynchroniseRequest, IMessage>
+		public static class Handler extends NetworkHandler.ServerHandler<Request>
 		{
-
-			@Override
-			public IMessage onMessage(PacketSynchroniseRequest message, MessageContext ctx)
+			public void processMessage(Request message, MessageContext context)
 			{
-				FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> processMessage(message, ctx));
-
-				return null;
-			}
-
-			// Fired on the server
-			private void processMessage(PacketSynchroniseRequest message, MessageContext context)
-			{
-				// MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-
-				//TODO: See commented line below this
-				// if (context.side== Side.CLIENT) ArcaneArchives.logger.error("Received synchronize request from wrong side");
-				MinecraftServer server = context.getServerHandler().player.getServer(); //TODO: decide if this is a better option than the above. This way
+				MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
 				if(server == null)
 				{
 					ArcaneArchives.logger.error("Server was null when processing sync packet");
 					return;
 				}
+
 				ServerNetwork network = NetworkHelper.getServerNetwork(message.playerId, server.getWorld(0));
 				if(network == null)
 				{
@@ -119,28 +106,27 @@ public class PacketNetwork
 						break;
 				}
 
-				PacketSynchroniseResponse response = new PacketSynchroniseResponse(message.type, message.playerId, output);
+				Response response = new Response(message.type, message.playerId, output);
 				EntityPlayerMP player = server.getPlayerList().getPlayerByUUID(message.playerId);
 
 				if(output != null)
 				{
-					AAPacketHandler.CHANNEL.sendTo(response, player);
+					NetworkHandler.CHANNEL.sendTo(response, player);
 				}
 			}
 		}
 	}
 
-	public static class PacketSynchroniseResponse extends PacketSynchroniseRequest
+	public static class Response extends Request
 	{
-
 		private NBTTagCompound data;
 
-		public PacketSynchroniseResponse()
+		public Response()
 		{
 			super();
 		}
 
-		public PacketSynchroniseResponse(SynchroniseType type, UUID player, NBTTagCompound data)
+		public Response(SynchroniseType type, UUID player, NBTTagCompound data)
 		{
 			super(type, player);
 			this.data = data;
@@ -161,19 +147,9 @@ public class PacketNetwork
 			ByteBufUtils.writeTag(buf, this.data);
 		}
 
-		public static class PacketSynchroniseResponseHandler implements IMessageHandler<PacketSynchroniseResponse, IMessage>
+		public static class Handler extends NetworkHandler.ClientHandler<Response>
 		{
-
-			@Override
-			public IMessage onMessage(PacketSynchroniseResponse message, MessageContext ctx)
-			{
-				FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> processMessage(message, ctx));
-
-				return null;
-			}
-
-			// This arrives on the client side!
-			private void processMessage(PacketSynchroniseResponse message, MessageContext context)
+			public void processMessage(Response message, MessageContext context)
 			{
 				ClientNetwork network = NetworkHelper.getClientNetwork(message.playerId);
 

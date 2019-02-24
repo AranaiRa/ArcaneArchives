@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.tileentities;
 
-import com.aranaira.arcanearchives.network.AAPacketHandler;
+import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketRadiantChest;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -140,7 +140,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 		if(super.updateOutput()) return true;
 
 		PacketRadiantChest.SetName packet = new PacketRadiantChest.SetName(getPos(), getChestName(), world.provider.getDimension());
-		AAPacketHandler.CHANNEL.sendToServer(packet);
+		NetworkHandler.CHANNEL.sendToServer(packet);
 
 		return true;
 	}

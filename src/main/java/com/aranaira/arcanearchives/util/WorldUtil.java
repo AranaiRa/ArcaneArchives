@@ -1,15 +1,41 @@
 package com.aranaira.arcanearchives.util;
 
+import com.aranaira.arcanearchives.network.PacketRadiantCrafting;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import javax.annotation.Nullable;
 
 public class WorldUtil
 {
+	@Nullable
+	public static <T> T getTileEntity(Class<T> clazz, int dimension, BlockPos pos) {
+		return getTileEntity(clazz, dimension, pos, false);
+	}
+
+	@Nullable
+	public static <T> T getTileEntity(Class<T> clazz, int dimension, BlockPos pos, boolean forceChunkLoad) {
+		MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+		if (server == null)
+		{
+			return null;
+		}
+
+		World world = DimensionManager.getWorld(dimension);
+
+		if (world == null) {
+			return null;
+		}
+
+		return getTileEntity(clazz, world, pos, forceChunkLoad);
+	}
+
 	@Nullable
 	public static <T> T getTileEntity(Class<T> clazz, IBlockAccess world, BlockPos pos) {
 		return getTileEntity(clazz, world, pos, false);

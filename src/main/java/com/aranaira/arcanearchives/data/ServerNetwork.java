@@ -1,21 +1,17 @@
 package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
-import com.aranaira.arcanearchives.network.AAPacketHandler;
-import com.aranaira.arcanearchives.network.PacketNetwork;
+import com.aranaira.arcanearchives.network.NetworkHandler;
+import com.aranaira.arcanearchives.network.PacketNetworks;
 import com.aranaira.arcanearchives.tileentities.*;
-import com.aranaira.arcanearchives.util.ItemComparison;
 import com.aranaira.arcanearchives.util.ItemStackConsolidator;
 import com.aranaira.arcanearchives.util.LargeItemNBTUtil;
 import com.aranaira.arcanearchives.util.types.*;
-import com.google.common.annotations.Beta;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.NonNullList;
-import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -352,7 +348,7 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 		return tag;
 	}
 
-	public void Synchronise(PacketNetwork.SynchroniseType type)
+	public void Synchronise(PacketNetworks.SynchroniseType type)
 	{
 		switch(type)
 		{
@@ -370,8 +366,8 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 			EntityPlayerMP player = server.getPlayerList().getPlayerByUUID(mPlayerId);
 			//noinspection ConstantConditions
 			if (player == null) return false;
-			IMessage packet = new PacketNetwork.PacketSynchroniseResponse(PacketNetwork.SynchroniseType.DATA, mPlayerId, buildSynchroniseData());
-			AAPacketHandler.CHANNEL.sendTo(packet, player);
+			IMessage packet = new PacketNetworks.Response(PacketNetworks.SynchroniseType.DATA, mPlayerId, buildSynchroniseData());
+			NetworkHandler.CHANNEL.sendTo(packet, player);
 			return true;
 		}
 
