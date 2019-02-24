@@ -210,7 +210,7 @@ public class BlockTemplate extends Block implements IHasModel
 				if(placer instanceof FakePlayer)
 				{
 					ArcaneArchives.logger.error(String.format("TileEntity placed by FakePlayer at %d,%d,%d is invalid and not linked to the network.", pos.getX(), pos.getY(), pos.getZ()));
-				} else
+				} else // TODO: HANDLE IF THIS IS NOT A PLAYER -- COULD BE NULL?
 				{
 					// If it's a network tile entity
 					if(te instanceof ImmanenceTileEntity)
