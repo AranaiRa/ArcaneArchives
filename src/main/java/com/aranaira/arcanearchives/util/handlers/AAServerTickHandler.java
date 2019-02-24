@@ -56,6 +56,8 @@ public class AAServerTickHandler
 				ServerNetwork network = NetworkHelper.getServerNetwork(networkId, ite.getWorld());
 				if(network == null) continue;
 
+				ite.generateTileId();
+
 				if(!network.NetworkContainsTile(ite))
 				{
 					network.AddTileToNetwork(ite);

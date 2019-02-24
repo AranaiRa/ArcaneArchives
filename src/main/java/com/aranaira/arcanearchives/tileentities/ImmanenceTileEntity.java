@@ -15,6 +15,7 @@ import java.util.UUID;
 
 public class ImmanenceTileEntity extends AATileEntity implements ITickable
 {
+	public UUID tileID = null;
 	public UUID networkID = null; //UUID of network owner
 	public int immanenceDrain = 0; //Immanence cost to operate the device
 	public int immanenceGeneration = 0; //Immanence that is given to the network with this device
@@ -33,6 +34,14 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 		setName(name);
 	}
 
+	public void generateTileId () {
+		if (!this.world.isRemote && this.networkID != null && this.tileID == null) {
+			ServerNetwork network = getNetwork();
+			this.tileID = network.generateTileId();
+		}
+	}
+
+	// Functions specifically for dealing with Rannuncarpus. >:0!
 	public void tick()
 	{
 		ticks++;
@@ -69,8 +78,13 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	@Nonnull
 	public NBTTagCompound writeToNBT(NBTTagCompound compound)
 	{
-		if (networkID != null) {
+		if(networkID != null)
+		{
 			compound.setString(Tags.PLAYER_ID, networkID.toString());
+		}
+		if(tileID != null)
+		{
+			compound.setString(Tags.TILE_ID, tileID.toString());
 		}
 		compound.setInteger(Tags.DIM, dimension);
 		return super.writeToNBT(compound);
@@ -82,6 +96,17 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 		if(compound.hasKey(Tags.PLAYER_ID))
 		{
 			networkID = UUID.fromString(compound.getString(Tags.PLAYER_ID));
+		}
+		if(compound.hasKey(Tags.TILE_ID))
+		{
+			UUID newId = UUID.fromString(compound.getString(Tags.TILE_ID));
+			if (tileID != null && !tileID.equals(newId)) {
+				if (!this.world.isRemote)
+				{
+					getNetwork().handleTileIdChange(tileID, newId);
+				}
+			}
+			tileID = newId;
 		}
 		dimension = compound.getInteger(Tags.DIM);
 		super.readFromNBT(compound);

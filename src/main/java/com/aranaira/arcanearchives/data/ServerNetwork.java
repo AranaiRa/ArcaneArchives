@@ -25,6 +25,7 @@ import java.util.*;
 public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 {
 	public HashMap<String, UUID> pendingInvites = new HashMap<>();
+	public Set<UUID> tileIDs = new HashSet<>();
 	public ManifestList manifestItems = new ManifestList(new ArrayList<>());
 	public ManifestItemHandler mManifestHandler = null;
 	private UUID mPlayerId;
@@ -71,7 +72,7 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 	public int CountTileEntities(Class<? extends AATileEntity> clazz)
 	{
 		int tmpCount = 0;
-		for(ImmanenceTileEntity ite : mNetworkTiles.filterClass(clazz))
+		for(IteRef ite : mNetworkTiles.filterClass(clazz))
 		{
 			tmpCount++;
 		}
@@ -84,25 +85,31 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 		int TotalGeneration = 0;
 		int TotalDrain = 0;
 
-		for(ImmanenceTileEntity ITE : GetBlocks())
+		for(IteRef ITE : GetBlocks())
 		{
-			TotalGeneration += ITE.immanenceGeneration;
+			ImmanenceTileEntity ite = ITE.getServerTile();
+			if (ite == null) continue;
+
+			TotalGeneration += ite.immanenceGeneration;
 		}
 
 		// Avoid the priority as it creates a new list
 		// only use if you ACTUALLY care about priority
 		// otherwise it would be best to resort the list
 		// whenever a new tile is added, based on priority
-		for(ImmanenceTileEntity ITE : GetBlocks())
+		for(IteRef ITE : GetBlocks())
 		{
-			int tmpDrain = ITE.immanenceDrain;
+			ImmanenceTileEntity ite = ITE.getServerTile();
+			if (ite == null) continue;
+
+			int tmpDrain = ite.immanenceDrain;
 			if(TotalGeneration > (TotalDrain + tmpDrain))
 			{
 				TotalDrain += tmpDrain;
-				ITE.isDrainPaid = true;
+				ite.isDrainPaid = true;
 			} else
 			{
-				ITE.isDrainPaid = false;
+				ite.isDrainPaid = false;
 			}
 		}
 		mCurrentImmanence = TotalGeneration - TotalDrain;
@@ -113,7 +120,7 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 	{
 		return this.mNetworkTiles.sorted((o1, o2) ->
 		{
-			if(o1.networkPriority > o2.networkPriority) return 1;
+			if(o1.networkPriority() > o2.networkPriority()) return 1;
 			else return -1;
 		});
 	}
@@ -134,9 +141,11 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 
 	public void AddTileToNetwork(ImmanenceTileEntity tileEntityInstance)
 	{
-		if(mNetworkTiles.contains(tileEntityInstance)) return;
+		tileEntityInstance.generateTileId();
 
-		mNetworkTiles.add(tileEntityInstance);
+		if(mNetworkTiles.containsUUID(tileEntityInstance.tileID)) return;
+
+		mNetworkTiles.add(new IteRef(tileEntityInstance));
 		tileEntityInstance.hasBeenAddedToNetwork = true;
 
 		mNeedsToBeUpdated = true;
@@ -149,7 +158,13 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 
 	public void RemoveTileFromNetwork(ImmanenceTileEntity tileEntityInstance)
 	{
-		mNetworkTiles.remove(tileEntityInstance);
+		RemoveTileFromNetwork(tileEntityInstance.tileID);
+	}
+
+	public void RemoveTileFromNetwork(UUID tileID) {
+		ImmanenceTileEntity tileEntityInstance = mNetworkTiles.getByUUID(tileID);
+
+		mNetworkTiles.removeByUUID(tileID);
 
 		mNeedsToBeUpdated = true;
 		UpdateImmanence();
@@ -161,7 +176,11 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 
 	public boolean NetworkContainsTile(ImmanenceTileEntity tileEntityInstance)
 	{
-		return mNetworkTiles.contains(tileEntityInstance);
+		return NetworkContainsTile(tileEntityInstance.tileID);
+	}
+
+	public boolean NetworkContainsTile(UUID tileID) {
+		return mNetworkTiles.containsUUID(tileID);
 	}
 
 	public TileList.TileListIterable GetRadiantChests()
@@ -190,6 +209,7 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 		mPlayerId = nbt.getUniqueId("playerId");
 	}
 
+	// TODO: TODO: CHECK
 	public void MarkUnsaved()
 	{
 		if(getParent() != null)
@@ -235,8 +255,11 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 		List<ManifestItemEntry> preManifest = new ArrayList<>();
 		Set<RadiantChestTileEntity> done = new HashSet<>();
 
-		for(ImmanenceTileEntity ite : GetRadiantChests())
+		for(IteRef ref : GetRadiantChests())
 		{
+			ImmanenceTileEntity ite = ref.getServerTile();
+			if (ite == null) continue;
+
 			RadiantChestTileEntity chest = (RadiantChestTileEntity) ite;
 			if(done.contains(chest)) continue;
 
@@ -262,18 +285,16 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 		totalResonators = 0;
 		totalCores = 0;
 
-		for (ImmanenceTileEntity ite : GetBlocks()) {
-			if (ite instanceof RadiantResonatorTileEntity) {
+		for (IteRef ite : GetBlocks()) {
+			if (ite.clazz.equals(RadiantResonatorTileEntity.class)) {
 				totalResonators++;
-			} else if (ite instanceof MatrixCoreTileEntity) {
+			} else if (ite.clazz.equals(MatrixCoreTileEntity.class)) {
 				totalCores++;
 			}
 		}
 
 		if (origCores != totalCores || origResonators != totalResonators) {
-			if (!synchroniseData()) {
-				FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(this::synchroniseData);
-			}
+			synchroniseData();
 		}
 	}
 
@@ -355,6 +376,21 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 		}
 
 		return false;
+	}
+
+	public UUID generateTileId () {
+		UUID newId = UUID.randomUUID();
+		while (tileIDs.contains(newId)) {
+			newId = UUID.randomUUID();
+		}
+
+		return newId;
+	}
+
+	public void handleTileIdChange (UUID oldId, UUID newId) {
+		RemoveTileFromNetwork(oldId);
+		tileIDs.remove(oldId);
+		tileIDs.add(newId);
 	}
 
 	public static class ManifestItemEntry

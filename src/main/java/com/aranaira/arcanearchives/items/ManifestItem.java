@@ -24,6 +24,7 @@ public class ManifestItem extends ItemTemplate
 	public ManifestItem()
 	{
 		super(NAME);
+		setMaxStackSize(1);
 	}
 
 	@Override
@@ -32,6 +33,7 @@ public class ManifestItem extends ItemTemplate
 		if(!worldIn.isRemote) return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
 
 		ClientNetwork network = NetworkHelper.getClientNetwork(playerIn.getUniqueID());
+		network.manifestItems.clear();
 		network.synchroniseManifest();
 
 		playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.MANIFEST, worldIn, (int) playerIn.posX, (int) playerIn.posY, (int) playerIn.posZ);
