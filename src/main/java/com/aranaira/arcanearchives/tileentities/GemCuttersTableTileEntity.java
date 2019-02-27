@@ -52,11 +52,15 @@ public class GemCuttersTableTileEntity extends AATileEntity
 		return recipe;
 	}
 
+	public void manuallySetRecipe (int index) {
+		this.recipe = GemCuttersTableRecipeList.getRecipeByIndex(index);
+	}
+
 	public void setRecipe(int index)
 	{
-		this.recipe = GemCuttersTableRecipeList.getRecipeByIndex(index);
+		manuallySetRecipe(index);
 
-		if (this.world.isRemote) {
+		if (world != null && world.isRemote) {
 			clientSideUpdate();
 		}
 	}
@@ -121,7 +125,7 @@ public class GemCuttersTableTileEntity extends AATileEntity
 	{
 		super.readFromNBT(compound);
 		mInventory.deserializeNBT(compound.getCompoundTag(AATileEntity.Tags.INVENTORY));
-		setRecipe(compound.getInteger(Tags.RECIPE)); // is this server-side or client-side?
+		manuallySetRecipe(compound.getInteger(Tags.RECIPE)); // is this server-side or client-side?
 	}
 
 	@Override
