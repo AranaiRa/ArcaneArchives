@@ -1,7 +1,6 @@
 package com.aranaira.arcanearchives.client;
 
 import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
-import com.aranaira.arcanearchives.inventory.slots.SlotGCTOutput;
 import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
 import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipe;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
@@ -76,7 +75,8 @@ public class GUIGemCuttersTable extends GuiContainer
 			{
 				dimSlot(slot, wasEnabled);
 			}
-		} else if(slot instanceof SlotGCTOutput)
+		}
+		/*else if(slot instanceof SlotGCTOutput)
 		{
 			if(!slot.getStack().isEmpty() && curRecipe != null)
 			{
@@ -85,7 +85,7 @@ public class GUIGemCuttersTable extends GuiContainer
 					dimSlot(slot, false);
 				}
 			}
-		}
+		}*/
 	}
 
 	private void dimSlot(Slot slot, boolean wasEnabled)
