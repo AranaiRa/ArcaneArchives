@@ -157,34 +157,6 @@ public class AATileEntity extends TileEntity
 		return true;
 	}
 
-
-	/**
-	 * This function will always return false if the world is not properly set.
-	 * All derived functions should perform their own world checks for their own
-	 * tiles.
-	 *
-	 * @return *True* if the function sent a packet, indicating that no further network
-	 * should be sent. *False* if the function did nothing (i.e., remote world) and
-	 * overrides should continue as normal.
-	 */
-	@Deprecated // This is actually a really bad way to do it, I've decided.
-	public boolean updateOutput()
-	{
-		if(world == null) return false;
-
-		if(world.isRemote) return false;
-
-		SPacketUpdateTileEntity update = getUpdatePacket();
-		MinecraftServer server = world.getMinecraftServer();
-
-		if(server != null && update != null)
-		{
-			server.getPlayerList().sendToAllNearExcept(null, pos.getX(), pos.getY(), pos.getZ(), 128, world.provider.getDimension(), update);
-		}
-
-		return true;
-	}
-
 	public static class Tags {
 		public static final String INVENTORY = "inventory";
 	}

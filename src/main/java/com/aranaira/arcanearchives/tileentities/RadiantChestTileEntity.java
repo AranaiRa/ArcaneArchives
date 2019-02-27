@@ -72,7 +72,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 	public void setChestName(String newName)
 	{
 		this.chestName = (newName == null) ? "" : newName;
-		this.updateOutput();
+		this.updateChestName();
 	}
 
 	public void setContents(ItemStack[] chestContents, ItemStack[] secondaryChestContents, boolean secondaryChest)
@@ -132,17 +132,15 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 		return new SPacketUpdateTileEntity(pos, 0, compound);
 	}
 
-	@Override
-	public boolean updateOutput()
+	private void updateChestName()
 	{
-		if(world == null) return false;
+		if(world == null) return;
 
-		if(super.updateOutput()) return true;
-
-		PacketRadiantChest.SetName packet = new PacketRadiantChest.SetName(getPos(), getChestName(), world.provider.getDimension());
-		NetworkHandler.CHANNEL.sendToServer(packet);
-
-		return true;
+		if (this.world.isRemote)
+		{
+			PacketRadiantChest.SetName packet = new PacketRadiantChest.SetName(getPos(), getChestName(), world.provider.getDimension());
+			NetworkHandler.CHANNEL.sendToServer(packet);
+		}
 	}
 
 	public static class Tags
