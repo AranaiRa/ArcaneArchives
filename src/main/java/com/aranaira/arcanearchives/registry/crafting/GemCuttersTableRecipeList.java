@@ -80,7 +80,7 @@ public class GemCuttersTableRecipeList
 	}
 
 	public static GemCuttersTableRecipe getRecipeByIndex (int index) {
-		if (index == -1) return null;
+		if (index == -1 || index >= RECIPE_LIST.size()) return null;
 
 		return RECIPE_LIST.get(index);
 	}
