@@ -22,9 +22,8 @@ public class ContainerGemCuttersTable extends Container
 	private GemCuttersTableTileEntity tile;
 	private boolean isServer;
 	private GemCuttersTableTileEntity.GemCuttersTableItemHandler tileInventory;
-	private ItemStackHandler tileOutput;
-	private SlotGCTOutput outputSlot;
 	private Runnable updateRecipeGUI;
+	private InventoryCraftResult craftResult;
 
 	public ContainerGemCuttersTable(GemCuttersTableTileEntity tile, IInventory playerInventory, boolean serverSide)
 	{
@@ -32,7 +31,8 @@ public class ContainerGemCuttersTable extends Container
 		this.isServer = serverSide;
 		this.playerInventory = playerInventory;
 		this.tileInventory = tile.getInventory();
-		this.tileOutput = tile.getOutput();
+
+		this.craftResult = new InventoryCraftResult();
 
 		int i = 35;
 		for(int y = 2; y > -1; y--)
@@ -50,9 +50,9 @@ public class ContainerGemCuttersTable extends Container
 			i--;
 		}
 
-		outputSlot = new SlotGCTOutput(this, tileOutput, this, 95, 18);
+		// outputSlot = new SlotGCTOutput(this, tileOutput, this, 95, 18);
 
-		this.addSlotToContainer(outputSlot);
+		// this.addSlotToContainer(outputSlot);
 
 		//selector - 1 - 8
 		{
