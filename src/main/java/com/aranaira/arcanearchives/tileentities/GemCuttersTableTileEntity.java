@@ -10,9 +10,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
@@ -62,6 +64,8 @@ public class GemCuttersTableTileEntity extends AATileEntity
 
 		if (world != null && world.isRemote) {
 			clientSideUpdate();
+		} else if (world != null && !world.isRemote) {
+			serverSideUpdate();
 		}
 	}
 
@@ -165,10 +169,19 @@ public class GemCuttersTableTileEntity extends AATileEntity
 	{
 		if(world == null || !world.isRemote) return;
 
-		// TODO
 		int index = (recipe == null) ? -1 : recipe.getIndex();
 		PacketGemCutters.ChangeRecipe packet = new PacketGemCutters.ChangeRecipe(index, getPos(), world.provider.getDimension());
 		NetworkHandler.CHANNEL.sendToServer(packet);
+	}
+
+	public void serverSideUpdate () {
+		if (world == null || world.isRemote) return;
+
+		SPacketUpdateTileEntity packet = getUpdatePacket();
+		MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+		if (server != null) {
+			server.getPlayerList().sendToAllNearExcept(null, pos.getX(), pos.getY(), pos.getZ(), 64, world.provider.getDimension(), packet);
+		}
 	}
 
 	public static class Tags

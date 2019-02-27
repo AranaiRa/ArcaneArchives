@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.inventory;
 
-import com.aranaira.arcanearchives.inventory.slots.SlotGCTOutput;
 import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
 import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipe;
 import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipeList;
@@ -8,7 +7,6 @@ import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
@@ -117,7 +115,8 @@ public class ContainerGemCuttersTable extends Container
 			{
 				slot.onSlotChanged();
 			}
-		} else {
+		} else
+		{
 			return ItemStack.EMPTY;
 		}
 
@@ -143,7 +142,7 @@ public class ContainerGemCuttersTable extends Container
 			// Client-side call
 			getTile().setRecipe(slot.getRelativeIndex()); // getSlot(slotId).getStack());
 
-			if (player.world.isRemote)
+			if(player.world.isRemote)
 			{
 				updateRecipeGUI.run();
 			}
