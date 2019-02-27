@@ -58,12 +58,12 @@ public class SlotGCTOutput extends SlotItemHandler
 			}
 		}
 
-		if(thePlayer instanceof EntityPlayerMP)
+		/*if(thePlayer instanceof EntityPlayerMP)
 		{
 			tile.updateRecipe();
 			tile.updateOutput();
 			((EntityPlayerMP) thePlayer).sendAllContents(cont, cont.getInventory());
-		}
+		}*/
 
 		return stack;
 	}

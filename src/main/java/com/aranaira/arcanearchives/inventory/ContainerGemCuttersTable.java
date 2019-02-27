@@ -6,10 +6,7 @@ import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipe;
 import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipeList;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ClickType;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -127,13 +124,13 @@ public class ContainerGemCuttersTable extends Container
 		return stack;
 	}
 
-	@Override
+	/*@Override
 	protected boolean mergeItemStack(ItemStack stack, int startIndex, int endIndex, boolean reverseDirection)
 	{
 		boolean temp = super.mergeItemStack(stack, startIndex, endIndex, reverseDirection);
 		this.getTile().updateOutput();
 		return temp;
-	}
+	}*/
 
 	@Override
 	@Nonnull
@@ -141,7 +138,10 @@ public class ContainerGemCuttersTable extends Container
 	{
 		if(slotId <= 43 && slotId >= 37)
 		{
-			getTile().setRecipe(getSlot(slotId).getStack());
+			SlotRecipeHandler slot = (SlotRecipeHandler) getSlot(slotId);
+
+			// Client-side call
+			getTile().setRecipe(slot.getRelativeIndex()); // getSlot(slotId).getStack());
 
 			if (player.world.isRemote)
 			{

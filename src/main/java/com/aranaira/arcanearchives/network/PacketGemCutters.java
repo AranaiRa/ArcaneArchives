@@ -4,16 +4,9 @@ import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 import java.util.UUID;
@@ -23,7 +16,7 @@ public class PacketGemCutters
 {
 	public static class ChangeRecipe implements IMessage
 	{
-		private ItemStack stack;
+		private int recipe;
 		private BlockPos pos;
 		private int dimension;
 
@@ -34,9 +27,9 @@ public class PacketGemCutters
 		}
 
 		@SuppressWarnings("unused")
-		public ChangeRecipe(ItemStack stack, BlockPos pos, int dimension)
+		public ChangeRecipe(int recipe, BlockPos pos, int dimension)
 		{
-			this.stack = stack;
+			this.recipe = recipe;
 			this.pos = pos;
 			this.dimension = dimension;
 		}
@@ -44,7 +37,7 @@ public class PacketGemCutters
 		@Override
 		public void fromBytes(ByteBuf buf)
 		{
-			stack = ByteBufUtils.readItemStack(buf);
+			recipe = buf.readInt();
 			pos = BlockPos.fromLong(buf.readLong());
 			dimension = buf.readInt();
 		}
@@ -52,7 +45,7 @@ public class PacketGemCutters
 		@Override
 		public void toBytes(ByteBuf buf)
 		{
-			ByteBufUtils.writeItemStack(buf, stack);
+			buf.writeInt(recipe);
 			buf.writeLong(pos.toLong());
 			buf.writeInt(dimension);
 		}
@@ -65,7 +58,8 @@ public class PacketGemCutters
 				GemCuttersTableTileEntity te = WorldUtil.getTileEntity(GemCuttersTableTileEntity.class, message.dimension, message.pos);
 				if(te != null)
 				{
-					te.setRecipe(message.stack);
+					// Server-side call
+					te.setRecipe(message.recipe);
 				}
 			}
 		}

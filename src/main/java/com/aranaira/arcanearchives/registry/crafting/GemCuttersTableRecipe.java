@@ -73,6 +73,10 @@ public class GemCuttersTableRecipe
 		return RecipeItemHelper.pack(mOutput) * mOutput.getCount();
 	}
 
+	public int getIndex  () {
+		return GemCuttersTableRecipeList.indexOf(this);
+	}
+
 	public class RecipeMatcher
 	{
 		private boolean simulate = true;

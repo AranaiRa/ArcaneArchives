@@ -74,8 +74,22 @@ public class GemCuttersTableRecipeList
 		VALID_INPUTS.addAll(recipe.getInput());
 	}
 
-	public static GemCuttersTableRecipe getRecipe(ItemStack item)
+	public static GemCuttersTableRecipe getRecipeByOutput(ItemStack item)
 	{
 		return RECIPE_LIST.stream().filter((recipe) -> ItemComparison.areStacksEqualIgnoreSize(recipe.getOutput(), item)).findFirst().orElse(null);
+	}
+
+	public static GemCuttersTableRecipe getRecipeByIndex (int index) {
+		if (index == -1) return null;
+
+		return RECIPE_LIST.get(index);
+	}
+
+	public static int indexOf (GemCuttersTableRecipe recipe) {
+		if (recipe == null) return -1;
+
+		if (!RECIPE_LIST.contains(recipe)) return -1;
+
+		return RECIPE_LIST.indexOf(recipe);
 	}
 }

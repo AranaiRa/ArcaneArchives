@@ -1,5 +1,7 @@
 package com.aranaira.arcanearchives.tileentities;
 
+import com.aranaira.arcanearchives.network.NetworkHandler;
+import com.aranaira.arcanearchives.network.PacketGemCutters;
 import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipe;
 import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipeList;
 import mcp.MethodsReturnNonnullByDefault;
@@ -25,14 +27,14 @@ import java.util.UUID;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
+public class GemCuttersTableTileEntity extends AATileEntity
 {
 
 	public static final int RECIPE_PAGE_LIMIT = 7;
 	private final GemCuttersTableItemHandler mInventory = new GemCuttersTableItemHandler(18);
-	private final ItemStackHandler mOutput = new ItemStackHandler(1);
 	private GemCuttersTableRecipe recipe = null;
 	private int curPage = 0;
+
 	public GemCuttersTableTileEntity()
 	{
 		super();
@@ -44,42 +46,18 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 		return mInventory;
 	}
 
-	public ItemStackHandler getOutput()
-	{
-		return mOutput;
-	}
-
-	public void setOutput(ItemStack stack)
-	{
-		this.mOutput.setStackInSlot(0, stack);
-	}
-
 	@Nullable
 	public GemCuttersTableRecipe getRecipe()
 	{
 		return recipe;
 	}
 
-	public void setRecipe(ItemStack itemStack)
+	public void setRecipe(int index)
 	{
-		setRecipe(GemCuttersTableRecipeList.getRecipe(itemStack));
-	}
+		this.recipe = GemCuttersTableRecipeList.getRecipeByIndex(index);
 
-	public void setRecipe(@Nullable GemCuttersTableRecipe recipe)
-	{
-		this.recipe = recipe;
-		updateRecipe();
-		updateOutput();
-
-		// send a synchronise packet
-	}
-
-	public void updateRecipe () {
-		if(recipe != null)
-		{
-			setOutput(recipe.getOutput());
-		} else {
-			setOutput(ItemStack.EMPTY);
+		if (this.world.isRemote) {
+			clientSideUpdate();
 		}
 	}
 
@@ -108,36 +86,16 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 		this.curPage = curPage;
 	}
 
-	public boolean nextPage()
+	public void nextPage()
 	{
 		if(GemCuttersTableRecipeList.getSize() > (getPage() + 1) * RECIPE_PAGE_LIMIT)
-		{
 			curPage++;
-			updateOutput();
-			return true;
-		} else
-		{
-			return false;
-		}
 	}
 
-	public boolean previousPage()
+	public void previousPage()
 	{
-		if(getPage() == 0)
-		{
-			return false;
-		} else
-		{
+		if(getPage() > 0)
 			curPage--;
-			updateOutput();
-			return true;
-		}
-	}
-
-	@Override
-	public void update()
-	{
-
 	}
 
 	@Override
@@ -146,7 +104,6 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 		// I'm making this all worse
 		if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
 		{
-			if(facing == EnumFacing.DOWN) return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(mOutput);
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(mInventory);
 		}
 		return super.getCapability(capability, facing);
@@ -163,31 +120,17 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 	public void readFromNBT(NBTTagCompound compound)
 	{
 		super.readFromNBT(compound);
-		mOutput.deserializeNBT(compound.getCompoundTag(Tags.OUTPUT));
 		mInventory.deserializeNBT(compound.getCompoundTag(AATileEntity.Tags.INVENTORY));
-
-		ItemStack recipe = ItemStack.EMPTY;
-
-		if(compound.hasKey(Tags.RECIPE))
-		{
-			recipe = new ItemStack(compound.getCompoundTag(Tags.RECIPE));
-		}
-
-		setPage(compound.getInteger(Tags.PAGE));
-		setRecipe(recipe);
+		setRecipe(compound.getInteger(Tags.RECIPE)); // is this server-side or client-side?
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound)
 	{
 		super.writeToNBT(compound);
-		compound.setTag(Tags.OUTPUT, mOutput.serializeNBT());
 		compound.setTag(AATileEntity.Tags.INVENTORY, mInventory.serializeNBT());
-		if(getRecipe() != null)
-		{
-			compound.setTag(Tags.RECIPE, getRecipe().getOutput().writeToNBT(new NBTTagCompound()));
-		}
-		compound.setInteger(Tags.PAGE, getPage());
+		int index = GemCuttersTableRecipeList.indexOf(getRecipe());
+		compound.setInteger(Tags.RECIPE, index);
 
 		return compound;
 	}
@@ -214,36 +157,19 @@ public class GemCuttersTableTileEntity extends AATileEntity implements ITickable
 		return new SPacketUpdateTileEntity(pos, 0, compound);
 	}
 
-	@Override
-	public boolean updateOutput()
+	public void clientSideUpdate()
 	{
-		/*if(world == null) return false;
+		if(world == null || !world.isRemote) return;
 
-		if(super.updateOutput()) return true;
-
-		if (world.isRemote)
-		{
-			PacketGemCutters.ChangePage packet = new PacketGemCutters.ChangePage(getPos(), getPage(), world.provider.getDimension());
-			NetworkHandler.CHANNEL.sendToServer(packet);
-			PacketGemCutters.ChangeRecipe packet2;
-			if(this.getRecipe() != null)
-			{
-				packet2 = new PacketGemCutters.ChangeRecipe(this.getRecipe().getOutput(), getPos(), world.provider.getDimension());
-			} else
-			{
-				packet2 = new PacketGemCutters.ChangeRecipe(ItemStack.EMPTY, getPos(), world.provider.getDimension());
-			}
-			NetworkHandler.CHANNEL.sendToServer(packet2);
-		}*/
-
-		return true;
+		// TODO
+		int index = (recipe == null) ? -1 : recipe.getIndex();
+		PacketGemCutters.ChangeRecipe packet = new PacketGemCutters.ChangeRecipe(index, getPos(), world.provider.getDimension());
+		NetworkHandler.CHANNEL.sendToServer(packet);
 	}
 
 	public static class Tags
 	{
-		public static final String OUTPUT = "output";
 		public static final String RECIPE = "recipe";
-		public static final String PAGE = "page";
 	}
 
 	public static class GemCuttersTableItemHandler extends ItemStackHandler
