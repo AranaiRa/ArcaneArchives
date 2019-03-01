@@ -1,9 +1,9 @@
 package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
-import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -17,6 +17,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class RadiantLantern extends BlockDirectionalTemplate
 {
@@ -34,42 +35,50 @@ public class RadiantLantern extends BlockDirectionalTemplate
 	@Override
 	@SuppressWarnings("deprecation")
 	public IBlockState withRotation(IBlockState state, Rotation rot)
-    {
-        return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
-    }
+	{
+		return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
+	}
 
-    @Override
+	@Override
 	@SuppressWarnings("deprecation")
-    public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
-    {
-        return state.withProperty(FACING, mirrorIn.mirror(state.getValue(FACING)));
-    }
+	public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
+	{
+		return state.withProperty(FACING, mirrorIn.mirror(state.getValue(FACING)));
+	}
 
 	@Override
 	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand)
 	{
-        return this.getDefaultState().withProperty(FACING, facing);
+		return this.getDefaultState().withProperty(FACING, facing);
 	}
 
 	@Override
 	public IBlockState getStateFromMeta(int meta)
-    {
-        IBlockState iblockstate = this.getDefaultState();
-        iblockstate = iblockstate.withProperty(FACING, EnumFacing.byIndex(meta));
-        return iblockstate;
-    }
+	{
+		IBlockState iblockstate = this.getDefaultState();
+		iblockstate = iblockstate.withProperty(FACING, EnumFacing.byIndex(meta));
+		return iblockstate;
+	}
 
-    @Override
+	@Override
 	public int getMetaFromState(IBlockState state)
-    {
-        return ((EnumFacing)state.getValue(FACING)).getIndex();
-    }
+	{
+		return state.getValue(FACING).getIndex();
+	}
 
-    @Override
+	@Nullable
+	@Override
+	@SuppressWarnings("deprecation")
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
+	{
+		return NULL_AABB;
+	}
+
+	@Override
 	protected BlockStateContainer createBlockState()
-    {
-        return new BlockStateContainer(this, new IProperty[] {FACING});
-    }
+	{
+		return new BlockStateContainer(this, new IProperty[]{FACING});
+	}
 
 	@Override
 	@SuppressWarnings("deprecation")
@@ -97,5 +106,12 @@ public class RadiantLantern extends BlockDirectionalTemplate
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
 	{
 		return new AxisAlignedBB(0.35, 0.0, 0.35, 0.65, 1.0, 0.65);
+	}
+
+	@Override
+	@SuppressWarnings("deprecation")
+	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face)
+	{
+		return BlockFaceShape.UNDEFINED;
 	}
 }
