@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.registry.crafting.gct;
+package com.aranaira.arcanearchives.recipe.gct;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.item.ItemStack;
@@ -32,7 +32,13 @@ public class GCTRecipeList
 	public static ItemStack getOutputByIndex (int index) {
 		if (index < 0 || index >= RECIPE_LIST.size()) return ItemStack.EMPTY;
 
-		return RECIPE_LIST.get(index).getRecipeOutput();
+		return RECIPE_LIST.get(index).getRecipeOutput().copy();
+	}
+
+	public static GCTRecipe getRecipeByIndex (int index) {
+		if (index < 0 || index >= RECIPE_LIST.size()) return null;
+
+		return RECIPE_LIST.get(index);
 	}
 
 	public static int indexOf (GCTRecipe recipe) {

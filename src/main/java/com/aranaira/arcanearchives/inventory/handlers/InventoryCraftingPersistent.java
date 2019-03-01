@@ -8,7 +8,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 
-public class InventoryCraftingPersistent extends InventoryCraftingItemHandler<RadiantCraftingTableTileEntity>
+public class InventoryCraftingPersistent extends InventoryCraftingItemHandler<RadiantCraftingTableTileEntity, ItemStackHandler>
 {
 	public InventoryCraftingPersistent(Container eventHandler, ItemStackHandler parent, RadiantCraftingTableTileEntity tile, int width, int height)
 	{

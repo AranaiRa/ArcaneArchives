@@ -6,19 +6,21 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 
-public abstract class InventoryCraftingItemHandler<T extends TileEntity> extends InventoryCrafting
+public abstract class InventoryCraftingItemHandler<T extends TileEntity, V extends IItemHandlerModifiable> extends InventoryCrafting
 {
 	private final int length;
 	private final Container eventHandler;
-	private final ItemStackHandler parent;
+	private final V parent;
 	private final T tile;
 	private boolean doNotCallUpdates;
 
-	public InventoryCraftingItemHandler(Container eventHandler, ItemStackHandler parent, T tile, int width, int height)
+	public InventoryCraftingItemHandler(Container eventHandler, V parent, T tile, int width, int height)
 	{
 		super(eventHandler, width, height);
 

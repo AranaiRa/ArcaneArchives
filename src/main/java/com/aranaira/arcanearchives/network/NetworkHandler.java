@@ -20,6 +20,7 @@ public class NetworkHandler
 		registerPacks(PacketRadiantChest.SetName.Handler.class, PacketRadiantChest.SetName.class, Side.SERVER);
 		registerPacks(PacketGemCutters.ChangeRecipe.Handler.class, PacketGemCutters.ChangeRecipe.class, Side.SERVER);
 		registerPacks(PacketGemCutters.Consume.Handler.class, PacketGemCutters.Consume.class, Side.SERVER);
+		registerPacks(PacketGemCutters.LastRecipe.Handler.class, PacketGemCutters.LastRecipe.class, Side.CLIENT);
 		registerPacks(PacketNetworks.Response.Handler.class, PacketNetworks.Response.class, Side.CLIENT);
 		registerPacks(PacketNetworks.Request.Handler.class, PacketNetworks.Request.class, Side.SERVER);
 		registerPacks(PacketRadiantCrafting.LastRecipe.Handler.class, PacketRadiantCrafting.LastRecipe.class, Side.CLIENT);

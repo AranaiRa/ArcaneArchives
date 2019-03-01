@@ -2,15 +2,17 @@ package com.aranaira.arcanearchives.client;
 
 import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
 import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
-import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipe;
+import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import org.lwjgl.opengl.GL11;
@@ -29,12 +31,12 @@ public class GUIGemCuttersTable extends GuiContainer
 	private static final int OVERLAY = 0xaa1e3340;
 
 	ContainerGemCuttersTable container;
-	GemCuttersTableRecipe curRecipe = null;
+	GCTRecipe curRecipe = null;
 	private InvisibleButton PrevPageButton;
 	private InvisibleButton NextPageButton;
 	private EntityPlayer player;
 	private GemCuttersTableTileEntity tile;
-	private Map<GemCuttersTableRecipe, Boolean> RECIPE_STATUS = new HashMap<>();
+	private Map<GCTRecipe, Boolean> RECIPE_STATUS = new HashMap<>();
 	private int timesChanged;
 
 	public GUIGemCuttersTable(EntityPlayer player, ContainerGemCuttersTable container)
@@ -59,7 +61,7 @@ public class GUIGemCuttersTable extends GuiContainer
 
 		if(slot instanceof SlotRecipeHandler)
 		{
-			GemCuttersTableRecipe recipe = ((SlotRecipeHandler) slot).getRecipe();
+			GCTRecipe recipe = ((SlotRecipeHandler) slot).getRecipe();
 			if(recipe == null) return;
 
 			if(recipe == curRecipe)
@@ -76,16 +78,6 @@ public class GUIGemCuttersTable extends GuiContainer
 				dimSlot(slot, wasEnabled);
 			}
 		}
-		/*else if(slot instanceof SlotGCTOutput)
-		{
-			if(!slot.getStack().isEmpty() && curRecipe != null)
-			{
-				if(!RECIPE_STATUS.getOrDefault(curRecipe, false))
-				{
-					dimSlot(slot, false);
-				}
-			}
-		}*/
 	}
 
 	private void dimSlot(Slot slot, boolean wasEnabled)
@@ -145,7 +137,7 @@ public class GUIGemCuttersTable extends GuiContainer
 		{
 			FontRenderer font = stack.getItem().getFontRenderer(stack);
 			List<String> tooltip = new ArrayList<>();
-			GemCuttersTableRecipe recipe = ((SlotRecipeHandler) slot).getRecipe();
+			GCTRecipe recipe = ((SlotRecipeHandler) slot).getRecipe();
 			if(recipe != null)
 			{
 				if(RECIPE_STATUS.getOrDefault(recipe, false))
@@ -157,9 +149,36 @@ public class GUIGemCuttersTable extends GuiContainer
 					tooltip.add(TextFormatting.RED + stack.getDisplayName());
 				}
 
-				for(ItemStack item : recipe.getInput())
+				if(recipe.TOOLTIP_CACHE != null)
 				{
-					tooltip.add(TextFormatting.BOLD + item.getDisplayName() + " : " + item.getCount());
+					tooltip.addAll(recipe.TOOLTIP_CACHE);
+				} else
+				{
+					Map<Integer, ItemStack> ingredients = new HashMap<>();
+					for(Ingredient ing : recipe.getIngredients())
+					{
+						ItemStack[] stacks = ing.getMatchingStacks();
+						assert stacks.length != 0; // TODO?
+						ItemStack item = stacks[0];
+						int packed = RecipeItemHelper.pack(item);
+						if(ingredients.containsKey(packed))
+						{
+							ingredients.get(packed).grow(1);
+						} else
+						{
+							ingredients.put(packed, item);
+						}
+					}
+
+					List<String> cache = new ArrayList<>();
+
+					for(ItemStack item : ingredients.values())
+					{
+						cache.add(TextFormatting.BOLD + item.getDisplayName() + " : " + item.getCount());
+					}
+
+					recipe.TOOLTIP_CACHE = cache;
+					tooltip.addAll(cache);
 				}
 			}
 

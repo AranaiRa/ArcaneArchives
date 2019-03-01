@@ -2,17 +2,15 @@ package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketGemCutters;
-import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipe;
-import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipeList;
+import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
+import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -34,7 +32,7 @@ public class GemCuttersTableTileEntity extends AATileEntity
 
 	public static final int RECIPE_PAGE_LIMIT = 7;
 	private final GemCuttersTableItemHandler mInventory = new GemCuttersTableItemHandler(18);
-	private GemCuttersTableRecipe recipe = null;
+	private GCTRecipe recipe = null;
 	private int curPage = 0;
 
 	public GemCuttersTableTileEntity()
@@ -49,22 +47,25 @@ public class GemCuttersTableTileEntity extends AATileEntity
 	}
 
 	@Nullable
-	public GemCuttersTableRecipe getRecipe()
+	public GCTRecipe getRecipe()
 	{
 		return recipe;
 	}
 
-	public void manuallySetRecipe (int index) {
-		this.recipe = GemCuttersTableRecipeList.getRecipeByIndex(index);
+	public void manuallySetRecipe(int index)
+	{
+		this.recipe = GCTRecipeList.getRecipeByIndex(index);
 	}
 
 	public void setRecipe(int index)
 	{
 		manuallySetRecipe(index);
 
-		if (world != null && world.isRemote) {
+		if(world != null && world.isRemote)
+		{
 			clientSideUpdate();
-		} else if (world != null && !world.isRemote) {
+		} else if(world != null && !world.isRemote)
+		{
 			serverSideUpdate();
 		}
 	}
@@ -74,14 +75,14 @@ public class GemCuttersTableTileEntity extends AATileEntity
 		EntityPlayer player = world.getPlayerEntityByUUID(playerId);
 		if(player == null) return;
 
-		GemCuttersTableRecipe recipe = getRecipe();
+		GCTRecipe recipe = getRecipe();
 		if(recipe == null) return;
 
 		InvWrapper plyInv = new InvWrapper(player.inventory);
 
-		if(!recipe.matchesRecipe(this.mInventory, plyInv)) return;
+		/*if(!recipe.matchesRecipe(this.mInventory, plyInv)) return;
 
-		recipe.consume(this.mInventory, plyInv);
+		recipe.consume(this.mInventory, plyInv);*/
 	}
 
 	public int getPage()
@@ -96,14 +97,12 @@ public class GemCuttersTableTileEntity extends AATileEntity
 
 	public void nextPage()
 	{
-		if(GemCuttersTableRecipeList.getSize() > (getPage() + 1) * RECIPE_PAGE_LIMIT)
-			curPage++;
+		if(GCTRecipeList.getSize() > (getPage() + 1) * RECIPE_PAGE_LIMIT) curPage++;
 	}
 
 	public void previousPage()
 	{
-		if(getPage() > 0)
-			curPage--;
+		if(getPage() > 0) curPage--;
 	}
 
 	@Override
@@ -137,7 +136,7 @@ public class GemCuttersTableTileEntity extends AATileEntity
 	{
 		super.writeToNBT(compound);
 		compound.setTag(AATileEntity.Tags.INVENTORY, mInventory.serializeNBT());
-		int index = GemCuttersTableRecipeList.indexOf(getRecipe());
+		int index = GCTRecipeList.indexOf(getRecipe());
 		compound.setInteger(Tags.RECIPE, index);
 
 		return compound;
@@ -174,12 +173,14 @@ public class GemCuttersTableTileEntity extends AATileEntity
 		NetworkHandler.CHANNEL.sendToServer(packet);
 	}
 
-	public void serverSideUpdate () {
-		if (world == null || world.isRemote) return;
+	public void serverSideUpdate()
+	{
+		if(world == null || world.isRemote) return;
 
 		SPacketUpdateTileEntity packet = getUpdatePacket();
 		MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-		if (server != null) {
+		if(server != null)
+		{
 			server.getPlayerList().sendToAllNearExcept(null, pos.getX(), pos.getY(), pos.getZ(), 64, world.provider.getDimension(), packet);
 		}
 	}

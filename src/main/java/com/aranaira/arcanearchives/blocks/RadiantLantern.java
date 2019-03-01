@@ -32,15 +32,17 @@ public class RadiantLantern extends BlockDirectionalTemplate
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
 	public IBlockState withRotation(IBlockState state, Rotation rot)
     {
         return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
     }
 
     @Override
+	@SuppressWarnings("deprecation")
     public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
     {
-        return state.withProperty(FACING, mirrorIn.mirror((EnumFacing)state.getValue(FACING)));
+        return state.withProperty(FACING, mirrorIn.mirror(state.getValue(FACING)));
     }
 
 	@Override

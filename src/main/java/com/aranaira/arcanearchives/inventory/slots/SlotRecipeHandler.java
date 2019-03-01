@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.inventory.slots;
 
-import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipe;
-import com.aranaira.arcanearchives.registry.crafting.GemCuttersTableRecipeList;
+import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
+import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -29,9 +29,9 @@ public class SlotRecipeHandler extends Slot
 		this.entity = entity;
 	}
 
-	public GemCuttersTableRecipe getRecipe()
+	public GCTRecipe getRecipe()
 	{
-		return GemCuttersTableRecipeList.getRecipeByIndex(getRelativeIndex());
+		return GCTRecipeList.getRecipeByIndex(getRelativeIndex());
 	}
 
 	public int getPage()
@@ -61,9 +61,9 @@ public class SlotRecipeHandler extends Slot
 	public ItemStack getStack()
 	{
 		int slot = getRelativeIndex();
-		if(slot < GemCuttersTableRecipeList.getSize())
+		if(slot < GCTRecipeList.getSize())
 		{
-			return GemCuttersTableRecipeList.getOutputByIndex(slot);
+			return GCTRecipeList.getOutputByIndex(slot).copy();
 		}
 
 		return ItemStack.EMPTY;

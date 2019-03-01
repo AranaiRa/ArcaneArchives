@@ -42,7 +42,7 @@ public class SlotIRecipe extends Slot
 	public ItemStack getStack()
 	{
 		if (tile.getRecipe(recipe) != null) {
-			return tile.getRecipe(recipe).getRecipeOutput();
+			return tile.getRecipe(recipe).getRecipeOutput().copy();
 		} else {
 			return ItemStack.EMPTY;
 		}

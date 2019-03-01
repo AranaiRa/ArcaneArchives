@@ -89,13 +89,13 @@ public class ContainerRadiantCraftingTable extends Container
 			index++;
 		}
 
-		this.recipeSlots.set(0, new SlotIRecipe(this, index++, tile, player, 0, 174, 16));
+		/*this.recipeSlots.set(0, new SlotIRecipe(this, index++, tile, player, 0, 174, 16));
 		this.recipeSlots.set(1, new SlotIRecipe(this, index++, tile, player, 1, 174, 42));
 		this.recipeSlots.set(2, new SlotIRecipe(this, index, tile, player, 2, 174, 68));
 
 		this.addSlotToContainer(recipeSlots.get(0));
 		this.addSlotToContainer(recipeSlots.get(1));
-		this.addSlotToContainer(recipeSlots.get(2));
+		this.addSlotToContainer(recipeSlots.get(2));*/
 	}
 
 	@SubscribeEvent

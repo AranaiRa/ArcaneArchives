@@ -29,7 +29,7 @@ public class CommonProxy
 
 	public void init(FMLInitializationEvent event)
 	{
-		RecipeLibrary.RegisterGCTRecipes();
+		RecipeLibrary.buildRecipes();
 		BlockRegistry.registerTileEntities();
 	}
 
