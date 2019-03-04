@@ -41,12 +41,17 @@ repositories {
         name = "HWYLA"
         url = "http://tehnut.info/maven"
     }
-    maven { // TUMAT
-        url = "http://maven.chaosfield.at"
-    }
     maven { // The One Probe
         name 'tterrag maven'
         url "https://maven.tterrag.com/"
+    }
+    maven { // Quark
+        name = "BlameJared"
+        url = "https://maven.blamejared.com"
+    }
+    maven {
+        name = "CurseForge"
+        url = "https://minecraft.curseforge.com/api/maven/"
     }
 }
 
@@ -55,6 +60,7 @@ dependencies {
     runtime "mezz.jei:jei_${project.jei_version}"
     deobfCompile "mcp.mobius.waila:Hwyla:${project.hwyla_version}"
     deobfCompile "mcjty.theoneprobe:TheOneProbe-${top_version}"
+    deobfCompile "vazkii.quark:Quark:${quark_version}"
 }
 
 runClient {

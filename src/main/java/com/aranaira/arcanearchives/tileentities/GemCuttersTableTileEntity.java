@@ -66,7 +66,7 @@ public class GemCuttersTableTileEntity extends AATileEntity
 			clientSideUpdate();
 		} else if(world != null && !world.isRemote)
 		{
-			serverSideUpdate();
+			defaultServerSideUpdate();
 		}
 	}
 
@@ -171,18 +171,6 @@ public class GemCuttersTableTileEntity extends AATileEntity
 		int index = (recipe == null) ? -1 : recipe.getIndex();
 		PacketGemCutters.ChangeRecipe packet = new PacketGemCutters.ChangeRecipe(index, getPos(), world.provider.getDimension());
 		NetworkHandler.CHANNEL.sendToServer(packet);
-	}
-
-	public void serverSideUpdate()
-	{
-		if(world == null || world.isRemote) return;
-
-		SPacketUpdateTileEntity packet = getUpdatePacket();
-		MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-		if(server != null)
-		{
-			server.getPlayerList().sendToAllNearExcept(null, pos.getX(), pos.getY(), pos.getZ(), 64, world.provider.getDimension(), packet);
-		}
 	}
 
 	public static class Tags

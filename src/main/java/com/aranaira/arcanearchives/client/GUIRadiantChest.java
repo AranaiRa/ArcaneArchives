@@ -2,15 +2,24 @@ package com.aranaira.arcanearchives.client;
 
 import com.aranaira.arcanearchives.inventory.ContainerRadiantChest;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.Optional;
 import org.lwjgl.opengl.GL11;
+import vazkii.quark.api.IChestButtonCallback;
+import vazkii.quark.api.IItemSearchBar;
 
 import java.io.IOException;
 
-public class GUIRadiantChest extends GuiContainer
+@Optional.InterfaceList({
+	@Optional.Interface(modid="quark", iface="vazkii.quark.api.IChestButtonCallback", striprefs = true),
+	@Optional.Interface(modid="quark", iface="vazkii.quark.api.IItemSearchBar", striprefs = true)
+})
+public class GUIRadiantChest extends GuiContainer implements IChestButtonCallback, IItemSearchBar
 {
 
 	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/radiantchest.png");
@@ -149,5 +158,20 @@ public class GUIRadiantChest extends GuiContainer
 			super.keyTyped(typedChar, keyCode);
 		}
 
+	}
+
+	@Optional.Method(modid="quark")
+	@Override
+	public boolean onAddChestButton(GuiButton button, int buttonType)
+	{
+		return true;
+	}
+
+	@Optional.Method(modid="quark")
+	@Override
+	public void onSearchBarAdded(GuiTextField bar)
+	{
+		bar.y = (height / 2) + 2;
+		bar.x = (width / 2) - bar.width / 2;
 	}
 }

@@ -11,6 +11,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import javax.annotation.Nullable;
 
@@ -155,6 +156,18 @@ public class AATileEntity extends TileEntity
 	public boolean isActive()
 	{
 		return true;
+	}
+
+	public void defaultServerSideUpdate()
+	{
+		if(world == null || world.isRemote) return;
+
+		SPacketUpdateTileEntity packet = getUpdatePacket();
+		MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+		if(server != null)
+		{
+			server.getPlayerList().sendToAllNearExcept(null, pos.getX(), pos.getY(), pos.getZ(), 64, world.provider.getDimension(), packet);
+		}
 	}
 
 	public static class Tags {

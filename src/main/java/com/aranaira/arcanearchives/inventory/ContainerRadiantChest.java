@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.inventory;
 
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
+import invtweaks.api.container.ChestContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
@@ -11,6 +12,7 @@ import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
 
+@ChestContainer(isLargeChest = true)
 public class ContainerRadiantChest extends Container
 {
 	private RadiantChestTileEntity tile;
@@ -21,33 +23,27 @@ public class ContainerRadiantChest extends Container
 
 		IItemHandler handler = tile.getInventory();
 
-		for(int y = 5; y > -1; y--)
-		{
-			for(int x = 8; x > -1; x--)
-			{
-				this.addSlotToContainer(new SlotItemHandler(handler, 9 * y + x, x * 18 + 16, y * 18 + 16));
-			}
-		}
+        for (int j = 0; j < 6; ++j)
+        {
+            for (int k = 0; k < 9; ++k)
+            {
+                this.addSlotToContainer(new SlotItemHandler(handler, k + j * 9, 16 + k * 18, 16 + j * 18));
+            }
+        }
 
-		//Creates the slots for the players inventory.
-		int i = 35;
-		//inventory.
-		for(int y = 2; y > -1; y--)
-		{
-			for(int x = 8; x > -1; x--)
-			{
-				this.addSlotToContainer(new Slot(playerInventory, i, 16 + (18 * x), 142 + (18 * y)));
+        for (int l = 0; l < 3; ++l)
+        {
+            for (int j1 = 0; j1 < 9; ++j1)
+            {
+                this.addSlotToContainer(new Slot(playerInventory, j1 + l * 9 + 9, 16 + j1 * 18, 142 + l * 18));
+            }
+        }
 
-				i--;
-			}
-		}
-		//Hotbar.
-		for(int x = 8; x > -1; x--)
-		{
-			this.addSlotToContainer(new Slot(playerInventory, i, 16 + (18 * x), 200));
-			i--;
-		}
-	}
+        for (int i1 = 0; i1 < 9; ++i1)
+        {
+            this.addSlotToContainer(new Slot(playerInventory, i1, 16 + i1 * 18, 200));
+        }
+    }
 
 	public String getName()
 	{

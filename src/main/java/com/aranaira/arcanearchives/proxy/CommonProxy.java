@@ -10,10 +10,7 @@ import com.aranaira.arcanearchives.network.NetworkHandler;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
+import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 
@@ -31,6 +28,8 @@ public class CommonProxy
 	{
 		RecipeLibrary.buildRecipes();
 		BlockRegistry.registerTileEntities();
+
+		FMLInterModComms.sendFunctionMessage("theoneprobe", "getTheOneProbe", "com.aranaira.arcanearchives.compat.top.TOPPlugin");
 	}
 
 	public void postInit(FMLPostInitializationEvent event)
