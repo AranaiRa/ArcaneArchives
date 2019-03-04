@@ -1,63 +1,178 @@
 package com.aranaira.arcanearchives.recipe.gct;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.google.common.collect.Lists;
+import com.aranaira.arcanearchives.util.types.IngredientStack;
+import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
+import it.unimi.dsi.fastutil.ints.IntList;
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.RecipeMatcher;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.List;
 
-public class GCTRecipe extends ShapelessOreRecipe implements IRecipe
+public class GCTRecipe extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe
 {
 	public List<String> TOOLTIP_CACHE = null;
 
-	public GCTRecipe(ResourceLocation group, @Nonnull ItemStack result, Object... recipe)
+	private IntOpenHashSet ingredientsSet = null;
+	private Int2IntOpenHashMap ingredientsMap = null;
+	private final List<IngredientStack> ingredients = new ArrayList<>();
+	private final ItemStack result;
+
+	public GCTRecipe(String name, @Nonnull ItemStack result, Object... recipe)
 	{
-		super(group, result, recipe);
+		this.setRegistryName(new ResourceLocation(ArcaneArchives.MODID, name));
+		this.result = result.copy();
+		for(Object stack : recipe)
+		{
+			if(stack instanceof ItemStack)
+			{
+				ingredients.add(new IngredientStack((ItemStack) stack));
+			} else if(stack instanceof Ingredient)
+			{
+				ingredients.add(new IngredientStack((Ingredient) stack));
+			} else if(stack instanceof String)
+			{
+				ingredients.add(new IngredientStack((String) stack));
+			} else
+			{
+				ArcaneArchives.logger.warn(String.format("Unknown ingredient type for recipe %s, skipped: %s", name, stack.toString()));
+			}
+		}
 	}
 
-	public static GCTRecipe buildAndAdd(String name, ItemStack result, Object... recipe)
+	private IntOpenHashSet getIngredientsSet()
 	{
-		ResourceLocation group = new ResourceLocation(ArcaneArchives.MODID, name);
-		GCTRecipe gctRecipe = new GCTRecipe(group, result, recipe);
+		if(ingredientsSet == null)
+		{
+			ingredientsMap = new Int2IntOpenHashMap();
+			ingredientsSet = new IntOpenHashSet();
 
-		GCTRecipeList.addRecipe(gctRecipe);
+			for(int i = 0; i < ingredients.size(); i++)
+			{
+				IngredientStack stack = ingredients.get(i);
+				IntList packs = stack.getValidItemStacksPacked();
+				ingredientsSet.addAll(packs);
+				for(int pack : packs)
+					ingredientsMap.put(pack, i);
+			}
 
-		return gctRecipe;
+		}
+
+		return ingredientsSet;
 	}
 
-	public int getIndex () {
+	private class Counter
+	{
+		private Int2IntOpenHashMap counter;
+
+		private Counter()
+		{
+			counter = new Int2IntOpenHashMap();
+			for(int i = 0; i < ingredients.size(); i++)
+			{
+				IngredientStack stack = ingredients.get(i);
+				counter.put(i, stack.getCount());
+			}
+		}
+
+		private void account(int index, int count)
+		{
+			if(counter.containsKey(index))
+			{
+				int val = counter.get(index);
+				int newVal = Math.max(0, val - count);
+				if(newVal == 0)
+				{
+					counter.remove(index);
+				} else
+				{
+					counter.put(index, newVal);
+				}
+			}
+		}
+
+		private boolean matches()
+		{
+			return counter.size() == 0;
+		}
+	}
+
+	public int getIndex()
+	{
 		return GCTRecipeList.indexOf(this);
 	}
 
 	@Override
-    public boolean matches(@Nonnull InventoryCrafting inv, @Nonnull World world)
-    {
-        RecipeItemHelper recipeItemHelper = new RecipeItemHelper();
-        List<ItemStack> items = Lists.newArrayList();
+	public boolean matches(@Nonnull InventoryCrafting inv, @Nonnull World world)
+	{
+		IntOpenHashSet ingredients = getIngredientsSet();
+		Counter counter = new Counter();
 
-        for (int i = 0; i < inv.getSizeInventory(); ++i)
-        {
-            ItemStack itemstack = inv.getStackInSlot(i);
-            if (!itemstack.isEmpty())
-            {
-                if (this.isSimple)
-                    recipeItemHelper.accountStack(itemstack);
-                else
-                    items.add(itemstack);
-            }
-        }
+		for(int i = 0; i < inv.getSizeInventory(); ++i)
+		{
+			ItemStack itemstack = inv.getStackInSlot(i);
+			if(!itemstack.isEmpty())
+			{
+				int stack = RecipeItemHelper.pack(itemstack);
+				if (ingredients.contains(stack)) {
+					int index = ingredientsMap.get(stack);
+					counter.account(index, itemstack.getCount());
+				}
+			}
+		}
 
-        if (this.isSimple)
-            return recipeItemHelper.canCraft(this, null);
+		return counter.matches();
+	}
 
-        return RecipeMatcher.findMatches(items, this.input) != null;
-    }
+	@Override
+	public ItemStack getCraftingResult(InventoryCrafting inv)
+	{
+		return result.copy();
+	}
+
+	@Override
+	public boolean canFit(int width, int height)
+	{
+		return true;
+	}
+
+	@Override
+	public ItemStack getRecipeOutput()
+	{
+		return result.copy();
+	}
+
+	@Override
+	public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv)
+	{
+		return null;
+	}
+
+	@Override
+	public NonNullList<Ingredient> getIngredients()
+	{
+		return null;
+	}
+
+	@Override
+	public boolean isDynamic()
+	{
+		return false;
+	}
+
+	@Override
+	public String getGroup()
+	{
+		return null;
+	}
 }

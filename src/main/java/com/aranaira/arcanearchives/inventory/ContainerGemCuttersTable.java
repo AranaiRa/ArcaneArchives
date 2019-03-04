@@ -13,7 +13,9 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.network.play.server.SPacketSetSlot;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -52,7 +54,15 @@ public class ContainerGemCuttersTable extends Container
 		this.craftResult = new InventoryCraftResult();
 		this.craftMatrix = InventoryCraftingGCT.build(this, tile, tileInventory, (InventoryPlayer) playerInventory); // TODO: Fake players?
 
-		//this.addSlotToContainer(new SlotCrafting(player, craftMatrix, craftResult, 0, 95, 18));
+		this.addSlotToContainer(new SlotCrafting(player, craftMatrix, craftResult, 0, 95, 18));
+		/*{
+			@Override
+			public ItemStack onTake(EntityPlayer thePlayer, ItemStack stack)
+			{
+				this.onCrafting(stack);
+				return stack;
+			}
+		});*/
 
 		for(int i = 0; i < 3; ++i)
 		{
@@ -139,7 +149,8 @@ public class ContainerGemCuttersTable extends Container
 		if(slotId >= 54 && slotId <= 68)
 		{
 			Slot baseSlot = getSlot(slotId);
-			if (!(baseSlot instanceof SlotRecipeHandler)) {
+			if(!(baseSlot instanceof SlotRecipeHandler))
+			{
 				return super.slotClick(slotId, dragType, clickTypeIn, player);
 			}
 
@@ -218,7 +229,7 @@ public class ContainerGemCuttersTable extends Container
 	@Override
 	protected void slotChangedCraftingGrid(World world, EntityPlayer player, InventoryCrafting inv, InventoryCraftResult result)
 	{
-		if (updateRecipeGUI != null) updateRecipeGUI.run();
+		if(updateRecipeGUI != null) updateRecipeGUI.run();
 
 		ItemStack itemstack = ItemStack.EMPTY;
 
@@ -226,11 +237,22 @@ public class ContainerGemCuttersTable extends Container
 		if(curRecipe != null)
 		{
 			itemstack = curRecipe.getRecipeOutput().copy();
+			if(curRecipe.matches(inv, world))
+			{
+				result.setInventorySlotContents(0, itemstack);
+			} else
+			{
+				result.setInventorySlotContents(0, ItemStack.EMPTY);
+				return;
+			}
+		} else
+		{
+			result.setInventorySlotContents(0, ItemStack.EMPTY);
+			return;
 		}
 
 		if(!world.isRemote)
 		{
-			result.setInventorySlotContents(0, itemstack);
 			EntityPlayerMP entityplayermp = (EntityPlayerMP) player;
 			if(lastLastRecipe != lastRecipe)
 			{
