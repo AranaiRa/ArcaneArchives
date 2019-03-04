@@ -36,7 +36,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	}
 
 	public void generateTileId () {
-		if (!this.world.isRemote && this.networkID != null && this.tileID == null) {
+		if (this.world != null && !this.world.isRemote && this.networkID != null && this.tileID == null) {
 			ServerNetwork network = getNetwork();
 			if (network != null)
 			{
