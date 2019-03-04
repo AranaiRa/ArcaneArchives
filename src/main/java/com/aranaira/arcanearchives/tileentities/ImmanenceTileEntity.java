@@ -10,6 +10,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.UUID;
 
 
@@ -37,7 +38,10 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	public void generateTileId () {
 		if (!this.world.isRemote && this.networkID != null && this.tileID == null) {
 			ServerNetwork network = getNetwork();
-			this.tileID = network.generateTileId();
+			if (network != null)
+			{
+				this.tileID = network.generateTileId();
+			}
 		}
 	}
 
@@ -96,6 +100,8 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 		if(compound.hasKey(Tags.PLAYER_ID))
 		{
 			networkID = UUID.fromString(compound.getString(Tags.PLAYER_ID));
+		} else {
+			ArcaneArchives.logger.debug(String.format("Tile entity of class %s didn't have a network ID", this.getClass().getName()));
 		}
 		if(compound.hasKey(Tags.TILE_ID))
 		{
@@ -103,11 +109,16 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 			if (tileID != null && !tileID.equals(newId)) {
 				if (!this.world.isRemote)
 				{
-					getNetwork().handleTileIdChange(tileID, newId);
+					ServerNetwork network = getNetwork();
+					if (network != null) {
+						network.handleTileIdChange(tileID, newId);
+					}
 				}
 			}
 			tileID = newId;
-		} else if (tileID == null) {
+		}
+
+		if (tileID == null) {
 			this.generateTileId();
 		}
 		dimension = compound.getInteger(Tags.DIM);
@@ -129,6 +140,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 		return cNetwork;
 	}
 
+	@Nullable
 	public ServerNetwork getNetwork()
 	{
 		if(network == null && networkID != null)
@@ -169,10 +181,11 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 		if(world != null && !world.isRemote)
 		{
 			ServerTickHandler.incomingITE(this);
+			ArcaneArchives.logger.debug(String.format("Loaded a tile entity with the class %s into the queue.", this.getClass().getName()));
 		} else if(world == null)
 		{
 			// TODO: Include more information
-			ArcaneArchives.logger.info("TileEntity loaded in with a null world. WTF?");
+			ArcaneArchives.logger.debug("TileEntity loaded in with a null world. WTF?");
 		}
 		super.onLoad();
 	}

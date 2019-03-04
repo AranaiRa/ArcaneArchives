@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.tileentities;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketRadiantChest;
 import net.minecraft.item.ItemStack;
@@ -43,6 +44,9 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 	public void readFromNBT(NBTTagCompound compound)
 	{
 		super.readFromNBT(compound);
+		if (!compound.hasKey(AATileEntity.Tags.INVENTORY)) {
+			ArcaneArchives.logger.info(String.format("Radiant Chest tile entity at %d/%d/%d is missing its inventory."));
+		}
 		mInventory.deserializeNBT(compound.getCompoundTag(AATileEntity.Tags.INVENTORY));
 		chestName = compound.getString(Tags.CHEST_NAME);
 	}

@@ -38,9 +38,10 @@ public class ServerTickHandler
 
 		for(ImmanenceTileEntity ite : incomingITEs)
 		{
-			if(ite.ticks() > 30)
+			if(ite.ticks() > 30 )
 			{
 				outgoingITE(ite);
+				ArcaneArchives.logger.debug(String.format("Tile entity with the class %s spent 30 ticks in the queue and is being discarded.", ite.getClass().getName()));
 			} else
 			{
 				UUID networkId = ite.networkID;
