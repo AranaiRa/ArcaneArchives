@@ -76,9 +76,9 @@ public class IngredientStack
 		this(ingredient, 1, null);
 	}
 
-	public IngredientStack(Block item, int count, NBTTagCompound nbt)
+	public IngredientStack(Block block, int count, NBTTagCompound nbt)
 	{
-		this.ingredient = Ingredient.fromItem(Item.getItemFromBlock(item));
+		this.ingredient = Ingredient.fromItem(Item.getItemFromBlock(block));
 		this.count = count;
 		this.nbt = nbt;
 	}
