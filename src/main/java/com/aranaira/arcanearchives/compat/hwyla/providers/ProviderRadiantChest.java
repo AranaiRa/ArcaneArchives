@@ -20,7 +20,7 @@ public class ProviderRadiantChest implements IWailaDataProvider
 		{
 			String chestName = te.getChestName();
 			if(!chestName.isEmpty())
-				tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.data.tooltip.chest_name", chestName));
+				tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.data.tooltip.chest_name") + " " + chestName);
 		}
 
 		return tooltip;

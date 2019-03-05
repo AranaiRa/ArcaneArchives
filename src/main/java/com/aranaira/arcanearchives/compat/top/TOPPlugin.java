@@ -40,7 +40,7 @@ public class TOPPlugin implements Function<ITheOneProbe, Void>, IProbeInfoProvid
 				String chestName = chest.getChestName();
 				if(!chestName.isEmpty())
 				{
-					probeInfo.text(TextFormatting.GOLD + "Name: " + chestName);
+					probeInfo.text(TextFormatting.GOLD + "{*arcanearchives.data.tooltip.chest_name*} " + chestName);
 				}
 			}
 		} else if(block instanceof RadiantResonator)
@@ -48,8 +48,9 @@ public class TOPPlugin implements Function<ITheOneProbe, Void>, IProbeInfoProvid
 			RadiantResonatorTileEntity resonator = WorldUtil.getTileEntity(RadiantResonatorTileEntity.class, world, data.getPos());
 			if(resonator != null)
 			{
-				probeInfo.text(String.format(TextFormatting.GOLD + "Progress: %d%%", resonator.getPercentageComplete()));
-				probeInfo.text(resonator.canTick() ? TextFormatting.GREEN + "Resonating" : TextFormatting.RED + "Offline");
+				probeInfo.text(TextFormatting.GOLD + "{*arcanearchives.data.tooltip.resonator_progress*} " + String.format("%d%%", resonator.getPercentageComplete()));
+				RadiantResonatorTileEntity.TickResult res = resonator.canTick();
+				probeInfo.text(res.getFormat() + "{*" + res.getKey() + "*}");
 			}
 		}
 	}

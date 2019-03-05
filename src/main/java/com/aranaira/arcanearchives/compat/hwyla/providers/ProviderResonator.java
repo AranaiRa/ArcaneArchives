@@ -18,8 +18,9 @@ public class ProviderResonator implements IWailaDataProvider
 		RadiantResonatorTileEntity te = (RadiantResonatorTileEntity) accessor.getTileEntity();
 		if(te != null)
 		{
-			tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.data.tooltip.resonator_progress", te.getPercentageComplete()));
-			tooltip.add(te.canTick() ? TextFormatting.GREEN + I18n.format("arcanearchives.data.tooltip.resonator_satus.online") : TextFormatting.RED + I18n.format("arcanearchives.data.tooltip.resonator_status.offline"));
+			tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.data.tooltip.resonator_progress") + String.format(" %d%%", te.getPercentageComplete()));
+			RadiantResonatorTileEntity.TickResult res = te.canTick();
+			tooltip.add(res.getFormat() + I18n.format(res.getKey()));
 		}
 
 		return tooltip;
