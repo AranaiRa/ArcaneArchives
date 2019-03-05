@@ -53,6 +53,8 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 
 		int ticksRequired = ConfigHandler.values.iRadiantResonatorTickTime;
 
+		markDirty();
+
 		if(world.isAirBlock(pos.up()))
 		{
 			if(growth < ticksRequired)

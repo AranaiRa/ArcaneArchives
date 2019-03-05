@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.blocks;
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
+import com.aranaira.arcanearchives.util.WorldUtil;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -99,5 +100,25 @@ public class RadiantResonator extends BlockTemplate
 	public TileEntity createTileEntity(World world, IBlockState state)
 	{
 		return new RadiantResonatorTileEntity();
+	}
+
+	@Override
+	public int getComparatorInputOverride(IBlockState blockState, World worldIn, BlockPos pos)
+	{
+		RadiantResonatorTileEntity te = WorldUtil.getTileEntity(RadiantResonatorTileEntity.class, worldIn, pos);
+		if (te == null) return 0;
+
+		if (te.canTick() == RadiantResonatorTileEntity.TickResult.HARVEST_WAITING) {
+			return 15;
+		}
+
+		int percentage = te.getPercentageComplete();
+		return Math.min((int) Math.floor(te.getPercentageComplete() / 6.6d), 14);
+	}
+
+	@Override
+	public boolean hasComparatorInputOverride(IBlockState state)
+	{
+		return true;
 	}
 }
