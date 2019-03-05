@@ -8,11 +8,13 @@ import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.RecipeLibrary;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class CommonProxy
 {
@@ -47,6 +49,11 @@ public class CommonProxy
 	public void serverStarted(FMLServerStartedEvent event)
 	{
 		NetworkHelper.clearClientCache(); // has no effect on the server
+	}
+
+	public void loadComplete (FMLLoadCompleteEvent event) {
+		// Ensure Bookshelf has an ore dictionary entry
+		OreDictionary.registerOre("bookshelf", Blocks.BOOKSHELF);
 	}
 
 	public void scheduleTask(Runnable runnable, Side side)
