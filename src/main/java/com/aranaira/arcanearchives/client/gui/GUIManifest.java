@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.client;
+package com.aranaira.arcanearchives.client.gui;
 
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
@@ -60,6 +60,11 @@ public class GUIManifest extends GuiContainer
 		this.ySize = 224;
 
 		this.player = player;
+
+		String text = mContainer.getSearchString();
+		if (text != null && !text.isEmpty()) {
+			mSearchText = text;
+		}
 	}
 
 	@Override
@@ -78,15 +83,6 @@ public class GUIManifest extends GuiContainer
 		else fontRenderer.drawString(temp, guiLeft + mTextLeftOffset, mTextTopOffset + guiTop, 0x000000);
 
 		fontRenderer.drawString("End Track", guiLeft + mEndTrackingLeftOffset, mEndTrackingTopOffset + guiTop, 0x000000);
-	}
-
-	//TODO Figure out how to display what chest the item is in.
-	@Override
-	@Nonnull
-	public List<String> getItemToolTip(ItemStack p_191927_1_)
-	{
-		// List<String> ls =
-		return super.getItemToolTip(p_191927_1_);
 	}
 
 	@Override

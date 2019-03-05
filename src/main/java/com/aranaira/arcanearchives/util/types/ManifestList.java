@@ -67,6 +67,10 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 		this.mFilterText = searchTerm;
 	}
 
+	public String getSearchText () {
+		return this.mFilterText;
+	}
+
 	@Override
 	public ManifestListIterable iterable()
 	{

@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.client;
+package com.aranaira.arcanearchives.client.gui;
 
 import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
 import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;

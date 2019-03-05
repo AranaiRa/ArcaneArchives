@@ -33,7 +33,15 @@ public class ManifestItem extends ItemTemplate
 	{
 		if(!worldIn.isRemote) return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
 
-		if (playerIn.isSneaking()) {
+		openManifest(worldIn, playerIn);
+
+		return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
+	}
+
+	public static void openManifest(World worldIn, EntityPlayer playerIn)
+	{
+		if(playerIn.isSneaking())
+		{
 			LineHandler.clearChests();
 		} else
 		{
@@ -43,7 +51,5 @@ public class ManifestItem extends ItemTemplate
 
 			playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.MANIFEST, worldIn, (int) playerIn.posX, (int) playerIn.posY, (int) playerIn.posZ);
 		}
-
-		return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
 	}
 }

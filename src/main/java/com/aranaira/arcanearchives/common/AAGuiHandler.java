@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.common;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.client.*;
+import com.aranaira.arcanearchives.client.gui.*;
 import com.aranaira.arcanearchives.inventory.*;
 import com.aranaira.arcanearchives.tileentities.*;
 import net.minecraft.entity.player.EntityPlayer;

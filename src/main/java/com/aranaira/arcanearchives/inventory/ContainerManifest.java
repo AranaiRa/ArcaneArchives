@@ -6,6 +6,9 @@ import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.events.LineHandler;
 import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
 import com.aranaira.arcanearchives.util.types.ManifestEntry;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
@@ -72,13 +75,21 @@ public class ContainerManifest extends Container
 		List<Vec3d> visPositions = entry.getVecPositions();
 		visPositions.forEach(LineHandler::addLine);
 
+		if (!GuiScreen.isShiftKeyDown()) {
+			Minecraft mc = Minecraft.getMinecraft();
+			mc.displayGuiScreen(null);
+		}
+
 		return ItemStack.EMPTY;
 	}
 
 	public void SetSearchString(String SearchText)
 	{
-		// server-side packet?
 		handler.setSearchText(SearchText);
+	}
+
+	public String getSearchString () {
+		return handler.getSearchText();
 	}
 
 
