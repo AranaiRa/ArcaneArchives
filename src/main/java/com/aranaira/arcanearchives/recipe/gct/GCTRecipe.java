@@ -5,8 +5,10 @@ import com.aranaira.arcanearchives.util.types.IngredientStack;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import it.unimi.dsi.fastutil.ints.IntList;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
+import net.minecraft.block.Block;
 import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
@@ -18,8 +20,6 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 public class GCTRecipe extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe
 {
@@ -33,19 +33,30 @@ public class GCTRecipe extends IForgeRegistryEntry.Impl<IRecipe> implements IRec
 
 	public GCTRecipe(String name, @Nonnull ItemStack result, Object... recipe)
 	{
-		this.setRegistryName(new ResourceLocation(ArcaneArchives.MODID, name));
+		this(new ResourceLocation(ArcaneArchives.MODID, name), result, recipe);
+	}
+
+	public GCTRecipe(ResourceLocation name, @Nonnull ItemStack result, Object... recipe)
+	{
+		this.setRegistryName(name);
 		this.result = result.copy();
 		for(Object stack : recipe)
 		{
 			if(stack instanceof ItemStack)
 			{
 				ingredients.add(new IngredientStack((ItemStack) stack));
+			} else if (stack instanceof Item) {
+				ingredients.add(new IngredientStack((Item) stack));
 			} else if(stack instanceof Ingredient)
 			{
 				ingredients.add(new IngredientStack((Ingredient) stack));
 			} else if(stack instanceof String)
 			{
 				ingredients.add(new IngredientStack((String) stack));
+			} else if(stack instanceof IngredientStack) {
+				ingredients.add((IngredientStack) stack);
+			} else if (stack instanceof Block) {
+				ingredients.add(new IngredientStack((Block) stack));
 			} else
 			{
 				ArcaneArchives.logger.warn(String.format("Unknown ingredient type for recipe %s, skipped: %s", name, stack.toString()));
@@ -165,9 +176,9 @@ public class GCTRecipe extends IForgeRegistryEntry.Impl<IRecipe> implements IRec
 	@Override
 	public NonNullList<Ingredient> getIngredients()
 	{
-		if (ingredientList == null)
+		if(ingredientList == null)
 		{
-			ingredientList = NonNullList.from(Ingredient.EMPTY, this.ingredients.stream().map(IngredientStack::getIngredient).collect(Collectors.toList()).toArray(new Ingredient[0]));
+			ingredientList = NonNullList.from(Ingredient.EMPTY, this.ingredients.stream().map(IngredientStack::getIngredient).toArray(Ingredient[]::new));
 		}
 
 		return ingredientList;
