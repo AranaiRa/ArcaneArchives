@@ -2,7 +2,6 @@ package com.aranaira.arcanearchives.tileentities;
 
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.items.ItemStackHandler;
@@ -60,11 +59,14 @@ public class RadiantCraftingTableTileEntity extends AATileEntity
 
 	public void readRecipe(NBTTagCompound compound, String key, int index)
 	{
-		if (compound.hasKey(key)) {
+		if(compound.hasKey(key))
+		{
 			String rec = compound.getString(key);
-			if (!rec.isEmpty()) {
+			if(!rec.isEmpty())
+			{
 				ResourceLocation loc = new ResourceLocation(rec);
-				if (ForgeRegistries.RECIPES.containsKey(loc)) {
+				if(ForgeRegistries.RECIPES.containsKey(loc))
+				{
 					recipeList.set(index, ForgeRegistries.RECIPES.getValue(loc));
 				}
 			}
@@ -89,7 +91,8 @@ public class RadiantCraftingTableTileEntity extends AATileEntity
 	{
 		IRecipe recipe = recipeList.get(index);
 		String rec = "";
-		if (recipe != null && recipe.getRegistryName() != null) {
+		if(recipe != null && recipe.getRegistryName() != null)
+		{
 			rec = recipe.getRegistryName().toString();
 		}
 

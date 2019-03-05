@@ -1,20 +1,17 @@
 package com.aranaira.arcanearchives.tileentities;
 
+import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.init.BlockRegistry;
-import com.aranaira.arcanearchives.config.ConfigHandler;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
 
 public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 {
@@ -43,10 +40,12 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 		EntityPlayer player = world.getPlayerEntityByUUID(networkID);
 
 		// Don't tick if the player isn't online
-		if(player == null) {
+		if(player == null)
+		{
 			canTick = false;
 			return;
-		} else {
+		} else
+		{
 			canTick = true;
 		}
 
@@ -65,13 +64,15 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 			}
 		}
 
-		if (ticks % 50 == 0) {
+		if(ticks % 50 == 0)
+		{
 			this.defaultServerSideUpdate();
 		}
 	}
 
-	public int getPercentageComplete () {
-		return (int)Math.floor(growth / (double)ConfigHandler.values.iRadiantResonatorTickTime * 100D);
+	public int getPercentageComplete()
+	{
+		return (int) Math.floor(growth / (double) ConfigHandler.values.iRadiantResonatorTickTime * 100D);
 	}
 
 	@Nonnull
@@ -91,10 +92,12 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 	{
 		super.readFromNBT(compound);
 
-		if (compound.hasKey(Tags.CURRENT_TICK)) {
+		if(compound.hasKey(Tags.CURRENT_TICK))
+		{
 			growth = compound.getInteger(Tags.CURRENT_TICK);
 		}
-		if (compound.hasKey(Tags.CAN_TICK)) {
+		if(compound.hasKey(Tags.CAN_TICK))
+		{
 			canTick = compound.getBoolean(Tags.CAN_TICK);
 		}
 	}
@@ -127,11 +130,13 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 		return new SPacketUpdateTileEntity(pos, 0, compound);
 	}
 
-	public boolean canTick () {
+	public boolean canTick()
+	{
 		return this.canTick;
 	}
 
-	public static class Tags {
+	public static class Tags
+	{
 		public static final String CURRENT_TICK = "current_tick";
 		public static final String CAN_TICK = "can_tick";
 	}

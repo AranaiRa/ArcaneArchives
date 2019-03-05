@@ -55,7 +55,8 @@ public class ItemBlockTemplate extends ItemBlock
 				ServerNetwork network = NetworkHelper.getServerNetwork(player.getUniqueID(), world);
 				if(network == null)
 				{
-					if (!world.isRemote) player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.invalidnetwork"), true);
+					if(!world.isRemote)
+						player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.invalidnetwork"), true);
 					return EnumActionResult.FAIL;
 				} else
 				{
@@ -66,7 +67,8 @@ public class ItemBlockTemplate extends ItemBlock
 
 			if((blockTemplate instanceof RadiantResonator && totalResonators >= placeLimit) || blockTemplate instanceof MatrixCrystalCore && totalCores >= placeLimit)
 			{
-				if (!world.isRemote) player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.toomanyplaced", blockTemplate.getPlaceLimit(), blockTemplate.getNameComponent()), true);
+				if(!world.isRemote)
+					player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.toomanyplaced", blockTemplate.getPlaceLimit(), blockTemplate.getNameComponent()), true);
 				return EnumActionResult.FAIL;
 			}
 		}
@@ -76,7 +78,8 @@ public class ItemBlockTemplate extends ItemBlock
 
 		if(up.getY() + height > world.getHeight())
 		{
-			if (!world.isRemote) player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.aboveworld", blockTemplate.getNameComponent()), true);
+			if(!world.isRemote)
+				player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.aboveworld", blockTemplate.getNameComponent()), true);
 			return EnumActionResult.FAIL;
 		}
 
@@ -99,12 +102,14 @@ public class ItemBlockTemplate extends ItemBlock
 
 			if(!safe)
 			{
-				if (!world.isRemote) player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.notenoughspace", blockTemplate.getNameComponent()), true);
+				if(!world.isRemote)
+					player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.notenoughspace", blockTemplate.getNameComponent()), true);
 				return EnumActionResult.FAIL;
 			}
 		}
 
-		if (placeLimit != -1 && world.isRemote) {
+		if(placeLimit != -1 && world.isRemote)
+		{
 			ArcaneArchives.logger.info(String.format("[DEBUG ONLY MESSAGE] Successfully placed %s, with %d total resonators and %d total cores in the client network.", blockTemplate.getLocalizedName(), totalResonators, totalCores));
 		}
 

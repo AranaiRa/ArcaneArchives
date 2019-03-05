@@ -1,14 +1,10 @@
 package com.aranaira.arcanearchives.inventory.handlers;
 
-import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
-import com.aranaira.arcanearchives.tileentities.RadiantCraftingTableTileEntity;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 
@@ -117,7 +113,8 @@ public abstract class InventoryCraftingItemHandler<T extends TileEntity, V exten
 	}
 
 	@Override
-	public void clear() {
+	public void clear()
+	{
 	}
 
 	public void setDoNotCallUpdates(boolean doNotCallUpdates)

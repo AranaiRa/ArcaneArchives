@@ -124,7 +124,8 @@ public class GCTRecipe extends IForgeRegistryEntry.Impl<IRecipe> implements IRec
 			if(!itemstack.isEmpty())
 			{
 				int stack = RecipeItemHelper.pack(itemstack);
-				if (ingredients.contains(stack)) {
+				if(ingredients.contains(stack))
+				{
 					int index = ingredientsMap.get(stack);
 					counter.account(index, itemstack.getCount());
 				}

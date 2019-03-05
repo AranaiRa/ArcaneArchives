@@ -36,8 +36,9 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 
 		String filter = mFilterText.toLowerCase();
 
-		return stream().filter((entry) -> {
-			if (entry == null) return false;
+		return stream().filter((entry) ->
+		{
+			if(entry == null) return false;
 
 			ItemStack stack = entry.getStack();
 			String display = stack.getDisplayName().toLowerCase();

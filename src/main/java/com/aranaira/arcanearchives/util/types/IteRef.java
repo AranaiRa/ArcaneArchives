@@ -2,11 +2,8 @@ package com.aranaira.arcanearchives.util.types;
 
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import java.lang.ref.WeakReference;
 import java.util.UUID;
@@ -50,7 +47,8 @@ public class IteRef
 
 	public ImmanenceTileEntity getServerTile()
 	{
-		if (tile == null || tile.get() == null) {
+		if(tile == null || tile.get() == null)
+		{
 			tile = new WeakReference<>(WorldUtil.getTileEntity(clazz, dimension, pos));
 		}
 
@@ -73,8 +71,9 @@ public class IteRef
 		return ite.isActive();
 	}
 
-	public int networkPriority () {
-		if (tile == null || tile.get() == null) return -999999999;
+	public int networkPriority()
+	{
+		if(tile == null || tile.get() == null) return -999999999;
 
 		//noinspection ConstantConditions
 		return tile.get().networkPriority;

@@ -9,16 +9,12 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Optional;
-import org.lwjgl.opengl.GL11;
 import vazkii.quark.api.IChestButtonCallback;
 import vazkii.quark.api.IItemSearchBar;
 
 import java.io.IOException;
 
-@Optional.InterfaceList({
-	@Optional.Interface(modid="quark", iface="vazkii.quark.api.IChestButtonCallback", striprefs = true),
-	@Optional.Interface(modid="quark", iface="vazkii.quark.api.IItemSearchBar", striprefs = true)
-})
+@Optional.InterfaceList({@Optional.Interface(modid = "quark", iface = "vazkii.quark.api.IChestButtonCallback", striprefs = true), @Optional.Interface(modid = "quark", iface = "vazkii.quark.api.IItemSearchBar", striprefs = true)})
 public class GUIRadiantChest extends GuiContainer implements IChestButtonCallback, IItemSearchBar
 {
 
@@ -82,7 +78,7 @@ public class GUIRadiantChest extends GuiContainer implements IChestButtonCallbac
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks)
 	{
-        this.drawDefaultBackground();
+		this.drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		this.renderHoveredToolTip(mouseX, mouseY);
 
@@ -127,7 +123,8 @@ public class GUIRadiantChest extends GuiContainer implements IChestButtonCallbac
 			//Backspace
 			if(keyCode == 14)
 			{
-				if(mNameField != null && mNameField.length() > 0) mNameField = mNameField.substring(0, mNameField.length() - 1);
+				if(mNameField != null && mNameField.length() > 0)
+					mNameField = mNameField.substring(0, mNameField.length() - 1);
 			}
 			//Escape and Enter
 			else if(keyCode == 1)
@@ -160,14 +157,14 @@ public class GUIRadiantChest extends GuiContainer implements IChestButtonCallbac
 
 	}
 
-	@Optional.Method(modid="quark")
+	@Optional.Method(modid = "quark")
 	@Override
 	public boolean onAddChestButton(GuiButton button, int buttonType)
 	{
 		return true;
 	}
 
-	@Optional.Method(modid="quark")
+	@Optional.Method(modid = "quark")
 	@Override
 	public void onSearchBarAdded(GuiTextField bar)
 	{

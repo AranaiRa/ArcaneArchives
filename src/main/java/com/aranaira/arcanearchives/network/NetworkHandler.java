@@ -32,21 +32,27 @@ public class NetworkHandler
 		packetID++;
 	}
 
-	public static abstract class BaseHandler<T extends IMessage> implements IMessageHandler<T, IMessage> {
+	public static abstract class BaseHandler<T extends IMessage> implements IMessageHandler<T, IMessage>
+	{
 		public abstract IMessage onMessage(T message, MessageContext ctx);
-		public abstract void processMessage (T message, MessageContext ctx);
+
+		public abstract void processMessage(T message, MessageContext ctx);
 	}
 
-	public static abstract class ServerHandler<T extends IMessage> extends BaseHandler<T> {
-		public IMessage onMessage (T message, MessageContext ctx)  {
+	public static abstract class ServerHandler<T extends IMessage> extends BaseHandler<T>
+	{
+		public IMessage onMessage(T message, MessageContext ctx)
+		{
 			FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> processMessage(message, ctx));
 
 			return null;
 		}
 	}
 
-	public static abstract class ClientHandler<T extends IMessage> extends BaseHandler<T> {
-		public IMessage onMessage (T message, MessageContext ctx)  {
+	public static abstract class ClientHandler<T extends IMessage> extends BaseHandler<T>
+	{
+		public IMessage onMessage(T message, MessageContext ctx)
+		{
 			ArcaneArchives.proxy.scheduleTask(() -> processMessage(message, ctx), Side.CLIENT);
 
 			return null;

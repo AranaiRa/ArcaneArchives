@@ -3,12 +3,10 @@ package com.aranaira.arcanearchives.inventory.slots;
 import com.aranaira.arcanearchives.inventory.ContainerRadiantCraftingTable;
 import com.aranaira.arcanearchives.tileentities.RadiantCraftingTableTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 
 public class SlotIRecipe extends Slot
 {
@@ -34,16 +32,19 @@ public class SlotIRecipe extends Slot
 		return false;
 	}
 
-	public int getRecipeIndex () {
+	public int getRecipeIndex()
+	{
 		return recipe;
 	}
 
 	@Override
 	public ItemStack getStack()
 	{
-		if (tile.getRecipe(recipe) != null) {
+		if(tile.getRecipe(recipe) != null)
+		{
 			return tile.getRecipe(recipe).getRecipeOutput().copy();
-		} else {
+		} else
+		{
 			return ItemStack.EMPTY;
 		}
 	}

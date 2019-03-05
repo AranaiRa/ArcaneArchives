@@ -170,7 +170,8 @@ public class AATileEntity extends TileEntity
 		}
 	}
 
-	public static class Tags {
+	public static class Tags
+	{
 		public static final String INVENTORY = "inventory";
 	}
 }

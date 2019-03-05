@@ -33,7 +33,8 @@ public class InventoryCraftingGCT extends InventoryCraftingItemHandler<GemCutter
 		return new InventoryCraftingGCT(eventHandler, tile, wrappedInventories, tileInventory, playerInventory, 9, 6);
 	}
 
-	public static class PlayerInvWrapper extends InvWrapper {
+	public static class PlayerInvWrapper extends InvWrapper
+	{
 
 		public PlayerInvWrapper(IInventory inv)
 		{
@@ -50,7 +51,7 @@ public class InventoryCraftingGCT extends InventoryCraftingItemHandler<GemCutter
 		@Override
 		public ItemStack getStackInSlot(int slot)
 		{
-			if (slot >= 36) return ItemStack.EMPTY;
+			if(slot >= 36) return ItemStack.EMPTY;
 
 			return super.getStackInSlot(slot);
 		}
@@ -59,7 +60,7 @@ public class InventoryCraftingGCT extends InventoryCraftingItemHandler<GemCutter
 		@Override
 		public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate)
 		{
-			if (slot >= 36) return stack;
+			if(slot >= 36) return stack;
 
 			return super.insertItem(slot, stack, simulate);
 		}
@@ -68,7 +69,7 @@ public class InventoryCraftingGCT extends InventoryCraftingItemHandler<GemCutter
 		@Override
 		public ItemStack extractItem(int slot, int amount, boolean simulate)
 		{
-			if (slot >= 36) return ItemStack.EMPTY;
+			if(slot >= 36) return ItemStack.EMPTY;
 
 			return super.extractItem(slot, amount, simulate);
 		}
@@ -76,7 +77,7 @@ public class InventoryCraftingGCT extends InventoryCraftingItemHandler<GemCutter
 		@Override
 		public void setStackInSlot(int slot, @Nonnull ItemStack stack)
 		{
-			if (slot >= 36) return;
+			if(slot >= 36) return;
 
 			super.setStackInSlot(slot, stack);
 		}
@@ -90,7 +91,7 @@ public class InventoryCraftingGCT extends InventoryCraftingItemHandler<GemCutter
 		@Override
 		public boolean isItemValid(int slot, @Nonnull ItemStack stack)
 		{
-			if (slot >= 36) return false;
+			if(slot >= 36) return false;
 
 			return super.isItemValid(slot, stack);
 		}

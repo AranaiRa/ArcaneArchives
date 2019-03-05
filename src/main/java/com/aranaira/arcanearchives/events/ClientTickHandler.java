@@ -26,30 +26,38 @@ public class ClientTickHandler
 		{
 			ticking = true;
 			Iterator<QueueEntry> iterator = queue.iterator();
-			while (iterator.hasNext()) {
+			while(iterator.hasNext())
+			{
 				QueueEntry entry = iterator.next();
-				if (entry.counter-- <= 0) {
+				if(entry.counter-- <= 0)
+				{
 					entry.runnable.run();
 					iterator.remove();
 				}
 			}
 			ticking = false;
-			for (WaitEntry entry : waitlist) {
+			for(WaitEntry entry : waitlist)
+			{
 				queue.addLast(new QueueEntry(entry.runnable, entry.delay));
 			}
 		}
 		waitlist.clear();
 	}
 
-	public static void addRunnable (Runnable runnable) {
+	public static void addRunnable(Runnable runnable)
+	{
 		addRunnable(runnable, 0);
 	}
 
-	public static void addRunnable (Runnable runnable, int delay) {
-		synchronized(lock) {
-			if (ticking) {
+	public static void addRunnable(Runnable runnable, int delay)
+	{
+		synchronized(lock)
+		{
+			if(ticking)
+			{
 				waitlist.addLast(new WaitEntry(runnable, delay));
-			} else {
+			} else
+			{
 				queue.addLast(new QueueEntry(runnable, delay));
 			}
 		}

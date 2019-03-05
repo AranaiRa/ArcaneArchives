@@ -1,7 +1,5 @@
 package com.aranaira.arcanearchives.inventory;
 
-import com.aranaira.arcanearchives.data.ServerNetwork;
-import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.inventory.handlers.NetworkItemHandler;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.player.EntityPlayer;

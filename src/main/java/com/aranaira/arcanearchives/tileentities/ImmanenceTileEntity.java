@@ -35,10 +35,12 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 		setName(name);
 	}
 
-	public void generateTileId () {
-		if (this.world != null && !this.world.isRemote && this.networkID != null && this.tileID == null) {
+	public void generateTileId()
+	{
+		if(this.world != null && !this.world.isRemote && this.networkID != null && this.tileID == null)
+		{
 			ServerNetwork network = getNetwork();
-			if (network != null)
+			if(network != null)
 			{
 				this.tileID = network.generateTileId();
 			}
@@ -100,17 +102,20 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 		if(compound.hasKey(Tags.PLAYER_ID))
 		{
 			networkID = UUID.fromString(compound.getString(Tags.PLAYER_ID));
-		} else {
+		} else
+		{
 			ArcaneArchives.logger.debug(String.format("Tile entity of class %s didn't have a network ID", this.getClass().getName()));
 		}
 		if(compound.hasKey(Tags.TILE_ID))
 		{
 			UUID newId = UUID.fromString(compound.getString(Tags.TILE_ID));
-			if (tileID != null && !tileID.equals(newId)) {
-				if (!this.world.isRemote)
+			if(tileID != null && !tileID.equals(newId))
+			{
+				if(!this.world.isRemote)
 				{
 					ServerNetwork network = getNetwork();
-					if (network != null) {
+					if(network != null)
+					{
 						network.handleTileIdChange(tileID, newId);
 					}
 				}
@@ -118,7 +123,8 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 			tileID = newId;
 		}
 
-		if (tileID == null) {
+		if(tileID == null)
+		{
 			this.generateTileId();
 		}
 		dimension = compound.getInteger(Tags.DIM);

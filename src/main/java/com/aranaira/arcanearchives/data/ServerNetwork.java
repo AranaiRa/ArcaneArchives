@@ -84,7 +84,7 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 		for(IteRef ITE : GetBlocks())
 		{
 			ImmanenceTileEntity ite = ITE.getServerTile();
-			if (ite == null) continue;
+			if(ite == null) continue;
 
 			TotalGeneration += ite.immanenceGeneration;
 		}
@@ -96,7 +96,7 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 		for(IteRef ITE : GetBlocks())
 		{
 			ImmanenceTileEntity ite = ITE.getServerTile();
-			if (ite == null) continue;
+			if(ite == null) continue;
 
 			int tmpDrain = ite.immanenceDrain;
 			if(TotalGeneration > (TotalDrain + tmpDrain))
@@ -147,7 +147,8 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 		mNeedsToBeUpdated = true;
 		UpdateImmanence();
 
-		if (tileEntityInstance instanceof RadiantResonatorTileEntity || tileEntityInstance instanceof MatrixCoreTileEntity) {
+		if(tileEntityInstance instanceof RadiantResonatorTileEntity || tileEntityInstance instanceof MatrixCoreTileEntity)
+		{
 			rebuildTotals();
 		}
 	}
@@ -157,7 +158,8 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 		RemoveTileFromNetwork(tileEntityInstance.tileID);
 	}
 
-	public void RemoveTileFromNetwork(UUID tileID) {
+	public void RemoveTileFromNetwork(UUID tileID)
+	{
 		ImmanenceTileEntity tileEntityInstance = mNetworkTiles.getByUUID(tileID);
 
 		mNetworkTiles.removeByUUID(tileID);
@@ -165,7 +167,8 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 		mNeedsToBeUpdated = true;
 		UpdateImmanence();
 
-		if (tileEntityInstance instanceof RadiantResonatorTileEntity || tileEntityInstance instanceof MatrixCoreTileEntity) {
+		if(tileEntityInstance instanceof RadiantResonatorTileEntity || tileEntityInstance instanceof MatrixCoreTileEntity)
+		{
 			rebuildTotals();
 		}
 	}
@@ -175,7 +178,8 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 		return NetworkContainsTile(tileEntityInstance.tileID);
 	}
 
-	public boolean NetworkContainsTile(UUID tileID) {
+	public boolean NetworkContainsTile(UUID tileID)
+	{
 		return mNetworkTiles.containsUUID(tileID);
 	}
 
@@ -254,7 +258,7 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 		for(IteRef ref : GetRadiantChests())
 		{
 			ImmanenceTileEntity ite = ref.getServerTile();
-			if (ite == null) continue;
+			if(ite == null) continue;
 
 			RadiantChestTileEntity chest = (RadiantChestTileEntity) ite;
 			if(done.contains(chest)) continue;
@@ -274,22 +278,27 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 		manifestItems.addAll(consolidated);
 	}
 
-	public void rebuildTotals () {
+	public void rebuildTotals()
+	{
 		int origResonators = totalResonators;
 		int origCores = totalCores;
 
 		totalResonators = 0;
 		totalCores = 0;
 
-		for (IteRef ite : GetBlocks()) {
-			if (ite.clazz.equals(RadiantResonatorTileEntity.class)) {
+		for(IteRef ite : GetBlocks())
+		{
+			if(ite.clazz.equals(RadiantResonatorTileEntity.class))
+			{
 				totalResonators++;
-			} else if (ite.clazz.equals(MatrixCoreTileEntity.class)) {
+			} else if(ite.clazz.equals(MatrixCoreTileEntity.class))
+			{
 				totalCores++;
 			}
 		}
 
-		if (origCores != totalCores || origResonators != totalResonators) {
+		if(origCores != totalCores || origResonators != totalResonators)
+		{
 			synchroniseData();
 		}
 	}
@@ -365,7 +374,7 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 		{
 			EntityPlayerMP player = server.getPlayerList().getPlayerByUUID(mPlayerId);
 			//noinspection ConstantConditions
-			if (player == null) return false;
+			if(player == null) return false;
 			IMessage packet = new PacketNetworks.Response(PacketNetworks.SynchroniseType.DATA, mPlayerId, buildSynchroniseData());
 			NetworkHandler.CHANNEL.sendTo(packet, player);
 			return true;
@@ -374,16 +383,19 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 		return false;
 	}
 
-	public UUID generateTileId () {
+	public UUID generateTileId()
+	{
 		UUID newId = UUID.randomUUID();
-		while (tileIDs.contains(newId)) {
+		while(tileIDs.contains(newId))
+		{
 			newId = UUID.randomUUID();
 		}
 
 		return newId;
 	}
 
-	public void handleTileIdChange (UUID oldId, UUID newId) {
+	public void handleTileIdChange(UUID oldId, UUID newId)
+	{
 		RemoveTileFromNetwork(oldId);
 		tileIDs.remove(oldId);
 		tileIDs.add(newId);

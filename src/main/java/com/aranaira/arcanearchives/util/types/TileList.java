@@ -41,18 +41,23 @@ public class TileList extends ReferenceList<IteRef>
 		return copy;
 	}
 
-	public boolean containsUUID (UUID uuid) {
-		for (IteRef ref : this) {
-			if (ref.uuid.equals(uuid)) return true;
+	public boolean containsUUID(UUID uuid)
+	{
+		for(IteRef ref : this)
+		{
+			if(ref.uuid.equals(uuid)) return true;
 		}
 
 		return false;
 	}
 
-	public ImmanenceTileEntity getByUUID (UUID uuid) {
-		for (IteRef ref : this) {
-			if (ref.uuid.equals(uuid)) {
-				if (ref.tile != null) return ref.tile.get();
+	public ImmanenceTileEntity getByUUID(UUID uuid)
+	{
+		for(IteRef ref : this)
+		{
+			if(ref.uuid.equals(uuid))
+			{
+				if(ref.tile != null) return ref.tile.get();
 				return null;
 			}
 		}
@@ -60,17 +65,21 @@ public class TileList extends ReferenceList<IteRef>
 		return null;
 	}
 
-	public void removeByUUID (UUID uuid) {
+	public void removeByUUID(UUID uuid)
+	{
 		IteRef toRemove = null;
 
-		for (IteRef ref : this) {
-			if (ref.uuid.equals(uuid)) {
+		for(IteRef ref : this)
+		{
+			if(ref.uuid.equals(uuid))
+			{
 				toRemove = ref;
 				break;
 			}
 		}
 
-		if (toRemove != null) {
+		if(toRemove != null)
+		{
 			this.remove(toRemove);
 		}
 	}

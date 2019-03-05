@@ -44,7 +44,8 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 	public void readFromNBT(NBTTagCompound compound)
 	{
 		super.readFromNBT(compound);
-		if (!compound.hasKey(AATileEntity.Tags.INVENTORY)) {
+		if(!compound.hasKey(AATileEntity.Tags.INVENTORY))
+		{
 			ArcaneArchives.logger.info(String.format("Radiant Chest tile entity at %d/%d/%d is missing its inventory."));
 		}
 		mInventory.deserializeNBT(compound.getCompoundTag(AATileEntity.Tags.INVENTORY));
@@ -140,7 +141,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 	{
 		if(world == null) return;
 
-		if (this.world.isRemote)
+		if(this.world.isRemote)
 		{
 			PacketRadiantChest.SetName packet = new PacketRadiantChest.SetName(getPos(), getChestName(), world.provider.getDimension());
 			NetworkHandler.CHANNEL.sendToServer(packet);

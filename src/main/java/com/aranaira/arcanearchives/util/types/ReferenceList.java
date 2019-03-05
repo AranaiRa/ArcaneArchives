@@ -1,10 +1,11 @@
 package com.aranaira.arcanearchives.util.types;
 
-import javax.annotation.Nonnull;
-
 import com.google.common.collect.ForwardingList;
 
-import java.util.*;
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.function.Supplier;
 
 public class ReferenceList<T> extends ForwardingList<T>
@@ -25,7 +26,7 @@ public class ReferenceList<T> extends ForwardingList<T>
 	{
 		this.reference = supplier.get();
 	}
-	
+
 	@Override
 	protected List<T> delegate()
 	{

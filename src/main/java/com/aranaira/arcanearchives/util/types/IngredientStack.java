@@ -58,17 +58,20 @@ public class IngredientStack
 		this(item, 1, null);
 	}
 
-	public IngredientStack(Ingredient ingredient, int count, NBTTagCompound nbt) {
+	public IngredientStack(Ingredient ingredient, int count, NBTTagCompound nbt)
+	{
 		this.ingredient = ingredient;
 		this.count = count;
 		this.nbt = nbt;
 	}
 
-	public IngredientStack(Ingredient ingredient, int count) {
+	public IngredientStack(Ingredient ingredient, int count)
+	{
 		this(ingredient, count, null);
 	}
 
-	public IngredientStack(Ingredient ingredient) {
+	public IngredientStack(Ingredient ingredient)
+	{
 		this(ingredient, 1, null);
 	}
 
@@ -82,7 +85,7 @@ public class IngredientStack
 		boolean res = ingredient.apply(p_apply_1_);
 		if(nbt != null && p_apply_1_ != null)
 		{
-	        return res && nbt.equals(p_apply_1_.getTagCompound());
+			return res && nbt.equals(p_apply_1_.getTagCompound());
 		}
 
 		return res;
@@ -98,12 +101,14 @@ public class IngredientStack
 		return ingredient.isSimple();
 	}
 
-	public int getCount () {
+	public int getCount()
+	{
 		return count;
 	}
 
 	@Nullable
-	public NBTTagCompound getNBT () {
+	public NBTTagCompound getNBT()
+	{
 		return nbt;
 	}
 }

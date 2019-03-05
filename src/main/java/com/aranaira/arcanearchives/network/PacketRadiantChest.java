@@ -51,7 +51,8 @@ public class PacketRadiantChest
 			public void processMessage(SetName message, MessageContext ctx)
 			{
 				RadiantChestTileEntity te = WorldUtil.getTileEntity(RadiantChestTileEntity.class, message.dimension, message.pos);
-				if (te != null) {
+				if(te != null)
+				{
 					te.setChestName(message.name);
 				}
 			}

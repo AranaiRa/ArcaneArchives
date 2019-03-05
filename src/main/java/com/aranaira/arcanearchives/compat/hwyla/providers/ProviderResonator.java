@@ -16,9 +16,10 @@ public class ProviderResonator implements IWailaDataProvider
 	public List<String> getWailaBody(ItemStack itemStack, List<String> tooltip, IWailaDataAccessor accessor, IWailaConfigHandler config)
 	{
 		RadiantResonatorTileEntity te = (RadiantResonatorTileEntity) accessor.getTileEntity();
-		if (te != null) {
+		if(te != null)
+		{
 			tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.data.tooltip.resonator_progress", te.getPercentageComplete()));
-			tooltip.add(te.canTick() ? TextFormatting.GREEN + I18n.format("arcanearchives.data.tooltip.resonator_satus.online"): TextFormatting.RED + I18n.format("arcanearchives.data.tooltip.resonator_status.offline"));
+			tooltip.add(te.canTick() ? TextFormatting.GREEN + I18n.format("arcanearchives.data.tooltip.resonator_satus.online") : TextFormatting.RED + I18n.format("arcanearchives.data.tooltip.resonator_status.offline"));
 		}
 
 		return tooltip;

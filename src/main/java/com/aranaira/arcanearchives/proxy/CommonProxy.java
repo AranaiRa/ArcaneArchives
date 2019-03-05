@@ -49,12 +49,15 @@ public class CommonProxy
 		NetworkHelper.clearClientCache(); // has no effect on the server
 	}
 
-	public void scheduleTask (Runnable runnable, Side side) {
+	public void scheduleTask(Runnable runnable, Side side)
+	{
 		scheduleTask(runnable, 0, side);
 	}
 
-	public void scheduleTask (Runnable runnable, int delay, Side side) {
-		switch (side) {
+	public void scheduleTask(Runnable runnable, int delay, Side side)
+	{
+		switch(side)
+		{
 			case CLIENT:
 				ClientTickHandler.addRunnable(runnable, delay);
 				break;

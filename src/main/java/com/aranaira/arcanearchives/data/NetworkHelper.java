@@ -71,7 +71,8 @@ public class NetworkHelper
 		}
 	}
 
-	public static class InvalidNetworkException extends NullPointerException {
+	public static class InvalidNetworkException extends NullPointerException
+	{
 		InvalidNetworkException(String s)
 		{
 			super(s);

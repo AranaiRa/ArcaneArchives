@@ -1,8 +1,8 @@
 package com.aranaira.arcanearchives.events;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -38,7 +38,7 @@ public class ServerTickHandler
 
 		for(ImmanenceTileEntity ite : incomingITEs)
 		{
-			if(ite.ticks() > 30 )
+			if(ite.ticks() > 30)
 			{
 				outgoingITE(ite);
 				ArcaneArchives.logger.debug(String.format("Tile entity with the class %s spent 30 ticks in the queue and is being discarded.", ite.getClass().getName()));
@@ -69,7 +69,7 @@ public class ServerTickHandler
 
 		for(ImmanenceTileEntity ite : outgoingITEs)
 		{
-			if (ite.isInvalid()) continue;
+			if(ite.isInvalid()) continue;
 
 			ite.breakBlock();
 		}
@@ -78,9 +78,10 @@ public class ServerTickHandler
 	}
 
 	@SubscribeEvent
-	public static void onPlayerLoggedIn (PlayerEvent.PlayerLoggedInEvent event) {
+	public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event)
+	{
 		ServerNetwork network = NetworkHelper.getServerNetwork(event.player.getUniqueID(), event.player.world);
-		if (network != null)
+		if(network != null)
 		{
 			network.rebuildTotals();
 		}

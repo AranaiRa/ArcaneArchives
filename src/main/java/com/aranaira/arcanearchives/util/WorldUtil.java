@@ -1,10 +1,8 @@
 package com.aranaira.arcanearchives.util;
 
-import com.aranaira.arcanearchives.network.PacketRadiantCrafting;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
@@ -15,21 +13,24 @@ import javax.annotation.Nullable;
 public class WorldUtil
 {
 	@Nullable
-	public static <T> T getTileEntity(Class<T> clazz, int dimension, BlockPos pos) {
+	public static <T> T getTileEntity(Class<T> clazz, int dimension, BlockPos pos)
+	{
 		return getTileEntity(clazz, dimension, pos, false);
 	}
 
 	@Nullable
-	public static <T> T getTileEntity(Class<T> clazz, int dimension, BlockPos pos, boolean forceChunkLoad) {
+	public static <T> T getTileEntity(Class<T> clazz, int dimension, BlockPos pos, boolean forceChunkLoad)
+	{
 		MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-		if (server == null)
+		if(server == null)
 		{
 			return null;
 		}
 
 		World world = DimensionManager.getWorld(dimension);
 
-		if (world == null) {
+		if(world == null)
+		{
 			return null;
 		}
 
@@ -37,7 +38,8 @@ public class WorldUtil
 	}
 
 	@Nullable
-	public static <T> T getTileEntity(Class<T> clazz, IBlockAccess world, BlockPos pos) {
+	public static <T> T getTileEntity(Class<T> clazz, IBlockAccess world, BlockPos pos)
+	{
 		return getTileEntity(clazz, world, pos, false);
 	}
 
@@ -45,13 +47,15 @@ public class WorldUtil
 	@SuppressWarnings("unchecked")
 	public static <T> T getTileEntity(Class<T> clazz, IBlockAccess world, BlockPos pos, boolean forceChunkLoad)
 	{
-		if(world == null || pos == null) {
+		if(world == null || pos == null)
+		{
 			return null;
 		}
 
 		if(world instanceof World)
 		{
-			if(!((World) world).isBlockLoaded(pos) && !forceChunkLoad) {
+			if(!((World) world).isBlockLoaded(pos) && !forceChunkLoad)
+			{
 				return null;
 			}
 		}
