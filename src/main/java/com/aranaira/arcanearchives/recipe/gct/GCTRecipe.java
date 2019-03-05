@@ -18,6 +18,8 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class GCTRecipe extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe
 {
@@ -27,6 +29,7 @@ public class GCTRecipe extends IForgeRegistryEntry.Impl<IRecipe> implements IRec
 	private Int2IntOpenHashMap ingredientsMap = null;
 	private final List<IngredientStack> ingredients = new ArrayList<>();
 	private final ItemStack result;
+	private NonNullList<Ingredient> ingredientList = null;
 
 	public GCTRecipe(String name, @Nonnull ItemStack result, Object... recipe)
 	{
@@ -156,13 +159,18 @@ public class GCTRecipe extends IForgeRegistryEntry.Impl<IRecipe> implements IRec
 	@Override
 	public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv)
 	{
-		return null;
+		return NonNullList.withSize(0, ItemStack.EMPTY); // TODO
 	}
 
 	@Override
 	public NonNullList<Ingredient> getIngredients()
 	{
-		return null;
+		if (ingredientList == null)
+		{
+			ingredientList = NonNullList.from(Ingredient.EMPTY, this.ingredients.stream().map(IngredientStack::getIngredient).collect(Collectors.toList()).toArray(new Ingredient[0]));
+		}
+
+		return ingredientList;
 	}
 
 	@Override
@@ -174,6 +182,6 @@ public class GCTRecipe extends IForgeRegistryEntry.Impl<IRecipe> implements IRec
 	@Override
 	public String getGroup()
 	{
-		return null;
+		return this.getRegistryName() == null ? "" : this.getRegistryName().toString();
 	}
 }

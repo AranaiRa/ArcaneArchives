@@ -106,6 +106,11 @@ public class IngredientStack
 		return count;
 	}
 
+	public Ingredient getIngredient ()
+	{
+		return ingredient;
+	}
+
 	@Nullable
 	public NBTTagCompound getNBT()
 	{
