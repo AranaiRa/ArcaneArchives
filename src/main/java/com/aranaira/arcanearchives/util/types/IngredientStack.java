@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.util.types;
 
 import it.unimi.dsi.fastutil.ints.IntList;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -73,6 +74,23 @@ public class IngredientStack
 	public IngredientStack(Ingredient ingredient)
 	{
 		this(ingredient, 1, null);
+	}
+
+	public IngredientStack(Block item, int count, NBTTagCompound nbt)
+	{
+		this.ingredient = Ingredient.fromItem(Item.getItemFromBlock(item));
+		this.count = count;
+		this.nbt = nbt;
+	}
+
+	public IngredientStack(Block item, int count)
+	{
+		this(item, count, null);
+	}
+
+	public IngredientStack(Block item)
+	{
+		this(item, 1, null);
 	}
 
 	public ItemStack[] getMatchingStacks()
