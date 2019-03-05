@@ -143,7 +143,7 @@ public class GCTRecipe extends IForgeRegistryEntry.Impl<IRecipe> implements IRec
 	@Override
 	public boolean canFit(int width, int height)
 	{
-		return true;
+		return ingredients.size() <= width * height;
 	}
 
 	@Override

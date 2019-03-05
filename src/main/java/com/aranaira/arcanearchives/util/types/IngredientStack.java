@@ -9,7 +9,7 @@ import net.minecraftforge.oredict.OreIngredient;
 
 import javax.annotation.Nullable;
 
-public class IngredientStack extends Ingredient
+public class IngredientStack
 {
 	private final Ingredient ingredient;
 	private final int count;
@@ -72,13 +72,11 @@ public class IngredientStack extends Ingredient
 		this(ingredient, 1, null);
 	}
 
-	@Override
 	public ItemStack[] getMatchingStacks()
 	{
 		return ingredient.getMatchingStacks();
 	}
 
-	@Override
 	public boolean apply(@Nullable ItemStack p_apply_1_)
 	{
 		boolean res = ingredient.apply(p_apply_1_);
@@ -90,13 +88,11 @@ public class IngredientStack extends Ingredient
 		return res;
 	}
 
-	@Override
 	public IntList getValidItemStacksPacked()
 	{
 		return ingredient.getValidItemStacksPacked();
 	}
 
-	@Override
 	public boolean isSimple()
 	{
 		return ingredient.isSimple();
