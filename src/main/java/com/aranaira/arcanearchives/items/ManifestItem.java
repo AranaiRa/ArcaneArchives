@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.common.AAGuiHandler;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.events.LineHandler;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,11 +33,16 @@ public class ManifestItem extends ItemTemplate
 	{
 		if(!worldIn.isRemote) return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
 
-		ClientNetwork network = NetworkHelper.getClientNetwork(playerIn.getUniqueID());
-		network.manifestItems.clear();
-		network.synchroniseManifest();
+		if (playerIn.isSneaking()) {
+			LineHandler.clearChests();
+		} else
+		{
+			ClientNetwork network = NetworkHelper.getClientNetwork(playerIn.getUniqueID());
+			network.manifestItems.clear();
+			network.synchroniseManifest();
 
-		playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.MANIFEST, worldIn, (int) playerIn.posX, (int) playerIn.posY, (int) playerIn.posZ);
+			playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.MANIFEST, worldIn, (int) playerIn.posX, (int) playerIn.posY, (int) playerIn.posZ);
+		}
 
 		return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
 	}
