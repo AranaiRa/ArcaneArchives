@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.recipe.gct;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,12 @@ public class GCTRecipeList
 		if(IMMUTABLE_COPY == null) IMMUTABLE_COPY = ImmutableList.copyOf(RECIPE_LIST);
 
 		return IMMUTABLE_COPY;
+	}
+
+	public static GCTRecipe makeAndAddRecipe (String name, @Nonnull ItemStack result, Object... recipe) {
+		GCTRecipe newRecipe = new GCTRecipe(name, result, recipe);
+		addRecipe(newRecipe);
+		return newRecipe;
 	}
 
 	public static void addRecipe(GCTRecipe recipe)
