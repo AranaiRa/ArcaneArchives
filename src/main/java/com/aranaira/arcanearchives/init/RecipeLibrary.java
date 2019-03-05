@@ -1,6 +1,8 @@
 package com.aranaira.arcanearchives.init;
 
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
+import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
+import com.aranaira.arcanearchives.util.types.IngredientStack;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -24,34 +26,25 @@ public class RecipeLibrary
 
 	public static void buildRecipes()
 	{
-		RADIANT_LANTERN_RECIPE = GCTRecipe.buildAndAdd("radiant_lantern", new ItemStack(BlockRegistry.RADIANT_LANTERN, 4), ItemRegistry.RAW_RADIANT_QUARTZ, ItemRegistry.RAW_RADIANT_QUARTZ, Items.GOLD_NUGGET);
+		RADIANT_LANTERN_RECIPE = GCTRecipeList.makeAndAddRecipe("radiant_lantern", new ItemStack(BlockRegistry.RADIANT_LANTERN, 4), new ItemStack(ItemRegistry.RAW_RADIANT_QUARTZ, 2), new IngredientStack("nuggetGold", 1));
 
-		MATRIX_REPOSITORY_RECIPE = GCTRecipe.buildAndAdd("matrix_repository", new ItemStack(BlockRegistry.MATRIX_REPOSITORY, 1), BlockRegistry.MATRIX_STORAGE, ItemRegistry.COMPONENT_MATERIALINTERFACE, ItemRegistry.COMPONENT_MATERIALINTERFACE);
 
-		COMPONENT_SCINTILLATINGINLAY_RECIPE = GCTRecipe.buildAndAdd("scintillatinginlay", new ItemStack(ItemRegistry.COMPONENT_SCINTILLATINGINLAY), ItemRegistry.COMPONENT_RADIANTDUST, ItemRegistry.COMPONENT_RADIANTDUST, ItemRegistry.COMPONENT_RADIANTDUST, ItemRegistry.COMPONENT_RADIANTDUST, ItemRegistry.COMPONENT_RADIANTDUST, ItemRegistry.COMPONENT_RADIANTDUST, Items.REDSTONE, Items.REDSTONE, Items.REDSTONE, Items.REDSTONE, Items.REDSTONE, Items.REDSTONE, Items.REDSTONE, Items.REDSTONE, Items.REDSTONE, Items.REDSTONE, Items.REDSTONE, Items.REDSTONE, Items.GOLD_INGOT, Items.GOLD_NUGGET, Items.GOLD_NUGGET, Items.GOLD_NUGGET, Items.GOLD_NUGGET, Items.GOLD_NUGGET, Items.GOLD_NUGGET); // TODO: Simplify
+		MATRIX_REPOSITORY_RECIPE = GCTRecipeList.makeAndAddRecipe("matrix_repository", new ItemStack(BlockRegistry.MATRIX_REPOSITORY, 1), BlockRegistry.MATRIX_STORAGE, ItemRegistry.COMPONENT_MATERIALINTERFACE, ItemRegistry.COMPONENT_MATERIALINTERFACE);
 
-		COMPONENT_RADIANTDUST_RECIPE = GCTRecipe.buildAndAdd("radiantdust", new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 2), ItemRegistry.RAW_RADIANT_QUARTZ);
+		COMPONENT_SCINTILLATINGINLAY_RECIPE = GCTRecipeList.makeAndAddRecipe("scintillatinginlay", new ItemStack(ItemRegistry.COMPONENT_SCINTILLATINGINLAY, 1), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 6), new IngredientStack("dustRedstone", 12), new IngredientStack("ingotGold"), new IngredientStack("nuggetGold", 6));
 
-		COMPONENT_MATRIXBRACE_RECIPE = GCTRecipe.buildAndAdd("component_matrixbrace", new ItemStack(ItemRegistry.COMPONENT_MATRIXBRACE), ItemRegistry.COMPONENT_SCINTILLATINGINLAY, Items.GOLD_INGOT, Items.GOLD_INGOT);
+		COMPONENT_RADIANTDUST_RECIPE = GCTRecipeList.makeAndAddRecipe("radiantdust", new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 2), ItemRegistry.RAW_RADIANT_QUARTZ);
 
-		COMPONENT_MATERIALINTERFACE_RECIPE = GCTRecipe.buildAndAdd("materialinterface", new ItemStack(ItemRegistry.COMPONENT_MATERIALINTERFACE), ItemRegistry.COMPONENT_SCINTILLATINGINLAY, Items.GOLD_INGOT, ItemRegistry.CUT_RADIANT_QUARTZ);
+		COMPONENT_MATRIXBRACE_RECIPE = GCTRecipeList.makeAndAddRecipe("component_matrixbrace", new ItemStack(ItemRegistry.COMPONENT_MATRIXBRACE, 1), ItemRegistry.COMPONENT_SCINTILLATINGINLAY, new IngredientStack("ingotGold", 2));
 
-		COMPONENT_CONTAINMENTFIELD_RECIPE = GCTRecipe.buildAndAdd("containmentfield", new ItemStack(ItemRegistry.COMPONENT_CONTAINMENTFIELD), ItemRegistry.COMPONENT_SCINTILLATINGINLAY, Items.GOLD_INGOT, Items.GOLD_INGOT, ItemRegistry.CUT_RADIANT_QUARTZ, ItemRegistry.CUT_RADIANT_QUARTZ);
+		COMPONENT_MATERIALINTERFACE_RECIPE = GCTRecipeList.makeAndAddRecipe("materialinterface", new ItemStack(ItemRegistry.COMPONENT_MATERIALINTERFACE, 1), ItemRegistry.COMPONENT_SCINTILLATINGINLAY, new IngredientStack("ingotGold"), ItemRegistry.CUT_RADIANT_QUARTZ);
 
-		CUT_RADIANT_QUARTZ_RECIPE = GCTRecipe.buildAndAdd("cut_radiant_quartz", new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 1), ItemRegistry.RAW_RADIANT_QUARTZ, ItemRegistry.RAW_RADIANT_QUARTZ);
+		COMPONENT_CONTAINMENTFIELD_RECIPE = GCTRecipeList.makeAndAddRecipe("containmentfield", new ItemStack(ItemRegistry.COMPONENT_CONTAINMENTFIELD, 1), ItemRegistry.COMPONENT_SCINTILLATINGINLAY, new IngredientStack("ingotGold", 2), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 2));
 
-		List<Object> ingredients = new ArrayList<>();
-		for(int i = 0; i < 60; i++) ingredients.add(ItemRegistry.CUT_RADIANT_QUARTZ);
-		for(int i = 0; i < 12; i++) ingredients.add("logWood");
-		for(int i = 0; i < 12; i++) ingredients.add(ItemRegistry.COMPONENT_SCINTILLATINGINLAY);
-		for(int i = 0; i < 4; i++) ingredients.add(BlockRegistry.RADIANT_LANTERN);
-		for(int i = 0; i < 8; i++) ingredients.add(Blocks.BOOKSHELF); // TODO: Extend with oredict support
-		MATRIX_CORE_RECIPE = GCTRecipe.buildAndAdd("matrix_core", new ItemStack(BlockRegistry.MATRIX_CRYSTAL_CORE, 1), ingredients.toArray(new Object[0]));
+		CUT_RADIANT_QUARTZ_RECIPE = GCTRecipeList.makeAndAddRecipe("cut_radiant_quartz", new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 1), new ItemStack(ItemRegistry.RAW_RADIANT_QUARTZ, 2));
 
-		ingredients.clear();
-		for(int i = 0; i < 2; i++) ingredients.add(ItemRegistry.COMPONENT_MATRIXBRACE);
-		ingredients.add(ItemRegistry.COMPONENT_MATERIALINTERFACE);
-		for(int i = 0; i < 24; i++) ingredients.add(ItemRegistry.CUT_RADIANT_QUARTZ);
-		MATRIX_STORAGE_RECIPE = GCTRecipe.buildAndAdd("matrix_storage", new ItemStack(BlockRegistry.MATRIX_STORAGE, 1), ingredients.toArray(new Object[0]));
+		MATRIX_CORE_RECIPE = GCTRecipeList.makeAndAddRecipe("matrix_core", new ItemStack(BlockRegistry.MATRIX_CRYSTAL_CORE, 1), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 60), new IngredientStack("logWood", 12), new ItemStack(ItemRegistry.COMPONENT_SCINTILLATINGINLAY, 12), new IngredientStack(BlockRegistry.RADIANT_LANTERN, 4), new IngredientStack("bookshelf", 1));
+
+		MATRIX_STORAGE_RECIPE = GCTRecipeList.makeAndAddRecipe("matrix_storage", new ItemStack(BlockRegistry.MATRIX_STORAGE, 1), new ItemStack(ItemRegistry.COMPONENT_MATRIXBRACE, 2), ItemRegistry.COMPONENT_MATERIALINTERFACE, new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 24));
 	}
 }
