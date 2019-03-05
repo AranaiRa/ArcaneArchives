@@ -95,3 +95,8 @@ arcanearchives.tooltip.manifest.chestsneak=[Hold shift to view chest locations.]
 arcanearchives.tooltip.manifest.item_entry=%s at (%d,%d,%d) contains %d.
 arcanearchives.tooltip.manifest.andmore=%d radiant chests weren't listed.
 arcanearchives.tooltip.manifest.clicktoshow=Click to draw a line to chests containing this item. Open chest to remove, or click "%s".
+
+arcanearchives.data.tooltip.chest_name=Name: %s
+arcanearchives.data.tooltip.resonator_progress=Progress: %d%%
+arcanearchives.data.tooltip.resonator_satus.online=Resonating
+arcanearchives.data.tooltip.resonator_status.offline=Offline
