@@ -23,7 +23,7 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 	public HashMap<String, UUID> pendingInvites = new HashMap<>();
 	public Set<UUID> tileIDs = new HashSet<>();
 	public ManifestList manifestItems = new ManifestList(new ArrayList<>());
-	public ManifestItemHandler mManifestHandler = null;
+	public ManifestItemHandler mManifestHandler;
 	private UUID mPlayerId;
 	private AAWorldSavedData mParent;
 	private TileList mNetworkTiles = new TileList(new ArrayList<>());
@@ -276,6 +276,10 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 
 		List<ManifestEntry> consolidated = ItemStackConsolidator.ConsolidateManifest(preManifest);
 		manifestItems.addAll(consolidated);
+	}
+
+	public ManifestItemHandler getManifestHandler () {
+		return mManifestHandler;
 	}
 
 	public void rebuildTotals()

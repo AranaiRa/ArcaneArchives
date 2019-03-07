@@ -4,9 +4,9 @@ import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.events.LineHandler;
-import com.aranaira.arcanearchives.inventory.handlers.FakeManifestItemHandler;
 import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
 import com.aranaira.arcanearchives.util.types.ManifestEntry;
+import com.aranaira.arcanearchives.util.types.ManifestList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,6 +24,7 @@ public class ContainerManifest extends Container
 {
 
 	private ClientNetwork clientNetwork = null;
+	private ServerNetwork serverNetwork = null;
 	private ManifestItemHandler handler;
 	private boolean serverSide;
 	private EntityPlayer player;
@@ -35,29 +36,26 @@ public class ContainerManifest extends Container
 
 		if(ServerSide)
 		{
-			handler = new FakeManifestItemHandler();
-			int i = 0;
-			for(int y = 0; y < 9; y++)
+			serverNetwork = NetworkHelper.getServerNetwork(playerIn.getUniqueID(), playerIn.world);
+			if (serverNetwork == null)
 			{
-				for(int x = 0; x < 9; x++)
-				{
-					this.addSlotToContainer(new SlotItemHandler(handler, i, x * 18 + 12, y * 18 + 30));
-					i++;
-				}
+				handler = new ManifestItemHandler(new ManifestList());
+			} else {
+				handler = serverNetwork.getManifestHandler();
 			}
 		} else
 		{
 			clientNetwork = NetworkHelper.getClientNetwork(this.player.getUniqueID());
 			handler = clientNetwork.getManifestHandler();
+		}
 
-			int i = 0;
-			for(int y = 0; y < 9; y++)
+		int i = 0;
+		for(int y = 0; y < 9; y++)
+		{
+			for(int x = 0; x < 9; x++)
 			{
-				for(int x = 0; x < 9; x++)
-				{
-					this.addSlotToContainer(new SlotItemHandler(handler, i, x * 18 + 12, y * 18 + 30));
-					i++;
-				}
+				this.addSlotToContainer(new SlotItemHandler(handler, i, x * 18 + 12, y * 18 + 30));
+				i++;
 			}
 		}
 	}
@@ -107,6 +105,4 @@ public class ContainerManifest extends Container
 	{
 		return handler.getSearchText();
 	}
-
-
 }
