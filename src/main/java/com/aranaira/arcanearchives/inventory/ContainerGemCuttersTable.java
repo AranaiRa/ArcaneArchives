@@ -86,7 +86,7 @@ public class ContainerGemCuttersTable extends Container
 
 		for(int x = 6; x > -1; x--)
 		{
-			this.addSlotToContainer(new SlotRecipeHandler(x, x * 18 + 41, 71, tile));
+			this.addSlotToContainer(new SlotRecipeHandler(x, x * 18 + 41, 70, tile));
 		}
 	}
 
