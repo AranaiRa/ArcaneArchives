@@ -1,14 +1,27 @@
 package com.aranaira.arcanearchives.inventory;
 
+import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.data.ServerNetwork;
+import com.aranaira.arcanearchives.network.NetworkHandler;
+import com.aranaira.arcanearchives.network.PacketNetworks;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
+import com.google.common.graph.Network;
 import invtweaks.api.container.ChestContainer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.management.PlayerList;
+import net.minecraft.util.NonNullList;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
+import sun.net.NetworkServer;
 
 import javax.annotation.Nonnull;
 
@@ -16,10 +29,16 @@ import javax.annotation.Nonnull;
 public class ContainerRadiantChest extends Container
 {
 	private RadiantChestTileEntity tile;
+	private boolean serverSide;
+	private EntityPlayer player;
 
-	public ContainerRadiantChest(RadiantChestTileEntity tile, IInventory playerInventory)
+	public ContainerRadiantChest(RadiantChestTileEntity tile, EntityPlayer player, boolean serverSide)
 	{
 		this.tile = tile;
+		this.player = player;
+		this.serverSide = serverSide;
+
+		IInventory playerInventory = player.inventory;
 
 		IItemHandler handler = tile.getInventory();
 
@@ -42,6 +61,10 @@ public class ContainerRadiantChest extends Container
 		for(int i1 = 0; i1 < 9; ++i1)
 		{
 			this.addSlotToContainer(new Slot(playerInventory, i1, 16 + i1 * 18, 200));
+		}
+
+		if (serverSide) {
+			this.addListener(new RadiantChestListener());
 		}
 	}
 
@@ -94,5 +117,61 @@ public class ContainerRadiantChest extends Container
 		}
 
 		return stack;
+	}
+
+	public class RadiantChestListener implements IContainerListener
+	{
+		private ServerNetwork network;
+		private int lastUpdated = 0;
+
+		public RadiantChestListener()
+		{
+			this.network = NetworkHelper.getServerNetwork(player.getUniqueID(), player.world);
+			this.lastUpdated = player.ticksExisted;
+		}
+
+		private void sendManifestUpdate () {
+			if (network != null && (player.ticksExisted - lastUpdated > 80))
+			{
+				MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+				if (server != null)
+				{
+					EntityPlayerMP player = server.getPlayerList().getPlayerByUUID(network.getPlayerID());
+					if(player != null)
+					{
+						NBTTagCompound output = network.buildSynchroniseManifest();
+						if(output != null)
+						{
+							PacketNetworks.Response packet = new PacketNetworks.Response(PacketNetworks.SynchroniseType.DATA, network.getPlayerID(), output);
+							NetworkHandler.CHANNEL.sendTo(packet, player);
+						}
+					}
+				}
+				lastUpdated = player.ticksExisted;
+			}
+		}
+
+		@Override
+		public void sendAllContents(Container containerToSend, NonNullList<ItemStack> itemsList)
+		{
+		}
+
+		@Override
+		public void sendSlotContents(Container containerToSend, int slotInd, ItemStack stack)
+		{
+			if (slotInd < 54) {
+				sendManifestUpdate();
+			}
+		}
+
+		@Override
+		public void sendWindowProperty(Container containerIn, int varToUpdate, int newValue)
+		{
+		}
+
+		@Override
+		public void sendAllWindowProperties(Container containerIn, IInventory inventory)
+		{
+		}
 	}
 }

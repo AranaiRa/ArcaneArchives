@@ -41,7 +41,7 @@ public class AAGuiHandler implements IGuiHandler
 		switch(ID)
 		{
 			case RADIANT_CHEST:
-				return new ContainerRadiantChest((RadiantChestTileEntity) te, player.inventory);
+				return new ContainerRadiantChest((RadiantChestTileEntity) te, player, true);
 			case GEMCUTTERS_TABLE:
 				return new ContainerGemCuttersTable((GemCuttersTableTileEntity) te, player, true);
 			case RADIANT_CRAFTING_TABLE:
@@ -77,7 +77,7 @@ public class AAGuiHandler implements IGuiHandler
 		switch(ID)
 		{
 			case RADIANT_CHEST:
-				return new GUIRadiantChest(new ContainerRadiantChest((RadiantChestTileEntity) te, player.inventory), player);
+				return new GUIRadiantChest(new ContainerRadiantChest((RadiantChestTileEntity) te, player, false), player);
 			case GEMCUTTERS_TABLE:
 				return new GUIGemCuttersTable(player, new ContainerGemCuttersTable((GemCuttersTableTileEntity) te, player, false));
 			case RADIANT_CRAFTING_TABLE:
