@@ -50,7 +50,7 @@ public class ContainerGemCuttersTable extends Container
 		this.world = player.world;
 
 		this.craftResult = new InventoryCraftResult();
-		this.craftMatrix = InventoryCraftingGCT.build(this, tile, tileInventory, (InventoryPlayer) playerInventory); // TODO: Fake players?
+		this.craftMatrix = InventoryCraftingGCT.build(this, tile, tileInventory, player.inventory); // TODO: Fake players?
 
 		this.addSlotToContainer(new SlotCrafting(player, craftMatrix, craftResult, 0, 95, 18));
 		/*{
