@@ -1,9 +1,16 @@
 package com.aranaira.arcanearchives.client.gui;
 
+import java.io.IOException;
+import java.util.*;
+
+import org.lwjgl.opengl.GL11;
+
 import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
 import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
+import com.aranaira.arcanearchives.util.types.IngredientStack;
+
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -12,16 +19,8 @@ import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
-import org.lwjgl.opengl.GL11;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class GUIGemCuttersTable extends GuiContainer
 {
@@ -155,7 +154,7 @@ public class GUIGemCuttersTable extends GuiContainer
 				} else
 				{
 					Map<Integer, ItemStack> ingredients = new HashMap<>();
-					for(Ingredient ing : recipe.getIngredients())
+					for(IngredientStack ing : recipe.getIngredients())
 					{
 						ItemStack[] stacks = ing.getMatchingStacks();
 						assert stacks.length != 0; // TODO?

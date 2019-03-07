@@ -29,7 +29,7 @@ public class GemCuttersTableTileEntity extends AATileEntity
 {
 
 	public static final int RECIPE_PAGE_LIMIT = 7;
-	private final GemCuttersTableItemHandler mInventory = new GemCuttersTableItemHandler(18);
+	private final GemCuttersTableItemHandler mInventory = new GemCuttersTableItemHandler(37);
 	private GCTRecipe recipe = null;
 	private int curPage = 0;
 

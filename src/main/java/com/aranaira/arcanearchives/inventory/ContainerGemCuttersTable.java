@@ -8,34 +8,41 @@ import com.aranaira.arcanearchives.network.PacketGemCutters;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
+import com.aranaira.arcanearchives.util.types.IngredientStack;
+
+import it.unimi.dsi.fastutil.ints.Int2IntMap.Entry;
+import it.unimi.dsi.fastutil.ints.IntIterator;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.network.play.server.SPacketSetSlot;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.items.*;
+
+import java.util.*;
 
 import javax.annotation.Nonnull;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class ContainerGemCuttersTable extends Container
 {
-	private IInventory playerInventory;
+	private static final int SLOT_OUTPUT = 0;
+    private IInventory playerInventory;
 	private GemCuttersTableTileEntity tile;
 	private boolean isServer;
 	private GemCuttersTableTileEntity.GemCuttersTableItemHandler tileInventory;
 	private Runnable updateRecipeGUI;
-	private InventoryCraftResult craftResult;
-	private InventoryCraftingGCT craftMatrix;
 	private EntityPlayer player;
 	private World world;
+	private final IItemHandlerModifiable outputInv = new ItemStackHandler(1);
 
 	private GCTRecipe lastRecipe;
 	private GCTRecipe lastLastRecipe;
@@ -48,46 +55,66 @@ public class ContainerGemCuttersTable extends Container
 		this.tileInventory = tile.getInventory();
 		this.player = player;
 		this.world = player.world;
+		
+		//Output Slot
+		this.addSlotToContainer(new SlotItemHandler(outputInv, SLOT_OUTPUT, 95, 18)
+		    {
+		        @Override
+		        public ItemStack onTake(EntityPlayer thePlayer, ItemStack stack)
+		        {
+		            for (Entry entry : tile.getRecipe().getMatchingSlots(tileInventory).int2IntEntrySet())
+		            {
+		                tileInventory.extractItem(entry.getIntKey(), entry.getIntValue(), false);
+		            }
+		            return super.onTake(thePlayer, stack);
+		        }
+		        
+		        @Override
+		        public boolean canTakeStack(EntityPlayer playerIn)
+		        {
+		            return tile.getRecipe().matches(tileInventory);
+		        }
+		    });
 
-		this.craftResult = new InventoryCraftResult();
-		this.craftMatrix = InventoryCraftingGCT.build(this, tile, tileInventory, player.inventory); // TODO: Fake players?
-
-		this.addSlotToContainer(new SlotCrafting(player, craftMatrix, craftResult, 0, 95, 18));
-		/*{
-			@Override
-			public ItemStack onTake(EntityPlayer thePlayer, ItemStack stack)
-			{
-				this.onCrafting(stack);
-				return stack;
-			}
-		});*/
-
+	    //Player Inventory
 		for(int i = 0; i < 3; ++i)
 		{
 			for(int j = 0; j < 9; ++j)
 			{
-				this.addSlotToContainer(new Slot(craftMatrix, j + i * 9 + 9, 23 + j * 18, 166 + i * 18));
+				this.addSlotToContainer(new Slot(playerInventory, j + i * 9 + 9, 23 + j * 18, 166 + i * 18));
 			}
 		}
 
+		//Player Hotbar
 		for(int k = 0; k < 9; ++k)
 		{
-			this.addSlotToContainer(new Slot(craftMatrix, k, 23 + k * 18, 224));
+			this.addSlotToContainer(new Slot(playerInventory, k, 23 + k * 18, 224));
 		}
-
-		int slot = 36;
+		
+		//GCT Inventory
 		for(int i = 0; i < 2; i++)
 		{
 			for(int j = 0; j < 9; j++)
 			{
-				this.addSlotToContainer(new Slot(craftMatrix, slot++, 23 + j * 18, 105 + i * 18));
+				this.addSlotToContainer(new SlotItemHandler(tileInventory, i * 9 + j, 23 + j * 18, 105 + i * 18)
+				    {
+				        @Override
+				        public void onSlotChanged()
+				        {
+				            super.onSlotChanged();
+				            updateRecipe();
+				        }
+				    });
 			}
 		}
 
+		//Recipe Selection Slots
 		for(int x = 6; x > -1; x--)
 		{
 			this.addSlotToContainer(new SlotRecipeHandler(x, x * 18 + 41, 70, tile));
 		}
+		
+		updateRecipe();
 	}
 
 	@Override
@@ -154,21 +181,59 @@ public class ContainerGemCuttersTable extends Container
 
 			SlotRecipeHandler slot = (SlotRecipeHandler) baseSlot;
 
-			// Client-side call
-			getTile().setRecipe(slot.getRelativeIndex()); // getSlot(slotId).getStack());
+	        getTile().setRecipe(slot.getRelativeIndex());
+			updateRecipe();
 
 			if(player.world.isRemote)
 			{
 				updateRecipeGUI.run();
 			}
 
-			slotChangedCraftingGrid(this.world, player, this.craftMatrix, this.craftResult);
-
 			return ItemStack.EMPTY;
 		}
 
 		return super.slotClick(slotId, dragType, clickTypeIn, player);
 	}
+
+    private void updateRecipe()
+    {   
+        if(updateRecipeGUI != null) updateRecipeGUI.run();
+
+        ItemStack itemstack = ItemStack.EMPTY;
+
+        GCTRecipe curRecipe = tile.getRecipe();
+        if(curRecipe != null)
+        {
+            itemstack = curRecipe.getRecipeOutput().copy();
+            if(curRecipe.matches(tileInventory))
+            {
+                outputInv.setStackInSlot(SLOT_OUTPUT, itemstack);
+            } 
+            else
+            {
+                outputInv.setStackInSlot(SLOT_OUTPUT, ItemStack.EMPTY);
+                return;
+            }
+        } 
+        else
+        {
+            outputInv.setStackInSlot(SLOT_OUTPUT, ItemStack.EMPTY);
+            return;
+        }
+
+        if(lastLastRecipe != lastRecipe)
+        {
+            playerInventory.setInventorySlotContents(0, itemstack);
+        } 
+        else if(lastLastRecipe != null && lastLastRecipe == lastRecipe && !ItemStack.areItemStacksEqual(lastLastRecipe.getRecipeOutput(), lastRecipe.getRecipeOutput()))
+        {
+            playerInventory.setInventorySlotContents(0, itemstack);
+        }
+        if(lastRecipe != null && !world.isRemote)
+            NetworkHandler.CHANNEL.sendTo(new PacketGemCutters.LastRecipe(lastRecipe), (EntityPlayerMP) player);
+
+        lastLastRecipe = lastRecipe;
+    }
 
 	public GemCuttersTableTileEntity getTile()
 	{
@@ -181,7 +246,7 @@ public class ContainerGemCuttersTable extends Container
 
 		for(GCTRecipe recipe : GCTRecipeList.getRecipeList())
 		{
-			map.put(recipe, recipe.matches(craftMatrix, world));
+			map.put(recipe, recipe.matches(tileInventory));
 		}
 
 		return map;
@@ -196,82 +261,9 @@ public class ContainerGemCuttersTable extends Container
 	}
 
 	@Override
-	public void setAll(List<ItemStack> p_190896_1_)
-	{
-		craftMatrix.setDoNotCallUpdates(true);
-		super.setAll(p_190896_1_);
-		craftMatrix.setDoNotCallUpdates(false);
-		craftMatrix.onCraftMatrixChanged();
-	}
-
-	@SubscribeEvent
-	public static void onCraftingStationGuiOpened(PlayerContainerEvent.Open event)
-	{
-		// by default the container does not update after it has been opened.
-		// we need it to check its recipe
-		if(event.getContainer() instanceof ContainerGemCuttersTable)
-		{
-			((ContainerGemCuttersTable) event.getContainer()).onCraftMatrixChanged();
-		}
-	}
-
-	public void onCraftMatrixChanged()
-	{
-		this.onCraftMatrixChanged(this.craftMatrix);
-	}
-
-	@Override
-	public void onCraftMatrixChanged(IInventory inventoryIn)
-	{
-		this.slotChangedCraftingGrid(this.world, this.player, this.craftMatrix, this.craftResult);
-	}
-
-	@Override
-	protected void slotChangedCraftingGrid(World world, EntityPlayer player, InventoryCrafting inv, InventoryCraftResult result)
-	{
-		if(updateRecipeGUI != null) updateRecipeGUI.run();
-
-		ItemStack itemstack = ItemStack.EMPTY;
-
-		GCTRecipe curRecipe = tile.getRecipe();
-		if(curRecipe != null)
-		{
-			itemstack = curRecipe.getRecipeOutput().copy();
-			if(curRecipe.matches(inv, world))
-			{
-				result.setInventorySlotContents(0, itemstack);
-			} else
-			{
-				result.setInventorySlotContents(0, ItemStack.EMPTY);
-				return;
-			}
-		} else
-		{
-			result.setInventorySlotContents(0, ItemStack.EMPTY);
-			return;
-		}
-
-		if(!world.isRemote)
-		{
-			EntityPlayerMP entityplayermp = (EntityPlayerMP) player;
-			if(lastLastRecipe != lastRecipe)
-			{
-				entityplayermp.connection.sendPacket(new SPacketSetSlot(this.windowId, 0, itemstack));
-			} else if(lastLastRecipe != null && lastLastRecipe == lastRecipe && !ItemStack.areItemStacksEqual(lastLastRecipe.getCraftingResult(inv), lastRecipe.getCraftingResult(inv)))
-			{
-				entityplayermp.connection.sendPacket(new SPacketSetSlot(this.windowId, 0, itemstack));
-			}
-			if(lastRecipe != null)
-				NetworkHandler.CHANNEL.sendTo(new PacketGemCutters.LastRecipe(lastRecipe), entityplayermp);
-		}
-
-		lastLastRecipe = lastRecipe;
-	}
-
-	@Override
 	public boolean canMergeSlot(ItemStack p_94530_1_, Slot p_94530_2_)
 	{
-		return p_94530_2_.inventory != this.craftResult && super.canMergeSlot(p_94530_1_, p_94530_2_);
+		return super.canMergeSlot(p_94530_1_, p_94530_2_);
 	}
 
 	public void updateLastRecipeFromServer(GCTRecipe recipe)
@@ -279,7 +271,7 @@ public class ContainerGemCuttersTable extends Container
 		lastRecipe = recipe;
 		if(recipe != null)
 		{
-			this.craftResult.setInventorySlotContents(0, recipe.getCraftingResult(craftMatrix));
+			tileInventory.setStackInSlot(0, recipe.getRecipeOutput());
 		}
 	}
 }

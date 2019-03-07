@@ -4,9 +4,8 @@ import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.wrapper.CombinedInvWrapper;
-import net.minecraftforge.items.wrapper.InvWrapper;
+import net.minecraftforge.items.*;
+import net.minecraftforge.items.wrapper.*;
 
 import javax.annotation.Nonnull;
 
@@ -27,12 +26,13 @@ public class InventoryCraftingGCT extends InventoryCraftingItemHandler<GemCutter
 
 	public static InventoryCraftingGCT build(Container eventHandler, GemCuttersTableTileEntity tile, ItemStackHandler tileInventory, IInventory playerInventory)
 	{
-		PlayerInvWrapper wrappedPlayerInventory = new PlayerInvWrapper(playerInventory);
+		IItemHandlerModifiable wrappedPlayerInventory = new RangedWrapper(new InvWrapper(playerInventory), 0, 36);
 		CombinedInvWrapper wrappedInventories = new CombinedInvWrapper(wrappedPlayerInventory, tileInventory);
 
 		return new InventoryCraftingGCT(eventHandler, tile, wrappedInventories, tileInventory, playerInventory, 9, 6);
 	}
 
+	@Deprecated
 	public static class PlayerInvWrapper extends InvWrapper
 	{
 
