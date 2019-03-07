@@ -11,8 +11,8 @@ import net.minecraftforge.items.IItemHandler;
 
 public class IngredientsMatcher
 {
-    private final Int2IntMap counter = new Int2IntOpenHashMap();;
-    private final IntSet ingredientsSet = new IntOpenHashSet();;
+    private final Int2IntMap counter = new Int2IntOpenHashMap();
+    private final IntSet ingredientsSet = new IntOpenHashSet();
     private final Int2IntMap ingredientsMap = new Int2IntOpenHashMap();
     private final List<IngredientStack> ingredients;;
 
@@ -29,11 +29,15 @@ public class IngredientsMatcher
             for(int pack : packs)
                 this.ingredientsMap.put(pack, i);
         }
+        
+        //0 is a valid value for this map
+        ingredientsMap.defaultReturnValue(-1);
     }
 
     public void account(ItemStack stack)
     {
-        int index = RecipeItemHelper.pack(stack);
+        int packed = RecipeItemHelper.pack(stack);
+        int index = ingredientsMap.get(packed);
         if(counter.containsKey(index))
         {
             int val = counter.get(index);
@@ -77,8 +81,8 @@ public class IngredientsMatcher
                 int packedStack = RecipeItemHelper.pack(itemstack);
                 if(ingredientsSet.contains(packedStack))
                 {
-                    int ingredientIndex = ingredientsMap.getOrDefault(packedStack, -1);
-                    if (ingredientIndex >= 0)
+                    int ingredientIndex = ingredientsMap.get(packedStack);
+                    if (ingredientIndex != ingredientsMap.defaultReturnValue())
                     {
                         IngredientStack ingredientStack = ingredients.get(ingredientIndex);
                         matchingSlots.put(slot, ingredientStack.getCount());

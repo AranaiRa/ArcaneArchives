@@ -10,6 +10,7 @@ import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import com.aranaira.arcanearchives.util.types.IngredientStack;
 
+import it.unimi.dsi.fastutil.ints.Int2IntMap;
 import it.unimi.dsi.fastutil.ints.Int2IntMap.Entry;
 import it.unimi.dsi.fastutil.ints.IntIterator;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,6 +22,7 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.network.play.server.SPacketSetSlot;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -66,11 +68,12 @@ public class ContainerGemCuttersTable extends Container
 		            {
 		                tileInventory.extractItem(entry.getIntKey(), entry.getIntValue(), false);
 		            }
-		            return super.onTake(thePlayer, stack);
+                    updateRecipe();
+		            return super.onTake(player, stack);
 		        }
 		        
 		        @Override
-		        public boolean canTakeStack(EntityPlayer playerIn)
+		        public boolean canTakeStack(EntityPlayer player)
 		        {
 		            return tile.getRecipe().matches(tileInventory);
 		        }
