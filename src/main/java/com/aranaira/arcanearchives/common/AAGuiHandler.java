@@ -33,7 +33,7 @@ public class AAGuiHandler implements IGuiHandler
 				return new NetworkContainer(player);
 			//return new NetworkCraftingContainer(player.inventory, world, new BlockPos(0, 0, 0));
 			case MANIFEST:
-				return null;
+				return new ContainerManifest(player, true);
 		}
 
 		if(!(te instanceof AATileEntity)) return null; // TODO: Handle this error somehow;

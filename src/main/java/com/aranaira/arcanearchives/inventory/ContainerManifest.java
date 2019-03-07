@@ -4,10 +4,10 @@ import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.events.LineHandler;
+import com.aranaira.arcanearchives.inventory.handlers.FakeManifestItemHandler;
 import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
 import com.aranaira.arcanearchives.util.types.ManifestEntry;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;
@@ -17,13 +17,13 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class ContainerManifest extends Container
 {
 
 	private ClientNetwork clientNetwork = null;
-	private ServerNetwork serverNetwork = null;
 	private ManifestItemHandler handler;
 	private boolean serverSide;
 	private EntityPlayer player;
@@ -33,18 +33,31 @@ public class ContainerManifest extends Container
 		this.serverSide = ServerSide;
 		this.player = playerIn;
 
-		if(ServerSide) return;
-
-		clientNetwork = NetworkHelper.getClientNetwork(this.player.getUniqueID());
-		handler = clientNetwork.getManifestHandler();
-
-		int i = 0;
-		for(int y = 0; y < 9; y++)
+		if(ServerSide)
 		{
-			for(int x = 0; x < 9; x++)
+			handler = new FakeManifestItemHandler();
+			int i = 0;
+			for(int y = 0; y < 9; y++)
 			{
-				this.addSlotToContainer(new SlotItemHandler(handler, i, x * 18 + 12, y * 18 + 30));
-				i++;
+				for(int x = 0; x < 9; x++)
+				{
+					this.addSlotToContainer(new SlotItemHandler(handler, i, x * 18 + 12, y * 18 + 30));
+					i++;
+				}
+			}
+		} else
+		{
+			clientNetwork = NetworkHelper.getClientNetwork(this.player.getUniqueID());
+			handler = clientNetwork.getManifestHandler();
+
+			int i = 0;
+			for(int y = 0; y < 9; y++)
+			{
+				for(int x = 0; x < 9; x++)
+				{
+					this.addSlotToContainer(new SlotItemHandler(handler, i, x * 18 + 12, y * 18 + 30));
+					i++;
+				}
 			}
 		}
 	}
@@ -55,6 +68,7 @@ public class ContainerManifest extends Container
 		return true;
 	}
 
+	@Nullable
 	public ManifestEntry getEntry(int slotId)
 	{
 		return handler.getManifestEntryInSlot(slotId);
@@ -75,7 +89,8 @@ public class ContainerManifest extends Container
 		List<Vec3d> visPositions = entry.getVecPositions();
 		visPositions.forEach(LineHandler::addLine);
 
-		if (!GuiScreen.isShiftKeyDown()) {
+		if(!GuiScreen.isShiftKeyDown())
+		{
 			Minecraft mc = Minecraft.getMinecraft();
 			mc.displayGuiScreen(null);
 		}
@@ -88,7 +103,8 @@ public class ContainerManifest extends Container
 		handler.setSearchText(SearchText);
 	}
 
-	public String getSearchString () {
+	public String getSearchString()
+	{
 		return handler.getSearchText();
 	}
 
