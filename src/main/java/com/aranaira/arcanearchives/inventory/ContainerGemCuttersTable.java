@@ -162,6 +162,8 @@ public class ContainerGemCuttersTable extends Container
 				updateRecipeGUI.run();
 			}
 
+			slotChangedCraftingGrid(this.world, player, this.craftMatrix, this.craftResult);
+
 			return ItemStack.EMPTY;
 		}
 
