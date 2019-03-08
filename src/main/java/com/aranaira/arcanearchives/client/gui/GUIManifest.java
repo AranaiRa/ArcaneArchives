@@ -147,25 +147,28 @@ public class GUIManifest extends GuiContainer
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
 	{
+		//Checks Text Box Bounds
+		isEnteringText = mouseX > guiLeft + mTextLeftOffset && mouseX < guiLeft + mTextLeftOffset + 88 && mouseY > guiTop + mTextTopOffset && mouseY < guiTop + mTextTopOffset + 10;
 
-		if(mouseButton == 0)
-		{
-			//Checks Text Box Bounds
-			isEnteringText = mouseX > guiLeft + mTextLeftOffset && mouseX < guiLeft + mTextLeftOffset + 88 && mouseY > guiTop + mTextTopOffset && mouseY < guiTop + mTextTopOffset + 10;
-
-			if(mouseX > guiLeft + mEndTrackingButtonLeftOffset && mouseX < guiLeft + mEndTrackingButtonLeftOffset + mEndTrackingButtonWidth && mouseY > guiTop + mEndTrackingButtonTopOffset && mouseY < guiTop + mEndTrackingButtonTopOffset + mEndTrackingButtonHeight)
-			{
-				LineHandler.clearChests(player.dimension);
-			}
-
-			if(mouseX > guiLeft + mRefreshButtonLeftOffset && mouseX < guiLeft + mRefreshButtonLeftOffset + mRefreshButtonWidth && mouseY > guiTop + mRefreshButtonTopOffset && mouseY < guiTop + mRefreshButtonTopOffset + mRefreshButtonHeight)
-			{
-				ClientNetwork network = NetworkHelper.getClientNetwork(player.getUniqueID());
-				network.synchroniseManifest();
-			}
-
-			// TODO: Refresh button
+		if (isEnteringText && mouseButton == 1) {
+			// This is a right click!
+			searchText = "";
+			container.SetSearchString(searchText);
 		}
+
+		if(mouseX > guiLeft + mEndTrackingButtonLeftOffset && mouseX < guiLeft + mEndTrackingButtonLeftOffset + mEndTrackingButtonWidth && mouseY > guiTop + mEndTrackingButtonTopOffset && mouseY < guiTop + mEndTrackingButtonTopOffset + mEndTrackingButtonHeight)
+		{
+			LineHandler.clearChests(player.dimension);
+		}
+
+		if(mouseX > guiLeft + mRefreshButtonLeftOffset && mouseX < guiLeft + mRefreshButtonLeftOffset + mRefreshButtonWidth && mouseY > guiTop + mRefreshButtonTopOffset && mouseY < guiTop + mRefreshButtonTopOffset + mRefreshButtonHeight)
+		{
+			ClientNetwork network = NetworkHelper.getClientNetwork(player.getUniqueID());
+			network.synchroniseManifest();
+		}
+
+		// TODO: Refresh button
+
 
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 	}
