@@ -8,7 +8,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -19,9 +18,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class Keybinds
 {
-	public static KeyBinding manifestKey = null;
 	public static final String ARCARC_GROUP = "arcanearchives.gui.keygroup";
 	public static final String ARCARC_BINDS = "arcanearchives.gui.keybinds";
+	public static KeyBinding manifestKey = null;
 
 	public static void initKeybinds()
 	{
@@ -51,7 +50,8 @@ public class Keybinds
 			if(foundManifest)
 			{
 				ManifestItem.openManifest(mc.player.world, mc.player);
-			} else {
+			} else
+			{
 				mc.player.sendMessage(new TextComponentTranslation("arcanearchives.gui.missing_manifest").setStyle(new Style().setColor(TextFormatting.YELLOW)));
 			}
 		}

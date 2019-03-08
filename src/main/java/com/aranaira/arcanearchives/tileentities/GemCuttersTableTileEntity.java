@@ -4,9 +4,6 @@ import com.aranaira.arcanearchives.inventory.handlers.SharedGCTData;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketGemCutters;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -16,6 +13,10 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
@@ -37,7 +38,7 @@ public class GemCuttersTableTileEntity extends AATileEntity
 
 	public void manuallySetRecipe(int index)
 	{
-	    sharedData.setCurrentRecipe(GCTRecipeList.getRecipeByIndex(index));
+		sharedData.setCurrentRecipe(GCTRecipeList.getRecipeByIndex(index));
 	}
 
 	public void setRecipe(int index)
@@ -83,10 +84,10 @@ public class GemCuttersTableTileEntity extends AATileEntity
 	{
 		super.writeToNBT(compound);
 		compound.setTag(AATileEntity.Tags.INVENTORY, CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(inventory, null));
-		if (sharedData.hasCurrentRecipe())
+		if(sharedData.hasCurrentRecipe())
 		{
-		    int index = GCTRecipeList.indexOf(sharedData.getCurrentRecipe());
-		    compound.setInteger(Tags.RECIPE, index);
+			int index = GCTRecipeList.indexOf(sharedData.getCurrentRecipe());
+			compound.setInteger(Tags.RECIPE, index);
 		}
 
 		return compound;
@@ -122,11 +123,11 @@ public class GemCuttersTableTileEntity extends AATileEntity
 		PacketGemCutters.ChangeRecipe packet = new PacketGemCutters.ChangeRecipe(index, getPos(), world.provider.getDimension());
 		NetworkHandler.CHANNEL.sendToServer(packet);
 	}
-	
+
 	public SharedGCTData getSharedData()
-    {
-        return sharedData;
-    }
+	{
+		return sharedData;
+	}
 
 	public static class Tags
 	{

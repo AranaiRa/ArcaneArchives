@@ -24,10 +24,8 @@ import java.util.UUID;
 
 public class ClientNetwork
 {
-	private UUID playerId;
-
 	public ManifestList manifestItems = new ManifestList(new ArrayList<>());
-
+	private UUID playerId;
 	/* Updated data via packet */
 	private HashMap<String, UUID> pendingInvites = new HashMap<>();
 	private int mCurrentImmanence = 0;
@@ -40,6 +38,12 @@ public class ClientNetwork
 	private ManifestItemHandler mManifestHandler = null;
 	//private TileList<ImmanenceTileEntity> mActualTiles = new TileList<>();
 
+	ClientNetwork(UUID id)
+	{
+		this.playerId = id;
+		this.mManifestHandler = new ManifestItemHandler(manifestItems);
+	}
+
 	public int getTotalResonators()
 	{
 		return totalResonators;
@@ -48,12 +52,6 @@ public class ClientNetwork
 	public int getTotalCores()
 	{
 		return totalCores;
-	}
-
-	ClientNetwork(UUID id)
-	{
-		this.playerId = id;
-		this.mManifestHandler = new ManifestItemHandler(manifestItems);
 	}
 
 	public ManifestItemHandler getManifestHandler()

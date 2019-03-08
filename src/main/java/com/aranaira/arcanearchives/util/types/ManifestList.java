@@ -62,13 +62,14 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 		return ItemStack.EMPTY;
 	}
 
+	public String getSearchText()
+	{
+		return this.mFilterText;
+	}
+
 	public void setSearchText(String searchTerm)
 	{
 		this.mFilterText = searchTerm;
-	}
-
-	public String getSearchText () {
-		return this.mFilterText;
 	}
 
 	@Override

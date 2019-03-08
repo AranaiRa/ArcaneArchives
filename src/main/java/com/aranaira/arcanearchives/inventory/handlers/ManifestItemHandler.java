@@ -64,14 +64,15 @@ public class ManifestItemHandler implements IItemHandlerModifiable
 	{
 	}
 
+	public String getSearchText()
+	{
+		return manifestBase.getSearchText();
+	}
+
 	public void setSearchText(String s)
 	{
 		manifestBase.setSearchText(s);
 		manifestActive = manifestBase.filtered();
-	}
-
-	public String getSearchText () {
-		return manifestBase.getSearchText();
 	}
 
 	public void clear()

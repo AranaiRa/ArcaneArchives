@@ -278,7 +278,8 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 		manifestItems.addAll(consolidated);
 	}
 
-	public ManifestItemHandler getManifestHandler () {
+	public ManifestItemHandler getManifestHandler()
+	{
 		return mManifestHandler;
 	}
 

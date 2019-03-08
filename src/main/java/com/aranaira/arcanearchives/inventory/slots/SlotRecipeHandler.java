@@ -3,12 +3,13 @@ package com.aranaira.arcanearchives.inventory.slots;
 import com.aranaira.arcanearchives.inventory.handlers.SharedGCTData;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
-import javax.annotation.Nullable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+
+import javax.annotation.Nullable;
 
 public class SlotRecipeHandler extends Slot
 {

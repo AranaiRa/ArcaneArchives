@@ -34,7 +34,7 @@ public class NetworkHandler
 	public static abstract class BaseHandler<T extends IMessage> implements IMessageHandler<T, IMessage>
 	{
 		@Override
-        public abstract IMessage onMessage(T message, MessageContext ctx);
+		public abstract IMessage onMessage(T message, MessageContext ctx);
 
 		public abstract void processMessage(T message, MessageContext ctx);
 	}
@@ -42,7 +42,7 @@ public class NetworkHandler
 	public static abstract class ServerHandler<T extends IMessage> extends BaseHandler<T>
 	{
 		@Override
-        public IMessage onMessage(T message, MessageContext ctx)
+		public IMessage onMessage(T message, MessageContext ctx)
 		{
 			FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> processMessage(message, ctx));
 
@@ -53,7 +53,7 @@ public class NetworkHandler
 	public static abstract class ClientHandler<T extends IMessage> extends BaseHandler<T>
 	{
 		@Override
-        public IMessage onMessage(T message, MessageContext ctx)
+		public IMessage onMessage(T message, MessageContext ctx)
 		{
 			ArcaneArchives.proxy.scheduleTask(() -> processMessage(message, ctx), Side.CLIENT);
 

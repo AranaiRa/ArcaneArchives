@@ -23,7 +23,6 @@ import net.minecraft.world.DimensionType;
 import org.apache.commons.lang3.text.WordUtils;
 import org.lwjgl.opengl.GL11;
 
-import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.util.List;
 
@@ -62,7 +61,8 @@ public class GUIManifest extends GuiContainer
 		this.player = player;
 
 		String text = mContainer.getSearchString();
-		if (text != null && !text.isEmpty()) {
+		if(text != null && !text.isEmpty())
+		{
 			mSearchText = text;
 		}
 	}

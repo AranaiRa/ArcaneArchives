@@ -17,8 +17,8 @@ import java.util.Set;
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID, value = Side.CLIENT)
 public class LineHandler
 {
-	private static Set<Vec3d> mBlockPositions = new HashSet<>();
 	public static boolean mIsDrawingLine;
+	private static Set<Vec3d> mBlockPositions = new HashSet<>();
 
 	@SubscribeEvent
 	public static void renderOverlay(RenderWorldLastEvent event)

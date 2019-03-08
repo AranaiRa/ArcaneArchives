@@ -1,13 +1,5 @@
 package com.aranaira.arcanearchives.client.gui;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.lwjgl.opengl.GL11;
-
 import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
 import com.aranaira.arcanearchives.inventory.handlers.SharedGCTData;
 import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
@@ -25,6 +17,13 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
+import org.lwjgl.opengl.GL11;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class GUIGemCuttersTable extends GuiContainer
 {
@@ -34,12 +33,12 @@ public class GUIGemCuttersTable extends GuiContainer
 	private static final int OVERLAY = 0xaa1e3340;
 
 	private final ContainerGemCuttersTable container;
-	private InvisibleButton prevPageButton;
-	private InvisibleButton nextPageButton;
 	private final EntityPlayer player;
 	private final Object2BooleanMap<GCTRecipe> recipeStatus = new Object2BooleanOpenHashMap<>();
-	private int timesChanged;
 	private final SharedGCTData sharedData;
+	private InvisibleButton prevPageButton;
+	private InvisibleButton nextPageButton;
+	private int timesChanged;
 
 	public GUIGemCuttersTable(EntityPlayer player, ContainerGemCuttersTable container)
 	{
@@ -215,7 +214,7 @@ public class GUIGemCuttersTable extends GuiContainer
 		}
 		if(button.id == 1)
 		{
-		    sharedData.nextPage();
+			sharedData.nextPage();
 		}
 		super.actionPerformed(button);
 	}

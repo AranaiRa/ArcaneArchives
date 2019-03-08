@@ -3,12 +3,7 @@ package com.aranaira.arcanearchives.init;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import com.aranaira.arcanearchives.util.types.IngredientStack;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @SuppressWarnings("unused")
 public class RecipeLibrary

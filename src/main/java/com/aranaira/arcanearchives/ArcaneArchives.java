@@ -47,7 +47,8 @@ public class ArcaneArchives
 	}
 
 	@EventHandler
-	public static void loadComplete(FMLLoadCompleteEvent event) {
+	public static void loadComplete(FMLLoadCompleteEvent event)
+	{
 		proxy.loadComplete(event);
 	}
 }

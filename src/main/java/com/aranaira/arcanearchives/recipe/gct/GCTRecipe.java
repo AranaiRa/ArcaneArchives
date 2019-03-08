@@ -1,26 +1,25 @@
 package com.aranaira.arcanearchives.recipe.gct;
 
-import java.util.*;
-
-import javax.annotation.Nonnull;
-
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.util.types.IngredientStack;
 import com.aranaira.arcanearchives.util.types.IngredientsMatcher;
-
-import it.unimi.dsi.fastutil.ints.*;
+import it.unimi.dsi.fastutil.ints.Int2IntMap;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.items.IItemHandler;
 
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 public class GCTRecipe
 {
-	public List<String> TOOLTIP_CACHE = null;
-	
 	private final List<IngredientStack> ingredients = new ArrayList<>();
 	private final ItemStack result;
+	public List<String> TOOLTIP_CACHE = null;
 
 	public GCTRecipe(@Nonnull ItemStack result, Object... recipe)
 	{
@@ -30,7 +29,8 @@ public class GCTRecipe
 			if(stack instanceof ItemStack)
 			{
 				ingredients.add(new IngredientStack((ItemStack) stack));
-			} else if (stack instanceof Item) {
+			} else if(stack instanceof Item)
+			{
 				ingredients.add(new IngredientStack((Item) stack));
 			} else if(stack instanceof Ingredient)
 			{
@@ -38,9 +38,11 @@ public class GCTRecipe
 			} else if(stack instanceof String)
 			{
 				ingredients.add(new IngredientStack((String) stack));
-			} else if(stack instanceof IngredientStack) {
+			} else if(stack instanceof IngredientStack)
+			{
 				ingredients.add((IngredientStack) stack);
-			} else if (stack instanceof Block) {
+			} else if(stack instanceof Block)
+			{
 				ingredients.add(new IngredientStack((Block) stack));
 			} else
 			{
@@ -56,12 +58,12 @@ public class GCTRecipe
 
 	public boolean matches(@Nonnull IItemHandler inv)
 	{
-        return new IngredientsMatcher(ingredients).matches(inv);
+		return new IngredientsMatcher(ingredients).matches(inv);
 	}
-	
+
 	public Int2IntMap getMatchingSlots(@Nonnull IItemHandler inv)
 	{
-	    return new IngredientsMatcher(ingredients).getMatchingSlots(inv);
+		return new IngredientsMatcher(ingredients).getMatchingSlots(inv);
 	}
 
 	public ItemStack getRecipeOutput()
@@ -70,7 +72,7 @@ public class GCTRecipe
 	}
 
 	public Collection<IngredientStack> getIngredients()
-    {
-        return ingredients;
-    }
+	{
+		return ingredients;
+	}
 }

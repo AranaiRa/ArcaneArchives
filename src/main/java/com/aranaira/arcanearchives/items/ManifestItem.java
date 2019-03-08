@@ -28,16 +28,6 @@ public class ManifestItem extends ItemTemplate
 		setMaxStackSize(1);
 	}
 
-	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
-	{
-		if(!worldIn.isRemote) return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
-
-		openManifest(worldIn, playerIn);
-
-		return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
-	}
-
 	public static void openManifest(World worldIn, EntityPlayer playerIn)
 	{
 		if(playerIn.isSneaking())
@@ -51,5 +41,15 @@ public class ManifestItem extends ItemTemplate
 
 			playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.MANIFEST, worldIn, (int) playerIn.posX, (int) playerIn.posY, (int) playerIn.posZ);
 		}
+	}
+
+	@Override
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
+	{
+		if(!worldIn.isRemote) return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
+
+		openManifest(worldIn, playerIn);
+
+		return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
 	}
 }

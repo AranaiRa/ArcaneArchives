@@ -5,7 +5,6 @@ import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketNetworks;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
-import com.google.common.graph.Network;
 import invtweaks.api.container.ChestContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -16,12 +15,10 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.management.PlayerList;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import sun.net.NetworkServer;
 
 import javax.annotation.Nonnull;
 
@@ -63,7 +60,8 @@ public class ContainerRadiantChest extends Container
 			this.addSlotToContainer(new Slot(playerInventory, i1, 16 + i1 * 18, 200));
 		}
 
-		if (serverSide) {
+		if(serverSide)
+		{
 			this.addListener(new RadiantChestListener());
 		}
 	}
@@ -130,11 +128,12 @@ public class ContainerRadiantChest extends Container
 			this.lastUpdated = player.ticksExisted;
 		}
 
-		private void sendManifestUpdate () {
-			if (network != null && (player.ticksExisted - lastUpdated > 80))
+		private void sendManifestUpdate()
+		{
+			if(network != null && (player.ticksExisted - lastUpdated > 80))
 			{
 				MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-				if (server != null)
+				if(server != null)
 				{
 					EntityPlayerMP player = server.getPlayerList().getPlayerByUUID(network.getPlayerID());
 					if(player != null)
@@ -159,7 +158,8 @@ public class ContainerRadiantChest extends Container
 		@Override
 		public void sendSlotContents(Container containerToSend, int slotInd, ItemStack stack)
 		{
-			if (slotInd < 54) {
+			if(slotInd < 54)
+			{
 				sendManifestUpdate();
 			}
 		}

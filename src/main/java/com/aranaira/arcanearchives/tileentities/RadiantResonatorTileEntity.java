@@ -136,41 +136,48 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 
 	public TickResult canTick()
 	{
-		if (world.isAirBlock(pos.up())) {
-			if (!canTick) {
+		if(world.isAirBlock(pos.up()))
+		{
+			if(!canTick)
+			{
 				return TickResult.OFFLINE;
-			} else {
+			} else
+			{
 				return TickResult.TICKING;
 			}
-		} else {
+		} else
+		{
 			IBlockState up = world.getBlockState(pos.up());
-			if (up.getBlock() instanceof RawQuartz) {
+			if(up.getBlock() instanceof RawQuartz)
+			{
 				return TickResult.HARVEST_WAITING;
-			} else {
+			} else
+			{
 				return TickResult.OBSTRUCTION;
 			}
 		}
 	}
 
-	public enum TickResult {
-		OBSTRUCTION("obstruction", TextFormatting.RED),
-		HARVEST_WAITING("harvestable", TextFormatting.GOLD),
-		OFFLINE("offline", TextFormatting.DARK_RED),
-		TICKING("resonating", TextFormatting.GREEN);
+	public enum TickResult
+	{
+		OBSTRUCTION("obstruction", TextFormatting.RED), HARVEST_WAITING("harvestable", TextFormatting.GOLD), OFFLINE("offline", TextFormatting.DARK_RED), TICKING("resonating", TextFormatting.GREEN);
 
 		private String key;
 		private TextFormatting format;
 
-		TickResult (String key, TextFormatting format) {
+		TickResult(String key, TextFormatting format)
+		{
 			this.key = key;
 			this.format = format;
 		}
 
-		public String getKey () {
+		public String getKey()
+		{
 			return "arcanearchives.data.tooltip.resonator_status." + key;
 		}
 
-		public TextFormatting getFormat () {
+		public TextFormatting getFormat()
+		{
 			return format;
 		}
 	}

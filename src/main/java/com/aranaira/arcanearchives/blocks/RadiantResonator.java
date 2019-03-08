@@ -106,9 +106,10 @@ public class RadiantResonator extends BlockTemplate
 	public int getComparatorInputOverride(IBlockState blockState, World worldIn, BlockPos pos)
 	{
 		RadiantResonatorTileEntity te = WorldUtil.getTileEntity(RadiantResonatorTileEntity.class, worldIn, pos);
-		if (te == null) return 0;
+		if(te == null) return 0;
 
-		if (te.canTick() == RadiantResonatorTileEntity.TickResult.HARVEST_WAITING) {
+		if(te.canTick() == RadiantResonatorTileEntity.TickResult.HARVEST_WAITING)
+		{
 			return 15;
 		}
 

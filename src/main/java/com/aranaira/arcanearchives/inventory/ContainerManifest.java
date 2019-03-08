@@ -12,13 +12,9 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IContainerListener;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.items.SlotItemHandler;
-import sun.net.NetworkServer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -41,10 +37,11 @@ public class ContainerManifest extends Container
 		if(ServerSide)
 		{
 			serverNetwork = NetworkHelper.getServerNetwork(playerIn.getUniqueID(), playerIn.world);
-			if (serverNetwork == null)
+			if(serverNetwork == null)
 			{
 				handler = new ManifestItemHandler(new ManifestList());
-			} else {
+			} else
+			{
 				handler = serverNetwork.getManifestHandler();
 			}
 		} else

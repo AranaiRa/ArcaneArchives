@@ -5,7 +5,6 @@ import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.Container;

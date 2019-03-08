@@ -51,7 +51,8 @@ public class CommonProxy
 		NetworkHelper.clearClientCache(); // has no effect on the server
 	}
 
-	public void loadComplete (FMLLoadCompleteEvent event) {
+	public void loadComplete(FMLLoadCompleteEvent event)
+	{
 		// Ensure Bookshelf has an ore dictionary entry
 		OreDictionary.registerOre("bookshelf", Blocks.BOOKSHELF);
 	}

@@ -124,7 +124,7 @@ public class IngredientStack
 		return count;
 	}
 
-	public Ingredient getIngredient ()
+	public Ingredient getIngredient()
 	{
 		return ingredient;
 	}
