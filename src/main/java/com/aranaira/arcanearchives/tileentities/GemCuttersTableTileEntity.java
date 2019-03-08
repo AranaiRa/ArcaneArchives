@@ -1,8 +1,8 @@
 package com.aranaira.arcanearchives.tileentities;
 
-import com.aranaira.arcanearchives.inventory.handlers.SharedGCTData;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketGemCutters;
+import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.nbt.NBTTagCompound;
@@ -23,7 +23,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class GemCuttersTableTileEntity extends AATileEntity
 {
 	private final ItemStackHandler inventory = new ItemStackHandler(18);
-	private SharedGCTData sharedData = new SharedGCTData();
+	public static final int RECIPE_PAGE_LIMIT = 7;
+	private GCTRecipe currentRecipe;
+	private GCTRecipe lastRecipe;
+	private GCTRecipe penultimateRecipe;
+	private int page;
 
 	public GemCuttersTableTileEntity()
 	{
@@ -38,7 +42,7 @@ public class GemCuttersTableTileEntity extends AATileEntity
 
 	public void manuallySetRecipe(int index)
 	{
-		sharedData.setCurrentRecipe(GCTRecipeList.getRecipeByIndex(index));
+		currentRecipe = GCTRecipeList.getRecipeByIndex(index);
 	}
 
 	public void setRecipe(int index)
@@ -84,10 +88,9 @@ public class GemCuttersTableTileEntity extends AATileEntity
 	{
 		super.writeToNBT(compound);
 		compound.setTag(AATileEntity.Tags.INVENTORY, inventory.serializeNBT());
-		if(sharedData.hasCurrentRecipe())
+		if(currentRecipe != null)
 		{
-			int index = GCTRecipeList.indexOf(sharedData.getCurrentRecipe());
-			compound.setInteger(Tags.RECIPE, index);
+			compound.setInteger(Tags.RECIPE, currentRecipe.getIndex());
 		}
 
 		return compound;
@@ -119,18 +122,69 @@ public class GemCuttersTableTileEntity extends AATileEntity
 	{
 		if(world == null || !world.isRemote) return;
 
-		int index = sharedData.hasCurrentRecipe() ? sharedData.getCurrentRecipe().getIndex() : -1;
+		int index = -1;
+
+		if (currentRecipe != null) {
+			index = currentRecipe.getIndex();
+		}
+
 		PacketGemCutters.ChangeRecipe packet = new PacketGemCutters.ChangeRecipe(index, getPos(), world.provider.getDimension());
 		NetworkHandler.CHANNEL.sendToServer(packet);
-	}
-
-	public SharedGCTData getSharedData()
-	{
-		return sharedData;
 	}
 
 	public static class Tags
 	{
 		public static final String RECIPE = "recipe";
+	}
+
+	@Nullable
+	public GCTRecipe getCurrentRecipe()
+	{
+		return currentRecipe;
+	}
+
+	public boolean hasCurrentRecipe()
+	{
+		return currentRecipe != null;
+	}
+
+	public GCTRecipe getLastRecipe()
+	{
+		return lastRecipe;
+	}
+
+	public void setLastRecipe(GCTRecipe lastRecipe)
+	{
+		this.lastRecipe = lastRecipe;
+	}
+
+	public GCTRecipe getPenultimateRecipe()
+	{
+		return penultimateRecipe;
+	}
+
+	public void updatePenultimateRecipe()
+	{
+		this.penultimateRecipe = this.lastRecipe;
+	}
+
+	public int getPage()
+	{
+		return page;
+	}
+
+	public void setPage(int page)
+	{
+		this.page = page;
+	}
+
+	public void previousPage()
+	{
+		if(getPage() > 0) setPage(page - 1);
+	}
+
+	public void nextPage()
+	{
+		if(GCTRecipeList.getSize() > (page + 1) * RECIPE_PAGE_LIMIT) setPage(page + 1);
 	}
 }

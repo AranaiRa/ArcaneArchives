@@ -1,9 +1,9 @@
 package com.aranaira.arcanearchives.client.gui;
 
 import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
-import com.aranaira.arcanearchives.inventory.handlers.SharedGCTData;
 import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
+import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import com.aranaira.arcanearchives.util.types.IngredientStack;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
@@ -27,7 +27,6 @@ import java.util.Map;
 
 public class GUIGemCuttersTable extends GuiContainer
 {
-
 	private static final ResourceLocation GUI_TEXTURES = new ResourceLocation("arcanearchives:textures/gui/gemcutterstable.png");
 
 	private static final int OVERLAY = 0xaa1e3340;
@@ -35,7 +34,7 @@ public class GUIGemCuttersTable extends GuiContainer
 	private final ContainerGemCuttersTable container;
 	private final EntityPlayer player;
 	private final Object2BooleanMap<GCTRecipe> recipeStatus = new Object2BooleanOpenHashMap<>();
-	private final SharedGCTData sharedData;
+	private final GemCuttersTableTileEntity tile;
 	private InvisibleButton prevPageButton;
 	private InvisibleButton nextPageButton;
 	private int timesChanged;
@@ -45,7 +44,7 @@ public class GUIGemCuttersTable extends GuiContainer
 		super(container);
 		this.container = container;
 		container.setUpdateRecipeGUI(this::updateRecipeStatus);
-		this.sharedData = container.getSharedData();
+		this.tile = container.getTile();
 		this.xSize = 206;
 		this.ySize = 254;
 		this.player = player;
@@ -65,7 +64,7 @@ public class GUIGemCuttersTable extends GuiContainer
 			GCTRecipe recipe = ((SlotRecipeHandler) slot).getRecipe();
 			if(recipe == null) return;
 
-			if(recipe == sharedData.getCurrentRecipe())
+			if(recipe == tile.getCurrentRecipe())
 			{
 				wasEnabled = true;
 				GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -211,11 +210,11 @@ public class GUIGemCuttersTable extends GuiContainer
 	{
 		if(button.id == 0)
 		{
-			sharedData.previousPage();
+			tile.previousPage();
 		}
 		if(button.id == 1)
 		{
-			sharedData.nextPage();
+			tile.nextPage();
 		}
 		super.actionPerformed(button);
 	}

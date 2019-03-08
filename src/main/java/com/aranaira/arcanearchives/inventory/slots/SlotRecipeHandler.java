@@ -1,8 +1,8 @@
 package com.aranaira.arcanearchives.inventory.slots;
 
-import com.aranaira.arcanearchives.inventory.handlers.SharedGCTData;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
+import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryBasic;
@@ -15,13 +15,13 @@ public class SlotRecipeHandler extends Slot
 {
 	private static IInventory emptyInventory = new InventoryBasic("[Null]", true, 0);
 	private final int index;
-	private final SharedGCTData sharedData;
+	private final GemCuttersTableTileEntity tile;
 
-	public SlotRecipeHandler(int index, int xPosition, int yPosition, SharedGCTData sharedData)
+	public SlotRecipeHandler(int index, int xPosition, int yPosition, GemCuttersTableTileEntity tile)
 	{
 		super(emptyInventory, index, xPosition, yPosition);
 		this.index = index;
-		this.sharedData = sharedData;
+		this.tile = tile;
 	}
 
 	public GCTRecipe getRecipe()
@@ -31,7 +31,7 @@ public class SlotRecipeHandler extends Slot
 
 	public int getPage()
 	{
-		return sharedData.getPage();
+		return tile.getPage();
 	}
 
 	public int getRelativeIndex()

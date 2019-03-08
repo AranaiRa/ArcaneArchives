@@ -1,12 +1,11 @@
 package com.aranaira.arcanearchives.inventory;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.inventory.handlers.SharedGCTData;
 import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketGemCutters;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
+import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import it.unimi.dsi.fastutil.ints.Int2IntMap.Entry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -15,10 +14,8 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.items.*;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
@@ -34,15 +31,15 @@ public class ContainerGemCuttersTable extends Container
 	private final IItemHandlerModifiable tileInventory;
 	private final IItemHandlerModifiable outputInv = new ItemStackHandler(1);
 	private final IItemHandler combinedInventory;
-	private final SharedGCTData sharedData;
+	private final GemCuttersTableTileEntity tile;
 	private final EntityPlayer player;
 	private final World world;
 	private Runnable updateRecipeGUI;
 
-	public ContainerGemCuttersTable(IItemHandlerModifiable tileInventory, SharedGCTData sharedData, EntityPlayer player)
+	public ContainerGemCuttersTable(IItemHandlerModifiable tileInventory, GemCuttersTableTileEntity tile, EntityPlayer player)
 	{
 		this.tileInventory = tileInventory;
-		this.sharedData = sharedData;
+		this.tile = tile;
 		this.playerInventory = player.inventory;
 		this.player = player;
 		this.world = player.world;
@@ -58,7 +55,7 @@ public class ContainerGemCuttersTable extends Container
 			@Override
 			public ItemStack onTake(EntityPlayer thePlayer, ItemStack stack)
 			{
-				for(Entry entry : sharedData.getCurrentRecipe().getMatchingSlots(combinedInventory).int2IntEntrySet())
+				for(Entry entry : tile.getCurrentRecipe().getMatchingSlots(combinedInventory).int2IntEntrySet())
 				{
 					combinedInventory.extractItem(entry.getIntKey(), entry.getIntValue(), false);
 				}
@@ -69,10 +66,7 @@ public class ContainerGemCuttersTable extends Container
 			@Override
 			public boolean canTakeStack(EntityPlayer player)
 			{
-				if (!player.world.isRemote) {
-					ArcaneArchives.logger.info("");
-				}
-				return sharedData.getCurrentRecipe().matches(combinedInventory);
+				return tile.getCurrentRecipe().matches(combinedInventory);
 			}
 
 			@Override
@@ -135,7 +129,7 @@ public class ContainerGemCuttersTable extends Container
 		//Recipe Selection Slots
 		for(int x = 6; x > -1; x--)
 		{
-			this.addSlotToContainer(new SlotRecipeHandler(x, x * 18 + 41, 70, sharedData));
+			this.addSlotToContainer(new SlotRecipeHandler(x, x * 18 + 41, 70, tile));
 		}
 
 		updateRecipe();
@@ -214,11 +208,11 @@ public class ContainerGemCuttersTable extends Container
 
 			SlotRecipeHandler slot = (SlotRecipeHandler) baseSlot;
 
-			sharedData.setCurrentRecipe(slot.getRecipe());
+			if(world.isRemote) tile.setRecipe(slot.getRelativeIndex());
 			updateRecipe();
-
 			if(player.world.isRemote)
 			{
+
 				updateRecipeGUI.run();
 			}
 
@@ -232,9 +226,9 @@ public class ContainerGemCuttersTable extends Container
 	{
 		if(updateRecipeGUI != null) updateRecipeGUI.run();
 
-		ItemStack itemstack = ItemStack.EMPTY;
+		ItemStack itemstack;
 
-		GCTRecipe curRecipe = sharedData.getCurrentRecipe();
+		GCTRecipe curRecipe = tile.getCurrentRecipe();
 		if(curRecipe != null)
 		{
 			itemstack = curRecipe.getRecipeOutput().copy();
@@ -252,17 +246,17 @@ public class ContainerGemCuttersTable extends Container
 			return;
 		}
 
-		if(sharedData.getPenultimateRecipe() != sharedData.getLastRecipe())
+		if(tile.getPenultimateRecipe() != tile.getLastRecipe())
 		{
 			playerInventory.setInventorySlotContents(0, itemstack);
-		} else if(sharedData.getPenultimateRecipe() != null && sharedData.getPenultimateRecipe() == sharedData.getLastRecipe() && !ItemStack.areItemStacksEqual(sharedData.getPenultimateRecipe().getRecipeOutput(), sharedData.getLastRecipe().getRecipeOutput()))
+		} else if(tile.getPenultimateRecipe() != null && tile.getPenultimateRecipe() == tile.getLastRecipe() && !ItemStack.areItemStacksEqual(tile.getPenultimateRecipe().getRecipeOutput(), tile.getLastRecipe().getRecipeOutput()))
 		{
 			playerInventory.setInventorySlotContents(0, itemstack);
 		}
-		if(sharedData.getLastRecipe() != null && !world.isRemote)
-			NetworkHandler.CHANNEL.sendTo(new PacketGemCutters.LastRecipe(sharedData.getLastRecipe()), (EntityPlayerMP) player);
+		if(tile.getLastRecipe() != null && !world.isRemote)
+			NetworkHandler.CHANNEL.sendTo(new PacketGemCutters.LastRecipe(tile.getLastRecipe()), (EntityPlayerMP) player);
 
-		sharedData.updatePenultimateRecipe();
+		tile.updatePenultimateRecipe();
 	}
 
 	public Map<GCTRecipe, Boolean> updateRecipeStatus()
@@ -291,15 +285,15 @@ public class ContainerGemCuttersTable extends Container
 
 	public void updateLastRecipeFromServer(GCTRecipe recipe)
 	{
-		sharedData.setLastRecipe(recipe);
+		tile.setLastRecipe(recipe);
 		if(recipe != null)
 		{
 			tileInventory.setStackInSlot(0, recipe.getRecipeOutput());
 		}
 	}
 
-	public SharedGCTData getSharedData()
+	public GemCuttersTableTileEntity getTile()
 	{
-		return sharedData;
+		return tile;
 	}
 }
