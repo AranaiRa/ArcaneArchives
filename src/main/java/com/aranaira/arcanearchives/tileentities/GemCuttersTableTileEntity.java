@@ -1,37 +1,28 @@
 package com.aranaira.arcanearchives.tileentities;
 
+import com.aranaira.arcanearchives.inventory.handlers.SharedGCTData;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketGemCutters;
-import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import mcp.MethodsReturnNonnullByDefault;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.wrapper.InvWrapper;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class GemCuttersTableTileEntity extends AATileEntity
 {
-
-	public static final int RECIPE_PAGE_LIMIT = 7;
-	private final GemCuttersTableItemHandler mInventory = new GemCuttersTableItemHandler(18);
-	private GCTRecipe recipe = null;
-	private int curPage = 0;
+	private final IItemHandlerModifiable inventory = new ItemStackHandler(18);
+	private SharedGCTData sharedData = new SharedGCTData();
 
 	public GemCuttersTableTileEntity()
 	{
@@ -39,20 +30,14 @@ public class GemCuttersTableTileEntity extends AATileEntity
 		setName("gemcutterstable");
 	}
 
-	public GemCuttersTableItemHandler getInventory()
+	public IItemHandlerModifiable getInventory()
 	{
-		return mInventory;
-	}
-
-	@Nullable
-	public GCTRecipe getRecipe()
-	{
-		return recipe;
+		return inventory;
 	}
 
 	public void manuallySetRecipe(int index)
 	{
-		this.recipe = GCTRecipeList.getRecipeByIndex(index);
+	    sharedData.setCurrentRecipe(GCTRecipeList.getRecipeByIndex(index));
 	}
 
 	public void setRecipe(int index)
@@ -68,48 +53,12 @@ public class GemCuttersTableTileEntity extends AATileEntity
 		}
 	}
 
-	public void consume(UUID playerId)
-	{
-		EntityPlayer player = world.getPlayerEntityByUUID(playerId);
-		if(player == null) return;
-
-		GCTRecipe recipe = getRecipe();
-		if(recipe == null) return;
-
-		InvWrapper plyInv = new InvWrapper(player.inventory);
-
-		/*if(!recipe.matchesRecipe(this.mInventory, plyInv)) return;
-
-		recipe.consume(this.mInventory, plyInv);*/
-	}
-
-	public int getPage()
-	{
-		return curPage;
-	}
-
-	public void setPage(int curPage)
-	{
-		this.curPage = curPage;
-	}
-
-	public void nextPage()
-	{
-		if(GCTRecipeList.getSize() > (getPage() + 1) * RECIPE_PAGE_LIMIT) curPage++;
-	}
-
-	public void previousPage()
-	{
-		if(getPage() > 0) curPage--;
-	}
-
 	@Override
 	public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing)
 	{
-		// I'm making this all worse
 		if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
 		{
-			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(mInventory);
+			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(inventory);
 		}
 		return super.getCapability(capability, facing);
 	}
@@ -125,7 +74,7 @@ public class GemCuttersTableTileEntity extends AATileEntity
 	public void readFromNBT(NBTTagCompound compound)
 	{
 		super.readFromNBT(compound);
-		mInventory.deserializeNBT(compound.getCompoundTag(AATileEntity.Tags.INVENTORY));
+		CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(inventory, null, compound.getCompoundTag(AATileEntity.Tags.INVENTORY));
 		manuallySetRecipe(compound.getInteger(Tags.RECIPE)); // is this server-side or client-side?
 	}
 
@@ -133,9 +82,12 @@ public class GemCuttersTableTileEntity extends AATileEntity
 	public NBTTagCompound writeToNBT(NBTTagCompound compound)
 	{
 		super.writeToNBT(compound);
-		compound.setTag(AATileEntity.Tags.INVENTORY, mInventory.serializeNBT());
-		int index = GCTRecipeList.indexOf(getRecipe());
-		compound.setInteger(Tags.RECIPE, index);
+		compound.setTag(AATileEntity.Tags.INVENTORY, CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(inventory, null));
+		if (sharedData.hasCurrentRecipe())
+		{
+		    int index = GCTRecipeList.indexOf(sharedData.getCurrentRecipe());
+		    compound.setInteger(Tags.RECIPE, index);
+		}
 
 		return compound;
 	}
@@ -166,41 +118,18 @@ public class GemCuttersTableTileEntity extends AATileEntity
 	{
 		if(world == null || !world.isRemote) return;
 
-		int index = (recipe == null) ? -1 : recipe.getIndex();
+		int index = sharedData.hasCurrentRecipe() ? sharedData.getCurrentRecipe().getIndex() : -1;
 		PacketGemCutters.ChangeRecipe packet = new PacketGemCutters.ChangeRecipe(index, getPos(), world.provider.getDimension());
 		NetworkHandler.CHANNEL.sendToServer(packet);
 	}
+	
+	public SharedGCTData getSharedData()
+    {
+        return sharedData;
+    }
 
 	public static class Tags
 	{
 		public static final String RECIPE = "recipe";
-	}
-
-	public static class GemCuttersTableItemHandler extends ItemStackHandler
-	{
-		private List<Runnable> hooks = new ArrayList<>();
-
-		public GemCuttersTableItemHandler(int size)
-		{
-			super(size);
-		}
-
-		public void addHook(Runnable runnable)
-		{
-			this.hooks.add(runnable);
-		}
-
-		public void deleteHook(Runnable runnable)
-		{
-			this.hooks.remove(runnable);
-		}
-
-		@Override
-		protected void onContentsChanged(int slot)
-		{
-			super.onContentsChanged(slot);
-
-			this.hooks.stream().filter(Objects::nonNull).forEach(Runnable::run);
-		}
 	}
 }

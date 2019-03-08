@@ -43,7 +43,8 @@ public class AAGuiHandler implements IGuiHandler
 			case RADIANT_CHEST:
 				return new ContainerRadiantChest((RadiantChestTileEntity) te, player, true);
 			case GEMCUTTERS_TABLE:
-				return new ContainerGemCuttersTable((GemCuttersTableTileEntity) te, player, true);
+			    GemCuttersTableTileEntity gct = (GemCuttersTableTileEntity) te;
+			    return new ContainerGemCuttersTable(gct.getInventory(), gct.getSharedData(), player);
 			case RADIANT_CRAFTING_TABLE:
 				return new ContainerRadiantCraftingTable((RadiantCraftingTableTileEntity) te, player, player.inventory);
 			case MATRIX_STORAGE:
@@ -79,7 +80,8 @@ public class AAGuiHandler implements IGuiHandler
 			case RADIANT_CHEST:
 				return new GUIRadiantChest(new ContainerRadiantChest((RadiantChestTileEntity) te, player, false), player);
 			case GEMCUTTERS_TABLE:
-				return new GUIGemCuttersTable(player, new ContainerGemCuttersTable((GemCuttersTableTileEntity) te, player, false));
+			    GemCuttersTableTileEntity gct = (GemCuttersTableTileEntity) te;
+				return new GUIGemCuttersTable(player, new ContainerGemCuttersTable(gct.getInventory(), gct.getSharedData(), player));
 			case RADIANT_CRAFTING_TABLE:
 				return new GUIRadiantCraftingTable(player, new ContainerRadiantCraftingTable((RadiantCraftingTableTileEntity) te, player, player.inventory));
 			case MATRIX_STORAGE:

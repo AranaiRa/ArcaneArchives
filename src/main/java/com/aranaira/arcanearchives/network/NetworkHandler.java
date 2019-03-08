@@ -19,7 +19,6 @@ public class NetworkHandler
 	{
 		registerPacks(PacketRadiantChest.SetName.Handler.class, PacketRadiantChest.SetName.class, Side.SERVER);
 		registerPacks(PacketGemCutters.ChangeRecipe.Handler.class, PacketGemCutters.ChangeRecipe.class, Side.SERVER);
-		registerPacks(PacketGemCutters.Consume.Handler.class, PacketGemCutters.Consume.class, Side.SERVER);
 		registerPacks(PacketGemCutters.LastRecipe.Handler.class, PacketGemCutters.LastRecipe.class, Side.CLIENT);
 		registerPacks(PacketNetworks.Response.Handler.class, PacketNetworks.Response.class, Side.CLIENT);
 		registerPacks(PacketNetworks.Request.Handler.class, PacketNetworks.Request.class, Side.SERVER);
@@ -34,14 +33,16 @@ public class NetworkHandler
 
 	public static abstract class BaseHandler<T extends IMessage> implements IMessageHandler<T, IMessage>
 	{
-		public abstract IMessage onMessage(T message, MessageContext ctx);
+		@Override
+        public abstract IMessage onMessage(T message, MessageContext ctx);
 
 		public abstract void processMessage(T message, MessageContext ctx);
 	}
 
 	public static abstract class ServerHandler<T extends IMessage> extends BaseHandler<T>
 	{
-		public IMessage onMessage(T message, MessageContext ctx)
+		@Override
+        public IMessage onMessage(T message, MessageContext ctx)
 		{
 			FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> processMessage(message, ctx));
 
@@ -51,7 +52,8 @@ public class NetworkHandler
 
 	public static abstract class ClientHandler<T extends IMessage> extends BaseHandler<T>
 	{
-		public IMessage onMessage(T message, MessageContext ctx)
+		@Override
+        public IMessage onMessage(T message, MessageContext ctx)
 		{
 			ArcaneArchives.proxy.scheduleTask(() -> processMessage(message, ctx), Side.CLIENT);
 

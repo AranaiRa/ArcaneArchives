@@ -1,9 +1,20 @@
 package com.aranaira.arcanearchives.client.gui;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.lwjgl.opengl.GL11;
+
 import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
+import com.aranaira.arcanearchives.inventory.handlers.SharedGCTData;
 import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
-import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
+import com.aranaira.arcanearchives.util.types.IngredientStack;
+import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
+import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -12,39 +23,30 @@ import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
-import org.lwjgl.opengl.GL11;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class GUIGemCuttersTable extends GuiContainer
 {
 
-	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/gemcutterstable.png");
+	private static final ResourceLocation GUI_TEXTURES = new ResourceLocation("arcanearchives:textures/gui/gemcutterstable.png");
 
 	private static final int OVERLAY = 0xaa1e3340;
 
-	ContainerGemCuttersTable container;
-	GCTRecipe curRecipe = null;
-	private InvisibleButton PrevPageButton;
-	private InvisibleButton NextPageButton;
-	private EntityPlayer player;
-	private GemCuttersTableTileEntity tile;
-	private Map<GCTRecipe, Boolean> RECIPE_STATUS = new HashMap<>();
+	private final ContainerGemCuttersTable container;
+	private InvisibleButton prevPageButton;
+	private InvisibleButton nextPageButton;
+	private final EntityPlayer player;
+	private final Object2BooleanMap<GCTRecipe> recipeStatus = new Object2BooleanOpenHashMap<>();
 	private int timesChanged;
+	private final SharedGCTData sharedData;
 
 	public GUIGemCuttersTable(EntityPlayer player, ContainerGemCuttersTable container)
 	{
 		super(container);
 		this.container = container;
-		this.tile = container.getTile();
 		container.setUpdateRecipeGUI(this::updateRecipeStatus);
+		this.sharedData = container.getSharedData();
 		this.xSize = 206;
 		this.ySize = 254;
 		this.player = player;
@@ -64,16 +66,16 @@ public class GUIGemCuttersTable extends GuiContainer
 			GCTRecipe recipe = ((SlotRecipeHandler) slot).getRecipe();
 			if(recipe == null) return;
 
-			if(recipe == curRecipe)
+			if(recipe == sharedData.getCurrentRecipe())
 			{
 				wasEnabled = true;
 				GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 				GlStateManager.enableColorMaterial();
-				this.mc.getTextureManager().bindTexture(GUITextures);
+				this.mc.getTextureManager().bindTexture(GUI_TEXTURES);
 				this.drawTexturedModalRect(slot.xPos - 2, slot.yPos - 2, 206, 0, 20, 20);
 			}
 
-			if(!RECIPE_STATUS.get(recipe))
+			if(!recipeStatus.getBoolean(recipe))
 			{
 				dimSlot(slot, wasEnabled);
 			}
@@ -82,7 +84,7 @@ public class GUIGemCuttersTable extends GuiContainer
 
 	private void dimSlot(Slot slot, boolean wasEnabled)
 	{
-		if(wasEnabled) this.mc.getTextureManager().deleteTexture(GUITextures);
+		if(wasEnabled) this.mc.getTextureManager().deleteTexture(GUI_TEXTURES);
 		GlStateManager.disableDepth();
 		drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, OVERLAY);
 	}
@@ -94,23 +96,22 @@ public class GUIGemCuttersTable extends GuiContainer
 
 		this.buttonList.clear();
 
-		this.PrevPageButton = new InvisibleButton(0, guiLeft + 26, guiTop + 69, 10, 18, "");
-		this.NextPageButton = new InvisibleButton(1, guiLeft + 170, guiTop + 69, 10, 18, "");
+		this.prevPageButton = new InvisibleButton(0, guiLeft + 26, guiTop + 69, 10, 18, "");
+		this.nextPageButton = new InvisibleButton(1, guiLeft + 170, guiTop + 69, 10, 18, "");
 
-		PrevPageButton.visible = false;
-		NextPageButton.visible = false;
+		prevPageButton.visible = false;
+		nextPageButton.visible = false;
 
-		this.buttonList.add(PrevPageButton);
-		this.buttonList.add(NextPageButton);
+		this.buttonList.add(prevPageButton);
+		this.buttonList.add(nextPageButton);
 
 		updateRecipeStatus();
 	}
 
 	public void updateRecipeStatus()
 	{
-		curRecipe = container.getTile().getRecipe();
-		RECIPE_STATUS.clear();
-		RECIPE_STATUS.putAll(container.updateRecipeStatus());
+		recipeStatus.clear();
+		recipeStatus.putAll(container.updateRecipeStatus());
 	}
 
 	@Override
@@ -140,7 +141,7 @@ public class GUIGemCuttersTable extends GuiContainer
 			GCTRecipe recipe = ((SlotRecipeHandler) slot).getRecipe();
 			if(recipe != null)
 			{
-				if(RECIPE_STATUS.getOrDefault(recipe, false))
+				if(recipeStatus.getBoolean(recipe))
 				{// Valid
 					tooltip.add(TextFormatting.GREEN + stack.getDisplayName());
 				} else
@@ -155,7 +156,7 @@ public class GUIGemCuttersTable extends GuiContainer
 				} else
 				{
 					Map<Integer, ItemStack> ingredients = new HashMap<>();
-					for(Ingredient ing : recipe.getIngredients())
+					for(IngredientStack ing : recipe.getIngredients())
 					{
 						ItemStack[] stacks = ing.getMatchingStacks();
 						assert stacks.length != 0; // TODO?
@@ -194,7 +195,7 @@ public class GUIGemCuttersTable extends GuiContainer
 	{
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.enableColorMaterial();
-		this.mc.getTextureManager().bindTexture(GUITextures);
+		this.mc.getTextureManager().bindTexture(GUI_TEXTURES);
 
 		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, 206, 256, 256, 256);
 	}
@@ -210,11 +211,11 @@ public class GUIGemCuttersTable extends GuiContainer
 	{
 		if(button.id == 0)
 		{
-			container.getTile().previousPage();
+			sharedData.previousPage();
 		}
 		if(button.id == 1)
 		{
-			container.getTile().nextPage();
+		    sharedData.nextPage();
 		}
 		super.actionPerformed(button);
 	}
