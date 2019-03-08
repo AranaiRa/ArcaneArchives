@@ -22,7 +22,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public class GemCuttersTableTileEntity extends AATileEntity
 {
-	private final IItemHandlerModifiable inventory = new ItemStackHandler(18);
+	private final ItemStackHandler inventory = new ItemStackHandler(18);
 	private SharedGCTData sharedData = new SharedGCTData();
 
 	public GemCuttersTableTileEntity()
@@ -48,7 +48,7 @@ public class GemCuttersTableTileEntity extends AATileEntity
 		if(world != null && world.isRemote)
 		{
 			clientSideUpdate();
-		} else if(world != null && !world.isRemote)
+		} else if(world != null)
 		{
 			defaultServerSideUpdate();
 		}
@@ -75,7 +75,7 @@ public class GemCuttersTableTileEntity extends AATileEntity
 	public void readFromNBT(NBTTagCompound compound)
 	{
 		super.readFromNBT(compound);
-		CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(inventory, null, compound.getCompoundTag(AATileEntity.Tags.INVENTORY));
+		inventory.deserializeNBT(compound.getCompoundTag(AATileEntity.Tags.INVENTORY));
 		manuallySetRecipe(compound.getInteger(Tags.RECIPE)); // is this server-side or client-side?
 	}
 
@@ -83,7 +83,7 @@ public class GemCuttersTableTileEntity extends AATileEntity
 	public NBTTagCompound writeToNBT(NBTTagCompound compound)
 	{
 		super.writeToNBT(compound);
-		compound.setTag(AATileEntity.Tags.INVENTORY, CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(inventory, null));
+		compound.setTag(AATileEntity.Tags.INVENTORY, inventory.serializeNBT());
 		if(sharedData.hasCurrentRecipe())
 		{
 			int index = GCTRecipeList.indexOf(sharedData.getCurrentRecipe());

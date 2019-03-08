@@ -51,6 +51,26 @@ public class IngredientsMatcher
 		}
 	}
 
+	public int discount (ItemStack stack) {
+		int packed = RecipeItemHelper.pack(stack);
+		int index = ingredientsMap.get(packed);
+		int res = -1;
+		if(counter.containsKey(index))
+		{
+			int thisAmount = stack.getCount();
+			int neededAmount = counter.get(index);
+			if (thisAmount >= neededAmount)
+			{
+				res = neededAmount;
+				counter.remove(index);
+			} else {
+				counter.put(index, neededAmount - thisAmount);
+				res = thisAmount;
+			}
+		}
+		return res;
+	}
+
 	public boolean matches(@Nonnull IItemHandler inv)
 	{
 		for(int i = 0; i < inv.getSlots(); ++i)
@@ -72,20 +92,15 @@ public class IngredientsMatcher
 	public Int2IntMap getMatchingSlots(@Nonnull IItemHandler inv)
 	{
 		Int2IntMap matchingSlots = new Int2IntOpenHashMap();
+
 		for(int slot = 0; slot < inv.getSlots(); ++slot)
 		{
 			ItemStack itemstack = inv.getStackInSlot(slot);
 			if(!itemstack.isEmpty())
 			{
-				int packedStack = RecipeItemHelper.pack(itemstack);
-				if(ingredientsSet.contains(packedStack))
-				{
-					int ingredientIndex = ingredientsMap.get(packedStack);
-					if(ingredientIndex != ingredientsMap.defaultReturnValue())
-					{
-						IngredientStack ingredientStack = ingredients.get(ingredientIndex);
-						matchingSlots.put(slot, ingredientStack.getCount());
-					}
+				int discount = discount(itemstack);
+				if (discount != -1) {
+					matchingSlots.put(slot, discount);
 				}
 			}
 		}

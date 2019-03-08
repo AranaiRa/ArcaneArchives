@@ -160,10 +160,11 @@ public class GUIGemCuttersTable extends GuiContainer
 						ItemStack[] stacks = ing.getMatchingStacks();
 						assert stacks.length != 0; // TODO?
 						ItemStack item = stacks[0];
+						item.setCount(ing.getCount());
 						int packed = RecipeItemHelper.pack(item);
 						if(ingredients.containsKey(packed))
 						{
-							ingredients.get(packed).grow(1);
+							ingredients.get(packed).grow(ing.getCount());
 						} else
 						{
 							ingredients.put(packed, item);

@@ -46,7 +46,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 		super.readFromNBT(compound);
 		if(!compound.hasKey(AATileEntity.Tags.INVENTORY))
 		{
-			ArcaneArchives.logger.info(String.format("Radiant Chest tile entity at %d/%d/%d is missing its inventory."));
+			ArcaneArchives.logger.info(String.format("Radiant Chest tile entity at %d/%d/%d is missing its inventory.", pos.getX(), pos.getY(), pos.getZ()));
 		}
 		mInventory.deserializeNBT(compound.getCompoundTag(AATileEntity.Tags.INVENTORY));
 		chestName = compound.getString(Tags.CHEST_NAME);

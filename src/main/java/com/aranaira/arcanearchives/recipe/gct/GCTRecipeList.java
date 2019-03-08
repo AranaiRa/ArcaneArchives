@@ -21,7 +21,7 @@ public class GCTRecipeList
 
 	public static GCTRecipe makeAndAddRecipe(String name, @Nonnull ItemStack result, Object... recipe)
 	{
-		GCTRecipe newRecipe = new GCTRecipe(result, recipe);
+		GCTRecipe newRecipe = new GCTRecipe(name, result, recipe);
 		addRecipe(newRecipe);
 		return newRecipe;
 	}

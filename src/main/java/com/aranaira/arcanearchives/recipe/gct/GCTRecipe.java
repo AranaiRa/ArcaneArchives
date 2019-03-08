@@ -8,6 +8,8 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
@@ -19,11 +21,13 @@ public class GCTRecipe
 {
 	private final List<IngredientStack> ingredients = new ArrayList<>();
 	private final ItemStack result;
+	private final String name;
 	public List<String> TOOLTIP_CACHE = null;
 
-	public GCTRecipe(@Nonnull ItemStack result, Object... recipe)
+	public GCTRecipe(String name, @Nonnull ItemStack result, Object... recipe)
 	{
 		this.result = result.copy();
+		this.name = name;
 		for(Object stack : recipe)
 		{
 			if(stack instanceof ItemStack)
@@ -56,9 +60,26 @@ public class GCTRecipe
 		return GCTRecipeList.indexOf(this);
 	}
 
+	public String getName()
+	{
+		return name;
+	}
+
 	public boolean matches(@Nonnull IItemHandler inv)
 	{
-		return new IngredientsMatcher(ingredients).matches(inv);
+		Side side = FMLCommonHandler.instance().getEffectiveSide();
+		boolean match = new IngredientsMatcher(ingredients).matches(inv);
+		try {
+			throw new Exception();
+		} catch (Exception e) {
+			String method1 = e.getStackTrace()[1].getMethodName();
+			if (!method1.equals("updateRecipeStatus") && !method1.equals("updateRecipe"))
+			{
+				ArcaneArchives.logger.info(String.format("Recipe %s matches: (%s) on the %s side.", getName(), (match) ? "true" : "false", side.toString()));
+				ArcaneArchives.logger.info("Call from function: " + method1);
+			}
+		}
+		return match;
 	}
 
 	public Int2IntMap getMatchingSlots(@Nonnull IItemHandler inv)

@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.inventory;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.inventory.handlers.SharedGCTData;
 import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
 import com.aranaira.arcanearchives.network.NetworkHandler;
@@ -14,8 +15,10 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.items.*;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
@@ -26,6 +29,7 @@ import java.util.Map;
 public class ContainerGemCuttersTable extends Container
 {
 	private static final int SLOT_OUTPUT = 0;
+	private final SlotItemHandler slotOutput;
 	private final IInventory playerInventory;
 	private final IItemHandlerModifiable tileInventory;
 	private final IItemHandlerModifiable outputInv = new ItemStackHandler(1);
@@ -49,7 +53,7 @@ public class ContainerGemCuttersTable extends Container
 		this.combinedInventory = new CombinedInvWrapper(tileInventory, (IItemHandlerModifiable) mainPlayerInv);
 
 		//Output Slot
-		this.addSlotToContainer(new SlotItemHandler(outputInv, SLOT_OUTPUT, 95, 18)
+		this.slotOutput = new SlotItemHandler(outputInv, SLOT_OUTPUT, 95, 18)
 		{
 			@Override
 			public ItemStack onTake(EntityPlayer thePlayer, ItemStack stack)
@@ -65,6 +69,9 @@ public class ContainerGemCuttersTable extends Container
 			@Override
 			public boolean canTakeStack(EntityPlayer player)
 			{
+				if (!player.world.isRemote) {
+					ArcaneArchives.logger.info("");
+				}
 				return sharedData.getCurrentRecipe().matches(combinedInventory);
 			}
 
@@ -73,7 +80,9 @@ public class ContainerGemCuttersTable extends Container
 			{
 				return false;
 			}
-		});
+		};
+
+		this.addSlotToContainer(slotOutput);
 
 		//Player Inventory
 		for(int i = 0; i < 3; ++i)
@@ -147,38 +156,48 @@ public class ContainerGemCuttersTable extends Container
 	@Nonnull
 	public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
 	{
-		ItemStack stack;
-		final Slot slot = inventorySlots.get(index);
+		Slot slot = this.inventorySlots.get(index);
 
-		if(slot != null && slot.getHasStack())
-		{
-			final ItemStack slotStack = slot.getStack();
-			stack = slotStack.copy();
-
-			//Chest inventory
-			if(index < 36)
-			{
-				if(!mergeItemStack(slotStack, 36, 54, true)) return ItemStack.EMPTY;
-			}
-			//Players inventory
-			else
-			{
-				if(!mergeItemStack(slotStack, 0, 36, true)) return ItemStack.EMPTY;
-			}
-
-			if(slotStack.isEmpty())
-			{
-				slot.putStack(ItemStack.EMPTY);
-			} else
-			{
-				slot.onSlotChanged();
-			}
-		} else
+		if(slot == null || !slot.getHasStack())
 		{
 			return ItemStack.EMPTY;
 		}
 
-		return stack;
+		ItemStack original = slot.getStack().copy();
+		ItemStack itemstack = slot.getStack().copy();
+
+		// Is it a slot in the main inventory? (aka not player inventory)
+		if(index < 36 || slot == slotOutput)
+		{
+			// try to put it into the player inventory (if we have a player inventory)
+			if(!this.mergeItemStack(itemstack, 1, 36, true))
+			{
+				return ItemStack.EMPTY;
+			}
+		}
+		// Slot is in the player inventory (if it exists), transfer to main inventory
+		else if(!this.mergeItemStack(itemstack, 36, 54, false))
+		{
+			return ItemStack.EMPTY;
+		}
+
+		slot.onSlotChanged();
+
+		if(itemstack.getCount() == original.getCount())
+		{
+			return ItemStack.EMPTY;
+		}
+
+		// update slot we pulled from
+		slot.putStack(itemstack);
+		slot.onTake(player, itemstack);
+
+		if(slot.getHasStack() && slot.getStack().isEmpty())
+		{
+			slot.putStack(ItemStack.EMPTY);
+		}
+
+		return original;
 	}
 
 	@Override
