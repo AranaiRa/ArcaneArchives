@@ -31,9 +31,9 @@ public class GUIManifest extends GuiContainer
 
 	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/manifest.png");
 	private final EntityPlayer player;
-	private String mSearchText = "";
-	private boolean mIsEnteringText = false;
-	private ContainerManifest mContainer;
+	private String searchText = "";
+	private boolean isEnteringText = false;
+	private ContainerManifest container;
 	private int mTextTopOffset = 14;
 	private int mTextLeftOffset = 13;
 	private int mEndTrackingLeftOffset = 67;
@@ -53,17 +53,17 @@ public class GUIManifest extends GuiContainer
 	{
 		super(container);
 
-		mContainer = container;
+		this.container = container;
 
 		this.xSize = 184;
 		this.ySize = 224;
 
 		this.player = player;
 
-		String text = mContainer.getSearchString();
+		String text = this.container.getSearchString();
 		if(text != null && !text.isEmpty())
 		{
-			mSearchText = text;
+			searchText = text;
 		}
 	}
 
@@ -74,11 +74,11 @@ public class GUIManifest extends GuiContainer
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		this.renderHoveredToolTip(mouseX, mouseY);
 
-		String temp = fontRenderer.trimStringToWidth(mSearchText, 6 * 15, true);
+		String temp = fontRenderer.trimStringToWidth(searchText, 6 * 15, true);
 
-		if(mSearchText.equals(""))
+		if(searchText.equals(""))
 			fontRenderer.drawString("Search", guiLeft + mTextLeftOffset, mTextTopOffset + guiTop, 0x000000);
-		else if(mIsEnteringText)
+		else if(isEnteringText)
 			fontRenderer.drawString(temp, guiLeft + mTextLeftOffset, mTextTopOffset + guiTop, 0x4363ff);
 		else fontRenderer.drawString(temp, guiLeft + mTextLeftOffset, mTextTopOffset + guiTop, 0x000000);
 
@@ -113,25 +113,25 @@ public class GUIManifest extends GuiContainer
 	protected void keyTyped(char typedChar, int keyCode) throws IOException
 	{
 		//If the user is currently entering text into the search bar.
-		if(mIsEnteringText)
+		if(isEnteringText)
 		{
 			//Backspace
 			if(keyCode == 14)
 			{
-				if(mSearchText.length() > 0) mSearchText = mSearchText.substring(0, mSearchText.length() - 1);
+				if(searchText.length() > 0) searchText = searchText.substring(0, searchText.length() - 1);
 			}
 			//Escape and Enter
 			else if(keyCode == 1 || keyCode == 28)
 			{
-				mIsEnteringText = false;
+				isEnteringText = false;
 			}
 			//Anything else.
 			else
 			{
-				if(Character.isLetterOrDigit(typedChar)) mSearchText += typedChar;
-				else if(typedChar == ' ') mSearchText += typedChar;
+				if(Character.isLetterOrDigit(typedChar)) searchText += typedChar;
+				else if(typedChar == ' ') searchText += typedChar;
 			}
-			mContainer.SetSearchString(mSearchText);
+			container.SetSearchString(searchText);
 		} else if(keyCode == 1 || keyCode == this.mc.gameSettings.keyBindInventory.getKeyCode())
 		{
 			Minecraft.getMinecraft().player.closeScreen();
@@ -141,7 +141,7 @@ public class GUIManifest extends GuiContainer
 	@Override
 	protected void handleMouseClick(Slot slotIn, int slotId, int mouseButton, ClickType type)
 	{
-		mContainer.slotClick(slotId, mouseButton, type, player);
+		container.slotClick(slotId, mouseButton, type, player);
 	}
 
 	@Override
@@ -151,11 +151,11 @@ public class GUIManifest extends GuiContainer
 		if(mouseButton == 0)
 		{
 			//Checks Text Box Bounds
-			mIsEnteringText = mouseX > guiLeft + mTextLeftOffset && mouseX < guiLeft + mTextLeftOffset + 88 && mouseY > guiTop + mTextTopOffset && mouseY < guiTop + mTextTopOffset + 10;
+			isEnteringText = mouseX > guiLeft + mTextLeftOffset && mouseX < guiLeft + mTextLeftOffset + 88 && mouseY > guiTop + mTextTopOffset && mouseY < guiTop + mTextTopOffset + 10;
 
 			if(mouseX > guiLeft + mEndTrackingButtonLeftOffset && mouseX < guiLeft + mEndTrackingButtonLeftOffset + mEndTrackingButtonWidth && mouseY > guiTop + mEndTrackingButtonTopOffset && mouseY < guiTop + mEndTrackingButtonTopOffset + mEndTrackingButtonHeight)
 			{
-				LineHandler.clearChests();
+				LineHandler.clearChests(player.dimension);
 			}
 
 			if(mouseX > guiLeft + mRefreshButtonLeftOffset && mouseX < guiLeft + mRefreshButtonLeftOffset + mRefreshButtonWidth && mouseY > guiTop + mRefreshButtonTopOffset && mouseY < guiTop + mRefreshButtonTopOffset + mRefreshButtonHeight)
@@ -175,7 +175,7 @@ public class GUIManifest extends GuiContainer
 	{
 		super.drawSlot(slot);
 
-		ManifestEntry entry = mContainer.getEntry(slot.getSlotIndex());
+		ManifestEntry entry = container.getEntry(slot.getSlotIndex());
 		if(entry == null) return;
 
 		if(entry.getDimension() != player.dimension)
@@ -196,7 +196,7 @@ public class GUIManifest extends GuiContainer
 
 		if(slot != null)
 		{
-			ManifestEntry entry = mContainer.getEntry(slot.slotNumber);
+			ManifestEntry entry = container.getEntry(slot.slotNumber);
 			if(entry != null && entry.getDimension() != player.dimension)
 			{
 				DimensionType dim = DimensionType.getById(entry.getDimension());

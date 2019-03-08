@@ -1,13 +1,21 @@
 package com.aranaira.arcanearchives.client.gui;
 
 import com.aranaira.arcanearchives.inventory.ContainerRadiantChest;
+import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
+import com.aranaira.arcanearchives.util.ManifestTracking;
+import com.aranaira.arcanearchives.util.types.ManifestEntry;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.Optional;
 import vazkii.quark.api.IChestButtonCallback;
 import vazkii.quark.api.IItemSearchBar;
@@ -17,7 +25,6 @@ import java.io.IOException;
 @Optional.InterfaceList({@Optional.Interface(modid = "quark", iface = "vazkii.quark.api.IChestButtonCallback", striprefs = true), @Optional.Interface(modid = "quark", iface = "vazkii.quark.api.IItemSearchBar", striprefs = true)})
 public class GUIRadiantChest extends GuiContainer implements IChestButtonCallback, IItemSearchBar
 {
-
 	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/radiantchest.png");
 	private final int ImageHeight = 253, ImageWidth = 192, ImageScale = 256;
 	private ContainerRadiantChest mContainer;
@@ -28,12 +35,22 @@ public class GUIRadiantChest extends GuiContainer implements IChestButtonCallbac
 	private int mNameTextHeight = 10;
 	private String mNameField;
 	private boolean mTextEnteringMode = false;
+	private IntArrayList tracked;
+	private int HIGHLIGHT = 0x991922c4;
+	private int dimension;
+	private BlockPos pos;
+
 
 	public GUIRadiantChest(ContainerRadiantChest inventorySlotsIn, EntityPlayer player)
 	{
 		super(inventorySlotsIn);
 
 		this.mContainer = inventorySlotsIn;
+
+		RadiantChestTileEntity tile = inventorySlotsIn.getTile();
+		this.dimension = tile.dimension;
+		this.pos = tile.getPos();
+		tracked = ManifestTracking.get(dimension, pos);
 
 		this.xSize = ImageWidth;
 		this.ySize = ImageHeight;
@@ -63,6 +80,22 @@ public class GUIRadiantChest extends GuiContainer implements IChestButtonCallbac
 	public void updateScreen()
 	{
 		super.updateScreen();
+	}
+
+	@Override
+	public void drawSlot(Slot slot)
+	{
+		ItemStack stack = slot.getStack();
+		if (!stack.isEmpty())
+		{
+			int pack = RecipeItemHelper.pack(stack);
+			if (tracked != null && tracked.contains(pack)) {
+				GlStateManager.disableDepth();
+				drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, HIGHLIGHT);
+			}
+		}
+
+		super.drawSlot(slot);
 	}
 
 	@Override
@@ -154,7 +187,16 @@ public class GUIRadiantChest extends GuiContainer implements IChestButtonCallbac
 		{
 			super.keyTyped(typedChar, keyCode);
 		}
+	}
 
+	@Override
+	public void onGuiClosed()
+	{
+		super.onGuiClosed();
+
+		if (tracked != null) {
+			ManifestTracking.remove(dimension, pos);
+		}
 	}
 
 	@Optional.Method(modid = "quark")

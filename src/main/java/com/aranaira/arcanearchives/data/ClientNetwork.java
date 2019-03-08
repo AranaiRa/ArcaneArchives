@@ -35,13 +35,13 @@ public class ClientNetwork
 	private int totalResonators = 0;
 	private int totalCores = 0;
 
-	private ManifestItemHandler mManifestHandler = null;
+	private ManifestItemHandler manifestItemHandler = null;
 	//private TileList<ImmanenceTileEntity> mActualTiles = new TileList<>();
 
 	ClientNetwork(UUID id)
 	{
 		this.playerId = id;
-		this.mManifestHandler = new ManifestItemHandler(manifestItems);
+		this.manifestItemHandler = new ManifestItemHandler(manifestItems);
 	}
 
 	public int getTotalResonators()
@@ -56,7 +56,7 @@ public class ClientNetwork
 
 	public ManifestItemHandler getManifestHandler()
 	{
-		return mManifestHandler;
+		return manifestItemHandler;
 	}
 
 	public ManifestList getManifestItems()
@@ -129,6 +129,8 @@ public class ClientNetwork
 			if(t1) return -1;
 			return 1;
 		});
+
+		manifestItemHandler.nullify();
 	}
 
 	public void deserializeData(NBTTagCompound tag)

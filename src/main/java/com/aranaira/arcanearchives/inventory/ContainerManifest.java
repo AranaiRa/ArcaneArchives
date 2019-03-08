@@ -5,6 +5,7 @@ import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.events.LineHandler;
 import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
+import com.aranaira.arcanearchives.util.ManifestTracking;
 import com.aranaira.arcanearchives.util.types.ManifestEntry;
 import com.aranaira.arcanearchives.util.types.ManifestList;
 import net.minecraft.client.Minecraft;
@@ -87,6 +88,8 @@ public class ContainerManifest extends Container
 
 		List<Vec3d> visPositions = entry.getVecPositions();
 		visPositions.forEach(LineHandler::addLine);
+
+		ManifestTracking.add(entry);
 
 		if(!GuiScreen.isShiftKeyDown())
 		{

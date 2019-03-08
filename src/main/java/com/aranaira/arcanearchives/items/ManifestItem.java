@@ -32,7 +32,7 @@ public class ManifestItem extends ItemTemplate
 	{
 		if(playerIn.isSneaking())
 		{
-			LineHandler.clearChests();
+			LineHandler.clearChests(playerIn.dimension);
 		} else
 		{
 			ClientNetwork network = NetworkHelper.getClientNetwork(playerIn.getUniqueID());

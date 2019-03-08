@@ -81,4 +81,9 @@ public class ManifestItemHandler implements IItemHandlerModifiable
 		manifestActive = manifestBase.filtered();
 	}
 
+	public void nullify ()
+	{
+		manifestActive = null;
+	}
+
 }

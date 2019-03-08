@@ -117,6 +117,11 @@ public class ContainerRadiantChest extends Container
 		return stack;
 	}
 
+	public RadiantChestTileEntity getTile()
+	{
+		return tile;
+	}
+
 	public class RadiantChestListener implements IContainerListener
 	{
 		private ServerNetwork network;
