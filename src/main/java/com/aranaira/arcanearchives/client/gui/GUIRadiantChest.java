@@ -3,7 +3,6 @@ package com.aranaira.arcanearchives.client.gui;
 import com.aranaira.arcanearchives.inventory.ContainerRadiantChest;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.ManifestTracking;
-import com.aranaira.arcanearchives.util.types.ManifestEntry;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -86,10 +85,11 @@ public class GUIRadiantChest extends GuiContainer implements IChestButtonCallbac
 	public void drawSlot(Slot slot)
 	{
 		ItemStack stack = slot.getStack();
-		if (!stack.isEmpty())
+		if(!stack.isEmpty())
 		{
 			int pack = RecipeItemHelper.pack(stack);
-			if (tracked != null && tracked.contains(pack)) {
+			if(tracked != null && tracked.contains(pack))
+			{
 				GlStateManager.disableDepth();
 				drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, HIGHLIGHT);
 			}
@@ -121,26 +121,32 @@ public class GUIRadiantChest extends GuiContainer implements IChestButtonCallbac
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
 	{
-		if(mouseButton == 0)
-		{
-			if(mouseX > guiLeft + mNameTextLeftOffset && mouseX < guiLeft + mNameTextLeftOffset + mNameTextWidth && mouseY > guiTop + mNameTextTopOffset && mouseY < guiTop + mNameTextTopOffset + mNameTextHeight)
-			{
-				mTextEnteringMode = true;
-			} else
-			{
-				if(mTextEnteringMode)
-				{
-					mTextEnteringMode = false;
-					if(!mContainer.getName().equals(mNameField))
-					{
-						mContainer.setName(mNameField);
-						mNameField = "";
-						return;
-					}
+		boolean exit = false;
 
-					//BlockPos pos, String name, UUID uuid, int dimensionID
-				}
+		if(mouseX > guiLeft + mNameTextLeftOffset && mouseX < guiLeft + mNameTextLeftOffset + mNameTextWidth && mouseY > guiTop + mNameTextTopOffset && mouseY < guiTop + mNameTextTopOffset + mNameTextHeight)
+		{
+			if(mouseButton == 1)
+			{
+				mNameField = "";
+				exit = true;
 			}
+			mTextEnteringMode = true;
+		} else
+		{
+			exit = true;
+		}
+
+		if(mTextEnteringMode && exit)
+		{
+			mTextEnteringMode = false;
+			if(!mContainer.getName().equals(mNameField))
+			{
+				mContainer.setName(mNameField);
+				mNameField = "";
+				return;
+			}
+
+			//BlockPos pos, String name, UUID uuid, int dimensionID
 		}
 
 		super.mouseClicked(mouseX, mouseY, mouseButton);
@@ -194,7 +200,8 @@ public class GUIRadiantChest extends GuiContainer implements IChestButtonCallbac
 	{
 		super.onGuiClosed();
 
-		if (tracked != null) {
+		if(tracked != null)
+		{
 			ManifestTracking.remove(dimension, pos);
 		}
 	}
