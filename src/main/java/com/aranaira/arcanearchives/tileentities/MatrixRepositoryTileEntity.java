@@ -18,7 +18,7 @@ public class MatrixRepositoryTileEntity extends ImmanenceTileEntity
 	public MatrixRepositoryTileEntity()
 	{
 		super("matrix_repository_tile_entity");
-		immanenceDrain = ConfigHandler.values.iRepositoryMatrixDrain;
+		immanenceDrain = 0; // ConfigHandler.values.iRepositoryMatrixDrain;
 		// maxItems = ConfigHandler.values.iRepositoryMatrixItemCap;
 	}
 

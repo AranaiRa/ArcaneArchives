@@ -19,13 +19,13 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 {
 	private int growth = 0;
 	private int ticks = 0;
-	private int bonusTicks = ConfigHandler.values.iRadiantResonatorBonusTicks;
+	private int bonusTicks = 0;
 	private boolean canTick = false;
 
 	public RadiantResonatorTileEntity()
 	{
 		super("radiant_resonator_tile_entity");
-		immanenceDrain = ConfigHandler.values.iRadiantResonatorDrain;
+		immanenceDrain = 0;
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 			canTick = true;
 		}
 
-		int ticksRequired = ConfigHandler.values.iRadiantResonatorTickTime;
+		int ticksRequired = ConfigHandler.ResonatorTickTime;
 
 		markDirty();
 
@@ -76,7 +76,7 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 
 	public int getPercentageComplete()
 	{
-		return (int) Math.floor(growth / (double) ConfigHandler.values.iRadiantResonatorTickTime * 100D);
+		return (int) Math.floor(growth / (double) ConfigHandler.ResonatorTickTime * 100D);
 	}
 
 	@Nonnull
