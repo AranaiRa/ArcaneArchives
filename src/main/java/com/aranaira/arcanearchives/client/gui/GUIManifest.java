@@ -76,7 +76,7 @@ public class GUIManifest extends GuiContainer
 
 		String temp = fontRenderer.trimStringToWidth(searchText, 6 * 15, true);
 
-		if(searchText.equals(""))
+		if(searchText.equals("") && !isEnteringText)
 			fontRenderer.drawString("Search", guiLeft + mTextLeftOffset, mTextTopOffset + guiTop, 0x000000);
 		else if(isEnteringText)
 			fontRenderer.drawString(temp, guiLeft + mTextLeftOffset, mTextTopOffset + guiTop, 0x4363ff);
