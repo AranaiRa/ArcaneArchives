@@ -1,15 +1,20 @@
 package com.aranaira.arcanearchives.inventory;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.inventory.handlers.InventoryCraftingPersistent;
 import com.aranaira.arcanearchives.inventory.slots.SlotCraftingFastWorkbench;
 import com.aranaira.arcanearchives.inventory.slots.SlotIRecipe;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketRadiantCrafting;
 import com.aranaira.arcanearchives.tileentities.RadiantCraftingTableTileEntity;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.*;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
@@ -345,7 +350,7 @@ public class ContainerRadiantCraftingTable extends Container
 			if(lastLastRecipe != lastRecipe)
 			{
 				entityplayermp.connection.sendPacket(new SPacketSetSlot(this.windowId, 0, itemstack));
-			} else if(lastLastRecipe != null && lastLastRecipe == lastRecipe && !ItemStack.areItemStacksEqual(lastLastRecipe.getCraftingResult(inv), lastRecipe.getCraftingResult(inv)))
+			} else if(lastLastRecipe != null && !ItemStack.areItemStacksEqual(lastLastRecipe.getCraftingResult(inv), lastRecipe.getCraftingResult(inv)))
 			{
 				entityplayermp.connection.sendPacket(new SPacketSetSlot(this.windowId, 0, itemstack));
 			}
@@ -371,10 +376,16 @@ public class ContainerRadiantCraftingTable extends Container
 
 	public void updateLastRecipeFromServer(IRecipe recipe)
 	{
+		if (lastRecipe == recipe) return;
+
 		lastRecipe = recipe;
-		if(recipe != null)
+		if(recipe != null && recipe.matches(craftMatrix, world))
 		{
-			this.craftResult.setInventorySlotContents(0, recipe.getCraftingResult(craftMatrix));
+			ItemStack stack = recipe.getCraftingResult(craftMatrix);
+			if (!stack.isEmpty())
+			{
+				this.craftResult.setInventorySlotContents(0, stack);
+			}
 		}
 	}
 
