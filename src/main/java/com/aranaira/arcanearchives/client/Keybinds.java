@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.client;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.events.LineHandler;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.items.ManifestItem;
@@ -39,17 +40,20 @@ public class Keybinds
 		if(manifestKey.isKeyDown() && mc.inGameHasFocus)
 		{
 			boolean foundManifest = false;
-			for(int i = 0; i < 36; i++)
+			if (ConfigHandler.ManifestPresence)
 			{
-				ItemStack item = mc.player.inventory.getStackInSlot(i);
-				if(item.getItem() == ItemRegistry.MANIFEST)
+				for(int i = 0; i < 36; i++)
 				{
-					foundManifest = true;
-					break;
+					ItemStack item = mc.player.inventory.getStackInSlot(i);
+					if(item.getItem() == ItemRegistry.MANIFEST)
+					{
+						foundManifest = true;
+						break;
+					}
 				}
 			}
 
-			if(foundManifest)
+			if(foundManifest || !ConfigHandler.ManifestPresence)
 			{
 				if(mc.player.isSneaking())
 				{
