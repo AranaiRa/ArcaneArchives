@@ -67,19 +67,7 @@ public class GCTRecipe
 
 	public boolean matches(@Nonnull IItemHandler inv)
 	{
-		Side side = FMLCommonHandler.instance().getEffectiveSide();
-		boolean match = new IngredientsMatcher(ingredients).matches(inv);
-		try {
-			throw new Exception();
-		} catch (Exception e) {
-			String method1 = e.getStackTrace()[1].getMethodName();
-			if (!method1.equals("updateRecipeStatus") && !method1.equals("updateRecipe"))
-			{
-				ArcaneArchives.logger.info(String.format("Recipe %s matches: (%s) on the %s side.", getName(), (match) ? "true" : "false", side.toString()));
-				ArcaneArchives.logger.info("Call from function: " + method1);
-			}
-		}
-		return match;
+		return new IngredientsMatcher(ingredients).matches(inv);
 	}
 
 	public Int2IntMap getMatchingSlots(@Nonnull IItemHandler inv)
