@@ -15,6 +15,18 @@ public class ConfigHandler
 	{
 		if(event.getModID().equals(ArcaneArchives.MODID))
 		{
+			parseColours();
+		}
+	}
+
+	@Config.Ignore
+	public static int MANIFEST_HIGHLIGHT = 0x991922c4;
+
+	public static void parseColours () {
+		try {
+			MANIFEST_HIGHLIGHT = Long.decode(ChestHighlight.toLowerCase()).intValue();
+		} catch (NumberFormatException event) {
+			ArcaneArchives.logger.error("Invalid manifest highlight colour: " + ChestHighlight, event);
 		}
 	}
 
@@ -29,6 +41,10 @@ public class ConfigHandler
 	@Config.Comment("Whether having a manifest in your inventory is required to open the screen")
 	@Config.Name("Manifest Presence")
 	public static boolean ManifestPresence = true;
+
+	@Config.Comment("Radiant chest highlight colour (use HTML syntax i.e., #FFFFFF")
+	@Config.Name("Radiant Chest Highlight")
+	public static String ChestHighlight = "#1922C4";
 
 	//public static boolean bJarvisModeEnabled = false;
 

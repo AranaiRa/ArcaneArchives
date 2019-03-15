@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.client.gui;
 
+import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerRadiantChest;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.ManifestTracking;
@@ -35,7 +36,6 @@ public class GUIRadiantChest extends GuiContainer implements IChestButtonCallbac
 	private String mNameField;
 	private boolean mTextEnteringMode = false;
 	private IntArrayList tracked;
-	private int HIGHLIGHT = 0x991922c4;
 	private int dimension;
 	private BlockPos pos;
 
@@ -91,7 +91,7 @@ public class GUIRadiantChest extends GuiContainer implements IChestButtonCallbac
 			if(tracked != null && tracked.contains(pack))
 			{
 				GlStateManager.disableDepth();
-				drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, HIGHLIGHT);
+				drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, ConfigHandler.MANIFEST_HIGHLIGHT);
 			}
 		}
 
