@@ -1,7 +1,7 @@
-package com.aranaira.arcanearchives.compat.hwyla;
+package com.aranaira.arcanearchives.integration.hwyla;
 
-import com.aranaira.arcanearchives.compat.hwyla.providers.ProviderRadiantChest;
-import com.aranaira.arcanearchives.compat.hwyla.providers.ProviderResonator;
+import com.aranaira.arcanearchives.integration.hwyla.providers.ProviderRadiantChest;
+import com.aranaira.arcanearchives.integration.hwyla.providers.ProviderResonator;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
 import mcp.mobius.waila.api.IWailaPlugin;

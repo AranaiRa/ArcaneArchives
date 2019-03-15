@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.compat.jei;
+package com.aranaira.arcanearchives.integration.jei;
 
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import mezz.jei.api.*;

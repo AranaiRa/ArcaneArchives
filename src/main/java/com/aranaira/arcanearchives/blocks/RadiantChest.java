@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
-import com.aranaira.arcanearchives.common.AAGuiHandler;
+import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.events.LineHandler;

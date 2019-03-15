@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives;
 
-import com.aranaira.arcanearchives.common.CreativeTabAA;
 import com.aranaira.arcanearchives.proxy.CommonProxy;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;

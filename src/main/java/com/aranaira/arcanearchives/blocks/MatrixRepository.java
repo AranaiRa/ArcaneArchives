@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
-import com.aranaira.arcanearchives.common.AAGuiHandler;
+import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.tileentities.MatrixRepositoryTileEntity;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

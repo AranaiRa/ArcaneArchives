@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.compat.hwyla.providers;
+package com.aranaira.arcanearchives.integration.hwyla.providers;
 
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
 import mcp.mobius.waila.api.IWailaConfigHandler;

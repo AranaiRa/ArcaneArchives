@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.common.AAGuiHandler;
+import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.events.LineHandler;

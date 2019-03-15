@@ -16,7 +16,6 @@ public class GUIRadiantCraftingTable extends GuiContainer
 		super(container);
 		this.xSize = 206;
 		this.ySize = 203;
-
 	}
 
 	@Override

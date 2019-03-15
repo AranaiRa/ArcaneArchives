@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.proxy;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.common.AAGuiHandler;
+import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.events.ClientTickHandler;
 import com.aranaira.arcanearchives.init.BlockRegistry;
@@ -31,7 +31,7 @@ public class CommonProxy
 		RecipeLibrary.buildRecipes();
 		BlockRegistry.registerTileEntities();
 
-		FMLInterModComms.sendFunctionMessage("theoneprobe", "getTheOneProbe", "com.aranaira.arcanearchives.compat.top.TOPPlugin");
+		FMLInterModComms.sendFunctionMessage("theoneprobe", "getTheOneProbe", "com.aranaira.arcanearchives.integration.top.TOPPlugin");
 	}
 
 	public void postInit(FMLPostInitializationEvent event)

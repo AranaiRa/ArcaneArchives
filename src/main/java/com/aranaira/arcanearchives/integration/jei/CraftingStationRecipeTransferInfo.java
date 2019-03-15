@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.compat.jei;
+package com.aranaira.arcanearchives.integration.jei;
 
 import com.aranaira.arcanearchives.inventory.ContainerRadiantCraftingTable;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;

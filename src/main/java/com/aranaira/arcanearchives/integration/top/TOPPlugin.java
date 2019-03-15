@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.compat.top;
+package com.aranaira.arcanearchives.integration.top;
 
 import com.aranaira.arcanearchives.blocks.RadiantChest;
 import com.aranaira.arcanearchives.blocks.RadiantResonator;
