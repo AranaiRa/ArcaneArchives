@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.client.gui;
 
+import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.events.LineHandler;
@@ -64,6 +65,12 @@ public class GUIManifest extends GuiContainer
 		if(text != null && !text.isEmpty())
 		{
 			searchText = text;
+		}
+
+		if (ConfigHandler.ManifestSearch) {
+			searchText = "";
+			isEnteringText = true;
+			container.SetSearchString(searchText);
 		}
 	}
 
