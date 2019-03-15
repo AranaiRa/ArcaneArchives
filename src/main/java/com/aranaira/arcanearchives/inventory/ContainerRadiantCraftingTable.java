@@ -266,7 +266,7 @@ public class ContainerRadiantCraftingTable extends Container
 		if(index < 10)
 		{
 			// try to put it into the player inventory (if we have a player inventory)
-			if(!this.mergeItemStack(itemstack, 10, end - 3, true))
+			if(!this.mergeItemStack(itemstack, 10, end, true))
 			{
 				return ItemStack.EMPTY;
 			}
