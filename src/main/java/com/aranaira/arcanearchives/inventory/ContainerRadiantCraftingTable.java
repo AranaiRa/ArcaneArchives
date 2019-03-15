@@ -277,7 +277,7 @@ public class ContainerRadiantCraftingTable extends Container
 			}
 		}
 		// Slot is in the player inventory (if it exists), transfer to main inventory
-		else if(!this.mergeItemStack(itemstack, 0, 9, false))
+		else if(!this.mergeItemStack(itemstack, 0, 10, false))
 		{
 			return ItemStack.EMPTY;
 		}
