@@ -104,5 +104,5 @@ arcanearchives.data.tooltip.resonator_status.obstruction=Obstructed
 arcanearchives.data.tooltip.resonator_status.harvestable=Harvestable
 
 arcanearchives.gui.keygroup=Arcane Archives
-arcanearchives.gui.keybind.manifest=Activate Manifest
+arcanearchives.gui.keybinds.manifest=Activate Manifest
 arcanearchives.gui.missing_manifest=You have no Manifest on you to peruse!
