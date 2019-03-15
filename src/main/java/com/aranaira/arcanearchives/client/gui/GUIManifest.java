@@ -150,7 +150,7 @@ public class GUIManifest extends GuiContainer
 		//Checks Text Box Bounds
 		isEnteringText = mouseX > guiLeft + mTextLeftOffset && mouseX < guiLeft + mTextLeftOffset + 88 && mouseY > guiTop + mTextTopOffset && mouseY < guiTop + mTextTopOffset + 10;
 
-		if (isEnteringText && mouseButton == 1) {
+		if (isEnteringText) {
 			// This is a right click!
 			searchText = "";
 			container.SetSearchString(searchText);
