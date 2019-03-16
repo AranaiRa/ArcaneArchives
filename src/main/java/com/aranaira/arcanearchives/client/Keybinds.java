@@ -2,21 +2,30 @@ package com.aranaira.arcanearchives.client;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.config.ConfigHandler;
+import com.aranaira.arcanearchives.data.ClientNetwork;
+import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.events.LineHandler;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.items.ManifestItem;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.input.Keyboard;
+
+import javax.annotation.Nullable;
 
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class Keybinds
@@ -25,11 +34,27 @@ public class Keybinds
 	public static final String ARCARC_BINDS = "arcanearchives.gui.keybinds";
 	public static KeyBinding manifestKey = null;
 
+	public static boolean skip = false;
+
 	public static void initKeybinds()
 	{
 		KeyBinding kb = new KeyBinding(ARCARC_BINDS + ".manifest", 0, ARCARC_GROUP);
 		ClientRegistry.registerKeyBinding(kb);
 		manifestKey = kb;
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Nullable
+	private static ItemStack underMouse (Minecraft mc) {
+		if (mc.currentScreen instanceof GuiContainer) {
+			GuiContainer container = (GuiContainer) mc.currentScreen;
+			Slot underMouse = container.getSlotUnderMouse();
+			if (underMouse != null) {
+				return underMouse.getStack();
+			}
+		}
+
+		return null;
 	}
 
 	@SubscribeEvent
@@ -40,7 +65,7 @@ public class Keybinds
 		if(manifestKey.isKeyDown() && mc.inGameHasFocus)
 		{
 			boolean foundManifest = false;
-			if (ConfigHandler.ManifestPresence)
+			if(ConfigHandler.ManifestPresence)
 			{
 				for(int i = 0; i < 36; i++)
 				{
@@ -65,6 +90,22 @@ public class Keybinds
 			} else
 			{
 				mc.player.sendMessage(new TextComponentTranslation("arcanearchives.gui.missing_manifest").setStyle(new Style().setColor(TextFormatting.YELLOW)));
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void onKeypress (GuiScreenEvent.KeyboardInputEvent.Pre event) {
+		if (Keyboard.getEventKeyState() && manifestKey.isActiveAndMatches(Keyboard.getEventKey())) {
+			Minecraft mc = Minecraft.getMinecraft();
+			if (mc.currentScreen != null) {
+				ItemStack stack = underMouse(mc);
+				if (stack != null && !stack.isEmpty()) {
+					ClientNetwork network = NetworkHelper.getClientNetwork();
+					network.setSearchTerm(stack.getDisplayName());
+					ManifestItem.openManifest(mc.player.world, mc.player);
+					skip = true;
+				}
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.client.gui;
 
+import com.aranaira.arcanearchives.client.Keybinds;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
@@ -67,10 +68,11 @@ public class GUIManifest extends GuiContainer
 			searchText = text;
 		}
 
-		if (ConfigHandler.ManifestSearch) {
+		if (ConfigHandler.ManifestSearch && !Keybinds.skip) {
 			searchText = "";
 			isEnteringText = true;
 			container.SetSearchString(searchText);
+			Keybinds.skip = false;
 		}
 	}
 

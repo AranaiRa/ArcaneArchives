@@ -1,7 +1,10 @@
 package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import net.minecraft.client.Minecraft;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -69,6 +72,13 @@ public class NetworkHelper
 			CLIENT_MAP.put(uuid, net);
 			return net;
 		}
+	}
+
+	@SideOnly(Side.CLIENT)
+	public static ClientNetwork getClientNetwork () {
+		Minecraft mc = Minecraft.getMinecraft();
+		UUID id = mc.player.getUniqueID();
+		return getClientNetwork(id);
 	}
 
 	public static class InvalidNetworkException extends NullPointerException

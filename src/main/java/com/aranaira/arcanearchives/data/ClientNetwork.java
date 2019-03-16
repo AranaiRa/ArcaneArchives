@@ -186,5 +186,9 @@ public class ClientNetwork
 	{
 		return Minecraft.getMinecraft().player;
 	}
+
+	public void setSearchTerm (String searchTerm) {
+		manifestItemHandler.setSearchText(searchTerm);
+	}
 }
 
