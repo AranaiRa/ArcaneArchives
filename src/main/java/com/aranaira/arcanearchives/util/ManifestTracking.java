@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
@@ -51,8 +52,6 @@ public class ManifestTracking
 	{
 		int item = RecipeItemHelper.pack(stack);
 
-		boolean hasTags = false;
-
 		NBTTagCompound tag = stack.getTagCompound();
 
 		IntArrayList dim = getDimension(dimension).getOrDefault(pos.toLong(), null);
@@ -63,7 +62,13 @@ public class ManifestTracking
 			if(tag != null && !tag.isEmpty())
 			{
 				Int2ObjectArrayMap<List<NBTTagCompound>> map = getTagDimension(dimension).computeIfAbsent(pos.toLong(), aLong -> new Int2ObjectArrayMap<>());
-				List<NBTTagCompound> list = map.computeIfAbsent(item, ObjectArrayList::new);
+				List<NBTTagCompound> list;
+				if (map.containsKey(item)) {
+					list = map.get(item);
+				} else {
+					list = new ObjectArrayList<>();
+					map.put(item, list);
+				}
 				list.add(tag);
 			}
 		}
