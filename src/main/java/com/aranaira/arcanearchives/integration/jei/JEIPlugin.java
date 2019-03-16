@@ -16,6 +16,7 @@ public class JEIPlugin implements IModPlugin
 	public static IJeiHelpers jeiHelpers;
 	public static ICraftingGridHelper craftingGridHelper;
 	public static IRecipeRegistry recipeRegistry;
+	public static IJeiRuntime runtime;
 
 	@Override
 	public void register(@Nonnull IModRegistry registry)
@@ -33,6 +34,7 @@ public class JEIPlugin implements IModPlugin
 	@Override
 	public void onRuntimeAvailable(@Nonnull IJeiRuntime jeiRuntime)
 	{
+		runtime = jeiRuntime;
 		recipeRegistry = jeiRuntime.getRecipeRegistry();
 	}
 }

@@ -1,18 +1,25 @@
 package com.aranaira.arcanearchives.client;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.client.gui.GUIManifest;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.events.LineHandler;
 import com.aranaira.arcanearchives.init.ItemRegistry;
+import com.aranaira.arcanearchives.integration.jei.JEIUnderMouse;
+import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
 import com.aranaira.arcanearchives.items.ManifestItem;
+import com.aranaira.arcanearchives.util.ManifestTracking;
+import com.aranaira.arcanearchives.util.types.ManifestEntry;
+import com.aranaira.arcanearchives.util.types.ManifestList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
@@ -26,6 +33,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 
 import javax.annotation.Nullable;
+import java.util.List;
+import java.util.function.Consumer;
 
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class Keybinds
@@ -46,6 +55,11 @@ public class Keybinds
 	@SideOnly(Side.CLIENT)
 	@Nullable
 	private static ItemStack underMouse (Minecraft mc) {
+		ItemStack jei = JEIUnderMouse.underMouse();
+		if (jei != null) {
+			return jei;
+		}
+
 		if (mc.currentScreen instanceof GuiContainer) {
 			GuiContainer container = (GuiContainer) mc.currentScreen;
 			Slot underMouse = container.getSlotUnderMouse();
@@ -102,9 +116,26 @@ public class Keybinds
 				ItemStack stack = underMouse(mc);
 				if (stack != null && !stack.isEmpty()) {
 					ClientNetwork network = NetworkHelper.getClientNetwork();
-					network.setSearchTerm(stack.getDisplayName());
-					ManifestItem.openManifest(mc.player.world, mc.player);
-					skip = true;
+					network.synchroniseManifest(handler ->
+					{
+						handler.setSearchText(stack.getDisplayName());
+						boolean addedValues = false;
+						for (int i = 0; i < handler.getSlots(); i++) {
+							ManifestEntry entry = handler.getManifestEntryInSlot(i);
+							if (entry == null) continue;
+							if (mc.player.dimension != entry.dimension) continue;
+
+							List<Vec3d> visPositions = entry.getVecPositions();
+							visPositions.forEach(LineHandler::addLine);
+
+							ManifestTracking.add(entry);
+
+							addedValues = true;
+						}
+						if (!GuiScreen.isShiftKeyDown() && addedValues) {
+							mc.displayGuiScreen(null);
+						}
+					});
 				}
 			}
 		}

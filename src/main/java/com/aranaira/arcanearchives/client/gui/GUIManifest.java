@@ -68,12 +68,15 @@ public class GUIManifest extends GuiContainer
 			searchText = text;
 		}
 
-		if (ConfigHandler.ManifestSearch && !Keybinds.skip) {
+		if (ConfigHandler.ManifestSearch) {
 			searchText = "";
 			isEnteringText = true;
 			container.SetSearchString(searchText);
-			Keybinds.skip = false;
 		}
+	}
+
+	public void refreshSearch () {
+		searchText = container.getSearchString();
 	}
 
 	@Override

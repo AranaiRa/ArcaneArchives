@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 public class ClientNetwork
 {
@@ -34,6 +35,8 @@ public class ClientNetwork
 
 	private int totalResonators = 0;
 	private int totalCores = 0;
+
+	private Consumer<ManifestItemHandler> callback = null;
 
 	private ManifestItemHandler manifestItemHandler = null;
 	//private TileList<ImmanenceTileEntity> mActualTiles = new TileList<>();
@@ -95,6 +98,11 @@ public class ClientNetwork
 		NetworkHandler.CHANNEL.sendToServer(request);
 	}
 
+	public void synchroniseManifest (Consumer<ManifestItemHandler> callback) {
+		this.callback = callback;
+		synchroniseManifest();
+	}
+
 	public void deserializeManifest(NBTTagCompound tag)
 	{
 		manifestItems.clear();
@@ -131,6 +139,11 @@ public class ClientNetwork
 		});
 
 		manifestItemHandler.nullify();
+
+		if (callback != null) {
+			callback.accept(manifestItemHandler);
+			callback = null;
+		}
 	}
 
 	public void deserializeData(NBTTagCompound tag)

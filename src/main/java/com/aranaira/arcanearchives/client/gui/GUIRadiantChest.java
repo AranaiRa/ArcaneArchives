@@ -3,7 +3,9 @@ package com.aranaira.arcanearchives.client.gui;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerRadiantChest;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
+import com.aranaira.arcanearchives.util.ItemComparison;
 import com.aranaira.arcanearchives.util.ManifestTracking;
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -12,8 +14,10 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.Optional;
@@ -21,6 +25,7 @@ import vazkii.quark.api.IChestButtonCallback;
 import vazkii.quark.api.IItemSearchBar;
 
 import java.io.IOException;
+import java.util.List;
 
 @Optional.InterfaceList({@Optional.Interface(modid = "quark", iface = "vazkii.quark.api.IChestButtonCallback", striprefs = true), @Optional.Interface(modid = "quark", iface = "vazkii.quark.api.IItemSearchBar", striprefs = true)})
 public class GUIRadiantChest extends GuiContainer implements IChestButtonCallback, IItemSearchBar
@@ -36,6 +41,7 @@ public class GUIRadiantChest extends GuiContainer implements IChestButtonCallbac
 	private String mNameField;
 	private boolean mTextEnteringMode = false;
 	private IntArrayList tracked;
+	private Int2ObjectArrayMap<List<NBTTagCompound>> trackedTags;
 	private int dimension;
 	private BlockPos pos;
 
@@ -50,6 +56,7 @@ public class GUIRadiantChest extends GuiContainer implements IChestButtonCallbac
 		this.dimension = tile.dimension;
 		this.pos = tile.getPos();
 		tracked = ManifestTracking.get(dimension, pos);
+		trackedTags = ManifestTracking.getTags(dimension, pos);
 
 		this.xSize = ImageWidth;
 		this.ySize = ImageHeight;
@@ -90,8 +97,33 @@ public class GUIRadiantChest extends GuiContainer implements IChestButtonCallbac
 			int pack = RecipeItemHelper.pack(stack);
 			if(tracked != null && tracked.contains(pack))
 			{
-				GlStateManager.disableDepth();
-				drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, ConfigHandler.MANIFEST_HIGHLIGHT);
+				boolean highlight = true;
+
+				if (stack.hasTagCompound() && trackedTags != null && trackedTags.containsKey(pack)) {
+					List<NBTTagCompound> tags = trackedTags.get(pack);
+					NBTTagCompound stackTag = stack.getTagCompound();
+					assert stackTag != null;
+					boolean foundMatchingTag = false;
+
+					for (NBTTagCompound tag : tags) {
+						if (stackTag.equals(tag)) {
+							foundMatchingTag = true;
+							break;
+						}
+					}
+
+					if (!foundMatchingTag) {
+						highlight = false;
+					}
+				} else if (stack.hasTagCompound() && trackedTags == null) {
+					highlight = false;
+				}
+
+				if (highlight)
+				{
+					GlStateManager.disableDepth();
+					drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, ConfigHandler.MANIFEST_HIGHLIGHT);
+				}
 			}
 		}
 
