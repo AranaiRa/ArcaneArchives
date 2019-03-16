@@ -1,12 +1,12 @@
 package com.aranaira.arcanearchives.util.types;
 
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ManifestList extends ReferenceList<ManifestEntry>
@@ -42,9 +42,20 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 
 			ItemStack stack = entry.getStack();
 			String display = stack.getDisplayName().toLowerCase();
+			if (display.contains(filter)) return true;
 			String resource = stack.getItem().getRegistryName().toString().toLowerCase();
+			if (resource.contains(filter)) return true;
 
-			return display.contains(filter) || resource.contains(filter);
+			// Other hooks to be added at a later point
+			if (stack.getItem() == Items.ENCHANTED_BOOK) {
+				Map<Enchantment, Integer> map = EnchantmentHelper.getEnchantments(stack);
+				for (Map.Entry<Enchantment, Integer> ench : map.entrySet()) {
+					String enchName = ench.getKey().getTranslatedName(ench.getValue());
+					if (enchName.toLowerCase().contains(filter)) return true;
+				}
+			}
+
+			return false;
 		}).collect(Collectors.toCollection(ManifestList::new));
 
 	}
