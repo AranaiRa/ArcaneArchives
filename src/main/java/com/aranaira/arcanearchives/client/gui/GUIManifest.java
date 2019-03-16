@@ -136,6 +136,9 @@ public class GUIManifest extends GuiContainer
 			else if(keyCode == 1 || keyCode == 28)
 			{
 				isEnteringText = false;
+				if (searchText.isEmpty() && keyCode == 1) {
+					Minecraft.getMinecraft().player.closeScreen();
+				}
 			}
 			//Anything else.
 			else
