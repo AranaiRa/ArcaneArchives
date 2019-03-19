@@ -1,9 +1,12 @@
 package com.aranaira.arcanearchives.events;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
+import com.aranaira.arcanearchives.tileentities.MatrixCoreTileEntity;
+import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
@@ -53,6 +56,22 @@ public class ServerTickHandler
 
 				ServerNetwork network = NetworkHelper.getServerNetwork(networkId, ite.getWorld());
 				if(network == null) continue;
+
+				if (ite instanceof RadiantResonatorTileEntity) {
+					if (network.getTotalResonators() >= ConfigHandler.ResonatorLimit) {
+						outgoingITE(ite);
+						consumed.add(ite);
+						continue;
+					}
+				}
+
+				if (ite instanceof MatrixCoreTileEntity) {
+					if (network.getTotalCores() >= ConfigHandler.MatrixCoreLimit) {
+						outgoingITE(ite);
+						consumed.add(ite);
+						continue;
+					}
+				}
 
 				ite.generateTileId();
 

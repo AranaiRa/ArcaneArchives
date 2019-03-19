@@ -30,9 +30,13 @@ public class ConfigHandler
 		}
 	}
 
-	@Config.Comment("Limit of resonators per player")
+	@Config.Comment("Limit of resonators per player's network")
 	@Config.Name("Resonator Limit")
 	public static int ResonatorLimit = 3;
+
+	@Config.Comment("Limit of matrix cores per player's network")
+	@Config.Name("Matrix Core Limit")
+	public static int MatrixCoreLimit = 1;
 
 	@Config.Comment("Number of ticks it takes to create raw quartz")
 	@Config.Name("Resonator Time")
