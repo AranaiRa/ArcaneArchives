@@ -65,7 +65,7 @@ public class GUIRadiantChest extends GuiContainer implements IChestButtonCallbac
 	{
 		super.initGui();
 
-		nameBox = new GuiTextField(1, fontRenderer, guiLeft + mNameTextLeftOffset, guiTop + mNameTextTopOffset, mNameTextWidth, mNameTextHeight);
+		nameBox = new RightClickTextField(1, fontRenderer, guiLeft + mNameTextLeftOffset, guiTop + mNameTextTopOffset, mNameTextWidth, mNameTextHeight);
 		nameBox.setText(mContainer.getName());
 		nameBox.setGuiResponder(this);
 		nameBox.setEnableBackgroundDrawing(false);
