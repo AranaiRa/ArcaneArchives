@@ -3,24 +3,24 @@ package com.aranaira.arcanearchives.client.gui;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerRadiantChest;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
-import com.aranaira.arcanearchives.util.ItemComparison;
 import com.aranaira.arcanearchives.util.ManifestTracking;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiPageButtonList;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.Optional;
+import org.lwjgl.input.Keyboard;
 import vazkii.quark.api.IChestButtonCallback;
 import vazkii.quark.api.IItemSearchBar;
 
@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Optional.InterfaceList({@Optional.Interface(modid = "quark", iface = "vazkii.quark.api.IChestButtonCallback", striprefs = true), @Optional.Interface(modid = "quark", iface = "vazkii.quark.api.IItemSearchBar", striprefs = true)})
-public class GUIRadiantChest extends GuiContainer implements IChestButtonCallback, IItemSearchBar
+public class GUIRadiantChest extends GuiContainer implements IChestButtonCallback, IItemSearchBar, GuiPageButtonList.GuiResponder
 {
 	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/radiantchest.png");
 	private final int ImageHeight = 253, ImageWidth = 192, ImageScale = 256;
@@ -38,13 +38,11 @@ public class GUIRadiantChest extends GuiContainer implements IChestButtonCallbac
 	private int mNameTextTopOffset = 238;
 	private int mNameTextWidth = 88;
 	private int mNameTextHeight = 10;
-	private String mNameField;
-	private boolean mTextEnteringMode = false;
 	private IntArrayList tracked;
 	private Int2ObjectArrayMap<List<NBTTagCompound>> trackedTags;
 	private int dimension;
 	private BlockPos pos;
-
+	private GuiTextField nameBox;
 
 	public GUIRadiantChest(ContainerRadiantChest inventorySlotsIn, EntityPlayer player)
 	{
@@ -62,24 +60,17 @@ public class GUIRadiantChest extends GuiContainer implements IChestButtonCallbac
 		this.ySize = ImageHeight;
 	}
 
-	public String getName()
-	{
-		if(mTextEnteringMode)
-		{
-			return (mNameField == null || mNameField.isEmpty()) ? mContainer.getName() : mNameField;
-		}
-
-		return mContainer.getName();
-	}
-
 	@Override
 	public void initGui()
 	{
 		super.initGui();
 
+		nameBox = new GuiTextField(1, fontRenderer, guiLeft + mNameTextLeftOffset, guiTop + mNameTextTopOffset, mNameTextWidth, mNameTextHeight);
+		nameBox.setText(mContainer.getName());
+		nameBox.setGuiResponder(this);
+		nameBox.setEnableBackgroundDrawing(false);
+
 		buttonList.clear();
-		//int offLeft = (width - ImageWidth) / 2 - 3;
-		//int offTop = 108;
 	}
 
 	@Override
@@ -99,27 +90,32 @@ public class GUIRadiantChest extends GuiContainer implements IChestButtonCallbac
 			{
 				boolean highlight = true;
 
-				if (stack.hasTagCompound() && trackedTags != null && trackedTags.containsKey(pack)) {
+				if(stack.hasTagCompound() && trackedTags != null && trackedTags.containsKey(pack))
+				{
 					List<NBTTagCompound> tags = trackedTags.get(pack);
 					NBTTagCompound stackTag = stack.getTagCompound();
 					assert stackTag != null;
 					boolean foundMatchingTag = false;
 
-					for (NBTTagCompound tag : tags) {
-						if (stackTag.equals(tag)) {
+					for(NBTTagCompound tag : tags)
+					{
+						if(stackTag.equals(tag))
+						{
 							foundMatchingTag = true;
 							break;
 						}
 					}
 
-					if (!foundMatchingTag) {
+					if(!foundMatchingTag)
+					{
 						highlight = false;
 					}
-				} else if (stack.hasTagCompound() && trackedTags == null) {
+				} else if(stack.hasTagCompound() && trackedTags == null)
+				{
 					highlight = false;
 				}
 
-				if (highlight)
+				if(highlight)
 				{
 					GlStateManager.disableDepth();
 					float partialTicks = this.mc.getTickLength();
@@ -146,86 +142,30 @@ public class GUIRadiantChest extends GuiContainer implements IChestButtonCallbac
 	{
 		this.drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
-		this.renderHoveredToolTip(mouseX, mouseY);
 
-		fontRenderer.drawString(getName(), guiLeft + mNameTextLeftOffset, guiTop + mNameTextTopOffset, 0x000000);
+		nameBox.drawTextBox();
+
+		this.renderHoveredToolTip(mouseX, mouseY);
 	}
 
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
 	{
-		boolean exit = false;
-
-		if(mouseX > guiLeft + mNameTextLeftOffset && mouseX < guiLeft + mNameTextLeftOffset + mNameTextWidth && mouseY > guiTop + mNameTextTopOffset && mouseY < guiTop + mNameTextTopOffset + mNameTextHeight)
-		{
-			if(mouseButton == 1)
-			{
-				mNameField = "";
-				exit = true;
-			}
-			mTextEnteringMode = true;
-		} else
-		{
-			exit = true;
-		}
-
-		if(mTextEnteringMode && exit)
-		{
-			mTextEnteringMode = false;
-			if(!mContainer.getName().equals(mNameField))
-			{
-				mContainer.setName(mNameField);
-				mNameField = "";
-				return;
-			}
-
-			//BlockPos pos, String name, UUID uuid, int dimensionID
-		}
-
+		// TODO: Re-implement right click
 		super.mouseClicked(mouseX, mouseY, mouseButton);
+
+		nameBox.mouseClicked(mouseX, mouseY, mouseButton);
 	}
 
 
 	@Override
 	protected void keyTyped(char typedChar, int keyCode) throws IOException
 	{
-		//If the user is currently entering text into the search bar.
-		if(mTextEnteringMode)
-		{
-			//Backspace
-			if(keyCode == 14)
-			{
-				if(mNameField != null && mNameField.length() > 0)
-					mNameField = mNameField.substring(0, mNameField.length() - 1);
-			}
-			//Escape and Enter
-			else if(keyCode == 1)
-			{
-				mTextEnteringMode = false;
-				mNameField = mContainer.getName();
-			} else if(keyCode == 28)
-			{
-				mTextEnteringMode = false;
-				if(!mContainer.getName().equals(mNameField))
-				{
-					mContainer.setName(mNameField);
-					mNameField = "";
-				}
-			}
-			//Anything else.
-			else
-			{
-				if(mNameField == null) mNameField = "";
-				if(Character.isLetterOrDigit(typedChar)) mNameField += typedChar;
-				else if(typedChar == ' ') mNameField += typedChar;
-			}
-		} else if(keyCode == 1 || keyCode == this.mc.gameSettings.keyBindInventory.getKeyCode())
-		{
-			Minecraft.getMinecraft().player.closeScreen();
-		} else
-		{
-			super.keyTyped(typedChar, keyCode);
-		}
+		if(keyCode == Keyboard.KEY_ESCAPE) Minecraft.getMinecraft().displayGuiScreen(null);
+
+		if (nameBox.textboxKeyTyped(typedChar, keyCode)) return;
+
+		super.keyTyped(typedChar, keyCode);
 	}
 
 	@Override
@@ -252,5 +192,21 @@ public class GUIRadiantChest extends GuiContainer implements IChestButtonCallbac
 	{
 		bar.y = (height / 2) + 2;
 		bar.x = (width / 2) - bar.width / 2;
+	}
+
+	@Override
+	public void setEntryValue(int id, boolean value)
+	{
+	}
+
+	@Override
+	public void setEntryValue(int id, float value)
+	{
+	}
+
+	@Override
+	public void setEntryValue(int id, String value)
+	{
+		mContainer.setName(value);
 	}
 }
