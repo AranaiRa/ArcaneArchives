@@ -160,17 +160,16 @@ public class ContainerGemCuttersTable extends Container
 		ItemStack original = slot.getStack().copy();
 		ItemStack itemstack = slot.getStack().copy();
 
-		// Is it a slot in the main inventory? (aka not player inventory)
-		if(index < 36 || slot == slotOutput)
+		// Player inventory
+		if(index >= 1 && index <= 36)
 		{
-			// try to put it into the player inventory (if we have a player inventory)
-			if(!this.mergeItemStack(itemstack, 1, 36, true))
+			if(!this.mergeItemStack(itemstack, 37, 55, false))
 			{
 				return ItemStack.EMPTY;
 			}
 		}
-		// Slot is in the player inventory (if it exists), transfer to main inventory
-		else if(!this.mergeItemStack(itemstack, 36, 54, false))
+		// Output slot to player inventory/tile inventory to player inventory
+		else if(!this.mergeItemStack(itemstack, 1, 37, true))
 		{
 			return ItemStack.EMPTY;
 		}
