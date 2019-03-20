@@ -6,6 +6,10 @@ import com.aranaira.arcanearchives.network.PacketGemCutters;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
+import invtweaks.api.container.ChestContainer;
+import invtweaks.api.container.ContainerSection;
+import invtweaks.api.container.ContainerSectionCallback;
+import invtweaks.api.container.InventoryContainer;
 import it.unimi.dsi.fastutil.ints.Int2IntMap.Entry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -20,9 +24,9 @@ import net.minecraftforge.items.*;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
 import javax.annotation.Nonnull;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
+@InventoryContainer
 public class ContainerGemCuttersTable extends Container
 {
 	private static final int SLOT_OUTPUT = 0;
@@ -294,5 +298,28 @@ public class ContainerGemCuttersTable extends Container
 	public GemCuttersTableTileEntity getTile()
 	{
 		return tile;
+	}
+
+	// Slot range INCLUDES startSlot EXCLUDES stopSlot
+	public List<Slot> getSlotRange (int startSlot, int stopSlot) {
+		List<Slot> output = new ArrayList<>();
+		for (int i = startSlot; i < stopSlot; i++) {
+			output.add(getSlot(i));
+		}
+		return output;
+	}
+
+	public Map<ContainerSection, List<Slot>> map = null;
+
+	@ContainerSectionCallback
+	public Map<ContainerSection, List<Slot>> containerSectionListMap () {
+		if (map == null)
+		{
+			map = new HashMap<>();
+			map.put(ContainerSection.INVENTORY, getSlotRange(1, 37));
+			map.put(ContainerSection.CHEST, getSlotRange(37, 55));
+		}
+
+		return map;
 	}
 }
