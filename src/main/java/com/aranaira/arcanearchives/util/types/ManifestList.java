@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.util.types;
 
+import com.aranaira.arcanearchives.util.ItemComparison;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Items;
@@ -11,7 +12,8 @@ import java.util.stream.Collectors;
 
 public class ManifestList extends ReferenceList<ManifestEntry>
 {
-	private String mFilterText;
+	private String mFilterText = null;
+	private ItemStack searchItem = null;
 
 	public ManifestList()
 	{
@@ -32,26 +34,37 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 
 	public ManifestList filtered()
 	{
-		if(mFilterText == null) return this;
+		if(mFilterText == null && searchItem == null) return this;
 
-		String filter = mFilterText.toLowerCase();
+		String filter = "";
 
+		if (mFilterText != null)
+		{
+			filter = mFilterText.toLowerCase();
+		}
+
+		String finalFilter = filter;
 		return stream().filter((entry) ->
 		{
 			if(entry == null) return false;
 
 			ItemStack stack = entry.getStack();
+
+			if (searchItem != null) {
+				return ItemComparison.areStacksEqualIgnoreSize(searchItem, stack);
+			}
+
 			String display = stack.getDisplayName().toLowerCase();
-			if (display.contains(filter)) return true;
+			if (display.contains(finalFilter)) return true;
 			String resource = stack.getItem().getRegistryName().toString().toLowerCase();
-			if (resource.contains(filter)) return true;
+			if (resource.contains(finalFilter)) return true;
 
 			// Other hooks to be added at a later point
 			if (stack.getItem() == Items.ENCHANTED_BOOK) {
 				Map<Enchantment, Integer> map = EnchantmentHelper.getEnchantments(stack);
 				for (Map.Entry<Enchantment, Integer> ench : map.entrySet()) {
 					String enchName = ench.getKey().getTranslatedName(ench.getValue());
-					if (enchName.toLowerCase().contains(filter)) return true;
+					if (enchName.toLowerCase().contains(finalFilter)) return true;
 				}
 			}
 
@@ -78,9 +91,17 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 		return this.mFilterText;
 	}
 
+	public ItemStack getSearchItem () {
+		return this.searchItem;
+	}
+
 	public void setSearchText(String searchTerm)
 	{
 		this.mFilterText = searchTerm;
+	}
+
+	public void setSearchItem (ItemStack stack) {
+		this.searchItem = stack;
 	}
 
 	@Override

@@ -69,9 +69,18 @@ public class ManifestItemHandler implements IItemHandlerModifiable
 		return manifestBase.getSearchText();
 	}
 
+	public ItemStack getSearchItem () {
+		return manifestBase.getSearchItem();
+	}
+
 	public void setSearchText(String s)
 	{
 		manifestBase.setSearchText(s);
+		manifestActive = manifestBase.filtered();
+	}
+
+	public void setSearchItem (ItemStack s) {
+		manifestBase.setSearchItem(s);
 		manifestActive = manifestBase.filtered();
 	}
 

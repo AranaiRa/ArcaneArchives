@@ -103,10 +103,15 @@ public class ContainerManifest extends Container
 	public void SetSearchString(String SearchText)
 	{
 		handler.setSearchText(SearchText);
+		handler.setSearchItem(null);
 	}
 
 	public String getSearchString()
 	{
 		return handler.getSearchText();
+	}
+
+	public ItemStack getSearchItem () {
+		return handler.getSearchItem();
 	}
 }

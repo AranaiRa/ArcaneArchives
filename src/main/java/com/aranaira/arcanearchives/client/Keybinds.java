@@ -118,7 +118,7 @@ public class Keybinds
 					ClientNetwork network = NetworkHelper.getClientNetwork();
 					network.synchroniseManifest(handler ->
 					{
-						handler.setSearchText(stack.getDisplayName());
+						handler.setSearchItem(stack);
 						boolean addedValues = false;
 						for (int i = 0; i < handler.getSlots(); i++) {
 							ManifestEntry entry = handler.getManifestEntryInSlot(i);

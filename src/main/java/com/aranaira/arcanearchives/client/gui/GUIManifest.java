@@ -66,6 +66,12 @@ public class GUIManifest extends GuiContainer
 		if(text != null && !text.isEmpty())
 		{
 			searchText = text;
+		} else if (text == null) {
+			ItemStack stack = this.container.getSearchItem();
+			if (stack != null)
+			{
+				searchText = stack.getDisplayName();
+			}
 		}
 
 		if (ConfigHandler.ManifestSearch) {
@@ -73,10 +79,6 @@ public class GUIManifest extends GuiContainer
 			isEnteringText = true;
 			container.SetSearchString(searchText);
 		}
-	}
-
-	public void refreshSearch () {
-		searchText = container.getSearchString();
 	}
 
 	@Override
