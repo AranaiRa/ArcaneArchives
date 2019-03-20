@@ -122,6 +122,7 @@ public class GUIRadiantChest extends GuiContainer implements IChestButtonCallbac
 				if (highlight)
 				{
 					GlStateManager.disableDepth();
+					float partialTicks = this.mc.getTickLength();
 					drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, ConfigHandler.MANIFEST_HIGHLIGHT);
 				}
 			}
