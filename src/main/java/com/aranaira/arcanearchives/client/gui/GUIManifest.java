@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.client.gui;
 
-import com.aranaira.arcanearchives.client.Keybinds;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
@@ -10,6 +9,7 @@ import com.aranaira.arcanearchives.util.types.ManifestEntry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiPageButtonList;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -23,21 +23,21 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.DimensionType;
 import org.apache.commons.lang3.text.WordUtils;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
 import java.util.List;
 
-public class GUIManifest extends GuiContainer
+public class GUIManifest extends GuiContainer implements GuiPageButtonList.GuiResponder
 {
-
 	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/manifest.png");
 	private final EntityPlayer player;
-	private String searchText = "";
-	private boolean isEnteringText = false;
 	private ContainerManifest container;
-	private int mTextTopOffset = 14;
+	private int mTextTopOffset = 13;
 	private int mTextLeftOffset = 13;
+	private int mTextWidth = 89;
+	private int mTextHeight = 11;
 	private int mEndTrackingLeftOffset = 67;
 	private int mEndTrackingTopOffset = 202;
 	private int mEndTrackingButtonLeftOffset = 65;
@@ -51,6 +51,8 @@ public class GUIManifest extends GuiContainer
 	private int mRefreshButtonWidth = 17;
 	private int mRefreshButtonHeight = 14;
 
+	private RightClickTextField searchBox;
+
 	public GUIManifest(EntityPlayer player, ContainerManifest container)
 	{
 		super(container);
@@ -61,24 +63,22 @@ public class GUIManifest extends GuiContainer
 		this.ySize = 224;
 
 		this.player = player;
+	}
 
-		String text = this.container.getSearchString();
-		if(text != null && !text.isEmpty())
-		{
-			searchText = text;
-		} else if (text == null) {
-			ItemStack stack = this.container.getSearchItem();
-			if (stack != null)
-			{
-				searchText = stack.getDisplayName();
-			}
-		}
+	@Override
+	public void initGui()
+	{
+		super.initGui();
 
-		if (ConfigHandler.ManifestSearch) {
+		String searchText = this.container.getSearchString();
+		if (searchText == null) {
 			searchText = "";
-			isEnteringText = true;
-			container.SetSearchString(searchText);
 		}
+
+		searchBox = new RightClickTextField(1, fontRenderer, guiLeft + mTextLeftOffset, guiTop + mTextTopOffset, mTextWidth, mTextHeight);
+		searchBox.setText(searchText);
+		searchBox.setGuiResponder(this);
+		searchBox.setEnableBackgroundDrawing(false);
 	}
 
 	@Override
@@ -86,15 +86,10 @@ public class GUIManifest extends GuiContainer
 	{
 		this.drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
+
+		searchBox.drawTextBox();
+
 		this.renderHoveredToolTip(mouseX, mouseY);
-
-		String temp = fontRenderer.trimStringToWidth(searchText, 6 * 15, true);
-
-		if(searchText.equals("") && !isEnteringText)
-			fontRenderer.drawString("Search", guiLeft + mTextLeftOffset, mTextTopOffset + guiTop, 0x000000);
-		else if(isEnteringText)
-			fontRenderer.drawString(temp, guiLeft + mTextLeftOffset, mTextTopOffset + guiTop, 0x4363ff);
-		else fontRenderer.drawString(temp, guiLeft + mTextLeftOffset, mTextTopOffset + guiTop, 0x000000);
 
 		fontRenderer.drawString("End Track", guiLeft + mEndTrackingLeftOffset, mEndTrackingTopOffset + guiTop, 0x000000);
 	}
@@ -102,7 +97,7 @@ public class GUIManifest extends GuiContainer
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.enableColorMaterial();
 		this.mc.getTextureManager().bindTexture(GUITextures);
 
@@ -126,33 +121,11 @@ public class GUIManifest extends GuiContainer
 	@Override
 	protected void keyTyped(char typedChar, int keyCode) throws IOException
 	{
-		//If the user is currently entering text into the search bar.
-		if(isEnteringText)
-		{
-			//Backspace
-			if(keyCode == 14)
-			{
-				if(searchText.length() > 0) searchText = searchText.substring(0, searchText.length() - 1);
-			}
-			//Escape and Enter
-			else if(keyCode == 1 || keyCode == 28)
-			{
-				isEnteringText = false;
-				if (searchText.isEmpty() && keyCode == 1) {
-					Minecraft.getMinecraft().player.closeScreen();
-				}
-			}
-			//Anything else.
-			else
-			{
-				if(Character.isLetterOrDigit(typedChar)) searchText += typedChar;
-				else if(typedChar == ' ') searchText += typedChar;
-			}
-			container.SetSearchString(searchText);
-		} else if(keyCode == 1 || keyCode == this.mc.gameSettings.keyBindInventory.getKeyCode())
-		{
-			Minecraft.getMinecraft().player.closeScreen();
-		}
+		if(keyCode == Keyboard.KEY_ESCAPE) Minecraft.getMinecraft().displayGuiScreen(null);
+
+		if(searchBox.textboxKeyTyped(typedChar, keyCode)) return;
+
+		super.keyTyped(typedChar, keyCode);
 	}
 
 	@Override
@@ -164,14 +137,7 @@ public class GUIManifest extends GuiContainer
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
 	{
-		//Checks Text Box Bounds
-		isEnteringText = mouseX > guiLeft + mTextLeftOffset && mouseX < guiLeft + mTextLeftOffset + 88 && mouseY > guiTop + mTextTopOffset && mouseY < guiTop + mTextTopOffset + 10;
-
-		if (isEnteringText) {
-			// This is a right click!
-			searchText = "";
-			container.SetSearchString(searchText);
-		}
+		if(searchBox.mouseClicked(mouseX, mouseY, mouseButton)) return;
 
 		if(mouseX > guiLeft + mEndTrackingButtonLeftOffset && mouseX < guiLeft + mEndTrackingButtonLeftOffset + mEndTrackingButtonWidth && mouseY > guiTop + mEndTrackingButtonTopOffset && mouseY < guiTop + mEndTrackingButtonTopOffset + mEndTrackingButtonHeight)
 		{
@@ -183,9 +149,6 @@ public class GUIManifest extends GuiContainer
 			ClientNetwork network = NetworkHelper.getClientNetwork(player.getUniqueID());
 			network.synchroniseManifest();
 		}
-
-		// TODO: Refresh button
-
 
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 	}
@@ -260,5 +223,21 @@ public class GUIManifest extends GuiContainer
 		this.drawHoveringText(tooltip, x, y, (font == null ? fontRenderer : font));
 
 		net.minecraftforge.fml.client.config.GuiUtils.postItemToolTip();
+	}
+
+	@Override
+	public void setEntryValue(int id, boolean value)
+	{
+	}
+
+	@Override
+	public void setEntryValue(int id, float value)
+	{
+	}
+
+	@Override
+	public void setEntryValue(int id, String value)
+	{
+		container.SetSearchString(value);
 	}
 }

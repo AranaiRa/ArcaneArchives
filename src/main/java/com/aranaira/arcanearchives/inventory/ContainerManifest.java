@@ -108,10 +108,10 @@ public class ContainerManifest extends Container
 
 	public String getSearchString()
 	{
-		return handler.getSearchText();
-	}
+		if (handler.getSearchItem() != null) {
+			return handler.getSearchItem().getDisplayName();
+		}
 
-	public ItemStack getSearchItem () {
-		return handler.getSearchItem();
+		return handler.getSearchText();
 	}
 }

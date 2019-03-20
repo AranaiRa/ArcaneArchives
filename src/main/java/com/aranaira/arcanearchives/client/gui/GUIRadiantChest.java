@@ -42,7 +42,7 @@ public class GUIRadiantChest extends GuiContainer implements IChestButtonCallbac
 	private Int2ObjectArrayMap<List<NBTTagCompound>> trackedTags;
 	private int dimension;
 	private BlockPos pos;
-	private GuiTextField nameBox;
+	private RightClickTextField nameBox;
 
 	public GUIRadiantChest(ContainerRadiantChest inventorySlotsIn, EntityPlayer player)
 	{
@@ -151,7 +151,6 @@ public class GUIRadiantChest extends GuiContainer implements IChestButtonCallbac
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
 	{
-		// TODO: Re-implement right click
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 
 		nameBox.mouseClicked(mouseX, mouseY, mouseButton);
