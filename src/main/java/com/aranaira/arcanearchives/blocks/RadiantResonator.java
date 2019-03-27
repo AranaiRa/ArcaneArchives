@@ -103,6 +103,7 @@ public class RadiantResonator extends BlockTemplate
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
 	public int getComparatorInputOverride(IBlockState blockState, World worldIn, BlockPos pos)
 	{
 		RadiantResonatorTileEntity te = WorldUtil.getTileEntity(RadiantResonatorTileEntity.class, worldIn, pos);
@@ -113,11 +114,11 @@ public class RadiantResonator extends BlockTemplate
 			return 15;
 		}
 
-		int percentage = te.getPercentageComplete();
 		return Math.min((int) Math.floor(te.getPercentageComplete() / 6.6d), 14);
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
 	public boolean hasComparatorInputOverride(IBlockState state)
 	{
 		return true;
