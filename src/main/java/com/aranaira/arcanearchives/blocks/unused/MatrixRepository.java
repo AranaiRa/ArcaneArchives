@@ -1,9 +1,7 @@
-package com.aranaira.arcanearchives.blocks;
+package com.aranaira.arcanearchives.blocks.unused;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
-import com.aranaira.arcanearchives.AAGuiHandler;
-import com.aranaira.arcanearchives.tileentities.MatrixRepositoryTileEntity;
+import com.aranaira.arcanearchives.tileentities.unused.MatrixRepositoryTileEntity;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -19,7 +17,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 

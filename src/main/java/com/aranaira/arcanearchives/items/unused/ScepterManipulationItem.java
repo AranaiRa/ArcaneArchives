@@ -1,8 +1,6 @@
-package com.aranaira.arcanearchives.blocks;
+package com.aranaira.arcanearchives.items.unused;
 
-import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
@@ -13,15 +11,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class MatrixDistillate extends BlockDirectionalTemplate
+public class ScepterManipulationItem extends ItemTemplate
 {
-	public static final String name = "matrix_distillate";
+	public static final String NAME = "item_sceptermanipulation";
 
-	public MatrixDistillate()
+	public ScepterManipulationItem()
 	{
-		super(name, Material.GLASS);
-		setLightLevel(16 / 16f);
-		setSize(3, 3, 1);
+		super(NAME);
 	}
 
 	@Override
@@ -30,18 +26,5 @@ public class MatrixDistillate extends BlockDirectionalTemplate
 	{
 		tooltip.add(TextFormatting.RED + "" + TextFormatting.BOLD + I18n.format("arcanearchives.tooltip.notimplemented1"));
 		tooltip.add(TextFormatting.RED + "" + TextFormatting.ITALIC + I18n.format("arcanearchives.tooltip.notimplemented2"));
-	}
-
-	@Override
-	public boolean hasOBJModel()
-	{
-		return true;
-	}
-
-	@Override
-	@SuppressWarnings("deprecation")
-	public boolean isOpaqueCube(IBlockState state)
-	{
-		return false;
 	}
 }

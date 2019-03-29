@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items;
+package com.aranaira.arcanearchives.items.unused;
 
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import net.minecraft.client.resources.I18n;
@@ -11,11 +11,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class GeomancyPendulumItem extends ItemTemplate
+public class ScepterAbductionItem extends ItemTemplate
 {
-	public static final String NAME = "item_geomancypendulum";
+	public static final String NAME = "item_scepterabduction";
 
-	public GeomancyPendulumItem()
+	public ScepterAbductionItem()
 	{
 		super(NAME);
 	}

@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.inventory;
+package com.aranaira.arcanearchives.inventory.unused;
 
 import com.aranaira.arcanearchives.inventory.handlers.NetworkItemHandler;
 import mcp.MethodsReturnNonnullByDefault;

@@ -1,6 +1,7 @@
-package com.aranaira.arcanearchives.tileentities;
+package com.aranaira.arcanearchives.tileentities.unused;
 
 import com.aranaira.arcanearchives.config.ConfigHandler;
+import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;

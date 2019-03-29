@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.client.gui;
 
-import com.aranaira.arcanearchives.inventory.NetworkContainer;
+import com.aranaira.arcanearchives.inventory.unused.NetworkContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;

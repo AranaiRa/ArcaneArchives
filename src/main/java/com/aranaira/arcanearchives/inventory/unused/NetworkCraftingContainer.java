@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.inventory;
+package com.aranaira.arcanearchives.inventory.unused;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ContainerWorkbench;

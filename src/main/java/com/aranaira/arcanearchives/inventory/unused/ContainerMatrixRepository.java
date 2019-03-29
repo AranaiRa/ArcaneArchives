@@ -1,6 +1,6 @@
-package com.aranaira.arcanearchives.inventory;
+package com.aranaira.arcanearchives.inventory.unused;
 
-import com.aranaira.arcanearchives.tileentities.MatrixRepositoryTileEntity;
+import com.aranaira.arcanearchives.tileentities.unused.MatrixRepositoryTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
