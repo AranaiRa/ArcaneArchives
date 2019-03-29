@@ -8,6 +8,7 @@ import com.aranaira.arcanearchives.events.LineHandler;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -51,5 +52,11 @@ public class ManifestItem extends ItemTemplate
 		openManifest(worldIn, playerIn);
 
 		return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
+	}
+
+	@Override
+	public EnumRarity getRarity(ItemStack stack)
+	{
+		return EnumRarity.RARE;
 	}
 }
