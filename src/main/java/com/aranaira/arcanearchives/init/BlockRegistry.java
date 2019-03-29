@@ -43,6 +43,7 @@ public class BlockRegistry
 	public static final RawQuartz RAW_QUARTZ = new RawQuartz();
 	public static final DominionCrystal DOMINION_CRYSTAL = new DominionCrystal();
 	public static final GemCuttersTable GEMCUTTERS_TABLE = new GemCuttersTable();
+	public static final MonitoringCrystal MONITORING_CRYSTAL = new MonitoringCrystal();
 	public static final AccessorBlock ACCESSOR = new AccessorBlock();
 
 	// Tiles
@@ -55,6 +56,7 @@ public class BlockRegistry
 	public static final GemCuttersTableTileEntity GEMCUTTERS_TABLE_TILE_ENTITY = new GemCuttersTableTileEntity();
 	public static final RadiantCraftingTableTileEntity RADIANT_CRAFTING_TABLE_TILE_ENTITY = new RadiantCraftingTableTileEntity();
 	public static final MatrixStorageTileEntity MATRIX_STORAGE_TILE_ENTITY = new MatrixStorageTileEntity();
+	public static final MonitoringCrystalTileEntity MONITORING_CRYSTAL_TILE_ENTITY = new MonitoringCrystalTileEntity();
 
 	@SubscribeEvent
 	public static void onBlockRegister(RegistryEvent.Register<Block> event)
@@ -76,8 +78,9 @@ public class BlockRegistry
 		//DOMINION_CRYSTAL.setItemBlock(new ItemBlockTemplate(DOMINION_CRYSTAL));
 		GEMCUTTERS_TABLE.setItemBlock(new ItemBlockTemplate(GEMCUTTERS_TABLE));
 		RADIANT_TROVE.setItemBlock(new ItemBlockTemplate(RADIANT_TROVE));
+		MONITORING_CRYSTAL.setItemBlock(new ItemBlockTemplate(MONITORING_CRYSTAL));
 
-		registry.registerAll(/*MATRIX_CRYSTAL_CORE, MATRIX_REPOSITORY, MATRIX_RESERVOIR, MATRIX_STORAGE, MATRIX_DISTILLATE*/STORAGE_RAW_QUARTZ, STORAGE_CUT_QUARTZ, RADIANT_CHEST, RADIANT_CRAFTING_TABLE, RADIANT_LANTERN, RADIANT_RESONATOR, RAW_QUARTZ/*DOMINION_CRYSTAL*/, GEMCUTTERS_TABLE, ACCESSOR, RADIANT_TROVE);
+		registry.registerAll(/*MATRIX_CRYSTAL_CORE, MATRIX_REPOSITORY, MATRIX_RESERVOIR, MATRIX_STORAGE, MATRIX_DISTILLATE*/STORAGE_RAW_QUARTZ, STORAGE_CUT_QUARTZ, RADIANT_CHEST, RADIANT_CRAFTING_TABLE, RADIANT_LANTERN, RADIANT_RESONATOR, RAW_QUARTZ/*DOMINION_CRYSTAL*/, GEMCUTTERS_TABLE, ACCESSOR, RADIANT_TROVE, MONITORING_CRYSTAL);
 
 	}
 
@@ -88,7 +91,7 @@ public class BlockRegistry
 
 		// ACCESSOR doesn't get registered.
 
-		Arrays.asList(/*MATRIX_CRYSTAL_CORE, MATRIX_REPOSITORY, MATRIX_RESERVOIR, MATRIX_STORAGE, MATRIX_DISTILLATE*/STORAGE_RAW_QUARTZ, STORAGE_CUT_QUARTZ, RADIANT_CHEST, RADIANT_CRAFTING_TABLE, RADIANT_LANTERN, RADIANT_RESONATOR, RAW_QUARTZ/*DOMINION_CRYSTAL*/, GEMCUTTERS_TABLE, ACCESSOR, RADIANT_TROVE).forEach(BlockTemplate::registerModels);
+		Arrays.asList(/*MATRIX_CRYSTAL_CORE, MATRIX_REPOSITORY, MATRIX_RESERVOIR, MATRIX_STORAGE, MATRIX_DISTILLATE*/STORAGE_RAW_QUARTZ, STORAGE_CUT_QUARTZ, RADIANT_CHEST, RADIANT_CRAFTING_TABLE, RADIANT_LANTERN, RADIANT_RESONATOR, RAW_QUARTZ/*DOMINION_CRYSTAL*/, GEMCUTTERS_TABLE, ACCESSOR, RADIANT_TROVE, MONITORING_CRYSTAL).forEach(BlockTemplate::registerModels);
 
 		Arrays.asList(STORAGE_RAW_QUARTZ, STORAGE_CUT_QUARTZ).forEach((block) ->
 		{
@@ -102,7 +105,7 @@ public class BlockRegistry
 
 	public static void registerTileEntities()
 	{
-		Arrays.asList(RADIANT_RESONATOR_TILE_ENTITY, /*MATRIX_CORE_TILE_ENTITY, MATRIX_REPOSITORY_TILE_ENTITY, */ ACCESSOR_TILE_ENTITY, RADIANT_CHEST_TILE_ENTITY, GEMCUTTERS_TABLE_TILE_ENTITY, RADIANT_CRAFTING_TABLE_TILE_ENTITY/*, MATRIX_STORAGE_TILE_ENTITY*/, RADIANT_TROVE_TILE_ENTITY).forEach((tile) ->
+		Arrays.asList(RADIANT_RESONATOR_TILE_ENTITY, /*MATRIX_CORE_TILE_ENTITY, MATRIX_REPOSITORY_TILE_ENTITY, */ ACCESSOR_TILE_ENTITY, RADIANT_CHEST_TILE_ENTITY, GEMCUTTERS_TABLE_TILE_ENTITY, RADIANT_CRAFTING_TABLE_TILE_ENTITY/*, MATRIX_STORAGE_TILE_ENTITY*/, RADIANT_TROVE_TILE_ENTITY, MONITORING_CRYSTAL_TILE_ENTITY).forEach((tile) ->
 		{
 			GameRegistry.registerTileEntity(tile.getClass(), new ResourceLocation(ArcaneArchives.MODID, tile.getName()));
 			ArcaneArchives.logger.info(String.format("Registered tile entity: %s", tile.getName()));

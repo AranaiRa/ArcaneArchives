@@ -44,6 +44,9 @@ tile.radiant_crafting_table.name=Radiant Crafting Table
 tile.radiant_chest.name=Radiant Chest
 tile.radiant_lantern.name=Radiant Lantern
 tile.radiant_resonator.name=Radiant Resonator
+tile.radiant_trove.name=Radiant Trove
+
+tile.monitoring_crystal.name=Monitoring Crystal
 
 tile.matrix_crystal_core.name=Crystal Matrix Core
 tile.matrix_repository.name=Repository Matrix
