@@ -137,7 +137,6 @@ public class RawQuartzItem extends ItemTemplate
 			if(te2 instanceof RadiantChestTileEntity)
 			{
 				((RadiantChestTileEntity) te2).setContents(chestContents, secondaryChestContents, secondaryChest);
-				((RadiantChestTileEntity) te2).setFacing(chestFacing);
 				((RadiantChestTileEntity) te2).networkID = player.getUniqueID();
 			}
 

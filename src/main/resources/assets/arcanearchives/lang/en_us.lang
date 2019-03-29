@@ -114,6 +114,28 @@ arcanearchives.data.tooltip.resonator_status.offline=Offline
 arcanearchives.data.tooltip.resonator_status.obstruction=Obstructed
 arcanearchives.data.tooltip.resonator_status.harvestable=Harvestable
 
+arcanearchives.data.scepter.missing_te=Error: missing tile entity.
+
+arcanearchives.data.scepter.radiant_chest.unnamed=Unnamed Radiant Chest.
+arcanearchives.data.scepter.radiant_chest.name=Radiant Chest named: %s.
+arcanearchives.data.scepter.radiant_chest.slots=Has %d slots free.
+
+arcanearchives.data.scepter.radiant_crafting.contains=Radiant Crafting table contains: %s.
+arcanearchives.data.scepter.radiant_crafting.empty=Radiant Crafting table is empty.
+
+arcanearchives.data.scepter.radiant_trove.empty=Radiant Trove has no associated item.
+arcanearchives.data.scepter.radiant_trove.item=Radiant Trove is set to store %s.
+arcanearchives.data.scepter.radiant_trove.count=Contains %d/%d items.
+arcanearchives.data.scepter.radiant_trove.upgrades=Has been upgraded %d time(s).
+
+arcanearchives.data.scepter.radiant_resonator.progress=Radiant Resonator current progress: %d%%
+arcanearchives.data.scepter.radiant_resonator.status=Current status: %s.
+
+arcanearchives.data.scepter.monitoring_crystal.facing=Monitoring Crystal is facing %s.
+
+arcanearchives.data.scepter.accessor.accessor_to=Accessor to %s at %d/%d/%d.
+arcanearchives.data.scepter.accessor.invalid=Invalid accessor block with no parent.
+
 arcanearchives.gui.keygroup=Arcane Archives
 arcanearchives.gui.keybinds.manifest=Activate Manifest
 arcanearchives.gui.missing_manifest=You have no Manifest on you to peruse!

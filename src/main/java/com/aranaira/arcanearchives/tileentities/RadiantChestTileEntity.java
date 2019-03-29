@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
 
 public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITickable
 {
-	private final ItemStackHandler mInventory = new ItemStackHandler(54);
+	private final ItemStackHandler inventory = new ItemStackHandler(54);
 	public String chestName = "";
 
 	public RadiantChestTileEntity()
@@ -29,7 +29,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 	public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing facing)
 	{
 		if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(mInventory);
+			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(inventory);
 		return super.getCapability(capability, facing);
 	}
 
@@ -48,7 +48,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 		{
 			ArcaneArchives.logger.info(String.format("Radiant Chest tile entity at %d/%d/%d is missing its inventory.", pos.getX(), pos.getY(), pos.getZ()));
 		}
-		mInventory.deserializeNBT(compound.getCompoundTag(AATileEntity.Tags.INVENTORY));
+		inventory.deserializeNBT(compound.getCompoundTag(AATileEntity.Tags.INVENTORY));
 		chestName = compound.getString(Tags.CHEST_NAME);
 	}
 
@@ -57,7 +57,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 	public NBTTagCompound writeToNBT(NBTTagCompound compound)
 	{
 		super.writeToNBT(compound);
-		compound.setTag(AATileEntity.Tags.INVENTORY, mInventory.serializeNBT());
+		compound.setTag(AATileEntity.Tags.INVENTORY, inventory.serializeNBT());
 		compound.setString(Tags.CHEST_NAME, chestName);
 
 		return compound;
@@ -84,35 +84,17 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 	{
 		for(int i = 0; i < chestContents.length; i++)
 		{
-			mInventory.insertItem(i, chestContents[i], false);
+			inventory.insertItem(i, chestContents[i], false);
 		}
 		if(secondaryChest) for(int i = 0; i < secondaryChestContents.length; i++)
 		{
-			mInventory.insertItem(i + 27, secondaryChestContents[i], false);
+			inventory.insertItem(i + 27, secondaryChestContents[i], false);
 		}
-	}
-
-	public void setFacing(EnumFacing chestFacing)
-	{
-
-
-	}
-
-	public boolean Contains(ItemStack item)
-	{
-		for(int i = 0; i < 54; i++)
-		{
-			if(ItemStack.areItemsEqual(item, mInventory.getStackInSlot(i)))
-			{
-				return true;
-			}
-		}
-		return false;
 	}
 
 	public ItemStackHandler getInventory()
 	{
-		return mInventory;
+		return inventory;
 	}
 
 	@Override
@@ -146,6 +128,14 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 			PacketRadiantChest.SetName packet = new PacketRadiantChest.SetName(getPos(), getChestName(), world.provider.getDimension());
 			NetworkHandler.CHANNEL.sendToServer(packet);
 		}
+	}
+
+	public int countEmptySlots () {
+		int empty = 0;
+		for (int i = 0; i < inventory.getSlots(); i++) {
+			if (inventory.getStackInSlot(i).isEmpty()) empty++;
+		}
+		return empty;
 	}
 
 	public static class Tags
