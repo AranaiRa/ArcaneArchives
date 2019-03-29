@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.blocks;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
@@ -14,10 +13,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -33,7 +28,6 @@ public class RadiantTrove extends BlockDirectionalTemplate
 		setHardness(1.7f);
 		setResistance(6000F);
 		setHarvestLevel("axe", 0);
-		MinecraftForge.EVENT_BUS.register(this);
 	}
 
 	@Override

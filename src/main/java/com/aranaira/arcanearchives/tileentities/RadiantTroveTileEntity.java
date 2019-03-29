@@ -4,19 +4,15 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.inventory.handlers.TroveItemHandler;
 import com.aranaira.arcanearchives.util.ItemComparison;
-import com.aranaira.arcanearchives.util.types.IteRef;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -27,6 +23,7 @@ import java.util.UUID;
 public class RadiantTroveTileEntity extends ImmanenceTileEntity
 {
 	private final TroveItemHandler inventory = new TroveItemHandler();
+	private int lastTick = 0;
 
 	public Object2IntOpenHashMap<UUID> rightClickCache = new Object2IntOpenHashMap<>();
 
@@ -53,7 +50,20 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity
 	}
 
 	public void onLeftClickTrove (EntityPlayer player) {
-		if (player.world.isRemote) return;
+		if(world.isRemote) return;
+
+		int curTick = world.getMinecraftServer().getTickCounter();
+		if (lastTick == curTick) return;
+		lastTick = curTick;
+
+		ArcaneArchives.logger.info("left clicked trove");
+
+		try {
+			Exception e = new Exception();
+			throw e;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		ItemStack stack = inventory.extractItem(0, 64, false);
 		if (stack.isEmpty()) return;
@@ -91,6 +101,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity
 				player.sendStatusMessage(new TextComponentTranslation("arcanearchives.warning.sneak_to_upgrade"), true);
 				return;
 			}
+			player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.trove_insertion_failed.wrong"), true);
 			return;
 		}
 
@@ -111,6 +122,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity
 		ItemStack result = inventory.insertItem(0, mainhand, false);
 
 		if (!result.isEmpty()) {
+			player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.trove_insertion_failed.full"), true);
 			mainhand.setCount(result.getCount());
 			return;
 		}
@@ -129,6 +141,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity
 						if (!result.isEmpty()) {
 							int diff = inSlot.getCount() - result.getCount();
 							inventory.insertItem(0, playerMain.extractItem(i, diff, false), false);
+							player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.trove_insertion_failed.full"), true);
 							return;
 						} else {
 							int thisCount = inSlot.getCount();
