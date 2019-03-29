@@ -1,0 +1,28 @@
+{
+    "_comment": [
+        "Craft a Scepter of Reveleation"
+    ],
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "R",
+        "S",
+        "G"
+    ],
+    "key": {
+        "R": {
+            "item": "arcanearchives:item_rawquartz",
+            "data": 0
+        },
+        "G": {
+            "type": "forge:ore_dict",
+            "ore": "nuggetGold"
+        },
+        "S": {
+            "type": "forge:ore_dict",
+            "ore": "stickWood"
+        }
+    },
+    "result": {
+        "item": "arcanearchives:item_scepterrevelation"
+    }
+}
