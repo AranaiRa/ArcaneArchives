@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.inventory.handlers;
 
-import net.minecraft.init.Items;
+import com.aranaira.arcanearchives.util.ItemComparison;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -20,7 +20,7 @@ public class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCo
 	@Override
 	public int getSlots()
 	{
-		return 1;
+		return 2;
 	}
 
 	public int getCount()
@@ -54,17 +54,30 @@ public class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCo
 	@Override
 	public ItemStack getStackInSlot(int slot)
 	{
-		ItemStack result = reference.copy();
-		result.setCount(Math.min(this.count, result.getMaxStackSize()));
+		if (slot == 0)
+		{
+			ItemStack result = reference.copy();
+			result.setCount(Math.min(this.count, result.getMaxStackSize()));
 
-		return result;
+			return result;
+		} else {
+			return ItemStack.EMPTY;
+		}
 	}
 
 	@Nonnull
 	@Override
 	public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate)
 	{
-		return stack;
+		if (ItemComparison.areStacksEqualIgnoreSize(reference, stack)) {
+			if (simulate) return ItemStack.EMPTY;
+
+			count += stack.getCount();
+			return ItemStack.EMPTY;
+		} else
+		{
+			return stack;
+		}
 	}
 
 	@Nonnull
@@ -94,7 +107,7 @@ public class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCo
 	@Override
 	public boolean isItemValid(int slot, @Nonnull ItemStack stack)
 	{
-		return false;
+		return ItemComparison.areStacksEqualIgnoreSize(reference, stack);
 	}
 
 	@Override
