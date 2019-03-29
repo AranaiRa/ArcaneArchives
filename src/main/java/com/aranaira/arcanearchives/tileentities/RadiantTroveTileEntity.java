@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.inventory.handlers.TroveItemHandler;
 import com.aranaira.arcanearchives.util.ItemComparison;
 import com.aranaira.arcanearchives.util.types.IteRef;
@@ -14,6 +15,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -51,12 +53,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity
 	}
 
 	public void onLeftClickTrove (EntityPlayer player) {
-		ItemStack reference = inventory.getItem();
-		if (inventory.isEmpty()) {
-			ArcaneArchives.logger.info("Trove contains no item");
-		} else {
-			ArcaneArchives.logger.info(String.format("Trove contains %d of %s, %s", inventory.getCount(), reference.getDisplayName(), inventory.getStackInSlot(0)));
-		}
+		if (player.world.isRemote) return;
 
 		ItemStack stack = inventory.extractItem(0, 64, false);
 		if (stack.isEmpty()) return;
@@ -69,12 +66,33 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity
 		ItemStack mainhand = player.getHeldItemMainhand();
 		if (mainhand.isEmpty()) return;
 
+		if (mainhand.getItem() == ItemRegistry.COMPONENT_MATERIALINTERFACE && player.isSneaking()) {
+			if (inventory.upgrade())
+			{
+				mainhand.shrink(1);
+				if (!player.world.isRemote) {
+					player.sendStatusMessage(new TextComponentTranslation("arcanearchives.success.upgraded_trove", inventory.getUpgrades(), TroveItemHandler.MAX_UPGRADES), true);
+				}
+				return;
+			} else {
+				player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.upgrade_trove_failed", inventory.getUpgrades(), TroveItemHandler.MAX_UPGRADES), true);
+				return;
+			}
+		}
+
 		if (inventory.isEmpty()) {
 			inventory.setItem(mainhand);
-			ArcaneArchives.logger.info("Trove is currently empty, setting item to: " + mainhand.getDisplayName());
 		}
 
 		ItemStack reference = inventory.getItem();
+
+		if (!ItemComparison.areStacksEqualIgnoreSize(reference, mainhand)) {
+			if (mainhand.getItem() == ItemRegistry.COMPONENT_MATERIALINTERFACE) {
+				player.sendStatusMessage(new TextComponentTranslation("arcanearchives.warning.sneak_to_upgrade"), true);
+				return;
+			}
+			return;
+		}
 
 		UUID playerId = player.getUniqueID();
 		boolean doubleClick = false;
@@ -90,10 +108,12 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity
 			rightClickCache.put(playerId, player.ticksExisted);
 		}
 
-		int count = 0;
+		ItemStack result = inventory.insertItem(0, mainhand, false);
 
-		count += mainhand.getCount();
-		mainhand.shrink(mainhand.getCount());
+		if (!result.isEmpty()) {
+			mainhand.setCount(result.getCount());
+			return;
+		}
 
 		if (doubleClick)
 		{
@@ -105,16 +125,19 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity
 					ItemStack inSlot = playerMain.getStackInSlot(i);
 					if(ItemComparison.areStacksEqualIgnoreSize(reference, inSlot))
 					{
-						int thisCount = inSlot.getCount();
-						playerMain.extractItem(i, thisCount, false);
-						count += thisCount;
+						result = inventory.insertItem(0, inSlot, true);
+						if (!result.isEmpty()) {
+							int diff = inSlot.getCount() - result.getCount();
+							inventory.insertItem(0, playerMain.extractItem(i, diff, false), false);
+							return;
+						} else {
+							int thisCount = inSlot.getCount();
+							inventory.insertItem(0, playerMain.extractItem(i, thisCount, false), false);
+						}
 					}
 				}
 			}
 		}
-
-		inventory.insert(count);
-		ArcaneArchives.logger.info(String.format("Inserted %dx%s into trove", count, reference.getDisplayName()));
 	}
 
 	@Override

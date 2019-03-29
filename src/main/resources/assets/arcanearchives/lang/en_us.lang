@@ -87,6 +87,11 @@ arcanearchives.error.notenoughspace=Not enough space to place the %s!
 arcanearchives.error.aboveworld=Placing the %s would exceed the build height limit!
 arcanearchives.error.invaliditemblock=Tried to place an invalid item with a place limit but no entity class.
 arcanearchives.error.invalidnetwork=Invalid network. Whoops!
+arcanearchives.error.upgrade_trove_failed=Failed to upgrade trove. Current upgrade level is: %d/%d.
+
+arcanearchives.warning.sneak_to_upgrade=Sneak to apply a material interface to a trove to upgrade it.
+
+arcanearchives.success.upgraded_trove=Upgraded drove to level %d/%d.
 
 arcanearchives.tooltip.notimplemented1=UNIMPLEMENTED
 arcanearchives.tooltip.notimplemented2=Using this item may crash your game!
