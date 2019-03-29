@@ -4,9 +4,9 @@
     ],
     "type": "minecraft:crafting_shaped",
     "pattern": [
-        "R",
-        "S",
-        "G"
+        "  R",
+        " G ",
+        "S  "
     ],
     "key": {
         "R": {

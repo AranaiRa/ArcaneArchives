@@ -4,11 +4,13 @@ import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import com.aranaira.arcanearchives.util.types.IngredientStack;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreIngredient;
 
 @SuppressWarnings("unused")
 public class RecipeLibrary
 {
 	public static GCTRecipe CUT_RADIANT_QUARTZ_RECIPE;
+	public static GCTRecipe MANIFEST_RECIPE;
 	public static GCTRecipe COMPONENT_CONTAINMENTFIELD_RECIPE;
 	public static GCTRecipe COMPONENT_MATERIALINTERFACE_RECIPE;
 	public static GCTRecipe COMPONENT_MATRIXBRACE_RECIPE;
@@ -25,6 +27,8 @@ public class RecipeLibrary
 		COMPONENT_RADIANTDUST_RECIPE = GCTRecipeList.makeAndAddRecipe("radiantdust", new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 2), ItemRegistry.RAW_RADIANT_QUARTZ);
 
 		CUT_RADIANT_QUARTZ_RECIPE = GCTRecipeList.makeAndAddRecipe("cut_radiant_quartz", new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 1), new ItemStack(ItemRegistry.RAW_RADIANT_QUARTZ, 2));
+
+		MANIFEST_RECIPE = GCTRecipeList.makeAndAddRecipe("manifest", new ItemStack(ItemRegistry.MANIFEST, 1), new IngredientStack("paper", 1), new IngredientStack("dyeBlack", 1), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 2));
 
 		RADIANT_LANTERN_RECIPE = GCTRecipeList.makeAndAddRecipe("radiant_lantern", new ItemStack(BlockRegistry.RADIANT_LANTERN, 4), new ItemStack(ItemRegistry.RAW_RADIANT_QUARTZ, 2), new IngredientStack("nuggetGold", 1));
 
