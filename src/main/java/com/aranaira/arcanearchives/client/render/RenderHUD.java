@@ -48,8 +48,13 @@ public class RenderHUD
 
 						ItemStack item = handler.getItemCurrent();
 						if (!item.isEmpty()) {
+							GlStateManager.pushMatrix();
 							RenderHelper.enableStandardItemLighting();
-							mc.getRenderItem().renderItemAndEffectIntoGUI(item, x - 40, y);
+							GlStateManager.disableLighting();
+							GlStateManager.enableRescaleNormal();
+							GlStateManager.enableColorMaterial();
+							GlStateManager.enableLighting();
+							mc.getRenderItem().renderItemIntoGUI(item, x - 40, y);
 							GlStateManager.disableLighting();
 							GlStateManager.disableDepth();
 							GlStateManager.disableBlend();
@@ -59,6 +64,7 @@ public class RenderHUD
 							GlStateManager.enableLighting();
 							GlStateManager.enableDepth();
 							GlStateManager.enableBlend();
+							GlStateManager.popMatrix();
 						}
 					}
 				}
