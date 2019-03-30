@@ -12,8 +12,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -52,6 +54,29 @@ public class RenderHUD
 							String s = "x " + NumberUtil.format(handler.getCount());
 							mc.fontRenderer.drawStringWithShadow(item.getDisplayName(), (float)(x - 19 -  mc.fontRenderer.getStringWidth(item.getDisplayName()) / 2), (float)(y - 11), 16777215);
 							mc.fontRenderer.drawStringWithShadow(s, (float)(x - 20), (float)(y + 3), 16777215);
+							if (handler.getUpgrades() != 0) {
+								if (handler.getUpgrades() == 1)
+								{
+									s = I18n.format("arcanearchives.data.gui.radiant_trove.upgrade", handler.getUpgrades());
+								}
+								else {
+									s = I18n.format("arcanearchives.data.gui.radiant_trove.upgrades", handler.getUpgrades());
+								}
+								mc.fontRenderer.drawStringWithShadow(TextFormatting.GOLD + s, (float)(x - 19 - mc.fontRenderer.getStringWidth(s) / 2), (float) (y + 20), 16777215);
+							}
+						} else if (handler.getUpgrades() != 0) {
+							if (handler.getUpgrades() != 0)
+							{
+								String s;
+								if(handler.getUpgrades() == 1)
+								{
+									s = I18n.format("arcanearchives.data.gui.radiant_trove.upgrade", handler.getUpgrades());
+								} else
+								{
+									s = I18n.format("arcanearchives.data.gui.radiant_trove.upgrades", handler.getUpgrades());
+								}
+								mc.fontRenderer.drawStringWithShadow(TextFormatting.GOLD + s, (float) (x - 19 - mc.fontRenderer.getStringWidth(s) / 2), (float) (y), 16777215);
+							}
 						}
 					}
 				}

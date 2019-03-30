@@ -108,4 +108,6 @@ public class RadiantTrove extends BlockDirectionalTemplate
 	{
 		return new RadiantTroveTileEntity();
 	}
+
+	
 }

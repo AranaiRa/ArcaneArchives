@@ -107,6 +107,9 @@ arcanearchives.tooltip.manifest.item_entry=%s at (%d,%d,%d) contains %d.
 arcanearchives.tooltip.manifest.andmore=%d radiant chests weren't listed.
 arcanearchives.tooltip.manifest.clicktoshow=Click to draw a line to chests containing this item. Open chest to remove, or click "%s".
 
+arcanearchives.data.gui.radiant_trove.upgrade=%d upgrade
+arcanearchives.data.gui.radiant_trove.upgrades=%d upgrades
+
 arcanearchives.data.tooltip.chest_name=Name:
 arcanearchives.data.tooltip.resonator_progress=Progress:
 arcanearchives.data.tooltip.resonator_status.resonating=Resonating
