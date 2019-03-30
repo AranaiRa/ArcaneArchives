@@ -48,23 +48,10 @@ public class RenderHUD
 
 						ItemStack item = handler.getItemCurrent();
 						if (!item.isEmpty()) {
-							GlStateManager.pushMatrix();
-							RenderHelper.enableStandardItemLighting();
-							GlStateManager.disableLighting();
-							GlStateManager.enableRescaleNormal();
-							GlStateManager.enableColorMaterial();
-							GlStateManager.enableLighting();
 							mc.getRenderItem().renderItemIntoGUI(item, x - 40, y);
-							GlStateManager.disableLighting();
-							GlStateManager.disableDepth();
-							GlStateManager.disableBlend();
 							String s = "x " + NumberUtil.format(handler.getCount());
 							mc.fontRenderer.drawStringWithShadow(item.getDisplayName(), (float)(x - 19 -  mc.fontRenderer.getStringWidth(item.getDisplayName()) / 2), (float)(y - 11), 16777215);
 							mc.fontRenderer.drawStringWithShadow(s, (float)(x - 20), (float)(y + 3), 16777215);
-							GlStateManager.enableLighting();
-							GlStateManager.enableDepth();
-							GlStateManager.enableBlend();
-							GlStateManager.popMatrix();
 						}
 					}
 				}
