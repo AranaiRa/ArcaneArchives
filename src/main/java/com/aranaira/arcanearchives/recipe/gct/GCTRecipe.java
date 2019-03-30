@@ -80,7 +80,7 @@ public class GCTRecipe
 		return result.copy();
 	}
 
-	public Collection<IngredientStack> getIngredients()
+	public List<IngredientStack> getIngredients()
 	{
 		return ingredients;
 	}

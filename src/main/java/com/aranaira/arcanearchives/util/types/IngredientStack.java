@@ -9,6 +9,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.oredict.OreIngredient;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class IngredientStack
 {
@@ -133,5 +135,14 @@ public class IngredientStack
 	public NBTTagCompound getNBT()
 	{
 		return nbt;
+	}
+
+	public List<ItemStack> getMatchingStacksWithSizes () {
+		List<ItemStack> result = new ArrayList<>();
+		for (ItemStack stack : getMatchingStacks()) {
+			stack.setCount(getCount());
+			result.add(stack);
+		}
+		return result;
 	}
 }
