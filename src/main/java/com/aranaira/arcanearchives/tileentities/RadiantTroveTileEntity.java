@@ -54,6 +54,10 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity
 		return super.hasCapability(capability, facing);
 	}
 
+	public boolean isEmpty () {
+		return inventory.isEmpty();
+	}
+
 	public void onLeftClickTrove (EntityPlayer player) {
 		if(world.isRemote) return;
 

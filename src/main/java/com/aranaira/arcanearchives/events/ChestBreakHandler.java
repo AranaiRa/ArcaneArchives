@@ -1,15 +1,17 @@
 package com.aranaira.arcanearchives.events;
 
-import com.aranaira.arcanearchives.blocks.RadiantChest;
+import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
-import net.minecraft.util.EnumFacing;
+import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
+import com.aranaira.arcanearchives.util.WorldUtil;
+import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDestroyBlockEvent;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.IItemHandler;
 
 @Mod.EventBusSubscriber
 public class ChestBreakHandler
@@ -18,15 +20,15 @@ public class ChestBreakHandler
 	public static void onBlockBreakEvent(BreakEvent event)
 	{
 		World w = event.getWorld();
+		Block block = event.getState().getBlock();
 
-		if(!w.isRemote && event.getState().getBlock() instanceof RadiantChest)
+		if(!w.isRemote && block == BlockRegistry.RADIANT_CHEST)
 		{
-			RadiantChestTileEntity rcte = (RadiantChestTileEntity) w.getTileEntity(event.getPos());
-
-			if(rcte == null) return;
+			RadiantChestTileEntity te = WorldUtil.getTileEntity(RadiantChestTileEntity.class, w, event.getPos());
+			if(te == null) return;
 
 			// null everything
-			ItemStackHandler handler = (ItemStackHandler) rcte.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+			IItemHandler handler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 
 			if(handler == null) return;
 
@@ -43,13 +45,21 @@ public class ChestBreakHandler
 			}
 
 			if(!allSlotsEmpty) event.setCanceled(true);
+		} else if(!w.isRemote && block == BlockRegistry.RADIANT_TROVE)
+		{
+			RadiantTroveTileEntity te = WorldUtil.getTileEntity(RadiantTroveTileEntity.class, w, event.getPos());
+			if(te != null && !te.isEmpty())
+			{
+				event.setCanceled(true);
+			}
 		}
 	}
 
 	@SubscribeEvent
 	public static void onLivingDestroyBlockEvent(LivingDestroyBlockEvent event)
 	{
-		if(event.getState().getBlock() instanceof RadiantChest)
+		Block block = event.getState().getBlock();
+		if(block == BlockRegistry.RADIANT_CHEST || block == BlockRegistry.RADIANT_TROVE)
 		{
 			event.setCanceled(true);
 		}
