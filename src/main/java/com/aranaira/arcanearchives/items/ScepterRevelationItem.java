@@ -119,7 +119,7 @@ public class ScepterRevelationItem extends ItemTemplate
 			}
 
 			TroveItemHandler inventory = te.getInventory();
-			ItemStack reference = inventory.getItem();
+			ItemStack reference = inventory.getItemCurrent();
 			int count = inventory.getCount();
 			int upgrades = inventory.getUpgrades();
 			int maxCount = inventory.getMaxCount();

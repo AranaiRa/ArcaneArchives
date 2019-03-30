@@ -50,6 +50,12 @@ public class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCo
 		return count;
 	}
 
+	public ItemStack getItemCurrent () {
+		if (count == 0) return ItemStack.EMPTY;
+
+		return this.reference;
+	}
+
 	public ItemStack getItem()
 	{
 		return this.reference;
