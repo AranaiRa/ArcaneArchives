@@ -16,9 +16,15 @@ public class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCo
 	private int upgrades = 0;
 	private int count = 0;
 	private ItemStack reference = ItemStack.EMPTY;
+	private final Runnable updater;
 
-	public TroveItemHandler()
+	public TroveItemHandler(Runnable updater)
 	{
+		this.updater = updater;
+	}
+
+	private void update () {
+		this.updater.run();
 	}
 
 	@Override
@@ -31,6 +37,7 @@ public class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCo
 		if (upgrades + 1 <= MAX_UPGRADES)
 		{
 			upgrades += 1;
+			update();
 			return true;
 		}
 
@@ -65,17 +72,12 @@ public class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCo
 	{
 		this.reference = reference.copy();
 		this.reference.setCount(1);
+		update();
 	}
 
 	public boolean isEmpty()
 	{
 		return count == 0;
-	}
-
-	public int insert(int amount)
-	{
-		this.count += amount;
-		return this.count;
 	}
 
 	@Nonnull
@@ -116,10 +118,12 @@ public class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCo
 				count += thisCount - diff;
 				ItemStack result = stack.copy();
 				result.setCount(diff);
+				update();
 				return result;
 			} else
 			{
 				count += stack.getCount();
+				update();
 				return ItemStack.EMPTY;
 			}
 		} else
@@ -142,6 +146,7 @@ public class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCo
 		if(simulate) return result;
 
 		this.count -= amount;
+		update();
 
 		return result;
 	}

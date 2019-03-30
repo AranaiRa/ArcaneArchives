@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.tileentities;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.inventory.handlers.TroveItemHandler;
 import com.aranaira.arcanearchives.util.ItemComparison;
@@ -22,10 +21,16 @@ import java.util.UUID;
 
 public class RadiantTroveTileEntity extends ImmanenceTileEntity
 {
-	private final TroveItemHandler inventory = new TroveItemHandler();
+	private final TroveItemHandler inventory = new TroveItemHandler(this::update);
 	private int lastTick = 0;
 
 	public Object2IntOpenHashMap<UUID> rightClickCache = new Object2IntOpenHashMap<>();
+
+	public void update () {
+		if (world.isRemote) return;
+
+		defaultServerSideUpdate();
+	}
 
 	public RadiantTroveTileEntity()
 	{
