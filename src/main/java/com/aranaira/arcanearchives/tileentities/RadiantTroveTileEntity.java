@@ -56,14 +56,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity
 		if (lastTick == curTick) return;
 		lastTick = curTick;
 
-		ArcaneArchives.logger.info("left clicked trove");
-
-		try {
-			Exception e = new Exception();
-			throw e;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		this.markDirty();
 
 		ItemStack stack = inventory.extractItem(0, 64, false);
 		if (stack.isEmpty()) return;
@@ -75,6 +68,8 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity
 	public void onRightClickTrove (EntityPlayer player) {
 		ItemStack mainhand = player.getHeldItemMainhand();
 		if (mainhand.isEmpty()) return;
+
+		this.markDirty();
 
 		if (mainhand.getItem() == ItemRegistry.COMPONENT_MATERIALINTERFACE && player.isSneaking()) {
 			if (inventory.upgrade())
@@ -125,6 +120,8 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity
 			player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.trove_insertion_failed.full"), true);
 			mainhand.setCount(result.getCount());
 			return;
+		} else {
+			mainhand.setCount(0);
 		}
 
 		if (doubleClick)
@@ -142,6 +139,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity
 							int diff = inSlot.getCount() - result.getCount();
 							inventory.insertItem(0, playerMain.extractItem(i, diff, false), false);
 							player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.trove_insertion_failed.full"), true);
+							this.markDirty();
 							return;
 						} else {
 							int thisCount = inSlot.getCount();

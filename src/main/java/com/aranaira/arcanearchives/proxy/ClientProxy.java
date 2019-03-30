@@ -3,8 +3,10 @@ package com.aranaira.arcanearchives.proxy;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.Keybinds;
 import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.obj.OBJLoader;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -21,7 +23,6 @@ public class ClientProxy extends CommonProxy
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		super.preInit(event);
-		// TODO: This was never actually being called from what I can tell?
 		OBJLoader.INSTANCE.addDomain(ArcaneArchives.MODID);
 
 		Keybinds.initKeybinds();
@@ -37,7 +38,6 @@ public class ClientProxy extends CommonProxy
 	@Override
 	public void registerItemRenderer(@Nonnull Item item, int meta, String id)
 	{
-
 	}
 
 	@SubscribeEvent
