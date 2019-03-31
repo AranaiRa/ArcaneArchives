@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.data;
 
+import com.aranaira.arcanearchives.blocks.MonitoringCrystal;
 import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketNetworks;
@@ -16,6 +17,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.items.IItemHandler;
 
 import java.util.*;
 
@@ -184,9 +186,9 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 		return mNetworkTiles.containsUUID(tileID);
 	}
 
-	public TileList.TileListIterable GetRadiantChests()
+	public TileList.TileListIterable getManifestTileEntities()
 	{
-		return mNetworkTiles.filterClass(RadiantChestTileEntity.class);
+		return mNetworkTiles.filterAssignableClass(ManifestTileEntity.class);
 	}
 
 	public void triggerUpdate()
@@ -254,25 +256,47 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 		manifestItems.clear();
 
 		List<ManifestItemEntry> preManifest = new ArrayList<>();
-		Set<RadiantChestTileEntity> done = new HashSet<>();
+		Set<ManifestTileEntity> done = new HashSet<>();
 
-		for(IteRef ref : GetRadiantChests())
+		for(IteRef ref : getManifestTileEntities())
 		{
-			ImmanenceTileEntity ite = ref.getServerTile();
+			ManifestTileEntity ite = ref.getManifestServerTile();
 			if(ite == null) continue;
 
-			RadiantChestTileEntity chest = (RadiantChestTileEntity) ite;
-			if(done.contains(chest)) continue;
+			if(done.contains(ite)) continue;
 
-			int dimId = chest.getWorld().provider.getDimension();
-			for(ItemStack is : new SlotIterable(chest.getInventory()))
-			{
-				if(is.isEmpty()) continue;
+			int dimId = ite.getWorld().provider.getDimension();
 
-				preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(chest.getPos(), chest.getChestName(), is.getCount())));
+			if (ite.isSingleStackInventory()) {
+				ItemStack is = ite.getSingleStack();
+				if (!is.isEmpty())
+				{
+					preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(ite.getPos(), ite.getChestName(), is.getCount())));
+				}
+			} else {
+				if (ite instanceof MonitoringCrystalTileEntity) {
+					MonitoringCrystalTileEntity mte = (MonitoringCrystalTileEntity) ite;
+					IItemHandler handler = mte.getInventory();
+					if (handler != null)
+					{
+						for(ItemStack is : new SlotIterable(handler)) {
+							if (is.isEmpty()) continue;
+
+							preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(mte.getTarget(), mte.getDescriptor(), is.getCount())));
+						}
+					}
+				} else
+				{
+					for(ItemStack is : new SlotIterable(ite.getInventory()))
+					{
+						if(is.isEmpty()) continue;
+
+						preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(ite.getPos(), ite.getChestName(), is.getCount())));
+					}
+				}
 			}
 
-			done.add(chest);
+			done.add(ite);
 		}
 
 		List<ManifestEntry> consolidated = ItemStackConsolidator.ConsolidateManifest(preManifest);

@@ -33,6 +33,10 @@ public class TileList extends ReferenceList<IteRef>
 		return new TileListIterable(Iterators.filter(iterator(), (f) -> f != null && f.isValid() && f.clazz.equals(clazz)));
 	}
 
+	public TileListIterable filterAssignableClass(Class<? extends AATileEntity> clazz) {
+		return new TileListIterable(Iterators.filter(iterator(), (f) -> f != null && f.isValid() && clazz.isAssignableFrom(f.clazz)));
+	}
+
 	public TileList sorted(Comparator<IteRef> c)
 	{
 		TileList copy = new TileList(new ArrayList<>());

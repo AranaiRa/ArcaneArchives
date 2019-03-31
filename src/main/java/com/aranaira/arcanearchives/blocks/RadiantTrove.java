@@ -1,15 +1,11 @@
 package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
-import com.aranaira.arcanearchives.data.NetworkHelper;
-import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.events.LineHandler;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.inventory.handlers.TroveItemHandler;
-import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
-import com.aranaira.arcanearchives.util.DropHelper;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -22,8 +18,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -41,11 +35,11 @@ public class RadiantTrove extends BlockDirectionalTemplate
 		setHarvestLevel("axe", 0);
 	}
 
-
-
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
+		LineHandler.removeLine(pos);
+
 		if (!world.isRemote && hand == EnumHand.MAIN_HAND) {
 			RadiantTroveTileEntity te = WorldUtil.getTileEntity(RadiantTroveTileEntity.class, world, pos);
 			if (te == null) return false;
@@ -61,9 +55,11 @@ public class RadiantTrove extends BlockDirectionalTemplate
 	public void onBlockClicked(World world, BlockPos pos, EntityPlayer player)
 	{
 		IBlockState state = world.getBlockState(pos);
+		LineHandler.removeLine(pos);
+
 		if (state.getBlock() == BlockRegistry.RADIANT_TROVE)
 		{
-			if(!world.isRemote && !player.isSneaking())
+			if(!world.isRemote)
 			{
 				RadiantTroveTileEntity te = WorldUtil.getTileEntity(RadiantTroveTileEntity.class, world, pos);
 				if(te == null) return;

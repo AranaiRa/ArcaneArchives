@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.*;
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.blocks.unused.*;
+import com.aranaira.arcanearchives.items.itemblocks.MonitoringCrystalItem;
 import com.aranaira.arcanearchives.items.templates.ItemBlockTemplate;
 import com.aranaira.arcanearchives.tileentities.*;
 import com.aranaira.arcanearchives.tileentities.unused.MatrixCoreTileEntity;
@@ -82,7 +83,7 @@ public class BlockRegistry
 		//DOMINION_CRYSTAL.setItemBlock(new ItemBlockTemplate(DOMINION_CRYSTAL));
 		GEMCUTTERS_TABLE.setItemBlock(new ItemBlockTemplate(GEMCUTTERS_TABLE));
 		RADIANT_TROVE.setItemBlock(new ItemBlockTemplate(RADIANT_TROVE));
-		MONITORING_CRYSTAL.setItemBlock(new ItemBlockTemplate(MONITORING_CRYSTAL));
+		MONITORING_CRYSTAL.setItemBlock(new MonitoringCrystalItem(MONITORING_CRYSTAL));
 
 		registry.registerAll(/*MATRIX_CRYSTAL_CORE, MATRIX_REPOSITORY, MATRIX_RESERVOIR, MATRIX_STORAGE, MATRIX_DISTILLATE*/STORAGE_RAW_QUARTZ, STORAGE_CUT_QUARTZ, RADIANT_CHEST, RADIANT_CRAFTING_TABLE, RADIANT_LANTERN, RADIANT_RESONATOR, RAW_QUARTZ/*DOMINION_CRYSTAL*/, GEMCUTTERS_TABLE, ACCESSOR, RADIANT_TROVE, MONITORING_CRYSTAL);
 

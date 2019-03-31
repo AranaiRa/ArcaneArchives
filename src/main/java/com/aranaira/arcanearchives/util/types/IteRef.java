@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.util.types;
 
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
+import com.aranaira.arcanearchives.tileentities.ManifestTileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
@@ -55,6 +56,14 @@ public class IteRef
 		}
 
 		return tile.get();
+	}
+
+	public ManifestTileEntity getManifestServerTile () {
+		if (ManifestTileEntity.class.isAssignableFrom(this.clazz)) {
+			return (ManifestTileEntity) getServerTile();
+		} else {
+			return null;
+		}
 	}
 
 	@Nullable

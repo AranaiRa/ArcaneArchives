@@ -62,12 +62,17 @@ public class RadiantTroveTileEntity extends ManifestTileEntity
 		if(world.isRemote) return;
 
 		int curTick = world.getMinecraftServer().getTickCounter();
-		if (lastTick == curTick) return;
+		if (curTick - lastTick < 3) return;
 		lastTick = curTick;
 
 		this.markDirty();
 
-		ItemStack stack = inventory.extractItem(0, 64, false);
+		int count = 64;
+
+		if (player.isSneaking()) {
+			count = 1;
+		}
+		ItemStack stack = inventory.extractItem(0, count, false);
 		if (stack.isEmpty()) return;
 
 		EntityItem item = new EntityItem(world, player.posX, player.posY, player.posZ, stack);
@@ -218,6 +223,18 @@ public class RadiantTroveTileEntity extends ManifestTileEntity
 		ItemStack stack = inventory.getItem();
 		stack.setCount(inventory.getCount());
 		return stack;
+	}
+
+	@Override
+	public String getDescriptor()
+	{
+		return "trove";
+	}
+
+	@Override
+	public String getChestName()
+	{
+		return "";
 	}
 
 	public static class Tags

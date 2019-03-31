@@ -7,6 +7,7 @@ import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDestroyBlockEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -14,7 +15,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 @Mod.EventBusSubscriber
-public class ChestBreakHandler
+public class AAEventHandler
 {
 	@SubscribeEvent
 	public static void onBlockBreakEvent(BreakEvent event)
@@ -63,5 +64,10 @@ public class ChestBreakHandler
 		{
 			event.setCanceled(true);
 		}
+	}
+
+	@SubscribeEvent
+	public static void onBlockActivated (PlayerInteractEvent.RightClickBlock event) {
+		LineHandler.removeLine(event.getPos());
 	}
 }

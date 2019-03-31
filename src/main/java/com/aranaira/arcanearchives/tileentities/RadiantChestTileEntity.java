@@ -64,6 +64,12 @@ public class RadiantChestTileEntity extends ManifestTileEntity
 		return compound;
 	}
 
+	@Override
+	public String getDescriptor()
+	{
+		return "chest";
+	}
+
 	public String getChestName()
 	{
 		return chestName;
