@@ -23,9 +23,9 @@
                         "scale": 1.0
                     },
                     "gui": {
-                        "translation": [0.05, 0.08, 0],
-                        "rotation": [ { "y": 45}, {"x": 30}, {"z": 0} ],
-                        "scale": 0.9
+                        "translation": [0.02, -0.02, 0],
+                        "rotation": [ { "y": 0}, {"x": 0}, {"z": -45} ],
+                        "scale": 1.8
                     },
                     "ground": {
                         "translation": [0, 0, 0],
