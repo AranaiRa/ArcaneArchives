@@ -5,6 +5,7 @@ import com.aranaira.arcanearchives.util.ManifestTracking;
 import com.aranaira.arcanearchives.util.RenderHelper;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
@@ -48,6 +49,11 @@ public class LineHandler
 		}
 
 		mBlockPositions.add(line);
+	}
+
+	public static void removeLine (BlockPos pos) {
+		Vec3d bpos = new Vec3d(pos.getX(), pos.getY(), pos.getZ());
+		removeLine(bpos);
 	}
 
 	public static void removeLine(Vec3d line)

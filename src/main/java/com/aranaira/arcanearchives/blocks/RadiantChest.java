@@ -37,12 +37,6 @@ public class RadiantChest extends BlockTemplate
 		setHarvestLevel("axe", 0);
 	}
 
-	public static void RemoveChestLines(BlockPos pos)
-	{
-		Vec3d bpos = new Vec3d(pos.getX(), pos.getY(), pos.getZ());
-		LineHandler.removeLine(bpos);
-	}
-
 	@Override
 	@SuppressWarnings("deprecation")
 	public boolean isFullCube(IBlockState state)
@@ -66,7 +60,7 @@ public class RadiantChest extends BlockTemplate
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
-		RemoveChestLines(pos);
+		LineHandler.removeLine(pos);
 
 		if(worldIn.isRemote) return true;
 
@@ -79,7 +73,7 @@ public class RadiantChest extends BlockTemplate
 	@ParametersAreNonnullByDefault
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
 	{
-		RemoveChestLines(pos);
+		LineHandler.removeLine(pos);
 
 		if(!worldIn.isRemote)
 		{
@@ -107,18 +101,5 @@ public class RadiantChest extends BlockTemplate
 	public TileEntity createTileEntity(World world, IBlockState state)
 	{
 		return new RadiantChestTileEntity();
-	}
-
-	@Override
-	public boolean canEntityDestroy(IBlockState state, IBlockAccess world, BlockPos pos, Entity entity)
-	{
-		return super.canEntityDestroy(state, world, pos, entity);
-	}
-
-	@Override
-	@ParametersAreNonnullByDefault
-	public boolean canBeReplacedByLeaves(IBlockState state, IBlockAccess world, BlockPos pos)
-	{
-		return false;
 	}
 }

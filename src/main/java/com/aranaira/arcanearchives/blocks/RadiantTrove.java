@@ -1,18 +1,29 @@
 package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
+import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.data.ServerNetwork;
+import com.aranaira.arcanearchives.events.LineHandler;
 import com.aranaira.arcanearchives.init.BlockRegistry;
+import com.aranaira.arcanearchives.init.ItemRegistry;
+import com.aranaira.arcanearchives.inventory.handlers.TroveItemHandler;
+import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
+import com.aranaira.arcanearchives.util.DropHelper;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -63,14 +74,6 @@ public class RadiantTrove extends BlockDirectionalTemplate
 	}
 
 	@Override
-	@ParametersAreNonnullByDefault
-	public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
-	{
-		super.breakBlock(worldIn, pos, state);
-	}
-
-	@Override
-
 	@SuppressWarnings("deprecation")
 	public boolean isOpaqueCube(IBlockState state)
 	{
@@ -109,5 +112,30 @@ public class RadiantTrove extends BlockDirectionalTemplate
 		return new RadiantTroveTileEntity();
 	}
 
-	
+	@Override
+	@ParametersAreNonnullByDefault
+	public void breakBlock(World world, BlockPos pos, IBlockState state)
+	{
+		LineHandler.removeLine(pos);
+
+		if(!world.isRemote)
+		{
+			RadiantTroveTileEntity te = WorldUtil.getTileEntity(RadiantTroveTileEntity.class, world, pos);
+			if (te != null)
+			{
+				TroveItemHandler handler = te.getInventory();
+				while (!handler.isEmpty()) {
+					ItemStack stack = handler.extractItem(0, 64, false);
+					EntityItem item = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), stack);
+					world.spawnEntity(item);
+				}
+				if (handler.getUpgrades() != 0) {
+					ItemStack stack = new ItemStack(ItemRegistry.COMPONENT_MATERIALINTERFACE, handler.getUpgrades(), 0);
+					EntityItem item = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), stack);
+					world.spawnEntity(item);
+				}
+			}
+		}
+		super.breakBlock(world, pos, state);
+	}
 }
