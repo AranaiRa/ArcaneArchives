@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.tileentities;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketRadiantChest;
+import com.aranaira.arcanearchives.util.ManifestTracking;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -15,7 +16,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 
-public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITickable
+public class RadiantChestTileEntity extends ManifestTileEntity
 {
 	private final ItemStackHandler inventory = new ItemStackHandler(54);
 	public String chestName = "";
@@ -61,12 +62,6 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements ITick
 		compound.setString(Tags.CHEST_NAME, chestName);
 
 		return compound;
-	}
-
-	@Override
-	public void update()
-	{
-		super.update();
 	}
 
 	public String getChestName()

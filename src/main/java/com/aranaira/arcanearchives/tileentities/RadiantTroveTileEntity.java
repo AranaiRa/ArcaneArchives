@@ -19,7 +19,7 @@ import net.minecraftforge.items.IItemHandler;
 import javax.annotation.Nonnull;
 import java.util.UUID;
 
-public class RadiantTroveTileEntity extends ImmanenceTileEntity
+public class RadiantTroveTileEntity extends ManifestTileEntity
 {
 	private final TroveItemHandler inventory = new TroveItemHandler(this::update);
 	private int lastTick = 0;
@@ -202,6 +202,22 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity
 		NBTTagCompound compound = writeToNBT(new NBTTagCompound());
 
 		return new SPacketUpdateTileEntity(pos, 0, compound);
+	}
+
+	@Override
+	public boolean isSingleStackInventory()
+	{
+		return true;
+	}
+
+	@Override
+	public ItemStack getSingleStack()
+	{
+		if (isEmpty()) return ItemStack.EMPTY;
+
+		ItemStack stack = inventory.getItem();
+		stack.setCount(inventory.getCount());
+		return stack;
 	}
 
 	public static class Tags
