@@ -109,6 +109,7 @@ public class Keybinds
 	}
 
 	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
 	public static void onKeypress (GuiScreenEvent.KeyboardInputEvent.Pre event) {
 		if (Keyboard.getEventKeyState() && manifestKey.isActiveAndMatches(Keyboard.getEventKey())) {
 			Minecraft mc = Minecraft.getMinecraft();
