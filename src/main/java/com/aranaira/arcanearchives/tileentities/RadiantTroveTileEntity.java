@@ -220,7 +220,7 @@ public class RadiantTroveTileEntity extends ManifestTileEntity
 	{
 		if (isEmpty()) return ItemStack.EMPTY;
 
-		ItemStack stack = inventory.getItem();
+		ItemStack stack = inventory.getItem().copy();
 		stack.setCount(inventory.getCount());
 		return stack;
 	}
