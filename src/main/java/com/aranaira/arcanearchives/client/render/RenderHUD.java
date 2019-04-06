@@ -10,6 +10,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.RayTraceResult;
@@ -58,7 +60,9 @@ public class RenderHUD
 						ItemStack item = handler.getItemCurrent();
 						if(!handler.isEmpty())
 						{
+							RenderHelper.enableGUIStandardItemLighting();
 							mc.getRenderItem().renderItemIntoGUI(item, x - 40, y);
+							RenderHelper.disableStandardItemLighting();
 							String s = "x " + NumberUtil.format(handler.getCount());
 							mc.fontRenderer.drawStringWithShadow(item.getDisplayName(), (float)(x - 19 -  mc.fontRenderer.getStringWidth(item.getDisplayName()) / 2), (float)(y - 11), 16777215);
 							mc.fontRenderer.drawStringWithShadow(s, (float)(x - 20), (float)(y + 3), 16777215);
