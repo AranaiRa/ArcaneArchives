@@ -123,7 +123,9 @@ public class RawQuartzItem extends ItemTemplate
 			if(secondaryChest)
 			{
 				world.removeTileEntity(secondaryChestPos);
+				IBlockState secondary = world.getBlockState(secondaryChestPos);
 				world.setBlockToAir(secondaryChestPos);
+				world.setBlockState(secondaryChestPos, secondary);
 			}
 
 			IBlockState iblockstate = BlockRegistry.RADIANT_CHEST.getDefaultState();
