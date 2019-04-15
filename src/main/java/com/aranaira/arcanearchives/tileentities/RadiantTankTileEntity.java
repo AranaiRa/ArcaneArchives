@@ -26,7 +26,7 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity
 
 	public RadiantTankTileEntity()
 	{
-		super("radianttrove");
+		super("radianttank");
 	}
 
 	@Override

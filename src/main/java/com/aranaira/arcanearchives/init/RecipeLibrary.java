@@ -21,6 +21,7 @@ public class RecipeLibrary
 	public static GCTRecipe MATRIX_REPOSITORY_RECIPE;
 	public static GCTRecipe RADIANT_LANTERN_RECIPE;
 	public static GCTRecipe RADIANT_TROVE_RECIPE;
+	public static GCTRecipe RADIANT_TANK_RECIPE;
 	public static GCTRecipe MONITORING_CRYSTAL_RECIPE;
 
 	public static void buildRecipes()
@@ -34,6 +35,8 @@ public class RecipeLibrary
 		RADIANT_LANTERN_RECIPE = GCTRecipeList.makeAndAddRecipe("radiant_lantern", new ItemStack(BlockRegistry.RADIANT_LANTERN, 4), new ItemStack(ItemRegistry.RAW_RADIANT_QUARTZ, 2), new IngredientStack("nuggetGold", 1));
 
 		RADIANT_TROVE_RECIPE = GCTRecipeList.makeAndAddRecipe("radiant_trove", new ItemStack(BlockRegistry.RADIANT_TROVE, 4), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 4), new ItemStack(ItemRegistry.COMPONENT_MATRIXBRACE), new ItemStack(ItemRegistry.COMPONENT_MATERIALINTERFACE), new ItemStack(BlockRegistry.RADIANT_CHEST));
+
+		RADIANT_TANK_RECIPE = GCTRecipeList.makeAndAddRecipe("radiant_tank", new ItemStack(BlockRegistry.RADIANT_TANK, 4), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 4), new ItemStack(ItemRegistry.COMPONENT_CONTAINMENTFIELD), new IngredientStack("ingotGold", 2));
 
 		MONITORING_CRYSTAL_RECIPE = GCTRecipeList.makeAndAddRecipe("monitoring_crystal", new ItemStack(BlockRegistry.MONITORING_CRYSTAL), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 1), new IngredientStack("nuggetGold", 2), new IngredientStack("stickWood", 4));
 
