@@ -24,15 +24,15 @@ public class ItemRegistry
 {
 	public static final RawQuartzItem RAW_RADIANT_QUARTZ = new RawQuartzItem();
 	public static final CutQuartzItem CUT_RADIANT_QUARTZ = new CutQuartzItem();
-	public static final GeomancyPendulumItem GEOMANCY_PENDULUM = new GeomancyPendulumItem();
-	public static final GeomanticMapItem GEOMANTIC_MAP = new GeomanticMapItem();
+	//public static final GeomancyPendulumItem GEOMANCY_PENDULUM = new GeomancyPendulumItem();
+	//public static final GeomanticMapItem GEOMANTIC_MAP = new GeomanticMapItem();
 	public static final ManifestItem MANIFEST = new ManifestItem();
 	public static final RadiantBucketItem RADIANT_BUCKET = new RadiantBucketItem();
-	public static final ScepterAbductionItem SCEPTER_ABDUCTION = new ScepterAbductionItem();
-	public static final ScepterManipulationItem SCEPTER_MANIPULATION = new ScepterManipulationItem();
-	public static final ScepterTranslocationItem SCEPTER_TRANSLOCATION = new ScepterTranslocationItem();
+	//public static final ScepterAbductionItem SCEPTER_ABDUCTION = new ScepterAbductionItem();
+	//public static final ScepterManipulationItem SCEPTER_MANIPULATION = new ScepterManipulationItem();
+	//public static final ScepterTranslocationItem SCEPTER_TRANSLOCATION = new ScepterTranslocationItem();
 	public static final ScepterRevelationItem SCEPTER_REVELATION = new ScepterRevelationItem();
-	public static final TomeOfArcanaItem TOME_OF_ARCANA = new TomeOfArcanaItem();
+	//public static final TomeOfArcanaItem TOME_OF_ARCANA = new TomeOfArcanaItem();
 	public static final TomeOfRequisitionItem TOME_OF_REQUISITION = new TomeOfRequisitionItem();
 
 	//CRAFTING COMPONENTS
@@ -43,7 +43,7 @@ public class ItemRegistry
 	public static final ComponentScintillatingInlayItem COMPONENT_SCINTILLATINGINLAY = new ComponentScintillatingInlayItem();
 
 	//SPIRIT SPHERES
-	public static final SpiritOrbItem SPIRIT_ORB = new SpiritOrbItem();
+	//public static final SpiritOrbItem SPIRIT_ORB = new SpiritOrbItem();
 
 	@SubscribeEvent
 	public static void onItemRegister(RegistryEvent.Register<Item> event)
@@ -52,7 +52,7 @@ public class ItemRegistry
 
 		Arrays.asList(RAW_RADIANT_QUARTZ, CUT_RADIANT_QUARTZ, /*GEOMANCY_PENDULUM, GEOMANTIC_MAP,*/ MANIFEST, RADIANT_BUCKET, /*SCEPTER_ABDUCTION, SCEPTER_MANIPULATION, SCEPTER_TRANSLOCATION, TOME_OF_ARCANA, TOME_OF_REQUISITION,*/ COMPONENT_CONTAINMENTFIELD, COMPONENT_MATRIXBRACE, COMPONENT_MATERIALINTERFACE, COMPONENT_RADIANTDUST, COMPONENT_SCINTILLATINGINLAY/*, SPIRIT_ORB*/, SCEPTER_REVELATION).forEach(registry::register);
 
-		Stream.of(/*BlockRegistry.MATRIX_CRYSTAL_CORE, BlockRegistry.MATRIX_REPOSITORY, BlockRegistry.MATRIX_RESERVOIR, BlockRegistry.MATRIX_STORAGE, BlockRegistry.MATRIX_DISTILLATE, */BlockRegistry.STORAGE_RAW_QUARTZ, BlockRegistry.STORAGE_CUT_QUARTZ, BlockRegistry.RADIANT_CHEST, BlockRegistry.RADIANT_CRAFTING_TABLE, BlockRegistry.RADIANT_LANTERN, BlockRegistry.RADIANT_RESONATOR, BlockRegistry.RAW_QUARTZ/*, BlockRegistry.DOMINION_CRYSTAL*/, BlockRegistry.GEMCUTTERS_TABLE, BlockRegistry.RADIANT_TROVE, BlockRegistry.MONITORING_CRYSTAL).map(BlockTemplate::getItemBlock).forEach(registry::register);
+		Stream.of(/*BlockRegistry.MATRIX_CRYSTAL_CORE, BlockRegistry.MATRIX_REPOSITORY, BlockRegistry.MATRIX_RESERVOIR, BlockRegistry.MATRIX_STORAGE, BlockRegistry.MATRIX_DISTILLATE, */BlockRegistry.STORAGE_RAW_QUARTZ, BlockRegistry.STORAGE_CUT_QUARTZ, BlockRegistry.RADIANT_CHEST, BlockRegistry.RADIANT_CRAFTING_TABLE, BlockRegistry.RADIANT_LANTERN, BlockRegistry.RADIANT_RESONATOR, BlockRegistry.RAW_QUARTZ/*, BlockRegistry.DOMINION_CRYSTAL*/, BlockRegistry.GEMCUTTERS_TABLE, BlockRegistry.RADIANT_TROVE, BlockRegistry.MONITORING_CRYSTAL, BlockRegistry.RADIANT_TANK).map(BlockTemplate::getItemBlock).forEach(registry::register);
 	}
 
 	@SubscribeEvent
@@ -60,7 +60,7 @@ public class ItemRegistry
 	{
 		Arrays.asList(RAW_RADIANT_QUARTZ, CUT_RADIANT_QUARTZ/*, GEOMANCY_PENDULUM, GEOMANTIC_MAP*/, MANIFEST, RADIANT_BUCKET, /*SCEPTER_ABDUCTION, SCEPTER_MANIPULATION, SCEPTER_TRANSLOCATION, TOME_OF_ARCANA, TOME_OF_REQUISITION, */COMPONENT_CONTAINMENTFIELD, COMPONENT_MATRIXBRACE, COMPONENT_MATERIALINTERFACE, COMPONENT_RADIANTDUST, COMPONENT_SCINTILLATINGINLAY, SCEPTER_REVELATION).forEach(ItemTemplate::registerModels);
 
-		Stream.of(/*BlockRegistry.MATRIX_CRYSTAL_CORE, BlockRegistry.MATRIX_REPOSITORY, BlockRegistry.MATRIX_RESERVOIR, BlockRegistry.MATRIX_STORAGE, BlockRegistry.MATRIX_DISTILLATE, */BlockRegistry.STORAGE_RAW_QUARTZ, BlockRegistry.STORAGE_CUT_QUARTZ, BlockRegistry.RADIANT_CHEST, BlockRegistry.RADIANT_CRAFTING_TABLE, BlockRegistry.RADIANT_LANTERN, BlockRegistry.RADIANT_RESONATOR, BlockRegistry.RAW_QUARTZ, /*BlockRegistry.DOMINION_CRYSTAL, */BlockRegistry.GEMCUTTERS_TABLE, BlockRegistry.RADIANT_TROVE, BlockRegistry.MONITORING_CRYSTAL).map(BlockTemplate::getItemBlock).forEach((block) -> ModelLoader.setCustomModelResourceLocation(block, 0, new ModelResourceLocation(block.getRegistryName(), "inventory")));
+		Stream.of(/*BlockRegistry.MATRIX_CRYSTAL_CORE, BlockRegistry.MATRIX_REPOSITORY, BlockRegistry.MATRIX_RESERVOIR, BlockRegistry.MATRIX_STORAGE, BlockRegistry.MATRIX_DISTILLATE, */BlockRegistry.STORAGE_RAW_QUARTZ, BlockRegistry.STORAGE_CUT_QUARTZ, BlockRegistry.RADIANT_CHEST, BlockRegistry.RADIANT_CRAFTING_TABLE, BlockRegistry.RADIANT_LANTERN, BlockRegistry.RADIANT_RESONATOR, BlockRegistry.RAW_QUARTZ, /*BlockRegistry.DOMINION_CRYSTAL, */BlockRegistry.GEMCUTTERS_TABLE, BlockRegistry.RADIANT_TROVE, BlockRegistry.MONITORING_CRYSTAL, BlockRegistry.RADIANT_TANK).map(BlockTemplate::getItemBlock).forEach((block) -> ModelLoader.setCustomModelResourceLocation(block, 0, new ModelResourceLocation(block.getRegistryName(), "inventory")));
 
 		/*SPIRIT_ORB.registerModels();*/
 	}
