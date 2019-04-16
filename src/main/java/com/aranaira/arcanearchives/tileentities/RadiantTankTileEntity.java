@@ -24,6 +24,10 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity
 		defaultServerSideUpdate();
 	}
 
+	public int getCapacity () {
+		return BASE_CAPACITY * (upgrades + 1);
+	}
+
 	public RadiantTankTileEntity()
 	{
 		super("radianttank");
@@ -46,11 +50,20 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity
 		return super.hasCapability(capability, facing);
 	}
 
+	private void validateCapacity () {
+		if (inventory.getCapacity() != getCapacity()) {
+			inventory.setCapacity(getCapacity());
+		}
+	}
+
 	@Override
 	public void readFromNBT(NBTTagCompound compound)
 	{
 		super.readFromNBT(compound);
+		this.upgrades = compound.getInteger("upgrades");
+		validateCapacity();
 		this.inventory.readFromNBT(compound.getCompoundTag(Tags.HANDLER_ITEM));
+		validateCapacity();
 	}
 
 	@Override
@@ -58,6 +71,7 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity
 	public NBTTagCompound writeToNBT(NBTTagCompound compound)
 	{
 		super.writeToNBT(compound);
+		compound.setInteger("upgrades", upgrades);
 		compound.setTag(Tags.HANDLER_ITEM, this.inventory.writeToNBT(new NBTTagCompound()));
 
 		return compound;

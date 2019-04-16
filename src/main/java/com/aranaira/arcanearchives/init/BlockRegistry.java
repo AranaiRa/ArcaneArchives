@@ -5,6 +5,7 @@ import com.aranaira.arcanearchives.blocks.*;
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.blocks.unused.*;
 import com.aranaira.arcanearchives.items.itemblocks.MonitoringCrystalItem;
+import com.aranaira.arcanearchives.items.itemblocks.RadiantTankItem;
 import com.aranaira.arcanearchives.items.templates.ItemBlockTemplate;
 import com.aranaira.arcanearchives.tileentities.*;
 import com.aranaira.arcanearchives.tileentities.unused.MatrixCoreTileEntity;
@@ -87,7 +88,7 @@ public class BlockRegistry
 		RADIANT_TROVE.setItemBlock(new ItemBlockTemplate(RADIANT_TROVE));
 		MONITORING_CRYSTAL.setItemBlock(new MonitoringCrystalItem(MONITORING_CRYSTAL));
 		// TODO: Fix this
-		RADIANT_TANK.setItemBlock(new ItemBlockTemplate(RADIANT_TANK));
+		RADIANT_TANK.setItemBlock(new RadiantTankItem(RADIANT_TANK));
 
 		registry.registerAll(/*MATRIX_CRYSTAL_CORE, MATRIX_REPOSITORY, MATRIX_RESERVOIR, MATRIX_STORAGE, MATRIX_DISTILLATE*/STORAGE_RAW_QUARTZ, STORAGE_CUT_QUARTZ, RADIANT_CHEST, RADIANT_CRAFTING_TABLE, RADIANT_LANTERN, RADIANT_RESONATOR, RAW_QUARTZ/*DOMINION_CRYSTAL*/, GEMCUTTERS_TABLE, ACCESSOR, RADIANT_TROVE, MONITORING_CRYSTAL, RADIANT_TANK);
 
