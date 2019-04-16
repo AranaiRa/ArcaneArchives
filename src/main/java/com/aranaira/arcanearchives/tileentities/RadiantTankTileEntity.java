@@ -77,6 +77,18 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity
 		return compound;
 	}
 
+	public NBTTagCompound serializeStack () {
+		NBTTagCompound compound = new NBTTagCompound();
+		compound.setInteger("upgrades", upgrades);
+		compound.setTag(Tags.HANDLER_ITEM, this.inventory.writeToNBT(new NBTTagCompound()));
+		return compound;
+	}
+
+	public void deserializeStack (NBTTagCompound tag) {
+		this.upgrades = tag.getInteger("upgrades");
+		this.inventory.readFromNBT(tag.getCompoundTag(Tags.HANDLER_ITEM));
+	}
+
 	public FluidTank getInventory()
 	{
 		return inventory;
