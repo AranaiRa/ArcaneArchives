@@ -50,6 +50,10 @@ public class ConfigHandler
 	@Config.Name("Radiant Chest Highlight")
 	public static String ChestHighlight = "#1922C4";
 
+	@Config.Comment("Causes Radiant Chests, Troves, etc, to be unbreakable when not empty")
+	@Config.Name("Unbreakable Radiant Chests & Troves")
+	public static boolean UnbreakableContainers = false;
+
 	//public static boolean bJarvisModeEnabled = false;
 
 	/*public static int iRadiantResonatorDrain = 20;

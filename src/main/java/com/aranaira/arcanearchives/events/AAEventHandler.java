@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.events;
 
+import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
@@ -20,6 +21,8 @@ public class AAEventHandler
 	@SubscribeEvent
 	public static void onBlockBreakEvent(BreakEvent event)
 	{
+		if (!ConfigHandler.UnbreakableContainers) return;
+
 		World w = event.getWorld();
 		Block block = event.getState().getBlock();
 
@@ -59,6 +62,8 @@ public class AAEventHandler
 	@SubscribeEvent
 	public static void onLivingDestroyBlockEvent(LivingDestroyBlockEvent event)
 	{
+		if (!ConfigHandler.UnbreakableContainers) return;
+
 		Block block = event.getState().getBlock();
 		if(block == BlockRegistry.RADIANT_CHEST || block == BlockRegistry.RADIANT_TROVE)
 		{
