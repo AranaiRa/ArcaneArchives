@@ -122,13 +122,11 @@ public class RadiantTrove extends BlockDirectionalTemplate
 				TroveItemHandler handler = te.getInventory();
 				while (!handler.isEmpty()) {
 					ItemStack stack = handler.extractItem(0, 64, false);
-					EntityItem item = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), stack);
-					world.spawnEntity(item);
+					spawnAsEntity(world, pos, stack);
 				}
 				if (handler.getUpgrades() != 0) {
 					ItemStack stack = new ItemStack(ItemRegistry.COMPONENT_MATERIALINTERFACE, handler.getUpgrades(), 0);
-					EntityItem item = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), stack);
-					world.spawnEntity(item);
+					spawnAsEntity(world, pos, stack);
 				}
 			}
 		}

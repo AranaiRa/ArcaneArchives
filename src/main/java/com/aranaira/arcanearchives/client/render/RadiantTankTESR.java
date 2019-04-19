@@ -23,15 +23,15 @@ import org.lwjgl.opengl.GL11;
 @SideOnly(Side.CLIENT)
 public class RadiantTankTESR extends TileEntitySpecialRenderer<RadiantTankTileEntity>
 {
-	private static Vec3d orig = new Vec3d(0.06d, 0.12d, 0.06d);
-	private static Vec3d other = new Vec3d (0.88d, 0d, 0.88d);
-
 	@Override
 	public void render(RadiantTankTileEntity te, double _x, double _y, double _z, float partialTicks, int destroyStage, float alpha)
 	{
 		if(te != null)
 		{
 			FluidTank tank = te.getInventory();
+
+			Vec3d orig = new Vec3d(0.08d, 0.05d, 0.08d);
+			Vec3d other = new Vec3d (0.76d, 0d, 0.76d);
 
 			if(tank != null && tank.getFluid() != null && tank.getFluidAmount() > 0)
 			{
@@ -43,7 +43,7 @@ public class RadiantTankTESR extends TileEntitySpecialRenderer<RadiantTankTileEn
 				double z = orig.z;
 
 				FluidStack fluidStack = tank.getFluid();
-				double y2 = (double) tank.getFluidAmount() / (double) tank.getCapacity() * 0.8d;
+				double y2 = (double) tank.getFluidAmount() / (double) tank.getCapacity() * 0.9d;
 
 				BlockPos pos = te.getPos();
 
@@ -141,7 +141,7 @@ public class RadiantTankTESR extends TileEntitySpecialRenderer<RadiantTankTileEn
 				// north
 				buffer.pos(x, y, z).color(colour.red, colour.green, colour.blue, colour.alpha).tex(minU, maxV).lightmap(colour.light1, colour.light2).endVertex();
 				buffer.pos(x, y2, z).color(colour.red, colour.green, colour.blue, colour.alpha).tex(minU, minV).lightmap(colour.light1, colour.light2).endVertex();
-				buffer.pos(x2, y2, z).color(colour.red, colour.green, colour.blue, colour.alpha).tex(maxU, maxV).lightmap(colour.light1, colour.light2).endVertex();
+				buffer.pos(x2, y2, z).color(colour.red, colour.green, colour.blue, colour.alpha).tex(maxU, minV).lightmap(colour.light1, colour.light2).endVertex();
 				buffer.pos(x2, y, z).color(colour.red, colour.green, colour.blue, colour.alpha).tex(maxU, maxV).lightmap(colour.light1, colour.light2).endVertex();
 
 				// east
@@ -190,7 +190,7 @@ public class RadiantTankTESR extends TileEntitySpecialRenderer<RadiantTankTileEn
 				buffer.pos(x, y2, z).color(colour.red, colour.green, colour.blue, colour.alpha).tex(minU, minV).lightmap(colour.light1, colour.light2).endVertex();
 				buffer.pos(x, y2, z2).color(colour.red, colour.green, colour.blue, colour.alpha).tex(minU, maxV).lightmap(colour.light1, colour.light2).endVertex();
 				buffer.pos(x2, y2, z2).color(colour.red, colour.green, colour.blue, colour.alpha).tex(maxU, maxV).lightmap(colour.light1, colour.light2).endVertex();
-				buffer.pos(x2, y2, z).color(colour.red, colour.green, colour.blue, colour.alpha).tex(maxU, maxV).lightmap(colour.light1, colour.light2).endVertex();
+				buffer.pos(x2, y2, z).color(colour.red, colour.green, colour.blue, colour.alpha).tex(maxU, minV).lightmap(colour.light1, colour.light2).endVertex();
 
 				tessellator.draw();
 

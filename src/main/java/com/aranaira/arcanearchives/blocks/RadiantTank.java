@@ -9,6 +9,7 @@ import com.aranaira.arcanearchives.inventory.handlers.TroveItemHandler;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -21,9 +22,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.Explosion;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -64,12 +67,16 @@ public class RadiantTank extends BlockTemplate
 		return !(heldItem.getItem() instanceof ItemBlock);
 	}
 
-	public static ItemStack generateStack (IBlockState state, World world, BlockPos pos, EntityPlayer player) {
+	public static ItemStack generateStack (IBlockState state, IBlockAccess world, BlockPos pos, EntityPlayer player) {
 		ItemStack stack = new ItemStack(BlockRegistry.RADIANT_TANK);
 
 		RadiantTankTileEntity te = WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, pos);
 		if (te == null) {
 			return stack;
+		}
+
+		if (te.wasCreativeDrop) {
+			return ItemStack.EMPTY;
 		}
 
 		NBTTagCompound tag = stack.getTagCompound();
@@ -90,14 +97,18 @@ public class RadiantTank extends BlockTemplate
 	}
 
 	@Override
-	public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest)
+	@SuppressWarnings("deprecation")
+	public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state)
 	{
-		ItemStack stack = generateStack(state, world, pos, player);
-		EntityItem tank = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), stack);
-		world.spawnEntity(tank);
-
-		return world.setBlockToAir(pos);
+		return generateStack(state, worldIn, pos, null);
 	}
+
+	@Override
+	public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune)
+	{
+	}
+
+
 
 	@Override
 	public void onBlockPlacedBy(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityLivingBase placer, @Nonnull ItemStack stack)
@@ -167,6 +178,22 @@ public class RadiantTank extends BlockTemplate
 	{
 		LineHandler.removeLine(pos);
 
+		ItemStack stack = generateStack(state, world, pos, null);
+		if (!stack.isEmpty())
+		{
+			spawnAsEntity(world, pos, stack);
+		}
+
 		super.breakBlock(world, pos, state);
+	}
+
+	@Override
+	public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player)
+	{
+		RadiantTankTileEntity te = WorldUtil.getTileEntity(RadiantTankTileEntity.class, worldIn, pos);
+		if (te != null) {
+			te.wasCreativeDrop = player.capabilities.isCreativeMode;
+		}
+		super.onBlockHarvested(worldIn, pos, state, player);
 	}
 }

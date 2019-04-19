@@ -17,6 +17,8 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity
 	private final FluidTank inventory = new FluidTank(BASE_CAPACITY);
 	private int upgrades = 0;
 
+	public boolean wasCreativeDrop = false;
+
 	public void update()
 	{
 		if(world.isRemote) return;
