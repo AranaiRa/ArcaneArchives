@@ -58,6 +58,8 @@ tile.accessorblock.name=Accessor
 tile.dominion_crystal.name=Dominion Crystal
 tile.gemcutters_table.name=Gem Cutter's Table
 
+tile.radiant_tank.name=Radiant Tank
+
 entity.spirit_crown_01.name=Crown Mote
 entity.spirit_crown_02.name=Crown Juve
 entity.spirit_crown_03.name=Crown Eld

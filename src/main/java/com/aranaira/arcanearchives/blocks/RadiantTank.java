@@ -23,6 +23,7 @@ import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.Explosion;
@@ -38,6 +39,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class RadiantTank extends BlockTemplate
 {
 	public static final String NAME = "radiant_tank";
+	public static AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.1, 0.0, 0.1, 0.9, 0.98, 0.9);
 
 	public RadiantTank()
 	{
@@ -46,6 +48,13 @@ public class RadiantTank extends BlockTemplate
 		setLightLevel(16 / 16f);
 		setHardness(1.7f);
 		setHarvestLevel("pickaxe", 0);
+	}
+
+	@Override
+	@SuppressWarnings("deprecation")
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+	{
+		return BOUNDING_BOX;
 	}
 
 	@Override

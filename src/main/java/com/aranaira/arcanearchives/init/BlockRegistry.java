@@ -13,7 +13,9 @@ import com.aranaira.arcanearchives.tileentities.unused.MatrixRepositoryTileEntit
 import com.aranaira.arcanearchives.tileentities.unused.MatrixStorageTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
@@ -77,10 +79,28 @@ public class BlockRegistry
 		//MATRIX_STORAGE.setItemBlock(new ItemBlockTemplate(MATRIX_STORAGE));
 		//MATRIX_DISTILLATE.setItemBlock(new ItemBlockTemplate(MATRIX_DISTILLATE));
 		STORAGE_RAW_QUARTZ.setItemBlock(new ItemBlock(STORAGE_RAW_QUARTZ));
-		STORAGE_CUT_QUARTZ.setItemBlock(new ItemBlock(STORAGE_CUT_QUARTZ));
+		STORAGE_CUT_QUARTZ.setItemBlock(new ItemBlock(STORAGE_CUT_QUARTZ) {
+			@Override
+			public EnumRarity getRarity(ItemStack stack)
+			{
+				return EnumRarity.UNCOMMON;
+			}
+		});
 		RADIANT_CHEST.setItemBlock(new ItemBlockTemplate(RADIANT_CHEST));
-		RADIANT_CRAFTING_TABLE.setItemBlock(new ItemBlock(RADIANT_CRAFTING_TABLE));
-		RADIANT_LANTERN.setItemBlock(new ItemBlock(RADIANT_LANTERN));
+		RADIANT_CRAFTING_TABLE.setItemBlock(new ItemBlock(RADIANT_CRAFTING_TABLE) {
+			@Override
+			public EnumRarity getRarity(ItemStack stack)
+			{
+				return EnumRarity.RARE;
+			}
+		});
+		RADIANT_LANTERN.setItemBlock(new ItemBlock(RADIANT_LANTERN) {
+			@Override
+			public EnumRarity getRarity(ItemStack stack)
+			{
+				return EnumRarity.UNCOMMON;
+			}
+		});
 		RADIANT_RESONATOR.setItemBlock(new ItemBlockTemplate(RADIANT_RESONATOR));
 		RAW_QUARTZ.setItemBlock(new ItemBlock(RAW_QUARTZ));
 		//DOMINION_CRYSTAL.setItemBlock(new ItemBlockTemplate(DOMINION_CRYSTAL));

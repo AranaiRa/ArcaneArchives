@@ -1,9 +1,11 @@
 package com.aranaira.arcanearchives.items.itemblocks;
 
+import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -21,6 +23,12 @@ public class RadiantTankItem extends ItemBlock
 	{
 		super(block);
 		this.setMaxStackSize(1);
+	}
+
+	@Override
+	public EnumRarity getRarity(ItemStack stack)
+	{
+		return EnumRarity.EPIC;
 	}
 
 	@Override
