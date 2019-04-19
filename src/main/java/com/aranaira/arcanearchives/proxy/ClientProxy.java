@@ -2,7 +2,9 @@ package com.aranaira.arcanearchives.proxy;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.Keybinds;
+import com.aranaira.arcanearchives.client.render.RadiantTankTESR;
 import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.obj.OBJLoader;
@@ -26,13 +28,13 @@ public class ClientProxy extends CommonProxy
 		OBJLoader.INSTANCE.addDomain(ArcaneArchives.MODID);
 
 		Keybinds.initKeybinds();
+		ClientRegistry.bindTileEntitySpecialRenderer(RadiantTankTileEntity.class, new RadiantTankTESR());
 	}
 
 	@Override
 	public void init(FMLInitializationEvent event)
 	{
 		super.init(event);
-		//ClientCommandHandler.instance.registerCommand(new ArcaneArchivesCommand());
 	}
 
 	@Override
