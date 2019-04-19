@@ -34,10 +34,10 @@ public class RadiantTankItem extends ItemBlock
 			fluid = FluidStack.loadFluidStackFromNBT(tag.getCompoundTag(RadiantTankTileEntity.Tags.HANDLER_ITEM));
 			if (fluid != null) {
 				tooltip.add(I18n.format("arcanearchives.tooltip.tank.fluid", fluid.getLocalizedName()));
-				tooltip.add(I18n.format("arcanearchives.tooltip.tank.amount", fluid.amount, RadiantTankTileEntity.BASE_CAPACITY * tag.getInteger("upgrades") + 1));
+				tooltip.add(I18n.format("arcanearchives.tooltip.tank.amount", fluid.amount, RadiantTankTileEntity.BASE_CAPACITY * (tag.getInteger("upgrades") + 1)));
 			} else {
 				tooltip.add(I18n.format("arcanearchives.tooltip.tank.fluid", "None"));
-				tooltip.add(I18n.format("arcanearchives.tooltip.tank.amount", 0, RadiantTankTileEntity.BASE_CAPACITY * tag.getInteger("upgrades") + 1));
+				tooltip.add(I18n.format("arcanearchives.tooltip.tank.amount", 0, RadiantTankTileEntity.BASE_CAPACITY * (tag.getInteger("upgrades") + 1)));
 			}
 		}
 
