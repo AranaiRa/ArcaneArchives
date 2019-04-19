@@ -102,7 +102,7 @@ public class ContainerRadiantChest extends Container
 			//Players inventory
 			else
 			{
-				if(!mergeItemStack(slotStack, 0, 54, true)) return ItemStack.EMPTY;
+				if(!mergeItemStack(slotStack, 0, 54, false)) return ItemStack.EMPTY;
 			}
 
 			if(slotStack.isEmpty())
