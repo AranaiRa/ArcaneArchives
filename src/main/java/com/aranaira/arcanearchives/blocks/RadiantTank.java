@@ -117,8 +117,6 @@ public class RadiantTank extends BlockTemplate
 	{
 	}
 
-
-
 	@Override
 	public void onBlockPlacedBy(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityLivingBase placer, @Nonnull ItemStack stack)
 	{
