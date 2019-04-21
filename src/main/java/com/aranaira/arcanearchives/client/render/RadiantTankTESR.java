@@ -212,7 +212,9 @@ public class RadiantTankTESR extends TileEntitySpecialRenderer<RadiantTankTileEn
 
 			tessellator.draw();
 
-			GlStateManager.disableBlend();
+			// Per Funwayguy
+			GlStateManager.color(1f, 1f, 1f, 1f);
+			//GlStateManager.disableBlend();
 			RenderHelper.enableStandardItemLighting();
 			GlStateManager.popMatrix();
 		}
