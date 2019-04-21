@@ -1,9 +1,14 @@
 package com.aranaira.arcanearchives.tileentities;
 
+import com.aranaira.arcanearchives.init.ItemRegistry;
+import com.aranaira.arcanearchives.inventory.handlers.TroveItemHandler;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidTank;
@@ -14,6 +19,7 @@ import javax.annotation.Nonnull;
 public class RadiantTankTileEntity extends ImmanenceTileEntity
 {
 	public static final int BASE_CAPACITY = Fluid.BUCKET_VOLUME * 16;
+	public static int MAX_UPGRADES = 10;
 	private final FluidTank inventory = new FluidTank(BASE_CAPACITY);
 	private int upgrades = 0;
 
@@ -116,6 +122,19 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity
 		NBTTagCompound compound = writeToNBT(new NBTTagCompound());
 
 		return new SPacketUpdateTileEntity(pos, 0, compound);
+	}
+
+	public void onRightClickUpgrade (EntityPlayer player, ItemStack upgrade) {
+		assert !player.world.isRemote;
+		if (upgrades + 1 <= MAX_UPGRADES) {
+			upgrades += 1;
+			upgrade.shrink(1);
+			validateCapacity();
+			player.sendStatusMessage(new TextComponentTranslation("arcanearchives.success.upgraded_tank", upgrades, MAX_UPGRADES), true);
+			defaultServerSideUpdate();
+		} else {
+			player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.upgrade_tank_failed", upgrades, MAX_UPGRADES), true);
+		}
 	}
 
 	public static class Tags

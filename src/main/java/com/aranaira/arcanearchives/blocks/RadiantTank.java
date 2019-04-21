@@ -1,15 +1,11 @@
 package com.aranaira.arcanearchives.blocks;
 
-import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.events.LineHandler;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.ItemRegistry;
-import com.aranaira.arcanearchives.inventory.handlers.TroveItemHandler;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
-import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -22,10 +18,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -67,6 +63,21 @@ public class RadiantTank extends BlockTemplate
 		RadiantTankTileEntity te = WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, pos);
 		if (te == null) {
 			return !(heldItem.getItem() instanceof ItemBlock);
+		}
+
+		if(heldItem.getItem() == ItemRegistry.COMPONENT_CONTAINMENTFIELD)
+		{
+			if(!world.isRemote)
+			{
+				if(player.isSneaking())
+				{
+					te.onRightClickUpgrade(player, heldItem);
+				} else
+				{
+					player.sendStatusMessage(new TextComponentTranslation("arcanearchives.warning.sneak_to_upgrade_tank"), true);
+				}
+			}
+			return true;
 		}
 
 		IFluidHandler handler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing);
