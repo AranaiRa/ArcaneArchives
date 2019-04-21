@@ -33,8 +33,12 @@ public class RadiantTankTESR extends TileEntitySpecialRenderer<RadiantTankTileEn
 	{
 		if(te != null)
 		{
+			GlStateManager.pushMatrix();
+			GlStateManager.enableBlend();
 			FluidTank tank = te.getInventory();
 			render(tank.getFluid(), tank.getCapacity(), te.getPos());
+			GlStateManager.disableBlend();
+			GlStateManager.popMatrix();
 		}
 	}
 
@@ -52,9 +56,6 @@ public class RadiantTankTESR extends TileEntitySpecialRenderer<RadiantTankTileEn
 
 		if(fluidStack != null && fluidStack.amount > 0)
 		{
-			GlStateManager.pushMatrix();
-			GlStateManager.enableBlend();
-
 			double x = orig.x;
 			double y = orig.y;
 			double z = orig.z;
@@ -95,7 +96,6 @@ public class RadiantTankTESR extends TileEntitySpecialRenderer<RadiantTankTileEn
 				GL11.glShadeModel(GL11.GL_FLAT);
 			}
 
-			// maybe not supposed to do this
 			GlStateManager.translate(orig.x, orig.y, orig.z);
 
 			ColourUtil.ColourLight colour = ColourUtil.parseColour(color, light);
@@ -213,10 +213,7 @@ public class RadiantTankTESR extends TileEntitySpecialRenderer<RadiantTankTileEn
 			tessellator.draw();
 
 			GlStateManager.disableBlend();
-			GlStateManager.popMatrix();
 			RenderHelper.enableStandardItemLighting();
-
-			GlStateManager.disableBlend();
 			GlStateManager.popMatrix();
 		}
 	}
