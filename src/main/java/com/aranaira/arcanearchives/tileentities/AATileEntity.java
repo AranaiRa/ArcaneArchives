@@ -162,12 +162,9 @@ public class AATileEntity extends TileEntity
 	{
 		if(world == null || world.isRemote) return;
 
-		SPacketUpdateTileEntity packet = getUpdatePacket();
-		MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-		if(server != null)
-		{
-			server.getPlayerList().sendToAllNearExcept(null, pos.getX(), pos.getY(), pos.getZ(), 64, world.provider.getDimension(), packet);
-		}
+		IBlockState state = world.getBlockState(getPos());
+		world.notifyBlockUpdate(getPos(), state, state, 8);
+		this.markDirty();
 	}
 
 	public static class Tags
