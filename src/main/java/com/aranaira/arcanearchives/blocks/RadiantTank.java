@@ -87,6 +87,8 @@ public class RadiantTank extends BlockTemplate
 		return !(heldItem.getItem() instanceof ItemBlock);
 	}
 
+
+
 	public static ItemStack generateStack (IBlockState state, IBlockAccess world, BlockPos pos, EntityPlayer player) {
 		ItemStack stack = new ItemStack(BlockRegistry.RADIANT_TANK);
 
