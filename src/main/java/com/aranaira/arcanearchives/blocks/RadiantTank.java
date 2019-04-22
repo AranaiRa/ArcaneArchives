@@ -25,9 +25,11 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -81,16 +83,12 @@ public class RadiantTank extends BlockTemplate
 		}
 
 		IFluidHandler handler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing);
-		FluidUtil.interactWithFluidHandler(player, hand, handler);
-
-		// I saw Darkhax do this!
-		return !(heldItem.getItem() instanceof ItemBlock);
+		return FluidUtil.interactWithFluidHandler(player, hand, handler);
 	}
 
 
-
 	public static ItemStack generateStack (IBlockState state, IBlockAccess world, BlockPos pos, EntityPlayer player) {
-		ItemStack stack = new ItemStack(BlockRegistry.RADIANT_TANK);
+		ItemStack stack = new ItemStack(BlockRegistry.RADIANT_TANK.getItemBlock());
 
 		RadiantTankTileEntity te = WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, pos);
 		if (te == null) {
@@ -107,7 +105,7 @@ public class RadiantTank extends BlockTemplate
 			stack.setTagCompound(tag);
 		}
 
-		tag.setTag("tank", te.serializeStack());
+		te.serializeStack(tag);
 
 		return stack;
 	}

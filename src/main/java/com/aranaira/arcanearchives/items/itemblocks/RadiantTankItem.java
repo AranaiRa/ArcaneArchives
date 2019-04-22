@@ -12,6 +12,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -57,6 +58,13 @@ public class RadiantTankItem extends ItemBlock
 	@Override
 	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt)
 	{
+		if (!stack.isEmpty()) {
+			int capacity = RadiantTankTileEntity.BASE_CAPACITY;
+			if (nbt != null) {
+				capacity *= (nbt.getInteger("upgrades") + 1);
+			}
+			return new FluidHandlerItemStack(stack, capacity);
+		}
 		return super.initCapabilities(stack, nbt);
 	}
 }

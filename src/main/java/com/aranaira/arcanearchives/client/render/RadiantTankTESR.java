@@ -44,10 +44,13 @@ public class RadiantTankTESR extends TileEntitySpecialRenderer<RadiantTankTileEn
 
 	public void render(ItemStack stack)
 	{
-		NBTTagCompound tag = stack.getTagCompound().getCompoundTag("tank");
-		FluidStack fluid = FluidStack.loadFluidStackFromNBT(tag.getCompoundTag(RadiantTankTileEntity.Tags.HANDLER_ITEM));
-		int capacity = RadiantTankTileEntity.BASE_CAPACITY * (tag.getInteger("upgrades") + 1);
-		render(fluid, capacity, BlockPos.ORIGIN);
+		if (stack.hasTagCompound())
+		{
+			NBTTagCompound tag = stack.getTagCompound().getCompoundTag("tank");
+			FluidStack fluid = FluidStack.loadFluidStackFromNBT(tag.getCompoundTag(RadiantTankTileEntity.Tags.HANDLER_ITEM));
+			int capacity = RadiantTankTileEntity.BASE_CAPACITY * (tag.getInteger("upgrades") + 1);
+			render(fluid, capacity, BlockPos.ORIGIN);
+		}
 	}
 
 	public void render(FluidStack fluidStack, int capacity, BlockPos pos)

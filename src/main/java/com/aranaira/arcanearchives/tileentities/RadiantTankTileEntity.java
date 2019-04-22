@@ -1,7 +1,5 @@
 package com.aranaira.arcanearchives.tileentities;
 
-import com.aranaira.arcanearchives.init.ItemRegistry;
-import com.aranaira.arcanearchives.inventory.handlers.TroveItemHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -13,6 +11,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 
 import javax.annotation.Nonnull;
 
@@ -30,6 +29,11 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity
 		if(world.isRemote) return;
 
 		defaultServerSideUpdate();
+	}
+
+	public int getUpgrades()
+	{
+		return upgrades;
 	}
 
 	public int getCapacity () {
@@ -85,16 +89,18 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity
 		return compound;
 	}
 
-	public NBTTagCompound serializeStack () {
-		NBTTagCompound compound = new NBTTagCompound();
-		compound.setInteger("upgrades", upgrades);
-		compound.setTag(Tags.HANDLER_ITEM, this.inventory.writeToNBT(new NBTTagCompound()));
-		return compound;
+	public NBTTagCompound serializeStack (NBTTagCompound tag) {
+		if (inventory.getFluid() != null)
+		{
+			tag.setTag(FluidHandlerItemStack.FLUID_NBT_KEY, inventory.writeToNBT(new NBTTagCompound()));
+		}
+		tag.setInteger("upgrades", upgrades);
+		return tag;
 	}
 
 	public void deserializeStack (NBTTagCompound tag) {
 		this.upgrades = tag.getInteger("upgrades");
-		this.inventory.readFromNBT(tag.getCompoundTag(Tags.HANDLER_ITEM));
+		this.inventory.readFromNBT(tag.getCompoundTag(FluidHandlerItemStack.FLUID_NBT_KEY));
 	}
 
 	public FluidTank getInventory()
