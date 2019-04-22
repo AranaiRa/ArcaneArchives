@@ -20,7 +20,7 @@ public class GCTCategory implements IRecipeCategory<GCTWrapper>
 
 	public GCTCategory(IGuiHelper helper)
 	{
-		this.background = helper.createDrawable(new ResourceLocation(ArcaneArchives.MODID, "textures/gui/jei/gem_cutters_table.png"), 0, 0, 72, 136);
+		this.background = helper.createDrawable(new ResourceLocation(ArcaneArchives.MODID, "textures/gui/jei/gem_cutters_table.png"), 0, 0, 120, 72);
 	}
 
 	@Override
@@ -56,10 +56,10 @@ public class GCTCategory implements IRecipeCategory<GCTWrapper>
 			GCTRecipe recipe = recipeWrapper.recipe;
 			for(int i = 0; i < recipe.getIngredients().size(); i++)
 			{
-				group.init(i, true, i * 18, ((i >= 4) ? 20 : 0));
+				group.init(i, true, i % 2 == 0 ? 0 : 18, (i / 2) * 18);
 				group.set(i, Arrays.asList(recipe.getIngredients().get(i).getMatchingStacks()));
 			}
-			group.init(8, false, 27, 115);
+			group.init(8, false, 98, 27);
 			group.set(8, recipe.getRecipeOutput());
 		}
 	}
