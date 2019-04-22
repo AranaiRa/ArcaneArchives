@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.client.render;
 
+import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
 import com.aranaira.arcanearchives.util.ColourUtil;
 import net.minecraft.client.Minecraft;
@@ -18,6 +19,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
@@ -44,12 +47,16 @@ public class RadiantTankTESR extends TileEntitySpecialRenderer<RadiantTankTileEn
 
 	public void render(ItemStack stack)
 	{
-		if (stack.hasTagCompound())
+		if (stack.hasTagCompound() && stack.getItem() == BlockRegistry.RADIANT_TANK.getItemBlock())
 		{
-			NBTTagCompound tag = stack.getTagCompound().getCompoundTag("tank");
-			FluidStack fluid = FluidStack.loadFluidStackFromNBT(tag.getCompoundTag(RadiantTankTileEntity.Tags.HANDLER_ITEM));
-			int capacity = RadiantTankTileEntity.BASE_CAPACITY * (tag.getInteger("upgrades") + 1);
-			render(fluid, capacity, BlockPos.ORIGIN);
+			NBTTagCompound tag = stack.getTagCompound();
+			FluidHandlerItemStack handler = (FluidHandlerItemStack) stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
+			if (handler != null)
+			{
+				FluidStack fluid = handler.getFluid();
+				int capacity = RadiantTankTileEntity.BASE_CAPACITY * (tag.getInteger("upgrades") + 1);
+				render(fluid, capacity, BlockPos.ORIGIN);
+			}
 		}
 	}
 
