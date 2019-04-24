@@ -32,10 +32,8 @@ public class RadiantTankTESR extends TileEntitySpecialRenderer<RadiantTankTileEn
 	private static Vec3d other = new Vec3d(0.76d, 0d, 0.76d);
 
 	@Override
-	public void render(RadiantTankTileEntity te, double _x, double _y, double _z, float partialTicks, int destroyStage, float alpha)
-	{
-		if(te != null)
-		{
+	public void render(RadiantTankTileEntity te, double _x, double _y, double _z, float partialTicks, int destroyStage, float alpha) {
+		if(te != null) {
 			GlStateManager.pushMatrix();
 			GlStateManager.enableBlend();
 			FluidTank tank = te.getInventory();
@@ -45,27 +43,10 @@ public class RadiantTankTESR extends TileEntitySpecialRenderer<RadiantTankTileEn
 		}
 	}
 
-	public void render(ItemStack stack)
-	{
-		if (stack.hasTagCompound() && stack.getItem() == BlockRegistry.RADIANT_TANK.getItemBlock())
-		{
-			NBTTagCompound tag = stack.getTagCompound();
-			FluidHandlerItemStack handler = (FluidHandlerItemStack) stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
-			if (handler != null)
-			{
-				FluidStack fluid = handler.getFluid();
-				int capacity = RadiantTankTileEntity.BASE_CAPACITY * (tag.getInteger("upgrades") + 1);
-				render(fluid, capacity, BlockPos.ORIGIN);
-			}
-		}
-	}
-
-	public void render(FluidStack fluidStack, int capacity, BlockPos pos)
-	{
+	public void render(FluidStack fluidStack, int capacity, BlockPos pos) {
 		if(rendererDispatcher == null) setRendererDispatcher(TileEntityRendererDispatcher.instance);
 
-		if(fluidStack != null && fluidStack.amount > 0)
-		{
+		if(fluidStack != null && fluidStack.amount > 0) {
 			double x = orig.x;
 			double y = orig.y;
 			double z = orig.z;
@@ -81,8 +62,7 @@ public class RadiantTankTESR extends TileEntitySpecialRenderer<RadiantTankTileEn
 			int light = mc.world.getCombinedLight(pos, fluidStack.getFluid().getLuminosity());
 			int color = fluidStack.getFluid().getColor(fluidStack);
 
-			if(pos != BlockPos.ORIGIN)
-			{
+			if(pos != BlockPos.ORIGIN) {
 				float sx = (float) (pos.getX() - TileEntityRendererDispatcher.staticPlayerX);
 				float sy = (float) (pos.getY() - TileEntityRendererDispatcher.staticPlayerY);
 				float sz = (float) (pos.getZ() - TileEntityRendererDispatcher.staticPlayerZ);
@@ -98,11 +78,9 @@ public class RadiantTankTESR extends TileEntitySpecialRenderer<RadiantTankTileEn
 			GlStateManager.enableBlend();
 			GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
-			if(Minecraft.isAmbientOcclusionEnabled())
-			{
+			if(Minecraft.isAmbientOcclusionEnabled()) {
 				GL11.glShadeModel(GL11.GL_SMOOTH);
-			} else
-			{
+			} else {
 				GL11.glShadeModel(GL11.GL_FLAT);
 			}
 
@@ -128,23 +106,20 @@ public class RadiantTankTESR extends TileEntitySpecialRenderer<RadiantTankTileEn
 			double u = orig.x % 1d;
 			double u1 = u + width;
 
-			while(u1 > 1f)
-			{
+			while(u1 > 1f) {
 				u1 -= 1f;
 			}
 
 			double vy = orig.y % 1d;
 			double vy1 = vy + height;
-			while(vy1 > 1f)
-			{
+			while(vy1 > 1f) {
 				vy1 -= 1f;
 			}
 
 			final double vz = orig.z % 1d;
 			double vz1 = vz + length;
 
-			while(vz1 > 1f)
-			{
+			while(vz1 > 1f) {
 				vz1 -= 1f;
 			}
 
@@ -227,6 +202,18 @@ public class RadiantTankTESR extends TileEntitySpecialRenderer<RadiantTankTileEn
 			//GlStateManager.disableBlend();
 			RenderHelper.enableStandardItemLighting();
 			GlStateManager.popMatrix();
+		}
+	}
+
+	public void render(ItemStack stack) {
+		if (stack.hasTagCompound() && stack.getItem() == BlockRegistry.RADIANT_TANK.getItemBlock()) {
+			NBTTagCompound tag = stack.getTagCompound();
+			FluidHandlerItemStack handler = (FluidHandlerItemStack) stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
+			if (handler != null) {
+				FluidStack fluid = handler.getFluid();
+				int capacity = RadiantTankTileEntity.BASE_CAPACITY * (tag.getInteger("upgrades") + 1);
+				render(fluid, capacity, BlockPos.ORIGIN);
+			}
 		}
 	}
 }

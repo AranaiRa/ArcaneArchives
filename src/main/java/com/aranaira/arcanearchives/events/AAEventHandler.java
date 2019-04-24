@@ -19,15 +19,13 @@ import net.minecraftforge.items.IItemHandler;
 public class AAEventHandler
 {
 	@SubscribeEvent
-	public static void onBlockBreakEvent(BreakEvent event)
-	{
+	public static void onBlockBreakEvent(BreakEvent event) {
 		if (!ConfigHandler.UnbreakableContainers) return;
 
 		World w = event.getWorld();
 		Block block = event.getState().getBlock();
 
-		if(!w.isRemote && block == BlockRegistry.RADIANT_CHEST)
-		{
+		if(!w.isRemote && block == BlockRegistry.RADIANT_CHEST) {
 			RadiantChestTileEntity te = WorldUtil.getTileEntity(RadiantChestTileEntity.class, w, event.getPos());
 			if(te == null) return;
 
@@ -39,34 +37,28 @@ public class AAEventHandler
 			boolean allSlotsEmpty = true;
 
 			// null everything
-			for(int i = 0; i < handler.getSlots(); i++)
-			{
-				if(!handler.getStackInSlot(i).isEmpty())
-				{
+			for(int i = 0; i < handler.getSlots(); i++) {
+				if(!handler.getStackInSlot(i).isEmpty()) {
 					allSlotsEmpty = false;
 					break;
 				}
 			}
 
 			if(!allSlotsEmpty) event.setCanceled(true);
-		} else if(!w.isRemote && block == BlockRegistry.RADIANT_TROVE)
-		{
+		} else if (!w.isRemote && block == BlockRegistry.RADIANT_TROVE) {
 			RadiantTroveTileEntity te = WorldUtil.getTileEntity(RadiantTroveTileEntity.class, w, event.getPos());
-			if(te != null && !te.isEmpty())
-			{
+			if(te != null && !te.isEmpty()) {
 				event.setCanceled(true);
 			}
 		}
 	}
 
 	@SubscribeEvent
-	public static void onLivingDestroyBlockEvent(LivingDestroyBlockEvent event)
-	{
+	public static void onLivingDestroyBlockEvent(LivingDestroyBlockEvent event) {
 		if (!ConfigHandler.UnbreakableContainers) return;
 
 		Block block = event.getState().getBlock();
-		if(block == BlockRegistry.RADIANT_CHEST || block == BlockRegistry.RADIANT_TROVE)
-		{
+		if(block == BlockRegistry.RADIANT_CHEST || block == BlockRegistry.RADIANT_TROVE) {
 			event.setCanceled(true);
 		}
 	}

@@ -17,8 +17,7 @@ public class NetworkHelper
 	// TODO: This needs to be cleared whenever the player enters a new world
 	private static Map<UUID, ClientNetwork> CLIENT_MAP = new HashMap<>();
 
-	public static void clearClientCache()
-	{
+	public static void clearClientCache() {
 		CLIENT_MAP.clear();
 	}
 
@@ -31,18 +30,15 @@ public class NetworkHelper
 	 * @return An ServerNetwork instance for the given id, or null if it was not found.
 	 */
 	@Nullable
-	public static ServerNetwork getServerNetwork(UUID uuid, World world)
-	{
-		if(uuid == null || uuid.equals(INVALID))
-		{
+	public static ServerNetwork getServerNetwork(UUID uuid, World world) {
+		if(uuid == null || uuid.equals(INVALID)) {
 			ArcaneArchives.logger.warn(() -> "Attempted to fetch an invalid archive: " + uuid);
 			ArcaneArchives.logger.warn("Trace:", new InvalidNetworkException("UUID must be valid"));
 			// In an ideal situation, we won't need these checks, but it's useful for notifying about bugs with a
 			// reduction in the chance of crashing the server/client
 			return null;
 		}
-		if(world == null || world.getMapStorage() == null)
-		{
+		if(world == null || world.getMapStorage() == null) {
 			ArcaneArchives.logger.error(String.format("Attempted to load a network for %s, but the world or its storage is null!", uuid.toString()));
 			ArcaneArchives.logger.warn("Trace:", new InvalidNetworkException("World is null!"));
 			return null;
@@ -50,8 +46,7 @@ public class NetworkHelper
 
 		AAWorldSavedData saveData = (AAWorldSavedData) world.getMapStorage().getOrLoadData(AAWorldSavedData.class, AAWorldSavedData.ID);
 
-		if(saveData == null)
-		{
+		if(saveData == null) {
 			saveData = new AAWorldSavedData();
 			world.getMapStorage().setData(AAWorldSavedData.ID, saveData);
 		}
@@ -59,15 +54,12 @@ public class NetworkHelper
 		return saveData.getNetwork(uuid);
 	}
 
-	public static ClientNetwork getClientNetwork(UUID uuid)
-	{
+	public static ClientNetwork getClientNetwork(UUID uuid) {
 		if(uuid == null || uuid.equals(INVALID)) return null;
 
-		if(CLIENT_MAP.containsKey(uuid))
-		{
+		if(CLIENT_MAP.containsKey(uuid)) {
 			return CLIENT_MAP.get(uuid);
-		} else
-		{
+		} else {
 			ClientNetwork net = new ClientNetwork(uuid);
 			CLIENT_MAP.put(uuid, net);
 			return net;
@@ -81,10 +73,8 @@ public class NetworkHelper
 		return getClientNetwork(id);
 	}
 
-	public static class InvalidNetworkException extends NullPointerException
-	{
-		InvalidNetworkException(String s)
-		{
+	public static class InvalidNetworkException extends NullPointerException {
+		InvalidNetworkException(String s) {
 			super(s);
 		}
 	}

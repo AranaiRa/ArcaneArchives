@@ -11,8 +11,7 @@ public class ContainerMatrixRepository extends Container
 {
 	MatrixRepositoryTileEntity mTileEntity;
 
-	public ContainerMatrixRepository(MatrixRepositoryTileEntity MRTE, IInventory playerInventory)
-	{
+	public ContainerMatrixRepository(MatrixRepositoryTileEntity MRTE, IInventory playerInventory) {
 		//ServerNetwork aanetwork = NetworkHelper.getServerNetwork(playerIn.getUniqueID());
 		mTileEntity = MRTE;
 
@@ -23,8 +22,7 @@ public class ContainerMatrixRepository extends Container
 	}
 
 	@Override
-	public boolean canInteractWith(@Nonnull EntityPlayer playerIn)
-	{
+	public boolean canInteractWith(@Nonnull EntityPlayer playerIn) {
 		return true;
 	}
 }

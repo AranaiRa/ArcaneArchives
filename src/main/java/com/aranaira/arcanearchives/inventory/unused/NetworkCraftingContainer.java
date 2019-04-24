@@ -8,9 +8,7 @@ import net.minecraft.world.World;
 public class NetworkCraftingContainer extends ContainerWorkbench
 {
 
-	public NetworkCraftingContainer(InventoryPlayer playerInventory, World worldIn, BlockPos posIn)
-	{
+	public NetworkCraftingContainer(InventoryPlayer playerInventory, World worldIn, BlockPos posIn) {
 		super(playerInventory, worldIn, posIn);
 	}
-
 }

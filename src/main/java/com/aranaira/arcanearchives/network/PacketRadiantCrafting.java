@@ -11,39 +11,31 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketRadiantCrafting
 {
-	public static class LastRecipe implements IMessage
-	{
+	public static class LastRecipe implements IMessage {
 		private IRecipe recipe;
 
-		public LastRecipe()
-		{
+		public LastRecipe() {
 		}
 
-		public LastRecipe(IRecipe recipe)
-		{
+		public LastRecipe(IRecipe recipe) {
 			this.recipe = recipe;
 		}
 
 		@Override
-		public void fromBytes(ByteBuf buf)
-		{
+		public void fromBytes(ByteBuf buf) {
 			recipe = CraftingManager.REGISTRY.getObjectById(buf.readInt());
 		}
 
 		@Override
-		public void toBytes(ByteBuf buf)
-		{
+		public void toBytes(ByteBuf buf) {
 			buf.writeInt(CraftingManager.REGISTRY.getIDForObject(recipe));
 		}
 
-		public static class Handler extends NetworkHandler.ClientHandler<LastRecipe>
-		{
+		public static class Handler extends NetworkHandler.ClientHandler<LastRecipe> {
 			@Override
-			public void processMessage(LastRecipe message, MessageContext ctx)
-			{
+			public void processMessage(LastRecipe message, MessageContext ctx) {
 				Container container = Minecraft.getMinecraft().player.openContainer;
-				if(container instanceof ContainerRadiantCraftingTable)
-				{
+				if(container instanceof ContainerRadiantCraftingTable) {
 					((ContainerRadiantCraftingTable) container).updateLastRecipeFromServer(message.recipe);
 				}
 			}

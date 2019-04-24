@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.items;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.AAGuiHandler;
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.Keybinds;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
@@ -27,19 +27,24 @@ public class ManifestItem extends ItemTemplate
 {
 	public static final String NAME = "item_manifest";
 
-	public ManifestItem()
-	{
+	public ManifestItem() {
 		super(NAME);
 		setMaxStackSize(1);
 	}
 
-	public static void openManifest(World worldIn, EntityPlayer playerIn)
-	{
-		if(playerIn.isSneaking())
-		{
+	@Override
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+		if(!worldIn.isRemote) return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
+
+		openManifest(worldIn, playerIn);
+
+		return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
+	}
+
+	public static void openManifest(World worldIn, EntityPlayer playerIn) {
+		if(playerIn.isSneaking()) {
 			LineHandler.clearChests(playerIn.dimension);
-		} else
-		{
+		} else {
 			ClientNetwork network = NetworkHelper.getClientNetwork(playerIn.getUniqueID());
 			network.manifestItems.clear();
 			network.synchroniseManifest();
@@ -49,18 +54,7 @@ public class ManifestItem extends ItemTemplate
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
-	{
-		if(!worldIn.isRemote) return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
-
-		openManifest(worldIn, playerIn);
-
-		return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
-	}
-
-	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
-	{
+	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		String additional = "";
 		if (Keybinds.manifestKey.getKeyCode() != 0) {
 			additional = " or " + Keybinds.manifestKey.getDisplayName();
@@ -71,13 +65,11 @@ public class ManifestItem extends ItemTemplate
 		}
 		tooltip.add(TextFormatting.GOLD + "" + TextFormatting.BOLD + "Sneak-Right-Click" + additional + TextFormatting.RESET + TextFormatting.GOLD + " to clear inventory tracking.");
 		if (Keybinds.manifestKey.getKeyCode() == 0) {
-
 		}
 	}
 
 	@Override
-	public EnumRarity getRarity(ItemStack stack)
-	{
+	public EnumRarity getRarity(ItemStack stack) {
 		return EnumRarity.RARE;
 	}
 }

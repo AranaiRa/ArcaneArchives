@@ -32,15 +32,13 @@ public class ScepterRevelationItem extends ItemTemplate
 {
 	public static final String NAME = "item_scepterrevelation";
 
-	public ScepterRevelationItem()
-	{
+	public ScepterRevelationItem() {
 		super(NAME);
 		setMaxStackSize(1);
 	}
 
 	@Override
-	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
-	{
+	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (hand != EnumHand.MAIN_HAND) return EnumActionResult.SUCCESS;
 
 		if (world.isAirBlock(pos)) return EnumActionResult.SUCCESS;
@@ -152,8 +150,7 @@ public class ScepterRevelationItem extends ItemTemplate
 			BlockPos parentPos = te.getParent();
 			if (parent == null) {
 				player.sendMessage(new TextComponentTranslation("arcanearchives.data.scepter.accessor.invalid").setStyle(error));
-			} else
-			{
+			} else {
 				player.sendMessage(new TextComponentTranslation("arcanearchives.data.scepter.accessor.accessor_to", new TextComponentTranslation(parent.getTranslationKey()+".name"), parentPos.getX(), parentPos.getY(), parentPos.getZ()).setStyle(def));
 			}
 		}
@@ -162,14 +159,12 @@ public class ScepterRevelationItem extends ItemTemplate
 	}
 
 	@Override
-    public EnumRarity getRarity(ItemStack stack)
-    {
-    	return EnumRarity.RARE;
-    }
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(TextFormatting.GOLD + "Used while sneaking to query information from devices and containers.");
+	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
-	{
-		tooltip.add(TextFormatting.GOLD + "Used while sneaking to query information from devices and containers.");
+    public EnumRarity getRarity(ItemStack stack) {
+    	return EnumRarity.RARE;
 	}
 }

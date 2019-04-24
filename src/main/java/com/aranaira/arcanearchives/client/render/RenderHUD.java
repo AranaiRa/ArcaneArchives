@@ -10,7 +10,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -38,8 +37,7 @@ public class RenderHUD
 		Minecraft mc = Minecraft.getMinecraft();
 
 		if (event.getType() == RenderGameOverlayEvent.ElementType.ALL) {
-			if(mc.player.ticksExisted - lastDrew < 0)
-			{
+			if(mc.player.ticksExisted - lastDrew < 0) {
 				lastDrew = Math.max(0, mc.player.ticksExisted - 60);
 			}
 
@@ -58,8 +56,7 @@ public class RenderHUD
 						TroveItemHandler handler = te.getInventory();
 
 						ItemStack item = handler.getItemCurrent();
-						if(!handler.isEmpty())
-						{
+						if(!handler.isEmpty()) {
 							RenderHelper.enableGUIStandardItemLighting();
 							mc.getRenderItem().renderItemIntoGUI(item, x - 40, y);
 							RenderHelper.disableStandardItemLighting();
@@ -67,8 +64,7 @@ public class RenderHUD
 							mc.fontRenderer.drawStringWithShadow(item.getDisplayName(), (float)(x - 19 -  mc.fontRenderer.getStringWidth(item.getDisplayName()) / 2), (float)(y - 11), 16777215);
 							mc.fontRenderer.drawStringWithShadow(s, (float)(x - 20), (float)(y + 3), 16777215);
 							if (handler.getUpgrades() != 0) {
-								if (handler.getUpgrades() == 1)
-								{
+								if (handler.getUpgrades() == 1) {
 									s = I18n.format("arcanearchives.data.gui.radiant_trove.upgrade", handler.getUpgrades());
 								} else {
 									s = I18n.format("arcanearchives.data.gui.radiant_trove.upgrades", handler.getUpgrades());
@@ -77,26 +73,20 @@ public class RenderHUD
 							}
 						} else if (handler.getUpgrades() != 0) {
 							String s;
-							if(handler.getUpgrades() == 1)
-							{
+							if(handler.getUpgrades() == 1) {
 								s = I18n.format("arcanearchives.data.gui.radiant_trove.upgrade", handler.getUpgrades());
-							} else
-							{
+							} else {
 								s = I18n.format("arcanearchives.data.gui.radiant_trove.upgrades", handler.getUpgrades());
 							}
 							mc.fontRenderer.drawStringWithShadow(TextFormatting.GOLD + s, (float) (x - 19 - mc.fontRenderer.getStringWidth(s) / 2), (float) (y), 16777215);
-						} else
-						{
-							if(mc.player.ticksExisted - lastDrew >= 40)
-							{
+						} else {
+							if(mc.player.ticksExisted - lastDrew >= 40) {
 								ArcaneArchives.logger.error("DEBUG: Not drawing a trove as it appears to be un-upgraded and empty.");
 								lastDrew = mc.player.ticksExisted;
 							}
 						}
-					} else
-					{
-						if(mc.player.ticksExisted - lastDrew >= 40)
-						{
+					} else {
+						if(mc.player.ticksExisted - lastDrew >= 40) {
 							ArcaneArchives.logger.error("DEBUG: Can't draw trove as there isn't a tile entity to access!");
 							lastDrew = mc.player.ticksExisted;
 						}

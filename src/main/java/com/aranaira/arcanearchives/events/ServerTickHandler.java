@@ -5,8 +5,8 @@ import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
-import com.aranaira.arcanearchives.tileentities.unused.MatrixCoreTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
+import com.aranaira.arcanearchives.tileentities.unused.MatrixCoreTileEntity;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
@@ -22,34 +22,23 @@ public class ServerTickHandler
 	private static final List<ImmanenceTileEntity> incomingITEs = new ArrayList<>();
 	private static final List<ImmanenceTileEntity> outgoingITEs = new ArrayList<>();
 
-	public static void incomingITE(ImmanenceTileEntity entity)
-	{
+	public static void incomingITE(ImmanenceTileEntity entity) {
 		incomingITEs.add(entity);
 	}
 
-	public static void outgoingITE(ImmanenceTileEntity entity)
-	{
-		outgoingITEs.add(entity);
-	}
-
 	@SubscribeEvent
-	public static void onServerTick(TickEvent.ServerTickEvent event)
-	{
+	public static void onServerTick(TickEvent.ServerTickEvent event) {
 		if(event.phase != TickEvent.Phase.END) return;
 
 		List<ImmanenceTileEntity> consumed = new ArrayList<>();
 
-		for(ImmanenceTileEntity ite : incomingITEs)
-		{
-			if(ite.ticks() > 30)
-			{
+		for(ImmanenceTileEntity ite : incomingITEs) {
+			if(ite.ticks() > 30) {
 				outgoingITE(ite);
 				ArcaneArchives.logger.debug(String.format("Tile entity with the class %s spent 30 ticks in the queue and is being discarded.", ite.getClass().getName()));
-			} else
-			{
+			} else {
 				UUID networkId = ite.networkID;
-				if(networkId == null || networkId.equals(NetworkHelper.INVALID))
-				{
+				if(networkId == null || networkId.equals(NetworkHelper.INVALID)) {
 					ite.tick();
 					continue;
 				}
@@ -75,8 +64,7 @@ public class ServerTickHandler
 
 				ite.generateTileId();
 
-				if(!network.NetworkContainsTile(ite))
-				{
+				if(!network.NetworkContainsTile(ite)) {
 					network.AddTileToNetwork(ite);
 				}
 			}
@@ -86,8 +74,7 @@ public class ServerTickHandler
 
 		incomingITEs.removeAll(consumed);
 
-		for(ImmanenceTileEntity ite : outgoingITEs)
-		{
+		for(ImmanenceTileEntity ite : outgoingITEs) {
 			if(ite.isInvalid()) continue;
 
 			ite.breakBlock();
@@ -96,12 +83,14 @@ public class ServerTickHandler
 		outgoingITEs.clear();
 	}
 
+	public static void outgoingITE(ImmanenceTileEntity entity) {
+		outgoingITEs.add(entity);
+	}
+
 	@SubscribeEvent
-	public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event)
-	{
+	public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
 		ServerNetwork network = NetworkHelper.getServerNetwork(event.player.getUniqueID(), event.player.world);
-		if(network != null)
-		{
+		if(network != null) {
 			network.rebuildTotals();
 		}
 	}

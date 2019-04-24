@@ -29,8 +29,7 @@ public class ContainerRadiantChest extends Container
 	private boolean serverSide;
 	private EntityPlayer player;
 
-	public ContainerRadiantChest(RadiantChestTileEntity tile, EntityPlayer player, boolean serverSide)
-	{
+	public ContainerRadiantChest(RadiantChestTileEntity tile, EntityPlayer player, boolean serverSide) {
 		this.tile = tile;
 		this.player = player;
 		this.serverSide = serverSide;
@@ -39,77 +38,57 @@ public class ContainerRadiantChest extends Container
 
 		IItemHandler handler = tile.getInventory();
 
-		for(int j = 0; j < 6; ++j)
-		{
-			for(int k = 0; k < 9; ++k)
-			{
+		for(int j = 0; j < 6; ++j) {
+			for(int k = 0; k < 9; ++k) {
 				this.addSlotToContainer(new SlotItemHandler(handler, k + j * 9, 16 + k * 18, 16 + j * 18));
 			}
 		}
 
-		for(int l = 0; l < 3; ++l)
-		{
-			for(int j1 = 0; j1 < 9; ++j1)
-			{
+		for(int l = 0; l < 3; ++l) {
+			for(int j1 = 0; j1 < 9; ++j1) {
 				this.addSlotToContainer(new Slot(playerInventory, j1 + l * 9 + 9, 16 + j1 * 18, 142 + l * 18));
 			}
 		}
 
-		for(int i1 = 0; i1 < 9; ++i1)
-		{
+		for(int i1 = 0; i1 < 9; ++i1) {
 			this.addSlotToContainer(new Slot(playerInventory, i1, 16 + i1 * 18, 200));
 		}
 
-		if(serverSide)
-		{
+		if(serverSide) {
 			this.addListener(new RadiantChestListener());
 		}
 	}
 
-	public String getName()
-	{
+	public String getName() {
 		return tile.getChestName();
 	}
 
-	public void setName(String name)
-	{
+	public void setName(String name) {
 		tile.setChestName(name);
 	}
 
 	@Override
-	public boolean canInteractWith(@Nonnull EntityPlayer playerIn)
-	{
-		return true;
-	}
-
-	@Override
 	@Nonnull
-	public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
-	{
+	public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
 		ItemStack stack = ItemStack.EMPTY;
 		final Slot slot = inventorySlots.get(index);
 
-		if(slot != null && slot.getHasStack())
-		{
+		if(slot != null && slot.getHasStack()) {
 			final ItemStack slotStack = slot.getStack();
 			stack = slotStack.copy();
 
 			//Chest inventory
-			if(index < 54)
-			{
+			if(index < 54) {
 				if(!mergeItemStack(slotStack, 54, 90, true)) return ItemStack.EMPTY;
 			}
 			//Players inventory
-			else
-			{
+			else {
 				if(!mergeItemStack(slotStack, 0, 54, false)) return ItemStack.EMPTY;
 			}
 
-			if(slotStack.isEmpty())
-			{
+			if(slotStack.isEmpty()) {
 				slot.putStack(ItemStack.EMPTY);
-			} else
-			{
+			} else {
 				slot.onSlotChanged();
 			}
 		}
@@ -117,35 +96,43 @@ public class ContainerRadiantChest extends Container
 		return stack;
 	}
 
-	public RadiantChestTileEntity getTile()
-	{
+	@Override
+	public boolean canInteractWith(@Nonnull EntityPlayer playerIn) {
+		return true;
+	}
+
+	public RadiantChestTileEntity getTile() {
 		return tile;
 	}
 
-	public class RadiantChestListener implements IContainerListener
-	{
+	public class RadiantChestListener implements IContainerListener {
 		private ServerNetwork network;
 		private int lastUpdated = 0;
 
-		public RadiantChestListener()
-		{
+		public RadiantChestListener() {
 			this.network = NetworkHelper.getServerNetwork(player.getUniqueID(), player.world);
 			this.lastUpdated = player.ticksExisted;
 		}
 
-		private void sendManifestUpdate()
-		{
-			if(network != null && (player.ticksExisted - lastUpdated > 80))
-			{
+		@Override
+		public void sendAllContents(Container containerToSend, NonNullList<ItemStack> itemsList) {
+		}
+
+		@Override
+		public void sendSlotContents(Container containerToSend, int slotInd, ItemStack stack) {
+			if(slotInd < 54) {
+				sendManifestUpdate();
+			}
+		}
+
+		private void sendManifestUpdate() {
+			if(network != null && (player.ticksExisted - lastUpdated > 80)) {
 				MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-				if(server != null)
-				{
+				if(server != null) {
 					EntityPlayerMP player = server.getPlayerList().getPlayerByUUID(network.getPlayerID());
-					if(player != null)
-					{
+					if(player != null) {
 						NBTTagCompound output = network.buildSynchroniseManifest();
-						if(output != null)
-						{
+						if(output != null) {
 							PacketNetworks.Response packet = new PacketNetworks.Response(PacketNetworks.SynchroniseType.DATA, network.getPlayerID(), output);
 							NetworkHandler.CHANNEL.sendTo(packet, player);
 						}
@@ -156,27 +143,11 @@ public class ContainerRadiantChest extends Container
 		}
 
 		@Override
-		public void sendAllContents(Container containerToSend, NonNullList<ItemStack> itemsList)
-		{
+		public void sendWindowProperty(Container containerIn, int varToUpdate, int newValue) {
 		}
 
 		@Override
-		public void sendSlotContents(Container containerToSend, int slotInd, ItemStack stack)
-		{
-			if(slotInd < 54)
-			{
-				sendManifestUpdate();
-			}
-		}
-
-		@Override
-		public void sendWindowProperty(Container containerIn, int varToUpdate, int newValue)
-		{
-		}
-
-		@Override
-		public void sendAllWindowProperties(Container containerIn, IInventory inventory)
-		{
+		public void sendAllWindowProperties(Container containerIn, IInventory inventory) {
 		}
 	}
 }

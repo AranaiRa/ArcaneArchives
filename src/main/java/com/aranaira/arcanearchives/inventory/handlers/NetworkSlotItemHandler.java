@@ -17,27 +17,30 @@ public class NetworkSlotItemHandler extends SlotItemHandler
 	private ServerNetwork network = null;
 	private ClientNetwork cNetwork = null;
 
-	public NetworkSlotItemHandler(IItemHandler itemHandler, ServerNetwork network, int index, int xPosition, int yPosition, EntityPlayer player)
-	{
+	public NetworkSlotItemHandler(IItemHandler itemHandler, ServerNetwork network, int index, int xPosition, int yPosition, EntityPlayer player) {
 		super(itemHandler, index, xPosition, yPosition);
 		this.player = player;
 		this.network = network;
 	}
 
-	public NetworkSlotItemHandler(IItemHandler itemHandler, ClientNetwork network, int index, int xPosition, int yPosition, EntityPlayer player)
-	{
+	public NetworkSlotItemHandler(IItemHandler itemHandler, ClientNetwork network, int index, int xPosition, int yPosition, EntityPlayer player) {
 		super(itemHandler, index, xPosition, yPosition);
 		this.player = player;
 		this.cNetwork = network;
 	}
 
-	public int getTotalSpace()
-	{
-		if(player.world.isRemote)
-		{
+	//Overriding this with no references to setStackInSlot
+	@Override
+	public boolean isItemValid(@Nonnull ItemStack stack) {
+		if(stack.isEmpty()) return false;
+
+		return getTotalSpace() > 0;
+	}
+
+	public int getTotalSpace() {
+		if(player.world.isRemote) {
 			return cNetwork.GetTotalSpace();
-		} else
-		{
+		} else {
 			return 0;
 			//if(network == null) // TODO: Error
 			//	return 0;
@@ -45,18 +48,8 @@ public class NetworkSlotItemHandler extends SlotItemHandler
 		}
 	}
 
-	//Overriding this with no references to setStackInSlot
 	@Override
-	public boolean isItemValid(@Nonnull ItemStack stack)
-	{
-		if(stack.isEmpty()) return false;
-
-		return getTotalSpace() > 0;
-	}
-
-	@Override
-	public int getItemStackLimit(@Nonnull ItemStack stack)
-	{
+	public int getItemStackLimit(@Nonnull ItemStack stack) {
 		return getTotalSpace();
 	}
 }

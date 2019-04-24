@@ -17,37 +17,25 @@ import java.util.function.Function;
 @SuppressWarnings("unused")
 public class TOPPlugin implements Function<ITheOneProbe, Void>, IProbeInfoProvider
 {
-	public void init(ITheOneProbe top)
-	{
-		top.registerProvider(this);
-	}
-
 	@Override
-	public String getID()
-	{
+	public String getID() {
 		return "arcanearchives:top_integration";
 	}
 
 	@Override
-	public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data)
-	{
+	public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
 		Block block = blockState.getBlock();
-		if(block instanceof RadiantChest)
-		{
+		if(block instanceof RadiantChest) {
 			RadiantChestTileEntity chest = WorldUtil.getTileEntity(RadiantChestTileEntity.class, world, data.getPos());
-			if(chest != null)
-			{
+			if(chest != null) {
 				String chestName = chest.getChestName();
-				if(!chestName.isEmpty())
-				{
+				if(!chestName.isEmpty()) {
 					probeInfo.text(TextFormatting.GOLD + "{*arcanearchives.data.tooltip.chest_name*} " + chestName);
 				}
 			}
-		} else if(block instanceof RadiantResonator)
-		{
+		} else if (block instanceof RadiantResonator) {
 			RadiantResonatorTileEntity resonator = WorldUtil.getTileEntity(RadiantResonatorTileEntity.class, world, data.getPos());
-			if(resonator != null)
-			{
+			if(resonator != null) {
 				probeInfo.text(TextFormatting.GOLD + "{*arcanearchives.data.tooltip.resonator_progress*} " + String.format("%d%%", resonator.getPercentageComplete()));
 				RadiantResonatorTileEntity.TickResult res = resonator.canTick();
 				probeInfo.text(res.getFormat() + "{*" + res.getKey() + "*}");
@@ -56,9 +44,12 @@ public class TOPPlugin implements Function<ITheOneProbe, Void>, IProbeInfoProvid
 	}
 
 	@Override
-	public Void apply(ITheOneProbe iTheOneProbe)
-	{
+	public Void apply(ITheOneProbe iTheOneProbe) {
 		init(iTheOneProbe);
 		return null;
+	}
+
+	public void init(ITheOneProbe top) {
+		top.registerProvider(this);
 	}
 }

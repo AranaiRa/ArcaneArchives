@@ -16,56 +16,47 @@ public class ManifestItemHandler implements IItemHandlerModifiable
 	private ManifestList manifestBase;
 	private ManifestList manifestActive = null;
 
-	public ManifestItemHandler(ManifestList manifest)
-	{
+	public ManifestItemHandler(ManifestList manifest) {
 		this.manifestBase = manifest;
 	}
 
 	@Override
-	public int getSlots()
-	{
+	public int getSlots() {
 		return 81;
 	}
 
 	@Override
-	public ItemStack getStackInSlot(int slot)
-	{
+	public ItemStack getStackInSlot(int slot) {
 		if(manifestActive == null) manifestActive = manifestBase.filtered();
 		return manifestActive.getItemStackForSlot(slot);
 	}
 
+	@Override
+	public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+		return stack;
+	}
+
+	@Override
+	public ItemStack extractItem(int slot, int amount, boolean simulate) {
+		return ItemStack.EMPTY;
+	}
+
+	@Override
+	public int getSlotLimit(int slot) {
+		return 0;
+	}
+
 	@Nullable
-	public ManifestEntry getManifestEntryInSlot(int slot)
-	{
+	public ManifestEntry getManifestEntryInSlot(int slot) {
 		if(manifestActive == null) manifestActive = manifestBase.filtered();
 		return manifestActive.getEntryForSlot(slot);
 	}
 
 	@Override
-	public ItemStack insertItem(int slot, ItemStack stack, boolean simulate)
-	{
-		return stack;
+	public void setStackInSlot(int slot, ItemStack stack) {
 	}
 
-	@Override
-	public ItemStack extractItem(int slot, int amount, boolean simulate)
-	{
-		return ItemStack.EMPTY;
-	}
-
-	@Override
-	public int getSlotLimit(int slot)
-	{
-		return 0;
-	}
-
-	@Override
-	public void setStackInSlot(int slot, ItemStack stack)
-	{
-	}
-
-	public String getSearchText()
-	{
+	public String getSearchText() {
 		return manifestBase.getSearchText();
 	}
 
@@ -73,8 +64,7 @@ public class ManifestItemHandler implements IItemHandlerModifiable
 		return manifestBase.getSearchItem();
 	}
 
-	public void setSearchText(String s)
-	{
+	public void setSearchText(String s) {
 		manifestBase.setSearchText(s);
 		manifestActive = manifestBase.filtered();
 	}
@@ -84,15 +74,12 @@ public class ManifestItemHandler implements IItemHandlerModifiable
 		manifestActive = manifestBase.filtered();
 	}
 
-	public void clear()
-	{
+	public void clear() {
 		manifestBase.setSearchText(null);
 		manifestActive = manifestBase.filtered();
 	}
 
-	public void nullify ()
-	{
+	public void nullify () {
 		manifestActive = null;
 	}
-
 }

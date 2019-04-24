@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.items.unused;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.resources.I18n;
@@ -27,15 +26,25 @@ public class TomeOfRequisitionItem extends ItemTemplate
 
 	public static final String NAME = "item_tomeofrequisition";
 
-	public TomeOfRequisitionItem()
-	{
+	public TomeOfRequisitionItem() {
 		super(NAME);
 	}
 
 	@Override
+	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		//player.openGui(ArcaneArchives.instance, 0, worldIn, (int) player.posX, (int) player.posY, (int) player.posZ);
+		return EnumActionResult.SUCCESS;
+	}
+
+	@Override
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+		//playerIn.openGui(ArcaneArchives.instance, 0, worldIn, (int) playerIn.posX, (int) playerIn.posY, (int) playerIn.posZ);
+		return super.onItemRightClick(worldIn, playerIn, handIn);
+	}
+
+	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
-	{
+	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.RED + "" + TextFormatting.BOLD + I18n.format("arcanearchives.tooltip.notimplemented1"));
 		tooltip.add(TextFormatting.RED + "" + TextFormatting.ITALIC + I18n.format("arcanearchives.tooltip.notimplemented2"));
 		tooltip.add(TextFormatting.RED + "" + TextFormatting.BOLD + I18n.format("arcanearchives.tooltip.temprecipe1"));
@@ -43,22 +52,7 @@ public class TomeOfRequisitionItem extends ItemTemplate
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
-	{
-		//playerIn.openGui(ArcaneArchives.instance, 0, worldIn, (int) playerIn.posX, (int) playerIn.posY, (int) playerIn.posZ);
-		return super.onItemRightClick(worldIn, playerIn, handIn);
-	}
-
-	@Override
-	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
-	{
-		//player.openGui(ArcaneArchives.instance, 0, worldIn, (int) player.posX, (int) player.posY, (int) player.posZ);
-		return EnumActionResult.SUCCESS;
-	}
-
-	@Override
-	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand)
-	{
+	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
 		return super.onItemUseFirst(player, world, pos, side, hitX, hitY, hitZ, hand);
 	}
 }

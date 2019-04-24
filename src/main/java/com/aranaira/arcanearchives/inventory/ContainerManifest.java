@@ -30,54 +30,39 @@ public class ContainerManifest extends Container
 	private boolean serverSide;
 	private EntityPlayer player;
 
-	public ContainerManifest(EntityPlayer playerIn, boolean ServerSide)
-	{
+	public ContainerManifest(EntityPlayer playerIn, boolean ServerSide) {
 		this.serverSide = ServerSide;
 		this.player = playerIn;
 
-		if(ServerSide)
-		{
+		if(ServerSide) {
 			serverNetwork = NetworkHelper.getServerNetwork(playerIn.getUniqueID(), playerIn.world);
-			if(serverNetwork == null)
-			{
+			if(serverNetwork == null) {
 				handler = new ManifestItemHandler(new ManifestList());
-			} else
-			{
+			} else {
 				handler = serverNetwork.getManifestHandler();
 			}
-		} else
-		{
+		} else {
 			clientNetwork = NetworkHelper.getClientNetwork(this.player.getUniqueID());
 			handler = clientNetwork.getManifestHandler();
 		}
 
 		int i = 0;
-		for(int y = 0; y < 9; y++)
-		{
-			for(int x = 0; x < 9; x++)
-			{
+		for(int y = 0; y < 9; y++) {
+			for(int x = 0; x < 9; x++) {
 				this.addSlotToContainer(new SlotItemHandler(handler, i, x * 18 + 12, y * 18 + 30));
 				i++;
 			}
 		}
 	}
 
-	@Override
-	public boolean canInteractWith(@Nonnull EntityPlayer playerIn)
-	{
-		return true;
-	}
-
 	@Nullable
-	public ManifestEntry getEntry(int slotId)
-	{
+	public ManifestEntry getEntry(int slotId) {
 		return handler.getManifestEntryInSlot(slotId);
 	}
 
 	@Override
 	@Nonnull
-	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
-	{
+	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player) {
 		if(this.serverSide) return ItemStack.EMPTY;
 
 		ManifestEntry entry = handler.getManifestEntryInSlot(slotId);
@@ -91,8 +76,7 @@ public class ContainerManifest extends Container
 
 		ManifestTracking.add(entry);
 
-		if(!GuiScreen.isShiftKeyDown())
-		{
+		if(!GuiScreen.isShiftKeyDown()) {
 			Minecraft mc = Minecraft.getMinecraft();
 			mc.displayGuiScreen(null);
 		}
@@ -100,14 +84,17 @@ public class ContainerManifest extends Container
 		return ItemStack.EMPTY;
 	}
 
-	public void SetSearchString(String SearchText)
-	{
+	@Override
+	public boolean canInteractWith(@Nonnull EntityPlayer playerIn) {
+		return true;
+	}
+
+	public void SetSearchString(String SearchText) {
 		handler.setSearchText(SearchText);
 		handler.setSearchItem(null);
 	}
 
-	public String getSearchString()
-	{
+	public String getSearchString() {
 		if (handler.getSearchItem() != null) {
 			return handler.getSearchItem().getDisplayName();
 		}

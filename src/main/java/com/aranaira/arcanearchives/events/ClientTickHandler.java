@@ -17,80 +17,64 @@ public class ClientTickHandler
 	private static LinkedList<WaitEntry> waitlist = new LinkedList<>();
 
 	@SubscribeEvent
-	public static void clientTick(TickEvent.ClientTickEvent event)
-	{
+	public static void clientTick(TickEvent.ClientTickEvent event) {
 		if(event.phase != TickEvent.Phase.END) return;
 
 		ticking = true;
-		synchronized(lock)
-		{
+		synchronized(lock) {
 			ticking = true;
 			Iterator<QueueEntry> iterator = queue.iterator();
-			while(iterator.hasNext())
-			{
+			while(iterator.hasNext()) {
 				QueueEntry entry = iterator.next();
-				if(entry.counter-- <= 0)
-				{
+				if(entry.counter-- <= 0) {
 					entry.runnable.run();
 					iterator.remove();
 				}
 			}
 			ticking = false;
-			for(WaitEntry entry : waitlist)
-			{
+			for(WaitEntry entry : waitlist) {
 				queue.addLast(new QueueEntry(entry.runnable, entry.delay));
 			}
 		}
 		waitlist.clear();
 	}
 
-	public static void addRunnable(Runnable runnable)
-	{
+	public static void addRunnable(Runnable runnable) {
 		addRunnable(runnable, 0);
 	}
 
-	public static void addRunnable(Runnable runnable, int delay)
-	{
-		synchronized(lock)
-		{
-			if(ticking)
-			{
+	public static void addRunnable(Runnable runnable, int delay) {
+		synchronized(lock) {
+			if(ticking) {
 				waitlist.addLast(new WaitEntry(runnable, delay));
-			} else
-			{
+			} else {
 				queue.addLast(new QueueEntry(runnable, delay));
 			}
 		}
 	}
 
-	private static class WaitEntry
-	{
+	private static class WaitEntry {
 		public Runnable runnable;
 		public int delay;
 
-		public WaitEntry(Runnable runnable, int delay)
-		{
+		public WaitEntry(Runnable runnable, int delay) {
 			this.runnable = runnable;
 			this.delay = delay;
 		}
 	}
 
-	private static class QueueEntry
-	{
+	private static class QueueEntry {
 		public Runnable runnable;
 		public int counter;
 
-		public QueueEntry(Runnable runnable, int counter)
-		{
+		public QueueEntry(Runnable runnable, int counter) {
 			this.runnable = runnable;
 			this.counter = counter;
 		}
 	}
 
-	private static class Lock
-	{
-		private Lock()
-		{
+	private static class Lock {
+		private Lock() {
 		}
 	}
 }

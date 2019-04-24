@@ -17,31 +17,26 @@ public class CraftingStationRecipeTransferInfo implements IRecipeTransferInfo<Co
 
 	@Nonnull
 	@Override
-	public Class<ContainerRadiantCraftingTable> getContainerClass()
-	{
+	public Class<ContainerRadiantCraftingTable> getContainerClass() {
 		return ContainerRadiantCraftingTable.class;
 	}
 
 	@Nonnull
 	@Override
-	public String getRecipeCategoryUid()
-	{
+	public String getRecipeCategoryUid() {
 		return VanillaRecipeCategoryUid.CRAFTING;
 	}
 
 	@Override
-	public boolean canHandle(ContainerRadiantCraftingTable container)
-	{
+	public boolean canHandle(ContainerRadiantCraftingTable container) {
 		return true;
 	}
 
 	@Nonnull
 	@Override
-	public List<Slot> getRecipeSlots(ContainerRadiantCraftingTable container)
-	{
+	public List<Slot> getRecipeSlots(ContainerRadiantCraftingTable container) {
 		List<Slot> slots = new ArrayList<>();
-		for(int i = 1; i < 10; i++)
-		{
+		for(int i = 1; i < 10; i++) {
 			slots.add(container.getSlot(i));
 		}
 		return slots;
@@ -49,13 +44,11 @@ public class CraftingStationRecipeTransferInfo implements IRecipeTransferInfo<Co
 
 	@Nonnull
 	@Override
-	public List<Slot> getInventorySlots(ContainerRadiantCraftingTable container)
-	{
+	public List<Slot> getInventorySlots(ContainerRadiantCraftingTable container) {
 		List<Slot> slots = new ArrayList<>();
 
 		// skip the actual slots of the crafting table
-		for(int i = 10; i < container.inventorySlots.size(); i++)
-		{
+		for(int i = 10; i < container.inventorySlots.size(); i++) {
 			slots.add(container.getSlot(i));
 		}
 		return slots;

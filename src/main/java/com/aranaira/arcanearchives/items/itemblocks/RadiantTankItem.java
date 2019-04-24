@@ -22,50 +22,19 @@ import java.util.List;
 
 public class RadiantTankItem extends ItemBlock
 {
-	public RadiantTankItem(Block block)
-	{
+	public RadiantTankItem(Block block) {
 		super(block);
 		this.setMaxStackSize(1);
 	}
 
 	@Override
-	public EnumRarity getRarity(ItemStack stack)
-	{
+	public EnumRarity getRarity(ItemStack stack) {
 		return EnumRarity.EPIC;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
-	{
-		FluidStack fluid;
-
-		if (stack.hasTagCompound()) {
-			NBTTagCompound tag = stack.getTagCompound();
-			IFluidHandlerItem handler = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
-			if(handler instanceof FluidHandlerItemStack)
-			{
-				FluidHandlerItemStack tank = (FluidHandlerItemStack) handler;
-				fluid = tank.getFluid();
-				if (fluid != null) {
-					tooltip.add(I18n.format("arcanearchives.tooltip.tank.fluid", fluid.getLocalizedName()));
-					tooltip.add(I18n.format("arcanearchives.tooltip.tank.amount", fluid.amount, RadiantTankTileEntity.BASE_CAPACITY * (tag.getInteger("upgrades") + 1)));
-				} else
-				{
-					tooltip.add(I18n.format("arcanearchives.tooltip.tank.fluid", "None"));
-					tooltip.add(I18n.format("arcanearchives.tooltip.tank.amount", 0, RadiantTankTileEntity.BASE_CAPACITY * (tag.getInteger("upgrades") + 1)));
-
-				}
-			}
-		}
-
-		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 
 	@Nullable
 	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt)
-	{
+	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) {
 		if (!stack.isEmpty()) {
 			int capacity = RadiantTankTileEntity.BASE_CAPACITY;
 			if (nbt != null) {
@@ -74,5 +43,29 @@ public class RadiantTankItem extends ItemBlock
 			return new FluidHandlerItemStack(stack, capacity);
 		}
 		return super.initCapabilities(stack, nbt);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		FluidStack fluid;
+
+		if (stack.hasTagCompound()) {
+			NBTTagCompound tag = stack.getTagCompound();
+			IFluidHandlerItem handler = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
+			if(handler instanceof FluidHandlerItemStack) {
+				FluidHandlerItemStack tank = (FluidHandlerItemStack) handler;
+				fluid = tank.getFluid();
+				if (fluid != null) {
+					tooltip.add(I18n.format("arcanearchives.tooltip.tank.fluid", fluid.getLocalizedName()));
+					tooltip.add(I18n.format("arcanearchives.tooltip.tank.amount", fluid.amount, RadiantTankTileEntity.BASE_CAPACITY * (tag.getInteger("upgrades") + 1)));
+				} else {
+					tooltip.add(I18n.format("arcanearchives.tooltip.tank.fluid", "None"));
+					tooltip.add(I18n.format("arcanearchives.tooltip.tank.amount", 0, RadiantTankTileEntity.BASE_CAPACITY * (tag.getInteger("upgrades") + 1)));
+				}
+			}
+		}
+
+		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 }

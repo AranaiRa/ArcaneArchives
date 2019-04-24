@@ -10,8 +10,7 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 public class NetworksHandler
 {
 	@SubscribeEvent
-	public static void playerLoggedIn(PlayerEvent.PlayerLoggedInEvent event)
-	{
+	public static void playerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
 		NetworkHelper.clearClientCache();
 	}
 }

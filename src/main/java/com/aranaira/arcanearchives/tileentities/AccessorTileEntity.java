@@ -24,83 +24,56 @@ public class AccessorTileEntity extends AATileEntity
 	private boolean breaking = false;
 	private BlockPos parent = BlockPos.ORIGIN;
 
-	public AccessorTileEntity()
-	{
+	public AccessorTileEntity() {
 		super();
 		setName("accessor");
 		setSize(new Size(1, 1, 1));
 	}
 
-	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound)
-	{
-		if(parent != BlockPos.ORIGIN) compound.setLong(Tags.POS, parent.toLong());
-		return super.writeToNBT(compound);
-	}
-
-	@Override
-	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
-	{
-		readFromNBT(pkt.getNbtCompound());
-		super.onDataPacket(net, pkt);
-	}
-
-	@Override
-	public NBTTagCompound getUpdateTag()
-	{
-		return writeToNBT(new NBTTagCompound());
-	}
-
-	@Override
-	public void readFromNBT(NBTTagCompound compound)
-	{
-		if(compound.hasKey(Tags.POS)) parent = BlockPos.fromLong(compound.getLong(Tags.POS));
-		super.readFromNBT(compound);
-	}
-
-	public boolean onBlockActivated(BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
-	{
+	public boolean onBlockActivated(BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		BlockPos par = getParent();
 		IBlockState parState = world.getBlockState(par);
 		Block parBlock = parState.getBlock();
 
-		if(!(parBlock instanceof BlockTemplate))
-		{
+		if(!(parBlock instanceof BlockTemplate)) {
 			return false;
 		}
 
 		return parBlock.onBlockActivated(world, getParent(), world.getBlockState(getParent()), playerIn, hand, facing, hitX, hitY, hitZ);
+	}	@Override
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+		if(parent != BlockPos.ORIGIN) compound.setLong(Tags.POS, parent.toLong());
+		return super.writeToNBT(compound);
 	}
 
-	public BlockPos getParent()
-	{
+	public BlockPos getParent() {
 		return parent;
+	}	@Override
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+		readFromNBT(pkt.getNbtCompound());
+		super.onDataPacket(net, pkt);
 	}
 
-	public void setParent(BlockPos pos)
-	{
+	public void setParent(BlockPos pos) {
 		this.parent = pos;
+	}	@Override
+	public NBTTagCompound getUpdateTag() {
+		return writeToNBT(new NBTTagCompound());
 	}
 
 	@Nullable
-	public AATileEntity getParentTile()
-	{
-		TileEntity te = world.getTileEntity(getParent());
-		if(te instanceof AATileEntity) return (AATileEntity) te;
-		return null;
-	}
-
-	@Nullable
-	public BlockTemplate getParentBlock()
-	{
+	public BlockTemplate getParentBlock() {
 		Block block = world.getBlockState(getParent()).getBlock();
 		if(block instanceof BlockTemplate) return (BlockTemplate) block;
 		return null;
+	}	@Override
+	public void readFromNBT(NBTTagCompound compound) {
+		if(compound.hasKey(Tags.POS)) parent = BlockPos.fromLong(compound.getLong(Tags.POS));
+		super.readFromNBT(compound);
 	}
 
 	@Override
-	public void breakBlock()
-	{
+	public void breakBlock() {
 		if(breaking) return;
 
 		breaking = true;
@@ -110,15 +83,33 @@ public class AccessorTileEntity extends AATileEntity
 		if(tile != null) tile.breakBlock();
 	}
 
-	@Override
-	public void breakBlock(@Nullable IBlockState state, boolean harvest)
-	{
-		super.breakBlock(state, harvest);
+	@Nullable
+	public AATileEntity getParentTile() {
+		TileEntity te = world.getTileEntity(getParent());
+		if(te instanceof AATileEntity) return (AATileEntity) te;
+		return null;
 	}
 
 	@Override
-	public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing)
-	{
+	public void breakBlock(@Nullable IBlockState state, boolean harvest) {
+		super.breakBlock(state, harvest);
+	}
+
+	public static class Tags {
+		public static final String POS = "pos";
+
+		private Tags() {
+		}
+	}
+
+
+
+
+
+
+
+	@Override
+	public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
 		AATileEntity parent = getParentTile();
 		if(parent != null) return parent.hasCapability(capability, facing);
 		return false;
@@ -126,19 +117,11 @@ public class AccessorTileEntity extends AATileEntity
 
 	@Nullable
 	@Override
-	public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing)
-	{
+	public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
 		AATileEntity parent = getParentTile();
 		if(parent != null) return parent.getCapability(capability, facing);
 		return null;
 	}
 
-	public static class Tags
-	{
-		public static final String POS = "pos";
 
-		private Tags()
-		{
-		}
-	}
 }

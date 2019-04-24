@@ -17,86 +17,71 @@ import java.util.UUID;
 
 public class PacketNetworks
 {
-	public enum SynchroniseType
-	{
+	public enum SynchroniseType {
 		INVALID("invalid"), DATA("data"), MANIFEST("manifest"), NETWORK_ITEMS("network_items");
 
 		private String key;
 
-		SynchroniseType(String key)
-		{
+		SynchroniseType(String key) {
 			this.key = key;
 		}
 
-		public static SynchroniseType fromKey(String key)
-		{
-			for(SynchroniseType type : values())
-			{
+		public static SynchroniseType fromKey(String key) {
+			for(SynchroniseType type : values()) {
 				if(type.key().equals(key)) return type;
 			}
 
 			return INVALID;
 		}
 
-		public String key()
-		{
+		public String key() {
 			return this.key;
 		}
 	}
 
-	public static class Request implements IMessage
-	{
+	public static class Request implements IMessage {
 		SynchroniseType type;
 		UUID playerId;
 
-		public Request()
-		{
+		public Request() {
 			this.type = SynchroniseType.DATA;
 			this.playerId = null;
 		}
 
-		public Request(SynchroniseType type, UUID playerId)
-		{
+		public Request(SynchroniseType type, UUID playerId) {
 			this.type = type;
 			this.playerId = playerId;
 		}
 
 		@Override
-		public void fromBytes(ByteBuf buf)
-		{
+		public void fromBytes(ByteBuf buf) {
 			this.type = SynchroniseType.fromKey(ByteBufUtils.readUTF8String(buf));
 			this.playerId = UUID.fromString(ByteBufUtils.readUTF8String(buf));
 		}
 
 		@Override
-		public void toBytes(ByteBuf buf)
-		{
+		public void toBytes(ByteBuf buf) {
 			ByteBufUtils.writeUTF8String(buf, this.type.key());
 			ByteBufUtils.writeUTF8String(buf, this.playerId.toString());
 		}
 
-		public static class Handler extends NetworkHandler.ServerHandler<Request>
-		{
-			public void processMessage(Request message, MessageContext context)
-			{
+		public static class Handler extends NetworkHandler.ServerHandler<Request> {
+			public void processMessage(Request message, MessageContext context) {
 				MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-				if(server == null)
-				{
+				if(server == null) {
 					ArcaneArchives.logger.error("Server was null when processing sync packet");
 					return;
 				}
 
 				ServerNetwork network = NetworkHelper.getServerNetwork(message.playerId, server.getWorld(0));
-				if(network == null)
-				{
+				if(network == null) {
 					ArcaneArchives.logger.error(() -> "Network was null when processing sync packet for " + message.playerId);
 					return;
 				}
 
 				NBTTagCompound output = null;
 
-				switch(message.type)
-				{
+				switch(message.type) {
 					case DATA:
 						output = network.buildSynchroniseData();
 						break;
@@ -108,52 +93,42 @@ public class PacketNetworks
 				Response response = new Response(message.type, message.playerId, output);
 				EntityPlayerMP player = server.getPlayerList().getPlayerByUUID(message.playerId);
 
-				if(output != null)
-				{
+				if(output != null) {
 					NetworkHandler.CHANNEL.sendTo(response, player);
 				}
 			}
 		}
 	}
 
-	public static class Response extends Request
-	{
+	public static class Response extends Request {
 		private NBTTagCompound data;
 
-		public Response()
-		{
+		public Response() {
 			super();
 		}
 
-		public Response(SynchroniseType type, UUID player, NBTTagCompound data)
-		{
+		public Response(SynchroniseType type, UUID player, NBTTagCompound data) {
 			super(type, player);
 			this.data = data;
-
 		}
 
 		@Override
-		public void fromBytes(ByteBuf buf)
-		{
+		public void fromBytes(ByteBuf buf) {
 			super.fromBytes(buf);
 			this.data = ByteBufUtils.readTag(buf);
 		}
 
 		@Override
-		public void toBytes(ByteBuf buf)
-		{
+		public void toBytes(ByteBuf buf) {
 			super.toBytes(buf);
 			ByteBufUtils.writeTag(buf, this.data);
 		}
 
-		public static class Handler extends NetworkHandler.ClientHandler<Response>
-		{
-			public void processMessage(Response message, MessageContext context)
-			{
+		public static class Handler extends NetworkHandler.ClientHandler<Response> {
+			public void processMessage(Response message, MessageContext context) {
 				ClientNetwork network = NetworkHelper.getClientNetwork(message.playerId);
 
-				switch(message.type)
-				{
+				switch(message.type) {
 					case DATA:
 						network.deserializeData(message.data);
 						break;

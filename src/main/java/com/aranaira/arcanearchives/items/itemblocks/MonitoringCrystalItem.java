@@ -14,21 +14,18 @@ import java.util.List;
 
 public class MonitoringCrystalItem extends ItemBlockTemplate
 {
-	public MonitoringCrystalItem(@Nonnull BlockTemplate block)
-	{
+	public MonitoringCrystalItem(@Nonnull BlockTemplate block) {
 		super(block);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
-	{
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + "Placed on inventories to relay their contents to a manifest.");
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 
 	@Override
-	public EnumRarity getRarity(ItemStack stack)
-	{
+	public EnumRarity getRarity(ItemStack stack) {
 		return EnumRarity.RARE;
 	}
 }

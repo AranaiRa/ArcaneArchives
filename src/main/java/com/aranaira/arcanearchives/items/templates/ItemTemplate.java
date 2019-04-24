@@ -11,8 +11,7 @@ public class ItemTemplate extends Item implements IHasModel
 {
 	private final String name;
 
-	public ItemTemplate(String name)
-	{
+	public ItemTemplate(String name) {
 		this.name = name;
 		setTranslationKey(name);
 		setRegistryName(new ResourceLocation(ArcaneArchives.MODID, name));
@@ -20,8 +19,7 @@ public class ItemTemplate extends Item implements IHasModel
 	}
 
 	@Override
-	public void registerModels()
-	{
+	public void registerModels() {
 		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
 	}
 }

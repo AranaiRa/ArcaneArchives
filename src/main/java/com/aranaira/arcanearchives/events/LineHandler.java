@@ -33,18 +33,14 @@ public class LineHandler
 	private static final long Z_MASK = (1L << NUM_Z_BITS) - 1L;
 
 	@SubscribeEvent
-	public static void renderOverlay(RenderWorldLastEvent event)
-	{
-		if(mBlockPositions.size() > 0)
-		{
+	public static void renderOverlay(RenderWorldLastEvent event) {
+		if(mBlockPositions.size() > 0) {
 			RenderHelper.drawRays(Minecraft.getMinecraft().player.getPositionVector(), ImmutableSet.copyOf(mBlockPositions), 15);
 		}
 	}
 
-	public static void addLine(Vec3d line)
-	{
-		if(mBlockPositions.contains(line))
-		{
+	public static void addLine(Vec3d line) {
+		if(mBlockPositions.contains(line)) {
 			return;
 		}
 
@@ -56,29 +52,24 @@ public class LineHandler
 		removeLine(bpos);
 	}
 
-	public static void removeLine(Vec3d line)
-	{
+	public static void removeLine(Vec3d line) {
 		mBlockPositions.remove(line);
 	}
 
 	@SubscribeEvent
-	public static void playerLoggedIn(PlayerLoggedInEvent event)
-	{
+	public static void playerLoggedIn(PlayerLoggedInEvent event) {
 		mBlockPositions.clear();
 		mIsDrawingLine = false;
 	}
 
-	public static void clearChests(int dimension)
-	{
-		for(Vec3d pos : mBlockPositions)
-		{
+	public static void clearChests(int dimension) {
+		for(Vec3d pos : mBlockPositions) {
 			ManifestTracking.remove(dimension, vec3dToLong(pos));
 		}
 		mBlockPositions.clear();
 	}
 
-	public static long vec3dToLong(Vec3d pos)
-	{
+	public static long vec3dToLong(Vec3d pos) {
 		return ((long) pos.x & X_MASK) << X_SHIFT | ((long) pos.y & Y_MASK) << Y_SHIFT | ((long) pos.z & Z_MASK);
 	}
 }

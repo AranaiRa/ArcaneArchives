@@ -22,15 +22,13 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 	private int bonusTicks = 0;
 	private boolean canTick = false;
 
-	public RadiantResonatorTileEntity()
-	{
+	public RadiantResonatorTileEntity() {
 		super("radiant_resonator_tile_entity");
 		immanenceDrain = 0;
 	}
 
 	@Override
-	public void update()
-	{
+	public void update() {
 		super.update();
 
 		ticks++;
@@ -42,12 +40,10 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 		EntityPlayer player = world.getPlayerEntityByUUID(networkID);
 
 		// Don't tick if the player isn't online
-		if(player == null)
-		{
+		if(player == null) {
 			canTick = false;
 			return;
-		} else
-		{
+		} else {
 			canTick = true;
 		}
 
@@ -55,34 +51,24 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 
 		markDirty();
 
-		if(world.isAirBlock(pos.up()))
-		{
-			if(growth < ticksRequired)
-			{
+		if(world.isAirBlock(pos.up())) {
+			if(growth < ticksRequired) {
 				growth++;
 				if(isDrainPaid) growth += bonusTicks;
-			} else
-			{
+			} else {
 				growth = 0;
 				world.setBlockState(pos.up(), BlockRegistry.RAW_QUARTZ.getDefaultState(), 3);
 			}
 		}
 
-		if(ticks % 50 == 0)
-		{
+		if(ticks % 50 == 0) {
 			this.defaultServerSideUpdate();
 		}
 	}
 
-	public int getPercentageComplete()
-	{
-		return (int) Math.floor(growth / (double) ConfigHandler.ResonatorTickTime * 100D);
-	}
-
 	@Nonnull
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound)
-	{
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
 
 		compound.setInteger(Tags.CURRENT_TICK, growth);
@@ -92,98 +78,83 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound compound)
-	{
+	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 
-		if(compound.hasKey(Tags.CURRENT_TICK))
-		{
+		if(compound.hasKey(Tags.CURRENT_TICK)) {
 			growth = compound.getInteger(Tags.CURRENT_TICK);
 		}
-		if(compound.hasKey(Tags.CAN_TICK))
-		{
+		if(compound.hasKey(Tags.CAN_TICK)) {
 			canTick = compound.getBoolean(Tags.CAN_TICK);
 		}
 	}
 
-	@Override
-	public NBTTagCompound getUpdateTag()
-	{
-		return writeToNBT(new NBTTagCompound());
-	}
-
-	@Override
-	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
-	{
-		readFromNBT(pkt.getNbtCompound());
-		super.onDataPacket(net, pkt);
-	}
-
-	@Override
-	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate)
-	{
-		return (oldState.getBlock() != newSate.getBlock());
+	public int getPercentageComplete() {
+		return (int) Math.floor(growth / (double) ConfigHandler.ResonatorTickTime * 100D);
 	}
 
 	@Override
 	@Nonnull
-	public SPacketUpdateTileEntity getUpdatePacket()
-	{
+	public SPacketUpdateTileEntity getUpdatePacket() {
 		NBTTagCompound compound = writeToNBT(new NBTTagCompound());
 
 		return new SPacketUpdateTileEntity(pos, 0, compound);
 	}
 
-	public TickResult canTick()
-	{
-		if(world.isAirBlock(pos.up()))
-		{
-			if(!canTick)
-			{
+	@Override
+	public NBTTagCompound getUpdateTag() {
+		return writeToNBT(new NBTTagCompound());
+	}
+
+	@Override
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+		readFromNBT(pkt.getNbtCompound());
+		super.onDataPacket(net, pkt);
+	}
+
+	@Override
+	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
+		return (oldState.getBlock() != newSate.getBlock());
+	}
+
+	public TickResult canTick() {
+		if(world.isAirBlock(pos.up())) {
+			if(!canTick) {
 				return TickResult.OFFLINE;
-			} else
-			{
+			} else {
 				return TickResult.TICKING;
 			}
-		} else
-		{
+		} else {
 			IBlockState up = world.getBlockState(pos.up());
-			if(up.getBlock() instanceof RawQuartz)
-			{
+			if(up.getBlock() instanceof RawQuartz) {
 				return TickResult.HARVEST_WAITING;
-			} else
-			{
+			} else {
 				return TickResult.OBSTRUCTION;
 			}
 		}
 	}
 
-	public enum TickResult
-	{
+	public enum TickResult {
 		OBSTRUCTION("obstruction", TextFormatting.RED), HARVEST_WAITING("harvestable", TextFormatting.GOLD), OFFLINE("offline", TextFormatting.DARK_RED), TICKING("resonating", TextFormatting.GREEN);
 
 		private String key;
 		private TextFormatting format;
 
-		TickResult(String key, TextFormatting format)
-		{
+		TickResult(String key, TextFormatting format) {
 			this.key = key;
 			this.format = format;
 		}
 
-		public String getKey()
-		{
+		public String getKey() {
 			return "arcanearchives.data.tooltip.resonator_status." + key;
 		}
 
-		public TextFormatting getFormat()
-		{
+		public TextFormatting getFormat() {
 			return format;
 		}
 	}
 
-	public static class Tags
-	{
+	public static class Tags {
 		public static final String CURRENT_TICK = "current_tick";
 		public static final String CAN_TICK = "can_tick";
 	}

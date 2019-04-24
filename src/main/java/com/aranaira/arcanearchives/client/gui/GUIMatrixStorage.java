@@ -19,24 +19,19 @@ public class GUIMatrixStorage extends GuiContainer
 	private float mScrollbarPercent = 0.0f;
 	private boolean mScrollbarSelected = false;
 
-	public GUIMatrixStorage(EntityPlayer player, ContainerMatrixStorage container)
-	{
+	public GUIMatrixStorage(EntityPlayer player, ContainerMatrixStorage container) {
 		super(container);
 		this.xSize = 223;
 		this.ySize = 246;
-
-
 	}
 
 	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks)
-	{
+	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
-	{
+	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.enableColorMaterial();
 		this.mc.getTextureManager().bindTexture(GUITextures);
@@ -54,11 +49,20 @@ public class GUIMatrixStorage extends GuiContainer
 	}
 
 	@Override
-	protected void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick)
-	{
+	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+		// ArcaneArchives.logger.info("Mouse : " + mouseX + "," + mouseY);
+		// ArcaneArchives.logger.info("Thing : " + (guiLeft + 92) + "," + (guiTop + 34 + (int) (166 * mScrollbarPercent)));
+		if(mouseX > guiLeft + 92 && mouseY > guiTop + 34 + (int) (166 * mScrollbarPercent) && mouseX < guiLeft + 92 + 12 && mouseY < guiTop + 34 + (int) (166 * mScrollbarPercent) + 12) {
+			mScrollbarSelected = true;
+		}
+
+		super.mouseClicked(mouseX, mouseY, mouseButton);
+	}
+
+	@Override
+	protected void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick) {
 		//ArcaneArchives.logger.info("X : " + mouseX + " | Y : " + mouseY + " | TIME : " + timeSinceLastClick);
-		if(clickedMouseButton == 0 && mScrollbarSelected)
-		{
+		if(clickedMouseButton == 0 && mScrollbarSelected) {
 			mScrollbarPercent = (float) (mouseY - 40 - guiTop) / (float) 166;
 			if(mScrollbarPercent > 1) mScrollbarPercent = 1;
 			if(mScrollbarPercent < 0) mScrollbarPercent = 0;
@@ -67,29 +71,14 @@ public class GUIMatrixStorage extends GuiContainer
 	}
 
 	@Override
-	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
-	{
-		// ArcaneArchives.logger.info("Mouse : " + mouseX + "," + mouseY);
-		// ArcaneArchives.logger.info("Thing : " + (guiLeft + 92) + "," + (guiTop + 34 + (int) (166 * mScrollbarPercent)));
-		if(mouseX > guiLeft + 92 && mouseY > guiTop + 34 + (int) (166 * mScrollbarPercent) && mouseX < guiLeft + 92 + 12 && mouseY < guiTop + 34 + (int) (166 * mScrollbarPercent) + 12)
-		{
-			mScrollbarSelected = true;
-		}
-
-		super.mouseClicked(mouseX, mouseY, mouseButton);
-	}
-
-	@Override
-	protected void mouseReleased(int mouseX, int mouseY, int state)
-	{
+	protected void mouseReleased(int mouseX, int mouseY, int state) {
 		mScrollbarSelected = false;
 
 		super.mouseReleased(mouseX, mouseY, state);
 	}
 
 	@Override
-	public boolean doesGuiPauseGame()
-	{
+	public boolean doesGuiPauseGame() {
 		return false;
 	}
 }

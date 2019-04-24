@@ -6,12 +6,9 @@ import com.aranaira.arcanearchives.util.types.Size;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import javax.annotation.Nullable;
 
@@ -37,8 +34,7 @@ public class AATileEntity extends TileEntity
 	/**
 	 * @return The current size associated with this tile entity. See `setSize`.
 	 */
-	public Size getSize()
-	{
+	public Size getSize() {
 		return this.size;
 	}
 
@@ -52,8 +48,7 @@ public class AATileEntity extends TileEntity
 	 *                to calculate accessor block positions, and to determine if the block
 	 *                can actually be placed.
 	 */
-	public void setSize(Size newSize)
-	{
+	public void setSize(Size newSize) {
 		this.size = newSize;
 	}
 
@@ -62,8 +57,7 @@ public class AATileEntity extends TileEntity
 	 * name that it was registered with. Note that this simply returns that part and does
 	 * not include the modid.
 	 */
-	public String getName()
-	{
+	public String getName() {
 		return name;
 	}
 
@@ -71,8 +65,7 @@ public class AATileEntity extends TileEntity
 	 * @param name The name to be used as the registry name path and also to refer
 	 *             to the specific type of tile entity.
 	 */
-	public void setName(String name)
-	{
+	public void setName(String name) {
 		this.name = name;
 	}
 
@@ -84,11 +77,9 @@ public class AATileEntity extends TileEntity
 	 * The default value for this function is EnumFacing.WEST; this may change in
 	 * the future.
 	 */
-	public EnumFacing getFacing()
-	{
+	public EnumFacing getFacing() {
 		IBlockState state = world.getBlockState(getPos());
-		if(state.getBlock() instanceof BlockTemplate)
-		{
+		if(state.getBlock() instanceof BlockTemplate) {
 			return ((BlockTemplate) state.getBlock()).getFacing(world, pos);
 		}
 
@@ -100,8 +91,7 @@ public class AATileEntity extends TileEntity
 	 * This function is called when individual accessor blocks are broken by the
 	 * AccessorTileEntity.
 	 */
-	public void breakBlock()
-	{
+	public void breakBlock() {
 		breakBlock(null, true);
 	}
 
@@ -120,8 +110,7 @@ public class AATileEntity extends TileEntity
 	 *                not being destroyed (if this was trigger from the break of
 	 *                one of the accessors).
 	 */
-	public void breakBlock(@Nullable IBlockState state, boolean harvest)
-	{
+	public void breakBlock(@Nullable IBlockState state, boolean harvest) {
 		if(breaking) return;
 
 		breaking = true;
@@ -129,14 +118,11 @@ public class AATileEntity extends TileEntity
 		Block block = (state == null) ? world.getBlockState(getPos()).getBlock() : state.getBlock();
 		EnumFacing facing = null;
 
-		if(block instanceof BlockDirectionalTemplate && state != null)
-		{
+		if(block instanceof BlockDirectionalTemplate && state != null) {
 			facing = state.getValue(BlockDirectionalTemplate.FACING);
 		}
-		if(block instanceof BlockTemplate)
-		{
-			for(BlockPos point : ((BlockTemplate) block).calculateAccessors(world, getPos(), facing))
-			{
+		if(block instanceof BlockTemplate) {
+			for(BlockPos point : ((BlockTemplate) block).calculateAccessors(world, getPos(), facing)) {
 				world.removeTileEntity(point);
 				world.setBlockState(point, Blocks.AIR.getDefaultState());
 			}
@@ -153,13 +139,11 @@ public class AATileEntity extends TileEntity
 	 *
 	 * @return Returns true by default.
 	 */
-	public boolean isActive()
-	{
+	public boolean isActive() {
 		return true;
 	}
 
-	public void defaultServerSideUpdate()
-	{
+	public void defaultServerSideUpdate() {
 		if(world == null || world.isRemote) return;
 
 		IBlockState state = world.getBlockState(getPos());
@@ -167,8 +151,7 @@ public class AATileEntity extends TileEntity
 		this.markDirty();
 	}
 
-	public static class Tags
-	{
+	public static class Tags {
 		public static final String INVENTORY = "inventory";
 	}
 }

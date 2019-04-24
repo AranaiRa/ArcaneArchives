@@ -12,14 +12,12 @@ public class GCTWrapper implements IRecipeWrapper
 {
 	public GCTRecipe recipe;
 
-	public GCTWrapper(GCTRecipe recipe)
-	{
+	public GCTWrapper(GCTRecipe recipe) {
 		this.recipe = recipe;
 	}
 
 	@Override
-	public void getIngredients(IIngredients ingredients)
-	{
+	public void getIngredients(IIngredients ingredients) {
 		if (recipe != null) {
 			for (IngredientStack stack : recipe.getIngredients()) {
 				ingredients.setInputs(VanillaTypes.ITEM, Arrays.asList(stack.getMatchingStacks()));

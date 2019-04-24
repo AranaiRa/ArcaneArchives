@@ -1,18 +1,15 @@
 package com.aranaira.arcanearchives.client;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.client.gui.GUIManifest;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.events.LineHandler;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.integration.jei.JEIUnderMouse;
-import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
 import com.aranaira.arcanearchives.items.ManifestItem;
 import com.aranaira.arcanearchives.util.ManifestTracking;
 import com.aranaira.arcanearchives.util.types.ManifestEntry;
-import com.aranaira.arcanearchives.util.types.ManifestList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -34,7 +31,6 @@ import org.lwjgl.input.Keyboard;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.function.Consumer;
 
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class Keybinds
@@ -45,8 +41,7 @@ public class Keybinds
 
 	public static boolean skip = false;
 
-	public static void initKeybinds()
-	{
+	public static void initKeybinds() {
 		KeyBinding kb = new KeyBinding(ARCARC_BINDS + ".manifest", 0, ARCARC_GROUP);
 		ClientRegistry.registerKeyBinding(kb);
 		manifestKey = kb;
@@ -73,36 +68,27 @@ public class Keybinds
 
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
-	public static void onKeyInputManifest(InputEvent.KeyInputEvent event)
-	{
+	public static void onKeyInputManifest(InputEvent.KeyInputEvent event) {
 		Minecraft mc = Minecraft.getMinecraft();
-		if(manifestKey.isKeyDown() && mc.inGameHasFocus)
-		{
+		if(manifestKey.isKeyDown() && mc.inGameHasFocus) {
 			boolean foundManifest = false;
-			if(ConfigHandler.ManifestPresence)
-			{
-				for(int i = 0; i < 36; i++)
-				{
+			if(ConfigHandler.ManifestPresence) {
+				for(int i = 0; i < 36; i++) {
 					ItemStack item = mc.player.inventory.getStackInSlot(i);
-					if(item.getItem() == ItemRegistry.MANIFEST)
-					{
+					if(item.getItem() == ItemRegistry.MANIFEST) {
 						foundManifest = true;
 						break;
 					}
 				}
 			}
 
-			if(foundManifest || !ConfigHandler.ManifestPresence)
-			{
-				if(mc.player.isSneaking())
-				{
+			if(foundManifest || !ConfigHandler.ManifestPresence) {
+				if(mc.player.isSneaking()) {
 					LineHandler.clearChests(mc.player.dimension);
-				} else
-				{
+				} else {
 					ManifestItem.openManifest(mc.player.world, mc.player);
 				}
-			} else
-			{
+			} else {
 				mc.player.sendMessage(new TextComponentTranslation("arcanearchives.gui.missing_manifest").setStyle(new Style().setColor(TextFormatting.YELLOW)));
 			}
 		}
@@ -117,8 +103,7 @@ public class Keybinds
 				ItemStack stack = underMouse(mc);
 				if (stack != null && !stack.isEmpty()) {
 					ClientNetwork network = NetworkHelper.getClientNetwork();
-					network.synchroniseManifest(handler ->
-					{
+					network.synchroniseManifest(handler -> {
 						handler.setSearchItem(stack);
 						boolean addedValues = false;
 						for (int i = 0; i < handler.getSlots(); i++) {

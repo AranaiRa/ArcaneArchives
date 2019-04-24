@@ -32,51 +32,8 @@ public class RadiantTroveTileEntity extends ManifestTileEntity
 		defaultServerSideUpdate();
 	}
 
-	public RadiantTroveTileEntity()
-	{
+	public RadiantTroveTileEntity() {
 		super("radianttrove");
-	}
-
-	@Override
-	public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing facing)
-	{
-		if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-		{
-			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(inventory);
-		}
-		return super.getCapability(capability, facing);
-	}
-
-	@Override
-	public boolean hasCapability(@Nonnull Capability<?> capability, EnumFacing facing)
-	{
-		if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) return true;
-		return super.hasCapability(capability, facing);
-	}
-
-	public boolean isEmpty () {
-		return inventory.isEmpty();
-	}
-
-	public void onLeftClickTrove (EntityPlayer player) {
-		if(world.isRemote) return;
-
-		int curTick = world.getMinecraftServer().getTickCounter();
-		if (curTick - lastTick < 3) return;
-		lastTick = curTick;
-
-		this.markDirty();
-
-		int count = 64;
-
-		if (player.isSneaking()) {
-			count = 1;
-		}
-		ItemStack stack = inventory.extractItem(0, count, false);
-		if (stack.isEmpty()) return;
-
-		EntityItem item = new EntityItem(world, player.posX, player.posY, player.posZ, stack);
-		world.spawnEntity(item);
 	}
 
 	public void onRightClickTrove (EntityPlayer player) {
@@ -86,8 +43,7 @@ public class RadiantTroveTileEntity extends ManifestTileEntity
 		this.markDirty();
 
 		if (mainhand.getItem() == ItemRegistry.COMPONENT_MATERIALINTERFACE && player.isSneaking()) {
-			if (inventory.upgrade())
-			{
+			if (inventory.upgrade()) {
 				mainhand.shrink(1);
 				if (!player.world.isRemote) {
 					player.sendStatusMessage(new TextComponentTranslation("arcanearchives.success.upgraded_trove", inventory.getUpgrades(), TroveItemHandler.MAX_UPGRADES), true);
@@ -124,7 +80,7 @@ public class RadiantTroveTileEntity extends ManifestTileEntity
 			} else {
 				rightClickCache.put(playerId, player.ticksExisted);
 			}
-		}	else {
+		} else {
 			rightClickCache.put(playerId, player.ticksExisted);
 		}
 
@@ -138,16 +94,12 @@ public class RadiantTroveTileEntity extends ManifestTileEntity
 			mainhand.setCount(0);
 		}
 
-		if (doubleClick)
-		{
+		if (doubleClick) {
 			IItemHandler playerMain = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
-			if (playerMain != null)
-			{
-				for(int i = 0; i < playerMain.getSlots(); i++)
-				{
+			if (playerMain != null) {
+				for(int i = 0; i < playerMain.getSlots(); i++) {
 					ItemStack inSlot = playerMain.getStackInSlot(i);
-					if(ItemComparison.areStacksEqualIgnoreSize(reference, inSlot))
-					{
+					if(ItemComparison.areStacksEqualIgnoreSize(reference, inSlot)) {
 						result = inventory.insertItem(0, inSlot, true);
 						if (!result.isEmpty()) {
 							int diff = inSlot.getCount() - result.getCount();
@@ -166,58 +118,85 @@ public class RadiantTroveTileEntity extends ManifestTileEntity
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound compound)
-	{
-		super.readFromNBT(compound);
-		this.inventory.deserializeNBT(compound.getCompoundTag(Tags.HANDLER_ITEM));
+	@Nonnull
+	public SPacketUpdateTileEntity getUpdatePacket() {
+		NBTTagCompound compound = writeToNBT(new NBTTagCompound());
+
+		return new SPacketUpdateTileEntity(pos, 0, compound);
+	}
+
+	public boolean isEmpty () {
+		return inventory.isEmpty();
+	}
+
+	public void onLeftClickTrove (EntityPlayer player) {
+		if(world.isRemote) return;
+
+		int curTick = world.getMinecraftServer().getTickCounter();
+		if (curTick - lastTick < 3) return;
+		lastTick = curTick;
+
+		this.markDirty();
+
+		int count = 64;
+
+		if (player.isSneaking()) {
+			count = 1;
+		}
+		ItemStack stack = inventory.extractItem(0, count, false);
+		if (stack.isEmpty()) return;
+
+		EntityItem item = new EntityItem(world, player.posX, player.posY, player.posZ, stack);
+		world.spawnEntity(item);
+	}
+
+	@Override
+	public NBTTagCompound getUpdateTag() {
+		return writeToNBT(new NBTTagCompound());
 	}
 
 	@Override
 	@Nonnull
-	public NBTTagCompound writeToNBT(NBTTagCompound compound)
-	{
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
 		compound.setTag(Tags.HANDLER_ITEM, this.inventory.serializeNBT());
 
 		return compound;
 	}
 
-	public TroveItemHandler getInventory()
-	{
-		return inventory;
+	@Override
+	public void readFromNBT(NBTTagCompound compound) {
+		super.readFromNBT(compound);
+		this.inventory.deserializeNBT(compound.getCompoundTag(Tags.HANDLER_ITEM));
 	}
 
 	@Override
-	public NBTTagCompound getUpdateTag()
-	{
-		return writeToNBT(new NBTTagCompound());
-	}
-
-	@Override
-	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
-	{
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
 		readFromNBT(pkt.getNbtCompound());
 		super.onDataPacket(net, pkt);
 	}
 
 	@Override
-	@Nonnull
-	public SPacketUpdateTileEntity getUpdatePacket()
-	{
-		NBTTagCompound compound = writeToNBT(new NBTTagCompound());
-
-		return new SPacketUpdateTileEntity(pos, 0, compound);
+	public boolean hasCapability(@Nonnull Capability<?> capability, EnumFacing facing) {
+		if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) return true;
+		return super.hasCapability(capability, facing);
 	}
 
 	@Override
-	public boolean isSingleStackInventory()
-	{
+	public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing facing) {
+		if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(inventory);
+		}
+		return super.getCapability(capability, facing);
+	}
+
+	@Override
+	public boolean isSingleStackInventory() {
 		return true;
 	}
 
 	@Override
-	public ItemStack getSingleStack()
-	{
+	public ItemStack getSingleStack() {
 		if (isEmpty()) return ItemStack.EMPTY;
 
 		ItemStack stack = inventory.getItem().copy();
@@ -226,23 +205,23 @@ public class RadiantTroveTileEntity extends ManifestTileEntity
 	}
 
 	@Override
-	public String getDescriptor()
-	{
+	public String getDescriptor() {
 		return "trove";
 	}
 
 	@Override
-	public String getChestName()
-	{
+	public String getChestName() {
 		return "";
 	}
 
-	public static class Tags
-	{
+	public TroveItemHandler getInventory() {
+		return inventory;
+	}
+
+	public static class Tags {
 		public static final String HANDLER_ITEM = "handler_item";
 
-		private Tags()
-		{
+		private Tags() {
 		}
 	}
 }

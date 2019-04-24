@@ -17,47 +17,39 @@ public class SlotRecipeHandler extends Slot
 	private final int index;
 	private final GemCuttersTableTileEntity tile;
 
-	public SlotRecipeHandler(int index, int xPosition, int yPosition, GemCuttersTableTileEntity tile)
-	{
+	public SlotRecipeHandler(int index, int xPosition, int yPosition, GemCuttersTableTileEntity tile) {
 		super(emptyInventory, index, xPosition, yPosition);
 		this.index = index;
 		this.tile = tile;
 	}
 
-	public GCTRecipe getRecipe()
-	{
+	public GCTRecipe getRecipe() {
 		return GCTRecipeList.getRecipeByIndex(getRelativeIndex());
 	}
 
-	public int getPage()
-	{
-		return tile.getPage();
-	}
-
-	public int getRelativeIndex()
-	{
+	public int getRelativeIndex() {
 		return index + getPage() * 7;
 	}
 
+	public int getPage() {
+		return tile.getPage();
+	}
+
 	@Override
-	public ItemStack onTake(EntityPlayer thePlayer, ItemStack stack)
-	{
+	public ItemStack onTake(EntityPlayer thePlayer, ItemStack stack) {
 		onSlotChanged();
 		return ItemStack.EMPTY;
 	}
 
 	@Override
-	public boolean isItemValid(ItemStack stack)
-	{
+	public boolean isItemValid(ItemStack stack) {
 		return false;
 	}
 
 	@Override
-	public ItemStack getStack()
-	{
+	public ItemStack getStack() {
 		int slot = getRelativeIndex();
-		if(slot < GCTRecipeList.getSize())
-		{
+		if(slot < GCTRecipeList.getSize()) {
 			return GCTRecipeList.getOutputByIndex(slot).copy();
 		}
 
@@ -65,68 +57,57 @@ public class SlotRecipeHandler extends Slot
 	}
 
 	@Override
-	public boolean getHasStack()
-	{
+	public boolean getHasStack() {
 		return !getStack().isEmpty();
 	}
 
 	@Override
-	public void putStack(ItemStack stack)
-	{
+	public void putStack(ItemStack stack) {
 	}
 
 	@Override
-	public void onSlotChanged()
-	{
+	public void onSlotChanged() {
 	}
 
 	@Override
-	public int getSlotStackLimit()
-	{
+	public int getSlotStackLimit() {
 		return 1;
 	}
 
 	@Override
-	public int getItemStackLimit(ItemStack stack)
-	{
+	public int getItemStackLimit(ItemStack stack) {
 		return 1;
 	}
 
 	// Handle this TODO
 	@Nullable
 	@Override
-	public String getSlotTexture()
-	{
+	public String getSlotTexture() {
 		return super.getSlotTexture();
 	}
 
 	@Override
-	public ItemStack decrStackSize(int amount)
-	{
+	public ItemStack decrStackSize(int amount) {
 		return ItemStack.EMPTY;
 	}
 
 	@Override
-	public boolean isHere(IInventory inv, int slotIn)
-	{
+	public boolean isHere(IInventory inv, int slotIn) {
 		return false;
 	}
 
 	@Override
-	public boolean canTakeStack(EntityPlayer playerIn)
-	{
+	public boolean canTakeStack(EntityPlayer playerIn) {
 		return false;
 	}
 
 	@Override
-	public int getSlotIndex()
-	{
+	public int getSlotIndex() {
 		return super.getSlotIndex();
 	}
 
 	@Override
-	public boolean isSameInventory(Slot other)
-	{
+	public boolean isSameInventory(Slot other) {
 		return false;
 	}
 }

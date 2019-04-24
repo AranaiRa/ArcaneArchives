@@ -24,42 +24,41 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity
 
 	public boolean wasCreativeDrop = false;
 
-	public void update()
-	{
+	public RadiantTankTileEntity() {
+		super("radianttank");
+	}
+
+	public void update() {
 		if(world.isRemote) return;
 
 		defaultServerSideUpdate();
-	}
-
-	public int getUpgrades()
-	{
-		return upgrades;
 	}
 
 	public int getCapacity () {
 		return BASE_CAPACITY * (upgrades + 1);
 	}
 
-	public RadiantTankTileEntity()
-	{
-		super("radianttank");
+	@Override
+	@Nonnull
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+		super.writeToNBT(compound);
+		compound.setInteger("upgrades", upgrades);
+		compound.setTag(Tags.HANDLER_ITEM, this.inventory.writeToNBT(new NBTTagCompound()));
+
+		return compound;
 	}
 
 	@Override
-	public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing facing)
-	{
-		if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY)
-		{
-			return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(inventory);
-		}
-		return super.getCapability(capability, facing);
+	public void readFromNBT(NBTTagCompound compound) {
+		super.readFromNBT(compound);
+		this.upgrades = compound.getInteger("upgrades");
+		validateCapacity();
+		this.inventory.readFromNBT(compound.getCompoundTag(Tags.HANDLER_ITEM));
+		validateCapacity();
 	}
 
-	@Override
-	public boolean hasCapability(@Nonnull Capability<?> capability, EnumFacing facing)
-	{
-		if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) return true;
-		return super.hasCapability(capability, facing);
+	public int getUpgrades() {
+		return upgrades;
 	}
 
 	private void validateCapacity () {
@@ -68,34 +67,24 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity
 		}
 	}
 
-	@Override
-	public void readFromNBT(NBTTagCompound compound)
-	{
-		super.readFromNBT(compound);
-		this.upgrades = compound.getInteger("upgrades");
-		validateCapacity();
-		this.inventory.readFromNBT(compound.getCompoundTag(Tags.HANDLER_ITEM));
-		validateCapacity();
-	}
-
-	@Override
-	@Nonnull
-	public NBTTagCompound writeToNBT(NBTTagCompound compound)
-	{
-		super.writeToNBT(compound);
-		compound.setInteger("upgrades", upgrades);
-		compound.setTag(Tags.HANDLER_ITEM, this.inventory.writeToNBT(new NBTTagCompound()));
-
-		return compound;
-	}
-
 	public NBTTagCompound serializeStack (NBTTagCompound tag) {
-		if (inventory.getFluid() != null)
-		{
+		if (inventory.getFluid() != null) {
 			tag.setTag(FluidHandlerItemStack.FLUID_NBT_KEY, inventory.writeToNBT(new NBTTagCompound()));
 		}
 		tag.setInteger("upgrades", upgrades);
 		return tag;
+	}
+
+	public FluidTank getInventory() {
+		return inventory;
+	}
+
+	@Override
+	@Nonnull
+	public SPacketUpdateTileEntity getUpdatePacket() {
+		NBTTagCompound compound = writeToNBT(new NBTTagCompound());
+
+		return new SPacketUpdateTileEntity(pos, 0, compound);
 	}
 
 	public void deserializeStack (NBTTagCompound tag) {
@@ -103,31 +92,29 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity
 		this.inventory.readFromNBT(tag.getCompoundTag(FluidHandlerItemStack.FLUID_NBT_KEY));
 	}
 
-	public FluidTank getInventory()
-	{
-		return inventory;
-	}
-
 	@Override
-	public NBTTagCompound getUpdateTag()
-	{
+	public NBTTagCompound getUpdateTag() {
 		return writeToNBT(new NBTTagCompound());
 	}
 
 	@Override
-	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
-	{
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
 		readFromNBT(pkt.getNbtCompound());
 		super.onDataPacket(net, pkt);
 	}
 
 	@Override
-	@Nonnull
-	public SPacketUpdateTileEntity getUpdatePacket()
-	{
-		NBTTagCompound compound = writeToNBT(new NBTTagCompound());
+	public boolean hasCapability(@Nonnull Capability<?> capability, EnumFacing facing) {
+		if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) return true;
+		return super.hasCapability(capability, facing);
+	}
 
-		return new SPacketUpdateTileEntity(pos, 0, compound);
+	@Override
+	public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing facing) {
+		if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+			return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(inventory);
+		}
+		return super.getCapability(capability, facing);
 	}
 
 	public void onRightClickUpgrade (EntityPlayer player, ItemStack upgrade) {
@@ -143,12 +130,10 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity
 		}
 	}
 
-	public static class Tags
-	{
+	public static class Tags {
 		public static final String HANDLER_ITEM = "handler_item";
 
-		private Tags()
-		{
+		private Tags() {
 		}
 	}
 }

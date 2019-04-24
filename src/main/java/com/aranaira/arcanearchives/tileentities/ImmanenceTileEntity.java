@@ -30,92 +30,50 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	private ClientNetwork cNetwork;
 	private int ticks = 0;
 
-	public ImmanenceTileEntity(String name)
-	{
+	public ImmanenceTileEntity(String name) {
 		setName(name);
 	}
 
-	public void generateTileId()
-	{
-		if(this.world != null && !this.world.isRemote && this.networkID != null && this.tileID == null)
-		{
-			ServerNetwork network = getNetwork();
-			if(network != null)
-			{
-				this.tileID = network.generateTileId();
-			}
-		}
-	}
-
 	// Functions specifically for dealing with Rannuncarpus. >:0!
-	public void tick()
-	{
+	public void tick() {
 		ticks++;
 	}
 
-	public int ticks()
-	{
+	public int ticks() {
 		return ticks;
 	}
 
 	@Override
-	public void update()
-	{
+	public void update() {
 	}
 
 	@Override
-	public boolean isActive()
-	{
+	public boolean isActive() {
 		// TODO: in a later version, functionality for initial registration delay
 		return true;
 	}
 
-	public UUID GetNetworkID()
-	{
+	public UUID GetNetworkID() {
 		return networkID;
 	}
 
-	public void SetNetworkID(UUID newId)
-	{
+	public void SetNetworkID(UUID newId) {
 		this.networkID = newId;
 	}
 
 	@Override
-	@Nonnull
-	public NBTTagCompound writeToNBT(NBTTagCompound compound)
-	{
-		if(networkID != null)
-		{
-			compound.setString(Tags.PLAYER_ID, networkID.toString());
-		}
-		if(tileID != null)
-		{
-			compound.setString(Tags.TILE_ID, tileID.toString());
-		}
-		compound.setInteger(Tags.DIM, dimension);
-		return super.writeToNBT(compound);
-	}
-
-	@Override
-	public void readFromNBT(NBTTagCompound compound)
-	{
-		if(compound.hasKey(Tags.PLAYER_ID))
-		{
+	public void readFromNBT(NBTTagCompound compound) {
+		if(compound.hasKey(Tags.PLAYER_ID)) {
 			networkID = UUID.fromString(compound.getString(Tags.PLAYER_ID));
-		} else
-		{
+		} else {
 			ArcaneArchives.logger.debug(String.format("Tile entity of class %s didn't have a network ID", this.getClass().getName()));
 		}
-		if(compound.hasKey(Tags.TILE_ID))
-		{
+		if(compound.hasKey(Tags.TILE_ID)) {
 			UUID newId = UUID.fromString(compound.getString(Tags.TILE_ID));
-			if(tileID != null && !tileID.equals(newId))
-			{
-				if(!this.world.isRemote)
-				{
+			if(tileID != null && !tileID.equals(newId)) {
+				if(!this.world.isRemote) {
 					ServerNetwork network = getNetwork();
-					if(network != null)
-					{
+					if(network != null) {
 						network.handleTileIdChange(tileID, newId);
 					}
 				}
@@ -123,43 +81,28 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 			tileID = newId;
 		}
 
-		if(tileID == null)
-		{
+		if(tileID == null) {
 			this.generateTileId();
 		}
 		dimension = compound.getInteger(Tags.DIM);
 		super.readFromNBT(compound);
 	}
 
-	public int GetNetImmanence()
-	{
-		return immanenceGeneration - immanenceDrain;
-	}
-
-	public ClientNetwork getClientNetwork()
-	{
-		if(cNetwork == null)
-		{
-			cNetwork = NetworkHelper.getClientNetwork(networkID);
+	@Override
+	@Nonnull
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+		if(networkID != null) {
+			compound.setString(Tags.PLAYER_ID, networkID.toString());
 		}
-
-		return cNetwork;
-	}
-
-	@Nullable
-	public ServerNetwork getNetwork()
-	{
-		if(network == null && networkID != null)
-		{
-			network = NetworkHelper.getServerNetwork(networkID, this.world);
+		if(tileID != null) {
+			compound.setString(Tags.TILE_ID, tileID.toString());
 		}
-
-		return network;
+		compound.setInteger(Tags.DIM, dimension);
+		return super.writeToNBT(compound);
 	}
 
 	@Override
-	public void invalidate()
-	{
+	public void invalidate() {
 		super.invalidate();
 
 		if(world.isRemote) return;
@@ -170,8 +113,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	}
 
 	@Override
-	public void onChunkUnload()
-	{
+	public void onChunkUnload() {
 		super.onChunkUnload();
 
 		if(world.isRemote) return;
@@ -182,22 +124,48 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable
 	}
 
 	@Override
-	public void onLoad()
-	{
-		if(world != null && !world.isRemote)
-		{
+	public void onLoad() {
+		if(world != null && !world.isRemote) {
 			ServerTickHandler.incomingITE(this);
 			ArcaneArchives.logger.debug(String.format("Loaded a tile entity with the class %s into the queue.", this.getClass().getName()));
-		} else if(world == null)
-		{
+		} else if (world == null) {
 			// TODO: Include more information
 			ArcaneArchives.logger.debug("TileEntity loaded in with a null world. WTF?");
 		}
 		super.onLoad();
 	}
 
-	public static class Tags
-	{
+	@Nullable
+	public ServerNetwork getNetwork() {
+		if(network == null && networkID != null) {
+			network = NetworkHelper.getServerNetwork(networkID, this.world);
+		}
+
+		return network;
+	}
+
+	public void generateTileId() {
+		if(this.world != null && !this.world.isRemote && this.networkID != null && this.tileID == null) {
+			ServerNetwork network = getNetwork();
+			if(network != null) {
+				this.tileID = network.generateTileId();
+			}
+		}
+	}
+
+	public int GetNetImmanence() {
+		return immanenceGeneration - immanenceDrain;
+	}
+
+	public ClientNetwork getClientNetwork() {
+		if(cNetwork == null) {
+			cNetwork = NetworkHelper.getClientNetwork(networkID);
+		}
+
+		return cNetwork;
+	}
+
+	public static class Tags {
 		public static final String PLAYER_ID = "playerId";
 		public static final String DIM = "dim";
 		public static final String TILE_ID = "tileId";

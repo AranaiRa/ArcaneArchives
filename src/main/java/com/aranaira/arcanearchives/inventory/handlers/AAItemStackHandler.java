@@ -10,35 +10,30 @@ import javax.annotation.Nonnull;
 @Deprecated
 public class AAItemStackHandler extends ItemStackHandler
 {
-	public AAItemStackHandler(int i)
-	{
+	public AAItemStackHandler(int i) {
 		super(i);
 	}
 
 	@Override
-	@Nonnull
-	public ItemStack extractItem(int slot, int amount, boolean simulate)
-	{
-		return super.extractItem(slot, amount, simulate);
-	}
-
-	@Nonnull
-	@Override
-	public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate)
-	{
-		return super.insertItem(slot, stack, simulate);
-	}
-
-	@Override
-	public void setStackInSlot(int slot, @Nonnull ItemStack stack)
-	{
+	public void setStackInSlot(int slot, @Nonnull ItemStack stack) {
 		Side side = FMLCommonHandler.instance().getEffectiveSide();
 
-		if(side == Side.CLIENT)
-		{
+		if(side == Side.CLIENT) {
 			int i = 1;
 		}
 
 		super.setStackInSlot(slot, stack);
+	}
+
+	@Nonnull
+	@Override
+	public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+		return super.insertItem(slot, stack, simulate);
+	}
+
+	@Override
+	@Nonnull
+	public ItemStack extractItem(int slot, int amount, boolean simulate) {
+		return super.extractItem(slot, amount, simulate);
 	}
 }

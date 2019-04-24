@@ -14,7 +14,7 @@ public class RenderHelper
 {
 	/*@SideOnly(Side.CLIENT)
 	public static void drawRay(Vec3d player_pos, Vec3d target_pos, float width)
-	{
+{
 		GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
 		GL11.glDisable(GL11.GL_CULL_FACE);
 		GL11.glDisable(GL11.GL_LIGHTING);
@@ -42,11 +42,10 @@ public class RenderHelper
 
 		GL11.glDepthMask(true);
 		GL11.glPopAttrib();
-	}*/
+}*/
 
 	@SideOnly(Side.CLIENT)
-	public static void drawRays(Vec3d player_pos, Set<Vec3d> target_pos, float width)
-	{
+	public static void drawRays(Vec3d player_pos, Set<Vec3d> target_pos, float width) {
 		GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
 		GL11.glDisable(GL11.GL_CULL_FACE);
 		GL11.glDisable(GL11.GL_LIGHTING);
@@ -65,8 +64,7 @@ public class RenderHelper
 		BufferBuilder bufferBuilder = tessellator.getBuffer();
 		bufferBuilder.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_COLOR);
 
-		for(Vec3d vec : target_pos)
-		{
+		for(Vec3d vec : target_pos) {
 			bufferBuilder.pos(player_pos.x, player_pos.y + 1, player_pos.z).color(c.red, c.green, c.blue, c.alpha).endVertex();
 			bufferBuilder.pos(vec.x + 0.5, vec.y + 0.5, vec.z + 0.5).color(c.red, c.green, c.blue, c.alpha).endVertex();
 		}
@@ -78,20 +76,17 @@ public class RenderHelper
 	}
 
 	@SideOnly(Side.CLIENT)
-	static class Color
-	{
+	static class Color {
 		public float red;
 		public float green;
 		public float blue;
 		public float alpha;
 
-		public Color()
-		{
+		public Color() {
 			this(1.0F, 1.0F, 1.0F, 1.0F);
 		}
 
-		public Color(float redIn, float greenIn, float blueIn, float alphaIn)
-		{
+		public Color(float redIn, float greenIn, float blueIn, float alphaIn) {
 			this.red = redIn;
 			this.green = greenIn;
 			this.blue = blueIn;

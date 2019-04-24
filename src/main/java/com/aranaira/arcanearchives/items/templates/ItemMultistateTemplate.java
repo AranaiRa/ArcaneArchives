@@ -15,47 +15,38 @@ public class ItemMultistateTemplate extends ItemTemplate
 {
 	protected Map<Integer, String> itemMap = new HashMap<>();
 
-	public ItemMultistateTemplate(String name)
-	{
+	public ItemMultistateTemplate(String name) {
 		super(name);
 		setHasSubtypes(true);
 	}
 
 	@Override
-	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items)
-	{
-		if(isInCreativeTab(tab))
-		{
-			for(int metadata : itemMap.keySet())
-			{
-				items.add(new ItemStack(this, 1, metadata));
-			}
-		}
-	}
-
-	@Override
-	public boolean isDamageable()
-	{
+	public boolean isDamageable() {
 		return false;
 	}
 
 	@Override
-	public String getTranslationKey(ItemStack stack)
-	{
+	public String getTranslationKey(ItemStack stack) {
 		int i = stack.getMetadata();
 
-		if(!itemMap.containsKey(i))
-		{
+		if(!itemMap.containsKey(i)) {
 			return "item.invalid";
 		}
 
 		return getTranslationKey() + "." + itemMap.get(i);
 	}
 
-	public ItemStack addItem(int number, String entry)
-	{
-		if(itemMap.containsKey(number))
-		{
+	@Override
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+		if(isInCreativeTab(tab)) {
+			for(int metadata : itemMap.keySet()) {
+				items.add(new ItemStack(this, 1, metadata));
+			}
+		}
+	}
+
+	public ItemStack addItem(int number, String entry) {
+		if(itemMap.containsKey(number)) {
 			return ItemStack.EMPTY;
 		}
 		itemMap.put(number, entry);
@@ -65,10 +56,8 @@ public class ItemMultistateTemplate extends ItemTemplate
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerModels()
-	{
-		for(Map.Entry<Integer, String> entry : itemMap.entrySet())
-		{
+	public void registerModels() {
+		for(Map.Entry<Integer, String> entry : itemMap.entrySet()) {
 			ModelLoader.setCustomModelResourceLocation(this, entry.getKey(), new ModelResourceLocation(getRegistryName(), "type=" + entry.getValue()));
 		}
 	}

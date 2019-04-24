@@ -1,11 +1,17 @@
 package com.aranaira.arcanearchives;
 
 import com.aranaira.arcanearchives.client.gui.*;
-import com.aranaira.arcanearchives.inventory.*;
+import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
+import com.aranaira.arcanearchives.inventory.ContainerManifest;
+import com.aranaira.arcanearchives.inventory.ContainerRadiantChest;
+import com.aranaira.arcanearchives.inventory.ContainerRadiantCraftingTable;
 import com.aranaira.arcanearchives.inventory.unused.ContainerMatrixRepository;
 import com.aranaira.arcanearchives.inventory.unused.ContainerMatrixStorage;
 import com.aranaira.arcanearchives.inventory.unused.NetworkContainer;
-import com.aranaira.arcanearchives.tileentities.*;
+import com.aranaira.arcanearchives.tileentities.AATileEntity;
+import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
+import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
+import com.aranaira.arcanearchives.tileentities.RadiantCraftingTableTileEntity;
 import com.aranaira.arcanearchives.tileentities.unused.MatrixRepositoryTileEntity;
 import com.aranaira.arcanearchives.tileentities.unused.MatrixStorageTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,13 +32,12 @@ public class AAGuiHandler implements IGuiHandler
 	public static final int MATRIX_RESERVOIR = 6;
 
 	@Override
-	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
-	{
+	public Object getServerGuiElement (int ID, EntityPlayer player, World world, int x, int y, int z) {
 		BlockPos pos = new BlockPos(x, y, z);
 		TileEntity te = world.getTileEntity(pos);
 
-		switch(ID)
-		{
+		switch (ID) {
+
 			case TOME_OF_REQUISITION:
 				return new NetworkContainer(player);
 			//return new NetworkCraftingContainer(player.inventory, world, new BlockPos(0, 0, 0));
@@ -42,8 +47,7 @@ public class AAGuiHandler implements IGuiHandler
 
 		if(!(te instanceof AATileEntity)) return null; // TODO: Handle this error somehow;
 
-		switch(ID)
-		{
+		switch(ID) {
 			case RADIANT_CHEST:
 				return new ContainerRadiantChest((RadiantChestTileEntity) te, player, true);
 			case GEMCUTTERS_TABLE:
@@ -55,8 +59,7 @@ public class AAGuiHandler implements IGuiHandler
 				return new ContainerMatrixStorage((MatrixStorageTileEntity) te, player.inventory);
 			case MATRIX_REPOSITORY:
 				return new ContainerMatrixRepository((MatrixRepositoryTileEntity) te, player.inventory);
-			default:
-			{
+			default: {
 				ArcaneArchives.logger.info(String.format("Invalid Container ID of %d was passed in; null was returned to the server", ID));
 				return null;
 			}
@@ -64,13 +67,11 @@ public class AAGuiHandler implements IGuiHandler
 	}
 
 	@Override
-	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
-	{
+	public Object getClientGuiElement (int ID, EntityPlayer player, World world, int x, int y, int z) {
 		BlockPos pos = new BlockPos(x, y, z);
 		TileEntity te = world.getTileEntity(pos);
 
-		switch(ID)
-		{
+		switch (ID) {
 			case TOME_OF_REQUISITION:
 				return new GUIBookContainer(new NetworkContainer(player));
 			case MANIFEST:
@@ -79,8 +80,7 @@ public class AAGuiHandler implements IGuiHandler
 
 		if(!(te instanceof AATileEntity)) return null; // TODO: Handle this error also
 
-		switch(ID)
-		{
+		switch (ID) {
 			case RADIANT_CHEST:
 				return new GUIRadiantChest(new ContainerRadiantChest((RadiantChestTileEntity) te, player, false), player);
 			case GEMCUTTERS_TABLE:
@@ -93,11 +93,8 @@ public class AAGuiHandler implements IGuiHandler
 			case MATRIX_REPOSITORY:
 				return new GUIMatrixRepository(player, new ContainerMatrixRepository((MatrixRepositoryTileEntity) te, player.inventory));
 			default:
-			{
 				ArcaneArchives.logger.info(String.format("Invalid Container ID of %d was passed in; null was returned to the client.", ID));
 				return null;
-			}
 		}
 	}
-
 }

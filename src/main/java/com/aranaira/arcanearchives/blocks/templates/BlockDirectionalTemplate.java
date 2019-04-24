@@ -25,35 +25,29 @@ public class BlockDirectionalTemplate extends BlockTemplate
 	 * @param name       The name of the block, used for translation key and registry name
 	 * @param materialIn The material of the block
 	 */
-	protected BlockDirectionalTemplate(String name, Material materialIn)
-	{
+	protected BlockDirectionalTemplate(String name, Material materialIn) {
 		super(name, materialIn);
 	}
 
 	@Override
-	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand)
-	{
-		return getDefaultState().withProperty(FACING, EnumFacing.fromAngle(placer.rotationYaw - 90));
-	}
-
-	@Override
-	public int getMetaFromState(IBlockState state)
-	{
-		return state.getValue(FACING).getIndex();
-	}
-
-	@Override
 	@SuppressWarnings("deprecation")
-	public IBlockState getStateFromMeta(int meta)
-	{
+	public IBlockState getStateFromMeta(int meta) {
 		return getDefaultState().withProperty(FACING, EnumFacing.byIndex(meta & 7));
 	}
 
 	@Override
-	protected BlockStateContainer createBlockState()
-	{
-		if(hasTileEntity(getDefaultState()))
-		{
+	public int getMetaFromState(IBlockState state) {
+		return state.getValue(FACING).getIndex();
+	}
+
+	@Override
+	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
+		return getDefaultState().withProperty(FACING, EnumFacing.fromAngle(placer.rotationYaw - 90));
+	}
+
+	@Override
+	protected BlockStateContainer createBlockState() {
+		if(hasTileEntity(getDefaultState())) {
 			return new ExtendedBlockState(this, new IProperty[]{FACING}, new IUnlistedProperty[]{Properties.AnimationProperty});
 		}
 

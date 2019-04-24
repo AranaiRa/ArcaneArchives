@@ -4,7 +4,6 @@ import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import com.aranaira.arcanearchives.util.types.IngredientStack;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreIngredient;
 
 @SuppressWarnings("unused")
 public class RecipeLibrary
@@ -24,8 +23,7 @@ public class RecipeLibrary
 	public static GCTRecipe RADIANT_TANK_RECIPE;
 	public static GCTRecipe MONITORING_CRYSTAL_RECIPE;
 
-	public static void buildRecipes()
-	{
+	public static void buildRecipes() {
 		COMPONENT_RADIANTDUST_RECIPE = GCTRecipeList.makeAndAddRecipe("radiantdust", new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 2), ItemRegistry.RAW_RADIANT_QUARTZ);
 
 		CUT_RADIANT_QUARTZ_RECIPE = GCTRecipeList.makeAndAddRecipe("cut_radiant_quartz", new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 1), new ItemStack(ItemRegistry.RAW_RADIANT_QUARTZ, 2));

@@ -8,8 +8,7 @@ public class StorageRawQuartz extends BlockTemplate
 
 	public static final String name = "storage_raw_quartz";
 
-	public StorageRawQuartz()
-	{
+	public StorageRawQuartz() {
 		super(name, Material.ROCK);
 		setLightLevel(16 / 16f);
 		setHardness(1.7f);

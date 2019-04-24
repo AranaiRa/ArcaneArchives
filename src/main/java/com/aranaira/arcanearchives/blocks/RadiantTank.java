@@ -25,11 +25,9 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -39,8 +37,7 @@ public class RadiantTank extends BlockTemplate
 	public static final String NAME = "radiant_tank";
 	public static AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.1, 0.0, 0.1, 0.9, 0.98, 0.9);
 
-	public RadiantTank()
-	{
+	public RadiantTank() {
 		super(NAME, Material.GLASS);
 		setSize(1, 1, 1);
 		setLightLevel(16 / 16f);
@@ -50,40 +47,14 @@ public class RadiantTank extends BlockTemplate
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
-	{
-		return BOUNDING_BOX;
+	public boolean causesSuffocation(IBlockState state) {
+		return false;
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
-	{
-		LineHandler.removeLine(pos);
-
-		ItemStack heldItem = player.getHeldItem(hand);
-
-		RadiantTankTileEntity te = WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, pos);
-		if (te == null) {
-			return !(heldItem.getItem() instanceof ItemBlock);
-		}
-
-		if(heldItem.getItem() == ItemRegistry.COMPONENT_CONTAINMENTFIELD)
-		{
-			if(!world.isRemote)
-			{
-				if(player.isSneaking())
-				{
-					te.onRightClickUpgrade(player, heldItem);
-				} else
-				{
-					player.sendStatusMessage(new TextComponentTranslation("arcanearchives.warning.sneak_to_upgrade_tank"), true);
-				}
-			}
-			return true;
-		}
-
-		IFluidHandler handler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing);
-		return FluidUtil.interactWithFluidHandler(player, hand, handler);
+	@SuppressWarnings("deprecation")
+	public boolean isFullCube(IBlockState state) {
+		return false;
 	}
 
 
@@ -111,39 +82,79 @@ public class RadiantTank extends BlockTemplate
 	}
 
 	@Override
-	public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player)
-	{
-		return generateStack(state, world, pos, player);
+	@SuppressWarnings("deprecation")
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+		return BOUNDING_BOX;
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state)
-	{
+	public boolean isOpaqueCube(IBlockState state) {
+		return false;
+	}
+
+	@Override
+	public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune) {
+	}
+
+	@Override
+	public BlockRenderLayer getRenderLayer() {
+		return BlockRenderLayer.CUTOUT;
+	}
+
+	@Override
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		LineHandler.removeLine(pos);
+
+		ItemStack heldItem = player.getHeldItem(hand);
+
+		RadiantTankTileEntity te = WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, pos);
+		if (te == null) {
+			return !(heldItem.getItem() instanceof ItemBlock);
+		}
+
+		if(heldItem.getItem() == ItemRegistry.COMPONENT_CONTAINMENTFIELD) {
+			if(!world.isRemote) {
+				if(player.isSneaking()) {
+					te.onRightClickUpgrade(player, heldItem);
+				} else {
+					player.sendStatusMessage(new TextComponentTranslation("arcanearchives.warning.sneak_to_upgrade_tank"), true);
+				}
+			}
+			return true;
+		}
+
+		IFluidHandler handler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing);
+		return FluidUtil.interactWithFluidHandler(player, hand, handler);
+	}
+
+	@Override
+	@SuppressWarnings("deprecation")
+	public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
 		return generateStack(state, worldIn, pos, null);
 	}
 
 	@Override
-	public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune)
-	{
-	}
-
-	@Override
-	public void onBlockPlacedBy(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityLivingBase placer, @Nonnull ItemStack stack)
-	{
-		super.onBlockPlacedBy(world, pos, state, placer, stack);
-
-		if (stack.hasTagCompound()) {
-			RadiantTankTileEntity te = WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, pos);
-			if (te != null) {
-				te.deserializeStack(stack.getTagCompound().getCompoundTag("tank"));
-			}
+	public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player) {
+		RadiantTankTileEntity te = WorldUtil.getTileEntity(RadiantTankTileEntity.class, worldIn, pos);
+		if (te != null) {
+			te.wasCreativeDrop = player.capabilities.isCreativeMode;
 		}
+		super.onBlockHarvested(worldIn, pos, state, player);
 	}
 
 	@Override
-	public void onBlockExploded(World world, BlockPos pos, Explosion explosion)
-	{
+	public boolean hasTileEntity(IBlockState state) {
+		return true;
+	}
+
+	@Override
+	public TileEntity createTileEntity(World world, IBlockState state) {
+		return new RadiantTankTileEntity();
+	}
+
+	@Override
+	public void onBlockExploded(World world, BlockPos pos, Explosion explosion) {
 		ItemStack stack = generateStack(null, world, pos, null);
 		EntityItem tank = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), stack);
 		world.spawnEntity(tank);
@@ -152,53 +163,17 @@ public class RadiantTank extends BlockTemplate
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
-	public boolean isOpaqueCube(IBlockState state)
-	{
-		return false;
-	}
-
-	@Override
-	@SuppressWarnings("deprecation")
-	public boolean isFullCube(IBlockState state)
-	{
-		return false;
-	}
-
-	@Override
-	@SuppressWarnings("deprecation")
-	public boolean causesSuffocation(IBlockState state)
-	{
-		return false;
-	}
-
-	@Override
-	public BlockRenderLayer getRenderLayer()
-	{
-		return BlockRenderLayer.CUTOUT;
-	}
-
-	@Override
-	public boolean hasTileEntity(IBlockState state)
-	{
-		return true;
-	}
-
-	@Override
-	public TileEntity createTileEntity(World world, IBlockState state)
-	{
-		return new RadiantTankTileEntity();
+	public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+		return generateStack(state, world, pos, player);
 	}
 
 	@Override
 	@ParametersAreNonnullByDefault
-	public void breakBlock(World world, BlockPos pos, IBlockState state)
-	{
+	public void breakBlock(World world, BlockPos pos, IBlockState state) {
 		LineHandler.removeLine(pos);
 
 		ItemStack stack = generateStack(state, world, pos, null);
-		if (!stack.isEmpty())
-		{
+		if (!stack.isEmpty()) {
 			spawnAsEntity(world, pos, stack);
 		}
 
@@ -206,12 +181,14 @@ public class RadiantTank extends BlockTemplate
 	}
 
 	@Override
-	public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player)
-	{
-		RadiantTankTileEntity te = WorldUtil.getTileEntity(RadiantTankTileEntity.class, worldIn, pos);
-		if (te != null) {
-			te.wasCreativeDrop = player.capabilities.isCreativeMode;
+	public void onBlockPlacedBy(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityLivingBase placer, @Nonnull ItemStack stack) {
+		super.onBlockPlacedBy(world, pos, state, placer, stack);
+
+		if (stack.hasTagCompound()) {
+			RadiantTankTileEntity te = WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, pos);
+			if (te != null) {
+				te.deserializeStack(stack.getTagCompound().getCompoundTag("tank"));
+			}
 		}
-		super.onBlockHarvested(worldIn, pos, state, player);
 	}
 }

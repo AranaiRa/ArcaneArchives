@@ -2,12 +2,9 @@ package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.blocks.MonitoringCrystal;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -18,28 +15,23 @@ public class MonitoringCrystalTileEntity extends ManifestTileEntity
 {
 	private BlockPos target = null;
 
-	public MonitoringCrystalTileEntity()
-	{
+	public MonitoringCrystalTileEntity() {
 		super("monitoring_crystal_tile_entity");
 	}
 
 	@Override
-	public String getDescriptor()
-	{
+	public String getDescriptor() {
 		return "Monitoring Crystal";
 	}
 
 	@Override
-	public String getChestName()
-	{
+	public String getChestName() {
 		return "";
 	}
 
 	@Override
-	public IItemHandler getInventory()
-	{
-		if (target == null)
-		{
+	public IItemHandler getInventory() {
+		if (target == null) {
 			IBlockState me = world.getBlockState(getPos());
 			EnumFacing facing = me.getValue(MonitoringCrystal.FACING).getOpposite();
 			target = getPos().offset(facing);
@@ -58,8 +50,7 @@ public class MonitoringCrystalTileEntity extends ManifestTileEntity
 		return null;
 	}
 
-	public BlockPos getTarget ()
-	{
+	public BlockPos getTarget () {
 		return target;
 	}
 }

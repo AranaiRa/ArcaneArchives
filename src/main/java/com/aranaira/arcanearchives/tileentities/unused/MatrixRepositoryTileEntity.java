@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.tileentities.unused;
 
-import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
@@ -16,36 +15,32 @@ public class MatrixRepositoryTileEntity extends ImmanenceTileEntity
 {
 
 
-	public MatrixRepositoryTileEntity()
-	{
+	public MatrixRepositoryTileEntity() {
 		super("matrix_repository_tile_entity");
 		immanenceDrain = 0; // ConfigHandler.values.iRepositoryMatrixDrain;
 		// maxItems = ConfigHandler.values.iRepositoryMatrixItemCap;
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound)
-	{
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 
 		return super.writeToNBT(compound);
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound compound)
-	{
+	public void readFromNBT(NBTTagCompound compound) {
 
 		super.readFromNBT(compound);
 	}
 
 	@Override
-	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate)
-	{
+	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
 		return (oldState.getBlock() != newSate.getBlock());
 	}
 
 	/*@Override
 	public ItemStack InsertItem(ItemStack item, boolean simulate)
-	{
+{
 		//Creates a copy of the item that can safely be edited.
 		ItemStack temp = item.copy();
 
@@ -60,15 +55,15 @@ public class MatrixRepositoryTileEntity extends ImmanenceTileEntity
 
 		//Tries to find the same item in the network, so that it will consolidate the itemstack.
 		for(ItemStack itemStack : inventory)
-		{
+{
 			if(ItemComparison.AreItemsEqual(temp, itemStack))
-			{
+{
 				//Adds the item count to the one in the network, and removes the remainder from the one that will be returned.
 				if(!simulate) itemStack.setCount(itemStack.getCount() + maxCanAdd);
 				temp.setCount(temp.getCount() - maxCanAdd);
 				return ItemStack.EMPTY;
-			}
-		}
+}
+}
 
 		//If the item is not found, create a copy that will be added to the network.
 		ItemStack temp_add = temp.copy();
@@ -78,5 +73,5 @@ public class MatrixRepositoryTileEntity extends ImmanenceTileEntity
 		if(!simulate) inventory.add(temp_add);
 
 		return ItemStack.EMPTY;
-	}*/
+}*/
 }

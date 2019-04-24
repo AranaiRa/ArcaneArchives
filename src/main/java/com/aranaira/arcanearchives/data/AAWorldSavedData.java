@@ -24,40 +24,33 @@ public class AAWorldSavedData extends WorldSavedData
 
 	// It REALLY is used.
 	@SuppressWarnings("unused")
-	public AAWorldSavedData(String id)
-	{
+	public AAWorldSavedData(String id) {
 		super(id);
 	}
 
-	public AAWorldSavedData()
-	{
+	public AAWorldSavedData() {
 		super(ID);
 	}
 
-	public void clearServerMap()
-	{
+	public void clearServerMap() {
 		arcaneArchivesNetworks.clear();
 	}
 
 	@Nullable
-	public ServerNetwork getNetwork(@Nullable UUID playerID)
-	{
+	public ServerNetwork getNetwork(@Nullable UUID playerID) {
 		if(playerID == null || playerID == NetworkHelper.INVALID) return null;
 
-		if(!arcaneArchivesNetworks.containsKey(playerID))
-		{
+		if(!arcaneArchivesNetworks.containsKey(playerID)) {
 			arcaneArchivesNetworks.put(playerID, ServerNetwork.newNetwork(playerID).setParent(this));
 		}
 		return arcaneArchivesNetworks.get(playerID);
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound tagCompound)
-	{
+	public void readFromNBT(NBTTagCompound tagCompound) {
 		NBTTagList networkData = tagCompound.getTagList("networkData", 10);
 
-		for(int i = 0; i < networkData.tagCount(); i++)
-		{
+		for(int i = 0; i < networkData.tagCount(); i++) {
 			NBTTagCompound data = networkData.getCompoundTagAt(i);
 			ServerNetwork network = ServerNetwork.fromNBT(data);
 			network.setParent(this);
@@ -66,12 +59,10 @@ public class AAWorldSavedData extends WorldSavedData
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound tagCompound)
-	{
+	public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
 		NBTTagList networkData = new NBTTagList();
 
-		for(ServerNetwork network : arcaneArchivesNetworks.values())
-		{
+		for(ServerNetwork network : arcaneArchivesNetworks.values()) {
 			networkData.appendTag(network.serializeNBT());
 		}
 
@@ -79,5 +70,4 @@ public class AAWorldSavedData extends WorldSavedData
 
 		return tagCompound;
 	}
-
 }

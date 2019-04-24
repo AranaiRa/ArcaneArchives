@@ -27,15 +27,13 @@ public class JEIPlugin implements IModPlugin
 	public static IJeiRuntime runtime;
 
 	@Override
-	public void registerCategories(IRecipeCategoryRegistration registry)
-	{
+	public void registerCategories(IRecipeCategoryRegistration registry) {
 		IGuiHelper helper = registry.getJeiHelpers().getGuiHelper();
 		registry.addRecipeCategories(new GCTCategory(helper));
 	}
 
 	@Override
-	public void register(@Nonnull IModRegistry registry)
-	{
+	public void register(@Nonnull IModRegistry registry) {
 		jeiHelpers = registry.getJeiHelpers();
 		IGuiHelper guiHelper = jeiHelpers.getGuiHelper();
 
@@ -51,8 +49,7 @@ public class JEIPlugin implements IModPlugin
 	}
 
 	@Override
-	public void onRuntimeAvailable(@Nonnull IJeiRuntime jeiRuntime)
-	{
+	public void onRuntimeAvailable(@Nonnull IJeiRuntime jeiRuntime) {
 		runtime = jeiRuntime;
 		recipeRegistry = jeiRuntime.getRecipeRegistry();
 	}

@@ -9,7 +9,6 @@ import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -25,8 +24,7 @@ public class RadiantTrove extends BlockDirectionalTemplate
 {
 	public static final String NAME = "radiant_trove";
 
-	public RadiantTrove()
-	{
+	public RadiantTrove() {
 		super(NAME, Material.WOOD);
 		setSize(1, 1, 1);
 		setLightLevel(16 / 16f);
@@ -36,8 +34,30 @@ public class RadiantTrove extends BlockDirectionalTemplate
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
-	{
+	@SuppressWarnings("deprecation")
+	public boolean causesSuffocation(IBlockState state) {
+		return false;
+	}
+
+	@Override
+	@SuppressWarnings("deprecation")
+	public boolean isFullCube(IBlockState state) {
+		return false;
+	}
+
+	@Override
+	@SuppressWarnings("deprecation")
+	public boolean isOpaqueCube(IBlockState state) {
+		return false;
+	}
+
+	@Override
+	public BlockRenderLayer getRenderLayer() {
+		return BlockRenderLayer.CUTOUT;
+	}
+
+	@Override
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		LineHandler.removeLine(pos);
 
 		if (!world.isRemote && hand == EnumHand.MAIN_HAND) {
@@ -52,15 +72,12 @@ public class RadiantTrove extends BlockDirectionalTemplate
 	}
 
 	@Override
-	public void onBlockClicked(World world, BlockPos pos, EntityPlayer player)
-	{
+	public void onBlockClicked(World world, BlockPos pos, EntityPlayer player) {
 		IBlockState state = world.getBlockState(pos);
 		LineHandler.removeLine(pos);
 
-		if (state.getBlock() == BlockRegistry.RADIANT_TROVE)
-		{
-			if(!world.isRemote)
-			{
+		if (state.getBlock() == BlockRegistry.RADIANT_TROVE) {
+			if(!world.isRemote) {
 				RadiantTroveTileEntity te = WorldUtil.getTileEntity(RadiantTroveTileEntity.class, world, pos);
 				if(te == null) return;
 
@@ -70,55 +87,23 @@ public class RadiantTrove extends BlockDirectionalTemplate
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
-	public boolean isOpaqueCube(IBlockState state)
-	{
-		return false;
-	}
-
-	@Override
-	@SuppressWarnings("deprecation")
-	public boolean isFullCube(IBlockState state)
-	{
-		return false;
-	}
-
-	@Override
-	@SuppressWarnings("deprecation")
-	public boolean causesSuffocation(IBlockState state)
-	{
-		return false;
-	}
-
-	@Override
-	public BlockRenderLayer getRenderLayer()
-	{
-		return BlockRenderLayer.CUTOUT;
-	}
-
-	@Override
-	public boolean hasTileEntity(IBlockState state)
-	{
+	public boolean hasTileEntity(IBlockState state) {
 		return true;
 	}
 
 	@Override
-	public TileEntity createTileEntity(World world, IBlockState state)
-	{
+	public TileEntity createTileEntity(World world, IBlockState state) {
 		return new RadiantTroveTileEntity();
 	}
 
 	@Override
 	@ParametersAreNonnullByDefault
-	public void breakBlock(World world, BlockPos pos, IBlockState state)
-	{
+	public void breakBlock(World world, BlockPos pos, IBlockState state) {
 		LineHandler.removeLine(pos);
 
-		if(!world.isRemote)
-		{
+		if(!world.isRemote) {
 			RadiantTroveTileEntity te = WorldUtil.getTileEntity(RadiantTroveTileEntity.class, world, pos);
-			if (te != null)
-			{
+			if (te != null) {
 				TroveItemHandler handler = te.getInventory();
 				while (!handler.isEmpty()) {
 					ItemStack stack = handler.extractItem(0, 64, false);

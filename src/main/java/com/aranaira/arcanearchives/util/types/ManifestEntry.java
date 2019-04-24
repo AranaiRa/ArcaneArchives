@@ -20,49 +20,35 @@ public class ManifestEntry
 	public List<ItemEntry> itemEntries;
 	public List<ItemEntry> consolidated;
 
-	public ManifestEntry(@Nonnull ItemStack stack, @Nonnull int dimension, @Nonnull List<ItemEntry> itemEntries)
-	{
+	public ManifestEntry(@Nonnull ItemStack stack, @Nonnull int dimension, @Nonnull List<ItemEntry> itemEntries) {
 		this.stack = stack;
 		this.dimension = dimension;
 		this.itemEntries = itemEntries;
 		this.consolidated = new ArrayList<>();
 	}
 
-	public ItemStack getStack()
-	{
+	public ItemStack getStack() {
 		return stack;
 	}
 
-	public int getDimension()
-	{
+	public int getDimension() {
 		return dimension;
 	}
 
-	public List<ItemEntry> getEntries()
-	{
-		return itemEntries;
-	}
-
-	public List<Vec3d> getVecPositions()
-	{
+	public List<Vec3d> getVecPositions() {
 		return itemEntries.stream().map(ItemEntry::asVec3d).collect(Collectors.toList());
 	}
 
-	public List<ItemEntry> consolidateEntries(boolean force)
-	{
-		if(consolidated.isEmpty() || force)
-		{
+	public List<ItemEntry> consolidateEntries(boolean force) {
+		if(consolidated.isEmpty() || force) {
 			consolidated.clear();
 
 			Map<BlockPos, Integer> workspace = new HashMap<>();
 
-			for(ItemEntry entry : getEntries())
-			{
-				if(workspace.containsKey(entry.entryPos))
-				{
+			for(ItemEntry entry : getEntries()) {
+				if(workspace.containsKey(entry.entryPos)) {
 					consolidated.get(workspace.get(entry.entryPos)).itemCount += entry.itemCount;
-				} else
-				{
+				} else {
 					consolidated.add(entry);
 					workspace.put(entry.entryPos, consolidated.size() - 1);
 				}
@@ -72,49 +58,45 @@ public class ManifestEntry
 		return consolidated;
 	}
 
-	public static class ItemEntry
-	{
+	public List<ItemEntry> getEntries() {
+		return itemEntries;
+	}
+
+	public static class ItemEntry {
 		public BlockPos entryPos;
 		public String chestName;
 		public int itemCount;
 
-		public ItemEntry(BlockPos pos, String chestName, int count)
-		{
+		public ItemEntry(BlockPos pos, String chestName, int count) {
 			this.entryPos = pos;
 			this.chestName = chestName;
 			this.itemCount = count;
 		}
 
-		public static ItemEntry deserializeNBT(NBTTagCompound tag)
-		{
+		public static ItemEntry deserializeNBT(NBTTagCompound tag) {
 			BlockPos pos = BlockPos.fromLong(tag.getLong(NetworkTags.ENTRY_POS));
 			String chestName = tag.getString(NetworkTags.CHEST_NAME);
 			int itemCount = tag.getInteger(NetworkTags.ITEM_COUNT);
 			return new ItemEntry(pos, chestName, itemCount);
 		}
 
-		public Vec3d asVec3d()
-		{
+		public Vec3d asVec3d() {
 			return new Vec3d(entryPos.getX(), entryPos.getY(), entryPos.getZ());
 		}
 
-		public String getChestName()
-		{
+		public String getChestName() {
 			return chestName;
 		}
 
-		public int getItemCount()
-		{
+		public int getItemCount() {
 			return itemCount;
 		}
 
-		public BlockPos getPosition()
-		{
+		public BlockPos getPosition() {
 			return entryPos;
 		}
 
-		public NBTTagCompound serializeNBT()
-		{
+		public NBTTagCompound serializeNBT() {
 			NBTTagCompound thisEntry = new NBTTagCompound();
 			thisEntry.setInteger(NetworkTags.ITEM_COUNT, itemCount);
 			thisEntry.setLong(NetworkTags.ENTRY_POS, entryPos.toLong());

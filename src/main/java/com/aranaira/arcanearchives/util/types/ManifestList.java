@@ -15,37 +15,27 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 	private String mFilterText = null;
 	private ItemStack searchItem = null;
 
-	public ManifestList()
-	{
-		super(new ArrayList<>());
-	}
-
-	public ManifestList(List<ManifestEntry> reference)
-	{
+	public ManifestList(List<ManifestEntry> reference) {
 		super(reference);
 		this.mFilterText = null;
 	}
 
-	public ManifestList(List<ManifestEntry> reference, String filterText)
-	{
+	public ManifestList(List<ManifestEntry> reference, String filterText) {
 		super(reference);
 		this.mFilterText = filterText;
 	}
 
-	public ManifestList filtered()
-	{
+	public ManifestList filtered() {
 		if(mFilterText == null && searchItem == null) return this;
 
 		String filter = "";
 
-		if (mFilterText != null)
-		{
+		if (mFilterText != null) {
 			filter = mFilterText.toLowerCase();
 		}
 
 		String finalFilter = filter;
-		return stream().filter((entry) ->
-		{
+		return stream().filter((entry) -> {
 			if(entry == null) return false;
 
 			ItemStack stack = entry.getStack();
@@ -70,24 +60,24 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 
 			return false;
 		}).collect(Collectors.toCollection(ManifestList::new));
+	}
 
+	public ManifestList() {
+		super(new ArrayList<>());
 	}
 
 	@Nullable
-	public ManifestEntry getEntryForSlot(int slot)
-	{
+	public ManifestEntry getEntryForSlot(int slot) {
 		if(slot < size() && slot >= 0) return get(slot);
 		return null;
 	}
 
-	public ItemStack getItemStackForSlot(int slot)
-	{
+	public ItemStack getItemStackForSlot(int slot) {
 		if(slot < size() && slot >= 0) return get(slot).getStack();
 		return ItemStack.EMPTY;
 	}
 
-	public String getSearchText()
-	{
+	public String getSearchText() {
 		return this.mFilterText;
 	}
 
@@ -95,8 +85,7 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 		return this.searchItem;
 	}
 
-	public void setSearchText(String searchTerm)
-	{
+	public void setSearchText(String searchTerm) {
 		this.mFilterText = searchTerm;
 	}
 
@@ -105,13 +94,11 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 	}
 
 	@Override
-	public ManifestListIterable iterable()
-	{
+	public ManifestListIterable iterable() {
 		return new ManifestListIterable(new ManifestIterator(iterator()));
 	}
 
-	public ManifestList sorted(Comparator<ManifestEntry> c)
-	{
+	public ManifestList sorted(Comparator<ManifestEntry> c) {
 		ManifestList copy = new ManifestList(new ArrayList<>(), null);
 		copy.addAll(this);
 		copy.sort(c);
@@ -119,48 +106,39 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 	}
 
 	@Override
-	public void clear()
-	{
+	public void clear() {
 		super.clear();
 	}
 
-	public class ManifestListIterable extends ReferenceListIterable<ManifestEntry>
-	{
-		ManifestListIterable(ManifestIterator iter)
-		{
+	public class ManifestListIterable extends ReferenceListIterable<ManifestEntry> {
+		ManifestListIterable(ManifestIterator iter) {
 			super(iter);
 		}
 
-		public int getSlot()
-		{
+		public int getSlot() {
 			return ((ManifestIterator) iter).getSlot();
 		}
 	}
 
-	public class ManifestIterator implements Iterator<ManifestEntry>
-	{
+	public class ManifestIterator implements Iterator<ManifestEntry> {
 		private int slot = 0;
 		private Iterator<ManifestEntry> iter;
 
-		public ManifestIterator(Iterator<ManifestEntry> iter)
-		{
+		public ManifestIterator(Iterator<ManifestEntry> iter) {
 			this.iter = iter;
 		}
 
-		public int getSlot()
-		{
+		public int getSlot() {
 			return slot;
 		}
 
 		@Override
-		public boolean hasNext()
-		{
+		public boolean hasNext() {
 			return iter.hasNext();
 		}
 
 		@Override
-		public ManifestEntry next()
-		{
+		public ManifestEntry next() {
 			slot++;
 			return iter.next();
 		}

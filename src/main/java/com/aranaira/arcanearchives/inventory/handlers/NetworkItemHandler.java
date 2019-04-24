@@ -22,32 +22,27 @@ public class NetworkItemHandler implements IItemHandlerModifiable
 	@Nullable
 	private ServerNetwork network;
 
-	public NetworkItemHandler(UUID uuid, World world)
-	{
+	public NetworkItemHandler(UUID uuid, World world) {
 		playerUUID = uuid;
 		// TODO: This is server-side only
 		network = NetworkHelper.getServerNetwork(uuid, world);
 	}
 
-	public String getSearchString()
-	{
+	public String getSearchString() {
 		return searchText;
 	}
 
-	public void setSearchString(String s)
-	{
+	public void setSearchString(String s) {
 		searchText = s;
 	}
 
 	@Override
-	public int getSlots()
-	{
+	public int getSlots() {
 		return 27;
 	}
 
 	@Override
-	public ItemStack getStackInSlot(int slot)
-	{
+	public ItemStack getStackInSlot(int slot) {
 		if(network == null) // TODO: ERROR
 			return ItemStack.EMPTY;
 
@@ -61,8 +56,7 @@ public class NetworkItemHandler implements IItemHandlerModifiable
 	}
 
 	@Override
-	public ItemStack insertItem(int slot, ItemStack stack, boolean simulate)
-	{
+	public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
 		if(network == null) // TODO: Error
 			return stack;
 		// TODO: This shouldn't be a copy?
@@ -71,8 +65,7 @@ public class NetworkItemHandler implements IItemHandlerModifiable
 	}
 
 	@Override
-	public ItemStack extractItem(int slot, int amount, boolean simulate)
-	{
+	public ItemStack extractItem(int slot, int amount, boolean simulate) {
 		if(network == null) // TODO: Error
 			return ItemStack.EMPTY;
 		//return network.ExtractItem(getStackInSlot(slot), amount, simulate);
@@ -80,15 +73,13 @@ public class NetworkItemHandler implements IItemHandlerModifiable
 	}
 
 	@Override
-	public int getSlotLimit(int slot)
-	{
+	public int getSlotLimit(int slot) {
 		//Should this be something ridiculously high?
 		return 100000;
 	}
 
 	@Override
-	public void setStackInSlot(int slot, ItemStack stack)
-	{
+	public void setStackInSlot(int slot, ItemStack stack) {
 		//if (stack.isEmpty())
 		//	return;
 

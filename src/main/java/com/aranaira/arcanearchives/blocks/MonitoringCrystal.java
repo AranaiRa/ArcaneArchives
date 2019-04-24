@@ -3,7 +3,6 @@ package com.aranaira.arcanearchives.blocks;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
 import com.aranaira.arcanearchives.tileentities.MonitoringCrystalTileEntity;
-import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
@@ -28,8 +27,7 @@ public class MonitoringCrystal extends BlockDirectionalTemplate
 
 	public static final String NAME = "monitoring_crystal";
 
-	public MonitoringCrystal()
-	{
+	public MonitoringCrystal() {
 		super(NAME, Material.GLASS);
 		setLightLevel(16 / 16f);
 		setHardness(0.3f);
@@ -37,98 +35,35 @@ public class MonitoringCrystal extends BlockDirectionalTemplate
 	}
 
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
-	{
-		ArcaneArchives.logger.info(state.getValue(BlockDirectionalTemplate.FACING).getName().toLowerCase());
-
-		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
-	}
-
-	@Override
 	@SuppressWarnings("deprecation")
-	public IBlockState withRotation(IBlockState state, Rotation rot)
-	{
+	public IBlockState withRotation(IBlockState state, Rotation rot) {
 		return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
-	{
+	public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
 		return state.withProperty(FACING, mirrorIn.mirror(state.getValue(FACING)));
 	}
 
 	@Override
-	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand)
-	{
-		return this.getDefaultState().withProperty(FACING, facing);
-	}
-
-	@Override
-	public IBlockState getStateFromMeta(int meta)
-	{
-		IBlockState iblockstate = this.getDefaultState();
-		iblockstate = iblockstate.withProperty(FACING, EnumFacing.byIndex(meta));
-		return iblockstate;
-	}
-
-	@Override
-	public int getMetaFromState(IBlockState state)
-	{
-		return state.getValue(FACING).getIndex();
-	}
-
-	@Nullable
-	@Override
 	@SuppressWarnings("deprecation")
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
-	{
-		return NULL_AABB;
-	}
-
-	@Override
-	protected BlockStateContainer createBlockState()
-	{
-		return new BlockStateContainer(this, FACING);
-	}
-
-	@Override
-	@SuppressWarnings("deprecation")
-	public boolean isFullCube(IBlockState state)
-	{
+	public boolean isFullCube(IBlockState state) {
 		return false;
-	}
-
-	@Override
-	@SuppressWarnings("deprecation")
-	public boolean isOpaqueCube(IBlockState state)
-	{
-		return false;
-	}
-
-	@Override
-	public boolean hasOBJModel()
-	{
-		return true;
 	}
 
 	@Override
 	@Nonnull
 	@SuppressWarnings("deprecation")
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
-	{
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		EnumFacing facing = state.getValue(FACING);
-		if (facing == EnumFacing.UP)
-		{
+		if (facing == EnumFacing.UP) {
 			return new AxisAlignedBB(0.1, 0.0, 0.1, 0.9, 0.15, 0.9);
-		} else if (facing == EnumFacing.DOWN)
-		{
+		} else if (facing == EnumFacing.DOWN) {
 			return new AxisAlignedBB(0.1, 1.0, 0.1, 0.9, 0.85, 0.9);
-		} else if (facing == EnumFacing.SOUTH)
-		{
+		} else if (facing == EnumFacing.SOUTH) {
 			return new AxisAlignedBB(0.9, 0.9, 0, 0.1, 0.15, 0.1);
-		} else if (facing == EnumFacing.NORTH)
-		{
+		} else if (facing == EnumFacing.NORTH) {
 			return new AxisAlignedBB(0.9, 0.9, 1, 0.1, 0.15, 0.9);
 		} else if (facing == EnumFacing.EAST) {
 			return new AxisAlignedBB(0.1, 0.9, 0.1, 0, 0.15, 0.9);
@@ -139,21 +74,64 @@ public class MonitoringCrystal extends BlockDirectionalTemplate
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face)
-	{
+	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
 		return BlockFaceShape.UNDEFINED;
 	}
 
+	@Nullable
 	@Override
-	public boolean hasTileEntity(IBlockState state)
-	{
+	@SuppressWarnings("deprecation")
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
+		return NULL_AABB;
+	}
+
+	@Override
+	@SuppressWarnings("deprecation")
+	public boolean isOpaqueCube(IBlockState state) {
+		return false;
+	}
+
+	@Override
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		ArcaneArchives.logger.info(state.getValue(BlockDirectionalTemplate.FACING).getName().toLowerCase());
+
+		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+	}
+
+	@Override
+	public boolean hasTileEntity(IBlockState state) {
 		return true;
 	}
 
 	@Override
-	public TileEntity createTileEntity(World world, IBlockState state)
-	{
+	public TileEntity createTileEntity(World world, IBlockState state) {
 		return new MonitoringCrystalTileEntity();
 	}
 
+	@Override
+	public IBlockState getStateFromMeta(int meta) {
+		IBlockState iblockstate = this.getDefaultState();
+		iblockstate = iblockstate.withProperty(FACING, EnumFacing.byIndex(meta));
+		return iblockstate;
+	}
+
+	@Override
+	public int getMetaFromState(IBlockState state) {
+		return state.getValue(FACING).getIndex();
+	}
+
+	@Override
+	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
+		return this.getDefaultState().withProperty(FACING, facing);
+	}
+
+	@Override
+	protected BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this, FACING);
+	}
+
+	@Override
+	public boolean hasOBJModel() {
+		return true;
+	}
 }

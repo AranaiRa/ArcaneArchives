@@ -5,8 +5,7 @@ import net.minecraftforge.items.IItemHandler;
 
 public abstract class ManifestTileEntity extends ImmanenceTileEntity
 {
-	public ManifestTileEntity(String name)
-	{
+	public ManifestTileEntity(String name) {
 		super(name);
 	}
 

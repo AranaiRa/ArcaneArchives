@@ -6,11 +6,8 @@ import com.aranaira.arcanearchives.client.render.RadiantTankTEISR;
 import com.aranaira.arcanearchives.client.render.RadiantTankTESR;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.init.BlockRegistry;
-import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.items.itemblocks.RadiantTankItem;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
-import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
-import javafx.scene.shape.Arc;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -37,13 +34,9 @@ public class ClientProxy extends CommonProxy
 	@SideOnly(Side.CLIENT)
 	public static RadiantTankTEISR itemTESR;
 
-	@Override
-	public void preInit(FMLPreInitializationEvent event)
-	{
-		super.preInit(event);
-		OBJLoader.INSTANCE.addDomain(ArcaneArchives.MODID);
-
-		Keybinds.initKeybinds();
+	@SubscribeEvent
+	public static void playerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+		NetworkHelper.clearClientCache();
 	}
 
 	@SubscribeEvent
@@ -58,19 +51,19 @@ public class ClientProxy extends CommonProxy
 	}
 
 	@Override
-	public void init(FMLInitializationEvent event)
-	{
+	public void preInit(FMLPreInitializationEvent event) {
+		super.preInit(event);
+		OBJLoader.INSTANCE.addDomain(ArcaneArchives.MODID);
+
+		Keybinds.initKeybinds();
+	}
+
+	@Override
+	public void init(FMLInitializationEvent event) {
 		super.init(event);
 	}
 
 	@Override
-	public void registerItemRenderer(@Nonnull Item item, int meta, String id)
-	{
-	}
-
-	@SubscribeEvent
-	public static void playerLoggedIn(PlayerEvent.PlayerLoggedInEvent event)
-	{
-		NetworkHelper.clearClientCache();
+	public void registerItemRenderer(@Nonnull Item item, int meta, String id) {
 	}
 }

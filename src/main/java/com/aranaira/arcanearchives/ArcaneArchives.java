@@ -22,32 +22,27 @@ public class ArcaneArchives
 	public static CommonProxy proxy;
 
 	@EventHandler
-	public static void preInit(FMLPreInitializationEvent event)
-	{
+	public static void preInit (FMLPreInitializationEvent event) {
 		proxy.preInit(event);
 	}
 
 	@EventHandler
-	public static void init(FMLInitializationEvent event)
-	{
+	public static void init (FMLInitializationEvent event) {
 		proxy.init(event);
 	}
 
 	@EventHandler
-	public static void postInit(FMLPostInitializationEvent event)
-	{
+	public static void postInit (FMLPostInitializationEvent event) {
 		proxy.postInit(event);
 	}
 
 	@EventHandler
-	public static void serverStarted(FMLServerStartedEvent event)
-	{
+	public static void serverStarted (FMLServerStartedEvent event) {
 		proxy.serverStarted(event);
 	}
 
 	@EventHandler
-	public static void loadComplete(FMLLoadCompleteEvent event)
-	{
+	public static void loadComplete (FMLLoadCompleteEvent event) {
 		proxy.loadComplete(event);
 	}
 }

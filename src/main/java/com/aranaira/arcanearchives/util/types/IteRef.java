@@ -3,7 +3,6 @@ package com.aranaira.arcanearchives.util.types;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.ManifestTileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -19,16 +18,14 @@ public class IteRef
 	public WeakReference<ImmanenceTileEntity> tile;
 	public Class<? extends ImmanenceTileEntity> clazz;
 
-	public IteRef(BlockPos pos, int dimension, UUID tileID, Class<? extends ImmanenceTileEntity> clazz)
-	{
+	public IteRef(BlockPos pos, int dimension, UUID tileID, Class<? extends ImmanenceTileEntity> clazz) {
 		this.pos = pos;
 		this.dimension = dimension;
 		this.clazz = clazz;
 		this.uuid = tileID;
 	}
 
-	public IteRef(ImmanenceTileEntity tile)
-	{
+	public IteRef(ImmanenceTileEntity tile) {
 		this.pos = tile.getPos();
 		this.dimension = tile.dimension;
 		this.clazz = tile.getClass();
@@ -36,22 +33,18 @@ public class IteRef
 		this.tile = new WeakReference<>(tile);
 	}
 
-	public ImmanenceTileEntity getWorldTile(World world)
-	{
+	public ImmanenceTileEntity getWorldTile(World world) {
 		if(world.provider.getDimension() != dimension && !world.isRemote) return getServerTile();
 
-		if(tile == null || tile.get() == null)
-		{
+		if(tile == null || tile.get() == null) {
 			tile = new WeakReference<>(WorldUtil.getTileEntity(clazz, world, pos));
 		}
 
 		return tile.get();
 	}
 
-	public ImmanenceTileEntity getServerTile()
-	{
-		if(tile == null || tile.get() == null)
-		{
+	public ImmanenceTileEntity getServerTile() {
+		if(tile == null || tile.get() == null) {
 			tile = new WeakReference<>(WorldUtil.getTileEntity(clazz, dimension, pos));
 		}
 
@@ -67,8 +60,7 @@ public class IteRef
 	}
 
 	@Nullable
-	public ImmanenceTileEntity getTile()
-	{
+	public ImmanenceTileEntity getTile() {
 		if(tile == null) return null;
 
 		return tile.get();
@@ -80,13 +72,11 @@ public class IteRef
 		this.tile = new WeakReference<>(tile);
 	}
 
-	public boolean isValid()
-	{
+	public boolean isValid() {
 		return tile != null && tile.get() != null;
 	}
 
-	public boolean isActive()
-	{
+	public boolean isActive() {
 		if(tile == null) return false;
 
 		ImmanenceTileEntity ite = tile.get();
@@ -96,8 +86,7 @@ public class IteRef
 		return ite.isActive();
 	}
 
-	public int networkPriority()
-	{
+	public int networkPriority() {
 		if(tile == null || tile.get() == null) return -999999999;
 
 		//noinspection ConstantConditions

@@ -16,26 +16,22 @@ public class ComponentContainmentFieldItem extends ItemTemplate
 {
 	public static final String NAME = "item_component_containmentfield";
 
-	public ComponentContainmentFieldItem()
-	{
+	public ComponentContainmentFieldItem() {
 		super(NAME);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
-	{
+	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + "A crafting ingredient also used to upgrade Radiant Tanks.");
 	}
 
 	@Override
-	public EnumRarity getRarity(ItemStack stack)
-	{
+	public EnumRarity getRarity(ItemStack stack) {
 		return EnumRarity.UNCOMMON;
 	}
 
 	@Override
-	public boolean doesSneakBypassUse(ItemStack stack, IBlockAccess world, BlockPos pos, EntityPlayer player)
-	{
+	public boolean doesSneakBypassUse(ItemStack stack, IBlockAccess world, BlockPos pos, EntityPlayer player) {
 		return true;
 	}
 }

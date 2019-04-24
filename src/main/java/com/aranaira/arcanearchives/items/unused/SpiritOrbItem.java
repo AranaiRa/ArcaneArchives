@@ -15,8 +15,7 @@ public class SpiritOrbItem extends ItemMultistateTemplate
 {
 	public static ItemStack EMPTY, CROWN_MOTE, CROWN_JUVE, CROWN_ELD, MATTER_MOTE, MATTER_JUVE, MATTER_ELD, POWER_MOTE, POWER_JUVE, POWER_ELD, SPACE_MOTE, SPACE_JUVE, SPACE_ELD, TIME_MOTE, TIME_JUVE, TIME_ELD;
 
-	public SpiritOrbItem()
-	{
+	public SpiritOrbItem() {
 		super("item_spiritorb");
 
 		EMPTY = addItem(0, "empty");
@@ -44,8 +43,7 @@ public class SpiritOrbItem extends ItemMultistateTemplate
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
-	{
+	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.RED + "" + TextFormatting.BOLD + I18n.format("arcanearchives.tooltip.notimplemented1"));
 		tooltip.add(TextFormatting.RED + "" + TextFormatting.ITALIC + I18n.format("arcanearchives.tooltip.notimplemented2"));
 	}

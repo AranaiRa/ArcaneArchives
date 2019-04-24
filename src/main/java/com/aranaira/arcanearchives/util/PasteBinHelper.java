@@ -21,10 +21,8 @@ public class PasteBinHelper
 {
 	private static final String api_dev_key = "b3dd7c6a1d559ea3b6c53e6e143955bc";
 
-	public static String PostToPasteBin(String s)
-	{
-		try
-		{
+	public static String PostToPasteBin(String s) {
+		try {
 			/*
 			URL url = new URL("https://pastebin.com/api/api_post.php");
 			HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
@@ -36,9 +34,9 @@ public class PasteBinHelper
 			StringBuilder stringBuilder = new StringBuilder();
 			String line = null;
 			while ((line = reader.readLine()) != null)
-			{
+{
 				stringBuilder.append(line + "\n");
-			}
+}
 			return stringBuilder.toString();
 			*/
 			HttpClient httpclient = HttpClients.createDefault();
@@ -55,24 +53,20 @@ public class PasteBinHelper
 			HttpResponse response = httpclient.execute(httppost);
 			HttpEntity entity = response.getEntity();
 
-			if(entity != null)
-			{
+			if(entity != null) {
 				InputStream instream = entity.getContent();
-				try
-				{
+				try {
 					BufferedReader reader = new BufferedReader(new InputStreamReader(instream));
 					StringBuilder stringBuilder = new StringBuilder();
 					String line = null;
 					while((line = reader.readLine()) != null) stringBuilder.append(line);
 
 					return stringBuilder.toString();
-				} finally
-				{
+				} finally {
 					instream.close();
 				}
 			}
-		} catch(Exception e)
-		{
+		} catch (Exception e) {
 			return e.toString();
 		}
 
@@ -82,39 +76,31 @@ public class PasteBinHelper
 
 	//Read a string from pastebin, s will be the last bit of the url.
 	//Example https://pastebin.com/raw/FTLHDhcF it would take in the FTLHDhcf
-	public static String ReadFromPasteBin(String s)
-	{
+	public static String ReadFromPasteBin(String s) {
 		HttpClient httpclient = HttpClients.createDefault();
 
-		try
-		{
+		try {
 			HttpResponse response = httpclient.execute(new HttpPost("https://pastebin.com/raw/" + s));
 			HttpEntity entity = response.getEntity();
 
-			if(entity != null)
-			{
+			if(entity != null) {
 				InputStream instream = entity.getContent();
-				try
-				{
+				try {
 					BufferedReader reader = new BufferedReader(new InputStreamReader(instream));
 					StringBuilder stringBuilder = new StringBuilder();
 					String line = null;
-					while((line = reader.readLine()) != null)
-					{
+					while((line = reader.readLine()) != null) {
 						stringBuilder.append(line);
 					}
 
 					return stringBuilder.toString();
-				} finally
-				{
+				} finally {
 					instream.close();
 				}
 			}
-		} catch(ClientProtocolException e)
-		{
+		} catch (ClientProtocolException e) {
 			e.printStackTrace();
-		} catch(IOException e)
-		{
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 

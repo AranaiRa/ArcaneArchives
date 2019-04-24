@@ -12,28 +12,24 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class MatrixCoreTileEntity extends ImmanenceTileEntity
 {
-	public MatrixCoreTileEntity()
-	{
+	public MatrixCoreTileEntity() {
 		super("matrix_core_tile_entity");
 		immanenceGeneration = Integer.MAX_VALUE;
 	}
 
 	@Override
-	public void update()
-	{
+	public void update() {
 
 		super.update();
 	}
 
 	@Override
-	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate)
-	{
-		return (oldState.getBlock() != newSate.getBlock());
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+		super.onDataPacket(net, pkt);
 	}
 
 	@Override
-	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
-	{
-		super.onDataPacket(net, pkt);
+	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
+		return (oldState.getBlock() != newSate.getBlock());
 	}
 }

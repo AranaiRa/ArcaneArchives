@@ -13,20 +13,17 @@ public class ComponentScintillatingInlayItem extends ItemTemplate
 {
 	public static final String NAME = "item_component_scintillatinginlay";
 
-	public ComponentScintillatingInlayItem()
-	{
+	public ComponentScintillatingInlayItem() {
 		super(NAME);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
-	{
+	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + "A crafting ingredient.");
 	}
 
 	@Override
-	public EnumRarity getRarity(ItemStack stack)
-	{
+	public EnumRarity getRarity(ItemStack stack) {
 		return EnumRarity.EPIC;
 	}
 }

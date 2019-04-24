@@ -11,42 +11,35 @@ public class SlotIterable implements Iterable<ItemStack>
 	private IItemHandler inventory;
 	private SlotIterator iter;
 
-	public SlotIterable(IItemHandler inventory)
-	{
+	public SlotIterable(IItemHandler inventory) {
 		this.inventory = inventory;
 	}
 
 	@Override
-	public Iterator<ItemStack> iterator()
-	{
+	public Iterator<ItemStack> iterator() {
 		this.iter = new SlotIterator();
 		return iter;
 	}
 
-	public int getSlot()
-	{
+	public int getSlot() {
 		return this.iter.cursor;
 	}
 
-	public class SlotIterator implements Iterator<ItemStack>
-	{
+	public class SlotIterator implements Iterator<ItemStack> {
 		int cursor;
 		int lastRet = -1;
 		int size = inventory.getSlots();
 
-		SlotIterator()
-		{
+		SlotIterator() {
 		}
 
 		@Override
-		public boolean hasNext()
-		{
+		public boolean hasNext() {
 			return cursor != size;
 		}
 
 		@Override
-		public ItemStack next()
-		{
+		public ItemStack next() {
 			int i = cursor;
 			if(i >= inventory.getSlots()) throw new NoSuchElementException();
 			cursor = i + 1;

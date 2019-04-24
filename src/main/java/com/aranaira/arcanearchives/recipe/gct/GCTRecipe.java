@@ -8,13 +8,10 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class GCTRecipe
@@ -24,64 +21,49 @@ public class GCTRecipe
 	private final String name;
 	public List<String> TOOLTIP_CACHE = null;
 
-	public GCTRecipe(String name, @Nonnull ItemStack result, Object... recipe)
-	{
+	public GCTRecipe(String name, @Nonnull ItemStack result, Object... recipe) {
 		this.result = result.copy();
 		this.name = name;
-		for(Object stack : recipe)
-		{
-			if(stack instanceof ItemStack)
-			{
+		for(Object stack : recipe) {
+			if(stack instanceof ItemStack) {
 				ingredients.add(new IngredientStack((ItemStack) stack));
-			} else if(stack instanceof Item)
-			{
+			} else if (stack instanceof Item) {
 				ingredients.add(new IngredientStack((Item) stack));
-			} else if(stack instanceof Ingredient)
-			{
+			} else if (stack instanceof Ingredient) {
 				ingredients.add(new IngredientStack((Ingredient) stack));
-			} else if(stack instanceof String)
-			{
+			} else if (stack instanceof String) {
 				ingredients.add(new IngredientStack((String) stack));
-			} else if(stack instanceof IngredientStack)
-			{
+			} else if (stack instanceof IngredientStack) {
 				ingredients.add((IngredientStack) stack);
-			} else if(stack instanceof Block)
-			{
+			} else if (stack instanceof Block) {
 				ingredients.add(new IngredientStack((Block) stack));
-			} else
-			{
+			} else {
 				ArcaneArchives.logger.warn(String.format("Unknown ingredient type for recipe, skipped: %s", stack.toString()));
 			}
 		}
 	}
 
-	public int getIndex()
-	{
+	public int getIndex() {
 		return GCTRecipeList.indexOf(this);
 	}
 
-	public String getName()
-	{
+	public String getName() {
 		return name;
 	}
 
-	public boolean matches(@Nonnull IItemHandler inv)
-	{
+	public boolean matches(@Nonnull IItemHandler inv) {
 		return new IngredientsMatcher(ingredients).matches(inv);
 	}
 
-	public Int2IntMap getMatchingSlots(@Nonnull IItemHandler inv)
-	{
+	public Int2IntMap getMatchingSlots(@Nonnull IItemHandler inv) {
 		return new IngredientsMatcher(ingredients).getMatchingSlots(inv);
 	}
 
-	public ItemStack getRecipeOutput()
-	{
+	public ItemStack getRecipeOutput() {
 		return result.copy();
 	}
 
-	public List<IngredientStack> getIngredients()
-	{
+	public List<IngredientStack> getIngredients() {
 		return ingredients;
 	}
 }
