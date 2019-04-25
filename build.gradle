@@ -45,7 +45,7 @@ repositories {
         name 'tterrag maven'
         url "https://maven.tterrag.com/"
     }
-    maven { // Quark
+    maven { // Quark and autorreglib
         name = "BlameJared"
         url = "https://maven.blamejared.com"
     }
@@ -62,6 +62,7 @@ dependencies {
     deobfCompile "mcp.mobius.waila:Hwyla:${project.hwyla_version}"
     deobfCompile "mcjty.theoneprobe:TheOneProbe-${top_version}"
     deobfCompile "vazkii.quark:Quark:${quark_version}"
+    deobfCompile "vazkii.autoreglib:AutoRegLib:${autoreglib_version}"
 }
 
 runClient {
