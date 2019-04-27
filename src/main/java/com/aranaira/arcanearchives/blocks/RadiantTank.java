@@ -187,7 +187,7 @@ public class RadiantTank extends BlockTemplate
 		if (stack.hasTagCompound()) {
 			RadiantTankTileEntity te = WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, pos);
 			if (te != null) {
-				te.deserializeStack(stack.getTagCompound().getCompoundTag("tank"));
+				te.deserializeStack(stack.getTagCompound());
 			}
 		}
 	}
