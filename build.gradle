@@ -27,7 +27,7 @@ minecraft {
         runDir = "../run"
     } else {
         runDir = "run"
-    }    
+    }
 
     useDepAts = true
 }
@@ -35,7 +35,7 @@ minecraft {
 repositories {
     maven {
         name = "JEI"
-        url =  "http://dvs1.progwml6.com/files/maven"
+        url = "http://dvs1.progwml6.com/files/maven"
     }
     maven {
         name = "HWYLA"
@@ -53,6 +53,15 @@ repositories {
         name = "CurseForge"
         url = "https://minecraft.curseforge.com/api/maven/"
     }
+    maven { // lirelent guidebook
+        url 'https://jitpack.io'
+    }
+}
+
+configurations {
+    // configuration that holds jars to embed inside the jar
+    embed
+    embed.transitive = false
 }
 
 dependencies {
@@ -63,6 +72,23 @@ dependencies {
     deobfCompile "mcjty.theoneprobe:TheOneProbe-${top_version}"
     deobfCompile "vazkii.quark:Quark:${quark_version}"
     deobfCompile "vazkii.autoreglib:AutoRegLib:${autoreglib_version}"
+
+    deobfCompile 'com.github.lirelent:Guidebook:master-SNAPSHOT'
+    embed 'com.github.lirelent:Guidebook:master-SNAPSHOT'
+}
+
+jar {
+    into('/META-INF/libraries') {
+        from configurations.embed
+    }
+
+    manifest {
+        attributes([
+                "ContainedDeps": configurations.embed.collect { it.getName() }.join(' '),
+                "Maven-Artifact":"${project.group}:${project.archivesBaseName}:${project.version}",
+                'Timestamp': System.currentTimeMillis()
+        ])
+    }
 }
 
 runClient {
@@ -83,11 +109,11 @@ processResources {
     // replace stuff in mcmod.info, nothing else
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
-                
+
         // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
+        expand 'version': project.version, 'mcversion': project.minecraft.version
     }
-        
+
     // copy everything else except the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
