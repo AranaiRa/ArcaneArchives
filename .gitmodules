@@ -1,0 +1,3 @@
+[submodule "guidebook"]
+	path = guidebook
+	url = git@github.com:lirelent/Guidebook.git

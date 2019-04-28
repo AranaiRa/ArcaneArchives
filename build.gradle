@@ -53,15 +53,20 @@ repositories {
         name = "CurseForge"
         url = "https://minecraft.curseforge.com/api/maven/"
     }
-    maven { // lirelent guidebook
-        url 'https://jitpack.io'
+    maven {  // guidebook common dep
+        url 'http://dogforce-games.com/maven'
+    }
+    maven { // guidebook transitive deps
+        url 'https://maven.mcmoddev.com'
     }
 }
 
-configurations {
-    // configuration that holds jars to embed inside the jar
-    embed
-    embed.transitive = false
+sourceSets {
+    main {
+        java {
+            srcDir "guidebook/src/main/java"
+        }
+    }
 }
 
 dependencies {
@@ -72,23 +77,11 @@ dependencies {
     deobfCompile "mcjty.theoneprobe:TheOneProbe-${top_version}"
     deobfCompile "vazkii.quark:Quark:${quark_version}"
     deobfCompile "vazkii.autoreglib:AutoRegLib:${autoreglib_version}"
-
-    deobfCompile 'com.github.lirelent:Guidebook:master-SNAPSHOT'
-    embed 'com.github.lirelent:Guidebook:master-SNAPSHOT'
-}
-
-jar {
-    into('/META-INF/libraries') {
-        from configurations.embed
-    }
-
-    manifest {
-        attributes([
-                "ContainedDeps": configurations.embed.collect { it.getName() }.join(' '),
-                "Maven-Artifact":"${project.group}:${project.archivesBaseName}:${project.version}",
-                'Timestamp': System.currentTimeMillis()
-        ])
-    }
+    
+    // guidebook dependencies
+    deobfCompile "gigaherz.commons:gigaherz.commons-1.12.1:0.6.4"
+    deobfCompile "net.darkhax.gamestages:GameStages-1.12.2:2.0.91"
+    deobfCompile "net.darkhax.bookshelf:Bookshelf-1.12.2:2.3.552"
 }
 
 runClient {
