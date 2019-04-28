@@ -24,7 +24,6 @@ public class RadiantTankItem extends ItemBlock
 {
 	public RadiantTankItem(Block block) {
 		super(block);
-		this.setMaxStackSize(1);
 	}
 
 	@Override
