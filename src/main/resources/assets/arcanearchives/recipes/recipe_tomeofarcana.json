@@ -1,0 +1,13 @@
+{
+    "_comment": [
+        "Craft a tome of arcana"
+    ],
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {   "item": "arcanearchives:item_rawquartz" },
+        {   "item": "minecraft:book" }
+    ],
+    "result": {
+        "item": "arcanearchives:item_tomeofarcana"
+    }
+}
