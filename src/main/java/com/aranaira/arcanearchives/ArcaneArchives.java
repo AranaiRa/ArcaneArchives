@@ -8,8 +8,7 @@ import net.minecraftforge.fml.common.event.*;
 import org.apache.logging.log4j.Logger;
 
 @Mod(modid = ArcaneArchives.MODID, name = ArcaneArchives.NAME, version = ArcaneArchives.VERSION)
-public class ArcaneArchives
-{
+public class ArcaneArchives {
 	public static final String MODID = "arcanearchives";
 	public static final String NAME = "Arcane Archives";
 	public static final String VERSION = "0.1";

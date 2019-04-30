@@ -129,7 +129,7 @@ public class RawQuartzItem extends ItemTemplate
 				itemstack.shrink(1);
 			}
 
-			return EnumActionResult.PASS;
+			return EnumActionResult.SUCCESS;
 
 			//return super.onItemUseFirst(player, world, pos, side, hitX, hitY, hitZ, hand);
 		} else if ((world.getBlockState(pos).getBlock() instanceof BlockWorkbench)) {
@@ -139,6 +139,6 @@ public class RawQuartzItem extends ItemTemplate
 			itemstack.shrink(1);
 		}
 
-		return EnumActionResult.PASS;
+		return EnumActionResult.SUCCESS;
 	}
 }

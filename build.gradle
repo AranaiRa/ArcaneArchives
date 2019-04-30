@@ -61,14 +61,6 @@ repositories {
     }
 }
 
-sourceSets {
-    main {
-        java {
-            srcDir "guidebook/src/main/java"
-        }
-    }
-}
-
 dependencies {
     deobfProvided "mezz.jei:jei_${minecraft_version}:${jei_version}:api"
     // at runtime, use the full JEI jar

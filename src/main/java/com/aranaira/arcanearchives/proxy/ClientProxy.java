@@ -8,9 +8,15 @@ import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.items.itemblocks.RadiantTankItem;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
+import com.lireherz.guidebook.client.GbookCommand;
+import com.lireherz.guidebook.guidebook.conditions.AdvancementCondition;
+import com.lireherz.guidebook.guidebook.conditions.BasicConditions;
+import com.lireherz.guidebook.guidebook.conditions.CompositeCondition;
+import gigaherz.common.client.ModelHandle;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
@@ -26,7 +32,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 
 @SuppressWarnings("unused")
-@Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
+@Mod.EventBusSubscriber(modid = ArcaneArchives.MODID, value=Side.CLIENT)
 public class ClientProxy extends CommonProxy
 {
 	@SideOnly(Side.CLIENT)
@@ -56,6 +62,14 @@ public class ClientProxy extends CommonProxy
 		OBJLoader.INSTANCE.addDomain(ArcaneArchives.MODID);
 
 		Keybinds.initKeybinds();
+
+		ModelHandle.init();
+
+		BasicConditions.register();
+		CompositeCondition.register();
+		AdvancementCondition.register();
+
+		ClientCommandHandler.instance.registerCommand(new GbookCommand());
 	}
 
 	@Override
