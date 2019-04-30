@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.data;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketNetworks;
@@ -201,7 +202,9 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 
 	public ManifestItemHandler getManifestHandler() {
 		return mManifestHandler;
-	}	public ServerNetwork setParent(AAWorldSavedData parent) {
+	}
+	
+	public ServerNetwork setParent(AAWorldSavedData parent) {
 		mParent = parent;
 		MarkUnsaved();
 		return this;
@@ -273,6 +276,22 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 			} else {
 				if (ite instanceof MonitoringCrystalTileEntity) {
 					MonitoringCrystalTileEntity mte = (MonitoringCrystalTileEntity) ite;
+					
+					mte.getInventory();
+					
+					boolean isUsed = false;
+					for (ManifestTileEntity mteComp : done) {
+						
+						if (((MonitoringCrystalTileEntity)mteComp).getTarget().compareTo(mte.getTarget()) == 0){
+							isUsed = true;
+						}
+					}
+					
+					if (isUsed) {
+						continue;
+					}
+					
+					
 					IItemHandler handler = mte.getInventory();
 					if (handler != null) {
 						for(ItemStack is : new SlotIterable(handler)) {
