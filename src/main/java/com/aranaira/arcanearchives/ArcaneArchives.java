@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives;
 
 import com.aranaira.arcanearchives.proxy.CommonProxy;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -43,5 +44,9 @@ public class ArcaneArchives {
 	@EventHandler
 	public static void loadComplete (FMLLoadCompleteEvent event) {
 		proxy.loadComplete(event);
+	}
+
+	public static ResourceLocation location (String string) {
+		return new ResourceLocation(MODID, string);
 	}
 }
