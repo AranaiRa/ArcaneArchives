@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items.unused;
+package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import net.minecraft.client.resources.I18n;
