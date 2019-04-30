@@ -73,7 +73,8 @@ dependencies {
     deobfCompile "mcjty.theoneprobe:TheOneProbe-${top_version}"
     deobfCompile "vazkii.quark:Quark:${quark_version}"
     deobfCompile "vazkii.autoreglib:AutoRegLib:${autoreglib_version}"
-
+    deobfCompile "com.azanor:Baubles:${version_baubles}"
+    deobfCompile "vazkii.botania:Botania:r1.10-357.7"
     deobfCompile "hellfirepvp.astralsorcery:astralsorcery:1.12.2-1.10.17-v124"
 
     // guidebook dependencies
