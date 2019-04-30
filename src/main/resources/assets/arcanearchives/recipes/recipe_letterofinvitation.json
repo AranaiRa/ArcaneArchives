@@ -1,13 +1,17 @@
 {
     "_comment": [
-        "Craft a Letter of Invitation"
+        "Craft a letter of invitation"
     ],
     "type": "minecraft:crafting_shapeless",
     "ingredients": [
         {   "item": "minecraft:paper" },
         {   "item": "arcanearchives:item_component_radiantdust" },
-        {   "item": "minecraft:dye:0" },
-        {   "item": "minecraft:dye:12" }
+        {   "item": "minecraft:dye",
+            "data": 0
+        },
+        {   "item": "minecraft:dye",
+            "data": 12
+        }
     ],
     "result": {
         "item": "arcanearchives:item_letterofinvitation"
