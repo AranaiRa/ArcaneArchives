@@ -58,17 +58,17 @@ public class MonitoringCrystal extends BlockDirectionalTemplate
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		EnumFacing facing = state.getValue(FACING);
 		if (facing == EnumFacing.UP) {
-			return new AxisAlignedBB(0.1, 0.0, 0.1, 0.9, 0.15, 0.9);
+			return new AxisAlignedBB(0.37, -0.1, 0.35, 0.61, 0.04, 0.64);
 		} else if (facing == EnumFacing.DOWN) {
-			return new AxisAlignedBB(0.1, 1.0, 0.1, 0.9, 0.85, 0.9);
+			return new AxisAlignedBB(0.37, 1.1, 0.35, 0.61, 0.94, 0.64);
 		} else if (facing == EnumFacing.SOUTH) {
-			return new AxisAlignedBB(0.9, 0.9, 0, 0.1, 0.15, 0.1);
+			return new AxisAlignedBB(0.61, 0.64, -0.1, 0.35, 0.35, 0.04);
 		} else if (facing == EnumFacing.NORTH) {
-			return new AxisAlignedBB(0.9, 0.9, 1, 0.1, 0.15, 0.9);
+			return new AxisAlignedBB(0.63, 0.64, 1.1, 0.39, 0.35, 0.94);
 		} else if (facing == EnumFacing.EAST) {
-			return new AxisAlignedBB(0.1, 0.9, 0.1, 0, 0.15, 0.9);
+			return new AxisAlignedBB(0.05, 0.63, 0.39, -0.1, 0.35, 0.63);
 		} else {
-			return new AxisAlignedBB(0.9, 0.9, 0.1, 1, 0.15, 0.9);
+			return new AxisAlignedBB(0.95, 0.63, 0.37, 1.1, 0.35, 0.62);
 		}
 	}
 
