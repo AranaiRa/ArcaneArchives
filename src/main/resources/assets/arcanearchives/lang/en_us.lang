@@ -12,6 +12,8 @@ item.item_sceptertranslocation.name=Scepter of Translocation
 item.item_scepterrevelation.name=Scepter of Revelation
 item.item_tomeofarcana.name=Tome of Arcana
 item.item_tomeofrequisition.name=Tome of Requisition
+item.item_letterofinvitation.name=Letter of Invitation
+item.item_letterofresignation.name=Letter of Resignation
 
 item.item_component_containmentfield.name=Containment Field
 item.item_component_materialinterface.name=Material Interface
