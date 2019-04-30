@@ -1,11 +1,19 @@
 package com.aranaira.arcanearchives.init;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.integration.astralsorcery.Liquefaction;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import com.aranaira.arcanearchives.util.types.IngredientStack;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.event.RegistryEvent.Register;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @SuppressWarnings("unused")
+@Mod.EventBusSubscriber(modid= ArcaneArchives.MODID)
 public class RecipeLibrary
 {
 	public static GCTRecipe CUT_RADIANT_QUARTZ_RECIPE;
@@ -51,5 +59,12 @@ public class RecipeLibrary
 		/*MATRIX_CORE_RECIPE = GCTRecipeList.makeAndAddRecipe("matrix_core", new ItemStack(BlockRegistry.MATRIX_CRYSTAL_CORE, 1), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 60), new IngredientStack("logWood", 12), new ItemStack(ItemRegistry.COMPONENT_SCINTILLATINGINLAY, 12), new IngredientStack(BlockRegistry.RADIANT_LANTERN, 4), new IngredientStack("bookshelf", 1));*/
 
 		/*MATRIX_STORAGE_RECIPE = GCTRecipeList.makeAndAddRecipe("matrix_storage", new ItemStack(BlockRegistry.MATRIX_STORAGE, 1), new ItemStack(ItemRegistry.COMPONENT_MATRIXBRACE, 2), ItemRegistry.COMPONENT_MATERIALINTERFACE, new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 24));*/
+	}
+
+	@SubscribeEvent
+	public static void onRegisterRecipes (Register<IRecipe> event) {
+		if (Loader.isModLoaded("astralsorcery")) {
+			Liquefaction.init();
+		}
 	}
 }

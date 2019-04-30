@@ -59,6 +59,10 @@ repositories {
     maven { // guidebook transitive deps
         url 'https://maven.mcmoddev.com'
     }
+    maven {
+        name = "HellfirePVP"
+        url = "https://maven.hellfiredev.net"
+    }
 }
 
 dependencies {
@@ -69,7 +73,9 @@ dependencies {
     deobfCompile "mcjty.theoneprobe:TheOneProbe-${top_version}"
     deobfCompile "vazkii.quark:Quark:${quark_version}"
     deobfCompile "vazkii.autoreglib:AutoRegLib:${autoreglib_version}"
-    
+
+    deobfCompile "hellfirepvp.astralsorcery:astralsorcery:1.12.2-1.10.17-v124"
+
     // guidebook dependencies
     deobfCompile "gigaherz.commons:gigaherz.commons-1.12.1:0.6.4"
     deobfCompile "net.darkhax.gamestages:GameStages-1.12.2:2.0.91"
