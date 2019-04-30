@@ -1,0 +1,15 @@
+{
+    "_comment": [
+        "Craft a Letter of Resignation"
+    ],
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {   "item": "minecraft:paper" },
+        {   "item": "arcanearchives:item_component_radiantdust" },
+        {   "item": "minecraft:dye:0" },
+        {   "item": "minecraft:dye:9" }
+    ],
+    "result": {
+        "item": "arcanearchives:item_letterofinvitation"
+    }
+}
