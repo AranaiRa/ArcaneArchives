@@ -9,6 +9,7 @@ import java.awt.*;
 
 public class Liquefaction {
 	public static void init () {
-		WellLiquefaction.registerLiquefaction(new ItemStack(ItemRegistry.RAW_RADIANT_QUARTZ), BlocksAS.fluidLiquidStarlight, 0.4f /* production multiplier, 0.4f = aquamarine */, 12 /* shatter multiplier: reduce this to make it shatter more often*/, new Color(0x00, 0x88, 0xDD) /* this is the default colour of aquamarine and resonating gems */);
+		WellLiquefaction.registerLiquefaction(new ItemStack(ItemRegistry.RAW_RADIANT_QUARTZ), BlocksAS.fluidLiquidStarlight, 0.07f, 80, new Color(0xDD, 0xEE, 0xFF));
+		WellLiquefaction.registerLiquefaction(new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ), BlocksAS.fluidLiquidStarlight, 0.12f, 72, new Color(0xDD, 0xEE, 0xFF));
 	}
 }
