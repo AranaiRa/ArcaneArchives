@@ -20,7 +20,7 @@ import java.util.List;
 public class TomeOfArcanaItem extends ItemTemplate
 {
 	public static final String NAME = "item_tomeofarcana";
-	public static final ResourceLocation TOME_OF_ARCANA = new ResourceLocation(ArcaneArchives.MODID, "xml/tomb.xml");
+	public static final ResourceLocation TOME_OF_ARCANA = new ResourceLocation(ArcaneArchives.MODID, "xml/tome.xml");
 
 	public TomeOfArcanaItem() {
 		super(NAME);
