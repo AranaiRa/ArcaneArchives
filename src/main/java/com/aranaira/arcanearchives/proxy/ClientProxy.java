@@ -9,6 +9,8 @@ import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.items.itemblocks.RadiantTankItem;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
 import com.lireherz.guidebook.client.GbookCommand;
+import com.lireherz.guidebook.guidebook.client.BookBakedModel;
+import com.lireherz.guidebook.guidebook.client.BookRegistry;
 import com.lireherz.guidebook.guidebook.conditions.AdvancementCondition;
 import com.lireherz.guidebook.guidebook.conditions.BasicConditions;
 import com.lireherz.guidebook.guidebook.conditions.CompositeCondition;
@@ -19,6 +21,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -68,6 +71,8 @@ public class ClientProxy extends CommonProxy
 		BasicConditions.register();
 		CompositeCondition.register();
 		AdvancementCondition.register();
+		BookRegistry.parseAllBooks();
+		ModelLoaderRegistry.registerLoader(new BookBakedModel.ModelLoader());
 
 		ClientCommandHandler.instance.registerCommand(new GbookCommand());
 	}
