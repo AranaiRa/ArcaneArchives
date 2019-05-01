@@ -2,12 +2,18 @@ buildscript {
     repositories {
         jcenter()
         maven { url = "http://files.minecraftforge.net/maven" }
+        maven {
+            name = 'sponge'
+            url = 'https://repo.spongepowered.org/maven'
+        }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'org.spongepowered.mixin'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 version = "0.2.0-preview12"
@@ -30,6 +36,14 @@ minecraft {
     }
 
     useDepAts = true
+    coreMod = "com.aranaira.arcanearchives.core.AALoadingPlugin"
+    clientJvmArgs += "-Dfml.coreMods.load=com.aranaira.arcanearchives.core.AALoadingPlugin"
+    serverJvmArgs += "-Dfml.coreMods.load=com.aranaira.arcanearchives.core.AALoadingPlugin"   
+}
+
+configurations {
+    ember
+    implementation.extendsFrom embed
 }
 
 repositories {
@@ -63,6 +77,10 @@ repositories {
         name = "HellfirePVP"
         url = "https://maven.hellfiredev.net"
     }
+    maven {
+        name = "sponge"
+        url = "http://repo.spongepowered.org/maven/"
+    }
 }
 
 dependencies {
@@ -81,15 +99,9 @@ dependencies {
     deobfCompile "gigaherz.commons:gigaherz.commons-1.12.1:0.6.4"
     deobfCompile "net.darkhax.gamestages:GameStages-1.12.2:2.0.91"
     deobfCompile "net.darkhax.bookshelf:Bookshelf-1.12.2:2.3.552"
-}
 
-runClient {
-    args '--username', 'archives'
-}
-
-jar {
-    manifest {
-        attributes 'FMLAT': 'aa_at.cfg'
+    embed("org.spongepowered:mixin:0.7.11-SNAPSHOT") {
+        transitive = false
     }
 }
 
@@ -109,6 +121,28 @@ processResources {
     // copy everything else except the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
+    }
+}
+
+jar {
+    manifest {
+        attributes "FMLCorePluginContainsFMLMod": "true", "FMLCorePlugin": "com.aranaira.arcanearchives.core.AALoadingPlugin"
+
+        attributes "MixinConfigs": "mixins.arcanearchives.json", "TweakClass": "ore.spongepowered.asm.launch.MixinTweaker", "ForceLoadAsMod": "true"
+
+        attributes "FMLAT": "aa_at.cfg"
+    }
+
+    configurations.embed.each { dep ->
+        from(project.zipTree(dep)) {
+            rename 'LICENSE.txt', 'org/spongepowered/LICENSE.txt'
+
+            exclude 'META-INF/*.SF'
+            exclude 'META-INF/*.RSA'
+            exclude 'META-INF/*.MF'
+
+            exclude '**/*.html'
+        }
     }
 
     rename '(.+_at.cfg)', 'META-INF/$1'

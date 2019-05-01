@@ -1,0 +1,10 @@
+{
+  "package": "com.aranaira.arcanearchives.mixins",
+  "plugin": "com.aranaira.arcanearchives.core.AAMixinPlugin",
+  "refmap": "mixins.arcanearchives.refmap.json",
+  "compatibilityLevel": "JAVA_8",
+  "minVersion": "0.6.0",
+  "mixins": [
+    "MixinGuiContainer"
+  ]
+}

@@ -38,6 +38,7 @@ public class TomeOfArcanaItem extends ItemTemplate
 		return ActionResult.newResult(result, stack);
 	}
 
+	@SideOnly(Side.CLIENT)
 	private EnumActionResult showBook (World worldIn, ItemStack stack) {
 		if (!worldIn.isRemote) {
 			return EnumActionResult.FAIL;

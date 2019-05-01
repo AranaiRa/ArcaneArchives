@@ -56,6 +56,12 @@ public class LineHandler
 		mBlockPositions.remove(line);
 	}
 
+	public static void checkClear () {
+		if (mBlockPositions.isEmpty()) {
+			ManifestTracking.clear();
+		}
+	}
+
 	@SubscribeEvent
 	public static void playerLoggedIn(PlayerLoggedInEvent event) {
 		mBlockPositions.clear();
