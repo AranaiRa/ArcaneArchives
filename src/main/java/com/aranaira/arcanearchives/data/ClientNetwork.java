@@ -124,6 +124,8 @@ public class ClientNetwork
 			return 1;
 		});
 
+		manifestItems.deserializationFinished();
+
 		manifestItemHandler.nullify();
 
 		if (callback != null) {

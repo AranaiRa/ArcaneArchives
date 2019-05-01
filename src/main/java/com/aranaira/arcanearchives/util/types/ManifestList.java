@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.util.types;
 
+import com.aranaira.arcanearchives.inventory.ContainerManifest;
 import com.aranaira.arcanearchives.util.ItemComparison;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -12,8 +13,9 @@ import java.util.stream.Collectors;
 
 public class ManifestList extends ReferenceList<ManifestEntry>
 {
-	private String mFilterText = null;
-	private ItemStack searchItem = null;
+	private ContainerManifest mListener;
+	private String mFilterText;
+	private ItemStack mSearchItem;
 
 	public ManifestList(List<ManifestEntry> reference) {
 		super(reference);
@@ -26,7 +28,7 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 	}
 
 	public ManifestList filtered() {
-		if(mFilterText == null && searchItem == null) return this;
+		if(mFilterText == null && mSearchItem == null) return this;
 
 		String filter = "";
 
@@ -40,8 +42,8 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 
 			ItemStack stack = entry.getStack();
 
-			if (searchItem != null) {
-				return ItemComparison.areStacksEqualIgnoreSize(searchItem, stack);
+			if (mSearchItem != null) {
+				return ItemComparison.areStacksEqualIgnoreSize(mSearchItem, stack);
 			}
 
 			String display = stack.getDisplayName().toLowerCase();
@@ -66,6 +68,28 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 		super(new ArrayList<>());
 	}
 
+	/**
+	 * Register provided {@link ContainerManifest} as a listener to {@link #deserializationFinished()} events
+	 *
+	 * @param containerManifest a {@link ContainerManifest}
+	 */
+	public void setListener(ContainerManifest containerManifest) {
+		this.mListener = containerManifest;
+	}
+
+	/**
+	 * Call this after this ManifestList has finished being populated from an external source.
+	 * For now this means from a packet from the server
+	 *
+	 * If a {@link ContainerManifest} listener has been registered to this manifest then
+	 * notify it that this {@link ManifestList} has been populated
+	 */
+	public void deserializationFinished() {
+		if (this.mListener != null) {
+			this.mListener.ensureCapacity(size());
+		}
+	}
+
 	@Nullable
 	public ManifestEntry getEntryForSlot(int slot) {
 		if(slot < size() && slot >= 0) return get(slot);
@@ -82,7 +106,7 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 	}
 
 	public ItemStack getSearchItem () {
-		return this.searchItem;
+		return this.mSearchItem;
 	}
 
 	public void setSearchText(String searchTerm) {
@@ -90,7 +114,7 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 	}
 
 	public void setSearchItem (ItemStack stack) {
-		this.searchItem = stack;
+		this.mSearchItem = stack;
 	}
 
 	@Override
