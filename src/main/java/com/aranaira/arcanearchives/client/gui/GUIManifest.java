@@ -10,7 +10,6 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiPageButtonList;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,11 +27,11 @@ import org.lwjgl.input.Mouse;
 import java.io.IOException;
 import java.util.List;
 
-public class GUIManifest extends GuiContainer implements GuiPageButtonList.GuiResponder {
+public class GUIManifest extends AbstractLayeredGuiContainer implements GuiPageButtonList.GuiResponder {
 	private static final ResourceLocation GUIBaseTextures = new ResourceLocation("arcanearchives:textures/gui/manifest_base.png");
 	private static final int mGUIBaseTexturesSize = 256;
 	private static final ResourceLocation GUIForegroundTextures = new ResourceLocation("arcanearchives:textures/gui/manifest_overlay.png");
-	private static final int mGUIForegroundTexturesSize = 256;
+	private static final float mGUIForegroundTexturesSize = 256;
 	private final EntityPlayer player;
 	private ContainerManifest container;
 	// offset and size of search box
@@ -100,20 +99,7 @@ public class GUIManifest extends GuiContainer implements GuiPageButtonList.GuiRe
 	}
 
 	@Override
-	public void drawScreen (int mouseX, int mouseY, float partialTicks) {
-		// this draws the "world" behind the gui
-		this.drawDefaultBackground();
-		// this draws the texture behind the slots via #drawGuiContainerBackgroundLayer
-		// then draws all the slots in this.inventorySlots
-		// then draws the texture in front of the slots via #drawGuiContainerForegroundLayer
-		super.drawScreen(mouseX, mouseY, partialTicks);
-
-		// we do this so that the all the final GUI elements are on top of whatever
-		// is drawn in drawGuiContainerForegroundLayer
-		GlStateManager.pushMatrix();
-		GlStateManager.translate(0.0F, 0.0F, 1010.0F);
-
-		// finally draw the rest of the GUI elements on top of everything
+	protected void drawTopLevelElements (int mouseX, int mouseY) {
 		searchBox.drawTextBox();
 
 		// TODO scroll bar utility class
@@ -122,30 +108,22 @@ public class GUIManifest extends GuiContainer implements GuiPageButtonList.GuiRe
 		this.renderHoveredToolTip(mouseX, mouseY);
 
 		fontRenderer.drawString("End Track", guiLeft + mEndTrackingLeftOffset, mEndTrackingTopOffset + guiTop, 0x000000);
-
-		GlStateManager.popMatrix();
 	}
 
 	@Override
-	protected void drawGuiContainerForegroundLayer (int mouseX, int mouseY) {
-		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+	protected void drawForegroundContents (int mouseX, int mouseY) {
+		super.drawForegroundContents(mouseX, mouseY);
 
-		// we do this so that the slots will "slide" behind this foreground picture as they move out of view
-		GlStateManager.pushMatrix();
-		GlStateManager.translate(0.0F, 0.0F, 1000.0F);
-
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		GlStateManager.color(1f, 1f, 1f, 1f);
 		GlStateManager.enableColorMaterial();
 		this.mc.getTextureManager().bindTexture(GUIForegroundTextures);
 
 		// for some reason this seems to be relative x and y position
-		drawModalRectWithCustomSizedTexture(0, 0, 0, 0, xSize, ySize, mGUIForegroundTexturesSize, mGUIForegroundTexturesSize);
-
-		GlStateManager.popMatrix();
+		drawModalRectWithCustomSizedTexture(0, 0, 0f, 0f, xSize, ySize, mGUIForegroundTexturesSize, mGUIForegroundTexturesSize);
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer (float partialTicks, int mouseX, int mouseY) {
+	protected void drawBackgroundContents (int mouseX, int mouseY) {
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.enableColorMaterial();
 		this.mc.getTextureManager().bindTexture(GUIBaseTextures);
