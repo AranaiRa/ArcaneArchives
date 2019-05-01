@@ -8,6 +8,7 @@ import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
 import com.aranaira.arcanearchives.util.ManifestTracking;
 import com.aranaira.arcanearchives.util.types.ManifestEntry;
 import com.aranaira.arcanearchives.util.types.ManifestList;
+import invtweaks.api.container.InventoryContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,6 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
+@InventoryContainer
 public class ContainerManifest extends Container
 {
 

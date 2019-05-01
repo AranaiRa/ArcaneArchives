@@ -37,12 +37,10 @@ minecraft {
 
     useDepAts = true
     coreMod = "com.aranaira.arcanearchives.core.AALoadingPlugin"
-    clientJvmArgs += "-Dfml.coreMods.load=com.aranaira.arcanearchives.core.AALoadingPlugin"
-    serverJvmArgs += "-Dfml.coreMods.load=com.aranaira.arcanearchives.core.AALoadingPlugin"   
 }
 
 configurations {
-    ember
+    embed
     implementation.extendsFrom embed
 }
 
