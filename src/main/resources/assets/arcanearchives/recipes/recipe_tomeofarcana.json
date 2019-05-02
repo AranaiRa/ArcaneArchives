@@ -4,8 +4,8 @@
     ],
     "type": "minecraft:crafting_shapeless",
     "ingredients": [
-        {   "item": "arcanearchives:item_rawquartz" },
-        {   "item": "minecraft:book" }
+        {   "item": "minecraft:book" },
+        {   "item": "minecraft:gold_nugget" }
     ],
     "result": {
         "item": "arcanearchives:item_tomeofarcana"
