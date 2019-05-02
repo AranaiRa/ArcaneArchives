@@ -1,6 +1,6 @@
-<book title="Tome of Arcana [WIP]" fontSize="0.4">
+<book title="Tome of Arcana [WIP]" cover="arcanearchives:covers/default" fontSize="0.4">
 
-    <include ref="gbook:xml/standard.xml" />
+    <include ref="arcanearchives:xml/standard.xml" />
 
     <chapter id="hello">
 
