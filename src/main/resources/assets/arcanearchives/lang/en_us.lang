@@ -117,6 +117,30 @@ arcanearchives.tooltip.manifest.clicktoshow=Click to draw a line to chests conta
 arcanearchives.tooltip.tank.fluid=Fluid: %s
 arcanearchives.tooltip.tank.amount=Amount: %s/%smb
 
+arcanearchives.tooltip.component.rawquartz=A crafting ingredient. Can also be used to upgrade chests and crafting tables into their Radiant versions.
+arcanearchives.tooltip.component.cutquartz=A crafting ingredient.
+arcanearchives.tooltip.component.radiantdust=A crafting ingredient.
+arcanearchives.tooltip.component.containmentfield=A crafting ingredient. Can also be used to upgrade Radiant Tanks.
+arcanearchives.tooltip.component.matrixbrace=A crafting ingredient.
+arcanearchives.tooltip.component.materialinterface=A crafting ingredient. Can also be used to upgrade Radiant Troves.
+arcanearchives.tooltip.component.scintillatinginlay=A crafting ingredient.
+
+arcanearchives.tooltip.device.radiantchest=Storage. Used to contain items.
+arcanearchives.tooltip.device.radianttank=Storage. Used to contain fluids.
+arcanearchives.tooltip.device.radiantresonator=Generates Raw Radiant Quartz over time if the block above itself is open.
+arcanearchives.tooltip.device.radiantlantern=Decoration. A light source.
+arcanearchives.tooltip.device.radianttrove=Storage. Used to store large amounts of a single type of item.
+arcanearchives.tooltip.device.radiantcraftingtable=Crafting station. Items stay in place, three recipes can be saved for quick crafting, and a linked inventory is visible.
+arcanearchives.tooltip.device.gemcutterstable=Crafting station. Used to shape Radiant Quartz into more detailed shapes.
+arcanearchives.tooltip.device.monitoringcrystal=Adds attached inventory to radiant storage for viewing with a Manifest.
+
+arcanearchives.tooltip.item.manifest=Used to view items stored in Radiant storage.
+arcanearchives.tooltip.item.radiantbucket=Used to transfer fluids to and from a Radiant Tank or Reservoir Matrix.
+arcanearchives.tooltip.item.letterofinvitation=Allows you to invite another player to your Arcane Network.
+arcanearchives.tooltip.item.letterofresignation=Allows you to leave an Arcane Network.
+arcanearchives.tooltip.item.scepterofrevelation=Queries information about devices and containers. Use while sneaking.
+arcanearchives.tooltip.item.tomeofarcana=Provides documentation for Arcane Archives.
+
 arcanearchives.data.gui.radiant_trove.upgrade=%d upgrade
 arcanearchives.data.gui.radiant_trove.upgrades=%d upgrades
 

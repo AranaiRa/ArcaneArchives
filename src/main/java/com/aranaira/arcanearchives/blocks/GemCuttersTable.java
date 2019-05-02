@@ -8,6 +8,7 @@ import com.aranaira.arcanearchives.util.DropHelper;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,11 +18,13 @@ import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
@@ -34,6 +37,11 @@ public class GemCuttersTable extends BlockDirectionalTemplate
 	public GemCuttersTable() {
 		super(name, Material.IRON);
 		setSize(2, 1, 1);
+	}
+
+	@Override
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.device.gemcutterstable"));
 	}
 
 	@Override
@@ -88,11 +96,6 @@ public class GemCuttersTable extends BlockDirectionalTemplate
 		playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.GEMCUTTERS_TABLE, worldIn, pos.getX(), pos.getY(), pos.getZ());
 
 		return true;
-	}
-
-	@Override
-	public void addInformation(ItemStack stack, @Nonnull World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		//TODO: Add real tooltip
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import com.aranaira.arcanearchives.tileentities.*;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -160,7 +161,7 @@ public class ScepterRevelationItem extends ItemTemplate
 
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.GOLD + "Used while sneaking to query information from devices and containers.");
+		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.scepterofrevelation"));
 	}
 
 	@Override
