@@ -44,6 +44,11 @@ configurations {
     compile.extendsFrom shade
 }
 
+configurations {
+    embed
+    embed.transitive = false
+}
+
 repositories {
     maven {
         name = "JEI"
@@ -95,6 +100,9 @@ dependencies {
 
     // guidebook dependencies
     deobfCompile "gigaherz.commons:gigaherz.commons-1.12.1:0.6.4"
+    shade ("gigaherz.commons:gigaherz.commons-1.12.1:0.6.4") {
+        transitive = false
+    }
     deobfCompile "net.darkhax.gamestages:GameStages-1.12.2:2.0.91"
     deobfCompile "net.darkhax.bookshelf:Bookshelf-1.12.2:2.3.552"
 
@@ -144,4 +152,8 @@ jar {
     }
 
     rename '(.+_at.cfg)', 'META-INF/$1'
+}
+
+mixin {
+    add sourceSets.main, "mixins.arcanearchives.refmap.json"
 }
