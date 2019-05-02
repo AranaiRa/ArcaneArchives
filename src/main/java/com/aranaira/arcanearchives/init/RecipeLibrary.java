@@ -5,8 +5,10 @@ import com.aranaira.arcanearchives.integration.astralsorcery.Liquefaction;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import com.aranaira.arcanearchives.util.types.IngredientStack;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
@@ -29,6 +31,7 @@ public class RecipeLibrary
 	public static GCTRecipe RADIANT_LANTERN_RECIPE;
 	public static GCTRecipe RADIANT_TROVE_RECIPE;
 	public static GCTRecipe RADIANT_TANK_RECIPE;
+	public static GCTRecipe RIVERTEAR_RECIPE;
 	public static GCTRecipe MONITORING_CRYSTAL_RECIPE;
 
 	public static void buildRecipes() {
@@ -55,6 +58,8 @@ public class RecipeLibrary
 		COMPONENT_MATERIALINTERFACE_RECIPE = GCTRecipeList.makeAndAddRecipe("materialinterface", new ItemStack(ItemRegistry.COMPONENT_MATERIALINTERFACE, 1), ItemRegistry.COMPONENT_SCINTILLATINGINLAY, new IngredientStack("ingotGold"), ItemRegistry.CUT_RADIANT_QUARTZ);
 
 		COMPONENT_CONTAINMENTFIELD_RECIPE = GCTRecipeList.makeAndAddRecipe("containmentfield", new ItemStack(ItemRegistry.COMPONENT_CONTAINMENTFIELD, 1), ItemRegistry.COMPONENT_SCINTILLATINGINLAY, new IngredientStack("ingotGold", 2), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 2));
+
+		RIVERTEAR_RECIPE = GCTRecipeList.makeAndAddRecipe("rivertear_gct", new ItemStack(ItemRegistry.RIVERTEAR), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 1), new IngredientStack(Ingredient.fromItem(Items.SUGAR), 4), new IngredientStack(Ingredient.fromItem(Items.WATER_BUCKET), 2));
 
 		/*MATRIX_CORE_RECIPE = GCTRecipeList.makeAndAddRecipe("matrix_core", new ItemStack(BlockRegistry.MATRIX_CRYSTAL_CORE, 1), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 60), new IngredientStack("logWood", 12), new ItemStack(ItemRegistry.COMPONENT_SCINTILLATINGINLAY, 12), new IngredientStack(BlockRegistry.RADIANT_LANTERN, 4), new IngredientStack("bookshelf", 1));*/
 
