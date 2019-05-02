@@ -1,0 +1,13 @@
+{
+    "_comment": [
+        "Craft Radiant Bucket from bucket"
+    ],
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {   "item": "minecraft:bucket" },
+        {   "item": "arcanearchives:item_rawquartz" }
+    ],
+    "result": {
+        "item": "arcanearchives:item_radiantbucket"
+    }
+}
