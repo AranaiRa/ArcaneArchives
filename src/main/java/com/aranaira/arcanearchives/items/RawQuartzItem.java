@@ -7,6 +7,7 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.BlockChest;
 import net.minecraft.block.BlockWorkbench;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -35,7 +36,7 @@ public class RawQuartzItem extends ItemTemplate
 
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.GOLD + "A crafting ingredient that is also used to convert crafting tables and chests into their radiant versions.");
+		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.component.rawquartz"));
 	}
 
 	@Override
