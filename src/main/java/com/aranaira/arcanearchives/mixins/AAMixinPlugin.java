@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.core;
+package com.aranaira.arcanearchives.mixins;
 
 import net.minecraft.launchwrapper.Launch;
 import org.spongepowered.asm.lib.tree.ClassNode;

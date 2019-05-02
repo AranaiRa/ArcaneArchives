@@ -1,6 +1,6 @@
 {
   "package": "com.aranaira.arcanearchives.mixins",
-  "plugin": "com.aranaira.arcanearchives.core.AAMixinPlugin",
+  "plugin": "com.aranaira.arcanearchives.mixins.AAMixinPlugin",
   "refmap": "mixins.arcanearchives.refmap.json",
   "compatibilityLevel": "JAVA_8",
   "minVersion": "0.6.0",
