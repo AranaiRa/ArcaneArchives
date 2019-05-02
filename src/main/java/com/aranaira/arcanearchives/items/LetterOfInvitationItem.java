@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class LetterOfInvitationItem extends ItemTemplate
@@ -17,5 +18,10 @@ public class LetterOfInvitationItem extends ItemTemplate
 
 	public LetterOfInvitationItem() {
 		super(NAME);
+	}
+
+	@Override
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.letterofinvitation"));
 	}
 }

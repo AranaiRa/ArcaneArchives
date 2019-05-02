@@ -8,6 +8,7 @@ import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.events.LineHandler;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -55,6 +56,7 @@ public class ManifestItem extends ItemTemplate
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.manifest"));
 		String additional = "";
 		if (Keybinds.manifestKey.getKeyCode() != 0) {
 			additional = " or " + Keybinds.manifestKey.getDisplayName();

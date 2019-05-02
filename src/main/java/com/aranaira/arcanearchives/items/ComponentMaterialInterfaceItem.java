@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -22,7 +23,7 @@ public class ComponentMaterialInterfaceItem extends ItemTemplate
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.GOLD + "A crafting ingredient which also acts as an upgrade for the Radiant Trove.");
+		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.component.materialinterface"));
 	}
 
 	@Override

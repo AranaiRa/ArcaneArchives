@@ -14,7 +14,7 @@ public class GUIMatrixStorage extends GuiContainer
 
 	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/matrix_storage.png");
 	private static final ResourceLocation PlayerInvTexture = new ResourceLocation("arcanearchives:textures/gui/player_inv.png");
-	private static final ResourceLocation ScrollBar = new ResourceLocation("arcanearchives:textures/gui/icon_scrollbar.png");
+	private static final ResourceLocation ScrollBar = new ResourceLocation("arcanearchives:textures/gui/buttons.png");
 
 	private float mScrollbarPercent = 0.0f;
 	private boolean mScrollbarSelected = false;
