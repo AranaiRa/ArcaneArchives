@@ -40,8 +40,8 @@ minecraft {
 }
 
 configurations {
-    embed
-    implementation.extendsFrom embed
+    shade
+    compile.extendsFrom shade
 }
 
 repositories {
@@ -98,7 +98,7 @@ dependencies {
     deobfCompile "net.darkhax.gamestages:GameStages-1.12.2:2.0.91"
     deobfCompile "net.darkhax.bookshelf:Bookshelf-1.12.2:2.3.552"
 
-    embed("org.spongepowered:mixin:0.7.11-SNAPSHOT") {
+    shade("org.spongepowered:mixin:0.7.11-SNAPSHOT") {
         transitive = false
     }
 }
@@ -126,12 +126,12 @@ jar {
     manifest {
         attributes "FMLCorePluginContainsFMLMod": "true", "FMLCorePlugin": "com.aranaira.arcanearchives.core.AALoadingPlugin"
 
-        attributes "MixinConfigs": "mixins.arcanearchives.json", "TweakClass": "ore.spongepowered.asm.launch.MixinTweaker", "ForceLoadAsMod": "true"
+        attributes "MixinConfigs": "mixins.arcanearchives.json", "TweakClass": "org.spongepowered.asm.launch.MixinTweaker", "ForceLoadAsMod": "true"
 
         attributes "FMLAT": "aa_at.cfg"
     }
 
-    configurations.embed.each { dep ->
+    configurations.shade.each { dep ->
         from(project.zipTree(dep)) {
             rename 'LICENSE.txt', 'org/spongepowered/LICENSE.txt'
 
