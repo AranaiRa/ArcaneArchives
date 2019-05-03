@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.client.gui;
 
+import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerRadiantCraftingTable;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -10,6 +11,7 @@ public class GUIRadiantCraftingTable extends GuiContainer
 {
 
 	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/radiantcraftingtable.png");
+	private static final ResourceLocation GUITexturesSimple = new ResourceLocation("arcanearchives:textures/gui/simple/radiantcraftingtable.png");
 
 	public GUIRadiantCraftingTable(EntityPlayer player, ContainerRadiantCraftingTable container) {
 		super(container);
@@ -28,7 +30,10 @@ public class GUIRadiantCraftingTable extends GuiContainer
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.enableColorMaterial();
-		this.mc.getTextureManager().bindTexture(GUITextures);
+		if(ConfigHandler.UsePrettyGUIs)
+			this.mc.getTextureManager().bindTexture(GUITextures);
+		else
+			this.mc.getTextureManager().bindTexture(GUITexturesSimple);
 
 		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, 256, 256, 256, 256);
 	}

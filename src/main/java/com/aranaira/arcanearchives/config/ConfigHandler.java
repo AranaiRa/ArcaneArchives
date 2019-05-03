@@ -57,6 +57,10 @@ public class ConfigHandler
 	@Config.Name("Tome of Arcana settings")
 	public static ConfigValues ConfigValues = new ConfigValues();
 
+	@Config.Comment("Disable to use default Minecraft-style GUI elements.")
+	@Config.Name("Use Pretty GUIs")
+	public static boolean UsePrettyGUIs = true;
+
 	//public static boolean bJarvisModeEnabled = false;
 
 	/*public static int iRadiantResonatorDrain = 20;

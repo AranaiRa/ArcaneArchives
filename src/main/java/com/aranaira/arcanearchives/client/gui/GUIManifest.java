@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.client.gui;
 
+import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.events.LineHandler;
@@ -29,8 +30,10 @@ import java.util.List;
 
 public class GUIManifest extends AbstractLayeredGuiContainer implements GuiPageButtonList.GuiResponder {
 	private static final ResourceLocation GUIBaseTextures = new ResourceLocation("arcanearchives:textures/gui/manifest_base.png");
+	private static final ResourceLocation GUIBaseTexturesSimple = new ResourceLocation("arcanearchives:textures/gui/simple/manifest_base.png");
 	private static final int mGUIBaseTexturesSize = 256;
 	private static final ResourceLocation GUIForegroundTextures = new ResourceLocation("arcanearchives:textures/gui/manifest_overlay.png");
+	private static final ResourceLocation GUIForegroundTexturesSimple = new ResourceLocation("arcanearchives:textures/gui/simple/manifest_overlay.png");
 	private static final float mGUIForegroundTexturesSize = 256;
 	private final EntityPlayer player;
 	private ContainerManifest container;
@@ -116,7 +119,10 @@ public class GUIManifest extends AbstractLayeredGuiContainer implements GuiPageB
 
 		GlStateManager.color(1f, 1f, 1f, 1f);
 		GlStateManager.enableColorMaterial();
-		this.mc.getTextureManager().bindTexture(GUIForegroundTextures);
+		if(ConfigHandler.UsePrettyGUIs)
+			this.mc.getTextureManager().bindTexture(GUIForegroundTextures);
+		else
+			this.mc.getTextureManager().bindTexture(GUIForegroundTexturesSimple);
 
 		// for some reason this seems to be relative x and y position
 		drawModalRectWithCustomSizedTexture(0, 0, 0f, 0f, xSize, ySize, mGUIForegroundTexturesSize, mGUIForegroundTexturesSize);
@@ -126,7 +132,10 @@ public class GUIManifest extends AbstractLayeredGuiContainer implements GuiPageB
 	protected void drawBackgroundContents (int mouseX, int mouseY) {
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.enableColorMaterial();
-		this.mc.getTextureManager().bindTexture(GUIBaseTextures);
+		if(ConfigHandler.UsePrettyGUIs)
+			this.mc.getTextureManager().bindTexture(GUIBaseTextures);
+		else
+			this.mc.getTextureManager().bindTexture(GUIBaseTexturesSimple);
 
 		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, xSize, ySize, mGUIBaseTexturesSize, mGUIBaseTexturesSize);
 	}
@@ -142,7 +151,10 @@ public class GUIManifest extends AbstractLayeredGuiContainer implements GuiPageB
 
 		{
 			GlStateManager.disableLighting();
-			this.mc.getTextureManager().bindTexture(GUIBaseTextures);
+			if(ConfigHandler.UsePrettyGUIs)
+				this.mc.getTextureManager().bindTexture(GUIBaseTextures);
+			else
+				this.mc.getTextureManager().bindTexture(GUIBaseTexturesSimple);
 			drawModalRectWithCustomSizedTexture(slot.xPos-1, slot.yPos-1, mSlotTextureLeftOffset, 0, mSlotTextureSize, mSlotTextureSize, mGUIBaseTexturesSize, mGUIBaseTexturesSize);
 			GlStateManager.enableLighting();
 		}

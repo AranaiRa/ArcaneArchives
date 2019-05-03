@@ -27,6 +27,7 @@ import java.util.List;
 @Optional.InterfaceList({@Optional.Interface(modid = "quark", iface = "vazkii.quark.api.IChestButtonCallback", striprefs = true), @Optional.Interface(modid = "quark", iface = "vazkii.quark.api.IItemSearchBar", striprefs = true)})
 public class GUIRadiantChest extends GuiContainer implements IChestButtonCallback, IItemSearchBar, GuiPageButtonList.GuiResponder {
 	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/radiantchest.png");
+	private static final ResourceLocation GUITexturesSimple = new ResourceLocation("arcanearchives:textures/gui/simple/radiantchest.png");
 	private final int ImageHeight = 253, ImageWidth = 192, ImageScale = 256;
 	private ContainerRadiantChest mContainer;
 
@@ -79,7 +80,10 @@ public class GUIRadiantChest extends GuiContainer implements IChestButtonCallbac
 	protected void drawGuiContainerBackgroundLayer (float partialTicks, int mouseX, int mouseY) {
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.enableColorMaterial();
-		this.mc.getTextureManager().bindTexture(GUITextures);
+		if(ConfigHandler.UsePrettyGUIs)
+			this.mc.getTextureManager().bindTexture(GUITextures);
+		else
+			this.mc.getTextureManager().bindTexture(GUITexturesSimple);
 
 		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, ImageScale, ImageScale, ImageScale, ImageScale);
 	}
