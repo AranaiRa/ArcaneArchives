@@ -1,9 +1,0 @@
-# Rhino
-newmtl CoverGraphics
-map_Kd arcanearchives:covers/default
-
-newmtl Default
-map_Kd arcanearchives:paper
-
-newmtl Cover
-map_Kd arcanearchives:cover
