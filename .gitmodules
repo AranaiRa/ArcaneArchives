@@ -1,4 +1,4 @@
 [submodule "src/main/java/com/lireherz"]
 	path = src/main/java/com/lireherz
 	url = https://github.com/lirelent/Guidebook
-	branch = test
+	branch = embed

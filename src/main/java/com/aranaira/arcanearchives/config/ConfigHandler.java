@@ -57,9 +57,13 @@ public class ConfigHandler
 	@Config.Name("Tome of Arcana settings")
 	public static ConfigValues ConfigValues = new ConfigValues();
 
-	@Config.Comment("Disable to use default Minecraft-style GUI elements.")
+	@Config.Comment("Disable to use default Minecraft-style GUI elements. (Client Only)")
 	@Config.Name("Use Pretty GUIs")
 	public static boolean UsePrettyGUIs = true;
+
+	@Config.Comment("Disable overlay of grid on Manifest. (Client Only")
+	@Config.Name("Disable Manifest Grid")
+	public static boolean DisableManifestGrid = true;
 
 	//public static boolean bJarvisModeEnabled = false;
 

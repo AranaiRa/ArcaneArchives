@@ -155,7 +155,9 @@ public class GUIManifest extends AbstractLayeredGuiContainer implements GuiPageB
 				this.mc.getTextureManager().bindTexture(GUIBaseTextures);
 			else
 				this.mc.getTextureManager().bindTexture(GUIBaseTexturesSimple);
-			drawModalRectWithCustomSizedTexture(slot.xPos-1, slot.yPos-1, mSlotTextureLeftOffset, 0, mSlotTextureSize, mSlotTextureSize, mGUIBaseTexturesSize, mGUIBaseTexturesSize);
+			if (!ConfigHandler.DisableManifestGrid) {
+				drawModalRectWithCustomSizedTexture(slot.xPos - 1, slot.yPos - 1, mSlotTextureLeftOffset, 0, mSlotTextureSize, mSlotTextureSize, mGUIBaseTexturesSize, mGUIBaseTexturesSize);
+			}
 			GlStateManager.enableLighting();
 		}
 

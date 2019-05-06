@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.proxy;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.blocks.AAModelLoader;
 import com.aranaira.arcanearchives.client.Keybinds;
 import com.aranaira.arcanearchives.client.render.RadiantTankTEISR;
 import com.aranaira.arcanearchives.client.render.RadiantTankTESR;
@@ -9,7 +10,6 @@ import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.items.itemblocks.RadiantTankItem;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
 import com.lireherz.guidebook.client.GbookCommand;
-import com.lireherz.guidebook.guidebook.client.BookBakedModel;
 import com.lireherz.guidebook.guidebook.client.BookRegistry;
 import com.lireherz.guidebook.guidebook.conditions.AdvancementCondition;
 import com.lireherz.guidebook.guidebook.conditions.BasicConditions;
@@ -22,7 +22,6 @@ import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
-import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -62,7 +61,6 @@ public class ClientProxy extends CommonProxy
 	@Override
 	public void preInit(FMLPreInitializationEvent event) {
 		super.preInit(event);
-		OBJLoader.INSTANCE.addDomain(ArcaneArchives.MODID);
 
 		Keybinds.initKeybinds();
 
@@ -72,7 +70,7 @@ public class ClientProxy extends CommonProxy
 		CompositeCondition.register();
 		AdvancementCondition.register();
 		BookRegistry.parseAllBooks();
-		ModelLoaderRegistry.registerLoader(new BookBakedModel.ModelLoader());
+		ModelLoaderRegistry.registerLoader(AAModelLoader.getInstance());
 
 		ClientCommandHandler.instance.registerCommand(new GbookCommand());
 	}
