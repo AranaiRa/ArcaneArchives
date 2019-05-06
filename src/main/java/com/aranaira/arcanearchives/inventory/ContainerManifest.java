@@ -28,7 +28,7 @@ import java.util.List;
 @InventoryContainer
 public class ContainerManifest extends Container {
 	// this must be a multiple of GRID_SPACING
-	private static int SCROLL_STEP = 3;
+	private static int SCROLL_STEP = 6;
 	private static int GRID_SPACING = 18;
 	private static int FIRST_CELL_X = 12;
 	private static int FIRST_CELL_Y = 30;
