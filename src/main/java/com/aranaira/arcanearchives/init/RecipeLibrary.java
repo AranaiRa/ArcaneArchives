@@ -33,6 +33,7 @@ public class RecipeLibrary
 	public static GCTRecipe RADIANT_TANK_RECIPE;
 	public static GCTRecipe RIVERTEAR_RECIPE;
 	public static GCTRecipe MONITORING_CRYSTAL_RECIPE;
+	public static GCTRecipe SCEPTER_MANIPULATION_RECIPE;
 
 	public static void buildRecipes() {
 		COMPONENT_RADIANTDUST_RECIPE = GCTRecipeList.makeAndAddRecipe("radiantdust", new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 2), ItemRegistry.RAW_RADIANT_QUARTZ);
@@ -40,6 +41,8 @@ public class RecipeLibrary
 		CUT_RADIANT_QUARTZ_RECIPE = GCTRecipeList.makeAndAddRecipe("cut_radiant_quartz", new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 1), new ItemStack(ItemRegistry.RAW_RADIANT_QUARTZ, 2));
 
 		MANIFEST_RECIPE = GCTRecipeList.makeAndAddRecipe("manifest", new ItemStack(ItemRegistry.MANIFEST, 1), new IngredientStack("paper", 1), new IngredientStack("dyeBlack", 1), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 2));
+
+		SCEPTER_MANIPULATION_RECIPE = GCTRecipeList.makeAndAddRecipe("sceptermanipulation", new ItemStack(ItemRegistry.SCEPTER_MANIPULATION), new ItemStack(ItemRegistry.SCEPTER_REVELATION, 1), new IngredientStack(ItemRegistry.COMPONENT_SCINTILLATINGINLAY, 1));
 
 		RADIANT_LANTERN_RECIPE = GCTRecipeList.makeAndAddRecipe("radiant_lantern", new ItemStack(BlockRegistry.RADIANT_LANTERN, 4), new ItemStack(ItemRegistry.RAW_RADIANT_QUARTZ, 2), new IngredientStack("nuggetGold", 1));
 
