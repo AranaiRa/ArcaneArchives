@@ -261,7 +261,7 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 		List<ManifestItemEntry> preManifest = new ArrayList<>();
 		Set<ManifestTileEntity> done = new HashSet<>();
 
-		for(IteRef ref : getManifestTileEntities()) {
+		outer: for(IteRef ref : getManifestTileEntities()) {
 			ManifestTileEntity ite = ref.getManifestServerTile();
 			if(ite == null) continue;
 
@@ -278,18 +278,13 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound>
 				if (ite instanceof MonitoringCrystalTileEntity) {
 					MonitoringCrystalTileEntity mte = (MonitoringCrystalTileEntity) ite;
 					
-					boolean isUsed = false;
 					for (ManifestTileEntity mteComp : done) {
 						if (mteComp instanceof MonitoringCrystalTileEntity) {
-							if (((MonitoringCrystalTileEntity) mteComp).getTarget().compareTo(mte.getTarget()) == 0) {
-								isUsed = true;
-								break;
+							MonitoringCrystalTileEntity other = (MonitoringCrystalTileEntity) mteComp;
+							if (other.getTarget() != null && mte.getTarget() != null && other.getTarget().equals(mte.getTarget())) {
+								continue outer;
 							}
 						}
-					}
-					
-					if (isUsed) {
-						continue;
 					}
 
 					IItemHandler handler = mte.getInventory();
