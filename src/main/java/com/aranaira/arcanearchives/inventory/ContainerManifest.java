@@ -30,8 +30,8 @@ public class ContainerManifest extends Container {
 	// this must be a multiple of GRID_SPACING
 	private static int SCROLL_STEP = 6;
 	private static int GRID_SPACING = 18;
-	private static int FIRST_CELL_X = 12;
-	private static int FIRST_CELL_Y = 30;
+	public static int FIRST_CELL_X = 12;
+	public static int FIRST_CELL_Y = 30;
 	/// number of cells in x and y, for now this is square
 	private static int NUM_CELLS = 9;
 

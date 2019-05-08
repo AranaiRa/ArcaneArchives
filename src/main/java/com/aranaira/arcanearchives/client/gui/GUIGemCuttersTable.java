@@ -65,9 +65,6 @@ public class GUIGemCuttersTable extends GuiContainer
 		this.prevPageButton = new InvisibleButton(0, guiLeft + 26, guiTop + 69, 10, 18, "");
 		this.nextPageButton = new InvisibleButton(1, guiLeft + 170, guiTop + 69, 10, 18, "");
 
-		prevPageButton.visible = false;
-		nextPageButton.visible = false;
-
 		this.buttonList.add(prevPageButton);
 		this.buttonList.add(nextPageButton);
 
