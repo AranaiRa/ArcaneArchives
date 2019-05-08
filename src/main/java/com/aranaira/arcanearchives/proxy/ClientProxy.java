@@ -25,6 +25,7 @@ import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
@@ -69,7 +70,6 @@ public class ClientProxy extends CommonProxy
 		BasicConditions.register();
 		CompositeCondition.register();
 		AdvancementCondition.register();
-		BookRegistry.parseAllBooks();
 		ModelLoaderRegistry.registerLoader(AAModelLoader.getInstance());
 
 		ClientCommandHandler.instance.registerCommand(new GbookCommand());
@@ -78,6 +78,15 @@ public class ClientProxy extends CommonProxy
 	@Override
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
+	}
+
+	@Override
+	public void postInit (FMLPostInitializationEvent event) {
+		super.postInit(event);
+
+		// force a reparse all of the GuideBook XMLs now that all the mod recipes have been registered
+		// this means that the recipes for modded items can now be found by the book parser
+		BookRegistry.parseAllBooks();
 	}
 
 	@Override

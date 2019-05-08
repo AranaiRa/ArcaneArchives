@@ -6,8 +6,10 @@ import com.lireherz.guidebook.guidebook.client.GuiGuidebook;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
@@ -24,6 +26,8 @@ public class TomeOfArcanaItem extends ItemTemplate
 
 	public TomeOfArcanaItem() {
 		super(NAME);
+		setHasSubtypes(true);
+		setMaxStackSize(1);
 	}
 
 	@Override
@@ -53,5 +57,23 @@ public class TomeOfArcanaItem extends ItemTemplate
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.tomeofarcana"));
+	}
+
+	public ItemStack of(ResourceLocation book)
+	{
+		ItemStack stack = new ItemStack(this);
+		NBTTagCompound tag = new NBTTagCompound();
+		tag.setString("Book", book.toString());
+		stack.setTagCompound(tag);
+		return stack;
+	}
+
+	@Override
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
+	{
+		if (this.isInCreativeTab(tab))
+		{
+			subItems.add(of(TOME_OF_ARCANA));
+		}
 	}
 }
