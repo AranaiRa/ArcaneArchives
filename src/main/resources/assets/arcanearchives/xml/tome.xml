@@ -1,16 +1,180 @@
-<book title="Tome of Arcana [WIP]" cover="arcanearchives:covers/default" fontSize="0.4">
+<book title="Tome of Arcana [WIP]" cover="arcanearchives:covers/default" fontSize="0.6">
 
     <include ref="arcanearchives:xml/standard.xml" />
 
-    <chapter id="hello">
+    <mod-loaded name="ml_astralsorcery" modid="astralsorcery"/>
 
+    <chapter id="TableOfContents">
         <section>
             <page_title>
-                <title>hello title</title>
+                <title>Table of Contents</title>
             </page_title>
-            hello world
-        </section>
+            <p>
+                TBD
+            </p>
+            <stack item="minecraft:coal" meta="0" count="2" />
+            <stack item="minecraft:coal" meta="0" count="2" scale="2.0"/>
+            <p align="center"><stack item="minecraft:coal" scale="3.0"/></p>
+            <p><stack item="minecraft:stick" meta="0" count="2" /> text text baby oo yeah</p>
 
+
+            <recipe type="shaped">
+                <recipe.result>
+                    <stack item="minecraft:stone_pickaxe"/>
+                </recipe.result>
+            </recipe>
+        </section>
     </chapter>
 
+    <chapter id="LetterOfInvitation">
+        <section>
+            <page_title>
+                <title>Letter of Invitation</title>
+            </page_title>
+            <p align="center"><stack item="arcanearchives:item_letterofinvitation" scale="3.0"/><stack item="arcanearchives:item_letterofresignation" scale="3.0"/></p>
+            <p>
+                A Letter of Invitation can be used to add another player to your network. When a player joins your network, any placed Radiant storage added to your network, and accessing a Manifest shows all of the items in your new, combined network instead of just the user’s network.
+            </p>
+            <p>
+                A Letter of Resignation is the opposite, removing yourself from another player’s network.
+            </p>
+        </section>
+        <section>
+            <p>
+                Letters of Invitation and Resignation can both be crafted conventionally.
+            </p>
+            <recipe type="shaped">
+                <recipe.result>
+                    <stack item="arcanearchives:item_letterofinvitation"/>
+                </recipe.result>
+            </recipe>
+            <recipe type="shaped">
+                <recipe.result>
+                    <stack item="arcanearchives:item_letterofresignation"/>
+                </recipe.result>
+            </recipe>
+            <p italics="true">
+                ...Lore fragment TBD
+            </p>
+        </section>
+    </chapter>
+
+    <chapter id="Manifest">
+        <section>
+            <page_title>
+                <title>Manifest</title>
+            </page_title>
+            <p align="center"><stack item="arcanearchives:item_manifest" scale="3.0"/></p>
+            <p>
+                A Manifest lists all items stored within loaded Radiant Storage in one single list. By hovering over a slot, you can get a list of each location that the item is stored at, including names of Radiant Chests. By clicking on the slot, you can track the locations of each of these items, drawing a line from your current position to the target inventories (as long as a target inventory is in the same dimension). Activating a tracked inventory container disables the line, as does hitting the “End Tracking” button at the bottom of the Manifest’s interface.
+            </p>
+            <p>
+                Items in non-Radiant storage can be added to the Manifest by attaching a <link ref="MonitoringCrystal">Monitoring Crystal</link> to its storage container.
+            </p>
+        </section>
+        <section>
+            <p>
+                Manifests can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+            </p>
+            <p italics="true">
+                ...Lore fragment TBD
+            </p>
+        </section>
+    </chapter>
+
+    <chapter id="MonitoringCrystal">
+        <section>
+            <page_title>
+                <title>Monitoring Crystal</title>
+            </page_title>
+            <p align="center"><stack item="arcanearchives:monitoring_crystal" scale="3.0"/></p>
+            <p>
+                A Monitoring Crystal can be attached to a storage container to allow its contents to be listed by a <link ref="Manifest">Manifest</link>. A Monitoring Crystal is also a light source.
+            </p>
+            <p>
+                Using a <stack item="arcanearchives:item_scepterrevelation"/><link ref="Scepters">Scepter of Revelation</link> on a Monitoring Crystal will return what direction the Monitoring Crystal is pointing towards.
+            </p>
+        </section>
+        <section>
+            <p>
+                Monitoring Crystals can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+            </p>
+            <p italics="true">
+                ...Lore fragment TBD
+            </p>
+        </section>
+    </chapter>
+
+    <chapter id="Mountaintear">
+        <section>
+            <page_title>
+                <title>Mountaintear</title>
+            </page_title>
+            <p>
+                When placed in a Lightwell, a Mountaintear generates lava at a slow rate. The Lightwell needs access to the sky. Once placed in a Lightwell, a Mountaintear cannot be retrieved.
+            </p>
+            <p>
+                While it's possible for a Mountaintear to shatter, the chances of shattering are <span italics="true">astronomically</span> unlikely. For all intents and purposes, a Mountaintear lasts indefinitely unless its Lightwell is broken.
+            </p>
+        </section>
+        <section>
+            <p>
+                Mountaintears cannot be crafted, and are only available via Creative mode.
+            </p>
+            <p italics="true">
+                ...Lore fragment TBD
+            </p>
+        </section>
+    </chapter>
+
+    <chapter id="RadiantQuartz">
+        <section>
+            <page_title>
+                <title>Radiant Quartz</title>
+            </page_title>
+            <p>
+                OwO
+            </p>
+            <stack item="astralsorcery:blockwell" meta="0" count="1" condition="ml_astralsorcery"/>
+            <p condition="ml_astralsorcery">
+                Raw Radiant Quartz can also be used in a Lightwell to generate liquid starlight. While its production is very low, it is remarkably resistant to shattering.
+            </p>
+        </section>
+    </chapter>
+
+    <chapter id="RadiantResonator">
+        <section>
+            <page_title>
+                <title>Radiant Resonator</title>
+            </page_title>
+            <p>
+                This device uses a mysterious process that somehow manages to solidify time itself into a crystalline structure called <link ref="RadiantQuartz">Radiant Quartz</link>. Every five minutes, one piece of Raw Radiant Quartz is produced. The Radiant Resonator will cease functioning until the Raw Radiant Quartz is removed.
+            </p>
+            <p>
+                The resonating process requires a link to a living creature—it will cease functioning if the player that placed it goes offline, even if its chunk is loaded.0
+            </p>
+            <p>
+                An individual player cannot place more than three Radiant Resonators total, and Radiant Resonators placed by entities other than players will destroy themselves.
+            </p>
+        </section>
+        <section>
+            <p>Radiant Resonators can be crafted conventionally.</p>
+            <recipe type="shaped">
+                <recipe.result>
+                    <stack item="arcanearchives:radiant_resonator"/>
+                </recipe.result>
+            </recipe>
+        </section>
+    </chapter>
+
+    <chapter id="Rivertear" condition="ml_astralsorcery">
+    <section>
+        <page_title>
+            <title>Rivertear</title>
+        </page_title>
+        <p>
+            OwO
+        </p>
+    </section>
+</chapter>
 </book>
