@@ -8,6 +8,7 @@
         {   "item": "minecraft:gold_nugget" }
     ],
     "result": {
-        "item": "arcanearchives:item_tomeofarcana"
+        "item": "arcanearchives:item_tomeofarcana",
+        "data": 0
     }
 }
