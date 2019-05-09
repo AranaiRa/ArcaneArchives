@@ -14,6 +14,6 @@ public class CreativeTabAA extends CreativeTabs
 
 	@Override
 	public ItemStack createIcon () {
-		return new ItemStack(ItemRegistry.TOME_OF_REQUISITION);
+		return new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ);
 	}
 }
