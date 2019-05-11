@@ -31,14 +31,12 @@ public class MonitoringCrystalTileEntity extends ManifestTileEntity
 	}
 
 	@Override
+	@Nullable
 	public IItemHandler getInventory() {
-		if (target == null) {
-			IBlockState me = world.getBlockState(getPos());
-			EnumFacing facing = me.getValue(MonitoringCrystal.FACING).getOpposite();
-			target = getPos().offset(facing);
-		}
+		BlockPos tar = getTarget();
+		if (tar == null) return null;
 
-		TileEntity te = world.getTileEntity(target);
+		TileEntity te = world.getTileEntity(tar);
 		if (te == null) return null;
 
 		// Monitoring Crystals don't work on ITEs.
@@ -53,6 +51,12 @@ public class MonitoringCrystalTileEntity extends ManifestTileEntity
 
 	@Nullable
 	public BlockPos getTarget () {
+		if (target == null) {
+			IBlockState me = world.getBlockState(getPos());
+			EnumFacing facing = me.getValue(MonitoringCrystal.FACING).getOpposite();
+			target = getPos().offset(facing);
+		}
+
 		return target;
 	}
 }

@@ -274,7 +274,7 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound> {
 
 		List<ManifestItemEntry> preManifest = new ArrayList<>();
 		Set<ManifestTileEntity> done = new HashSet<>();
-		List<BlockPosDimension> positions = new ArrayList<>();
+		Set<BlockPosDimension> positions = new HashSet<>();
 		EntityPlayer player = getPlayer();
 
 		for (IteRef ref : getManifestTileEntities()) {
