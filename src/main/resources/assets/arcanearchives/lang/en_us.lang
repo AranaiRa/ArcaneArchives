@@ -97,7 +97,7 @@ arcanearchives.error.upgrade_trove_failed=Failed to upgrade trove. Current upgra
 arcanearchives.error.upgrade_tank_failed=Failed to upgrade tanke. Current upgrade level is: %d/%d.
 arcanearchives.error.trove_insertion_failed.full=Cannot insert any more items into this trove.
 arcanearchives.error.trove_insertion_failed.wrong=That item cannot be stored in this trove.
-arcanearchives.error.monitoring_crystal=Multiple Monitoring Crystals were found targetting the same block: %d/%d/%d.
+arcanearchives.error.monitoring_crystal=Multiple Monitoring Crystals were found targetting the same block: %d/%d/%d in dimension %d.
 
 arcanearchives.warning.sneak_to_upgrade=Sneak to apply a material interface to a trove to upgrade it.
 arcanearchives.warning.sneak_to_upgrade_tank=Sneak to apply a containment field to a tank to upgrade it.

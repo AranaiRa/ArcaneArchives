@@ -274,6 +274,7 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound> {
 
 		List<ManifestItemEntry> preManifest = new ArrayList<>();
 		Set<ManifestTileEntity> done = new HashSet<>();
+		List<BlockPosDimension> positions = new ArrayList<>();
 		EntityPlayer player = getPlayer();
 
 		for (IteRef ref : getManifestTileEntities()) {
@@ -297,19 +298,23 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound> {
 				if (ite instanceof MonitoringCrystalTileEntity) {
 					MonitoringCrystalTileEntity mte = (MonitoringCrystalTileEntity) ite;
 
-					for (ManifestTileEntity mteComp : done) {
-						if (mteComp instanceof MonitoringCrystalTileEntity) {
-							MonitoringCrystalTileEntity other = (MonitoringCrystalTileEntity) mteComp;
-							if (other.getTarget() != null && mte.getTarget() != null && other.getTarget().equals(mte.getTarget())) {
-								BlockPos tar = mte.getTarget();
-								if (player != null) {
-									player.sendMessage(new TextComponentTranslation("arcanearchives.error.monitoring_crystal", tar.getX(), tar.getY(), tar.getZ()));
-								} else {
-									ArcaneArchives.logger.error("Multiple Monitoring Crystals were found for network " + mPlayerId.toString() + " targeting " + String.format("%d/%d/%d", tar.getX(), tar.getY(), tar.getZ()));
-								}
-							}
-						}
+					BlockPos tar = mte.getTarget();
+					if (tar == null) {
+						continue;
 					}
+
+					BlockPosDimension ttar = new BlockPosDimension(tar, mte.dimension);
+
+					if (positions.contains(ttar)) {
+						if (player != null) {
+							player.sendMessage(new TextComponentTranslation("arcanearchives.error.monitoring_crystal", tar.getX(), tar.getY(), tar.getZ(), ttar.dimension));
+						} else {
+							ArcaneArchives.logger.error("Multiple Monitoring Crystals were found for network " + mPlayerId.toString() + " targeting " + String.format("%d/%d/%d in dimension %d", tar.getX(), tar.getY(), tar.getZ(), ttar.dimension));
+						}
+						continue;
+					}
+
+					positions.add(ttar);
 
 					IItemHandler handler = mte.getInventory();
 					if (handler != null) {
@@ -421,6 +426,33 @@ public class ServerNetwork implements INBTSerializable<NBTTagCompound> {
 			this.stack = stack;
 			this.dim = dim;
 			this.entry = entry;
+		}
+	}
+
+	public static class BlockPosDimension {
+		public BlockPos pos;
+		public int dimension;
+
+		public BlockPosDimension (BlockPos pos, int dimension) {
+			this.pos = pos;
+			this.dimension = dimension;
+		}
+
+		@Override
+		public boolean equals (Object o) {
+			if (this == o) {
+				return true;
+			}
+			if (o == null || getClass() != o.getClass()) {
+				return false;
+			}
+			BlockPosDimension that = (BlockPosDimension) o;
+			return dimension == that.dimension && Objects.equals(pos, that.pos);
+		}
+
+		@Override
+		public int hashCode () {
+			return Objects.hash(pos, dimension);
 		}
 	}
 
