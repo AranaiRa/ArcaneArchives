@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.blocks.MonitoringCrystal;
+import com.sun.istack.internal.Nullable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -50,6 +51,7 @@ public class MonitoringCrystalTileEntity extends ManifestTileEntity
 		return null;
 	}
 
+	@Nullable
 	public BlockPos getTarget () {
 		return target;
 	}
