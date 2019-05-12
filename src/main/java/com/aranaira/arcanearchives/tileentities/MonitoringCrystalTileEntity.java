@@ -8,6 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
@@ -30,14 +31,12 @@ public class MonitoringCrystalTileEntity extends ManifestTileEntity
 	}
 
 	@Override
+	@Nullable
 	public IItemHandler getInventory() {
-		if (target == null) {
-			IBlockState me = world.getBlockState(getPos());
-			EnumFacing facing = me.getValue(MonitoringCrystal.FACING).getOpposite();
-			target = getPos().offset(facing);
-		}
+		BlockPos tar = getTarget();
+		if (tar == null) return null;
 
-		TileEntity te = world.getTileEntity(target);
+		TileEntity te = world.getTileEntity(tar);
 		if (te == null) return null;
 
 		// Monitoring Crystals don't work on ITEs.
@@ -50,7 +49,14 @@ public class MonitoringCrystalTileEntity extends ManifestTileEntity
 		return null;
 	}
 
+	@Nullable
 	public BlockPos getTarget () {
+		if (target == null) {
+			IBlockState me = world.getBlockState(getPos());
+			EnumFacing facing = me.getValue(MonitoringCrystal.FACING).getOpposite();
+			target = getPos().offset(facing);
+		}
+
 		return target;
 	}
 }
