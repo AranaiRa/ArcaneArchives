@@ -4,6 +4,9 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.integration.jei.gct.GCTCategory;
 import com.aranaira.arcanearchives.integration.jei.gct.GCTWrapper;
+import com.aranaira.arcanearchives.integration.jei.quartz.QuartzCategory;
+import com.aranaira.arcanearchives.integration.jei.quartz.QuartzWrapper;
+import com.aranaira.arcanearchives.integration.jei.quartz.QuartzWrapper.FakeQuartzRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import mezz.jei.api.*;
@@ -13,11 +16,13 @@ import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
+import java.util.Collections;
 
 @mezz.jei.api.JEIPlugin
 public class JEIPlugin implements IModPlugin
 {
 	public static final String GEM_CUTTERS_TABLE = ArcaneArchives.MODID + ".gem_cutters_table";
+	public static final String RADIANT_RESONATOR = ArcaneArchives.MODID + ".radiant_resonator";
 
 	private static final int craftOutputSlot = 0;
 	private static final int craftInputSlot1 = 3;
@@ -29,7 +34,7 @@ public class JEIPlugin implements IModPlugin
 	@Override
 	public void registerCategories(IRecipeCategoryRegistration registry) {
 		IGuiHelper helper = registry.getJeiHelpers().getGuiHelper();
-		registry.addRecipeCategories(new GCTCategory(helper));
+		registry.addRecipeCategories(new GCTCategory(helper), new QuartzCategory(helper));
 	}
 
 	@Override
@@ -46,6 +51,10 @@ public class JEIPlugin implements IModPlugin
 		registry.handleRecipes(GCTRecipe.class, GCTWrapper::new, GEM_CUTTERS_TABLE);
 		registry.addRecipes(GCTRecipeList.getRecipeList(), GEM_CUTTERS_TABLE);
 		registry.addRecipeCatalyst(new ItemStack(BlockRegistry.GEMCUTTERS_TABLE), GEM_CUTTERS_TABLE);
+
+		registry.handleRecipes(FakeQuartzRecipe.class, QuartzWrapper::new, RADIANT_RESONATOR);
+		registry.addRecipes(Collections.singletonList(new FakeQuartzRecipe()), RADIANT_RESONATOR);
+		registry.addRecipeCatalyst(new ItemStack(BlockRegistry.RADIANT_RESONATOR), RADIANT_RESONATOR);
 	}
 
 	@Override

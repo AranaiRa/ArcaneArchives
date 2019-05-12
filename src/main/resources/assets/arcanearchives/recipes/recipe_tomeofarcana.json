@@ -9,6 +9,9 @@
     ],
     "result": {
         "item": "arcanearchives:item_tomeofarcana",
+        "nbt": {
+            "Book": "xml/tome.xml"
+        },
         "data": 0
     }
 }
