@@ -1,0 +1,8 @@
+# Blender MTL File: 'brazierofhoarding.blend'
+# Material Count: 3
+
+newmtl Fire
+map_Kd minecraft:blocks/fire
+
+newmtl Master
+map_Kd arcanearchives:blocks/block_arcanearchives_master
