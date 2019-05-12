@@ -180,6 +180,11 @@ arcanearchives.data.scepter.monitoring_crystal.facing=Monitoring Crystal is faci
 arcanearchives.data.scepter.accessor.accessor_to=Accessor to %s at %d/%d/%d.
 arcanearchives.data.scepter.accessor.invalid=Invalid accessor block with no parent.
 
+arcanearchives.data.scepter.tile.invalid=Invalid tile entity for this block!
+arcanearchives.data.scepter.tile.no_upgrades=No upgrades to remove from this device.
+arcanearchives.data.scepter.tile.cant_downgrade.trove=Too many stored items, cannot downgrade!
+arcanearchives.data.scepter.tile.downgrade_success.trove=Successfully removed an upgrade! Now at %d/%d.
+
 arcanearchives.gui.keygroup=Arcane Archives
 arcanearchives.gui.keybinds.manifest=Activate Manifest
 arcanearchives.gui.missing_manifest=You have no Manifest on you to peruse!
