@@ -67,6 +67,12 @@
             <p><stack item="arcanearchives:item_scepterrevelation"/> <link ref="ScepterRevelation">Scepter of Revelation</link></p>
             <p><stack item="arcanearchives:item_component_scintillatinginlay"/> <link ref="ScintillatingInlay">Scintillating Inlay</link></p>
         </section>
+        <section>
+            <page_title>
+                <title>Concepts</title>
+            </page_title>
+            <p><image src="arcanearchives:gui/guidebook/otherwhere" tw="16" th="16" /> <link ref="Otherwhere">Otherwhere</link></p>
+        </section>
     </chapter>
 
     <chapter id="BrazierHoarding">
@@ -318,12 +324,11 @@
             <p>
                 Radiant Resonators only run while you’re online, even if the chunk is loaded.
             </p>
-            <horizontal_rule/>
+        </section>
+        <section>
             <p>
                 <stack item="arcanearchives:item_scepterrevelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Radiant Resonator will return its current process, and whether it is running or not..
             </p>
-        </section>
-        <section>
             <p>
                 <stack item="minecraft:crafting_table"/> Radiant Resonators can be crafted conventionally.
             </p>
@@ -390,6 +395,7 @@
             <p>
                 <stack item="arcanearchives:item_sceptermanipulation"/> Using a <link ref="ScepterManipulation">Scepter of Manipulation</link> on a Radiant Trove will remove one installed upgrade, so long as the storage that upgrade provided is currently unused.
             </p>
+            <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Radiant Troves can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
@@ -805,6 +811,19 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Scintillating Inlay can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <horizontal_rule/>
+            <p italics="true">
+                ...Lore fragment TBD
+            </p>
+        </section>
+    </chapter>
+
+    <chapter id="Otherwhere">
+        <section>
+            <page_title>
+                <title>Otherwhere</title>
+            </page_title>
+            <p align="center"><image src="arcanearchives:gui/guidebook/otherwhere" tw="16" th="16" scale="3.0"/></p>
             <horizontal_rule/>
             <p italics="true">
                 ...Lore fragment TBD
