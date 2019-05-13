@@ -31,7 +31,6 @@ public class ItemRegistry
 	public static final RadiantBucketItem RADIANT_BUCKET = new RadiantBucketItem();
 	public static final RivertearItem RIVERTEAR = new RivertearItem();
 	//public static final ScepterAbductionItem SCEPTER_ABDUCTION = new ScepterAbductionItem();
-	//public static final ScepterManipulationItem SCEPTER_MANIPULATION = new ScepterManipulationItem();
 	//public static final ScepterTranslocationItem SCEPTER_TRANSLOCATION = new ScepterTranslocationItem();
 	public static final ScepterRevelationItem SCEPTER_REVELATION = new ScepterRevelationItem();
 	public static final ScepterManipulationItem SCEPTER_MANIPULATION = new ScepterManipulationItem();
@@ -54,27 +53,21 @@ public class ItemRegistry
 	public static void onItemRegister(RegistryEvent.Register<Item> event) {
 		IForgeRegistry<Item> registry = event.getRegistry();
 
-		Arrays.asList(RAW_RADIANT_QUARTZ, CUT_RADIANT_QUARTZ, /*GEOMANCY_PENDULUM, GEOMANTIC_MAP,*/ MANIFEST, RADIANT_BUCKET, /*SCEPTER_ABDUCTION, SCEPTER_MANIPULATION, SCEPTER_TRANSLOCATION, */TOME_OF_ARCANA, LETTER_OF_INVITATION, LETTER_OF_RESIGNATION,/* TOME_OF_REQUISITION,*/ COMPONENT_CONTAINMENTFIELD, COMPONENT_MATRIXBRACE, COMPONENT_MATERIALINTERFACE, COMPONENT_RADIANTDUST, COMPONENT_SCINTILLATINGINLAY/*, SPIRIT_ORB*/, SCEPTER_REVELATION, SCEPTER_MANIPULATION, RIVERTEAR, MOUNTAINTEAR).forEach(registry::register);
+		Arrays.asList(RAW_RADIANT_QUARTZ, CUT_RADIANT_QUARTZ, /*GEOMANCY_PENDULUM, GEOMANTIC_MAP,*/ MANIFEST, RADIANT_BUCKET, /*SCEPTER_ABDUCTION, SCEPTER_TRANSLOCATION, */TOME_OF_ARCANA, LETTER_OF_INVITATION, LETTER_OF_RESIGNATION,/* TOME_OF_REQUISITION,*/ COMPONENT_CONTAINMENTFIELD, COMPONENT_MATRIXBRACE, COMPONENT_MATERIALINTERFACE, COMPONENT_RADIANTDUST, COMPONENT_SCINTILLATINGINLAY/*, SPIRIT_ORB*/, SCEPTER_REVELATION, SCEPTER_MANIPULATION, RIVERTEAR, MOUNTAINTEAR).forEach(registry::register);
 
-		Stream.of(/*BlockRegistry.MATRIX_CRYSTAL_CORE, BlockRegistry.MATRIX_REPOSITORY, BlockRegistry.MATRIX_RESERVOIR, BlockRegistry.MATRIX_STORAGE, BlockRegistry.MATRIX_DISTILLATE, */BlockRegistry.STORAGE_RAW_QUARTZ, BlockRegistry.STORAGE_CUT_QUARTZ, BlockRegistry.RADIANT_CHEST, BlockRegistry.RADIANT_CRAFTING_TABLE, BlockRegistry.RADIANT_LANTERN, BlockRegistry.RADIANT_RESONATOR, BlockRegistry.RAW_QUARTZ/*, BlockRegistry.DOMINION_CRYSTAL*/, BlockRegistry.GEMCUTTERS_TABLE, BlockRegistry.RADIANT_TROVE, BlockRegistry.MONITORING_CRYSTAL, BlockRegistry.RADIANT_TANK).map(BlockTemplate::getItemBlock).forEach(registry::register);
+		Stream.of(/*BlockRegistry.MATRIX_CRYSTAL_CORE, BlockRegistry.MATRIX_REPOSITORY, BlockRegistry.MATRIX_RESERVOIR, BlockRegistry.MATRIX_STORAGE, BlockRegistry.MATRIX_DISTILLATE, */BlockRegistry.STORAGE_RAW_QUARTZ, BlockRegistry.STORAGE_CUT_QUARTZ, BlockRegistry.RADIANT_CHEST, BlockRegistry.RADIANT_CRAFTING_TABLE, BlockRegistry.RADIANT_LANTERN, BlockRegistry.RADIANT_RESONATOR, BlockRegistry.RAW_QUARTZ/*, BlockRegistry.DOMINION_CRYSTAL*/, BlockRegistry.GEMCUTTERS_TABLE, BlockRegistry.RADIANT_TROVE, BlockRegistry.MONITORING_CRYSTAL, BlockRegistry.RADIANT_TANK, BlockRegistry.BRAZIER_OF_HOARDING).map(BlockTemplate::getItemBlock).forEach(registry::register);
 	}
 
 	@SubscribeEvent
 	public static void onModelRegister(ModelRegistryEvent event) {
 		Arrays.asList(RAW_RADIANT_QUARTZ, CUT_RADIANT_QUARTZ/*, GEOMANCY_PENDULUM, GEOMANTIC_MAP*/, MANIFEST, RADIANT_BUCKET /*SCEPTER_ABDUCTION, SCEPTER_MANIPULATION, SCEPTER_TRANSLOCATION*/, TOME_OF_ARCANA, LETTER_OF_INVITATION, LETTER_OF_RESIGNATION, /*TOME_OF_REQUISITION, */COMPONENT_CONTAINMENTFIELD, COMPONENT_MATRIXBRACE, COMPONENT_MATERIALINTERFACE, COMPONENT_RADIANTDUST, COMPONENT_SCINTILLATINGINLAY/*, SPIRIT_ORB*/, SCEPTER_REVELATION, SCEPTER_MANIPULATION, RIVERTEAR, MOUNTAINTEAR).forEach(ItemTemplate::registerModels);
 
-		Stream.of(/*BlockRegistry.MATRIX_CRYSTAL_CORE, BlockRegistry.MATRIX_REPOSITORY, BlockRegistry.MATRIX_RESERVOIR, BlockRegistry.MATRIX_STORAGE, BlockRegistry.MATRIX_DISTILLATE, */BlockRegistry.STORAGE_RAW_QUARTZ, BlockRegistry.STORAGE_CUT_QUARTZ, BlockRegistry.RADIANT_CHEST, BlockRegistry.RADIANT_CRAFTING_TABLE, BlockRegistry.RADIANT_LANTERN, BlockRegistry.RADIANT_RESONATOR, BlockRegistry.RAW_QUARTZ, /*BlockRegistry.DOMINION_CRYSTAL, */BlockRegistry.GEMCUTTERS_TABLE, BlockRegistry.RADIANT_TROVE, BlockRegistry.MONITORING_CRYSTAL).map(BlockTemplate::getItemBlock).forEach((block) -> ModelLoader.setCustomModelResourceLocation(block, 0, new ModelResourceLocation(block.getRegistryName(), "inventory")));
+		Stream.of(/*BlockRegistry.MATRIX_CRYSTAL_CORE, BlockRegistry.MATRIX_REPOSITORY, BlockRegistry.MATRIX_RESERVOIR, BlockRegistry.MATRIX_STORAGE, BlockRegistry.MATRIX_DISTILLATE, */BlockRegistry.STORAGE_RAW_QUARTZ, BlockRegistry.STORAGE_CUT_QUARTZ, BlockRegistry.RADIANT_CHEST, BlockRegistry.RADIANT_CRAFTING_TABLE, BlockRegistry.RADIANT_LANTERN, BlockRegistry.RADIANT_RESONATOR, BlockRegistry.RAW_QUARTZ, /*BlockRegistry.DOMINION_CRYSTAL, */BlockRegistry.GEMCUTTERS_TABLE, BlockRegistry.RADIANT_TROVE, BlockRegistry.MONITORING_CRYSTAL, BlockRegistry.BRAZIER_OF_HOARDING).map(BlockTemplate::getItemBlock).forEach((block) -> ModelLoader.setCustomModelResourceLocation(block, 0, new ModelResourceLocation(block.getRegistryName(), "inventory")));
 
 		/*SPIRIT_ORB.registerModels();*/
 	}
 
 	@SubscribeEvent
 	public static void missingMappings(RegistryEvent.MissingMappings<Item> event) {
-		for(RegistryEvent.MissingMappings.Mapping<Item> mapping : event.getMappings()) {
-			ResourceLocation missingResource = mapping.key;
-			if(missingResource.getNamespace().equals(ArcaneArchives.MODID) && missingResource.getPath().equals("accessorblock")) {
-				mapping.remap(Items.AIR);
-			}
-		}
 	}
 }

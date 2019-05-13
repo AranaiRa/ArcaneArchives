@@ -2,6 +2,34 @@
 
     <include ref="arcanearchives:xml/standard.xml" />
 
+    <stack-links>
+        <stack item="arcanearchives:brazier_of_hoarding">:BrazierHoarding</stack>
+        <stack item="arcanearchives:radiant_lantern">:DecorativeBlocks</stack>
+        <stack item="arcanearchives:gemcutters_table">GemCuttersTable</stack>
+        <stack item="arcanearchives:monitoring_crystal">MonitoringCrystal</stack>
+        <stack item="arcanearchives:radiant_chest">RadiantChest</stack>
+        <stack item="arcanearchives:radiant_crafting_table">RadiantCraftingTable</stack>
+        <stack item="arcanearchives:radiant_resonator">RadiantResonator</stack>
+        <stack item="arcanearchives:radiant_tank">RadiantTank</stack>
+        <stack item="arcanearchives:radiant_trove">RadiantTrove</stack>
+
+        <stack item="arcanearchives:item_component_containmentfield">ContainmentField</stack>
+        <stack item="arcanearchives:item_letterofinvitation">LetterInvitation</stack>
+        <stack item="arcanearchives:item_letterofresignation">LetterResignation</stack>
+        <stack item="arcanearchives:item_manifest">Manifest</stack>
+        <stack item="arcanearchives:item_component_materialinterface">MaterialInterface</stack>
+        <stack item="arcanearchives:item_component_matrixbrace">MatrixBrace</stack>
+        <stack item="arcanearchives:item_mountaintear">Mountaintear</stack>
+        <stack item="arcanearchives:item_radiantbucket">RadiantBucket</stack>
+        <stack item="arcanearchives:item_component_radiantdust">RadiantDust</stack>
+        <stack item="arcanearchives:item_rawquartz">RawQuartz</stack>
+        <stack item="arcanearchives:item_cutquartz">ShapedQuartz</stack>
+        <stack item="arcanearchives:item_rivertear">Rivertear</stack>
+        <stack item="arcanearchives:item_sceptermanipulation">ScepterManipulation</stack>
+        <stack item="arcanearchives:item_scepterrevelation">ScepterRevelation</stack>
+        <stack item="arcanearchives:item_component_scintillatinginlay">ScintillatingInlay</stack>
+    </stack-links>
+
     <mod-loaded name="ml_astralsorcery" modid="astralsorcery"/>
 
     <chapter id="TableOfContents">
@@ -9,6 +37,7 @@
             <page_title>
                 <title>Blocks</title>
             </page_title>
+            <p><stack item="arcanearchives:brazier_of_hoarding"/> <link ref="BrazierHoarding">Brazier of Hoarding</link></p>
             <p><stack item="arcanearchives:radiant_lantern"/> <link ref="DecorativeBlocks">Decorative Blocks</link></p>
             <p><stack item="arcanearchives:gemcutters_table"/> <link ref="GemCuttersTable">Gem Cutter's Table</link></p>
             <p><stack item="arcanearchives:monitoring_crystal"/> <link ref="MonitoringCrystal">Monitoring Crystal</link></p>
@@ -37,6 +66,47 @@
             <p><stack item="arcanearchives:item_sceptermanipulation"/> <link ref="ScepterManipulation">Scepter of Manipulation</link></p>
             <p><stack item="arcanearchives:item_scepterrevelation"/> <link ref="ScepterRevelation">Scepter of Revelation</link></p>
             <p><stack item="arcanearchives:item_component_scintillatinginlay"/> <link ref="ScintillatingInlay">Scintillating Inlay</link></p>
+        </section>
+        <section>
+            <page_title>
+                <title>Concepts</title>
+            </page_title>
+            <p><image src="arcanearchives:gui/guidebook/otherwhere" tw="16" th="16" /> <link ref="Otherwhere">Otherwhere</link></p>
+        </section>
+    </chapter>
+
+    <chapter id="BrazierHoarding">
+        <section>
+            <page_title>
+                <title>Brazier of Hoarding</title>
+            </page_title>
+            <p align="center"><stack item="arcanearchives:brazier_of_hoarding" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                A Brazier of Hoarding is an organization device that can act as a drop-off point to store items in your network. Braziers of Hoarding are also a light source.
+            </p>
+            <p>
+                <stack item="arcanearchives:radiant_trove"/> Any items used on, or dropped on top of, a Brazier of Hoarding will be transported to a <link ref="RadiantTrove">Radiant Trove</link> that contains the item.
+            </p>
+            <p>
+                <stack item="arcanearchives:radiant_chest"/> If no appropriate Radiant Troves exist in your network, items will be placed in <link ref="RadiantChest">Radiant Chests</link>, starting with chests that already contain an instance of the item.
+            </p>
+            <p>
+                If no storage can be found, items are ejected from the Brazier of Hoarding.
+            </p>
+        </section>
+        <section>
+            <p>
+                <stack item="arcanearchives:item_sceptermanipulation"/> Using a <link ref="ScepterManipulation">Scepter of Manipulation</link> on a Brazier of Hoarding will toggle whether it is allowed to place items in Radiant Chests that don't already contain a copy of the item.
+            </p>
+            <horizontal_rule/>
+            <p>
+                <stack item="arcanearchives:gemcutters_table"/> Braziers of Hoarding can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+            </p>
+            <horizontal_rule/>
+            <p italics="true">
+                ...Lore fragment TBD
+            </p>
         </section>
     </chapter>
 
@@ -214,7 +284,7 @@
                 After crafting an item, you can click on one of the slots on the right side of the interface to save the recipe. If enough items are present in your inventory, clicking on a slot with a saved recipe crafts the item without requiring you to set items on the crafting grid. Shift clicking clears the recipe in a slot.
             </p>
             <p>
-                <stack item="arcanearchives:item_scepterrevelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Radiant Chest will return what items are present in the crafting grid.
+                <stack item="arcanearchives:item_scepterrevelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Radiant Crafting Table will return what items are present in the crafting grid.
             </p>
         </section>
         <section>
@@ -254,12 +324,11 @@
             <p>
                 Radiant Resonators only run while you’re online, even if the chunk is loaded.
             </p>
-            <horizontal_rule/>
+        </section>
+        <section>
             <p>
                 <stack item="arcanearchives:item_scepterrevelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Radiant Resonator will return its current process, and whether it is running or not..
             </p>
-        </section>
-        <section>
             <p>
                 <stack item="minecraft:crafting_table"/> Radiant Resonators can be crafted conventionally.
             </p>
@@ -326,6 +395,7 @@
             <p>
                 <stack item="arcanearchives:item_sceptermanipulation"/> Using a <link ref="ScepterManipulation">Scepter of Manipulation</link> on a Radiant Trove will remove one installed upgrade, so long as the storage that upgrade provided is currently unused.
             </p>
+            <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Radiant Troves can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
@@ -741,6 +811,19 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Scintillating Inlay can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <horizontal_rule/>
+            <p italics="true">
+                ...Lore fragment TBD
+            </p>
+        </section>
+    </chapter>
+
+    <chapter id="Otherwhere">
+        <section>
+            <page_title>
+                <title>Otherwhere</title>
+            </page_title>
+            <p align="center"><image src="arcanearchives:gui/guidebook/otherwhere" tw="16" th="16" scale="3.0"/></p>
             <horizontal_rule/>
             <p italics="true">
                 ...Lore fragment TBD
