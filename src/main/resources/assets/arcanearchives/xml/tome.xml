@@ -214,7 +214,7 @@
                 After crafting an item, you can click on one of the slots on the right side of the interface to save the recipe. If enough items are present in your inventory, clicking on a slot with a saved recipe crafts the item without requiring you to set items on the crafting grid. Shift clicking clears the recipe in a slot.
             </p>
             <p>
-                <stack item="arcanearchives:item_scepterrevelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Radiant Chest will return what items are present in the crafting grid.
+                <stack item="arcanearchives:item_scepterrevelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Radiant Crafting Table will return what items are present in the crafting grid.
             </p>
         </section>
         <section>
