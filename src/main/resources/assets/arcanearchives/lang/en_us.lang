@@ -50,6 +50,7 @@ tile.radiant_lantern.name=Radiant Lantern
 tile.radiant_resonator.name=Radiant Resonator
 tile.radiant_trove.name=Radiant Trove
 
+tile.brazier_of_hoarding.name=Brazier of Hoarding
 tile.monitoring_crystal.name=Monitoring Crystal
 
 tile.matrix_crystal_core.name=Crystal Matrix Core

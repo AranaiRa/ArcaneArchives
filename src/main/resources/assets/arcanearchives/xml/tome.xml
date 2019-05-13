@@ -3,6 +3,7 @@
     <include ref="arcanearchives:xml/standard.xml" />
 
     <stack-links>
+        <stack item="arcanearchives:brazier_of_hoarding">:BrazierHoarding</stack>
         <stack item="arcanearchives:radiant_lantern">:DecorativeBlocks</stack>
         <stack item="arcanearchives:gemcutters_table">GemCuttersTable</stack>
         <stack item="arcanearchives:monitoring_crystal">MonitoringCrystal</stack>
@@ -36,6 +37,7 @@
             <page_title>
                 <title>Blocks</title>
             </page_title>
+            <p><stack item="arcanearchives:brazier_of_hoarding"/> <link ref="BrazierHoarding">Brazier of Hoarding</link></p>
             <p><stack item="arcanearchives:radiant_lantern"/> <link ref="DecorativeBlocks">Decorative Blocks</link></p>
             <p><stack item="arcanearchives:gemcutters_table"/> <link ref="GemCuttersTable">Gem Cutter's Table</link></p>
             <p><stack item="arcanearchives:monitoring_crystal"/> <link ref="MonitoringCrystal">Monitoring Crystal</link></p>
@@ -64,6 +66,41 @@
             <p><stack item="arcanearchives:item_sceptermanipulation"/> <link ref="ScepterManipulation">Scepter of Manipulation</link></p>
             <p><stack item="arcanearchives:item_scepterrevelation"/> <link ref="ScepterRevelation">Scepter of Revelation</link></p>
             <p><stack item="arcanearchives:item_component_scintillatinginlay"/> <link ref="ScintillatingInlay">Scintillating Inlay</link></p>
+        </section>
+    </chapter>
+
+    <chapter id="BrazierHoarding">
+        <section>
+            <page_title>
+                <title>Brazier of Hoarding</title>
+            </page_title>
+            <p align="center"><stack item="arcanearchives:brazier_of_hoarding" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                A Brazier of Hoarding is an organization device that can act as a drop-off point to store items in your network. Braziers of Hoarding are also a light source.
+            </p>
+            <p>
+                <stack item="arcanearchives:radiant_trove"/> Any items used on, or dropped on top of, a Brazier of Hoarding will be transported to a <link ref="RadiantTrove">Radiant Trove</link> that contains the item.
+            </p>
+            <p>
+                <stack item="arcanearchives:radiant_chest"/> If no appropriate Radiant Troves exist in your network, items will be placed in <link ref="RadiantChest">Radiant Chests</link>, starting with chests that already contain an instance of the item.
+            </p>
+            <p>
+                If no storage can be found, items are ejected from the Brazier of Hoarding.
+            </p>
+        </section>
+        <section>
+            <p>
+                <stack item="arcanearchives:item_sceptermanipulation"/> Using a <link ref="ScepterManipulation">Scepter of Manipulation</link> on a Brazier of Hoarding will toggle whether it is allowed to place items in Radiant Chests that don't already contain a copy of the item.
+            </p>
+            <horizontal_rule/>
+            <p>
+                <stack item="arcanearchives:gemcutters_table"/> Braziers of Hoarding can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+            </p>
+            <horizontal_rule/>
+            <p italics="true">
+                ...Lore fragment TBD
+            </p>
         </section>
     </chapter>
 
