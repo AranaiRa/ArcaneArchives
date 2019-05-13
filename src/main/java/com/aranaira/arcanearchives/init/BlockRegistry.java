@@ -15,7 +15,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -50,7 +49,7 @@ public class BlockRegistry
 	public static final MonitoringCrystal MONITORING_CRYSTAL = new MonitoringCrystal();
 	public static final AccessorBlock ACCESSOR = new AccessorBlock();
 	public static final RadiantTank RADIANT_TANK = new RadiantTank();
-	public static final BrazierOfHoarding BRAZIER_OF_HOARDING = new BrazierOfHoarding();
+	public static final Brazier BRAZIER_OF_HOARDING = new Brazier();
 
 	// Tiles
 	public static final RadiantResonatorTileEntity RADIANT_RESONATOR_TILE_ENTITY = new RadiantResonatorTileEntity();
@@ -64,6 +63,7 @@ public class BlockRegistry
 	//public static final MatrixStorageTileEntity MATRIX_STORAGE_TILE_ENTITY = new MatrixStorageTileEntity();
 	public static final MonitoringCrystalTileEntity MONITORING_CRYSTAL_TILE_ENTITY = new MonitoringCrystalTileEntity();
 	public static final RadiantTankTileEntity RADIANT_TANK_TILE_ENTITY = new RadiantTankTileEntity();
+	public static final BrazierTileEntity BRAZIER_OF_HOARDING_TILE_ENTITY = new BrazierTileEntity();
 
 	@SubscribeEvent
 	public static void onBlockRegister(RegistryEvent.Register<Block> event) {
@@ -122,7 +122,7 @@ public class BlockRegistry
 	}
 
 	public static void registerTileEntities() {
-		Arrays.asList(RADIANT_RESONATOR_TILE_ENTITY, /*MATRIX_CORE_TILE_ENTITY, MATRIX_REPOSITORY_TILE_ENTITY, */ ACCESSOR_TILE_ENTITY, RADIANT_CHEST_TILE_ENTITY, GEMCUTTERS_TABLE_TILE_ENTITY, RADIANT_CRAFTING_TABLE_TILE_ENTITY/*, MATRIX_STORAGE_TILE_ENTITY*/, RADIANT_TROVE_TILE_ENTITY, MONITORING_CRYSTAL_TILE_ENTITY, RADIANT_TANK_TILE_ENTITY).forEach((tile) -> {
+		Arrays.asList(RADIANT_RESONATOR_TILE_ENTITY, /*MATRIX_CORE_TILE_ENTITY, MATRIX_REPOSITORY_TILE_ENTITY, */ ACCESSOR_TILE_ENTITY, RADIANT_CHEST_TILE_ENTITY, GEMCUTTERS_TABLE_TILE_ENTITY, RADIANT_CRAFTING_TABLE_TILE_ENTITY/*, MATRIX_STORAGE_TILE_ENTITY*/, RADIANT_TROVE_TILE_ENTITY, MONITORING_CRYSTAL_TILE_ENTITY, RADIANT_TANK_TILE_ENTITY, BRAZIER_OF_HOARDING_TILE_ENTITY).forEach((tile) -> {
 			GameRegistry.registerTileEntity(tile.getClass(), new ResourceLocation(ArcaneArchives.MODID, tile.getName()));
 			ArcaneArchives.logger.info(String.format("Registered tile entity: %s", tile.getName()));
 		});

@@ -6,6 +6,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -13,13 +14,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class BrazierOfHoarding extends BlockTemplate
+public class Brazier extends BlockTemplate
 {
 
 	public static final String name = "brazier_of_hoarding";
 
-	public BrazierOfHoarding() {
-		super(name, Material.GLASS);
+	public Brazier () {
+		super(name, Material.IRON);
 		setLightLevel(16 / 16f);
 	}
 
@@ -39,5 +40,10 @@ public class BrazierOfHoarding extends BlockTemplate
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.RED + "" + TextFormatting.BOLD + I18n.format("arcanearchives.tooltip.notimplemented1"));
 		tooltip.add(TextFormatting.RED + "" + TextFormatting.ITALIC + I18n.format("arcanearchives.tooltip.notimplemented2"));
+	}
+
+	@Override
+	public BlockRenderLayer getRenderLayer () {
+		return BlockRenderLayer.CUTOUT;
 	}
 }
