@@ -92,7 +92,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable {
 		if (this.world != null && !this.world.isRemote && this.networkId != null && this.uuid == null) {
 			ServerNetwork network = getServerNetwork();
 			if (network != null) {
-				this.uuid = network.generateTileId();
+				this.uuid = network.generateTileUuid();
 			}
 		}
 	}

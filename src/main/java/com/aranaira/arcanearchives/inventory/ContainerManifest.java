@@ -70,22 +70,21 @@ public class ContainerManifest extends Container {
 	private int mYOffset;
 	private int mMinYOffset;
 
-	public ContainerManifest (EntityPlayer playerIn, boolean ServerSide) {
-		this.serverSide = ServerSide;
+	public ContainerManifest (EntityPlayer playerIn) {
+		this.serverSide = false; //ServerSide;
 		this.player = playerIn;
 		this.mYOffset = 0;
 
-		if (ServerSide) {
+		/*if (ServerSide) {
 			serverNetwork = NetworkHelper.getServerNetwork(playerIn.getUniqueID(), playerIn.world);
 			if (serverNetwork == null) {
 				handler = new ManifestItemHandler(new ManifestList());
 			} else {
 				handler = serverNetwork.getManifestHandler();
 			}
-		} else {
-			clientNetwork = NetworkHelper.getClientNetwork(this.player.getUniqueID());
-			handler = clientNetwork.getManifestHandler();
-		}
+		} else {*/
+		clientNetwork = NetworkHelper.getClientNetwork(this.player.getUniqueID());
+		handler = clientNetwork.getManifestHandler();
 	}
 
 	public void stepPositionUp () {

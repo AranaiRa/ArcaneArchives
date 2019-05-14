@@ -132,11 +132,11 @@ public class ContainerRadiantChest extends Container {
 			if (network != null && (player.ticksExisted - lastUpdated > 80)) {
 				MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
 				if (server != null) {
-					EntityPlayerMP player = server.getPlayerList().getPlayerByUUID(network.getUUID());
+					EntityPlayerMP player = server.getPlayerList().getPlayerByUUID(network.getUuid());
 					if (player != null) {
 						NBTTagCompound output = network.buildSynchroniseManifest();
 						if (output != null) {
-							PacketNetworks.Response packet = new PacketNetworks.Response(PacketNetworks.SynchroniseType.DATA, network.getUUID(), output);
+							PacketNetworks.Response packet = new PacketNetworks.Response(PacketNetworks.SynchroniseType.DATA, network.getUuid(), output);
 							NetworkHandler.CHANNEL.sendTo(packet, player);
 						}
 					}

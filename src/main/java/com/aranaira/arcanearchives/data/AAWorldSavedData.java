@@ -55,7 +55,7 @@ public class AAWorldSavedData extends WorldSavedData {
 		for (int i = 0; i < networkData.tagCount(); i++) {
 			NBTTagCompound data = networkData.getCompoundTagAt(i);
 			ServerNetwork network = ServerNetwork.fromNBT(data);
-			arcaneArchivesNetworks.put(network.getUUID(), network);
+			arcaneArchivesNetworks.put(network.getUuid(), network);
 		}
 	}
 
@@ -64,7 +64,7 @@ public class AAWorldSavedData extends WorldSavedData {
 		NBTTagList networkData = new NBTTagList();
 
 		for (ServerNetwork network : arcaneArchivesNetworks.values()) {
-			networkData.appendTag(network.serializeNBT());
+			networkData.appendTag(network.writeToSave());
 		}
 
 		tagCompound.setTag("networkData", networkData);

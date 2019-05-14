@@ -67,7 +67,7 @@ public class ServerTickHandler {
 
 				ite.tryGenerateUUID();
 
-				if (!network.NetworkContainsTile(ite)) {
+				if (!network.containsTile(ite)) {
 					network.addTile(ite);
 				}
 			}

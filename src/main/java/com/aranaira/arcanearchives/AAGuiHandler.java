@@ -76,7 +76,7 @@ public class AAGuiHandler implements IGuiHandler {
 			case TOME_OF_REQUISITION:
 				return new GUIBookContainer(new NetworkContainer(player));
 			case MANIFEST:
-				return new GUIManifest(player, new ContainerManifest(player, false));
+				return new GUIManifest(player, new ContainerManifest(player));
 		}
 
 		if (!(te instanceof AATileEntity)) {
