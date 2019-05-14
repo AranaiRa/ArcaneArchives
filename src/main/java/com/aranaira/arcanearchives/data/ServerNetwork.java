@@ -72,7 +72,9 @@ public class ServerNetwork {
 		return null;
 	}
 
-	// TODO: ???
+	/***
+	 * Static entrypoint used by AAWorldSavedData
+	 */
 	public static ServerNetwork fromNBT (NBTTagCompound data) {
 		ServerNetwork network = new ServerNetwork(null);
 		network.readFromSave(data);
