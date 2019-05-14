@@ -24,6 +24,7 @@ public class ComponentScintillatingInlayItem extends ItemTemplate
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
 	public EnumRarity getRarity(ItemStack stack) {
 		return EnumRarity.EPIC;
 	}

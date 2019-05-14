@@ -77,7 +77,7 @@ public class MatrixCrystalCore extends BlockDirectionalTemplate
 		/*TileEntity te = world.getTileEntity(pos);
 		if(te instanceof ImmanenceTileEntity)
 {
-			if(!((ImmanenceTileEntity) te).networkID.equals(player.getUniqueID())) return false;
+			if(!((ImmanenceTileEntity) te).networkId.equals(player.getUniqueID())) return false;
 			player.openGui(ArcaneArchives.instance, AAGuiHandler.TOME_OF_REQUISITION, world, pos.getX(), pos.getY(), pos.getZ());
 }
 		return true;*/

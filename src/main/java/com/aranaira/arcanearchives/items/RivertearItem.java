@@ -27,6 +27,7 @@ public class RivertearItem extends ItemTemplate
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
 	public EnumRarity getRarity(ItemStack stack) {
 		return EnumRarity.UNCOMMON;
 	}

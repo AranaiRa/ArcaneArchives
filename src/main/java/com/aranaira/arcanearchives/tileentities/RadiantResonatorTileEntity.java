@@ -24,7 +24,6 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 
 	public RadiantResonatorTileEntity() {
 		super("radiant_resonator_tile_entity");
-		immanenceDrain = 0;
 	}
 
 	@Override
@@ -34,10 +33,10 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 		ticks++;
 
 		// Only tick on the client side
-		if(world.isRemote || networkID == null || networkID.equals(NetworkHelper.INVALID)) return;
+		if(world.isRemote || networkId == null || networkId.equals(NetworkHelper.INVALID)) return;
 
 		// This will have to be updated to hive networks TODO
-		EntityPlayer player = world.getPlayerEntityByUUID(networkID);
+		EntityPlayer player = world.getPlayerEntityByUUID(networkId);
 
 		// Don't tick if the player isn't online
 		if(player == null) {
@@ -54,7 +53,7 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity
 		if(world.isAirBlock(pos.up())) {
 			if(growth < ticksRequired) {
 				growth++;
-				if(isDrainPaid) growth += bonusTicks;
+				//if(isDrainPaid) growth += bonusTicks;
 			} else {
 				growth = 0;
 				world.setBlockState(pos.up(), BlockRegistry.RAW_QUARTZ.getDefaultState(), 3);

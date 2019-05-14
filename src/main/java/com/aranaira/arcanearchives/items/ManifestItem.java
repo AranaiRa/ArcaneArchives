@@ -71,6 +71,7 @@ public class ManifestItem extends ItemTemplate
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
 	public EnumRarity getRarity(ItemStack stack) {
 		return EnumRarity.RARE;
 	}

@@ -41,7 +41,8 @@ public class AAWorldSavedData extends WorldSavedData
 		if(playerID == null || playerID == NetworkHelper.INVALID) return null;
 
 		if(!arcaneArchivesNetworks.containsKey(playerID)) {
-			arcaneArchivesNetworks.put(playerID, ServerNetwork.newNetwork(playerID).setParent(this));
+			arcaneArchivesNetworks.put(playerID, new ServerNetwork(playerID));
+			this.markDirty();
 		}
 		return arcaneArchivesNetworks.get(playerID);
 	}
@@ -53,8 +54,7 @@ public class AAWorldSavedData extends WorldSavedData
 		for(int i = 0; i < networkData.tagCount(); i++) {
 			NBTTagCompound data = networkData.getCompoundTagAt(i);
 			ServerNetwork network = ServerNetwork.fromNBT(data);
-			network.setParent(this);
-			arcaneArchivesNetworks.put(network.getPlayerID(), network);
+			arcaneArchivesNetworks.put(network.getUUID(), network);
 		}
 	}
 

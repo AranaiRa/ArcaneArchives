@@ -90,8 +90,7 @@ public class RadiantChest extends BlockTemplate
 		if(!worldIn.isRemote) {
 			TileEntity te = worldIn.getTileEntity(pos);
 			if(te instanceof RadiantChestTileEntity) {
-				ServerNetwork network = NetworkHelper.getServerNetwork(((RadiantChestTileEntity) te).networkID, worldIn);
-				if(network != null) network.triggerUpdate();
+				ServerNetwork network = NetworkHelper.getServerNetwork(((RadiantChestTileEntity) te).networkId, worldIn);
 
 				// This is never an IInventory
 				IItemHandler inv = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);

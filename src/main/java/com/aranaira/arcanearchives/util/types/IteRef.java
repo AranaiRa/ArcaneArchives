@@ -29,7 +29,7 @@ public class IteRef
 		this.pos = tile.getPos();
 		this.dimension = tile.dimension;
 		this.clazz = tile.getClass();
-		this.uuid = tile.tileID;
+		this.uuid = tile.uuid;
 		this.tile = new WeakReference<>(tile);
 	}
 
@@ -67,7 +67,7 @@ public class IteRef
 	}
 
 	public void updateTile (ImmanenceTileEntity tile) {
-		if (this.isValid() || tile.getPos() != this.pos || tile.dimension != this.dimension || !this.clazz.equals(tile.getClass()) || !this.uuid.equals(tile.tileID)) return;
+		if (this.isValid() || tile.getPos() != this.pos || tile.dimension != this.dimension || !this.clazz.equals(tile.getClass()) || !this.uuid.equals(tile.uuid)) return;
 
 		this.tile = new WeakReference<>(tile);
 	}
@@ -86,10 +86,10 @@ public class IteRef
 		return ite.isActive();
 	}
 
-	public int networkPriority() {
+	/*public int networkPriority() {
 		if(tile == null || tile.get() == null) return -999999999;
 
 		//noinspection ConstantConditions
 		return tile.get().networkPriority;
-	}
+	}*/
 }

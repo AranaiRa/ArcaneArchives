@@ -20,20 +20,20 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class RadiantTankItem extends ItemBlock
-{
-	public RadiantTankItem(Block block) {
+public class RadiantTankItem extends ItemBlock {
+	public RadiantTankItem (Block block) {
 		super(block);
 	}
 
 	@Override
-	public EnumRarity getRarity(ItemStack stack) {
+	@SuppressWarnings("deprecation")
+	public EnumRarity getRarity (ItemStack stack) {
 		return EnumRarity.EPIC;
 	}
 
 	@Nullable
 	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) {
+	public ICapabilityProvider initCapabilities (ItemStack stack, @Nullable NBTTagCompound nbt) {
 		if (!stack.isEmpty()) {
 			int capacity = RadiantTankTileEntity.BASE_CAPACITY;
 			if (nbt != null) {
@@ -46,13 +46,13 @@ public class RadiantTankItem extends ItemBlock
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		FluidStack fluid;
 
 		if (stack.hasTagCompound()) {
 			NBTTagCompound tag = stack.getTagCompound();
 			IFluidHandlerItem handler = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
-			if(handler instanceof FluidHandlerItemStack) {
+			if (handler instanceof FluidHandlerItemStack) {
 				FluidHandlerItemStack tank = (FluidHandlerItemStack) handler;
 				fluid = tank.getFluid();
 				if (fluid != null) {

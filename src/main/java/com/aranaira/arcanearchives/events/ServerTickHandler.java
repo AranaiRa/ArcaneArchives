@@ -37,7 +37,7 @@ public class ServerTickHandler
 				outgoingITE(ite);
 				ArcaneArchives.logger.debug(String.format("Tile entity with the class %s spent 30 ticks in the queue and is being discarded.", ite.getClass().getName()));
 			} else {
-				UUID networkId = ite.networkID;
+				UUID networkId = ite.networkId;
 				if(networkId == null || networkId.equals(NetworkHelper.INVALID)) {
 					ite.tick();
 					continue;
@@ -62,10 +62,10 @@ public class ServerTickHandler
 					}
 				}
 
-				ite.generateTileId();
+				ite.tryGenerateUUID();
 
 				if(!network.NetworkContainsTile(ite)) {
-					network.AddTileToNetwork(ite);
+					network.addTile(ite);
 				}
 			}
 

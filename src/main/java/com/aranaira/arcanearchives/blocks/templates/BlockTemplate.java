@@ -132,7 +132,7 @@ public class BlockTemplate extends Block implements IHasModel
 						ImmanenceTileEntity ite = (ImmanenceTileEntity) te;
 
 						UUID newId = placer.getUniqueID();
-						ite.SetNetworkID(newId);
+						ite.setNetworkId(newId);
 						ite.dimension = placer.dimension;
 					}
 
