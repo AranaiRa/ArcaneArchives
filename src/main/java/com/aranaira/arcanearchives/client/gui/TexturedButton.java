@@ -13,10 +13,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 public class TexturedButton extends GuiButton {
 	private static final ResourceLocation BUTTON_TEXTURES = new ResourceLocation("arcanearchives:textures/gui/buttons.png");
-	private static int[] TEXTURE_X_START = new int[]{0};
-	private static int[] TEXTURE_Y_START = new int[]{0};
-	private static int[] TEXTURE_HEIGHT  = new int[]{16};
-	private static int[] TEXTURE_WIDTH   = new int[]{16};
+	private static final int[] TEXTURE_X_START = new int[]{0};
+	private static final int[] TEXTURE_Y_START = new int[]{0};
+	private static final int[] TEXTURE_HEIGHT  = new int[]{16};
+	private static final int[] TEXTURE_WIDTH   = new int[]{16};
+	private static final float BUTTON_TEXTURE_TOTAL_SIZE = 16;
 
 	private int mTextureId;
 
@@ -44,7 +45,7 @@ public class TexturedButton extends GuiButton {
 			int w = TEXTURE_HEIGHT[mTextureId];
 			int h = TEXTURE_WIDTH[mTextureId];
 
-			this.drawTexturedModalRect(this.x, this.y, x, y, w, h);
+			drawModalRectWithCustomSizedTexture(this.x, this.y, x, y, w, h, BUTTON_TEXTURE_TOTAL_SIZE, BUTTON_TEXTURE_TOTAL_SIZE);
 		}
 	}
 }

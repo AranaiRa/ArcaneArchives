@@ -55,9 +55,9 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 	private static int mRefreshButtonWidth = 17;
 	private static int mRefreshButtonHeight = 14;
 	// initial offset of scroll nub
-	private static int mScrollBarTopOffset = 28;
+	private static int mScrollBarTopOffset = 29;
 	private static int mScrollBarBottomOffset = 191;
-	private static int mScrollBarLeftOffset = 177;
+	private static int mScrollBarLeftOffset = 178;
 	// offset and size of slot texture in #GUIBaseTextures
 	private static int mSlotTextureLeftOffset = 224;
 	private static int mSlotTextureSize = 18;
