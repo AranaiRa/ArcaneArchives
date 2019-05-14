@@ -38,9 +38,6 @@ public class ServerNetwork {
 	// Set of IDs of contained tiles
 	private Set<UUID> tileIdSet = new HashSet<>();
 
-	// Per-player handler
-	private ManifestItemHandler manifestHandler;
-
 	// Per-player values
 	private int totalCores = 0;
 	private int totalResonators = 0;
@@ -48,7 +45,6 @@ public class ServerNetwork {
 	// Initial set-up
 	public ServerNetwork (UUID id) {
 		uuid = id;
-		manifestHandler = new ManifestItemHandler(manifestItems);
 	}
 
 	/**
