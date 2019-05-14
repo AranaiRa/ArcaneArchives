@@ -12,6 +12,7 @@
         <stack item="arcanearchives:radiant_resonator">RadiantResonator</stack>
         <stack item="arcanearchives:radiant_tank">RadiantTank</stack>
         <stack item="arcanearchives:radiant_trove">RadiantTrove</stack>
+        <stack item="arcanearchives:raw_quartz">DecorativeBlocks:RawQuartzCluster</stack>
 
         <stack item="arcanearchives:item_component_containmentfield">ContainmentField</stack>
         <stack item="arcanearchives:item_letterofinvitation">LetterInvitation</stack>
@@ -46,6 +47,7 @@
             <p><stack item="arcanearchives:radiant_resonator"/> <link ref="RadiantResonator">Radiant Resonator</link></p>
             <p><stack item="arcanearchives:radiant_tank"/> <link ref="RadiantTank">Radiant Tank</link></p>
             <p><stack item="arcanearchives:radiant_trove"/> <link ref="RadiantTrove">Radiant Trove</link></p>
+            <p><stack item="arcanearchives:raw_quartz"/> <link ref="DecorativeBlocks:RawQuartzCluster">Raw Quartz Cluster</link></p>
         </section>
         <section>
             <page_title>
@@ -71,6 +73,7 @@
             <page_title>
                 <title>Concepts</title>
             </page_title>
+            <p><image src="arcanearchives:gui/guidebook/networks" tw="16" th="16" /> <link ref="Networks">Networks</link></p>
             <p><image src="arcanearchives:gui/guidebook/otherwhere" tw="16" th="16" /> <link ref="Otherwhere">Otherwhere</link></p>
         </section>
     </chapter>
@@ -83,7 +86,7 @@
             <p align="center"><stack item="arcanearchives:brazier_of_hoarding" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                A Brazier of Hoarding is an organization device that can act as a drop-off point to store items in your network. Braziers of Hoarding are also a light source.
+                A Brazier of Hoarding is an organization device that can act as a drop-off point to store items in your <link ref="Networks">Network</link>. Braziers of Hoarding are also a light source.
             </p>
             <p>
                 <stack item="arcanearchives:radiant_trove"/> Any items used on, or dropped on top of, a Brazier of Hoarding will be transported to a <link ref="RadiantTrove">Radiant Trove</link> that contains the item.
@@ -160,10 +163,24 @@
             <p align="center"><stack item="arcanearchives:radiant_lantern" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                Radiant Lanterns are a light source, and can be crafted at a <stack item="arcanearchives:gemcutters_table" /> <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                Radiant Lanterns are a light source.
             </p>
             <p>
                 <stack item="arcanearchives:gemcutters_table"/> Radiant Lanterns can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+            </p>
+            <horizontal_rule/>
+        </section>
+        <section id="RawQuartzCluster">
+            <page_title>
+                <title>Raw Quartz Cluster</title>
+            </page_title>
+            <p align="center"><stack item="arcanearchives:raw_quartz" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                Raw Quartz Clusters are a light source. They can be collected with a pick bearing the Silk Touch enchantment; otherwise breaking a Raw Quartz Cluster will return a piece of <link ref="RawQuartz">Raw Radiant Quartz</link>.
+            </p>
+            <p>
+                <stack item="arcanearchives:radiant_resonator" /> Raw Quartz Clusters are created over time on top of a <link ref="RadiantResonator">Radiant Resonator</link>.
             </p>
             <horizontal_rule/>
         </section>
@@ -439,7 +456,7 @@
             <p align="center"><stack item="arcanearchives:item_letterofinvitation" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                If another player uses a Letter of Invitation that you crafted, they are added to your network.
+                If another player uses a Letter of Invitation that you crafted, they are added to your <link ref="Networks">Network</link>.
             </p>
             <p>
                 <stack item="arcanearchives:item_manifest"/> When viewing a <link ref="Manifest">Manifest</link>, all placed Radiant Storage from any player in your network is visible.
@@ -471,7 +488,7 @@
             <p align="center"><stack item="arcanearchives:item_letterofresignation" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                A Letter of Resignation can be used to leave a hybrid network created with a <link ref="LetterInvitation">Letter of Invitation</link>.
+                A Letter of Resignation can be used to leave a <link ref="Networks">Hybrid Network</link> created with a <link ref="LetterInvitation">Letter of Invitation</link>.
             </p>
             <p>
                 <stack item="arcanearchives:item_manifest"/> When you leave a hybrid network, any Radiant Storage you placed is removed from the network, and will no longer be visible on a <link ref="Manifest">Manifest</link> by members of the network you left.
@@ -672,7 +689,7 @@
         </section>
         <section>
             <p>
-                <stack item="arcanearchives:radiant_resonator" /> Raw Radiant Quartz is created over time on top of a <link ref="RadiantResonator">Radiant Resonator</link>.
+                <stack item="arcanearchives:radiant_resonator" /> Raw Radiant Quartz is created over time on top of a <link ref="RadiantResonator">Radiant Resonator</link> in the form of a <link ref="DecorativeBlocks:RawQuartzCluster">Raw Quartz Cluster</link>.
             </p>
             <horizontal_rule/>
             <p italics="true">
@@ -811,6 +828,19 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Scintillating Inlay can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <horizontal_rule/>
+            <p italics="true">
+                ...Lore fragment TBD
+            </p>
+        </section>
+    </chapter>
+
+    <chapter id="Networks">
+        <section>
+            <page_title>
+                <title>Networks</title>
+            </page_title>
+            <p align="center"><image src="arcanearchives:gui/guidebook/networks" tw="16" th="16" scale="3.0"/></p>
             <horizontal_rule/>
             <p italics="true">
                 ...Lore fragment TBD
