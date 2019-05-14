@@ -15,9 +15,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @SuppressWarnings("unused")
-@Mod.EventBusSubscriber(modid= ArcaneArchives.MODID)
-public class RecipeLibrary
-{
+@Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
+public class RecipeLibrary {
 	public static GCTRecipe CUT_RADIANT_QUARTZ_RECIPE;
 	public static GCTRecipe MANIFEST_RECIPE;
 	public static GCTRecipe COMPONENT_CONTAINMENTFIELD_RECIPE;
@@ -35,7 +34,7 @@ public class RecipeLibrary
 	public static GCTRecipe MONITORING_CRYSTAL_RECIPE;
 	public static GCTRecipe SCEPTER_MANIPULATION_RECIPE;
 
-	public static void buildRecipes() {
+	public static void buildRecipes () {
 		COMPONENT_RADIANTDUST_RECIPE = GCTRecipeList.makeAndAddRecipe("radiantdust", new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 2), ItemRegistry.RAW_RADIANT_QUARTZ);
 
 		CUT_RADIANT_QUARTZ_RECIPE = GCTRecipeList.makeAndAddRecipe("cut_radiant_quartz", new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 1), new ItemStack(ItemRegistry.RAW_RADIANT_QUARTZ, 2));

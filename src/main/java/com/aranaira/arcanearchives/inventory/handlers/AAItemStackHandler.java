@@ -8,17 +8,16 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 
 @Deprecated
-public class AAItemStackHandler extends ItemStackHandler
-{
-	public AAItemStackHandler(int i) {
+public class AAItemStackHandler extends ItemStackHandler {
+	public AAItemStackHandler (int i) {
 		super(i);
 	}
 
 	@Override
-	public void setStackInSlot(int slot, @Nonnull ItemStack stack) {
+	public void setStackInSlot (int slot, @Nonnull ItemStack stack) {
 		Side side = FMLCommonHandler.instance().getEffectiveSide();
 
-		if(side == Side.CLIENT) {
+		if (side == Side.CLIENT) {
 			int i = 1;
 		}
 
@@ -27,13 +26,13 @@ public class AAItemStackHandler extends ItemStackHandler
 
 	@Nonnull
 	@Override
-	public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+	public ItemStack insertItem (int slot, @Nonnull ItemStack stack, boolean simulate) {
 		return super.insertItem(slot, stack, simulate);
 	}
 
 	@Override
 	@Nonnull
-	public ItemStack extractItem(int slot, int amount, boolean simulate) {
+	public ItemStack extractItem (int slot, int amount, boolean simulate) {
 		return super.extractItem(slot, amount, simulate);
 	}
 }

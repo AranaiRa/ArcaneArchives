@@ -23,37 +23,35 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class GemCuttersTable extends BlockDirectionalTemplate
-{
+public class GemCuttersTable extends BlockDirectionalTemplate {
 	public static final String name = "gemcutters_table";
 
-	public GemCuttersTable() {
+	public GemCuttersTable () {
 		super(name, Material.IRON);
 		setSize(2, 1, 1);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.device.gemcutterstable"));
 	}
 
 	@Override
-	public boolean hasOBJModel() {
+	public boolean hasOBJModel () {
 		return true;
 	}
 
 	@Override
 	// TODO: Is this called when accessors are broken?
-	public void breakBlock(World world, BlockPos pos, IBlockState state) {
+	public void breakBlock (World world, BlockPos pos, IBlockState state) {
 		TileEntity te = world.getTileEntity(pos);
-		if(te instanceof GemCuttersTableTileEntity) {
+		if (te instanceof GemCuttersTableTileEntity) {
 			IItemHandler inv = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 			DropHelper.dropInventoryItems(world, pos, inv);
 		}
@@ -62,36 +60,38 @@ public class GemCuttersTable extends BlockDirectionalTemplate
 	}
 
 	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+	public void onBlockPlacedBy (World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean causesSuffocation(IBlockState state) {
+	public boolean causesSuffocation (IBlockState state) {
 		return false;
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean isFullCube(IBlockState state) {
+	public boolean isFullCube (IBlockState state) {
 		return false;
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean isOpaqueCube(IBlockState state) {
+	public boolean isOpaqueCube (IBlockState state) {
 		return false;
 	}
 
 	@Override
-	public BlockRenderLayer getRenderLayer() {
+	public BlockRenderLayer getRenderLayer () {
 		return BlockRenderLayer.CUTOUT;
 	}
 
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if(worldIn.isRemote) return true;
+	public boolean onBlockActivated (World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if (worldIn.isRemote) {
+			return true;
+		}
 
 		playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.GEMCUTTERS_TABLE, worldIn, pos.getX(), pos.getY(), pos.getZ());
 
@@ -99,12 +99,12 @@ public class GemCuttersTable extends BlockDirectionalTemplate
 	}
 
 	@Override
-	public boolean hasTileEntity(IBlockState state) {
+	public boolean hasTileEntity (IBlockState state) {
 		return true;
 	}
 
 	@Override
-	public TileEntity createTileEntity(World world, IBlockState state) {
+	public TileEntity createTileEntity (World world, IBlockState state) {
 		return new GemCuttersTableTileEntity();
 	}
 }

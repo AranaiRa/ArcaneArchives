@@ -9,11 +9,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Config(modid = ArcaneArchives.MODID)
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
-public class ConfigHandler
-{
+public class ConfigHandler {
 	@SubscribeEvent
-	public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
-		if(event.getModID().equals(ArcaneArchives.MODID)) {
+	public static void onConfigChanged (ConfigChangedEvent.OnConfigChangedEvent event) {
+		if (event.getModID().equals(ArcaneArchives.MODID)) {
 			parseColours();
 		}
 	}

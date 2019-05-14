@@ -23,8 +23,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-public class ClientNetwork
-{
+public class ClientNetwork {
 	public ManifestList manifestItems = new ManifestList(new ArrayList<>());
 	private UUID playerId;
 	/* Updated data via packet */
@@ -41,49 +40,49 @@ public class ClientNetwork
 	private ManifestItemHandler manifestItemHandler = null;
 	//private TileList<ImmanenceTileEntity> mActualTiles = new TileList<>();
 
-	ClientNetwork(UUID id) {
+	ClientNetwork (UUID id) {
 		this.playerId = id;
 		this.manifestItemHandler = new ManifestItemHandler(manifestItems);
 	}
 
-	public int getTotalResonators() {
+	public int getTotalResonators () {
 		return totalResonators;
 	}
 
-	public int getTotalCores() {
+	public int getTotalCores () {
 		return totalCores;
 	}
 
-	public ManifestItemHandler getManifestHandler() {
+	public ManifestItemHandler getManifestHandler () {
 		return manifestItemHandler;
 	}
 
-	public ManifestList getManifestItems() {
+	public ManifestList getManifestItems () {
 		return manifestItems;
 	}
 
-	public int GetImmanence() {
+	public int GetImmanence () {
 		return mCurrentImmanence;
 	}
 
 	// TODO get this as a value form the server
-	public int CountTileEntities(Class clazz) {
+	public int CountTileEntities (Class clazz) {
 		return 0;
 	}
 
 	// TODO this needs to be passed from the server
-	public List<NonNullList<ItemStack>> GetItemsOnNetwork() {
+	public List<NonNullList<ItemStack>> GetItemsOnNetwork () {
 		return null;
 	}
 
 	// This requests a synchronise packet from the server
 	// but does not include the manifest info.
-	public void synchroniseData() {
+	public void synchroniseData () {
 		PacketNetworks.Request request = new PacketNetworks.Request(PacketNetworks.SynchroniseType.DATA, playerId);
 		NetworkHandler.CHANNEL.sendToServer(request);
 	}
 
-	public void synchroniseManifest() {
+	public void synchroniseManifest () {
 		PacketNetworks.Request request = new PacketNetworks.Request(PacketNetworks.SynchroniseType.MANIFEST, playerId);
 		NetworkHandler.CHANNEL.sendToServer(request);
 	}
@@ -93,17 +92,17 @@ public class ClientNetwork
 		synchroniseManifest();
 	}
 
-	public void deserializeManifest(NBTTagCompound tag) {
+	public void deserializeManifest (NBTTagCompound tag) {
 		manifestItems.clear();
 
 		NBTTagList list = tag.getTagList(NetworkTags.MANIFEST, 10);
 
-		for(NBTBase base : list) {
+		for (NBTBase base : list) {
 			NBTTagCompound itemEntry = (NBTTagCompound) base;
 			int dimension = itemEntry.getInteger(NetworkTags.DIMENSION);
 			List<ManifestEntry.ItemEntry> entries = new ArrayList<>();
 			NBTTagList entryList = itemEntry.getTagList(NetworkTags.ENTRIES, Constants.NBT.TAG_COMPOUND);
-			for(NBTBase entry : entryList) {
+			for (NBTBase entry : entryList) {
 				entries.add(ManifestEntry.ItemEntry.deserializeNBT((NBTTagCompound) entry));
 			}
 			ItemStack stack = LargeItemNBTUtil.readFromNBT(itemEntry);
@@ -118,9 +117,15 @@ public class ClientNetwork
 			int comp = turp1.getStack().getDisplayName().compareToIgnoreCase(turp2.getStack().getDisplayName());
 			boolean t1 = turp1.getDimension() == dim;
 			boolean t2 = turp2.getDimension() == dim;
-			if(comp != 0) return comp;
-			if(t1 == t2) return comp;
-			if(t1) return -1;
+			if (comp != 0) {
+				return comp;
+			}
+			if (t1 == t2) {
+				return comp;
+			}
+			if (t1) {
+				return -1;
+			}
 			return 1;
 		});
 
@@ -135,18 +140,20 @@ public class ClientNetwork
 	}
 
 	@SideOnly(Side.CLIENT)
-	public EntityPlayer getPlayer() {
+	public EntityPlayer getPlayer () {
 		return Minecraft.getMinecraft().player;
 	}
 
-	public void deserializeData(NBTTagCompound tag) {
+	public void deserializeData (NBTTagCompound tag) {
 		this.mCurrentImmanence = tag.getInteger(NetworkTags.IMMANENCE);
 		this.mTotalSpace = tag.getInteger(NetworkTags.TOTAL_SPACE);
 		this.mItemCount = tag.getInteger(NetworkTags.ITEM_COUNT);
 		this.pendingInvites.clear();
 
-		for(NBTBase nbt : tag.getTagList(NetworkTags.INVITES_PENDING, 10)) {
-			if(!(nbt instanceof NBTTagCompound)) continue;
+		for (NBTBase nbt : tag.getTagList(NetworkTags.INVITES_PENDING, 10)) {
+			if (!(nbt instanceof NBTTagCompound)) {
+				continue;
+			}
 
 			NBTTagCompound tag2 = (NBTTagCompound) nbt;
 			this.pendingInvites.put(tag2.getString(NetworkTags.INVITE_KEY), UUID.fromString(tag2.getString(NetworkTags.INVITE_VALUE)));
@@ -156,27 +163,27 @@ public class ClientNetwork
 		this.totalResonators = tag.getInteger(NetworkTags.TOTAL_RESONATORS);
 	}
 
-	public UUID getPlayerID() {
+	public UUID getPlayerID () {
 		return playerId;
 	}
 
 	// Okay the client probably needs this
-	public int GetItemCount() {
+	public int GetItemCount () {
 		return mItemCount;
 	}
 
 	// And this
-	public int GetTotalSpace() {
+	public int GetTotalSpace () {
 		return mTotalSpace;
 	}
 
 	// TODO
-	public List<ItemStack> GetAllItemsOnNetwork() {
+	public List<ItemStack> GetAllItemsOnNetwork () {
 		return null;
 	}
 
 	// TODO
-	public List<ItemStack> GetFilteredItems(String s) {
+	public List<ItemStack> GetFilteredItems (String s) {
 		return null;
 	}
 }

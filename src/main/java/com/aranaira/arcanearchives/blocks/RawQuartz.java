@@ -12,13 +12,12 @@ import net.minecraft.world.IBlockAccess;
 
 import javax.annotation.Nonnull;
 
-public class RawQuartz extends BlockTemplate
-{
+public class RawQuartz extends BlockTemplate {
 
 	//public static final PropertyDirection DIRECTION = PropertyDirection.create("facing");
 	public static final String name = "raw_quartz";
 
-	public RawQuartz() {
+	public RawQuartz () {
 		super(name, Material.ROCK);
 		setLightLevel(16 / 16f);
 		setHardness(1.4f);
@@ -28,30 +27,30 @@ public class RawQuartz extends BlockTemplate
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean isFullCube(IBlockState state) {
+	public boolean isFullCube (IBlockState state) {
 		return false;
 	}
 
 	@Override
 	@Nonnull
 	@SuppressWarnings("deprecation")
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+	public AxisAlignedBB getBoundingBox (IBlockState state, IBlockAccess source, BlockPos pos) {
 		return new AxisAlignedBB(0.2, 0.0, 0.2, 0.8, 1.0, 0.8);
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean isOpaqueCube(IBlockState state) {
+	public boolean isOpaqueCube (IBlockState state) {
 		return false;
 	}
 
 	@Override
-	public void getDrops(@Nonnull NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, @Nonnull IBlockState state, int fortune) {
+	public void getDrops (@Nonnull NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, @Nonnull IBlockState state, int fortune) {
 		drops.add(new ItemStack(ItemRegistry.RAW_RADIANT_QUARTZ, 1));
 	}
 
 	@Override
-	public boolean hasOBJModel() {
+	public boolean hasOBJModel () {
 		return true;
 	}
 }

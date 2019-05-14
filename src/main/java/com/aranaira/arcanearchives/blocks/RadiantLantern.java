@@ -23,12 +23,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class RadiantLantern extends BlockDirectionalTemplate
-{
+public class RadiantLantern extends BlockDirectionalTemplate {
 
 	public static final String NAME = "radiant_lantern";
 
-	public RadiantLantern() {
+	public RadiantLantern () {
 		super(NAME, Material.GLASS);
 		setLightLevel(16 / 16f);
 		setHardness(0.3f);
@@ -36,78 +35,78 @@ public class RadiantLantern extends BlockDirectionalTemplate
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.device.radiantlantern"));
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public IBlockState withRotation(IBlockState state, Rotation rot) {
+	public IBlockState withRotation (IBlockState state, Rotation rot) {
 		return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
+	public IBlockState withMirror (IBlockState state, Mirror mirrorIn) {
 		return state.withProperty(FACING, mirrorIn.mirror(state.getValue(FACING)));
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean isFullCube(IBlockState state) {
+	public boolean isFullCube (IBlockState state) {
 		return false;
 	}
 
 	@Override
 	@Nonnull
 	@SuppressWarnings("deprecation")
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+	public AxisAlignedBB getBoundingBox (IBlockState state, IBlockAccess source, BlockPos pos) {
 		return new AxisAlignedBB(0.35, 0.0, 0.35, 0.65, 1.0, 0.65);
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+	public BlockFaceShape getBlockFaceShape (IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
 		return BlockFaceShape.UNDEFINED;
 	}
 
 	@Nullable
 	@Override
 	@SuppressWarnings("deprecation")
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
+	public AxisAlignedBB getCollisionBoundingBox (IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
 		return NULL_AABB;
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean isOpaqueCube(IBlockState state) {
+	public boolean isOpaqueCube (IBlockState state) {
 		return false;
 	}
 
 	@Override
-	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
+	public IBlockState getStateForPlacement (World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
 		return this.getDefaultState().withProperty(FACING, facing);
 	}
 
 	@Override
-	public int getMetaFromState(IBlockState state) {
+	public int getMetaFromState (IBlockState state) {
 		return state.getValue(FACING).getIndex();
 	}
 
 	@Override
-	public IBlockState getStateFromMeta(int meta) {
+	public IBlockState getStateFromMeta (int meta) {
 		IBlockState iblockstate = this.getDefaultState();
 		iblockstate = iblockstate.withProperty(FACING, EnumFacing.byIndex(meta));
 		return iblockstate;
 	}
 
 	@Override
-	protected BlockStateContainer createBlockState() {
+	protected BlockStateContainer createBlockState () {
 		return new BlockStateContainer(this, FACING);
 	}
 
 	@Override
-	public boolean hasOBJModel() {
+	public boolean hasOBJModel () {
 		return true;
 	}
 }

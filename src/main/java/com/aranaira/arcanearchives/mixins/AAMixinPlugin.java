@@ -17,17 +17,17 @@ public class AAMixinPlugin implements IMixinConfigPlugin {
 
 	@Override
 	public String getRefMapperConfig () {
-        if (Launch.blackboard.get("fml.deobfuscatedEnvironment") == Boolean.TRUE) {
-            return null;
-        }
+		if (Launch.blackboard.get("fml.deobfuscatedEnvironment") == Boolean.TRUE) {
+			return null;
+		}
 
-        return "mixins.arcanearchives.refmap.json";
+		return "mixins.arcanearchives.refmap.json";
 	}
 
 	@Override
 	public boolean shouldApplyMixin (String targetClassName, String mixinClassName) {
 		return !targetClassName.startsWith("net.minecraft.client") || MixinEnvironment.getCurrentEnvironment().getSide() == MixinEnvironment.Side.CLIENT;
-    }
+	}
 
 	@Override
 	public void acceptTargets (Set<String> myTargets, Set<String> otherTargets) {

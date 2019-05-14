@@ -33,15 +33,14 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
-public class Keybinds
-{
+public class Keybinds {
 	public static final String ARCARC_GROUP = "arcanearchives.gui.keygroup";
 	public static final String ARCARC_BINDS = "arcanearchives.gui.keybinds";
 	public static KeyBinding manifestKey = null;
 
 	public static boolean skip = false;
 
-	public static void initKeybinds() {
+	public static void initKeybinds () {
 		KeyBinding kb = new KeyBinding(ARCARC_BINDS + ".manifest", 0, ARCARC_GROUP);
 		ClientRegistry.registerKeyBinding(kb);
 		manifestKey = kb;
@@ -68,22 +67,22 @@ public class Keybinds
 
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
-	public static void onKeyInputManifest(InputEvent.KeyInputEvent event) {
+	public static void onKeyInputManifest (InputEvent.KeyInputEvent event) {
 		Minecraft mc = Minecraft.getMinecraft();
-		if(manifestKey.isKeyDown() && mc.inGameHasFocus) {
+		if (manifestKey.isKeyDown() && mc.inGameHasFocus) {
 			boolean foundManifest = false;
-			if(ConfigHandler.ManifestPresence) {
-				for(int i = 0; i < 36; i++) {
+			if (ConfigHandler.ManifestPresence) {
+				for (int i = 0; i < 36; i++) {
 					ItemStack item = mc.player.inventory.getStackInSlot(i);
-					if(item.getItem() == ItemRegistry.MANIFEST) {
+					if (item.getItem() == ItemRegistry.MANIFEST) {
 						foundManifest = true;
 						break;
 					}
 				}
 			}
 
-			if(foundManifest || !ConfigHandler.ManifestPresence) {
-				if(mc.player.isSneaking()) {
+			if (foundManifest || !ConfigHandler.ManifestPresence) {
+				if (mc.player.isSneaking()) {
 					LineHandler.clearChests(mc.player.dimension);
 				} else {
 					ManifestItem.openManifest(mc.player.world, mc.player);
@@ -108,8 +107,12 @@ public class Keybinds
 						boolean addedValues = false;
 						for (int i = 0; i < handler.getSlots(); i++) {
 							ManifestEntry entry = handler.getManifestEntryInSlot(i);
-							if (entry == null) continue;
-							if (mc.player.dimension != entry.dimension) continue;
+							if (entry == null) {
+								continue;
+							}
+							if (mc.player.dimension != entry.dimension) {
+								continue;
+							}
 
 							List<Vec3d> visPositions = entry.getVecPositions();
 							visPositions.forEach(LineHandler::addLine);

@@ -11,30 +11,29 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class MatrixRepositoryTileEntity extends ImmanenceTileEntity
-{
+public class MatrixRepositoryTileEntity extends ImmanenceTileEntity {
 
 
-	public MatrixRepositoryTileEntity() {
+	public MatrixRepositoryTileEntity () {
 		super("matrix_repository_tile_entity");
 		// immanenceDrain = 0; // ConfigHandler.values.iRepositoryMatrixDrain;
 		// maxItems = ConfigHandler.values.iRepositoryMatrixItemCap;
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+	public NBTTagCompound writeToNBT (NBTTagCompound compound) {
 
 		return super.writeToNBT(compound);
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound compound) {
+	public void readFromNBT (NBTTagCompound compound) {
 
 		super.readFromNBT(compound);
 	}
 
 	@Override
-	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
+	public boolean shouldRefresh (World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
 		return (oldState.getBlock() != newSate.getBlock());
 	}
 

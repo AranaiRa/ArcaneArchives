@@ -10,8 +10,7 @@ import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
 
-public class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCompound>
-{
+public class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCompound> {
 	private static int COUNT_MULTIPLIER_PER_UPGRADE = 1;
 	private static int BASE_COUNT = 64 * 64;
 	public static int MAX_UPGRADES = 9;
@@ -21,7 +20,7 @@ public class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCo
 	private ItemStack reference = ItemStack.EMPTY;
 	private final Runnable updater;
 
-	public TroveItemHandler(Runnable updater) {
+	public TroveItemHandler (Runnable updater) {
 		this.updater = updater;
 	}
 
@@ -30,13 +29,13 @@ public class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCo
 	}
 
 	@Override
-	public int getSlots() {
+	public int getSlots () {
 		return 2;
 	}
 
 	@Nonnull
 	@Override
-	public ItemStack getStackInSlot(int slot) {
+	public ItemStack getStackInSlot (int slot) {
 		if (slot == 0) {
 			ItemStack result = reference.copy();
 			result.setCount(Math.min(this.count, result.getMaxStackSize()));
@@ -61,7 +60,7 @@ public class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCo
 
 	@Nonnull
 	@Override
-	public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+	public ItemStack insertItem (int slot, @Nonnull ItemStack stack, boolean simulate) {
 		if (ItemComparison.areStacksEqualIgnoreSize(reference, stack)) {
 			int thisCount = stack.getCount();
 			int diff = 0;
@@ -71,7 +70,9 @@ public class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCo
 			}
 
 			if (simulate) {
-				if (diff == 0) return ItemStack.EMPTY;
+				if (diff == 0) {
+					return ItemStack.EMPTY;
+				}
 				ItemStack result = stack.copy();
 				result.setCount(diff);
 				return result;
@@ -94,22 +95,32 @@ public class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCo
 	}
 
 	public ItemStack getItemCurrent () {
-		if (count == 0) return ItemStack.EMPTY;
+		if (count == 0) {
+			return ItemStack.EMPTY;
+		}
 
 		return this.reference;
 	}
 
 	@Nonnull
 	@Override
-	public ItemStack extractItem(int slot, int amount, boolean simulate) {
-		if(amount > reference.getMaxStackSize()) amount = reference.getMaxStackSize();
+	public ItemStack extractItem (int slot, int amount, boolean simulate) {
+		if (amount > reference.getMaxStackSize()) {
+			amount = reference.getMaxStackSize();
+		}
 
-		if(this.count < amount) amount = this.count;
+		if (this.count < amount) {
+			amount = this.count;
+		}
 
 		ItemStack result = getStackInSlot(0);
 
-		if(amount < result.getCount()) result.setCount(amount);
-		if(simulate) return result;
+		if (amount < result.getCount()) {
+			result.setCount(amount);
+		}
+		if (simulate) {
+			return result;
+		}
 
 		this.count -= amount;
 		update();
@@ -118,12 +129,12 @@ public class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCo
 	}
 
 	@Override
-	public int getSlotLimit(int slot) {
+	public int getSlotLimit (int slot) {
 		return reference.getMaxStackSize();
 	}
 
 	@Override
-	public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+	public boolean isItemValid (int slot, @Nonnull ItemStack stack) {
 		return ItemComparison.areStacksEqualIgnoreSize(reference, stack);
 	}
 
@@ -153,26 +164,26 @@ public class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCo
 		return false;
 	}
 
-	public int getCount() {
+	public int getCount () {
 		return count;
 	}
 
-	public ItemStack getItem() {
+	public ItemStack getItem () {
 		return this.reference;
 	}
 
-	public void setItem(ItemStack reference) {
+	public void setItem (ItemStack reference) {
 		this.reference = reference.copy();
 		this.reference.setCount(1);
 		update();
 	}
 
-	public boolean isEmpty() {
+	public boolean isEmpty () {
 		return count == 0;
 	}
 
 	@Override
-	public NBTTagCompound serializeNBT() {
+	public NBTTagCompound serializeNBT () {
 		NBTTagCompound result = new NBTTagCompound();
 		result.setInteger(Tags.COUNT, this.count);
 		result.setTag(Tags.REFERENCE, this.reference.serializeNBT());
@@ -181,7 +192,7 @@ public class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCo
 	}
 
 	@Override
-	public void deserializeNBT(NBTTagCompound nbt) {
+	public void deserializeNBT (NBTTagCompound nbt) {
 		this.count = nbt.getInteger(Tags.COUNT);
 		this.reference = new ItemStack(nbt.getCompoundTag(Tags.REFERENCE));
 		this.upgrades = nbt.getInteger(Tags.UPGRADES);
@@ -192,7 +203,7 @@ public class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCo
 		public static final String REFERENCE = "REFERENCE";
 		public static final String UPGRADES = "UPGRADES";
 
-		public Tags() {
+		public Tags () {
 		}
 	}
 }

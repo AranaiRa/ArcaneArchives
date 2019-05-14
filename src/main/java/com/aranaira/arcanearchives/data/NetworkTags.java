@@ -1,7 +1,6 @@
 package com.aranaira.arcanearchives.data;
 
-public class NetworkTags
-{
+public class NetworkTags {
 	// Manifest
 	public static final String ENTRIES = "entries";
 	public static final String DIMENSION = "dimension";

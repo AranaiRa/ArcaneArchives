@@ -19,30 +19,29 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class MatrixStorage extends BlockTemplate
-{
+public class MatrixStorage extends BlockTemplate {
 
 	public static final String name = "matrix_storage";
 
-	public MatrixStorage() {
+	public MatrixStorage () {
 		super(name, Material.GLASS);
 		setLightLevel(16 / 16f);
 		setSize(1, 3, 1);
 	}
 
 	@Override
-	public boolean hasOBJModel() {
+	public boolean hasOBJModel () {
 		return true;
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean isOpaqueCube(IBlockState state) {
+	public boolean isOpaqueCube (IBlockState state) {
 		return false;
 	}
 
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public boolean onBlockActivated (World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		return false;
 		/*RadiantChest.RemoveChestLines(pos);
 
@@ -53,18 +52,18 @@ public class MatrixStorage extends BlockTemplate
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.RED + "" + TextFormatting.BOLD + I18n.format("arcanearchives.tooltip.notimplemented1"));
 		tooltip.add(TextFormatting.RED + "" + TextFormatting.ITALIC + I18n.format("arcanearchives.tooltip.notimplemented2"));
 	}
 
 	@Override
-	public boolean hasTileEntity(IBlockState state) {
+	public boolean hasTileEntity (IBlockState state) {
 		return true;
 	}
 
 	@Override
-	public TileEntity createTileEntity(World world, IBlockState state) {
+	public TileEntity createTileEntity (World world, IBlockState state) {
 		return new MatrixStorageTileEntity();
 	}
 }

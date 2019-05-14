@@ -2,8 +2,7 @@ package com.aranaira.arcanearchives.util.types;
 
 import java.util.function.BiPredicate;
 
-public class Filter<T>
-{
+public class Filter<T> {
 	private T term = null;
 	private BiPredicate<T, T> comparator = null;
 

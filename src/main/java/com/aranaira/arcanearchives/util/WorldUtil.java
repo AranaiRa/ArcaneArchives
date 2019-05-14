@@ -10,23 +10,22 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import javax.annotation.Nullable;
 
-public class WorldUtil
-{
+public class WorldUtil {
 	@Nullable
-	public static <T> T getTileEntity(Class<T> clazz, int dimension, BlockPos pos) {
+	public static <T> T getTileEntity (Class<T> clazz, int dimension, BlockPos pos) {
 		return getTileEntity(clazz, dimension, pos, false);
 	}
 
 	@Nullable
-	public static <T> T getTileEntity(Class<T> clazz, int dimension, BlockPos pos, boolean forceChunkLoad) {
+	public static <T> T getTileEntity (Class<T> clazz, int dimension, BlockPos pos, boolean forceChunkLoad) {
 		MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-		if(server == null) {
+		if (server == null) {
 			return null;
 		}
 
 		World world = DimensionManager.getWorld(dimension);
 
-		if(world == null) {
+		if (world == null) {
 			return null;
 		}
 
@@ -35,24 +34,24 @@ public class WorldUtil
 
 	@Nullable
 	@SuppressWarnings("unchecked")
-	public static <T> T getTileEntity(Class<T> clazz, IBlockAccess world, BlockPos pos, boolean forceChunkLoad) {
-		if(world == null || pos == null) {
+	public static <T> T getTileEntity (Class<T> clazz, IBlockAccess world, BlockPos pos, boolean forceChunkLoad) {
+		if (world == null || pos == null) {
 			return null;
 		}
 
-		if(world instanceof World) {
-			if(!((World) world).isBlockLoaded(pos) && !forceChunkLoad) {
+		if (world instanceof World) {
+			if (!((World) world).isBlockLoaded(pos) && !forceChunkLoad) {
 				return null;
 			}
 		}
 
 		TileEntity te = world.getTileEntity(pos);
 
-		if(te == null) {
+		if (te == null) {
 			return null;
 		}
 
-		if(clazz.isInstance(te)) {
+		if (clazz.isInstance(te)) {
 			return (T) te;
 		}
 
@@ -60,11 +59,11 @@ public class WorldUtil
 	}
 
 	@Nullable
-	public static <T> T getTileEntity(Class<T> clazz, IBlockAccess world, BlockPos pos) {
+	public static <T> T getTileEntity (Class<T> clazz, IBlockAccess world, BlockPos pos) {
 		return getTileEntity(clazz, world, pos, false);
 	}
 
-	public static boolean isChunkLoaded(World world, BlockPos pos) {
+	public static boolean isChunkLoaded (World world, BlockPos pos) {
 		return world.isBlockLoaded(pos);
 	}
 }

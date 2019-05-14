@@ -20,12 +20,11 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class RadiantCraftingTable extends BlockTemplate
-{
+public class RadiantCraftingTable extends BlockTemplate {
 
 	public static final String NAME = "radiant_crafting_table";
 
-	public RadiantCraftingTable() {
+	public RadiantCraftingTable () {
 		super(NAME, Material.GLASS);
 		setLightLevel(16 / 16f);
 		setHardness(1.7f);
@@ -33,24 +32,24 @@ public class RadiantCraftingTable extends BlockTemplate
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.device.radiantcraftingtable"));
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean isFullCube(IBlockState state) {
+	public boolean isFullCube (IBlockState state) {
 		return false;
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean isOpaqueCube(IBlockState state) {
+	public boolean isOpaqueCube (IBlockState state) {
 		return false;
 	}
 
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public boolean onBlockActivated (World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		// ArcaneArchives.logger.info("TRYING TO OPEN GUI");
 		playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.RADIANT_CRAFTING_TABLE, worldIn, pos.getX(), pos.getY(), pos.getZ());
 
@@ -58,17 +57,17 @@ public class RadiantCraftingTable extends BlockTemplate
 	}
 
 	@Override
-	public boolean hasTileEntity(IBlockState state) {
+	public boolean hasTileEntity (IBlockState state) {
 		return true;
 	}
 
 	@Override
-	public TileEntity createTileEntity(World world, IBlockState state) {
+	public TileEntity createTileEntity (World world, IBlockState state) {
 		return new RadiantCraftingTableTileEntity();
 	}
 
 	@Override
-	public boolean hasOBJModel() {
+	public boolean hasOBJModel () {
 		return true;
 	}
 }

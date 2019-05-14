@@ -19,8 +19,7 @@ import javax.annotation.Nullable;
  * The only direct descendents of this that are not ITEs are the Gem Cutter's Table (as it
  * does not use immanence), and the Accessor Block.
  */
-public class AATileEntity extends TileEntity
-{
+public class AATileEntity extends TileEntity {
 	public String name;
 	public Size size;
 
@@ -34,7 +33,7 @@ public class AATileEntity extends TileEntity
 	/**
 	 * @return The current size associated with this tile entity. See `setSize`.
 	 */
-	public Size getSize() {
+	public Size getSize () {
 		return this.size;
 	}
 
@@ -48,7 +47,7 @@ public class AATileEntity extends TileEntity
 	 *                to calculate accessor block positions, and to determine if the block
 	 *                can actually be placed.
 	 */
-	public void setSize(Size newSize) {
+	public void setSize (Size newSize) {
 		this.size = newSize;
 	}
 
@@ -57,7 +56,7 @@ public class AATileEntity extends TileEntity
 	 * name that it was registered with. Note that this simply returns that part and does
 	 * not include the modid.
 	 */
-	public String getName() {
+	public String getName () {
 		return name;
 	}
 
@@ -65,7 +64,7 @@ public class AATileEntity extends TileEntity
 	 * @param name The name to be used as the registry name path and also to refer
 	 *             to the specific type of tile entity.
 	 */
-	public void setName(String name) {
+	public void setName (String name) {
 		this.name = name;
 	}
 
@@ -77,9 +76,9 @@ public class AATileEntity extends TileEntity
 	 * The default value for this function is EnumFacing.WEST; this may change in
 	 * the future.
 	 */
-	public EnumFacing getFacing() {
+	public EnumFacing getFacing () {
 		IBlockState state = world.getBlockState(getPos());
-		if(state.getBlock() instanceof BlockTemplate) {
+		if (state.getBlock() instanceof BlockTemplate) {
 			return ((BlockTemplate) state.getBlock()).getFacing(world, pos);
 		}
 
@@ -91,7 +90,7 @@ public class AATileEntity extends TileEntity
 	 * This function is called when individual accessor blocks are broken by the
 	 * AccessorTileEntity.
 	 */
-	public void breakBlock() {
+	public void breakBlock () {
 		breakBlock(null, true);
 	}
 
@@ -110,19 +109,21 @@ public class AATileEntity extends TileEntity
 	 *                not being destroyed (if this was trigger from the break of
 	 *                one of the accessors).
 	 */
-	public void breakBlock(@Nullable IBlockState state, boolean harvest) {
-		if(breaking) return;
+	public void breakBlock (@Nullable IBlockState state, boolean harvest) {
+		if (breaking) {
+			return;
+		}
 
 		breaking = true;
 
 		Block block = (state == null) ? world.getBlockState(getPos()).getBlock() : state.getBlock();
 		EnumFacing facing = null;
 
-		if(block instanceof BlockDirectionalTemplate && state != null) {
+		if (block instanceof BlockDirectionalTemplate && state != null) {
 			facing = state.getValue(BlockDirectionalTemplate.FACING);
 		}
-		if(block instanceof BlockTemplate) {
-			for(BlockPos point : ((BlockTemplate) block).calculateAccessors(world, getPos(), facing)) {
+		if (block instanceof BlockTemplate) {
+			for (BlockPos point : ((BlockTemplate) block).calculateAccessors(world, getPos(), facing)) {
 				world.removeTileEntity(point);
 				world.setBlockState(point, Blocks.AIR.getDefaultState());
 			}
@@ -139,12 +140,14 @@ public class AATileEntity extends TileEntity
 	 *
 	 * @return Returns true by default.
 	 */
-	public boolean isActive() {
+	public boolean isActive () {
 		return true;
 	}
 
-	public void defaultServerSideUpdate() {
-		if(world == null || world.isRemote) return;
+	public void defaultServerSideUpdate () {
+		if (world == null || world.isRemote) {
+			return;
+		}
 
 		IBlockState state = world.getBlockState(getPos());
 		world.notifyBlockUpdate(getPos(), state, state, 8);

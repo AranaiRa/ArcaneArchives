@@ -17,11 +17,10 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PasteBinHelper
-{
+public class PasteBinHelper {
 	private static final String api_dev_key = "b3dd7c6a1d559ea3b6c53e6e143955bc";
 
-	public static String PostToPasteBin(String s) {
+	public static String PostToPasteBin (String s) {
 		try {
 			/*
 			URL url = new URL("https://pastebin.com/api/api_post.php");
@@ -53,13 +52,15 @@ public class PasteBinHelper
 			HttpResponse response = httpclient.execute(httppost);
 			HttpEntity entity = response.getEntity();
 
-			if(entity != null) {
+			if (entity != null) {
 				InputStream instream = entity.getContent();
 				try {
 					BufferedReader reader = new BufferedReader(new InputStreamReader(instream));
 					StringBuilder stringBuilder = new StringBuilder();
 					String line = null;
-					while((line = reader.readLine()) != null) stringBuilder.append(line);
+					while ((line = reader.readLine()) != null) {
+						stringBuilder.append(line);
+					}
 
 					return stringBuilder.toString();
 				} finally {
@@ -76,20 +77,20 @@ public class PasteBinHelper
 
 	//Read a string from pastebin, s will be the last bit of the url.
 	//Example https://pastebin.com/raw/FTLHDhcF it would take in the FTLHDhcf
-	public static String ReadFromPasteBin(String s) {
+	public static String ReadFromPasteBin (String s) {
 		HttpClient httpclient = HttpClients.createDefault();
 
 		try {
 			HttpResponse response = httpclient.execute(new HttpPost("https://pastebin.com/raw/" + s));
 			HttpEntity entity = response.getEntity();
 
-			if(entity != null) {
+			if (entity != null) {
 				InputStream instream = entity.getContent();
 				try {
 					BufferedReader reader = new BufferedReader(new InputStreamReader(instream));
 					StringBuilder stringBuilder = new StringBuilder();
 					String line = null;
-					while((line = reader.readLine()) != null) {
+					while ((line = reader.readLine()) != null) {
 						stringBuilder.append(line);
 					}
 

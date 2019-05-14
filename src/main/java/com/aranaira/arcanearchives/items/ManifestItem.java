@@ -24,26 +24,27 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class ManifestItem extends ItemTemplate
-{
+public class ManifestItem extends ItemTemplate {
 	public static final String NAME = "item_manifest";
 
-	public ManifestItem() {
+	public ManifestItem () {
 		super(NAME);
 		setMaxStackSize(1);
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-		if(!worldIn.isRemote) return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
+	public ActionResult<ItemStack> onItemRightClick (World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+		if (!worldIn.isRemote) {
+			return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
+		}
 
 		openManifest(worldIn, playerIn);
 
 		return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
 	}
 
-	public static void openManifest(World worldIn, EntityPlayer playerIn) {
-		if(playerIn.isSneaking()) {
+	public static void openManifest (World worldIn, EntityPlayer playerIn) {
+		if (playerIn.isSneaking()) {
 			LineHandler.clearChests(playerIn.dimension);
 		} else {
 			ClientNetwork network = NetworkHelper.getClientNetwork(playerIn.getUniqueID());
@@ -55,7 +56,7 @@ public class ManifestItem extends ItemTemplate
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.manifest"));
 		String additional = "";
 		if (Keybinds.manifestKey.getKeyCode() != 0) {
@@ -72,7 +73,7 @@ public class ManifestItem extends ItemTemplate
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public EnumRarity getRarity(ItemStack stack) {
+	public EnumRarity getRarity (ItemStack stack) {
 		return EnumRarity.RARE;
 	}
 }

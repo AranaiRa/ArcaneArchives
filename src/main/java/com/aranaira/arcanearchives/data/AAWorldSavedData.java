@@ -16,31 +16,32 @@ import java.util.UUID;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class AAWorldSavedData extends WorldSavedData
-{
+public class AAWorldSavedData extends WorldSavedData {
 	public static final String ID = "Archane-Archives-Network";
 
 	private Map<UUID, ServerNetwork> arcaneArchivesNetworks = new HashMap<>();
 
 	// It REALLY is used.
 	@SuppressWarnings("unused")
-	public AAWorldSavedData(String id) {
+	public AAWorldSavedData (String id) {
 		super(id);
 	}
 
-	public AAWorldSavedData() {
+	public AAWorldSavedData () {
 		super(ID);
 	}
 
-	public void clearServerMap() {
+	public void clearServerMap () {
 		arcaneArchivesNetworks.clear();
 	}
 
 	@Nullable
-	public ServerNetwork getNetwork(@Nullable UUID playerID) {
-		if(playerID == null || playerID == NetworkHelper.INVALID) return null;
+	public ServerNetwork getNetwork (@Nullable UUID playerID) {
+		if (playerID == null || playerID == NetworkHelper.INVALID) {
+			return null;
+		}
 
-		if(!arcaneArchivesNetworks.containsKey(playerID)) {
+		if (!arcaneArchivesNetworks.containsKey(playerID)) {
 			arcaneArchivesNetworks.put(playerID, new ServerNetwork(playerID));
 			this.markDirty();
 		}
@@ -48,10 +49,10 @@ public class AAWorldSavedData extends WorldSavedData
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound tagCompound) {
+	public void readFromNBT (NBTTagCompound tagCompound) {
 		NBTTagList networkData = tagCompound.getTagList("networkData", 10);
 
-		for(int i = 0; i < networkData.tagCount(); i++) {
+		for (int i = 0; i < networkData.tagCount(); i++) {
 			NBTTagCompound data = networkData.getCompoundTagAt(i);
 			ServerNetwork network = ServerNetwork.fromNBT(data);
 			arcaneArchivesNetworks.put(network.getUUID(), network);
@@ -59,10 +60,10 @@ public class AAWorldSavedData extends WorldSavedData
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
+	public NBTTagCompound writeToNBT (NBTTagCompound tagCompound) {
 		NBTTagList networkData = new NBTTagList();
 
-		for(ServerNetwork network : arcaneArchivesNetworks.values()) {
+		for (ServerNetwork network : arcaneArchivesNetworks.values()) {
 			networkData.appendTag(network.serializeNBT());
 		}
 

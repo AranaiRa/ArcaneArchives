@@ -25,11 +25,10 @@ import java.util.Random;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class MatrixCrystalCore extends BlockDirectionalTemplate
-{
+public class MatrixCrystalCore extends BlockDirectionalTemplate {
 	public static final String name = "matrix_crystal_core";
 
-	public MatrixCrystalCore() {
+	public MatrixCrystalCore () {
 		super(name, Material.ROCK);
 		setLightLevel(16 / 16f);
 		setPlaceLimit(1);
@@ -38,40 +37,40 @@ public class MatrixCrystalCore extends BlockDirectionalTemplate
 	}
 
 	@Override
-	public boolean hasOBJModel() {
+	public boolean hasOBJModel () {
 		return true;
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean causesSuffocation(IBlockState state) {
+	public boolean causesSuffocation (IBlockState state) {
 		return false;
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean isFullCube(IBlockState state) {
+	public boolean isFullCube (IBlockState state) {
 		return false;
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean isOpaqueCube(IBlockState state) {
+	public boolean isOpaqueCube (IBlockState state) {
 		return false;
 	}
 
 	@Override
-	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+	public void updateTick (World worldIn, BlockPos pos, IBlockState state, Random rand) {
 		super.updateTick(worldIn, pos, state, rand);
 	}
 
 	@Override
-	public BlockRenderLayer getRenderLayer() {
+	public BlockRenderLayer getRenderLayer () {
 		return BlockRenderLayer.CUTOUT;
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+	public boolean onBlockActivated (World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
 		return false;
 
 		/*TileEntity te = world.getTileEntity(pos);
@@ -85,18 +84,18 @@ public class MatrixCrystalCore extends BlockDirectionalTemplate
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.RED + "" + TextFormatting.BOLD + I18n.format("arcanearchives.tooltip.notimplemented1"));
 		tooltip.add(TextFormatting.RED + "" + TextFormatting.ITALIC + I18n.format("arcanearchives.tooltip.notimplemented2"));
 	}
 
 	@Override
-	public boolean hasTileEntity(IBlockState state) {
+	public boolean hasTileEntity (IBlockState state) {
 		return true;
 	}
 
 	@Override
-	public TileEntity createTileEntity(World world, IBlockState state) {
+	public TileEntity createTileEntity (World world, IBlockState state) {
 		return new MatrixCoreTileEntity();
 	}
 }

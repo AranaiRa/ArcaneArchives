@@ -3,8 +3,8 @@ package com.aranaira.arcanearchives.integration.astralsorcery;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import hellfirepvp.astralsorcery.common.base.WellLiquefaction;
 import hellfirepvp.astralsorcery.common.lib.BlocksAS;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidRegistry;
 
 import java.awt.*;
 

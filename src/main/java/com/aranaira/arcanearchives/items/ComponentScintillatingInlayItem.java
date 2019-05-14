@@ -10,22 +10,21 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ComponentScintillatingInlayItem extends ItemTemplate
-{
+public class ComponentScintillatingInlayItem extends ItemTemplate {
 	public static final String NAME = "item_component_scintillatinginlay";
 
-	public ComponentScintillatingInlayItem() {
+	public ComponentScintillatingInlayItem () {
 		super(NAME);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.component.scintillatinginlay"));
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public EnumRarity getRarity(ItemStack stack) {
+	public EnumRarity getRarity (ItemStack stack) {
 		return EnumRarity.EPIC;
 	}
 }

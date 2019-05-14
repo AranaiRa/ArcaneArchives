@@ -8,15 +8,14 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 
 import javax.annotation.Nonnull;
 
-public abstract class InventoryCraftingItemHandler<T extends TileEntity, V extends IItemHandlerModifiable> extends InventoryCrafting
-{
+public abstract class InventoryCraftingItemHandler<T extends TileEntity, V extends IItemHandlerModifiable> extends InventoryCrafting {
 	private final int length;
 	private final Container eventHandler;
 	private final V parent;
 	private final T tile;
 	private boolean doNotCallUpdates;
 
-	public InventoryCraftingItemHandler(Container eventHandler, V parent, T tile, int width, int height) {
+	public InventoryCraftingItemHandler (Container eventHandler, V parent, T tile, int width, int height) {
 		super(eventHandler, width, height);
 
 		this.tile = tile;
@@ -26,56 +25,62 @@ public abstract class InventoryCraftingItemHandler<T extends TileEntity, V exten
 		this.doNotCallUpdates = false;
 	}
 
-	public String getCommandSenderName() {
+	public String getCommandSenderName () {
 		return "container.crafting";
-	}	@Override
-	public int getSizeInventory() {
+	}
+
+	@Override
+	public int getSizeInventory () {
 		return length;
 	}
 
 	@Nonnull
-	public ItemStack getStackInSlotOnClosing(int index) {
+	public ItemStack getStackInSlotOnClosing (int index) {
 		return ItemStack.EMPTY;
-	}	@Override
-	public boolean isEmpty() {
-		for(int i = 0; i < this.parent.getSlots(); i++) {
+	}
+
+	@Override
+	public boolean isEmpty () {
+		for (int i = 0; i < this.parent.getSlots(); i++) {
 			ItemStack slot = this.parent.getStackInSlot(i);
-			if(!slot.isEmpty()) return false;
+			if (!slot.isEmpty()) {
+				return false;
+			}
 		}
 		return true;
 	}
 
-	public void setDoNotCallUpdates(boolean doNotCallUpdates) {
+	public void setDoNotCallUpdates (boolean doNotCallUpdates) {
 		this.doNotCallUpdates = doNotCallUpdates;
-	}	@Nonnull
+	}
+
+	@Nonnull
 	@Override
-	public ItemStack getStackInSlot(int index) {
+	public ItemStack getStackInSlot (int index) {
 		return index >= this.getSizeInventory() ? ItemStack.EMPTY : this.parent.getStackInSlot(index);
 	}
 
 
-
 	@Override
-	public boolean hasCustomName() {
+	public boolean hasCustomName () {
 		return false;
 	}
 
 
-
 	@Nonnull
 	@Override
-	public ItemStack decrStackSize(int index, int count) {
-		if(!this.getStackInSlot(index).isEmpty()) {
+	public ItemStack decrStackSize (int index, int count) {
+		if (!this.getStackInSlot(index).isEmpty()) {
 			ItemStack itemstack;
 
-			if(this.getStackInSlot(index).getCount() <= count) {
+			if (this.getStackInSlot(index).getCount() <= count) {
 				itemstack = this.getStackInSlot(index);
 				this.setInventorySlotContents(index, ItemStack.EMPTY);
 				return itemstack;
 			} else {
 				itemstack = this.getStackInSlot(index).splitStack(count);
 
-				if(this.getStackInSlot(index).getCount() == 0) {
+				if (this.getStackInSlot(index).getCount() == 0) {
 					this.setInventorySlotContents(index, ItemStack.EMPTY);
 				}
 
@@ -88,24 +93,23 @@ public abstract class InventoryCraftingItemHandler<T extends TileEntity, V exten
 	}
 
 	@Override
-	public void setInventorySlotContents(int index, @Nonnull ItemStack stack) {
+	public void setInventorySlotContents (int index, @Nonnull ItemStack stack) {
 		this.parent.setStackInSlot(index, stack);
 		onCraftMatrixChanged();
 	}
 
 	@Override
-	public void markDirty() {
+	public void markDirty () {
 		this.tile.markDirty();
 	}
 
 	@Override
-	public void clear() {
+	public void clear () {
 	}
 
 
-
-	public void onCraftMatrixChanged() {
-		if(!doNotCallUpdates) {
+	public void onCraftMatrixChanged () {
+		if (!doNotCallUpdates) {
 			this.eventHandler.onCraftMatrixChanged(this);
 		}
 	}

@@ -35,8 +35,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
-public class BlockTemplate extends Block implements IHasModel
-{
+public class BlockTemplate extends Block implements IHasModel {
 	public Size size;
 	private int placeLimit = -1;
 	private Class<? extends AATileEntity> entityClass;
@@ -49,7 +48,7 @@ public class BlockTemplate extends Block implements IHasModel
 	 * @param name       The name of the block, used for translation key and registry name
 	 * @param materialIn The material of the block
 	 */
-	public BlockTemplate(String name, Material materialIn) {
+	public BlockTemplate (String name, Material materialIn) {
 		super(materialIn);
 		setTranslationKey(name);
 		setRegistryName(new ResourceLocation(ArcaneArchives.MODID, name));
@@ -57,11 +56,11 @@ public class BlockTemplate extends Block implements IHasModel
 		setHarvestLevel("pickaxe", 0);
 	}
 
-	public ItemBlock getItemBlock() {
+	public ItemBlock getItemBlock () {
 		return itemBlock;
 	}
 
-	public void setItemBlock(ItemBlock itemBlock) {
+	public void setItemBlock (ItemBlock itemBlock) {
 		this.itemBlock = itemBlock;
 
 		assert this.getRegistryName() != null;
@@ -69,46 +68,46 @@ public class BlockTemplate extends Block implements IHasModel
 		this.itemBlock.setRegistryName(this.getRegistryName());
 	}
 
-	public ITextComponent getNameComponent() {
+	public ITextComponent getNameComponent () {
 		return new TextComponentTranslation(String.format("%s.name", getTranslationKey()));
 	}
 
-	public Class<? extends AATileEntity> getEntityClass() {
+	public Class<? extends AATileEntity> getEntityClass () {
 		return this.entityClass;
 	}
 
-	public void setEntityClass(Class<? extends AATileEntity> clazz) {
+	public void setEntityClass (Class<? extends AATileEntity> clazz) {
 		this.entityClass = clazz;
 	}
 
-	public int getPlaceLimit() {
+	public int getPlaceLimit () {
 		return placeLimit;
 	}
 
-	public void setPlaceLimit(int newPlaceLimit) {
+	public void setPlaceLimit (int newPlaceLimit) {
 		placeLimit = newPlaceLimit;
 	}
 
-	public void setSize(int w, int h, int l) {
+	public void setSize (int w, int h, int l) {
 		size = new Size(w, h, l);
 	}
 
-	public boolean hasOBJModel() {
+	public boolean hasOBJModel () {
 		return false;
 	}
 
 	@Override
-	public void registerModels() {
-		if(Item.getItemFromBlock(this) != Items.AIR) {
+	public void registerModels () {
+		if (Item.getItemFromBlock(this) != Items.AIR) {
 			ArcaneArchives.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory");
 		}
 	}
 
 	@Override
-	public void breakBlock(World world, BlockPos pos, IBlockState state) {
-		if(hasAccessors() && !world.isRemote) {
+	public void breakBlock (World world, BlockPos pos, IBlockState state) {
+		if (hasAccessors() && !world.isRemote) {
 			TileEntity te = world.getTileEntity(pos);
-			if(te instanceof AATileEntity) {
+			if (te instanceof AATileEntity) {
 				((AATileEntity) te).breakBlock(state, false);
 			}
 		}
@@ -116,19 +115,19 @@ public class BlockTemplate extends Block implements IHasModel
 	}
 
 	@Override
-	public void onBlockPlacedBy(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityLivingBase placer, @Nonnull ItemStack stack) {
+	public void onBlockPlacedBy (@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityLivingBase placer, @Nonnull ItemStack stack) {
 		super.onBlockPlacedBy(world, pos, state, placer, stack);
 
-		if(!world.isRemote) {
+		if (!world.isRemote) {
 			TileEntity te = world.getTileEntity(pos);
 
-			if(te instanceof AATileEntity) {
-				if(placer instanceof FakePlayer) {
+			if (te instanceof AATileEntity) {
+				if (placer instanceof FakePlayer) {
 					ArcaneArchives.logger.error(String.format("TileEntity placed by FakePlayer at %d,%d,%d is invalid and not linked to the network.", pos.getX(), pos.getY(), pos.getZ()));
 				} else // TODO: HANDLE IF THIS IS NOT A PLAYER -- COULD BE NULL?
 				{
 					// If it's a network tile entity
-					if(te instanceof ImmanenceTileEntity) {
+					if (te instanceof ImmanenceTileEntity) {
 						ImmanenceTileEntity ite = (ImmanenceTileEntity) te;
 
 						UUID newId = placer.getUniqueID();
@@ -143,11 +142,11 @@ public class BlockTemplate extends Block implements IHasModel
 			}
 
 			// The item block has already taken care of to make sure that the points can be replaced.
-			if(this.hasAccessors()) {
-				for(BlockPos point : calculateAccessors(world, pos)) {
+			if (this.hasAccessors()) {
+				for (BlockPos point : calculateAccessors(world, pos)) {
 					world.setBlockState(point, BlockRegistry.ACCESSOR.getDefaultState());
 					TileEntity ate = world.getTileEntity(point);
-					if(ate != null) {
+					if (ate != null) {
 						((AccessorTileEntity) ate).setParent(pos);
 					} else {
 						// TODO: Include more information
@@ -158,35 +157,39 @@ public class BlockTemplate extends Block implements IHasModel
 		}
 	}
 
-	public Size getSize() {
-		if(size == null) return new Size(0, 0, 0);
+	public Size getSize () {
+		if (size == null) {
+			return new Size(0, 0, 0);
+		}
 		return size;
 	}
 
-	public void setSize(Size newSize) {
+	public void setSize (Size newSize) {
 		size = newSize;
 	}
 
-	public boolean hasAccessors() {
+	public boolean hasAccessors () {
 		return size != null && size.hasAccessors();
 	}
 
-	public List<BlockPos> calculateAccessors(World world, BlockPos pos) {
+	public List<BlockPos> calculateAccessors (World world, BlockPos pos) {
 		return calculateAccessors(world, pos, null);
 	}
 
 	// This always includes the parent location
-	public List<BlockPos> calculateAccessors(World world, BlockPos pos, @Nullable EnumFacing facing) {
+	public List<BlockPos> calculateAccessors (World world, BlockPos pos, @Nullable EnumFacing facing) {
 		Size size = getSize();
 
-		if(facing == null) facing = getFacing(world, pos);
+		if (facing == null) {
+			facing = getFacing(world, pos);
+		}
 
 		EnumFacing curOffset = EnumFacing.fromAngle(facing.getHorizontalAngle() - ((size.width == size.length) ? 90 : 180));
 
 		BlockPos start = pos;
 		BlockPos stop;
 
-		if(size.width == 2) {
+		if (size.width == 2) {
 			stop = pos.offset(curOffset, 1);
 		} else {
 			int steps = (size.width - 1) / 2;
@@ -195,7 +198,7 @@ public class BlockTemplate extends Block implements IHasModel
 			start = pos.offset(curOffset.getOpposite(), steps);
 		}
 
-		if(size.length == 2) {
+		if (size.length == 2) {
 			stop = stop.offset(facing, 1);
 		} else {
 			int steps = (size.length - 1) / 2;
@@ -205,7 +208,7 @@ public class BlockTemplate extends Block implements IHasModel
 		}
 
 		// for height, we move up the required number of steps;
-		for(int i = 1; i < size.height; i++) {
+		for (int i = 1; i < size.height; i++) {
 			stop = stop.up();
 		}
 
@@ -216,9 +219,9 @@ public class BlockTemplate extends Block implements IHasModel
 	}
 
 	@Nonnull
-	public EnumFacing getFacing(World world, BlockPos pos) {
+	public EnumFacing getFacing (World world, BlockPos pos) {
 		IBlockState state = world.getBlockState(pos);
-		if(state.getBlock() instanceof BlockDirectionalTemplate) {
+		if (state.getBlock() instanceof BlockDirectionalTemplate) {
 			return state.getValue(BlockDirectionalTemplate.FACING);
 		} else {
 			return EnumFacing.WEST;
@@ -226,8 +229,8 @@ public class BlockTemplate extends Block implements IHasModel
 	}
 
 	@Override
-	protected BlockStateContainer createBlockState() {
-		if(hasTileEntity(getDefaultState())) {
+	protected BlockStateContainer createBlockState () {
+		if (hasTileEntity(getDefaultState())) {
 			return new ExtendedBlockState(this, new IProperty[]{}, new IUnlistedProperty[]{Properties.AnimationProperty});
 		}
 

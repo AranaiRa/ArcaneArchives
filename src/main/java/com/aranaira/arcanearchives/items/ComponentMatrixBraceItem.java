@@ -10,22 +10,21 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ComponentMatrixBraceItem extends ItemTemplate
-{
+public class ComponentMatrixBraceItem extends ItemTemplate {
 	public static final String NAME = "item_component_matrixbrace";
 
-	public ComponentMatrixBraceItem() {
+	public ComponentMatrixBraceItem () {
 		super(NAME);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.component.matrixbrace"));
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public EnumRarity getRarity(ItemStack stack) {
+	public EnumRarity getRarity (ItemStack stack) {
 		return EnumRarity.UNCOMMON;
 	}
 }

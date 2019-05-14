@@ -36,7 +36,8 @@ public abstract class AbstractLayeredGuiContainer extends GuiContainer {
 	 * @param mouseX current mouse X position
 	 * @param mouseY current mouse Y position
 	 */
-	protected void drawBackgroundContents (int mouseX, int mouseY) {}
+	protected void drawBackgroundContents (int mouseX, int mouseY) {
+	}
 
 	/**
 	 * Stuff drawn here will be drawn in front of the {@link net.minecraft.inventory.Slot}s
@@ -44,7 +45,8 @@ public abstract class AbstractLayeredGuiContainer extends GuiContainer {
 	 * @param mouseX current mouse X position
 	 * @param mouseY current mouse Y position
 	 */
-	protected void drawForegroundContents (int mouseX, int mouseY) {}
+	protected void drawForegroundContents (int mouseX, int mouseY) {
+	}
 
 	/**
 	 * Stuff drawn here will be drawn in front of everything else, at the Top of the world
@@ -52,7 +54,8 @@ public abstract class AbstractLayeredGuiContainer extends GuiContainer {
 	 * @param mouseX current mouse X position
 	 * @param mouseY current mouse Y position
 	 */
-	protected void drawTopLevelElements (int mouseX, int mouseY) {}
+	protected void drawTopLevelElements (int mouseX, int mouseY) {
+	}
 
 	// ================ start of internal gubbins that make this class do its job =============================
 	@Override

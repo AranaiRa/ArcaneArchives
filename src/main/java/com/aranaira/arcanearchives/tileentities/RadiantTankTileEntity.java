@@ -15,8 +15,7 @@ import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 
 import javax.annotation.Nonnull;
 
-public class RadiantTankTileEntity extends ImmanenceTileEntity
-{
+public class RadiantTankTileEntity extends ImmanenceTileEntity {
 	public static final int BASE_CAPACITY = Fluid.BUCKET_VOLUME * 16;
 	public static int MAX_UPGRADES = 10;
 	private final FluidTank inventory = new FluidTank(BASE_CAPACITY);
@@ -24,12 +23,14 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity
 
 	public boolean wasCreativeDrop = false;
 
-	public RadiantTankTileEntity() {
+	public RadiantTankTileEntity () {
 		super("radianttank");
 	}
 
-	public void update() {
-		if(world.isRemote) return;
+	public void update () {
+		if (world.isRemote) {
+			return;
+		}
 
 		defaultServerSideUpdate();
 	}
@@ -40,7 +41,7 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity
 
 	@Override
 	@Nonnull
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+	public NBTTagCompound writeToNBT (NBTTagCompound compound) {
 		super.writeToNBT(compound);
 		compound.setInteger("upgrades", upgrades);
 		compound.setTag(Tags.HANDLER_ITEM, this.inventory.writeToNBT(new NBTTagCompound()));
@@ -49,7 +50,7 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound compound) {
+	public void readFromNBT (NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		this.upgrades = compound.getInteger("upgrades");
 		validateCapacity();
@@ -57,7 +58,7 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity
 		validateCapacity();
 	}
 
-	public int getUpgrades() {
+	public int getUpgrades () {
 		return upgrades;
 	}
 
@@ -75,13 +76,13 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity
 		return tag;
 	}
 
-	public FluidTank getInventory() {
+	public FluidTank getInventory () {
 		return inventory;
 	}
 
 	@Override
 	@Nonnull
-	public SPacketUpdateTileEntity getUpdatePacket() {
+	public SPacketUpdateTileEntity getUpdatePacket () {
 		NBTTagCompound compound = writeToNBT(new NBTTagCompound());
 
 		return new SPacketUpdateTileEntity(pos, 0, compound);
@@ -93,25 +94,27 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity
 	}
 
 	@Override
-	public NBTTagCompound getUpdateTag() {
+	public NBTTagCompound getUpdateTag () {
 		return writeToNBT(new NBTTagCompound());
 	}
 
 	@Override
-	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+	public void onDataPacket (NetworkManager net, SPacketUpdateTileEntity pkt) {
 		readFromNBT(pkt.getNbtCompound());
 		super.onDataPacket(net, pkt);
 	}
 
 	@Override
-	public boolean hasCapability(@Nonnull Capability<?> capability, EnumFacing facing) {
-		if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) return true;
+	public boolean hasCapability (@Nonnull Capability<?> capability, EnumFacing facing) {
+		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+			return true;
+		}
 		return super.hasCapability(capability, facing);
 	}
 
 	@Override
-	public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing facing) {
-		if(capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+	public <T> T getCapability (@Nonnull Capability<T> capability, EnumFacing facing) {
+		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
 			return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(inventory);
 		}
 		return super.getCapability(capability, facing);
@@ -133,7 +136,7 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity
 	public static class Tags {
 		public static final String HANDLER_ITEM = "handler_item";
 
-		private Tags() {
+		private Tags () {
 		}
 	}
 }

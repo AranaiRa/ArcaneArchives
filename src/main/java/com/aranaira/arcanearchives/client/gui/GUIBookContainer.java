@@ -15,8 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GUIBookContainer extends GuiContainer
-{
+public class GUIBookContainer extends GuiContainer {
 	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/requisition_items.png");
 	private final int ImageHeight = 256, ImageWidth = 256, ImageScale = 256;
 	// TODO: This could cause problems if the class is ever loaded in a server context without the Minecraft class
@@ -47,7 +46,7 @@ public class GUIBookContainer extends GuiContainer
 
 	private NetworkContainer container;
 
-	public GUIBookContainer(NetworkContainer container) {
+	public GUIBookContainer (NetworkContainer container) {
 
 		super(container);
 
@@ -57,7 +56,7 @@ public class GUIBookContainer extends GuiContainer
 	}
 
 	@Override
-	public void initGui() {
+	public void initGui () {
 		super.initGui();
 
 		buttonList.clear();
@@ -78,7 +77,7 @@ public class GUIBookContainer extends GuiContainer
 	}
 
 	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+	public void drawScreen (int mouseX, int mouseY, float partialTicks) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.enableColorMaterial();
 
@@ -95,12 +94,15 @@ public class GUIBookContainer extends GuiContainer
 		String temp = fontRenderer.trimStringToWidth(SearchText, 6 * 15, true);
 
 		//Decides what to display if the player has typed something in the search bar.
-		if(SearchText.equals("")) fontRenderer.drawString("Search", guiLeft + 46, 20 + guiTop, 0x000000);
-		else fontRenderer.drawString(temp, guiLeft + 46, 20 + guiTop, 0x000000);
+		if (SearchText.equals("")) {
+			fontRenderer.drawString("Search", guiLeft + 46, 20 + guiTop, 0x000000);
+		} else {
+			fontRenderer.drawString(temp, guiLeft + 46, 20 + guiTop, 0x000000);
+		}
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+	protected void drawGuiContainerBackgroundLayer (float partialTicks, int mouseX, int mouseY) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.enableColorMaterial();
 		this.mc.getTextureManager().bindTexture(GUITextures);
@@ -109,9 +111,9 @@ public class GUIBookContainer extends GuiContainer
 	}
 
 	@Override
-	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+	protected void mouseClicked (int mouseX, int mouseY, int mouseButton) throws IOException {
 
-		if(mouseButton == 0) {
+		if (mouseButton == 0) {
 			//Checks Text Box Bounds
 			isEnteringText = mouseX > guiLeft + 46 && mouseX < guiLeft + 46 + 88 && mouseY > guiTop + 20 && mouseY < guiTop + 30;
 		}
@@ -120,37 +122,43 @@ public class GUIBookContainer extends GuiContainer
 	}
 
 	@Override
-	protected void keyTyped(char typedChar, int keyCode) {
+	protected void keyTyped (char typedChar, int keyCode) {
 		//If the user is currently entering text into the search bar.
-		if(isEnteringText) {
+		if (isEnteringText) {
 			//Backspace
-			if(keyCode == 14) {
-				if(SearchText.length() > 0) SearchText = SearchText.substring(0, SearchText.length() - 1);
+			if (keyCode == 14) {
+				if (SearchText.length() > 0) {
+					SearchText = SearchText.substring(0, SearchText.length() - 1);
+				}
 			}
 			//Escape and Enter
-			else if(keyCode == 1 || keyCode == 28) {
+			else if (keyCode == 1 || keyCode == 28) {
 				isEnteringText = false;
 			}
 			//Anything else.
 			else {
-				if(Character.isLetterOrDigit(typedChar)) SearchText += typedChar;
-				else if(typedChar == ' ') SearchText += typedChar;
+				if (Character.isLetterOrDigit(typedChar)) {
+					SearchText += typedChar;
+				} else if (typedChar == ' ') {
+					SearchText += typedChar;
+				}
 			}
 			container.SetSearchString(SearchText);
-		} else if (keyCode == 1 || keyCode == this.mc.gameSettings.keyBindInventory.getKeyCode())
+		} else if (keyCode == 1 || keyCode == this.mc.gameSettings.keyBindInventory.getKeyCode()) {
 			Minecraft.getMinecraft().player.closeScreen();
+		}
 	}
 
 	@Override
-	public void onGuiClosed() {
+	public void onGuiClosed () {
 		container.onContainerClosed(mc.player);
 		super.onGuiClosed();
 	}
 
 	@Override
-	public void updateScreen() {
+	public void updateScreen () {
 		//Sets the GUI Buttons to be usable.
-		for(GuiButton button : buttonList) {
+		for (GuiButton button : buttonList) {
 			button.visible = true;
 		}
 
@@ -160,7 +168,7 @@ public class GUIBookContainer extends GuiContainer
 
 	@SideOnly(Side.CLIENT)
 	static class GenericButton extends GuiButton {
-		public GenericButton(int x, int y, int width, int height, String text) {
+		public GenericButton (int x, int y, int width, int height, String text) {
 			super(1, x, y, width, height, text);
 		}
 	}

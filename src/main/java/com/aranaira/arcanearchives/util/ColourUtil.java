@@ -1,7 +1,6 @@
 package com.aranaira.arcanearchives.util;
 
-public class ColourUtil
-{
+public class ColourUtil {
 	public static ColourLight parseColour (int colour, int light) {
 		return new ColourLight(colour, light);
 	}

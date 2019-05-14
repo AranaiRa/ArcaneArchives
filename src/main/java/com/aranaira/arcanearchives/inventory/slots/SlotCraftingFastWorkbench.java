@@ -15,13 +15,12 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
  * <p>
  * Basically it ju
  */
-public class SlotCraftingFastWorkbench extends SlotCrafting
-{
+public class SlotCraftingFastWorkbench extends SlotCrafting {
 	private final EntityPlayer player;
 	private final ContainerRadiantCraftingTable containerCraftingStation;
 	private final InventoryCraftingPersistent craftMatrixPersistent;
 
-	public SlotCraftingFastWorkbench(ContainerRadiantCraftingTable containerCraftingStation, EntityPlayer player, InventoryCraftingPersistent craftingInventory, IInventory inventoryIn, int slotIndex, int xPosition, int yPosition) {
+	public SlotCraftingFastWorkbench (ContainerRadiantCraftingTable containerCraftingStation, EntityPlayer player, InventoryCraftingPersistent craftingInventory, IInventory inventoryIn, int slotIndex, int xPosition, int yPosition) {
 		super(player, craftingInventory, inventoryIn, slotIndex, xPosition, yPosition);
 		this.containerCraftingStation = containerCraftingStation;
 		this.craftMatrixPersistent = craftingInventory;
@@ -29,8 +28,8 @@ public class SlotCraftingFastWorkbench extends SlotCrafting
 	}
 
 	@Override
-	public ItemStack decrStackSize(int amount) {
-		if(this.getHasStack()) {
+	public ItemStack decrStackSize (int amount) {
+		if (this.getHasStack()) {
 			this.amountCrafted += Math.min(amount, this.getStack().getCount());
 		}
 
@@ -38,8 +37,8 @@ public class SlotCraftingFastWorkbench extends SlotCrafting
 	}
 
 	@Override
-	protected void onCrafting(ItemStack stack) {
-		if(this.amountCrafted > 0) {
+	protected void onCrafting (ItemStack stack) {
+		if (this.amountCrafted > 0) {
 			stack.onCrafting(this.player.world, this.player, this.amountCrafted);
 			containerCraftingStation.saveLastRecipe();
 			FMLCommonHandler.instance().firePlayerCraftingEvent(this.player, stack, craftMatrix);
@@ -49,7 +48,7 @@ public class SlotCraftingFastWorkbench extends SlotCrafting
 	}
 
 	@Override
-	public ItemStack onTake(EntityPlayer thePlayer, ItemStack stack) {
+	public ItemStack onTake (EntityPlayer thePlayer, ItemStack stack) {
 		this.onCrafting(stack);
 		net.minecraftforge.common.ForgeHooks.setCraftingPlayer(thePlayer);
 		NonNullList<ItemStack> nonnulllist = containerCraftingStation.getRemainingItems();
@@ -57,17 +56,17 @@ public class SlotCraftingFastWorkbench extends SlotCrafting
 
 		craftMatrixPersistent.setDoNotCallUpdates(true);
 
-		for(int i = 0; i < nonnulllist.size(); ++i) {
+		for (int i = 0; i < nonnulllist.size(); ++i) {
 			ItemStack itemstack = this.craftMatrix.getStackInSlot(i);
 			ItemStack itemstack1 = nonnulllist.get(i);
 
-			if(!itemstack.isEmpty()) {
+			if (!itemstack.isEmpty()) {
 				this.craftMatrix.decrStackSize(i, 1);
 				itemstack = this.craftMatrix.getStackInSlot(i);
 			}
 
-			if(!itemstack1.isEmpty()) {
-				if(itemstack.isEmpty()) {
+			if (!itemstack1.isEmpty()) {
+				if (itemstack.isEmpty()) {
 					this.craftMatrix.setInventorySlotContents(i, itemstack1);
 				} else if (ItemStack.areItemsEqual(itemstack, itemstack1) && ItemStack.areItemStackTagsEqual(itemstack, itemstack1)) {
 					itemstack1.grow(itemstack.getCount());
