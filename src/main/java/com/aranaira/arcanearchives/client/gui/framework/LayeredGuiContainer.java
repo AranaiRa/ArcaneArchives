@@ -1,6 +1,7 @@
-package com.aranaira.arcanearchives.client.gui;
+package com.aranaira.arcanearchives.client.gui.framework;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.inventory.Container;
@@ -22,17 +23,23 @@ import net.minecraft.inventory.Slot;
  * <li> {@link #drawTopLevelElements(int, int)} </li>
  * </ol>
  */
-public abstract class AbstractLayeredGuiContainer extends GuiContainer {
+public abstract class LayeredGuiContainer extends GuiContainer {
 	/**
-	 * at what Z level to render {@link #drawForegroundContents(int, int)} relative to {@link @TOP_Z}
+	 * at what Z level to render {@link #drawForegroundContents(int, int)} relative to {@link @START_Z}
 	 */
-	public static float DELTA_FOREGROUND_Z = -10f;
+	public static float DELTA_FOREGROUND_Z = 300f;
 	/**
-	 * at what Z level to render {@link #drawBackgroundContents(int, int)} relative to {@link @TOP_Z}
+	 * at what Z level to render {@link #drawBackgroundContents(int, int)} relative to {@link @START_Z}
 	 */
-	public static float DELTA_BACKGROUND_Z = -100f;
+	public static float DELTA_BACKGROUND_Z = -50f;
 	/**
-	 * at what Z level to render {@link #drawTopLevelElements(int, int)}
+	 * at what Z level relative to the "fog" that is drawn in front of the world behind the GUI to start drawing
+	 */
+	public static float START_Z = 100f;
+	/**
+	 * at what Z level to render {@link #drawTopLevelElements(int, int)} relative to z level
+	 * when {@link #drawScreen(int, int, float)} is called which is where the "fog" in front of the view
+	 * of the world is drawn via {@link GuiScreen#drawDefaultBackground()}
 	 */
 	public static float TOP_Z = 400f;
 
@@ -40,7 +47,7 @@ public abstract class AbstractLayeredGuiContainer extends GuiContainer {
 	 * @param inventorySlotsIn a {@link Container} that contains the {@link net.minecraft.inventory.Slot}s
 	 *                         that this GUI needs to render
 	 */
-	public AbstractLayeredGuiContainer (Container inventorySlotsIn) {
+	public LayeredGuiContainer (Container inventorySlotsIn) {
 		super(inventorySlotsIn);
 	}
 
@@ -68,12 +75,24 @@ public abstract class AbstractLayeredGuiContainer extends GuiContainer {
 	 */
 	protected void drawTopLevelElements (int mouseX, int mouseY) {}
 
+	/**
+	 * Use this method to add buttons to this {@link LayeredGuiContainer} so that they will end up
+	 * on the correct layer
+	 *
+	 * @param buttonIn {@link GuiButton} to add
+	 */
+	@Override
+	protected <T extends GuiButton> T addButton(T buttonIn) {
+		super.addButton(new LayeredButton(buttonIn));
+		return buttonIn;
+	}
+
 	// ================ start of internal gubbins that make this class do its job =============================
 	@Override
 	protected void drawGuiContainerBackgroundLayer (float partialTicks, int mouseX, int mouseY) {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(0f, 0f, DELTA_BACKGROUND_Z);
-		ArcaneArchives.logger.warn("drawGuiContainerBackgroundLayer " + GUIUtils.getCurrentModelViewMatrix());
+
 		drawBackgroundContents(mouseX, mouseY);
 
 		// clean up GL state
@@ -88,7 +107,6 @@ public abstract class AbstractLayeredGuiContainer extends GuiContainer {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(0f, 0f, DELTA_FOREGROUND_Z);
 
-		ArcaneArchives.logger.warn("drawGuiContainerForegroundLayer " + GUIUtils.getCurrentModelViewMatrix());
 		drawForegroundContents(mouseX, mouseY);
 
 		// clean up GL state
@@ -100,11 +118,10 @@ public abstract class AbstractLayeredGuiContainer extends GuiContainer {
 		// this draws the "world" behind the gui
 		this.drawDefaultBackground();
 
-		// we do this so that the all the final GUI elements are on top of everything else
+		// translate relative to the "fog" that is drawn in front of the world in the background in
+		// the drawDefaultBackground call above
 		GlStateManager.pushMatrix();
-		GlStateManager.translate(0.0f, 0.0f, TOP_Z);
-
-		ArcaneArchives.logger.warn("drawScreen " + GUIUtils.getCurrentModelViewMatrix());
+		GlStateManager.translate(0.0f, 0.0f, START_Z);
 
 		// first calls super.super.drawScreen which will draw buttonList and labelList
 		// then draws the texture behind the slots via #drawGuiContainerBackgroundLayer
@@ -112,9 +129,14 @@ public abstract class AbstractLayeredGuiContainer extends GuiContainer {
 		// then draws the texture in front of the slots via #drawGuiContainerForegroundLayer
 		super.drawScreen(mouseX, mouseY, partialTicks);
 
+		// translate for drawTopLevelElements
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(0.0f, 0.0f, TOP_Z);
+
 		drawTopLevelElements(mouseX, mouseY);
 
 		// clean up GL state
+		GlStateManager.popMatrix();
 		GlStateManager.popMatrix();
 	}
 }

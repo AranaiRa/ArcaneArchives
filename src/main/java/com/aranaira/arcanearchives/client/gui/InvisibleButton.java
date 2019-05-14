@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.client.gui;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -26,6 +25,8 @@ public class InvisibleButton extends GuiButton {
 	@Override
 	public void drawButton (Minecraft mc, int mouseX, int mouseY, float partialTicks) {
 		if (!displayString.isEmpty()) {
+			zLevel = 200;
+
 			FontRenderer fontrenderer = mc.fontRenderer;
 			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 			this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
@@ -46,8 +47,9 @@ public class InvisibleButton extends GuiButton {
 				j = 16777120;
 			}
 
-			ArcaneArchives.logger.warn("drawButton " + GUIUtils.getCurrentModelViewMatrix());
 			this.drawCenteredString(fontrenderer, this.displayString, this.x + this.width / 2, this.y + (this.height - 8) / 2, j);
+
+			zLevel = 0;
 		}
 	}
 }

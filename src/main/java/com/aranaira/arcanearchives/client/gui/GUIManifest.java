@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.client.gui;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.client.gui.framework.LayeredGuiContainer;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
@@ -29,7 +30,7 @@ import org.lwjgl.input.Mouse;
 import java.io.IOException;
 import java.util.List;
 
-public class GUIManifest extends AbstractLayeredGuiContainer implements GuiPageButtonList.GuiResponder {
+public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonList.GuiResponder {
 	private static final ResourceLocation GUIBaseTextures = new ResourceLocation("arcanearchives:textures/gui/manifest_base.png");
 	private static final ResourceLocation GUIBaseTexturesSimple = new ResourceLocation("arcanearchives:textures/gui/simple/manifest_base.png");
 	private static final int mGUIBaseTexturesSize = 256;
@@ -54,8 +55,9 @@ public class GUIManifest extends AbstractLayeredGuiContainer implements GuiPageB
 	private static int mRefreshButtonWidth = 17;
 	private static int mRefreshButtonHeight = 14;
 	// initial offset of scroll nub
-	private static int mScrollBarTopOffset = ContainerManifest.FIRST_CELL_Y;
-	private static int mScrollBarLeftOffset = 155;
+	private static int mScrollBarTopOffset = 28;
+	private static int mScrollBarBottomOffset = 191;
+	private static int mScrollBarLeftOffset = 177;
 	// offset and size of slot texture in #GUIBaseTextures
 	private static int mSlotTextureLeftOffset = 224;
 	private static int mSlotTextureSize = 18;
@@ -68,7 +70,7 @@ public class GUIManifest extends AbstractLayeredGuiContainer implements GuiPageB
 
 	private RightClickTextField searchBox;
 	private ScrollBar mScrollBar;
-	private InvisibleButton mEndTrackButton;
+	private GuiButton mEndTrackButton;
 
 	public GUIManifest (EntityPlayer player, ContainerManifest container) {
 		super(container);
@@ -98,17 +100,25 @@ public class GUIManifest extends AbstractLayeredGuiContainer implements GuiPageB
 		searchBox.setGuiResponder(this);
 		searchBox.setEnableBackgroundDrawing(false);
 
-		mScrollBar = new ScrollBar(this, 10, guiLeft + mScrollBarLeftOffset, guiTop + mScrollBarTopOffset);
+		mScrollBar = new ScrollBar(10, guiLeft + mScrollBarLeftOffset, guiTop + mScrollBarTopOffset);
+		addButton(mScrollBar.mNub);
 
 		mEndTrackButton = new InvisibleButton(0, guiLeft + mEndTrackingLeftOffset, mEndTrackingTopOffset + guiTop, mEndTrackingButtonWidth, mEndTrackingButtonHeight, "End Tracking");
-		buttonList.add(mEndTrackButton);
+		addButton(mEndTrackButton);
 	}
 
 	@Override
 	protected void drawTopLevelElements (int mouseX, int mouseY) {
 		searchBox.drawTextBox();
 
+		// make sure tool tip is on top of everything else
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(0.0f, 0.0f, 50f);
+
 		renderHoveredToolTip(mouseX, mouseY);
+
+		// clean up GL state
+		GlStateManager.popMatrix();
 	}
 
 	@Override
