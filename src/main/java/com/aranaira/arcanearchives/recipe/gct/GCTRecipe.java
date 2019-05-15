@@ -14,18 +14,17 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GCTRecipe
-{
+public class GCTRecipe {
 	private final List<IngredientStack> ingredients = new ArrayList<>();
 	private final ItemStack result;
 	private final String name;
 	public List<String> TOOLTIP_CACHE = null;
 
-	public GCTRecipe(String name, @Nonnull ItemStack result, Object... recipe) {
+	public GCTRecipe (String name, @Nonnull ItemStack result, Object... recipe) {
 		this.result = result.copy();
 		this.name = name;
-		for(Object stack : recipe) {
-			if(stack instanceof ItemStack) {
+		for (Object stack : recipe) {
+			if (stack instanceof ItemStack) {
 				ingredients.add(new IngredientStack((ItemStack) stack));
 			} else if (stack instanceof Item) {
 				ingredients.add(new IngredientStack((Item) stack));
@@ -43,27 +42,27 @@ public class GCTRecipe
 		}
 	}
 
-	public int getIndex() {
+	public int getIndex () {
 		return GCTRecipeList.indexOf(this);
 	}
 
-	public String getName() {
+	public String getName () {
 		return name;
 	}
 
-	public boolean matches(@Nonnull IItemHandler inv) {
+	public boolean matches (@Nonnull IItemHandler inv) {
 		return new IngredientsMatcher(ingredients).matches(inv);
 	}
 
-	public Int2IntMap getMatchingSlots(@Nonnull IItemHandler inv) {
+	public Int2IntMap getMatchingSlots (@Nonnull IItemHandler inv) {
 		return new IngredientsMatcher(ingredients).getMatchingSlots(inv);
 	}
 
-	public ItemStack getRecipeOutput() {
+	public ItemStack getRecipeOutput () {
 		return result.copy();
 	}
 
-	public List<IngredientStack> getIngredients() {
+	public List<IngredientStack> getIngredients () {
 		return ingredients;
 	}
 }

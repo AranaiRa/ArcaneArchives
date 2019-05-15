@@ -14,40 +14,39 @@ import net.minecraft.util.ResourceLocation;
 
 import java.util.Arrays;
 
-public class GCTCategory implements IRecipeCategory<GCTWrapper>
-{
+public class GCTCategory implements IRecipeCategory<GCTWrapper> {
 	private final IDrawable background;
 
-	public GCTCategory(IGuiHelper helper) {
+	public GCTCategory (IGuiHelper helper) {
 		this.background = helper.createDrawable(new ResourceLocation(ArcaneArchives.MODID, "textures/gui/jei/gem_cutters_table.png"), 0, 0, 120, 72);
 	}
 
 	@Override
-	public String getUid() {
+	public String getUid () {
 		return JEIPlugin.GEM_CUTTERS_TABLE;
 	}
 
 	@Override
-	public String getTitle() {
+	public String getTitle () {
 		return I18n.format("tile.gemcutters_table.name");
 	}
 
 	@Override
-	public String getModName() {
+	public String getModName () {
 		return ArcaneArchives.NAME;
 	}
 
 	@Override
-	public IDrawable getBackground() {
+	public IDrawable getBackground () {
 		return background;
 	}
 
 	@Override
-	public void setRecipe(IRecipeLayout recipeLayout, GCTWrapper recipeWrapper, IIngredients ingredients) {
+	public void setRecipe (IRecipeLayout recipeLayout, GCTWrapper recipeWrapper, IIngredients ingredients) {
 		IGuiItemStackGroup group = recipeLayout.getItemStacks();
-		if(recipeWrapper.recipe != null) {
+		if (recipeWrapper.recipe != null) {
 			GCTRecipe recipe = recipeWrapper.recipe;
-			for(int i = 0; i < recipe.getIngredients().size(); i++) {
+			for (int i = 0; i < recipe.getIngredients().size(); i++) {
 				group.init(i, true, i % 2 == 0 ? 0 : 18, (i / 2) * 18);
 				group.set(i, Arrays.asList(recipe.getIngredients().get(i).getMatchingStacks()));
 			}

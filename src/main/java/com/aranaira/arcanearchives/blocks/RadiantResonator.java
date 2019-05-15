@@ -24,11 +24,10 @@ import java.util.Random;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class RadiantResonator extends BlockTemplate
-{
+public class RadiantResonator extends BlockTemplate {
 	public static final String name = "radiant_resonator";
 
-	public RadiantResonator() {
+	public RadiantResonator () {
 		super(name, Material.IRON);
 		setPlaceLimit(ConfigHandler.ResonatorLimit);
 		setHardness(1.1f);
@@ -37,72 +36,74 @@ public class RadiantResonator extends BlockTemplate
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.device.radiantresonator"));
 	}
 
 	@Override
-	public boolean hasOBJModel() {
+	public boolean hasOBJModel () {
 		return true;
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean causesSuffocation(IBlockState state) {
+	public boolean causesSuffocation (IBlockState state) {
 		return false;
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean isFullCube(IBlockState state) {
+	public boolean isFullCube (IBlockState state) {
 		return false;
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean isOpaqueCube(IBlockState state) {
+	public boolean isOpaqueCube (IBlockState state) {
 		return false;
 	}
 
 	@Override
-	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+	public void updateTick (World worldIn, BlockPos pos, IBlockState state, Random rand) {
 		super.updateTick(worldIn, pos, state, rand);
 	}
 
 	@Override
-	public void onPlayerDestroy(World worldIn, BlockPos pos, IBlockState state) {
-		if(worldIn.getBlockState(pos.up()).getBlock() instanceof RawQuartz) {
+	public void onPlayerDestroy (World worldIn, BlockPos pos, IBlockState state) {
+		if (worldIn.getBlockState(pos.up()).getBlock() instanceof RawQuartz) {
 			worldIn.destroyBlock(pos.up(), true);
 		}
 		super.onPlayerDestroy(worldIn, pos, state);
 	}
 
 	@Override
-	public void onExplosionDestroy(World worldIn, BlockPos pos, Explosion explosion) {
-		if(worldIn.getBlockState(pos.up()).getBlock() instanceof RawQuartz) {
+	public void onExplosionDestroy (World worldIn, BlockPos pos, Explosion explosion) {
+		if (worldIn.getBlockState(pos.up()).getBlock() instanceof RawQuartz) {
 			worldIn.destroyBlock(pos.up(), false);
 		}
 		super.onExplosionDestroy(worldIn, pos, explosion);
 	}
 
 	@Override
-	public BlockRenderLayer getRenderLayer() {
+	public BlockRenderLayer getRenderLayer () {
 		return BlockRenderLayer.CUTOUT;
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean hasComparatorInputOverride(IBlockState state) {
+	public boolean hasComparatorInputOverride (IBlockState state) {
 		return true;
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public int getComparatorInputOverride(IBlockState blockState, World worldIn, BlockPos pos) {
+	public int getComparatorInputOverride (IBlockState blockState, World worldIn, BlockPos pos) {
 		RadiantResonatorTileEntity te = WorldUtil.getTileEntity(RadiantResonatorTileEntity.class, worldIn, pos);
-		if(te == null) return 0;
+		if (te == null) {
+			return 0;
+		}
 
-		if(te.canTick() == RadiantResonatorTileEntity.TickResult.HARVEST_WAITING) {
+		if (te.canTick() == RadiantResonatorTileEntity.TickResult.HARVEST_WAITING) {
 			return 15;
 		}
 
@@ -110,12 +111,12 @@ public class RadiantResonator extends BlockTemplate
 	}
 
 	@Override
-	public boolean hasTileEntity(IBlockState state) {
+	public boolean hasTileEntity (IBlockState state) {
 		return true;
 	}
 
 	@Override
-	public TileEntity createTileEntity(World world, IBlockState state) {
+	public TileEntity createTileEntity (World world, IBlockState state) {
 		return new RadiantResonatorTileEntity();
 	}
 }

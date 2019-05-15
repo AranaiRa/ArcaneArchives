@@ -20,8 +20,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 
-public class AAGuiHandler implements IGuiHandler
-{
+public class AAGuiHandler implements IGuiHandler {
 	public static final int TOME_OF_REQUISITION = 0;
 	public static final int RADIANT_CHEST = 1;
 	public static final int MANIFEST = 2;
@@ -45,9 +44,11 @@ public class AAGuiHandler implements IGuiHandler
 				return null; // return new ContainerManifest(player, true);
 		}
 
-		if(!(te instanceof AATileEntity)) return null; // TODO: Handle this error somehow;
+		if (!(te instanceof AATileEntity)) {
+			return null; // TODO: Handle this error somehow;
+		}
 
-		switch(ID) {
+		switch (ID) {
 			case RADIANT_CHEST:
 				return new ContainerRadiantChest((RadiantChestTileEntity) te, player, true);
 			case GEMCUTTERS_TABLE:
@@ -75,10 +76,12 @@ public class AAGuiHandler implements IGuiHandler
 			case TOME_OF_REQUISITION:
 				return new GUIBookContainer(new NetworkContainer(player));
 			case MANIFEST:
-				return new GUIManifest(player, new ContainerManifest(player, false));
+				return new GUIManifest(player, new ContainerManifest(player));
 		}
 
-		if(!(te instanceof AATileEntity)) return null; // TODO: Handle this error also
+		if (!(te instanceof AATileEntity)) {
+			return null; // TODO: Handle this error also
+		}
 
 		switch (ID) {
 			case RADIANT_CHEST:

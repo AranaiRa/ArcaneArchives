@@ -80,10 +80,11 @@ public class GUIRadiantChest extends GuiContainer implements IChestButtonCallbac
 	protected void drawGuiContainerBackgroundLayer (float partialTicks, int mouseX, int mouseY) {
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.enableColorMaterial();
-		if(ConfigHandler.UsePrettyGUIs)
+		if (ConfigHandler.UsePrettyGUIs) {
 			this.mc.getTextureManager().bindTexture(GUITextures);
-		else
+		} else {
 			this.mc.getTextureManager().bindTexture(GUITexturesSimple);
+		}
 
 		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, ImageScale, ImageScale, ImageScale, ImageScale);
 	}

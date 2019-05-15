@@ -26,36 +26,39 @@ import java.util.List;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class RawQuartzItem extends ItemTemplate
-{
+public class RawQuartzItem extends ItemTemplate {
 	public static final String NAME = "item_rawquartz";
 
-	public RawQuartzItem() {
+	public RawQuartzItem () {
 		super(NAME);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.component.rawquartz"));
 	}
 
 	@Override
-	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
-		if(!player.isSneaking()) return EnumActionResult.PASS;
+	public EnumActionResult onItemUseFirst (EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
+		if (!player.isSneaking()) {
+			return EnumActionResult.PASS;
+		}
 
 		ItemStack itemstack = player.getHeldItem(hand);
 
-		if((world.getBlockState(pos).getBlock() instanceof BlockChest)) {
-			if(world.isRemote) return EnumActionResult.FAIL;
+		if ((world.getBlockState(pos).getBlock() instanceof BlockChest)) {
+			if (world.isRemote) {
+				return EnumActionResult.FAIL;
+			}
 
-			if(!(world.getBlockState(pos).getBlock() instanceof BlockChest)) {
+			if (!(world.getBlockState(pos).getBlock() instanceof BlockChest)) {
 				return EnumActionResult.FAIL;
 			}
 
 			BlockPos secondaryChestPos = new BlockPos(0, 0, 0);
 			boolean secondaryChest = false;
 
-			if(world.getBlockState(pos.add(0, 0, 1)).getBlock() instanceof BlockChest) {
+			if (world.getBlockState(pos.add(0, 0, 1)).getBlock() instanceof BlockChest) {
 				secondaryChestPos = pos.add(0, 0, 1);
 				secondaryChest = true;
 			} else if (world.getBlockState(pos.add(0, 0, -1)).getBlock() instanceof BlockChest) {
@@ -76,21 +79,23 @@ public class RawQuartzItem extends ItemTemplate
 
 			EnumFacing chestFacing = EnumFacing.DOWN;
 
-			if(te instanceof TileEntityChest) {
-				if(((TileEntityChest) te).numPlayersUsing > 0) return EnumActionResult.FAIL;
+			if (te instanceof TileEntityChest) {
+				if (((TileEntityChest) te).numPlayersUsing > 0) {
+					return EnumActionResult.FAIL;
+				}
 				IBlockState chestState = world.getBlockState(pos);
 				chestFacing = chestState.getValue(BlockChest.FACING);
 				chestContents = new ItemStack[((TileEntityChest) te).getSizeInventory()];
-				for(int i = 0; i < chestContents.length; i++) {
+				for (int i = 0; i < chestContents.length; i++) {
 					chestContents[i] = ((TileEntityChest) te).getStackInSlot(i);
 				}
 
-				if(secondaryChest) {
+				if (secondaryChest) {
 					TileEntity ste = world.getTileEntity(secondaryChestPos);
 
-					if(ste != null) {
+					if (ste != null) {
 						secondaryChestContents = new ItemStack[((TileEntityChest) ste).getSizeInventory()];
-						for(int i = 0; i < secondaryChestContents.length; i++) {
+						for (int i = 0; i < secondaryChestContents.length; i++) {
 							secondaryChestContents[i] = ((TileEntityChest) ste).getStackInSlot(i);
 						}
 					}
@@ -106,7 +111,7 @@ public class RawQuartzItem extends ItemTemplate
 			world.removeTileEntity(pos);
 			world.setBlockToAir(pos);
 
-			if(secondaryChest) {
+			if (secondaryChest) {
 				world.removeTileEntity(secondaryChestPos);
 				IBlockState secondary = world.getBlockState(secondaryChestPos);
 				world.setBlockToAir(secondaryChestPos);
@@ -121,12 +126,12 @@ public class RawQuartzItem extends ItemTemplate
 
 			TileEntity te2 = world.getTileEntity(pos);
 
-			if(te2 instanceof RadiantChestTileEntity) {
+			if (te2 instanceof RadiantChestTileEntity) {
 				((RadiantChestTileEntity) te2).setContents(chestContents, secondaryChestContents, secondaryChest);
-				((RadiantChestTileEntity) te2).networkID = player.getUniqueID();
+				((RadiantChestTileEntity) te2).networkId = player.getUniqueID();
 			}
 
-			if(!player.capabilities.isCreativeMode) {
+			if (!player.capabilities.isCreativeMode) {
 				itemstack.shrink(1);
 			}
 

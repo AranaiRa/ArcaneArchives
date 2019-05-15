@@ -12,35 +12,40 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class MonitoringCrystalTileEntity extends ManifestTileEntity
-{
+public class MonitoringCrystalTileEntity extends ManifestTileEntity {
 	private BlockPos target = null;
 
-	public MonitoringCrystalTileEntity() {
+	public MonitoringCrystalTileEntity () {
 		super("monitoring_crystal_tile_entity");
 	}
 
 	@Override
-	public String getDescriptor() {
+	public String getDescriptor () {
 		return "Monitoring Crystal";
 	}
 
 	@Override
-	public String getChestName() {
+	public String getChestName () {
 		return "";
 	}
 
 	@Override
 	@Nullable
-	public IItemHandler getInventory() {
+	public IItemHandler getInventory () {
 		BlockPos tar = getTarget();
-		if (tar == null) return null;
+		if (tar == null) {
+			return null;
+		}
 
 		TileEntity te = world.getTileEntity(tar);
-		if (te == null) return null;
+		if (te == null) {
+			return null;
+		}
 
 		// Monitoring Crystals don't work on ITEs.
-		if (te instanceof ImmanenceTileEntity) return null;
+		if (te instanceof ImmanenceTileEntity) {
+			return null;
+		}
 
 		if (te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)) {
 			return te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);

@@ -11,24 +11,25 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ManifestList extends ReferenceList<ManifestEntry>
-{
+public class ManifestList extends ReferenceList<ManifestEntry> {
 	private ContainerManifest mListener;
 	private String mFilterText;
 	private ItemStack mSearchItem;
 
-	public ManifestList(List<ManifestEntry> reference) {
+	public ManifestList (List<ManifestEntry> reference) {
 		super(reference);
 		this.mFilterText = null;
 	}
 
-	public ManifestList(List<ManifestEntry> reference, String filterText) {
+	public ManifestList (List<ManifestEntry> reference, String filterText) {
 		super(reference);
 		this.mFilterText = filterText;
 	}
 
-	public ManifestList filtered() {
-		if(mFilterText == null && mSearchItem == null) return this;
+	public ManifestList filtered () {
+		if (mFilterText == null && mSearchItem == null) {
+			return this;
+		}
 
 		String filter = "";
 
@@ -38,7 +39,9 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 
 		String finalFilter = filter;
 		return stream().filter((entry) -> {
-			if(entry == null) return false;
+			if (entry == null) {
+				return false;
+			}
 
 			ItemStack stack = entry.getStack();
 
@@ -47,16 +50,22 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 			}
 
 			String display = stack.getDisplayName().toLowerCase();
-			if (display.contains(finalFilter)) return true;
+			if (display.contains(finalFilter)) {
+				return true;
+			}
 			String resource = stack.getItem().getRegistryName().toString().toLowerCase();
-			if (resource.contains(finalFilter)) return true;
+			if (resource.contains(finalFilter)) {
+				return true;
+			}
 
 			// Other hooks to be added at a later point
 			if (stack.getItem() == Items.ENCHANTED_BOOK) {
 				Map<Enchantment, Integer> map = EnchantmentHelper.getEnchantments(stack);
 				for (Map.Entry<Enchantment, Integer> ench : map.entrySet()) {
 					String enchName = ench.getKey().getTranslatedName(ench.getValue());
-					if (enchName.toLowerCase().contains(finalFilter)) return true;
+					if (enchName.toLowerCase().contains(finalFilter)) {
+						return true;
+					}
 				}
 			}
 
@@ -64,7 +73,7 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 		}).collect(Collectors.toCollection(ManifestList::new));
 	}
 
-	public ManifestList() {
+	public ManifestList () {
 		super(new ArrayList<>());
 	}
 
@@ -73,35 +82,39 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 	 *
 	 * @param containerManifest a {@link ContainerManifest}
 	 */
-	public void setListener(ContainerManifest containerManifest) {
+	public void setListener (ContainerManifest containerManifest) {
 		this.mListener = containerManifest;
 	}
 
 	/**
 	 * Call this after this ManifestList has finished being populated from an external source.
 	 * For now this means from a packet from the server
-	 *
+	 * <p>
 	 * If a {@link ContainerManifest} listener has been registered to this manifest then
 	 * notify it that this {@link ManifestList} has been populated
 	 */
-	public void deserializationFinished() {
+	public void deserializationFinished () {
 		if (this.mListener != null) {
 			this.mListener.ensureCapacity(size());
 		}
 	}
 
 	@Nullable
-	public ManifestEntry getEntryForSlot(int slot) {
-		if(slot < size() && slot >= 0) return get(slot);
+	public ManifestEntry getEntryForSlot (int slot) {
+		if (slot < size() && slot >= 0) {
+			return get(slot);
+		}
 		return null;
 	}
 
-	public ItemStack getItemStackForSlot(int slot) {
-		if(slot < size() && slot >= 0) return get(slot).getStack();
+	public ItemStack getItemStackForSlot (int slot) {
+		if (slot < size() && slot >= 0) {
+			return get(slot).getStack();
+		}
 		return ItemStack.EMPTY;
 	}
 
-	public String getSearchText() {
+	public String getSearchText () {
 		return this.mFilterText;
 	}
 
@@ -109,7 +122,7 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 		return this.mSearchItem;
 	}
 
-	public void setSearchText(String searchTerm) {
+	public void setSearchText (String searchTerm) {
 		this.mFilterText = searchTerm;
 	}
 
@@ -118,11 +131,11 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 	}
 
 	@Override
-	public ManifestListIterable iterable() {
+	public ManifestListIterable iterable () {
 		return new ManifestListIterable(new ManifestIterator(iterator()));
 	}
 
-	public ManifestList sorted(Comparator<ManifestEntry> c) {
+	public ManifestList sorted (Comparator<ManifestEntry> c) {
 		ManifestList copy = new ManifestList(new ArrayList<>(), null);
 		copy.addAll(this);
 		copy.sort(c);
@@ -130,16 +143,16 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 	}
 
 	@Override
-	public void clear() {
+	public void clear () {
 		super.clear();
 	}
 
 	public class ManifestListIterable extends ReferenceListIterable<ManifestEntry> {
-		ManifestListIterable(ManifestIterator iter) {
+		ManifestListIterable (ManifestIterator iter) {
 			super(iter);
 		}
 
-		public int getSlot() {
+		public int getSlot () {
 			return ((ManifestIterator) iter).getSlot();
 		}
 	}
@@ -148,21 +161,21 @@ public class ManifestList extends ReferenceList<ManifestEntry>
 		private int slot = 0;
 		private Iterator<ManifestEntry> iter;
 
-		public ManifestIterator(Iterator<ManifestEntry> iter) {
+		public ManifestIterator (Iterator<ManifestEntry> iter) {
 			this.iter = iter;
 		}
 
-		public int getSlot() {
+		public int getSlot () {
 			return slot;
 		}
 
 		@Override
-		public boolean hasNext() {
+		public boolean hasNext () {
 			return iter.hasNext();
 		}
 
 		@Override
-		public ManifestEntry next() {
+		public ManifestEntry next () {
 			slot++;
 			return iter.next();
 		}

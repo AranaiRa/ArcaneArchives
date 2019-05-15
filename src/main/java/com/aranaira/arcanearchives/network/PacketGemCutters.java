@@ -13,33 +13,32 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 @SuppressWarnings("WeakerAccess")
-public class PacketGemCutters
-{
+public class PacketGemCutters {
 	public static class ChangeRecipe implements IMessage {
 		private int recipe;
 		private BlockPos pos;
 		private int dimension;
 
 		@SuppressWarnings("unused")
-		public ChangeRecipe() {
+		public ChangeRecipe () {
 		}
 
 		@SuppressWarnings("unused")
-		public ChangeRecipe(int recipe, BlockPos pos, int dimension) {
+		public ChangeRecipe (int recipe, BlockPos pos, int dimension) {
 			this.recipe = recipe;
 			this.pos = pos;
 			this.dimension = dimension;
 		}
 
 		@Override
-		public void fromBytes(ByteBuf buf) {
+		public void fromBytes (ByteBuf buf) {
 			recipe = buf.readInt();
 			pos = BlockPos.fromLong(buf.readLong());
 			dimension = buf.readInt();
 		}
 
 		@Override
-		public void toBytes(ByteBuf buf) {
+		public void toBytes (ByteBuf buf) {
 			buf.writeInt(recipe);
 			buf.writeLong(pos.toLong());
 			buf.writeInt(dimension);
@@ -47,9 +46,9 @@ public class PacketGemCutters
 
 		public static class Handler extends NetworkHandler.ServerHandler<ChangeRecipe> {
 			@Override
-			public void processMessage(ChangeRecipe message, MessageContext ctx) {
+			public void processMessage (ChangeRecipe message, MessageContext ctx) {
 				GemCuttersTableTileEntity te = WorldUtil.getTileEntity(GemCuttersTableTileEntity.class, message.dimension, message.pos);
-				if(te != null) {
+				if (te != null) {
 					// Server-side call
 					te.setRecipe(message.recipe);
 				}
@@ -60,28 +59,28 @@ public class PacketGemCutters
 	public static class LastRecipe implements IMessage {
 		private GCTRecipe recipe;
 
-		public LastRecipe() {
+		public LastRecipe () {
 		}
 
-		public LastRecipe(GCTRecipe recipe) {
+		public LastRecipe (GCTRecipe recipe) {
 			this.recipe = recipe;
 		}
 
 		@Override
-		public void fromBytes(ByteBuf buf) {
+		public void fromBytes (ByteBuf buf) {
 			recipe = GCTRecipeList.getRecipeByIndex(buf.readInt());
 		}
 
 		@Override
-		public void toBytes(ByteBuf buf) {
+		public void toBytes (ByteBuf buf) {
 			buf.writeInt(recipe.getIndex());
 		}
 
 		public static class Handler extends NetworkHandler.ClientHandler<LastRecipe> {
 			@Override
-			public void processMessage(LastRecipe message, MessageContext ctx) {
+			public void processMessage (LastRecipe message, MessageContext ctx) {
 				Container container = Minecraft.getMinecraft().player.openContainer;
-				if(container instanceof ContainerGemCuttersTable) {
+				if (container instanceof ContainerGemCuttersTable) {
 					((ContainerGemCuttersTable) container).updateLastRecipeFromServer(message.recipe);
 				}
 			}

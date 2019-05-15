@@ -25,8 +25,7 @@ import java.util.Arrays;
 
 @SuppressWarnings("WeakerAccess")
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
-public class BlockRegistry
-{
+public class BlockRegistry {
 
 	//Matrices
 	/*public static final MatrixCrystalCore MATRIX_CRYSTAL_CORE = new MatrixCrystalCore();
@@ -66,7 +65,7 @@ public class BlockRegistry
 	public static final BrazierTileEntity BRAZIER_OF_HOARDING_TILE_ENTITY = new BrazierTileEntity();
 
 	@SubscribeEvent
-	public static void onBlockRegister(RegistryEvent.Register<Block> event) {
+	public static void onBlockRegister (RegistryEvent.Register<Block> event) {
 		IForgeRegistry<Block> registry = event.getRegistry();
 
 		//MATRIX_CRYSTAL_CORE.setItemBlock(new ItemBlockTemplate(MATRIX_CRYSTAL_CORE));
@@ -77,20 +76,23 @@ public class BlockRegistry
 		STORAGE_RAW_QUARTZ.setItemBlock(new ItemBlock(STORAGE_RAW_QUARTZ));
 		STORAGE_CUT_QUARTZ.setItemBlock(new ItemBlock(STORAGE_CUT_QUARTZ) {
 			@Override
-			public EnumRarity getRarity(ItemStack stack) {
+			@SuppressWarnings("deprecation")
+			public EnumRarity getRarity (ItemStack stack) {
 				return EnumRarity.UNCOMMON;
 			}
 		});
 		RADIANT_CHEST.setItemBlock(new ItemBlockTemplate(RADIANT_CHEST));
 		RADIANT_CRAFTING_TABLE.setItemBlock(new ItemBlock(RADIANT_CRAFTING_TABLE) {
 			@Override
-			public EnumRarity getRarity(ItemStack stack) {
+			@SuppressWarnings("deprecation")
+			public EnumRarity getRarity (ItemStack stack) {
 				return EnumRarity.RARE;
 			}
 		});
 		RADIANT_LANTERN.setItemBlock(new ItemBlock(RADIANT_LANTERN) {
 			@Override
-			public EnumRarity getRarity(ItemStack stack) {
+			@SuppressWarnings("deprecation")
+			public EnumRarity getRarity (ItemStack stack) {
 				return EnumRarity.UNCOMMON;
 			}
 		});
@@ -108,20 +110,20 @@ public class BlockRegistry
 	}
 
 	@SubscribeEvent
-	public static void registerModels(ModelRegistryEvent event) {
+	public static void registerModels (ModelRegistryEvent event) {
 		// ACCESSOR doesn't get registered.
 
 		Arrays.asList(/*MATRIX_CRYSTAL_CORE, MATRIX_REPOSITORY, MATRIX_RESERVOIR, MATRIX_STORAGE, MATRIX_DISTILLATE*/STORAGE_RAW_QUARTZ, STORAGE_CUT_QUARTZ, RADIANT_CHEST, RADIANT_CRAFTING_TABLE, RADIANT_LANTERN, RADIANT_RESONATOR, RAW_QUARTZ/*DOMINION_CRYSTAL*/, GEMCUTTERS_TABLE, ACCESSOR, RADIANT_TROVE, MONITORING_CRYSTAL, RADIANT_TANK, BRAZIER_OF_HOARDING).forEach(BlockTemplate::registerModels);
 
 		Arrays.asList(STORAGE_RAW_QUARTZ, STORAGE_CUT_QUARTZ).forEach((block) -> {
 			ItemBlock itemBlock = block.getItemBlock();
-			if(itemBlock != null) {
+			if (itemBlock != null) {
 				ModelLoader.setCustomModelResourceLocation(itemBlock, 0, new ModelResourceLocation(block.getRegistryName(), "inventory"));
 			}
 		});
 	}
 
-	public static void registerTileEntities() {
+	public static void registerTileEntities () {
 		Arrays.asList(RADIANT_RESONATOR_TILE_ENTITY, /*MATRIX_CORE_TILE_ENTITY, MATRIX_REPOSITORY_TILE_ENTITY, */ ACCESSOR_TILE_ENTITY, RADIANT_CHEST_TILE_ENTITY, GEMCUTTERS_TABLE_TILE_ENTITY, RADIANT_CRAFTING_TABLE_TILE_ENTITY/*, MATRIX_STORAGE_TILE_ENTITY*/, RADIANT_TROVE_TILE_ENTITY, MONITORING_CRYSTAL_TILE_ENTITY, RADIANT_TANK_TILE_ENTITY, BRAZIER_OF_HOARDING_TILE_ENTITY).forEach((tile) -> {
 			GameRegistry.registerTileEntity(tile.getClass(), new ResourceLocation(ArcaneArchives.MODID, tile.getName()));
 			ArcaneArchives.logger.info(String.format("Registered tile entity: %s", tile.getName()));

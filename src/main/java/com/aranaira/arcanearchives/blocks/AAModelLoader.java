@@ -37,8 +37,7 @@ public class AAModelLoader implements ICustomModelLoader {
 
 	@Override
 	public boolean accepts (ResourceLocation modelLocation) {
-		return (modelLocation.getNamespace().equals(ArcaneArchives.MODID.toLowerCase()) && modelLocation.getPath().endsWith(".obj")) ||
-				bookBakedModel.accepts(modelLocation);
+		return (modelLocation.getNamespace().equals(ArcaneArchives.MODID.toLowerCase()) && modelLocation.getPath().endsWith(".obj")) || bookBakedModel.accepts(modelLocation);
 	}
 
 	@Override

@@ -28,8 +28,7 @@ import java.util.List;
 
 // nearly the same as ContainerWorkbench but uses the TileEntities inventory
 @Mod.EventBusSubscriber
-public class ContainerRadiantCraftingTable extends Container
-{
+public class ContainerRadiantCraftingTable extends Container {
 	protected final BlockPos pos;
 	protected final World world;
 	private final ItemStackHandler itemHandler;
@@ -44,7 +43,7 @@ public class ContainerRadiantCraftingTable extends Container
 
 	private RadiantCraftingTableTileEntity tile;
 
-	public ContainerRadiantCraftingTable(RadiantCraftingTableTileEntity tile, EntityPlayer player, InventoryPlayer playerInventory) {
+	public ContainerRadiantCraftingTable (RadiantCraftingTableTileEntity tile, EntityPlayer player, InventoryPlayer playerInventory) {
 		super();
 
 		this.tile = tile;
@@ -62,23 +61,23 @@ public class ContainerRadiantCraftingTable extends Container
 		int i;
 		int j;
 
-		for(i = 0; i < 3; ++i) {
-			for(j = 0; j < 3; ++j) {
+		for (i = 0; i < 3; ++i) {
+			for (j = 0; j < 3; ++j) {
 				this.addSlotToContainer(new Slot(this.craftMatrix, j + i * 3, 24 + j * 18, 24 + i * 18));
 			}
 		}
 
 		int index = 9;
 
-		for(int row = 0; row < 3; row++) {
-			for(int col = 0; col < 9; col++) {
+		for (int row = 0; row < 3; row++) {
+			for (int col = 0; col < 9; col++) {
 				this.addSlotToContainer(new Slot(playerInventory, index, 23 + col * 18, 115 + row * 18));
 				index++;
 			}
 		}
 
 		index = 0;
-		for(int col = 0; col < 9; col++) {
+		for (int col = 0; col < 9; col++) {
 			this.addSlotToContainer(new Slot(playerInventory, index, 23 + col * 18, 173));
 			index++;
 		}
@@ -93,29 +92,29 @@ public class ContainerRadiantCraftingTable extends Container
 	}
 
 	@SubscribeEvent
-	public static void onCraftingStationGuiOpened(PlayerContainerEvent.Open event) {
+	public static void onCraftingStationGuiOpened (PlayerContainerEvent.Open event) {
 		// by default the container does not update after it has been opened.
 		// we need it to check its recipe
-		if(event.getContainer() instanceof ContainerRadiantCraftingTable) {
+		if (event.getContainer() instanceof ContainerRadiantCraftingTable) {
 			((ContainerRadiantCraftingTable) event.getContainer()).onCraftMatrixChanged();
 		}
 	}
 
-	public void onCraftMatrixChanged() {
+	public void onCraftMatrixChanged () {
 		this.onCraftMatrixChanged(this.craftMatrix);
 	}
 
-	public void saveLastRecipe() {
+	public void saveLastRecipe () {
 		actualLastLastRecipe = actualLastRecipe;
 		actualLastRecipe = lastRecipe;
 	}
 
 	@Nonnull
 	@Override
-	public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
+	public ItemStack transferStackInSlot (EntityPlayer playerIn, int index) {
 		Slot slot = this.inventorySlots.get(index);
 
-		if(slot == null || !slot.getHasStack()) {
+		if (slot == null || !slot.getHasStack()) {
 			return ItemStack.EMPTY;
 		}
 
@@ -126,20 +125,20 @@ public class ContainerRadiantCraftingTable extends Container
 		int end = this.inventorySlots.size();
 
 		// Is it a slot in the main inventory? (aka not player inventory)
-		if(index < 10) {
+		if (index < 10) {
 			// try to put it into the player inventory (if we have a player inventory)
-			if(!this.mergeItemStack(itemstack, 10, end, true)) {
+			if (!this.mergeItemStack(itemstack, 10, end, true)) {
 				return ItemStack.EMPTY;
 			}
 		}
 		// Slot is in the player inventory (if it exists), transfer to main inventory
-		else if(!this.mergeItemStack(itemstack, 0, 10, false)) {
+		else if (!this.mergeItemStack(itemstack, 0, 10, false)) {
 			return ItemStack.EMPTY;
 		}
 
 		slot.onSlotChanged();
 
-		if(itemstack.getCount() == original.getCount()) {
+		if (itemstack.getCount() == original.getCount()) {
 			return ItemStack.EMPTY;
 		}
 
@@ -147,7 +146,7 @@ public class ContainerRadiantCraftingTable extends Container
 		slot.putStack(itemstack);
 		slot.onTake(player, itemstack);
 
-		if(slot.getHasStack() && slot.getStack().isEmpty()) {
+		if (slot.getHasStack() && slot.getStack().isEmpty()) {
 			slot.putStack(ItemStack.EMPTY);
 		}
 
@@ -155,31 +154,31 @@ public class ContainerRadiantCraftingTable extends Container
 	}
 
 	// only refills items that are already present
-	protected boolean mergeItemStackRefill(@Nonnull ItemStack stack, int startIndex, int endIndex, boolean useEndIndex) {
-		if(stack.getCount() <= 0) {
+	protected boolean mergeItemStackRefill (@Nonnull ItemStack stack, int startIndex, int endIndex, boolean useEndIndex) {
+		if (stack.getCount() <= 0) {
 			return false;
 		}
 
 		boolean flag1 = false;
 		int k = startIndex;
 
-		if(useEndIndex) {
+		if (useEndIndex) {
 			k = endIndex - 1;
 		}
 
 		Slot slot;
 		ItemStack itemstack1;
 
-		if(stack.isStackable()) {
-			while(stack.getCount() > 0 && (!useEndIndex && k < endIndex || useEndIndex && k >= startIndex)) {
+		if (stack.isStackable()) {
+			while (stack.getCount() > 0 && (!useEndIndex && k < endIndex || useEndIndex && k >= startIndex)) {
 				slot = this.inventorySlots.get(k);
 				itemstack1 = slot.getStack();
 
-				if(!itemstack1.isEmpty() && itemstack1.getItem() == stack.getItem() && (!stack.getHasSubtypes() || stack.getMetadata() == itemstack1.getMetadata()) && ItemStack.areItemStackTagsEqual(stack, itemstack1) && this.canMergeSlot(stack, slot)) {
+				if (!itemstack1.isEmpty() && itemstack1.getItem() == stack.getItem() && (!stack.getHasSubtypes() || stack.getMetadata() == itemstack1.getMetadata()) && ItemStack.areItemStackTagsEqual(stack, itemstack1) && this.canMergeSlot(stack, slot)) {
 					int l = itemstack1.getCount() + stack.getCount();
 					int limit = Math.min(stack.getMaxStackSize(), slot.getItemStackLimit(stack));
 
-					if(l <= limit) {
+					if (l <= limit) {
 						stack.setCount(0);
 						itemstack1.setCount(l);
 						slot.onSlotChanged();
@@ -192,7 +191,7 @@ public class ContainerRadiantCraftingTable extends Container
 					}
 				}
 
-				if(useEndIndex) {
+				if (useEndIndex) {
 					--k;
 				} else {
 					++k;
@@ -204,29 +203,29 @@ public class ContainerRadiantCraftingTable extends Container
 	}
 
 	// only moves items into empty slots
-	protected boolean mergeItemStackMove(@Nonnull ItemStack stack, int startIndex, int endIndex, boolean useEndIndex) {
-		if(stack.getCount() <= 0) {
+	protected boolean mergeItemStackMove (@Nonnull ItemStack stack, int startIndex, int endIndex, boolean useEndIndex) {
+		if (stack.getCount() <= 0) {
 			return false;
 		}
 
 		boolean flag1 = false;
 		int k;
 
-		if(useEndIndex) {
+		if (useEndIndex) {
 			k = endIndex - 1;
 		} else {
 			k = startIndex;
 		}
 
-		while(!useEndIndex && k < endIndex || useEndIndex && k >= startIndex) {
+		while (!useEndIndex && k < endIndex || useEndIndex && k >= startIndex) {
 			Slot slot = this.inventorySlots.get(k);
 			ItemStack itemstack1 = slot.getStack();
 
-			if(itemstack1.isEmpty() && slot.isItemValid(stack) && this.canMergeSlot(stack, slot)) // Forge: Make sure to respect isItemValid in the slot.
+			if (itemstack1.isEmpty() && slot.isItemValid(stack) && this.canMergeSlot(stack, slot)) // Forge: Make sure to respect isItemValid in the slot.
 			{
 				int limit = slot.getItemStackLimit(stack);
 				ItemStack stack2 = stack.copy();
-				if(stack2.getCount() > limit) {
+				if (stack2.getCount() > limit) {
 					stack2.setCount(limit);
 					stack.shrink(limit);
 				} else {
@@ -236,12 +235,12 @@ public class ContainerRadiantCraftingTable extends Container
 				slot.onSlotChanged();
 				flag1 = true;
 
-				if(stack.isEmpty()) {
+				if (stack.isEmpty()) {
 					break;
 				}
 			}
 
-			if(useEndIndex) {
+			if (useEndIndex) {
 				--k;
 			} else {
 				++k;
@@ -253,18 +252,18 @@ public class ContainerRadiantCraftingTable extends Container
 	}
 
 	@Override
-	public boolean canMergeSlot(ItemStack p_94530_1_, Slot p_94530_2_) {
+	public boolean canMergeSlot (ItemStack p_94530_1_, Slot p_94530_2_) {
 		return p_94530_2_.inventory != this.craftResult && super.canMergeSlot(p_94530_1_, p_94530_2_);
 	}
 
 	@Override
-	public void onCraftMatrixChanged(IInventory inventoryIn) {
+	public void onCraftMatrixChanged (IInventory inventoryIn) {
 		this.slotChangedCraftingGrid(this.world, this.player, this.craftMatrix, this.craftResult);
 	}
 
 	// update crafting
 	@Override
-	public void setAll(List<ItemStack> p_190896_1_) {
+	public void setAll (List<ItemStack> p_190896_1_) {
 		craftMatrix.setDoNotCallUpdates(true);
 		super.setAll(p_190896_1_);
 		craftMatrix.setDoNotCallUpdates(false);
@@ -272,36 +271,36 @@ public class ContainerRadiantCraftingTable extends Container
 	}
 
 	@Override
-	public boolean canInteractWith(EntityPlayer playerIn) {
+	public boolean canInteractWith (EntityPlayer playerIn) {
 		return true;
 	}
 
 	// Fix for a vanilla bug: doesn't take Slot.getMaxStackSize into account
 	@Override
-	protected boolean mergeItemStack(@Nonnull ItemStack stack, int startIndex, int endIndex, boolean useEndIndex) {
+	protected boolean mergeItemStack (@Nonnull ItemStack stack, int startIndex, int endIndex, boolean useEndIndex) {
 		boolean ret = mergeItemStackRefill(stack, startIndex, endIndex, useEndIndex);
-		if(!stack.isEmpty() && stack.getCount() > 0) {
+		if (!stack.isEmpty() && stack.getCount() > 0) {
 			ret |= mergeItemStackMove(stack, startIndex, endIndex, useEndIndex);
 		}
 		return ret;
 	}
 
 	@Override
-	protected void slotChangedCraftingGrid(World world, EntityPlayer player, InventoryCrafting inv, InventoryCraftResult result) {
+	protected void slotChangedCraftingGrid (World world, EntityPlayer player, InventoryCrafting inv, InventoryCraftResult result) {
 		ItemStack itemstack = ItemStack.EMPTY;
 
-		if(lastRecipe == null || !lastRecipe.matches(inv, world)) {
+		if (lastRecipe == null || !lastRecipe.matches(inv, world)) {
 			lastRecipe = CraftingManager.findMatchingRecipe(inv, world);
 		}
 
-		if(lastRecipe != null) {
+		if (lastRecipe != null) {
 			itemstack = lastRecipe.getCraftingResult(inv);
 		}
 
-		if(!world.isRemote) {
+		if (!world.isRemote) {
 			result.setInventorySlotContents(0, itemstack);
 			EntityPlayerMP entityplayermp = (EntityPlayerMP) player;
-			if(lastLastRecipe != lastRecipe) {
+			if (lastLastRecipe != lastRecipe) {
 				entityplayermp.connection.sendPacket(new SPacketSetSlot(this.windowId, 0, itemstack));
 			} else if (lastLastRecipe != null && !ItemStack.areItemStacksEqual(lastLastRecipe.getCraftingResult(inv), lastRecipe.getCraftingResult(inv))) {
 				entityplayermp.connection.sendPacket(new SPacketSetSlot(this.windowId, 0, itemstack));
@@ -315,15 +314,17 @@ public class ContainerRadiantCraftingTable extends Container
 	/**
 	 * @return the starting slot for the player inventory. Present for usage in the JEI crafting station support
 	 */
-	public InventoryCrafting getCraftMatrix() {
+	public InventoryCrafting getCraftMatrix () {
 		return craftMatrix;
 	}
 
-	public void updateLastRecipeFromServer(IRecipe recipe) {
-		if (lastRecipe == recipe) return;
+	public void updateLastRecipeFromServer (IRecipe recipe) {
+		if (lastRecipe == recipe) {
+			return;
+		}
 
 		lastRecipe = recipe;
-		if(recipe != null && recipe.matches(craftMatrix, world)) {
+		if (recipe != null && recipe.matches(craftMatrix, world)) {
 			ItemStack stack = recipe.getCraftingResult(craftMatrix);
 			if (!stack.isEmpty()) {
 				this.craftResult.setInventorySlotContents(0, stack);
@@ -331,8 +332,8 @@ public class ContainerRadiantCraftingTable extends Container
 		}
 	}
 
-	public NonNullList<ItemStack> getRemainingItems() {
-		if(lastRecipe != null && lastRecipe.matches(craftMatrix, world)) {
+	public NonNullList<ItemStack> getRemainingItems () {
+		if (lastRecipe != null && lastRecipe.matches(craftMatrix, world)) {
 			return lastRecipe.getRemainingItems(craftMatrix);
 		}
 		return craftMatrix.stackList;

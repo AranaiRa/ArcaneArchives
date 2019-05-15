@@ -19,8 +19,7 @@ import javax.annotation.Nonnull;
 import java.util.Collections;
 
 @mezz.jei.api.JEIPlugin
-public class JEIPlugin implements IModPlugin
-{
+public class JEIPlugin implements IModPlugin {
 	public static final String GEM_CUTTERS_TABLE = ArcaneArchives.MODID + ".gem_cutters_table";
 	public static final String RADIANT_RESONATOR = ArcaneArchives.MODID + ".radiant_resonator";
 
@@ -32,13 +31,13 @@ public class JEIPlugin implements IModPlugin
 	public static IJeiRuntime runtime;
 
 	@Override
-	public void registerCategories(IRecipeCategoryRegistration registry) {
+	public void registerCategories (IRecipeCategoryRegistration registry) {
 		IGuiHelper helper = registry.getJeiHelpers().getGuiHelper();
 		registry.addRecipeCategories(new GCTCategory(helper), new QuartzCategory(helper));
 	}
 
 	@Override
-	public void register(@Nonnull IModRegistry registry) {
+	public void register (@Nonnull IModRegistry registry) {
 		jeiHelpers = registry.getJeiHelpers();
 		IGuiHelper guiHelper = jeiHelpers.getGuiHelper();
 
@@ -58,7 +57,7 @@ public class JEIPlugin implements IModPlugin
 	}
 
 	@Override
-	public void onRuntimeAvailable(@Nonnull IJeiRuntime jeiRuntime) {
+	public void onRuntimeAvailable (@Nonnull IJeiRuntime jeiRuntime) {
 		runtime = jeiRuntime;
 		recipeRegistry = jeiRuntime.getRecipeRegistry();
 	}

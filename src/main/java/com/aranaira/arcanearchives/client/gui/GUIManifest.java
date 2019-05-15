@@ -133,10 +133,11 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 
 		GlStateManager.color(1f, 1f, 1f, 1f);
 		GlStateManager.enableColorMaterial();
-		if(ConfigHandler.UsePrettyGUIs)
+		if (ConfigHandler.UsePrettyGUIs) {
 			this.mc.getTextureManager().bindTexture(GUIForegroundTextures);
-		else
+		} else {
 			this.mc.getTextureManager().bindTexture(GUIForegroundTexturesSimple);
+		}
 
 		// for some reason this seems to be relative x and y position
 		drawModalRectWithCustomSizedTexture(0, 0, 0f, 0f, xSize, ySize, mGUIForegroundTexturesSize, mGUIForegroundTexturesSize);
@@ -146,10 +147,11 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 	protected void drawBackgroundContents (int mouseX, int mouseY) {
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.enableColorMaterial();
-		if(ConfigHandler.UsePrettyGUIs)
+		if (ConfigHandler.UsePrettyGUIs) {
 			this.mc.getTextureManager().bindTexture(GUIBaseTextures);
-		else
+		} else {
 			this.mc.getTextureManager().bindTexture(GUIBaseTexturesSimple);
+		}
 
 		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, xSize, ySize, mGUIBaseTexturesSize, mGUIBaseTexturesSize);
 	}
@@ -165,10 +167,11 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 
 		{
 			GlStateManager.disableLighting();
-			if(ConfigHandler.UsePrettyGUIs)
+			if (ConfigHandler.UsePrettyGUIs) {
 				this.mc.getTextureManager().bindTexture(GUIBaseTextures);
-			else
+			} else {
 				this.mc.getTextureManager().bindTexture(GUIBaseTexturesSimple);
+			}
 			if (!ConfigHandler.DisableManifestGrid) {
 				drawModalRectWithCustomSizedTexture(slot.xPos - 1, slot.yPos - 1, mSlotTextureLeftOffset, 0, mSlotTextureSize, mSlotTextureSize, mGUIBaseTexturesSize, mGUIBaseTexturesSize);
 			}

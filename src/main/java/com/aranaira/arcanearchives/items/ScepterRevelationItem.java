@@ -29,20 +29,23 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ScepterRevelationItem extends ItemTemplate
-{
+public class ScepterRevelationItem extends ItemTemplate {
 	public static final String NAME = "item_scepterrevelation";
 
-	public ScepterRevelationItem() {
+	public ScepterRevelationItem () {
 		super(NAME);
 		setMaxStackSize(1);
 	}
 
 	@Override
-	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (hand != EnumHand.MAIN_HAND) return EnumActionResult.SUCCESS;
+	public EnumActionResult onItemUse (EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if (hand != EnumHand.MAIN_HAND) {
+			return EnumActionResult.SUCCESS;
+		}
 
-		if (world.isAirBlock(pos)) return EnumActionResult.SUCCESS;
+		if (world.isAirBlock(pos)) {
+			return EnumActionResult.SUCCESS;
+		}
 
 		player.swingArm(hand);
 
@@ -84,7 +87,7 @@ public class ScepterRevelationItem extends ItemTemplate
 				ItemStack stack = inventory.getStackInSlot(i);
 				if (!stack.isEmpty()) {
 					empty = false;
-					names.add(new TextComponentTranslation(stack.getTranslationKey()+".name"));
+					names.add(new TextComponentTranslation(stack.getTranslationKey() + ".name"));
 				}
 			}
 
@@ -116,7 +119,7 @@ public class ScepterRevelationItem extends ItemTemplate
 			if (reference.isEmpty()) {
 				player.sendMessage(new TextComponentTranslation("arcanearchives.data.scepter.radiant_trove.empty").setStyle(def));
 			} else {
-				player.sendMessage(new TextComponentTranslation("arcanearchives.data.scepter.radiant_trove.item", new TextComponentTranslation(reference.getTranslationKey()+".name")).setStyle(def));
+				player.sendMessage(new TextComponentTranslation("arcanearchives.data.scepter.radiant_trove.item", new TextComponentTranslation(reference.getTranslationKey() + ".name")).setStyle(def));
 			}
 
 			player.sendMessage(new TextComponentTranslation("arcanearchives.data.scepter.radiant_trove.count", count, maxCount).setStyle(def));
@@ -152,7 +155,7 @@ public class ScepterRevelationItem extends ItemTemplate
 			if (parent == null) {
 				player.sendMessage(new TextComponentTranslation("arcanearchives.data.scepter.accessor.invalid").setStyle(error));
 			} else {
-				player.sendMessage(new TextComponentTranslation("arcanearchives.data.scepter.accessor.accessor_to", new TextComponentTranslation(parent.getTranslationKey()+".name"), parentPos.getX(), parentPos.getY(), parentPos.getZ()).setStyle(def));
+				player.sendMessage(new TextComponentTranslation("arcanearchives.data.scepter.accessor.accessor_to", new TextComponentTranslation(parent.getTranslationKey() + ".name"), parentPos.getX(), parentPos.getY(), parentPos.getZ()).setStyle(def));
 			}
 		}
 
@@ -160,12 +163,13 @@ public class ScepterRevelationItem extends ItemTemplate
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.scepterofrevelation"));
 	}
 
 	@Override
-    public EnumRarity getRarity(ItemStack stack) {
-    	return EnumRarity.RARE;
+	@SuppressWarnings("deprecation")
+	public EnumRarity getRarity (ItemStack stack) {
+		return EnumRarity.RARE;
 	}
 }

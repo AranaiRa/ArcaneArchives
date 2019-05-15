@@ -19,12 +19,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class TomeOfArcanaItem extends ItemTemplate
-{
+public class TomeOfArcanaItem extends ItemTemplate {
 	public static final String NAME = "item_tomeofarcana";
 	public static final ResourceLocation TOME_OF_ARCANA = new ResourceLocation(ArcaneArchives.MODID, "xml/tome.xml");
 
-	public TomeOfArcanaItem() {
+	public TomeOfArcanaItem () {
 		super(NAME);
 		setHasSubtypes(true);
 		setMaxStackSize(1);
@@ -55,12 +54,11 @@ public class TomeOfArcanaItem extends ItemTemplate
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.tomeofarcana"));
 	}
 
-	public ItemStack of(ResourceLocation book)
-	{
+	public ItemStack of (ResourceLocation book) {
 		ItemStack stack = new ItemStack(this);
 		NBTTagCompound tag = new NBTTagCompound();
 		tag.setString("Book", book.toString());
@@ -69,10 +67,8 @@ public class TomeOfArcanaItem extends ItemTemplate
 	}
 
 	@Override
-	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
-	{
-		if (this.isInCreativeTab(tab))
-		{
+	public void getSubItems (CreativeTabs tab, NonNullList<ItemStack> subItems) {
+		if (this.isInCreativeTab(tab)) {
 			subItems.add(of(TOME_OF_ARCANA));
 		}
 	}

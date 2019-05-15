@@ -7,11 +7,10 @@ import net.minecraft.inventory.IInventory;
 
 import javax.annotation.Nonnull;
 
-public class ContainerMatrixStorage extends Container
-{
+public class ContainerMatrixStorage extends Container {
 	MatrixStorageTileEntity mTileEntity;
 
-	public ContainerMatrixStorage(MatrixStorageTileEntity MSTE, IInventory playerInventory) {
+	public ContainerMatrixStorage (MatrixStorageTileEntity MSTE, IInventory playerInventory) {
 		//ServerNetwork aanetwork = NetworkHelper.getServerNetwork(playerIn.getUniqueID());
 		mTileEntity = MSTE;
 
@@ -22,7 +21,7 @@ public class ContainerMatrixStorage extends Container
 	}
 
 	@Override
-	public boolean canInteractWith(@Nonnull EntityPlayer playerIn) {
+	public boolean canInteractWith (@Nonnull EntityPlayer playerIn) {
 		return true;
 	}
 }

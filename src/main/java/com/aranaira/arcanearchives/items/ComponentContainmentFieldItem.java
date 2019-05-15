@@ -13,26 +13,26 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ComponentContainmentFieldItem extends ItemTemplate
-{
+public class ComponentContainmentFieldItem extends ItemTemplate {
 	public static final String NAME = "item_component_containmentfield";
 
-	public ComponentContainmentFieldItem() {
+	public ComponentContainmentFieldItem () {
 		super(NAME);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.component.containmentfield"));
 	}
 
 	@Override
-	public EnumRarity getRarity(ItemStack stack) {
+	@SuppressWarnings("deprecation")
+	public EnumRarity getRarity (ItemStack stack) {
 		return EnumRarity.UNCOMMON;
 	}
 
 	@Override
-	public boolean doesSneakBypassUse(ItemStack stack, IBlockAccess world, BlockPos pos, EntityPlayer player) {
+	public boolean doesSneakBypassUse (ItemStack stack, IBlockAccess world, BlockPos pos, EntityPlayer player) {
 		return true;
 	}
 }

@@ -8,41 +8,40 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class ReferenceList<T> extends ForwardingList<T>
-{
+public class ReferenceList<T> extends ForwardingList<T> {
 	private List<T> reference;
 
-	public ReferenceList() {
+	public ReferenceList () {
 		this.reference = new ArrayList<>();
 	}
 
-	public ReferenceList(List<T> reference) {
+	public ReferenceList (List<T> reference) {
 		this.reference = reference;
 	}
 
-	public ReferenceList(Supplier<List<T>> supplier) {
+	public ReferenceList (Supplier<List<T>> supplier) {
 		this.reference = supplier.get();
 	}
 
 	@Override
-	protected List<T> delegate() {
+	protected List<T> delegate () {
 		return reference;
 	}
 
-	public ReferenceListIterable<T> iterable() {
+	public ReferenceListIterable<T> iterable () {
 		return new ReferenceListIterable<>(iterator());
 	}
 
 	public class ReferenceListIterable<U> implements Iterable<U> {
 		Iterator<U> iter;
 
-		ReferenceListIterable(Iterator<U> iter) {
+		ReferenceListIterable (Iterator<U> iter) {
 			this.iter = iter;
 		}
 
 		@Override
 		@Nonnull
-		public Iterator<U> iterator() {
+		public Iterator<U> iterator () {
 			return this.iter;
 		}
 	}

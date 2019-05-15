@@ -11,48 +11,51 @@ import java.util.stream.Collectors;
 
 import static com.aranaira.arcanearchives.data.ServerNetwork.ManifestItemEntry;
 
-public class ItemStackConsolidator
-{
+public class ItemStackConsolidator {
 	@Deprecated
-	public static NonNullList<ItemStack> ConsolidateItems(NonNullList<ItemStack> list) {
+	public static NonNullList<ItemStack> ConsolidateItems (NonNullList<ItemStack> list) {
 		NonNullList<ItemStack> tempList = NonNullList.create();
 
-		for(ItemStack s : list) {
+		for (ItemStack s : list) {
 			boolean added = false;
-			for(ItemStack s2 : tempList) {
-				if(ItemComparison.areStacksEqualIgnoreSize(s, s2)) {
+			for (ItemStack s2 : tempList) {
+				if (ItemComparison.areStacksEqualIgnoreSize(s, s2)) {
 					s2.setCount(s2.getCount() + s.getCount());
 					added = true;
 				}
 			}
-			if(added) continue;
+			if (added) {
+				continue;
+			}
 			tempList.add(s.copy());
 		}
 
 		return tempList;
 	}
 
-	public static List<ItemStack> ConsolidatedItems(NonNullList<ItemStack> list) {
+	public static List<ItemStack> ConsolidatedItems (NonNullList<ItemStack> list) {
 		List<ItemStack> input = new ArrayList<>(list);
 		List<ItemStack> output = new ArrayList<>();
 
-		if(input.size() == 0) return output;
+		if (input.size() == 0) {
+			return output;
+		}
 
-		while(input.size() != 0) {
+		while (input.size() != 0) {
 			ItemStack next = input.remove(0).copy();
 			final ItemStack copy = next.copy();
 
 			List<ItemStack> matches = input.stream().filter((i) -> ItemComparison.areStacksEqualIgnoreSize(copy, i)).collect(Collectors.toList());
 
-			if(matches.size() == 0) {
+			if (matches.size() == 0) {
 				output.add(next.copy());
 				continue;
 			}
 
 			input.removeAll(matches);
 
-			for(ItemStack match : matches) {
-				if((next.getCount() + match.getCount()) > next.getMaxStackSize()) {
+			for (ItemStack match : matches) {
+				if ((next.getCount() + match.getCount()) > next.getMaxStackSize()) {
 					output.add(next.copy());
 					next = match.copy();
 					continue;
@@ -67,12 +70,14 @@ public class ItemStackConsolidator
 		return output;
 	}
 
-	public static List<ManifestEntry> ConsolidateManifest(List<ManifestItemEntry> input) {
+	public static List<ManifestEntry> ConsolidateManifest (List<ManifestItemEntry> input) {
 		List<ManifestEntry> output = new ArrayList<>();
 
-		if(input.size() == 0) return output;
+		if (input.size() == 0) {
+			return output;
+		}
 
-		while(input.size() != 0) {
+		while (input.size() != 0) {
 			ManifestItemEntry tup = input.remove(0);
 			ManifestEntry next = new ManifestEntry(tup.stack, tup.dim, Lists.newArrayList(tup.entry));
 			final ItemStack copy = tup.stack.copy();
@@ -82,7 +87,7 @@ public class ItemStackConsolidator
 
 			input.removeAll(matches);
 
-			for(ManifestItemEntry match : matches) {
+			for (ManifestItemEntry match : matches) {
 				next.stack.setCount(next.stack.getCount() + match.stack.getCount());
 				next.itemEntries.add(match.entry);
 			}

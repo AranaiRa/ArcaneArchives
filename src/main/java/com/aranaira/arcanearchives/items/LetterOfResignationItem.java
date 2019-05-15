@@ -10,16 +10,15 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class LetterOfResignationItem extends ItemTemplate
-{
+public class LetterOfResignationItem extends ItemTemplate {
 	public static final String NAME = "item_letterofresignation";
 
-	public LetterOfResignationItem() {
+	public LetterOfResignationItem () {
 		super(NAME);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.letterofresignation"));
 	}
 }

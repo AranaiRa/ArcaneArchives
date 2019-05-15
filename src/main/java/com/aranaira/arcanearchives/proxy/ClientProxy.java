@@ -35,16 +35,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 
 @SuppressWarnings("unused")
-@Mod.EventBusSubscriber(modid = ArcaneArchives.MODID, value=Side.CLIENT)
-public class ClientProxy extends CommonProxy
-{
+@Mod.EventBusSubscriber(modid = ArcaneArchives.MODID, value = Side.CLIENT)
+public class ClientProxy extends CommonProxy {
 	@SideOnly(Side.CLIENT)
 	public static RadiantTankTESR tankTESR;
 	@SideOnly(Side.CLIENT)
 	public static RadiantTankTEISR itemTESR;
 
 	@SubscribeEvent
-	public static void playerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+	public static void playerLoggedIn (PlayerEvent.PlayerLoggedInEvent event) {
 		NetworkHelper.clearClientCache();
 	}
 
@@ -60,7 +59,7 @@ public class ClientProxy extends CommonProxy
 	}
 
 	@Override
-	public void preInit(FMLPreInitializationEvent event) {
+	public void preInit (FMLPreInitializationEvent event) {
 		super.preInit(event);
 
 		Keybinds.initKeybinds();
@@ -76,7 +75,7 @@ public class ClientProxy extends CommonProxy
 	}
 
 	@Override
-	public void init(FMLInitializationEvent event) {
+	public void init (FMLInitializationEvent event) {
 		super.init(event);
 	}
 
@@ -90,6 +89,6 @@ public class ClientProxy extends CommonProxy
 	}
 
 	@Override
-	public void registerItemRenderer(@Nonnull Item item, int meta, String id) {
+	public void registerItemRenderer (@Nonnull Item item, int meta, String id) {
 	}
 }

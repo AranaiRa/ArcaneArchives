@@ -9,39 +9,38 @@ import net.minecraftforge.items.ItemStackHandler;
 import java.util.Arrays;
 import java.util.List;
 
-public class RadiantCraftingTableTileEntity extends AATileEntity
-{
+public class RadiantCraftingTableTileEntity extends AATileEntity {
 	private ItemStackHandler persistentMatrix = new ItemStackHandler(9);
 	private List<IRecipe> recipeList = Arrays.asList(new IRecipe[3]);
 
-	public RadiantCraftingTableTileEntity() {
+	public RadiantCraftingTableTileEntity () {
 		super();
 		setName("radiantcraftingtable");
 	}
 
-	public ItemStackHandler getInventory() {
+	public ItemStackHandler getInventory () {
 		return persistentMatrix;
 	}
 
-	public IRecipe getRecipe(int index) {
+	public IRecipe getRecipe (int index) {
 		return recipeList.get(index);
 	}
 
-	public void setRecipe(int index, IRecipe recipe) {
+	public void setRecipe (int index, IRecipe recipe) {
 		recipeList.set(index, recipe);
 		markDirty();
 	}
 
 
 	@Override
-	public void readFromNBT(NBTTagCompound compound) {
+	public void readFromNBT (NBTTagCompound compound) {
 		super.readFromNBT(compound);
 
-		if(compound.hasKey(AATileEntity.Tags.INVENTORY)) {
+		if (compound.hasKey(AATileEntity.Tags.INVENTORY)) {
 			persistentMatrix.deserializeNBT(compound.getCompoundTag(AATileEntity.Tags.INVENTORY));
 		}
 
-		for(int i = 0; i < 3; i++) {
+		for (int i = 0; i < 3; i++) {
 			recipeList.set(i, null);
 		}
 
@@ -50,12 +49,12 @@ public class RadiantCraftingTableTileEntity extends AATileEntity
 		readRecipe(compound, Tags.RECIPE3, 2);
 	}
 
-	public void readRecipe(NBTTagCompound compound, String key, int index) {
-		if(compound.hasKey(key)) {
+	public void readRecipe (NBTTagCompound compound, String key, int index) {
+		if (compound.hasKey(key)) {
 			String rec = compound.getString(key);
-			if(!rec.isEmpty()) {
+			if (!rec.isEmpty()) {
 				ResourceLocation loc = new ResourceLocation(rec);
-				if(ForgeRegistries.RECIPES.containsKey(loc)) {
+				if (ForgeRegistries.RECIPES.containsKey(loc)) {
 					recipeList.set(index, ForgeRegistries.RECIPES.getValue(loc));
 				}
 			}
@@ -63,7 +62,7 @@ public class RadiantCraftingTableTileEntity extends AATileEntity
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+	public NBTTagCompound writeToNBT (NBTTagCompound compound) {
 		compound = super.writeToNBT(compound);
 
 		compound.setTag(AATileEntity.Tags.INVENTORY, persistentMatrix.serializeNBT());
@@ -75,10 +74,10 @@ public class RadiantCraftingTableTileEntity extends AATileEntity
 		return compound;
 	}
 
-	public void storeRecipe(NBTTagCompound compound, String tag, int index) {
+	public void storeRecipe (NBTTagCompound compound, String tag, int index) {
 		IRecipe recipe = recipeList.get(index);
 		String rec = "";
-		if(recipe != null && recipe.getRegistryName() != null) {
+		if (recipe != null && recipe.getRegistryName() != null) {
 			rec = recipe.getRegistryName().toString();
 		}
 

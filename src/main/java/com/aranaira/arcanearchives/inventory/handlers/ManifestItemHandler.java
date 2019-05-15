@@ -28,11 +28,11 @@ public class ManifestItemHandler implements IItemHandlerModifiable {
 	}
 
 	@Override
-	public int getSlots() {
+	public int getSlots () {
 		return mNumSlots;
 	}
 
-	public void setSlots(int numSlots) {
+	public void setSlots (int numSlots) {
 		this.mNumSlots = numSlots;
 	}
 

@@ -27,18 +27,18 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class ItemBlockTemplate extends ItemBlock
-{
+public class ItemBlockTemplate extends ItemBlock {
 	private BlockTemplate blockTemplate;
 
-	public ItemBlockTemplate(@Nonnull BlockTemplate block) {
+	public ItemBlockTemplate (@Nonnull BlockTemplate block) {
 		super(block);
 
 		this.blockTemplate = block;
 	}
 
 	@Override
-	public EnumRarity getRarity(ItemStack stack) {
+	@SuppressWarnings("deprecation")
+	public EnumRarity getRarity (ItemStack stack) {
 		Block blockTemplate = ((ItemBlock) stack.getItem()).getBlock();
 		if (blockTemplate == BlockRegistry.RADIANT_TROVE || blockTemplate == BlockRegistry.RADIANT_TANK || blockTemplate == BlockRegistry.GEMCUTTERS_TABLE) {
 			return EnumRarity.EPIC;
@@ -51,20 +51,20 @@ public class ItemBlockTemplate extends ItemBlock
 	}
 
 	@Override
-	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
+	public EnumActionResult onItemUseFirst (EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
 		int totalResonators = 0;
 		int totalCores = 0;
 
 		int placeLimit = blockTemplate.getPlaceLimit();
 
-		if(placeLimit != -1) {
-			if(world.isRemote) {
+		if (placeLimit != -1) {
+			if (world.isRemote) {
 				ClientNetwork network = NetworkHelper.getClientNetwork(player.getUniqueID());
 				totalResonators = network.getTotalResonators();
 				totalCores = network.getTotalCores();
 			} else {
 				ServerNetwork network = NetworkHelper.getServerNetwork(player.getUniqueID(), world);
-				if(network == null) {
+				if (network == null) {
 					player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.invalidnetwork"), true);
 					return EnumActionResult.FAIL;
 				} else {
@@ -73,9 +73,10 @@ public class ItemBlockTemplate extends ItemBlock
 				}
 			}
 
-			if((blockTemplate instanceof RadiantResonator && totalResonators >= placeLimit) || blockTemplate instanceof MatrixCrystalCore && totalCores >= placeLimit) {
-				if(!world.isRemote)
+			if ((blockTemplate instanceof RadiantResonator && totalResonators >= placeLimit) || blockTemplate instanceof MatrixCrystalCore && totalCores >= placeLimit) {
+				if (!world.isRemote) {
 					player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.toomanyplaced", blockTemplate.getPlaceLimit(), blockTemplate.getNameComponent()), true);
+				}
 				return EnumActionResult.FAIL;
 			}
 		}
@@ -83,34 +84,36 @@ public class ItemBlockTemplate extends ItemBlock
 		BlockPos up = pos.up();
 		int height = blockTemplate.getSize().height;
 
-		if(up.getY() + height > world.getHeight()) {
-			if(!world.isRemote)
+		if (up.getY() + height > world.getHeight()) {
+			if (!world.isRemote) {
 				player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.aboveworld", blockTemplate.getNameComponent()), true);
+			}
 			return EnumActionResult.FAIL;
 		}
 
-		if(blockTemplate.hasAccessors()) {
+		if (blockTemplate.hasAccessors()) {
 			boolean safe = true;
 
 			EnumFacing dir = EnumFacing.fromAngle(player.rotationYaw - 90);
 
-			for(BlockPos point : blockTemplate.calculateAccessors(world, up, dir)) {
+			for (BlockPos point : blockTemplate.calculateAccessors(world, up, dir)) {
 				IBlockState newState = world.getBlockState(point);
 				Block newBlock = newState.getBlock();
-				if(!newBlock.isAir(newState, world, point) && !newBlock.isReplaceable(world, point)) {
+				if (!newBlock.isAir(newState, world, point) && !newBlock.isReplaceable(world, point)) {
 					safe = false;
 					break;
 				}
 			}
 
-			if(!safe) {
-				if(!world.isRemote)
+			if (!safe) {
+				if (!world.isRemote) {
 					player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.notenoughspace", blockTemplate.getNameComponent()), true);
+				}
 				return EnumActionResult.FAIL;
 			}
 		}
 
-		if(placeLimit != -1 && world.isRemote) {
+		if (placeLimit != -1 && world.isRemote) {
 			ArcaneArchives.logger.info(String.format("[DEBUG ONLY MESSAGE] Successfully placed %s, with %d total resonators and %d total cores in the client network.", blockTemplate.getLocalizedName(), totalResonators, totalCores));
 		}
 

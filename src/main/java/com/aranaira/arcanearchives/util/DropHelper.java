@@ -8,14 +8,17 @@ import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
 
-public class DropHelper
-{
-	public static void dropInventoryItems(World world, BlockPos pos, @Nullable IItemHandler inventory) {
-		if(inventory == null) return;
+public class DropHelper {
+	public static void dropInventoryItems (World world, BlockPos pos, @Nullable IItemHandler inventory) {
+		if (inventory == null) {
+			return;
+		}
 
-		for(int i = 0; i < inventory.getSlots(); i++) {
+		for (int i = 0; i < inventory.getSlots(); i++) {
 			ItemStack toDrop = inventory.extractItem(i, 64, false);
-			if(toDrop.isEmpty()) continue;
+			if (toDrop.isEmpty()) {
+				continue;
+			}
 
 			InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), toDrop);
 		}

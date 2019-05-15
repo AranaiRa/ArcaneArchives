@@ -10,7 +10,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 /**
  * A {@link GuiButton} with a texture from {@link #BUTTON_TEXTURES}
- */ public class TexturedButton extends GuiButton {
+ */
+public class TexturedButton extends GuiButton {
 	private static final ResourceLocation BUTTON_TEXTURES = new ResourceLocation("arcanearchives:textures/gui/buttons.png");
 	private static final int[] TEXTURE_X_START = new int[]{0};
 	private static final int[] TEXTURE_Y_START = new int[]{0};
