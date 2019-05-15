@@ -232,6 +232,16 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 				Minecraft.getMinecraft().displayGuiScreen(null);
 				break;
 			}
+			case Keyboard.KEY_UP: {
+				container.stepPositionDown();
+				mScrollBar.scrollUp();
+				break;
+			}
+			case Keyboard.KEY_DOWN: {
+				container.stepPositionUp();
+				mScrollBar.scrollDown();
+				break;
+			}
 			default: {
 				// no-op
 				break;
