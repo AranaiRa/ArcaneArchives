@@ -50,13 +50,13 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 	private static int mEndTrackingButtonWidth = 88;
 	private static int mEndTrackingButtonHeight = 12;
 	// offset and size of refresh button
-	private static int mRefreshButtonTopOffset = 199;
-	private static int mRefreshButtonLeftOffset = 155;
-	private static int mRefreshButtonWidth = 17;
-	private static int mRefreshButtonHeight = 14;
-	// initial offset of scroll nub
+	private static int mRefreshButtonLeftOffset = 178;
+	private static int mRefreshButtonTopOffset = 200;
+	private static int mRefreshButtonWidth = 16;
+	private static int mRefreshButtonHeight = 16;
+	// scroll bar area
 	private static int mScrollBarTopOffset = 29;
-	private static int mScrollBarBottomOffset = 191;
+	private static int mScrollBarBottomOffset = 195;
 	private static int mScrollBarLeftOffset = 178;
 	// offset and size of slot texture in #GUIBaseTextures
 	private static int mSlotTextureLeftOffset = 224;
@@ -71,6 +71,7 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 	private RightClickTextField searchBox;
 	private ScrollBar mScrollBar;
 	private GuiButton mEndTrackButton;
+	private GuiButton mRefreashButton;
 
 	public GUIManifest (EntityPlayer player, ContainerManifest container) {
 		super(container);
@@ -100,11 +101,16 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 		searchBox.setGuiResponder(this);
 		searchBox.setEnableBackgroundDrawing(false);
 
-		mScrollBar = new ScrollBar(10, guiLeft + mScrollBarLeftOffset, guiTop + mScrollBarTopOffset);
+		mScrollBar = new ScrollBar(10, guiLeft + mScrollBarLeftOffset, guiTop + mScrollBarTopOffset, guiTop + mScrollBarBottomOffset);
 		addButton(mScrollBar.mNub);
 
-		mEndTrackButton = new InvisibleButton(0, guiLeft + mEndTrackingLeftOffset, mEndTrackingTopOffset + guiTop, mEndTrackingButtonWidth, mEndTrackingButtonHeight, "End Tracking");
+		container.setScrollBarListener(mScrollBar);
+
+		mEndTrackButton = new InvisibleButton(0, guiLeft + mEndTrackingLeftOffset, guiTop + mEndTrackingTopOffset, mEndTrackingButtonWidth, mEndTrackingButtonHeight, "End Tracking");
 		addButton(mEndTrackButton);
+
+		mRefreashButton = new InvisibleButton(1, guiLeft + mRefreshButtonLeftOffset, guiTop + mRefreshButtonTopOffset, mRefreshButtonWidth, mRefreshButtonHeight, "");
+		addButton(mRefreashButton);
 	}
 
 	@Override
@@ -179,7 +185,9 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 	protected void actionPerformed (GuiButton button) throws IOException {
 		if (button.id == mEndTrackButton.id) {
 			LineHandler.clearChests(player.dimension);
-			ArcaneArchives.logger.warn("Manifest End Tracking Button Clicked");
+		} else if (button.id == mRefreashButton.id) {
+			ClientNetwork network = NetworkHelper.getClientNetwork(player.getUniqueID());
+			network.synchroniseManifest();
 		}
 
 		super.actionPerformed(button);
@@ -189,12 +197,6 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 	protected void mouseClicked (int mouseX, int mouseY, int mouseButton) throws IOException {
 		if (searchBox.mouseClicked(mouseX, mouseY, mouseButton)) {
 			return;
-		}
-
-		if (mouseX > guiLeft + mRefreshButtonLeftOffset && mouseX < guiLeft + mRefreshButtonLeftOffset + mRefreshButtonWidth && mouseY > guiTop + mRefreshButtonTopOffset && mouseY < guiTop + mRefreshButtonTopOffset + mRefreshButtonHeight) {
-			ClientNetwork network = NetworkHelper.getClientNetwork(player.getUniqueID());
-			network.synchroniseManifest();
-			ArcaneArchives.logger.warn("Manifest Refresh Button Clicked");
 		}
 
 		super.mouseClicked(mouseX, mouseY, mouseButton);
@@ -213,8 +215,10 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 		int wheelState = Mouse.getEventDWheel();
 		if (wheelState > 0) {
 			container.stepPositionDown();
+			mScrollBar.scrollUp();
 		} else if (wheelState < 0) {
 			container.stepPositionUp();
+			mScrollBar.scrollDown();
 		}
 	}
 

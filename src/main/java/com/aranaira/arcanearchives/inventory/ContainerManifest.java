@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.inventory;
 
+import com.aranaira.arcanearchives.client.gui.ScrollBar;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
@@ -65,6 +66,7 @@ public class ContainerManifest extends Container {
 	private ClientNetwork clientNetwork = null;
 	private ServerNetwork serverNetwork = null;
 	private ManifestItemHandler handler;
+	private ScrollBar scrollBarListener;
 	private boolean serverSide;
 	private EntityPlayer player;
 	private int mYOffset;
@@ -74,6 +76,7 @@ public class ContainerManifest extends Container {
 		this.serverSide = ServerSide;
 		this.player = playerIn;
 		this.mYOffset = 0;
+		this.scrollBarListener = null;
 
 		if (ServerSide) {
 			serverNetwork = NetworkHelper.getServerNetwork(playerIn.getUniqueID(), playerIn.world);
@@ -108,6 +111,10 @@ public class ContainerManifest extends Container {
 		}
 	}
 
+	public void setScrollBarListener (ScrollBar scrollBar) {
+		this.scrollBarListener = scrollBar;
+	}
+
 	/**
 	 * Ensure this container has at least this many {@link net.minecraft.inventory.Slot}s
 	 *
@@ -117,10 +124,15 @@ public class ContainerManifest extends Container {
 		if (capacity > this.inventorySlots.size()) {
 			// ceiling on number of rows we need - the NUM_CELLS displayed rows times the grid spacing
 			// this means we want to
-			mMinYOffset = (((capacity + 8) / NUM_CELLS) - NUM_CELLS) * GRID_SPACING * -1;
+			mMinYOffset = (((capacity + (NUM_CELLS - 1)) / NUM_CELLS) - NUM_CELLS) * GRID_SPACING * -1;
 			handler.setSlots(capacity);
 			for (int i = this.inventoryItemStacks.size(); i < capacity; i++) {
 				this.addSlotToContainer(new ManifestItemSlot(handler, i, (i % NUM_CELLS) * GRID_SPACING + FIRST_CELL_X, (i / NUM_CELLS) * GRID_SPACING + FIRST_CELL_Y));
+			}
+
+			if (scrollBarListener != null) {
+				// ceiling on number of needed steps
+				scrollBarListener.setNumSteps(((-1 * mMinYOffset) + SCROLL_STEP - 1) / SCROLL_STEP);
 			}
 		}
 	}
