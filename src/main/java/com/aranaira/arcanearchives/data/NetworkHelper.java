@@ -66,7 +66,7 @@ public class NetworkHelper {
 			HIVE_MAP.put(hive.getOwner(), potential);
 		} else {
 			if (potential.validate(hive)) {
-				// update the hive
+				// TODO: update the hive
 			}
 			return potential;
 		}
