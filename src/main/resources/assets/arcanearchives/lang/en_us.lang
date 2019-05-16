@@ -16,6 +16,7 @@ item.item_tomeofarcana.name=Tome of Arcana
 item.item_tomeofrequisition.name=Tome of Requisition
 item.item_letterofinvitation.name=Letter of Invitation
 item.item_letterofresignation.name=Letter of Resignation
+item.item_writofexpulsion.name=Writ of Expulsion
 
 item.item_component_containmentfield.name=Containment Field
 item.item_component_materialinterface.name=Material Interface
@@ -141,6 +142,7 @@ arcanearchives.tooltip.device.monitoringcrystal=Adds attached inventory to radia
 
 arcanearchives.tooltip.item.letterofinvitation=Allows you to invite another player to your Arcane Network.
 arcanearchives.tooltip.item.letterofresignation=Allows you to leave an Arcane Network.
+arcanearchives.tooltip.item.writofexpulsion=Allows you to kick a player from your Arcane Network. Rename on an anvil to set the player to kick.
 arcanearchives.tooltip.item.manifest=Used to view items stored in Radiant storage.
 arcanearchives.tooltip.item.mountaintear=Slowly creates infinite lava when placed in a Lightwell.
 arcanearchives.tooltip.item.radiantbucket=Used to transfer fluids to and from a Radiant Tank or Reservoir Matrix.
