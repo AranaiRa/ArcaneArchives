@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.blocks;
 
+import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import net.minecraft.block.material.Material;
@@ -7,7 +8,10 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Mirror;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
@@ -18,7 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class RawQuartz extends BlockTemplate {
+public class RawQuartz extends BlockDirectionalTemplate {
 
 	//public static final PropertyDirection DIRECTION = PropertyDirection.create("facing");
 	public static final String name = "raw_quartz";
@@ -29,6 +33,30 @@ public class RawQuartz extends BlockTemplate {
 		setHardness(1.4f);
 		//setDefaultState(this.blockState.getBaseState().withProperty(DIRECTION,  EnumFacing.NORTH));
 		setHarvestLevel("pickaxe", 0);
+	}
+
+	@Override
+	@SuppressWarnings("deprecation")
+	public IBlockState withRotation (IBlockState state, Rotation rot) {
+		return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
+	}
+
+	@Override
+	@SuppressWarnings("deprecation")
+	public IBlockState withMirror (IBlockState state, Mirror mirrorIn) {
+		return state.withProperty(FACING, mirrorIn.mirror(state.getValue(FACING)));
+	}
+
+	@Override
+	public IBlockState getStateFromMeta (int meta) {
+		IBlockState iblockstate = this.getDefaultState();
+		iblockstate = iblockstate.withProperty(FACING, EnumFacing.byIndex(meta));
+		return iblockstate;
+	}
+
+	@Override
+	public int getMetaFromState (IBlockState state) {
+		return state.getValue(FACING).getIndex();
 	}
 
 	@Override

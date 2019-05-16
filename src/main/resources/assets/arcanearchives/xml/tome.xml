@@ -381,6 +381,8 @@
             <p>
                 <stack item="arcanearchives:item_scepterrevelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Radiant Tank will return what type of fluid is stored, its current and maximum capacity, and how many upgrades have been installed.
             </p>
+        </section>
+        <section>
             <p>
                 <stack item="arcanearchives:item_sceptermanipulation"/> Using a <link ref="ScepterManipulation">Scepter of Manipulation</link> on a Radiant Tank will remove one installed upgrade, so long as the storage that upgrade provided is currently unused.
             </p>
@@ -411,6 +413,8 @@
             <p>
                 <stack item="arcanearchives:item_scepterrevelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Radiant Trove will return what type of item is stored, its current and maximum capacity, and how many upgrades have been installed.
             </p>
+        </section>
+        <section>
             <p>
                 <stack item="arcanearchives:item_sceptermanipulation"/> Using a <link ref="ScepterManipulation">Scepter of Manipulation</link> on a Radiant Trove will remove one installed upgrade, so long as the storage that upgrade provided is currently unused.
             </p>
@@ -842,7 +846,7 @@
             <page_title>
                 <title>Writ of Expulsion</title>
             </page_title>
-            <p align="center"><stack item="arcanearchives:item_writexpulsion" scale="3.0"/></p>
+            <p align="center"><stack item="arcanearchives:item_writofexpulsion" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
                 A Writ of Expulsion can be used to forcibly remove a player from a <link ref="Networks">Hybrid Network</link>.
