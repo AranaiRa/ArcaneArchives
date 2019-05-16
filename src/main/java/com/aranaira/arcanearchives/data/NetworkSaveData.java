@@ -3,34 +3,31 @@
 
 package com.aranaira.arcanearchives.data;
 
-import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.storage.WorldSavedData;
 
 import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
-public class AAWorldSavedData extends WorldSavedData {
+public class NetworkSaveData extends WorldSavedData {
 	public static final String ID = "Archane-Archives-Network";
 
 	private Map<UUID, ServerNetwork> arcaneArchivesNetworks = new HashMap<>();
 
 	// It REALLY is used.
 	@SuppressWarnings("unused")
-	public AAWorldSavedData (String id) {
+	public NetworkSaveData (String id) {
 		super(id);
 	}
 
-	public AAWorldSavedData () {
+	public NetworkSaveData () {
 		super(ID);
 	}
 
+	// TODO: Use this?
 	public void clearServerMap () {
 		arcaneArchivesNetworks.clear();
 	}

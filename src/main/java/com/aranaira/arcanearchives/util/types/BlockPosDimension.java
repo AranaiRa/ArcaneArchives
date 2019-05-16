@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.data;
+package com.aranaira.arcanearchives.util.types;
 
 import net.minecraft.util.math.BlockPos;
 
