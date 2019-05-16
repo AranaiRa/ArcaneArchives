@@ -1,7 +1,6 @@
 package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketNetworks;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
@@ -59,7 +58,7 @@ public class ServerNetwork {
 	 * Returns null if they do not exist or are offline.
 	 */
 	@Nullable
-	public EntityPlayer getPlayer () {
+	private EntityPlayer getPlayer () {
 		MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
 		if (server != null) {
 			return server.getPlayerList().getPlayerByUUID(uuid);
@@ -346,57 +345,10 @@ public class ServerNetwork {
 		NBTTagCompound tag = new NBTTagCompound();
 		rebuildTotals();
 
-		tag.setInteger(NetworkTags.TOTAL_RESONATORS, totalResonators);
-		tag.setInteger(NetworkTags.TOTAL_CORES, totalCores);
+		tag.setInteger(NetworkTags.TOTAL_RESONATORS, getTotalResonators());
+		tag.setInteger(NetworkTags.TOTAL_CORES, getTotalCores());
 
 		return tag;
 	}
 
-	/**
-	 * Simple helper class for storing an item stack, a dimension and an item entry.
-	 * It's a bit like putting pouches inside of boxes inside of crates, but it works.
-	 */
-	public static class ManifestItemEntry {
-		public ItemStack stack;
-		public int dim;
-		public ManifestEntry.ItemEntry entry;
-
-		public ManifestItemEntry (ItemStack stack, int dim, ManifestEntry.ItemEntry entry) {
-			this.stack = stack;
-			this.dim = dim;
-			this.entry = entry;
-		}
-	}
-
-	/**
-	 * Specifically pairing a block position with a dimension in order to
-	 * track the unique whereabouts of a tile or other block without running
-	 * into cross-dimensional conflicts.
-	 */
-	public static class BlockPosDimension {
-		public BlockPos pos;
-		public int dimension;
-
-		public BlockPosDimension (BlockPos pos, int dimension) {
-			this.pos = pos;
-			this.dimension = dimension;
-		}
-
-		@Override
-		public boolean equals (Object o) {
-			if (this == o) {
-				return true;
-			}
-			if (o == null || getClass() != o.getClass()) {
-				return false;
-			}
-			BlockPosDimension that = (BlockPosDimension) o;
-			return dimension == that.dimension && Objects.equals(pos, that.pos);
-		}
-
-		@Override
-		public int hashCode () {
-			return Objects.hash(pos, dimension);
-		}
-	}
 }
