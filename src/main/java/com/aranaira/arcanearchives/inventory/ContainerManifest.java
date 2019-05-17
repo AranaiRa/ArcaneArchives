@@ -1,20 +1,21 @@
 package com.aranaira.arcanearchives.inventory;
 
-import com.aranaira.arcanearchives.client.gui.ScrollBar;
+import com.aranaira.arcanearchives.client.gui.framework.IScrollabe;
+import com.aranaira.arcanearchives.client.gui.framework.IScrollableContainer;
+import com.aranaira.arcanearchives.client.gui.framework.ScrollEventManager;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
-import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.events.LineHandler;
 import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
 import com.aranaira.arcanearchives.util.ManifestTracking;
 import com.aranaira.arcanearchives.util.types.ManifestEntry;
-import com.aranaira.arcanearchives.util.types.ManifestList;
 import invtweaks.api.container.InventoryContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
@@ -24,10 +25,11 @@ import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
 @InventoryContainer
-public class ContainerManifest extends Container {
+public class ContainerManifest extends Container implements IScrollableContainer {
 	// this must be a multiple of GRID_SPACING
 	private static int SCROLL_STEP = 6;
 	private static int GRID_SPACING = 18;
@@ -36,7 +38,7 @@ public class ContainerManifest extends Container {
 	/// number of cells in x and y, for now this is square
 	private static int NUM_CELLS = 9;
 
-	private static class ManifestItemSlot extends SlotItemHandler {
+	private static class ManifestItemSlot extends SlotItemHandler implements IScrollabe {
 		public int originalY;
 		private boolean isEnabled;
 
@@ -51,8 +53,9 @@ public class ContainerManifest extends Container {
 			setIsEnabled();
 		}
 
+		@Override
 		public void updateY (int yOffset) {
-			yPos = originalY + yOffset;
+			yPos = originalY - yOffset;
 			setIsEnabled();
 		}
 
@@ -63,20 +66,20 @@ public class ContainerManifest extends Container {
 		}
 	}
 
-	private ClientNetwork clientNetwork = null;
-	private ServerNetwork serverNetwork = null;
+	private ClientNetwork clientNetwork;
 	private ManifestItemHandler handler;
-	private ScrollBar scrollBarListener;
 	private boolean serverSide;
 	private EntityPlayer player;
-	private int mYOffset;
-	private int mMinYOffset;
+
+	private ScrollEventManager scrollEventManager;
+	final private List<ManifestItemSlot> manifestItemSlots;
+	private int mMaxYOffset;
 
 	public ContainerManifest (EntityPlayer playerIn) {
 		this.serverSide = false; //ServerSide;
 		this.player = playerIn;
-		this.mYOffset = 0;
-		this.scrollBarListener = null;
+		this.scrollEventManager = null;
+		this.manifestItemSlots = new ArrayList<>();
 
 		/*if (ServerSide) {
 			serverNetwork = NetworkHelper.getServerNetwork(playerIn.getUniqueID(), playerIn.world);
@@ -95,28 +98,27 @@ public class ContainerManifest extends Container {
 		return (GRID_SPACING / SCROLL_STEP) * NUM_CELLS;
 	}
 
-	public void stepPositionUp () {
-		if (mYOffset > mMinYOffset) {
-			mYOffset -= SCROLL_STEP;
-			for (int i = 0; i < this.inventorySlots.size(); i++) {
-				ManifestItemSlot manifestItemSlot = (ManifestItemSlot) (this.inventorySlots.get(i));
-				manifestItemSlot.updateY(mYOffset);
-			}
-		}
+	public void setScrollEventManager (ScrollEventManager scrollEventManager) {
+		this.scrollEventManager = scrollEventManager;
+		this.scrollEventManager.registerListener(this);
 	}
 
-	public void stepPositionDown () {
-		if (mYOffset < 0) {
-			mYOffset += SCROLL_STEP;
-			for (int i = 0; i < this.inventorySlots.size(); i++) {
-				ManifestItemSlot manifestItemSlot = (ManifestItemSlot) (this.inventorySlots.get(i));
-				manifestItemSlot.updateY(mYOffset);
-			}
-		}
+	@Override
+	public List<? extends IScrollabe> getScrollable () {
+		return manifestItemSlots;
 	}
 
-	public void setScrollBarListener (ScrollBar scrollBar) {
-		this.scrollBarListener = scrollBar;
+	@Override
+	public int getMaxYOffset () {
+		return mMaxYOffset;
+	}
+
+	@Override
+	protected Slot addSlotToContainer (Slot slotIn) {
+		if (slotIn instanceof ManifestItemSlot) {
+			manifestItemSlots.add((ManifestItemSlot) slotIn);
+		}
+		return super.addSlotToContainer(slotIn);
 	}
 
 	/**
@@ -128,15 +130,15 @@ public class ContainerManifest extends Container {
 		if (capacity > this.inventorySlots.size()) {
 			// ceiling on number of rows we need - the NUM_CELLS displayed rows times the grid spacing
 			// this means we want to
-			mMinYOffset = (((capacity + (NUM_CELLS - 1)) / NUM_CELLS) - NUM_CELLS) * GRID_SPACING * -1;
+			mMaxYOffset = (((capacity + (NUM_CELLS - 1)) / NUM_CELLS) - NUM_CELLS) * GRID_SPACING;
 			handler.setSlots(capacity);
 			for (int i = this.inventoryItemStacks.size(); i < capacity; i++) {
 				this.addSlotToContainer(new ManifestItemSlot(handler, i, (i % NUM_CELLS) * GRID_SPACING + FIRST_CELL_X, (i / NUM_CELLS) * GRID_SPACING + FIRST_CELL_Y));
 			}
 
-			if (scrollBarListener != null) {
+			if (scrollEventManager != null) {
 				// ceiling on number of needed steps
-				scrollBarListener.setNumSteps(((-1 * mMinYOffset) + SCROLL_STEP - 1) / SCROLL_STEP);
+				scrollEventManager.setNumSteps(((mMaxYOffset) + SCROLL_STEP - 1) / SCROLL_STEP);
 			}
 		}
 	}

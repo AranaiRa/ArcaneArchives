@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.client.gui;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.gui.framework.LayeredGuiContainer;
+import com.aranaira.arcanearchives.client.gui.framework.ScrollEventManager;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
@@ -30,6 +30,7 @@ import org.lwjgl.input.Mouse;
 import java.io.IOException;
 import java.util.List;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonList.GuiResponder {
 	private static final ResourceLocation GUIBaseTextures = new ResourceLocation("arcanearchives:textures/gui/manifest_base.png");
 	private static final ResourceLocation GUIBaseTexturesSimple = new ResourceLocation("arcanearchives:textures/gui/simple/manifest_base.png");
@@ -39,6 +40,7 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 	private static final float mGUIForegroundTexturesSize = 256;
 	private final EntityPlayer player;
 	private ContainerManifest container;
+	private ScrollEventManager scrollEventManager;
 	// offset and size of search box
 	private static int mTextTopOffset = 13;
 	private static int mTextLeftOffset = 13;
@@ -76,10 +78,12 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 	public GUIManifest (EntityPlayer player, ContainerManifest container) {
 		super(container);
 
+		this.scrollEventManager = new ScrollEventManager();
 		this.container = container;
 
 		ClientNetwork network = NetworkHelper.getClientNetwork(player.getUniqueID());
 		network.manifestItems.setListener(container);
+		container.setScrollEventManager(scrollEventManager);
 
 		this.xSize = 200;
 		this.ySize = 224;
@@ -102,9 +106,8 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 		searchBox.setEnableBackgroundDrawing(false);
 
 		mScrollBar = new ScrollBar(10, guiLeft + mScrollBarLeftOffset, guiTop + mScrollBarTopOffset, guiTop + mScrollBarBottomOffset);
+		scrollEventManager.registerListener(mScrollBar);
 		addButton(mScrollBar.mNub);
-
-		container.setScrollBarListener(mScrollBar);
 
 		mEndTrackButton = new InvisibleButton(0, guiLeft + mEndTrackingLeftOffset, guiTop + mEndTrackingTopOffset, mEndTrackingButtonWidth, mEndTrackingButtonHeight, "End Tracking");
 		addButton(mEndTrackButton);
@@ -217,11 +220,11 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 		// this returns the delta z since last poll
 		int wheelState = Mouse.getEventDWheel();
 		if (wheelState > 0) {
-			container.stepPositionDown();
-			mScrollBar.scrollUp();
+			scrollEventManager.nextDecrement();
+			scrollEventManager.updateYOffsets();
 		} else if (wheelState < 0) {
-			container.stepPositionUp();
-			mScrollBar.scrollDown();
+			scrollEventManager.nextIncrement();
+			scrollEventManager.updateYOffsets();
 		}
 	}
 
@@ -233,29 +236,23 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 				break;
 			}
 			case Keyboard.KEY_UP: {
-				container.stepPositionDown();
-				mScrollBar.scrollUp();
+				scrollEventManager.nextDecrement();
+				scrollEventManager.updateYOffsets();
 				break;
 			}
 			case Keyboard.KEY_DOWN: {
-				container.stepPositionUp();
-				mScrollBar.scrollDown();
-				break;
-			}
-			case Keyboard.KEY_NEXT: {
-				// quick have for page down
-				for (int i = 0; i < container.getNumStepsPerPage(); i++) {
-					container.stepPositionUp();
-					mScrollBar.scrollDown();
-				}
+				scrollEventManager.nextIncrement();
+				scrollEventManager.updateYOffsets();
 				break;
 			}
 			case Keyboard.KEY_PRIOR: {
-				// quick have for page up
-				for (int i = 0; i < container.getNumStepsPerPage(); i++) {
-					container.stepPositionDown();
-					mScrollBar.scrollUp();
-				}
+				scrollEventManager.decrementBy(container.getNumStepsPerPage());
+				scrollEventManager.updateYOffsets();
+				break;
+			}
+			case Keyboard.KEY_NEXT: {
+				scrollEventManager.incrementBy(container.getNumStepsPerPage());
+				scrollEventManager.updateYOffsets();
 				break;
 			}
 			default: {
