@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items;
+package com.aranaira.arcanearchives.items.gems;
 
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import net.minecraft.client.resources.I18n;
@@ -18,6 +18,7 @@ public class RivertearItem extends ItemTemplate {
 
 	public RivertearItem () {
 		super(NAME);
+		setMaxStackSize(1);
 	}
 
 	@Override
