@@ -34,6 +34,7 @@ public class GemCuttersTable extends BlockDirectionalTemplate {
 
 	public GemCuttersTable () {
 		super(name, Material.IRON);
+		this.setHardness(2.5f);
 		setSize(2, 1, 1);
 	}
 
@@ -106,5 +107,15 @@ public class GemCuttersTable extends BlockDirectionalTemplate {
 	@Override
 	public TileEntity createTileEntity (World world, IBlockState state) {
 		return new GemCuttersTableTileEntity();
+	}
+
+	@Override
+	public IBlockState getStateFromMeta (int meta) {
+		return getDefaultState();
+	}
+
+	@Override
+	public int getMetaFromState (IBlockState state) {
+		return 0;
 	}
 }
