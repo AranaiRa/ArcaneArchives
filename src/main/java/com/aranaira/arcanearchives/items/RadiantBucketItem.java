@@ -42,6 +42,7 @@ public class RadiantBucketItem extends ItemTemplate {
 
 	public RadiantBucketItem() {
 		super(NAME);
+		setMaxStackSize(1);
 	}
 
 	@Override
