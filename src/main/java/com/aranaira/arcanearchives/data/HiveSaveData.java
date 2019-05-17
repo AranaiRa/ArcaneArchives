@@ -1,12 +1,11 @@
 package com.aranaira.arcanearchives.data;
 
-import com.sun.istack.internal.Nullable;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.common.util.Constants.NBT;
 
-import java.rmi.server.UID;
+import javax.annotation.Nullable;
 import java.util.*;
 
 public class HiveSaveData extends WorldSavedData {
