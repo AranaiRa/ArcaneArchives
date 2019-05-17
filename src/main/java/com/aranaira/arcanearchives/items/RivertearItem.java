@@ -18,6 +18,7 @@ public class RivertearItem extends ItemTemplate {
 
 	public RivertearItem () {
 		super(NAME);
+		setMaxStackSize(1);
 	}
 
 	@Override

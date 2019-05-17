@@ -18,6 +18,7 @@ public class MountaintearItem extends ItemTemplate {
 
 	public MountaintearItem () {
 		super(NAME);
+		setMaxStackSize(1);
 	}
 
 	@Override
