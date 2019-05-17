@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items;
+package com.aranaira.arcanearchives.items.gems;
 
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import net.minecraft.client.resources.I18n;
@@ -13,18 +13,17 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class MountaintearItem extends ItemTemplate {
-	public static final String NAME = "item_mountaintear";
+public class RivertearItem extends ItemTemplate {
+	public static final String NAME = "item_rivertear";
 
-	public MountaintearItem () {
+	public RivertearItem () {
 		super(NAME);
 		setMaxStackSize(1);
 	}
 
 	@Override
 	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.mountaintear"));
-		tooltip.add(TextFormatting.RED + I18n.format("arcanearchives.tooltip.creativeonly"));
+		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.rivertear"));
 	}
 
 	@Override
