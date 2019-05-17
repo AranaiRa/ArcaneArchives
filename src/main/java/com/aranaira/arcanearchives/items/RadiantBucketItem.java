@@ -5,8 +5,11 @@ import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
+import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiNewChat;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -23,6 +26,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
@@ -119,14 +123,19 @@ public class RadiantBucketItem extends ItemTemplate {
 				} else {
 					BlockPos pos = raytraceresult.getBlockPos();
 
-					RadiantTankTileEntity rtte = (RadiantTankTileEntity) world.getTileEntity(BlockPos.fromLong(nbt.getLong("homeTank")));
-					IFluidHandler cap = rtte.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-					if(FluidRegistry.lookupFluidForBlock(world.getBlockState(pos).getBlock()) != null) {
-						FluidStack fs = new FluidStack(FluidRegistry.lookupFluidForBlock(world.getBlockState(pos).getBlock()), 1000);
-						cap.fill(fs, true);
-						world.setBlockState(pos, Blocks.AIR.getDefaultState());
-						playerIn.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
-						return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+					RadiantTankTileEntity rtte = WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, BlockPos.fromLong(nbt.getLong("homeTank")));
+					if(!world.isBlockLoaded(BlockPos.fromLong(nbt.getLong("homeTank")), true)) {
+						playerIn.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.tankmissing"), true);
+					} else {
+						//RadiantTankTileEntity rtte = (RadiantTankTileEntity) world.getTileEntity(BlockPos.fromLong(nbt.getLong("homeTank")));
+						IFluidHandler cap = rtte.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
+						if (FluidRegistry.lookupFluidForBlock(world.getBlockState(pos).getBlock()) != null) {
+							FluidStack fs = new FluidStack(FluidRegistry.lookupFluidForBlock(world.getBlockState(pos).getBlock()), 1000);
+							cap.fill(fs, true);
+							world.setBlockState(pos, Blocks.AIR.getDefaultState());
+							playerIn.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
+							return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+						}
 					}
 				}
 			}
@@ -154,12 +163,15 @@ public class RadiantBucketItem extends ItemTemplate {
 		}
 		else if(nbt.hasKey("homeTank")) {
 			//TODO: check if area is loaded
-			if(world.getBlockState(BlockPos.fromLong(nbt.getLong("homeTank"))).getBlock() == BlockRegistry.RADIANT_TANK) {
-				RadiantTankTileEntity rtte = (RadiantTankTileEntity)world.getTileEntity(BlockPos.fromLong(nbt.getLong("homeTank")));
+			RadiantTankTileEntity rtte = WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, BlockPos.fromLong(nbt.getLong("homeTank")));
+			ArcaneArchives.logger.info("am I loaded? "+(world.isBlockLoaded(BlockPos.fromLong(nbt.getLong("homeTank")))));
+			if(!world.isBlockLoaded(BlockPos.fromLong(nbt.getLong("homeTank")), true)) {
+				player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.tankmissing"), true);
+			} else {
 				IFluidHandler cap = rtte.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
 
 				//Remove fluid block from tank and place in world
-				if(nbt.getBoolean("isEmptyMode")) {
+				if (nbt.getBoolean("isEmptyMode")) {
 					FluidStack fs = cap.drain(1000, false);
 					if (fs != null) {
 
@@ -174,10 +186,9 @@ public class RadiantBucketItem extends ItemTemplate {
 						}
 					}
 				}
-				//Remove fluid block from world and place in tank
 				else {
 					//Check if the target has a fluid inventory
-					if(false) {
+					if (false) {
 						//TODO: inserting fluids into inventories
 					}
 				}
