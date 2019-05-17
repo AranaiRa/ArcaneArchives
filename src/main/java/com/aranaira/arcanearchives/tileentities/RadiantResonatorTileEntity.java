@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.blocks.RawQuartz;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.init.BlockRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -57,7 +58,8 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity {
 				//if(isDrainPaid) growth += bonusTicks;
 			} else {
 				growth = 0;
-				world.setBlockState(pos.up(), BlockRegistry.RAW_QUARTZ.getDefaultState(), 3);
+				//world.setBlockState(pos.up(), BlockRegistry.RAW_QUARTZ.getStateFromMeta(0));
+				world.setBlockState(pos.up(), BlockRegistry.RAW_QUARTZ.getStateFromMeta(2));
 			}
 		}
 

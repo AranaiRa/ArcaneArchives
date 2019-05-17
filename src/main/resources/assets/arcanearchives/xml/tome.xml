@@ -29,6 +29,7 @@
         <stack item="arcanearchives:item_sceptermanipulation">ScepterManipulation</stack>
         <stack item="arcanearchives:item_scepterrevelation">ScepterRevelation</stack>
         <stack item="arcanearchives:item_component_scintillatinginlay">ScintillatingInlay</stack>
+        <stack item="arcanearchives:item_writofexpulsion">WritExpulsion</stack>
     </stack-links>
 
     <mod-loaded name="ml_astralsorcery" modid="astralsorcery"/>
@@ -68,6 +69,7 @@
             <p><stack item="arcanearchives:item_sceptermanipulation"/> <link ref="ScepterManipulation">Scepter of Manipulation</link></p>
             <p><stack item="arcanearchives:item_scepterrevelation"/> <link ref="ScepterRevelation">Scepter of Revelation</link></p>
             <p><stack item="arcanearchives:item_component_scintillatinginlay"/> <link ref="ScintillatingInlay">Scintillating Inlay</link></p>
+            <p><stack item="arcanearchives:item_writofexpulsion"/> <link ref="WritExpulsion">Writ of Expulsion</link></p>
         </section>
         <section>
             <page_title>
@@ -379,6 +381,8 @@
             <p>
                 <stack item="arcanearchives:item_scepterrevelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Radiant Tank will return what type of fluid is stored, its current and maximum capacity, and how many upgrades have been installed.
             </p>
+        </section>
+        <section>
             <p>
                 <stack item="arcanearchives:item_sceptermanipulation"/> Using a <link ref="ScepterManipulation">Scepter of Manipulation</link> on a Radiant Tank will remove one installed upgrade, so long as the storage that upgrade provided is currently unused.
             </p>
@@ -409,6 +413,8 @@
             <p>
                 <stack item="arcanearchives:item_scepterrevelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Radiant Trove will return what type of item is stored, its current and maximum capacity, and how many upgrades have been installed.
             </p>
+        </section>
+        <section>
             <p>
                 <stack item="arcanearchives:item_sceptermanipulation"/> Using a <link ref="ScepterManipulation">Scepter of Manipulation</link> on a Radiant Trove will remove one installed upgrade, so long as the storage that upgrade provided is currently unused.
             </p>
@@ -828,6 +834,38 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Scintillating Inlay can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <horizontal_rule/>
+            <p italics="true">
+                ...Lore fragment TBD
+            </p>
+        </section>
+    </chapter>
+
+    <chapter id="WritExpulsion">
+        <section>
+            <page_title>
+                <title>Writ of Expulsion</title>
+            </page_title>
+            <p align="center"><stack item="arcanearchives:item_writofexpulsion" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                A Writ of Expulsion can be used to forcibly remove a player from a <link ref="Networks">Hybrid Network</link>.
+            </p>
+            <p>
+                <stack item="minecraft:anvil"/> Once you've named the Writ of Expulsion on an anvil to the name of the desired player to kick from your network, use it to complete the process.
+            </p>
+        </section>
+        <section>
+            <p>
+                <stack item="minecraft:crafting_table"/> Writs of Expulsion can be crafted conventionally.
+            </p>
+            <horizontal_rule/>
+            <recipe type="shaped">
+                <recipe.result>
+                    <stack item="arcanearchives:item_writofexpulsion"/>
+                </recipe.result>
+            </recipe>
+            <space height="8"/>
             <horizontal_rule/>
             <p italics="true">
                 ...Lore fragment TBD

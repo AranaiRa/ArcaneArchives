@@ -1,7 +1,6 @@
 package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketNetworks;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
@@ -27,7 +26,7 @@ import net.minecraftforge.items.IItemHandler;
 import javax.annotation.Nullable;
 import java.util.*;
 
-public class ServerNetwork {
+public class ServerNetwork implements IServerNetwork {
 	// Actual owner of this network
 	private UUID uuid;
 
@@ -47,9 +46,17 @@ public class ServerNetwork {
 		uuid = id;
 	}
 
-	/**
-	 * Simply returns the network's uuid.
+	/***
+	 * Static entrypoint used by NetworkSaveData
 	 */
+	public static ServerNetwork fromNBT (NBTTagCompound data) {
+		ServerNetwork network = new ServerNetwork(null);
+		network.readFromSave(data);
+		return network;
+	}
+
+
+	@Override
 	public UUID getUuid () {
 		return uuid;
 	}
@@ -68,25 +75,12 @@ public class ServerNetwork {
 		return null;
 	}
 
-	/***
-	 * Static entrypoint used by AAWorldSavedData
-	 */
-	public static ServerNetwork fromNBT (NBTTagCompound data) {
-		ServerNetwork network = new ServerNetwork(null);
-		network.readFromSave(data);
-		return network;
-	}
-
-	/**
-	 * Function for retrieving the current list of valid tiles from the network.
-	 */
+	@Override
 	public TileList.TileListIterable getValidTiles () {
 		return tiles.filterValid();
 	}
 
-	/**
-	 * Attempts to return a unique tile id.
-	 */
+	@Override
 	public UUID generateTileUuid () {
 		UUID newId = UUID.randomUUID();
 		while (tileIdSet.contains(newId)) {
@@ -96,22 +90,14 @@ public class ServerNetwork {
 		return newId;
 	}
 
-	/**
-	 * TODO: Honestly, I'm not sure what this does any more.
-	 * Theoretically it removes the tile under its old uuid and
-	 * inserts it under its new uuid. I don't know what circumstances
-	 * there could be that would involve this actually happening
-	 * though.
-	 */
+	@Override
 	public void handleTileIdChange (UUID oldId, UUID newId) {
 		removeTile(oldId);
 		tileIdSet.remove(oldId);
 		tileIdSet.add(newId);
 	}
 
-	/**
-	 * Function for adding tile entities to the network
-	 */
+	@Override
 	public void addTile (ImmanenceTileEntity tileEntityInstance) {
 		tileEntityInstance.tryGenerateUUID();
 
@@ -130,34 +116,32 @@ public class ServerNetwork {
 	/**
 	 * Functions for removing tile entities from the network.
 	 */
-	private void removeTile (ImmanenceTileEntity te) {
+	@Override
+	public void removeTile (ImmanenceTileEntity te) {
 		tiles.removeByUUID(te.getUuid());
 
 		if (te instanceof RadiantResonatorTileEntity || te instanceof MatrixCoreTileEntity) {
 			rebuildTotals();
 		}
-
 	}
 
-	private void removeTile (UUID tileID) {
+	@Override
+	public void removeTile (UUID tileID) {
 		ImmanenceTileEntity te = tiles.getByUUID(tileID);
 		removeTile(te);
 	}
 
-	/**
-	 * Block of functions used for determining if this network contains an ITE or tileId.
-	 */
+	@Override
 	public boolean containsTile (ImmanenceTileEntity tileEntityInstance) {
 		return containsTile(tileEntityInstance.uuid);
 	}
 
+	@Override
 	public boolean containsTile (UUID tileID) {
 		return tiles.containsUUID(tileID);
 	}
 
-	/**
-	*	Functions used for interacting with AAWorldSavedData.
-	 */
+	@Override
 	public NBTTagCompound writeToSave () {
 		NBTTagCompound tagCompound = new NBTTagCompound();
 		tagCompound.setUniqueId("playerId", uuid);
@@ -165,6 +149,7 @@ public class ServerNetwork {
 		return tagCompound;
 	}
 
+	@Override
 	public void readFromSave (NBTTagCompound tag) {
 		this.uuid = tag.getUniqueId("playerId");
 	}
@@ -176,17 +161,17 @@ public class ServerNetwork {
 		return manifestHandler;
 	}*/
 
-	/**
-	 * Contains code relating to per-player limits for resonators (and Matrices)
-	 */
+	@Override
 	public int getTotalCores () {
 		return totalCores;
 	}
 
+	@Override
 	public int getTotalResonators () {
 		return totalResonators;
 	}
 
+	@Override
 	public void rebuildTotals () {
 		int origResonators = totalResonators;
 		int origCores = totalCores;
@@ -214,7 +199,8 @@ public class ServerNetwork {
 	 * resonators client-side in addition to server-side to prevent
 	 * ghosting.
 	 */
-	private void synchroniseData () {
+	@Override
+	public void synchroniseData () {
 		EntityPlayer player = getPlayer();
 		if (player != null) {
 			IMessage packet = new PacketNetworks.Response(PacketNetworks.SynchroniseType.DATA, uuid, buildSynchroniseData());
@@ -222,11 +208,42 @@ public class ServerNetwork {
 		}
 	}
 
-	/**
-	 * Function that should be improved for the manifest.
-	 * Converts the manifestItems list into an NBT form
-	 * for return to the client.
-	 */
+	@Override
+	public boolean isHiveNetwork () {
+		return false;
+	}
+
+	@Override
+	@Nullable
+	public List<ServerNetwork> getContainedNetworks () {
+		return null;
+	}
+
+	@Override
+	public void addNetwork (ServerNetwork network) {
+	}
+
+	@Override
+	public void removeNetwork (ServerNetwork network) {
+	}
+
+	@Override
+	public void handleNewOwner () {
+	}
+
+	@Override
+	@Nullable
+	public ServerNetwork getOwnerNetwork () {
+		return null;
+	}
+
+	@Override
+	@Nullable
+	public HiveNetwork getHiveNetwork () {
+		return null;
+	}
+
+	@Override
 	public NBTTagCompound buildSynchroniseManifest () {
 		// Step one: iterate loaded chests and get item stacks.
 		rebuildManifest();
@@ -254,7 +271,7 @@ public class ServerNetwork {
 	/**
 	 * Rebuilds the manifestItems list.
 	 */
-	private void rebuildManifest () {
+	public void rebuildManifest () {
 		manifestItems.clear();
 
 		List<ManifestItemEntry> preManifest = new ArrayList<>();
@@ -333,70 +350,19 @@ public class ServerNetwork {
 	 * Fetches only manifest tile entites: radiant chests & troves.
 	 * TODO: Get rid of additional classes and use the predicate instead.
 	 */
-	private TileList.TileListIterable getManifestTileEntities () {
+	public TileList.TileListIterable getManifestTileEntities () {
 		return tiles.filterAssignableClass(ManifestTileEntity.class);
 	}
 
-	/**
-	 * Code specifically for synchronising data to the player.
-	 * Currently this only contains the total number of
-	 * resonators and matrix cores.
-	 */
+	@Override
 	public NBTTagCompound buildSynchroniseData () {
 		NBTTagCompound tag = new NBTTagCompound();
 		rebuildTotals();
 
-		tag.setInteger(NetworkTags.TOTAL_RESONATORS, totalResonators);
-		tag.setInteger(NetworkTags.TOTAL_CORES, totalCores);
+		tag.setInteger(NetworkTags.TOTAL_RESONATORS, getTotalResonators());
+		tag.setInteger(NetworkTags.TOTAL_CORES, getTotalCores());
 
 		return tag;
 	}
 
-	/**
-	 * Simple helper class for storing an item stack, a dimension and an item entry.
-	 * It's a bit like putting pouches inside of boxes inside of crates, but it works.
-	 */
-	public static class ManifestItemEntry {
-		public ItemStack stack;
-		public int dim;
-		public ManifestEntry.ItemEntry entry;
-
-		public ManifestItemEntry (ItemStack stack, int dim, ManifestEntry.ItemEntry entry) {
-			this.stack = stack;
-			this.dim = dim;
-			this.entry = entry;
-		}
-	}
-
-	/**
-	 * Specifically pairing a block position with a dimension in order to
-	 * track the unique whereabouts of a tile or other block without running
-	 * into cross-dimensional conflicts.
-	 */
-	public static class BlockPosDimension {
-		public BlockPos pos;
-		public int dimension;
-
-		public BlockPosDimension (BlockPos pos, int dimension) {
-			this.pos = pos;
-			this.dimension = dimension;
-		}
-
-		@Override
-		public boolean equals (Object o) {
-			if (this == o) {
-				return true;
-			}
-			if (o == null || getClass() != o.getClass()) {
-				return false;
-			}
-			BlockPosDimension that = (BlockPosDimension) o;
-			return dimension == that.dimension && Objects.equals(pos, that.pos);
-		}
-
-		@Override
-		public int hashCode () {
-			return Objects.hash(pos, dimension);
-		}
-	}
 }

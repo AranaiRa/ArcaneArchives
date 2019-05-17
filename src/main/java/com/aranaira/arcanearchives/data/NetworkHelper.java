@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.data.HiveSaveData.Hive;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -15,6 +16,7 @@ public class NetworkHelper {
 	public static UUID INVALID = UUID.fromString("00000000-0000-0000-0000-000000000000");
 	// TODO: This needs to be cleared whenever the player enters a new world
 	private static Map<UUID, ClientNetwork> CLIENT_MAP = new HashMap<>();
+	private static Map<UUID, HiveNetwork> HIVE_MAP = new HashMap<>();
 
 	public static void clearClientCache () {
 		CLIENT_MAP.clear();
@@ -30,27 +32,67 @@ public class NetworkHelper {
 	 */
 	@Nullable
 	public static ServerNetwork getServerNetwork (UUID uuid, World world) {
+		if (!checkUUIDAndWorld(uuid, world)) return null;
+
+		NetworkSaveData saveData = (NetworkSaveData) world.getMapStorage().getOrLoadData(NetworkSaveData.class, NetworkSaveData.ID);
+
+		if (saveData == null) {
+			saveData = new NetworkSaveData();
+			world.getMapStorage().setData(NetworkSaveData.ID, saveData);
+		}
+
+		return saveData.getNetwork(uuid);
+	}
+
+	@Nullable
+	public static HiveNetwork getHiveNetwork (UUID uuid, World world) {
+		if (!checkUUIDAndWorld(uuid, world)) return null;
+
+		HiveSaveData saveData = (HiveSaveData) world.getMapStorage().getOrLoadData(HiveSaveData.class, HiveSaveData.ID);
+
+		if (saveData == null) {
+			saveData = new HiveSaveData();
+			world.getMapStorage().setData(HiveSaveData.ID, saveData);
+		}
+
+		Hive hive = saveData.getHiveByMember(uuid);
+
+		// This should never be null
+		if (hive == null) return null;
+
+		HiveNetwork potential = HIVE_MAP.get(hive.getOwner());
+		if (potential == null) {
+			potential = createFromHive(hive, world);
+			HIVE_MAP.put(hive.getOwner(), potential);
+		} else {
+			if (potential.validate(hive)) {
+				// TODO: update the hive
+			}
+			return potential;
+		}
+
+		return null;
+	}
+
+	// TODO: Implement
+	public static HiveNetwork createFromHive (Hive hive, World world) {
+		return null;
+	}
+
+	public static boolean checkUUIDAndWorld (UUID uuid, World world) {
 		if (uuid == null || uuid.equals(INVALID)) {
 			ArcaneArchives.logger.warn(() -> "Attempted to fetch an invalid archive: " + uuid);
 			ArcaneArchives.logger.warn("Trace:", new InvalidNetworkException("UUID must be valid"));
 			// In an ideal situation, we won't need these checks, but it's useful for notifying about bugs with a
 			// reduction in the chance of crashing the server/client
-			return null;
+			return false;
 		}
 		if (world == null || world.getMapStorage() == null) {
 			ArcaneArchives.logger.error(String.format("Attempted to load a network for %s, but the world or its storage is null!", uuid.toString()));
 			ArcaneArchives.logger.warn("Trace:", new InvalidNetworkException("World is null!"));
-			return null;
+			return false;
 		}
-
-		AAWorldSavedData saveData = (AAWorldSavedData) world.getMapStorage().getOrLoadData(AAWorldSavedData.class, AAWorldSavedData.ID);
-
-		if (saveData == null) {
-			saveData = new AAWorldSavedData();
-			world.getMapStorage().setData(AAWorldSavedData.ID, saveData);
-		}
-
-		return saveData.getNetwork(uuid);
+		return true;
 	}
 
 	public static ClientNetwork getClientNetwork (UUID uuid) {

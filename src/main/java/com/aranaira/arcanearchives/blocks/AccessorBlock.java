@@ -90,7 +90,7 @@ public class AccessorBlock extends BlockTemplate {
 		if (parent == null) {
 			return super.getMapColor(state, world, pos);
 		}
-		return parent.block().getMapColor(state, world, parent.pos());
+		return parent.block().getMapColor(parent.state(), world, parent.pos());
 	}
 
 	@Override
@@ -109,34 +109,7 @@ public class AccessorBlock extends BlockTemplate {
 		if (parent == null) {
 			return super.getBlockHardness(blockState, world, pos);
 		}
-		return parent.block().getBlockHardness(blockState, world, parent.pos());
-	}
-
-	@Override
-	public int getPackedLightmapCoords (IBlockState state, IBlockAccess source, BlockPos pos) {
-		Parent parent = getBlock(source, pos);
-		if (parent == null) {
-			return super.getPackedLightmapCoords(state, source, pos);
-		}
-		return parent.block().getPackedLightmapCoords(state, source, parent.pos());
-	}
-
-	@Override
-	public boolean shouldSideBeRendered (IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
-		Parent parent = getBlock(blockAccess, pos);
-		if (parent == null) {
-			return super.shouldSideBeRendered(blockState, blockAccess, pos, side);
-		}
-		return parent.block().shouldSideBeRendered(blockState, blockAccess, parent.pos(), side);
-	}
-
-	@Override
-	public BlockFaceShape getBlockFaceShape (IBlockAccess world, IBlockState state, BlockPos pos, EnumFacing face) {
-		Parent parent = getBlock(world, pos);
-		if (parent == null) {
-			return super.getBlockFaceShape(world, state, pos, face);
-		}
-		return parent.block().getBlockFaceShape(world, state, parent.pos(), face);
+		return parent.block().getBlockHardness(parent.state(), world, parent.pos());
 	}
 
 	@Override
@@ -160,7 +133,7 @@ public class AccessorBlock extends BlockTemplate {
 		if (parent == null) {
 			return super.getPlayerRelativeBlockHardness(state, player, world, pos);
 		}
-		return parent.block().getPlayerRelativeBlockHardness(state, player, world, parent.pos());
+		return parent.block().getPlayerRelativeBlockHardness(parent.state(), player, world, parent.pos());
 	}
 
 	@Override
@@ -183,7 +156,7 @@ public class AccessorBlock extends BlockTemplate {
 		if (parent == null) {
 			return super.getWeakPower(blockState, blockAccess, pos, side);
 		}
-		return parent.block().getWeakPower(blockState, blockAccess, parent.pos(), side);
+		return parent.block().getWeakPower(parent.state(), blockAccess, parent.pos(), side);
 	}
 
 	@Override
@@ -192,7 +165,7 @@ public class AccessorBlock extends BlockTemplate {
 		if (parent == null) {
 			return super.getStrongPower(blockState, blockAccess, pos, side);
 		}
-		return parent.block().getStrongPower(blockState, blockAccess, parent.pos(), side);
+		return parent.block().getStrongPower(parent.state(), blockAccess, parent.pos(), side);
 	}
 
 	@Override
@@ -201,7 +174,7 @@ public class AccessorBlock extends BlockTemplate {
 		if (parent == null) {
 			return super.eventReceived(state, world, pos, id, param);
 		}
-		return parent.block().eventReceived(state, world, parent.pos(), id, param);
+		return parent.block().eventReceived(parent.state(), world, parent.pos(), id, param);
 	}
 
 	@Override
@@ -210,7 +183,7 @@ public class AccessorBlock extends BlockTemplate {
 		if (parent == null) {
 			return super.getComparatorInputOverride(blockState, world, pos);
 		}
-		return parent.block().getComparatorInputOverride(blockState, world, parent.pos());
+		return parent.block().getComparatorInputOverride(parent.state(), world, parent.pos());
 	}
 
 	@Override
@@ -281,6 +254,10 @@ public class AccessorBlock extends BlockTemplate {
 
 		public BlockPos pos () {
 			return parentPos;
+		}
+
+		public IBlockState state () {
+			return parentBlock.getDefaultState();
 		}
 	}
 }
