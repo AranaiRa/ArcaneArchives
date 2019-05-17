@@ -104,6 +104,11 @@ public class ContainerManifest extends Container implements IScrollableContainer
 	}
 
 	@Override
+	public void registerScrollEventManager (ScrollEventManager scrollEventManager) {
+		this.scrollEventManager = scrollEventManager;
+	}
+
+	@Override
 	public List<? extends IScrollabe> getScrollable () {
 		return manifestItemSlots;
 	}

@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.client.gui;
 
 import com.aranaira.arcanearchives.client.gui.framework.IScrollabe;
 import com.aranaira.arcanearchives.client.gui.framework.IScrollableContainer;
+import com.aranaira.arcanearchives.client.gui.framework.ScrollEventManager;
 import net.minecraft.client.gui.GuiButton;
 
 import java.util.Collections;
@@ -39,12 +40,19 @@ public class ScrollBar extends GuiButton implements IScrollableContainer {
 	 */
 	private int maxNubTopOffset;
 
+	private ScrollEventManager scrollEventManager;
+
 	public ScrollBar (int startId, int leftOffset, int topOffset, int bottomOffset) {
 		super(startId, leftOffset, topOffset, TexturedButton.getWidth(0), bottomOffset - topOffset, "");
 
 		this.mNub = new ScrollBarNub(startId + 1, 0, leftOffset, topOffset);
 
 		this.maxNubTopOffset = this.height - this.mNub.height;
+	}
+
+	@Override
+	public void registerScrollEventManager (ScrollEventManager scrollEventManager) {
+		this.scrollEventManager = scrollEventManager;
 	}
 
 	@Override

@@ -5,6 +5,9 @@ import com.aranaira.arcanearchives.MathUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Manages scrolling events between {@link IScrollableContainer} which contain elements which are {@link IScrollabe}
+ */
 public class ScrollEventManager {
 	/**
 	 * represents which step from the top of the scroll bar we're currently at, so if the number of steps change
@@ -31,6 +34,7 @@ public class ScrollEventManager {
 	 */
 	public void registerListener(IScrollableContainer listener) {
 		listeners.add(listener);
+		listener.registerScrollEventManager(this);
 	}
 
 	/**
