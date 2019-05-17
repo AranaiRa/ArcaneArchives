@@ -120,11 +120,13 @@ public class RadiantBucketItem extends ItemTemplate {
 
 					RadiantTankTileEntity rtte = (RadiantTankTileEntity) world.getTileEntity(BlockPos.fromLong(nbt.getLong("homeTank")));
 					IFluidHandler cap = rtte.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-					FluidStack fs = new FluidStack(FluidRegistry.lookupFluidForBlock(world.getBlockState(pos).getBlock()), 1000);
-					cap.fill(fs, true);
-					world.setBlockState(pos, Blocks.AIR.getDefaultState());
-					playerIn.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
-					return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+					if(FluidRegistry.lookupFluidForBlock(world.getBlockState(pos).getBlock()) != null) {
+						FluidStack fs = new FluidStack(FluidRegistry.lookupFluidForBlock(world.getBlockState(pos).getBlock()), 1000);
+						cap.fill(fs, true);
+						world.setBlockState(pos, Blocks.AIR.getDefaultState());
+						playerIn.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
+						return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+					}
 				}
 			}
 		}
