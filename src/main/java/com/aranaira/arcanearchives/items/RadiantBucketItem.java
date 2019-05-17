@@ -14,6 +14,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
@@ -25,6 +26,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -45,17 +47,20 @@ public class RadiantBucketItem extends ItemTemplate {
 	@Override
 	public void registerModels() {
 		ModelResourceLocation unlinked = new ModelResourceLocation(getRegistryName()+"_unlinked", "inventory");
-		ModelResourceLocation linked   = new ModelResourceLocation(getRegistryName()+"_linked",   "inventory");
+		ModelResourceLocation empty    = new ModelResourceLocation(getRegistryName()+"_empty",    "inventory");
+		ModelResourceLocation fill     = new ModelResourceLocation(getRegistryName()+"_fill",     "inventory");
 
-		ModelBakery.registerItemVariants(this, unlinked, linked);
+		ModelBakery.registerItemVariants(this, unlinked, empty, fill);
 
 		ModelLoader.setCustomMeshDefinition(this, new ItemMeshDefinition() {
 			@Override
 			public ModelResourceLocation getModelLocation(ItemStack stack) {
-				if (isLinked(stack)) {
-					return linked;
-				} else {
+				if (!isLinked(stack)) {
 					return unlinked;
+				} else if(isEmptyMode(stack)) {
+					return empty;
+				} else {
+					return fill;
 				}
 			}
 		});
@@ -82,45 +87,44 @@ public class RadiantBucketItem extends ItemTemplate {
 		//Only progress if linked to a tank
 		if (isLinked(stack)) {
 			//Swap between fill and empty mode
-			if(playerIn.isSneaking()) {
-				if(stack.hasTagCompound()) {
+			if (playerIn.isSneaking()) {
+				if (stack.hasTagCompound()) {
 					nbt = stack.getTagCompound();
 				} else {
 					nbt = new NBTTagCompound();
 				}
 
-				if(nbt.hasKey("isEmptyMode")){
-					if(nbt.getBoolean("isEmptyMode")){
+				if (nbt.hasKey("isEmptyMode")) {
+					if (nbt.getBoolean("isEmptyMode")) {
 						nbt.setBoolean("isEmptyMode", false);
-					}
-					else {
+					} else {
 						nbt.setBoolean("isEmptyMode", true);
 					}
-				}
-				else {
+				} else {
 					nbt.setBoolean("isEmptyMode", false);
 				}
 				stack.setTagCompound(nbt);
 			}
 			//Slurp up fluid if in fill mode
-			else {
-				if(!nbt.hasKey("isEmptyMode")) nbt.setBoolean("isEmptyMode", false);
+			else if (!isEmptyMode(stack)){
+				RayTraceResult raytraceresult = this.rayTrace(world, playerIn, true);
+				ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onBucketUse(playerIn, world, stack, raytraceresult);
+				if (ret != null) return ret;
 
-				if(!nbt.getBoolean("isEmptyMode")) {
-					RayTraceResult raytraceresult = this.rayTrace(world, playerIn, true);
-					ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onBucketUse(playerIn, world, stack, raytraceresult);
-					if (ret != null) return ret;
+				if (raytraceresult == null) {
+					return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+				} else if (raytraceresult.typeOfHit != RayTraceResult.Type.BLOCK) {
+					return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+				} else {
+					BlockPos pos = raytraceresult.getBlockPos();
 
-					if (raytraceresult == null) {
-						return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
-					}
-					else if (raytraceresult.typeOfHit != RayTraceResult.Type.BLOCK) {
-						return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
-					}
-					else {
-						BlockPos pos = raytraceresult.getBlockPos();
-						ArcaneArchives.logger.info(world.getBlockState(pos).getBlock().getLocalizedName());
-					}
+					RadiantTankTileEntity rtte = (RadiantTankTileEntity) world.getTileEntity(BlockPos.fromLong(nbt.getLong("homeTank")));
+					IFluidHandler cap = rtte.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
+					FluidStack fs = new FluidStack(FluidRegistry.lookupFluidForBlock(world.getBlockState(pos).getBlock()), 1000);
+					cap.fill(fs, true);
+					world.setBlockState(pos, Blocks.AIR.getDefaultState());
+					playerIn.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
+					return new ActionResult<>(EnumActionResult.SUCCESS, stack);
 				}
 			}
 		}
@@ -161,6 +165,7 @@ public class RadiantBucketItem extends ItemTemplate {
 
 							if (fs.getFluid().canBePlacedInWorld()) {
 								world.setBlockState(pos.offset(facing), fs.getFluid().getBlock().getDefaultState(), 11);
+								player.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
 								return EnumActionResult.SUCCESS;
 							}
 						}
@@ -189,6 +194,14 @@ public class RadiantBucketItem extends ItemTemplate {
 
 	private boolean isLinked(ItemStack stack) {
 		return getTagCompoundSafe(stack).hasKey("homeTank");
+	}
+
+	private boolean isEmptyMode(ItemStack stack) {
+		if(getTagCompoundSafe(stack).hasKey("isEmptyMode")){
+			return stack.getTagCompound().getBoolean("isEmptyMode");
+		}
+		stack.getTagCompound().setBoolean("isEmptyMode", false);
+		return false;
 	}
 
 	private ItemStack getHeldBucket(EntityPlayer player){
