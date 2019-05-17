@@ -123,11 +123,11 @@ public class RadiantBucketItem extends ItemTemplate {
 				} else {
 					BlockPos pos = raytraceresult.getBlockPos();
 
-					RadiantTankTileEntity rtte = WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, BlockPos.fromLong(nbt.getLong("homeTank")));
-					if(!world.isBlockLoaded(BlockPos.fromLong(nbt.getLong("homeTank")), true)) {
+					if(!world.isBlockLoaded(BlockPos.fromLong(nbt.getLong("homeTank")), false)) {
 						playerIn.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.tankmissing"), true);
 					} else {
 						//RadiantTankTileEntity rtte = (RadiantTankTileEntity) world.getTileEntity(BlockPos.fromLong(nbt.getLong("homeTank")));
+						RadiantTankTileEntity rtte = WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, BlockPos.fromLong(nbt.getLong("homeTank")));
 						IFluidHandler cap = rtte.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
 						if (FluidRegistry.lookupFluidForBlock(world.getBlockState(pos).getBlock()) != null) {
 							FluidStack fs = new FluidStack(FluidRegistry.lookupFluidForBlock(world.getBlockState(pos).getBlock()), 1000);
@@ -163,11 +163,12 @@ public class RadiantBucketItem extends ItemTemplate {
 		}
 		else if(nbt.hasKey("homeTank")) {
 			//TODO: check if area is loaded
-			RadiantTankTileEntity rtte = WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, BlockPos.fromLong(nbt.getLong("homeTank")));
-			ArcaneArchives.logger.info("am I loaded? "+(world.isBlockLoaded(BlockPos.fromLong(nbt.getLong("homeTank")))));
-			if(!world.isBlockLoaded(BlockPos.fromLong(nbt.getLong("homeTank")), true)) {
+			if(!world.isBlockLoaded(BlockPos.fromLong(nbt.getLong("homeTank")), false)) {
 				player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.tankmissing"), true);
 			} else {
+				ArcaneArchives.logger.info("am I loaded? "+(world.isBlockLoaded(BlockPos.fromLong(nbt.getLong("homeTank")))));
+				RadiantTankTileEntity rtte = WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, BlockPos.fromLong(nbt.getLong("homeTank")));
+				//RadiantTankTileEntity rtte = (RadiantTankTileEntity) world.getTileEntity(BlockPos.fromLong(nbt.getLong("homeTank")));
 				IFluidHandler cap = rtte.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
 
 				//Remove fluid block from tank and place in world
