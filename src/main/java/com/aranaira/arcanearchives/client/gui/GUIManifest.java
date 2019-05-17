@@ -242,6 +242,22 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 				mScrollBar.scrollDown();
 				break;
 			}
+			case Keyboard.KEY_NEXT: {
+				// quick have for page down
+				for (int i = 0; i < container.getNumStepsPerPage(); i++) {
+					container.stepPositionUp();
+					mScrollBar.scrollDown();
+				}
+				break;
+			}
+			case Keyboard.KEY_PRIOR: {
+				// quick have for page up
+				for (int i = 0; i < container.getNumStepsPerPage(); i++) {
+					container.stepPositionDown();
+					mScrollBar.scrollUp();
+				}
+				break;
+			}
 			default: {
 				// no-op
 				break;

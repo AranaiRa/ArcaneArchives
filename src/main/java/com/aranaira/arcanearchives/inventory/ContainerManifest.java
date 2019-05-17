@@ -90,6 +90,11 @@ public class ContainerManifest extends Container {
 		handler = clientNetwork.getManifestHandler();
 	}
 
+	public int getNumStepsPerPage () {
+		// number of steps per row times number of cells on a page
+		return (GRID_SPACING / SCROLL_STEP) * NUM_CELLS;
+	}
+
 	public void stepPositionUp () {
 		if (mYOffset > mMinYOffset) {
 			mYOffset -= SCROLL_STEP;
