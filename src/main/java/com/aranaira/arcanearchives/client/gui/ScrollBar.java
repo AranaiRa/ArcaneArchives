@@ -3,12 +3,13 @@ package com.aranaira.arcanearchives.client.gui;
 import com.aranaira.arcanearchives.client.gui.framework.IScrollabe;
 import com.aranaira.arcanearchives.client.gui.framework.IScrollableContainer;
 import com.aranaira.arcanearchives.client.gui.framework.ScrollEventManager;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 
 import java.util.Collections;
 import java.util.List;
 
-public class ScrollBar extends GuiButton implements IScrollableContainer {
+public class ScrollBar extends InvisibleButton implements IScrollableContainer {
 	private class ScrollBarNub extends TexturedButton implements IScrollabe {
 
 		/**
@@ -46,12 +47,17 @@ public class ScrollBar extends GuiButton implements IScrollableContainer {
 		super(startId, leftOffset, topOffset, TexturedButton.getWidth(0), bottomOffset - topOffset, "");
 
 		this.mNub = new ScrollBarNub(startId + 1, 0, leftOffset, topOffset);
-
 		this.maxNubTopOffset = this.height - this.mNub.height;
+
+		this.scrollEventManager = null;
 	}
 
 	@Override
 	public void registerScrollEventManager (ScrollEventManager scrollEventManager) {
+		if (this.scrollEventManager != null) {
+			this.scrollEventManager.unregisterListener(this);
+		}
+
 		this.scrollEventManager = scrollEventManager;
 	}
 
@@ -63,5 +69,20 @@ public class ScrollBar extends GuiButton implements IScrollableContainer {
 	@Override
 	public int getMaxYOffset () {
 		return maxNubTopOffset;
+	}
+
+	@Override
+	public boolean mousePressed (Minecraft mc, int mouseX, int mouseY) {
+		final boolean interacted = super.mousePressed(mc, mouseX, mouseY);
+
+		if (interacted && !mNub.mousePressed(mc, mouseX, mouseY)) {
+			if (mouseY < mNub.y) {
+				scrollEventManager.pageUp();
+			} else {
+				scrollEventManager.pageDown();
+			}
+		}
+
+		return interacted;
 	}
 }

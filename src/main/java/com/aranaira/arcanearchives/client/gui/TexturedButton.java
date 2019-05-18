@@ -15,8 +15,8 @@ public class TexturedButton extends GuiButton {
 	private static final ResourceLocation BUTTON_TEXTURES = new ResourceLocation("arcanearchives:textures/gui/buttons.png");
 	private static final int[] TEXTURE_X_START = new int[]{0};
 	private static final int[] TEXTURE_Y_START = new int[]{0};
-	private static final int[] TEXTURE_HEIGHT = new int[]{16};
-	private static final int[] TEXTURE_WIDTH = new int[]{16};
+	private static final int[] TEXTURE_HEIGHT = new int[]{12};
+	private static final int[] TEXTURE_WIDTH = new int[]{12};
 	private static final float BUTTON_TEXTURE_TOTAL_SIZE = 16;
 
 	private int mTextureId;

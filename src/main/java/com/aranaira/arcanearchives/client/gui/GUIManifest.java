@@ -54,11 +54,11 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 	// offset and size of refresh button
 	private static int mRefreshButtonLeftOffset = 178;
 	private static int mRefreshButtonTopOffset = 200;
-	private static int mRefreshButtonWidth = 16;
-	private static int mRefreshButtonHeight = 16;
+	private static int mRefreshButtonWidth = 14;
+	private static int mRefreshButtonHeight = 14;
 	// scroll bar area
 	private static int mScrollBarTopOffset = 29;
-	private static int mScrollBarBottomOffset = 195;
+	private static int mScrollBarBottomOffset = 191;
 	private static int mScrollBarLeftOffset = 178;
 	// offset and size of slot texture in #GUIBaseTextures
 	private static int mSlotTextureLeftOffset = 224;
@@ -107,6 +107,7 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 
 		mScrollBar = new ScrollBar(10, guiLeft + mScrollBarLeftOffset, guiTop + mScrollBarTopOffset, guiTop + mScrollBarBottomOffset);
 		scrollEventManager.registerListener(mScrollBar);
+		addButton(mScrollBar);
 		addButton(mScrollBar.mNub);
 
 		mEndTrackButton = new InvisibleButton(0, guiLeft + mEndTrackingLeftOffset, guiTop + mEndTrackingTopOffset, mEndTrackingButtonWidth, mEndTrackingButtonHeight, "End Tracking");
@@ -220,11 +221,9 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 		// this returns the delta z since last poll
 		int wheelState = Mouse.getEventDWheel();
 		if (wheelState > 0) {
-			scrollEventManager.nextDecrement();
-			scrollEventManager.updateYOffsets();
+			scrollEventManager.arrowUp();
 		} else if (wheelState < 0) {
-			scrollEventManager.nextIncrement();
-			scrollEventManager.updateYOffsets();
+			scrollEventManager.arrowDown();
 		}
 	}
 
@@ -236,23 +235,19 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 				break;
 			}
 			case Keyboard.KEY_UP: {
-				scrollEventManager.nextDecrement();
-				scrollEventManager.updateYOffsets();
+				scrollEventManager.arrowUp();
 				break;
 			}
 			case Keyboard.KEY_DOWN: {
-				scrollEventManager.nextIncrement();
-				scrollEventManager.updateYOffsets();
+				scrollEventManager.arrowDown();
 				break;
 			}
 			case Keyboard.KEY_PRIOR: {
-				scrollEventManager.decrementBy(container.getNumStepsPerPage());
-				scrollEventManager.updateYOffsets();
+				scrollEventManager.pageUp();
 				break;
 			}
 			case Keyboard.KEY_NEXT: {
-				scrollEventManager.incrementBy(container.getNumStepsPerPage());
-				scrollEventManager.updateYOffsets();
+				scrollEventManager.pageDown();
 				break;
 			}
 			default: {

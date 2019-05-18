@@ -93,11 +93,6 @@ public class ContainerManifest extends Container implements IScrollableContainer
 		handler = clientNetwork.getManifestHandler();
 	}
 
-	public int getNumStepsPerPage () {
-		// number of steps per row times number of cells on a page
-		return (GRID_SPACING / SCROLL_STEP) * NUM_CELLS;
-	}
-
 	public void setScrollEventManager (ScrollEventManager scrollEventManager) {
 		this.scrollEventManager = scrollEventManager;
 		this.scrollEventManager.registerListener(this);
@@ -105,7 +100,14 @@ public class ContainerManifest extends Container implements IScrollableContainer
 
 	@Override
 	public void registerScrollEventManager (ScrollEventManager scrollEventManager) {
+		if (this.scrollEventManager != null) {
+			this.scrollEventManager.setStepsPerPage(1);
+			this.scrollEventManager.unregisterListener(this);
+		}
+
 		this.scrollEventManager = scrollEventManager;
+		// number of steps per row times number of cells on a page
+		this.scrollEventManager.setStepsPerPage((GRID_SPACING / SCROLL_STEP) * NUM_CELLS);
 	}
 
 	@Override

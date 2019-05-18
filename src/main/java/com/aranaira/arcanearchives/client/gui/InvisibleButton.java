@@ -1,13 +1,21 @@
 package com.aranaira.arcanearchives.client.gui;
 
+import com.aranaira.arcanearchives.config.ConfigHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 
 import javax.annotation.Nonnull;
 
 public class InvisibleButton extends GuiButton {
+
+	/**
+	 * Draw shaded box where this invisible button is to aid in debugging placement
+	 */
+	public static boolean DEBUG_LOCATION = false;
 
 	public InvisibleButton (int buttonId, int x, int y, int widthIn, int heightIn, @Nonnull String buttonText) {
 		super(buttonId, x, y, widthIn, heightIn, buttonText);
@@ -24,6 +32,10 @@ public class InvisibleButton extends GuiButton {
 	 */
 	@Override
 	public void drawButton (Minecraft mc, int mouseX, int mouseY, float partialTicks) {
+		if (DEBUG_LOCATION) {
+			GuiContainer.drawRect(x, y, x + width, y + height, ConfigHandler.MANIFEST_HIGHLIGHT);
+		}
+
 		if (!displayString.isEmpty()) {
 			zLevel = 200;
 

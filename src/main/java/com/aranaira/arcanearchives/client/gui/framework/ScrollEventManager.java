@@ -19,12 +19,18 @@ public class ScrollEventManager {
 	 */
 	private int numSteps;
 	/**
+	 * the number of steps for page up/down
+	 */
+	private int stepsPerPage;
+
+	/**
 	 * The scrollable GUI elements that want to get scrolled by this manager
 	 */
 	private List<IScrollableContainer> listeners;
 
-	public ScrollEventManager() {
+	public ScrollEventManager () {
 		listeners = new ArrayList<>();
+		stepsPerPage = 1;
 	}
 
 	/**
@@ -32,49 +38,65 @@ public class ScrollEventManager {
 	 *
 	 * @param listener {@link IScrollableContainer}
 	 */
-	public void registerListener(IScrollableContainer listener) {
-		listeners.add(listener);
+	public void registerListener (IScrollableContainer listener) {
 		listener.registerScrollEventManager(this);
+		listeners.add(listener);
+	}
+
+	/**
+	 * Remove listener to the list of things that are interested in scroll events passed through this manager
+	 *
+	 * @param listener {@link IScrollableContainer}
+	 */
+	public void unregisterListener (IScrollableContainer listener) {
+		listeners.remove(listener);
+	}
+
+	/**
+	 * @param stepsPerPage set {@link #stepsPerPage} u
+	 */
+	public void setStepsPerPage (int stepsPerPage) {
+		this.stepsPerPage = stepsPerPage;
+	}
+
+	/**
+	 * Scroll up of all {@link IScrollableContainer} elements associated with this manager
+	 * by one page defined by {@link #stepsPerPage}
+	 */
+	public void pageUp () {
+		currentIncrement = Math.max(0, currentIncrement - stepsPerPage);
+		updateYOffsets();
+	}
+
+	/**
+	 * Scroll down of all {@link IScrollableContainer} elements associated with this manager
+	 * by one page defined by {@link #stepsPerPage}
+	 */
+	public void pageDown () {
+		currentIncrement = Math.min(numSteps, currentIncrement + stepsPerPage);
+		updateYOffsets();
 	}
 
 	/**
 	 * Increase the scroll of all {@link IScrollableContainer} elements associated with this manager
-	 * by increment
-	 *
-	 * @param increment increment
+	 * by one step
 	 */
-	public void incrementBy(int increment) {
-		if (increment > 0) {
-			currentIncrement = Math.min(numSteps, currentIncrement + increment);
-		}
-	}
-
-	/**
-	 * Increase the scroll of all {@link IScrollableContainer} elements associated with this manager
-	 * by one
-	 */
-	public void nextIncrement() {
-		incrementBy(1);
-	}
-
-	/**
-	 * Decrease the scroll of all {@link IScrollableContainer} elements associated with this manager
-	 * by decrement
-	 *
-	 * @param decrement decrement
-	 */
-	public void decrementBy(int decrement) {
-		if (decrement > 0) {
-			currentIncrement = Math.max(0, currentIncrement - decrement);
+	public void arrowDown () {
+		if (currentIncrement < numSteps) {
+			++currentIncrement;
+			updateYOffsets();
 		}
 	}
 
 	/**
 	 * Decrease the scroll of all {@link IScrollableContainer} elements associated with this manager
-	 * by one
+	 * by one step
 	 */
-	public void nextDecrement() {
-		decrementBy(1);
+	public void arrowUp () {
+		if (currentIncrement > 0) {
+			--currentIncrement;
+			updateYOffsets();
+		}
 	}
 
 	/**
@@ -82,13 +104,14 @@ public class ScrollEventManager {
 	 */
 	public void setNumSteps (int numSteps) {
 		this.numSteps = numSteps;
+		updateYOffsets();
 	}
 
 	/**
 	 * Update the y offset for current {@link #numSteps} and {@link #currentIncrement} in each
 	 * {@link IScrollableContainer#getScrollable()} in {@link #listeners}
 	 */
-	public void updateYOffsets() {
+	private void updateYOffsets () {
 		for (IScrollableContainer scrollableContainer : listeners) {
 			int stepSize = MathUtils.intDivisionCeiling(scrollableContainer.getMaxYOffset(), numSteps);
 			int yOffset = Math.min(scrollableContainer.getMaxYOffset(), stepSize * currentIncrement);
