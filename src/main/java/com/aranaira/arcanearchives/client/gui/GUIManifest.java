@@ -162,29 +162,31 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 
 	@Override
 	public void drawSlot (Slot slot) {
-		super.drawSlot(slot);
+		if (slot.isEnabled()) {
+			super.drawSlot(slot);
 
-		ManifestEntry entry = container.getEntry(slot.getSlotIndex());
-		if (entry == null) {
-			return;
-		}
-
-		{
-			GlStateManager.disableLighting();
-			if (ConfigHandler.UsePrettyGUIs) {
-				this.mc.getTextureManager().bindTexture(GUIBaseTextures);
-			} else {
-				this.mc.getTextureManager().bindTexture(GUIBaseTexturesSimple);
+			ManifestEntry entry = container.getEntry(slot.getSlotIndex());
+			if (entry == null) {
+				return;
 			}
-			if (!ConfigHandler.DisableManifestGrid) {
-				drawModalRectWithCustomSizedTexture(slot.xPos - 1, slot.yPos - 1, mSlotTextureLeftOffset, 0, mSlotTextureSize, mSlotTextureSize, mGUIBaseTexturesSize, mGUIBaseTexturesSize);
-			}
-			GlStateManager.enableLighting();
-		}
 
-		if (entry.getDimension() != player.dimension) {
-			GlStateManager.disableDepth();
-			drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, OTHER_DIMENSION);
+			{
+				GlStateManager.disableLighting();
+				if (ConfigHandler.UsePrettyGUIs) {
+					this.mc.getTextureManager().bindTexture(GUIBaseTextures);
+				} else {
+					this.mc.getTextureManager().bindTexture(GUIBaseTexturesSimple);
+				}
+				if (!ConfigHandler.DisableManifestGrid) {
+					drawModalRectWithCustomSizedTexture(slot.xPos - 1, slot.yPos - 1, mSlotTextureLeftOffset, 0, mSlotTextureSize, mSlotTextureSize, mGUIBaseTexturesSize, mGUIBaseTexturesSize);
+				}
+				GlStateManager.enableLighting();
+			}
+
+			if (entry.getDimension() != player.dimension) {
+				GlStateManager.disableDepth();
+				drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, OTHER_DIMENSION);
+			}
 		}
 	}
 

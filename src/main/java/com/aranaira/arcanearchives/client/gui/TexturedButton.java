@@ -38,6 +38,8 @@ public class TexturedButton extends GuiButton {
 	@Override
 	public void drawButton (Minecraft mc, int mouseX, int mouseY, float partialTicks) {
 		if (this.visible) {
+			this.mouseDragged(mc, mouseX, mouseY);
+
 			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 			mc.getTextureManager().bindTexture(BUTTON_TEXTURES);
 			int x = TEXTURE_X_START[mTextureId];

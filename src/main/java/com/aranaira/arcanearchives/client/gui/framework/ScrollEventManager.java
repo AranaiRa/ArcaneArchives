@@ -53,6 +53,28 @@ public class ScrollEventManager {
 	}
 
 	/**
+	 * Set {@link IScrollabe#updateY(int)} of all elements to have their y offset set to
+	 * scrollPercent of {@link IScrollableContainer#getMaxYOffset()} of the {@link IScrollableContainer}
+	 * they're a part of.
+	 *
+	 * @param scrollPercent percent of {@link IScrollableContainer#getMaxYOffset()} to scroll to
+	 */
+	public void setScrollPercent (float scrollPercent) {
+		// bound effectiveScrollPercent to [0, 1] inclusive
+		float effectiveScrollPercent = Math.max(0f, Math.min(1f, scrollPercent));
+		// always update currentIncrement so that if we start using arrow keys after
+		// calling this function things will work "correctly"
+		currentIncrement = Math.round(effectiveScrollPercent * numSteps);
+
+		// ignore currentIncrement and do exact scrolling
+		for (IScrollableContainer scrollableContainer : listeners) {
+			// round to nearest "pixel"
+			int yOffset = Math.round(effectiveScrollPercent * scrollableContainer.getMaxYOffset());
+			scrollableContainer.getScrollable().forEach(scrollableElement -> scrollableElement.updateY(yOffset));
+		}
+	}
+
+	/**
 	 * @param stepsPerPage set {@link #stepsPerPage} u
 	 */
 	public void setStepsPerPage (int stepsPerPage) {

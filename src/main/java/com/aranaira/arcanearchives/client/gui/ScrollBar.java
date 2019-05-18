@@ -22,11 +22,60 @@ public class ScrollBar extends InvisibleButton implements IScrollableContainer {
 		 */
 		public ScrollBarNub (int buttonId, int textureId, int x, int y) {
 			super(buttonId, textureId, x, y);
+
+			this.isBeingDragged = false;
 		}
+
+		/**
+		 * true iff this button is currently being dragged
+		 */
+		private boolean isBeingDragged;
 
 		@Override
 		public void updateY (int yOffset) {
 			y = ScrollBar.this.y + yOffset;
+		}
+
+		/**
+		 * Computer scrollPercent based on arbitrary y position from mouse
+		 *
+		 * @param mouseY
+		 * @return percent from top that mouseY is
+		 */
+		private float getScrollPercent (int mouseY) {
+			return (mouseY - ScrollBar.this.y) / (float) ScrollBar.this.getMaxYOffset();
+		}
+
+		@Override
+		public boolean mousePressed (Minecraft mc, int mouseX, int mouseY) {
+			final boolean interacted = super.mousePressed(mc, mouseX, mouseY);
+
+			if (visible && interacted) {
+				isBeingDragged = true;
+				ScrollBar.this.scrollEventManager.setScrollPercent(getScrollPercent(mouseY));
+			}
+
+			return interacted;
+		}
+
+		@Override
+		protected void mouseDragged (Minecraft mc, int mouseX, int mouseY) {
+			super.mouseDragged(mc, mouseX, mouseY);
+
+			if (visible && isBeingDragged) {
+				ScrollBar.this.scrollEventManager.setScrollPercent(getScrollPercent(mouseY));
+			}
+		}
+
+		@Override
+		public void mouseReleased (int mouseX, int mouseY) {
+			super.mouseReleased(mouseX, mouseY);
+
+			// once we let go, let it jump to nearest step
+			if (visible && isBeingDragged) {
+				isBeingDragged = false;
+				ScrollBar.this.scrollEventManager.setScrollPercent(getScrollPercent(mouseY));
+			}
 		}
 	}
 
