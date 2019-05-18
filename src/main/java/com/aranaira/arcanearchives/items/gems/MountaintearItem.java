@@ -14,27 +14,27 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class MountaintearItem extends ItemTemplate {
-	public static final String NAME = "item_mountaintear";
+    public static final String NAME = "item_mountaintear";
 
-	public MountaintearItem () {
-		super(NAME);
-		setMaxStackSize(1);
-	}
+    public MountaintearItem () {
+        super(NAME);
+        setMaxStackSize(1);
+    }
 
-	@Override
-	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.mountaintear"));
-		tooltip.add(TextFormatting.RED + I18n.format("arcanearchives.tooltip.creativeonly"));
-	}
+    @Override
+    public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+        tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.mountaintear"));
+        tooltip.add(TextFormatting.RED + I18n.format("arcanearchives.tooltip.creativeonly"));
+    }
 
-	@Override
-	@SuppressWarnings("deprecation")
-	public EnumRarity getRarity (ItemStack stack) {
-		return EnumRarity.UNCOMMON;
-	}
+    @Override
+    @SuppressWarnings("deprecation")
+    public EnumRarity getRarity (ItemStack stack) {
+        return EnumRarity.UNCOMMON;
+    }
 
-	@Override
-	public boolean doesSneakBypassUse (ItemStack stack, IBlockAccess world, BlockPos pos, EntityPlayer player) {
-		return true;
-	}
+    @Override
+    public boolean doesSneakBypassUse (ItemStack stack, IBlockAccess world, BlockPos pos, EntityPlayer player) {
+        return true;
+    }
 }

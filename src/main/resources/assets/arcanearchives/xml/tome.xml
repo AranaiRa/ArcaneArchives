@@ -373,7 +373,7 @@
             <p align="center"><stack item="arcanearchives:radiant_tank" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                A Radiant Tank is a storage container that can contain up to 16 buckets of a single type of fluid.
+                A Radiant Tank is a storage container that can contain up to 16 buckets of a single type of fluid. Using a Radiant Tank on a fluid inventory will transfer the target's fluid inventory into the held Radiant Tank.
             </p>
             <p>
                 <stack item="arcanearchives:item_component_containmentfield"/> By using a <link ref="ContainmentField">Containment Field</link> while sneaking, the maximum capacity can be increased by 16 buckets. Up to 9 such upgrades can be applied total.

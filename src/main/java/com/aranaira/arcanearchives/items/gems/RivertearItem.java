@@ -14,26 +14,26 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class RivertearItem extends ItemTemplate {
-	public static final String NAME = "item_rivertear";
+    public static final String NAME = "item_rivertear";
 
-	public RivertearItem () {
-		super(NAME);
-		setMaxStackSize(1);
-	}
+    public RivertearItem () {
+        super(NAME);
+        setMaxStackSize(1);
+    }
 
-	@Override
-	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.rivertear"));
-	}
+    @Override
+    public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+        tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.rivertear"));
+    }
 
-	@Override
-	@SuppressWarnings("deprecation")
-	public EnumRarity getRarity (ItemStack stack) {
-		return EnumRarity.UNCOMMON;
-	}
+    @Override
+    @SuppressWarnings("deprecation")
+    public EnumRarity getRarity (ItemStack stack) {
+        return EnumRarity.UNCOMMON;
+    }
 
-	@Override
-	public boolean doesSneakBypassUse (ItemStack stack, IBlockAccess world, BlockPos pos, EntityPlayer player) {
-		return true;
-	}
+    @Override
+    public boolean doesSneakBypassUse (ItemStack stack, IBlockAccess world, BlockPos pos, EntityPlayer player) {
+        return true;
+    }
 }
