@@ -1,5 +1,7 @@
 package com.aranaira.arcanearchives.util;
 
+import net.minecraft.block.Block;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -7,6 +9,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
 
@@ -65,5 +68,19 @@ public class WorldUtil {
 
 	public static boolean isChunkLoaded (World world, BlockPos pos) {
 		return world.isBlockLoaded(pos);
+	}
+
+	public static void spawnInventoryInWorld (World world, double x, double y, double z, IItemHandler inventory) {
+		spawnInventoryInWorld(world, new BlockPos(x, y, z), inventory);
+	}
+
+	public static void spawnInventoryInWorld (World world, BlockPos pos, IItemHandler inventory) {
+		if (inventory != null && !world.isRemote) {
+			for (int i = 0; i < inventory.getSlots(); i++) {
+				if (!inventory.getStackInSlot(i).isEmpty()) {
+					Block.spawnAsEntity(world, pos, inventory.getStackInSlot(i));
+				}
+			}
+		}
 	}
 }

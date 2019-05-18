@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.tileentities;
 
+import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -82,6 +83,12 @@ public class RadiantCraftingTableTileEntity extends AATileEntity {
 		}
 
 		compound.setString(tag, rec);
+	}
+
+	public void blockBroken () {
+		if (!world.isRemote) {
+			WorldUtil.spawnInventoryInWorld(world, getPos(), persistentMatrix);
+		}
 	}
 
 	@SuppressWarnings("WeakerAccess")

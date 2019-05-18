@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.tileentities.RadiantCraftingTableTileEntity;
+import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -69,5 +70,14 @@ public class RadiantCraftingTable extends BlockTemplate {
 	@Override
 	public boolean hasOBJModel () {
 		return true;
+	}
+
+	@Override
+	public void breakBlock (World world, BlockPos pos, IBlockState state) {
+		RadiantCraftingTableTileEntity te = WorldUtil.getTileEntity(RadiantCraftingTableTileEntity.class, world, pos);
+		if (te != null) {
+			te.blockBroken();
+		}
+		super.breakBlock(world, pos, state);
 	}
 }
