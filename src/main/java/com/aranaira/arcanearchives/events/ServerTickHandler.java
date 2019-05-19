@@ -20,6 +20,7 @@ import java.util.UUID;
 public class ServerTickHandler {
 	private static final List<ImmanenceTileEntity> incomingITEs = new ArrayList<>();
 	private static final List<ImmanenceTileEntity> outgoingITEs = new ArrayList<>();
+	private static final List<ImmanenceTileEntity> externalITEs = new ArrayList<>();
 
 	public static void incomingITE (ImmanenceTileEntity entity) {
 		incomingITEs.add(entity);
@@ -77,6 +78,9 @@ public class ServerTickHandler {
 
 		incomingITEs.removeAll(consumed);
 
+		outgoingITEs.addAll(externalITEs);
+		externalITEs.clear();
+
 		for (ImmanenceTileEntity ite : outgoingITEs) {
 			if (ite.isInvalid()) {
 				continue;
@@ -88,8 +92,12 @@ public class ServerTickHandler {
 		outgoingITEs.clear();
 	}
 
-	public static void outgoingITE (ImmanenceTileEntity entity) {
+	private static void outgoingITE (ImmanenceTileEntity entity) {
 		outgoingITEs.add(entity);
+	}
+
+	public static void externalOutgoingITE (ImmanenceTileEntity entity) {
+		externalITEs.add(entity);
 	}
 
 	@SubscribeEvent

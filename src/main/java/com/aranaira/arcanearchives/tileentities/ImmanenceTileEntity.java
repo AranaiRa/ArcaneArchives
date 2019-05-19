@@ -57,14 +57,14 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable {
 	public void invalidate () {
 		super.invalidate();
 
-		ServerTickHandler.outgoingITE(this);
+		ServerTickHandler.externalOutgoingITE(this);
 	}
 
 	@Override
 	public void onChunkUnload () {
 		super.onChunkUnload();
 
-		ServerTickHandler.outgoingITE(this);
+		ServerTickHandler.externalOutgoingITE(this);
 	}
 
 	@Override
