@@ -60,17 +60,21 @@ public class ScrollEventManager {
 	 * @param scrollPercent percent of {@link IScrollableContainer#getMaxYOffset()} to scroll to
 	 */
 	public void setScrollPercent (float scrollPercent) {
-		// bound effectiveScrollPercent to [0, 1] inclusive
-		float effectiveScrollPercent = Math.max(0f, Math.min(1f, scrollPercent));
-		// always update currentIncrement so that if we start using arrow keys after
-		// calling this function things will work "correctly"
-		currentIncrement = Math.round(effectiveScrollPercent * numSteps);
+		if (numSteps > 0) {
 
-		// ignore currentIncrement and do exact scrolling
-		for (IScrollableContainer scrollableContainer : listeners) {
-			// round to nearest "pixel"
-			int yOffset = Math.round(effectiveScrollPercent * scrollableContainer.getMaxYOffset());
-			scrollableContainer.getScrollable().forEach(scrollableElement -> scrollableElement.updateY(yOffset));
+			// bound effectiveScrollPercent to [0, 1] inclusive
+			float effectiveScrollPercent = Math.max(0f, Math.min(1f, scrollPercent));
+			// always update currentIncrement so that if we start using arrow keys after
+			// calling this function things will work "correctly"
+			currentIncrement = Math.round(effectiveScrollPercent * numSteps);
+
+			// ignore currentIncrement and do exact scrolling
+			for (IScrollableContainer scrollableContainer : listeners) {
+				// round to nearest "pixel"
+				int yOffset = Math.round(effectiveScrollPercent * scrollableContainer.getMaxYOffset());
+				scrollableContainer.getScrollable().forEach(scrollableElement -> scrollableElement.updateY(yOffset));
+			}
+
 		}
 	}
 
@@ -125,7 +129,7 @@ public class ScrollEventManager {
 	 * Set the number of increments in the {@link IScrollableContainer} managed by this manager
 	 */
 	public void setNumSteps (int numSteps) {
-		this.numSteps = numSteps;
+		this.numSteps = Math.max(0, numSteps);
 		updateYOffsets();
 	}
 
@@ -134,10 +138,12 @@ public class ScrollEventManager {
 	 * {@link IScrollableContainer#getScrollable()} in {@link #listeners}
 	 */
 	private void updateYOffsets () {
-		for (IScrollableContainer scrollableContainer : listeners) {
-			int stepSize = MathUtils.intDivisionCeiling(scrollableContainer.getMaxYOffset(), numSteps);
-			int yOffset = Math.min(scrollableContainer.getMaxYOffset(), stepSize * currentIncrement);
-			scrollableContainer.getScrollable().forEach(scrollableElement -> scrollableElement.updateY(yOffset));
+		if (numSteps > 0) {
+			for (IScrollableContainer scrollableContainer : listeners) {
+				int stepSize = MathUtils.intDivisionCeiling(scrollableContainer.getMaxYOffset(), numSteps);
+				int yOffset = Math.min(scrollableContainer.getMaxYOffset(), stepSize * currentIncrement);
+				scrollableContainer.getScrollable().forEach(scrollableElement -> scrollableElement.updateY(yOffset));
+			}
 		}
 	}
 }

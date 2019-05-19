@@ -16,7 +16,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'org.spongepowered.mixin'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
-version = "0.2.0-preview13-hotfix4-unreleased"
+version = "0.2.0-preview14a-ohnobuckets"
 group = "com.aranairra.arcanearchives"
 archivesBaseName = "arcanearchives"
 

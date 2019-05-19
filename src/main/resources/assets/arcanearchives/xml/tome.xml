@@ -60,16 +60,21 @@
             <p><stack item="arcanearchives:item_manifest"/> <link ref="Manifest">Manifest</link></p>
             <p><stack item="arcanearchives:item_component_materialinterface"/> <link ref="MaterialInterface">Material Interface</link></p>
             <p><stack item="arcanearchives:item_component_matrixbrace"/> <link ref="MatrixBrace">Matrix Brace</link></p>
-            <p><stack item="arcanearchives:item_mountaintear"/> <link ref="Mountaintear">Mountaintear</link></p>
             <p><stack item="arcanearchives:item_radiantbucket"/> <link ref="RadiantBucket">Radiant Bucket</link></p>
             <p><stack item="arcanearchives:item_component_radiantdust"/> <link ref="RadiantDust">Radiant Dust</link></p>
             <p><stack item="arcanearchives:item_rawquartz"/> <link ref="RawQuartz">Radiant Quartz (Raw)</link></p>
             <p><stack item="arcanearchives:item_cutquartz"/> <link ref="ShapedQuartz">Radiant Quartz (Shaped)</link></p>
-            <p><stack item="arcanearchives:item_rivertear"/> <link ref="Rivertear">Rivertear</link></p>
             <p><stack item="arcanearchives:item_sceptermanipulation"/> <link ref="ScepterManipulation">Scepter of Manipulation</link></p>
             <p><stack item="arcanearchives:item_scepterrevelation"/> <link ref="ScepterRevelation">Scepter of Revelation</link></p>
             <p><stack item="arcanearchives:item_component_scintillatinginlay"/> <link ref="ScintillatingInlay">Scintillating Inlay</link></p>
             <p><stack item="arcanearchives:item_writofexpulsion"/> <link ref="WritExpulsion">Writ of Expulsion</link></p>
+        </section>
+        <section>
+            <page_title>
+                <title>Arcane Gems</title>
+            </page_title>
+            <p><stack item="arcanearchives:item_mountaintear"/> <link ref="Mountaintear">Mountaintear</link></p>
+            <p><stack item="arcanearchives:item_rivertear"/> <link ref="Rivertear">Rivertear</link></p>
         </section>
         <section>
             <page_title>
@@ -591,31 +596,6 @@
         </section>
     </chapter>
 
-    <chapter id="Mountaintear">
-        <section>
-            <page_title>
-                <title>Mountaintear</title>
-            </page_title>
-            <p align="center"><stack item="arcanearchives:item_mountaintear" scale="3.0"/></p>
-            <horizontal_rule/>
-            <p>
-                <stack item="astralsorcery:blockwell"/> When placed in a Lightwell with access to the sky, a Mountaintear generates lava at a slow rate. While it's possible for a Mountaintear to shatter, the chances of shattering are <span italics="true">astronomically</span> unlikely. For all intents and purposes, a Mountaintear lasts indefinitely unless its Lightwell is broken.
-            </p>
-            <p>
-                Once placed in a Lightwell, a Mountaintear cannot be retrieved.
-            </p>
-        </section>
-        <section>
-            <p>
-                Mountaintears cannot be crafted, and are only available via Creative mode.
-            </p>
-            <horizontal_rule/>
-            <p italics="true">
-                ...Lore fragment TBD
-            </p>
-        </section>
-    </chapter>
-
     <chapter id="RadiantBucket">
         <section>
             <page_title>
@@ -718,31 +698,6 @@
         <section>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Shaped Radiant Quartz can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
-            </p>
-            <horizontal_rule/>
-            <p italics="true">
-                ...Lore fragment TBD
-            </p>
-        </section>
-    </chapter>
-
-    <chapter id="Rivertear">
-        <section>
-            <page_title>
-                <title>Rivertear</title>
-            </page_title>
-            <p align="center"><stack item="arcanearchives:item_rivertear" scale="3.0"/></p>
-            <horizontal_rule/>
-            <p>
-                <stack item="astralsorcery:blockwell"/> When placed in a Lightwell with access to the sky, a Rivertear generates water at an extremely rapid rate. While it's possible for a Rivertear to shatter, the chances of shattering are <span italics="true">astronomically</span> unlikely. For all intents and purposes, a Rivertear lasts indefinitely unless its Lightwell is broken.
-            </p>
-            <p>
-                Once placed in a Lightwell, a Rivertear cannot be retrieved.
-            </p>
-        </section>
-        <section>
-            <p>
-                <stack item="arcanearchives:gemcutters_table" /> Rivertears can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <horizontal_rule/>
             <p italics="true">
@@ -873,12 +828,75 @@
         </section>
     </chapter>
 
+    <chapter id="Mountaintear">
+        <section>
+            <page_title>
+                <title>Mountaintear</title>
+            </page_title>
+            <p align="center"><stack item="arcanearchives:item_mountaintear" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                <stack item="astralsorcery:blockwell"/> When placed in a Lightwell with access to the sky, a Mountaintear generates lava at a slow rate. While it's possible for a Mountaintear to shatter, the chances of shattering are <span italics="true">astronomically</span> unlikely. For all intents and purposes, a Mountaintear lasts indefinitely unless its Lightwell is broken.
+            </p>
+            <p>
+                Once placed in a Lightwell, a Mountaintear cannot be retrieved.
+            </p>
+        </section>
+        <section>
+            <p>
+                Mountaintears cannot be crafted, and are only available via Creative mode.
+            </p>
+            <horizontal_rule/>
+            <p italics="true">
+                ...Lore fragment TBD
+            </p>
+        </section>
+    </chapter>
+
+    <chapter id="Rivertear">
+        <section>
+            <page_title>
+                <title>Rivertear</title>
+            </page_title>
+            <p align="center"><stack item="arcanearchives:item_rivertear" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                <stack item="astralsorcery:blockwell"/> When placed in a Lightwell with access to the sky, a Rivertear generates water at an extremely rapid rate. While it's possible for a Rivertear to shatter, the chances of shattering are <span italics="true">astronomically</span> unlikely. For all intents and purposes, a Rivertear lasts indefinitely unless its Lightwell is broken.
+            </p>
+            <p>
+                Once placed in a Lightwell, a Rivertear cannot be retrieved.
+            </p>
+        </section>
+        <section>
+            <p>
+                <stack item="arcanearchives:gemcutters_table" /> Rivertears can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+            </p>
+            <horizontal_rule/>
+            <p italics="true">
+                ...Lore fragment TBD
+            </p>
+        </section>
+    </chapter>
+
     <chapter id="Networks">
         <section>
             <page_title>
                 <title>Networks</title>
             </page_title>
             <p align="center"><image src="arcanearchives:gui/guidebook/networks" tw="16" th="16" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                Every Arcane Archives block you place becomes part of a network. Each block in the network can be accessed by certain items and devices, and ultimately ties back to you. The creation of a network is automatic, and you can only ever belong to one network.
+            </p>
+            <p>
+                <stack item="arcanearchives:item_letterofinvitation"/> By using a <link ref="LetterInvitation">Letter of Invitation</link> given to you by another player, you can form a hybrid network with that player, pooling your resources together. Everything in both players' networks is mutually accessible.
+            </p>
+            <p>
+                <stack item="arcanearchives:item_letterofresignation"/> By using a <link ref="LetterResignation">Letter of Resignation</link>, you can break from a hybrid network. All blocks that you placed return to your individual network.
+            </p>
+            <p>
+                <stack item="arcanearchives:item_manifest"/> <link ref="Manifest">Manifests</link> display the contents of all inventories that are part of the network you belong to.
+            </p>
             <horizontal_rule/>
             <p italics="true">
                 ...Lore fragment TBD

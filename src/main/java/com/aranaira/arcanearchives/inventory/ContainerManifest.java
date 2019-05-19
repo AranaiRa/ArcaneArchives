@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.inventory;
 
+import com.aranaira.arcanearchives.MathUtils;
 import com.aranaira.arcanearchives.client.gui.framework.IScrollabe;
 import com.aranaira.arcanearchives.client.gui.framework.IScrollableContainer;
 import com.aranaira.arcanearchives.client.gui.framework.ScrollEventManager;
@@ -145,7 +146,7 @@ public class ContainerManifest extends Container implements IScrollableContainer
 
 			if (scrollEventManager != null) {
 				// ceiling on number of needed steps
-				scrollEventManager.setNumSteps(((mMaxYOffset) + SCROLL_STEP - 1) / SCROLL_STEP);
+				scrollEventManager.setNumSteps(Math.max(0, MathUtils.intDivisionCeiling(mMaxYOffset, SCROLL_STEP)));
 			}
 		}
 	}

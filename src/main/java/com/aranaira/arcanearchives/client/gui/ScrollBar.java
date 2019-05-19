@@ -43,7 +43,7 @@ public class ScrollBar extends InvisibleButton implements IScrollableContainer {
 		 * @return percent from top that mouseY is
 		 */
 		private float getScrollPercent (int mouseY) {
-			return (mouseY - ScrollBar.this.y) / (float) ScrollBar.this.getMaxYOffset();
+			return (mouseY - (this.height / 2) - ScrollBar.this.y) / (float) ScrollBar.this.getMaxYOffset();
 		}
 
 		@Override
@@ -71,11 +71,7 @@ public class ScrollBar extends InvisibleButton implements IScrollableContainer {
 		public void mouseReleased (int mouseX, int mouseY) {
 			super.mouseReleased(mouseX, mouseY);
 
-			// once we let go, let it jump to nearest step
-			if (visible && isBeingDragged) {
-				isBeingDragged = false;
-				ScrollBar.this.scrollEventManager.setScrollPercent(getScrollPercent(mouseY));
-			}
+			isBeingDragged = false;
 		}
 	}
 
