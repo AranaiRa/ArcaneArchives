@@ -607,16 +607,16 @@
             <p align="center"><stack item="arcanearchives:item_radiantamphora" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:radiant_tank"/>A Radiant Amphora acts as a long distance connection to a specific <link ref="RadiantTank">Radiant Tank</link>. You can bind a Radiant Bucket to a Radiant Tank by simply using the bucket on the desired tank. The bucket will become solid to signify the connection.
+                <stack item="arcanearchives:radiant_tank"/>A Radiant Amphora acts as a long distance connection to a specific <link ref="RadiantTank">Radiant Tank</link>. You can bind a Radiant Amphora to a Radiant Tank by simply using the amphora on the desired tank. The amphora will become colorized to signify that a connection was made.
             </p>
             <p>
-                While in <span bold="true">Fill</span> mode (Radiant Amphora is upright), picking up fluid directly places it into the linked Radiant Tank.
+                <image src="arcanearchives:items/item_radiantamphora" tw="16" th="16"/> While in <span bold="true">Fill</span> mode, picking up fluid directly places it into the linked Radiant Tank.
             </p>
             <p>
-                When in <span bold="true">Empty</span> mode (Radiant Amphora is tilted), fluid is removed from the linked Radiant Tank and placed at the target point.
+                <image src="arcanearchives:items/item_radiantamphora_tilted" tw="16" th="16"/> When in <span bold="true">Empty</span> mode, fluid is removed from the linked Radiant Tank and placed at the target point.
             </p>
             <p>
-                You can switch the Radiant Amphora's current mode by using it while sneaking.
+                You can switch the Radiant Amphora's current mode by left clicking the air.
             </p>
         </section>
         <section>

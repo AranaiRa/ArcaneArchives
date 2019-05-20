@@ -1,11 +1,19 @@
 package com.aranaira.arcanearchives.events;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.init.BlockRegistry;
+import com.aranaira.arcanearchives.init.ItemRegistry;
+import com.aranaira.arcanearchives.network.NetworkHandler;
+import com.aranaira.arcanearchives.network.PacketRadiantAmphora;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDestroyBlockEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -75,5 +83,15 @@ public class AAEventHandler {
 	@SubscribeEvent
 	public static void onBlockActivated (PlayerInteractEvent.RightClickBlock event) {
 		LineHandler.removeLine(event.getPos());
+	}
+
+	@SubscribeEvent
+	public static void LeftClickEmpty(PlayerInteractEvent.LeftClickEmpty event)
+	{
+		Item item = event.getEntityPlayer().inventory.getCurrentItem().getItem();
+		if(item == ItemRegistry.RADIANT_AMPHORA) {
+			PacketRadiantAmphora packet = new PacketRadiantAmphora();
+			NetworkHandler.CHANNEL.sendToServer(packet);
+		}
 	}
 }

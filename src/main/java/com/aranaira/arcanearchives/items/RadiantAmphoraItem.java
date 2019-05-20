@@ -87,12 +87,8 @@ public class RadiantAmphoraItem extends ItemTemplate {
 
 			//Only progress if linked to a tank
 			if (isLinked(stack)) {
-				//Swap between fill and empty mode
-				if (playerIn.isSneaking()) {
-					nbt.setBoolean("isEmptyMode", nbt.hasKey("isEmptyMode") && !nbt.getBoolean("isEmptyMode"));
-				}
 				//Slurp up fluid if in fill mode
-				else if (!getEmptyMode(stack)) {
+				if (!getEmptyMode(stack)) {
 					RayTraceResult raytraceresult = this.rayTrace(world, playerIn, true);
 					/*ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onBucketUse(playerIn, world, stack, raytraceresult);
 					if (ret != null) return ret;*/
@@ -187,7 +183,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 
 	private ItemStack getHeldBucket (EntityPlayer player) {
 		for (ItemStack stack : player.getHeldEquipment()) {
-			if (stack.getItem() == ItemRegistry.RADIANT_BUCKET) return stack;
+			if (stack.getItem() == ItemRegistry.RADIANT_AMPHORA) return stack;
 		}
 
 		return ItemStack.EMPTY;
