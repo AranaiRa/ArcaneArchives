@@ -1,0 +1,14 @@
+{
+    "_comment": [
+        "Revert raw radiant quartz from its silk touched cluster form"
+    ],
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {   
+            "item": "arcanearchives:raw_quartz"
+        }
+    ],
+    "result": {
+        "item": "arcanearchives:item_rawquartz"
+    }
+}
