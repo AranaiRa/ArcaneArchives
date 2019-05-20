@@ -41,10 +41,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class RadiantBucketItem extends ItemTemplate {
-	public static final String NAME = "item_radiantbucket";
+public class RadiantAmphoraItem extends ItemTemplate {
+	public static final String NAME = "item_radiantamphora";
 
-	public RadiantBucketItem() {
+	public RadiantAmphoraItem() {
 		super(NAME);
 		setMaxStackSize(1);
 	}
@@ -73,7 +73,7 @@ public class RadiantBucketItem extends ItemTemplate {
 
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.radiantbucket"));
+		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.radiantamphora"));
 		if (stack.hasTagCompound() && stack.getTagCompound().hasKey("homeTank"))
 		{
 			tooltip.add(stack.getTagCompound().getLong("homeTank")+"");

@@ -27,7 +27,7 @@ public class ItemRegistry {
 	//public static final GeomanticMapItem GEOMANTIC_MAP = new GeomanticMapItem();
 	public static final ManifestItem MANIFEST = new ManifestItem();
 	public static final MountaintearItem MOUNTAINTEAR = new MountaintearItem();
-	public static final RadiantBucketItem RADIANT_BUCKET = new RadiantBucketItem();
+	public static final RadiantAmphoraItem RADIANT_BUCKET = new RadiantAmphoraItem();
 	public static final RivertearItem RIVERTEAR = new RivertearItem();
 	//public static final ScepterAbductionItem SCEPTER_ABDUCTION = new ScepterAbductionItem();
 	//public static final ScepterTranslocationItem SCEPTER_TRANSLOCATION = new ScepterTranslocationItem();

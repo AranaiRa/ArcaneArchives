@@ -21,7 +21,7 @@
         <stack item="arcanearchives:item_component_materialinterface">MaterialInterface</stack>
         <stack item="arcanearchives:item_component_matrixbrace">MatrixBrace</stack>
         <stack item="arcanearchives:item_mountaintear">Mountaintear</stack>
-        <stack item="arcanearchives:item_radiantbucket">RadiantAmphora</stack>
+        <stack item="arcanearchives:item_radiantamphora">RadiantAmphora</stack>
         <stack item="arcanearchives:item_component_radiantdust">RadiantDust</stack>
         <stack item="arcanearchives:item_rawquartz">RawQuartz</stack>
         <stack item="arcanearchives:item_cutquartz">ShapedQuartz</stack>
@@ -60,7 +60,7 @@
             <p><stack item="arcanearchives:item_manifest"/> <link ref="Manifest">Manifest</link></p>
             <p><stack item="arcanearchives:item_component_materialinterface"/> <link ref="MaterialInterface">Material Interface</link></p>
             <p><stack item="arcanearchives:item_component_matrixbrace"/> <link ref="MatrixBrace">Matrix Brace</link></p>
-            <p><stack item="arcanearchives:item_radiantbucket"/> <link ref="RadiantAmphora">Radiant Amphora</link></p>
+            <p><stack item="arcanearchives:item_radiantamphora"/> <link ref="RadiantAmphora">Radiant Amphora</link></p>
             <p><stack item="arcanearchives:item_component_radiantdust"/> <link ref="RadiantDust">Radiant Dust</link></p>
             <p><stack item="arcanearchives:item_rawquartz"/> <link ref="RawQuartz">Radiant Quartz (Raw)</link></p>
             <p><stack item="arcanearchives:item_cutquartz"/> <link ref="ShapedQuartz">Radiant Quartz (Shaped)</link></p>
@@ -381,7 +381,7 @@
                 A Radiant Tank is a storage container that can contain up to 16 buckets of a single type of fluid. Using a Radiant Tank on a fluid inventory will transfer the target's fluid inventory into the held Radiant Tank.
             </p>
             <p>
-                <stack item="arcanearchives:item_radiantbucket"/> <link ref="RadiantAmphora">Radiant Amphorae</link> can fill and empty a Radiant Tank from anywhere, as long as the tank is in a loaded chunk.
+                <stack item="arcanearchives:item_radiantamphora"/> <link ref="RadiantAmphora">Radiant Amphorae</link> can fill and empty a Radiant Tank from anywhere, as long as the tank is in a loaded chunk.
             </p>
             <p>
                 <stack item="arcanearchives:item_component_containmentfield"/> By using a <link ref="ContainmentField">Containment Field</link> while sneaking, the maximum capacity can be increased by 16 buckets. Up to 9 such upgrades can be applied total.
@@ -604,7 +604,7 @@
             <page_title>
                 <title>Radiant Amphora</title>
             </page_title>
-            <p align="center"><stack item="arcanearchives:item_radiantbucket" scale="3.0"/></p>
+            <p align="center"><stack item="arcanearchives:item_radiantamphora" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:radiant_tank"/>A Radiant Amphora acts as a long distance connection to a specific <link ref="RadiantTank">Radiant Tank</link>. You can bind a Radiant Bucket to a Radiant Tank by simply using the bucket on the desired tank. The bucket will become solid to signify the connection.
