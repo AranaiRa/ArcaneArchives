@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.items;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
@@ -17,6 +18,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -152,17 +154,41 @@ public class RadiantAmphoraItem extends ItemTemplate {
 					return EnumActionResult.SUCCESS;
 				}
 
-				//Remove fluid block from tank and place in world
 				if (emptyMode) {
-					FluidStack fs = cap.drain(1000, false);
-					if (fs != null && fs.amount == 1000) {
-						if (FluidUtil.tryPlaceFluid(player, world, pos.offset(facing), cap, fs)) {
-							player.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
-							return EnumActionResult.SUCCESS;
+					TileEntity te = WorldUtil.getTileEntity(TileEntity.class, player.dimension, pos);
+					//Dump fluid to target fluid inventory, if one exists
+					if(te != null) {
+						IFluidHandler tcap = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing);
+						if(tcap != null) {
+							FluidStack fs = cap.drain(1000, false);
+							fs.amount = tcap.fill(fs, false);
+							cap.drain(fs, true);
+							tcap.fill(fs, true);
+						}
+					}
+					//Remove fluid block from tank and place in world
+					else {
+						ArcaneArchives.logger.info("no tile entity");
+						FluidStack fs = cap.drain(1000, false);
+						if (fs != null && fs.amount == 1000) {
+							if (FluidUtil.tryPlaceFluid(player, world, pos.offset(facing), cap, fs)) {
+								player.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
+								return EnumActionResult.SUCCESS;
+							}
 						}
 					}
 				} else {
-					//Check if the target has a fluid inventory
+					TileEntity te = WorldUtil.getTileEntity(TileEntity.class, player.dimension, pos);
+					//Dump fluid to target fluid inventory, if one exists
+					if(te != null) {
+						IFluidHandler tcap = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing);
+						if(tcap != null) {
+							FluidStack fs = tcap.drain(1000, false);
+							fs.amount = cap.fill(fs, false);
+							tcap.drain(fs, true);
+							cap.fill(fs, true);
+						}
+					}
 				}
 			}
 		}
