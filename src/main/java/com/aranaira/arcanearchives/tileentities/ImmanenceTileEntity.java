@@ -54,20 +54,6 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable {
 	}
 
 	@Override
-	public void invalidate () {
-		super.invalidate();
-
-		ServerTickHandler.externalOutgoingITE(this);
-	}
-
-	@Override
-	public void onChunkUnload () {
-		super.onChunkUnload();
-
-		ServerTickHandler.externalOutgoingITE(this);
-	}
-
-	@Override
 	public void onLoad () {
 		if (world != null && !world.isRemote) {
 			ServerTickHandler.incomingITE(this);
