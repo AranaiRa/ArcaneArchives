@@ -36,6 +36,11 @@ public class RawQuartz extends BlockDirectionalTemplate {
 	}
 
 	@Override
+	public boolean canSilkHarvest(){
+		return true;
+	}
+
+	@Override
 	@SuppressWarnings("deprecation")
 	public IBlockState withRotation (IBlockState state, Rotation rot) {
 		return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
