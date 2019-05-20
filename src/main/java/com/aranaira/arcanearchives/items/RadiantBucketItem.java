@@ -86,111 +86,113 @@ public class RadiantBucketItem extends ItemTemplate {
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer playerIn, EnumHand hand) {
-		ItemStack stack = playerIn.getHeldItem(hand);
-		NBTTagCompound nbt = stack.getTagCompound();
+		if(!world.isRemote) {
+			ItemStack stack = playerIn.getHeldItem(hand);
+			NBTTagCompound nbt = stack.getTagCompound();
 
-		//Only progress if linked to a tank
-		if (isLinked(stack)) {
-			//Swap between fill and empty mode
-			if (playerIn.isSneaking()) {
+			//Only progress if linked to a tank
+			if (isLinked(stack)) {
+				//Swap between fill and empty mode
+				if (playerIn.isSneaking()) {
+					if (stack.hasTagCompound()) {
+						nbt = stack.getTagCompound();
+					} else {
+						nbt = new NBTTagCompound();
+					}
+
+					if (nbt.hasKey("isEmptyMode")) {
+						if (nbt.getBoolean("isEmptyMode")) {
+							nbt.setBoolean("isEmptyMode", false);
+						} else {
+							nbt.setBoolean("isEmptyMode", true);
+						}
+					} else {
+						nbt.setBoolean("isEmptyMode", false);
+					}
+					stack.setTagCompound(nbt);
+				}
+				//Slurp up fluid if in fill mode
+				else if (!isEmptyMode(stack)) {
+					RayTraceResult raytraceresult = this.rayTrace(world, playerIn, true);
+					ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onBucketUse(playerIn, world, stack, raytraceresult);
+					if (ret != null) return ret;
+
+					if (raytraceresult == null) {
+						return new ActionResult<>(EnumActionResult.PASS, stack);
+					} else if (raytraceresult.typeOfHit != RayTraceResult.Type.BLOCK) {
+						return new ActionResult<>(EnumActionResult.PASS, stack);
+					} else {
+						BlockPos pos = raytraceresult.getBlockPos();
+
+						if (!world.isBlockLoaded(BlockPos.fromLong(nbt.getLong("homeTank")), false)) {
+							playerIn.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.tankmissing"), true);
+						} else {
+							RadiantTankTileEntity rtte = WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, BlockPos.fromLong(nbt.getLong("homeTank")));
+							IFluidHandler cap = rtte.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
+							if (FluidRegistry.lookupFluidForBlock(world.getBlockState(pos).getBlock()) != null) {
+								FluidStack fs = new FluidStack(FluidRegistry.lookupFluidForBlock(world.getBlockState(pos).getBlock()), 1000);
+								if(cap.fill(fs, false) == 1000) {
+									cap.fill(fs, true);
+									world.setBlockState(pos, Blocks.AIR.getDefaultState());
+									playerIn.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
+								}
+								return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+							}
+						}
+					}
+				}
+			}
+		}
+		return new ActionResult<>(EnumActionResult.PASS, playerIn.getHeldItem(hand));
+	}
+
+	@Override
+	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if(!world.isRemote) {
+			Block hit = world.getBlockState(pos).getBlock();
+			ItemStack stack = getHeldBucket(player);
+			NBTTagCompound nbt = getTagCompoundSafe(stack);
+
+			if (hit == BlockRegistry.RADIANT_TANK) {
+
 				if (stack.hasTagCompound()) {
 					nbt = stack.getTagCompound();
 				} else {
 					nbt = new NBTTagCompound();
 				}
 
-				if (nbt.hasKey("isEmptyMode")) {
-					if (nbt.getBoolean("isEmptyMode")) {
-						nbt.setBoolean("isEmptyMode", false);
-					} else {
-						nbt.setBoolean("isEmptyMode", true);
-					}
-				} else {
-					nbt.setBoolean("isEmptyMode", false);
-				}
+				nbt.setLong("homeTank", pos.toLong());
 				stack.setTagCompound(nbt);
-			}
-			//Slurp up fluid if in fill mode
-			else if (!isEmptyMode(stack)){
-				RayTraceResult raytraceresult = this.rayTrace(world, playerIn, true);
-				ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onBucketUse(playerIn, world, stack, raytraceresult);
-				if (ret != null) return ret;
-
-				if (raytraceresult == null) {
-					return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
-				} else if (raytraceresult.typeOfHit != RayTraceResult.Type.BLOCK) {
-					return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+			} else if (nbt.hasKey("homeTank")) {
+				//TODO: check if area is loaded
+				boolean loaded = world.isBlockLoaded(BlockPos.fromLong(nbt.getLong("homeTank")), false);
+				if (!loaded) {
+					player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.tankmissing"), true);
+					return EnumActionResult.SUCCESS;
 				} else {
-					BlockPos pos = raytraceresult.getBlockPos();
+					RadiantTankTileEntity rtte = WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, BlockPos.fromLong(nbt.getLong("homeTank")));
+					IFluidHandler cap = rtte.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
 
-					if(!world.isBlockLoaded(BlockPos.fromLong(nbt.getLong("homeTank")), false)) {
-						playerIn.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.tankmissing"), true);
-					} else {
-						//RadiantTankTileEntity rtte = (RadiantTankTileEntity) world.getTileEntity(BlockPos.fromLong(nbt.getLong("homeTank")));
-						RadiantTankTileEntity rtte = WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, BlockPos.fromLong(nbt.getLong("homeTank")));
-						IFluidHandler cap = rtte.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-						if (FluidRegistry.lookupFluidForBlock(world.getBlockState(pos).getBlock()) != null) {
-							FluidStack fs = new FluidStack(FluidRegistry.lookupFluidForBlock(world.getBlockState(pos).getBlock()), 1000);
-							cap.fill(fs, true);
-							world.setBlockState(pos, Blocks.AIR.getDefaultState());
-							playerIn.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
-							return new ActionResult<>(EnumActionResult.SUCCESS, stack);
-						}
-					}
-				}
-			}
-		}
-		return new ActionResult<>(EnumActionResult.PASS, stack);
-	}
+					//Remove fluid block from tank and place in world
+					if (nbt.getBoolean("isEmptyMode")) {
+						FluidStack fs = cap.drain(1000, false);
+						if (fs != null) {
 
-	@Override
-	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		Block hit = world.getBlockState(pos).getBlock();
-		ItemStack stack = getHeldBucket(player);
-		NBTTagCompound nbt = getTagCompoundSafe(stack);
+							if (fs.amount == 1000) {
+								cap.drain(1000, true);
 
-		ArcaneArchives.logger.info("hit "+hit.getLocalizedName());
-		if(hit == BlockRegistry.RADIANT_TANK) {
-
-			if(stack.hasTagCompound()) {
-				nbt = stack.getTagCompound();
-			} else {
-				nbt = new NBTTagCompound();
-			}
-
-			nbt.setLong("homeTank", pos.toLong());
-			stack.setTagCompound(nbt);
-		}
-		else if(nbt.hasKey("homeTank")) {
-			//TODO: check if area is loaded
-			if(!world.isBlockLoaded(BlockPos.fromLong(nbt.getLong("homeTank")), false)) {
-				player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.tankmissing"), true);
-			} else {
-				ArcaneArchives.logger.info("am I loaded? "+(world.isBlockLoaded(BlockPos.fromLong(nbt.getLong("homeTank")))));
-				RadiantTankTileEntity rtte = WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, BlockPos.fromLong(nbt.getLong("homeTank")));
-				//RadiantTankTileEntity rtte = (RadiantTankTileEntity) world.getTileEntity(BlockPos.fromLong(nbt.getLong("homeTank")));
-				IFluidHandler cap = rtte.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-
-				//Remove fluid block from tank and place in world
-				if (nbt.getBoolean("isEmptyMode")) {
-					FluidStack fs = cap.drain(1000, false);
-					if (fs != null) {
-
-						if (fs.amount == 1000) {
-							cap.drain(1000, true);
-
-							if (fs.getFluid().canBePlacedInWorld()) {
-								world.setBlockState(pos.offset(facing), fs.getFluid().getBlock().getDefaultState(), 11);
-								player.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
-								return EnumActionResult.SUCCESS;
+								if (fs.getFluid().canBePlacedInWorld()) {
+									world.setBlockState(pos.offset(facing), fs.getFluid().getBlock().getDefaultState(), 11);
+									player.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
+									return EnumActionResult.SUCCESS;
+								}
 							}
 						}
-					}
-				}
-				else {
-					//Check if the target has a fluid inventory
-					if (false) {
-						//TODO: inserting fluids into inventories
+					} else {
+						//Check if the target has a fluid inventory
+						if (false) {
+							//TODO: inserting fluids into inventories
+						}
 					}
 				}
 			}
