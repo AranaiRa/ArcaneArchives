@@ -28,6 +28,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -76,11 +77,9 @@ public class RadiantAmphoraItem extends ItemTemplate {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.radiantamphora"));
 		if (stack.hasTagCompound() && stack.getTagCompound().hasKey("homeTank"))
 		{
-			tooltip.add(stack.getTagCompound().getLong("homeTank")+"");
-		}
-		if (stack.hasTagCompound() && stack.getTagCompound().hasKey("isEmptyMode"))
-		{
-			tooltip.add(" :: "+stack.getTagCompound().getBoolean("isEmptyMode"));
+			BlockPos bp = BlockPos.fromLong(stack.getTagCompound().getLong("homeTank"));
+			int dimID = stack.getTagCompound().getInteger("homeTankDim");
+			tooltip.add("Linked to <"+bp.getX()+", "+bp.getY()+", "+bp.getZ()+"> in \""+DimensionType.getById(dimID).getName()+"\"");
 		}
 	}
 
@@ -162,6 +161,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 				}
 
 				nbt.setLong("homeTank", pos.toLong());
+				nbt.setInteger("homeTankDim", player.dimension);
 				stack.setTagCompound(nbt);
 			} else if (nbt.hasKey("homeTank")) {
 				//TODO: check if area is loaded
