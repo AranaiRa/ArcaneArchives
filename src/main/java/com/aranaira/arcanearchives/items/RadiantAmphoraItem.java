@@ -33,6 +33,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -182,7 +183,8 @@ public class RadiantAmphoraItem extends ItemTemplate {
 								cap.drain(1000, true);
 
 								if (fs.getFluid().canBePlacedInWorld()) {
-									world.setBlockState(pos.offset(facing), fs.getFluid().getBlock().getDefaultState(), 11);
+									//world.setBlockState(pos.offset(facing), fs.getFluid().getBlock().getDefaultState(), 11);
+									FluidUtil.tryPlaceFluid(player, world, pos.offset(facing), cap, fs);
 									player.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
 									return EnumActionResult.SUCCESS;
 								}
