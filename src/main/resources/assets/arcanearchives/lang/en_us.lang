@@ -178,6 +178,11 @@ arcanearchives.data.scepter.radiant_trove.item=Radiant Trove is set to store %s.
 arcanearchives.data.scepter.radiant_trove.count=Contains %d/%d items.
 arcanearchives.data.scepter.radiant_trove.upgrades=Has been upgraded %d time(s).
 
+arcanearchives.data.scepter.radiant_tank.empty=Radiant Tank is empty.
+arcanearchives.data.scepter.radiant_tank.item=Radiant Tank is storing %s.
+arcanearchives.data.scepter.radiant_tank.count=Fluid capacity is currently %d/%d.
+arcanearchives.data.scepter.radiant_tank.upgrades=Has been upgraded %d time(s).
+
 arcanearchives.data.scepter.radiant_resonator.progress=Radiant Resonator current progress: %d%%
 arcanearchives.data.scepter.radiant_resonator.status=Current status: %s.
 
