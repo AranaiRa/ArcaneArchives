@@ -1,5 +1,7 @@
 package com.aranaira.arcanearchives.blocks.templates;
 
+import com.aranaira.arcanearchives.tileentities.AATileEntity;
+import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
@@ -52,4 +54,17 @@ public class BlockDirectionalTemplate extends BlockTemplate {
 
 		return new ExtendedBlockState(this, new IProperty[]{FACING}, new IUnlistedProperty[]{});
 	}
+
+	@Override
+	public boolean rotateBlock (World world, BlockPos pos, EnumFacing axis) {
+		AATileEntity tile = WorldUtil.getTileEntity(AATileEntity.class, world, pos);
+		boolean result = super.rotateBlock(world, pos, axis);
+		if (tile != null) {
+			tile.validate();
+			world.setTileEntity(pos, tile);
+		}
+		return result;
+	}
+
+
 }
