@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.inventory;
 
-import com.aranaira.arcanearchives.MathUtils;
+import com.aranaira.arcanearchives.util.MathUtils;
 import com.aranaira.arcanearchives.client.gui.framework.IScrollabe;
 import com.aranaira.arcanearchives.client.gui.framework.IScrollableContainer;
 import com.aranaira.arcanearchives.client.gui.framework.ScrollEventManager;

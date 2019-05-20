@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.client.gui.framework;
 
-import com.aranaira.arcanearchives.MathUtils;
+import com.aranaira.arcanearchives.util.MathUtils;
 
 import java.util.ArrayList;
 import java.util.List;

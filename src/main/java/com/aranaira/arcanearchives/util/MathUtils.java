@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives;
+package com.aranaira.arcanearchives.util;
 
 public class MathUtils {
 	/**

@@ -1,16 +1,13 @@
 package com.aranaira.arcanearchives.items;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
+import com.aranaira.arcanearchives.util.NBTUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiNewChat;
-import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
@@ -31,14 +28,12 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -46,191 +41,155 @@ import java.util.List;
 public class RadiantAmphoraItem extends ItemTemplate {
 	public static final String NAME = "item_radiantamphora";
 
-	public RadiantAmphoraItem() {
+	public RadiantAmphoraItem () {
 		super(NAME);
 		setMaxStackSize(1);
 	}
 
 	@Override
-	public void registerModels() {
-		ModelResourceLocation unlinked = new ModelResourceLocation(getRegistryName()+"_unlinked", "inventory");
-		ModelResourceLocation empty    = new ModelResourceLocation(getRegistryName()+"_empty",    "inventory");
-		ModelResourceLocation fill     = new ModelResourceLocation(getRegistryName()+"_fill",     "inventory");
+	public void registerModels () {
+		ModelResourceLocation unlinked = new ModelResourceLocation(getRegistryName() + "_unlinked", "inventory");
+		ModelResourceLocation empty = new ModelResourceLocation(getRegistryName() + "_empty", "inventory");
+		ModelResourceLocation fill = new ModelResourceLocation(getRegistryName() + "_fill", "inventory");
 
 		ModelBakery.registerItemVariants(this, unlinked, empty, fill);
 
-		ModelLoader.setCustomMeshDefinition(this, new ItemMeshDefinition() {
-			@Override
-			public ModelResourceLocation getModelLocation(ItemStack stack) {
-				if (!isLinked(stack)) {
-					return unlinked;
-				} else if(isEmptyMode(stack)) {
-					return empty;
-				} else {
-					return fill;
-				}
+		ModelLoader.setCustomMeshDefinition(this, stack -> {
+			if (!isLinked(stack)) {
+				return unlinked;
+			} else if (getEmptyMode(stack)) {
+				return empty;
+			} else {
+				return fill;
 			}
 		});
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.radiantamphora"));
-		if (stack.hasTagCompound() && stack.getTagCompound().hasKey("homeTank"))
-		{
+		if (stack.getTagCompound() != null && stack.getTagCompound().hasKey("homeTank")) {
 			BlockPos bp = BlockPos.fromLong(stack.getTagCompound().getLong("homeTank"));
 			int dimID = stack.getTagCompound().getInteger("homeTankDim");
-			tooltip.add("Linked to <"+bp.getX()+", "+bp.getY()+", "+bp.getZ()+"> in \""+DimensionType.getById(dimID).getName()+"\"");
+			tooltip.add("Linked to <" + bp.getX() + ", " + bp.getY() + ", " + bp.getZ() + "> in \"" + DimensionType.getById(dimID).getName() + "\"");
 		}
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer playerIn, EnumHand hand) {
-		if(!world.isRemote) {
-			ItemStack stack = playerIn.getHeldItem(hand);
+	public ActionResult<ItemStack> onItemRightClick (World world, EntityPlayer playerIn, EnumHand hand) {
+		ItemStack stack = playerIn.getHeldItem(hand);
+		if (!world.isRemote) {
 			NBTTagCompound nbt = stack.getTagCompound();
+			if (nbt == null) {
+				nbt = new NBTTagCompound();
+				stack.setTagCompound(nbt);
+			}
 
 			//Only progress if linked to a tank
 			if (isLinked(stack)) {
 				//Swap between fill and empty mode
 				if (playerIn.isSneaking()) {
-					if (stack.hasTagCompound()) {
-						nbt = stack.getTagCompound();
-					} else {
-						nbt = new NBTTagCompound();
-					}
-
-					if (nbt.hasKey("isEmptyMode")) {
-						if (nbt.getBoolean("isEmptyMode")) {
-							nbt.setBoolean("isEmptyMode", false);
-						} else {
-							nbt.setBoolean("isEmptyMode", true);
-						}
-					} else {
-						nbt.setBoolean("isEmptyMode", false);
-					}
-					stack.setTagCompound(nbt);
+					nbt.setBoolean("isEmptyMode", nbt.hasKey("isEmptyMode") && !nbt.getBoolean("isEmptyMode"));
 				}
 				//Slurp up fluid if in fill mode
-				else if (!isEmptyMode(stack)) {
+				else if (!getEmptyMode(stack)) {
 					RayTraceResult raytraceresult = this.rayTrace(world, playerIn, true);
-					ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onBucketUse(playerIn, world, stack, raytraceresult);
-					if (ret != null) return ret;
+					/*ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onBucketUse(playerIn, world, stack, raytraceresult);
+					if (ret != null) return ret;*/
+					// ^^^ This is problmematic because it allows mods to modify the event as though it were a normal bucket.
 
+					// Actually nullable vvv
 					if (raytraceresult == null) {
 						return new ActionResult<>(EnumActionResult.PASS, stack);
 					} else if (raytraceresult.typeOfHit != RayTraceResult.Type.BLOCK) {
 						return new ActionResult<>(EnumActionResult.PASS, stack);
 					} else {
 						BlockPos pos = raytraceresult.getBlockPos();
+						BlockPos home = BlockPos.fromLong(nbt.getLong("homeTank"));
+						IBlockState state = world.getBlockState(pos);
+						Block block = state.getBlock();
 
-						if (!world.isBlockLoaded(BlockPos.fromLong(nbt.getLong("homeTank")), false)) {
+						RadiantTankTileEntity rtte = WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, home);
+						IFluidHandler cap = rtte == null ? null : rtte.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
+						// Null = missing tank or unloaded tank or doesn't have a capability
+						if (rtte == null) {
 							playerIn.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.tankmissing"), true);
-						} else {
-							RadiantTankTileEntity rtte = WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, BlockPos.fromLong(nbt.getLong("homeTank")));
-							IFluidHandler cap = rtte.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-							if (FluidRegistry.lookupFluidForBlock(world.getBlockState(pos).getBlock()) != null) {
-								FluidStack fs = new FluidStack(FluidRegistry.lookupFluidForBlock(world.getBlockState(pos).getBlock()), 1000);
-								if(cap.fill(fs, false) == 1000) {
-									cap.fill(fs, true);
-									world.setBlockState(pos, Blocks.AIR.getDefaultState());
-									playerIn.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
-								}
-								return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+							return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+						}
+
+						Fluid fluid = FluidRegistry.lookupFluidForBlock(block);
+						if (fluid != null) {
+							FluidStack fs = new FluidStack(fluid, 1000);
+							if (cap.fill(fs, false) == 1000) {
+								cap.fill(fs, true);
+								world.setBlockState(pos, Blocks.AIR.getDefaultState());
+								playerIn.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
 							}
+							return new ActionResult<>(EnumActionResult.SUCCESS, stack);
 						}
 					}
 				}
 			}
 		}
-		return new ActionResult<>(EnumActionResult.PASS, playerIn.getHeldItem(hand));
+		return new ActionResult<>(EnumActionResult.PASS, stack);
 	}
 
 	@Override
-	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if(!world.isRemote) {
+	public EnumActionResult onItemUse (EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if (!world.isRemote) {
 			Block hit = world.getBlockState(pos).getBlock();
 			ItemStack stack = getHeldBucket(player);
-			NBTTagCompound nbt = getTagCompoundSafe(stack);
+			NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+
+			boolean emptyMode = nbt.hasKey("isEmptyMode") && nbt.getBoolean("isEmptyMode");
 
 			if (hit == BlockRegistry.RADIANT_TANK) {
-
-				if (stack.hasTagCompound()) {
-					nbt = stack.getTagCompound();
-				} else {
-					nbt = new NBTTagCompound();
-				}
-
 				nbt.setLong("homeTank", pos.toLong());
 				nbt.setInteger("homeTankDim", player.dimension);
-				stack.setTagCompound(nbt);
 			} else if (nbt.hasKey("homeTank")) {
-				//TODO: check if area is loaded
-				boolean loaded = world.isBlockLoaded(BlockPos.fromLong(nbt.getLong("homeTank")), false);
-				if (!loaded) {
+				BlockPos home = BlockPos.fromLong(nbt.getLong("homeTank"));
+				// getTileEntity automatically checks for loaded/unloaded
+				RadiantTankTileEntity rtte = WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, home);
+				IFluidHandler cap = rtte == null ? null : rtte.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
+				if (rtte == null || cap == null) {
 					player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.tankmissing"), true);
 					return EnumActionResult.SUCCESS;
-				} else {
-					RadiantTankTileEntity rtte = WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, BlockPos.fromLong(nbt.getLong("homeTank")));
-					IFluidHandler cap = rtte.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
+				}
 
-					//Remove fluid block from tank and place in world
-					if (nbt.getBoolean("isEmptyMode")) {
-						FluidStack fs = cap.drain(1000, false);
-						if (fs != null) {
-
-							if (fs.amount == 1000) {
-								cap.drain(1000, true);
-
-								if (fs.getFluid().canBePlacedInWorld()) {
-									//world.setBlockState(pos.offset(facing), fs.getFluid().getBlock().getDefaultState(), 11);
-									FluidUtil.tryPlaceFluid(player, world, pos.offset(facing), cap, fs);
-									player.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
-									return EnumActionResult.SUCCESS;
-								}
-							}
-						}
-					} else {
-						//Check if the target has a fluid inventory
-						if (false) {
-							//TODO: inserting fluids into inventories
+				//Remove fluid block from tank and place in world
+				if (emptyMode) {
+					FluidStack fs = cap.drain(1000, false);
+					if (fs != null && fs.amount == 1000) {
+						if (FluidUtil.tryPlaceFluid(player, world, pos.offset(facing), cap, fs)) {
+							player.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
+							return EnumActionResult.SUCCESS;
 						}
 					}
+				} else {
+					//Check if the target has a fluid inventory
 				}
 			}
 		}
 		return EnumActionResult.PASS;
 	}
 
-	private NBTTagCompound getTagCompoundSafe(ItemStack stack) {
-		NBTTagCompound tagCompound = stack.getTagCompound();
-		if (tagCompound == null) {
-			tagCompound = new NBTTagCompound();
-			stack.setTagCompound(tagCompound);
-		}
-		return tagCompound;
+	private boolean isLinked (ItemStack stack) {
+		return NBTUtils.getOrCreateTagCompound(stack).hasKey("homeTank");
 	}
 
-	private boolean isLinked(ItemStack stack) {
-		return getTagCompoundSafe(stack).hasKey("homeTank");
+	private boolean getEmptyMode (ItemStack stack) {
+		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+		if (!nbt.hasKey("isEmptyMode")) {
+			nbt.setBoolean("isEmptyMode", false);
+		}
+		return nbt.getBoolean("isEmptyMode");
 	}
 
-	private boolean isEmptyMode(ItemStack stack) {
-		if(getTagCompoundSafe(stack).hasKey("isEmptyMode")){
-			return stack.getTagCompound().getBoolean("isEmptyMode");
-		}
-		stack.getTagCompound().setBoolean("isEmptyMode", false);
-		return false;
-	}
-
-	private ItemStack getHeldBucket(EntityPlayer player){
-		ItemStack stack = player.getHeldItemMainhand();
-		if(stack.getItem() == ItemRegistry.RADIANT_BUCKET) {
-			return stack;
-		} else {
-			stack = player.getHeldItemOffhand();
+	private ItemStack getHeldBucket (EntityPlayer player) {
+		for (ItemStack stack : player.getHeldEquipment()) {
+			if (stack.getItem() == ItemRegistry.RADIANT_BUCKET) return stack;
 		}
 
-		return stack;
+		return ItemStack.EMPTY;
 	}
 }
