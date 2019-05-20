@@ -10,40 +10,28 @@ import java.util.UUID;
 import java.util.function.Predicate;
 
 public class TileList extends ReferenceList<IteRef> {
-	/*public TileList() {
-		super(new ArrayList<>());
-	}*/
-
 	public TileList (List<IteRef> reference) {
 		super(reference);
 	}
 
 	public TileListIterable filterValid () {
+		invalidate();
 		return new TileListIterable(Iterators.filter(iterator(), (f) -> f != null && f.isValid()));
 	}
 
-	/*public TileListIterable filterActive() {
-		return new TileListIterable(Iterators.filter(iterator(), (f) -> f != null && f.isActive()));
-	}*/
-
-	/*public TileListIterable filterClass(Class<? extends AATileEntity> clazz) {
-		return new TileListIterable(Iterators.filter(iterator(), (f) -> f != null && f.isValid() && f.clazz.equals(clazz)));
-	}*/
-
 	public TileListIterable filterAssignableClass (Class<? extends AATileEntity> clazz) {
+		invalidate();
 		return new TileListIterable(Iterators.filter(iterator(), (f) -> f != null && f.isValid() && clazz.isAssignableFrom(f.clazz)));
 	}
 
 	public TileListIterable filter (Predicate<IteRef> predicate) {
+		invalidate();
 		return new TileListIterable(Iterators.filter(iterator(), predicate::test));
 	}
 
-	/*public TileList sorted(Comparator<IteRef> c) {
-		TileList copy = new TileList(new ArrayList<>());
-		copy.addAll(this);
-		copy.sort(c);
-		return copy;
-	}*/
+	private void invalidate () {
+		removeIf(ite -> !ite.isValid());
+	}
 
 	public boolean containsUUID (UUID uuid) {
 		for (IteRef ref : this) {
