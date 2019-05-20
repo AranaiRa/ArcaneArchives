@@ -23,6 +23,10 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nullable;
@@ -103,6 +107,27 @@ public class ScepterRevelationItem extends ItemTemplate {
 				}
 				player.sendMessage(new TextComponentTranslation("arcanearchives.data.scepter.radiant_crafting.contains", base).setStyle(def));
 			}
+		} else if (block == BlockRegistry.RADIANT_TANK) {
+			RadiantTankTileEntity te = WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, pos);
+			if (te == null) {
+				player.sendMessage(new TextComponentTranslation("arcanearchives.data.scepter.missing_te").setStyle(error));
+				return EnumActionResult.SUCCESS;
+			}
+
+			IFluidHandler cap = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing);
+			FluidStack fluid = te.getInventory().getFluid();
+			int amount = te.getInventory().getFluidAmount();
+			int upgrades = te.getUpgrades();
+			int maxCount = te.getCapacity();
+
+			if (fluid == null) {
+				player.sendMessage(new TextComponentTranslation("arcanearchives.data.scepter.radiant_tank.empty").setStyle(def));
+			} else {
+				player.sendMessage(new TextComponentTranslation("arcanearchives.data.scepter.radiant_tank.item", new TextComponentTranslation(fluid.getLocalizedName()).setStyle(def)));
+			}
+
+			player.sendMessage(new TextComponentTranslation("arcanearchives.data.scepter.radiant_tank.count", amount, maxCount).setStyle(def));
+			player.sendMessage(new TextComponentTranslation("arcanearchives.data.scepter.radiant_tank.upgrades", upgrades).setStyle(def));
 		} else if (block == BlockRegistry.RADIANT_TROVE) {
 			RadiantTroveTileEntity te = WorldUtil.getTileEntity(RadiantTroveTileEntity.class, world, pos);
 			if (te == null) {

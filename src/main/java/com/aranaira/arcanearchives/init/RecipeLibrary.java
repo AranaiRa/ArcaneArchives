@@ -33,6 +33,7 @@ public class RecipeLibrary {
 	public static GCTRecipe RIVERTEAR_RECIPE;
 	public static GCTRecipe MONITORING_CRYSTAL_RECIPE;
 	public static GCTRecipe SCEPTER_MANIPULATION_RECIPE;
+	public static GCTRecipe RADIANT_AMPHORA_RECIPE;
 
 	public static void buildRecipes () {
 		COMPONENT_RADIANTDUST_RECIPE = GCTRecipeList.makeAndAddRecipe("radiantdust", new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 2), ItemRegistry.RAW_RADIANT_QUARTZ);
@@ -62,6 +63,8 @@ public class RecipeLibrary {
 		COMPONENT_CONTAINMENTFIELD_RECIPE = GCTRecipeList.makeAndAddRecipe("containmentfield", new ItemStack(ItemRegistry.COMPONENT_CONTAINMENTFIELD, 1), ItemRegistry.COMPONENT_SCINTILLATINGINLAY, new IngredientStack("ingotGold", 2), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 2));
 
 		RIVERTEAR_RECIPE = GCTRecipeList.makeAndAddRecipe("rivertear_gct", new ItemStack(ItemRegistry.RIVERTEAR), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 1), new IngredientStack(Ingredient.fromItem(Items.SUGAR), 4), new IngredientStack(Ingredient.fromItem(Items.WATER_BUCKET), 2));
+
+		RADIANT_AMPHORA_RECIPE = GCTRecipeList.makeAndAddRecipe("amphora_gct", new ItemStack(ItemRegistry.RADIANT_BUCKET), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 4), new ItemStack(Items.CLAY_BALL, 4), new ItemStack(Items.GOLD_NUGGET, 4));
 
 		/*MATRIX_CORE_RECIPE = GCTRecipeList.makeAndAddRecipe("matrix_core", new ItemStack(BlockRegistry.MATRIX_CRYSTAL_CORE, 1), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 60), new IngredientStack("logWood", 12), new ItemStack(ItemRegistry.COMPONENT_SCINTILLATINGINLAY, 12), new IngredientStack(BlockRegistry.RADIANT_LANTERN, 4), new IngredientStack("bookshelf", 1));*/
 
