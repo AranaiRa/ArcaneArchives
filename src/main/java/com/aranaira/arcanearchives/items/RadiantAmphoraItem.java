@@ -139,7 +139,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 
 			boolean emptyMode = nbt.hasKey("isEmptyMode") && nbt.getBoolean("isEmptyMode");
 
-			if (hit == BlockRegistry.RADIANT_TANK) {
+			if (hit == BlockRegistry.RADIANT_TANK && player.isSneaking()) {
 				nbt.setLong("homeTank", pos.toLong());
 				nbt.setInteger("homeTankDim", player.dimension);
 			} else if (nbt.hasKey("homeTank")) {
