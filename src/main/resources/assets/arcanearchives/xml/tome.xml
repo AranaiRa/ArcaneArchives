@@ -621,15 +621,8 @@
         </section>
         <section>
             <p>
-                <stack item="minecraft:crafting_table"/> Radiant Amphorae can be crafted conventionally.
+                <stack item="arcanearchives:gemcutters_table" /> Radiant Amphorae can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
-            <horizontal_rule/>
-            <recipe type="shaped">
-                <recipe.result>
-                    <stack item="arcanearchives:item_radiantbucket"/>
-                </recipe.result>
-            </recipe>
-            <space height="8"/>
             <horizontal_rule/>
             <p italics="true">
                 ...Lore fragment TBD
