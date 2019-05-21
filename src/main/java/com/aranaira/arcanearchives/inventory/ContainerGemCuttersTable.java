@@ -10,12 +10,15 @@ import invtweaks.api.container.ContainerSection;
 import invtweaks.api.container.ContainerSectionCallback;
 import invtweaks.api.container.InventoryContainer;
 import it.unimi.dsi.fastutil.ints.Int2IntMap.Entry;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
@@ -59,7 +62,14 @@ public class ContainerGemCuttersTable extends Container {
 			@Override
 			public ItemStack onTake (EntityPlayer thePlayer, ItemStack stack) {
 				for (Entry entry : tile.getCurrentRecipe().getMatchingSlots(combinedInventory).int2IntEntrySet()) {
-					combinedInventory.extractItem(entry.getIntKey(), entry.getIntValue(), false);
+					ItemStack result = combinedInventory.extractItem(entry.getIntKey(), entry.getIntValue(), false);
+					if (result.getItem() instanceof ItemBucket) {
+						ItemStack returned = new ItemStack(Items.BUCKET);
+						ItemStack result2 = ItemHandlerHelper.insertItemStacked(tileInventory, returned, false);
+						if (result2.isEmpty()) continue;
+						if (!world.isRemote)
+							Block.spawnAsEntity(world, thePlayer.getPosition(), returned);
+					}
 				}
 				updateRecipe();
 				return super.onTake(player, stack);
