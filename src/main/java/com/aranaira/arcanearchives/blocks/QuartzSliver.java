@@ -30,18 +30,107 @@ public class QuartzSliver extends BlockDirectionalTemplate {
 	public static final String name = "quartz_sliver";
 
 	public QuartzSliver() {
-		super(name, Material.ROCK);
+		super(name, Material.GLASS);
 		setLightLevel(16 / 16f);
 		setHardness(0.0f);
+	}
+
+	private boolean canPlaceOn(World worldIn, BlockPos pos)
+	{
+		IBlockState state = worldIn.getBlockState(pos);
+		return state.getBlock().canPlaceTorchOnTop(state, worldIn, pos);
+	}
+
+	protected boolean checkForDrop(World worldIn, BlockPos pos, IBlockState state)
+	{
+		if (state.getBlock() == this && this.canPlaceAt(worldIn, pos, (EnumFacing)state.getValue(FACING)))
+		{
+			return true;
+		}
+		else
+		{
+			if (worldIn.getBlockState(pos).getBlock() == this)
+			{
+				this.dropBlockAsItem(worldIn, pos, state, 0);
+				worldIn.setBlockToAir(pos);
+			}
+
+			return false;
+		}
+	}
+
+	private boolean canPlaceAt(World worldIn, BlockPos pos, EnumFacing facing)
+	{
+		BlockPos blockpos = pos.offset(facing.getOpposite());
+		IBlockState iblockstate = worldIn.getBlockState(blockpos);
+		Block block = iblockstate.getBlock();
+		BlockFaceShape blockfaceshape = iblockstate.getBlockFaceShape(worldIn, blockpos, facing);
+
+		if (facing.equals(EnumFacing.UP) && this.canPlaceOn(worldIn, blockpos))
+		{
+			return true;
+		}
+		else if (facing != EnumFacing.UP && facing != EnumFacing.DOWN)
+		{
+			return !isExceptBlockForAttachWithPiston(block) && blockfaceshape == BlockFaceShape.SOLID;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
 	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos fromPos)
 	{
+		this.onNeighborChangeInternal(world, pos, state);
 		//TODO: make sure changed block is the one that the sliver is attached to
-		world.setBlockState(pos, Blocks.AIR.getDefaultState());
-		this.dropBlockAsItem(world, pos, getDefaultState(), 0);
+		//world.setBlockState(pos, Blocks.AIR.getDefaultState());
+		//this.dropBlockAsItem(world, pos, getDefaultState(), 0);
+	}
+
+	/**
+	 * Shamelessly stolen from BlockTorch
+	 * @param worldIn
+	 * @param pos
+	 * @param state
+	 * @return
+	 */
+	protected boolean onNeighborChangeInternal(World worldIn, BlockPos pos, IBlockState state)
+	{
+		if (!this.checkForDrop(worldIn, pos, state))
+		{
+			return true;
+		}
+		else
+		{
+			EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
+			EnumFacing.Axis enumfacing$axis = enumfacing.getAxis();
+			EnumFacing enumfacing1 = enumfacing.getOpposite();
+			BlockPos blockpos = pos.offset(enumfacing1);
+			boolean flag = false;
+
+			if (enumfacing$axis.isHorizontal() && worldIn.getBlockState(blockpos).getBlockFaceShape(worldIn, blockpos, enumfacing) != BlockFaceShape.SOLID)
+			{
+				flag = true;
+			}
+			else if (enumfacing$axis.isVertical() && !this.canPlaceOn(worldIn, blockpos))
+			{
+				flag = true;
+			}
+
+			if (flag)
+			{
+				this.dropBlockAsItem(worldIn, pos, state, 0);
+				worldIn.setBlockToAir(pos);
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
 	}
 
 	@Override
@@ -51,7 +140,7 @@ public class QuartzSliver extends BlockDirectionalTemplate {
 
 	@Override
 	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		//TODO: add tooltip
+		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.quartzsliver"));
 	}
 
 	@Override

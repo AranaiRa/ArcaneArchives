@@ -10,10 +10,14 @@ import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.Block;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDestroyBlockEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -22,6 +26,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+
+import java.util.Random;
 
 @Mod.EventBusSubscriber
 public class AAEventHandler {
@@ -92,6 +98,48 @@ public class AAEventHandler {
 		if(item == ItemRegistry.RADIANT_AMPHORA) {
 			PacketRadiantAmphora packet = new PacketRadiantAmphora();
 			NetworkHandler.CHANNEL.sendToServer(packet);
+		}
+	}
+
+	@SubscribeEvent
+	public static void LeftClickBlock(PlayerInteractEvent.LeftClickBlock event)
+	{
+		if(!event.getWorld().isRemote) {
+			Item item = event.getEntityPlayer().inventory.getCurrentItem().getItem();
+			if (item == ItemRegistry.RADIANT_AMPHORA && event.getEntityPlayer().isSneaking()) {
+				ItemStack stack = event.getEntityPlayer().getHeldItemMainhand();
+				NBTTagCompound nbt = stack.getTagCompound();
+				if (nbt.hasKey("isEmptyMode")) {
+					boolean emptyMode = nbt.getBoolean("isEmptyMode");
+					emptyMode = !emptyMode;
+					nbt.setBoolean("isEmptyMode", emptyMode);
+				}
+			}
+			if (item == ItemRegistry.RAW_RADIANT_QUARTZ) {
+				ItemStack stack = event.getEntityPlayer().getHeldItemMainhand();
+				Random rng = new Random();
+				int num = rng.nextInt(5);
+				if(num == 0) {
+					stack.shrink(1);
+					num = rng.nextInt(16) + 8;
+					ItemStack shards = new ItemStack(BlockRegistry.QUARTZ_SLIVER, num);
+					Vec3d pos = event.getHitVec();
+					EntityItem ei = new EntityItem(event.getWorld(), pos.x, pos.y, pos.z, shards);
+					ei.motionX = rng.nextFloat() * 0.4f - 0.2f;
+					ei.motionZ = rng.nextFloat() * 0.4f - 0.2f;
+					ei.motionY = rng.nextFloat() * 0.2f + 0.2f;
+					event.getWorld().spawnEntity(ei);
+				}
+				else if(num == 1 || num == 2){
+					ItemStack shards = new ItemStack(BlockRegistry.QUARTZ_SLIVER, 1);
+					Vec3d pos = event.getHitVec();
+					EntityItem ei = new EntityItem(event.getWorld(), pos.x, pos.y, pos.z, shards);
+					ei.motionX = rng.nextFloat() * 0.4f - 0.2f;
+					ei.motionZ = rng.nextFloat() * 0.4f - 0.2f;
+					ei.motionY = rng.nextFloat() * 0.2f + 0.2f;
+					event.getWorld().spawnEntity(ei);
+				}
+			}
 		}
 	}
 }

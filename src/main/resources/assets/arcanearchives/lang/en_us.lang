@@ -148,6 +148,7 @@ arcanearchives.tooltip.item.letterofresignation=Allows you to leave an Arcane Ne
 arcanearchives.tooltip.item.writofexpulsion=Allows you to kick a player from your Arcane Network. Rename on an anvil to set the player to kick.
 arcanearchives.tooltip.item.manifest=Used to view items stored in Radiant storage.
 arcanearchives.tooltip.item.mountaintear=Slowly creates infinite lava when placed in a Lightwell.
+arcanearchives.tooltip.item.quartzsliver=An alternative to torches. Acquire by smashing Radiant Quartz against stone.
 arcanearchives.tooltip.item.radiantamphora=Used to transfer fluids to and from a Radiant Tank or Reservoir Matrix.
 arcanearchives.tooltip.item.rawquartz=Grows on a Radiant Resonator over time. Break to harvest Raw Radiant Quartz. Can be collected with Silk Touch and placed as a decorative item.
 arcanearchives.tooltip.item.rivertear=Rapidly creates infinite water when placed in a Lightwell.
