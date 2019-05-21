@@ -61,7 +61,20 @@ public class RadiantLantern extends BlockDirectionalTemplate {
 	@Nonnull
 	@SuppressWarnings("deprecation")
 	public AxisAlignedBB getBoundingBox (IBlockState state, IBlockAccess source, BlockPos pos) {
-		return new AxisAlignedBB(0.35, 0.0, 0.35, 0.65, 1.0, 0.65);
+		EnumFacing facing = state.getValue(FACING);
+		if (facing == EnumFacing.UP) {
+			return new AxisAlignedBB(0.35, 0.0, 0.35, 0.65, 1.0, 0.65);
+		} else if (facing == EnumFacing.DOWN) {
+			return new AxisAlignedBB(0.35, 0.0, 0.35, 0.65, 1.0, 0.65);
+		} else if (facing == EnumFacing.SOUTH) {
+			return new AxisAlignedBB(0.35, 0.35, 0.0, 0.65, 0.65, 1.0);
+		} else if (facing == EnumFacing.NORTH) {
+			return new AxisAlignedBB(0.35, 0.35, 0.0, 0.65, 0.65, 1.0);
+		} else if (facing == EnumFacing.EAST) {
+			return new AxisAlignedBB(0.0, 0.35, 0.35, 1.0, 0.65, 0.65);
+		} else {
+			return new AxisAlignedBB(1.0, 0.35, 0.35, 1.0, 0.65, 0.65);
+		}
 	}
 
 	@Override
