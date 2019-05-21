@@ -7,7 +7,7 @@
         <stack item="arcanearchives:radiant_lantern">:DecorativeBlocks</stack>
         <stack item="arcanearchives:gemcutters_table">GemCuttersTable</stack>
         <stack item="arcanearchives:monitoring_crystal">MonitoringCrystal</stack>
-        <stack item="arcanearchives:quartz_sliver">DecorativeBlocks:QuartzSliver</stack>
+        <stack item="arcanearchives:quartz_sliver">DecorativeBlocks:SliverOfLight</stack>
         <stack item="arcanearchives:radiant_chest">RadiantChest</stack>
         <stack item="arcanearchives:radiant_crafting_table">RadiantCraftingTable</stack>
         <stack item="arcanearchives:radiant_resonator">RadiantResonator</stack>
@@ -164,20 +164,6 @@
             <space height="8"/>
             <horizontal_rule/>
         </section>
-        <section id="QuartzSliver">
-            <page_title>
-                <title>Quartz Sliver</title>
-            </page_title>
-            <p align="center"><stack item="arcanearchives:quartz_sliver" scale="3.0"/></p>
-            <horizontal_rule/>
-            <p>
-                Quartz Slivers are a light source, and an alternative to torches.
-            </p>
-            <p>
-                <stack item="minecraft:stone"/> Quartz Slivers can be crafted by bashing a piece of <link ref="RawQuartz">Raw Radiant Quartz</link> against another block. Each bash has a 20% chance of creating slivers.
-            </p>
-            <horizontal_rule/>
-        </section>
         <section>
             <page_title>
                 <title>Radiant Lantern</title>
@@ -203,6 +189,20 @@
             </p>
             <p>
                 <stack item="arcanearchives:radiant_resonator" /> Raw Quartz Clusters are created over time on top of a <link ref="RadiantResonator">Radiant Resonator</link>.
+            </p>
+            <horizontal_rule/>
+        </section>
+        <section id="SliverOfLight">
+            <page_title>
+                <title>Sliver of Light</title>
+            </page_title>
+            <p align="center"><stack item="arcanearchives:quartz_sliver" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                Slivers of Light are a light source, and an alternative to torches.
+            </p>
+            <p>
+                <stack item="minecraft:stone"/> Slivers of Light can be crafted by bashing a piece of <link ref="RawQuartz">Raw Radiant Quartz</link> against another block. Each bash has a 40% chance of creating a single sliver, and a 20% chance of creating a handful of slivers but destroying the piece of Raw Radiant Quartz.
             </p>
             <horizontal_rule/>
         </section>
@@ -685,7 +685,7 @@
                 <stack item="minecraft:crafting_table" /> Raw Radiant Quartz can be used to convert a crafting table into a <link ref="RadiantCraftingTable">Radiant Crafting Table</link>.
             </p>
             <p>
-                <stack item="arcanearchives:quartz_sliver" /> Raw Radiant Quartz can be used to create <link ref="DecorativeBlocks:QuartzSliver">Quartz Slivers</link> by bashing a piece against another block.
+                <stack item="arcanearchives:quartz_sliver" /> Raw Radiant Quartz can be used to create <link ref="DecorativeBlocks:SliverOfLight">Slivers of Light</link> by bashing a piece against another block.
             </p>
         </section>
         <section>
