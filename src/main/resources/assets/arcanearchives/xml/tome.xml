@@ -7,6 +7,7 @@
         <stack item="arcanearchives:radiant_lantern">:DecorativeBlocks</stack>
         <stack item="arcanearchives:gemcutters_table">GemCuttersTable</stack>
         <stack item="arcanearchives:monitoring_crystal">MonitoringCrystal</stack>
+        <stack item="arcanearchives:quartz_sliver">DecorativeBlocks:QuartzSliver</stack>
         <stack item="arcanearchives:radiant_chest">RadiantChest</stack>
         <stack item="arcanearchives:radiant_crafting_table">RadiantCraftingTable</stack>
         <stack item="arcanearchives:radiant_resonator">RadiantResonator</stack>
@@ -161,6 +162,20 @@
                 </recipe.result>
             </recipe>
             <space height="8"/>
+            <horizontal_rule/>
+        </section>
+        <section id="QuartzSliver">
+            <page_title>
+                <title>Quartz Sliver</title>
+            </page_title>
+            <p align="center"><stack item="arcanearchives:quartz_sliver" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                Quartz Slivers are a light source, and an alternative to torches.
+            </p>
+            <p>
+                <stack item="minecraft:stone"/> Quartz Slivers can be crafted by bashing a piece of <link ref="RawQuartz">Raw Radiant Quartz</link> against another block. Each bash has a 20% chance of creating slivers.
+            </p>
             <horizontal_rule/>
         </section>
         <section>
@@ -668,6 +683,9 @@
             </p>
             <p>
                 <stack item="minecraft:crafting_table" /> Raw Radiant Quartz can be used to convert a crafting table into a <link ref="RadiantCraftingTable">Radiant Crafting Table</link>.
+            </p>
+            <p>
+                <stack item="arcanearchives:quartz_sliver" /> Raw Radiant Quartz can be used to create <link ref="DecorativeBlocks:QuartzSliver">Quartz Slivers</link> by bashing a piece against another block.
             </p>
         </section>
         <section>
