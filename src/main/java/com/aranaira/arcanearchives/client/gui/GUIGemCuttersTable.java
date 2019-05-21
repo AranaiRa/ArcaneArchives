@@ -1,12 +1,16 @@
 package com.aranaira.arcanearchives.client.gui;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
 import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
+import com.aranaira.arcanearchives.util.CycleTimer;
 import com.aranaira.arcanearchives.util.types.IngredientStack;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -20,10 +24,8 @@ import net.minecraft.util.text.TextFormatting;
 import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Stream;
 
 public class GUIGemCuttersTable extends GuiContainer {
 	private static final ResourceLocation GUI_TEXTURES = new ResourceLocation("arcanearchives:textures/gui/gemcutterstable.png");
@@ -38,6 +40,8 @@ public class GUIGemCuttersTable extends GuiContainer {
 	private InvisibleButton nextPageButton;
 	private int timesChanged;
 
+	private CycleTimer cycleTimer;
+
 	public GUIGemCuttersTable (EntityPlayer player, ContainerGemCuttersTable container) {
 		super(container);
 		this.container = container;
@@ -48,6 +52,7 @@ public class GUIGemCuttersTable extends GuiContainer {
 		this.player = player;
 		updateRecipeStatus();
 		this.timesChanged = this.player.inventory.getTimesChanged();
+		this.cycleTimer = new CycleTimer(-1);
 	}
 
 	public void updateRecipeStatus () {
@@ -72,6 +77,7 @@ public class GUIGemCuttersTable extends GuiContainer {
 
 	@Override
 	public void drawScreen (int mouseX, int mouseY, float partialTicks) {
+		cycleTimer.onDraw();
 		this.drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		this.renderHoveredToolTip(mouseX, mouseY);
@@ -131,6 +137,9 @@ public class GUIGemCuttersTable extends GuiContainer {
 		return false;
 	}
 
+	private Map<GCTRecipe, List<List<ItemStack>>> recipeIngredients = new HashMap<>();
+	private Map<GCTRecipe, IntArrayList> recipeCounts = new HashMap<>();
+
 	@Override
 	protected void renderToolTip (ItemStack stack, int x, int y) {
 		Slot slot = this.getSlotUnderMouse();
@@ -143,35 +152,29 @@ public class GUIGemCuttersTable extends GuiContainer {
 				if (recipeStatus.getBoolean(recipe)) {// Valid
 					tooltip.add(TextFormatting.GREEN + stack.getDisplayName());
 				} else {
-					// Invalid
 					tooltip.add(TextFormatting.RED + stack.getDisplayName());
 				}
 
-				if (recipe.TOOLTIP_CACHE != null) {
-					tooltip.addAll(recipe.TOOLTIP_CACHE);
-				} else {
-					Map<Integer, ItemStack> ingredients = new HashMap<>();
+				List<List<ItemStack>> ingredients = recipeIngredients.get(recipe);
+				IntArrayList counts = recipeCounts.get(recipe);
+				if (ingredients == null || counts == null) {
+					ingredients = new ArrayList<>();
+					counts = new IntArrayList();
+
 					for (IngredientStack ing : recipe.getIngredients()) {
 						ItemStack[] stacks = ing.getMatchingStacks();
-						assert stacks.length != 0; // TODO?
-						ItemStack item = stacks[0];
-						item.setCount(ing.getCount());
-						int packed = RecipeItemHelper.pack(item);
-						if (ingredients.containsKey(packed)) {
-							ingredients.get(packed).grow(ing.getCount());
-						} else {
-							ingredients.put(packed, item);
-						}
+						assert stacks.length != 0;
+						ingredients.add(Arrays.asList(stacks));
+						counts.add(ing.getCount());
 					}
 
-					List<String> cache = new ArrayList<>();
+					recipeIngredients.put(recipe, ingredients);
+					recipeCounts.put(recipe, counts);
+				}
 
-					for (ItemStack item : ingredients.values()) {
-						cache.add(TextFormatting.BOLD + item.getDisplayName() + " : " + item.getCount());
-					}
-
-					recipe.TOOLTIP_CACHE = cache;
-					tooltip.addAll(cache);
+				for (int i = 0; i < ingredients.size(); i++) {
+					ItemStack item = cycleTimer.getCycledItem(ingredients.get(i));
+					tooltip.add(TextFormatting.BOLD + item.getDisplayName() + " : " + counts.getInt(i));
 				}
 			}
 
