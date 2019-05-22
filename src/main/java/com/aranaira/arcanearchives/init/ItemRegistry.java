@@ -8,6 +8,7 @@ import com.aranaira.arcanearchives.items.gems.MountaintearItem;
 import com.aranaira.arcanearchives.items.gems.RivertearItem;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.items.unused.TomeOfRequisitionItem;
+import com.aranaira.arcanearchives.util.IHasModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -62,9 +63,12 @@ public class ItemRegistry {
 
 	@SubscribeEvent
 	public static void onModelRegister (ModelRegistryEvent event) {
-		Arrays.asList(RAW_RADIANT_QUARTZ, CUT_RADIANT_QUARTZ/*, GEOMANCY_PENDULUM, GEOMANTIC_MAP*/, MANIFEST, RADIANT_AMPHORA, /*SCEPTER_ABDUCTION, SCEPTER_MANIPULATION, SCEPTER_TRANSLOCATION*/ TOME_OF_ARCANA, LETTER_OF_INVITATION, LETTER_OF_RESIGNATION, WRIT_OF_EXPULSION, /*TOME_OF_REQUISITION, */COMPONENT_CONTAINMENTFIELD, COMPONENT_MATRIXBRACE, COMPONENT_MATERIALINTERFACE, COMPONENT_RADIANTDUST, COMPONENT_SCINTILLATINGINLAY/*, SPIRIT_ORB*/, SCEPTER_REVELATION, SCEPTER_MANIPULATION, RIVERTEAR, MOUNTAINTEAR).forEach(ItemTemplate::registerModels);
+		Arrays.asList(RAW_RADIANT_QUARTZ, CUT_RADIANT_QUARTZ/*, GEOMANCY_PENDULUM, GEOMANTIC_MAP*/, MANIFEST, RADIANT_AMPHORA, /*SCEPTER_ABDUCTION, SCEPTER_MANIPULATION, SCEPTER_TRANSLOCATION*/ LETTER_OF_INVITATION, LETTER_OF_RESIGNATION, WRIT_OF_EXPULSION, /*TOME_OF_REQUISITION, */COMPONENT_CONTAINMENTFIELD, COMPONENT_MATRIXBRACE, COMPONENT_MATERIALINTERFACE, COMPONENT_RADIANTDUST, COMPONENT_SCINTILLATINGINLAY/*, SPIRIT_ORB*/, SCEPTER_REVELATION, SCEPTER_MANIPULATION, RIVERTEAR, MOUNTAINTEAR).forEach(ItemTemplate::registerModels);
 
 		Stream.of(/*BlockRegistry.MATRIX_CRYSTAL_CORE, BlockRegistry.MATRIX_REPOSITORY, BlockRegistry.MATRIX_RESERVOIR, BlockRegistry.MATRIX_STORAGE, BlockRegistry.MATRIX_DISTILLATE, */BlockRegistry.STORAGE_RAW_QUARTZ, BlockRegistry.STORAGE_CUT_QUARTZ, BlockRegistry.RADIANT_CHEST, BlockRegistry.RADIANT_CRAFTING_TABLE, BlockRegistry.RADIANT_LANTERN, BlockRegistry.RADIANT_RESONATOR, BlockRegistry.RAW_QUARTZ, /*BlockRegistry.DOMINION_CRYSTAL, */BlockRegistry.GEMCUTTERS_TABLE, BlockRegistry.RADIANT_TROVE, BlockRegistry.MONITORING_CRYSTAL, BlockRegistry.BRAZIER_OF_HOARDING).map(BlockTemplate::getItemBlock).forEach((block) -> ModelLoader.setCustomModelResourceLocation(block, 0, new ModelResourceLocation(block.getRegistryName(), "inventory")));
+
+		// has to be a bit special because it's a ItemGuidebook
+		TOME_OF_ARCANA.registerModels();
 
 		/*SPIRIT_ORB.registerModels();*/
 	}

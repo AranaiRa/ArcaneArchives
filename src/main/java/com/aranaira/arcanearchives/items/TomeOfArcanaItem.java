@@ -1,55 +1,51 @@
 package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.items.templates.ItemTemplate;
-import com.lireherz.guidebook.guidebook.client.GuiGuidebook;
-import net.minecraft.client.Minecraft;
+import com.aranaira.arcanearchives.util.IHasModel;
+import gigaherz.lirelent.guidebook.client.BookRegistryEvent;
+import gigaherz.lirelent.guidebook.guidebook.ItemGuidebook;
+import gigaherz.lirelent.guidebook.guidebook.client.BookRendering;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Optional;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class TomeOfArcanaItem extends ItemTemplate {
+@Mod.EventBusSubscriber
+public class TomeOfArcanaItem extends ItemGuidebook implements IHasModel {
 	public static final String NAME = "item_tomeofarcana";
-	public static final ResourceLocation TOME_OF_ARCANA = new ResourceLocation(ArcaneArchives.MODID, "xml/tome.xml");
+	private static final ResourceLocation TOME_OF_ARCANA = new ResourceLocation(ArcaneArchives.MODID, "xml/tome.xml");
 
 	public TomeOfArcanaItem () {
-		super(NAME);
+		setTranslationKey(NAME);
+		setRegistryName(new ResourceLocation(ArcaneArchives.MODID, NAME));
+		setCreativeTab(ArcaneArchives.TAB);
 		setHasSubtypes(true);
 		setMaxStackSize(1);
 	}
 
 	@Override
-	public EnumActionResult onItemUse (EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		return showBook(worldIn, playerIn.getHeldItem(hand));
+	public void getSubItems (CreativeTabs tab, NonNullList<ItemStack> subItems) {
+		if (this.isInCreativeTab(tab)) {
+			subItems.add(of(TOME_OF_ARCANA));
+		}
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick (World worldIn, EntityPlayer playerIn, EnumHand hand) {
-		ItemStack stack = playerIn.getHeldItem(hand);
-		EnumActionResult result = showBook(worldIn, stack);
-		return ActionResult.newResult(result, stack);
-	}
-
-	@SideOnly(Side.CLIENT)
-	private EnumActionResult showBook (World worldIn, ItemStack stack) {
-		if (!worldIn.isRemote) {
-			return EnumActionResult.FAIL;
-		}
-
-		Minecraft.getMinecraft().displayGuiScreen(new GuiGuidebook(TOME_OF_ARCANA));
-
-		return EnumActionResult.SUCCESS;
+	public void registerModels () {
+		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
 	}
 
 	@Override
@@ -58,18 +54,18 @@ public class TomeOfArcanaItem extends ItemTemplate {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.tomeofarcana"));
 	}
 
-	public ItemStack of (ResourceLocation book) {
-		ItemStack stack = new ItemStack(this);
-		NBTTagCompound tag = new NBTTagCompound();
-		tag.setString("Book", book.toString());
-		stack.setTagCompound(tag);
-		return stack;
-	}
+	@Optional.Method(modid = "gbook")
+	@SubscribeEvent
+	@SuppressWarnings("unused")
+	public static void registerBook (BookRegistryEvent event) {
+		// uncomment this is you are trying to fine tune margin values in TomeOfArcanaItemBackground
+		// it will display transparent boxes of where page and page elements thing they should be bounded by
+		//BookRendering.DEBUG_DRAW_BOUNDS = true;
 
-	@Override
-	public void getSubItems (CreativeTabs tab, NonNullList<ItemStack> subItems) {
-		if (this.isInCreativeTab(tab)) {
-			subItems.add(of(TOME_OF_ARCANA));
-		}
+		// tell guidebook mod to parse the XML and be ready to display the page contents, but we'll handle the item
+		event.register(TOME_OF_ARCANA, true);
+
+		// tell guidebook mod that we want to deal with rendering the background
+		BookRendering.BACKGROUND_FACTORY_MAP.put(new ResourceLocation(ArcaneArchives.MODID, "textures/gui/arcana_documentation.png"), TomeOfArcanaItemBackground.TomeOfArcanaItemBackgroundFactory);
 	}
 }

@@ -71,10 +71,16 @@ repositories {
         url = "https://minecraft.curseforge.com/api/maven/"
     }
     maven {  // guidebook common dep
-        url 'http://dogforce-games.com/maven'
+        name = "guidebook"
+        url = "http://dogforce-games.com/maven"
     }
-    maven { // guidebook transitive deps
-        url 'https://maven.mcmoddev.com'
+    maven { // guidebook transitive deps and baubles
+        name = "mcmoddev"
+        url = "https://maven.mcmoddev.com"
+    }
+    flatDir {
+        name = "local jars"
+        dirs 'embed'
     }
     maven {
         name = "HellfirePVP"
@@ -84,6 +90,12 @@ repositories {
         name = "sponge"
         url = "http://repo.spongepowered.org/maven/"
     }
+}
+
+configurations {
+    // configuration that holds jars to embed inside the jar
+    embed
+    embed.transitive = false
 }
 
 dependencies {
@@ -100,11 +112,10 @@ dependencies {
 
     // guidebook dependencies
     deobfCompile "gigaherz.commons:gigaherz.commons-1.12.1:0.6.4"
-    shade ("gigaherz.commons:gigaherz.commons-1.12.1:0.6.4") {
-        transitive = false
-    }
-    deobfCompile "net.darkhax.gamestages:GameStages-1.12.2:2.0.91"
-    deobfCompile "net.darkhax.bookshelf:Bookshelf-1.12.2:2.3.552"
+
+    // modified guidebook, note "lirelent" package
+    deobfCompile "gigaherz.lirelent.guidebook:Guidebook-1.12.2:2.9.1-all"
+    embed "gigaherz.lirelent.guidebook:Guidebook-1.12.2:2.9.1-all"
 
     shade("org.spongepowered:mixin:0.7.11-SNAPSHOT") {
         transitive = false
@@ -131,12 +142,23 @@ processResources {
 }
 
 jar {
+    into('/META-INF/libraries') {
+        from configurations.embed
+    }
+
     manifest {
-        attributes "FMLCorePluginContainsFMLMod": "true", "FMLCorePlugin": "com.aranaira.arcanearchives.core.AALoadingPlugin"
+        attributes([
+                "FMLCorePluginContainsFMLMod": "true",
+                "FMLCorePlugin"              : "com.aranaira.arcanearchives.core.AALoadingPlugin",
 
-        attributes "MixinConfigs": "mixins.arcanearchives.json", "TweakClass": "org.spongepowered.asm.launch.MixinTweaker", "ForceLoadAsMod": "true"
+                "MixinConfigs"               : "mixins.arcanearchives.json",
+                "TweakClass"                 : "org.spongepowered.asm.launch.MixinTweaker",
+                "ForceLoadAsMod"             : "true",
 
-        attributes "FMLAT": "aa_at.cfg"
+                "FMLAT"                      : "aa_at.cfg",
+
+                "ContainedDeps"              : configurations.embed.collect { it.getName() }.join(' ')
+        ])
     }
 
     configurations.shade.each { dep ->

@@ -1,6 +1,6 @@
-<book title="Tome of Arcana [WIP]" cover="arcanearchives:items/item_tomeofarcana" fontSize="0.6">
+<book title="Tome of Arcana [WIP]" background="arcanearchives:textures/gui/arcana_documentation.png" fontSize="0.6">
 
-    <include ref="arcanearchives:xml/standard.xml" />
+    <include ref="gbook:xml/standard.xml" />
 
     <stack-links>
         <stack item="arcanearchives:brazier_of_hoarding">:BrazierHoarding</stack>

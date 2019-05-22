@@ -1,7 +1,6 @@
 package com.aranaira.arcanearchives.config;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.lireherz.guidebook.ConfigValues;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -51,10 +50,6 @@ public class ConfigHandler {
 	@Config.Comment("Causes Radiant Chests, Troves, etc, to be unbreakable when not empty")
 	@Config.Name("Unbreakable Radiant Chests & Troves")
 	public static boolean UnbreakableContainers = false;
-
-	@Config.Comment("Tome of Arcana settings (from Guidebook)")
-	@Config.Name("Tome of Arcana settings")
-	public static ConfigValues ConfigValues = new ConfigValues();
 
 	@Config.Comment("Disable to use default Minecraft-style GUI elements. (Client Only)")
 	@Config.Name("Use Pretty GUIs")
