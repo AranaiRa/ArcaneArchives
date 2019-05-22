@@ -20,11 +20,6 @@ public class InvisibleButton extends GuiButton {
 		super(buttonId, x, y, widthIn, heightIn, buttonText);
 	}
 
-	@Override
-	public boolean mousePressed (Minecraft mc, int mouseX, int mouseY) {
-		return this.enabled && mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
-	}
-
 	/**
 	 * Draws this button text (if set) to the screen. Mostly a copy paste
 	 * of {@link GuiButton#drawButton(Minecraft, int, int, float)}
@@ -39,26 +34,29 @@ public class InvisibleButton extends GuiButton {
 			}
 
 			if (!displayString.isEmpty()) {
+				// largely cribbed from GuiButton::DrawButton
 				zLevel = 200;
 
 				FontRenderer fontrenderer = mc.fontRenderer;
-				GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-				this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
-				GlStateManager.enableBlend();
-				GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-				GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+				GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+				this.hovered = mousePressed(mc, mouseX, mouseY);
+
+				GlStateManager.enableDepth();
+				GlStateManager.disableBlend();
 
 				// GuiButton::DrawButton draws textures here, for invisibleButtons we don't want a texture
 
 				this.mouseDragged(mc, mouseX, mouseY);
-				int j = 14737632;
+
+				// note that "color" in minecraft is "alpha", "red", "green", "blue" with 2 hex chars for each
+				int j = 0xFFE0E0E0;
 
 				if (packedFGColour != 0) {
 					j = packedFGColour;
 				} else if (!this.enabled) {
-					j = 10526880;
+					j = 0xFFA0A0A0;
 				} else if (this.hovered) {
-					j = 16777120;
+					j = 0xFFFFFFA0;
 				}
 
 				this.drawCenteredString(fontrenderer, this.displayString, this.x + this.width / 2, this.y + (this.height - 8) / 2, j);

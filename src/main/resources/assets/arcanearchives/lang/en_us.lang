@@ -43,7 +43,7 @@ item.item_spiritorb.time_eld.name=Saturnine Time Orb
 
 tile.storage_raw_quartz.name=Raw Radiant Quartz Block
 tile.storage_cut_quartz.name=Shaped Radiant Quartz Block
-tile.quartz_sliver.name=Quartz Sliver
+tile.quartz_sliver.name=Sliver of Light
 tile.raw_quartz.name=Raw Quartz Cluster
 
 tile.radiant_crafting_table.name=Radiant Crafting Table
