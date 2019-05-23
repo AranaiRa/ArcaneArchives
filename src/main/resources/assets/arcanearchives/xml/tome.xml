@@ -6,6 +6,7 @@
         <stack item="arcanearchives:brazier_of_hoarding">:BrazierHoarding</stack>
         <stack item="arcanearchives:radiant_lantern">:DecorativeBlocks</stack>
         <stack item="arcanearchives:gemcutters_table">GemCuttersTable</stack>
+        <stack item="arcanearchives:lectern_manifest">LecternManifest</stack>
         <stack item="arcanearchives:monitoring_crystal">MonitoringCrystal</stack>
         <stack item="arcanearchives:quartz_sliver">DecorativeBlocks:SliverOfLight</stack>
         <stack item="arcanearchives:radiant_chest">RadiantChest</stack>
@@ -43,6 +44,7 @@
             <p><stack item="arcanearchives:brazier_of_hoarding"/> <link ref="BrazierHoarding">Brazier of Hoarding</link></p>
             <p><stack item="arcanearchives:radiant_lantern"/> <link ref="DecorativeBlocks">Decorative Blocks</link></p>
             <p><stack item="arcanearchives:gemcutters_table"/> <link ref="GemCuttersTable">Gem Cutter's Table</link></p>
+            <p><stack item="arcanearchives:lectern_manifest"/> <link ref="LecternManifest">Manifest Lectern</link></p>
             <p><stack item="arcanearchives:monitoring_crystal"/> <link ref="MonitoringCrystal">Monitoring Crystal</link></p>
             <p><stack item="arcanearchives:radiant_chest"/> <link ref="RadiantChest">Radiant Chest</link></p>
             <p><stack item="arcanearchives:radiant_crafting_table"/> <link ref="RadiantCraftingTable">Radiant Crafting Table</link></p>
@@ -230,6 +232,38 @@
             <recipe type="shaped">
                 <recipe.result>
                     <stack item="arcanearchives:gemcutters_table"/>
+                </recipe.result>
+            </recipe>
+            <space height="8"/>
+            <horizontal_rule/>
+            <p italics="true">
+                ...Lore fragment TBD
+            </p>
+        </section>
+    </chapter>
+
+    <chapter id="LecternManifest">
+        <section>
+            <page_title>
+                <title>Manifest Lectern</title>
+            </page_title>
+            <p align="center"><stack item="arcanearchives:lectern_manifest" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                A Manifest Lectern acts as a <link ref="Manifest">Manifest</link> does, save that it is placed in the world rather than an item you carry with you.
+            </p>
+            <p>
+                When using the item tracking feature, a Manifest Lectern will draw lines from you to the target inventories, rather than from itself to the target inventories.
+            </p>
+        </section>
+        <section>
+            <p>
+                <stack item="minecraft:crafting_table"/> Manifest Lecterns can be crafted conventionally.
+            </p>
+            <horizontal_rule/>
+            <recipe type="shaped">
+                <recipe.result>
+                    <stack item="arcanearchives:lectern_manifest"/>
                 </recipe.result>
             </recipe>
             <space height="8"/>
