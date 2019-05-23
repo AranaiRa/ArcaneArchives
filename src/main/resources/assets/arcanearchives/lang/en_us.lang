@@ -62,6 +62,7 @@ tile.matrix_reservoir.name=Reservoir Matrix
 tile.matrix_distillate.name=Distillate Matrix
 
 tile.accessorblock.name=Accessor
+tile.lectern_manifest.name=Manifest Lectern
 tile.dominion_crystal.name=Dominion Crystal
 tile.gemcutters_table.name=Gem Cutter's Table
 
@@ -100,7 +101,7 @@ arcanearchives.error.upgrade_trove_failed=Failed to upgrade trove. Current upgra
 arcanearchives.error.upgrade_tank_failed=Failed to upgrade tanke. Current upgrade level is: %d/%d.
 arcanearchives.error.trove_insertion_failed.full=Cannot insert any more items into this trove.
 arcanearchives.error.trove_insertion_failed.wrong=That item cannot be stored in this trove.
-arcanearchives.error.monitoring_crystal=Multiple Monitoring Crystals were found targetting the same block: %d/%d/%d in dimension %d.
+arcanearchives.error.monitoring_crystal=Multiple Monitoring Crystals were found targeting the same block: %d/%d/%d in dimension %d.
 arcanearchives.error.tankfull=Destination Radiant Tank cannot accept more fluid.
 arcanearchives.error.tankmissing=Destination Radiant Tank is missing or not loaded.
 
