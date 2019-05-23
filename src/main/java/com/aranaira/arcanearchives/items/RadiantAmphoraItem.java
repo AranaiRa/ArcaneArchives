@@ -57,7 +57,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 	@Override
 	public ICapabilityProvider initCapabilities (ItemStack stack, @Nullable NBTTagCompound nbt) {
 		if (!stack.isEmpty()) {
-			return new FluidTankWrapper(stack);
+			return new AmphoraCapabilityProvider(stack, new AmphoraUtil(stack));
 		}
 		return super.initCapabilities(stack, nbt);
 	}
@@ -306,14 +306,14 @@ public class RadiantAmphoraItem extends ItemTemplate {
 		}
 	}
 
-	private static class FluidTankWrapper implements IFluidHandlerItem, ICapabilityProvider {
-		public static long VALIDITY_DELAY = 5000;
-		private IFluidHandler tank;
+	private static class FluidTankWrapperFill implements IFluidHandlerItem {
+		private static long VALIDITY_DELAY = 5000;
+		protected IFluidHandler tank;
 		private long lastUpdated;
-		private AmphoraUtil util;
+		protected AmphoraUtil util;
 
-		public FluidTankWrapper (ItemStack stack) {
-			this.util = new AmphoraUtil(stack);
+		public FluidTankWrapperFill (ItemStack stack, AmphoraUtil util) {
+			this.util = util;
 			update();
 		}
 
@@ -342,6 +342,8 @@ public class RadiantAmphoraItem extends ItemTemplate {
 			if (tank == null) {
 				return new IFluidTankProperties[] {};
 			}
+
+			// TODO: This may need tweaking
 			return tank.getTankProperties();
 		}
 
@@ -356,35 +358,83 @@ public class RadiantAmphoraItem extends ItemTemplate {
 		@Override
 		@Nullable
 		public FluidStack drain (FluidStack resource, boolean doDrain) {
-			validate();
-			if (tank == null) return null;
-			return tank.drain(resource, doDrain);
+			return null;
 		}
 
 		@Override
 		@Nullable
 		public FluidStack drain (int maxDrain, boolean doDrain) {
-			validate();
-			if (tank == null) return null;
-			return tank.drain(maxDrain, doDrain);
-		}
-
-		@Override
-		public boolean hasCapability (@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
-			return capability == CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY;
-		}
-
-		@SuppressWarnings("unchecked")
-		@Override
-		@Nullable
-		public <T> T getCapability (@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
-			return capability == CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY ? (T) this : null;
+			return null;
 		}
 
 		@Nonnull
 		@Override
 		public ItemStack getContainer () {
 			return util.getStack();
+		}
+	}
+
+	public static class FluidTankWrapperDrain extends FluidTankWrapperFill {
+		public FluidTankWrapperDrain (ItemStack stack, AmphoraUtil util) {
+			super(stack, util);
+		}
+
+		@Override
+		public IFluidTankProperties[] getTankProperties () {
+			return super.getTankProperties();
+		}
+
+		@Override
+		public int fill (FluidStack resource, boolean doFill) {
+			return 0;
+		}
+
+		@Nullable
+		@Override
+		public FluidStack drain (FluidStack resource, boolean doDrain) {
+			validate();
+			if (tank == null) return null;
+
+			return tank.drain(resource, doDrain);
+		}
+
+		@Nullable
+		@Override
+		public FluidStack drain (int maxDrain, boolean doDrain) {
+			validate();
+			if (tank == null) return null;
+
+			return tank.drain(maxDrain, doDrain);
+		}
+	}
+
+	public static class AmphoraCapabilityProvider implements ICapabilityProvider {
+		private ItemStack container;
+		private AmphoraUtil util;
+
+		public AmphoraCapabilityProvider (ItemStack container, AmphoraUtil util) {
+			this.container = container;
+			this.util = util;
+		}
+
+		@Override
+		public boolean hasCapability (@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
+			return capability == CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY;
+
+		}
+
+		@Nullable
+		@Override
+		public <T> T getCapability (@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
+			if (capability == CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY) {
+				if (util.getIsEmptyMode()) {
+					return (T) new FluidTankWrapperDrain(container, util);
+				} else {
+					return (T) new FluidTankWrapperFill(container, util);
+				}
+			}
+
+			return null;
 		}
 	}
 }
