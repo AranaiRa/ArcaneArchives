@@ -34,7 +34,7 @@ public class LineHandler {
 	@SubscribeEvent
 	public static void renderOverlay (RenderWorldLastEvent event) {
 		if (mBlockPositions.size() > 0) {
-			RenderHelper.drawRays(Minecraft.getMinecraft().player.getPositionVector(), ImmutableSet.copyOf(mBlockPositions), 15);
+			RenderHelper.drawRays(Minecraft.getMinecraft().player.world.getTotalWorldTime(), Minecraft.getMinecraft().player.getPositionVector(), ImmutableSet.copyOf(mBlockPositions), 15);
 		}
 	}
 

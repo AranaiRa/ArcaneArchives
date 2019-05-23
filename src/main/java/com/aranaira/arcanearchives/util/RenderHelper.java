@@ -1,8 +1,10 @@
 package com.aranaira.arcanearchives.util;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -44,7 +46,7 @@ public class RenderHelper {
 }*/
 
 	@SideOnly(Side.CLIENT)
-	public static void drawRays (Vec3d player_pos, Set<Vec3d> target_pos, float width) {
+	public static void drawRays (long worldTime, Vec3d player_pos, Set<Vec3d> target_pos, float width) {
 		GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
 		GL11.glDisable(GL11.GL_CULL_FACE);
 		GL11.glDisable(GL11.GL_LIGHTING);
@@ -55,7 +57,7 @@ public class RenderHelper {
 		GL11.glTranslated(-player_pos.x, -player_pos.y, -player_pos.z);
 
 
-		Color c = new Color(0.601f, 0.164f, 0.734f, 1f);
+		Color c = ColorHelper.getColorFromTime(worldTime);//new Color(0.601f, 0.164f, 0.734f, 1f);
 		GL11.glColor4d(c.red, c.green, c.blue, c.alpha);
 		GL11.glLineWidth(width);
 		GL11.glDepthMask(false);
@@ -90,6 +92,29 @@ public class RenderHelper {
 			this.green = greenIn;
 			this.blue = blueIn;
 			this.alpha = alphaIn;
+		}
+
+		public static Color Lerp(Color one, Color two, float prog){
+			Color lerped = new Color();
+
+			lerped.red = (float)MathHelper.clampedLerp(one.red, two.red, prog);
+			lerped.green = (float)MathHelper.clampedLerp(one.green, two.green, prog);
+			lerped.blue = (float)MathHelper.clampedLerp(one.blue, two.blue, prog);
+			lerped.alpha = (float)MathHelper.clampedLerp(one.alpha, two.alpha, prog);
+			return lerped;
+		}
+
+		public static String FormatForLogger(Color c, boolean includeAlpha){
+			String str = "";
+			str += "<R:"+c.red;
+			str += "  G:"+c.green;
+			str += "  B:"+c.blue;
+
+			if(includeAlpha)
+				str += "  A:"+c.alpha;
+			str += ">";
+
+			return str;
 		}
 	}
 }
