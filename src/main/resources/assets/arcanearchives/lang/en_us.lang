@@ -126,6 +126,7 @@ arcanearchives.tooltip.manifest.clicktoshow=Click to draw a line to chests conta
 
 arcanearchives.tooltip.tank.fluid=Fluid: %s
 arcanearchives.tooltip.tank.amount=Amount: %s/%smb
+arcanearchives.tooltip.amphora.unknown_fluid=unknown fluid
 
 arcanearchives.tooltip.component.rawquartz=A crafting ingredient. Can also be used to upgrade chests and crafting tables into their Radiant versions.
 arcanearchives.tooltip.component.cutquartz=A crafting ingredient.
