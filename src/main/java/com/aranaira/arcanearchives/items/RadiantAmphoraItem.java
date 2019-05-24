@@ -41,6 +41,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 public class RadiantAmphoraItem extends ItemTemplate {
@@ -57,7 +58,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 	@Override
 	public ICapabilityProvider initCapabilities (ItemStack stack, @Nullable NBTTagCompound nbt) {
 		if (!stack.isEmpty()) {
-			return new AmphoraCapabilityProvider(stack, new AmphoraUtil(stack));
+			return new AmphoraCapabilityProvider(new AmphoraUtil(stack));
 		}
 		return super.initCapabilities(stack, nbt);
 	}
@@ -74,7 +75,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 			AmphoraUtil util = new AmphoraUtil(stack);
 			if (!util.isLinked()) {
 				return unlinked;
-			} else if (util.getIsEmptyMode()) {
+			} else if (util.getMode() == TankMode.DRAIN) {
 				return empty;
 			} else {
 				return fill;
@@ -110,7 +111,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 		//Only progress if linked to a tank
 		AmphoraUtil util = new AmphoraUtil(stack);
 
-		if (util.isLinked() && !util.getIsEmptyMode()) {
+		if (util.isLinked() && util.getMode() == TankMode.DRAIN) {
 			RayTraceResult raytraceresult = this.rayTrace(world, player, true);
 
 			// Actually nullable vvv
@@ -153,7 +154,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 
 			if (hit == BlockRegistry.RADIANT_TANK && player.isSneaking()) {
 				util.setHome(pos, player.dimension);
-			} else if (util.isLinked() && util.getIsEmptyMode()) {
+			} else if (util.isLinked() && util.getMode() == TankMode.DRAIN) {
 				IFluidHandler cap = util.getCapability();
 				if (cap == null) {
 					player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.tankmissing"), true);
@@ -182,7 +183,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 	public static class AmphoraUtil {
 		private ItemStack stack;
 		private NBTTagCompound nbt;
-		private RadiantTankTileEntity te;
+		private WeakReference<RadiantTankTileEntity> te;
 
 		public AmphoraUtil (ItemStack incoming) {
 			stack = incoming;
@@ -210,11 +211,24 @@ public class RadiantAmphoraItem extends ItemTemplate {
 			return nbt.getInteger("homeTankDim");
 		}
 
-		public boolean getIsEmptyMode () {
-			if (!nbt.hasKey("isEmptyMode")) {
-				nbt.setBoolean("isEmptyMode", false);
+		public TankMode getMode () {
+			if (!nbt.hasKey("mode")) {
+				nbt.setInteger("mode", TankMode.FILL.ordinal());
 			}
-			return nbt.getBoolean("isEmptyMode");
+			return TankMode.fromOrdinal(nbt.getInteger("mode"));
+		}
+
+		public void toggleMode () {
+			if (!nbt.hasKey("mode")) {
+				nbt.setInteger("mode", TankMode.FILL.ordinal());
+			} else {
+				TankMode current = TankMode.fromOrdinal(nbt.getInteger("mode"));
+				if (current == TankMode.FILL) {
+					nbt.setInteger("mode", TankMode.DRAIN.ordinal());
+				} else {
+					nbt.setInteger("mode", TankMode.FILL.ordinal());
+				}
+			}
 		}
 
 		public boolean isLinked () {
@@ -236,11 +250,20 @@ public class RadiantAmphoraItem extends ItemTemplate {
 		}
 
 		public Fluid getFluid (IFluidHandler capability) {
-			return capability.getTankProperties()[0].getContents().getFluid();
+			IFluidTankProperties[] props = capability.getTankProperties();
+			if (props.length == 0) return null;
+
+			FluidStack contents = props[0].getContents();
+			if (contents == null) return null;
+
+			return contents.getFluid();
 		}
 
 		public FluidStack getFluidStack (IFluidHandler capability) {
-			return new FluidStack(getFluid(capability), 1000);
+			Fluid fluid = getFluid(capability);
+			if (fluid == null) return null;
+
+			return new FluidStack(fluid, 1000);
 		}
 
 		private void validate () {
@@ -255,21 +278,21 @@ public class RadiantAmphoraItem extends ItemTemplate {
 				return null;
 			}
 
-			if (te == null) {
+			if (te == null || te.get() == null) {
 				if (nbt.hasKey("homeTank") && nbt.hasKey("homeTankDim")) {
 					BlockPos home = BlockPos.fromLong(nbt.getLong("homeTank"));
 					int dim = nbt.getInteger("homeTankDim");
-					te = WorldUtil.getTileEntity(RadiantTankTileEntity.class, dim, home);
+					te = new WeakReference<>(WorldUtil.getTileEntity(RadiantTankTileEntity.class, dim, home));
 				} else {
 					return null;
 				}
 			}
 
-			if (te == null) {
+			if (te == null || te.get() == null) {
 				return null;
 			}
 
-			IFluidHandler capability = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
+			IFluidHandler capability = te.get().getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
 			if (capability == null) {
 				return null;
 			}
@@ -306,13 +329,56 @@ public class RadiantAmphoraItem extends ItemTemplate {
 		}
 	}
 
-	private static class FluidTankWrapperFill implements IFluidHandlerItem {
+	private static class FluidTankPropWrapper implements IFluidTankProperties {
+		private FluidStack fluid;
+		private int capacity;
+		private AmphoraUtil util;
+
+		public FluidTankPropWrapper (FluidStack fluid, int capacity, AmphoraUtil util) {
+			this.fluid = fluid;
+			this.capacity = capacity;
+			this.util = util;
+		}
+
+		@Nullable
+		@Override
+		public FluidStack getContents () {
+			return fluid;
+		}
+
+		@Override
+		public int getCapacity () {
+			return capacity;
+		}
+
+		@Override
+		public boolean canFill () {
+			return util.getMode() == TankMode.FILL;
+		}
+
+		@Override
+		public boolean canDrain () {
+			return util.getMode() == TankMode.DRAIN;
+		}
+
+		@Override
+		public boolean canFillFluidType (FluidStack fluidStack) {
+			return ((fluid == null || fluid.getFluid().equals(fluidStack.getFluid())) && util.getMode() == TankMode.FILL);
+		}
+
+		@Override
+		public boolean canDrainFluidType (FluidStack fluidStack) {
+			return ((fluid == null || fluid.getFluid().equals(fluidStack.getFluid())) && util.getMode() == TankMode.DRAIN);
+		}
+	}
+
+	private static class FluidTankWrapper implements IFluidHandlerItem {
 		private static long VALIDITY_DELAY = 5000;
 		protected IFluidHandler tank;
 		private long lastUpdated;
 		protected AmphoraUtil util;
 
-		public FluidTankWrapperFill (ItemStack stack, AmphoraUtil util) {
+		public FluidTankWrapper (AmphoraUtil util) {
 			this.util = util;
 			update();
 		}
@@ -340,17 +406,23 @@ public class RadiantAmphoraItem extends ItemTemplate {
 		public IFluidTankProperties[] getTankProperties () {
 			validate();
 			if (tank == null) {
-				return new IFluidTankProperties[] {};
+				return new IFluidTankProperties[]{};
 			}
 
-			// TODO: This may need tweaking
-			return tank.getTankProperties();
+			IFluidTankProperties[] props = tank.getTankProperties();
+			return new IFluidTankProperties[]{new FluidTankPropWrapper(props[0].getContents(), props[0].getCapacity(), util)};
 		}
 
 		@Override
 		public int fill (FluidStack resource, boolean doFill) {
 			validate();
-			if (tank == null) return 0;
+			if (tank == null) {
+				return 0;
+			}
+
+			if (util.getMode() == TankMode.DRAIN) {
+				return 0;
+			}
 
 			return tank.fill(resource, doFill);
 		}
@@ -358,13 +430,31 @@ public class RadiantAmphoraItem extends ItemTemplate {
 		@Override
 		@Nullable
 		public FluidStack drain (FluidStack resource, boolean doDrain) {
-			return null;
+			validate();
+			if (tank == null) {
+				return null;
+			}
+
+			if (util.getMode() == TankMode.FILL) {
+				return null;
+			}
+
+			return tank.drain(resource, doDrain);
 		}
 
 		@Override
 		@Nullable
 		public FluidStack drain (int maxDrain, boolean doDrain) {
-			return null;
+			validate();
+			if (tank == null) {
+				return null;
+			}
+
+			if (util.getMode() == TankMode.FILL) {
+				return null;
+			}
+
+			return tank.drain(maxDrain, doDrain);
 		}
 
 		@Nonnull
@@ -374,46 +464,10 @@ public class RadiantAmphoraItem extends ItemTemplate {
 		}
 	}
 
-	public static class FluidTankWrapperDrain extends FluidTankWrapperFill {
-		public FluidTankWrapperDrain (ItemStack stack, AmphoraUtil util) {
-			super(stack, util);
-		}
-
-		@Override
-		public IFluidTankProperties[] getTankProperties () {
-			return super.getTankProperties();
-		}
-
-		@Override
-		public int fill (FluidStack resource, boolean doFill) {
-			return 0;
-		}
-
-		@Nullable
-		@Override
-		public FluidStack drain (FluidStack resource, boolean doDrain) {
-			validate();
-			if (tank == null) return null;
-
-			return tank.drain(resource, doDrain);
-		}
-
-		@Nullable
-		@Override
-		public FluidStack drain (int maxDrain, boolean doDrain) {
-			validate();
-			if (tank == null) return null;
-
-			return tank.drain(maxDrain, doDrain);
-		}
-	}
-
 	public static class AmphoraCapabilityProvider implements ICapabilityProvider {
-		private ItemStack container;
 		private AmphoraUtil util;
 
-		public AmphoraCapabilityProvider (ItemStack container, AmphoraUtil util) {
-			this.container = container;
+		public AmphoraCapabilityProvider (AmphoraUtil util) {
 			this.util = util;
 		}
 
@@ -425,16 +479,24 @@ public class RadiantAmphoraItem extends ItemTemplate {
 
 		@Nullable
 		@Override
+		@SuppressWarnings("unchecked")
 		public <T> T getCapability (@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
 			if (capability == CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY) {
-				if (util.getIsEmptyMode()) {
-					return (T) new FluidTankWrapperDrain(container, util);
-				} else {
-					return (T) new FluidTankWrapperFill(container, util);
-				}
+				return (T) new FluidTankWrapper(util);
 			}
 
 			return null;
+		}
+	}
+
+	public enum TankMode {
+		DRAIN, FILL;
+
+		public static TankMode fromOrdinal (int ordinal) {
+			if (ordinal == 0) {
+				return DRAIN;
+			}
+			return FILL;
 		}
 	}
 }
