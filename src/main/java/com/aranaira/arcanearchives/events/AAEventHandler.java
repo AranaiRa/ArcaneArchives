@@ -4,6 +4,9 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.ItemRegistry;
+import com.aranaira.arcanearchives.items.RadiantAmphoraItem;
+import com.aranaira.arcanearchives.items.RadiantAmphoraItem.AmphoraUtil;
+import com.aranaira.arcanearchives.items.RadiantAmphoraItem.TankMode;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketRadiantAmphora;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
@@ -108,12 +111,8 @@ public class AAEventHandler {
 			Item item = event.getEntityPlayer().inventory.getCurrentItem().getItem();
 			if (item == ItemRegistry.RADIANT_AMPHORA && event.getEntityPlayer().isSneaking()) {
 				ItemStack stack = event.getEntityPlayer().getHeldItemMainhand();
-				NBTTagCompound nbt = stack.getTagCompound();
-				if (nbt.hasKey("isEmptyMode")) {
-					boolean emptyMode = nbt.getBoolean("isEmptyMode");
-					emptyMode = !emptyMode;
-					nbt.setBoolean("isEmptyMode", emptyMode);
-				}
+				AmphoraUtil util = new AmphoraUtil(stack);
+				util.toggleMode();
 			}
 			if (item == ItemRegistry.RAW_RADIANT_QUARTZ) {
 				ItemStack stack = event.getEntityPlayer().getHeldItemMainhand();
