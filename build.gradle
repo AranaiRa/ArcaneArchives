@@ -70,10 +70,6 @@ repositories {
         name = "CurseForge"
         url = "https://minecraft.curseforge.com/api/maven/"
     }
-    maven {  // guidebook common dep
-        name = "guidebook"
-        url = "http://dogforce-games.com/maven"
-    }
     maven { // guidebook transitive deps and baubles
         name = "mcmoddev"
         url = "https://maven.mcmoddev.com"
@@ -110,12 +106,9 @@ dependencies {
     deobfCompile "vazkii.botania:Botania:r1.10-357.7"
     deobfCompile "hellfirepvp.astralsorcery:astralsorcery:1.12.2-1.10.17-v124"
 
-    // guidebook dependencies
-    deobfCompile "gigaherz.commons:gigaherz.commons-1.12.1:0.6.4"
-
     // modified guidebook, note "lirelent" package
-    deobfCompile "gigaherz.lirelent.guidebook:Guidebook-1.12.2:2.9.1-all"
-    embed "gigaherz.lirelent.guidebook:Guidebook-1.12.2:2.9.1-all"
+    deobfCompile "gigaherz.lirelent.guidebook:Guidebook-1.12.2:2.9.1"
+    embed "gigaherz.lirelent.guidebook:Guidebook-1.12.2:2.9.1"
 
     shade("org.spongepowered:mixin:0.7.11-SNAPSHOT") {
         transitive = false
