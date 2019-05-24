@@ -14,7 +14,7 @@ public class ColorHelper {
         COLORSTEP_6 = new RenderHelper.Color(0.80f, 0.50f, 1.00f, 1.0f), //Purple
         COLORSTEP_7 = new RenderHelper.Color(1.00f, 0.55f, 1.00f, 1.0f); //Pink
 
-    private static int colorIncrement = 20;
+    private static int colorIncrement = 12;
 
     public static RenderHelper.Color getColorFromTime(long worldTime) {
         int clippedTime = (int)(worldTime % (colorIncrement * 8));
