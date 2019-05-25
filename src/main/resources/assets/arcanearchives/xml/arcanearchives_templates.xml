@@ -1,0 +1,5 @@
+<library>
+    <template id="horizontal_rule" height="15">
+        <p align="center"><image src="arcanearchives:gui/book" w="120" h="7" tx="50" ty="10"/></p>
+    </template>
+</library>
