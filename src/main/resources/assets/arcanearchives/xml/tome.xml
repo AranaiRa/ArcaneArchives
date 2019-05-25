@@ -1,7 +1,11 @@
-<book title="Tome of Arcana [WIP]" background="arcanearchives:textures/gui/arcana_documentation.png" fontSize="0.6">
+<book title="Tome of Arcana" background="arcanearchives:textures/gui/arcana_documentation.png" fontSize="0.6">
 
     <include ref="gbook:xml/standard.xml" />
     <include ref="arcanearchives:xml/arcanearchives_templates.xml" />
+
+    <conditions>
+        <false name="AllGems"/>
+    </conditions>
 
     <stack-links>
         <stack item="arcanearchives:brazier_of_hoarding">:BrazierHoarding</stack>
@@ -77,8 +81,19 @@
             <page_title>
                 <title>Arcane Gems</title>
             </page_title>
+            <p condition="AllGems"><stack item="arcanearchives:item_fabrial"/> <link ref="Fabrial">Fabrial</link></p>
+            <space height="8" condition="AllGems"/>
+            <p condition="AllGems"><stack item="arcanearchives:item_glyphspindle"/> <link ref="Glyphspindle">Glyphspindle</link></p>
+            <space height="8" condition="AllGems"/>
+            <p condition="AllGems"><stack item="arcanearchives:item_homingstone"/> <link ref="Homingstone">Homingstone</link></p>
+            <p condition="AllGems"><stack item="arcanearchives:item_munchstone"/> <link ref="Munchstone">Munchstone</link></p>
+            <space height="8" condition="AllGems"/>
             <p><stack item="arcanearchives:item_mountaintear"/> <link ref="Mountaintear">Mountaintear</link></p>
             <p><stack item="arcanearchives:item_rivertear"/> <link ref="Rivertear">Rivertear</link></p>
+            <space height="8" condition="AllGems"/>
+            <p condition="AllGems"><stack item="arcanearchives:item_pyreway"/> <link ref="Pyreway">Pyreway</link></p>
+            <p condition="AllGems"><stack item="arcanearchives:item_earthway"/> <link ref="Earthway">Earthway</link></p>
+            <p condition="AllGems"><stack item="arcanearchives:item_nightway"/> <link ref="Nightway">Nightway</link></p>
         </section>
         <section>
             <page_title>
@@ -108,16 +123,18 @@
             <p>
                 If no storage can be found, items are ejected from the Brazier of Hoarding.
             </p>
-        </section>
-        <section>
             <p>
                 <stack item="arcanearchives:item_sceptermanipulation"/> Using a <link ref="ScepterManipulation">Scepter of Manipulation</link> on a Brazier of Hoarding will toggle whether it is allowed to place items in Radiant Chests that don't already contain a copy of the item.
-            </p>
+            </p><space height="4"/>
             <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:gemcutters_table"/> Braziers of Hoarding can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
-            <horizontal_rule/>
+        </section>
+        <section>
+            <page_title>
+                <title>Brazier of Hoarding</title>
+            </page_title>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -125,6 +142,23 @@
     </chapter>
 
     <chapter id="DecorativeBlocks">
+        <section>
+            <page_title>
+                <title>Decorative Blocks</title>
+            </page_title>
+            <p>
+                The following blocks are included primarily for decorative purposes.
+            </p>
+            <p align="center">
+                <stack item="arcanearchives:storage_raw_quartz" scale="2.0"/>
+                <stack item="arcanearchives:storage_cut_quartz" scale="2.0"/>
+                <stack item="arcanearchives:radiant_lantern" scale="2.0"/>
+            </p>
+            <p align="center">
+                <stack item="arcanearchives:raw_quartz" scale="2.0"/>
+                <stack item="arcanearchives:quartz_sliver" scale="2.0"/>
+            </p>
+        </section>
         <section>
             <page_title>
                 <title>Block of Raw Radiant Quartz</title>
@@ -220,23 +254,24 @@
             <horizontal_rule/>
             <p>
                 A Gem Cutter's Table is a crafting station used to refine Raw Radiant Quartz into Shaped Radiant Quartz. Items that require finesse to craft are generally made on a Gem Cutter's Table.
-            </p>
+            </p><space height="4"/>
             <p>
                 Unlike conventional crafting, there are no shape requirements for a Gem Cutter's Table recipe. After selecting the desired item you can simply remove it from the output slot if enough ingredients are present.
             </p>
-        </section>
-        <section>
             <p>
                 <stack item="minecraft:crafting_table"/> Gem Cutter's Tables can be crafted conventionally.
             </p>
             <horizontal_rule/>
-            <recipe type="shaped">
+            <recipe type="shaped" align="center">
                 <recipe.result>
                     <stack item="arcanearchives:gemcutters_table"/>
                 </recipe.result>
             </recipe>
-            <space height="8"/>
-            <horizontal_rule/>
+        </section>
+        <section>
+            <page_title>
+                <title>Gem Cutter's Table</title>
+            </page_title>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -252,7 +287,7 @@
             <horizontal_rule/>
             <p>
                 A Manifest Lectern acts as a <link ref="Manifest">Manifest</link> does, save that it is placed in the world rather than an item you carry with you.
-            </p>
+            </p><space height="4"/>
             <p>
                 When using the item tracking feature, a Manifest Lectern will draw lines from you to the target inventories, rather than from itself to the target inventories.
             </p>
@@ -313,12 +348,15 @@
             <p>
                 <stack item="arcanearchives:item_scepterrevelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Monitoring Crystal will return what direction the Monitoring Crystal is pointing towards.
             </p>
-        </section>
-        <section>
+            <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Monitoring Crystals can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
-            <horizontal_rule/>
+        </section>
+        <section>
+            <page_title>
+                <title>Monitoring Crystal</title>
+            </page_title>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -344,22 +382,23 @@
             <p>
                 <stack item="arcanearchives:item_scepterrevelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Radiant Chest will return the chest's name, and how many slots of its inventory are available.
             </p>
-        </section>
-        <section>
+            <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:item_rawquartz"/> Radiant Chests can be crafted by using a piece of <link ref="RadiantQuartz">Raw Radiant Quartz</link> on a chest while sneaking. Any items inside the chest will be imported, and if used on a double vanilla chest, both chests' inventories will be imported into the new Radiant Chest.
             </p>
             <p>
                 <stack item="minecraft:crafting_table"/> Radiant Chests can be crafted conventionally.
             </p>
-            <horizontal_rule/>
             <recipe type="shaped">
                 <recipe.result>
                     <stack item="arcanearchives:radiant_chest"/>
                 </recipe.result>
             </recipe>
-            <space height="8"/>
-            <horizontal_rule/>
+        </section>
+        <section>
+            <page_title>
+                <title>Radiant Chest</title>
+            </page_title>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -382,22 +421,23 @@
             <p>
                 <stack item="arcanearchives:item_scepterrevelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Radiant Crafting Table will return what items are present in the crafting grid.
             </p>
-        </section>
-        <section>
             <p>
                 <stack item="arcanearchives:item_rawquartz"/> Radiant Crafting Tables can be crafted by using a piece of <link ref="RadiantQuartz">Raw Radiant Quartz</link> on a vanilla crafting table while sneaking.
             </p>
+            <horizontal_rule/>
             <p>
                 <stack item="minecraft:crafting_table"/> Radiant Crafting Tables can be crafted conventionally.
             </p>
-            <horizontal_rule/>
             <recipe type="shaped">
                 <recipe.result>
                     <stack item="arcanearchives:radiant_crafting_table"/>
                 </recipe.result>
             </recipe>
-            <space height="8"/>
-            <horizontal_rule/>
+        </section>
+        <section>
+            <page_title>
+                <title>Radiant Crafting Table</title>
+            </page_title>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -420,22 +460,23 @@
             <p>
                 Radiant Resonators only run while you’re online, even if the chunk is loaded.
             </p>
-        </section>
-        <section>
             <p>
-                <stack item="arcanearchives:item_scepterrevelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Radiant Resonator will return its current process, and whether it is running or not..
+                <stack item="arcanearchives:item_scepterrevelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Radiant Resonator will return its current process, and whether it is running or not.
             </p>
+            <horizontal_rule/>
             <p>
                 <stack item="minecraft:crafting_table"/> Radiant Resonators can be crafted conventionally.
             </p>
-            <horizontal_rule/>
             <recipe type="shaped">
                 <recipe.result>
                     <stack item="arcanearchives:radiant_resonator"/>
                 </recipe.result>
             </recipe>
-            <space height="8"/>
-            <horizontal_rule/>
+        </section>
+        <section>
+            <page_title>
+                <title>Radiant Resonator</title>
+            </page_title>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -461,8 +502,6 @@
             <p>
                 <stack item="arcanearchives:item_scepterrevelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Radiant Tank will return what type of fluid is stored, its current and maximum capacity, and how many upgrades have been installed.
             </p>
-        </section>
-        <section>
             <p>
                 <stack item="arcanearchives:item_sceptermanipulation"/> Using a <link ref="ScepterManipulation">Scepter of Manipulation</link> on a Radiant Tank will remove one installed upgrade, so long as the storage that upgrade provided is currently unused.
             </p>
@@ -470,7 +509,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Radiant Tanks can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
-            <horizontal_rule/>
+        </section>
+        <section>
+            <page_title>
+                <title>Radiant Tank</title>
+            </page_title>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -493,8 +536,6 @@
             <p>
                 <stack item="arcanearchives:item_scepterrevelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Radiant Trove will return what type of item is stored, its current and maximum capacity, and how many upgrades have been installed.
             </p>
-        </section>
-        <section>
             <p>
                 <stack item="arcanearchives:item_sceptermanipulation"/> Using a <link ref="ScepterManipulation">Scepter of Manipulation</link> on a Radiant Trove will remove one installed upgrade, so long as the storage that upgrade provided is currently unused.
             </p>
@@ -502,7 +543,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Radiant Troves can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
-            <horizontal_rule/>
+        </section>
+        <section>
+            <page_title>
+                <title>Radiant Trove</title>
+            </page_title>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -522,12 +567,15 @@
             <p>
                 <stack item="arcanearchives:radiant_tank"/> Containment Fields can be used to upgrade <link ref="RadiantTank">Radiant Tanks</link>.
             </p>
-        </section>
-        <section>
+            <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Containment Fields can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
-            <horizontal_rule/>
+        </section>
+        <section>
+            <page_title>
+                <title>Containment Field</title>
+            </page_title>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -547,8 +595,7 @@
             <p>
                 <stack item="arcanearchives:item_manifest"/> When viewing a <link ref="Manifest">Manifest</link>, all placed Radiant Storage from any player in your network is visible.
             </p>
-        </section>
-        <section>
+            <horizontal_rule/>
             <p>
                 <stack item="minecraft:crafting_table"/> Letters of Invitation can be crafted conventionally.
             </p>
@@ -558,8 +605,11 @@
                     <stack item="arcanearchives:item_letterofinvitation"/>
                 </recipe.result>
             </recipe>
-            <space height="8"/>
-            <horizontal_rule/>
+        </section>
+        <section>
+            <page_title>
+                <title>Letter of Invitation</title>
+            </page_title>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -579,19 +629,20 @@
             <p>
                 <stack item="arcanearchives:item_manifest"/> When you leave a hybrid network, any Radiant Storage you placed is removed from the network, and will no longer be visible on a <link ref="Manifest">Manifest</link> by members of the network you left.
             </p>
-        </section>
-        <section>
+            <horizontal_rule/>
             <p>
                 <stack item="minecraft:crafting_table"/> Letters of Resignation can be crafted conventionally.
             </p>
-            <horizontal_rule/>
             <recipe type="shaped">
                 <recipe.result>
                     <stack item="arcanearchives:item_letterofresignation"/>
                 </recipe.result>
             </recipe>
-            <space height="8"/>
-            <horizontal_rule/>
+        </section>
+        <section>
+            <page_title>
+                <title>Letter of Resignation</title>
+            </page_title>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -608,8 +659,6 @@
             <p>
                 A Manifest lists all items stored within loaded Radiant Storage in one single list. By hovering over a slot, you can get a list of each location that the item is stored at, including names of Radiant Chests. By clicking on the slot, you can track the locations of each of these items, drawing a line from your current position to the target inventories (as long as a target inventory is in the same dimension). Activating a tracked inventory container disables the line, as does hitting the “End Tracking” button at the bottom of the Manifest’s interface.
             </p>
-        </section>
-        <section>
             <p>
                 <stack item="arcanearchives:monitoring_crystal"/> Items in non-Radiant storage can be added to the Manifest by attaching a <link ref="MonitoringCrystal">Monitoring Crystal</link> to its storage container.
             </p>
@@ -617,7 +666,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table"/> Manifests can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
-            <horizontal_rule/>
+        </section>
+        <section>
+            <page_title>
+                <title>Manifest</title>
+            </page_title>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -637,12 +690,15 @@
             <p>
                 <stack item="arcanearchives:radiant_trove"/> Material Interfaces can be used to upgrade <link ref="RadiantTrove">Radiant Troves</link>.
             </p>
-        </section>
-        <section>
+            <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Material Interfaces can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
-            <horizontal_rule/>
+        </section>
+        <section>
+            <page_title>
+                <title>Material Interface</title>
+            </page_title>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -659,12 +715,15 @@
             <p>
                 A Matrix Brace is a crafting component. Matrix Braces are generally used in devices that need to hold a piece of Radiant Quartz in midair.
             </p>
-        </section>
-        <section>
+            <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Matrix Braces can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
-            <horizontal_rule/>
+        </section>
+        <section>
+            <page_title>
+                <title>Matrix Brace</title>
+            </page_title>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -687,8 +746,6 @@
             <p>
                 <image src="arcanearchives:items/item_radiantamphora_tilted" tw="16" th="16"/> When in <span bold="true">Empty</span> mode, fluid is removed from the linked Radiant Tank and placed at the target point.
             </p>
-        </section>
-        <section>
             <p>
                 You can switch the Radiant Amphora's current mode by left clicking the air.
             </p>
@@ -696,7 +753,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Radiant Amphorae can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
-            <horizontal_rule/>
+        </section>
+        <section>
+            <page_title>
+                <title>Radiant Amphora</title>
+            </page_title>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -713,12 +774,15 @@
             <p>
                 Radiant Dust is a crafting component made from ground up <link ref="RawQuartz">Raw Radiant Quartz</link>. Radiant Dust is generally used in devices where full sized pieces of Radiant Quartz would be too large.
             </p>
-        </section>
-        <section>
+            <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Radiant Dust can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
-            <horizontal_rule/>
+        </section>
+        <section>
+            <page_title>
+                <title>Radiant Dust</title>
+            </page_title>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -744,12 +808,15 @@
             <p>
                 <stack item="arcanearchives:quartz_sliver" /> Raw Radiant Quartz can be used to create <link ref="DecorativeBlocks:SliverOfLight">Slivers of Light</link> by bashing a piece against another block.
             </p>
-        </section>
-        <section>
+            <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:radiant_resonator" /> Raw Radiant Quartz is created over time on top of a <link ref="RadiantResonator">Radiant Resonator</link> in the form of a <link ref="DecorativeBlocks:RawQuartzCluster">Raw Quartz Cluster</link>.
             </p>
-            <horizontal_rule/>
+        </section>
+        <section>
+            <page_title>
+                <title>Raw Radiant Quartz</title>
+            </page_title>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -766,12 +833,15 @@
             <p>
                 Shaped Radiant Quartz is cut and polished Radiant Quartz that is suitable for more advanced uses. It is primarily a crafting component.
             </p>
-        </section>
-        <section>
+            <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Shaped Radiant Quartz can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
-            <horizontal_rule/>
+        </section>
+        <section>
+            <page_title>
+                <title>Shaped Radiant Quartz</title>
+            </page_title>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -792,12 +862,15 @@
                 <stack item="arcanearchives:radiant_tank" scale="2.0"/>
                 <stack item="arcanearchives:radiant_trove" scale="2.0"/>
             </p>
-        </section>
-        <section>
+            <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Scepters of Manipulation can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
-            <horizontal_rule/>
+        </section>
+        <section>
+            <page_title>
+                <title>Scepter of Manipulation</title>
+            </page_title>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -827,19 +900,20 @@
             <p>
                 Scepters of Revelation are also used as a crafting component for other Scepters.
             </p>
-        </section>
-        <section>
+            <horizontal_rule/>
             <p>
                 <stack item="minecraft:crafting_table"/> Scepters of Revelation can be crafted conventionally.
             </p>
-            <horizontal_rule/>
             <recipe type="shaped">
                 <recipe.result>
                     <stack item="arcanearchives:item_scepterrevelation"/>
                 </recipe.result>
             </recipe>
-            <space height="8"/>
-            <horizontal_rule/>
+        </section>
+        <section>
+            <page_title>
+                <title>Scepter of Revelation</title>
+            </page_title>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -856,12 +930,15 @@
             <p>
                 Scintillating Inlay is a crafting component. Scintillating Inlay is generally used in devices that need to transfer signals or perform complex calculations.
             </p>
-        </section>
-        <section>
+            <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Scintillating Inlay can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
-            <horizontal_rule/>
+        </section>
+        <section>
+            <page_title>
+                <title>Scintillating Inlay</title>
+            </page_title>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -881,19 +958,20 @@
             <p>
                 <stack item="minecraft:anvil"/> Once you've named the Writ of Expulsion on an anvil to the name of the desired player to kick from your network, use it to complete the process.
             </p>
-        </section>
-        <section>
+            <horizontal_rule/>
             <p>
                 <stack item="minecraft:crafting_table"/> Writs of Expulsion can be crafted conventionally.
             </p>
-            <horizontal_rule/>
             <recipe type="shaped">
                 <recipe.result>
                     <stack item="arcanearchives:item_writofexpulsion"/>
                 </recipe.result>
             </recipe>
-            <space height="8"/>
-            <horizontal_rule/>
+        </section>
+        <section>
+            <page_title>
+                <title>Writ of Expulsion</title>
+            </page_title>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -908,17 +986,23 @@
             <p align="center"><stack item="arcanearchives:item_mountaintear" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
+                A Mountaintear is an Arcane Gem formed from a red-spectrum piece of <link ref="CutQuartz">Shaped Radiant Quartz</link> in a tear cut. It is associated with lava.
+            </p>
+            <p>
                 <stack item="astralsorcery:blockwell"/> When placed in a Lightwell with access to the sky, a Mountaintear generates lava at a slow rate. While it's possible for a Mountaintear to shatter, the chances of shattering are <span italics="true">astronomically</span> unlikely. For all intents and purposes, a Mountaintear lasts indefinitely unless its Lightwell is broken.
             </p>
             <p>
                 Once placed in a Lightwell, a Mountaintear cannot be retrieved.
             </p>
-        </section>
-        <section>
+            <horizontal_rule/>
             <p>
                 Mountaintears cannot be crafted, and are only available via Creative mode.
             </p>
-            <horizontal_rule/>
+        </section>
+        <section>
+            <page_title>
+                <title>Mountaintear</title>
+            </page_title>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -933,17 +1017,23 @@
             <p align="center"><stack item="arcanearchives:item_rivertear" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
+                A Rivertear is an Arcane Gem formed from a blue-spectrum piece of <link ref="CutQuartz">Shaped Radiant Quartz</link> in a tear cut. It is associated with water.
+            </p>
+            <p>
                 <stack item="astralsorcery:blockwell"/> When placed in a Lightwell with access to the sky, a Rivertear generates water at an extremely rapid rate. While it's possible for a Rivertear to shatter, the chances of shattering are <span italics="true">astronomically</span> unlikely. For all intents and purposes, a Rivertear lasts indefinitely unless its Lightwell is broken.
             </p>
             <p>
                 Once placed in a Lightwell, a Rivertear cannot be retrieved.
             </p>
-        </section>
-        <section>
+            <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Rivertears can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
-            <horizontal_rule/>
+        </section>
+        <section>
+            <page_title>
+                <title>Rivertear</title>
+            </page_title>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -969,7 +1059,14 @@
             <p>
                 <stack item="arcanearchives:item_manifest"/> <link ref="Manifest">Manifests</link> display the contents of all inventories that are part of the network you belong to.
             </p>
-            <horizontal_rule/>
+            <p>
+                <stack item="arcanearchives:item_writofexpulsion"/> By using a <link ref="WritExpulsion">Writ of Expulsion</link> named on an anvil, you can force a player in a hybrid network to leave the network.
+            </p>
+        </section>
+        <section>
+            <page_title>
+                <title>Networks</title>
+            </page_title>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
