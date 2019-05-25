@@ -5,8 +5,7 @@ import com.aranaira.arcanearchives.blocks.LecternManifest;
 import com.aranaira.arcanearchives.blocks.QuartzSliver;
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.items.*;
-import com.aranaira.arcanearchives.items.gems.MountaintearItem;
-import com.aranaira.arcanearchives.items.gems.RivertearItem;
+import com.aranaira.arcanearchives.items.gems.*;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.items.unused.TomeOfRequisitionItem;
 import com.aranaira.arcanearchives.util.IHasModel;
@@ -30,9 +29,7 @@ public class ItemRegistry {
 	//public static final GeomancyPendulumItem GEOMANCY_PENDULUM = new GeomancyPendulumItem();
 	//public static final GeomanticMapItem GEOMANTIC_MAP = new GeomanticMapItem();
 	public static final ManifestItem MANIFEST = new ManifestItem();
-	public static final MountaintearItem MOUNTAINTEAR = new MountaintearItem();
 	public static final RadiantAmphoraItem RADIANT_AMPHORA = new RadiantAmphoraItem();
-	public static final RivertearItem RIVERTEAR = new RivertearItem();
 	//public static final ScepterAbductionItem SCEPTER_ABDUCTION = new ScepterAbductionItem();
 	//public static final ScepterTranslocationItem SCEPTER_TRANSLOCATION = new ScepterTranslocationItem();
 	public static final ScepterRevelationItem SCEPTER_REVELATION = new ScepterRevelationItem();
@@ -50,6 +47,17 @@ public class ItemRegistry {
 	public static final ComponentRadiantDustItem COMPONENT_RADIANTDUST = new ComponentRadiantDustItem();
 	public static final ComponentScintillatingInlayItem COMPONENT_SCINTILLATINGINLAY = new ComponentScintillatingInlayItem();
 
+	//ARCANE GEMS
+	public static final FabrialItem FABRIAL = new FabrialItem();
+	public static final GlyphspindleItem GLYPHSPINDLE = new GlyphspindleItem();
+	public static final HomingstoneItem HOMINGSTONE = new HomingstoneItem();
+	public static final EarthwayItem EARTHWAY = new EarthwayItem();
+	public static final MountaintearItem MOUNTAINTEAR = new MountaintearItem();
+	public static final MunchstoneItem MUNCHSTONE = new MunchstoneItem();
+	public static final NightwayItem NIGHTWAY = new NightwayItem();
+	public static final PyrewayItem PYREWAY = new PyrewayItem();
+	public static final RivertearItem RIVERTEAR = new RivertearItem();
+
 	//SPIRIT SPHERES
 	//public static final SpiritOrbItem SPIRIT_ORB = new SpiritOrbItem();
 
@@ -58,13 +66,13 @@ public class ItemRegistry {
 		IForgeRegistry<Item> registry = event.getRegistry();
 
 
-		Arrays.asList(RAW_RADIANT_QUARTZ, CUT_RADIANT_QUARTZ, /*GEOMANCY_PENDULUM, GEOMANTIC_MAP,*/ MANIFEST, RADIANT_AMPHORA, /*SCEPTER_ABDUCTION, SCEPTER_TRANSLOCATION, */TOME_OF_ARCANA, LETTER_OF_INVITATION, LETTER_OF_RESIGNATION, WRIT_OF_EXPULSION,/* TOME_OF_REQUISITION,*/ COMPONENT_CONTAINMENTFIELD, COMPONENT_MATRIXBRACE, COMPONENT_MATERIALINTERFACE, COMPONENT_RADIANTDUST, COMPONENT_SCINTILLATINGINLAY/*, SPIRIT_ORB*/, SCEPTER_REVELATION, SCEPTER_MANIPULATION, RIVERTEAR, MOUNTAINTEAR).forEach(registry::register);
+		Arrays.asList(RAW_RADIANT_QUARTZ, CUT_RADIANT_QUARTZ, /*GEOMANCY_PENDULUM, GEOMANTIC_MAP,*/ MANIFEST, RADIANT_AMPHORA, /*SCEPTER_ABDUCTION, SCEPTER_TRANSLOCATION, */TOME_OF_ARCANA, LETTER_OF_INVITATION, LETTER_OF_RESIGNATION, WRIT_OF_EXPULSION,/* TOME_OF_REQUISITION,*/ COMPONENT_CONTAINMENTFIELD, COMPONENT_MATRIXBRACE, COMPONENT_MATERIALINTERFACE, COMPONENT_RADIANTDUST, COMPONENT_SCINTILLATINGINLAY/*, SPIRIT_ORB*/, SCEPTER_REVELATION, SCEPTER_MANIPULATION, /*FABRIAL, HOMINGSTONE, MUNCHSTONE, GLYPHSPINDLE,*/ MOUNTAINTEAR, RIVERTEAR/*, PYREWAY, EARTHWAY, NIGHTWAY*/).forEach(registry::register);
 		Stream.of(/*BlockRegistry.MATRIX_CRYSTAL_CORE, BlockRegistry.MATRIX_REPOSITORY, BlockRegistry.MATRIX_RESERVOIR, BlockRegistry.MATRIX_STORAGE, BlockRegistry.MATRIX_DISTILLATE, */BlockRegistry.QUARTZ_SLIVER, BlockRegistry.STORAGE_RAW_QUARTZ, BlockRegistry.STORAGE_CUT_QUARTZ, BlockRegistry.RADIANT_CHEST, BlockRegistry.RADIANT_CRAFTING_TABLE, BlockRegistry.RADIANT_LANTERN, BlockRegistry.RADIANT_RESONATOR, BlockRegistry.RAW_QUARTZ/*, BlockRegistry.DOMINION_CRYSTAL*/, BlockRegistry.LECTERN_MANIFEST, BlockRegistry.GEMCUTTERS_TABLE, BlockRegistry.RADIANT_TROVE, BlockRegistry.MONITORING_CRYSTAL, BlockRegistry.RADIANT_TANK, BlockRegistry.BRAZIER_OF_HOARDING).map(BlockTemplate::getItemBlock).forEach(registry::register);
 	}
 
 	@SubscribeEvent
 	public static void onModelRegister (ModelRegistryEvent event) {
-		Arrays.asList(RAW_RADIANT_QUARTZ, CUT_RADIANT_QUARTZ/*, GEOMANCY_PENDULUM, GEOMANTIC_MAP*/, MANIFEST, RADIANT_AMPHORA, /*SCEPTER_ABDUCTION, SCEPTER_MANIPULATION, SCEPTER_TRANSLOCATION*/ LETTER_OF_INVITATION, LETTER_OF_RESIGNATION, WRIT_OF_EXPULSION, /*TOME_OF_REQUISITION, */COMPONENT_CONTAINMENTFIELD, COMPONENT_MATRIXBRACE, COMPONENT_MATERIALINTERFACE, COMPONENT_RADIANTDUST, COMPONENT_SCINTILLATINGINLAY/*, SPIRIT_ORB*/, SCEPTER_REVELATION, SCEPTER_MANIPULATION, RIVERTEAR, MOUNTAINTEAR).forEach(ItemTemplate::registerModels);
+		Arrays.asList(RAW_RADIANT_QUARTZ, CUT_RADIANT_QUARTZ/*, GEOMANCY_PENDULUM, GEOMANTIC_MAP*/, MANIFEST, RADIANT_AMPHORA, /*SCEPTER_ABDUCTION, SCEPTER_MANIPULATION, SCEPTER_TRANSLOCATION*/ LETTER_OF_INVITATION, LETTER_OF_RESIGNATION, WRIT_OF_EXPULSION, /*TOME_OF_REQUISITION, */COMPONENT_CONTAINMENTFIELD, COMPONENT_MATRIXBRACE, COMPONENT_MATERIALINTERFACE, COMPONENT_RADIANTDUST, COMPONENT_SCINTILLATINGINLAY/*, SPIRIT_ORB*/, SCEPTER_REVELATION, SCEPTER_MANIPULATION, /*FABRIAL, HOMINGSTONE, MUNCHSTONE, GLYPHSPINDLE,*/ MOUNTAINTEAR, RIVERTEAR/*, PYREWAY, EARTHWAY, NIGHTWAY*/).forEach(ItemTemplate::registerModels);
 
 		Stream.of(/*BlockRegistry.MATRIX_CRYSTAL_CORE, BlockRegistry.MATRIX_REPOSITORY, BlockRegistry.MATRIX_RESERVOIR, BlockRegistry.MATRIX_STORAGE, BlockRegistry.MATRIX_DISTILLATE, */BlockRegistry.STORAGE_RAW_QUARTZ, BlockRegistry.STORAGE_CUT_QUARTZ, BlockRegistry.RADIANT_CHEST, BlockRegistry.RADIANT_CRAFTING_TABLE, BlockRegistry.RADIANT_LANTERN, BlockRegistry.RADIANT_RESONATOR, BlockRegistry.RAW_QUARTZ, /*BlockRegistry.DOMINION_CRYSTAL, */BlockRegistry.LECTERN_MANIFEST, BlockRegistry.GEMCUTTERS_TABLE, BlockRegistry.RADIANT_TROVE, BlockRegistry.MONITORING_CRYSTAL, BlockRegistry.BRAZIER_OF_HOARDING).map(BlockTemplate::getItemBlock).forEach((block) -> ModelLoader.setCustomModelResourceLocation(block, 0, new ModelResourceLocation(block.getRegistryName(), "inventory")));
 
