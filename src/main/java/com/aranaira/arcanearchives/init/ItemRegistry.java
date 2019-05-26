@@ -1,14 +1,18 @@
 package com.aranaira.arcanearchives.init;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.blocks.LecternManifest;
-import com.aranaira.arcanearchives.blocks.QuartzSliver;
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.items.*;
-import com.aranaira.arcanearchives.items.gems.*;
+import com.aranaira.arcanearchives.items.gems.crystalloid.GlyphspindleItem;
+import com.aranaira.arcanearchives.items.gems.oval.HomingstoneItem;
+import com.aranaira.arcanearchives.items.gems.oval.MunchstoneItem;
+import com.aranaira.arcanearchives.items.gems.pendeloque.MountaintearItem;
+import com.aranaira.arcanearchives.items.gems.pendeloque.RivertearItem;
+import com.aranaira.arcanearchives.items.gems.trillion.EarthwayItem;
+import com.aranaira.arcanearchives.items.gems.trillion.NightwayItem;
+import com.aranaira.arcanearchives.items.gems.trillion.PyrewayItem;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.items.unused.TomeOfRequisitionItem;
-import com.aranaira.arcanearchives.util.IHasModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -17,7 +21,6 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
-import vazkii.aurelienribon.tweenengine.equations.Quart;
 
 import java.util.Arrays;
 import java.util.stream.Stream;

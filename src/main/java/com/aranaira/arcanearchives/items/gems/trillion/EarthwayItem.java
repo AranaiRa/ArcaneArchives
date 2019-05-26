@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items.gems;
+package com.aranaira.arcanearchives.items.gems.trillion;
 
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import net.minecraft.client.resources.I18n;

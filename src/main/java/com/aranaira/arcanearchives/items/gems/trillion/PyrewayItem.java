@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items.gems;
+package com.aranaira.arcanearchives.items.gems.trillion;
 
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import net.minecraft.client.resources.I18n;
@@ -13,17 +13,17 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class RivertearItem extends ItemTemplate {
-    public static final String NAME = "item_rivertear";
+public class PyrewayItem extends ItemTemplate {
+    public static final String NAME = "item_pyreway";
 
-    public RivertearItem () {
+    public PyrewayItem() {
         super(NAME);
         setMaxStackSize(1);
     }
 
     @Override
     public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.rivertear"));
+        tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.pyreway"));
     }
 
     @Override

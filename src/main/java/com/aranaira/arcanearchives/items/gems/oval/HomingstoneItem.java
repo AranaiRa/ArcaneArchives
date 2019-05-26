@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items.gems;
+package com.aranaira.arcanearchives.items.gems.oval;
 
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import net.minecraft.client.resources.I18n;
@@ -13,17 +13,17 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class NightwayItem extends ItemTemplate {
-    public static final String NAME = "item_nightway";
+public class HomingstoneItem extends ItemTemplate {
+    public static final String NAME = "item_homingstone";
 
-    public NightwayItem() {
+    public HomingstoneItem() {
         super(NAME);
         setMaxStackSize(1);
     }
 
     @Override
     public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.nightway"));
+        tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.homingstone"));
     }
 
     @Override
