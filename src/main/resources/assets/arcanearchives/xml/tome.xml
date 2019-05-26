@@ -986,7 +986,7 @@
             <p align="center"><stack item="arcanearchives:item_mountaintear" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                A Mountaintear is an Arcane Gem formed from a red-spectrum piece of <link ref="CutQuartz">Shaped Radiant Quartz</link> in a tear cut. It is associated with lava.
+                A Mountaintear is an Arcane Gem formed from an orange-spectrum piece of <link ref="CutQuartz">Shaped Radiant Quartz</link> in a tear cut. It is associated with lava.
             </p>
             <p>
                 <stack item="astralsorcery:blockwell"/> When placed in a Lightwell with access to the sky, a Mountaintear generates lava at a slow rate. While it's possible for a Mountaintear to shatter, the chances of shattering are <span italics="true">astronomically</span> unlikely. For all intents and purposes, a Mountaintear lasts indefinitely unless its Lightwell is broken.
