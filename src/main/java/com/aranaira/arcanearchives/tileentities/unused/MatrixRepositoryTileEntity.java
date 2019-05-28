@@ -60,7 +60,7 @@ public class MatrixRepositoryTileEntity extends ImmanenceTileEntity {
 				//Adds the item count to the one in the network, and removes the remainder from the one that will be returned.
 				if(!simulate) itemStack.setCount(itemStack.getCount() + maxCanAdd);
 				temp.setCount(temp.getCount() - maxCanAdd);
-				return ItemStack.EMPTY;
+				return ItemStack.DRAIN;
 }
 }
 
@@ -71,6 +71,6 @@ public class MatrixRepositoryTileEntity extends ImmanenceTileEntity {
 		temp_add.setCount(maxCanAdd);
 		if(!simulate) inventory.add(temp_add);
 
-		return ItemStack.EMPTY;
+		return ItemStack.DRAIN;
 }*/
 }

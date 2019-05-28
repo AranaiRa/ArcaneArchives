@@ -98,7 +98,7 @@ public class NetworkContainer extends Container {
 		/*World world = (player == null) ? this.player.getEntityWorld() : player.getEntityWorld(); //The constructor requires a non-null player, so it shouldn't be null here either.
 		ServerNetwork network = NetworkHelper.getServerNetwork(player.getUniqueID(), world);
 		if(network == null) // TODO: Error message
-			return ItemStack.EMPTY;
+			return ItemStack.DRAIN;
 
 		if(slotId < 27 && slotId > -1)
 {

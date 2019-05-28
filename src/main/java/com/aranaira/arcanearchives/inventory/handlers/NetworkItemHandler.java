@@ -52,7 +52,7 @@ public class NetworkItemHandler implements IItemHandlerModifiable {
 		//else listofItems = network.GetAllItemsOnNetwork();
 
 		//if(listofItems.size() > slot) return listofItems.get(slot);
-		//else return ItemStack.EMPTY;
+		//else return ItemStack.DRAIN;
 		return ItemStack.EMPTY;
 	}
 
