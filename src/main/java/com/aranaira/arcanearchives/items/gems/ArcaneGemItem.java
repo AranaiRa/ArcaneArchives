@@ -135,6 +135,33 @@ public abstract class ArcaneGemItem extends ItemTemplate {
         }
 
         /**
+         * Gets the current charge amount of a gem.
+         * @param stack The ItemStack to check.
+         * @return The amount of charge.
+         */
+        public static int getCharge(ItemStack stack) {
+            NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+            if(nbt.hasKey("charge")) {
+                return nbt.getInteger("charge");
+            } else {
+                nbt.setInteger("charge", 0);
+                return 0;
+            }
+        }
+
+        /**
+         * Gets the current charge amount of a gem as a value between 0..1
+         * @param stack The ItemStack to check
+         * @return The amount of charge.
+         */
+        public static float getChargePercent(ItemStack stack) {
+            int current = getCharge(stack);
+            int maximum = getMaxCharge(stack);
+
+            return (float)current / (float)maximum;
+        }
+
+        /**
          * Restore the charge on the gem by a set amount.
          * @param amount How much to increase charge by. -1 to fill the gem outright.
          * @return true if the gem is full
@@ -142,9 +169,13 @@ public abstract class ArcaneGemItem extends ItemTemplate {
         public static boolean restoreCharge(ItemStack stack, int amount) {
             NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
             int maximum = getMaxCharge(stack);
-            int currentCharge = 0;
+            int currentCharge;
             if (nbt.hasKey("charge"))
                 currentCharge = nbt.getInteger("charge");
+            else {
+                currentCharge = getMaxCharge(stack);
+                nbt.setInteger("charge", currentCharge);
+            }
 
             if(amount == -1) {
                 nbt.setInteger("charge", maximum);
@@ -164,11 +195,15 @@ public abstract class ArcaneGemItem extends ItemTemplate {
          * @param amount How much to reduce charge by. -1 to empty the gem outright.
          * @return true if charge remains, false if gem is now empty
          */
-        public boolean consumeCharge(ItemStack stack, int amount){
+        public static boolean consumeCharge(ItemStack stack, int amount){
             NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
-            int currentCharge = 0;
+            int currentCharge;
             if (nbt.hasKey("charge"))
                 currentCharge = nbt.getInteger("charge");
+            else {
+                currentCharge = getMaxCharge(stack);
+                nbt.setInteger("charge", currentCharge);
+            }
 
             if(amount < -1)
                 return currentCharge < 0;

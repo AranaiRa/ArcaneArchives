@@ -3,14 +3,8 @@ package com.aranaira.arcanearchives.init;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.items.*;
-import com.aranaira.arcanearchives.items.gems.crystalloid.GlyphspindleItem;
-import com.aranaira.arcanearchives.items.gems.oval.HomingstoneItem;
-import com.aranaira.arcanearchives.items.gems.oval.MunchstoneItem;
 import com.aranaira.arcanearchives.items.gems.pendeloque.MountaintearItem;
 import com.aranaira.arcanearchives.items.gems.pendeloque.RivertearItem;
-import com.aranaira.arcanearchives.items.gems.trillion.EarthwayItem;
-import com.aranaira.arcanearchives.items.gems.trillion.NightwayItem;
-import com.aranaira.arcanearchives.items.gems.trillion.PyrewayItem;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.items.unused.TomeOfRequisitionItem;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -52,13 +46,7 @@ public class ItemRegistry {
 
 	//ARCANE GEMS
 	public static final FabrialItem FABRIAL = new FabrialItem();
-	public static final GlyphspindleItem GLYPHSPINDLE = new GlyphspindleItem();
-	public static final HomingstoneItem HOMINGSTONE = new HomingstoneItem();
-	public static final EarthwayItem EARTHWAY = new EarthwayItem();
 	public static final MountaintearItem MOUNTAINTEAR = new MountaintearItem();
-	public static final MunchstoneItem MUNCHSTONE = new MunchstoneItem();
-	public static final NightwayItem NIGHTWAY = new NightwayItem();
-	public static final PyrewayItem PYREWAY = new PyrewayItem();
 	public static final RivertearItem RIVERTEAR = new RivertearItem();
 
 	//SPIRIT SPHERES
