@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.items.gems.pendeloque;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.items.RadiantAmphoraItem;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
@@ -36,6 +37,7 @@ public class RivertearItem extends ArcaneGemItem {
 
     @Override
     public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+        tooltip.add(I18n.format("arcanearchives.tooltip.gemcharge") + ": " +getTooltipData(stack));
         tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.rivertear"));
     }
 
@@ -47,6 +49,7 @@ public class RivertearItem extends ArcaneGemItem {
     @Override
     public EnumActionResult onItemUse (EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (!world.isRemote) {
+            ArcaneArchives.logger.info(GemUtil.getCharge(player.getHeldItem(hand)) +" / "+ GemUtil.getMaxCharge(player.getHeldItem(hand)));
             if(GemUtil.getCharge(player.getHeldItem(hand)) > 0) {
                 Block hit = world.getBlockState(pos).getBlock();
 

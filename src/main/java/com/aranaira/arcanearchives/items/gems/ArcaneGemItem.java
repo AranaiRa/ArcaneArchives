@@ -3,9 +3,11 @@ package com.aranaira.arcanearchives.items.gems;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.util.NBTUtils;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.text.TextFormatting;
 
 public abstract class ArcaneGemItem extends ItemTemplate {
     public static GemCut cut;
@@ -39,6 +41,25 @@ public abstract class ArcaneGemItem extends ItemTemplate {
     public static int getMaxChargeNormal() { return maxChargeNormal; }
 
     public static int getMaxChargeUpgraded() { return maxChargeUpgraded; }
+
+    protected String getTooltipData(ItemStack stack) {
+        String str;
+        if(GemUtil.hasUnlimitedCharge(stack))
+            str = "[Unlimited]";
+        else
+            str = "["+GemUtil.getCharge(stack)+" / "+GemUtil.getMaxCharge(stack)+"]";
+        
+        byte upgrades = GemUtil.getUpgrades(stack);
+        if((upgrades & UPGRADE_MATTER) == UPGRADE_MATTER)
+            str += "   " + TextFormatting.GREEN + I18n.format("arcanearchives.tooltip.gemupgrade.matter");
+        if((upgrades & UPGRADE_POWER) == UPGRADE_POWER)
+            str += "   " + TextFormatting.RED + I18n.format("arcanearchives.tooltip.gemupgrade.power");
+        if((upgrades & UPGRADE_SPACE) == UPGRADE_SPACE)
+            str += "   " + TextFormatting.BLUE + I18n.format("arcanearchives.tooltip.gemupgrade.space");
+        if((upgrades & UPGRADE_TIME) == UPGRADE_TIME)
+            str += "   " + TextFormatting.RED + I18n.format("arcanearchives.tooltip.gemupgrade.time");
+        return str;
+    }
 
     /**
      * Used by the HUD element to determine whether to use the bar or the bar with toggle indicator
@@ -144,8 +165,9 @@ public abstract class ArcaneGemItem extends ItemTemplate {
             if(nbt.hasKey("charge")) {
                 return nbt.getInteger("charge");
             } else {
-                nbt.setInteger("charge", 0);
-                return 0;
+                int maximum = getMaxCharge(stack);
+                nbt.setInteger("charge", maximum);
+                return maximum;
             }
         }
 
@@ -212,6 +234,22 @@ public abstract class ArcaneGemItem extends ItemTemplate {
             else
                 currentCharge -= amount;
             return currentCharge > 0;
+        }
+
+        /**
+         * Checks whether this gem has unlimited use.
+         * @param stack The ItemStack to check
+         * @return
+         */
+        public static boolean hasUnlimitedCharge(ItemStack stack) {
+            if(getMaxCharge(stack) == 0) return true;
+
+            NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+            if(nbt.hasKey("infinite")) return nbt.getBoolean("infinity");
+            else {
+                nbt.setBoolean("infinite", false);
+                return false;
+            }
         }
     }
 
