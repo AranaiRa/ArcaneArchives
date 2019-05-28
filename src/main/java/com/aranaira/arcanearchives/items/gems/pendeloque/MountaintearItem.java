@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.items.gems.pendeloque;
 
+import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -13,11 +14,11 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class MountaintearItem extends ItemTemplate {
+public class MountaintearItem extends ArcaneGemItem {
     public static final String NAME = "item_mountaintear";
 
     public MountaintearItem () {
-        super(NAME);
+        super(NAME, GemCut.PENDELOQUE, GemColor.ORANGE, 25, 100);
         setMaxStackSize(1);
     }
 

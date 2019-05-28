@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.items.gems.pendeloque;
 
+import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -13,23 +14,16 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class RivertearItem extends ItemTemplate {
+public class RivertearItem extends ArcaneGemItem {
     public static final String NAME = "item_rivertear";
 
     public RivertearItem () {
-        super(NAME);
-        setMaxStackSize(1);
+        super(NAME, GemCut.PENDELOQUE, GemColor.BLUE, 25, 100);
     }
 
     @Override
     public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
         tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.rivertear"));
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    public EnumRarity getRarity (ItemStack stack) {
-        return EnumRarity.UNCOMMON;
     }
 
     @Override
