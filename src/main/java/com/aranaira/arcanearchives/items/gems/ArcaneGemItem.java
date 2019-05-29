@@ -3,16 +3,19 @@ package com.aranaira.arcanearchives.items.gems;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.util.NBTUtils;
+import net.minecraft.client.renderer.block.model.ModelBakery;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.client.model.ModelLoader;
 
 public abstract class ArcaneGemItem extends ItemTemplate {
-    public static GemCut cut;
-    public static GemColor color;
-    public static int
+    public GemCut cut;
+    public GemColor color;
+    public int
         maxChargeNormal, maxChargeUpgraded;
 
     private static final byte
@@ -38,9 +41,9 @@ public abstract class ArcaneGemItem extends ItemTemplate {
         return color;
     }
 
-    public static int getMaxChargeNormal() { return maxChargeNormal; }
+    public int getMaxChargeNormal() { return maxChargeNormal; }
 
-    public static int getMaxChargeUpgraded() { return maxChargeUpgraded; }
+    public int getMaxChargeUpgraded() { return maxChargeUpgraded; }
 
     protected String getTooltipData(ItemStack stack) {
         String str;
@@ -48,7 +51,7 @@ public abstract class ArcaneGemItem extends ItemTemplate {
             str = "[Unlimited]";
         else
             str = "["+GemUtil.getCharge(stack)+" / "+GemUtil.getMaxCharge(stack)+"]";
-        
+
         byte upgrades = GemUtil.getUpgrades(stack);
         if((upgrades & UPGRADE_MATTER) == UPGRADE_MATTER)
             str += "   " + TextFormatting.GREEN + I18n.format("arcanearchives.tooltip.gemupgrade.matter");
@@ -67,6 +70,37 @@ public abstract class ArcaneGemItem extends ItemTemplate {
      */
     public boolean hasToggleMode() {
         return false;
+    }
+
+    protected ModelResourceLocation getDunGemResourceLocation(GemCut cut) {
+        String loc = "arcanearchives:gems/";
+        loc += cut.toString().toLowerCase()+"/dun";
+        ArcaneArchives.logger.info("&&&&&&& "+getRegistryName()+" is looking for "+loc);
+        return new ModelResourceLocation(loc, "inventory");
+    }
+
+    protected ModelResourceLocation getChargedGemResourceLocation(GemCut cut, GemColor color) {
+        String loc = "arcanearchives:gems/";
+        loc += cut.toString().toLowerCase()+"/";
+        loc += color.toString().toLowerCase();
+        ArcaneArchives.logger.info("&&&&&&& "+getRegistryName()+" is looking for "+loc);
+        return new ModelResourceLocation(loc, "inventory");
+    }
+
+    @Override
+    public void registerModels () {
+        ModelResourceLocation charged = getChargedGemResourceLocation(cut, color);
+        ModelResourceLocation dun = getDunGemResourceLocation(cut);
+
+        ModelBakery.registerItemVariants(this, charged, dun);
+
+        ModelLoader.setCustomMeshDefinition(this, stack -> {
+            if (GemUtil.isChargeEmpty(stack)) {
+                return dun;
+            } else {
+                return charged;
+            }
+        });
     }
 
     /**
@@ -195,19 +229,18 @@ public abstract class ArcaneGemItem extends ItemTemplate {
             if (nbt.hasKey("charge"))
                 currentCharge = nbt.getInteger("charge");
             else {
-                currentCharge = getMaxCharge(stack);
+                currentCharge = maximum;
                 nbt.setInteger("charge", currentCharge);
             }
 
             if(amount == -1) {
-                nbt.setInteger("charge", maximum);
+                currentCharge = maximum;
             }
             else {
                 currentCharge += amount;
-
                 if(currentCharge > maximum) currentCharge = maximum;
-                nbt.setInteger("charge", maximum);
             }
+            nbt.setInteger("charge", maximum);
 
             return currentCharge >= maximum;
         }
@@ -226,13 +259,13 @@ public abstract class ArcaneGemItem extends ItemTemplate {
                 currentCharge = getMaxCharge(stack);
                 nbt.setInteger("charge", currentCharge);
             }
-
             if(amount < -1)
                 return currentCharge < 0;
             else if(amount == -1)
                 currentCharge = 0;
             else
                 currentCharge -= amount;
+            nbt.setInteger("charge", currentCharge);
             return currentCharge > 0;
         }
 
@@ -250,6 +283,14 @@ public abstract class ArcaneGemItem extends ItemTemplate {
                 nbt.setBoolean("infinite", false);
                 return false;
             }
+        }
+
+        public static boolean isChargeEmpty(ItemStack stack) {
+            NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+            if(!hasUnlimitedCharge(stack)) {
+                return getCharge(stack) == 0;
+            }
+            else return false;
         }
     }
 
