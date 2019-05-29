@@ -1,5 +1,5 @@
 {
-    "parent": "item/generated",
+    "parent": "arcanearchives:item/gems/arcane_gem",
     "textures": {
         "layer0": "arcanearchives:items/gems/oval/red"
     }
