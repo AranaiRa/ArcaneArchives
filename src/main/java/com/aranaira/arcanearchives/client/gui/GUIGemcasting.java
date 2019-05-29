@@ -34,11 +34,10 @@ public class GUIGemcasting {
         fill_x = 3,
         fill_y = 164,
         fill_h = 3,
-        check_x = 0,
-        check_y = 0,
         leftShiftContainer = 41,
         leftShiftContainerWithCheck = 48,
         leftShiftGem = 31,
+        leftShiftGemTex = 15,
         leftShiftFill = 41,
         leftShiftCheck = 0;
 
@@ -72,6 +71,14 @@ public class GUIGemcasting {
                     minecraft.ingameGUI.drawTexturedModalRect(anchorX + 8 - leftShiftContainerWithCheck, anchorY + 2, container_x, containerWithCheckReversed_y, container_w, container_h);
                 else
                     minecraft.ingameGUI.drawTexturedModalRect(anchorX + 8, anchorY + 2, container_x, containerWithCheck_y, container_w, container_h);
+
+                //checkbox fill
+                if(ArcaneGemItem.GemUtil.isToggledOn(stack)) {
+                    if(leftHandSide)
+                        minecraft.ingameGUI.drawTexturedModalRect(anchorX - 37, anchorY + 5, fill_x, fill_y + getColorOffset(gem), 3, fill_h);
+                    else
+                        minecraft.ingameGUI.drawTexturedModalRect(anchorX + 35, anchorY + 5, fill_x, fill_y + getColorOffset(gem), 3, fill_h);
+                }
             }
             else {
                 if(leftHandSide)
@@ -83,19 +90,22 @@ public class GUIGemcasting {
             //gem
             int gemPosX = anchorX + 8;
             int gemPosY = anchorY - 16;
-            if(leftHandSide)
+            int texOffset = 0;
+            if(leftHandSide) {
                 gemPosX -= leftShiftGem;
+                texOffset += leftShiftGemTex;
+            }
 
             if(gem.getGemCut() == ArcaneGemItem.GemCut.ASSCHER)
-                minecraft.ingameGUI.drawTexturedModalRect(gemPosX, gemPosY, gem_x, gem_asscher_y, gem_s, gem_s);
+                minecraft.ingameGUI.drawTexturedModalRect(gemPosX, gemPosY, gem_x+texOffset, gem_asscher_y, gem_s, gem_s);
             else if(gem.getGemCut() == ArcaneGemItem.GemCut.OVAL)
-                minecraft.ingameGUI.drawTexturedModalRect(gemPosX, gemPosY, gem_x, gem_oval_y, gem_s, gem_s);
+                minecraft.ingameGUI.drawTexturedModalRect(gemPosX, gemPosY, gem_x+texOffset, gem_oval_y, gem_s, gem_s);
             else if(gem.getGemCut() == ArcaneGemItem.GemCut.PAMPEL)
-                    minecraft.ingameGUI.drawTexturedModalRect(gemPosX, gemPosY, gem_x, gem_pampel_y, gem_s, gem_s);
+                    minecraft.ingameGUI.drawTexturedModalRect(gemPosX, gemPosY, gem_x+texOffset, gem_pampel_y, gem_s, gem_s);
             else if(gem.getGemCut() == ArcaneGemItem.GemCut.PENDELOQUE)
-                    minecraft.ingameGUI.drawTexturedModalRect(gemPosX, gemPosY, gem_x, gem_pendeloque_y, gem_s, gem_s);
+                    minecraft.ingameGUI.drawTexturedModalRect(gemPosX, gemPosY, gem_x+texOffset, gem_pendeloque_y, gem_s, gem_s);
             else if(gem.getGemCut() == ArcaneGemItem.GemCut.TRILLION)
-                    minecraft.ingameGUI.drawTexturedModalRect(gemPosX, gemPosY, gem_x, gem_trillion_y, gem_s, gem_s);
+                    minecraft.ingameGUI.drawTexturedModalRect(gemPosX, gemPosY, gem_x+texOffset, gem_trillion_y, gem_s, gem_s);
 
             //bar fill
             int fillAmount = (int)(ArcaneGemItem.GemUtil.getChargePercent(stack) * 20);
@@ -104,39 +114,11 @@ public class GUIGemcasting {
             else
                 minecraft.ingameGUI.drawTexturedModalRect(anchorX + 11, anchorY + 5, fill_x, fill_y + getColorOffset(gem), fillAmount, fill_h);
 
-            //checkbox fill
-            if(ArcaneGemItem.GemUtil.isToggledOn(stack))
-                minecraft.ingameGUI.drawTexturedModalRect(anchorX + 11, anchorY + 5, fill_x, fill_y + getColorOffset(gem), 3, fill_h);
-
             GlStateManager.depthMask(true);
             GlStateManager.disableBlend();
             GlStateManager.popMatrix();
 
         }
-        /*Tessellator tessellator = Tessellator.getInstance();
-
-        GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS);
-        GlStateManager.pushMatrix();
-
-        GlStateManager.disableDepth();
-        GlStateManager.depthMask(false);
-        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
-        minecraft.renderEngine.bindTexture(GUITextures);
-
-        GlStateManager.enableBlend();
-        //fix this bit to GlStateManager
-        GL11.glBlendFunc(GL11.GL_ZERO, GL11.GL_ONE_MINUS_SRC_ALPHA);
-
-        BufferBuilder bb = tessellator.getBuffer();
-        bb.begin(7, DefaultVertexFormats.POSITION_TEX);
-        buildBarWithCheck(bb, screenWidth, screenHeight);
-        tessellator.draw();
-
-        GlStateManager.depthMask(true);
-        GlStateManager.enableDepth();
-        GlStateManager.disableBlend();
-        GlStateManager.popMatrix();
-        GL11.glPopAttrib();*/
     }
 
     private static int getColorOffset(ArcaneGemItem gem){
