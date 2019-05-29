@@ -72,21 +72,33 @@ public abstract class ArcaneGemItem extends ItemTemplate {
         return false;
     }
 
+    /**
+     * Retrieves the resource location for the gem's dun texture
+     * @param cut The gem's cut
+     * @return
+     */
     protected ModelResourceLocation getDunGemResourceLocation(GemCut cut) {
         String loc = "arcanearchives:gems/";
         loc += cut.toString().toLowerCase()+"/dun";
-        ArcaneArchives.logger.info("&&&&&&& "+getRegistryName()+" is looking for "+loc);
         return new ModelResourceLocation(loc, "inventory");
     }
 
+    /**
+     * Retrieves the resource location for the gem's textures
+     * @param cut The gem's cut
+     * @param color The gem's color spectrum
+     * @return
+     */
     protected ModelResourceLocation getChargedGemResourceLocation(GemCut cut, GemColor color) {
         String loc = "arcanearchives:gems/";
         loc += cut.toString().toLowerCase()+"/";
         loc += color.toString().toLowerCase();
-        ArcaneArchives.logger.info("&&&&&&& "+getRegistryName()+" is looking for "+loc);
         return new ModelResourceLocation(loc, "inventory");
     }
 
+    /**
+     * Sets up the models for both charged and dun states
+     */
     @Override
     public void registerModels () {
         ModelResourceLocation charged = getChargedGemResourceLocation(cut, color);
