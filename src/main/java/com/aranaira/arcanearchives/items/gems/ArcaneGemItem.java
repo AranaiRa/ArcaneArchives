@@ -118,7 +118,7 @@ public abstract class ArcaneGemItem extends ItemTemplate {
     /**
      * Helper class that handles all of the NBT lookups
      */
-    protected static class GemUtil {
+    public static class GemUtil {
 
         /**
          * Sets the upgrades on a gem by applying a bitmask.
@@ -303,6 +303,14 @@ public abstract class ArcaneGemItem extends ItemTemplate {
                 return getCharge(stack) == 0;
             }
             else return false;
+        }
+
+        public static boolean isToggledOn(ItemStack stack) {
+            NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+            if(!nbt.hasKey("toggle")) {
+                nbt.setBoolean("toggle", false);
+            }
+            return nbt.getBoolean("toggle");
         }
     }
 
