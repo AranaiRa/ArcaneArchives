@@ -700,7 +700,22 @@
                 <title>Material Interface</title>
             </page_title>
             <p italics="true">
-                ...Lore fragment TBD
+                My tests with the mysterious crystal indicate that each facet, no matter how small or how minutely different from its neighbors, lead to a different part of this strange Otherwhere.
+            </p><space height="4"/>
+            <p italics="true">
+                The implications of this property are staggering for compact storage.
+            </p><space height="4"/>
+            <p italics="true">
+                Or at least, they would be, if the slightest touch didn’t change what part of Otherwhere the crystal is pointing to. A pity, too. I was rather fond of that spoon.
+            </p><space height="4"/>
+            <p italics="true">
+                I believe a device meant to emulate the <span italics="false">Unseen Hand of the Master</span> spell, along with some minor divination enchantments for good measure, might have the potential to correct for these instabilities and maintain a consistent location and frequency in Othewhere.
+            </p><space height="4"/>
+            <p italics="true">
+                —Research Journal of Sharaveda
+            </p>
+            <p italics="true">
+                —1665, Autumn’s Birth
             </p>
         </section>
     </chapter>
