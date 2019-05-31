@@ -321,11 +321,75 @@ public abstract class ArcaneGemItem extends ItemTemplate {
     }
 
     public enum GemCut {
-        NOCUT, ASSCHER, OVAL, PAMPEL, PENDELOQUE, TRILLION
+        NOCUT, ASSCHER, OVAL, PAMPEL, PENDELOQUE, TRILLION;
+
+        /**
+         * Converts a gem cut to a specific value. Used in packets.
+         * @param cut The gem's cut
+         */
+        public static byte ToByte(GemCut cut) {
+            if(cut == ASSCHER) return 1;
+            if(cut == OVAL) return 2;
+            if(cut == PAMPEL) return 3;
+            if(cut == PENDELOQUE) return 4;
+            if(cut == TRILLION) return 5;
+            return 0;
+        }
+
+        /**
+         * Converts a byte value into a specific gem cut value. Used in packets.
+         * @param query The byte value to check
+         * @return The gem's cut
+         */
+        public static GemCut fromByte(byte query) {
+            if(query == 1) return ASSCHER;
+            if(query == 2) return OVAL;
+            if(query == 3) return PAMPEL;
+            if(query == 4) return PENDELOQUE;
+            if(query == 5) return TRILLION;
+            return NOCUT;
+        }
     }
 
     public enum GemColor {
-        NOCOLOR, RED, ORANGE, YELLOW, GREEN, CYAN, BLUE, PURPLE, PINK, BLACK, WHITE
+        NOCOLOR, RED, ORANGE, YELLOW, GREEN, CYAN, BLUE, PURPLE, PINK, BLACK, WHITE;
+
+        /**
+         * Converts a gem cut to a specific value. Used in packets.
+         * @param color The gem's color
+         */
+        public static byte ToByte(GemColor color) {
+            if(color == RED) return 1;
+            else if(color == ORANGE) return 2;
+            else if(color == YELLOW) return 3;
+            else if(color == GREEN) return 4;
+            else if(color == CYAN) return 5;
+            else if(color == BLUE) return 6;
+            else if(color == PURPLE) return 7;
+            else if(color == PINK) return 8;
+            else if(color == BLACK) return 9;
+            else if(color == WHITE) return 10;
+            return 0;
+        }
+
+        /**
+         * Converts a byte value into a specific color. Used in packets.
+         * @param query The byte value to check
+         * @return The color value
+         */
+        public static GemColor fromByte(byte query) {
+            if(query == 1) return RED;
+            else if(query == 2) return ORANGE;
+            else if(query == 3) return YELLOW;
+            else if(query == 4) return GREEN;
+            else if(query == 5) return CYAN;
+            else if(query == 6) return BLUE;
+            else if(query == 7) return PURPLE;
+            else if(query == 8) return PINK;
+            else if(query == 9) return BLACK;
+            else if(query == 10) return WHITE;
+            return NOCOLOR;
+        }
     }
 
     public enum GemUpgrades {

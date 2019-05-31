@@ -62,7 +62,7 @@ public class MountaintearItem extends ArcaneGemItem {
 
                 Vec3d end = new Vec3d(pos.offset(facing).getX(), pos.offset(facing).getY(), pos.offset(facing).getZ());
 
-                PacketDoParticles packet = new PacketDoParticles(start, end);
+                PacketDoParticles packet = new PacketDoParticles(cut, color, start, end);
                 NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, start.x, start.y, start.z, 160);
                 NetworkHandler.CHANNEL.sendToAllAround(packet, tp);
                 //ParticleGenerator.makeDefaultLine(world, start, end, 40, 2.0);
