@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.items.gems.pendeloque;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketDoParticles;
@@ -8,6 +9,8 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -45,15 +48,15 @@ public class RivertearItem extends ArcaneGemItem {
     public EnumActionResult onItemUse (EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (!world.isRemote) {
             if(GemUtil.getCharge(player.getHeldItem(hand)) > 0) {
-                Block hit = world.getBlockState(pos).getBlock();
-
+                ArcaneArchives.logger.info("beep");
                 world.setBlockState(pos.offset(facing), Blocks.WATER.getDefaultState(), 11);
+                return EnumActionResult.SUCCESS;
             }
         }
         return EnumActionResult.PASS;
     }
 
-    @Override
+    /*@Override
     public ActionResult<ItemStack> onItemRightClick (World world, EntityPlayer player, EnumHand hand) {
         if(!world.isRemote) {
             if(GemUtil.getCharge(player.getHeldItem(hand)) > 0) {
@@ -79,5 +82,5 @@ public class RivertearItem extends ArcaneGemItem {
             }
         }
         return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
-    }
+    }*/
 }

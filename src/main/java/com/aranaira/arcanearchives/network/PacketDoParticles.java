@@ -65,7 +65,8 @@ public class PacketDoParticles implements IMessage {
 		public void processMessage (PacketDoParticles packet, MessageContext context) {
 			ArcaneArchives.logger.info("Received particles packet\n    Gem is "+packet.color.name()+" "+packet.cut.name()+"\n    pos1="+packet.pos1+"    pos2="+packet.pos2);
 
-			ParticleGenerator.makeDefaultLine(Minecraft.getMinecraft().player.world, packet.pos1, packet.pos2, 40, 2.0);
+			int particleDensity = 5 * (int)Math.ceil(packet.pos1.distanceTo(packet.pos2));
+			ParticleGenerator.makeDefaultLine(Minecraft.getMinecraft().player.world, packet.pos1, packet.pos2, particleDensity, 2.0);
 			ParticleGenerator.makeDefaultBurst(Minecraft.getMinecraft().player.world, packet.pos2, 36, 1,0.6, 0.01, 0.03);
 		}
 	}

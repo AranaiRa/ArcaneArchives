@@ -1,6 +1,9 @@
 package com.aranaira.arcanearchives.client.particles;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.client.particles.particle.ParticlePendeloqueGemLine;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -23,7 +26,6 @@ public class ParticleGenerator {
         for(int i=0; i<=count; i++) {
             double prog = (double)i / (double)count;
             Vec3d pos = veclerp(start, end, prog);
-            ArcaneArchives.logger.info(prog + ": <"+pos.x+", "+pos.y+", "+pos.z+">");
             if(shiftIntensity > 0) {
                 //TODO: shift based on normalized vector
                 double x1 = Math.sin(prog * Math.PI * 2) * shiftIntensity * xShiftMult1;
@@ -39,11 +41,10 @@ public class ParticleGenerator {
             double sx = ((rng.nextDouble() * 2.0) - 1.0) * 0.1;
             double sz = ((rng.nextDouble() * 2.0) - 1.0) * 0.1;
             double sy = ((rng.nextDouble() * 0.7) + 0.3) * 0.1;
-            world.spawnParticle(EnumParticleTypes.CLOUD, pos.x, pos.y, pos.z, sx, sy, sz);
+            ParticlePendeloqueGemLine p = new ParticlePendeloqueGemLine(world, pos.x, pos.y, pos.z, sx, sy, sz, 20+i, 2.0f);
+            Minecraft.getMinecraft().effectRenderer.addEffect(p);
         }
     }
-
-
 
     public static void makeDefaultBurst(World world, Vec3d point, int radialCount, int heightCount, double radius, double speedMin, double speedMax) {
 
@@ -51,7 +52,7 @@ public class ParticleGenerator {
             double py = (double)h / (double)heightCount;
             for(int i=0; i<radialCount; i++) {
                 double segment = (Math.PI * 2.0) / radialCount;
-                double theta = i * segment; ArcaneArchives.logger.info("theta="+theta);
+                double theta = i * segment;
                 double ax = Math.cos(theta) * radius;
                 double az = Math.sin(theta) * radius;
 
