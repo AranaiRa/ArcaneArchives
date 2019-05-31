@@ -1,34 +1,25 @@
 package com.aranaira.arcanearchives.items.gems.pendeloque;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.init.BlockRegistry;
-import com.aranaira.arcanearchives.items.RadiantAmphoraItem;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
-import com.aranaira.arcanearchives.items.templates.ItemTemplate;
-import net.darkhax.bookshelf.data.Blockstates;
+import com.aranaira.arcanearchives.network.NetworkHandler;
+import com.aranaira.arcanearchives.network.PacketDoParticles;
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.block.model.ModelBakery;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumRarity;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 import java.util.List;
 
@@ -56,13 +47,37 @@ public class RivertearItem extends ArcaneGemItem {
             if(GemUtil.getCharge(player.getHeldItem(hand)) > 0) {
                 Block hit = world.getBlockState(pos).getBlock();
 
-                FluidStack fs = new FluidStack(FluidRegistry.WATER, 1000);
-                world.setBlockState(pos.offset(facing), fs.getFluid().getBlock().getDefaultState(), 11);
-                GemUtil.consumeCharge(player.getHeldItem(hand), 1);
-
-                world.spawnParticle(EnumParticleTypes.ENCHANTMENT_TABLE, pos.getX(), pos.getY(), pos.getZ(), 0, 0.1,0);
+                world.setBlockState(pos.offset(facing), Blocks.WATER.getDefaultState(), 11);
             }
         }
         return EnumActionResult.PASS;
+    }
+
+    @Override
+    public ActionResult<ItemStack> onItemRightClick (World world, EntityPlayer player, EnumHand hand) {
+        if(!world.isRemote) {
+            if(GemUtil.getCharge(player.getHeldItem(hand)) > 0) {
+                Vec3d start = new Vec3d(player.posX, player.posY+1, player.posZ);
+                Vec3d dir = player.getLookVec();
+                Vec3d rayTarget = new Vec3d(start.x + dir.x * 40, start.y + dir.y * 40, start.z + dir.z * 40);
+
+                RayTraceResult ray = world.rayTraceBlocks(start, rayTarget, false, true, false);
+
+                if(ray != null) {
+                    BlockPos pos = ray.getBlockPos();
+                    EnumFacing facing = ray.sideHit;
+
+                    Vec3d end = new Vec3d(pos.offset(facing).getX(), pos.offset(facing).getY(), pos.offset(facing).getZ());
+
+                    world.setBlockState(pos.offset(facing), Blocks.WATER.getDefaultState(), 11);
+                    world.scheduleUpdate(pos.offset(facing), Blocks.WATER, 20);
+
+                    PacketDoParticles packet = new PacketDoParticles(cut, color, start, end);
+                    NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, start.x, start.y, start.z, 160);
+                    NetworkHandler.CHANNEL.sendToAllAround(packet, tp);
+                }
+            }
+        }
+        return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
     }
 }

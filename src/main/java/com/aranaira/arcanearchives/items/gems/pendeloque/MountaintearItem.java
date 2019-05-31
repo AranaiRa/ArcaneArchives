@@ -4,7 +4,6 @@ import com.aranaira.arcanearchives.client.particles.ParticleGenerator;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketDoParticles;
-import com.aranaira.arcanearchives.network.PacketRadiantAmphora;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
@@ -67,6 +66,7 @@ public class MountaintearItem extends ArcaneGemItem {
                 NetworkHandler.CHANNEL.sendToAllAround(packet, tp);
             }
         } else {
+
             //TODO: actually place lava OR SOMETHING
         }
         return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
