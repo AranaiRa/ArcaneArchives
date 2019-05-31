@@ -18,6 +18,9 @@ public class PacketDoParticles implements IMessage {
 	//ArcaneGemItem.GemCut cut;
 	//ArcaneGemItem.GemColor color;
 
+	public PacketDoParticles() {
+	}
+
 	public PacketDoParticles(Vec3d pos1, Vec3d pos2) {
 	}
 
