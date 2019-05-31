@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
@@ -52,13 +53,14 @@ public class RivertearItem extends ArcaneGemItem {
     @Override
     public EnumActionResult onItemUse (EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (!world.isRemote) {
-            ArcaneArchives.logger.info(GemUtil.getCharge(player.getHeldItem(hand)) +" / "+ GemUtil.getMaxCharge(player.getHeldItem(hand)));
             if(GemUtil.getCharge(player.getHeldItem(hand)) > 0) {
                 Block hit = world.getBlockState(pos).getBlock();
 
                 FluidStack fs = new FluidStack(FluidRegistry.WATER, 1000);
                 world.setBlockState(pos.offset(facing), fs.getFluid().getBlock().getDefaultState(), 11);
                 GemUtil.consumeCharge(player.getHeldItem(hand), 1);
+
+                world.spawnParticle(EnumParticleTypes.ENCHANTMENT_TABLE, pos.getX(), pos.getY(), pos.getZ(), 0, 0.1,0);
             }
         }
         return EnumActionResult.PASS;
