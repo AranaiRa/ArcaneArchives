@@ -125,6 +125,11 @@ arcanearchives.tooltip.temprecipe1=The recipe for this item is temporary.
 arcanearchives.tooltip.temprecipe2=It will be changed in a later version.
 arcanearchives.tooltip.shouldnothave=This block should not be acquirable.
 arcanearchives.tooltip.creativeonly=This item is currently only available through Creative Mode.
+arcanearchives.tooltip.gemcharge=Charge
+arcanearchives.tooltip.gemupgrade.matter=MATTER
+arcanearchives.tooltip.gemupgrade.power=POWER
+arcanearchives.tooltip.gemupgrade.space=SPACE
+arcanearchives.tooltip.gemupgrade.time=TIME
 
 arcanearchives.tooltip.manifest.inanotherdim=This chest is located in %s.
 arcanearchives.tooltip.manifest.chestsneak=[Hold shift to view chest locations.]
