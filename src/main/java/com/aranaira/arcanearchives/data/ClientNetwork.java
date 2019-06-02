@@ -78,12 +78,12 @@ public class ClientNetwork {
 	// This requests a synchronise packet from the server
 	// but does not include the manifest info.
 	public void synchroniseData () {
-		PacketNetworks.Request request = new PacketNetworks.Request(PacketNetworks.SynchroniseType.DATA, playerId);
+		PacketNetworks.Request request = new PacketNetworks.Request(PacketNetworks.SynchroniseType.DATA);
 		NetworkHandler.CHANNEL.sendToServer(request);
 	}
 
 	public void synchroniseManifest () {
-		PacketNetworks.Request request = new PacketNetworks.Request(PacketNetworks.SynchroniseType.MANIFEST, playerId);
+		PacketNetworks.Request request = new PacketNetworks.Request(PacketNetworks.SynchroniseType.MANIFEST);
 		NetworkHandler.CHANNEL.sendToServer(request);
 	}
 

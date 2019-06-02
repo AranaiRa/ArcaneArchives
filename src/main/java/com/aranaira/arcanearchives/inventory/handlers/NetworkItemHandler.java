@@ -14,6 +14,7 @@ import java.util.UUID;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
+@Deprecated
 public class NetworkItemHandler implements IItemHandlerModifiable {
 
 	private UUID playerUUID; //TODO: unused variable

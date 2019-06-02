@@ -6,6 +6,7 @@ import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import com.aranaira.arcanearchives.util.types.IngredientStack;
 import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
@@ -13,6 +14,7 @@ import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.oredict.OreDictionary;
 
 @SuppressWarnings("unused")
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
@@ -34,6 +36,9 @@ public class RecipeLibrary {
 	public static GCTRecipe MONITORING_CRYSTAL_RECIPE;
 	public static GCTRecipe SCEPTER_MANIPULATION_RECIPE;
 	public static GCTRecipe RADIANT_AMPHORA_RECIPE;
+	public static GCTRecipe LETTER_OF_INVITATION_RECIPE;
+	public static GCTRecipe LETTER_OF_RESIGNATION_RECIPE;
+	public static GCTRecipe WRIT_OF_EXPULSION_RECIPE;
 
 	public static void buildRecipes () {
 		COMPONENT_RADIANTDUST_RECIPE = GCTRecipeList.makeAndAddRecipe("radiantdust", new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 2), ItemRegistry.RAW_RADIANT_QUARTZ);
@@ -41,6 +46,12 @@ public class RecipeLibrary {
 		CUT_RADIANT_QUARTZ_RECIPE = GCTRecipeList.makeAndAddRecipe("cut_radiant_quartz", new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 1), new ItemStack(ItemRegistry.RAW_RADIANT_QUARTZ, 2));
 
 		MANIFEST_RECIPE = GCTRecipeList.makeAndAddRecipe("manifest", new ItemStack(ItemRegistry.MANIFEST, 1), new IngredientStack("paper", 1), new IngredientStack("dyeBlack", 1), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 2));
+
+		LETTER_OF_INVITATION_RECIPE = GCTRecipeList.makeAndAddRecipeWithCreator("letter_of_invitation", new ItemStack(ItemRegistry.LETTER_OF_INVITATION, 1), new IngredientStack("paper", 3), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 1), new IngredientStack("dyeLightBlue", 1));
+
+		LETTER_OF_RESIGNATION_RECIPE = GCTRecipeList.makeAndAddRecipeWithCreator("letter_of_resignation", new ItemStack(ItemRegistry.LETTER_OF_RESIGNATION, 1), new IngredientStack("paper", 3), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 1), new IngredientStack("dyePink", 1));
+
+		WRIT_OF_EXPULSION_RECIPE = GCTRecipeList.makeAndAddRecipeWithCreator("writ_of_explusion", new ItemStack(ItemRegistry.WRIT_OF_EXPULSION, 1), new IngredientStack("paper", 3), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 1), new IngredientStack("dyeRed", 1));
 
 		SCEPTER_MANIPULATION_RECIPE = GCTRecipeList.makeAndAddRecipe("sceptermanipulation", new ItemStack(ItemRegistry.SCEPTER_MANIPULATION), new ItemStack(ItemRegistry.SCEPTER_REVELATION, 1), new IngredientStack(ItemRegistry.COMPONENT_SCINTILLATINGINLAY, 1));
 
@@ -70,6 +81,8 @@ public class RecipeLibrary {
 
 		/*MATRIX_STORAGE_RECIPE = GCTRecipeList.makeAndAddRecipe("matrix_storage", new ItemStack(BlockRegistry.MATRIX_STORAGE, 1), new ItemStack(ItemRegistry.COMPONENT_MATRIXBRACE, 2), ItemRegistry.COMPONENT_MATERIALINTERFACE, new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 24));*/
 	}
+
+
 
 	@SubscribeEvent
 	public static void onRegisterRecipes (Register<IRecipe> event) {

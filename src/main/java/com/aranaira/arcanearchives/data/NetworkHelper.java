@@ -45,7 +45,7 @@ public class NetworkHelper {
 	}
 
 	@Nullable
-	public static HiveNetwork getHiveNetwork (UUID uuid, World world) {
+	public static Hive getHiveMembership (UUID uuid, World world) {
 		if (!checkUUIDAndWorld(uuid, world)) return null;
 
 		HiveSaveData saveData = (HiveSaveData) world.getMapStorage().getOrLoadData(HiveSaveData.class, HiveSaveData.ID);
@@ -55,23 +55,26 @@ public class NetworkHelper {
 			world.getMapStorage().setData(HiveSaveData.ID, saveData);
 		}
 
-		Hive hive = saveData.getHiveByMember(uuid);
+		return saveData.getHiveByMember(uuid);
+	}
 
-		// This should never be null
+	@Nullable
+	public static HiveNetwork getHiveNetwork (UUID uuid, World world) {
+		return getHiveNetwork(uuid, world, getHiveMembership(uuid, world));
+	}
+
+	@Nullable
+	public static HiveNetwork getHiveNetwork (UUID uuid, World world, Hive hive) {
+		// Can be null
 		if (hive == null) return null;
 
 		HiveNetwork potential = HIVE_MAP.get(hive.getOwner());
-		if (potential == null) {
+		if (potential == null || !potential.validate(hive)) {
 			potential = createFromHive(hive, world);
 			HIVE_MAP.put(hive.getOwner(), potential);
-		} else {
-			if (potential.validate(hive)) {
-				// TODO: update the hive
-			}
-			return potential;
 		}
 
-		return null;
+		return potential;
 	}
 
 	// TODO: Implement

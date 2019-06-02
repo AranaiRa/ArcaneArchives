@@ -5,15 +5,17 @@ import com.aranaira.arcanearchives.util.types.TileList;
 import com.aranaira.arcanearchives.util.types.TileList.TileListIterable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 
 import java.util.List;
 import java.util.UUID;
 
-public interface IServerNetwork {
+public interface IServerNetwork extends IHiveBase {
 	/**
 	 * Simply returns the network's uuid.
 	 */
 	UUID getUuid ();
+	World getWorld ();
 
 	/**
 	 * Function for retrieving the current list of valid tiles from the network.
@@ -75,18 +77,6 @@ public interface IServerNetwork {
 	void removeTile (ImmanenceTileEntity te);
 	void removeTile (UUID tileID);
 	void synchroniseData ();
-
-	/** Hive-specific stuff
-	 *
-	 */
-	boolean isHiveNetwork ();
-	List<ServerNetwork> getContainedNetworks ();
-	void addNetwork (ServerNetwork network);
-	void removeNetwork (ServerNetwork network);
-	void handleNewOwner ();
-	ServerNetwork getOwnerNetwork ();
-
-	HiveNetwork getHiveNetwork ();
 
 	/**
 	 * Code specifically for synchronising data to the player.
