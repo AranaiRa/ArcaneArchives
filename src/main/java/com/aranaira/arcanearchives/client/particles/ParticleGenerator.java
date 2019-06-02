@@ -2,13 +2,18 @@ package com.aranaira.arcanearchives.client.particles;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.particles.particle.ParticlePendeloqueGemLine;
+import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
+import com.aranaira.arcanearchives.util.RenderHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import java.util.Vector;
 
 public class ParticleGenerator {
     public static Random rng = new Random();
@@ -23,6 +28,7 @@ public class ParticleGenerator {
         double yShiftMult = rng.nextDouble() * 0.3;
         double distMagnifier = 1.0 + dist * 0.1;
 
+        ArrayList<Vec3d> verts = new ArrayList<Vec3d>();
         for(int i=0; i<=count; i++) {
             double prog = (double)i / (double)count;
             Vec3d pos = veclerp(start, end, prog);
@@ -41,9 +47,11 @@ public class ParticleGenerator {
             double sx = ((rng.nextDouble() * 2.0) - 1.0) * 0.1;
             double sz = ((rng.nextDouble() * 2.0) - 1.0) * 0.1;
             double sy = ((rng.nextDouble() * 0.7) + 0.3) * 0.1;
-            ParticlePendeloqueGemLine p = new ParticlePendeloqueGemLine(world, pos.x, pos.y, pos.z, sx, sy, sz, 20+i, 2.0f);
-            Minecraft.getMinecraft().effectRenderer.addEffect(p);
+            //ParticlePendeloqueGemLine p = new ParticlePendeloqueGemLine(world, pos.x, pos.y, pos.z, sx, sy, sz, 20+i, 2.0f);
+            //Minecraft.getMinecraft().effectRenderer.addEffect(p);
+            verts.add(pos);
         }
+        RenderHelper.drawSegmentedLine(world.getWorldTime(), ArcaneGemItem.GemColor.getColor(ArcaneGemItem.GemColor.ORANGE), 1, start, verts);
     }
 
     public static void makeDefaultBurst(World world, Vec3d point, int radialCount, int heightCount, double radius, double speedMin, double speedMax) {

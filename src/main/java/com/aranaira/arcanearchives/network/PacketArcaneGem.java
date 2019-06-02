@@ -2,28 +2,24 @@ package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.particles.ParticleGenerator;
-import com.aranaira.arcanearchives.init.ItemRegistry;
-import com.aranaira.arcanearchives.items.RadiantAmphoraItem.AmphoraUtil;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.network.NetworkHandler.ServerHandler;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class PacketDoParticles implements IMessage {
+public class PacketArcaneGem implements IMessage {
 
 	private ArcaneGemItem.GemCut cut;
 	private ArcaneGemItem.GemColor color;
 	private Vec3d pos1, pos2;
 
-	public PacketDoParticles() {
+	public PacketArcaneGem() {
 	}
 
-	public PacketDoParticles(ArcaneGemItem.GemCut cut, ArcaneGemItem.GemColor color, Vec3d pos1, Vec3d pos2) {
+	public PacketArcaneGem(ArcaneGemItem.GemCut cut, ArcaneGemItem.GemColor color, Vec3d pos1, Vec3d pos2) {
 		this.cut = cut;
 		this.color = color;
 		this.pos1 = pos1;
@@ -60,12 +56,13 @@ public class PacketDoParticles implements IMessage {
 		buf.writeDouble(pos2.z);
 	}
 
-	public static class Handler extends ServerHandler<PacketDoParticles> {
+	public static class Handler extends ServerHandler<PacketArcaneGem> {
 		@Override
-		public void processMessage (PacketDoParticles packet, MessageContext context) {
+		public void processMessage (PacketArcaneGem packet, MessageContext context) {
 			ArcaneArchives.logger.info("Received particles packet\n    Gem is "+packet.color.name()+" "+packet.cut.name()+"\n    pos1="+packet.pos1+"    pos2="+packet.pos2);
 
 			int particleDensity = 5 * (int)Math.ceil(packet.pos1.distanceTo(packet.pos2));
+
 			ParticleGenerator.makeDefaultLine(Minecraft.getMinecraft().player.world, packet.pos1, packet.pos2, particleDensity, 2.0);
 			ParticleGenerator.makeDefaultBurst(Minecraft.getMinecraft().player.world, packet.pos2, 36, 1,0.6, 0.01, 0.03);
 		}

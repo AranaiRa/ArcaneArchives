@@ -1,28 +1,18 @@
 package com.aranaira.arcanearchives.items.gems.pendeloque;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
-import com.aranaira.arcanearchives.network.NetworkHandler;
-import com.aranaira.arcanearchives.network.PacketDoParticles;
-import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 import java.util.List;
 
@@ -48,7 +38,6 @@ public class RivertearItem extends ArcaneGemItem {
     public EnumActionResult onItemUse (EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (!world.isRemote) {
             if(GemUtil.getCharge(player.getHeldItem(hand)) > 0) {
-                ArcaneArchives.logger.info("beep");
                 world.setBlockState(pos.offset(facing), Blocks.WATER.getDefaultState(), 11);
                 return EnumActionResult.SUCCESS;
             }
@@ -75,7 +64,7 @@ public class RivertearItem extends ArcaneGemItem {
                     world.setBlockState(pos.offset(facing), Blocks.WATER.getDefaultState(), 11);
                     world.scheduleUpdate(pos.offset(facing), Blocks.WATER, 20);
 
-                    PacketDoParticles packet = new PacketDoParticles(cut, color, start, end);
+                    PacketArcaneGem packet = new PacketArcaneGem(cut, color, start, end);
                     NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, start.x, start.y, start.z, 160);
                     NetworkHandler.CHANNEL.sendToAllAround(packet, tp);
                 }

@@ -1,9 +1,8 @@
 package com.aranaira.arcanearchives.items.gems.pendeloque;
 
-import com.aranaira.arcanearchives.client.particles.ParticleGenerator;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.network.NetworkHandler;
-import com.aranaira.arcanearchives.network.PacketDoParticles;
+import com.aranaira.arcanearchives.network.PacketArcaneGem;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
@@ -61,7 +60,7 @@ public class MountaintearItem extends ArcaneGemItem {
 
                 Vec3d end = new Vec3d(pos.offset(facing).getX(), pos.offset(facing).getY(), pos.offset(facing).getZ());
 
-                PacketDoParticles packet = new PacketDoParticles(cut, color, start, end);
+                PacketArcaneGem packet = new PacketArcaneGem(cut, color, start, end);
                 NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, start.x, start.y, start.z, 160);
                 NetworkHandler.CHANNEL.sendToAllAround(packet, tp);
             }

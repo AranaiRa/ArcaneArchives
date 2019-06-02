@@ -12,6 +12,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.model.ModelLoader;
 
+import java.awt.*;
+
 public abstract class ArcaneGemItem extends ItemTemplate {
     public GemCut cut;
     public GemColor color;
@@ -389,6 +391,28 @@ public abstract class ArcaneGemItem extends ItemTemplate {
             else if(query == 9) return BLACK;
             else if(query == 10) return WHITE;
             return NOCOLOR;
+        }
+
+        public static Color getColor(GemColor color) {
+            if(color == GemColor.RED)
+                return new Color(1.00f, 0.50f, 0.50f, 1.0f);
+            else if(color == GemColor.ORANGE)
+                return new Color(1.00f, 0.75f, 0.50f, 1.0f);
+            else if(color == GemColor.YELLOW)
+                return new Color(1.00f, 1.00f, 0.50f, 1.0f);
+            else if(color == GemColor.GREEN)
+                return new Color(0.50f, 1.00f, 0.60f, 1.0f);
+            else if(color == GemColor.CYAN)
+                return new Color(0.50f, 1.00f, 1.00f, 1.0f);
+            else if(color == GemColor.BLUE)
+                return new Color(0.50f, 0.65f, 1.00f, 1.0f);
+            else if(color == GemColor.PURPLE)
+                return new Color(0.80f, 0.50f, 1.00f, 1.0f);
+            else if(color == GemColor.PINK)
+                return new Color(1.00f, 0.55f, 1.00f, 1.0f);
+            else if(color == GemColor.BLACK)
+                return new Color(0.00f, 0.00f, 0.00f, 1.0f);
+            return new Color(1,1,1,1);
         }
     }
 

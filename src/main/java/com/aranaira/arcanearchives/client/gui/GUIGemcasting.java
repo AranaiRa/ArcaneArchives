@@ -8,10 +8,13 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 import java.nio.Buffer;
 
+@SideOnly(Side.CLIENT)
 public class GUIGemcasting {
 
     private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/fabrial.png");

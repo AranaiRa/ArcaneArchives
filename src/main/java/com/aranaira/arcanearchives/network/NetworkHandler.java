@@ -23,7 +23,7 @@ public class NetworkHandler {
 		registerPacks(PacketRadiantCrafting.LastRecipe.Handler.class, PacketRadiantCrafting.LastRecipe.class, Side.CLIENT);
 		registerPacks(PacketRadiantAmphora.Handler.class, PacketRadiantAmphora.class, Side.SERVER);
 		registerPacks(PacketRadiantAmphora.Handler.class, PacketRadiantAmphora.class, Side.SERVER);
-		registerPacks(PacketDoParticles.Handler.class, PacketDoParticles.class, Side.CLIENT);
+		registerPacks(PacketArcaneGem.Handler.class, PacketArcaneGem.class, Side.CLIENT);
 	}
 
 	private static <REQ extends IMessage, REPLY extends IMessage> void registerPacks (Class<? extends IMessageHandler<REQ, REPLY>> messageHandler, Class<REQ> requestMessageType, Side side) {
