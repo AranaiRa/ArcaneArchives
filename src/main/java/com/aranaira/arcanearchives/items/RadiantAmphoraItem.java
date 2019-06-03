@@ -84,6 +84,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.radiantamphora"));
 		AmphoraUtil util = new AmphoraUtil(stack);

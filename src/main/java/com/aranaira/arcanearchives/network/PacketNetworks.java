@@ -15,6 +15,8 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.UUID;
 
@@ -129,6 +131,7 @@ public class PacketNetworks {
 		}
 
 		public static class Handler extends NetworkHandler.ClientHandler<Response> {
+			@SideOnly(Side.CLIENT)
 			public void processMessage (Response message, MessageContext context) {
 				EntityPlayer player = Minecraft.getMinecraft().player;
 				ClientNetwork network = NetworkHelper.getClientNetwork(player.getUniqueID());

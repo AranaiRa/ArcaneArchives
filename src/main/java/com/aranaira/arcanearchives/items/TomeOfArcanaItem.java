@@ -23,10 +23,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-@Mod.EventBusSubscriber
 public class TomeOfArcanaItem extends ItemGuidebook implements IHasModel {
 	public static final String NAME = "item_tomeofarcana";
-	private static final ResourceLocation TOME_OF_ARCANA = new ResourceLocation(ArcaneArchives.MODID, "xml/tome.xml");
+	public static final ResourceLocation TOME_OF_ARCANA = new ResourceLocation(ArcaneArchives.MODID, "xml/tome.xml");
 
 	public TomeOfArcanaItem () {
 		setTranslationKey(NAME);
@@ -52,20 +51,5 @@ public class TomeOfArcanaItem extends ItemGuidebook implements IHasModel {
 	@SideOnly(Side.CLIENT)
 	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.tomeofarcana"));
-	}
-
-	@Optional.Method(modid = "gbook")
-	@SubscribeEvent
-	@SuppressWarnings("unused")
-	public static void registerBook (BookRegistryEvent event) {
-		// uncomment this is you are trying to fine tune margin values in TomeOfArcanaItemBackground
-		// it will display transparent boxes of where page and page elements thing they should be bounded by
-		//BookRendering.DEBUG_DRAW_BOUNDS = true;
-
-		// tell guidebook mod to parse the XML and be ready to display the page contents, but we'll handle the item
-		event.register(TOME_OF_ARCANA, true);
-
-		// tell guidebook mod that we want to deal with rendering the background
-		BookRendering.BACKGROUND_FACTORY_MAP.put(new ResourceLocation(ArcaneArchives.MODID, "textures/gui/arcana_documentation.png"), TomeOfArcanaItemBackground.TomeOfArcanaItemBackgroundFactory);
 	}
 }
