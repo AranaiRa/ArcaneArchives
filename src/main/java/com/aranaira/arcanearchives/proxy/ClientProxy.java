@@ -6,8 +6,11 @@ import com.aranaira.arcanearchives.client.render.RadiantTankTEISR;
 import com.aranaira.arcanearchives.client.render.RadiantTankTESR;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.init.BlockRegistry;
+import com.aranaira.arcanearchives.integration.gbook.GBookInit;
+import com.aranaira.arcanearchives.items.TomeOfArcanaItemBackground;
 import com.aranaira.arcanearchives.items.itemblocks.RadiantTankItem;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
+import gigaherz.lirelent.guidebook.guidebook.client.BookRendering;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -15,8 +18,10 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
@@ -60,6 +65,13 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void init (FMLInitializationEvent event) {
 		super.init(event);
+	}
+
+	@Override
+	public void loadComplete (FMLLoadCompleteEvent event) {
+		if (Loader.isModLoaded("gbook")) {
+			GBookInit.init();
+		}
 	}
 
 	@Override

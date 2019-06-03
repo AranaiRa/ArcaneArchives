@@ -24,12 +24,17 @@ public class HiveSaveData extends WorldSavedData {
 
 	@Override
 	public void readFromNBT (NBTTagCompound nbt) {
-
+		// TODO: IMPLEMENT
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT (NBTTagCompound compound) {
+		// TODO: IMPLEMENT
 		return null;
+	}
+
+	public void createHiveNetwork (Hive hive) {
+
 	}
 
 	public Hive getHiveByOwner (UUID owner) {
@@ -41,10 +46,12 @@ public class HiveSaveData extends WorldSavedData {
 		return ownerToHive.get(owner);
 	}
 
+	@Nullable
 	public Hive getHiveByMember (UUID member) {
 		// Check to see if they have an owner first
-		if (ownerToHive.get(member) != null) {
-			return ownerToHive.get(member);
+		Hive ownerHive = ownerToHive.get(member);
+		if (ownerHive != null) {
+			return ownerHive;
 		}
 
 		UUID owner = memberToOwner.get(member);
@@ -53,7 +60,7 @@ public class HiveSaveData extends WorldSavedData {
 			return getHiveByOwner(member);
 		}
 
-		return getHiveByOwner(owner);
+		return null;
 	}
 
 	public static class Hive {

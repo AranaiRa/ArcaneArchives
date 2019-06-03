@@ -19,16 +19,22 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
+import java.lang.ref.WeakReference;
 import java.util.*;
 
 public class ServerNetwork implements IServerNetwork {
 	// Actual owner of this network
 	private UUID uuid;
+	private WeakReference<World> world;
+
+	// TODO: Invalidate this when joining a network or leaving a network
+	private Boolean isHiveMember;
 
 	// Per-player items/blocks
 	private ManifestList manifestItems = new ManifestList(new ArrayList<>());
@@ -55,6 +61,14 @@ public class ServerNetwork implements IServerNetwork {
 		return network;
 	}
 
+	@Override
+	public World getWorld () {
+		if (world == null || world.get() == null) {
+			world = new WeakReference<>(FMLCommonHandler.instance().getMinecraftServerInstance().getEntityWorld());
+		}
+
+		return world.get();
+	}
 
 	@Override
 	public UUID getUuid () {
@@ -203,7 +217,7 @@ public class ServerNetwork implements IServerNetwork {
 	public void synchroniseData () {
 		EntityPlayer player = getPlayer();
 		if (player != null) {
-			IMessage packet = new PacketNetworks.Response(PacketNetworks.SynchroniseType.DATA, uuid, buildSynchroniseData());
+			IMessage packet = new PacketNetworks.Response(PacketNetworks.SynchroniseType.DATA, buildSynchroniseData());
 			NetworkHandler.CHANNEL.sendTo(packet, (EntityPlayerMP) player);
 		}
 	}
@@ -214,21 +228,24 @@ public class ServerNetwork implements IServerNetwork {
 	}
 
 	@Override
+	public boolean isHiveMember () {
+		// TODO
+		if (isHiveMember == null) {
+			isHiveMember = NetworkHelper.getHiveMembership(uuid, getWorld()) != null;
+		}
+
+		return isHiveMember;
+	}
+
+	@Override
 	@Nullable
 	public List<ServerNetwork> getContainedNetworks () {
 		return null;
 	}
 
 	@Override
-	public void addNetwork (ServerNetwork network) {
-	}
-
-	@Override
-	public void removeNetwork (ServerNetwork network) {
-	}
-
-	@Override
-	public void handleNewOwner () {
+	public NBTTagCompound buildHiveManifest (EntityPlayer player) {
+		return null;
 	}
 
 	@Override
@@ -240,7 +257,7 @@ public class ServerNetwork implements IServerNetwork {
 	@Override
 	@Nullable
 	public HiveNetwork getHiveNetwork () {
-		return null;
+		return NetworkHelper.getHiveNetwork(uuid, getWorld());
 	}
 
 	@Override
