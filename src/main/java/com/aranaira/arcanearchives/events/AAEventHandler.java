@@ -29,6 +29,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.entity.living.LivingDestroyBlockEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -162,6 +163,31 @@ public class AAEventHandler {
 			}
 			if(player.getHeldItemOffhand().getItem() instanceof ArcaneGemItem) {
 				GUIGemcasting.draw(minecraft, player.getHeldItemOffhand(), event.getResolution().getScaledWidth(), event.getResolution().getScaledHeight(), true);
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void playerPickupXP(PlayerPickupXpEvent event) {
+		EntityPlayer player = event.getEntityPlayer();
+		if(player == null) return;
+
+		ItemStack[] held = new ItemStack[2];
+		if(player.getHeldItemMainhand().getItem() instanceof ArcaneGemItem) {
+			held[0] = player.getHeldItemMainhand();
+		}
+		if(player.getHeldItemOffhand().getItem() instanceof ArcaneGemItem) {
+			held[1] = player.getHeldItemOffhand();
+		}
+
+		for(ItemStack stack : held) {
+			if(stack != null) {
+				if (stack.getItem() == ItemRegistry.MINDSPINDLE) {
+					if (ArcaneGemItem.GemUtil.getCharge(stack) > 0) {
+						event.getOrb().xpValue = Math.round(event.getOrb().xpValue * 1.5f);
+						ArcaneGemItem.GemUtil.consumeCharge(stack, 1);
+					}
+				}
 			}
 		}
 	}

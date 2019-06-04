@@ -27,16 +27,18 @@
         <stack item="arcanearchives:item_manifest">Manifest</stack>
         <stack item="arcanearchives:item_component_materialinterface">MaterialInterface</stack>
         <stack item="arcanearchives:item_component_matrixbrace">MatrixBrace</stack>
-        <stack item="arcanearchives:item_mountaintear">Mountaintear</stack>
         <stack item="arcanearchives:item_radiantamphora">RadiantAmphora</stack>
         <stack item="arcanearchives:item_component_radiantdust">RadiantDust</stack>
         <stack item="arcanearchives:item_rawquartz">RawQuartz</stack>
         <stack item="arcanearchives:item_cutquartz">ShapedQuartz</stack>
-        <stack item="arcanearchives:item_rivertear">Rivertear</stack>
         <stack item="arcanearchives:item_sceptermanipulation">ScepterManipulation</stack>
         <stack item="arcanearchives:item_scepterrevelation">ScepterRevelation</stack>
         <stack item="arcanearchives:item_component_scintillatinginlay">ScintillatingInlay</stack>
         <stack item="arcanearchives:item_writofexpulsion">WritExpulsion</stack>
+
+        <stack item="arcanearchives:item_mindspindle">Mindspindle</stack>
+        <stack item="arcanearchives:item_mountaintear">Mountaintear</stack>
+        <stack item="arcanearchives:item_rivertear">Rivertear</stack>
     </stack-links>
 
     <mod-loaded name="ml_astralsorcery" modid="astralsorcery"/>
@@ -87,7 +89,8 @@
             <space height="8" condition="AllGems"/>
             <p condition="AllGems"><stack item="arcanearchives:item_homingstone"/> <link ref="Homingstone">Homingstone</link></p>
             <p condition="AllGems"><stack item="arcanearchives:item_munchstone"/> <link ref="Munchstone">Munchstone</link></p>
-            <space height="8" condition="AllGems"/>
+            <p><stack item="arcanearchives:item_mindspindle"/> <link ref="Mindspindle">Mindspindle</link></p>
+            <space height="8"/>
             <p><stack item="arcanearchives:item_mountaintear"/> <link ref="Mountaintear">Mountaintear</link></p>
             <p><stack item="arcanearchives:item_rivertear"/> <link ref="Rivertear">Rivertear</link></p>
             <space height="8" condition="AllGems"/>
@@ -993,6 +996,34 @@
         </section>
     </chapter>
 
+    <chapter id="Mindspindle">
+        <section>
+            <page_title>
+                <title>Mindspindle</title>
+            </page_title>
+            <p align="center"><stack item="arcanearchives:item_mindspindle" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                A Mindspindle is an Arcane Gem formed from a green-spectrum piece of <link ref="CutQuartz">Shaped Radiant Quartz</link> in a pampel cut.
+            </p>
+            <p>
+                When held, a Mindspindle magnifies the amount of experience contained within experience globes by 50%. It loses charge for each experience globe improved.
+            </p>
+            <horizontal_rule/>
+            <p>
+                Mindspindles cannot be crafted, and are only available via Creative mode.
+            </p>
+        </section>
+        <section>
+            <page_title>
+                <title>Mountaintear</title>
+            </page_title>
+            <p italics="true">
+                ...Lore fragment TBD
+            </p>
+        </section>
+    </chapter>
+
     <chapter id="Mountaintear">
         <section>
             <page_title>
@@ -1001,7 +1032,7 @@
             <p align="center"><stack item="arcanearchives:item_mountaintear" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                A Mountaintear is an Arcane Gem formed from an orange-spectrum piece of <link ref="CutQuartz">Shaped Radiant Quartz</link> in a tear cut. It is associated with lava.
+                A Mountaintear is an Arcane Gem formed from an orange-spectrum piece of <link ref="CutQuartz">Shaped Radiant Quartz</link> in a pendeloque cut.
             </p>
             <p>
                 <stack item="astralsorcery:blockwell"/> When placed in a Lightwell with access to the sky, a Mountaintear generates lava at a slow rate. While it's possible for a Mountaintear to shatter, the chances of shattering are <span italics="true">astronomically</span> unlikely. For all intents and purposes, a Mountaintear lasts indefinitely unless its Lightwell is broken.
@@ -1032,7 +1063,7 @@
             <p align="center"><stack item="arcanearchives:item_rivertear" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                A Rivertear is an Arcane Gem formed from a blue-spectrum piece of <link ref="CutQuartz">Shaped Radiant Quartz</link> in a tear cut. It is associated with water.
+                A Rivertear is an Arcane Gem formed from a blue-spectrum piece of <link ref="CutQuartz">Shaped Radiant Quartz</link> in a pendeloque cut.
             </p>
             <p>
                 <stack item="astralsorcery:blockwell"/> When placed in a Lightwell with access to the sky, a Rivertear generates water at an extremely rapid rate. While it's possible for a Rivertear to shatter, the chances of shattering are <span italics="true">astronomically</span> unlikely. For all intents and purposes, a Rivertear lasts indefinitely unless its Lightwell is broken.
