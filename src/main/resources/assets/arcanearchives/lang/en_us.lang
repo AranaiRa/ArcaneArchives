@@ -225,3 +225,11 @@ text.copyToClipboard.success=Text successfully copied.
 cmd.gbook.guide.done=Reloading complete
 
 jei.gui.resonator=Every %.1f minutes.
+
+# Network stuff
+arcanearchives.network.hive.successfully_added=You were successfully added to the network!
+arcanearchives.network.hive.successfully_removed_self=You were removed from the network.
+arcanearchives.network.hive.successfully_remove_player=Player was removed from the network.
+arcanearchives.network.hive.failed_add=Failed to add you to the network.
+arcanearchives.network.hive.failed_remove_self=Failed to remove you from the network.
+arcanearchives.network.hive.failed_remove_player=Failed to remove player from the network.

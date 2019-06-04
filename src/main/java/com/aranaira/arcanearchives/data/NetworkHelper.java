@@ -5,6 +5,7 @@ import com.aranaira.arcanearchives.data.HiveSaveData.Hive;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.MapStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -41,6 +42,54 @@ public class NetworkHelper {
 		}
 
 		return saveData.getNetwork(uuid);
+	}
+
+	public static boolean addToNetwork (UUID owner, UUID newMember, World world) {
+		// This requires the handling of the creation of the new network
+		// as well as actually saving the data now that it has been modified.
+		// Returns true if it successfully added the newMember to the network
+		HiveSaveData saveData = (HiveSaveData) world.getMapStorage().getOrLoadData(HiveSaveData.class, HiveSaveData.ID);
+
+		Hive owned = getHiveMembership(owner, world);
+		Hive possible = getHiveMembership(newMember, world);
+		if (possible != null && !(possible.getOwner().equals(owner))) {
+			return false; // They're already a member of another network
+		}
+		if (possible != null && possible.getOwner().equals(owner)) return true; // They're already a member; nothing to do
+
+		// Now we worry about a new hive
+		if (owned == null) {
+			// The two founding members, hooray!
+			owned = new Hive(owner);
+			saveData.addHive(owned);
+		}
+
+		owned.addMember(newMember);
+		saveData.addMember(owned, newMember);
+		saveData.markDirty();
+		world.getMapStorage().saveAllData();
+		return true;
+	}
+
+	public static boolean removeFromNetwork (UUID owner, UUID memberToRemove, World world) {
+		HiveSaveData saveData = (HiveSaveData) world.getMapStorage().getOrLoadData(HiveSaveData.class, HiveSaveData.ID);
+
+		Hive owned = getHiveMembership(owner, world);
+		Hive member = getHiveMembership(memberToRemove, world);
+
+		if (!owned.equals(member)) return false;
+
+		if (!owned.getMembers().contains(memberToRemove) && !owner.equals(memberToRemove)) return false;
+
+		if (owner.equals(memberToRemove)) {
+			saveData.changeOwner(owned);
+		} else {
+			saveData.removeMember(owned, memberToRemove);
+		}
+
+		saveData.markDirty();
+		world.getMapStorage().saveAllData();
+		return true;
 	}
 
 	public static NBTTagCompound getHiveMembershipInfo (Hive hive, UUID uuid) {
