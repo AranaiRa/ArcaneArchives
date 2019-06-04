@@ -1,12 +1,18 @@
 package com.aranaira.arcanearchives.init;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.data.ClientNetwork;
+import com.aranaira.arcanearchives.data.HiveNetwork;
+import com.aranaira.arcanearchives.data.HiveSaveData.Hive;
+import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.integration.astralsorcery.Liquefaction;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
+import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import com.aranaira.arcanearchives.util.types.IngredientStack;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
@@ -14,7 +20,6 @@ import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.oredict.OreDictionary;
 
 @SuppressWarnings("unused")
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
@@ -47,11 +52,40 @@ public class RecipeLibrary {
 
 		MANIFEST_RECIPE = GCTRecipeList.makeAndAddRecipe("manifest", new ItemStack(ItemRegistry.MANIFEST, 1), new IngredientStack("paper", 1), new IngredientStack("dyeBlack", 1), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 2));
 
-		LETTER_OF_INVITATION_RECIPE = GCTRecipeList.makeAndAddRecipeWithCreator("letter_of_invitation", new ItemStack(ItemRegistry.LETTER_OF_INVITATION, 1), new IngredientStack("paper", 3), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 1), new IngredientStack("dyeLightBlue", 1));
+		////////////////////
 
-		LETTER_OF_RESIGNATION_RECIPE = GCTRecipeList.makeAndAddRecipeWithCreator("letter_of_resignation", new ItemStack(ItemRegistry.LETTER_OF_RESIGNATION, 1), new IngredientStack("paper", 3), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 1), new IngredientStack("dyePink", 1));
+		LETTER_OF_INVITATION_RECIPE = GCTRecipeList.makeAndAddRecipeWithCreatorAndCondition("letter_of_invitation", new ItemStack(ItemRegistry.LETTER_OF_INVITATION, 1), new IngredientStack("paper", 3), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 1), new IngredientStack("dyeLightBlue", 1)).addCondition((EntityPlayer player, GemCuttersTableTileEntity tile) -> {
+			if (!player.world.isRemote) {
+				Hive hive = NetworkHelper.getHiveMembership(player.getUniqueID(), player.world);
+				return (hive == null || hive.getOwner().equals(player.getUniqueID()));
+			} else {
+				ClientNetwork network = NetworkHelper.getClientNetwork();
+				return network.ownsHive() || !network.inHive();
+			}
+		});
 
-		WRIT_OF_EXPULSION_RECIPE = GCTRecipeList.makeAndAddRecipeWithCreator("writ_of_explusion", new ItemStack(ItemRegistry.WRIT_OF_EXPULSION, 1), new IngredientStack("paper", 3), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 1), new IngredientStack("dyeRed", 1));
+		LETTER_OF_RESIGNATION_RECIPE = GCTRecipeList.makeAndAddRecipeWithCreatorAndCondition("letter_of_resignation", new ItemStack(ItemRegistry.LETTER_OF_RESIGNATION, 1), new IngredientStack("paper", 3), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 1), new IngredientStack("dyePink", 1)).addCondition((EntityPlayer player, GemCuttersTableTileEntity tile) -> {
+			if (!player.world.isRemote) {
+				Hive hive = NetworkHelper.getHiveMembership(player.getUniqueID(), player.world);
+				return hive != null;
+			} else {
+				ClientNetwork network = NetworkHelper.getClientNetwork();
+				return network.inHive();
+			}
+		});
+
+		WRIT_OF_EXPULSION_RECIPE = GCTRecipeList.makeAndAddRecipeWithCreatorAndCondition("writ_of_explusion", new ItemStack(ItemRegistry.WRIT_OF_EXPULSION, 1), new IngredientStack("paper", 3), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 1), new IngredientStack("dyeRed", 1)).addCondition((EntityPlayer player, GemCuttersTableTileEntity tile) -> {
+			if (!player.world.isRemote) {
+				Hive hive = NetworkHelper.getHiveMembership(player.getUniqueID(), player.world);
+				return hive != null && hive.getOwner().equals(player.getUniqueID());
+			} else {
+				ClientNetwork network = NetworkHelper.getClientNetwork();
+				return network.inHive() && network.ownsHive();
+			}
+		});
+
+
+		//////
 
 		SCEPTER_MANIPULATION_RECIPE = GCTRecipeList.makeAndAddRecipe("sceptermanipulation", new ItemStack(ItemRegistry.SCEPTER_MANIPULATION), new ItemStack(ItemRegistry.SCEPTER_REVELATION, 1), new IngredientStack(ItemRegistry.COMPONENT_SCINTILLATINGINLAY, 1));
 
