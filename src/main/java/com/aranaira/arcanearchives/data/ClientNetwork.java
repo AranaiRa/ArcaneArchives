@@ -40,6 +40,9 @@ public class ClientNetwork {
 	private ManifestItemHandler manifestItemHandler = null;
 	//private TileList<ImmanenceTileEntity> mActualTiles = new TileList<>();
 
+	private boolean inHive = false;
+	private boolean ownsHive = false;
+
 	ClientNetwork (UUID id) {
 		this.playerId = id;
 		this.manifestItemHandler = new ManifestItemHandler(manifestItems);
@@ -78,12 +81,12 @@ public class ClientNetwork {
 	// This requests a synchronise packet from the server
 	// but does not include the manifest info.
 	public void synchroniseData () {
-		PacketNetworks.Request request = new PacketNetworks.Request(PacketNetworks.SynchroniseType.DATA, playerId);
+		PacketNetworks.Request request = new PacketNetworks.Request(PacketNetworks.SynchroniseType.DATA);
 		NetworkHandler.CHANNEL.sendToServer(request);
 	}
 
 	public void synchroniseManifest () {
-		PacketNetworks.Request request = new PacketNetworks.Request(PacketNetworks.SynchroniseType.MANIFEST, playerId);
+		PacketNetworks.Request request = new PacketNetworks.Request(PacketNetworks.SynchroniseType.MANIFEST);
 		NetworkHandler.CHANNEL.sendToServer(request);
 	}
 
@@ -161,6 +164,19 @@ public class ClientNetwork {
 
 		this.totalCores = tag.getInteger(NetworkTags.TOTAL_CORES);
 		this.totalResonators = tag.getInteger(NetworkTags.TOTAL_RESONATORS);
+	}
+
+	public void deserializeHive (NBTTagCompound tag) {
+		this.inHive = tag.getBoolean("in_hive");
+		this.ownsHive = tag.getBoolean("is_owner");
+	}
+
+	public boolean inHive () {
+		return inHive;
+	}
+
+	public boolean ownsHive () {
+		return ownsHive;
 	}
 
 	public UUID getPlayerID () {

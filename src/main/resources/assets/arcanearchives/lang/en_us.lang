@@ -161,8 +161,10 @@ arcanearchives.tooltip.device.lectern_manifest=Used to view items stored in Radi
 arcanearchives.tooltip.device.monitoringcrystal=Adds attached inventory to radiant storage for viewing with a Manifest.
 
 arcanearchives.tooltip.item.letterofinvitation=Allows you to invite another player to your Arcane Network.
+arcanearchives.tooltip.item.letterofinvitation.named=An invitation to join the Arcane Network of %s.
 arcanearchives.tooltip.item.letterofresignation=Allows you to leave an Arcane Network.
 arcanearchives.tooltip.item.writofexpulsion=Allows you to kick a player from your Arcane Network. Rename on an anvil to set the player to kick.
+arcanearchives.tooltip.item.writofexpulsion.named=A writ to remove %s from your Arcane Network.
 arcanearchives.tooltip.item.manifest=Used to view items stored in Radiant storage.
 arcanearchives.tooltip.item.quartzsliver=An alternative to torches. Acquire by smashing Radiant Quartz against stone.
 arcanearchives.tooltip.item.radiantamphora=Used to transfer fluids to and from a Radiant Tank or Reservoir Matrix.
@@ -227,3 +229,20 @@ text.copyToClipboard.success=Text successfully copied.
 cmd.gbook.guide.done=Reloading complete
 
 jei.gui.resonator=Every %.1f minutes.
+
+# Network stuff from packets
+arcanearchives.network.hive.successfully_added=You were successfully added to the network!
+arcanearchives.network.hive.successfully_removed_self=You were removed from the network.
+arcanearchives.network.hive.successfully_remove_player=Player was removed from the network.
+arcanearchives.network.hive.failed_add=Failed to add you to the network.
+arcanearchives.network.hive.failed_remove_self=Failed to remove you from the network.
+arcanearchives.network.hive.failed_remove_player=Failed to remove player from the network.
+# Network stuff for items
+arcanearchives.network.hive.joined=Successfully joined the Arcane Network of %s!
+arcanearchives.network.hive.left=Successfully left your network!
+arcanearchives.network.hive.failed=Failed to join the network!
+arcanearchives.network.hive.yours=This is already your network!
+arcanearchives.network.hive.left_failed=You aren't in a network to leave.
+arcanearchives.network.hive.expel_unnamed=You must name this writ in an anvil in order to identify the person to be removed.
+arcanearchives.network.hive.expel_failed=Failed to perform expulsion.
+arcanearchives.network.hive.expelled=Successfully expelled %s from your network.

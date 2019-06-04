@@ -8,12 +8,16 @@ import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.items.RadiantAmphoraItem;
 import com.aranaira.arcanearchives.items.RadiantAmphoraItem.AmphoraUtil;
 import com.aranaira.arcanearchives.items.RadiantAmphoraItem.TankMode;
+import com.aranaira.arcanearchives.items.TomeOfArcanaItem;
+import com.aranaira.arcanearchives.items.TomeOfArcanaItemBackground;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketRadiantAmphora;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
+import gigaherz.lirelent.guidebook.client.BookRegistryEvent;
+import gigaherz.lirelent.guidebook.guidebook.client.BookRendering;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -23,6 +27,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -32,6 +37,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -103,7 +109,8 @@ public class AAEventHandler {
 	}
 
 	@SubscribeEvent
-	public static void LeftClickEmpty(PlayerInteractEvent.LeftClickEmpty event)
+	@SideOnly(Side.CLIENT)
+	public static void onLeftClickEmpty(PlayerInteractEvent.LeftClickEmpty event)
 	{
 		Item item = event.getEntityPlayer().inventory.getCurrentItem().getItem();
 		if(item == ItemRegistry.RADIANT_AMPHORA) {
@@ -113,7 +120,7 @@ public class AAEventHandler {
 	}
 
 	@SubscribeEvent
-	public static void LeftClickBlock(PlayerInteractEvent.LeftClickBlock event)
+	public static void onLeftClickBlock(PlayerInteractEvent.LeftClickBlock event)
 	{
 		if(!event.getWorld().isRemote) {
 			Item item = event.getEntityPlayer().inventory.getCurrentItem().getItem();
@@ -192,5 +199,11 @@ public class AAEventHandler {
 				}
 			}
 		}
+	@Optional.Method(modid = "gbook")
+	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
+	@SuppressWarnings("unused")
+	public static void registerBook (BookRegistryEvent event) {
+		event.register(TomeOfArcanaItem.TOME_OF_ARCANA, true);
 	}
 }

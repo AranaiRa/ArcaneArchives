@@ -2,22 +2,26 @@ package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.ClientNetwork;
+import com.aranaira.arcanearchives.data.HiveNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-
-import java.util.UUID;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PacketNetworks {
 	public enum SynchroniseType {
-		INVALID("invalid"), DATA("data"), MANIFEST("manifest"), NETWORK_ITEMS("network_items");
+		INVALID("invalid"), DATA("data"), MANIFEST("manifest"), HIVE_STATUS("hive_status");
 
 		private String key;
 
@@ -25,11 +29,9 @@ public class PacketNetworks {
 			this.key = key;
 		}
 
-		public static SynchroniseType fromKey (String key) {
+		public static SynchroniseType fromOrdinal (int i) {
 			for (SynchroniseType type : values()) {
-				if (type.key().equals(key)) {
-					return type;
-				}
+				if (type.ordinal() == i) return type;
 			}
 
 			return INVALID;
@@ -42,28 +44,23 @@ public class PacketNetworks {
 
 	public static class Request implements IMessage {
 		SynchroniseType type;
-		UUID playerId;
 
 		public Request () {
 			this.type = SynchroniseType.DATA;
-			this.playerId = null;
 		}
 
-		public Request (SynchroniseType type, UUID playerId) {
+		public Request (SynchroniseType type) {
 			this.type = type;
-			this.playerId = playerId;
 		}
 
 		@Override
 		public void fromBytes (ByteBuf buf) {
-			this.type = SynchroniseType.fromKey(ByteBufUtils.readUTF8String(buf));
-			this.playerId = UUID.fromString(ByteBufUtils.readUTF8String(buf));
+			this.type = SynchroniseType.fromOrdinal(buf.readShort());
 		}
 
 		@Override
 		public void toBytes (ByteBuf buf) {
-			ByteBufUtils.writeUTF8String(buf, this.type.key());
-			ByteBufUtils.writeUTF8String(buf, this.playerId.toString());
+			buf.writeShort(this.type.ordinal());
 		}
 
 		public static class Handler extends NetworkHandler.ServerHandler<Request> {
@@ -74,9 +71,11 @@ public class PacketNetworks {
 					return;
 				}
 
-				ServerNetwork network = NetworkHelper.getServerNetwork(message.playerId, server.getWorld(0));
+				EntityPlayerMP player = context.getServerHandler().player;
+
+				ServerNetwork network = NetworkHelper.getServerNetwork(player.getUniqueID(), server.getWorld(0));
 				if (network == null) {
-					ArcaneArchives.logger.error(() -> "Network was null when processing sync packet for " + message.playerId);
+					ArcaneArchives.logger.error(() -> "Network was null when processing sync packet for " + player.getUniqueID());
 					return;
 				}
 
@@ -86,13 +85,22 @@ public class PacketNetworks {
 					case DATA:
 						output = network.buildSynchroniseData();
 						break;
+					case HIVE_STATUS:
+						// TODO:
+						// is_member, is_owner
+						output = network.buildHiveMembershipData();
+						break;
 					case MANIFEST:
-						output = network.buildSynchroniseManifest();
+						if (network.isHiveMember()) {
+							HiveNetwork hive = network.getHiveNetwork();
+							output = hive.buildHiveManifest(player);
+						} else {
+							output = network.buildSynchroniseManifest();
+						}
 						break;
 				}
 
-				Response response = new Response(message.type, message.playerId, output);
-				EntityPlayerMP player = server.getPlayerList().getPlayerByUUID(message.playerId);
+				Response response = new Response(message.type, output);
 
 				if (output != null) {
 					NetworkHandler.CHANNEL.sendTo(response, player);
@@ -108,8 +116,8 @@ public class PacketNetworks {
 			super();
 		}
 
-		public Response (SynchroniseType type, UUID player, NBTTagCompound data) {
-			super(type, player);
+		public Response (SynchroniseType type, NBTTagCompound data) {
+			super(type);
 			this.data = data;
 		}
 
@@ -126,8 +134,10 @@ public class PacketNetworks {
 		}
 
 		public static class Handler extends NetworkHandler.ClientHandler<Response> {
+			@SideOnly(Side.CLIENT)
 			public void processMessage (Response message, MessageContext context) {
-				ClientNetwork network = NetworkHelper.getClientNetwork(message.playerId);
+				EntityPlayer player = Minecraft.getMinecraft().player;
+				ClientNetwork network = NetworkHelper.getClientNetwork(player.getUniqueID());
 
 				switch (message.type) {
 					case DATA:
@@ -135,6 +145,9 @@ public class PacketNetworks {
 						break;
 					case MANIFEST:
 						network.deserializeManifest(message.data);
+						break;
+					case HIVE_STATUS:
+						network.deserializeHive(message.data);
 						break;
 				}
 			}

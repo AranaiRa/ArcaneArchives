@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.blocks;
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
+import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity.TickResult;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.material.Material;
@@ -103,12 +104,17 @@ public class RadiantResonator extends BlockTemplate {
 			return 0;
 		}
 
+		TickResult tr = te.canTick();
+
+		if (tr == TickResult.OFFLINE || tr == TickResult.OBSTRUCTION) {
+			return 0;
+		}
+
 		if (te.canTick() == RadiantResonatorTileEntity.TickResult.HARVEST_WAITING) {
 			return 15;
 		}
 
-		return Math.min((int) Math.floor(te.getPercentageComplete() / 6.6d), 14);
-	}
+		return Math.max(1, Math.min((int) Math.floor(te.getPercentageComplete() / 7.14) + 1, 14));	}
 
 	@Override
 	public boolean hasTileEntity (IBlockState state) {

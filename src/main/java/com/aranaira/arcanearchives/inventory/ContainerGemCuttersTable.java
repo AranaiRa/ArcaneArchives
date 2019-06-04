@@ -61,7 +61,8 @@ public class ContainerGemCuttersTable extends Container {
 		this.slotOutput = new SlotItemHandler(outputInv, SLOT_OUTPUT, 95, 18) {
 			@Override
 			public ItemStack onTake (EntityPlayer thePlayer, ItemStack stack) {
-				for (Entry entry : tile.getCurrentRecipe().getMatchingSlots(combinedInventory).int2IntEntrySet()) {
+				GCTRecipe recipe = tile.getCurrentRecipe();
+				for (Entry entry : recipe.getMatchingSlots(combinedInventory).int2IntEntrySet()) {
 					ItemStack result = combinedInventory.extractItem(entry.getIntKey(), entry.getIntValue(), false);
 					if (result.getItem() instanceof ItemBucket) {
 						ItemStack returned = new ItemStack(Items.BUCKET);
@@ -71,7 +72,9 @@ public class ContainerGemCuttersTable extends Container {
 							Block.spawnAsEntity(world, thePlayer.getPosition(), returned);
 					}
 				}
-				updateRecipe();
+				if (!player.world.isRemote) {
+					stack = recipe.onCrafted(player, stack);
+				}
 				return super.onTake(player, stack);
 			}
 
@@ -82,7 +85,7 @@ public class ContainerGemCuttersTable extends Container {
 
 			@Override
 			public boolean canTakeStack (EntityPlayer player) {
-				return tile.getCurrentRecipe().matches(combinedInventory);
+				return tile.getCurrentRecipe().matches(combinedInventory) && tile.getCurrentRecipe().craftable(player, tile);
 			}
 		};
 

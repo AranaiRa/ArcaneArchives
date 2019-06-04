@@ -136,7 +136,7 @@ public class ContainerRadiantChest extends Container {
 					if (player != null) {
 						NBTTagCompound output = network.buildSynchroniseManifest();
 						if (output != null) {
-							PacketNetworks.Response packet = new PacketNetworks.Response(PacketNetworks.SynchroniseType.DATA, network.getUuid(), output);
+							PacketNetworks.Response packet = new PacketNetworks.Response(PacketNetworks.SynchroniseType.DATA, output);
 							NetworkHandler.CHANNEL.sendTo(packet, player);
 						}
 					}

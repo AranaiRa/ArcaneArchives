@@ -25,6 +25,12 @@ public class GCTRecipeList {
 		return newRecipe;
 	}
 
+	public static GCTRecipeWithConditionsCrafter makeAndAddRecipeWithCreatorAndCondition (String name, @Nonnull ItemStack result, Object ... recipe) {
+		GCTRecipeWithConditionsCrafter newRecipe = new GCTRecipeWithConditionsCrafter(name, result, recipe);
+		addRecipe(newRecipe);
+		return newRecipe;
+	}
+
 	public static void addRecipe (GCTRecipe recipe) {
 		IMMUTABLE_COPY = null;
 		RECIPE_LIST.add(recipe);

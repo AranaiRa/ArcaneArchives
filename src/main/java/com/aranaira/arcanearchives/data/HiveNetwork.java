@@ -1,22 +1,30 @@
 package com.aranaira.arcanearchives.data;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.HiveSaveData.Hive;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
+import com.aranaira.arcanearchives.tileentities.ManifestTileEntity;
+import com.aranaira.arcanearchives.tileentities.MonitoringCrystalTileEntity;
+import com.aranaira.arcanearchives.util.ItemStackConsolidator;
+import com.aranaira.arcanearchives.util.LargeItemNBTUtil;
+import com.aranaira.arcanearchives.util.types.*;
 import com.aranaira.arcanearchives.util.types.TileList.TileListIterable;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
-public class HiveNetwork extends ServerNetwork {
+public class HiveNetwork implements IHiveBase {
 	private List<ServerNetwork> memberNetworks;
 	private ServerNetwork ownerNetwork;
 
-	public HiveNetwork (UUID ownerId, ServerNetwork ownerNetwork, List<ServerNetwork> memberNetworks) {
-		super(ownerId);
-
+	public HiveNetwork (ServerNetwork ownerNetwork, List<ServerNetwork> memberNetworks) {
 		this.ownerNetwork = ownerNetwork;
 		this.memberNetworks = memberNetworks;
 	}
@@ -39,142 +47,134 @@ public class HiveNetwork extends ServerNetwork {
 		return true;
 	}
 
-	@Override
-	public void handleNewOwner () {
-		super.handleNewOwner();
+	// TODO: ????
+	private List<ServerNetwork> getCombinedNetworks () {
+		List<ServerNetwork> combined = new ArrayList<>(getContainedNetworks());
+		combined.add(ownerNetwork);
+		return combined;
 	}
 
 	@Nullable
 	@Override
 	public ServerNetwork getOwnerNetwork () {
-		return super.getOwnerNetwork();
+		return ownerNetwork;
 	}
 
 	@Nullable
 	@Override
 	public HiveNetwork getHiveNetwork () {
-		return super.getHiveNetwork();
-	}
-
-	@Nullable
-	@Override
-	public EntityPlayer getPlayer () {
-		return super.getPlayer();
+		return this;
 	}
 
 	@Override
-	public UUID getUuid () {
-		return super.getUuid();
-	}
-
-	@Override
-	public void synchroniseData () {
-		super.synchroniseData();
+	public boolean isHiveMember () {
+		return true;
 	}
 
 	@Override
 	public boolean isHiveNetwork () {
-		return super.isHiveNetwork();
+		return true;
 	}
 
 	@Nullable
 	@Override
 	public List<ServerNetwork> getContainedNetworks () {
-		return super.getContainedNetworks();
+		return memberNetworks;
 	}
 
 	@Override
-	public void addNetwork (ServerNetwork network) {
-		super.addNetwork(network);
-	}
+	public NBTTagCompound buildHiveManifest (EntityPlayer player) {
+		ManifestList manifestItems = new ManifestList(new ArrayList<>());
 
-	@Override
-	public void removeNetwork (ServerNetwork network) {
-		super.removeNetwork(network);
-	}
+		List<ManifestItemEntry> preManifest = new ArrayList<>();
+		Set<ManifestTileEntity> done = new HashSet<>();
+		Set<BlockPosDimension> positions = new HashSet<>();
 
-	@Override
-	public NBTTagCompound buildSynchroniseManifest () {
-		return super.buildSynchroniseManifest();
-	}
+		for (ServerNetwork network : getCombinedNetworks()) {
+			for (IteRef ref : network.getManifestTileEntities()) {
+				ManifestTileEntity ite = ref.getManifestServerTile();
+				if (ite == null) {
+					continue;
+				}
 
-	@Override
-	public void rebuildManifest () {
-		super.rebuildManifest();
-	}
+				if (done.contains(ite)) {
+					continue;
+				}
 
-	@Override
-	public TileListIterable getManifestTileEntities () {
-		return super.getManifestTileEntities();
-	}
+				int dimId = ite.getWorld().provider.getDimension();
 
-	@Override
-	public NBTTagCompound buildSynchroniseData () {
-		return super.buildSynchroniseData();
-	}
+				if (ite.isSingleStackInventory()) {
+					ItemStack is = ite.getSingleStack();
+					if (!is.isEmpty()) {
+						preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(ite.getPos(), ite.getChestName(), is.getCount())));
+					}
+				} else {
+					if (ite instanceof MonitoringCrystalTileEntity) {
+						MonitoringCrystalTileEntity mte = (MonitoringCrystalTileEntity) ite;
 
-	@Override
-	public TileListIterable getValidTiles () {
-		return super.getValidTiles();
-	}
+						BlockPos tar = mte.getTarget();
+						if (tar == null) {
+							continue;
+						}
 
-	@Override
-	public UUID generateTileUuid () {
-		return super.generateTileUuid();
-	}
+						BlockPosDimension ttar = new BlockPosDimension(tar, mte.dimension);
 
-	@Override
-	public void handleTileIdChange (UUID oldId, UUID newId) {
-		super.handleTileIdChange(oldId, newId);
-	}
+						if (positions.contains(ttar)) {
+							if (player != null) {
+								player.sendMessage(new TextComponentTranslation("arcanearchives.error.monitoring_crystal", tar.getX(), tar.getY(), tar.getZ(), ttar.dimension));
+							} else {
+								ArcaneArchives.logger.error("Multiple Monitoring Crystals were found for hive network " + ownerNetwork.getUuid().toString() + " targeting " + String.format("%d/%d/%d in dimension %d", tar.getX(), tar.getY(), tar.getZ(), ttar.dimension));
+							}
+							continue;
+						}
 
-	@Override
-	public void addTile (ImmanenceTileEntity tileEntityInstance) {
-		super.addTile(tileEntityInstance);
-	}
+						positions.add(ttar);
 
-	@Override
-	public void removeTile (ImmanenceTileEntity te) {
-		super.removeTile(te);
-	}
+						IItemHandler handler = mte.getInventory();
+						if (handler != null) {
+							for (ItemStack is : new SlotIterable(handler)) {
+								if (is.isEmpty()) {
+									continue;
+								}
 
-	@Override
-	public void removeTile (UUID tileID) {
-		super.removeTile(tileID);
-	}
+								preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(mte.getTarget(), mte.getDescriptor(), is.getCount())));
+							}
+						}
+					} else {
+						for (ItemStack is : new SlotIterable(ite.getInventory())) {
+							if (is.isEmpty()) {
+								continue;
+							}
 
-	@Override
-	public boolean containsTile (ImmanenceTileEntity tileEntityInstance) {
-		return super.containsTile(tileEntityInstance);
-	}
+							preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(ite.getPos(), ite.getChestName(), is.getCount())));
+						}
+					}
+				}
 
-	@Override
-	public boolean containsTile (UUID tileID) {
-		return super.containsTile(tileID);
-	}
+				done.add(ite);
+			}
+		}
 
-	@Override
-	public NBTTagCompound writeToSave () {
-		return super.writeToSave();
-	}
+		List<ManifestEntry> consolidated = ItemStackConsolidator.ConsolidateManifest(preManifest);
+		manifestItems.addAll(consolidated);
 
-	@Override
-	public void readFromSave (NBTTagCompound tag) {
-		super.readFromSave(tag);
-	}
+		NBTTagList manifest = new NBTTagList();
 
-	@Override
-	public int getTotalCores () {
-		return super.getTotalCores();
-	}
+		for (ManifestEntry entry : manifestItems) {
+			NBTTagCompound itemEntry = new NBTTagCompound();
+			LargeItemNBTUtil.writeToNBT(itemEntry, entry.getStack());
+			NBTTagList entries = new NBTTagList();
+			for (ManifestEntry.ItemEntry iEntry : entry.getEntries()) {
+				entries.appendTag(iEntry.serializeNBT());
+			}
+			itemEntry.setTag(NetworkTags.ENTRIES, entries);
+			itemEntry.setInteger(NetworkTags.DIMENSION, entry.getDimension());
+			manifest.appendTag(itemEntry);
+		}
 
-	@Override
-	public int getTotalResonators () {
-		return super.getTotalResonators();
-	}
+		NBTTagCompound result = new NBTTagCompound();
+		result.setTag(NetworkTags.MANIFEST, manifest);
 
-	@Override
-	public void rebuildTotals () {
-		super.rebuildTotals();
+		return result;
 	}
 }

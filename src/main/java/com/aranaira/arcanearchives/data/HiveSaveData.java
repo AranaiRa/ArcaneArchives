@@ -9,7 +9,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 public class HiveSaveData extends WorldSavedData {
-	public static final String ID = "Archane-Archives-Network";
+	public static final String ID = "Archane-Archives-Hives";
 
 	private Map<UUID, Hive> ownerToHive = new HashMap<>();
 	private Map<UUID, UUID> memberToOwner = new HashMap<>();
@@ -24,12 +24,26 @@ public class HiveSaveData extends WorldSavedData {
 
 	@Override
 	public void readFromNBT (NBTTagCompound nbt) {
-
+		// TODO: IMPLEMENT
+		NBTTagList list = nbt.getTagList("hive_data", NBT.TAG_COMPOUND);
+		for (int i = 0; i < list.tagCount(); i++) {
+			Hive hive = Hive.fromNBT(list.getCompoundTagAt(i));
+			ownerToHive.put(hive.getOwner(), hive);
+			for (UUID member : hive.getMembers()) {
+				memberToOwner.put(member, hive.getOwner());
+			}
+		}
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT (NBTTagCompound compound) {
-		return null;
+		// TODO: IMPLEMENT
+		NBTTagList list = new NBTTagList();
+		for (Hive hive : ownerToHive.values()) {
+			list.appendTag(hive.writeToNBT());
+		}
+		compound.setTag("hive_data", list);
+		return compound;
 	}
 
 	public Hive getHiveByOwner (UUID owner) {
@@ -41,19 +55,63 @@ public class HiveSaveData extends WorldSavedData {
 		return ownerToHive.get(owner);
 	}
 
+	public boolean addHive (Hive hive) {
+		if (ownerToHive.containsKey(hive.getOwner())) return false;
+
+		ownerToHive.put(hive.getOwner(), hive);
+		return true;
+	}
+
+	public void addMember (Hive hive, UUID newMember) {
+		if (hive.getOwner().equals(newMember)) return;
+
+		if (hive.getMembers().contains(newMember)) return;
+
+		UUID oldOwner = memberToOwner.get(newMember);
+		if (oldOwner != null || !hive.getOwner().equals(oldOwner)) {
+			memberToOwner.remove(newMember);
+		}
+
+		memberToOwner.put(newMember, hive.getOwner());
+	}
+
+	public void removeMember (Hive hive, UUID memberToRemove) {
+		assert !hive.getOwner().equals(memberToRemove); // This should be handled with Change Owner
+		memberToOwner.remove(memberToRemove);
+		hive.removeMember(memberToRemove);
+	}
+
+	public void changeOwner (Hive hive) {
+		UUID oldOwner = hive.getOwner();
+		UUID newOwner = hive.getOldestMember();
+		hive.removeMember(newOwner);
+		hive.setOwner(newOwner);
+
+		ownerToHive.remove(oldOwner);
+		ownerToHive.put(newOwner, hive);
+		memberToOwner.remove(newOwner);
+
+		for (UUID member : hive.getMembers()) {
+			assert !member.equals(newOwner);
+			memberToOwner.remove(member);
+			memberToOwner.put(member, newOwner);
+		}
+	}
+
+	@Nullable
 	public Hive getHiveByMember (UUID member) {
 		// Check to see if they have an owner first
-		if (ownerToHive.get(member) != null) {
-			return ownerToHive.get(member);
+		Hive ownerHive = ownerToHive.get(member);
+		if (ownerHive != null) {
+			return ownerHive;
 		}
 
 		UUID owner = memberToOwner.get(member);
-		if (owner == null) {
-			// Create a new hive with this member as the owner
-			return getHiveByOwner(member);
+		if (owner != null) {
+			return getHiveByOwner(owner);
 		}
 
-		return getHiveByOwner(owner);
+		return null;
 	}
 
 	public static class Hive {
@@ -118,6 +176,12 @@ public class HiveSaveData extends WorldSavedData {
 			for (int i = 0; i < members.tagCount(); i++) {
 				this.members.add(members.getCompoundTagAt(i).getUniqueId("uuid"));
 			}
+		}
+
+		public static Hive fromNBT (NBTTagCompound tag) {
+			Hive hive = new Hive(null);
+			hive.readFromNBT(tag);
+			return hive;
 		}
 	}
 }

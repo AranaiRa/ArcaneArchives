@@ -10,6 +10,7 @@ import net.minecraftforge.items.SlotItemHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+@Deprecated
 public class NetworkSlotItemHandler extends SlotItemHandler {
 	private EntityPlayer player;
 	@Nullable

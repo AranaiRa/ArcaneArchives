@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.proxy;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.commands.CommandHive;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.events.ClientTickHandler;
 import com.aranaira.arcanearchives.init.BlockRegistry;
@@ -38,6 +39,10 @@ public class CommonProxy {
 	}
 
 	public void registerBlockRenderer (Block block, int meta, String id) {
+	}
+
+	public void serverStarting (FMLServerStartingEvent event) {
+		event.registerServerCommand(new CommandHive());
 	}
 
 	public void serverStarted (FMLServerStartedEvent event) {

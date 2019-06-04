@@ -3,14 +3,15 @@ package com.aranaira.arcanearchives.data;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.HiveSaveData.Hive;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.MapStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class NetworkHelper {
 	public static UUID INVALID = UUID.fromString("00000000-0000-0000-0000-000000000000");
@@ -44,8 +45,87 @@ public class NetworkHelper {
 		return saveData.getNetwork(uuid);
 	}
 
+	public static boolean addToNetwork (UUID owner, UUID newMember, World world) {
+		// This requires the handling of the creation of the new network
+		// as well as actually saving the data now that it has been modified.
+		// Returns true if it successfully added the newMember to the network
+		HiveSaveData saveData = (HiveSaveData) world.getMapStorage().getOrLoadData(HiveSaveData.class, HiveSaveData.ID);
+
+		Hive owned = saveData.getHiveByOwner(owner);
+		Hive possible = getHiveMembership(newMember, world);
+		if (owned.getOwner().equals(newMember) || (possible != null && !(possible.getOwner().equals(owner)))) {
+			return false; // They're already a member of another network
+		}
+		if (possible != null && possible.getOwner().equals(owner)) return true; // They're already a member; nothing to do
+
+		// Now we worry about a new hive
+		if (owned == null) {
+			// The two founding members, hooray!
+			owned = new Hive(owner);
+			saveData.addHive(owned);
+		}
+
+		owned.addMember(newMember);
+		saveData.addMember(owned, newMember);
+		saveData.markDirty();
+		world.getMapStorage().saveAllData();
+		return true;
+	}
+
+	public static boolean removeFromNetwork (UUID owner, UUID memberToRemove, World world) {
+		HiveSaveData saveData = (HiveSaveData) world.getMapStorage().getOrLoadData(HiveSaveData.class, HiveSaveData.ID);
+
+		Hive owned = getHiveMembership(owner, world);
+		Hive member = getHiveMembership(memberToRemove, world);
+
+		if (!owned.equals(member)) return false;
+
+		if (!owned.getMembers().contains(memberToRemove) && !owner.equals(memberToRemove)) return false;
+
+		if (owner.equals(memberToRemove)) {
+			saveData.changeOwner(owned);
+		} else {
+			saveData.removeMember(owned, memberToRemove);
+		}
+
+		saveData.markDirty();
+		world.getMapStorage().saveAllData();
+		return true;
+	}
+
+	public static boolean abandonNetwork (EntityPlayer player, World world) {
+		Hive hive = getHiveMembership(player.getUniqueID(), world);
+		return removeFromNetwork(hive.getOwner(), player.getUniqueID(), world);
+	}
+
+	public static boolean ejectPlayer (UUID owner, UUID caster, UUID eject, World world) {
+		if (!owner.equals(caster)) return false;
+		return removeFromNetwork(owner, eject, world);
+	}
+
+	public static NBTTagCompound getHiveMembershipInfo (Hive hive, UUID uuid) {
+		NBTTagCompound result = new NBTTagCompound();
+		result.setBoolean("is_owner", false);
+		result.setBoolean("in_hive", false);
+
+		if (hive == null) {
+			return result;
+		}
+
+		if (hive.getOwner().equals(uuid)) {
+			result.setBoolean("is_owner", true);
+			result.setBoolean("in_hive", true);
+		}
+
+		if (hive.getMembers().contains(uuid)) {
+			result.setBoolean("in_hive", true);
+		}
+
+		return result;
+	}
+
 	@Nullable
-	public static HiveNetwork getHiveNetwork (UUID uuid, World world) {
+	public static Hive getHiveMembership (UUID uuid, World world) {
 		if (!checkUUIDAndWorld(uuid, world)) return null;
 
 		HiveSaveData saveData = (HiveSaveData) world.getMapStorage().getOrLoadData(HiveSaveData.class, HiveSaveData.ID);
@@ -55,28 +135,39 @@ public class NetworkHelper {
 			world.getMapStorage().setData(HiveSaveData.ID, saveData);
 		}
 
-		Hive hive = saveData.getHiveByMember(uuid);
+		return saveData.getHiveByMember(uuid);
+	}
 
-		// This should never be null
+	@Nullable
+	public static HiveNetwork getHiveNetwork (UUID uuid, World world) {
+		return getHiveNetwork(uuid, world, getHiveMembership(uuid, world));
+	}
+
+	@Nullable
+	public static HiveNetwork getHiveNetwork (UUID uuid, World world, Hive hive) {
+		// Can be null
 		if (hive == null) return null;
 
 		HiveNetwork potential = HIVE_MAP.get(hive.getOwner());
-		if (potential == null) {
+		if (potential == null || !potential.validate(hive)) {
 			potential = createFromHive(hive, world);
 			HIVE_MAP.put(hive.getOwner(), potential);
-		} else {
-			if (potential.validate(hive)) {
-				// TODO: update the hive
-			}
-			return potential;
 		}
 
-		return null;
+		return potential;
 	}
 
 	// TODO: Implement
 	public static HiveNetwork createFromHive (Hive hive, World world) {
-		return null;
+		ServerNetwork owner = getServerNetwork(hive.getOwner(), world);
+		List<ServerNetwork> members = new ArrayList<>();
+		for (UUID member : hive.getMembers()) {
+			ServerNetwork m = getServerNetwork(member, world);
+			assert m != null;
+			members.add(m);
+		}
+
+		return new HiveNetwork(owner, members);
 	}
 
 	public static boolean checkUUIDAndWorld (UUID uuid, World world) {
