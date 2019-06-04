@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.network;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.HiveNetwork;
+import com.aranaira.arcanearchives.data.HiveSaveData.Hive;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import io.netty.buffer.ByteBuf;
@@ -22,7 +23,7 @@ import java.util.UUID;
 
 public class PacketNetworks {
 	public enum SynchroniseType {
-		INVALID("invalid"), DATA("data"), MANIFEST("manifest"), NETWORK_ITEMS("network_items");
+		INVALID("invalid"), DATA("data"), MANIFEST("manifest"), HIVE_STATUS("hive_status");
 
 		private String key;
 
@@ -86,8 +87,13 @@ public class PacketNetworks {
 					case DATA:
 						output = network.buildSynchroniseData();
 						break;
+					case HIVE_STATUS:
+						// TODO:
+						// is_member, is_owner
+						Hive info = NetworkHelper.getHiveMembership(player.getUniqueID(), player.world);
+						output = NetworkHelper.getHiveMembershipInfo(info, player.getUniqueID());
+						break;
 					case MANIFEST:
-						// TODO: Handle hive networks
 						if (network.isHiveMember()) {
 							HiveNetwork hive = network.getHiveNetwork();
 							output = hive.buildHiveManifest(player);
@@ -142,6 +148,9 @@ public class PacketNetworks {
 						break;
 					case MANIFEST:
 						network.deserializeManifest(message.data);
+						break;
+					case HIVE_STATUS:
+						network.deserializeHive(message.data);
 						break;
 				}
 			}

@@ -3,14 +3,13 @@ package com.aranaira.arcanearchives.data;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.HiveSaveData.Hive;
 import net.minecraft.client.Minecraft;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class NetworkHelper {
 	public static UUID INVALID = UUID.fromString("00000000-0000-0000-0000-000000000000");
@@ -42,6 +41,27 @@ public class NetworkHelper {
 		}
 
 		return saveData.getNetwork(uuid);
+	}
+
+	public static NBTTagCompound getHiveMembershipInfo (Hive hive, UUID uuid) {
+		NBTTagCompound result = new NBTTagCompound();
+		result.setBoolean("is_owner", false);
+		result.setBoolean("in_hive", false);
+
+		if (hive == null) {
+			return result;
+		}
+
+		if (hive.getOwner().equals(uuid)) {
+			result.setBoolean("is_owner", true);
+			result.setBoolean("in_hive", true);
+		}
+
+		if (hive.getMembers().contains(uuid)) {
+			result.setBoolean("in_hive", true);
+		}
+
+		return result;
 	}
 
 	@Nullable
@@ -79,7 +99,15 @@ public class NetworkHelper {
 
 	// TODO: Implement
 	public static HiveNetwork createFromHive (Hive hive, World world) {
-		return null;
+		ServerNetwork owner = getServerNetwork(hive.getOwner(), world);
+		List<ServerNetwork> members = new ArrayList<>();
+		for (UUID member : hive.getMembers()) {
+			ServerNetwork m = getServerNetwork(member, world);
+			assert m != null;
+			members.add(m);
+		}
+
+		return new HiveNetwork(owner, members);
 	}
 
 	public static boolean checkUUIDAndWorld (UUID uuid, World world) {

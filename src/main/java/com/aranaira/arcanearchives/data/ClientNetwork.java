@@ -40,6 +40,9 @@ public class ClientNetwork {
 	private ManifestItemHandler manifestItemHandler = null;
 	//private TileList<ImmanenceTileEntity> mActualTiles = new TileList<>();
 
+	private boolean inHive = false;
+	private boolean ownsHive = false;
+
 	ClientNetwork (UUID id) {
 		this.playerId = id;
 		this.manifestItemHandler = new ManifestItemHandler(manifestItems);
@@ -161,6 +164,19 @@ public class ClientNetwork {
 
 		this.totalCores = tag.getInteger(NetworkTags.TOTAL_CORES);
 		this.totalResonators = tag.getInteger(NetworkTags.TOTAL_RESONATORS);
+	}
+
+	public void deserializeHive (NBTTagCompound tag) {
+		this.inHive = tag.getBoolean("in_hive");
+		this.ownsHive = tag.getBoolean("is_owner");
+	}
+
+	public boolean inHive () {
+		return inHive;
+	}
+
+	public boolean ownsHive () {
+		return ownsHive;
 	}
 
 	public UUID getPlayerID () {
