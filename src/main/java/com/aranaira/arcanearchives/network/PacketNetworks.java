@@ -3,7 +3,6 @@ package com.aranaira.arcanearchives.network;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.HiveNetwork;
-import com.aranaira.arcanearchives.data.HiveSaveData.Hive;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import io.netty.buffer.ByteBuf;
@@ -18,8 +17,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.UUID;
 
 public class PacketNetworks {
 	public enum SynchroniseType {
@@ -90,8 +87,7 @@ public class PacketNetworks {
 					case HIVE_STATUS:
 						// TODO:
 						// is_member, is_owner
-						Hive info = NetworkHelper.getHiveMembership(player.getUniqueID(), player.world);
-						output = NetworkHelper.getHiveMembershipInfo(info, player.getUniqueID());
+						output = network.buildHiveMembershipData();
 						break;
 					case MANIFEST:
 						if (network.isHiveMember()) {

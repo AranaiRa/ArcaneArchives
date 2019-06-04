@@ -1,8 +1,10 @@
 package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.data.HiveSaveData.Hive;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketNetworks;
+import com.aranaira.arcanearchives.network.PacketNetworks.SynchroniseType;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.ManifestTileEntity;
 import com.aranaira.arcanearchives.tileentities.MonitoringCrystalTileEntity;
@@ -220,6 +222,20 @@ public class ServerNetwork implements IServerNetwork {
 			IMessage packet = new PacketNetworks.Response(PacketNetworks.SynchroniseType.DATA, buildSynchroniseData());
 			NetworkHandler.CHANNEL.sendTo(packet, (EntityPlayerMP) player);
 		}
+	}
+
+	@Override
+	public void synchroniseHiveInfo () {
+		EntityPlayer player = getPlayer();
+		if (player != null) {
+			IMessage packet = new PacketNetworks.Response(SynchroniseType.HIVE_STATUS, buildHiveMembershipData());
+			NetworkHandler.CHANNEL.sendTo(packet, (EntityPlayerMP) player);
+		}
+	}
+
+	public NBTTagCompound buildHiveMembershipData () {
+		Hive info = NetworkHelper.getHiveMembership(uuid, getWorld());
+		return NetworkHelper.getHiveMembershipInfo(info, uuid);
 	}
 
 	@Override

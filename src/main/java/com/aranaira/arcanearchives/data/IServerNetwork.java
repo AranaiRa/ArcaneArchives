@@ -77,6 +77,7 @@ public interface IServerNetwork extends IHiveBase {
 	void removeTile (ImmanenceTileEntity te);
 	void removeTile (UUID tileID);
 	void synchroniseData ();
+	void synchroniseHiveInfo ();
 
 	/**
 	 * Code specifically for synchronising data to the player.
@@ -84,4 +85,5 @@ public interface IServerNetwork extends IHiveBase {
 	 * resonators and matrix cores.
 	 */
 	NBTTagCompound buildSynchroniseData ();
+	NBTTagCompound buildHiveMembershipData ();
 }
