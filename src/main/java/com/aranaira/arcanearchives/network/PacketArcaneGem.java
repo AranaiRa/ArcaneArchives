@@ -6,6 +6,10 @@ import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.network.NetworkHandler.ServerHandler;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.SoundList;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -61,10 +65,16 @@ public class PacketArcaneGem implements IMessage {
 		public void processMessage (PacketArcaneGem packet, MessageContext context) {
 			ArcaneArchives.logger.info("Received particles packet\n    Gem is "+packet.color.name()+" "+packet.cut.name()+"\n    pos1="+packet.pos1+"    pos2="+packet.pos2);
 
-			int particleDensity = 5 * (int)Math.ceil(packet.pos1.distanceTo(packet.pos2));
+			if(packet.cut == ArcaneGemItem.GemCut.PENDELOQUE) {
+				int particleDensity = 5 * (int) Math.ceil(packet.pos1.distanceTo(packet.pos2));
 
-			ParticleGenerator.makeDefaultLine(Minecraft.getMinecraft().player.world, packet.pos1, packet.pos2, particleDensity, 2.0);
-			ParticleGenerator.makeDefaultBurst(Minecraft.getMinecraft().player.world, packet.pos2, 36, 1,0.6, 0.01, 0.03);
+				ParticleGenerator.makeDefaultLine(Minecraft.getMinecraft().player.world, packet.pos1, packet.pos2, particleDensity, 2.0);
+				ParticleGenerator.makeDefaultBurst(Minecraft.getMinecraft().player.world, packet.pos2, 36, 1, 0.6, 0.01, 0.03);
+			}
+			else if(packet.cut == ArcaneGemItem.GemCut.PAMPEL) {
+				Minecraft.getMinecraft().player.playSound(SoundEvents.ENTITY_PLAYER_BURP, 1.0F, 1.0F);
+				ParticleGenerator.makeDefaultBurst(Minecraft.getMinecraft().player.world, packet.pos2, 36, 5, 1.0, 0.01, 0.03);
+			}
 		}
 	}
 }
