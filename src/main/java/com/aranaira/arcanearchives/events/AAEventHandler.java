@@ -177,18 +177,18 @@ public class AAEventHandler {
 	@SubscribeEvent
 	public static void playerPickupXP(PlayerPickupXpEvent event) {
 		EntityPlayer player = event.getEntityPlayer();
-		if(player == null) return;
+		if (player == null) return;
 
 		ItemStack[] held = new ItemStack[2];
-		if(player.getHeldItemMainhand().getItem() instanceof ArcaneGemItem) {
+		if (player.getHeldItemMainhand().getItem() instanceof ArcaneGemItem) {
 			held[0] = player.getHeldItemMainhand();
 		}
-		if(player.getHeldItemOffhand().getItem() instanceof ArcaneGemItem) {
+		if (player.getHeldItemOffhand().getItem() instanceof ArcaneGemItem) {
 			held[1] = player.getHeldItemOffhand();
 		}
 
-		for(ItemStack stack : held) {
-			if(stack != null) {
+		for (ItemStack stack : held) {
+			if (stack != null) {
 				if (stack.getItem() == ItemRegistry.MINDSPINDLE) {
 					if (ArcaneGemItem.GemUtil.getCharge(stack) > 0) {
 						int chargeReduction = event.getOrb().xpValue;
@@ -199,6 +199,8 @@ public class AAEventHandler {
 				}
 			}
 		}
+	}
+
 	@Optional.Method(modid = "gbook")
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)

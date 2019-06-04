@@ -80,36 +80,4 @@ public class RivertearItem extends ArcaneGemItem {
         }
         return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
     }*/
-
-	public static final String NAME = "item_rivertear";
-
-	public RivertearItem () {
-		super(NAME, GemCut.PENDELOQUE, GemColor.BLUE, 25, 100);
-	}
-
-	@Override
-	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(I18n.format("arcanearchives.tooltip.gemcharge") + ": " + getTooltipData(stack));
-		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.rivertear"));
-	}
-
-	@Override
-	public boolean doesSneakBypassUse (ItemStack stack, IBlockAccess world, BlockPos pos, EntityPlayer player) {
-		return true;
-	}
-
-	@Override
-	public EnumActionResult onItemUse (EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (!world.isRemote) {
-			ArcaneArchives.logger.info(GemUtil.getCharge(player.getHeldItem(hand)) + " / " + GemUtil.getMaxCharge(player.getHeldItem(hand)));
-			if (GemUtil.getCharge(player.getHeldItem(hand)) > 0) {
-				Block hit = world.getBlockState(pos).getBlock();
-
-				FluidStack fs = new FluidStack(FluidRegistry.WATER, 1000);
-				world.setBlockState(pos.offset(facing), fs.getFluid().getBlock().getDefaultState(), 11);
-				GemUtil.consumeCharge(player.getHeldItem(hand), 1);
-			}
-		}
-		return EnumActionResult.PASS;
-	}
 }
