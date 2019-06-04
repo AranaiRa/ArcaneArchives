@@ -477,8 +477,17 @@
             <page_title>
                 <title>Radiant Resonator</title>
             </page_title>
+            <p align="center">
+                <image src="arcanearchives:gui/guidebook/lore_resonator" tw="256" th="200"/>
+            </p><space height="16"/>
             <p italics="true">
-                ...Lore fragment TBD
+                —Founds in the notes of Sharaveda, Deceased
+            </p>
+            <p italics="true">
+                —Annotation made by Traylin, grandson of the deceased
+            </p>
+            <p italics="true">
+                —1672, Winter's Birth
             </p>
         </section>
     </chapter>
