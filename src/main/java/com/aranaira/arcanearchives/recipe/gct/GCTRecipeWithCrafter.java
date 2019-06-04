@@ -7,8 +7,8 @@ import net.minecraft.nbt.NBTTagCompound;
 
 import javax.annotation.Nonnull;
 
-public class GCTRecipeWithCreator extends GCTRecipe {
-	public GCTRecipeWithCreator (String name, @Nonnull ItemStack result, Object... recipe) {
+public class GCTRecipeWithCrafter extends GCTRecipe {
+	public GCTRecipeWithCrafter (String name, @Nonnull ItemStack result, Object... recipe) {
 		super(name, result, recipe);
 	}
 

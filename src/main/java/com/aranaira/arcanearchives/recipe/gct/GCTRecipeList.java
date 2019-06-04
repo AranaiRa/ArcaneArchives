@@ -25,8 +25,8 @@ public class GCTRecipeList {
 		return newRecipe;
 	}
 
-	public static GCTRecipeWithCreator makeAndAddRecipeWithCreator (String name, @Nonnull ItemStack result, Object ... recipe) {
-		GCTRecipeWithCreator newRecipe = new GCTRecipeWithCreator(name, result, recipe);
+	public static GCTRecipeWithCrafter makeAndAddRecipeWithCreator (String name, @Nonnull ItemStack result, Object ... recipe) {
+		GCTRecipeWithCrafter newRecipe = new GCTRecipeWithCrafter(name, result, recipe);
 		addRecipe(newRecipe);
 		return newRecipe;
 	}

@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.recipe.gct;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import com.aranaira.arcanearchives.util.types.IngredientStack;
 import com.aranaira.arcanearchives.util.types.IngredientsMatcher;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
@@ -15,7 +16,7 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GCTRecipe {
+public class GCTRecipe implements IGCTRecipe {
 	private final List<IngredientStack> ingredients = new ArrayList<>();
 	private final ItemStack result;
 	private final String name;
@@ -42,31 +43,43 @@ public class GCTRecipe {
 		}
 	}
 
+	@Override
 	public int getIndex () {
 		return GCTRecipeList.indexOf(this);
 	}
 
+	@Override
 	public String getName () {
 		return name;
 	}
 
+	@Override
 	public boolean matches (@Nonnull IItemHandler inv) {
 		return new IngredientsMatcher(ingredients).matches(inv);
 	}
 
+	@Override
+	public boolean craftable (EntityPlayer player, GemCuttersTableTileEntity tile) {
+		return true;
+	}
+
+	@Override
 	public Int2IntMap getMatchingSlots (@Nonnull IItemHandler inv) {
 		return new IngredientsMatcher(ingredients).getMatchingSlots(inv);
 	}
 
+	@Override
 	public ItemStack getRecipeOutput () {
 		return result.copy();
 	}
 
+	@Override
 	public List<IngredientStack> getIngredients () {
 		return ingredients;
 	}
 
 	// Only called on the server side, in theory
+	@Override
 	public ItemStack onCrafted (EntityPlayer player, ItemStack output) {
 		return output;
 	}

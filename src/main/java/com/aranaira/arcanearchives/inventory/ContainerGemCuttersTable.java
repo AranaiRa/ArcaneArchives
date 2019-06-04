@@ -85,7 +85,7 @@ public class ContainerGemCuttersTable extends Container {
 
 			@Override
 			public boolean canTakeStack (EntityPlayer player) {
-				return tile.getCurrentRecipe().matches(combinedInventory);
+				return tile.getCurrentRecipe().matches(combinedInventory) && tile.getCurrentRecipe().craftable(player, tile);
 			}
 		};
 
