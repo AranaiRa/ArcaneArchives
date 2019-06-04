@@ -66,7 +66,7 @@ public class RecipeLibrary {
 
 		COMPONENT_CONTAINMENTFIELD_RECIPE = GCTRecipeList.makeAndAddRecipe("containmentfield", new ItemStack(ItemRegistry.COMPONENT_CONTAINMENTFIELD, 1), ItemRegistry.COMPONENT_SCINTILLATINGINLAY, new IngredientStack("ingotGold", 2), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 2));
 
-		MINDSPINDLE_RECIPE = GCTRecipeList.makeAndAddRecipe("mindspindle_gct", new ItemStack(ItemRegistry.MINDSPINDLE), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 1), new IngredientStack("dyeGreen", 4), new IngredientStack(Ingredient.fromItem(Item.getItemFromBlock(Blocks.ENCHANTING_TABLE))), new IngredientStack(Ingredient.fromItem(Items.WRITABLE_BOOK)));
+		MINDSPINDLE_RECIPE = GCTRecipeList.makeAndAddRecipe("mindspindle_gct", new ItemStack(ItemRegistry.MINDSPINDLE), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 1), new IngredientStack("dyeGreen", 4), new IngredientStack(Items.ENCHANTED_BOOK), new IngredientStack(Ingredient.fromItem(Items.EMERALD), 2));
 
 		RIVERTEAR_RECIPE = GCTRecipeList.makeAndAddRecipe("rivertear_gct", new ItemStack(ItemRegistry.RIVERTEAR), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 1), new IngredientStack(Ingredient.fromItem(Items.SUGAR), 4), new IngredientStack(Ingredient.fromItem(Items.WATER_BUCKET)), new IngredientStack(Ingredient.fromItem(Items.WATER_BUCKET)));
 
