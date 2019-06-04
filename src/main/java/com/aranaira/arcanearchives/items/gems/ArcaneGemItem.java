@@ -1,18 +1,23 @@
 package com.aranaira.arcanearchives.items.gems;
 
+import baubles.api.cap.BaublesCapabilities;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.util.NBTUtils;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.model.ModelLoader;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public abstract class ArcaneGemItem extends ItemTemplate {
     public GemCut cut;
@@ -329,6 +334,28 @@ public abstract class ArcaneGemItem extends ItemTemplate {
                 nbt.setBoolean("toggle", false);
             }
             return nbt.getBoolean("toggle");
+        }
+
+        /**
+         * Get gems that are capable of operating passively. Checks for held, gems slotted in a Fabrial's active or passive slots, and a gem in the Gem Socket.
+         * @param player
+         * @return List of appropriate gems
+         */
+        public static ArrayList<ItemStack> getAvailableGems(EntityPlayer player) {
+            ArrayList<ItemStack> gems = new ArrayList<ItemStack>();
+
+            //Held gems
+            if(player.getHeldItemMainhand().getItem() instanceof ArcaneGemItem)
+                gems.add(player.getHeldItemMainhand());
+            if(player.getHeldItemOffhand().getItem() instanceof ArcaneGemItem)
+                gems.add(player.getHeldItemOffhand());
+
+            NonNullList<ItemStack> inv = player.inventory.mainInventory;
+            //TODO: check for fabrial
+
+            //TODO: check for socket bauble
+
+            return gems;
         }
     }
 

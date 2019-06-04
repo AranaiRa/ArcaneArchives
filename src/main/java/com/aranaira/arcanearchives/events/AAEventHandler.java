@@ -44,6 +44,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 @Mod.EventBusSubscriber
@@ -179,16 +180,10 @@ public class AAEventHandler {
 		EntityPlayer player = event.getEntityPlayer();
 		if (player == null) return;
 
-		ItemStack[] held = new ItemStack[2];
-		if (player.getHeldItemMainhand().getItem() instanceof ArcaneGemItem) {
-			held[0] = player.getHeldItemMainhand();
-		}
-		if (player.getHeldItemOffhand().getItem() instanceof ArcaneGemItem) {
-			held[1] = player.getHeldItemOffhand();
-		}
+		ArrayList<ItemStack> held = ArcaneGemItem.GemUtil.getAvailableGems(event.getEntityPlayer());
 
-		for (ItemStack stack : held) {
-			if (stack != null) {
+		if(held.size() > 0) {
+			for (ItemStack stack : held) {
 				if (stack.getItem() == ItemRegistry.MINDSPINDLE) {
 					if (ArcaneGemItem.GemUtil.getCharge(stack) > 0) {
 						int chargeReduction = event.getOrb().xpValue;
