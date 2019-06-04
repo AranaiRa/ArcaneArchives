@@ -184,8 +184,10 @@ public class AAEventHandler {
 			if(stack != null) {
 				if (stack.getItem() == ItemRegistry.MINDSPINDLE) {
 					if (ArcaneGemItem.GemUtil.getCharge(stack) > 0) {
+						int chargeReduction = event.getOrb().xpValue;
 						event.getOrb().xpValue = Math.round(event.getOrb().xpValue * 1.5f);
-						ArcaneGemItem.GemUtil.consumeCharge(stack, 1);
+						event.getOrb().delayBeforeCanPickup = 0;
+						ArcaneGemItem.GemUtil.consumeCharge(stack, chargeReduction);
 					}
 				}
 			}

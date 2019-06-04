@@ -1007,7 +1007,10 @@
                 A Mindspindle is an Arcane Gem formed from a green-spectrum piece of <link ref="CutQuartz">Shaped Radiant Quartz</link> in a pampel cut.
             </p>
             <p>
-                When held, a Mindspindle magnifies the amount of experience contained within experience globes by 50%. It loses charge for each experience globe improved.
+                When held, a Mindspindle magnifies the amount of experience contained within experience globes by 50%. It loses one point of charge for each experience point amplified, and can affect an un-amplified total of 800xp before needing to be recharged.
+            </p>
+            <p>
+                If you come into contact with a very large number of experience globes while holding a Mindspindle, you can absorb their essence instantly, instead of needing to wait for each globe to be picked up in sequence.
             </p>
             <horizontal_rule/>
             <p>

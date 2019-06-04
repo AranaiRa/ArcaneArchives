@@ -16,7 +16,7 @@ import java.util.List;
 public class MindspindleItem extends ArcaneGemItem {
     public static final String NAME = "item_mindspindle";
 
-    public MindspindleItem() { super(NAME, GemCut.PAMPEL, GemColor.GREEN, 75, 400); }
+    public MindspindleItem() { super(NAME, GemCut.PAMPEL, GemColor.GREEN, 800, 3600); }
 
     @Override
     public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
