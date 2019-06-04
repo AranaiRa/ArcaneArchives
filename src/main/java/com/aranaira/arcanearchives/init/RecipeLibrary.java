@@ -5,7 +5,9 @@ import com.aranaira.arcanearchives.integration.astralsorcery.Liquefaction;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import com.aranaira.arcanearchives.util.types.IngredientStack;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
@@ -30,10 +32,12 @@ public class RecipeLibrary {
 	public static GCTRecipe RADIANT_LANTERN_RECIPE;
 	public static GCTRecipe RADIANT_TROVE_RECIPE;
 	public static GCTRecipe RADIANT_TANK_RECIPE;
-	public static GCTRecipe RIVERTEAR_RECIPE;
 	public static GCTRecipe MONITORING_CRYSTAL_RECIPE;
 	public static GCTRecipe SCEPTER_MANIPULATION_RECIPE;
 	public static GCTRecipe RADIANT_AMPHORA_RECIPE;
+
+	public static GCTRecipe MINDSPINDLE_RECIPE;
+	public static GCTRecipe RIVERTEAR_RECIPE;
 
 	public static void buildRecipes () {
 		COMPONENT_RADIANTDUST_RECIPE = GCTRecipeList.makeAndAddRecipe("radiantdust", new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 2), ItemRegistry.RAW_RADIANT_QUARTZ);
@@ -61,6 +65,8 @@ public class RecipeLibrary {
 		COMPONENT_MATERIALINTERFACE_RECIPE = GCTRecipeList.makeAndAddRecipe("materialinterface", new ItemStack(ItemRegistry.COMPONENT_MATERIALINTERFACE, 1), ItemRegistry.COMPONENT_SCINTILLATINGINLAY, new IngredientStack("ingotGold"), ItemRegistry.CUT_RADIANT_QUARTZ);
 
 		COMPONENT_CONTAINMENTFIELD_RECIPE = GCTRecipeList.makeAndAddRecipe("containmentfield", new ItemStack(ItemRegistry.COMPONENT_CONTAINMENTFIELD, 1), ItemRegistry.COMPONENT_SCINTILLATINGINLAY, new IngredientStack("ingotGold", 2), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 2));
+
+		MINDSPINDLE_RECIPE = GCTRecipeList.makeAndAddRecipe("mindspindle_gct", new ItemStack(ItemRegistry.MINDSPINDLE), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 1), new IngredientStack("dyeGreen", 4), new IngredientStack(Ingredient.fromItem(Item.getItemFromBlock(Blocks.ENCHANTING_TABLE))), new IngredientStack(Ingredient.fromItem(Items.WRITABLE_BOOK)));
 
 		RIVERTEAR_RECIPE = GCTRecipeList.makeAndAddRecipe("rivertear_gct", new ItemStack(ItemRegistry.RIVERTEAR), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 1), new IngredientStack(Ingredient.fromItem(Items.SUGAR), 4), new IngredientStack(Ingredient.fromItem(Items.WATER_BUCKET)), new IngredientStack(Ingredient.fromItem(Items.WATER_BUCKET)));
 

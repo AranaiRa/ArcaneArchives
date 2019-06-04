@@ -1012,14 +1012,17 @@
             <p>
                 If you come into contact with a very large number of experience globes while holding a Mindspindle, you can absorb their essence instantly, instead of needing to wait for each globe to be picked up in sequence.
             </p>
+            <p>
+                <image src="arcanearchives:items/gems/pampel/dun" tw="16" th="16"/> To recharge a dun Mindspindle, activate the gem while you have a book in your inventory. The book is consumed.
+            </p>
             <horizontal_rule/>
             <p>
-                Mindspindles cannot be crafted, and are only available via Creative mode.
+                <stack item="arcanearchives:gemcutters_table" /> Mindspindles can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
         </section>
         <section>
             <page_title>
-                <title>Mountaintear</title>
+                <title>Mindspindle</title>
             </page_title>
             <p italics="true">
                 ...Lore fragment TBD
