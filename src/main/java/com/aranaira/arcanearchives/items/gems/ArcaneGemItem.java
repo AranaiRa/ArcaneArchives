@@ -291,8 +291,10 @@ public abstract class ArcaneGemItem extends ItemTemplate {
                 return currentCharge < 0;
             else if(amount == -1)
                 currentCharge = 0;
-            else
+            else {
                 currentCharge -= amount;
+                if (currentCharge < 0) currentCharge = 0;
+            }
             nbt.setInteger("charge", currentCharge);
             return currentCharge > 0;
         }
