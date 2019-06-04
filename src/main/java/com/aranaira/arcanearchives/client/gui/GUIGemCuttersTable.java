@@ -118,7 +118,7 @@ public class GUIGemCuttersTable extends GuiContainer {
 				this.drawTexturedModalRect(slot.xPos - 2, slot.yPos - 2, 206, 0, 20, 20);
 			}
 
-			if (!recipeStatus.getBoolean(recipe)) {
+			if (!recipeStatus.getBoolean(recipe) || !recipe.craftable(mc.player, tile)) {
 				dimSlot(slot, wasEnabled);
 			}
 		}
