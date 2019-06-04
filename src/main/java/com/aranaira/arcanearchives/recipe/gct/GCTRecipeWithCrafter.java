@@ -18,6 +18,7 @@ public class GCTRecipeWithCrafter extends GCTRecipe {
 
 		// TODO: This may need to become more complex to handle other members of hives
 		tag.setUniqueId("creator", player.getUniqueID());
+		tag.setString("creator_name", player.getDisplayNameString());
 		return output;
 	}
 }

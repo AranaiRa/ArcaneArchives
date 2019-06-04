@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.data;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.HiveSaveData.Hive;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.MapStorage;
@@ -50,9 +51,9 @@ public class NetworkHelper {
 		// Returns true if it successfully added the newMember to the network
 		HiveSaveData saveData = (HiveSaveData) world.getMapStorage().getOrLoadData(HiveSaveData.class, HiveSaveData.ID);
 
-		Hive owned = getHiveMembership(owner, world);
+		Hive owned = saveData.getHiveByOwner(owner);
 		Hive possible = getHiveMembership(newMember, world);
-		if (possible != null && !(possible.getOwner().equals(owner))) {
+		if (owned.getOwner().equals(newMember) || (possible != null && !(possible.getOwner().equals(owner)))) {
 			return false; // They're already a member of another network
 		}
 		if (possible != null && possible.getOwner().equals(owner)) return true; // They're already a member; nothing to do
@@ -90,6 +91,16 @@ public class NetworkHelper {
 		saveData.markDirty();
 		world.getMapStorage().saveAllData();
 		return true;
+	}
+
+	public static boolean abandonNetwork (EntityPlayer player, World world) {
+		Hive hive = getHiveMembership(player.getUniqueID(), world);
+		return removeFromNetwork(hive.getOwner(), player.getUniqueID(), world);
+	}
+
+	public static boolean ejectPlayer (UUID owner, UUID caster, UUID eject, World world) {
+		if (!owner.equals(caster)) return false;
+		return removeFromNetwork(owner, eject, world);
 	}
 
 	public static NBTTagCompound getHiveMembershipInfo (Hive hive, UUID uuid) {

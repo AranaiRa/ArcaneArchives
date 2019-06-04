@@ -9,7 +9,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 public class HiveSaveData extends WorldSavedData {
-	public static final String ID = "Archane-Archives-Network";
+	public static final String ID = "Archane-Archives-Hives";
 
 	private Map<UUID, Hive> ownerToHive = new HashMap<>();
 	private Map<UUID, UUID> memberToOwner = new HashMap<>();
@@ -63,6 +63,10 @@ public class HiveSaveData extends WorldSavedData {
 	}
 
 	public void addMember (Hive hive, UUID newMember) {
+		if (hive.getOwner().equals(newMember)) return;
+
+		if (hive.getMembers().contains(newMember)) return;
+
 		UUID oldOwner = memberToOwner.get(newMember);
 		if (oldOwner != null || !hive.getOwner().equals(oldOwner)) {
 			memberToOwner.remove(newMember, oldOwner);
@@ -103,9 +107,8 @@ public class HiveSaveData extends WorldSavedData {
 		}
 
 		UUID owner = memberToOwner.get(member);
-		if (owner == null) {
-			// Create a new hive with this member as the owner
-			return getHiveByOwner(member);
+		if (owner != null) {
+			return getHiveByOwner(owner);
 		}
 
 		return null;
