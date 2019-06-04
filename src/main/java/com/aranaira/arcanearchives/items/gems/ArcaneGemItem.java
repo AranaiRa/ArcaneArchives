@@ -86,6 +86,17 @@ public abstract class ArcaneGemItem extends ItemTemplate {
     }
 
     /**
+     * Retrieves the resource location for the gem's conflicted static texture
+     * @param cut The gem's cut
+     * @return
+     */
+    protected ModelResourceLocation getConflictGemResourceLocation(GemCut cut) {
+        String loc = "arcanearchives:gems/";
+        loc += cut.toString().toLowerCase()+"/static";
+        return new ModelResourceLocation(loc, "inventory");
+    }
+
+    /**
      * Retrieves the resource location for the gem's textures
      * @param cut The gem's cut
      * @param color The gem's color spectrum
@@ -104,6 +115,7 @@ public abstract class ArcaneGemItem extends ItemTemplate {
     @Override
     public void registerModels () {
         ModelResourceLocation charged = getChargedGemResourceLocation(cut, color);
+        ModelResourceLocation conflict = getConflictGemResourceLocation(cut);
         ModelResourceLocation dun = getDunGemResourceLocation(cut);
 
         ModelBakery.registerItemVariants(this, charged, dun);
@@ -111,6 +123,8 @@ public abstract class ArcaneGemItem extends ItemTemplate {
         ModelLoader.setCustomMeshDefinition(this, stack -> {
             if (GemUtil.isChargeEmpty(stack)) {
                 return dun;
+            } else if(false) {//TODO: Check for dupes in inventory
+                return conflict;
             } else {
                 return charged;
             }
