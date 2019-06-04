@@ -37,6 +37,11 @@ public class ArcaneArchives {
 	}
 
 	@EventHandler
+	public static void serverStarting (FMLServerStartingEvent event) {
+		proxy.serverStarting(event);
+	}
+
+	@EventHandler
 	public static void serverStarted (FMLServerStartedEvent event) {
 		proxy.serverStarted(event);
 	}
