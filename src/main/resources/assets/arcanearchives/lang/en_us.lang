@@ -24,6 +24,7 @@ item.item_mindspindle.name=Mindspindle
 item.item_mountaintear.name=Mountaintear
 item.item_rivertear.name=Rivertear
 item.item_pyreway.name=Pyreway
+item.item_phoenixway.name=Pyreway
 item.item_earthway.name=Earthway
 item.item_nightway.name=Nightway
 
@@ -178,6 +179,7 @@ arcanearchives.tooltip.item.tomeofarcana=Provides documentation for Arcane Archi
 arcanearchives.tooltip.item.mindspindle=Increases the amount of experience in picked up experience globes.
 arcanearchives.tooltip.item.mountaintear=Slowly creates infinite lava when placed in a Lightwell.
 arcanearchives.tooltip.item.rivertear=Rapidly creates infinite water when placed in a Lightwell.
+arcanearchives.tooltip.item.phoenixway=Lights fires at target position. Grants fire resistance if you're about to take fire damage.
 
 arcanearchives.tooltip.bauble.gemsocket=Can be slotted with an Arcane Gem. Slotted Arcane Gem counts as being held at all times.
 
