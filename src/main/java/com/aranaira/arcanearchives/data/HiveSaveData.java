@@ -24,7 +24,6 @@ public class HiveSaveData extends WorldSavedData {
 
 	@Override
 	public void readFromNBT (NBTTagCompound nbt) {
-		// TODO: IMPLEMENT
 		NBTTagList list = nbt.getTagList("hive_data", NBT.TAG_COMPOUND);
 		for (int i = 0; i < list.tagCount(); i++) {
 			Hive hive = Hive.fromNBT(list.getCompoundTagAt(i));
@@ -37,7 +36,6 @@ public class HiveSaveData extends WorldSavedData {
 
 	@Override
 	public NBTTagCompound writeToNBT (NBTTagCompound compound) {
-		// TODO: IMPLEMENT
 		NBTTagList list = new NBTTagList();
 		for (Hive hive : ownerToHive.values()) {
 			list.appendTag(hive.writeToNBT());

@@ -54,7 +54,7 @@ public class RecipeLibrary {
 
 		////////////////////
 
-		LETTER_OF_INVITATION_RECIPE = GCTRecipeList.makeAndAddRecipeWithCreatorAndCondition("letter_of_invitation", new ItemStack(ItemRegistry.LETTER_OF_INVITATION, 1), new IngredientStack("paper", 3), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 1), new IngredientStack("dyeLightBlue", 1)).addCondition((EntityPlayer player, GemCuttersTableTileEntity tile) -> {
+		/*LETTER_OF_INVITATION_RECIPE = GCTRecipeList.makeAndAddRecipeWithCreatorAndCondition("letter_of_invitation", new ItemStack(ItemRegistry.LETTER_OF_INVITATION, 1), new IngredientStack("paper", 3), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 1), new IngredientStack("dyeLightBlue", 1)).addCondition((EntityPlayer player, GemCuttersTableTileEntity tile) -> {
 			if (!player.world.isRemote) {
 				Hive hive = NetworkHelper.getHiveMembership(player.getUniqueID(), player.world);
 				return (hive == null || hive.getOwner().equals(player.getUniqueID()));
@@ -82,7 +82,7 @@ public class RecipeLibrary {
 				ClientNetwork network = NetworkHelper.getClientNetwork();
 				return network.inHive() && network.ownsHive();
 			}
-		});
+		});*/
 
 
 		//////
