@@ -23,15 +23,22 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
+import net.minecraft.init.PotionTypes;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDestroyBlockEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
@@ -190,6 +197,34 @@ public class AAEventHandler {
 						event.getOrb().xpValue = Math.round(event.getOrb().xpValue * 1.5f);
 						event.getOrb().delayBeforeCanPickup = 0;
 						ArcaneGemItem.GemUtil.consumeCharge(stack, chargeReduction);
+					}
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void onEntityHurt(LivingAttackEvent event) {
+		if(event.getEntity() instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) event.getEntity();
+
+			if (!player.world.isRemote) {
+				ArrayList<ItemStack> held = ArcaneGemItem.GemUtil.getAvailableGems(player);
+				if (held.size() > 0) {
+					for (ItemStack stack : held) {
+						if (stack.getItem() == ItemRegistry.PHOENIXWAY) {
+							if (player.isPotionActive(MobEffects.FIRE_RESISTANCE)) {
+								continue;
+							}
+							if (ArcaneGemItem.GemUtil.getCharge(stack) >= 0) {
+								if (event.getSource() == DamageSource.ON_FIRE || event.getSource() == DamageSource.IN_FIRE) {
+									Minecraft.getMinecraft().player.playSound(SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, 1.0F, 1.0F);
+									player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 600, 0));
+									ArcaneGemItem.GemUtil.consumeCharge(stack, 12);
+									event.setCanceled(true);
+								}
+							}
+						}
 					}
 				}
 			}
