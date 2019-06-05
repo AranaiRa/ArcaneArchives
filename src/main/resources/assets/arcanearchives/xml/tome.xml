@@ -39,6 +39,7 @@
         <stack item="arcanearchives:item_mindspindle">Mindspindle</stack>
         <stack item="arcanearchives:item_mountaintear">Mountaintear</stack>
         <stack item="arcanearchives:item_rivertear">Rivertear</stack>
+        <stack item="arcanearchives:item_phoenixway">Phoenixway</stack>
 
         <stack item="arcanearchives:bauble_gemsocket">GemSocket</stack>
     </stack-links>
@@ -96,7 +97,8 @@
             <space height="8"/>
             <p><stack item="arcanearchives:item_mountaintear"/> <link ref="Mountaintear">Mountaintear</link></p>
             <p><stack item="arcanearchives:item_rivertear"/> <link ref="Rivertear">Rivertear</link></p>
-            <space height="8" condition="AllGems"/>
+            <space height="8"/>
+            <p><stack item="arcanearchives:item_phoenixway"/> <link ref="Phoenixway">Phoenixway</link></p>
             <p condition="AllGems"><stack item="arcanearchives:item_pyreway"/> <link ref="Pyreway">Pyreway</link></p>
             <p condition="AllGems"><stack item="arcanearchives:item_earthway"/> <link ref="Earthway">Earthway</link></p>
             <p condition="AllGems"><stack item="arcanearchives:item_nightway"/> <link ref="Nightway">Nightway</link></p>
@@ -1106,6 +1108,40 @@
         <section>
             <page_title>
                 <title>Rivertear</title>
+            </page_title>
+            <p italics="true">
+                ...Lore fragment TBD
+            </p>
+        </section>
+    </chapter>
+
+    <chapter id="Phoenixway">
+        <section>
+            <page_title>
+                <title>Phoenixway</title>
+            </page_title>
+            <p align="center"><stack item="arcanearchives:item_phoenixway" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                A Phoenixway is an Arcane Gem formed from a orange-spectrum piece of <link ref="CutQuartz">Shaped Radiant Quartz</link> in a trillion cut.
+            </p>
+            <p>
+                When activated, a Phoenixway will light a fire at a distance of up to 40 blocks at the cost of one point of charge.
+            </p>
+            <p>
+                If you're about to take fire damage while holding a Phoenixway, it will block the damage and grant 30 seconds of Fire Resistance at the cost of twelve points of charge.
+            </p>
+            <p>
+                <image src="arcanearchives:items/gems/trillion/dun" tw="16" th="16"/> To recharge a dun Phoenixway, cook the gem in a furnace.
+            </p>
+            <horizontal_rule/>
+            <p>
+                <stack item="arcanearchives:gemcutters_table" /> Phoenixways can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+            </p>
+        </section>
+        <section>
+            <page_title>
+                <title>Mindspindle</title>
             </page_title>
             <p italics="true">
                 ...Lore fragment TBD
