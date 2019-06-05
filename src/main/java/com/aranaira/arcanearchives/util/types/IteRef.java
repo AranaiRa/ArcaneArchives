@@ -78,7 +78,7 @@ public class IteRef {
 	}
 
 	public boolean isValid () {
-		return tile != null && tile.get() != null;
+		return tile != null && tile.get() != null && tile.get().getWorld().isBlockLoaded(pos);
 	}
 
 	public boolean isActive () {

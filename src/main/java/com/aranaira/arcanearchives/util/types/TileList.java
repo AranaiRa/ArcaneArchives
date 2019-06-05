@@ -56,6 +56,15 @@ public class TileList extends ReferenceList<IteRef> {
 		return null;
 	}
 
+	public void updateUUID (UUID oldId, UUID newId) {
+		for (IteRef ref : this) {
+			if (ref.uuid.equals(oldId)) {
+				ref.uuid = newId;
+				break;
+			}
+		}
+	}
+
 	public void removeByUUID (UUID uuid) {
 		IteRef toRemove = null;
 

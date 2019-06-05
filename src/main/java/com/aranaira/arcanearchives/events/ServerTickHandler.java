@@ -20,6 +20,7 @@ import java.util.UUID;
 public class ServerTickHandler {
 	private static final List<ImmanenceTileEntity> incomingITEs = new ArrayList<>();
 	private static final List<ImmanenceTileEntity> outgoingITEs = new ArrayList<>();
+	private static final List<ImmanenceTileEntity> limitedITEs = new ArrayList<>();
 
 	public static void incomingITE (ImmanenceTileEntity entity) {
 		incomingITEs.add(entity);
@@ -32,6 +33,29 @@ public class ServerTickHandler {
 		}
 
 		List<ImmanenceTileEntity> consumed = new ArrayList<>();
+
+		if (!limitedITEs.isEmpty()) {
+			for (ImmanenceTileEntity ite : limitedITEs) {
+				UUID networkId = ite.networkId;
+				if (networkId == null || networkId.equals(NetworkHelper.INVALID)) {
+					continue;
+				}
+
+				ServerNetwork network = NetworkHelper.getServerNetwork(networkId, ite.getWorld());
+				if (network == null) {
+					continue;
+				}
+
+				if (ite.uuid != null && !network.isSafe(ite.uuid)) {
+					outgoingITE(ite);
+				}
+
+				consumed.add(ite);
+			}
+		}
+
+		limitedITEs.removeAll(consumed);
+		consumed.clear();
 
 		for (ImmanenceTileEntity ite : incomingITEs) {
 			if (ite.ticks() > 30) {
@@ -49,26 +73,14 @@ public class ServerTickHandler {
 					continue;
 				}
 
-				if (ite instanceof RadiantResonatorTileEntity) {
-					if (network.getTotalResonators() >= ConfigHandler.ResonatorLimit) {
-						outgoingITE(ite);
-						consumed.add(ite);
-						continue;
-					}
-				}
-
-				if (ite instanceof MatrixCoreTileEntity) {
-					if (network.getTotalCores() >= ConfigHandler.MatrixCoreLimit) {
-						outgoingITE(ite);
-						consumed.add(ite);
-						continue;
-					}
-				}
-
 				ite.tryGenerateUUID();
 
 				if (!network.containsTile(ite)) {
 					network.addTile(ite);
+				}
+
+				if (ite instanceof RadiantResonatorTileEntity || ite instanceof MatrixCoreTileEntity) {
+					limitedITE(ite);
 				}
 			}
 
@@ -86,6 +98,10 @@ public class ServerTickHandler {
 		}
 
 		outgoingITEs.clear();
+	}
+
+	private static void limitedITE (ImmanenceTileEntity entity) {
+		limitedITEs.add(entity);
 	}
 
 	private static void outgoingITE (ImmanenceTileEntity entity) {

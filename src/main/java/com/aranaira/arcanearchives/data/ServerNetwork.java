@@ -44,6 +44,7 @@ public class ServerNetwork implements IServerNetwork {
 
 	// Set of IDs of contained tiles
 	private Set<UUID> tileIdSet = new HashSet<>();
+	private Set<UUID> safeLimitedIDs = new HashSet<>();
 
 	// Per-player values
 	private int totalCores = 0;
@@ -77,6 +78,10 @@ public class ServerNetwork implements IServerNetwork {
 		return uuid;
 	}
 
+	public boolean isSafe (UUID id) {
+		return safeLimitedIDs.contains(id);
+	}
+
 	/**
 	 * Attempts to fetch the player associated with this network.
 	 * Returns null if they do not exist or are offline.
@@ -108,9 +113,11 @@ public class ServerNetwork implements IServerNetwork {
 
 	@Override
 	public void handleTileIdChange (UUID oldId, UUID newId) {
-		removeTile(oldId);
 		tileIdSet.remove(oldId);
 		tileIdSet.add(newId);
+		safeLimitedIDs.remove(oldId);
+		safeLimitedIDs.add(newId);
+		tiles.updateUUID(oldId, newId);
 	}
 
 	@Override
@@ -125,6 +132,7 @@ public class ServerNetwork implements IServerNetwork {
 		tileEntityInstance.hasBeenAddedToNetwork = true;
 
 		if (tileEntityInstance instanceof RadiantResonatorTileEntity || tileEntityInstance instanceof MatrixCoreTileEntity) {
+			safeLimitedIDs.add(tileEntityInstance.uuid);
 			rebuildTotals();
 		}
 	}
@@ -137,6 +145,7 @@ public class ServerNetwork implements IServerNetwork {
 		tiles.removeByUUID(te.getUuid());
 
 		if (te instanceof RadiantResonatorTileEntity || te instanceof MatrixCoreTileEntity) {
+			safeLimitedIDs.remove(te.uuid);
 			rebuildTotals();
 		}
 	}
@@ -189,9 +198,6 @@ public class ServerNetwork implements IServerNetwork {
 
 	@Override
 	public void rebuildTotals () {
-		int origResonators = totalResonators;
-		int origCores = totalCores;
-
 		totalResonators = 0;
 		totalCores = 0;
 
@@ -204,9 +210,7 @@ public class ServerNetwork implements IServerNetwork {
 			}
 		}
 
-		if (origCores != totalCores || origResonators != totalResonators) {
-			synchroniseData();
-		}
+		synchroniseData();
 	}
 
 	/**
@@ -390,7 +394,6 @@ public class ServerNetwork implements IServerNetwork {
 	@Override
 	public NBTTagCompound buildSynchroniseData () {
 		NBTTagCompound tag = new NBTTagCompound();
-		rebuildTotals();
 
 		tag.setInteger(NetworkTags.TOTAL_RESONATORS, getTotalResonators());
 		tag.setInteger(NetworkTags.TOTAL_CORES, getTotalCores());
