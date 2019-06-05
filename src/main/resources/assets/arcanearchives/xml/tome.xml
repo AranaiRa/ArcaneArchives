@@ -606,14 +606,8 @@
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="minecraft:crafting_table"/> Letters of Invitation can be crafted conventionally.
+                <stack item="arcanearchives:gemcutters_table" /> Letters of Invitation can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
-            <horizontal_rule/>
-            <recipe type="shaped">
-                <recipe.result>
-                    <stack item="arcanearchives:item_letterofinvitation"/>
-                </recipe.result>
-            </recipe>
         </section>
         <section>
             <page_title>
@@ -640,13 +634,8 @@
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="minecraft:crafting_table"/> Letters of Resignation can be crafted conventionally.
+                <stack item="arcanearchives:gemcutters_table" /> Letters of Resignation can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
-            <recipe type="shaped">
-                <recipe.result>
-                    <stack item="arcanearchives:item_letterofresignation"/>
-                </recipe.result>
-            </recipe>
         </section>
         <section>
             <page_title>
@@ -984,13 +973,8 @@
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="minecraft:crafting_table"/> Writs of Expulsion can be crafted conventionally.
+                <stack item="arcanearchives:gemcutters_table" /> Writs of Expulsion can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
-            <recipe type="shaped">
-                <recipe.result>
-                    <stack item="arcanearchives:item_writofexpulsion"/>
-                </recipe.result>
-            </recipe>
         </section>
         <section>
             <page_title>

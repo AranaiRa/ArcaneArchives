@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.inventory;
 
-import com.aranaira.arcanearchives.util.MathUtils;
+import com.aranaira.arcanearchives.client.gui.framework.CustomCountSlot;
 import com.aranaira.arcanearchives.client.gui.framework.IScrollabe;
 import com.aranaira.arcanearchives.client.gui.framework.IScrollableContainer;
 import com.aranaira.arcanearchives.client.gui.framework.ScrollEventManager;
@@ -9,6 +9,7 @@ import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.events.LineHandler;
 import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
 import com.aranaira.arcanearchives.util.ManifestTracking;
+import com.aranaira.arcanearchives.util.MathUtils;
 import com.aranaira.arcanearchives.util.types.ManifestEntry;
 import invtweaks.api.container.InventoryContainer;
 import net.minecraft.client.Minecraft;
@@ -22,7 +23,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -39,7 +39,7 @@ public class ContainerManifest extends Container implements IScrollableContainer
 	/// number of cells in x and y, for now this is square
 	private static int NUM_CELLS = 9;
 
-	private static class ManifestItemSlot extends SlotItemHandler implements IScrollabe {
+	private static class ManifestItemSlot extends CustomCountSlot implements IScrollabe {
 		public int originalY;
 		private boolean isEnabled;
 

@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.client.gui;
 
+import com.aranaira.arcanearchives.client.gui.framework.CustomCountSlot;
 import com.aranaira.arcanearchives.client.gui.framework.LayeredGuiContainer;
 import com.aranaira.arcanearchives.client.gui.framework.ScrollEventManager;
 import com.aranaira.arcanearchives.config.ConfigHandler;
@@ -164,6 +165,10 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 	public void drawSlot (Slot slot) {
 		if (slot.isEnabled()) {
 			super.drawSlot(slot);
+
+			if (slot instanceof CustomCountSlot) {
+				((CustomCountSlot) slot).renderCount(this.fontRenderer);
+			}
 
 			ManifestEntry entry = container.getEntry(slot.getSlotIndex());
 			if (entry == null) {
