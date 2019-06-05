@@ -50,6 +50,8 @@ item.item_spiritorb.time_mote.name=Time Orb
 item.item_spiritorb.time_juve.name=Elder Time Orb
 item.item_spiritorb.time_eld.name=Saturnine Time Orb
 
+item.bauble_gemsocket.name=Gem Socket
+
 tile.storage_raw_quartz.name=Raw Radiant Quartz Block
 tile.storage_cut_quartz.name=Shaped Radiant Quartz Block
 tile.quartz_sliver.name=Sliver of Light
@@ -176,6 +178,8 @@ arcanearchives.tooltip.item.tomeofarcana=Provides documentation for Arcane Archi
 arcanearchives.tooltip.item.mindspindle=Increases the amount of experience in picked up experience globes.
 arcanearchives.tooltip.item.mountaintear=Slowly creates infinite lava when placed in a Lightwell.
 arcanearchives.tooltip.item.rivertear=Rapidly creates infinite water when placed in a Lightwell.
+
+arcanearchives.tooltip.bauble.gemsocket=Can be slotted with an Arcane Gem. Slotted Arcane Gem counts as being held at all times.
 
 arcanearchives.data.gui.radiant_trove.upgrade=%d upgrade
 arcanearchives.data.gui.radiant_trove.upgrades=%d upgrades

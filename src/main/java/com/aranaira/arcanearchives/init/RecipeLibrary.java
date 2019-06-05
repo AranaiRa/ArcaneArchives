@@ -36,6 +36,7 @@ public class RecipeLibrary {
 	public static GCTRecipe MATRIX_CORE_RECIPE;
 	public static GCTRecipe MATRIX_STORAGE_RECIPE;
 	public static GCTRecipe MATRIX_REPOSITORY_RECIPE;
+	public static GCTRecipe GEM_SOCKET_RECIPE;
 	public static GCTRecipe RADIANT_LANTERN_RECIPE;
 	public static GCTRecipe RADIANT_TROVE_RECIPE;
 	public static GCTRecipe RADIANT_TANK_RECIPE;
@@ -111,11 +112,13 @@ public class RecipeLibrary {
 
 		COMPONENT_CONTAINMENTFIELD_RECIPE = GCTRecipeList.makeAndAddRecipe("containmentfield", new ItemStack(ItemRegistry.COMPONENT_CONTAINMENTFIELD, 1), ItemRegistry.COMPONENT_SCINTILLATINGINLAY, new IngredientStack("ingotGold", 2), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 2));
 
+		RADIANT_AMPHORA_RECIPE = GCTRecipeList.makeAndAddRecipe("amphora_gct", new ItemStack(ItemRegistry.RADIANT_AMPHORA), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 4), new ItemStack(Items.CLAY_BALL, 4), new ItemStack(Items.GOLD_NUGGET, 4));
+
+		GEM_SOCKET_RECIPE = GCTRecipeList.makeAndAddRecipe("gemsocket_gct", new ItemStack(ItemRegistry.BAUBLE_GEMSOCKET), new ItemStack(ItemRegistry.COMPONENT_SCINTILLATINGINLAY, 1), new ItemStack(Items.GOLD_NUGGET, 4), new ItemStack(Items.BOWL, 1), new ItemStack(Items.LEATHER, 1));
+
 		MINDSPINDLE_RECIPE = GCTRecipeList.makeAndAddRecipe("mindspindle_gct", new ItemStack(ItemRegistry.MINDSPINDLE), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 1), new IngredientStack("dyeGreen", 4), new IngredientStack(Items.ENCHANTED_BOOK), new IngredientStack(Ingredient.fromItem(Items.EMERALD), 2));
 
 		RIVERTEAR_RECIPE = GCTRecipeList.makeAndAddRecipe("rivertear_gct", new ItemStack(ItemRegistry.RIVERTEAR), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 1), new IngredientStack(Ingredient.fromItem(Items.SUGAR), 4), new IngredientStack(Ingredient.fromItem(Items.WATER_BUCKET)), new IngredientStack(Ingredient.fromItem(Items.WATER_BUCKET)));
-
-		RADIANT_AMPHORA_RECIPE = GCTRecipeList.makeAndAddRecipe("amphora_gct", new ItemStack(ItemRegistry.RADIANT_AMPHORA), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 4), new ItemStack(Items.CLAY_BALL, 4), new ItemStack(Items.GOLD_NUGGET, 4));
 
 		/*MATRIX_CORE_RECIPE = GCTRecipeList.makeAndAddRecipe("matrix_core", new ItemStack(BlockRegistry.MATRIX_CRYSTAL_CORE, 1), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 60), new IngredientStack("logWood", 12), new ItemStack(ItemRegistry.COMPONENT_SCINTILLATINGINLAY, 12), new IngredientStack(BlockRegistry.RADIANT_LANTERN, 4), new IngredientStack("bookshelf", 1));*/
 

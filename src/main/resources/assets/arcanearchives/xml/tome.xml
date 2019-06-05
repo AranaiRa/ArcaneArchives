@@ -39,6 +39,8 @@
         <stack item="arcanearchives:item_mindspindle">Mindspindle</stack>
         <stack item="arcanearchives:item_mountaintear">Mountaintear</stack>
         <stack item="arcanearchives:item_rivertear">Rivertear</stack>
+
+        <stack item="arcanearchives:bauble_gemsocket">GemSocket</stack>
     </stack-links>
 
     <mod-loaded name="ml_astralsorcery" modid="astralsorcery"/>
@@ -65,6 +67,7 @@
                 <title>Items</title>
             </page_title>
             <p><stack item="arcanearchives:item_component_containmentfield"/> <link ref="ContainmentField">Containment Field</link></p>
+            <p><stack item="arcanearchives:bauble_gemsocket"/> <link ref="GemSocket">Gem Socket</link></p>
             <p><stack item="arcanearchives:item_letterofinvitation"/> <link ref="LetterInvitation">Letter of Invitation</link></p>
             <p><stack item="arcanearchives:item_letterofresignation"/> <link ref="LetterResignation">Letter of Resignation</link></p>
             <p><stack item="arcanearchives:item_manifest"/> <link ref="Manifest">Manifest</link></p>
@@ -587,6 +590,31 @@
         <section>
             <page_title>
                 <title>Containment Field</title>
+            </page_title>
+            <p italics="true">
+                ...Lore fragment TBD
+            </p>
+        </section>
+    </chapter>
+
+    <chapter id="GemSocket">
+        <section>
+            <page_title>
+                <title>Gem Socket</title>
+            </page_title>
+            <p align="center"><stack item="arcanearchives:bauble_gemsocket" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                A Gem Socket is a bauble that can be worn in the Body slot.
+            </p>
+            <horizontal_rule/>
+            <p>
+                <stack item="arcanearchives:gemcutters_table" /> Gem Sockets can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+            </p>
+        </section>
+        <section>
+            <page_title>
+                <title>Gem Socket</title>
             </page_title>
             <p italics="true">
                 ...Lore fragment TBD
