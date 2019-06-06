@@ -357,8 +357,23 @@
             <page_title>
                 <title>Monitoring Crystal</title>
             </page_title>
-            <p italics="true">
-                ...Lore fragment TBD
+            <p bold="true" italics="true">
+                The Creed of Branding
+            </p><space height="12"/>
+            <p italics="true" indent="20">
+                The promise and distinction you have displayed have earned you the right to call yourself a Master of the Eternal University. As of this moment, you are born anew, free of the shackles of Apprenticeship.
+            </p><space height="4"/>
+            <p italics="true" indent="20">
+                Your forehead shall bear the Brand of Monitoring, and with it we shall watch you. Observation breeds honesty, and honesty breeds Temperance.
+            </p><space height="4"/>
+            <p italics="true" indent="20">
+                Enlightenment is the right of the strong, and no strength can be found in intemperate acts. Trust in the judgment of the Quadrate, and the Magistocracy will trust in your works.
+            </p><space height="4"/>
+            <p italics="true" indent="20">
+                Bask in the light of your Enlightenment, Master, and walk ever on the path of Wisdom.
+            </p><space height="4"/>
+            <p italics="true" align="center">
+                <image src="arcanearchives:gui/guidebook/observation_sigil" tw="118" th="94"/>
             </p>
         </section>
     </chapter>
