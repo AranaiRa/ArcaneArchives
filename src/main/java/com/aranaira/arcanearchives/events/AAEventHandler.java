@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.events;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.gui.GUIGemcasting;
 import com.aranaira.arcanearchives.config.ConfigHandler;
+import com.aranaira.arcanearchives.entity.AIResonatorSit;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.items.RadiantAmphoraItem;
@@ -22,6 +23,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -32,6 +34,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDestroyBlockEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
@@ -179,5 +182,13 @@ public class AAEventHandler {
 	@SuppressWarnings("unused")
 	public static void registerBook (BookRegistryEvent event) {
 		event.register(TomeOfArcanaItem.TOME_OF_ARCANA, true);
+	}
+
+	@SubscribeEvent
+	public static void onEntityJoinedWorld (EntityJoinWorldEvent event) {
+		if (event.getEntity() instanceof EntityOcelot) {
+			EntityOcelot ocelot = (EntityOcelot) event.getEntity();
+			ocelot.tasks.addTask(6, new AIResonatorSit(ocelot, 0.8D));
+		}
 	}
 }

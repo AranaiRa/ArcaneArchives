@@ -3,21 +3,25 @@ package com.aranaira.arcanearchives.tileentities;
 import com.aranaira.arcanearchives.blocks.RawQuartz;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.NetworkHelper;
-import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.init.BlockRegistry;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
+import java.util.List;
+import java.util.Random;
 
 public class RadiantResonatorTileEntity extends ImmanenceTileEntity {
+	public static Random rand = new Random();
+
 	private int growth = 0;
 	private int ticks = 0;
 	private int bonusTicks = 0;
@@ -56,11 +60,17 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity {
 		if (world.isAirBlock(pos.up())) {
 			if (growth < ticksRequired) {
 				growth++;
-				//if(isDrainPaid) growth += bonusTicks;
 			} else {
 				growth = 0;
-				//world.setBlockState(pos.up(), BlockRegistry.RAW_QUARTZ.getStateFromMeta(0));
 				world.setBlockState(pos.up(), BlockRegistry.RAW_QUARTZ.getStateFromMeta(2));
+
+				BlockPos up = pos.up();
+				List<EntityOcelot> entities = world.getEntitiesWithinAABB(EntityOcelot.class, new AxisAlignedBB(up.getX() - 0.9, up.getY() - 0.9, up.getZ() - 0.9, up.getX() + 0.9, up.getY() + 0.9, up.getZ() + 0.9));
+				for (EntityOcelot ocelot : entities) {
+					ocelot.motionY += rand.nextFloat() * 5F;
+					ocelot.motionX += (rand.nextFloat() - 0.5f) * 3F;
+					ocelot.motionZ += (rand.nextFloat() - 0.5f) * 3F;
+				}
 			}
 		}
 

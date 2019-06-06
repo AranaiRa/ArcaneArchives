@@ -42,7 +42,9 @@ public class LetterOfResignationItem extends LetterTemplate {
 			player.sendStatusMessage(new TextComponentTranslation("arcanearchives.network.hive.left_failed"), true);
 			return stack;
 		}
-		return ItemStack.EMPTY;
+
+		stack.shrink(1);
+		return stack;
 	}
 
 	@Override

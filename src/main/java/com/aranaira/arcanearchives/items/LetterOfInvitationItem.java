@@ -39,7 +39,7 @@ public class LetterOfInvitationItem extends LetterTemplate {
 		EntityPlayer player = (EntityPlayer) entity;
 		if (network.equals(playerId)) {
 			player.sendStatusMessage(new TextComponentTranslation("arcanearchives.network.hive.yours"), true);
-			return null;
+			return stack;
 		}
 
 		if (NetworkHelper.addToNetwork(network, playerId, world)) {
@@ -48,7 +48,9 @@ public class LetterOfInvitationItem extends LetterTemplate {
 			player.sendStatusMessage(new TextComponentTranslation("arcanearchives.network.hive.failed"), true);
 			return stack;
 		}
-		return ItemStack.EMPTY;
+
+		stack.shrink(1);
+		return stack;
 	}
 
 	@Override

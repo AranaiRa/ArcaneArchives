@@ -50,7 +50,9 @@ public class WritOfExpulsionItem extends LetterTemplate {
 			player.sendStatusMessage(new TextComponentTranslation("arcanearchives.network.hive.expel_failed"), true);
 			return stack;
 		}
-		return ItemStack.EMPTY;
+
+		stack.shrink(1);
+		return stack;
 	}
 
 	@Override

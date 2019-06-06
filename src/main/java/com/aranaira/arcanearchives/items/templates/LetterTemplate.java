@@ -32,8 +32,7 @@ public abstract class LetterTemplate extends ItemTemplate {
 
 	@Override
 	public ItemStack onItemUseFinish (ItemStack stack, World worldIn, EntityLivingBase entityLiving) {
-		if (worldIn.isRemote || !(entityLiving instanceof EntityPlayer)) {
-			stack.shrink(1);
+		if (worldIn.isRemote) {
 			return stack;
 		}
 

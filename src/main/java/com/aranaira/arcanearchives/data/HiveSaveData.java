@@ -63,8 +63,6 @@ public class HiveSaveData extends WorldSavedData {
 	public void addMember (Hive hive, UUID newMember) {
 		if (hive.getOwner().equals(newMember)) return;
 
-		if (hive.getMembers().contains(newMember)) return;
-
 		UUID oldOwner = memberToOwner.get(newMember);
 		if (oldOwner != null || !hive.getOwner().equals(oldOwner)) {
 			memberToOwner.remove(newMember);
