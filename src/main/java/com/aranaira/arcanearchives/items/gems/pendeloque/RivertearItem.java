@@ -47,6 +47,7 @@ public class RivertearItem extends ArcaneGemItem {
         if (!world.isRemote) {
             if(GemUtil.getCharge(player.getHeldItem(hand)) > 0) {
                 world.setBlockState(pos.offset(facing), Blocks.WATER.getDefaultState(), 11);
+                GemUtil.consumeCharge(player.getHeldItemMainhand(), 1);
                 return EnumActionResult.SUCCESS;
             }
         }
