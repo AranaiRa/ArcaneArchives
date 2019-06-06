@@ -1,8 +1,11 @@
 package com.aranaira.arcanearchives.items.gems.pendeloque;
 
+import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import com.aranaira.arcanearchives.ArcaneArchives;
@@ -11,7 +14,9 @@ import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -21,7 +26,9 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import vazkii.botania.common.item.ItemTemperanceStone;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class RivertearItem extends ArcaneGemItem {
@@ -52,6 +59,24 @@ public class RivertearItem extends ArcaneGemItem {
             }
         }
         return EnumActionResult.PASS;
+    }
+
+    @Override
+    public boolean onEntityItemUpdate(EntityItem entityItem)
+    {
+        World world = entityItem.world;
+
+        if (!world.isRemote && entityItem.isInLava())
+        {
+            //int amountToRestore = GemUtil.getMaxCharge(entityItem.getItem()) - GemUtil.getCharge(entityItem.getItem());
+            //GemUtil.restoreCharge(entityItem.getItem(), amountToRestore);
+            world.spawnEntity(new EntityItem(world, entityItem.posX, entityItem.posY + 0.5, entityItem.posZ,
+                    new ItemStack(ItemRegistry.RIVERTEAR)));
+            entityItem.setDead();
+
+            return true;
+        }
+        return super.onEntityItemUpdate(entityItem);
     }
 
     /*@Override
