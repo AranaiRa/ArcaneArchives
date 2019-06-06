@@ -26,10 +26,7 @@ import java.util.List;
 public class PhoenixwayItem extends ArcaneGemItem {
     public static final String NAME = "item_phoenixway";
 
-    public PhoenixwayItem() {
-        super(NAME, GemCut.TRILLION, GemColor.ORANGE, 75, 300);
-        setMaxStackSize(1);
-    }
+    public PhoenixwayItem() { super(NAME, GemCut.TRILLION, GemColor.ORANGE, 75, 300); }
 
     @Override
     public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
