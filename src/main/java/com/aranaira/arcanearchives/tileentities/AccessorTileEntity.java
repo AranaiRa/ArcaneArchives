@@ -109,11 +109,6 @@ public class AccessorTileEntity extends AATileEntity {
 		return null;
 	}
 
-	@Override
-	public void breakBlock (@Nullable IBlockState state, boolean harvest) {
-		super.breakBlock(state, harvest);
-	}
-
 	public static class Tags {
 		public static final String POS = "pos";
 

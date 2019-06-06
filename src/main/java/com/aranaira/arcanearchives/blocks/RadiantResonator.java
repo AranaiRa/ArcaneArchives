@@ -125,4 +125,14 @@ public class RadiantResonator extends BlockTemplate {
 	public TileEntity createTileEntity (World world, IBlockState state) {
 		return new RadiantResonatorTileEntity();
 	}
+
+	@Override
+	public void breakBlock (World world, BlockPos pos, IBlockState state) {
+		TileEntity te = world.getTileEntity(pos);
+		if (te instanceof RadiantResonatorTileEntity) {
+			((RadiantResonatorTileEntity) te).breakBlock(state, true);
+		}
+
+		super.breakBlock(world, pos, state);
+	}
 }

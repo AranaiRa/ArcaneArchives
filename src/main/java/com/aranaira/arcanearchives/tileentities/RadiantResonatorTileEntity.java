@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.tileentities;
 import com.aranaira.arcanearchives.blocks.RawQuartz;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.passive.EntityOcelot;
@@ -16,6 +17,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
@@ -128,6 +130,18 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity {
 	@Override
 	public boolean shouldRefresh (World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
 		return (oldState.getBlock() != newSate.getBlock());
+	}
+
+	@Override
+	public void breakBlock (@Nullable IBlockState state, boolean harvest) {
+		super.breakBlock(state, harvest);
+
+		if (world.isRemote) return;
+
+		ServerNetwork network = NetworkHelper.getServerNetwork(networkId, world);
+		if (network != null) {
+			network.removeTile(this);
+		}
 	}
 
 	public TickResult canTick () {
