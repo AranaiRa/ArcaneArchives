@@ -69,7 +69,6 @@ public class RivertearItem extends ArcaneGemItem {
         if (!world.isRemote && entityItem.isInWater())
         {
             if(GemUtil.getCharge(entityItem.getItem()) < GemUtil.getMaxCharge(entityItem.getItem())) {
-                Vec3d pos = new Vec3d(entityItem.posX, entityItem.posY, entityItem.posZ);
                 GemUtil.restoreCharge(entityItem.getItem(), -1);
                 world.playSound(entityItem.posX, entityItem.posY, entityItem.posZ, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1.0f, 0.5f, false);
                 return true;

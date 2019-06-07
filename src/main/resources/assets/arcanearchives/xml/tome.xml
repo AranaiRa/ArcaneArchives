@@ -1095,10 +1095,13 @@
                 A Rivertear is an Arcane Gem formed from a blue-spectrum piece of <link ref="CutQuartz">Shaped Radiant Quartz</link> in a pendeloque cut.
             </p>
             <p>
-                <stack item="astralsorcery:blockwell"/> When placed in a Lightwell with access to the sky, a Rivertear generates water at an extremely rapid rate. While it's possible for a Rivertear to shatter, the chances of shattering are <span italics="true">astronomically</span> unlikely. For all intents and purposes, a Rivertear lasts indefinitely unless its Lightwell is broken.
+                When activated, a Rivertear will conjure a block of water at a distance of up to 40 blocks at the cost of one point of charge.
             </p>
             <p>
-                Once placed in a Lightwell, a Rivertear cannot be retrieved.
+                <stack item="astralsorcery:blockwell"/> When placed in a Lightwell with access to the sky, a Rivertear generates water at an extremely rapid rate. While it's possible for a Rivertear to shatter, the chances of shattering are <span italics="true">astronomically</span> unlikely. For all intents and purposes, a Rivertear lasts indefinitely unless its Lightwell is broken. Once placed in a Lightwell, a Rivertear cannot be retrieved.
+            </p>
+            <p>
+                <image src="arcanearchives:items/gems/pendeloque/dun" tw="16" th="16"/> To recharge a dun Rivertear, toss it in a block of water.
             </p>
             <horizontal_rule/>
             <p>
