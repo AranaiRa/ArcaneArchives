@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.items.gems.pendeloque;
 
+import com.aranaira.arcanearchives.client.particles.ParticleGenerator;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import net.minecraft.client.resources.I18n;
@@ -14,13 +15,12 @@ import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -66,15 +66,14 @@ public class RivertearItem extends ArcaneGemItem {
     {
         World world = entityItem.world;
 
-        if (!world.isRemote && entityItem.isInLava())
+        if (!world.isRemote && entityItem.isInWater())
         {
-            //int amountToRestore = GemUtil.getMaxCharge(entityItem.getItem()) - GemUtil.getCharge(entityItem.getItem());
-            //GemUtil.restoreCharge(entityItem.getItem(), amountToRestore);
-            world.spawnEntity(new EntityItem(world, entityItem.posX, entityItem.posY + 0.5, entityItem.posZ,
-                    new ItemStack(ItemRegistry.RIVERTEAR)));
-            entityItem.setDead();
-
-            return true;
+            if(GemUtil.getCharge(entityItem.getItem()) < GemUtil.getMaxCharge(entityItem.getItem())) {
+                Vec3d pos = new Vec3d(entityItem.posX, entityItem.posY, entityItem.posZ);
+                GemUtil.restoreCharge(entityItem.getItem(), -1);
+                world.playSound(entityItem.posX, entityItem.posY, entityItem.posZ, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1.0f, 0.5f, false);
+                return true;
+            }
         }
         return super.onEntityItemUpdate(entityItem);
     }
