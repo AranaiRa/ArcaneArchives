@@ -1,10 +1,15 @@
 package com.aranaira.arcanearchives.events;
 
+import baubles.api.BaubleType;
+import baubles.api.BaublesApi;
+import baubles.api.cap.IBaublesItemHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.gui.GUIGemcasting;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.ItemRegistry;
+import com.aranaira.arcanearchives.inventory.handlers.GemSocketHandler;
+import com.aranaira.arcanearchives.items.BaubleGemSocket;
 import com.aranaira.arcanearchives.items.RadiantAmphoraItem;
 import com.aranaira.arcanearchives.items.RadiantAmphoraItem.AmphoraUtil;
 import com.aranaira.arcanearchives.items.RadiantAmphoraItem.TankMode;
@@ -174,10 +179,20 @@ public class AAEventHandler {
 
 		if(event.getType() == RenderGameOverlayEvent.ElementType.VIGNETTE) {
 			if(player.getHeldItemMainhand().getItem() instanceof ArcaneGemItem) {
-				GUIGemcasting.draw(minecraft, player.getHeldItemMainhand(), event.getResolution().getScaledWidth(), event.getResolution().getScaledHeight(), false);
+				GUIGemcasting.draw(minecraft, player.getHeldItemMainhand(), event.getResolution().getScaledWidth(), event.getResolution().getScaledHeight(), GUIGemcasting.EnumGemGuiMode.RIGHT);
 			}
 			if(player.getHeldItemOffhand().getItem() instanceof ArcaneGemItem) {
-				GUIGemcasting.draw(minecraft, player.getHeldItemOffhand(), event.getResolution().getScaledWidth(), event.getResolution().getScaledHeight(), true);
+				GUIGemcasting.draw(minecraft, player.getHeldItemOffhand(), event.getResolution().getScaledWidth(), event.getResolution().getScaledHeight(), GUIGemcasting.EnumGemGuiMode.LEFT);
+			}
+
+			IBaublesItemHandler handler = BaublesApi.getBaublesHandler(player);
+			for(int i : BaubleType.BODY.getValidSlots()) {
+				if(handler.getStackInSlot(i).getItem() instanceof BaubleGemSocket) {
+					if(handler.getStackInSlot(i).getTagCompound().hasKey("gem")) {
+						ItemStack containedStack = GemSocketHandler.getHandler(handler.getStackInSlot(i)).getInventory().getStackInSlot(0);
+						GUIGemcasting.draw(minecraft, containedStack, event.getResolution().getScaledWidth(), event.getResolution().getScaledHeight(), GUIGemcasting.EnumGemGuiMode.SOCKET);
+					}
+				}
 			}
 		}
 	}
