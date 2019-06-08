@@ -1,7 +1,12 @@
 package com.aranaira.arcanearchives.items.gems;
 
+import baubles.api.BaubleType;
+import baubles.api.BaublesApi;
 import baubles.api.cap.BaublesCapabilities;
+import baubles.api.cap.IBaublesItemHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.inventory.handlers.GemSocketHandler;
+import com.aranaira.arcanearchives.items.BaubleGemSocket;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.util.NBTUtils;
 import net.minecraft.client.renderer.block.model.ModelBakery;
@@ -342,7 +347,7 @@ public abstract class ArcaneGemItem extends ItemTemplate {
          * @return List of appropriate gems
          */
         public static ArrayList<ItemStack> getAvailableGems(EntityPlayer player) {
-            ArrayList<ItemStack> gems = new ArrayList<ItemStack>();
+            ArrayList<ItemStack> gems = new ArrayList<>();
 
             //Held gems
             if(player.getHeldItemMainhand().getItem() instanceof ArcaneGemItem)
@@ -353,7 +358,15 @@ public abstract class ArcaneGemItem extends ItemTemplate {
             NonNullList<ItemStack> inv = player.inventory.mainInventory;
             //TODO: check for fabrial
 
-            //TODO: check for socket bauble
+            IBaublesItemHandler handler = BaublesApi.getBaublesHandler(player);
+            for(int i : BaubleType.BODY.getValidSlots()) {
+                if(handler.getStackInSlot(i).getItem() instanceof BaubleGemSocket) {
+                    if(handler.getStackInSlot(i).getTagCompound().hasKey("gem")) {
+                        ItemStack containedStack = GemSocketHandler.getHandler(handler.getStackInSlot(i)).getInventory().getStackInSlot(0);
+                        gems.add(containedStack);
+                    }
+                }
+            }
 
             return gems;
         }
@@ -393,6 +406,16 @@ public abstract class ArcaneGemItem extends ItemTemplate {
             if(query == 4) return PENDELOQUE;
             if(query == 5) return TRILLION;
             return NOCUT;
+        }
+    }
+
+    public class GemWrapper {
+        public ItemStack gem;
+        public boolean inSocket;
+
+        public GemWrapper(ItemStack gem, boolean inSocket) {
+            this.gem = gem;
+            this.inSocket = inSocket;
         }
     }
 

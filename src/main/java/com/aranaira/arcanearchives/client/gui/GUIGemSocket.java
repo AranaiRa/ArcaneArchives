@@ -56,7 +56,7 @@ public class GUIGemSocket extends GuiContainer {
             this.mc.getTextureManager().bindTexture(TEXTURE_PLAYERINV);
             this.drawTexturedModalRect(i, j+22+FABRIAL_S, 0, 0, INVENTORY_W, INVENTORY_H);
 
-            this.drawTexturedModalRect(i+43, j+11, STRAP_X, STRAP_Y, STRAP_W, STRAP_H);
+            this.drawTexturedModalRect(i+42, j+11, STRAP_X, STRAP_Y, STRAP_W, STRAP_H);
 
             this.mc.getTextureManager().bindTexture(TEXTURE_FABRIAL);
             this.drawTexturedModalRect(i+78, j, FABRIAL_X, FABRIAL_Y, FABRIAL_S, FABRIAL_S);

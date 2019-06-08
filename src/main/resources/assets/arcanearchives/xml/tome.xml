@@ -609,6 +609,17 @@
             <p>
                 A Gem Socket is a bauble that can be worn in the Body slot.
             </p>
+            <p>
+                Activating a Gem Socket allows you to slot in an Arcane Gem. You always treat this gem as if you were holding it for the purposes of passive effects.
+            </p>
+            <horizontal_rule/>
+            <p>
+                The following Arcane Gems have passive effects:
+            </p>
+            <p align="center">
+                <stack item="arcanearchives:item_mindspindle" scale="2.0"/>
+                <stack item="arcanearchives:item_phoenixway" scale="2.0"/>
+            </p>
             <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Gem Sockets can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
