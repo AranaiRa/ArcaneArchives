@@ -81,6 +81,8 @@ public class AAGuiHandler implements IGuiHandler {
 				return new GUIBookContainer(new NetworkContainer(player));
 			case MANIFEST:
 				return new GUIManifest(player, new ContainerManifest(player));
+			case BAUBLE_GEMSOCKET:
+				return new GUIGemSocket(new ContainerGemSocket(player));
 		}
 
 		if (!(te instanceof AATileEntity)) {

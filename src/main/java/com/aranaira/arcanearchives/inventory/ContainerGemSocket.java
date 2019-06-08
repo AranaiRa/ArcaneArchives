@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.inventory;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.inventory.handlers.GemSocketHandler;
 import com.aranaira.arcanearchives.items.BaubleGemSocket;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
@@ -21,6 +22,7 @@ public class ContainerGemSocket extends Container {
     private ItemStack socket;
 
     public ContainerGemSocket(EntityPlayer player) {
+        ArcaneArchives.logger.info("CONTAINER CLASS INSTANTIATED");
         this.player = player;
         socket = player.getHeldItemMainhand();
 
@@ -38,7 +40,7 @@ public class ContainerGemSocket extends Container {
     private void createGemSlot() {
         int xOffset = 47;
         int yOffset = -15;
-        addSlotToContainer(new SlotItemHandler(null, 36, xOffset, yOffset));
+        addSlotToContainer(new SlotItemHandler(handler.getInventory(), 0, xOffset, yOffset));
     }
 
     private void createPlayerInventory(InventoryPlayer inventoryPlayer) {

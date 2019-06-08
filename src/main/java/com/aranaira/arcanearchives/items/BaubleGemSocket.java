@@ -40,7 +40,12 @@ public class BaubleGemSocket extends ItemTemplate implements baubles.api.IBauble
     @Override
     @Nonnull
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, @Nonnull EnumHand hand) {
-        player.openGui(ArcaneArchives.instance, AAGuiHandler.BAUBLE_GEMSOCKET, world, 0, 0, 0);
-        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+        if (world.isRemote) {
+            return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+        }
+        ArcaneArchives.logger.info("PRE OPEN GUI");
+        player.openGui(ArcaneArchives.instance, AAGuiHandler.BAUBLE_GEMSOCKET, world, (int)player.posX, (int)player.posY, (int)player.posZ);
+        ArcaneArchives.logger.info("POST OPEN GUI");
+        return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
     }
 }

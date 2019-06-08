@@ -22,6 +22,7 @@ public class GUIGemSocket extends GuiContainer {
 
     public GUIGemSocket(@Nonnull ContainerGemSocket containerGemSocket) {
         super(containerGemSocket);
+        ArcaneArchives.logger.info("GUI CLASS INSTANTIATED");
         this.containerGemSocket = containerGemSocket;
         xSize = 256;
         ySize = 256;
