@@ -69,9 +69,32 @@ public class ParticleGenerator {
 
                 double sx = ax * ((speedMax - speedMin) + speedMin);
                 double sz = az * ((speedMax - speedMin) + speedMin);
-                double sy = rng.nextDouble() * 1.5 * ((speedMax - speedMin) + speedMin);
+                double sy = ((rng.nextDouble() * 0.7) + 0.3) * 0.1;
+
 
                 world.spawnParticle(EnumParticleTypes.CLOUD, px, point.y + 0.5, pz, sx, sy * 2, sz);
+            }
+        }
+    }
+
+    public static void makeDefaultBurstOnEntity(World world, Vec3d point, int radialCount, int heightCount, double radius, double speedMin, double speedMax) {
+
+        for(int h=0; h<heightCount; h++) {
+            double py = (double)h / (double)heightCount;
+            for(int i=0; i<radialCount; i++) {
+                double segment = (Math.PI * 2.0) / radialCount;
+                double theta = i * segment;
+                double ax = Math.cos(theta) * radius;
+                double az = Math.sin(theta) * radius;
+
+                double px = point.x + ax;
+                double pz = point.z + az;
+
+                double sx = ax * ((speedMax - speedMin) + speedMin);
+                double sz = az * ((speedMax - speedMin) + speedMin);
+                double sy = Math.abs(rng.nextDouble() * 14.5 * ((speedMax - speedMin) + speedMin));
+
+                world.spawnParticle(EnumParticleTypes.CLOUD, px, point.y + 0.5, pz, sx, sy, sz);
             }
         }
     }

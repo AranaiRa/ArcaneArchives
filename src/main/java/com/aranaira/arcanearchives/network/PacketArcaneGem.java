@@ -3,7 +3,7 @@ package com.aranaira.arcanearchives.network;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.particles.ParticleGenerator;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
-import com.aranaira.arcanearchives.network.NetworkHandler.ServerHandler;
+import com.aranaira.arcanearchives.network.NetworkHandler.ClientHandler;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundList;
@@ -60,7 +60,7 @@ public class PacketArcaneGem implements IMessage {
 		buf.writeDouble(pos2.z);
 	}
 
-	public static class Handler extends ServerHandler<PacketArcaneGem> {
+	public static class Handler extends ClientHandler<PacketArcaneGem> {
 		@Override
 		public void processMessage (PacketArcaneGem packet, MessageContext context) {
 			ArcaneArchives.logger.info("Received particles packet\n    Gem is "+packet.color.name()+" "+packet.cut.name()+"\n    pos1="+packet.pos1+"    pos2="+packet.pos2);
@@ -74,7 +74,7 @@ public class PacketArcaneGem implements IMessage {
 			else if(packet.cut == ArcaneGemItem.GemCut.PAMPEL) {
 				if(packet.color == ArcaneGemItem.GemColor.GREEN) {
 					Minecraft.getMinecraft().player.playSound(SoundEvents.ENTITY_PLAYER_BURP, 1.0F, 1.0F);
-					ParticleGenerator.makeDefaultBurst(Minecraft.getMinecraft().player.world, packet.pos2, 36, 5, 1.0, 0.01, 0.03);
+					ParticleGenerator.makeDefaultBurstOnEntity(Minecraft.getMinecraft().player.world, packet.pos2, 18, 5, 0.5, 0.01, 0.03);
 				}
 			}
 			else if(packet.cut == ArcaneGemItem.GemCut.TRILLION) {
