@@ -176,6 +176,7 @@ arcanearchives.tooltip.item.scepterofrevelation=Queries information about device
 arcanearchives.tooltip.item.scepterofmanipulation=Modifies properties of certain blocks. Use while sneaking.
 arcanearchives.tooltip.item.tomeofarcana=Provides documentation for Arcane Archives.
 
+arcanearchives.tooltip.item.munchstone=Consumes plant based blocks to restore hunger.
 arcanearchives.tooltip.item.mindspindle=Increases the amount of experience in picked up experience globes.
 arcanearchives.tooltip.item.mountaintear=Slowly creates infinite lava when placed in a Lightwell.
 arcanearchives.tooltip.item.rivertear=Rapidly creates infinite water when placed in a Lightwell.
