@@ -38,14 +38,14 @@ public class ContainerGemSocket extends Container {
     }
 
     private void createGemSlot() {
-        int xOffset = 47;
-        int yOffset = -15;
+        int xOffset = 81;
+        int yOffset = 3;
         addSlotToContainer(new SlotItemHandler(handler.getInventory(), 0, xOffset, yOffset));
     }
 
     private void createPlayerInventory(InventoryPlayer inventoryPlayer) {
-        int xOffset = 8;
-        int yOffset = 67;
+        int xOffset = 10;
+        int yOffset = 57;
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {

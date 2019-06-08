@@ -182,6 +182,7 @@ arcanearchives.tooltip.item.rivertear=Rapidly creates infinite water when placed
 arcanearchives.tooltip.item.phoenixway=Lights fires at target position. Grants fire resistance if you're about to take fire damage.
 
 arcanearchives.tooltip.bauble.gemsocket=Can be slotted with an Arcane Gem. Slotted Arcane Gem counts as being held at all times.
+arcanearchives.tooltip.bauble.gemsocket.contains=Contains a
 
 arcanearchives.data.gui.radiant_trove.upgrade=%d upgrade
 arcanearchives.data.gui.radiant_trove.upgrades=%d upgrades

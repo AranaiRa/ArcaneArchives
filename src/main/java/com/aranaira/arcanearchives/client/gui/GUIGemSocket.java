@@ -17,15 +17,25 @@ public class GUIGemSocket extends GuiContainer {
         TEXTURE_FABRIAL = new ResourceLocation("arcanearchives:textures/gui/fabrial.png"),
         TEXTURE_FABRIAL_SIMPLE = new ResourceLocation("arcanearchives:textures/gui/simple/fabrial.png");
 
+    private static final int
+        FABRIAL_X = 102,
+        FABRIAL_Y = 0,
+        FABRIAL_S = 22,
+        STRAP_X = 0,
+        STRAP_Y = 101,
+        STRAP_W = 94,
+        STRAP_H = 37,
+        INVENTORY_W = 181,
+        INVENTORY_H = 101;
+
 
     private ContainerGemSocket containerGemSocket;
 
     public GUIGemSocket(@Nonnull ContainerGemSocket containerGemSocket) {
         super(containerGemSocket);
-        ArcaneArchives.logger.info("GUI CLASS INSTANTIATED");
         this.containerGemSocket = containerGemSocket;
-        xSize = 256;
-        ySize = 256;
+        xSize = INVENTORY_W;
+        ySize = INVENTORY_H + 22 + FABRIAL_S;
     }
 
     @Override
@@ -40,10 +50,16 @@ public class GUIGemSocket extends GuiContainer {
         GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
 
         if (ConfigHandler.UsePrettyGUIs) {
+            float i = (this.width - this.xSize) / 2;
+            float j = (this.height - this.ySize) / 2;
+
             this.mc.getTextureManager().bindTexture(TEXTURE_PLAYERINV);
-            int i = (this.width - this.xSize) / 2;
-            int j = (this.height - this.ySize) / 2;
-            this.drawTexturedModalRect(i, j, 0, 0, 181, 101);
+            this.drawTexturedModalRect(i, j+22+FABRIAL_S, 0, 0, INVENTORY_W, INVENTORY_H);
+
+            this.drawTexturedModalRect(i+43, j+11, STRAP_X, STRAP_Y, STRAP_W, STRAP_H);
+
+            this.mc.getTextureManager().bindTexture(TEXTURE_FABRIAL);
+            this.drawTexturedModalRect(i+78, j, FABRIAL_X, FABRIAL_Y, FABRIAL_S, FABRIAL_S);
         }
     }
 }
