@@ -238,8 +238,7 @@ public class ServerNetwork implements IServerNetwork {
 	}
 
 	public NBTTagCompound buildHiveMembershipData () {
-		Hive info = NetworkHelper.getHiveMembership(uuid, getWorld());
-		return NetworkHelper.getHiveMembershipInfo(info, uuid);
+		return NetworkHelper.getHiveMembershipInfo(uuid, getWorld());
 	}
 
 	@Override
@@ -249,12 +248,7 @@ public class ServerNetwork implements IServerNetwork {
 
 	@Override
 	public boolean isHiveMember () {
-		// TODO
-		if (isHiveMember == null) {
-			isHiveMember = NetworkHelper.getHiveMembership(uuid, getWorld()) != null;
-		}
-
-		return isHiveMember;
+		return NetworkHelper.isHiveMember(uuid, getWorld());
 	}
 
 	@Override

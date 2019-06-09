@@ -229,18 +229,24 @@ cmd.gbook.guide.done=Reloading complete
 jei.gui.resonator=Every %.1f minutes.
 
 # Network stuff from packets
-arcanearchives.network.hive.successfully_added=You were successfully added to the network!
-arcanearchives.network.hive.successfully_removed_self=You were removed from the network.
-arcanearchives.network.hive.successfully_remove_player=Player was removed from the network.
-arcanearchives.network.hive.failed_add=Failed to add you to the network.
-arcanearchives.network.hive.failed_remove_self=Failed to remove you from the network.
-arcanearchives.network.hive.failed_remove_player=Failed to remove player from the network.
+arcanearchives.network.hive.successfully_added=You were successfully added to the Arcane Network!
+arcanearchives.network.hive.successfully_removed_self=You were removed from the Arcane Network.
+arcanearchives.network.hive.successfully_remove_player=Player was removed from the Arcane Network.
+arcanearchives.network.hive.failed_add=Failed to add you to the Arcane Network.
+arcanearchives.network.hive.failed_remove_self=Failed to remove you from the Arcane Network.
+arcanearchives.network.hive.failed_remove_player=Failed to remove player from the Arcane Network.
 # Network stuff for items
 arcanearchives.network.hive.joined=Successfully joined the Arcane Network of %s!
-arcanearchives.network.hive.left=Successfully left your network!
-arcanearchives.network.hive.failed=Failed to join the network!
-arcanearchives.network.hive.yours=This is already your network!
-arcanearchives.network.hive.left_failed=You aren't in a network to leave.
+arcanearchives.network.hive.left=Successfully left your Arcane Network!
+arcanearchives.network.hive.failed=Failed to join the Arcane Network!
+arcanearchives.network.hive.yours=This is already your Arcane Network!
+arcanearchives.network.hive.left_failed=You aren't in a Arcane Network to leave.
+arcanearchives.network.hive.leaving_failed=This letter of resignation wasn't meant for you.
 arcanearchives.network.hive.expel_unnamed=You must name this writ in an anvil in order to identify the person to be removed.
-arcanearchives.network.hive.expel_failed=Failed to perform expulsion.
-arcanearchives.network.hive.expelled=Successfully expelled %s from your network.
+arcanearchives.network.hive.expel_failed=Failed to remove %s from your Arcane Network.
+arcanearchives.network.hive.expelled=Successfully expelled %s from your Arcane Network.
+arcanearchives.network.hive.were_expelled=You were removed from your Arcane Network.
+arcanearchives.network.hive.expel_no_permission=You don't have permission to use this item.
+arcanearchives.network.hive.joined_your_network=%s has joined your Arcane Network!
+arcanearchives.network.hive.left_your_network=%s has left your Arcane Network!
+arcanearchives.network.hive.disbanded=%s has left your Arcane Network, leaving it empty. It has been disbanded.

@@ -1,7 +1,8 @@
 package com.aranaira.arcanearchives.items;
 
+import com.aranaira.arcanearchives.data.HiveSaveData;
+import com.aranaira.arcanearchives.data.HiveSaveData.Hive;
 import com.aranaira.arcanearchives.data.NetworkHelper;
-import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.items.templates.LetterTemplate;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -23,7 +24,7 @@ import java.util.UUID;
 public class WritOfExpulsionItem extends LetterTemplate {
 	public static final String NAME = "item_writofexpulsion";
 
-	public WritOfExpulsionItem() {
+	public WritOfExpulsionItem () {
 		super(NAME);
 	}
 
@@ -35,6 +36,7 @@ public class WritOfExpulsionItem extends LetterTemplate {
 			entity.sendMessage(new TextComponentString("Invalid letter! Oops?"));
 			return stack;
 		}
+
 		EntityPlayer player = (EntityPlayer) entity;
 		if (!tag.hasKey("expel_name")) {
 			player.sendStatusMessage(new TextComponentTranslation("arcanearchives.network.hive.expel_unnamed"), true);
@@ -44,12 +46,32 @@ public class WritOfExpulsionItem extends LetterTemplate {
 		UUID playerId = entity.getUniqueID();
 		UUID expelId = tag.getUniqueId("expel");
 
-		if (NetworkHelper.ejectPlayer(network, playerId, expelId, world)) {
-			player.sendStatusMessage(new TextComponentTranslation("arcanearchives.network.hive.expelled", tag.getString("expel_name")), true);
-		} else {
-			player.sendStatusMessage(new TextComponentTranslation("arcanearchives.network.hive.expel_failed"), true);
+		if (!network.equals(playerId)) {
+			player.sendStatusMessage(new TextComponentTranslation("arcanearchives.network.hive.expel_no_permission"), true);
 			return stack;
 		}
+
+		HiveSaveData saveData = NetworkHelper.getHiveData(world);
+		Hive hive = saveData.getHiveByMember(expelId);
+		if (!hive.owner.equals(playerId)) {
+			player.sendStatusMessage(new TextComponentTranslation("arcanearchives.network.hive.expel_no_permission"), true);
+			return stack;
+		}
+
+		if (saveData.removeMember(hive, expelId)) {
+			player.sendStatusMessage(new TextComponentTranslation("arcanearchives.network.hive.expelled", tag.getString("expel_name")), true);
+			saveData.alertMembers(world, hive, expelId, false);
+			EntityPlayer expelled = world.getPlayerEntityByUUID(expelId);
+			if (expelled != null) {
+				expelled.sendMessage(new TextComponentTranslation("arcanearchives.network.hive.were_expelled"));
+			}
+		} else {
+			player.sendStatusMessage(new TextComponentTranslation("arcanearchives.network.hive.expel_failed", tag.getString("expel_name")), true);
+			return stack;
+		}
+
+		saveData.markDirty();
+		world.getMapStorage().saveAllData();
 
 		stack.shrink(1);
 		return stack;

@@ -1,10 +1,10 @@
 package com.aranaira.arcanearchives.client.gui;
 
-import com.aranaira.arcanearchives.inventory.unused.NetworkContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -44,9 +44,9 @@ public class GUIBookContainer extends GuiContainer {
 	//The search bar's text used for filtering the list of items on the network.
 	private String SearchText = "";
 
-	private NetworkContainer container;
+	private Container container;
 
-	public GUIBookContainer (NetworkContainer container) {
+	public GUIBookContainer (Container container) {
 
 		super(container);
 
@@ -119,34 +119,6 @@ public class GUIBookContainer extends GuiContainer {
 		}
 
 		super.mouseClicked(mouseX, mouseY, mouseButton);
-	}
-
-	@Override
-	protected void keyTyped (char typedChar, int keyCode) {
-		//If the user is currently entering text into the search bar.
-		if (isEnteringText) {
-			//Backspace
-			if (keyCode == 14) {
-				if (SearchText.length() > 0) {
-					SearchText = SearchText.substring(0, SearchText.length() - 1);
-				}
-			}
-			//Escape and Enter
-			else if (keyCode == 1 || keyCode == 28) {
-				isEnteringText = false;
-			}
-			//Anything else.
-			else {
-				if (Character.isLetterOrDigit(typedChar)) {
-					SearchText += typedChar;
-				} else if (typedChar == ' ') {
-					SearchText += typedChar;
-				}
-			}
-			container.SetSearchString(SearchText);
-		} else if (keyCode == 1 || keyCode == this.mc.gameSettings.keyBindInventory.getKeyCode()) {
-			Minecraft.getMinecraft().player.closeScreen();
-		}
 	}
 
 	@Override

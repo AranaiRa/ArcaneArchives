@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
+@SuppressWarnings("deprecation")
 public class RawQuartz extends BlockDirectionalTemplate {
 
 	//public static final PropertyDirection DIRECTION = PropertyDirection.create("facing");

@@ -1,5 +1,7 @@
 package com.aranaira.arcanearchives.items;
 
+import com.aranaira.arcanearchives.data.HiveSaveData;
+import com.aranaira.arcanearchives.data.HiveSaveData.Hive;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.items.templates.LetterTemplate;
@@ -31,12 +33,20 @@ public class LetterOfResignationItem extends LetterTemplate {
 	public ItemStack letterTriggered (ItemStack stack, World world, EntityLivingBase entity) {
 		NBTTagCompound tag = stack.getTagCompound();
 		if (tag == null || !tag.hasKey("creator_name")) {
-			// TODO: Something with a sort of error or something
 			entity.sendMessage(new TextComponentString("Invalid letter! Oops?"));
 			return stack;
 		}
+		UUID creator = tag.getUniqueId("creator");
 		EntityPlayer player = (EntityPlayer) entity;
-		if (NetworkHelper.abandonNetwork(player, world)) {
+		if (!creator.equals(player.getUniqueID())) {
+			player.sendStatusMessage(new TextComponentTranslation("arcanearchives.network.hive.leaving_failed"), true);
+			return stack;
+		}
+
+		HiveSaveData saveData = NetworkHelper.getHiveData(world);
+		Hive hive = saveData.getHiveByMember(player.getUniqueID());
+		if (hive != null && saveData.removeMember(hive, player.getUniqueID())) {
+			saveData.alertMembers(world, hive, player.getUniqueID(), false);
 			player.sendStatusMessage(new TextComponentTranslation("arcanearchives.network.hive.left"), true);
 		} else {
 			player.sendStatusMessage(new TextComponentTranslation("arcanearchives.network.hive.left_failed"), true);

@@ -29,24 +29,6 @@ public class HiveNetwork implements IHiveBase {
 		this.memberNetworks = memberNetworks;
 	}
 
-	public boolean validate (Hive hive) {
-		if (!this.ownerNetwork.getUuid().equals(hive.getOwner())) {
-			return false;
-		}
-
-		if (hive.getMembers().size() != memberNetworks.size()) {
-			return false;
-		}
-
-		for (ServerNetwork member : memberNetworks) {
-			if (!hive.getMembers().contains(member.getUuid())) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
 	// TODO: ????
 	private List<ServerNetwork> getCombinedNetworks () {
 		List<ServerNetwork> combined = new ArrayList<>(getContainedNetworks());
