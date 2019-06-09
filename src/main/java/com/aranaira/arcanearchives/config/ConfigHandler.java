@@ -1,10 +1,13 @@
 package com.aranaira.arcanearchives.config;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.network.PacketConfig.MaxDistance;
 import net.minecraftforge.common.config.Config;
+import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import vazkii.botania.common.network.PacketHandler;
 
 @Config(modid = ArcaneArchives.MODID)
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
@@ -12,7 +15,10 @@ public class ConfigHandler {
 	@SubscribeEvent
 	public static void onConfigChanged (ConfigChangedEvent.OnConfigChangedEvent event) {
 		if (event.getModID().equals(ArcaneArchives.MODID)) {
+			ConfigManager.sync(ArcaneArchives.MODID, Config.Type.INSTANCE);
 			parseColours();
+			MaxDistance packet = new MaxDistance(ConfigHandler.manifestSettings.MaxDistance);
+			PacketHandler.sendToServer(packet);
 		}
 	}
 
@@ -21,9 +27,9 @@ public class ConfigHandler {
 
 	public static void parseColours () {
 		try {
-			MANIFEST_HIGHLIGHT = Long.decode(ChestHighlight.toLowerCase()).intValue();
+			MANIFEST_HIGHLIGHT = Long.decode(manifestSettings.ChestHighlight.toLowerCase()).intValue();
 		} catch (NumberFormatException event) {
-			ArcaneArchives.logger.error("Invalid manifest highlight colour: " + ChestHighlight, event);
+			ArcaneArchives.logger.error("Invalid manifest highlight colour: " + manifestSettings.ChestHighlight, event);
 		}
 	}
 
@@ -31,21 +37,13 @@ public class ConfigHandler {
 	@Config.Name("Resonator Limit")
 	public static int ResonatorLimit = 3;
 
-	@Config.Comment("Limit of matrix cores per player's network")
+	/*@Config.Comment("Limit of matrix cores per player's network")
 	@Config.Name("Matrix Core Limit")
-	public static int MatrixCoreLimit = 1;
+	public static int MatrixCoreLimit = 1;*/
 
 	@Config.Comment("Number of ticks it takes to create raw quartz")
 	@Config.Name("Resonator Time")
 	public static int ResonatorTickTime = 6000;
-
-	@Config.Comment("Whether having a manifest in your inventory is required to open the screen")
-	@Config.Name("Manifest Presence")
-	public static boolean ManifestPresence = true;
-
-	@Config.Comment("Radiant chest highlight colour (use HTML syntax i.e., #FFFFFF")
-	@Config.Name("Radiant Chest Highlight")
-	public static String ChestHighlight = "#1922C4";
 
 	@Config.Comment("Causes Radiant Chests, Troves, etc, to be unbreakable when not empty")
 	@Config.Name("Unbreakable Radiant Chests & Troves")
@@ -55,9 +53,27 @@ public class ConfigHandler {
 	@Config.Name("Use Pretty GUIs")
 	public static boolean UsePrettyGUIs = true;
 
-	@Config.Comment("Disable overlay of grid on Manifest. (Client Only")
-	@Config.Name("Disable Manifest Grid")
-	public static boolean DisableManifestGrid = true;
+	@Config.Comment("Client-side settings related to the Manifest")
+	@Config.Name("Manifest Settings")
+	public static ManifestSettings manifestSettings = new ManifestSettings();
+
+	public static class ManifestSettings {
+		@Config.Comment("Whether having a manifest in your inventory is required to open the screen")
+		@Config.Name("Manifest Presence")
+		public boolean ManifestPresence = true;
+
+		@Config.Comment("Disable overlay of grid on Manifest. (Client Only")
+		@Config.Name("Disable Manifest Grid")
+		public boolean DisableManifestGrid = true;
+
+		@Config.Comment("Radiant chest highlight colour (use HTML syntax i.e., #FFFFFF")
+		@Config.Name("Radiant Chest Highlight")
+		public String ChestHighlight = "#1922C4";
+
+		@Config.Comment("Maximum distance in blocks to track chests from for the Manifest")
+		@Config.Name("[Hive Network] Max track distance")
+		public int MaxDistance = 100;
+	}
 
 	//public static boolean bJarvisModeEnabled = false;
 

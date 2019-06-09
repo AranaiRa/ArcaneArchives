@@ -71,7 +71,7 @@ public class Keybinds {
 		Minecraft mc = Minecraft.getMinecraft();
 		if (manifestKey.isKeyDown() && mc.inGameHasFocus) {
 			boolean foundManifest = false;
-			if (ConfigHandler.ManifestPresence) {
+			if (ConfigHandler.manifestSettings.ManifestPresence) {
 				for (int i = 0; i < 36; i++) {
 					ItemStack item = mc.player.inventory.getStackInSlot(i);
 					if (item.getItem() == ItemRegistry.MANIFEST) {
@@ -81,7 +81,7 @@ public class Keybinds {
 				}
 			}
 
-			if (foundManifest || !ConfigHandler.ManifestPresence) {
+			if (foundManifest || !ConfigHandler.manifestSettings.ManifestPresence) {
 				if (mc.player.isSneaking()) {
 					LineHandler.clearChests(mc.player.dimension);
 				} else {

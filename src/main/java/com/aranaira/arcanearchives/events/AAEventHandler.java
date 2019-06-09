@@ -1,36 +1,27 @@
 package com.aranaira.arcanearchives.events;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.gui.GUIGemcasting;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.entity.AIResonatorSit;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.ItemRegistry;
-import com.aranaira.arcanearchives.items.RadiantAmphoraItem;
 import com.aranaira.arcanearchives.items.RadiantAmphoraItem.AmphoraUtil;
-import com.aranaira.arcanearchives.items.RadiantAmphoraItem.TankMode;
 import com.aranaira.arcanearchives.items.TomeOfArcanaItem;
-import com.aranaira.arcanearchives.items.TomeOfArcanaItemBackground;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.network.NetworkHandler;
+import com.aranaira.arcanearchives.network.PacketConfig.MaxDistance;
 import com.aranaira.arcanearchives.network.PacketRadiantAmphora;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import gigaherz.lirelent.guidebook.client.BookRegistryEvent;
-import gigaherz.lirelent.guidebook.guidebook.client.BookRendering;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -41,15 +32,26 @@ import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import vazkii.botania.common.network.PacketHandler;
 
 import java.util.Random;
 
 @Mod.EventBusSubscriber
 public class AAEventHandler {
+	@SubscribeEvent
+	public static void onPlayerJoined (PlayerLoggedInEvent event) {
+		EntityPlayer player = event.player;
+		if (player.world.isRemote) {
+			MaxDistance packet = new MaxDistance(ConfigHandler.manifestSettings.MaxDistance);
+			PacketHandler.sendToServer(packet);
+		}
+	}
+
 	@SubscribeEvent
 	public static void onBlockBreakEvent (BreakEvent event) {
 		if (!ConfigHandler.UnbreakableContainers) {
@@ -112,19 +114,17 @@ public class AAEventHandler {
 
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
-	public static void onLeftClickEmpty(PlayerInteractEvent.LeftClickEmpty event)
-	{
+	public static void onLeftClickEmpty (PlayerInteractEvent.LeftClickEmpty event) {
 		Item item = event.getEntityPlayer().inventory.getCurrentItem().getItem();
-		if(item == ItemRegistry.RADIANT_AMPHORA) {
+		if (item == ItemRegistry.RADIANT_AMPHORA) {
 			PacketRadiantAmphora packet = new PacketRadiantAmphora();
 			NetworkHandler.CHANNEL.sendToServer(packet);
 		}
 	}
 
 	@SubscribeEvent
-	public static void onLeftClickBlock(PlayerInteractEvent.LeftClickBlock event)
-	{
-		if(!event.getWorld().isRemote) {
+	public static void onLeftClickBlock (PlayerInteractEvent.LeftClickBlock event) {
+		if (!event.getWorld().isRemote) {
 			Item item = event.getEntityPlayer().inventory.getCurrentItem().getItem();
 			if (item == ItemRegistry.RADIANT_AMPHORA && event.getEntityPlayer().isSneaking()) {
 				ItemStack stack = event.getEntityPlayer().getHeldItemMainhand();
@@ -135,7 +135,7 @@ public class AAEventHandler {
 				ItemStack stack = event.getEntityPlayer().getHeldItemMainhand();
 				Random rng = new Random();
 				int num = rng.nextInt(5);
-				if(num == 0) {
+				if (num == 0) {
 					stack.shrink(1);
 					num = rng.nextInt(16) + 8;
 					ItemStack shards = new ItemStack(BlockRegistry.QUARTZ_SLIVER, num);
@@ -145,8 +145,7 @@ public class AAEventHandler {
 					ei.motionZ = rng.nextFloat() * 0.4f - 0.2f;
 					ei.motionY = rng.nextFloat() * 0.2f + 0.2f;
 					event.getWorld().spawnEntity(ei);
-				}
-				else if(num == 1 || num == 2){
+				} else if (num == 1 || num == 2) {
 					ItemStack shards = new ItemStack(BlockRegistry.QUARTZ_SLIVER, 1);
 					Vec3d pos = event.getHitVec();
 					EntityItem ei = new EntityItem(event.getWorld(), pos.x, pos.y, pos.z, shards);
@@ -161,16 +160,18 @@ public class AAEventHandler {
 
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
-	public static void renderGemHUD(RenderGameOverlayEvent.Post event) {
+	public static void renderGemHUD (RenderGameOverlayEvent.Post event) {
 		Minecraft minecraft = Minecraft.getMinecraft();
 		EntityPlayer player = minecraft.player;
-		if(player == null) return;
+		if (player == null) {
+			return;
+		}
 
-		if(event.getType() == RenderGameOverlayEvent.ElementType.VIGNETTE) {
-			if(player.getHeldItemMainhand().getItem() instanceof ArcaneGemItem) {
+		if (event.getType() == RenderGameOverlayEvent.ElementType.VIGNETTE) {
+			if (player.getHeldItemMainhand().getItem() instanceof ArcaneGemItem) {
 				GUIGemcasting.draw(minecraft, player.getHeldItemMainhand(), event.getResolution().getScaledWidth(), event.getResolution().getScaledHeight(), false);
 			}
-			if(player.getHeldItemOffhand().getItem() instanceof ArcaneGemItem) {
+			if (player.getHeldItemOffhand().getItem() instanceof ArcaneGemItem) {
 				GUIGemcasting.draw(minecraft, player.getHeldItemOffhand(), event.getResolution().getScaledWidth(), event.getResolution().getScaledHeight(), true);
 			}
 		}

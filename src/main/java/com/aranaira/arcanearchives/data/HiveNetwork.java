@@ -64,9 +64,24 @@ public class HiveNetwork implements IHiveBase {
 		return memberNetworks;
 	}
 
+	@Nullable
+	public ServerNetwork getContainedNetwork (EntityPlayer player) {
+		for (ServerNetwork network : getCombinedNetworks()) {
+			if (network.getUuid().equals(player.getUniqueID())) return network;
+		}
+
+		return null;
+	}
+
 	@Override
 	public NBTTagCompound buildHiveManifest (EntityPlayer player) {
 		ManifestList manifestItems = new ManifestList(new ArrayList<>());
+
+		ServerNetwork playerNetwork = getContainedNetwork(player);
+		assert playerNetwork != null;
+
+		// already squared
+		int maxDistance = playerNetwork.getMaxDistance();
 
 		List<ManifestItemEntry> preManifest = new ArrayList<>();
 		Set<ManifestTileEntity> done = new HashSet<>();

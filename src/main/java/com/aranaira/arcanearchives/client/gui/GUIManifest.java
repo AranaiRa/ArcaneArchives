@@ -1,9 +1,11 @@
 package com.aranaira.arcanearchives.client.gui;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.gui.framework.CustomCountSlot;
 import com.aranaira.arcanearchives.client.gui.framework.LayeredGuiContainer;
 import com.aranaira.arcanearchives.client.gui.framework.ScrollEventManager;
 import com.aranaira.arcanearchives.config.ConfigHandler;
+import com.aranaira.arcanearchives.config.ConfigHandler.ManifestSettings;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.events.LineHandler;
@@ -24,11 +26,17 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.DimensionType;
+import net.minecraftforge.common.config.ConfigElement;
+import net.minecraftforge.fml.client.config.GuiConfig;
+import net.minecraftforge.fml.client.config.IConfigElement;
 import org.apache.commons.lang3.text.WordUtils;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings("FieldCanBeLocal")
@@ -57,6 +65,11 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 	private static int mRefreshButtonTopOffset = 200;
 	private static int mRefreshButtonWidth = 14;
 	private static int mRefreshButtonHeight = 14;
+	// offset and side of config button
+	private static int mConfigButtonLeftOffset = 158;
+	private static int mConfigButtonTopOffset = 200;
+	private static int mConfigButtonWidth = 14;
+	private static int mConfigButtonHeight = 14;
 	// scroll bar area
 	private static int mScrollBarTopOffset = 29;
 	private static int mScrollBarBottomOffset = 191;
@@ -75,6 +88,7 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 	private ScrollBar mScrollBar;
 	private GuiButton mEndTrackButton;
 	private GuiButton mRefreashButton;
+	private GuiButton mConfigButton;
 
 	public GUIManifest (EntityPlayer player, ContainerManifest container) {
 		super(container);
@@ -116,6 +130,9 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 
 		mRefreashButton = new InvisibleButton(1, guiLeft + mRefreshButtonLeftOffset, guiTop + mRefreshButtonTopOffset, mRefreshButtonWidth, mRefreshButtonHeight, "");
 		addButton(mRefreashButton);
+
+		mConfigButton = new InvisibleButton(2, guiLeft + mConfigButtonLeftOffset, guiTop + mConfigButtonTopOffset, mConfigButtonWidth, mConfigButtonHeight, "");
+		addButton(mConfigButton);
 	}
 
 	@Override
@@ -182,7 +199,7 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 				} else {
 					this.mc.getTextureManager().bindTexture(GUIBaseTexturesSimple);
 				}
-				if (!ConfigHandler.DisableManifestGrid) {
+				if (!ConfigHandler.manifestSettings.DisableManifestGrid) {
 					drawModalRectWithCustomSizedTexture(slot.xPos - 1, slot.yPos - 1, mSlotTextureLeftOffset, 0, mSlotTextureSize, mSlotTextureSize, mGUIBaseTexturesSize, mGUIBaseTexturesSize);
 				}
 				GlStateManager.enableLighting();
@@ -202,6 +219,9 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 		} else if (button.id == mRefreashButton.id) {
 			ClientNetwork network = NetworkHelper.getClientNetwork(player.getUniqueID());
 			network.synchroniseManifest();
+		} else if (button.id == mConfigButton.id) {
+			GuiConfig config = new GuiConfig(this, ArcaneArchives.MODID, ArcaneArchives.NAME);
+			this.mc.displayGuiScreen(config);
 		}
 
 		super.actionPerformed(button);

@@ -49,10 +49,19 @@ public class ServerNetwork implements IServerNetwork {
 	// Per-player values
 	private int totalCores = 0;
 	private int totalResonators = 0;
+	private int maxDistance = 0;
 
 	// Initial set-up
 	public ServerNetwork (UUID id) {
 		uuid = id;
+	}
+
+	public int getMaxDistance () {
+		return maxDistance * maxDistance;
+	}
+
+	public void setMaxDistance (int maxDistance) {
+		this.maxDistance = maxDistance;
 	}
 
 	/***
