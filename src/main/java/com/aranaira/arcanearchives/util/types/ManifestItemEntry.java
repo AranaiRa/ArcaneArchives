@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.util.types;
 
-import com.aranaira.arcanearchives.util.types.ManifestEntry;
 import net.minecraft.item.ItemStack;
 
 /**
@@ -11,10 +10,16 @@ public class ManifestItemEntry {
 	public ItemStack stack;
 	public int dim;
 	public ManifestEntry.ItemEntry entry;
+	public int distance = -1;
 
 	public ManifestItemEntry (ItemStack stack, int dim, ManifestEntry.ItemEntry entry) {
 		this.stack = stack;
 		this.dim = dim;
 		this.entry = entry;
+	}
+
+	public ManifestItemEntry (ItemStack stack, int dim, ManifestEntry.ItemEntry entry, int distance) {
+		this(stack, dim, entry);
+		this.distance = distance;
 	}
 }

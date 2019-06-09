@@ -73,6 +73,13 @@ public class HiveNetwork implements IHiveBase {
 		return null;
 	}
 
+	public int distanceSq (BlockPos pos1, BlockPos pos2) {
+		int d1 = pos1.getX() - pos2.getX();
+		int d2 = pos1.getY() - pos2.getY();
+		int d3 = pos1.getZ() - pos2.getZ();
+		return Math.abs(d1 * d1 + d2 * d2 + d3 * d3);
+	}
+
 	@Override
 	public NBTTagCompound buildHiveManifest (EntityPlayer player) {
 		ManifestList manifestItems = new ManifestList(new ArrayList<>());
@@ -103,7 +110,7 @@ public class HiveNetwork implements IHiveBase {
 				if (ite.isSingleStackInventory()) {
 					ItemStack is = ite.getSingleStack();
 					if (!is.isEmpty()) {
-						preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(ite.getPos(), ite.getChestName(), is.getCount())));
+						preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(ite.getPos(), ite.getChestName(), is.getCount()), distanceSq(ite.getPos(), player.getPosition())));
 					}
 				} else {
 					if (ite instanceof MonitoringCrystalTileEntity) {
@@ -134,7 +141,7 @@ public class HiveNetwork implements IHiveBase {
 									continue;
 								}
 
-								preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(mte.getTarget(), mte.getDescriptor(), is.getCount())));
+								preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(mte.getTarget(), mte.getDescriptor(), is.getCount()), distanceSq(tar, player.getPosition())));
 							}
 						}
 					} else {
@@ -143,7 +150,7 @@ public class HiveNetwork implements IHiveBase {
 								continue;
 							}
 
-							preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(ite.getPos(), ite.getChestName(), is.getCount())));
+							preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(ite.getPos(), ite.getChestName(), is.getCount()), distanceSq(ite.getPos(), player.getPosition())));
 						}
 					}
 				}
@@ -152,7 +159,7 @@ public class HiveNetwork implements IHiveBase {
 			}
 		}
 
-		List<ManifestEntry> consolidated = ItemStackConsolidator.ConsolidateManifest(preManifest);
+		List<ManifestEntry> consolidated = ItemStackConsolidator.ConsolidateManifest(preManifest, maxDistance);
 		manifestItems.addAll(consolidated);
 
 		NBTTagList manifest = new NBTTagList();
