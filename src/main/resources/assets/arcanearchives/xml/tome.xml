@@ -4,7 +4,9 @@
     <include ref="arcanearchives:xml/arcanearchives_templates.xml" />
 
     <conditions>
-        <false name="AllGems"/>
+        <mod-loaded name="ml_thaumcraft" modid="thaumcraft"/>
+        <not name="no_thaumcraft"><mod-loaded modid="thaumcraft"/></not>
+        <mod-loaded name="ml_astralsorcery" modid="astralsorcery"/>
     </conditions>
 
     <stack-links>
@@ -38,8 +40,6 @@
         <stack item="arcanearchives:item_component_scintillatinginlay">ScintillatingInlay</stack>
         <stack item="arcanearchives:item_writofexpulsion">WritExpulsion</stack>
     </stack-links>
-
-    <mod-loaded name="ml_astralsorcery" modid="astralsorcery"/>
 
     <chapter id="TableOfContents">
         <section>
@@ -81,19 +81,9 @@
             <page_title>
                 <title>Arcane Gems</title>
             </page_title>
-            <p condition="AllGems"><stack item="arcanearchives:item_fabrial"/> <link ref="Fabrial">Fabrial</link></p>
-            <space height="8" condition="AllGems"/>
-            <p condition="AllGems"><stack item="arcanearchives:item_glyphspindle"/> <link ref="Glyphspindle">Glyphspindle</link></p>
-            <space height="8" condition="AllGems"/>
-            <p condition="AllGems"><stack item="arcanearchives:item_homingstone"/> <link ref="Homingstone">Homingstone</link></p>
-            <p condition="AllGems"><stack item="arcanearchives:item_munchstone"/> <link ref="Munchstone">Munchstone</link></p>
-            <space height="8" condition="AllGems"/>
             <p><stack item="arcanearchives:item_mountaintear"/> <link ref="Mountaintear">Mountaintear</link></p>
             <p><stack item="arcanearchives:item_rivertear"/> <link ref="Rivertear">Rivertear</link></p>
-            <space height="8" condition="AllGems"/>
-            <p condition="AllGems"><stack item="arcanearchives:item_pyreway"/> <link ref="Pyreway">Pyreway</link></p>
-            <p condition="AllGems"><stack item="arcanearchives:item_earthway"/> <link ref="Earthway">Earthway</link></p>
-            <p condition="AllGems"><stack item="arcanearchives:item_nightway"/> <link ref="Nightway">Nightway</link></p>
+            <space height="8"/>
         </section>
         <section>
             <page_title>
@@ -996,7 +986,28 @@
                 <title>Writ of Expulsion</title>
             </page_title>
             <p italics="true">
-                ...Lore fragment TBD
+                Master Sharaveda, it has become painfully clear that you no longer possess the objectivity necessary to act as a Master of the Eternal University.
+            </p><space height="4"/>
+            <p italics="true">
+                You have become utterly obsessed with this material that you <span bold="true">claim</span> exists. Yet you have <span bold="true">repeatedly</span> failed to produce a shred of actual evidence for its existence, save for glowing fragments. A feat, I might add, that is achievable with a simple cantrip.
+            </p><space height="4"/>
+            <p italics="true" condition="ml_thaumcraft">
+                It is the opinion of this counsel that your mind has been addled by your thaumaturgical studies. You see things that cannot be because of the Warp that has twisted your mind; you are too taken with your obsessions to understand that existence is based on <span bold="true">squares</span>. These five and six sided shapes you speak of are nonsense; the delusions of a sick mind that can no longer cope with reality.
+            </p><space height="4"/>
+            <p italics="true" condition="no_thaumcraft">
+                Given your age, it is the opinion of this counsel that your mind is degenerating into senility. These five and six sided shapes you speak of are nonsense; the delusions of a feeble old coot who fails to accept that a theory could be wrong.
+            </p><space height="4"/>
+            <p italics="true">
+                A judgment has been reached by a majority of the Quadrate. You have strayed from the path of Wisdom, and your right to Enlightenment is forfeit. You are banished from the Eternal University, and no longer bear the title of Master. You may no longer practice your craft or step foot into the University on pain of execution.
+            </p><space height="4"/>
+            <p italics="true">
+                —Kurst of the Green Flame, Tetrarch of Research
+            </p>
+            <p italics="true">
+                —Final statement at Sharaveda’s disciplinary inquest
+            </p>
+            <p italics="true">
+                —1670, Spring’s Height
             </p>
         </section>
     </chapter>

@@ -66,7 +66,8 @@ public class RenderHelper {
 		bufferBuilder.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_COLOR);
 
 		for (Vec3d vec : target_pos) {
-			GlStateManager.glLineWidth(getLineWidthFromDistance(player_pos, vec, 10, 70));
+			//GlStateManager.glLineWidth(getLineWidthFromDistance(player_pos, vec, 10, 70));
+			GlStateManager.glLineWidth(10.0f);
 			bufferBuilder.pos(player_pos.x, player_pos.y + 1, player_pos.z).color(c.red, c.green, c.blue, c.alpha).endVertex();
 			bufferBuilder.pos(vec.x + 0.5, vec.y + 0.5, vec.z + 0.5).color(c.red, c.green, c.blue, c.alpha).endVertex();
 		}
