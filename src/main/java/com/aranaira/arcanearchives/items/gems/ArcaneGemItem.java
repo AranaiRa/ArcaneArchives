@@ -18,6 +18,8 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.model.ModelLoader;
 
@@ -139,6 +141,19 @@ public abstract class ArcaneGemItem extends ItemTemplate {
                 return charged;
             }
         });
+    }
+
+    /**
+     * Convenience method to convert BlockPos into a Vec3d
+     * @param pos The BlockPos to convert
+     * @param shiftToCenter Whether to leave the BlockPos as is or shift it to the center of the block
+     * @return
+     */
+    protected Vec3d blockPosToVector(BlockPos pos, boolean shiftToCenter) {
+        if(shiftToCenter)
+            return new Vec3d(pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5);
+        else
+            return new Vec3d(pos.getX(), pos.getY(), pos.getZ());
     }
 
     /**

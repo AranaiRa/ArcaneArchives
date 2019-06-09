@@ -220,23 +220,25 @@ public class AAEventHandler {
 
 	@SubscribeEvent
 	public static void onEntityHurt(LivingAttackEvent event) {
-		if(event.getEntity() instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) event.getEntity();
+		if(!event.getEntity().world.isRemote) {
+			if (event.getEntity() instanceof EntityPlayer) {
+				EntityPlayer player = (EntityPlayer) event.getEntity();
 
-			if (!player.world.isRemote) {
-				ArrayList<ItemStack> held = ArcaneGemItem.GemUtil.getAvailableGems(player);
-				if (held.size() > 0) {
-					for (ItemStack stack : held) {
-						if (stack.getItem() == ItemRegistry.PHOENIXWAY) {
-							if (player.isPotionActive(MobEffects.FIRE_RESISTANCE)) {
-								continue;
-							}
-							if (ArcaneGemItem.GemUtil.getCharge(stack) >= 0) {
-								if (event.getSource() == DamageSource.ON_FIRE || event.getSource() == DamageSource.IN_FIRE) {
-									Minecraft.getMinecraft().player.playSound(SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, 1.0F, 1.0F);
-									player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 600, 0));
-									ArcaneGemItem.GemUtil.consumeCharge(stack, 12);
-									event.setCanceled(true);
+				if (!player.world.isRemote) {
+					ArrayList<ItemStack> held = ArcaneGemItem.GemUtil.getAvailableGems(player);
+					if (held.size() > 0) {
+						for (ItemStack stack : held) {
+							if (stack.getItem() == ItemRegistry.PHOENIXWAY) {
+								if (player.isPotionActive(MobEffects.FIRE_RESISTANCE)) {
+									continue;
+								}
+								if (ArcaneGemItem.GemUtil.getCharge(stack) >= 0) {
+									if (event.getSource() == DamageSource.ON_FIRE || event.getSource() == DamageSource.IN_FIRE) {
+										Minecraft.getMinecraft().player.playSound(SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, 1.0F, 1.0F);
+										player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 600, 0));
+										ArcaneGemItem.GemUtil.consumeCharge(stack, 12);
+										event.setCanceled(true);
+									}
 								}
 							}
 						}

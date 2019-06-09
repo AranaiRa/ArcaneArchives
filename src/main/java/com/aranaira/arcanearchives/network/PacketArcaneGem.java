@@ -14,6 +14,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
+import java.util.Random;
+
 public class PacketArcaneGem implements IMessage {
 
 	private ArcaneGemItem.GemCut cut;
@@ -65,7 +67,12 @@ public class PacketArcaneGem implements IMessage {
 		public void processMessage (PacketArcaneGem packet, MessageContext context) {
 			ArcaneArchives.logger.info("Received particles packet\n    Gem is "+packet.color.name()+" "+packet.cut.name()+"\n    pos1="+packet.pos1+"    pos2="+packet.pos2);
 
-			if(packet.cut == ArcaneGemItem.GemCut.PENDELOQUE) {
+			if(packet.cut == ArcaneGemItem.GemCut.OVAL) {
+				if(packet.color == ArcaneGemItem.GemColor.BLACK) {
+					Minecraft.getMinecraft().player.playSound(SoundEvents.ENTITY_PLAYER_BURP, 1.0f, new Random().nextFloat() * 0.5f + 0.75f);
+				}
+			}
+			else if(packet.cut == ArcaneGemItem.GemCut.PENDELOQUE) {
 				int particleDensity = 5 * (int) Math.ceil(packet.pos1.distanceTo(packet.pos2));
 
 				ParticleGenerator.makeDefaultLine(Minecraft.getMinecraft().player.world, packet.pos1, packet.pos2, particleDensity, 2.0);
