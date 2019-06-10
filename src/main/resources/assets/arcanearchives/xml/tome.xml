@@ -405,7 +405,22 @@
                 <title>Radiant Chest</title>
             </page_title>
             <p italics="true">
-                ...Lore fragment TBD
+                Upon further examination, the glowing crystalline substance I was imparted with seems to have spatial (temporal?) distortion properties. Further research is required; I have an idea I wish to test out.
+            </p><space height="4"/>
+            <p italics="true">
+                I constructed a frame out of this crystalline substance. Items placed within the frame only seem to be visible—and, indeed, existent, if my instruments are to be believed— from certain angles of view.
+            </p><space height="4"/>
+            <p italics="true">
+                I tried to attach wooden panels to the frame to keep the contents within, but they too were subject to this strange spatial distortion. Reinforcing the wood with a lacquer ensorcelled with the <span italics="false">Stalwart Oak Abjuration</span> seems to prevent the panels from being affected by these distortions.
+            </p><space height="4"/>
+            <p italics="true" condition="ml_astralsorcery">
+                It appears my opinions on the usefulness of the <span italics="false">Stalwart Oak Abjuration</span> compared to Infused Wood were incorrect. I believe I owe Etrea a drink.
+            </p><space height="4"/>
+            <p italics="true">
+                —Research Journal of Sharaveda
+            </p>
+            <p italics="true">
+                —1665, Autumn’s Birth
             </p>
         </section>
     </chapter>
