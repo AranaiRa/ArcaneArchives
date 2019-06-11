@@ -83,9 +83,9 @@ public class RenderHelper {
 	@SideOnly(Side.CLIENT)
 	public static void drawSegmentedLine (long worldTime, java.awt.Color color, float width, Vec3d player_pos, ArrayList<Vec3d> verts) {
 		//GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
-		ArcaneArchives.logger.info("starting line render");
+		//ArcaneArchives.logger.info("starting line render");
 		GlStateManager.pushMatrix();
-		ArcaneArchives.logger.info("pushed matrix");
+		//ArcaneArchives.logger.info("pushed matrix");
 		GlStateManager.disableCull();
 		GlStateManager.disableLighting();
 		GlStateManager.disableTexture2D();
@@ -104,7 +104,7 @@ public class RenderHelper {
 		for (Vec3d vert : verts) {
 			GlStateManager.glLineWidth(getLineWidthFromDistance(player_pos, vert, 10, 70));
 			bufferBuilder.pos(vert.x, vert.y, vert.z).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()).endVertex();
-			ArcaneArchives.logger.info("added line vert at "+vert);
+			//ArcaneArchives.logger.info("added line vert at "+vert);
 		}
 		tessellator.draw();
 

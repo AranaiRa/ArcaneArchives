@@ -290,7 +290,7 @@ public class AAEventHandler {
 	@SubscribeEvent
 	public static void onCriticalHitLanded (CriticalHitEvent event) {
 		if(!event.getEntityPlayer().world.isRemote) {
-			ArcaneArchives.logger.info(event.getEntityPlayer() + " attacked " + event.getTarget());
+			//ArcaneArchives.logger.info(event.getEntityPlayer() + " attacked " + event.getTarget());
 			for (ItemStack stack : ArcaneGemItem.GemUtil.getAvailableGems(event.getEntityPlayer())) {
 				if(stack.getItem() instanceof MurdergleamItem) {
 					if(ArcaneGemItem.GemUtil.isToggledOn(stack) && ArcaneGemItem.GemUtil.getCharge(stack) > 0) {

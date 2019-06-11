@@ -25,7 +25,7 @@ import java.util.stream.Stream;
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class ItemRegistry {
 	public static final RawQuartzItem RAW_RADIANT_QUARTZ = new RawQuartzItem();
-	public static final CutQuartzItem CUT_RADIANT_QUARTZ = new CutQuartzItem();
+	public static final ShapedQuartzItem CUT_RADIANT_QUARTZ = new ShapedQuartzItem();
 	//public static final GeomancyPendulumItem GEOMANCY_PENDULUM = new GeomancyPendulumItem();
 	//public static final GeomanticMapItem GEOMANTIC_MAP = new GeomanticMapItem();
 	public static final ManifestItem MANIFEST = new ManifestItem();

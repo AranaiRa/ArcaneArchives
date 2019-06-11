@@ -4,7 +4,6 @@ import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
@@ -14,25 +13,19 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class DevouringCharmItem extends ItemTemplate {
-    public static final String NAME = "item_upgrade_devouringcharm";
+	public static final String NAME = "item_upgrade_devouringcharm";
 
-    public DevouringCharmItem() {
-        super(NAME);
-    }
+	public DevouringCharmItem () {
+		super(NAME);
+	}
 
-    @Override
-    public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.upgrade.devouringcharm"));
-    }
+	@Override
+	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.upgrade.devouringcharm"));
+	}
 
-    @Override
-    @SuppressWarnings("deprecation")
-    public EnumRarity getRarity (ItemStack stack) {
-        return EnumRarity.UNCOMMON;
-    }
-
-    @Override
-    public boolean doesSneakBypassUse (ItemStack stack, IBlockAccess world, BlockPos pos, EntityPlayer player) {
-        return true;
-    }
+	@Override
+	public boolean doesSneakBypassUse (ItemStack stack, IBlockAccess world, BlockPos pos, EntityPlayer player) {
+		return true;
+	}
 }

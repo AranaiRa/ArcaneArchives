@@ -65,7 +65,7 @@ public class PacketArcaneGem implements IMessage {
 	public static class Handler extends ClientHandler<PacketArcaneGem> {
 		@Override
 		public void processMessage (PacketArcaneGem packet, MessageContext context) {
-			ArcaneArchives.logger.info("Received particles packet\n    Gem is "+packet.color.name()+" "+packet.cut.name()+"\n    pos1="+packet.pos1+"    pos2="+packet.pos2);
+			//ArcaneArchives.logger.info("Received particles packet\n    Gem is "+packet.color.name()+" "+packet.cut.name()+"\n    pos1="+packet.pos1+"    pos2="+packet.pos2);
 
 			if(packet.cut == ArcaneGemItem.GemCut.OVAL) {
 				if(packet.color == ArcaneGemItem.GemColor.BLACK) {

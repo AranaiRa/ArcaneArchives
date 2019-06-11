@@ -4,7 +4,6 @@ import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
@@ -23,12 +22,6 @@ public class ComponentContainmentFieldItem extends ItemTemplate {
 	@Override
 	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.component.containmentfield"));
-	}
-
-	@Override
-	@SuppressWarnings("deprecation")
-	public EnumRarity getRarity (ItemStack stack) {
-		return EnumRarity.UNCOMMON;
 	}
 
 	@Override

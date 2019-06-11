@@ -4,7 +4,6 @@ import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -23,12 +22,6 @@ import java.util.List;
 public class RadiantTankItem extends ItemBlock {
 	public RadiantTankItem (Block block) {
 		super(block);
-	}
-
-	@Override
-	@SuppressWarnings("deprecation")
-	public EnumRarity getRarity (ItemStack stack) {
-		return EnumRarity.EPIC;
 	}
 
 	@Nullable

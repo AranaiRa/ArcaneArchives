@@ -7,14 +7,11 @@ import com.aranaira.arcanearchives.blocks.unused.MatrixCrystalCore;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
-import com.aranaira.arcanearchives.init.BlockRegistry;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -34,20 +31,6 @@ public class ItemBlockTemplate extends ItemBlock {
 		super(block);
 
 		this.blockTemplate = block;
-	}
-
-	@Override
-	@SuppressWarnings("deprecation")
-	public EnumRarity getRarity (ItemStack stack) {
-		Block blockTemplate = ((ItemBlock) stack.getItem()).getBlock();
-		if (blockTemplate == BlockRegistry.RADIANT_TROVE || blockTemplate == BlockRegistry.RADIANT_TANK || blockTemplate == BlockRegistry.GEMCUTTERS_TABLE) {
-			return EnumRarity.EPIC;
-		}
-		if (blockTemplate == BlockRegistry.RADIANT_CHEST || blockTemplate == BlockRegistry.RADIANT_RESONATOR) {
-			return EnumRarity.RARE;
-		}
-
-		return EnumRarity.COMMON;
 	}
 
 	@Override
