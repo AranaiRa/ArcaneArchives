@@ -531,6 +531,9 @@
                 <stack item="arcanearchives:item_component_containmentfield"/> By using a <link ref="ContainmentField">Containment Field</link> while sneaking, the maximum capacity can be increased by 16 buckets. Up to 9 such upgrades can be applied total.
             </p>
             <p>
+                <stack item="arcanearchives:item_upgrade_devouringcharm"/> By using a <link ref="DevouringCharm">Devouring Charm</link> while sneaking, fluid added to the Tank in excess of its maximum capacity is destroyed.
+            </p>
+            <p>
                 <stack item="arcanearchives:item_scepterrevelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Radiant Tank will return what type of fluid is stored, its current and maximum capacity, and how many upgrades have been installed.
             </p>
             <p>
@@ -563,6 +566,9 @@
             </p>
             <p>
                 <stack item="arcanearchives:item_component_materialinterface"/> By using a <link ref="MaterialInterface">Material Interface</link> while sneaking, the maximum capacity can be increased by 64 stacks. Up to 9 such upgrades can be applied total.
+            </p>
+            <p>
+                <stack item="arcanearchives:item_upgrade_devouringcharm"/> By using a <link ref="DevouringCharm">Devouring Charm</link> while sneaking, items added to the Trove in excess of its maximum capacity are destroyed.
             </p>
             <p>
                 <stack item="arcanearchives:item_scepterrevelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Radiant Trove will return what type of item is stored, its current and maximum capacity, and how many upgrades have been installed.
@@ -636,10 +642,28 @@
         </section>
         <section>
             <page_title>
-                <title>Containment Field</title>
+                <title>Devouring Charm</title>
             </page_title>
             <p italics="true">
-                ...Lore fragment TBD
+                The Eternal University makes these simple charms available to all apprentices. Inside the mouth of the charm is a portal similar in many ways to a portal to the Nether, save that the connection is one-way.
+            </p><space height="4"/>
+            <p italics="true">
+                Anything inserted into the charm will be gone forever, sent to some hellish void to be destroyed. It is standard University procedure to toss leftover food scraps, experimental waste, creatures you no longer have a need for, and other refuse into your Charm.
+            </p><space height="4"/>
+            <p italics="true">
+                Though you have been given a handheld version for personal use, larger charms can be signed out for up to one day’s time with the permission of your Master.
+            </p><space height="4"/>
+            <p italics="true">
+                If you find yourself with a case of an <span bold="true">exceptionally</span> large mess, a room containing a Devouring Charm approximately eighty blocks in diameter can be signed out with a letter from your Master and the permission of at least two other Masters.
+            </p><space height="4"/>
+            <p italics="true">
+                Do show some discretion and at least <span italics="false">try</span> not to let anything come to that.
+            </p><space height="4"/>
+            <p italics="true">
+                —The Apprentice's Panoply
+            </p>
+            <p italics="true">
+                ...Form letter given to all Apprentices of the Eternal University
             </p>
         </section>
     </chapter>
