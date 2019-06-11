@@ -5,6 +5,7 @@ import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketArcaneGem;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
@@ -27,6 +28,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants.BlockFlags;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -97,14 +99,17 @@ public class RivertearItem extends ArcaneGemItem {
 
                     Vec3d end = new Vec3d(pos.offset(facing).getX(), pos.offset(facing).getY(), pos.offset(facing).getZ());
 
-                    world.setBlockState(pos.offset(facing), Blocks.WATER.getDefaultState(), 11);
-                    world.scheduleUpdate(pos.offset(facing), Blocks.WATER, 20);
+                    IBlockState water = Blocks.WATER.getDefaultState();
+                    world.setBlockState(pos.offset(facing), water);
+                    Blocks.WATER.neighborChanged(water, world, pos.offset(facing), Blocks.WATER, null);
 
-                    GemUtil.consumeCharge(player.getHeldItemMainhand(), 1);
+                    if (!player.capabilities.isCreativeMode) {
+                        GemUtil.consumeCharge(player.getHeldItemMainhand(), 1);
+                    }
 
                     PacketArcaneGem packet = new PacketArcaneGem(cut, color, start, end);
                     NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, start.x, start.y, start.z, 160);
-                    NetworkHandler.CHANNEL.sendToAllAround(packet, tp);
+                    NetworkHandler.CHANNEL.sendToAllTracking(packet, tp);
                 }
             }
         }

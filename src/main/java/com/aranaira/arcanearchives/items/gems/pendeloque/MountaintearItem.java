@@ -81,7 +81,7 @@ public class MountaintearItem extends ArcaneGemItem {
                     Vec3d end = new Vec3d(pos.offset(facing).getX(), pos.offset(facing).getY(), pos.offset(facing).getZ());
 
                     world.setBlockState(pos.offset(facing), Blocks.LAVA.getDefaultState(), 11);
-                    world.scheduleUpdate(pos.offset(facing), Blocks.LAVA, 20);
+                    Blocks.LAVA.neighborChanged(Blocks.LAVA.getDefaultState(), world, pos.offset(facing), Blocks.LAVA, null);
 
                     GemUtil.consumeCharge(player.getHeldItemMainhand(), 1);
 
