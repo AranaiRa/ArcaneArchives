@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.events;
 
 import com.aranaira.arcanearchives.client.gui.GUIGemcasting;
 import com.aranaira.arcanearchives.config.ConfigHandler;
+import com.aranaira.arcanearchives.config.client.ManifestConfig;
 import com.aranaira.arcanearchives.entity.AIResonatorSit;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.ItemRegistry;
@@ -10,6 +11,7 @@ import com.aranaira.arcanearchives.items.TomeOfArcanaItem;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketConfig.MaxDistance;
+import com.aranaira.arcanearchives.network.PacketConfig.RequestMaxDistance;
 import com.aranaira.arcanearchives.network.PacketRadiantAmphora;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
@@ -20,6 +22,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
@@ -46,9 +49,9 @@ public class AAEventHandler {
 	@SubscribeEvent
 	public static void onPlayerJoined (PlayerLoggedInEvent event) {
 		EntityPlayer player = event.player;
-		if (player.world.isRemote) {
-			MaxDistance packet = new MaxDistance(ConfigHandler.manifestSettings.MaxDistance);
-			PacketHandler.sendToServer(packet);
+		if (!player.world.isRemote) {
+			RequestMaxDistance packet = new RequestMaxDistance();
+			NetworkHandler.CHANNEL.sendTo(packet, (EntityPlayerMP) player);
 		}
 	}
 

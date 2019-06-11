@@ -18,6 +18,12 @@ public class ManifestEntry {
 	public int dimension;
 	public List<ItemEntry> itemEntries;
 	public List<ItemEntry> consolidated;
+	public boolean outOfRange = false;
+
+	public ManifestEntry (@Nonnull ItemStack stack, @Nonnull int dimension, @Nonnull List<ItemEntry> itemEntries, boolean outOfRange) {
+		this(stack, dimension, itemEntries);
+		this.outOfRange = outOfRange;
+	}
 
 	public ManifestEntry (@Nonnull ItemStack stack, @Nonnull int dimension, @Nonnull List<ItemEntry> itemEntries) {
 		this.stack = stack;

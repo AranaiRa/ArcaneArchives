@@ -1,24 +1,35 @@
 package com.aranaira.arcanearchives.config;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.client.gui.GUIManifest;
+import com.aranaira.arcanearchives.config.client.ManifestConfig;
+import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketConfig.MaxDistance;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import vazkii.botania.common.network.PacketHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-@Config(modid = ArcaneArchives.MODID)
+@Config(modid= ArcaneArchives.MODID, name = "arcanearchives")
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class ConfigHandler {
 	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
 	public static void onConfigChanged (ConfigChangedEvent.OnConfigChangedEvent event) {
 		if (event.getModID().equals(ArcaneArchives.MODID)) {
 			ConfigManager.sync(ArcaneArchives.MODID, Config.Type.INSTANCE);
 			parseColours();
-			MaxDistance packet = new MaxDistance(ConfigHandler.manifestSettings.MaxDistance);
-			PacketHandler.sendToServer(packet);
+			MaxDistance packet = new MaxDistance(ManifestConfig.MaxDistance);
+			NetworkHandler.CHANNEL.sendToServer(packet);
+
+			Minecraft minecraft = Minecraft.getMinecraft();
+			if (minecraft.currentScreen instanceof GUIManifest) {
+				((GUIManifest) minecraft.currentScreen).doRefresh();
+			}
 		}
 	}
 
@@ -27,9 +38,9 @@ public class ConfigHandler {
 
 	public static void parseColours () {
 		try {
-			MANIFEST_HIGHLIGHT = Long.decode(manifestSettings.ChestHighlight.toLowerCase()).intValue();
+			MANIFEST_HIGHLIGHT = Long.decode(ManifestConfig.ChestHighlight.toLowerCase()).intValue();
 		} catch (NumberFormatException event) {
-			ArcaneArchives.logger.error("Invalid manifest highlight colour: " + manifestSettings.ChestHighlight, event);
+			ArcaneArchives.logger.error("Invalid manifest highlight colour: " + ManifestConfig.ChestHighlight, event);
 		}
 	}
 
@@ -52,28 +63,6 @@ public class ConfigHandler {
 	@Config.Comment("Disable to use default Minecraft-style GUI elements. (Client Only)")
 	@Config.Name("Use Pretty GUIs")
 	public static boolean UsePrettyGUIs = true;
-
-	@Config.Comment("Client-side settings related to the Manifest")
-	@Config.Name("Manifest Settings")
-	public static ManifestSettings manifestSettings = new ManifestSettings();
-
-	public static class ManifestSettings {
-		@Config.Comment("Whether having a manifest in your inventory is required to open the screen")
-		@Config.Name("Manifest Presence")
-		public boolean ManifestPresence = true;
-
-		@Config.Comment("Disable overlay of grid on Manifest. (Client Only")
-		@Config.Name("Disable Manifest Grid")
-		public boolean DisableManifestGrid = true;
-
-		@Config.Comment("Radiant chest highlight colour (use HTML syntax i.e., #FFFFFF")
-		@Config.Name("Radiant Chest Highlight")
-		public String ChestHighlight = "#1922C4";
-
-		@Config.Comment("Maximum distance in blocks to track chests from for the Manifest")
-		@Config.Name("[Hive Network] Max track distance")
-		public int MaxDistance = 100;
-	}
 
 	//public static boolean bJarvisModeEnabled = false;
 

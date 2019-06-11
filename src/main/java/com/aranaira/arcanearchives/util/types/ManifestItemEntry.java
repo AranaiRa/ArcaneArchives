@@ -10,7 +10,7 @@ public class ManifestItemEntry {
 	public ItemStack stack;
 	public int dim;
 	public ManifestEntry.ItemEntry entry;
-	public int distance = -1;
+	public boolean outOfRange = false;
 
 	public ManifestItemEntry (ItemStack stack, int dim, ManifestEntry.ItemEntry entry) {
 		this.stack = stack;
@@ -18,8 +18,8 @@ public class ManifestItemEntry {
 		this.entry = entry;
 	}
 
-	public ManifestItemEntry (ItemStack stack, int dim, ManifestEntry.ItemEntry entry, int distance) {
+	public ManifestItemEntry (ItemStack stack, int dim, ManifestEntry.ItemEntry entry, boolean outOfRange) {
 		this(stack, dim, entry);
-		this.distance = distance;
+		this.outOfRange = outOfRange;
 	}
 }

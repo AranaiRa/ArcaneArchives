@@ -1,23 +1,16 @@
 package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.data.ClientNetwork;
-import com.aranaira.arcanearchives.data.HiveNetwork;
+import com.aranaira.arcanearchives.config.client.ManifestConfig;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
-import com.aranaira.arcanearchives.network.PacketNetworks.SynchroniseType;
+import com.aranaira.arcanearchives.network.NetworkHandler.ClientHandler;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PacketConfig {
 	public static class MaxDistance implements IMessage {
@@ -58,6 +51,27 @@ public class PacketConfig {
 				}
 
 				network.setMaxDistance(message.distance);
+			}
+		}
+	}
+
+	public static class RequestMaxDistance implements IMessage {
+		public RequestMaxDistance () {
+		}
+
+		@Override
+		public void fromBytes (ByteBuf buf) {
+		}
+
+		@Override
+		public void toBytes (ByteBuf buf) {
+		}
+
+		public static class Handler extends ClientHandler<RequestMaxDistance> {
+			@Override
+			public void processMessage (RequestMaxDistance message, MessageContext ctx) {
+				MaxDistance packet = new MaxDistance(ManifestConfig.MaxDistance);
+				NetworkHandler.CHANNEL.sendToServer(packet);
 			}
 		}
 	}
