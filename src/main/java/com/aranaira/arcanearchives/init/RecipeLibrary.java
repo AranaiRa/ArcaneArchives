@@ -9,6 +9,7 @@ import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import com.aranaira.arcanearchives.util.types.IngredientStack;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -28,6 +29,7 @@ public class RecipeLibrary {
 	public static GCTRecipe COMPONENT_MATRIXBRACE_RECIPE;
 	public static GCTRecipe COMPONENT_RADIANTDUST_RECIPE;
 	public static GCTRecipe COMPONENT_SCINTILLATINGINLAY_RECIPE;
+	public static GCTRecipe UPGRADE_DEVOURINGCHARM_RECIPE;
 	public static GCTRecipe MATRIX_CORE_RECIPE;
 	public static GCTRecipe MATRIX_STORAGE_RECIPE;
 	public static GCTRecipe MATRIX_REPOSITORY_RECIPE;
@@ -105,6 +107,8 @@ public class RecipeLibrary {
 		COMPONENT_MATERIALINTERFACE_RECIPE = GCTRecipeList.makeAndAddRecipe("materialinterface", new ItemStack(ItemRegistry.COMPONENT_MATERIALINTERFACE, 1), ItemRegistry.COMPONENT_SCINTILLATINGINLAY, new IngredientStack("ingotGold"), ItemRegistry.CUT_RADIANT_QUARTZ);
 
 		COMPONENT_CONTAINMENTFIELD_RECIPE = GCTRecipeList.makeAndAddRecipe("containmentfield", new ItemStack(ItemRegistry.COMPONENT_CONTAINMENTFIELD, 1), ItemRegistry.COMPONENT_SCINTILLATINGINLAY, new IngredientStack("ingotGold", 2), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 2));
+
+		UPGRADE_DEVOURINGCHARM_RECIPE = GCTRecipeList.makeAndAddRecipe("upgrade_devouringcharm", new ItemStack(ItemRegistry.DEVOURING_CHARM, 4), new IngredientStack("ingotGold", 1), new IngredientStack(Blocks.OBSIDIAN, 2), new IngredientStack(Items.GUNPOWDER, 1));
 
 		RIVERTEAR_RECIPE = GCTRecipeList.makeAndAddRecipe("rivertear_gct", new ItemStack(ItemRegistry.RIVERTEAR), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 1), new IngredientStack(Ingredient.fromItem(Items.SUGAR), 4), new IngredientStack(Ingredient.fromItem(Items.WATER_BUCKET)), new IngredientStack(Ingredient.fromItem(Items.WATER_BUCKET)));
 
