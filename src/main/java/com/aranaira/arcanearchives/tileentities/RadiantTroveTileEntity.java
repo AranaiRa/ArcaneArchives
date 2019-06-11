@@ -21,9 +21,8 @@ import java.util.UUID;
 
 public class RadiantTroveTileEntity extends ManifestTileEntity {
 	private final TroveItemHandler inventory = new TroveItemHandler(this::update);
-	private int lastTick = 0;
-
-	public Object2IntOpenHashMap<UUID> rightClickCache = new Object2IntOpenHashMap<>();
+	private long lastClick = 0;
+	private UUID lastUUID = null;
 
 	public void update () {
 		if (world.isRemote) {
@@ -39,6 +38,9 @@ public class RadiantTroveTileEntity extends ManifestTileEntity {
 
 	public void onRightClickTrove (EntityPlayer player) {
 		ItemStack mainhand = player.getHeldItemMainhand();
+		if (mainhand.isEmpty()) {
+			mainhand = player.getHeldItemOffhand();
+		}
 		if (mainhand.isEmpty()) {
 			return;
 		}
@@ -76,16 +78,12 @@ public class RadiantTroveTileEntity extends ManifestTileEntity {
 		UUID playerId = player.getUniqueID();
 		boolean doubleClick = false;
 
-		if (rightClickCache.containsKey(playerId)) {
-			int lastClick = rightClickCache.getInt(playerId);
-			if ((player.ticksExisted - lastClick) <= 25 && (player.ticksExisted - lastClick) >= 0) {
-				doubleClick = true;
-			} else {
-				rightClickCache.put(playerId, player.ticksExisted);
-			}
-		} else {
-			rightClickCache.put(playerId, player.ticksExisted);
+		if (lastUUID == playerId && (System.currentTimeMillis() - lastClick) <= 15) {
+			doubleClick = true;
 		}
+
+		lastUUID = playerId;
+		lastClick = System.currentTimeMillis();
 
 		ItemStack result = inventory.insertItem(0, mainhand, false);
 
