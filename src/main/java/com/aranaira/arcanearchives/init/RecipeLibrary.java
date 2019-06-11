@@ -46,6 +46,8 @@ public class RecipeLibrary {
 	public static GCTRecipe LETTER_OF_RESIGNATION_RECIPE;
 	public static GCTRecipe WRIT_OF_EXPULSION_RECIPE;
 
+	public static GCTRecipe MURDERGLEAM_RECIPE;
+	public static GCTRecipe MUNCHSTONE_RECIPE;
 	public static GCTRecipe MINDSPINDLE_RECIPE;
 	public static GCTRecipe RIVERTEAR_RECIPE;
 	public static GCTRecipe PHOENIXWAY_RECIPE;
@@ -119,6 +121,10 @@ public class RecipeLibrary {
 		RADIANT_AMPHORA_RECIPE = GCTRecipeList.makeAndAddRecipe("amphora_gct", new ItemStack(ItemRegistry.RADIANT_AMPHORA), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 4), new ItemStack(Items.CLAY_BALL, 4), new ItemStack(Items.GOLD_NUGGET, 4));
 
 		GEM_SOCKET_RECIPE = GCTRecipeList.makeAndAddRecipe("gemsocket_gct", new ItemStack(ItemRegistry.BAUBLE_GEMSOCKET), new ItemStack(ItemRegistry.COMPONENT_SCINTILLATINGINLAY, 1), new ItemStack(Items.GOLD_NUGGET, 4), new ItemStack(Items.BOWL, 1), new ItemStack(Items.LEATHER, 1));
+
+		MURDERGLEAM_RECIPE = GCTRecipeList.makeAndAddRecipe("murdergleam_gct", new ItemStack(ItemRegistry.MURDERGLEAM), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 1), new IngredientStack("dyeYellow", 4), new IngredientStack(Items.DIAMOND_SWORD), new IngredientStack(Ingredient.fromItem(Items.BLAZE_POWDER), 2));
+
+		MUNCHSTONE_RECIPE = GCTRecipeList.makeAndAddRecipe("munchstone_gct", new ItemStack(ItemRegistry.MUNCHSTONE), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 1), new IngredientStack("dyeBlack", 4), new IngredientStack(Items.CAKE), new IngredientStack(Ingredient.fromItem(Items.SPECKLED_MELON), 2));
 
 		MINDSPINDLE_RECIPE = GCTRecipeList.makeAndAddRecipe("mindspindle_gct", new ItemStack(ItemRegistry.MINDSPINDLE), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 1), new IngredientStack("dyeGreen", 4), new IngredientStack(Items.ENCHANTED_BOOK), new IngredientStack(Ingredient.fromItem(Items.EMERALD), 2));
 

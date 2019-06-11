@@ -39,6 +39,7 @@
         <stack item="arcanearchives:item_component_scintillatinginlay">ScintillatingInlay</stack>
         <stack item="arcanearchives:item_writofexpulsion">WritExpulsion</stack>
 
+        <stack item="arcanearchives:item_murdergleam">Murdergleam</stack>
         <stack item="arcanearchives:item_mindspindle">Mindspindle</stack>
         <stack item="arcanearchives:item_mountaintear">Mountaintear</stack>
         <stack item="arcanearchives:item_rivertear">Rivertear</stack>
@@ -89,6 +90,8 @@
             <page_title>
                 <title>Arcane Gems</title>
             </page_title>
+            <p><stack item="arcanearchives:item_murdergleam"/> <link ref="Murdergleam">Murdergleam</link></p>
+            <space height="8"/>
             <p><stack item="arcanearchives:item_munchstone"/> <link ref="Munchstone">Munchstone</link></p>
             <space height="8"/>
             <p><stack item="arcanearchives:item_mindspindle"/> <link ref="Mindspindle">Mindspindle</link></p>
@@ -697,6 +700,7 @@
                 The following Arcane Gems have passive effects:
             </p>
             <p align="center">
+                <stack item="arcanearchives:item_murdergleam" scale="2.0"/>
                 <stack item="arcanearchives:item_mindspindle" scale="2.0"/>
                 <stack item="arcanearchives:item_phoenixway" scale="2.0"/>
             </p>
@@ -1158,6 +1162,32 @@
             </p>
             <p>
                 ...1670, Spring’s Height
+            </p>
+        </section>
+    </chapter>
+
+    <chapter id="Murdergleam">
+        <section>
+            <page_title>
+                <title>Murdergleam</title>
+            </page_title>
+            <p align="center"><stack item="arcanearchives:item_murdergleam" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                A Murdergleam is an Arcane Gem formed from a yellow-spectrum piece of <link ref="CutQuartz">Shaped Radiant Quartz</link> in an asscher cut.
+            </p>
+            <p>
+                When toggled on, a Murdergleam guarantees that all of your attacks will be critical hits. Each attack drains a point of charge (even attacks that deal no damage due to attacking too quickly). The gem can be toggled on or off by left clicking.
+            </p>
+            <p>
+                When a Murdergleam runs out of charge, it automatically toggles itself off. Likewise, when it reaches full charge, it automatically toggles itself on.
+            </p>
+            <p>
+                <image src="arcanearchives:items/gems/asscher/dun" tw="16" th="16"/> To recharge a dun Murdergleam, land traditional critical hits while the gem is toggled off.
+            </p>
+            <horizontal_rule/>
+            <p>
+                <stack item="arcanearchives:gemcutters_table" /> Murdergleams can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
         </section>
     </chapter>

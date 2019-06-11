@@ -26,8 +26,7 @@ public class NetworkHandler {
 		registerPacks(PacketConfig.RequestMaxDistance.Handler.class, PacketConfig.RequestMaxDistance.class, Side.CLIENT);
 		registerPacks(PacketRadiantAmphora.Handler.class, PacketRadiantAmphora.class, Side.SERVER);
 		registerPacks(PacketArcaneGem.Handler.class, PacketArcaneGem.class, Side.CLIENT);
-		//registerPacks(PacketHives.AddMember.Handler.class, PacketHives.AddMember.class, Side.SERVER);
-		//registerPacks(PacketHives.RemoveMember.Handler.class, PacketHives.RemoveMember.class, Side.SERVER);
+		registerPacks(PacketArcaneGemToggle.Handler.class, PacketArcaneGemToggle.class, Side.SERVER);
 	}
 
 	private static <REQ extends IMessage, REPLY extends IMessage> void registerPacks (Class<? extends IMessageHandler<REQ, REPLY>> messageHandler, Class<REQ> requestMessageType, Side side) {

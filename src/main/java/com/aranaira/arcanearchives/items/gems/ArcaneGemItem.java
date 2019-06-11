@@ -60,11 +60,19 @@ public abstract class ArcaneGemItem extends ItemTemplate {
     public int getMaxChargeUpgraded() { return maxChargeUpgraded; }
 
     protected String getTooltipData(ItemStack stack) {
-        String str;
+        String str = "";
+
+        if(hasToggleMode()) {
+            if(GemUtil.isToggledOn(stack))
+                str += "[On] ";
+            else
+                str += "[Off] ";
+        }
+
         if(GemUtil.hasUnlimitedCharge(stack))
-            str = "[Unlimited]";
+            str += "[Unlimited]";
         else
-            str = "["+GemUtil.getCharge(stack)+" / "+GemUtil.getMaxCharge(stack)+"]";
+            str += "["+GemUtil.getCharge(stack)+" / "+GemUtil.getMaxCharge(stack)+"]";
 
         byte upgrades = GemUtil.getUpgrades(stack);
         if((upgrades & UPGRADE_MATTER) == UPGRADE_MATTER)
@@ -293,7 +301,7 @@ public abstract class ArcaneGemItem extends ItemTemplate {
                 currentCharge += amount;
                 if(currentCharge > maximum) currentCharge = maximum;
             }
-            nbt.setInteger("charge", maximum);
+            nbt.setInteger("charge", currentCharge);
 
             return currentCharge >= maximum;
         }
@@ -340,6 +348,11 @@ public abstract class ArcaneGemItem extends ItemTemplate {
             }
         }
 
+        /**
+         * Convenience method to check whether a gem is out of charge
+         * @param stack The gem to check
+         * @return
+         */
         public static boolean isChargeEmpty(ItemStack stack) {
             NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
             if(!hasUnlimitedCharge(stack)) {
@@ -348,12 +361,36 @@ public abstract class ArcaneGemItem extends ItemTemplate {
             else return false;
         }
 
+        /**
+         * Checks whether the gem is toggled on
+         * @param stack The gem to check
+         * @return The gem's toggle status. If the gem has no toggle state, always returns false.
+         */
         public static boolean isToggledOn(ItemStack stack) {
+            ArcaneGemItem agi = (ArcaneGemItem)stack.getItem();
+            if(agi.hasToggleMode()) {
+                NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+                if (!nbt.hasKey("toggle")) {
+                    nbt.setBoolean("toggle", false);
+                }
+                return nbt.getBoolean("toggle");
+            }
+            return false;
+        }
+
+        /**
+         * Switches whether the gem is toggled on or off.
+         * @param stack The gem to swap the toggle mode of.
+         */
+        public static void swapToggle(ItemStack stack) {
             NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
             if(!nbt.hasKey("toggle")) {
-                nbt.setBoolean("toggle", false);
+                nbt.setBoolean("toggle", true);
             }
-            return nbt.getBoolean("toggle");
+            else {
+                nbt.setBoolean("toggle", !nbt.getBoolean("toggle"));
+            }
+            stack.setTagCompound(nbt);
         }
 
         /**
