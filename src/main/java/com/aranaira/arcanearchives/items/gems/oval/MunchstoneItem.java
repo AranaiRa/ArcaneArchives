@@ -57,7 +57,7 @@ public class MunchstoneItem extends ArcaneGemItem {
             new EdibleBlock(Blocks.YELLOW_FLOWER,        2, 2),
             new EdibleBlock(Blocks.REEDS,                4, 4),
             new EdibleBlock(Blocks.SAPLING,              2, 2),
-            new EdibleBlock(Blocks.TALLGRASS,            2, 2),
+            new EdibleBlock(Blocks.TALLGRASS,            1, 1),
             new EdibleBlock(Blocks.VINE,                 2, 2),
             new EdibleBlock(Blocks.WATERLILY,            4, 4),
             new EdibleBlock(Blocks.WHEAT,                4, 4),
