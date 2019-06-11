@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.config;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.gui.GUIManifest;
+import com.aranaira.arcanearchives.config.client.ItemTrackingConfig;
 import com.aranaira.arcanearchives.config.client.ManifestConfig;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketConfig.MaxDistance;
@@ -14,7 +15,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@Config(modid= ArcaneArchives.MODID, name = "arcanearchives")
+@Config(modid= ArcaneArchives.MODID, name = "General Settings")
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class ConfigHandler {
 	@SubscribeEvent
@@ -38,19 +39,15 @@ public class ConfigHandler {
 
 	public static void parseColours () {
 		try {
-			MANIFEST_HIGHLIGHT = Long.decode(ManifestConfig.ChestHighlight.toLowerCase()).intValue();
+			MANIFEST_HIGHLIGHT = Long.decode(ItemTrackingConfig.ChestHighlight.toLowerCase()).intValue();
 		} catch (NumberFormatException event) {
-			ArcaneArchives.logger.error("Invalid manifest highlight colour: " + ManifestConfig.ChestHighlight, event);
+			ArcaneArchives.logger.error("Invalid manifest highlight colour: " + ItemTrackingConfig.ChestHighlight, event);
 		}
 	}
 
 	@Config.Comment("Limit of resonators per player's network")
 	@Config.Name("Resonator Limit")
 	public static int ResonatorLimit = 3;
-
-	/*@Config.Comment("Limit of matrix cores per player's network")
-	@Config.Name("Matrix Core Limit")
-	public static int MatrixCoreLimit = 1;*/
 
 	@Config.Comment("Number of ticks it takes to create raw quartz")
 	@Config.Name("Resonator Time")

@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.mixins;
 
 import com.aranaira.arcanearchives.config.ConfigHandler;
+import com.aranaira.arcanearchives.config.client.ItemTrackingConfig;
 import com.aranaira.arcanearchives.events.LineHandler;
 import com.aranaira.arcanearchives.util.ManifestTracking;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -20,6 +21,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class MixinGuiContainer {
 	@Inject(method = "drawSlot", at = @At(value = "HEAD"))
 	private void onDrawSlot (Slot slot, CallbackInfo callbackInfo) {
+		if (ItemTrackingConfig.DisableMixinHighlight) return;
+
 		ItemStack stack = slot.getStack();
 		if (!stack.isEmpty()) {
 			if (ManifestTracking.matches(stack)) {
