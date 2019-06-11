@@ -16,7 +16,10 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiPageButtonList;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;
@@ -202,10 +205,42 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 
 			if (entry.getDimension() != player.dimension || entry.outOfRange) {
 				GlStateManager.disableDepth();
-				drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, OTHER_DIMENSION);
+				drawRectWithBlend(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, OTHER_DIMENSION);
 				GlStateManager.enableDepth();
 			}
 		}
+	}
+
+	public static void drawRectWithBlend (int left, int top, int right, int bottom, int color) {
+		if (left < right) {
+			int i = left;
+			left = right;
+			right = i;
+		}
+
+		if (top < bottom) {
+			int j = top;
+			top = bottom;
+			bottom = j;
+		}
+
+		float f3 = (float) (color >> 24 & 255) / 255.0F;
+		float f = (float) (color >> 16 & 255) / 255.0F;
+		float f1 = (float) (color >> 8 & 255) / 255.0F;
+		float f2 = (float) (color & 255) / 255.0F;
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder bufferbuilder = tessellator.getBuffer();
+		GlStateManager.enableBlend();
+		GlStateManager.disableTexture2D();
+		GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+		GlStateManager.color(f, f1, f2, f3);
+		bufferbuilder.begin(7, DefaultVertexFormats.POSITION);
+		bufferbuilder.pos((double) left, (double) bottom, 0.0D).endVertex();
+		bufferbuilder.pos((double) right, (double) bottom, 0.0D).endVertex();
+		bufferbuilder.pos((double) right, (double) top, 0.0D).endVertex();
+		bufferbuilder.pos((double) left, (double) top, 0.0D).endVertex();
+		tessellator.draw();
+		GlStateManager.enableTexture2D();
 	}
 
 	public void doRefresh () {
