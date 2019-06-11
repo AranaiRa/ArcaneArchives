@@ -659,10 +659,10 @@
             <p italics="true">
                 Do show some discretion and at least <span italics="false">try</span> not to let anything come to that.
             </p><space height="4"/>
-            <p italics="true">
-                —The Apprentice's Panoply
+            <p bold="true">
+                The Apprentice's Panoply
             </p>
-            <p italics="true">
+            <p>
                 ...Form letter given to all Apprentices of the Eternal University
             </p>
         </section>
@@ -1005,8 +1005,39 @@
                 <title>Scepter of Revelation</title>
             </page_title>
             <p italics="true">
-                ...Lore fragment TBD
+                A series of simple divination spells grants this scepter a number of useful information divining abilities. It is standard University procedure to gather data from your experiments using primarily your Scepter of Revelation.
+            </p><space height="4"/>
+            <p italics="true">
+                Should your experiments be likely to result in personal injury, your Scepter of Revelation is imbued with a danger-sensing spell and will begin to vibrate wildly. In such a case, you have approximately sixty seconds to vacate the premises.
+            </p><space height="4"/>
+            <p italics="true">
+                The Eternal University is not responsible for healing injuries sustained by careless laboratory procedure.
+            </p><space height="4"/>
+            <p bold="true">
+                The Apprentice's Panoply
             </p>
+            <p>
+                ...Form letter given to all Apprentices of the Eternal University
+            </p><space height="4"/>
+            <horizontal_rule/>
+            <p italics="true">
+                Interesting. The Scepter of Revelation’s ability to divine information appears to be greatly enhanced when the crystalline material (which I have dubbed Radiant Quartz) is attached as a prism of sorts.
+            </p><space height="4"/>
+            <p italics="true">
+                Unlike my previous instruments, using this newly improved Scepter of Revelation is returning consistent results from my storage contraption.
+            </p><space height="4"/>
+            <p italics="true">
+                Unfortunately, it seems to have lost its precognitive warning capabilities.
+            </p><space height="4"/>
+            <p bold="true">
+                Addendum
+            </p>
+            <p>
+                ...Sharaveda
+            </p>
+            <p>
+                ...1665, Summer's Birth
+            </p><space height="16"/>
         </section>
     </chapter>
 
@@ -1072,14 +1103,14 @@
             <p italics="true">
                 A judgment has been reached by a majority of the Quadrate. You have strayed from the path of Wisdom, and your right to Enlightenment is forfeit. You are banished from the Eternal University, and no longer bear the title of Master. You may no longer practice your craft or step foot into the University on pain of execution.
             </p><space height="4"/>
-            <p italics="true">
-                —Kurst of the Green Flame, Tetrarch of Research
+            <p bold="true">
+                Final statement at Sharaveda’s disciplinary inquest
             </p>
-            <p italics="true">
-                —Final statement at Sharaveda’s disciplinary inquest
+            <p>
+                ...Kurst of the Green Flame, Tetrarch of Research
             </p>
-            <p italics="true">
-                —1670, Spring’s Height
+            <p>
+                ...1670, Spring’s Height
             </p>
         </section>
     </chapter>
