@@ -24,6 +24,7 @@
         <stack item="arcanearchives:raw_quartz">DecorativeBlocks:RawQuartzCluster</stack>
 
         <stack item="arcanearchives:item_component_containmentfield">ContainmentField</stack>
+        <stack item="arcanearchives:item_upgrade_devouringcharm">DevouringCharm</stack>
         <stack item="arcanearchives:item_letterofinvitation">LetterInvitation</stack>
         <stack item="arcanearchives:item_letterofresignation">LetterResignation</stack>
         <stack item="arcanearchives:item_manifest">Manifest</stack>
@@ -63,6 +64,7 @@
                 <title>Items</title>
             </page_title>
             <p><stack item="arcanearchives:item_component_containmentfield"/> <link ref="ContainmentField">Containment Field</link></p>
+            <p><stack item="arcanearchives:item_upgrade_devouringcharm"/> <link ref="DevouringCharm">Devouring Charm</link></p>
             <p><stack item="arcanearchives:item_letterofinvitation"/> <link ref="LetterInvitation">Letter of Invitation</link></p>
             <p><stack item="arcanearchives:item_letterofresignation"/> <link ref="LetterResignation">Letter of Resignation</link></p>
             <p><stack item="arcanearchives:item_manifest"/> <link ref="Manifest">Manifest</link></p>
@@ -599,6 +601,37 @@
             <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Containment Fields can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+            </p>
+        </section>
+        <section>
+            <page_title>
+                <title>Containment Field</title>
+            </page_title>
+            <p italics="true">
+                ...Lore fragment TBD
+            </p>
+        </section>
+    </chapter>
+
+    <chapter id="DevouringCharm">
+        <section>
+            <page_title>
+                <title>Devouring Charm</title>
+            </page_title>
+            <p align="center"><stack item="arcanearchives:item_upgrade_devouringcharm" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                A Devouring Charm allows you to destroy items or empty fluids out of a bucket. Devouring Charms are also an optional upgrade component.
+            </p>
+            <p>
+                <stack item="arcanearchives:radiant_tank"/> When used to upgrade a <link ref="RadiantTank">Radiant Tanks</link>, any fluid inserted over the tank's maximum capacity is destroyed.
+            </p>
+            <p>
+                <stack item="arcanearchives:radiant_trove"/> When used to upgrade a <link ref="RadiantTrove">Radiant Trove</link>, any items inserted beyond the Trove's maximum capacity are destroyed.
+            </p>
+            <horizontal_rule/>
+            <p>
+                <stack item="arcanearchives:gemcutters_table" /> Devouring Charms can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
         </section>
         <section>
