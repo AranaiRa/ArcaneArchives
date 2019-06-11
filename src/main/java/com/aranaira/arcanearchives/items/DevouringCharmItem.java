@@ -22,7 +22,7 @@ public class DevouringCharmItem extends ItemTemplate {
 
     @Override
     public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.devouringcharm"));
+        tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.upgrade.devouringcharm"));
     }
 
     @Override
