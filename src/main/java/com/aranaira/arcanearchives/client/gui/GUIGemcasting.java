@@ -107,6 +107,8 @@ public class GUIGemcasting {
             if(mode == EnumGemGuiMode.SOCKET) {
                 gemPosX += 28;
                 gemPosY += 23;
+                if(gem.hasToggleMode())
+                    gemPosX += 7;
             }
 
             if(gem.getGemCut() == ArcaneGemItem.GemCut.ASSCHER)
