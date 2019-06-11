@@ -16,7 +16,10 @@ import com.aranaira.arcanearchives.items.RadiantAmphoraItem;
 import com.aranaira.arcanearchives.items.RadiantAmphoraItem.AmphoraUtil;
 import com.aranaira.arcanearchives.items.TomeOfArcanaItem;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
+import com.aranaira.arcanearchives.items.gems.asscher.MurdergleamItem;
 import com.aranaira.arcanearchives.network.NetworkHandler;
+import com.aranaira.arcanearchives.network.PacketArcaneGem;
+import com.aranaira.arcanearchives.network.PacketArcaneGemToggle;
 import com.aranaira.arcanearchives.network.PacketConfig.MaxDistance;
 import com.aranaira.arcanearchives.network.PacketConfig.RequestMaxDistance;
 import com.aranaira.arcanearchives.network.PacketRadiantAmphora;
@@ -42,13 +45,17 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDestroyBlockEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Optional;
+import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -136,6 +143,15 @@ public class AAEventHandler {
 		if (item == ItemRegistry.RADIANT_AMPHORA) {
 			PacketRadiantAmphora packet = new PacketRadiantAmphora();
 			NetworkHandler.CHANNEL.sendToServer(packet);
+		}
+		if (item instanceof ArcaneGemItem) {
+			ItemStack stack = event.getEntityPlayer().getHeldItemMainhand();
+			ArcaneGemItem agi = (ArcaneGemItem)stack.getItem();
+
+			if(agi.hasToggleMode()) {
+				PacketArcaneGemToggle packet = new PacketArcaneGemToggle();
+				NetworkHandler.CHANNEL.sendToServer(packet);
+			}
 		}
 	}
 
@@ -268,6 +284,31 @@ public class AAEventHandler {
 		if (event.getEntity() instanceof EntityOcelot) {
 			EntityOcelot ocelot = (EntityOcelot) event.getEntity();
 			ocelot.tasks.addTask(6, new AIResonatorSit(ocelot, 0.8D));
+		}
+	}
+
+	@SubscribeEvent
+	public static void onCriticalHitLanded (CriticalHitEvent event) {
+		if(!event.getEntityPlayer().world.isRemote) {
+			ArcaneArchives.logger.info(event.getEntityPlayer() + " attacked " + event.getTarget());
+			for (ItemStack stack : ArcaneGemItem.GemUtil.getAvailableGems(event.getEntityPlayer())) {
+				if(stack.getItem() instanceof MurdergleamItem) {
+					if(ArcaneGemItem.GemUtil.isToggledOn(stack) && ArcaneGemItem.GemUtil.getCharge(stack) > 0) {
+						event.setDamageModifier(1.5f);
+						event.setResult(Event.Result.ALLOW);
+						ArcaneGemItem.GemUtil.consumeCharge(stack, 1);
+						if(ArcaneGemItem.GemUtil.getCharge(stack) == 0) {
+							ArcaneGemItem.GemUtil.swapToggle(stack);
+						}
+					}
+					else if (event.isVanillaCritical()) {
+						ArcaneGemItem.GemUtil.restoreCharge(stack, 3);
+						if(ArcaneGemItem.GemUtil.getCharge(stack) == ArcaneGemItem.GemUtil.getMaxCharge(stack)) {
+							ArcaneGemItem.GemUtil.swapToggle(stack);
+						}
+					}
+				}
+			}
 		}
 	}
 }

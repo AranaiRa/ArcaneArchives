@@ -17,6 +17,7 @@ item.item_letterofresignation.name=Letter of Resignation
 item.item_writofexpulsion.name=Writ of Expulsion
 
 item.item_fabrial.name=Fabrial
+item.item_murdergleam.name=Murdergleam
 item.item_homingstone.name=Homingstone
 item.item_munchstone.name=Munchstone
 item.item_glyphspindle.name=Glyphspindle
@@ -132,6 +133,8 @@ arcanearchives.tooltip.temprecipe2=It will be changed in a later version.
 arcanearchives.tooltip.shouldnothave=This block should not be acquirable.
 arcanearchives.tooltip.creativeonly=This item is currently only available through Creative Mode.
 arcanearchives.tooltip.gemcharge=Charge
+arcanearchives.tooltip.gemtoggle.active=On
+arcanearchives.tooltip.gemtoggle.inactive=Off
 arcanearchives.tooltip.gemupgrade.matter=MATTER
 arcanearchives.tooltip.gemupgrade.power=POWER
 arcanearchives.tooltip.gemupgrade.space=SPACE
@@ -181,6 +184,7 @@ arcanearchives.tooltip.item.scepterofrevelation=Queries information about device
 arcanearchives.tooltip.item.scepterofmanipulation=Modifies properties of certain blocks. Use while sneaking.
 arcanearchives.tooltip.item.tomeofarcana=Provides documentation for Arcane Archives.
 
+arcanearchives.tooltip.item.murdergleam=Forces all attacks to become critical hits.
 arcanearchives.tooltip.item.munchstone=Consumes plant based blocks to restore hunger.
 arcanearchives.tooltip.item.mindspindle=Increases the amount of experience in picked up experience globes.
 arcanearchives.tooltip.item.mountaintear=Slowly creates infinite lava when placed in a Lightwell.
