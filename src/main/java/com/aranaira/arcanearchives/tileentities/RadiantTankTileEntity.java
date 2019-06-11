@@ -90,7 +90,9 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity {
 
 	public void deserializeStack (NBTTagCompound tag) {
 		this.upgrades = tag.getInteger("upgrades");
+		this.validateCapacity();
 		this.inventory.readFromNBT(tag.getCompoundTag(FluidHandlerItemStack.FLUID_NBT_KEY));
+		this.validateCapacity();
 	}
 
 	@Override
