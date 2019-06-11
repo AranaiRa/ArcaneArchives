@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.util;
 
 import com.aranaira.arcanearchives.inventory.handlers.TroveItemHandler;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
+import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -24,6 +25,11 @@ public class ItemUtilities {
 			TroveItemHandler handler = trove.getInventory();
 			float f = handler.getMaxCount() / (float) handler.getCount();
 			return MathHelper.floor(f * 14.0F) + (handler.getCount() > 0 ? 1 : 0);
+		} else if (te instanceof RadiantTankTileEntity) {
+			RadiantTankTileEntity tank = (RadiantTankTileEntity) te;
+			int amount = tank.getInventory().getFluidAmount();
+			float f = tank.getCapacity() / (float) amount;
+			return MathHelper.floor(f * 14.0F) + (amount > 0 ? 1 : 0);
 		}
 		return 0;
 	}

@@ -127,12 +127,15 @@ public class RadiantTrove extends BlockDirectionalTemplate {
 					ItemStack stack = handler.extractItem(0, 64, false);
 					spawnAsEntity(world, pos, stack);
 				}
+				// TODO: Also when change the upgrade system remove these
 				if (handler.getUpgrades() != 0) {
 					ItemStack stack = new ItemStack(ItemRegistry.COMPONENT_MATERIALINTERFACE, handler.getUpgrades(), 0);
 					spawnAsEntity(world, pos, stack);
 				}
 			}
 		}
+
+		world.updateComparatorOutputLevel(pos, this);
 		super.breakBlock(world, pos, state);
 	}
 
