@@ -326,11 +326,11 @@
             <p italics="true">
                 A good riddance, I say. To the podia, the old masters, and everything their close-minded reign at the University brought forth.
             </p><space height="4"/>
-            <p italics="true">
-                —Personal musings of Sharaveda
+            <p bole="true">
+                Personal musings of Sharaveda
             </p>
-            <p italics="true">
-                —1663, Summer's End
+            <p>
+                ...1663, Summer's End
             </p>
         </section>
     </chapter>
@@ -429,11 +429,11 @@
             <p italics="true" condition="ml_astralsorcery">
                 It appears my opinions on the usefulness of the <span italics="false">Stalwart Oak Abjuration</span> compared to Infused Wood were incorrect. I believe I owe Etrea a drink.
             </p><space height="4"/>
-            <p italics="true">
-                —Research Journal of Sharaveda
+            <p bold="true">
+                Research Journal of Sharaveda
             </p>
-            <p italics="true">
-                —1665, Autumn’s Birth
+            <p>
+                ...1665, Autumn’s Birth
             </p>
         </section>
     </chapter>
@@ -513,14 +513,14 @@
             <p align="center">
                 <image src="arcanearchives:gui/guidebook/lore_resonator" tw="256" th="200"/>
             </p><space height="16"/>
-            <p italics="true">
-                —Founds in the notes of Sharaveda, Deceased
+            <p bold="true">
+                Found in the notes of Sharaveda, Deceased
             </p>
-            <p italics="true">
-                —Annotation made by Traylin, grandson of the deceased
+            <p>
+                ...Annotation made by Traylin, former Apprentice of the deceased
             </p>
-            <p italics="true">
-                —1672, Winter's Birth
+            <p>
+                ...1672, Winter's Birth
             </p>
         </section>
     </chapter>
