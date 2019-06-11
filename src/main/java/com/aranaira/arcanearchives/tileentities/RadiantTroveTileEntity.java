@@ -22,6 +22,7 @@ import java.util.UUID;
 public class RadiantTroveTileEntity extends ManifestTileEntity {
 	private final TroveItemHandler inventory = new TroveItemHandler(this::update);
 	private long lastClick = 0;
+	private int lastTick = 0;
 	private UUID lastUUID = null;
 
 	public void update () {
