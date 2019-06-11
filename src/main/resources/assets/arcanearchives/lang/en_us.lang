@@ -32,6 +32,8 @@ item.item_component_matrixbrace.name=Matrix Brace
 item.item_component_radiantdust.name=Radiant Dust
 item.item_component_scintillatinginlay.name=Scintillating Inlay
 
+item.item_upgrade_devouringcharm.name=Devouring Charm
+
 item.item_spiritorb.empty.name=Unaspected Planetary Orb
 item.item_spiritorb.crown_mote.name=Crown Orb
 item.item_spiritorb.crown_juve.name=Grand Crown Orb
@@ -149,6 +151,8 @@ arcanearchives.tooltip.component.containmentfield=A crafting ingredient. Can als
 arcanearchives.tooltip.component.matrixbrace=A crafting ingredient.
 arcanearchives.tooltip.component.materialinterface=A crafting ingredient. Can also be used to upgrade Radiant Troves.
 arcanearchives.tooltip.component.scintillatinginlay=A crafting ingredient.
+
+arcanearchives.tooltip.upgrade.devouringcharm=Voids items and fluids. Used as an upgrade to apply voiding to Radiant Tanks and Radiant Troves.
 
 arcanearchives.tooltip.device.radiantchest=Storage. Used to contain items.
 arcanearchives.tooltip.device.radianttank=Storage. Used to contain fluids.
