@@ -8,6 +8,7 @@ import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.events.LineHandler;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.DropHelper;
+import com.aranaira.arcanearchives.util.ItemUtilities;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -27,6 +28,7 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
+@SuppressWarnings("deprecation")
 public class RadiantChest extends BlockTemplate {
 	public static final String NAME = "radiant_chest";
 
@@ -84,7 +86,6 @@ public class RadiantChest extends BlockTemplate {
 	}
 
 	@Override
-	@ParametersAreNonnullByDefault
 	public void breakBlock (World worldIn, BlockPos pos, IBlockState state) {
 		LineHandler.removeLine(pos);
 
@@ -98,6 +99,18 @@ public class RadiantChest extends BlockTemplate {
 				DropHelper.dropInventoryItems(worldIn, pos, inv);
 			}
 		}
+
+		worldIn.updateComparatorOutputLevel(pos, this);
 		super.breakBlock(worldIn, pos, state);
+	}
+
+	@Override
+	public boolean hasComparatorInputOverride (IBlockState state) {
+		return true;
+	}
+
+	@Override
+	public int getComparatorInputOverride (IBlockState blockState, World worldIn, BlockPos pos) {
+		return ItemUtilities.calculateRedstoneFromTileEntity(worldIn.getTileEntity(pos));
 	}
 }

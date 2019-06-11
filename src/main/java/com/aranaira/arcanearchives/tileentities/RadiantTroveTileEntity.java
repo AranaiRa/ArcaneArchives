@@ -2,8 +2,7 @@ package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.inventory.handlers.TroveItemHandler;
-import com.aranaira.arcanearchives.util.ItemComparison;
-import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
+import com.aranaira.arcanearchives.util.ItemUtilities;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -67,7 +66,7 @@ public class RadiantTroveTileEntity extends ManifestTileEntity {
 
 		ItemStack reference = inventory.getItem();
 
-		if (!ItemComparison.areStacksEqualIgnoreSize(reference, mainhand)) {
+		if (!ItemUtilities.areStacksEqualIgnoreSize(reference, mainhand)) {
 			if (mainhand.getItem() == ItemRegistry.COMPONENT_MATERIALINTERFACE) {
 				player.sendStatusMessage(new TextComponentTranslation("arcanearchives.warning.sneak_to_upgrade"), true);
 				return;
@@ -101,7 +100,7 @@ public class RadiantTroveTileEntity extends ManifestTileEntity {
 			if (playerMain != null) {
 				for (int i = 0; i < playerMain.getSlots(); i++) {
 					ItemStack inSlot = playerMain.getStackInSlot(i);
-					if (ItemComparison.areStacksEqualIgnoreSize(reference, inSlot)) {
+					if (ItemUtilities.areStacksEqualIgnoreSize(reference, inSlot)) {
 						result = inventory.insertItem(0, inSlot, true);
 						if (!result.isEmpty()) {
 							int diff = inSlot.getCount() - result.getCount();

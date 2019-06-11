@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.util.types;
 
 import com.aranaira.arcanearchives.inventory.ContainerManifest;
-import com.aranaira.arcanearchives.util.ItemComparison;
+import com.aranaira.arcanearchives.util.ItemUtilities;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Items;
@@ -46,7 +46,7 @@ public class ManifestList extends ReferenceList<ManifestEntry> {
 			ItemStack stack = entry.getStack();
 
 			if (mSearchItem != null) {
-				return ItemComparison.areStacksEqualIgnoreSize(mSearchItem, stack);
+				return ItemUtilities.areStacksEqualIgnoreSize(mSearchItem, stack);
 			}
 
 			String display = stack.getDisplayName().toLowerCase();
