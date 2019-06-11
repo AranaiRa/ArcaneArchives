@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class FabrialItem extends ItemTemplate {
-	public static final String NAME = "item_fabrial";
+	public static final String NAME = "fabrial";
 
 	public FabrialItem () {
 		super(NAME);

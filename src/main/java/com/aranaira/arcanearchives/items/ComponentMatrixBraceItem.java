@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class ComponentMatrixBraceItem extends ItemTemplate {
-	public static final String NAME = "item_component_matrixbrace";
+	public static final String NAME = "matrix_brace";
 
 	public ComponentMatrixBraceItem () {
 		super(NAME);

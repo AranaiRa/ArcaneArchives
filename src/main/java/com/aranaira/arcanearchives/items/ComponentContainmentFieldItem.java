@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class ComponentContainmentFieldItem extends ItemTemplate {
-	public static final String NAME = "item_component_containmentfield";
+	public static final String NAME = "containment_field";
 
 	public ComponentContainmentFieldItem () {
 		super(NAME);

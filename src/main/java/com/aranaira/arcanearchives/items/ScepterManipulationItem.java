@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class ScepterManipulationItem extends ItemTemplate {
-	public static final String NAME = "item_sceptermanipulation";
+	public static final String NAME = "scepter_manipulation";
 
 	public ScepterManipulationItem () {
 		super(NAME);

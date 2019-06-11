@@ -24,7 +24,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.List;
 
 public class TomeOfArcanaItem extends ItemGuidebook implements IHasModel {
-	public static final String NAME = "item_tomeofarcana";
+	public static final String NAME = "tome_arcana";
 	public static final ResourceLocation TOME_OF_ARCANA = new ResourceLocation(ArcaneArchives.MODID, "xml/tome.xml");
 
 	public TomeOfArcanaItem () {

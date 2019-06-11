@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public class BaubleGemSocket extends ItemTemplate implements baubles.api.IBauble {
-    public static final String NAME = "bauble_gemsocket";
+    public static final String NAME = "gemsocket";
 
     public BaubleGemSocket() {
         super(NAME);

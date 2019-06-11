@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class ComponentMaterialInterfaceItem extends ItemTemplate {
-	public static final String NAME = "item_component_materialinterface";
+	public static final String NAME = "material_interface";
 
 	public ComponentMaterialInterfaceItem () {
 		super(NAME);

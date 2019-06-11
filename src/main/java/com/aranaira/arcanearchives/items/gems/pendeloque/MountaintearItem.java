@@ -22,7 +22,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import java.util.List;
 
 public class MountaintearItem extends ArcaneGemItem {
-	public static final String NAME = "item_mountaintear";
+	public static final String NAME = "mountaintear";
 
 	public MountaintearItem () {
 		super(NAME, GemCut.PENDELOQUE, GemColor.ORANGE, 25, 100);

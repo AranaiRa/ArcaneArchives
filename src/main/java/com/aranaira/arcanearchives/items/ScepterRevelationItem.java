@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ScepterRevelationItem extends ItemTemplate {
-	public static final String NAME = "item_scepterrevelation";
+	public static final String NAME = "scepter_revelation";
 
 	public ScepterRevelationItem () {
 		super(NAME);

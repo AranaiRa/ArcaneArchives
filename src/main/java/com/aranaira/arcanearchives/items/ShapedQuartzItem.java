@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class ShapedQuartzItem extends ItemTemplate {
-	public static final String NAME = "item_cutquartz";
+	public static final String NAME = "shaped_quartz";
 
 	public ShapedQuartzItem () {
 		super(NAME);

@@ -1,0 +1,20 @@
+{
+    "_comment": [
+        "Turn raw radiant quartz into a storage block"
+    ],
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {   "item": "arcanearchives:raw_quartz" },
+        {   "item": "arcanearchives:raw_quartz" },
+        {   "item": "arcanearchives:raw_quartz" },
+        {   "item": "arcanearchives:raw_quartz" },
+        {   "item": "arcanearchives:raw_quartz" },
+        {   "item": "arcanearchives:raw_quartz" },
+        {   "item": "arcanearchives:raw_quartz" },
+        {   "item": "arcanearchives:raw_quartz" },
+        {   "item": "arcanearchives:raw_quartz" }
+    ],
+    "result": {
+        "item": "arcanearchives:storage_raw_quartz"
+    }
+}

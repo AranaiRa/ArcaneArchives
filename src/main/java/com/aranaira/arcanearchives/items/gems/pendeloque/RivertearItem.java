@@ -38,7 +38,7 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public class RivertearItem extends ArcaneGemItem {
-    public static final String NAME = "item_rivertear";
+    public static final String NAME = "rivertear";
 
     public RivertearItem () {
         super(NAME, GemCut.PENDELOQUE, GemColor.BLUE, 25, 100);

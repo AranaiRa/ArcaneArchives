@@ -24,7 +24,7 @@ import java.util.List;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class ManifestItem extends ItemTemplate {
-	public static final String NAME = "item_manifest";
+	public static final String NAME = "manifest";
 
 	public ManifestItem () {
 		super(NAME);

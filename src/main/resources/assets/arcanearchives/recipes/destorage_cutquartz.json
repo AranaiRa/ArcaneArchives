@@ -5,11 +5,11 @@
     "type": "minecraft:crafting_shapeless",
     "ingredients": [
         {   
-            "item": "arcanearchives:storage_cut_quartz"
+            "item": "arcanearchives:storage_shaped_quartz"
         }
     ],
     "result": {
-        "item": "arcanearchives:item_cutquartz",
+        "item": "arcanearchives:shaped_quartz",
         "count": 9
     }
 }

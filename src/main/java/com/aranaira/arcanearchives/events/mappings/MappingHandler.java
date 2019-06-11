@@ -1,7 +1,9 @@
 package com.aranaira.arcanearchives.events.mappings;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.ItemRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -17,6 +19,17 @@ public class MappingHandler {
 		for (Mapping<Item> entry : event.getAllMappings()) {
 			if (entry.key.getNamespace().equals(ArcaneArchives.MODID)) {
 				entry.remap(lookupItem(entry.key));
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void onBlockMappingsEvent (MissingMappings<Block> event) {
+		for (Mapping<Block> entry : event.getAllMappings()) {
+			if (entry.key.getNamespace().equals(ArcaneArchives.MODID) && entry.key.getPath().equals("raw_quartz")) {
+				entry.remap(BlockRegistry.RAW_QUARTZ);
+			} else if (entry.key.getNamespace().equals(ArcaneArchives.MODID) && entry.key.getPath().equals("storage_cut_quartz")) {
+				entry.remap(BlockRegistry.STORAGE_SHAPED_QUARTZ);
 			}
 		}
 	}
@@ -66,7 +79,7 @@ public class MappingHandler {
 			case "item_scepterrevelation":
 				return ItemRegistry.SCEPTER_REVELATION;
 			case "item_cutquartz":
-				return ItemRegistry.CUT_RADIANT_QUARTZ;
+				return ItemRegistry.SHAPED_RADIANT_QUARTZ;
 			case "item_tomeofarcana":
 				return ItemRegistry.TOME_OF_ARCANA;
 			case "item_writofexpulsion":

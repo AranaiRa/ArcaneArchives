@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class MurdergleamItem extends ArcaneGemItem {
-	public static final String NAME = "item_murdergleam";
+	public static final String NAME = "murdergleam";
 
 	public MurdergleamItem () {
 		super(NAME, GemCut.ASSCHER, GemColor.YELLOW, 30, 150);

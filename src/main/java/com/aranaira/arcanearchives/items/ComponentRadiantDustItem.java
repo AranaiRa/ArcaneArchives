@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class ComponentRadiantDustItem extends ItemTemplate {
-	public static final String NAME = "item_component_radiantdust";
+	public static final String NAME = "radiant_dust";
 
 	public ComponentRadiantDustItem () {
 		super(NAME);

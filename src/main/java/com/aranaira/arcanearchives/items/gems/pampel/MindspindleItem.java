@@ -21,7 +21,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import java.util.List;
 
 public class MindspindleItem extends ArcaneGemItem {
-	public static final String NAME = "item_mindspindle";
+	public static final String NAME = "mindspindle";
 
 	public MindspindleItem () {
 		super(NAME, GemCut.PAMPEL, GemColor.GREEN, 800, 3600);

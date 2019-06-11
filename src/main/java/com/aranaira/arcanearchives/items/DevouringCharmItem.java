@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class DevouringCharmItem extends ItemTemplate {
-	public static final String NAME = "item_upgrade_devouringcharm";
+	public static final String NAME = "devouring_charm";
 
 	public DevouringCharmItem () {
 		super(NAME);

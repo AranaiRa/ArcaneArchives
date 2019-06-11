@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class WritOfExpulsionItem extends LetterTemplate {
-	public static final String NAME = "item_writofexpulsion";
+	public static final String NAME = "writ_expulsion";
 
 	public WritOfExpulsionItem () {
 		super(NAME);

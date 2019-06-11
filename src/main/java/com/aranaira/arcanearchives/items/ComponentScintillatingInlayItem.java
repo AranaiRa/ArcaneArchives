@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class ComponentScintillatingInlayItem extends ItemTemplate {
-	public static final String NAME = "item_component_scintillatinginlay";
+	public static final String NAME = "scintillating_inlay";
 
 	public ComponentScintillatingInlayItem () {
 		super(NAME);

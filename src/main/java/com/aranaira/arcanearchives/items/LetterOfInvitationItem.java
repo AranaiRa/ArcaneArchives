@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class LetterOfInvitationItem extends LetterTemplate {
-	public static final String NAME = "item_letterofinvitation";
+	public static final String NAME = "letter_invitation";
 
 	public LetterOfInvitationItem () {
 		super(NAME);
