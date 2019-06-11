@@ -299,6 +299,7 @@ public class ServerNetwork implements IServerNetwork {
 			}
 			itemEntry.setTag(NetworkTags.ENTRIES, entries);
 			itemEntry.setInteger(NetworkTags.DIMENSION, entry.getDimension());
+			itemEntry.setBoolean(NetworkTags.OUT_OF_RANGE, entry.outOfRange);
 			manifest.appendTag(itemEntry);
 		}
 
@@ -319,6 +320,8 @@ public class ServerNetwork implements IServerNetwork {
 		Set<BlockPosDimension> positions = new HashSet<>();
 		EntityPlayer player = getPlayer();
 
+		int maxDistance = getMaxDistance();
+
 		for (IteRef ref : getManifestTileEntities()) {
 			ManifestTileEntity ite = ref.getManifestServerTile();
 			if (ite == null) {
@@ -329,12 +332,13 @@ public class ServerNetwork implements IServerNetwork {
 				continue;
 			}
 
+			boolean outOfRange = distanceSq(ite.getPos(), player.getPosition()) >= maxDistance;
 			int dimId = ite.getWorld().provider.getDimension();
 
 			if (ite.isSingleStackInventory()) {
 				ItemStack is = ite.getSingleStack();
 				if (!is.isEmpty()) {
-					preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(ite.getPos(), ite.getChestName(), is.getCount())));
+					preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(ite.getPos(), ite.getChestName(), is.getCount()), outOfRange));
 				}
 			} else {
 				if (ite instanceof MonitoringCrystalTileEntity) {
@@ -365,7 +369,7 @@ public class ServerNetwork implements IServerNetwork {
 								continue;
 							}
 
-							preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(mte.getTarget(), mte.getDescriptor(), is.getCount())));
+							preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(mte.getTarget(), mte.getDescriptor(), is.getCount()), outOfRange));
 						}
 					}
 				} else {
@@ -374,7 +378,7 @@ public class ServerNetwork implements IServerNetwork {
 							continue;
 						}
 
-						preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(ite.getPos(), ite.getChestName(), is.getCount())));
+						preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(ite.getPos(), ite.getChestName(), is.getCount()), outOfRange));
 					}
 				}
 			}
@@ -404,4 +408,10 @@ public class ServerNetwork implements IServerNetwork {
 		return tag;
 	}
 
+	public int distanceSq (BlockPos pos1, BlockPos pos2) {
+		int d1 = pos1.getX() - pos2.getX();
+		int d2 = pos1.getY() - pos2.getY();
+		int d3 = pos1.getZ() - pos2.getZ();
+		return Math.abs(d1 * d1 + d2 * d2 + d3 * d3);
+	}
 }

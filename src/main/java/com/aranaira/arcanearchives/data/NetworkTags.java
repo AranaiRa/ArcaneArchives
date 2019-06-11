@@ -9,6 +9,7 @@ public class NetworkTags {
 	// Manifest Entry
 	public static final String ENTRY_POS = "entry_pos";
 	public static final String CHEST_NAME = "chest_name";
+	public static final String OUT_OF_RANGE = "out_of_range";
 
 	// General stats
 	public static final String IMMANENCE = "immanence";

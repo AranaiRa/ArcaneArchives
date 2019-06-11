@@ -1,14 +1,11 @@
 package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.data.HiveSaveData.Hive;
-import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.ManifestTileEntity;
 import com.aranaira.arcanearchives.tileentities.MonitoringCrystalTileEntity;
 import com.aranaira.arcanearchives.util.ItemStackConsolidator;
 import com.aranaira.arcanearchives.util.LargeItemNBTUtil;
 import com.aranaira.arcanearchives.util.types.*;
-import com.aranaira.arcanearchives.util.types.TileList.TileListIterable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -73,13 +70,6 @@ public class HiveNetwork implements IHiveBase {
 		return null;
 	}
 
-	public int distanceSq (BlockPos pos1, BlockPos pos2) {
-		int d1 = pos1.getX() - pos2.getX();
-		int d2 = pos1.getY() - pos2.getY();
-		int d3 = pos1.getZ() - pos2.getZ();
-		return Math.abs(d1 * d1 + d2 * d2 + d3 * d3);
-	}
-
 	@Override
 	public NBTTagCompound buildHiveManifest (EntityPlayer player) {
 		ManifestList manifestItems = new ManifestList(new ArrayList<>());
@@ -105,12 +95,15 @@ public class HiveNetwork implements IHiveBase {
 					continue;
 				}
 
+				int distance = ownerNetwork.distanceSq(ite.getPos(), player.getPosition());
+				boolean outOfRange = distance >= maxDistance;
+
 				int dimId = ite.getWorld().provider.getDimension();
 
 				if (ite.isSingleStackInventory()) {
 					ItemStack is = ite.getSingleStack();
 					if (!is.isEmpty()) {
-						preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(ite.getPos(), ite.getChestName(), is.getCount()), distanceSq(ite.getPos(), player.getPosition())));
+						preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(ite.getPos(), ite.getChestName(), is.getCount()), outOfRange));
 					}
 				} else {
 					if (ite instanceof MonitoringCrystalTileEntity) {
@@ -141,7 +134,7 @@ public class HiveNetwork implements IHiveBase {
 									continue;
 								}
 
-								preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(mte.getTarget(), mte.getDescriptor(), is.getCount()), distanceSq(tar, player.getPosition())));
+								preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(mte.getTarget(), mte.getDescriptor(), is.getCount()), outOfRange));
 							}
 						}
 					} else {
@@ -150,7 +143,7 @@ public class HiveNetwork implements IHiveBase {
 								continue;
 							}
 
-							preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(ite.getPos(), ite.getChestName(), is.getCount()), distanceSq(ite.getPos(), player.getPosition())));
+							preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(ite.getPos(), ite.getChestName(), is.getCount()), outOfRange));
 						}
 					}
 				}
@@ -173,6 +166,7 @@ public class HiveNetwork implements IHiveBase {
 			}
 			itemEntry.setTag(NetworkTags.ENTRIES, entries);
 			itemEntry.setInteger(NetworkTags.DIMENSION, entry.getDimension());
+			itemEntry.setBoolean(NetworkTags.OUT_OF_RANGE, entry.outOfRange);
 			manifest.appendTag(itemEntry);
 		}
 

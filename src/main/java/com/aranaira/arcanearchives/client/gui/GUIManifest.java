@@ -5,7 +5,7 @@ import com.aranaira.arcanearchives.client.gui.framework.CustomCountSlot;
 import com.aranaira.arcanearchives.client.gui.framework.LayeredGuiContainer;
 import com.aranaira.arcanearchives.client.gui.framework.ScrollEventManager;
 import com.aranaira.arcanearchives.config.ConfigHandler;
-import com.aranaira.arcanearchives.config.ConfigHandler.ManifestSettings;
+import com.aranaira.arcanearchives.config.client.ManifestConfig;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.events.LineHandler;
@@ -26,17 +26,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.DimensionType;
-import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.fml.client.config.GuiConfig;
-import net.minecraftforge.fml.client.config.IConfigElement;
 import org.apache.commons.lang3.text.WordUtils;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings("FieldCanBeLocal")
@@ -199,17 +194,23 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 				} else {
 					this.mc.getTextureManager().bindTexture(GUIBaseTexturesSimple);
 				}
-				if (!ConfigHandler.manifestSettings.DisableManifestGrid) {
+				if (!ManifestConfig.DisableManifestGrid) {
 					drawModalRectWithCustomSizedTexture(slot.xPos - 1, slot.yPos - 1, mSlotTextureLeftOffset, 0, mSlotTextureSize, mSlotTextureSize, mGUIBaseTexturesSize, mGUIBaseTexturesSize);
 				}
 				GlStateManager.enableLighting();
 			}
 
-			if (entry.getDimension() != player.dimension) {
+			if (entry.getDimension() != player.dimension || entry.outOfRange) {
 				GlStateManager.disableDepth();
 				drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, OTHER_DIMENSION);
+				GlStateManager.enableDepth();
 			}
 		}
+	}
+
+	public void doRefresh () {
+		ClientNetwork network = NetworkHelper.getClientNetwork(player.getUniqueID());
+		network.synchroniseManifest();
 	}
 
 	@Override
@@ -217,10 +218,9 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 		if (button.id == mEndTrackButton.id) {
 			LineHandler.clearChests(player.dimension);
 		} else if (button.id == mRefreashButton.id) {
-			ClientNetwork network = NetworkHelper.getClientNetwork(player.getUniqueID());
-			network.synchroniseManifest();
+			doRefresh();
 		} else if (button.id == mConfigButton.id) {
-			GuiConfig config = new GuiConfig(this, ArcaneArchives.MODID, ArcaneArchives.NAME);
+			GuiConfig config = new GuiConfig(this, ArcaneArchives.MODID, false, false, ArcaneArchives.NAME, ManifestConfig.class);
 			this.mc.displayGuiScreen(config);
 		}
 
@@ -335,6 +335,9 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 					}
 				} else {
 					tooltip.add("" + TextFormatting.DARK_GRAY + I18n.format("arcanearchives.tooltip.manifest.chestsneak"));
+				}
+				if (entry.outOfRange) {
+					tooltip.add("" + TextFormatting.DARK_GRAY + I18n.format("arcanearchives.tooltip.manifest.outofrange", ManifestConfig.MaxDistance));
 				}
 			}
 		}

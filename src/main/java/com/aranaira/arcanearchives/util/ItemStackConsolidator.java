@@ -84,10 +84,7 @@ public class ItemStackConsolidator {
 
 		while (input.size() != 0) {
 			ManifestItemEntry tup = input.remove(0);
-			ManifestEntry next = new ManifestEntry(tup.stack, tup.dim, Lists.newArrayList(tup.entry));
-			ItemStack oor = tup.stack.copy();
-			oor.setCount(0);
-			ManifestEntry nextOOR = new ManifestEntry(oor, tup.dim, Lists.newArrayList(tup.entry));
+			ManifestEntry next = new ManifestEntry(tup.stack, tup.dim, Lists.newArrayList(tup.entry), tup.outOfRange);
 			final ItemStack copy = tup.stack.copy();
 			final int copy2 = tup.dim;
 
@@ -96,19 +93,11 @@ public class ItemStackConsolidator {
 			input.removeAll(matches);
 
 			for (ManifestItemEntry match : matches) {
-				if (match.distance < maxDistance) {
-					next.stack.setCount(next.stack.getCount() + match.stack.getCount());
-					next.itemEntries.add(match.entry);
-				} else {
-					nextOOR.stack.setCount(next.stack.getCount() + match.stack.getCount());
-					nextOOR.itemEntries.add(match.entry);
-				}
+				next.stack.setCount(next.stack.getCount() + match.stack.getCount());
+				next.itemEntries.add(match.entry);
 			}
 
 			output.add(next);
-			if (nextOOR.stack.getCount() != 0) {
-				output.add(nextOOR);
-			}
 		}
 
 		return output;

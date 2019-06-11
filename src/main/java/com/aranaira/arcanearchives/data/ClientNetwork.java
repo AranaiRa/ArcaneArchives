@@ -109,7 +109,8 @@ public class ClientNetwork {
 				entries.add(ManifestEntry.ItemEntry.deserializeNBT((NBTTagCompound) entry));
 			}
 			ItemStack stack = LargeItemNBTUtil.readFromNBT(itemEntry);
-			ManifestEntry thisEntry = new ManifestEntry(stack, dimension, entries);
+			boolean outOfRange = itemEntry.getBoolean(NetworkTags.OUT_OF_RANGE);
+			ManifestEntry thisEntry = new ManifestEntry(stack, dimension, entries, outOfRange);
 
 			manifestItems.add(thisEntry);
 		}
