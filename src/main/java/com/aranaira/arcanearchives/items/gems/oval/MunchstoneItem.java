@@ -125,8 +125,6 @@ public class MunchstoneItem extends ArcaneGemItem {
 
                 for (EdibleBlock eb : entries) {
                     if (block == eb.block) {
-                        world.setBlockState(pos, Blocks.AIR.getDefaultState());
-
                         int hungerLevel = player.getFoodStats().getFoodLevel();
                         int hungerMod = eb.hungerValue;
                         float saturationLevel = player.getFoodStats().getSaturationLevel();
@@ -154,6 +152,7 @@ public class MunchstoneItem extends ArcaneGemItem {
 
                         if(hungerMod + saturationMod > 0) {
                             GemUtil.consumeCharge(gem, chargeConsumed);
+                            world.setBlockState(pos, Blocks.AIR.getDefaultState());
 
                             PacketArcaneGem packet = new PacketArcaneGem(cut, color, blockPosToVector(pos, true), blockPosToVector(pos, true));
                             NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, pos.getX(), pos.getY(), pos.getZ(), 40);

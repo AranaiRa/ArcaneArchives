@@ -73,15 +73,11 @@ public class PacketArcaneGem implements IMessage {
 				}
 			}
 			else if(packet.cut == ArcaneGemItem.GemCut.PENDELOQUE) {
-				int particleDensity = 5 * (int) Math.ceil(packet.pos1.distanceTo(packet.pos2));
-
-				ParticleGenerator.makeDefaultLine(Minecraft.getMinecraft().player.world, packet.pos1, packet.pos2, particleDensity, 2.0);
-				ParticleGenerator.makeDefaultBurst(Minecraft.getMinecraft().player.world, packet.pos2, 36, 1, 0.6, 0.01, 0.03);
+				//Do nothing right now
 			}
 			else if(packet.cut == ArcaneGemItem.GemCut.PAMPEL) {
 				if(packet.color == ArcaneGemItem.GemColor.GREEN) {
-					Minecraft.getMinecraft().player.playSound(SoundEvents.ENTITY_PLAYER_BURP, 1.0F, 1.0F);
-					ParticleGenerator.makeDefaultBurstOnEntity(Minecraft.getMinecraft().player.world, packet.pos2, 18, 5, 0.5, 0.01, 0.03);
+					Minecraft.getMinecraft().player.playSound(SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, 1.0F, 1.0F);
 				}
 			}
 			else if(packet.cut == ArcaneGemItem.GemCut.TRILLION) {

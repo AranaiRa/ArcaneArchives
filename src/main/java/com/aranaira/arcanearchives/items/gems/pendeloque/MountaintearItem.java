@@ -5,7 +5,10 @@ import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketArcaneGem;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
@@ -46,27 +49,45 @@ public class MountaintearItem extends ArcaneGemItem {
     }
 
     @Override
+    public boolean onEntityItemUpdate(EntityItem entityItem)
+    {
+        World world = entityItem.world;
+
+        if (!world.isRemote && entityItem.isInLava())
+        {
+            if(GemUtil.getCharge(entityItem.getItem()) < GemUtil.getMaxCharge(entityItem.getItem())) {
+                GemUtil.restoreCharge(entityItem.getItem(), -1);
+                world.playSound(entityItem.posX, entityItem.posY, entityItem.posZ, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1.0f, 0.5f, false);
+                return true;
+            }
+        }
+        return super.onEntityItemUpdate(entityItem);
+    }
+
+    @Override
     public ActionResult<ItemStack> onItemRightClick (World world, EntityPlayer player, EnumHand hand) {
         if(!world.isRemote) {
-            Vec3d start = new Vec3d(player.posX, player.posY+1, player.posZ);
-            Vec3d dir = player.getLookVec();
-            Vec3d rayTarget = new Vec3d(start.x + dir.x * 40, start.y + dir.y * 40, start.z + dir.z * 40);
+            if(GemUtil.getCharge(player.getHeldItem(hand)) > 0) {
+                Vec3d start = new Vec3d(player.posX, player.posY+player.height, player.posZ);
+                Vec3d dir = player.getLookVec();
+                Vec3d rayTarget = new Vec3d(start.x + dir.x * 40, start.y + dir.y * 40, start.z + dir.z * 40);
 
-            RayTraceResult ray = world.rayTraceBlocks(start, rayTarget, false, true, false);
+                RayTraceResult ray = world.rayTraceBlocks(start, rayTarget, false, true, false);
 
-            if(ray != null) {
-                BlockPos pos = ray.getBlockPos();
-                EnumFacing facing = ray.sideHit;
+                if(ray != null) {
+                    BlockPos pos = ray.getBlockPos();
+                    EnumFacing facing = ray.sideHit;
 
-                Vec3d end = new Vec3d(pos.offset(facing).getX(), pos.offset(facing).getY(), pos.offset(facing).getZ());
+                    Vec3d end = new Vec3d(pos.offset(facing).getX(), pos.offset(facing).getY(), pos.offset(facing).getZ());
 
-                PacketArcaneGem packet = new PacketArcaneGem(cut, color, start, end);
-                NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, start.x, start.y, start.z, 160);
-                NetworkHandler.CHANNEL.sendToAllAround(packet, tp);
+                    world.setBlockState(pos.offset(facing), Blocks.LAVA.getDefaultState(), 11);
+                    world.scheduleUpdate(pos.offset(facing), Blocks.LAVA, 20);
+
+                    PacketArcaneGem packet = new PacketArcaneGem(cut, color, start, end);
+                    NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, start.x, start.y, start.z, 160);
+                    NetworkHandler.CHANNEL.sendToAllAround(packet, tp);
+                }
             }
-        } else {
-
-            //TODO: actually place lava OR SOMETHING
         }
         return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
     }
