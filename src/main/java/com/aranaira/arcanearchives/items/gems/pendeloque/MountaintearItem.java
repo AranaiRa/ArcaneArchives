@@ -83,6 +83,8 @@ public class MountaintearItem extends ArcaneGemItem {
                     world.setBlockState(pos.offset(facing), Blocks.LAVA.getDefaultState(), 11);
                     world.scheduleUpdate(pos.offset(facing), Blocks.LAVA, 20);
 
+                    GemUtil.consumeCharge(player.getHeldItemMainhand(), 1);
+
                     PacketArcaneGem packet = new PacketArcaneGem(cut, color, start, end);
                     NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, start.x, start.y, start.z, 160);
                     NetworkHandler.CHANNEL.sendToAllAround(packet, tp);
