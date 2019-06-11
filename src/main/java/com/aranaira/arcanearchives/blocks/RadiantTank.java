@@ -115,7 +115,10 @@ public class RadiantTank extends BlockTemplate {
 	public boolean onBlockActivated (World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		LineHandler.removeLine(pos);
 
-		ItemStack heldItem = player.getHeldItem(hand);
+		ItemStack heldItem = player.getHeldItemMainhand();
+		if (heldItem.isEmpty()) {
+			heldItem = player.getHeldItemOffhand();
+		}
 
 		RadiantTankTileEntity te = WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, pos);
 		if (te == null) {
