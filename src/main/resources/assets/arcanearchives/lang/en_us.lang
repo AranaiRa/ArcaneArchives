@@ -203,6 +203,9 @@ arcanearchives.data.tooltip.resonator_status.resonating=Resonating
 arcanearchives.data.tooltip.resonator_status.offline=Offline
 arcanearchives.data.tooltip.resonator_status.obstruction=Obstructed
 arcanearchives.data.tooltip.resonator_status.harvestable=Harvestable
+arcanearchives.data.tooltip.trove_count= of:
+arcanearchives.data.tooltip.trove_count_waila=%d of: %s
+arcanearchives.data.tooltip.empty=Empty.
 
 arcanearchives.data.scepter.missing_te=Error: missing tile entity.
 
