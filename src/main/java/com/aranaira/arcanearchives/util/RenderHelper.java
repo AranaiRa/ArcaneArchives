@@ -11,6 +11,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.Set;
 
 public class RenderHelper {
@@ -72,6 +74,38 @@ public class RenderHelper {
 			bufferBuilder.pos(vec.x + 0.5, vec.y + 0.5, vec.z + 0.5).color(c.red, c.green, c.blue, c.alpha).endVertex();
 		}
 		//ArcaneArchives.logger.info(GL11.glGetFloat(GL11.GL_LINE_WIDTH));
+		tessellator.draw();
+
+		GlStateManager.depthMask(true);
+		GlStateManager.popMatrix();
+	}
+
+	@SideOnly(Side.CLIENT)
+	public static void drawSegmentedLine (long worldTime, java.awt.Color color, float width, Vec3d player_pos, ArrayList<Vec3d> verts) {
+		//GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
+		ArcaneArchives.logger.info("starting line render");
+		GlStateManager.pushMatrix();
+		ArcaneArchives.logger.info("pushed matrix");
+		GlStateManager.disableCull();
+		GlStateManager.disableLighting();
+		GlStateManager.disableTexture2D();
+
+		GlStateManager.enableBlend();
+		GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+		GlStateManager.translate(-player_pos.x, -player_pos.y, -player_pos.z);
+
+		GlStateManager.color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+		GlStateManager.depthMask(false);
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder bufferBuilder = tessellator.getBuffer();
+		bufferBuilder.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_COLOR);
+
+		bufferBuilder.pos(player_pos.x, player_pos.y + 1, player_pos.z).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()).endVertex();
+		for (Vec3d vert : verts) {
+			GlStateManager.glLineWidth(getLineWidthFromDistance(player_pos, vert, 10, 70));
+			bufferBuilder.pos(vert.x, vert.y, vert.z).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()).endVertex();
+			ArcaneArchives.logger.info("added line vert at "+vert);
+		}
 		tessellator.draw();
 
 		GlStateManager.depthMask(true);

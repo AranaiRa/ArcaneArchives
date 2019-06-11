@@ -20,11 +20,13 @@ item.item_fabrial.name=Fabrial
 item.item_homingstone.name=Homingstone
 item.item_munchstone.name=Munchstone
 item.item_glyphspindle.name=Glyphspindle
-item.item_rivertear.name=Rivertear
+item.item_mindspindle.name=Mindspindle
 item.item_mountaintear.name=Mountaintear
+item.item_rivertear.name=Rivertear
+item.item_pyreway.name=Pyreway
+item.item_phoenixway.name=Phoenixway
 item.item_earthway.name=Earthway
 item.item_nightway.name=Nightway
-item.item_pyreway.name=Pyreway
 
 item.item_component_containmentfield.name=Containment Field
 item.item_component_materialinterface.name=Material Interface
@@ -50,6 +52,8 @@ item.item_spiritorb.space_eld.name=Mercurial Space Orb
 item.item_spiritorb.time_mote.name=Time Orb
 item.item_spiritorb.time_juve.name=Elder Time Orb
 item.item_spiritorb.time_eld.name=Saturnine Time Orb
+
+item.bauble_gemsocket.name=Gem Socket
 
 tile.storage_raw_quartz.name=Raw Radiant Quartz Block
 tile.storage_cut_quartz.name=Shaped Radiant Quartz Block
@@ -177,8 +181,14 @@ arcanearchives.tooltip.item.scepterofrevelation=Queries information about device
 arcanearchives.tooltip.item.scepterofmanipulation=Modifies properties of certain blocks. Use while sneaking.
 arcanearchives.tooltip.item.tomeofarcana=Provides documentation for Arcane Archives.
 
+arcanearchives.tooltip.item.munchstone=Consumes plant based blocks to restore hunger.
+arcanearchives.tooltip.item.mindspindle=Increases the amount of experience in picked up experience globes.
 arcanearchives.tooltip.item.mountaintear=Slowly creates infinite lava when placed in a Lightwell.
 arcanearchives.tooltip.item.rivertear=Rapidly creates infinite water when placed in a Lightwell.
+arcanearchives.tooltip.item.phoenixway=Lights fires at target position. Grants fire resistance if you're about to take fire damage.
+
+arcanearchives.tooltip.bauble.gemsocket=Can be slotted with an Arcane Gem. Slotted Arcane Gem counts as being held at all times.
+arcanearchives.tooltip.bauble.gemsocket.contains=Contains a
 
 arcanearchives.data.gui.radiant_trove.upgrade=%d upgrade
 arcanearchives.data.gui.radiant_trove.upgrades=%d upgrades

@@ -8,10 +8,13 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 import java.nio.Buffer;
 
+@SideOnly(Side.CLIENT)
 public class GUIGemcasting {
 
     private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/fabrial.png");
@@ -53,7 +56,7 @@ public class GUIGemcasting {
         colorShift_BLACK = 32,
         colorShift_WHITE = 36;
 
-    public static void draw(Minecraft minecraft, ItemStack stack, int screenWidth, int screenHeight, boolean leftHandSide) {
+    public static void draw(Minecraft minecraft, ItemStack stack, int screenWidth, int screenHeight, EnumGemGuiMode mode) {
         if(stack.getItem() instanceof ArcaneGemItem) {
             minecraft.renderEngine.bindTexture(GUITextures);
             ArcaneGemItem gem = (ArcaneGemItem) stack.getItem();
@@ -67,33 +70,43 @@ public class GUIGemcasting {
 
             //bar container
             if (gem.hasToggleMode()) {
-                if(leftHandSide)
+                if(mode == EnumGemGuiMode.LEFT)
                     minecraft.ingameGUI.drawTexturedModalRect(anchorX + 8 - leftShiftContainerWithCheck, anchorY + 2, container_x, containerWithCheckReversed_y, container_w, container_h);
-                else
+                else if(mode == EnumGemGuiMode.RIGHT)
                     minecraft.ingameGUI.drawTexturedModalRect(anchorX + 8, anchorY + 2, container_x, containerWithCheck_y, container_w, container_h);
+                else if(mode == EnumGemGuiMode.SOCKET)
+                    minecraft.ingameGUI.drawTexturedModalRect(anchorX + 8, anchorY + 14, container_x, containerWithCheck_y, container_w, container_h);
 
                 //checkbox fill
                 if(ArcaneGemItem.GemUtil.isToggledOn(stack)) {
-                    if(leftHandSide)
+                    if(mode == EnumGemGuiMode.LEFT)
                         minecraft.ingameGUI.drawTexturedModalRect(anchorX - 37, anchorY + 5, fill_x, fill_y + getColorOffset(gem), 3, fill_h);
-                    else
+                    else if(mode == EnumGemGuiMode.RIGHT)
                         minecraft.ingameGUI.drawTexturedModalRect(anchorX + 35, anchorY + 5, fill_x, fill_y + getColorOffset(gem), 3, fill_h);
+                    else if(mode == EnumGemGuiMode.SOCKET)
+                        minecraft.ingameGUI.drawTexturedModalRect(anchorX + 35, anchorY + 17, fill_x, fill_y + getColorOffset(gem), 3, fill_h);
                 }
             }
             else {
-                if(leftHandSide)
+                if(mode == EnumGemGuiMode.LEFT)
                     minecraft.ingameGUI.drawTexturedModalRect(anchorX + 8 - leftShiftContainer, anchorY + 2, container_x, container_y, container_w, container_h);
-                else
+                else if(mode == EnumGemGuiMode.RIGHT)
                     minecraft.ingameGUI.drawTexturedModalRect(anchorX + 8, anchorY + 2, container_x, container_y, container_w, container_h);
+                else if(mode == EnumGemGuiMode.SOCKET)
+                    minecraft.ingameGUI.drawTexturedModalRect(anchorX + 8, anchorY + 14, container_x, container_y, container_w, container_h);
             }
 
             //gem
             int gemPosX = anchorX + 8;
             int gemPosY = anchorY - 16;
             int texOffset = 0;
-            if(leftHandSide) {
+            if(mode == EnumGemGuiMode.LEFT) {
                 gemPosX -= leftShiftGem;
                 texOffset += leftShiftGemTex;
+            }
+            if(mode == EnumGemGuiMode.SOCKET) {
+                gemPosX += 28;
+                gemPosY += 23;
             }
 
             if(gem.getGemCut() == ArcaneGemItem.GemCut.ASSCHER)
@@ -101,24 +114,30 @@ public class GUIGemcasting {
             else if(gem.getGemCut() == ArcaneGemItem.GemCut.OVAL)
                 minecraft.ingameGUI.drawTexturedModalRect(gemPosX, gemPosY, gem_x+texOffset, gem_oval_y, gem_s, gem_s);
             else if(gem.getGemCut() == ArcaneGemItem.GemCut.PAMPEL)
-                    minecraft.ingameGUI.drawTexturedModalRect(gemPosX, gemPosY, gem_x+texOffset, gem_pampel_y, gem_s, gem_s);
+                minecraft.ingameGUI.drawTexturedModalRect(gemPosX, gemPosY, gem_x+texOffset, gem_pampel_y, gem_s, gem_s);
             else if(gem.getGemCut() == ArcaneGemItem.GemCut.PENDELOQUE)
-                    minecraft.ingameGUI.drawTexturedModalRect(gemPosX, gemPosY, gem_x+texOffset, gem_pendeloque_y, gem_s, gem_s);
+                minecraft.ingameGUI.drawTexturedModalRect(gemPosX, gemPosY, gem_x+texOffset, gem_pendeloque_y, gem_s, gem_s);
             else if(gem.getGemCut() == ArcaneGemItem.GemCut.TRILLION)
-                    minecraft.ingameGUI.drawTexturedModalRect(gemPosX, gemPosY, gem_x+texOffset, gem_trillion_y, gem_s, gem_s);
+                minecraft.ingameGUI.drawTexturedModalRect(gemPosX, gemPosY, gem_x+texOffset, gem_trillion_y, gem_s, gem_s);
 
             //bar fill
             int fillAmount = (int)(ArcaneGemItem.GemUtil.getChargePercent(stack) * 20);
-            if(leftHandSide)
+            if(mode == EnumGemGuiMode.LEFT)
                 minecraft.ingameGUI.drawTexturedModalRect(anchorX + 11 - leftShiftFill + (20 - fillAmount), anchorY + 5, fill_x, fill_y + getColorOffset(gem), fillAmount, fill_h);
-            else
+            else if(mode == EnumGemGuiMode.RIGHT)
                 minecraft.ingameGUI.drawTexturedModalRect(anchorX + 11, anchorY + 5, fill_x, fill_y + getColorOffset(gem), fillAmount, fill_h);
+            else if(mode == EnumGemGuiMode.SOCKET)
+                minecraft.ingameGUI.drawTexturedModalRect(anchorX + 11, anchorY + 17, fill_x, fill_y + getColorOffset(gem), fillAmount, fill_h);
 
             GlStateManager.depthMask(true);
             GlStateManager.disableBlend();
             GlStateManager.popMatrix();
 
         }
+    }
+
+    private static void drawLeftGem() {
+
     }
 
     private static int getColorOffset(ArcaneGemItem gem){
@@ -146,5 +165,9 @@ public class GUIGemcasting {
             default:
                 return -14;
         }
+    }
+
+    public enum EnumGemGuiMode {
+        RIGHT, LEFT, SOCKET, FABRIAL_MAIN, FABRIAL_1, FABRIAL_2, FABRIAL_3, FABRIAL_4
     }
 }
