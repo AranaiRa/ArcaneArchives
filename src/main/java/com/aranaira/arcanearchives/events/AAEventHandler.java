@@ -1,11 +1,18 @@
 package com.aranaira.arcanearchives.events;
 
+import baubles.api.BaubleType;
+import baubles.api.BaublesApi;
+import baubles.api.cap.IBaublesItemHandler;
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.gui.GUIGemcasting;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.config.client.ManifestConfig;
 import com.aranaira.arcanearchives.entity.AIResonatorSit;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.ItemRegistry;
+import com.aranaira.arcanearchives.inventory.handlers.GemSocketHandler;
+import com.aranaira.arcanearchives.items.BaubleGemSocket;
+import com.aranaira.arcanearchives.items.RadiantAmphoraItem;
 import com.aranaira.arcanearchives.items.RadiantAmphoraItem.AmphoraUtil;
 import com.aranaira.arcanearchives.items.TomeOfArcanaItem;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
@@ -29,8 +36,14 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraft.init.MobEffects;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDestroyBlockEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Optional;
@@ -42,6 +55,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import vazkii.botania.common.network.PacketHandler;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 @Mod.EventBusSubscriber
@@ -161,21 +175,82 @@ public class AAEventHandler {
 		}
 	}
 
-	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
-	public static void renderGemHUD (RenderGameOverlayEvent.Post event) {
+	@SubscribeEvent
+	public static void renderGemHUD(RenderGameOverlayEvent.Post event) {
 		Minecraft minecraft = Minecraft.getMinecraft();
 		EntityPlayer player = minecraft.player;
 		if (player == null) {
 			return;
 		}
 
-		if (event.getType() == RenderGameOverlayEvent.ElementType.VIGNETTE) {
-			if (player.getHeldItemMainhand().getItem() instanceof ArcaneGemItem) {
-				GUIGemcasting.draw(minecraft, player.getHeldItemMainhand(), event.getResolution().getScaledWidth(), event.getResolution().getScaledHeight(), false);
+		if(event.getType() == RenderGameOverlayEvent.ElementType.VIGNETTE) {
+			if(player.getHeldItemMainhand().getItem() instanceof ArcaneGemItem) {
+				GUIGemcasting.draw(minecraft, player.getHeldItemMainhand(), event.getResolution().getScaledWidth(), event.getResolution().getScaledHeight(), GUIGemcasting.EnumGemGuiMode.RIGHT);
 			}
-			if (player.getHeldItemOffhand().getItem() instanceof ArcaneGemItem) {
-				GUIGemcasting.draw(minecraft, player.getHeldItemOffhand(), event.getResolution().getScaledWidth(), event.getResolution().getScaledHeight(), true);
+			if(player.getHeldItemOffhand().getItem() instanceof ArcaneGemItem) {
+				GUIGemcasting.draw(minecraft, player.getHeldItemOffhand(), event.getResolution().getScaledWidth(), event.getResolution().getScaledHeight(), GUIGemcasting.EnumGemGuiMode.LEFT);
+			}
+
+			IBaublesItemHandler handler = BaublesApi.getBaublesHandler(player);
+			for(int i : BaubleType.BODY.getValidSlots()) {
+				if(handler.getStackInSlot(i).getItem() instanceof BaubleGemSocket) {
+					if(handler.getStackInSlot(i).getTagCompound().hasKey("gem")) {
+						ItemStack containedStack = GemSocketHandler.getHandler(handler.getStackInSlot(i)).getInventory().getStackInSlot(0);
+						GUIGemcasting.draw(minecraft, containedStack, event.getResolution().getScaledWidth(), event.getResolution().getScaledHeight(), GUIGemcasting.EnumGemGuiMode.SOCKET);
+					}
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void playerPickupXP(PlayerPickupXpEvent event) {
+		EntityPlayer player = event.getEntityPlayer();
+		if (player == null) return;
+
+		ArrayList<ItemStack> held = ArcaneGemItem.GemUtil.getAvailableGems(event.getEntityPlayer());
+
+		if(held.size() > 0) {
+			for (ItemStack stack : held) {
+				if (stack.getItem() == ItemRegistry.MINDSPINDLE) {
+					if (ArcaneGemItem.GemUtil.getCharge(stack) > 0) {
+						int chargeReduction = event.getOrb().xpValue;
+						event.getOrb().xpValue = Math.round(event.getOrb().xpValue * 1.5f);
+						event.getOrb().delayBeforeCanPickup = 0;
+						ArcaneGemItem.GemUtil.consumeCharge(stack, chargeReduction);
+					}
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void onEntityHurt(LivingAttackEvent event) {
+		if(!event.getEntity().world.isRemote) {
+			if (event.getEntity() instanceof EntityPlayer) {
+				EntityPlayer player = (EntityPlayer) event.getEntity();
+
+				if (!player.world.isRemote) {
+					ArrayList<ItemStack> held = ArcaneGemItem.GemUtil.getAvailableGems(player);
+					if (held.size() > 0) {
+						for (ItemStack stack : held) {
+							if (stack.getItem() == ItemRegistry.PHOENIXWAY) {
+								if (player.isPotionActive(MobEffects.FIRE_RESISTANCE)) {
+									continue;
+								}
+								if (ArcaneGemItem.GemUtil.getCharge(stack) >= 0) {
+									if (event.getSource() == DamageSource.ON_FIRE || event.getSource() == DamageSource.IN_FIRE) {
+										Minecraft.getMinecraft().player.playSound(SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, 1.0F, 1.0F);
+										player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 600, 0));
+										ArcaneGemItem.GemUtil.consumeCharge(stack, 12);
+										event.setCanceled(true);
+									}
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	}

@@ -30,16 +30,21 @@
         <stack item="arcanearchives:item_manifest">Manifest</stack>
         <stack item="arcanearchives:item_component_materialinterface">MaterialInterface</stack>
         <stack item="arcanearchives:item_component_matrixbrace">MatrixBrace</stack>
-        <stack item="arcanearchives:item_mountaintear">Mountaintear</stack>
         <stack item="arcanearchives:item_radiantamphora">RadiantAmphora</stack>
         <stack item="arcanearchives:item_component_radiantdust">RadiantDust</stack>
         <stack item="arcanearchives:item_rawquartz">RawQuartz</stack>
         <stack item="arcanearchives:item_cutquartz">ShapedQuartz</stack>
-        <stack item="arcanearchives:item_rivertear">Rivertear</stack>
         <stack item="arcanearchives:item_sceptermanipulation">ScepterManipulation</stack>
         <stack item="arcanearchives:item_scepterrevelation">ScepterRevelation</stack>
         <stack item="arcanearchives:item_component_scintillatinginlay">ScintillatingInlay</stack>
         <stack item="arcanearchives:item_writofexpulsion">WritExpulsion</stack>
+
+        <stack item="arcanearchives:item_mindspindle">Mindspindle</stack>
+        <stack item="arcanearchives:item_mountaintear">Mountaintear</stack>
+        <stack item="arcanearchives:item_rivertear">Rivertear</stack>
+        <stack item="arcanearchives:item_phoenixway">Phoenixway</stack>
+
+        <stack item="arcanearchives:bauble_gemsocket">GemSocket</stack>
     </stack-links>
 
     <chapter id="TableOfContents">
@@ -65,6 +70,7 @@
             </page_title>
             <p><stack item="arcanearchives:item_component_containmentfield"/> <link ref="ContainmentField">Containment Field</link></p>
             <p><stack item="arcanearchives:item_upgrade_devouringcharm"/> <link ref="DevouringCharm">Devouring Charm</link></p>
+            <p><stack item="arcanearchives:bauble_gemsocket"/> <link ref="GemSocket">Gem Socket</link></p>
             <p><stack item="arcanearchives:item_letterofinvitation"/> <link ref="LetterInvitation">Letter of Invitation</link></p>
             <p><stack item="arcanearchives:item_letterofresignation"/> <link ref="LetterResignation">Letter of Resignation</link></p>
             <p><stack item="arcanearchives:item_manifest"/> <link ref="Manifest">Manifest</link></p>
@@ -83,9 +89,14 @@
             <page_title>
                 <title>Arcane Gems</title>
             </page_title>
+            <p><stack item="arcanearchives:item_munchstone"/> <link ref="Munchstone">Munchstone</link></p>
+            <space height="8"/>
+            <p><stack item="arcanearchives:item_mindspindle"/> <link ref="Mindspindle">Mindspindle</link></p>
+            <space height="8"/>
             <p><stack item="arcanearchives:item_mountaintear"/> <link ref="Mountaintear">Mountaintear</link></p>
             <p><stack item="arcanearchives:item_rivertear"/> <link ref="Rivertear">Rivertear</link></p>
             <space height="8"/>
+            <p><stack item="arcanearchives:item_phoenixway"/> <link ref="Phoenixway">Phoenixway</link></p>
         </section>
         <section>
             <page_title>
@@ -663,7 +674,43 @@
                 The Apprentice's Panoply
             </p>
             <p>
-                ...Form letter given to all Apprentices of the Eternal University
+            ...Form letter given to all Apprentices of the Eternal University
+            </p>
+        </section>
+    </chapter>
+
+    <chapter id="GemSocket">
+        <section>
+            <page_title>
+                <title>Gem Socket</title>
+            </page_title>
+            <p align="center"><stack item="arcanearchives:bauble_gemsocket" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                A Gem Socket is a bauble that can be worn in the Body slot.
+            </p>
+            <p>
+                Activating a Gem Socket allows you to slot in an Arcane Gem. You always treat this gem as if you were holding it for the purposes of passive effects.
+            </p>
+            <horizontal_rule/>
+            <p>
+                The following Arcane Gems have passive effects:
+            </p>
+            <p align="center">
+                <stack item="arcanearchives:item_mindspindle" scale="2.0"/>
+                <stack item="arcanearchives:item_phoenixway" scale="2.0"/>
+            </p>
+            <horizontal_rule/>
+            <p>
+                <stack item="arcanearchives:gemcutters_table" /> Gem Sockets can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+            </p>
+        </section>
+        <section>
+            <page_title>
+                <title>Gem Socket</title>
+            </page_title>
+            <p italics="true">
+                ...Lore fragment TBD
             </p>
         </section>
     </chapter>
@@ -1115,6 +1162,58 @@
         </section>
     </chapter>
 
+    <chapter id="Munchstone">
+        <section>
+            <page_title>
+                <title>Munchstone</title>
+            </page_title>
+            <p align="center"><stack item="arcanearchives:item_munchstone" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                A Munchstone is an Arcane Gem formed from a black-spectrum piece of <link ref="CutQuartz">Shaped Radiant Quartz</link> in an oval cut.
+            </p>
+            <p>
+                When activated, a Munchstone allows you to consume plant-blased blocks to restore your hunger and saturation. Charge is consumed for each point of hunger and each point of saturation recovered.
+            </p>
+            <p>
+                Notably, you can use a Munchstone even if your stomach is full.
+            </p>
+            <p>
+                <image src="arcanearchives:items/gems/oval/dun" tw="16" th="16"/> To recharge a dun Mindspindle, activate the gem while you have bonemeal in your inventory. Five pieces of bonemeal are necessary to fully refill the gem, and if you have less than five pieces the gem will only be partially recharged. The bonemeal is consumed.
+            </p>
+            <horizontal_rule/>
+            <p>
+                <stack item="arcanearchives:gemcutters_table" /> Munchstones can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+            </p>
+        </section>
+    </chapter>
+
+    <chapter id="Mindspindle">
+        <section>
+            <page_title>
+                <title>Mindspindle</title>
+            </page_title>
+            <p align="center"><stack item="arcanearchives:item_mindspindle" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                A Mindspindle is an Arcane Gem formed from a green-spectrum piece of <link ref="CutQuartz">Shaped Radiant Quartz</link> in a pampel cut.
+            </p>
+            <p>
+                When held, a Mindspindle magnifies the amount of experience contained within experience globes by 50%. It loses one point of charge for each experience point amplified, and can affect an un-amplified total of 800xp before needing to be recharged.
+            </p>
+            <p>
+                If you come into contact with a very large number of experience globes while holding a Mindspindle, you can absorb their essence instantly, instead of needing to wait for each globe to be picked up in sequence.
+            </p>
+            <p>
+                <image src="arcanearchives:items/gems/pampel/dun" tw="16" th="16"/> To recharge a dun Mindspindle, activate the gem while you have a book in your inventory. The book is consumed.
+            </p>
+            <horizontal_rule/>
+            <p>
+                <stack item="arcanearchives:gemcutters_table" /> Mindspindles can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+            </p>
+        </section>
+    </chapter>
+
     <chapter id="Mountaintear">
         <section>
             <page_title>
@@ -1123,7 +1222,7 @@
             <p align="center"><stack item="arcanearchives:item_mountaintear" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                A Mountaintear is an Arcane Gem formed from an orange-spectrum piece of <link ref="CutQuartz">Shaped Radiant Quartz</link> in a tear cut. It is associated with lava.
+                A Mountaintear is an Arcane Gem formed from an orange-spectrum piece of <link ref="CutQuartz">Shaped Radiant Quartz</link> in a pendeloque cut.
             </p>
             <p>
                 <stack item="astralsorcery:blockwell"/> When placed in a Lightwell with access to the sky, a Mountaintear generates lava at a slow rate. While it's possible for a Mountaintear to shatter, the chances of shattering are <span italics="true">astronomically</span> unlikely. For all intents and purposes, a Mountaintear lasts indefinitely unless its Lightwell is broken.
@@ -1136,14 +1235,6 @@
                 Mountaintears cannot be crafted, and are only available via Creative mode.
             </p>
         </section>
-        <section>
-            <page_title>
-                <title>Mountaintear</title>
-            </page_title>
-            <p italics="true">
-                ...Lore fragment TBD
-            </p>
-        </section>
     </chapter>
 
     <chapter id="Rivertear">
@@ -1154,25 +1245,46 @@
             <p align="center"><stack item="arcanearchives:item_rivertear" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                A Rivertear is an Arcane Gem formed from a blue-spectrum piece of <link ref="CutQuartz">Shaped Radiant Quartz</link> in a tear cut. It is associated with water.
+                A Rivertear is an Arcane Gem formed from a blue-spectrum piece of <link ref="CutQuartz">Shaped Radiant Quartz</link> in a pendeloque cut.
             </p>
             <p>
-                <stack item="astralsorcery:blockwell"/> When placed in a Lightwell with access to the sky, a Rivertear generates water at an extremely rapid rate. While it's possible for a Rivertear to shatter, the chances of shattering are <span italics="true">astronomically</span> unlikely. For all intents and purposes, a Rivertear lasts indefinitely unless its Lightwell is broken.
+                When activated, a Rivertear will conjure a block of water at a distance of up to 40 blocks at the cost of one point of charge.
             </p>
             <p>
-                Once placed in a Lightwell, a Rivertear cannot be retrieved.
+                <stack item="astralsorcery:blockwell"/> When placed in a Lightwell with access to the sky, a Rivertear generates water at an extremely rapid rate. While it's possible for a Rivertear to shatter, the chances of shattering are <span italics="true">astronomically</span> unlikely. For all intents and purposes, a Rivertear lasts indefinitely unless its Lightwell is broken. Once placed in a Lightwell, a Rivertear cannot be retrieved.
+            </p>
+            <p>
+                <image src="arcanearchives:items/gems/pendeloque/dun" tw="16" th="16"/> To recharge a dun Rivertear, toss it in a block of water.
             </p>
             <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Rivertears can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
         </section>
+    </chapter>
+
+    <chapter id="Phoenixway">
         <section>
             <page_title>
-                <title>Rivertear</title>
+                <title>Phoenixway</title>
             </page_title>
-            <p italics="true">
-                ...Lore fragment TBD
+            <p align="center"><stack item="arcanearchives:item_phoenixway" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                A Phoenixway is an Arcane Gem formed from a orange-spectrum piece of <link ref="CutQuartz">Shaped Radiant Quartz</link> in a trillion cut.
+            </p>
+            <p>
+                When activated, a Phoenixway will light a fire at a distance of up to 40 blocks at the cost of one point of charge.
+            </p>
+            <p>
+                If you're about to take fire damage while holding a Phoenixway, it will block the damage and grant 30 seconds of Fire Resistance at the cost of twelve points of charge.
+            </p>
+            <p>
+                <image src="arcanearchives:items/gems/trillion/dun" tw="16" th="16"/> To recharge a dun Phoenixway, cook the gem in a furnace.
+            </p>
+            <horizontal_rule/>
+            <p>
+                <stack item="arcanearchives:gemcutters_table" /> Phoenixways can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
         </section>
     </chapter>

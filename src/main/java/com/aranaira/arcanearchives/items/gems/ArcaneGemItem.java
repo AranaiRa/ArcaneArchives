@@ -1,16 +1,30 @@
 package com.aranaira.arcanearchives.items.gems;
 
+import baubles.api.BaubleType;
+import baubles.api.BaublesApi;
+import baubles.api.cap.BaublesCapabilities;
+import baubles.api.cap.IBaublesItemHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.inventory.handlers.GemSocketHandler;
+import com.aranaira.arcanearchives.items.BaubleGemSocket;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.util.NBTUtils;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.model.ModelLoader;
+
+import java.awt.*;
+import java.util.ArrayList;
 
 public abstract class ArcaneGemItem extends ItemTemplate {
     public GemCut cut;
@@ -84,6 +98,17 @@ public abstract class ArcaneGemItem extends ItemTemplate {
     }
 
     /**
+     * Retrieves the resource location for the gem's conflicted static texture
+     * @param cut The gem's cut
+     * @return
+     */
+    protected ModelResourceLocation getConflictGemResourceLocation(GemCut cut) {
+        String loc = "arcanearchives:gems/";
+        loc += cut.toString().toLowerCase()+"/static";
+        return new ModelResourceLocation(loc, "inventory");
+    }
+
+    /**
      * Retrieves the resource location for the gem's textures
      * @param cut The gem's cut
      * @param color The gem's color spectrum
@@ -102,6 +127,7 @@ public abstract class ArcaneGemItem extends ItemTemplate {
     @Override
     public void registerModels () {
         ModelResourceLocation charged = getChargedGemResourceLocation(cut, color);
+        ModelResourceLocation conflict = getConflictGemResourceLocation(cut);
         ModelResourceLocation dun = getDunGemResourceLocation(cut);
 
         ModelBakery.registerItemVariants(this, charged, dun);
@@ -109,10 +135,25 @@ public abstract class ArcaneGemItem extends ItemTemplate {
         ModelLoader.setCustomMeshDefinition(this, stack -> {
             if (GemUtil.isChargeEmpty(stack)) {
                 return dun;
+            } else if(false) {//TODO: Check for dupes in inventory
+                return conflict;
             } else {
                 return charged;
             }
         });
+    }
+
+    /**
+     * Convenience method to convert BlockPos into a Vec3d
+     * @param pos The BlockPos to convert
+     * @param shiftToCenter Whether to leave the BlockPos as is or shift it to the center of the block
+     * @return
+     */
+    protected Vec3d blockPosToVector(BlockPos pos, boolean shiftToCenter) {
+        if(shiftToCenter)
+            return new Vec3d(pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5);
+        else
+            return new Vec3d(pos.getX(), pos.getY(), pos.getZ());
     }
 
     /**
@@ -275,8 +316,10 @@ public abstract class ArcaneGemItem extends ItemTemplate {
                 return currentCharge < 0;
             else if(amount == -1)
                 currentCharge = 0;
-            else
+            else {
                 currentCharge -= amount;
+                if (currentCharge < 0) currentCharge = 0;
+            }
             nbt.setInteger("charge", currentCharge);
             return currentCharge > 0;
         }
@@ -312,6 +355,36 @@ public abstract class ArcaneGemItem extends ItemTemplate {
             }
             return nbt.getBoolean("toggle");
         }
+
+        /**
+         * Get gems that are capable of operating passively. Checks for held, gems slotted in a Fabrial's active or passive slots, and a gem in the Gem Socket.
+         * @param player
+         * @return List of appropriate gems
+         */
+        public static ArrayList<ItemStack> getAvailableGems(EntityPlayer player) {
+            ArrayList<ItemStack> gems = new ArrayList<>();
+
+            //Held gems
+            if(player.getHeldItemMainhand().getItem() instanceof ArcaneGemItem)
+                gems.add(player.getHeldItemMainhand());
+            if(player.getHeldItemOffhand().getItem() instanceof ArcaneGemItem)
+                gems.add(player.getHeldItemOffhand());
+
+            NonNullList<ItemStack> inv = player.inventory.mainInventory;
+            //TODO: check for fabrial
+
+            IBaublesItemHandler handler = BaublesApi.getBaublesHandler(player);
+            for(int i : BaubleType.BODY.getValidSlots()) {
+                if(handler.getStackInSlot(i).getItem() instanceof BaubleGemSocket) {
+                    if(handler.getStackInSlot(i).getTagCompound().hasKey("gem")) {
+                        ItemStack containedStack = GemSocketHandler.getHandler(handler.getStackInSlot(i)).getInventory().getStackInSlot(0);
+                        gems.add(containedStack);
+                    }
+                }
+            }
+
+            return gems;
+        }
     }
 
     @Override
@@ -321,11 +394,107 @@ public abstract class ArcaneGemItem extends ItemTemplate {
     }
 
     public enum GemCut {
-        NOCUT, ASSCHER, OVAL, PAMPEL, PENDELOQUE, TRILLION
+        NOCUT, ASSCHER, OVAL, PAMPEL, PENDELOQUE, TRILLION;
+
+        /**
+         * Converts a gem cut to a specific value. Used in packets.
+         * @param cut The gem's cut
+         */
+        public static byte ToByte(GemCut cut) {
+            if(cut == ASSCHER) return 1;
+            if(cut == OVAL) return 2;
+            if(cut == PAMPEL) return 3;
+            if(cut == PENDELOQUE) return 4;
+            if(cut == TRILLION) return 5;
+            return 0;
+        }
+
+        /**
+         * Converts a byte value into a specific gem cut value. Used in packets.
+         * @param query The byte value to check
+         * @return The gem's cut
+         */
+        public static GemCut fromByte(byte query) {
+            if(query == 1) return ASSCHER;
+            if(query == 2) return OVAL;
+            if(query == 3) return PAMPEL;
+            if(query == 4) return PENDELOQUE;
+            if(query == 5) return TRILLION;
+            return NOCUT;
+        }
+    }
+
+    public class GemWrapper {
+        public ItemStack gem;
+        public boolean inSocket;
+
+        public GemWrapper(ItemStack gem, boolean inSocket) {
+            this.gem = gem;
+            this.inSocket = inSocket;
+        }
     }
 
     public enum GemColor {
-        NOCOLOR, RED, ORANGE, YELLOW, GREEN, CYAN, BLUE, PURPLE, PINK, BLACK, WHITE
+        NOCOLOR, RED, ORANGE, YELLOW, GREEN, CYAN, BLUE, PURPLE, PINK, BLACK, WHITE;
+
+        /**
+         * Converts a gem cut to a specific value. Used in packets.
+         * @param color The gem's color
+         */
+        public static byte ToByte(GemColor color) {
+            if(color == RED) return 1;
+            else if(color == ORANGE) return 2;
+            else if(color == YELLOW) return 3;
+            else if(color == GREEN) return 4;
+            else if(color == CYAN) return 5;
+            else if(color == BLUE) return 6;
+            else if(color == PURPLE) return 7;
+            else if(color == PINK) return 8;
+            else if(color == BLACK) return 9;
+            else if(color == WHITE) return 10;
+            return 0;
+        }
+
+        /**
+         * Converts a byte value into a specific color. Used in packets.
+         * @param query The byte value to check
+         * @return The color value
+         */
+        public static GemColor fromByte(byte query) {
+            if(query == 1) return RED;
+            else if(query == 2) return ORANGE;
+            else if(query == 3) return YELLOW;
+            else if(query == 4) return GREEN;
+            else if(query == 5) return CYAN;
+            else if(query == 6) return BLUE;
+            else if(query == 7) return PURPLE;
+            else if(query == 8) return PINK;
+            else if(query == 9) return BLACK;
+            else if(query == 10) return WHITE;
+            return NOCOLOR;
+        }
+
+        public static Color getColor(GemColor color) {
+            if(color == GemColor.RED)
+                return new Color(1.00f, 0.50f, 0.50f, 1.0f);
+            else if(color == GemColor.ORANGE)
+                return new Color(1.00f, 0.75f, 0.50f, 1.0f);
+            else if(color == GemColor.YELLOW)
+                return new Color(1.00f, 1.00f, 0.50f, 1.0f);
+            else if(color == GemColor.GREEN)
+                return new Color(0.50f, 1.00f, 0.60f, 1.0f);
+            else if(color == GemColor.CYAN)
+                return new Color(0.50f, 1.00f, 1.00f, 1.0f);
+            else if(color == GemColor.BLUE)
+                return new Color(0.50f, 0.65f, 1.00f, 1.0f);
+            else if(color == GemColor.PURPLE)
+                return new Color(0.80f, 0.50f, 1.00f, 1.0f);
+            else if(color == GemColor.PINK)
+                return new Color(1.00f, 0.55f, 1.00f, 1.0f);
+            else if(color == GemColor.BLACK)
+                return new Color(0.00f, 0.00f, 0.00f, 1.0f);
+            return new Color(1,1,1,1);
+        }
     }
 
     public enum GemUpgrades {

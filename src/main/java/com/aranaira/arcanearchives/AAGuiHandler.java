@@ -3,10 +3,7 @@ package com.aranaira.arcanearchives;
 import com.aranaira.arcanearchives.client.gui.*;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
-import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
-import com.aranaira.arcanearchives.inventory.ContainerManifest;
-import com.aranaira.arcanearchives.inventory.ContainerRadiantChest;
-import com.aranaira.arcanearchives.inventory.ContainerRadiantCraftingTable;
+import com.aranaira.arcanearchives.inventory.*;
 import com.aranaira.arcanearchives.tileentities.AATileEntity;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
@@ -26,6 +23,7 @@ public class AAGuiHandler implements IGuiHandler {
 	public static final int MATRIX_STORAGE = 5;
 	public static final int MATRIX_REPOSITORY = 6;
 	public static final int MATRIX_RESERVOIR = 6;
+	public static final int BAUBLE_GEMSOCKET = 7;
 
 	@Override
 	public Object getServerGuiElement (int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -39,6 +37,8 @@ public class AAGuiHandler implements IGuiHandler {
 			//return new NetworkCraftingContainer(player.inventory, world, new BlockPos(0, 0, 0));
 			case MANIFEST:
 				return null; // return new ContainerManifest(player, true);
+			case BAUBLE_GEMSOCKET:
+				return new ContainerGemSocket(player);
 		}
 
 		if (!(te instanceof AATileEntity)) {
@@ -76,6 +76,8 @@ public class AAGuiHandler implements IGuiHandler {
 				return new GUIBookContainer(null);
 			case MANIFEST:
 				return new GUIManifest(player, new ContainerManifest(player));
+			case BAUBLE_GEMSOCKET:
+				return new GUIGemSocket(new ContainerGemSocket(player));
 		}
 
 		if (!(te instanceof AATileEntity)) {
