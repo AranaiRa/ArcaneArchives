@@ -1,6 +1,8 @@
 package com.aranaira.arcanearchives.util;
 
+import com.aranaira.arcanearchives.inventory.handlers.TroveItemHandler;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
+import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.MathHelper;
@@ -17,6 +19,11 @@ public class ItemUtilities {
 	public static int calculateRedstoneFromTileEntity (@Nullable TileEntity te) {
 		if (te instanceof RadiantChestTileEntity) {
 			return calculateRedstoneFromItemHandler(te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null));
+		} else if (te instanceof RadiantTroveTileEntity) {
+			RadiantTroveTileEntity trove = (RadiantTroveTileEntity) te;
+			TroveItemHandler handler = trove.getInventory();
+			float f = handler.getMaxCount() / (float) handler.getCount();
+			return MathHelper.floor(f * 14.0F) + (handler.getCount() > 0 ? 1 : 0);
 		}
 		return 0;
 	}

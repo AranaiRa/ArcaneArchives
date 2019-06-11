@@ -6,6 +6,7 @@ import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.inventory.handlers.TroveItemHandler;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
+import com.aranaira.arcanearchives.util.ItemUtilities;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -28,6 +29,7 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
+@SuppressWarnings("deprecation")
 public class RadiantTrove extends BlockDirectionalTemplate {
 	public static final String NAME = "radiant_trove";
 
@@ -139,5 +141,15 @@ public class RadiantTrove extends BlockDirectionalTemplate {
 	@SuppressWarnings("deprecation")
 	public AxisAlignedBB getBoundingBox (IBlockState state, IBlockAccess source, BlockPos pos) {
 		return new AxisAlignedBB(0.2, 0.0, 0.2, 0.8, 1.0, 0.8);
+	}
+
+	@Override
+	public boolean hasComparatorInputOverride (IBlockState state) {
+		return true;
+	}
+
+	@Override
+	public int getComparatorInputOverride (IBlockState blockState, World worldIn, BlockPos pos) {
+		return ItemUtilities.calculateRedstoneFromTileEntity(worldIn.getTileEntity(pos));
 	}
 }
