@@ -87,21 +87,14 @@
             <page_title>
                 <title>Arcane Gems</title>
             </page_title>
-            <p condition="AllGems"><stack item="arcanearchives:item_fabrial"/> <link ref="Fabrial">Fabrial</link></p>
-            <space height="8" condition="AllGems"/>
-            <p condition="AllGems"><stack item="arcanearchives:item_glyphspindle"/> <link ref="Glyphspindle">Glyphspindle</link></p>
-            <space height="8" condition="AllGems"/>
-            <p condition="AllGems"><stack item="arcanearchives:item_homingstone"/> <link ref="Homingstone">Homingstone</link></p>
-            <p condition="AllGems"><stack item="arcanearchives:item_munchstone"/> <link ref="Munchstone">Munchstone</link></p>
+            <p><stack item="arcanearchives:item_munchstone"/> <link ref="Munchstone">Munchstone</link></p>
+            <space height="8"/>
             <p><stack item="arcanearchives:item_mindspindle"/> <link ref="Mindspindle">Mindspindle</link></p>
             <space height="8"/>
             <p><stack item="arcanearchives:item_mountaintear"/> <link ref="Mountaintear">Mountaintear</link></p>
             <p><stack item="arcanearchives:item_rivertear"/> <link ref="Rivertear">Rivertear</link></p>
             <space height="8"/>
             <p><stack item="arcanearchives:item_phoenixway"/> <link ref="Phoenixway">Phoenixway</link></p>
-            <p condition="AllGems"><stack item="arcanearchives:item_pyreway"/> <link ref="Pyreway">Pyreway</link></p>
-            <p condition="AllGems"><stack item="arcanearchives:item_earthway"/> <link ref="Earthway">Earthway</link></p>
-            <p condition="AllGems"><stack item="arcanearchives:item_nightway"/> <link ref="Nightway">Nightway</link></p>
         </section>
         <section>
             <page_title>
@@ -1030,6 +1023,32 @@
         </section>
     </chapter>
 
+    <chapter id="Munchstone">
+        <section>
+            <page_title>
+                <title>Munchstone</title>
+            </page_title>
+            <p align="center"><stack item="arcanearchives:item_munchstone" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                A Munchstone is an Arcane Gem formed from a black-spectrum piece of <link ref="CutQuartz">Shaped Radiant Quartz</link> in an oval cut.
+            </p>
+            <p>
+                When activated, a Munchstone allows you to consume plant-blased blocks to restore your hunger and saturation. Charge is consumed for each point of hunger and each point of saturation recovered.
+            </p>
+            <p>
+                Notably, you can use a Munchstone even if your stomach is full.
+            </p>
+            <p>
+                <image src="arcanearchives:items/gems/oval/dun" tw="16" th="16"/> To recharge a dun Mindspindle, activate the gem while you have bonemeal in your inventory. Five pieces of bonemeal are necessary to fully refill the gem, and if you have less than five pieces the gem will only be partially recharged. The bonemeal is consumed.
+            </p>
+            <horizontal_rule/>
+            <p>
+                <stack item="arcanearchives:gemcutters_table" /> Munchstones can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+            </p>
+        </section>
+    </chapter>
+
     <chapter id="Mindspindle">
         <section>
             <page_title>
@@ -1054,14 +1073,6 @@
                 <stack item="arcanearchives:gemcutters_table" /> Mindspindles can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
         </section>
-        <section>
-            <page_title>
-                <title>Mindspindle</title>
-            </page_title>
-            <p italics="true">
-                ...Lore fragment TBD
-            </p>
-        </section>
     </chapter>
 
     <chapter id="Mountaintear">
@@ -1083,14 +1094,6 @@
             <horizontal_rule/>
             <p>
                 Mountaintears cannot be crafted, and are only available via Creative mode.
-            </p>
-        </section>
-        <section>
-            <page_title>
-                <title>Mountaintear</title>
-            </page_title>
-            <p italics="true">
-                ...Lore fragment TBD
             </p>
         </section>
     </chapter>
@@ -1119,14 +1122,6 @@
                 <stack item="arcanearchives:gemcutters_table" /> Rivertears can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
         </section>
-        <section>
-            <page_title>
-                <title>Rivertear</title>
-            </page_title>
-            <p italics="true">
-                ...Lore fragment TBD
-            </p>
-        </section>
     </chapter>
 
     <chapter id="Phoenixway">
@@ -1151,14 +1146,6 @@
             <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Phoenixways can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
-            </p>
-        </section>
-        <section>
-            <page_title>
-                <title>Mindspindle</title>
-            </page_title>
-            <p italics="true">
-                ...Lore fragment TBD
             </p>
         </section>
     </chapter>
