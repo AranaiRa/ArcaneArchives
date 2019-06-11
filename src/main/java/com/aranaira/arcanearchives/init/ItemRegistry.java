@@ -26,19 +26,20 @@ import java.util.stream.Stream;
 public class ItemRegistry {
 	public static final RawQuartzItem RAW_RADIANT_QUARTZ = new RawQuartzItem();
 	public static final ShapedQuartzItem CUT_RADIANT_QUARTZ = new ShapedQuartzItem();
-	//public static final GeomancyPendulumItem GEOMANCY_PENDULUM = new GeomancyPendulumItem();
-	//public static final GeomanticMapItem GEOMANTIC_MAP = new GeomanticMapItem();
 	public static final ManifestItem MANIFEST = new ManifestItem();
 	public static final RadiantAmphoraItem RADIANT_AMPHORA = new RadiantAmphoraItem();
-	//public static final ScepterAbductionItem SCEPTER_ABDUCTION = new ScepterAbductionItem();
-	//public static final ScepterTranslocationItem SCEPTER_TRANSLOCATION = new ScepterTranslocationItem();
 	public static final ScepterRevelationItem SCEPTER_REVELATION = new ScepterRevelationItem();
 	public static final ScepterManipulationItem SCEPTER_MANIPULATION = new ScepterManipulationItem();
 	public static final TomeOfArcanaItem TOME_OF_ARCANA = new TomeOfArcanaItem();
-	public static final TomeOfRequisitionItem TOME_OF_REQUISITION = new TomeOfRequisitionItem();
 	public static final LetterOfInvitationItem LETTER_OF_INVITATION = new LetterOfInvitationItem();
 	public static final LetterOfResignationItem LETTER_OF_RESIGNATION = new LetterOfResignationItem();
 	public static final WritOfExpulsionItem WRIT_OF_EXPULSION = new WritOfExpulsionItem();
+
+	//public static final GeomancyPendulumItem GEOMANCY_PENDULUM = new GeomancyPendulumItem();
+	//public static final GeomanticMapItem GEOMANTIC_MAP = new GeomanticMapItem();
+	//public static final ScepterAbductionItem SCEPTER_ABDUCTION = new ScepterAbductionItem();
+	//public static final ScepterTranslocationItem SCEPTER_TRANSLOCATION = new ScepterTranslocationItem();
+	//public static final TomeOfRequisitionItem TOME_OF_REQUISITION = new TomeOfRequisitionItem();
 
 	//CRAFTING COMPONENTS
 	public static final ComponentContainmentFieldItem COMPONENT_CONTAINMENTFIELD = new ComponentContainmentFieldItem();
