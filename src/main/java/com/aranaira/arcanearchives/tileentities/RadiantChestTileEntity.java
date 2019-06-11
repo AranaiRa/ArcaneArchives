@@ -17,7 +17,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 
 public class RadiantChestTileEntity extends ManifestTileEntity {
-	private final ItemStackHandler inventory = new ItemStackHandler(54);
+	private final RadiantChestHandler inventory = new RadiantChestHandler(54);
 	public String chestName = "";
 
 	public RadiantChestTileEntity () {
@@ -51,17 +51,6 @@ public class RadiantChestTileEntity extends ManifestTileEntity {
 
 	public ItemStackHandler getInventory () {
 		return inventory;
-	}
-
-	public void setContents (ItemStack[] chestContents, ItemStack[] secondaryChestContents, boolean secondaryChest) {
-		for (int i = 0; i < chestContents.length; i++) {
-			inventory.insertItem(i, chestContents[i], false);
-		}
-		if (secondaryChest) {
-			for (int i = 0; i < secondaryChestContents.length; i++) {
-				inventory.insertItem(i + 27, secondaryChestContents[i], false);
-			}
-		}
 	}
 
 	@Override
@@ -119,6 +108,7 @@ public class RadiantChestTileEntity extends ManifestTileEntity {
 		return super.getCapability(capability, facing);
 	}
 
+	@Deprecated
 	public int countEmptySlots () {
 		int empty = 0;
 		for (int i = 0; i < inventory.getSlots(); i++) {
@@ -136,12 +126,36 @@ public class RadiantChestTileEntity extends ManifestTileEntity {
 		}
 	}
 
-	private static class RadiantChestHandler extends ItemStackHandler {
+	private class RadiantChestHandler extends ItemStackHandler {
 		public int emptySlots = 0;
 		public Int2IntOpenHashMap itemReference = new Int2IntOpenHashMap();
 
 		public RadiantChestHandler (int size) {
 			super(size);
+			itemReference.defaultReturnValue(-1);
+		}
+
+		@Override
+		public void deserializeNBT (NBTTagCompound nbt) {
+			super.deserializeNBT(nbt);
+			if (!RadiantChestTileEntity.this.world.isRemote) {
+				manualRecount();
+			}
+		}
+
+		private void manualRecount () {
+			itemReference.clear();
+			itemReference.defaultReturnValue(0);
+			emptySlots = 0;
+			for (int i = 0; i < getSlots(); i++) {
+				ItemStack stack = getStackInSlot(i);
+				if (stack.isEmpty()) {
+					emptySlots++;
+				} else {
+					int packed = RecipeItemHelper.pack(stack);
+					itemReference.put(packed, itemReference.get(packed) + stack.getCount());
+				}
+			}
 			itemReference.defaultReturnValue(-1);
 		}
 
