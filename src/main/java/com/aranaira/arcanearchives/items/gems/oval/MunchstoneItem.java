@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.items.gems.oval;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketArcaneGem;
@@ -77,6 +78,8 @@ public class MunchstoneItem extends ArcaneGemItem {
 	@Override
 	public EnumActionResult onItemUse (EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote) {
+
+			ArcaneArchives.logger.info("munchstone trigger");
 			ItemStack gem = player.getHeldItemMainhand();
 
 			if (GemUtil.getCharge(gem) > 0) {
@@ -99,12 +102,6 @@ public class MunchstoneItem extends ArcaneGemItem {
 						}
 
 						int chargeConsumed = hungerMod + (int) saturationMod;
-
-                        /*ArcaneArchives.logger.info(
-                            "\nhl:"+hungerLevel+"  hm:"+hungerMod+
-                            "\nsl:"+saturationLevel+"  sm:"+saturationMod+
-                            "\ncharge:"+chargeConsumed
-                            );*/
 
 						if (hungerMod > 0) {
 							player.getFoodStats().setFoodLevel(hungerLevel + hungerMod);
