@@ -653,6 +653,9 @@
             <p>
                 <stack item="arcanearchives:radiant_trove"/> When used to upgrade a <link ref="RadiantTrove">Radiant Trove</link>, any items inserted beyond the Trove's maximum capacity are destroyed.
             </p>
+            <p>
+                <stack item="arcanearchives:parchtear"/> Placing a <link ref="Parchtear">Parchtear</link> into the fluid voiding slot of a Devouring Charm restores its charge.
+            </p>
             <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Devouring Charms can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
@@ -842,11 +845,11 @@
             <p italics="true">
                 I believe a device meant to emulate the <span italics="false">Unseen Hand of the Master</span> spell, along with some minor divination enchantments for good measure, might have the potential to correct for these instabilities and maintain a consistent location and frequency in Othewhere.
             </p><space height="4"/>
-            <p italics="true">
-                —Research Journal of Sharaveda
+            <p bold="true">
+                Research Journal of Sharaveda
             </p>
-            <p italics="true">
-                —1665, Autumn’s Birth
+            <p>
+                ...1665, Autumn’s Birth
             </p>
         </section>
     </chapter>
@@ -887,10 +890,10 @@
                 <stack item="arcanearchives:radiant_tank"/>A Radiant Amphora acts as a long distance connection to a specific <link ref="RadiantTank">Radiant Tank</link>. You can bind a Radiant Amphora to a Radiant Tank by using the amphora on the desired tank while sneaking. The amphora will become colorized to signify that a connection was made.
             </p>
             <p>
-                <image src="arcanearchives:items/radiant_amphora" tw="16" th="16"/> While in <span bold="true">Fill</span> mode, picking up fluid directly places it into the linked Radiant Tank.
+                <image src="arcanearchives:items/item_radiantamphora" tw="16" th="16"/> While in <span bold="true">Fill</span> mode, picking up fluid directly places it into the linked Radiant Tank.
             </p>
             <p>
-                <image src="arcanearchives:items/radiant_amphora_tilted" tw="16" th="16"/> When in <span bold="true">Empty</span> mode, fluid is removed from the linked Radiant Tank and placed at the target point.
+                <image src="arcanearchives:items/item_radiantamphora_tilted" tw="16" th="16"/> When in <span bold="true">Empty</span> mode, fluid is removed from the linked Radiant Tank and placed at the target point.
             </p>
             <p>
                 You can switch the Radiant Amphora's current mode by left clicking the air.
