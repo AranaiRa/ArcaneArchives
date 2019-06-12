@@ -25,14 +25,18 @@ import com.aranaira.arcanearchives.network.PacketConfig.RequestMaxDistance;
 import com.aranaira.arcanearchives.network.PacketRadiantAmphora;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
+import com.aranaira.arcanearchives.util.DropHelper;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import gigaherz.lirelent.guidebook.client.BookRegistryEvent;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Enchantments;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
@@ -45,6 +49,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDestroyBlockEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -63,6 +68,7 @@ import net.minecraftforge.items.IItemHandler;
 import vazkii.botania.common.network.PacketHandler;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Random;
 
 @Mod.EventBusSubscriber
@@ -290,7 +296,6 @@ public class AAEventHandler {
 	@SubscribeEvent
 	public static void onCriticalHitLanded (CriticalHitEvent event) {
 		if(!event.getEntityPlayer().world.isRemote) {
-			ArcaneArchives.logger.info(event.getEntityPlayer() + " attacked " + event.getTarget());
 			for (ItemStack stack : ArcaneGemItem.GemUtil.getAvailableGems(event.getEntityPlayer())) {
 				if(stack.getItem() instanceof MurdergleamItem) {
 					if(ArcaneGemItem.GemUtil.isToggledOn(stack) && ArcaneGemItem.GemUtil.getCharge(stack) > 0) {

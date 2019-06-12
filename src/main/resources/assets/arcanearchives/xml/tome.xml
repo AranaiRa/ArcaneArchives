@@ -43,6 +43,7 @@
         <stack item="arcanearchives:item_mindspindle">Mindspindle</stack>
         <stack item="arcanearchives:item_mountaintear">Mountaintear</stack>
         <stack item="arcanearchives:item_rivertear">Rivertear</stack>
+        <stack item="arcanearchives:item_parchtear">Parchtear</stack>
         <stack item="arcanearchives:item_phoenixway">Phoenixway</stack>
 
         <stack item="arcanearchives:bauble_gemsocket">GemSocket</stack>
@@ -98,6 +99,7 @@
             <space height="8"/>
             <p><stack item="arcanearchives:item_mountaintear"/> <link ref="Mountaintear">Mountaintear</link></p>
             <p><stack item="arcanearchives:item_rivertear"/> <link ref="Rivertear">Rivertear</link></p>
+            <p><stack item="arcanearchives:item_rivertear"/> <link ref="Rivertear">Parchtear</link></p>
             <space height="8"/>
             <p><stack item="arcanearchives:item_phoenixway"/> <link ref="Phoenixway">Phoenixway</link></p>
         </section>
@@ -1209,7 +1211,7 @@
                 Notably, you can use a Munchstone even if your stomach is full.
             </p>
             <p>
-                <image src="arcanearchives:items/gems/oval/dun" tw="16" th="16"/> To recharge a dun Mindspindle, activate the gem while you have bonemeal in your inventory. Five pieces of bonemeal are necessary to fully refill the gem, and if you have less than five pieces the gem will only be partially recharged. The bonemeal is consumed.
+                <image src="arcanearchives:items/gems/oval/dun" tw="16" th="16"/> To recharge a dun Munchstone, activate the gem while you have bonemeal in your inventory. Five pieces of bonemeal are necessary to fully refill the gem, and if you have less than five pieces the gem will only be partially recharged. The bonemeal is consumed.
             </p>
             <horizontal_rule/>
             <p>
@@ -1293,6 +1295,29 @@
         </section>
     </chapter>
 
+    <chapter id="Parchtear">
+        <section>
+            <page_title>
+                <title>Parchtear</title>
+            </page_title>
+            <p align="center"><stack item="arcanearchives:item_parchtear" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                A Parchtear is an Arcane Gem formed from a black-spectrum piece of <link ref="CutQuartz">Shaped Radiant Quartz</link> in an pendeloque cut.
+            </p>
+            <p>
+                When activated, the Parchtear destroys a radius 1 cuboid area of fluid. If you are sneaking, it instead destroys a single block of fluid. Each fluid block destroyed consumes a point of charge.
+            </p>
+            <p>
+                <image src="arcanearchives:items/gems/pendeloque/dun" tw="16" th="16"/> To recharge a dun Parchtear, place it in the bucket voiding slot of a <link ref="DevouringCharm">Devouring Charm</link>.
+            </p>
+            <horizontal_rule/>
+            <p>
+                <stack item="arcanearchives:gemcutters_table" /> Parchtear can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+            </p>
+        </section>
+    </chapter>
+
     <chapter id="Phoenixway">
         <section>
             <page_title>
@@ -1310,7 +1335,7 @@
                 If you're about to take fire damage while holding a Phoenixway, it will block the damage and grant 30 seconds of Fire Resistance at the cost of twelve points of charge.
             </p>
             <p>
-                <image src="arcanearchives:items/gems/trillion/dun" tw="16" th="16"/> To recharge a dun Phoenixway, cook the gem in a furnace.
+                <image src="arcanearchives:items/gems/trillion/dun" tw="16" th="16"/> To recharge a dun Phoenixway, activate the gem while you have gunpowder in your inventory. Three pieces of gunpowder are necessary to fully refill the gem, and if you have less than three pieces the gem will only be partially recharged. The gunpowder is consumed.
             </p>
             <horizontal_rule/>
             <p>

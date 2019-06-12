@@ -50,6 +50,7 @@ public class RecipeLibrary {
 	public static GCTRecipe MUNCHSTONE_RECIPE;
 	public static GCTRecipe MINDSPINDLE_RECIPE;
 	public static GCTRecipe RIVERTEAR_RECIPE;
+	public static GCTRecipe PARCHTEAR_RECIPE;
 	public static GCTRecipe PHOENIXWAY_RECIPE;
 
 	public static void buildRecipes () {
@@ -129,6 +130,8 @@ public class RecipeLibrary {
 		MINDSPINDLE_RECIPE = GCTRecipeList.makeAndAddRecipe("mindspindle_gct", new ItemStack(ItemRegistry.MINDSPINDLE), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 1), new IngredientStack("dyeGreen", 4), new IngredientStack(Items.ENCHANTED_BOOK), new IngredientStack(Ingredient.fromItem(Items.EMERALD), 2));
 
 		RIVERTEAR_RECIPE = GCTRecipeList.makeAndAddRecipe("rivertear_gct", new ItemStack(ItemRegistry.RIVERTEAR), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 1), new IngredientStack(Ingredient.fromItem(Items.SUGAR), 4), new IngredientStack(Ingredient.fromItem(Items.WATER_BUCKET)), new IngredientStack(Ingredient.fromItem(Items.WATER_BUCKET)));
+
+		PARCHTEAR_RECIPE = GCTRecipeList.makeAndAddRecipe("parchtear_gct", new ItemStack(ItemRegistry.PARCHTEAR), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 1), new IngredientStack("dyeBlack", 4), new IngredientStack(Blocks.HARDENED_CLAY, 4), new IngredientStack(Blocks.DEADBUSH, 4));
 
 		PHOENIXWAY_RECIPE = GCTRecipeList.makeAndAddRecipe("phoenixway_gct", new ItemStack(ItemRegistry.PHOENIXWAY), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 1), new IngredientStack(Ingredient.fromItem(Items.BLAZE_POWDER), 4), new IngredientStack(Ingredient.fromItem(Items.COAL), 4), new IngredientStack(Ingredient.fromItem(Items.FLINT_AND_STEEL)));
 

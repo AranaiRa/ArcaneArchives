@@ -3,11 +3,11 @@ package com.aranaira.arcanearchives.init;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.items.*;
-import com.aranaira.arcanearchives.items.gems.asscher.MurdergleamItem;
-import com.aranaira.arcanearchives.items.gems.oval.MunchstoneItem;
+import com.aranaira.arcanearchives.items.gems.asscher.*;
+import com.aranaira.arcanearchives.items.gems.oval.*;
 import com.aranaira.arcanearchives.items.gems.pampel.*;
 import com.aranaira.arcanearchives.items.gems.pendeloque.*;
-import com.aranaira.arcanearchives.items.gems.trillion.PhoenixwayItem;
+import com.aranaira.arcanearchives.items.gems.trillion.*;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.items.unused.TomeOfRequisitionItem;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -57,6 +57,7 @@ public class ItemRegistry {
 	public static final MindspindleItem MINDSPINDLE = new MindspindleItem();
 	public static final MountaintearItem MOUNTAINTEAR = new MountaintearItem();
 	public static final RivertearItem RIVERTEAR = new RivertearItem();
+	public static final ParchtearItem PARCHTEAR = new ParchtearItem();
 	public static final PhoenixwayItem PHOENIXWAY = new PhoenixwayItem();
 
 	//BAUBLES
@@ -70,13 +71,13 @@ public class ItemRegistry {
 		IForgeRegistry<Item> registry = event.getRegistry();
 
 
-		Arrays.asList(RAW_RADIANT_QUARTZ, CUT_RADIANT_QUARTZ, /*GEOMANCY_PENDULUM, GEOMANTIC_MAP,*/ MANIFEST, RADIANT_AMPHORA, /*SCEPTER_ABDUCTION, SCEPTER_TRANSLOCATION, */TOME_OF_ARCANA, LETTER_OF_INVITATION, LETTER_OF_RESIGNATION, WRIT_OF_EXPULSION,/* TOME_OF_REQUISITION,*/ COMPONENT_CONTAINMENTFIELD, COMPONENT_MATRIXBRACE, COMPONENT_MATERIALINTERFACE, COMPONENT_RADIANTDUST, COMPONENT_SCINTILLATINGINLAY/*, SPIRIT_ORB*/, SCEPTER_REVELATION, SCEPTER_MANIPULATION, DEVOURING_CHARM, BAUBLE_GEMSOCKET, /*FABRIAL*/ MURDERGLEAM, MUNCHSTONE, MINDSPINDLE, MOUNTAINTEAR, RIVERTEAR, PHOENIXWAY).forEach(registry::register);
+		Arrays.asList(RAW_RADIANT_QUARTZ, CUT_RADIANT_QUARTZ, /*GEOMANCY_PENDULUM, GEOMANTIC_MAP,*/ MANIFEST, RADIANT_AMPHORA, /*SCEPTER_ABDUCTION, SCEPTER_TRANSLOCATION, */TOME_OF_ARCANA, LETTER_OF_INVITATION, LETTER_OF_RESIGNATION, WRIT_OF_EXPULSION,/* TOME_OF_REQUISITION,*/ COMPONENT_CONTAINMENTFIELD, COMPONENT_MATRIXBRACE, COMPONENT_MATERIALINTERFACE, COMPONENT_RADIANTDUST, COMPONENT_SCINTILLATINGINLAY/*, SPIRIT_ORB*/, SCEPTER_REVELATION, SCEPTER_MANIPULATION, DEVOURING_CHARM, BAUBLE_GEMSOCKET, /*FABRIAL*/ MURDERGLEAM, MUNCHSTONE, MINDSPINDLE, MOUNTAINTEAR, RIVERTEAR, PARCHTEAR, PHOENIXWAY).forEach(registry::register);
 		Stream.of(/*BlockRegistry.MATRIX_CRYSTAL_CORE, BlockRegistry.MATRIX_REPOSITORY, BlockRegistry.MATRIX_RESERVOIR, BlockRegistry.MATRIX_STORAGE, BlockRegistry.MATRIX_DISTILLATE, */BlockRegistry.QUARTZ_SLIVER, BlockRegistry.STORAGE_RAW_QUARTZ, BlockRegistry.STORAGE_CUT_QUARTZ, BlockRegistry.RADIANT_CHEST, BlockRegistry.RADIANT_CRAFTING_TABLE, BlockRegistry.RADIANT_LANTERN, BlockRegistry.RADIANT_RESONATOR, BlockRegistry.RAW_QUARTZ/*, BlockRegistry.DOMINION_CRYSTAL*/, BlockRegistry.LECTERN_MANIFEST, BlockRegistry.GEMCUTTERS_TABLE, BlockRegistry.RADIANT_TROVE, BlockRegistry.MONITORING_CRYSTAL, BlockRegistry.RADIANT_TANK, BlockRegistry.BRAZIER_OF_HOARDING).map(BlockTemplate::getItemBlock).forEach(registry::register);
 	}
 
 	@SubscribeEvent
 	public static void onModelRegister (ModelRegistryEvent event) {
-		Arrays.asList(RAW_RADIANT_QUARTZ, CUT_RADIANT_QUARTZ/*, GEOMANCY_PENDULUM, GEOMANTIC_MAP*/, MANIFEST, RADIANT_AMPHORA, /*SCEPTER_ABDUCTION, SCEPTER_MANIPULATION, SCEPTER_TRANSLOCATION*/ LETTER_OF_INVITATION, LETTER_OF_RESIGNATION, WRIT_OF_EXPULSION, /*TOME_OF_REQUISITION, */COMPONENT_CONTAINMENTFIELD, COMPONENT_MATRIXBRACE, COMPONENT_MATERIALINTERFACE, COMPONENT_RADIANTDUST, COMPONENT_SCINTILLATINGINLAY/*, SPIRIT_ORB*/, SCEPTER_REVELATION, SCEPTER_MANIPULATION, DEVOURING_CHARM, BAUBLE_GEMSOCKET, /*FABRIAL*/ MURDERGLEAM, MUNCHSTONE, MINDSPINDLE, MOUNTAINTEAR, RIVERTEAR, PHOENIXWAY).forEach(ItemTemplate::registerModels);
+		Arrays.asList(RAW_RADIANT_QUARTZ, CUT_RADIANT_QUARTZ/*, GEOMANCY_PENDULUM, GEOMANTIC_MAP*/, MANIFEST, RADIANT_AMPHORA, /*SCEPTER_ABDUCTION, SCEPTER_MANIPULATION, SCEPTER_TRANSLOCATION*/ LETTER_OF_INVITATION, LETTER_OF_RESIGNATION, WRIT_OF_EXPULSION, /*TOME_OF_REQUISITION, */COMPONENT_CONTAINMENTFIELD, COMPONENT_MATRIXBRACE, COMPONENT_MATERIALINTERFACE, COMPONENT_RADIANTDUST, COMPONENT_SCINTILLATINGINLAY/*, SPIRIT_ORB*/, SCEPTER_REVELATION, SCEPTER_MANIPULATION, DEVOURING_CHARM, BAUBLE_GEMSOCKET, /*FABRIAL*/ MURDERGLEAM, MUNCHSTONE, MINDSPINDLE, MOUNTAINTEAR, RIVERTEAR, PARCHTEAR, PHOENIXWAY).forEach(ItemTemplate::registerModels);
 
 		Stream.of(/*BlockRegistry.MATRIX_CRYSTAL_CORE, BlockRegistry.MATRIX_REPOSITORY, BlockRegistry.MATRIX_RESERVOIR, BlockRegistry.MATRIX_STORAGE, BlockRegistry.MATRIX_DISTILLATE, */BlockRegistry.STORAGE_RAW_QUARTZ, BlockRegistry.STORAGE_CUT_QUARTZ, BlockRegistry.RADIANT_CHEST, BlockRegistry.RADIANT_CRAFTING_TABLE, BlockRegistry.RADIANT_LANTERN, BlockRegistry.RADIANT_RESONATOR, BlockRegistry.RAW_QUARTZ, /*BlockRegistry.DOMINION_CRYSTAL, */BlockRegistry.LECTERN_MANIFEST, BlockRegistry.GEMCUTTERS_TABLE, BlockRegistry.RADIANT_TROVE, BlockRegistry.MONITORING_CRYSTAL, BlockRegistry.BRAZIER_OF_HOARDING).map(BlockTemplate::getItemBlock).forEach((block) -> ModelLoader.setCustomModelResourceLocation(block, 0, new ModelResourceLocation(block.getRegistryName(), "inventory")));
 

@@ -7,6 +7,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -48,6 +49,25 @@ public class PhoenixwayItem extends ArcaneGemItem {
     @Override
     public ActionResult<ItemStack> onItemRightClick (World world, EntityPlayer player, EnumHand hand) {
         if(!world.isRemote) {
+            if(GemUtil.getCharge(player.getHeldItemMainhand()) == 0) {
+                for(int i=0; i<player.inventory.mainInventory.size(); i++) {
+                    ItemStack stack = player.inventory.mainInventory.get(i);
+                    if(stack.getItem() == Items.GUNPOWDER) {
+                        int numConsumed = 3;
+                        if(numConsumed > stack.getCount())
+                            numConsumed = stack.getCount();
+                        GemUtil.restoreCharge(player.getHeldItemMainhand(), numConsumed * 25);
+                        stack.shrink(numConsumed);
+                        //TODO: Play a particle effect
+                        Vec3d pos = player.getPositionVector().add(0, 1, 0);
+                        PacketArcaneGem packet = new PacketArcaneGem(cut, color, pos, pos);
+                        NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, pos.x, pos.y, pos.z, 160);
+                        NetworkHandler.CHANNEL.sendToAllAround(packet, tp);
+                        break;
+                    }
+                    else continue;
+                }
+            }
             if (GemUtil.getCharge(player.getHeldItemMainhand()) > 0) {
                 Vec3d start = new Vec3d(player.posX, player.posY + player.height, player.posZ);
                 Vec3d dir = player.getLookVec();
