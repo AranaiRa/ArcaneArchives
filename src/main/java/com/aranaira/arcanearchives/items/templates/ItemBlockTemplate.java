@@ -7,6 +7,7 @@ import com.aranaira.arcanearchives.blocks.unused.MatrixCrystalCore;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
+import com.aranaira.arcanearchives.init.BlockRegistry;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -74,7 +75,7 @@ public class ItemBlockTemplate extends ItemBlock {
 			return EnumActionResult.FAIL;
 		}
 
-		if (blockTemplate.hasAccessors()) {
+		if (blockTemplate.hasAccessors() || blockTemplate == BlockRegistry.LECTERN_MANIFEST) {
 			boolean safe = true;
 
 			EnumFacing dir = EnumFacing.fromAngle(player.rotationYaw - 90);

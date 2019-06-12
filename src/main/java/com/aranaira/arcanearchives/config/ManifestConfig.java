@@ -5,7 +5,7 @@ import net.minecraftforge.common.config.Config;
 
 
 @Config.LangKey("arcanearchives.config.manifest")
-@Config(modid= ArcaneArchives.MODID)
+@Config(modid= ArcaneArchives.MODID, category="manifest")
 public class ManifestConfig {
 	@Config.Comment("Whether having a manifest in your inventory is required to open the screen")
 	@Config.Name("Manifest Presence")

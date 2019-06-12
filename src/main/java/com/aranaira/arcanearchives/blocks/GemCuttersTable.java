@@ -27,8 +27,6 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
 public class GemCuttersTable extends BlockDirectionalTemplate {
 	public static final String name = "gemcutters_table";
 
@@ -36,6 +34,7 @@ public class GemCuttersTable extends BlockDirectionalTemplate {
 		super(name, Material.IRON);
 		this.setHardness(2.5f);
 		setSize(2, 1, 1);
+		setLightLevel(16f/16f);
 	}
 
 	@Override

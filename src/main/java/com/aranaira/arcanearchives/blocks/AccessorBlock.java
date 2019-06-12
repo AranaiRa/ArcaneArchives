@@ -36,7 +36,7 @@ import java.util.Random;
 // TODO: WAILA, TUMAT, TOP, etc support
 public class AccessorBlock extends BlockTemplate {
 	public AccessorBlock () {
-		super("accessorblock", Material.ROCK);
+		super("accessorblock", Material.GLASS);
 		setTranslationKey("accessorblock");
 	}
 
@@ -75,7 +75,7 @@ public class AccessorBlock extends BlockTemplate {
 
 	@Override
 	public int getLightOpacity (IBlockState state) {
-		return 0;
+		return 15;
 	}
 
 	@Override

@@ -68,18 +68,24 @@ public class ContainerGemCuttersTable extends Container {
 					if (result.getItem() instanceof ItemBucket) {
 						ItemStack returned = new ItemStack(Items.BUCKET);
 						ItemStack result2 = ItemHandlerHelper.insertItemStacked(tileInventory, returned, false);
-						if (result2.isEmpty()) continue;
-						if (!world.isRemote)
+						if (result2.isEmpty()) {
+							continue;
+						}
+						if (!world.isRemote) {
 							Block.spawnAsEntity(world, thePlayer.getPosition(), returned);
+						}
 					}
-					if(result.getItem() instanceof ItemFlintAndSteel) {
+					if (result.getItem() instanceof ItemFlintAndSteel) {
 						ItemStack returned = result.copy();
 						returned.setItemDamage(returned.getItemDamage() - 1);
 
 						ItemStack result2 = ItemHandlerHelper.insertItemStacked(tileInventory, returned, false);
-						if (result2.isEmpty()) continue;
-						if (!world.isRemote)
+						if (result2.isEmpty()) {
+							continue;
+						}
+						if (!world.isRemote) {
 							Block.spawnAsEntity(world, thePlayer.getPosition(), returned);
+						}
 					}
 				}
 				if (!player.world.isRemote) {

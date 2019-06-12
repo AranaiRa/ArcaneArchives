@@ -7,11 +7,13 @@ import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.events.LineHandler;
+import com.aranaira.arcanearchives.init.BlockRegistry;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -36,6 +38,7 @@ public class LecternManifest extends BlockDirectionalTemplate {
 		setHarvestLevel("axe", 0);
 		this.setHardness(1.5f);
 		setSize(1, 2, 1);
+		setLightLevel(16f/16f);
 	}
 
 	@Override
@@ -69,5 +72,14 @@ public class LecternManifest extends BlockDirectionalTemplate {
 	@Override
 	public BlockRenderLayer getRenderLayer () {
 		return BlockRenderLayer.CUTOUT;
+	}
+
+	@Override
+	public void breakBlock (World world, BlockPos pos, IBlockState state) {
+		if (!world.isAirBlock(pos.up())) {
+			world.setBlockState(pos.up(), Blocks.AIR.getDefaultState());
+		}
+
+		super.breakBlock(world, pos, state);
 	}
 }
