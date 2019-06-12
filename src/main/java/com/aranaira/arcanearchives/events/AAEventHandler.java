@@ -6,37 +6,36 @@ import baubles.api.cap.IBaublesItemHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.gui.GUIGemcasting;
 import com.aranaira.arcanearchives.config.ConfigHandler;
-import com.aranaira.arcanearchives.config.client.ManifestConfig;
 import com.aranaira.arcanearchives.entity.AIResonatorSit;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.inventory.handlers.GemSocketHandler;
 import com.aranaira.arcanearchives.items.BaubleGemSocket;
-import com.aranaira.arcanearchives.items.RadiantAmphoraItem;
 import com.aranaira.arcanearchives.items.RadiantAmphoraItem.AmphoraUtil;
 import com.aranaira.arcanearchives.items.TomeOfArcanaItem;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
-import com.aranaira.arcanearchives.items.gems.asscher.MurdergleamItem;
+import com.aranaira.arcanearchives.items.gems.asscher.*;
+import com.aranaira.arcanearchives.items.gems.oval.*;
+import com.aranaira.arcanearchives.items.gems.pampel.*;
+import com.aranaira.arcanearchives.items.gems.pendeloque.*;
+import com.aranaira.arcanearchives.items.gems.trillion.*;
 import com.aranaira.arcanearchives.network.NetworkHandler;
-import com.aranaira.arcanearchives.network.PacketArcaneGem;
 import com.aranaira.arcanearchives.network.PacketArcaneGemToggle;
-import com.aranaira.arcanearchives.network.PacketConfig.MaxDistance;
 import com.aranaira.arcanearchives.network.PacketConfig.RequestMaxDistance;
 import com.aranaira.arcanearchives.network.PacketRadiantAmphora;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
-import com.aranaira.arcanearchives.util.DropHelper;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import gigaherz.lirelent.guidebook.client.BookRegistryEvent;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Enchantments;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
@@ -47,10 +46,10 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDestroyBlockEvent;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
@@ -60,11 +59,11 @@ import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import vazkii.botania.client.core.handler.LightningHandler;
 import vazkii.botania.common.network.PacketHandler;
 
 import java.util.ArrayList;
@@ -311,6 +310,70 @@ public class AAEventHandler {
 						if(ArcaneGemItem.GemUtil.getCharge(stack) == ArcaneGemItem.GemUtil.getMaxCharge(stack)) {
 							ArcaneGemItem.GemUtil.swapToggle(stack);
 						}
+					}
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void onEntityAttacked(LivingAttackEvent event) {
+		if(!event.getEntityLiving().world.isRemote) {
+			if(event.getEntityLiving() instanceof EntityPlayer) {
+				if (event.getSource().getTrueSource() instanceof EntityLiving) {
+					EntityLivingBase source = (EntityLivingBase) event.getSource().getTrueSource();
+					EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+					for (ItemStack gem : ArcaneGemItem.GemUtil.getAvailableGems(player)) {
+						if(gem.getItem() instanceof StormwayItem) {
+							if(ArcaneGemItem.GemUtil.isToggledOn(gem) && ArcaneGemItem.GemUtil.getCharge(gem) > 0 && event.getSource().isProjectile()) {
+								source.world.spawnEntity(new EntityLightningBolt(source.world, source.posX, source.posY + 0.5, source.posZ, false));
+
+								if(source.isEntityUndead())
+									source.addPotionEffect(new PotionEffect(MobEffects.INSTANT_HEALTH, 1, 10));
+								else
+									source.addPotionEffect(new PotionEffect(MobEffects.INSTANT_DAMAGE, 1, 10));
+
+								ArcaneGemItem.GemUtil.consumeCharge(gem, 1);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void onEntityStruckbyLightning(EntityStruckByLightningEvent event) {
+		if(!event.getEntity().world.isRemote) {
+			if(event.getEntity() instanceof EntityPlayer) {
+				EntityPlayer player = (EntityPlayer) event.getEntity();
+				for (ItemStack gem : ArcaneGemItem.GemUtil.getAvailableGems(player)) {
+					if(gem.getItem() instanceof StormwayItem) {
+						if(ArcaneGemItem.GemUtil.getCharge(gem) > 0) {
+							player.addPotionEffect(new PotionEffect(MobEffects.SPEED, 1200, 2));
+							player.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 1200, 0));
+							player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 1200, 0));
+
+							ArcaneGemItem.GemUtil.consumeCharge(gem, 6);
+							ArcaneArchives.logger.info("fired lightning event");
+
+							event.setCanceled(true);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void onEntityUpdate(LivingEvent.LivingUpdateEvent event) {
+		if(!event.getEntityLiving().world.isRemote && event.getEntityLiving() instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+			for(ItemStack gem : ArcaneGemItem.GemUtil.getAvailableGems(player)) {
+				if(gem.getItem() instanceof StormwayItem) {
+					if(ArcaneGemItem.GemUtil.getCharge(gem) < ArcaneGemItem.GemUtil.getMaxCharge(gem) && player.world.isRaining()) {
+						ArcaneGemItem.GemUtil.restoreCharge(gem, -1);
+						player.playSound(SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, 1.0F, 1.0F);
 					}
 				}
 			}
