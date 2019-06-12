@@ -7,6 +7,8 @@ import com.aranaira.arcanearchives.items.itemblocks.MonitoringCrystalItem;
 import com.aranaira.arcanearchives.items.itemblocks.RadiantTankItem;
 import com.aranaira.arcanearchives.items.templates.ItemBlockTemplate;
 import com.aranaira.arcanearchives.tileentities.*;
+import com.aranaira.arcanearchives.tileentities.unused.MatrixCoreTileEntity;
+import com.aranaira.arcanearchives.tileentities.unused.MatrixRepositoryTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.ItemBlock;
@@ -31,6 +33,7 @@ public class BlockRegistry {
 	public static final MatrixReservoir MATRIX_RESERVOIR = new MatrixReservoir();
 	public static final MatrixStorage MATRIX_STORAGE = new MatrixStorage();
 	public static final MatrixDistillate MATRIX_DISTILLATE = new MatrixDistillate(); //TODO: Check if Thaumcraft is loaded*/
+	//public static final DominionCrystal DOMINION_CRYSTAL = new DominionCrystal();
 
 	//Blocks
 	public static final StorageRawQuartz STORAGE_RAW_QUARTZ = new StorageRawQuartz();
@@ -42,27 +45,27 @@ public class BlockRegistry {
 	public static final RadiantResonator RADIANT_RESONATOR = new RadiantResonator();
 	public static final RawQuartzCluster RAW_QUARTZ = new RawQuartzCluster();
 	public static final QuartzSliver QUARTZ_SLIVER = new QuartzSliver();
-	//public static final DominionCrystal DOMINION_CRYSTAL = new DominionCrystal();
 	public static final GemCuttersTable GEMCUTTERS_TABLE = new GemCuttersTable();
 	public static final MonitoringCrystal MONITORING_CRYSTAL = new MonitoringCrystal();
 	public static final AccessorBlock ACCESSOR = new AccessorBlock();
 	public static final RadiantTank RADIANT_TANK = new RadiantTank();
 	public static final Brazier BRAZIER_OF_HOARDING = new Brazier();
 	public static final LecternManifest LECTERN_MANIFEST = new LecternManifest();
+	public static final LecternAccessor LECTERN_ACCESSOR = new LecternAccessor();
 
 	// Tiles
 	public static final RadiantResonatorTileEntity RADIANT_RESONATOR_TILE_ENTITY = new RadiantResonatorTileEntity();
-	/*public static final MatrixCoreTileEntity MATRIX_CORE_TILE_ENTITY = new MatrixCoreTileEntity();
-	public static final MatrixRepositoryTileEntity MATRIX_REPOSITORY_TILE_ENTITY = new MatrixRepositoryTileEntity();*/
 	public static final AccessorTileEntity ACCESSOR_TILE_ENTITY = new AccessorTileEntity();
 	public static final RadiantChestTileEntity RADIANT_CHEST_TILE_ENTITY = new RadiantChestTileEntity();
 	public static final RadiantTroveTileEntity RADIANT_TROVE_TILE_ENTITY = new RadiantTroveTileEntity();
 	public static final GemCuttersTableTileEntity GEMCUTTERS_TABLE_TILE_ENTITY = new GemCuttersTableTileEntity();
 	public static final RadiantCraftingTableTileEntity RADIANT_CRAFTING_TABLE_TILE_ENTITY = new RadiantCraftingTableTileEntity();
-	//public static final MatrixStorageTileEntity MATRIX_STORAGE_TILE_ENTITY = new MatrixStorageTileEntity();
 	public static final MonitoringCrystalTileEntity MONITORING_CRYSTAL_TILE_ENTITY = new MonitoringCrystalTileEntity();
 	public static final RadiantTankTileEntity RADIANT_TANK_TILE_ENTITY = new RadiantTankTileEntity();
 	public static final BrazierTileEntity BRAZIER_OF_HOARDING_TILE_ENTITY = new BrazierTileEntity();
+	//public static final MatrixCoreTileEntity MATRIX_CORE_TILE_ENTITY = new MatrixCoreTileEntity();
+	//public static final MatrixRepositoryTileEntity MATRIX_REPOSITORY_TILE_ENTITY = new MatrixRepositoryTileEntity();
+	//public static final MatrixStorageTileEntity MATRIX_STORAGE_TILE_ENTITY = new MatrixStorageTileEntity();
 
 	@SubscribeEvent
 	public static void onBlockRegister (RegistryEvent.Register<Block> event) {
@@ -90,14 +93,14 @@ public class BlockRegistry {
 		QUARTZ_SLIVER.setItemBlock(new ItemBlockTemplate(QUARTZ_SLIVER));
 		LECTERN_MANIFEST.setItemBlock(new ItemBlockTemplate(LECTERN_MANIFEST));
 
-		registry.registerAll(/*MATRIX_CRYSTAL_CORE, MATRIX_REPOSITORY, MATRIX_RESERVOIR, MATRIX_STORAGE, MATRIX_DISTILLATE*/QUARTZ_SLIVER, STORAGE_RAW_QUARTZ, STORAGE_SHAPED_QUARTZ, RADIANT_CHEST, RADIANT_CRAFTING_TABLE, RADIANT_LANTERN, RADIANT_RESONATOR, RAW_QUARTZ/*DOMINION_CRYSTAL*/, LECTERN_MANIFEST, GEMCUTTERS_TABLE, ACCESSOR, RADIANT_TROVE, MONITORING_CRYSTAL, RADIANT_TANK, BRAZIER_OF_HOARDING);
+		registry.registerAll(/*MATRIX_CRYSTAL_CORE, MATRIX_REPOSITORY, MATRIX_RESERVOIR, MATRIX_STORAGE, MATRIX_DISTILLATE*/QUARTZ_SLIVER, STORAGE_RAW_QUARTZ, STORAGE_SHAPED_QUARTZ, RADIANT_CHEST, RADIANT_CRAFTING_TABLE, RADIANT_LANTERN, RADIANT_RESONATOR, RAW_QUARTZ/*DOMINION_CRYSTAL*/, LECTERN_MANIFEST, GEMCUTTERS_TABLE, ACCESSOR, RADIANT_TROVE, MONITORING_CRYSTAL, RADIANT_TANK, BRAZIER_OF_HOARDING, LECTERN_ACCESSOR);
 	}
 
 	@SubscribeEvent
 	public static void registerModels (ModelRegistryEvent event) {
 		// ACCESSOR doesn't get registered.
 
-		Arrays.asList(/*MATRIX_CRYSTAL_CORE, MATRIX_REPOSITORY, MATRIX_RESERVOIR, MATRIX_STORAGE, MATRIX_DISTILLATE*/QUARTZ_SLIVER, STORAGE_RAW_QUARTZ, STORAGE_SHAPED_QUARTZ, RADIANT_CHEST, RADIANT_CRAFTING_TABLE, RADIANT_LANTERN, RADIANT_RESONATOR, RAW_QUARTZ/*DOMINION_CRYSTAL*/, LECTERN_MANIFEST, GEMCUTTERS_TABLE, ACCESSOR, RADIANT_TROVE, MONITORING_CRYSTAL, RADIANT_TANK, BRAZIER_OF_HOARDING).forEach(BlockTemplate::registerModels);
+		Arrays.asList(/*MATRIX_CRYSTAL_CORE, MATRIX_REPOSITORY, MATRIX_RESERVOIR, MATRIX_STORAGE, MATRIX_DISTILLATE*/QUARTZ_SLIVER, STORAGE_RAW_QUARTZ, STORAGE_SHAPED_QUARTZ, RADIANT_CHEST, RADIANT_CRAFTING_TABLE, RADIANT_LANTERN, RADIANT_RESONATOR, RAW_QUARTZ/*DOMINION_CRYSTAL*/, LECTERN_MANIFEST, GEMCUTTERS_TABLE, ACCESSOR, RADIANT_TROVE, MONITORING_CRYSTAL, RADIANT_TANK, BRAZIER_OF_HOARDING, LECTERN_ACCESSOR).forEach(BlockTemplate::registerModels);
 
 		Arrays.asList(QUARTZ_SLIVER, STORAGE_RAW_QUARTZ, STORAGE_SHAPED_QUARTZ).forEach((block) -> {
 			ItemBlock itemBlock = block.getItemBlock();
