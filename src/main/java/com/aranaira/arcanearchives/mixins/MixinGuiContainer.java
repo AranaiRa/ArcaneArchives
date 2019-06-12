@@ -21,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class MixinGuiContainer {
 	@Inject(method = "drawSlot", at = @At(value = "HEAD"))
 	private void onDrawSlot (Slot slot, CallbackInfo callbackInfo) {
-		if (ItemTrackingConfig.DisableMixinHighlight) return;
+		if (ItemTrackingConfig.DisableMixinHighlight || ItemTrackingConfig.getContainerClasses().contains(this.getClass())) return;
 
 		ItemStack stack = slot.getStack();
 		if (!stack.isEmpty()) {
