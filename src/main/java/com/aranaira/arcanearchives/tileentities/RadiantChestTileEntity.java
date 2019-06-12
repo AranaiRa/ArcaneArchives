@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.blocks.RadiantChest;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketRadiantChest;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
@@ -138,7 +139,7 @@ public class RadiantChestTileEntity extends ManifestTileEntity {
 		@Override
 		public void deserializeNBT (NBTTagCompound nbt) {
 			super.deserializeNBT(nbt);
-			if (!RadiantChestTileEntity.this.world.isRemote) {
+			if (RadiantChestTileEntity.this.world == null || !RadiantChestTileEntity.this.world.isRemote) {
 				manualRecount();
 			}
 		}

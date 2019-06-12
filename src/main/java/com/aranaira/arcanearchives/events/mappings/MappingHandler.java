@@ -28,7 +28,8 @@ public class MappingHandler {
 		for (Mapping<Block> entry : event.getAllMappings()) {
 			if (entry.key.getNamespace().equals(ArcaneArchives.MODID) && entry.key.getPath().equals("raw_quartz")) {
 				entry.remap(BlockRegistry.RAW_QUARTZ);
-			} else if (entry.key.getNamespace().equals(ArcaneArchives.MODID) && entry.key.getPath().equals("storage_cut_quartz")) {
+			}
+			if (entry.key.getNamespace().equals(ArcaneArchives.MODID) && entry.key.getPath().equals("storage_cut_quartz")) {
 				entry.remap(BlockRegistry.STORAGE_SHAPED_QUARTZ);
 			}
 		}

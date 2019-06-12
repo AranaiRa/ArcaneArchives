@@ -3,7 +3,6 @@ package com.aranaira.arcanearchives.events;
 import baubles.api.BaubleType;
 import baubles.api.BaublesApi;
 import baubles.api.cap.IBaublesItemHandler;
-import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.gui.GUIGemcasting;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.entity.AIResonatorSit;
@@ -63,11 +62,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import vazkii.botania.client.core.handler.LightningHandler;
-import vazkii.botania.common.network.PacketHandler;
 
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Random;
 
 @Mod.EventBusSubscriber
