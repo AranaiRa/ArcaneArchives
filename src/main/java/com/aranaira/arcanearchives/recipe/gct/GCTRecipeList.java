@@ -1,17 +1,34 @@
 package com.aranaira.arcanearchives.recipe.gct;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.util.ItemUtilities;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class GCTRecipeList {
 	private static final LinkedHashMap<ResourceLocation, GCTRecipe> RECIPE_LIST = new LinkedHashMap<>();
 	private static ImmutableList<GCTRecipe> IMMUTABLE_COPY = null;
+
+	public static Map<ResourceLocation, GCTRecipe> getRecipes () {
+		return RECIPE_LIST;
+	}
+
+	@Nullable
+	public static GCTRecipe getRecipeByOutput (ItemStack output) {
+		for (GCTRecipe recipe : RECIPE_LIST.values()) {
+			if (ItemUtilities.areStacksEqualIgnoreSize(output, recipe.getRecipeOutput())) {
+				return recipe;
+			}
+		}
+
+		return null;
+	}
 
 	public static List<GCTRecipe> getRecipeList () {
 		if (IMMUTABLE_COPY == null) {
@@ -27,7 +44,7 @@ public class GCTRecipeList {
 		return newRecipe;
 	}
 
-	public static GCTRecipeWithConditionsCrafter makeAndAddRecipeWithCreatorAndCondition (String name, @Nonnull ItemStack result, Object ... recipe) {
+	public static GCTRecipeWithConditionsCrafter makeAndAddRecipeWithCreatorAndCondition (String name, @Nonnull ItemStack result, Object... recipe) {
 		GCTRecipeWithConditionsCrafter newRecipe = new GCTRecipeWithConditionsCrafter(name, result, recipe);
 		addRecipe(newRecipe);
 		return newRecipe;
