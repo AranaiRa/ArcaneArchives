@@ -11,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -27,68 +28,30 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
+@SuppressWarnings("deprecation")
 public class LecternAccessor extends BlockTemplate {
 	public LecternAccessor () {
-		super("lecternaccessor", Material.ROCK);
+		super("lecternaccessor", Material.GLASS);
 		setTranslationKey("lecternaccessor");
+		setLightLevel(16f/16f);
 	}
 
 	@Override
 	// Called before the tile entity itself is removed
 	public void breakBlock (World world, BlockPos pos, IBlockState state) {
-
 		super.breakBlock(world, pos, state);
-	}
-
-	@Override
-	public boolean hasAccessors () {
-		return false;
-	}
-
-	@Override
-	public boolean isTopSolid (IBlockState state) {
-		return false;
-	}
-
-	@Override
-	public boolean isFullBlock (IBlockState state) {
-		return true;
-	}
-
-	@Override
-	public boolean canEntitySpawn (IBlockState state, Entity entityIn) {
-		return false;
-	}
-
-	@Override
-	public int getLightOpacity (IBlockState state) {
-		return 0;
+		world.destroyBlock(pos.down(), true);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public boolean isTranslucent (IBlockState state) {
-		return true;
-	}
-
-	@Override
-	public boolean causesSuffocation (IBlockState state) {
-		return true;
-	}
-
-	@Override
-	public EnumBlockRenderType getRenderType (IBlockState state) {
-		return EnumBlockRenderType.INVISIBLE;
+	public BlockRenderLayer getRenderLayer () {
+		return BlockRenderLayer.CUTOUT;
 	}
 
 	@Override
 	public float getBlockHardness (IBlockState blockState, World world, BlockPos pos) {
-		return BlockRegistry.LECTERN_MANIFEST.getBlockHardness(blockState, world, pos.down());
-	}
-
-	@Override
-	public boolean isOpaqueCube (IBlockState state) {
-		return false;
+		return BlockRegistry.LECTERN_MANIFEST.getBlockHardness(world.getBlockState(pos.down()), world, pos.down());
 	}
 
 	@Override
@@ -98,12 +61,12 @@ public class LecternAccessor extends BlockTemplate {
 
 	@Override
 	public float getPlayerRelativeBlockHardness (IBlockState state, EntityPlayer player, World world, BlockPos pos) {
-		return BlockRegistry.LECTERN_MANIFEST.getPlayerRelativeBlockHardness(state, player, world, pos.down());
+		return BlockRegistry.LECTERN_MANIFEST.getPlayerRelativeBlockHardness(world.getBlockState(pos.down()), player, world, pos.down());
 	}
 
 	@Override
 	public boolean onBlockActivated (World world, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		return BlockRegistry.LECTERN_MANIFEST.onBlockActivated(world, pos.down(), state, playerIn, hand, facing, hitX, hitY, hitZ);
+		return BlockRegistry.LECTERN_MANIFEST.onBlockActivated(world, pos.down(), world.getBlockState(pos.down()), playerIn, hand, facing, hitX, hitY, hitZ);
 	}
 
 	@Override
@@ -114,7 +77,7 @@ public class LecternAccessor extends BlockTemplate {
 
 	@Override
 	public boolean isSideSolid (IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -124,6 +87,17 @@ public class LecternAccessor extends BlockTemplate {
 
 	@Override
 	public ItemStack getPickBlock (IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
-		return BlockRegistry.LECTERN_MANIFEST.getPickBlock(state, target, world, pos.down(), player);
+		return BlockRegistry.LECTERN_MANIFEST.getPickBlock(world.getBlockState(pos.down()), target, world, pos.down(), player);
+	}
+
+	@Nullable
+	@Override
+	public String getHarvestTool (IBlockState state) {
+		return BlockRegistry.LECTERN_MANIFEST.getHarvestTool(BlockRegistry.LECTERN_MANIFEST.getDefaultState());
+	}
+
+	@Override
+	public int getHarvestLevel (IBlockState state) {
+		return BlockRegistry.LECTERN_MANIFEST.getHarvestLevel(BlockRegistry.LECTERN_MANIFEST.getDefaultState());
 	}
 }

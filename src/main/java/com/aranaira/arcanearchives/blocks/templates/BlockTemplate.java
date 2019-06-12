@@ -142,13 +142,13 @@ public class BlockTemplate extends Block implements IHasModel {
 			}
 
 			// The item block has already taken care of to make sure that the points can be replaced.
-			if (this.hasAccessors()) {
+			if (this.hasAccessors() || this == BlockRegistry.LECTERN_MANIFEST) {
 				for (BlockPos point : calculateAccessors(world, pos)) {
-					world.setBlockState(point, BlockRegistry.ACCESSOR.getDefaultState());
+					world.setBlockState(point, (this == BlockRegistry.LECTERN_MANIFEST) ? BlockRegistry.LECTERN_ACCESSOR.getDefaultState() : BlockRegistry.ACCESSOR.getDefaultState());
 					TileEntity ate = world.getTileEntity(point);
 					if (ate != null) {
 						((AccessorTileEntity) ate).setParent(pos);
-					} else {
+					} else if (this != BlockRegistry.LECTERN_MANIFEST) {
 						// TODO: Include more information
 						ArcaneArchives.logger.info("Block had TileEntity accessors but no TileEntity exists to link to it. WTF?");
 					}
