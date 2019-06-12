@@ -40,7 +40,7 @@ public class RawQuartzItem extends ItemTemplate {
 
 	@Override
 	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.component.rawquartz"));
+		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.raw_quartz"));
 	}
 
 	@Override

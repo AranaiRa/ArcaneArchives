@@ -9,15 +9,15 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ComponentRadiantDustItem extends ItemTemplate {
-	public static final String NAME = "radiant_dust";
+public class MatrixBraceItem extends ItemTemplate {
+	public static final String NAME = "matrix_brace";
 
-	public ComponentRadiantDustItem () {
+	public MatrixBraceItem() {
 		super(NAME);
 	}
 
 	@Override
 	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.component.radiantdust"));
+		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.matrix_brace"));
 	}
 }

@@ -60,6 +60,6 @@ public class LetterOfResignationItem extends LetterTemplate {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.letterofresignation"));
+		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.letter_resignation"));
 	}
 }

@@ -50,6 +50,6 @@ public class TomeOfArcanaItem extends ItemGuidebook implements IHasModel {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.tomeofarcana"));
+		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.tome_arcana"));
 	}
 }

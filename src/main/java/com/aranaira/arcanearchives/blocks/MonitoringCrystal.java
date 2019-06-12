@@ -40,7 +40,7 @@ public class MonitoringCrystal extends BlockDirectionalTemplate {
 
 	@Override
 	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.device.monitoringcrystal"));
+		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.device.monitoring_crystal"));
 	}
 
 	@Override

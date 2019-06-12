@@ -33,7 +33,7 @@ public class ScepterManipulationItem extends ItemTemplate {
 
 	@Override
 	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.scepterofmanipulation"));
+		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.scepter_manipulation"));
 	}
 
 	@Override

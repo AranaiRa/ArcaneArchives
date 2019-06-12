@@ -12,16 +12,16 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ComponentContainmentFieldItem extends ItemTemplate {
-	public static final String NAME = "containment_field";
+public class MaterialInterfaceItem extends ItemTemplate {
+	public static final String NAME = "material_interface";
 
-	public ComponentContainmentFieldItem () {
+	public MaterialInterfaceItem() {
 		super(NAME);
 	}
 
 	@Override
 	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.component.containmentfield"));
+		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.material_interface"));
 	}
 
 	@Override

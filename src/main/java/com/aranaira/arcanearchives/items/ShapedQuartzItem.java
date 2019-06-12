@@ -18,6 +18,6 @@ public class ShapedQuartzItem extends ItemTemplate {
 
 	@Override
 	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.component.cutquartz"));
+		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.shaped_quartz"));
 	}
 }

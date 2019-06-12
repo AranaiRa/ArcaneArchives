@@ -140,7 +140,7 @@ public class QuartzSliver extends BlockDirectionalTemplate {
 
 	@Override
 	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.quartzsliver"));
+		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.quartz_sliver"));
 	}
 
 	@Override

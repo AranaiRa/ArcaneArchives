@@ -9,15 +9,15 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ComponentScintillatingInlayItem extends ItemTemplate {
+public class ScintillatingInlayItem extends ItemTemplate {
 	public static final String NAME = "scintillating_inlay";
 
-	public ComponentScintillatingInlayItem () {
+	public ScintillatingInlayItem() {
 		super(NAME);
 	}
 
 	@Override
 	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.component.scintillatinginlay"));
+		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.scintillating_inlay"));
 	}
 }

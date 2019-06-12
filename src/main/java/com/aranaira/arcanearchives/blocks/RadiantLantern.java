@@ -36,7 +36,7 @@ public class RadiantLantern extends BlockDirectionalTemplate {
 
 	@Override
 	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.device.radiantlantern"));
+		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.device.radiant_lantern"));
 	}
 
 	@Override

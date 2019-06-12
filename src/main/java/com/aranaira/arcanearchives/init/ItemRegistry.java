@@ -41,11 +41,11 @@ public class ItemRegistry {
 	//public static final TomeOfRequisitionItem TOME_OF_REQUISITION = new TomeOfRequisitionItem();
 
 	//CRAFTING COMPONENTS
-	public static final ComponentContainmentFieldItem COMPONENT_CONTAINMENTFIELD = new ComponentContainmentFieldItem();
-	public static final ComponentMatrixBraceItem COMPONENT_MATRIXBRACE = new ComponentMatrixBraceItem();
-	public static final ComponentMaterialInterfaceItem COMPONENT_MATERIALINTERFACE = new ComponentMaterialInterfaceItem();
-	public static final ComponentRadiantDustItem COMPONENT_RADIANTDUST = new ComponentRadiantDustItem();
-	public static final ComponentScintillatingInlayItem COMPONENT_SCINTILLATINGINLAY = new ComponentScintillatingInlayItem();
+	public static final ContainmentFieldItem COMPONENT_CONTAINMENTFIELD = new ContainmentFieldItem();
+	public static final MatrixBraceItem COMPONENT_MATRIXBRACE = new MatrixBraceItem();
+	public static final MaterialInterfaceItem COMPONENT_MATERIALINTERFACE = new MaterialInterfaceItem();
+	public static final RadiantDustItem COMPONENT_RADIANTDUST = new RadiantDustItem();
+	public static final ScintillatingInlayItem COMPONENT_SCINTILLATINGINLAY = new ScintillatingInlayItem();
 
 	//DEVICE UPGRADES
 	public static final DevouringCharmItem DEVOURING_CHARM = new DevouringCharmItem();

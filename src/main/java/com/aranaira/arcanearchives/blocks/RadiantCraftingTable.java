@@ -34,7 +34,7 @@ public class RadiantCraftingTable extends BlockTemplate {
 
 	@Override
 	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.device.radiantcraftingtable"));
+		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.device.radiant_crafting_table"));
 	}
 
 	@Override

@@ -82,9 +82,9 @@ public class WritOfExpulsionItem extends LetterTemplate {
 	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		NBTTagCompound tag = stack.getTagCompound();
 		if (tag != null && tag.hasKey("expel_name")) {
-			tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.writofexpulsion.named", tag.getString("expel_name")));
+			tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.writ_expulsion.named", tag.getString("expel_name")));
 		} else {
-			tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.writofexpulsion"));
+			tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.writ_expulsion"));
 		}
 	}
 }

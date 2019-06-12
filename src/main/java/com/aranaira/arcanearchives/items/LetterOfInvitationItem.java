@@ -66,9 +66,9 @@ public class LetterOfInvitationItem extends LetterTemplate {
 	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		NBTTagCompound tag = stack.getTagCompound();
 		if (tag == null || !tag.hasKey("creator_name")) {
-			tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.letterofinvitation"));
+			tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.letter_invitation"));
 		} else {
-			tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.letterofinvitation.named", tag.getString("creator_name")));
+			tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.letter_invitation.named", tag.getString("creator_name")));
 		}
 	}
 }
