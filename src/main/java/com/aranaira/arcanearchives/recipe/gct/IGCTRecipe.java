@@ -5,6 +5,7 @@ import com.aranaira.arcanearchives.util.types.IngredientStack;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
@@ -14,7 +15,7 @@ import java.util.List;
 public interface IGCTRecipe {
 	int getIndex ();
 
-	String getName ();
+	ResourceLocation getName ();
 
 	boolean matches (@Nonnull IItemHandler inv);
 

@@ -10,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
@@ -19,11 +20,11 @@ import java.util.List;
 public class GCTRecipe implements IGCTRecipe {
 	private final List<IngredientStack> ingredients = new ArrayList<>();
 	private final ItemStack result;
-	private final String name;
+	private final ResourceLocation name;
 
 	public GCTRecipe (String name, @Nonnull ItemStack result, Object... recipe) {
 		this.result = result.copy();
-		this.name = name;
+		this.name = new ResourceLocation(ArcaneArchives.MODID, name);
 		for (Object stack : recipe) {
 			if (stack instanceof ItemStack) {
 				ingredients.add(new IngredientStack((ItemStack) stack));
@@ -49,7 +50,7 @@ public class GCTRecipe implements IGCTRecipe {
 	}
 
 	@Override
-	public String getName () {
+	public ResourceLocation getName () {
 		return name;
 	}
 

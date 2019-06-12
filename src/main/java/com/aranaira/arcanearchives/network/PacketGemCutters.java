@@ -8,14 +8,16 @@ import com.aranaira.arcanearchives.util.WorldUtil;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.Container;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 @SuppressWarnings("WeakerAccess")
 public class PacketGemCutters {
 	public static class ChangeRecipe implements IMessage {
-		private int recipe;
+		private ResourceLocation recipe;
 		private BlockPos pos;
 		private int dimension;
 
@@ -24,7 +26,7 @@ public class PacketGemCutters {
 		}
 
 		@SuppressWarnings("unused")
-		public ChangeRecipe (int recipe, BlockPos pos, int dimension) {
+		public ChangeRecipe (ResourceLocation recipe, BlockPos pos, int dimension) {
 			this.recipe = recipe;
 			this.pos = pos;
 			this.dimension = dimension;
@@ -32,14 +34,14 @@ public class PacketGemCutters {
 
 		@Override
 		public void fromBytes (ByteBuf buf) {
-			recipe = buf.readInt();
+			recipe = new ResourceLocation(ByteBufUtils.readUTF8String(buf));
 			pos = BlockPos.fromLong(buf.readLong());
 			dimension = buf.readInt();
 		}
 
 		@Override
 		public void toBytes (ByteBuf buf) {
-			buf.writeInt(recipe);
+			ByteBufUtils.writeUTF8String(buf, recipe.toString());
 			buf.writeLong(pos.toLong());
 			buf.writeInt(dimension);
 		}
@@ -68,7 +70,7 @@ public class PacketGemCutters {
 
 		@Override
 		public void fromBytes (ByteBuf buf) {
-			recipe = GCTRecipeList.getRecipeByIndex(buf.readInt());
+			recipe = GCTRecipeList.getRecipe(new ResourceLocation(ByteBufUtils.readUTF8String(buf)));
 		}
 
 		@Override

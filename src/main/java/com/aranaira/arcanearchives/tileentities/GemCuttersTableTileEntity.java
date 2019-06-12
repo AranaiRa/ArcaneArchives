@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.tileentities;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketGemCutters;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
@@ -9,6 +10,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -37,6 +39,10 @@ public class GemCuttersTableTileEntity extends AATileEntity {
 		return inventory;
 	}
 
+	public void setRecipe (ResourceLocation name) {
+		currentRecipe = GCTRecipeList.getRecipe(name);
+	}
+
 	public void setRecipe (int index) {
 		manuallySetRecipe(index);
 
@@ -51,25 +57,27 @@ public class GemCuttersTableTileEntity extends AATileEntity {
 		currentRecipe = GCTRecipeList.getRecipeByIndex(index);
 	}
 
+	public static final ResourceLocation INVALID = new ResourceLocation(ArcaneArchives.MODID, "invalid_gct_recipe");
+
 	public void clientSideUpdate () {
 		if (world == null || !world.isRemote) {
 			return;
 		}
 
-		int index = -1;
+		ResourceLocation loc = INVALID;
 
 		if (currentRecipe != null) {
-			index = currentRecipe.getIndex();
+			loc = currentRecipe.getName();
 		}
 
-		PacketGemCutters.ChangeRecipe packet = new PacketGemCutters.ChangeRecipe(index, getPos(), world.provider.getDimension());
+		PacketGemCutters.ChangeRecipe packet = new PacketGemCutters.ChangeRecipe(loc, getPos(), world.provider.getDimension());
 		NetworkHandler.CHANNEL.sendToServer(packet);
 	}
 
 	@Override
 	public <T> T getCapability (Capability<T> capability, @Nullable EnumFacing facing) {
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(inventory);
+			return (T) inventory;
 		}
 		return super.getCapability(capability, facing);
 	}
@@ -84,9 +92,11 @@ public class GemCuttersTableTileEntity extends AATileEntity {
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			return true;
 		}
-		return super.hasCapability(capability, facing);
+
+		return false;
 	}
 
+	@Deprecated
 	public boolean hasCurrentRecipe () {
 		return currentRecipe != null;
 	}

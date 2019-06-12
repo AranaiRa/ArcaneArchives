@@ -6,11 +6,9 @@ import com.aranaira.arcanearchives.client.render.RadiantTankTEISR;
 import com.aranaira.arcanearchives.client.render.RadiantTankTESR;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.init.BlockRegistry;
-import com.aranaira.arcanearchives.integration.gbook.GBookInit;
-import com.aranaira.arcanearchives.items.TomeOfArcanaItemBackground;
+import com.aranaira.arcanearchives.integration.guidebook.GBookInit;
 import com.aranaira.arcanearchives.items.itemblocks.RadiantTankItem;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
-import gigaherz.lirelent.guidebook.guidebook.client.BookRendering;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -69,7 +67,7 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void loadComplete (FMLLoadCompleteEvent event) {
-		if (Loader.isModLoaded("gbook")) {
+		if (Loader.isModLoaded("guidebook")) {
 			GBookInit.init();
 		}
 	}

@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.integration.gbook;
+package com.aranaira.arcanearchives.integration.guidebook;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.items.TomeOfArcanaItemBackground;
