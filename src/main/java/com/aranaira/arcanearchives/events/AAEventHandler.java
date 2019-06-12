@@ -273,7 +273,7 @@ public class AAEventHandler {
 		}
 	}
 
-	@Optional.Method(modid = "guidebook")
+	@Optional.Method(modid = "gbook")
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	@SuppressWarnings("unused")
