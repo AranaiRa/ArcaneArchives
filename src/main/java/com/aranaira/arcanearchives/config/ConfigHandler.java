@@ -2,8 +2,6 @@ package com.aranaira.arcanearchives.config;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.gui.GUIManifest;
-import com.aranaira.arcanearchives.config.client.ItemTrackingConfig;
-import com.aranaira.arcanearchives.config.client.ManifestConfig;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketConfig.MaxDistance;
 import net.minecraft.client.Minecraft;
@@ -15,7 +13,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@Config(modid= ArcaneArchives.MODID, name = "arcanearchives/general", category="General Settings")
+@Config.LangKey("arcanearchives.config.general")
+@Config(modid= ArcaneArchives.MODID)
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class ConfigHandler {
 	@SubscribeEvent

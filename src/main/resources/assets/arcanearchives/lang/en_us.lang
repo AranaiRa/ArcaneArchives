@@ -270,3 +270,10 @@ arcanearchives.network.hive.expel_no_permission=You don't have permission to use
 arcanearchives.network.hive.joined_your_network=%s has joined your Arcane Network!
 arcanearchives.network.hive.left_your_network=%s has left your Arcane Network!
 arcanearchives.network.hive.disbanded=%s has left your Arcane Network, leaving it empty. It has been disbanded.
+
+arcanearchives.config.item_tracking=Item Tracking
+arcanearchives.config.item_tracking.tooltip=Settings related to item tracking.
+arcanearchives.config.manifest=Manifest Settings
+arcanearchives.config.manifest.tooltip=Settings related to the client-side appearance and functionality of the manifest, including tracking distance.
+arcanearchives.config.general=General Settings
+arcanearchives.config.general.tooltip=General game settings.

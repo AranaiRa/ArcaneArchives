@@ -1,9 +1,11 @@
-package com.aranaira.arcanearchives.config.client;
+package com.aranaira.arcanearchives.config;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import net.minecraftforge.common.config.Config;
 
-@Config(modid= ArcaneArchives.MODID, name = "arcanearchives/manifest", category="Manifest Client Settings")
+
+@Config.LangKey("arcanearchives.config.manifest")
+@Config(modid= ArcaneArchives.MODID)
 public class ManifestConfig {
 	@Config.Comment("Whether having a manifest in your inventory is required to open the screen")
 	@Config.Name("Manifest Presence")
