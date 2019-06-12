@@ -4,7 +4,7 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.fml.common.Mod;
 
-@Config(modid= ArcaneArchives.MODID, name = "Item Tracking Settings", category="item_tracking")
+@Config(modid= ArcaneArchives.MODID, name = "arcanearchives/item_tracking", category="Item Tracking")
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class ItemTrackingConfig {
 	@Config.Comment("Radiant chest highlight colour (use HTML syntax i.e., #FFFFFF")

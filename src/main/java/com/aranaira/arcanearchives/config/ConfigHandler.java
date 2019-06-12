@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@Config(modid= ArcaneArchives.MODID, name = "General Settings")
+@Config(modid= ArcaneArchives.MODID, name = "arcanearchives/general", category="General Settings")
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class ConfigHandler {
 	@SubscribeEvent

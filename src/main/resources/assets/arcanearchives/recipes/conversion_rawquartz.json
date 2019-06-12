@@ -5,7 +5,7 @@
     "type": "minecraft:crafting_shapeless",
     "ingredients": [
         {   
-            "item": "arcanearchives:raw_quartz_block"
+            "item": "arcanearchives:raw_quartz_cluster"
         }
     ],
     "result": {
