@@ -2,8 +2,7 @@ package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.inventory.handlers.TroveItemHandler;
-import com.aranaira.arcanearchives.util.ItemComparison;
-import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
+import com.aranaira.arcanearchives.util.ItemUtilities;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -21,9 +20,9 @@ import java.util.UUID;
 
 public class RadiantTroveTileEntity extends ManifestTileEntity {
 	private final TroveItemHandler inventory = new TroveItemHandler(this::update);
+	private long lastClick = 0;
 	private int lastTick = 0;
-
-	public Object2IntOpenHashMap<UUID> rightClickCache = new Object2IntOpenHashMap<>();
+	private UUID lastUUID = null;
 
 	public void update () {
 		if (world.isRemote) {
@@ -39,6 +38,9 @@ public class RadiantTroveTileEntity extends ManifestTileEntity {
 
 	public void onRightClickTrove (EntityPlayer player) {
 		ItemStack mainhand = player.getHeldItemMainhand();
+		if (mainhand.isEmpty()) {
+			mainhand = player.getHeldItemOffhand();
+		}
 		if (mainhand.isEmpty()) {
 			return;
 		}
@@ -64,7 +66,7 @@ public class RadiantTroveTileEntity extends ManifestTileEntity {
 
 		ItemStack reference = inventory.getItem();
 
-		if (!ItemComparison.areStacksEqualIgnoreSize(reference, mainhand)) {
+		if (!ItemUtilities.areStacksEqualIgnoreSize(reference, mainhand)) {
 			if (mainhand.getItem() == ItemRegistry.COMPONENT_MATERIALINTERFACE) {
 				player.sendStatusMessage(new TextComponentTranslation("arcanearchives.warning.sneak_to_upgrade"), true);
 				return;
@@ -76,16 +78,12 @@ public class RadiantTroveTileEntity extends ManifestTileEntity {
 		UUID playerId = player.getUniqueID();
 		boolean doubleClick = false;
 
-		if (rightClickCache.containsKey(playerId)) {
-			int lastClick = rightClickCache.getInt(playerId);
-			if ((player.ticksExisted - lastClick) <= 25 && (player.ticksExisted - lastClick) >= 0) {
-				doubleClick = true;
-			} else {
-				rightClickCache.put(playerId, player.ticksExisted);
-			}
-		} else {
-			rightClickCache.put(playerId, player.ticksExisted);
+		if (lastUUID == playerId && (System.currentTimeMillis() - lastClick) <= 15) {
+			doubleClick = true;
 		}
+
+		lastUUID = playerId;
+		lastClick = System.currentTimeMillis();
 
 		ItemStack result = inventory.insertItem(0, mainhand, false);
 
@@ -102,7 +100,7 @@ public class RadiantTroveTileEntity extends ManifestTileEntity {
 			if (playerMain != null) {
 				for (int i = 0; i < playerMain.getSlots(); i++) {
 					ItemStack inSlot = playerMain.getStackInSlot(i);
-					if (ItemComparison.areStacksEqualIgnoreSize(reference, inSlot)) {
+					if (ItemUtilities.areStacksEqualIgnoreSize(reference, inSlot)) {
 						result = inventory.insertItem(0, inSlot, true);
 						if (!result.isEmpty()) {
 							int diff = inSlot.getCount() - result.getCount();

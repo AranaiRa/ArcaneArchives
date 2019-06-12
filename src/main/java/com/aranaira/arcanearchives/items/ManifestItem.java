@@ -11,7 +11,6 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -25,7 +24,7 @@ import java.util.List;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class ManifestItem extends ItemTemplate {
-	public static final String NAME = "item_manifest";
+	public static final String NAME = "manifest";
 
 	public ManifestItem () {
 		super(NAME);
@@ -69,11 +68,5 @@ public class ManifestItem extends ItemTemplate {
 		tooltip.add(TextFormatting.GOLD + "" + TextFormatting.BOLD + "Sneak-Right-Click" + additional + TextFormatting.RESET + TextFormatting.GOLD + " to clear inventory tracking.");
 		if (Keybinds.manifestKey.getKeyCode() == 0) {
 		}
-	}
-
-	@Override
-	@SuppressWarnings("deprecation")
-	public EnumRarity getRarity (ItemStack stack) {
-		return EnumRarity.RARE;
 	}
 }

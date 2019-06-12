@@ -32,7 +32,7 @@ import java.util.List;
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public class RawQuartzItem extends ItemTemplate {
-	public static final String NAME = "item_rawquartz";
+	public static final String NAME = "raw_quartz";
 
 	public RawQuartzItem () {
 		super(NAME);

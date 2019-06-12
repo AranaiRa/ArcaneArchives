@@ -2,8 +2,10 @@ package com.aranaira.arcanearchives.integration.top;
 
 import com.aranaira.arcanearchives.blocks.RadiantChest;
 import com.aranaira.arcanearchives.blocks.RadiantResonator;
+import com.aranaira.arcanearchives.blocks.RadiantTrove;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
+import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import mcjty.theoneprobe.api.*;
 import net.minecraft.block.Block;
@@ -38,6 +40,11 @@ public class TOPPlugin implements Function<ITheOneProbe, Void>, IProbeInfoProvid
 				probeInfo.text(TextFormatting.GOLD + "{*arcanearchives.data.tooltip.resonator_progress*} " + String.format("%d%%", resonator.getPercentageComplete()));
 				RadiantResonatorTileEntity.TickResult res = resonator.canTick();
 				probeInfo.text(res.getFormat() + "{*" + res.getKey() + "*}");
+			}
+		} else if (block instanceof RadiantTrove) {
+			RadiantTroveTileEntity trove = WorldUtil.getTileEntity(RadiantTroveTileEntity.class, world, data.getPos());
+			if (trove != null) {
+				probeInfo.text(TextFormatting.GOLD + "" + trove.getInventory().getCount() + " {*arcanearchives.data.tooltip.trove_count*} " + "{*" + trove.getInventory().getItem().getTranslationKey() + ".name*}");
 			}
 		}
 	}

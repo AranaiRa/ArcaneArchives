@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.inventory.handlers;
 
 import com.aranaira.arcanearchives.init.ItemRegistry;
-import com.aranaira.arcanearchives.util.ItemComparison;
+import com.aranaira.arcanearchives.util.ItemUtilities;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -61,7 +61,7 @@ public class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCo
 	@Nonnull
 	@Override
 	public ItemStack insertItem (int slot, @Nonnull ItemStack stack, boolean simulate) {
-		if (ItemComparison.areStacksEqualIgnoreSize(reference, stack)) {
+		if (ItemUtilities.areStacksEqualIgnoreSize(reference, stack)) {
 			int thisCount = stack.getCount();
 			int diff = 0;
 
@@ -135,7 +135,7 @@ public class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCo
 
 	@Override
 	public boolean isItemValid (int slot, @Nonnull ItemStack stack) {
-		return ItemComparison.areStacksEqualIgnoreSize(reference, stack);
+		return ItemUtilities.areStacksEqualIgnoreSize(reference, stack);
 	}
 
 	public boolean upgrade () {

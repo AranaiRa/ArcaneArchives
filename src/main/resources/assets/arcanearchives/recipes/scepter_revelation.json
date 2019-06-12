@@ -10,7 +10,7 @@
     ],
     "key": {
         "R": {
-            "item": "arcanearchives:item_rawquartz",
+            "item": "arcanearchives:raw_quartz",
             "data": 0
         },
         "G": {
@@ -23,6 +23,6 @@
         }
     },
     "result": {
-        "item": "arcanearchives:item_scepterrevelation"
+        "item": "arcanearchives:scepter_revelation"
     }
 }

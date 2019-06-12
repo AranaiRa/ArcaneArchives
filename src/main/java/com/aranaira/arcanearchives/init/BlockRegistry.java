@@ -9,9 +9,7 @@ import com.aranaira.arcanearchives.items.templates.ItemBlockTemplate;
 import com.aranaira.arcanearchives.tileentities.*;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
@@ -36,7 +34,7 @@ public class BlockRegistry {
 
 	//Blocks
 	public static final StorageRawQuartz STORAGE_RAW_QUARTZ = new StorageRawQuartz();
-	public static final StorageCutQuartz STORAGE_CUT_QUARTZ = new StorageCutQuartz();
+	public static final StorageShapedQuartz STORAGE_SHAPED_QUARTZ = new StorageShapedQuartz();
 	public static final RadiantChest RADIANT_CHEST = new RadiantChest();
 	public static final RadiantTrove RADIANT_TROVE = new RadiantTrove();
 	public static final RadiantCraftingTable RADIANT_CRAFTING_TABLE = new RadiantCraftingTable();
@@ -76,28 +74,10 @@ public class BlockRegistry {
 		//MATRIX_STORAGE.setItemBlock(new ItemBlockTemplate(MATRIX_STORAGE));
 		//MATRIX_DISTILLATE.setItemBlock(new ItemBlockTemplate(MATRIX_DISTILLATE));
 		STORAGE_RAW_QUARTZ.setItemBlock(new ItemBlock(STORAGE_RAW_QUARTZ));
-		STORAGE_CUT_QUARTZ.setItemBlock(new ItemBlock(STORAGE_CUT_QUARTZ) {
-			@Override
-			@SuppressWarnings("deprecation")
-			public EnumRarity getRarity (ItemStack stack) {
-				return EnumRarity.UNCOMMON;
-			}
-		});
+		STORAGE_SHAPED_QUARTZ.setItemBlock(new ItemBlock(STORAGE_SHAPED_QUARTZ));
 		RADIANT_CHEST.setItemBlock(new ItemBlockTemplate(RADIANT_CHEST));
-		RADIANT_CRAFTING_TABLE.setItemBlock(new ItemBlock(RADIANT_CRAFTING_TABLE) {
-			@Override
-			@SuppressWarnings("deprecation")
-			public EnumRarity getRarity (ItemStack stack) {
-				return EnumRarity.RARE;
-			}
-		});
-		RADIANT_LANTERN.setItemBlock(new ItemBlock(RADIANT_LANTERN) {
-			@Override
-			@SuppressWarnings("deprecation")
-			public EnumRarity getRarity (ItemStack stack) {
-				return EnumRarity.UNCOMMON;
-			}
-		});
+		RADIANT_CRAFTING_TABLE.setItemBlock(new ItemBlock(RADIANT_CRAFTING_TABLE));
+		RADIANT_LANTERN.setItemBlock(new ItemBlock(RADIANT_LANTERN));
 		RADIANT_RESONATOR.setItemBlock(new ItemBlockTemplate(RADIANT_RESONATOR));
 		RAW_QUARTZ.setItemBlock(new ItemBlock(RAW_QUARTZ));
 		//DOMINION_CRYSTAL.setItemBlock(new ItemBlockTemplate(DOMINION_CRYSTAL));
@@ -110,16 +90,16 @@ public class BlockRegistry {
 		QUARTZ_SLIVER.setItemBlock(new ItemBlockTemplate(QUARTZ_SLIVER));
 		LECTERN_MANIFEST.setItemBlock(new ItemBlockTemplate(LECTERN_MANIFEST));
 
-		registry.registerAll(/*MATRIX_CRYSTAL_CORE, MATRIX_REPOSITORY, MATRIX_RESERVOIR, MATRIX_STORAGE, MATRIX_DISTILLATE*/QUARTZ_SLIVER, STORAGE_RAW_QUARTZ, STORAGE_CUT_QUARTZ, RADIANT_CHEST, RADIANT_CRAFTING_TABLE, RADIANT_LANTERN, RADIANT_RESONATOR, RAW_QUARTZ/*DOMINION_CRYSTAL*/, LECTERN_MANIFEST, GEMCUTTERS_TABLE, ACCESSOR, RADIANT_TROVE, MONITORING_CRYSTAL, RADIANT_TANK, BRAZIER_OF_HOARDING);
+		registry.registerAll(/*MATRIX_CRYSTAL_CORE, MATRIX_REPOSITORY, MATRIX_RESERVOIR, MATRIX_STORAGE, MATRIX_DISTILLATE*/QUARTZ_SLIVER, STORAGE_RAW_QUARTZ, STORAGE_SHAPED_QUARTZ, RADIANT_CHEST, RADIANT_CRAFTING_TABLE, RADIANT_LANTERN, RADIANT_RESONATOR, RAW_QUARTZ/*DOMINION_CRYSTAL*/, LECTERN_MANIFEST, GEMCUTTERS_TABLE, ACCESSOR, RADIANT_TROVE, MONITORING_CRYSTAL, RADIANT_TANK, BRAZIER_OF_HOARDING);
 	}
 
 	@SubscribeEvent
 	public static void registerModels (ModelRegistryEvent event) {
 		// ACCESSOR doesn't get registered.
 
-		Arrays.asList(/*MATRIX_CRYSTAL_CORE, MATRIX_REPOSITORY, MATRIX_RESERVOIR, MATRIX_STORAGE, MATRIX_DISTILLATE*/QUARTZ_SLIVER, STORAGE_RAW_QUARTZ, STORAGE_CUT_QUARTZ, RADIANT_CHEST, RADIANT_CRAFTING_TABLE, RADIANT_LANTERN, RADIANT_RESONATOR, RAW_QUARTZ/*DOMINION_CRYSTAL*/, LECTERN_MANIFEST, GEMCUTTERS_TABLE, ACCESSOR, RADIANT_TROVE, MONITORING_CRYSTAL, RADIANT_TANK, BRAZIER_OF_HOARDING).forEach(BlockTemplate::registerModels);
+		Arrays.asList(/*MATRIX_CRYSTAL_CORE, MATRIX_REPOSITORY, MATRIX_RESERVOIR, MATRIX_STORAGE, MATRIX_DISTILLATE*/QUARTZ_SLIVER, STORAGE_RAW_QUARTZ, STORAGE_SHAPED_QUARTZ, RADIANT_CHEST, RADIANT_CRAFTING_TABLE, RADIANT_LANTERN, RADIANT_RESONATOR, RAW_QUARTZ/*DOMINION_CRYSTAL*/, LECTERN_MANIFEST, GEMCUTTERS_TABLE, ACCESSOR, RADIANT_TROVE, MONITORING_CRYSTAL, RADIANT_TANK, BRAZIER_OF_HOARDING).forEach(BlockTemplate::registerModels);
 
-		Arrays.asList(QUARTZ_SLIVER, STORAGE_RAW_QUARTZ, STORAGE_CUT_QUARTZ).forEach((block) -> {
+		Arrays.asList(QUARTZ_SLIVER, STORAGE_RAW_QUARTZ, STORAGE_SHAPED_QUARTZ).forEach((block) -> {
 			ItemBlock itemBlock = block.getItemBlock();
 			if (itemBlock != null) {
 				ModelLoader.setCustomModelResourceLocation(itemBlock, 0, new ModelResourceLocation(block.getRegistryName(), "inventory"));

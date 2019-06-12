@@ -10,7 +10,7 @@
     ],
     "key": {
         "M": {
-            "item": "arcanearchives:item_manifest"
+            "item": "arcanearchives:manifest"
         },
         "S": {
             "item": "minecraft:stick"

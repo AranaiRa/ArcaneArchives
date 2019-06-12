@@ -12,7 +12,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -23,7 +22,6 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -34,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ScepterRevelationItem extends ItemTemplate {
-	public static final String NAME = "item_scepterrevelation";
+	public static final String NAME = "scepter_revelation";
 
 	public ScepterRevelationItem () {
 		super(NAME);
@@ -190,11 +188,5 @@ public class ScepterRevelationItem extends ItemTemplate {
 	@Override
 	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.scepterofrevelation"));
-	}
-
-	@Override
-	@SuppressWarnings("deprecation")
-	public EnumRarity getRarity (ItemStack stack) {
-		return EnumRarity.RARE;
 	}
 }

@@ -23,7 +23,7 @@
             "item": "minecraft:crafting_table"
         },
         "Q": {
-            "item": "arcanearchives:item_rawquartz"
+            "item": "arcanearchives:raw_quartz"
         },
         "W": {
             "type": "forge:ore_dict",

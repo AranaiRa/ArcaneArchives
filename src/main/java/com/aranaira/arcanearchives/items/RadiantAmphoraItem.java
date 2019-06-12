@@ -45,7 +45,7 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 public class RadiantAmphoraItem extends ItemTemplate {
-	public static final String NAME = "item_radiantamphora";
+	public static final String NAME = "radiant_amphora";
 	// Check delay in milliseconds for fluid types
 	public static long CHECK_DELAY = 15000L;
 

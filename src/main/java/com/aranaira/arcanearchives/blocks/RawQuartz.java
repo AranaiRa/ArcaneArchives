@@ -26,7 +26,7 @@ import java.util.List;
 public class RawQuartz extends BlockDirectionalTemplate {
 
 	//public static final PropertyDirection DIRECTION = PropertyDirection.create("facing");
-	public static final String name = "raw_quartz";
+	public static final String name = "raw_quartz_block";
 
 	public RawQuartz () {
 		super(name, Material.ROCK);

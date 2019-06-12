@@ -4,7 +4,7 @@
     ],
     "type": "minecraft:crafting_shapeless",
     "ingredients": [
-        {   "item": "arcanearchives:item_rawquartz" },
+        {   "item": "arcanearchives:raw_quartz" },
         {   "type": "forge:ore_dict", "ore": "chestWood" }
     ],
     "result": {

@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class LetterOfResignationItem extends LetterTemplate {
-	public static final String NAME = "item_letterofresignation";
+	public static final String NAME = "letter_resignation";
 
 	public LetterOfResignationItem () {
 		super(NAME);

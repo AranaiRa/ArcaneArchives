@@ -29,7 +29,7 @@ public class PacketArcaneGemToggle implements IMessage {
 	public static class Handler extends ServerHandler<PacketArcaneGemToggle> {
 		@Override
 		public void processMessage (PacketArcaneGemToggle packet, MessageContext context) {
-			ArcaneArchives.logger.info("Received toggle packet");
+			//ArcaneArchives.logger.info("Received toggle packet");
 			EntityPlayerMP player = context.getServerHandler().player;
 			ArcaneGemItem.GemUtil.swapToggle(player.getHeldItemMainhand());
 		}

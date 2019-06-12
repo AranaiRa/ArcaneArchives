@@ -22,7 +22,7 @@ public class ContainerGemSocket extends Container {
     private ItemStack socket;
 
     public ContainerGemSocket(EntityPlayer player) {
-        ArcaneArchives.logger.info("CONTAINER CLASS INSTANTIATED");
+        //ArcaneArchives.logger.info("CONTAINER CLASS INSTANTIATED");
         this.player = player;
         socket = player.getHeldItemMainhand();
 

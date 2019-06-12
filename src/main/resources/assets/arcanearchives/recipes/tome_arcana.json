@@ -8,7 +8,7 @@
         {   "item": "minecraft:gold_nugget" }
     ],
     "result": {
-        "item": "arcanearchives:item_tomeofarcana",
+        "item": "arcanearchives:tome_arcana",
         "nbt": {
             "Book": "xml/tome.xml"
         },

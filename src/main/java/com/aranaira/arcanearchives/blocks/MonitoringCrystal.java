@@ -102,7 +102,7 @@ public class MonitoringCrystal extends BlockDirectionalTemplate {
 
 	@Override
 	public boolean onBlockActivated (World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		ArcaneArchives.logger.info(state.getValue(BlockDirectionalTemplate.FACING).getName().toLowerCase());
+		//ArcaneArchives.logger.info(state.getValue(BlockDirectionalTemplate.FACING).getName().toLowerCase());
 
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
 	}

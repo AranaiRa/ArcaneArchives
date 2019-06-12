@@ -5,6 +5,7 @@ import com.aranaira.arcanearchives.events.LineHandler;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
+import com.aranaira.arcanearchives.util.ItemUtilities;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -37,6 +38,7 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
+@SuppressWarnings("deprecation")
 public class RadiantTank extends BlockTemplate {
 	public static final String NAME = "radiant_tank";
 	public static AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.1, 0.0, 0.1, 0.9, 0.98, 0.9);
@@ -115,7 +117,10 @@ public class RadiantTank extends BlockTemplate {
 	public boolean onBlockActivated (World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		LineHandler.removeLine(pos);
 
-		ItemStack heldItem = player.getHeldItem(hand);
+		ItemStack heldItem = player.getHeldItemMainhand();
+		if (heldItem.isEmpty()) {
+			heldItem = player.getHeldItemOffhand();
+		}
 
 		RadiantTankTileEntity te = WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, pos);
 		if (te == null) {
@@ -186,6 +191,7 @@ public class RadiantTank extends BlockTemplate {
 			spawnAsEntity(world, pos, stack);
 		}
 
+		world.updateComparatorOutputLevel(pos, this);
 		super.breakBlock(world, pos, state);
 	}
 
@@ -199,5 +205,15 @@ public class RadiantTank extends BlockTemplate {
 				te.deserializeStack(stack.getTagCompound());
 			}
 		}
+	}
+
+	@Override
+	public boolean hasComparatorInputOverride (IBlockState state) {
+		return true;
+	}
+
+	@Override
+	public int getComparatorInputOverride (IBlockState blockState, World worldIn, BlockPos pos) {
+		return ItemUtilities.calculateRedstoneFromTileEntity(worldIn.getTileEntity(pos));
 	}
 }

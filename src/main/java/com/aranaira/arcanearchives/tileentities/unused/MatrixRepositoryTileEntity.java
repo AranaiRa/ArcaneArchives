@@ -55,7 +55,7 @@ public class MatrixRepositoryTileEntity extends ImmanenceTileEntity {
 		//Tries to find the same item in the network, so that it will consolidate the itemstack.
 		for(ItemStack itemStack : inventory)
 {
-			if(ItemComparison.AreItemsEqual(temp, itemStack))
+			if(ItemUtilities.AreItemsEqual(temp, itemStack))
 {
 				//Adds the item count to the one in the network, and removes the remainder from the one that will be returned.
 				if(!simulate) itemStack.setCount(itemStack.getCount() + maxCanAdd);
