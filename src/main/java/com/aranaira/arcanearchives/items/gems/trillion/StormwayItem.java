@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.items.gems.trillion;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketArcaneGem;
+import com.aranaira.arcanearchives.util.NBTUtils;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -12,6 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -92,5 +94,20 @@ public class StormwayItem extends ArcaneGemItem {
 			}
 		}
 		return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+	}
+
+	public static void setStrikeCooldownTimer(ItemStack stack) {
+		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+		nbt.setLong("cooldown", System.currentTimeMillis());
+		stack.setTagCompound(nbt);
+	}
+
+	public static boolean canBeStruck(ItemStack stack) {
+		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+		if(nbt.hasKey("cooldown")) {
+			return nbt.getLong("cooldown") + 1000 < System.currentTimeMillis();
+		}
+		else
+			return true;
 	}
 }

@@ -346,15 +346,13 @@ public class AAEventHandler {
 				EntityPlayer player = (EntityPlayer) event.getEntity();
 				for (ItemStack gem : ArcaneGemItem.GemUtil.getAvailableGems(player)) {
 					if(gem.getItem() instanceof StormwayItem) {
-						if(ArcaneGemItem.GemUtil.getCharge(gem) > 0) {
+						if(ArcaneGemItem.GemUtil.getCharge(gem) > 0 && StormwayItem.canBeStruck(gem)) {
 							player.addPotionEffect(new PotionEffect(MobEffects.SPEED, 1200, 2));
 							player.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 1200, 0));
 							player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 1200, 0));
 
 							ArcaneGemItem.GemUtil.consumeCharge(gem, 6);
-							ArcaneArchives.logger.info("fired lightning event");
-
-							event.setCanceled(true);
+							StormwayItem.setStrikeCooldownTimer(gem);
 						}
 					}
 				}
