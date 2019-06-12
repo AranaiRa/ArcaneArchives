@@ -22,9 +22,19 @@ public class GCTRecipe implements IGCTRecipe {
 	private final ItemStack result;
 	private final ResourceLocation name;
 
-	public GCTRecipe (String name, @Nonnull ItemStack result, Object... recipe) {
+	public GCTRecipe (String name, @Nonnull ItemStack result, Object ... recipe) {
+		this(new ResourceLocation(ArcaneArchives.MODID, name), result, recipe);
+	}
+
+	public GCTRecipe (ResourceLocation name, @Nonnull ItemStack result, List<IngredientStack> ingredients) {
+		this.result = result;
+		this.name = name;
+		this.ingredients.addAll(ingredients);
+	}
+
+	public GCTRecipe (ResourceLocation name, @Nonnull ItemStack result, Object... recipe) {
 		this.result = result.copy();
-		this.name = new ResourceLocation(ArcaneArchives.MODID, name);
+		this.name = name;
 		for (Object stack : recipe) {
 			if (stack instanceof ItemStack) {
 				ingredients.add(new IngredientStack((ItemStack) stack));

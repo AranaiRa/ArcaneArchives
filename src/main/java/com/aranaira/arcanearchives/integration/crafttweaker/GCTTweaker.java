@@ -19,6 +19,7 @@ import net.minecraft.util.ResourceLocation;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -75,7 +76,12 @@ public class GCTTweaker {
 
 		@Override
 		public void apply () {
-			List<IngredientStack>
+			List<IngredientStack> stacks = new ArrayList<>();
+			for (IIngredient ingredient : ingredients) {
+				stacks.add(new IngredientStack(CraftTweakerMC.getIngredient(ingredient), ingredient.getAmount()));
+			}
+			GCTRecipe recipe = new GCTRecipe(name, output, stacks);
+			GCTRecipeList.addRecipe(recipe);
 		}
 	}
 }
