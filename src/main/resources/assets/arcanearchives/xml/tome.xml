@@ -40,6 +40,7 @@
         <stack item="arcanearchives:writ_expulsion">WritExpulsion</stack>
 
         <stack item="arcanearchives:murdergleam">Murdergleam</stack>
+        <stack item="arcanearchives:cleansegleam">Cleansegleam</stack>
         <stack item="arcanearchives:mindspindle">Mindspindle</stack>
         <stack item="arcanearchives:mountaintear">Mountaintear</stack>
         <stack item="arcanearchives:rivertear">Rivertear</stack>
@@ -93,6 +94,7 @@
                 <title>Arcane Gems</title>
             </page_title>
             <p><stack item="arcanearchives:murdergleam"/> <link ref="Murdergleam">Murdergleam</link></p>
+            <p><stack item="arcanearchives:cleansegleam"/> <link ref="Cleansegleam">Cleansegleam</link></p>
             <space height="8"/>
             <p><stack item="arcanearchives:munchstone"/> <link ref="Munchstone">Munchstone</link></p>
             <space height="8"/>
@@ -1196,6 +1198,32 @@
             <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Murdergleams can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+            </p>
+        </section>
+    </chapter>
+
+    <chapter id="Cleansegleam">
+        <section>
+            <page_title>
+                <title>Cleansegleam</title>
+            </page_title>
+            <p align="center"><stack item="arcanearchives:cleansegleam" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                A Cleansegleam is an Arcane Gem formed from a blue-spectrum piece of <link ref="shaped_quartz">Shaped Radiant Quartz</link> in an asscher cut.
+            </p>
+            <p>
+                When activated, a Cleansegleam will purge the user of Hunger, Nausea, and Poison at the cost of a point of charge.
+            </p>
+            <p>
+                If activated while sneaking, you can attempt to cure the target you're looking at of these effects instead.
+            </p>
+            <p>
+                <image src="arcanearchives:items/gems/asscher/dun" tw="16" th="16"/> To recharge a dun Cleansegleam, activate the gem while you have a bucket of milk in your inventory. The milk is conusmed, and the bucket is returned. Alternatively, if you have a Radiant Amphora linked to a Radiant Tank containing milk, the milk is deducted from the tank directly.
+            </p>
+            <horizontal_rule/>
+            <p>
+                <stack item="arcanearchives:gemcutters_table" /> Cleansegleam can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
         </section>
     </chapter>

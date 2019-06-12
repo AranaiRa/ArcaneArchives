@@ -50,6 +50,7 @@ public class RecipeLibrary {
 	public static GCTRecipe RIVERTEAR_RECIPE;
 	public static GCTRecipe PARCHTEAR_RECIPE;
 	public static GCTRecipe PHOENIXWAY_RECIPE;
+	public static GCTRecipe STORMWAY_RECIPE;
 
 	public static void buildRecipes () {
 		RADIANT_DUST_RECIPE = GCTRecipeList.makeAndAddRecipe("radiant_dust", new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 2), ItemRegistry.RAW_RADIANT_QUARTZ);
@@ -132,6 +133,8 @@ public class RecipeLibrary {
 		PARCHTEAR_RECIPE = GCTRecipeList.makeAndAddRecipe("parchtear", new ItemStack(ItemRegistry.PARCHTEAR), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyeBlack", 4), new IngredientStack(Blocks.HARDENED_CLAY, 4), new IngredientStack(Blocks.DEADBUSH, 4));
 
 		PHOENIXWAY_RECIPE = GCTRecipeList.makeAndAddRecipe("phoenixway", new ItemStack(ItemRegistry.PHOENIXWAY), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack(Ingredient.fromItem(Items.BLAZE_POWDER), 4), new IngredientStack(Ingredient.fromItem(Items.COAL), 4), new IngredientStack(Ingredient.fromItem(Items.FLINT_AND_STEEL)));
+
+		STORMWAY_RECIPE = GCTRecipeList.makeAndAddRecipe("stormway", new ItemStack(ItemRegistry.STORMWAY), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyeYellow", 4), new IngredientStack(Ingredient.fromItem(Items.REDSTONE), 16), new IngredientStack(Blocks.IRON_BARS), 8);
 
 		/*MATRIX_CORE_RECIPE = GCTRecipeList.makeAndAddRecipe("matrix_core", new ItemStack(BlockRegistry.MATRIX_CRYSTAL_CORE, 1), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 60), new IngredientStack("logWood", 12), new ItemStack(ItemRegistry.COMPONENT_SCINTILLATINGINLAY, 12), new IngredientStack(BlockRegistry.RADIANT_LANTERN, 4), new IngredientStack("bookshelf", 1));*/
 
