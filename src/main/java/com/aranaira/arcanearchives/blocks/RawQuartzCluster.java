@@ -23,12 +23,12 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 @SuppressWarnings("deprecation")
-public class RawQuartz extends BlockDirectionalTemplate {
+public class RawQuartzCluster extends BlockDirectionalTemplate {
 
 	//public static final PropertyDirection DIRECTION = PropertyDirection.create("facing");
-	public static final String name = "raw_quartz_block";
+	public static final String name = "raw_quartz_cluster";
 
-	public RawQuartz () {
+	public RawQuartzCluster() {
 		super(name, Material.ROCK);
 		setLightLevel(16 / 16f);
 		setHardness(1.4f);

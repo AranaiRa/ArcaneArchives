@@ -129,7 +129,7 @@ public class RecipeLibrary {
 
 		RIVERTEAR_RECIPE = GCTRecipeList.makeAndAddRecipe("rivertear", new ItemStack(ItemRegistry.RIVERTEAR), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack(Ingredient.fromItem(Items.SUGAR), 4), new IngredientStack(Ingredient.fromItem(Items.WATER_BUCKET)), new IngredientStack(Ingredient.fromItem(Items.WATER_BUCKET)));
 
-		PARCHTEAR_RECIPE = GCTRecipeList.makeAndAddRecipe("parchtear", new ItemStack(ItemRegistry.PARCHTEAR), new ItemStack(ItemRegistry.CUT_RADIANT_QUARTZ, 1), new IngredientStack("dyeBlack", 4), new IngredientStack(Blocks.HARDENED_CLAY, 4), new IngredientStack(Blocks.DEADBUSH, 4));
+		PARCHTEAR_RECIPE = GCTRecipeList.makeAndAddRecipe("parchtear", new ItemStack(ItemRegistry.PARCHTEAR), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyeBlack", 4), new IngredientStack(Blocks.HARDENED_CLAY, 4), new IngredientStack(Blocks.DEADBUSH, 4));
 
 		PHOENIXWAY_RECIPE = GCTRecipeList.makeAndAddRecipe("phoenixway", new ItemStack(ItemRegistry.PHOENIXWAY), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack(Ingredient.fromItem(Items.BLAZE_POWDER), 4), new IngredientStack(Ingredient.fromItem(Items.COAL), 4), new IngredientStack(Ingredient.fromItem(Items.FLINT_AND_STEEL)));
 

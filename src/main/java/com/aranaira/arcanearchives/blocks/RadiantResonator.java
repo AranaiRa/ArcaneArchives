@@ -71,7 +71,7 @@ public class RadiantResonator extends BlockTemplate {
 
 	@Override
 	public void onPlayerDestroy (World worldIn, BlockPos pos, IBlockState state) {
-		if (worldIn.getBlockState(pos.up()).getBlock() instanceof RawQuartz) {
+		if (worldIn.getBlockState(pos.up()).getBlock() instanceof RawQuartzCluster) {
 			worldIn.destroyBlock(pos.up(), true);
 		}
 		super.onPlayerDestroy(worldIn, pos, state);
@@ -79,7 +79,7 @@ public class RadiantResonator extends BlockTemplate {
 
 	@Override
 	public void onExplosionDestroy (World worldIn, BlockPos pos, Explosion explosion) {
-		if (worldIn.getBlockState(pos.up()).getBlock() instanceof RawQuartz) {
+		if (worldIn.getBlockState(pos.up()).getBlock() instanceof RawQuartzCluster) {
 			worldIn.destroyBlock(pos.up(), false);
 		}
 		super.onExplosionDestroy(worldIn, pos, explosion);

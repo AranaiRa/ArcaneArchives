@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ParchtearItem extends ArcaneGemItem {
-    public static final String NAME = "item_parchtear";
+    public static final String NAME = "parchtear";
     public static final int CUBOID_RADIUS = 1;
 
     public ParchtearItem() {

@@ -40,7 +40,7 @@ public class BlockRegistry {
 	public static final RadiantCraftingTable RADIANT_CRAFTING_TABLE = new RadiantCraftingTable();
 	public static final RadiantLantern RADIANT_LANTERN = new RadiantLantern();
 	public static final RadiantResonator RADIANT_RESONATOR = new RadiantResonator();
-	public static final RawQuartz RAW_QUARTZ = new RawQuartz();
+	public static final RawQuartzCluster RAW_QUARTZ = new RawQuartzCluster();
 	public static final QuartzSliver QUARTZ_SLIVER = new QuartzSliver();
 	//public static final DominionCrystal DOMINION_CRYSTAL = new DominionCrystal();
 	public static final GemCuttersTable GEMCUTTERS_TABLE = new GemCuttersTable();
