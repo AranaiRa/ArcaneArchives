@@ -70,7 +70,7 @@ public class RivertearItem extends ArcaneGemItem {
 	public ActionResult<ItemStack> onItemRightClick (World world, EntityPlayer player, EnumHand hand) {
 		if (!world.isRemote) {
 			if (GemUtil.getCharge(player.getHeldItem(hand)) > 0) {
-				Vec3d start = new Vec3d(player.posX, player.posY + player.height, player.posZ);
+				Vec3d start = new Vec3d(player.posX, player.posY + player.getEyeHeight(), player.posZ);
 				Vec3d dir = player.getLookVec();
 				Vec3d rayTarget = new Vec3d(start.x + dir.x * 40, start.y + dir.y * 40, start.z + dir.z * 40);
 

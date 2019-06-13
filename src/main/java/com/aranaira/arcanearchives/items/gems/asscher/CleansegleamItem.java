@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.items.gems.asscher;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
+import mcp.mobius.waila.overlay.RayTracing;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
@@ -54,11 +55,11 @@ public class CleansegleamItem extends ArcaneGemItem {
 				int chargeCost = 0;
 				if (player.isSneaking()) {
 					ArcaneArchives.logger.info("player is sneaking");
-					Vec3d start = new Vec3d(player.posX, player.posY+player.height, player.posZ);
+					Vec3d start = new Vec3d(player.posX, player.posY+player.getEyeHeight(), player.posZ);
 					Vec3d dir = player.getLookVec();
 					Vec3d rayTarget = new Vec3d(start.x + dir.x * 10, start.y + dir.y * 10, start.z + dir.z * 10);
 
-					RayTraceResult ray = world.rayTraceBlocks(start, rayTarget, false, false, true);
+					RayTraceResult ray = RayTracing.rayTraceServer(player, 10);
 
 					if(ray != null) {
 						ArcaneArchives.logger.info("entity=null? " + (ray.entityHit == null));
