@@ -255,7 +255,7 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 		} else if (button.id == mRefreashButton.id) {
 			doRefresh();
 		} else if (button.id == mConfigButton.id) {
-			GuiConfig config = new GuiConfig(this, ArcaneArchives.MODID, false, false, ArcaneArchives.NAME, ManifestConfig.class);
+			GuiConfig config = new GuiConfig(this, ArcaneArchives.MODID, false, false, ArcaneArchives.NAME, ConfigHandler.class);
 			this.mc.displayGuiScreen(config);
 		}
 
