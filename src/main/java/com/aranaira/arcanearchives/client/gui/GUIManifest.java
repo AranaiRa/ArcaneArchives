@@ -363,7 +363,7 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 						if (chestName.isEmpty()) {
 							chestName = String.format("%s %d", I18n.format("arcanearchives.text.radiantchest.unnamed_chest"), unnamed_count++);
 						}
-						tooltip.add(TextFormatting.GRAY + I18n.format("arcanearchives.tooltip.manifest.item_entry", chestName, pos.getX(), pos.getY(), pos.getZ(), thisEntry.getItemCount()));
+						tooltip.add(TextFormatting.GRAY + I18n.format("arcanearchives.tooltip.manifest.entry", chestName, pos.getX(), pos.getY(), pos.getZ(), thisEntry.getItemCount()));
 					}
 					if (diff > 0) {
 						tooltip.add(I18n.format("arcanearchives.tooltip.manifest.andmore", diff));
