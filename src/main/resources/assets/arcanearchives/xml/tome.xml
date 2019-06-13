@@ -41,6 +41,7 @@
 
         <stack item="arcanearchives:murdergleam">Murdergleam</stack>
         <stack item="arcanearchives:cleansegleam">Cleansegleam</stack>
+        <stack item="arcanearchives:salvegleam">Salvegleam</stack>
         <stack item="arcanearchives:mindspindle">Mindspindle</stack>
         <stack item="arcanearchives:mountaintear">Mountaintear</stack>
         <stack item="arcanearchives:rivertear">Rivertear</stack>
@@ -95,6 +96,7 @@
             </page_title>
             <p><stack item="arcanearchives:murdergleam"/> <link ref="Murdergleam">Murdergleam</link></p>
             <p><stack item="arcanearchives:cleansegleam"/> <link ref="Cleansegleam">Cleansegleam</link></p>
+            <p><stack item="arcanearchives:salvegleam"/> <link ref="Salvegleam">Salvegleam</link></p>
             <space height="8"/>
             <p><stack item="arcanearchives:munchstone"/> <link ref="Munchstone">Munchstone</link></p>
             <space height="8"/>
@@ -710,6 +712,7 @@
             </p>
             <p align="center">
                 <stack item="arcanearchives:murdergleam" scale="2.0"/>
+                <stack item="arcanearchives:salvegleam" scale="2.0"/>
                 <stack item="arcanearchives:mindspindle" scale="2.0"/>
                 <stack item="arcanearchives:phoenixway" scale="2.0"/>
                 <stack item="arcanearchives:stormway" scale="2.0"/>
@@ -1223,7 +1226,30 @@
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Cleansegleam can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Cleansegleams can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+            </p>
+        </section>
+    </chapter>
+
+    <chapter id="Salvegleam">
+        <section>
+            <page_title>
+                <title>Salvegleam</title>
+            </page_title>
+            <p align="center"><stack item="arcanearchives:salvegleam" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                A Salvegleam is an Arcane Gem formed from a pink-spectrum piece of <link ref="shaped_quartz">Shaped Radiant Quartz</link> in an asscher cut.
+            </p>
+            <p>
+                When held and toggled on, the gem will heal you for half a heart approximately once every second if you are hurt. Each half heart consumes a point of charge.
+            </p>
+            <p>
+                <image src="arcanearchives:items/gems/asscher/dun" tw="16" th="16"/> To recharge a dun Salvegleam, slaughter a passive animal while holding the gem. Doing so restores points of charge equal to half of the animal's maximum health.
+            </p>
+            <horizontal_rule/>
+            <p>
+                <stack item="arcanearchives:gemcutters_table" /> Salvegleams can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
         </section>
     </chapter>

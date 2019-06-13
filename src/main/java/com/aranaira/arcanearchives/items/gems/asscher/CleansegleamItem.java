@@ -58,7 +58,7 @@ public class CleansegleamItem extends ArcaneGemItem {
 					Vec3d dir = player.getLookVec();
 					Vec3d rayTarget = new Vec3d(start.x + dir.x * 10, start.y + dir.y * 10, start.z + dir.z * 10);
 
-					RayTraceResult ray = world.rayTraceBlocks(start, rayTarget, false, true, false);
+					RayTraceResult ray = world.rayTraceBlocks(start, rayTarget, false, false, true);
 
 					if(ray != null) {
 						ArcaneArchives.logger.info("entity=null? " + (ray.entityHit == null));

@@ -27,6 +27,8 @@ item.writ_expulsion.name=Writ of Expulsion
 item.fabrial.name=Fabrial
 item.murdergleam.name=Murdergleam
 item.cleansegleam.name=Cleansegleam
+item.switchgleam.name=Switchgleam
+item.salvegleam.name=Salvegleam
 item.homingstone.name=Homingstone
 item.munchstone.name=Munchstone
 item.glyphspindle.name=Glyphspindle
@@ -185,6 +187,8 @@ arcanearchives.tooltip.item.writ_expulsion.named=A writ to remove %s from your A
 
 arcanearchives.tooltip.gem.murdergleam=Forces all attacks to become critical hits.
 arcanearchives.tooltip.gem.cleansegleam=Removes Hunger, Nausea, and Poison. Sneak to use on others.
+arcanearchives.tooltip.gem.switchgleam=Swaps positions with the targeted entity. Blocks enderman teleportation when toggled on.
+arcanearchives.tooltip.gem.salvegleam=Restores health when you're hurt.
 arcanearchives.tooltip.gem.munchstone=Consumes plant based blocks to restore hunger.
 arcanearchives.tooltip.gem.mindspindle=Increases the amount of experience in picked up experience globes.
 arcanearchives.tooltip.gem.mountaintear=Slowly creates infinite lava when placed in a Lightwell.

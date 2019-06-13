@@ -33,6 +33,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -48,8 +49,10 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDestroyBlockEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
@@ -365,10 +368,47 @@ public class AAEventHandler {
 		if(!event.getEntityLiving().world.isRemote && event.getEntityLiving() instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) event.getEntityLiving();
 			for(ItemStack gem : ArcaneGemItem.GemUtil.getAvailableGems(player)) {
-				if(gem.getItem() instanceof StormwayItem) {
+				/**
+				 * Salvegleam
+				 */
+				if(gem.getItem() instanceof SalvegleamItem) {
+					if(ArcaneGemItem.GemUtil.getCharge(gem) > 0 && ArcaneGemItem.GemUtil.isToggledOn(gem)) {
+						if(player.getHealth() < player.getMaxHealth()) {
+							if(SalvegleamItem.canDoHealingPulse(gem)) {
+								player.heal(1.0f);
+								ArcaneGemItem.GemUtil.consumeCharge(gem, 1);
+								if(ArcaneGemItem.GemUtil.getCharge(gem) == 0)
+									ArcaneGemItem.GemUtil.setToggle(gem, false);
+							}
+						}
+					}
+				}
+				/**
+				 * Stormway
+				 */
+				else if(gem.getItem() instanceof StormwayItem) {
 					if(ArcaneGemItem.GemUtil.getCharge(gem) < ArcaneGemItem.GemUtil.getMaxCharge(gem) && player.world.isRaining()) {
 						ArcaneGemItem.GemUtil.restoreCharge(gem, -1);
 						player.playSound(SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, 1.0F, 1.0F);
+					}
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void onPlayerAttackEntity(LivingDeathEvent event) {
+		if(!event.getEntityLiving().world.isRemote) {
+			if(event.getEntityLiving() instanceof EntityAnimal) {
+				EntityAnimal animal = (EntityAnimal)event.getEntityLiving();
+				ArcaneArchives.logger.info("i like the part where it stopped moving");
+				if(event.getSource().getTrueSource() instanceof EntityPlayer) {
+					for(ItemStack gem : ArcaneGemItem.GemUtil.getAvailableGems((EntityPlayer)event.getSource().getTrueSource())) {
+						if(gem.getItem() instanceof SalvegleamItem) {
+							ArcaneGemItem.GemUtil.restoreCharge(gem, (int)event.getEntityLiving().getMaxHealth() / 2);
+							if(ArcaneGemItem.GemUtil.getCharge(gem) == ArcaneGemItem.GemUtil.getMaxCharge(gem))
+								ArcaneGemItem.GemUtil.setToggle(gem, true);
+						}
 					}
 				}
 			}

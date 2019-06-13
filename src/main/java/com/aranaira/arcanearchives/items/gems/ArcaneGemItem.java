@@ -423,13 +423,30 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 		 * @param stack The gem to swap the toggle mode of.
 		 */
 		public static void swapToggle (ItemStack stack) {
-			NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
-			if (!nbt.hasKey("toggle")) {
-				nbt.setBoolean("toggle", true);
-			} else {
-				nbt.setBoolean("toggle", !nbt.getBoolean("toggle"));
+			ArcaneGemItem gem = (ArcaneGemItem) stack.getItem();
+			if(gem.hasToggleMode()) {
+				NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+				if (!nbt.hasKey("toggle")) {
+					nbt.setBoolean("toggle", true);
+				} else {
+					nbt.setBoolean("toggle", !nbt.getBoolean("toggle"));
+				}
+				stack.setTagCompound(nbt);
 			}
-			stack.setTagCompound(nbt);
+		}
+
+		/**
+		 * Sets the gem's toggle state. Has no effect if the gem has no toggle functionality.
+		 * @param stack The gem to modify
+		 * @param state The desired toggle state
+		 */
+		public static void setToggle (ItemStack stack, boolean state) {
+			ArcaneGemItem gem = (ArcaneGemItem) stack.getItem();
+			if(gem.hasToggleMode()) {
+				NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+				nbt.setBoolean("toggle", state);
+				stack.setTagCompound(nbt);
+			}
 		}
 
 		/**
