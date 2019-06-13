@@ -11,6 +11,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 
+import javax.vecmath.Vector2d;
+import java.util.Vector;
+
 public class RadiantChestTESR extends TileEntitySpecialRenderer<RadiantChestTileEntity> {
 	@Override
 	public void render (RadiantChestTileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
@@ -52,5 +55,20 @@ public class RadiantChestTESR extends TileEntitySpecialRenderer<RadiantChestTile
 
 		// Finish rendering the item
 		GlStateManager.popMatrix();
+	}
+
+	private Vector2d getOffset(EnumFacing facing) {
+		switch(facing) {
+			case NORTH:
+				return new Vector2d(0.5, 0.0);
+			case SOUTH:
+				return new Vector2d(0.5, 1.0);
+			case EAST:
+				return new Vector2d(1.0, 0.5);
+			case WEST:
+				return new Vector2d(0.0, 0.5);
+			default:
+				return new Vector2d(0.0, 0.0);
+		}
 	}
 }
