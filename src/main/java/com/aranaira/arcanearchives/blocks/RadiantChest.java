@@ -6,9 +6,12 @@ import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.events.LineHandler;
+import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.DropHelper;
 import com.aranaira.arcanearchives.util.ItemUtilities;
+import com.aranaira.arcanearchives.util.WorldUtil;
+import com.google.common.collect.Lists;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -65,7 +68,34 @@ public class RadiantChest extends BlockTemplate {
 			return true;
 		}
 
-		playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.RADIANT_CHEST, worldIn, pos.getX(), pos.getY(), pos.getZ());
+		ItemStack mainHand = playerIn.getHeldItemMainhand();
+		ItemStack offHand = playerIn.getHeldItemOffhand();
+		ItemStack displayStack = ItemStack.EMPTY;
+
+		if (mainHand.getItem() == ItemRegistry.SCEPTER_MANIPULATION && !offHand.isEmpty()) {
+			displayStack = offHand;
+		} else if (offHand.getItem() == ItemRegistry.SCEPTER_MANIPULATION && !mainHand.isEmpty()) {
+			displayStack = mainHand;
+		}
+
+		boolean clearDisplayed = false;
+
+		if ((mainHand.getItem() == ItemRegistry.SCEPTER_MANIPULATION && offHand.isEmpty() || offHand.getItem() == ItemRegistry.SCEPTER_MANIPULATION && mainHand.isEmpty()) && playerIn.isSneaking()) {
+			clearDisplayed = true;
+		}
+
+		if (!displayStack.isEmpty() || clearDisplayed) {
+			RadiantChestTileEntity te = WorldUtil.getTileEntity(RadiantChestTileEntity.class, worldIn, pos);
+			if (te != null) {
+				if (!displayStack.isEmpty()) {
+					te.setDisplay(displayStack, facing);
+				} else {
+					te.setDisplay(ItemStack.EMPTY, EnumFacing.NORTH);
+				}
+			}
+		} else {
+			playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.RADIANT_CHEST, worldIn, pos.getX(), pos.getY(), pos.getZ());
+		}
 
 		return true;
 	}

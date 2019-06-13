@@ -21,6 +21,7 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -37,6 +38,11 @@ public class ScepterRevelationItem extends ItemTemplate {
 	public ScepterRevelationItem () {
 		super(NAME);
 		setMaxStackSize(1);
+	}
+
+	@Override
+	public boolean doesSneakBypassUse (ItemStack stack, IBlockAccess world, BlockPos pos, EntityPlayer player) {
+		return true;
 	}
 
 	@Override

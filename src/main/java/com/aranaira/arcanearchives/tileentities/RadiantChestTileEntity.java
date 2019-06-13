@@ -19,10 +19,26 @@ import javax.annotation.Nonnull;
 
 public class RadiantChestTileEntity extends ManifestTileEntity {
 	private final RadiantChestHandler inventory = new RadiantChestHandler(54);
+	private ItemStack displayStack = ItemStack.EMPTY;
+	private EnumFacing displayFacing = EnumFacing.NORTH;
 	public String chestName = "";
 
 	public RadiantChestTileEntity () {
 		super("radiantchest");
+	}
+
+	public ItemStack getDisplayStack () {
+		return displayStack;
+	}
+
+	public void setDisplay (ItemStack displayStack, EnumFacing facing) {
+		this.displayStack = displayStack;
+		this.displayFacing = facing;
+		defaultServerSideUpdate();
+	}
+
+	public EnumFacing getDisplayFacing () {
+		return displayFacing;
 	}
 
 	@Override
@@ -73,6 +89,8 @@ public class RadiantChestTileEntity extends ManifestTileEntity {
 		super.writeToNBT(compound);
 		compound.setTag(AATileEntity.Tags.INVENTORY, inventory.serializeNBT());
 		compound.setString(Tags.CHEST_NAME, chestName);
+		compound.setInteger(Tags.DISPLAY_FACING, displayFacing.getIndex());
+		compound.setTag(Tags.DISPLAY_STACK, displayStack.serializeNBT());
 
 		return compound;
 	}
@@ -85,6 +103,8 @@ public class RadiantChestTileEntity extends ManifestTileEntity {
 		}
 		inventory.deserializeNBT(compound.getCompoundTag(AATileEntity.Tags.INVENTORY));
 		chestName = compound.getString(Tags.CHEST_NAME);
+		displayFacing = EnumFacing.byIndex(compound.getInteger(Tags.DISPLAY_FACING));
+		displayStack = new ItemStack(compound.getCompoundTag(Tags.DISPLAY_STACK));
 	}
 
 	@Override
@@ -122,6 +142,8 @@ public class RadiantChestTileEntity extends ManifestTileEntity {
 
 	public static class Tags {
 		public static final String CHEST_NAME = "chestName";
+		public static final String DISPLAY_STACK = "displayStack";
+		public static final String DISPLAY_FACING = "displayFacing";
 
 		private Tags () {
 		}
