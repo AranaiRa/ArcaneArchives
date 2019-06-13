@@ -1,6 +1,14 @@
 {
     "parent": "arcanearchives:item/gems/arcane_gem",
     "textures": {
-        "layer0": "arcanearchives:items/gems/asscher/black"
-    }
+        "layer0": "arcanearchives:items/gems/pampel/black"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "arcanearchives:colourblind": 1.0
+            },
+            "model": "arcanearchives:item/gems/accessibility/pampel/black"
+        }
+    ]
 }
