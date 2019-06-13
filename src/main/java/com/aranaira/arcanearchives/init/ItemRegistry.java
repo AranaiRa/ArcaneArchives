@@ -63,7 +63,7 @@ public class ItemRegistry {
 	public static final PhoenixwayItem PHOENIXWAY = new PhoenixwayItem();
 	public static final StormwayItem STORMWAY = new StormwayItem();
 
-	public static List<Item> ARSENAL_ITEMS = Arrays.asList(FABRIAL, MURDERGLEAM, CLEANSEGLEAM, MUNCHSTONE, MINDSPINDLE, MOUNTAINTEAR, RIVERTEAR, PARCHTEAR, PHOENIXWAY, STORMWAY);
+	public static List<Item> ARSENAL_ITEMS = Arrays.asList(/*FABRIAL, */MURDERGLEAM, CLEANSEGLEAM, MUNCHSTONE, MINDSPINDLE, MOUNTAINTEAR, RIVERTEAR, PARCHTEAR, PHOENIXWAY, STORMWAY);
 	//BAUBLES
 	public static final BaubleGemSocket BAUBLE_GEMSOCKET = new BaubleGemSocket();
 

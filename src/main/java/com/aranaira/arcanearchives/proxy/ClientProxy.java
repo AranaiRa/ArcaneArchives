@@ -2,12 +2,14 @@ package com.aranaira.arcanearchives.proxy;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.Keybinds;
+import com.aranaira.arcanearchives.client.render.RadiantChestTESR;
 import com.aranaira.arcanearchives.client.render.RadiantTankTEISR;
 import com.aranaira.arcanearchives.client.render.RadiantTankTESR;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.integration.guidebook.GBookInit;
 import com.aranaira.arcanearchives.items.itemblocks.RadiantTankItem;
+import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
@@ -35,6 +37,8 @@ public class ClientProxy extends CommonProxy {
 	public static RadiantTankTESR tankTESR;
 	@SideOnly(Side.CLIENT)
 	public static RadiantTankTEISR itemTESR;
+	@SideOnly(Side.CLIENT)
+	public static RadiantChestTESR chestTESR;
 
 	@SubscribeEvent
 	public static void playerLoggedIn (PlayerEvent.PlayerLoggedInEvent event) {
@@ -44,12 +48,17 @@ public class ClientProxy extends CommonProxy {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public static void modelRegister (ModelRegistryEvent event) {
-		RadiantTankTESR tesr = new RadiantTankTESR();
-		ClientRegistry.bindTileEntitySpecialRenderer(RadiantTankTileEntity.class, tesr);
+		tankTESR = new RadiantTankTESR();
+		ClientRegistry.bindTileEntitySpecialRenderer(RadiantTankTileEntity.class, tankTESR);
+		//
 		RadiantTankItem item = (RadiantTankItem) BlockRegistry.RADIANT_TANK.getItemBlock();
 		ModelResourceLocation mrl = new ModelResourceLocation(new ResourceLocation(ArcaneArchives.MODID, "dummy_builtin_blocktransforms"), "inventory");
 		ModelLoader.setCustomModelResourceLocation(item, 0, mrl);
-		item.setTileEntityItemStackRenderer(new RadiantTankTEISR(tesr));
+		itemTESR = new RadiantTankTEISR(tankTESR);
+		item.setTileEntityItemStackRenderer(itemTESR);
+		//
+		chestTESR = new RadiantChestTESR();
+		ClientRegistry.bindTileEntitySpecialRenderer(RadiantChestTileEntity.class, chestTESR);
 	}
 
 	@Override
