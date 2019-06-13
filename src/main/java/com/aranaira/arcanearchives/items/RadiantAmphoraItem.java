@@ -252,17 +252,23 @@ public class RadiantAmphoraItem extends ItemTemplate {
 
 		public Fluid getFluid (IFluidHandler capability) {
 			IFluidTankProperties[] props = capability.getTankProperties();
-			if (props.length == 0) return null;
+			if (props.length == 0) {
+				return null;
+			}
 
 			FluidStack contents = props[0].getContents();
-			if (contents == null) return null;
+			if (contents == null) {
+				return null;
+			}
 
 			return contents.getFluid();
 		}
 
 		public FluidStack getFluidStack (IFluidHandler capability) {
 			Fluid fluid = getFluid(capability);
-			if (fluid == null) return null;
+			if (fluid == null) {
+				return null;
+			}
 
 			return new FluidStack(fluid, 1000);
 		}

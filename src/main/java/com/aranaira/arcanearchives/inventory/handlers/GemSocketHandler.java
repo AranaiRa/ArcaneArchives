@@ -10,57 +10,57 @@ import javax.annotation.Nonnull;
 
 //Shamelessly pillaged from Roots' QuiverHandler
 public class GemSocketHandler implements INBTSerializable<NBTTagCompound> {
-    private ItemStack socket;
-    private ItemStackHandler handler = new ItemStackHandler(1) {
-        @Override
-        public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-            return stack.getItem() instanceof ArcaneGemItem;
-        }
+	private ItemStack socket;
+	private ItemStackHandler handler = new ItemStackHandler(1) {
+		@Override
+		public boolean isItemValid (int slot, @Nonnull ItemStack stack) {
+			return stack.getItem() instanceof ArcaneGemItem;
+		}
 
-        @Override
-        protected void onContentsChanged(int slot) {
-            super.onContentsChanged(slot);
+		@Override
+		protected void onContentsChanged (int slot) {
+			super.onContentsChanged(slot);
 
-            GemSocketHandler.this.saveToStack();
-        }
-    };
+			GemSocketHandler.this.saveToStack();
+		}
+	};
 
-    public GemSocketHandler(ItemStack socket) {
-        this.socket = socket;
-    }
+	public GemSocketHandler (ItemStack socket) {
+		this.socket = socket;
+	}
 
-    @Override
-    public NBTTagCompound serializeNBT() {
-        return handler.serializeNBT();
-    }
+	@Override
+	public NBTTagCompound serializeNBT () {
+		return handler.serializeNBT();
+	}
 
-    @Override
-    public void deserializeNBT(NBTTagCompound nbt) {
-        handler.deserializeNBT(nbt);
-    }
+	@Override
+	public void deserializeNBT (NBTTagCompound nbt) {
+		handler.deserializeNBT(nbt);
+	}
 
-    public ItemStackHandler getInventory(){
-        return handler;
-    }
+	public ItemStackHandler getInventory () {
+		return handler;
+	}
 
-    public static GemSocketHandler getHandler(ItemStack stack) {
-        GemSocketHandler handler = new GemSocketHandler(stack);
-        if(stack.hasTagCompound()) {
-            if(stack.getTagCompound().hasKey("gem")) {
-                handler.deserializeNBT(stack.getTagCompound().getCompoundTag("gem"));
-            }
-        }
+	public static GemSocketHandler getHandler (ItemStack stack) {
+		GemSocketHandler handler = new GemSocketHandler(stack);
+		if (stack.hasTagCompound()) {
+			if (stack.getTagCompound().hasKey("gem")) {
+				handler.deserializeNBT(stack.getTagCompound().getCompoundTag("gem"));
+			}
+		}
 
-        return handler;
-    }
+		return handler;
+	}
 
-    public void saveToStack() {
-        NBTTagCompound nbt = socket.getTagCompound();
-        if(nbt == null) {
-            nbt = new NBTTagCompound();
-            socket.setTagCompound(nbt);
-        }
+	public void saveToStack () {
+		NBTTagCompound nbt = socket.getTagCompound();
+		if (nbt == null) {
+			nbt = new NBTTagCompound();
+			socket.setTagCompound(nbt);
+		}
 
-        nbt.setTag("gem", serializeNBT());
-    }
+		nbt.setTag("gem", serializeNBT());
+	}
 }

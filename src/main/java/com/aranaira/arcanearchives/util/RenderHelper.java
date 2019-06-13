@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.util;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -11,7 +10,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -112,8 +110,8 @@ public class RenderHelper {
 		GlStateManager.popMatrix();
 	}
 
-	private static float getLineWidthFromDistance(Vec3d first, Vec3d second, float minDistanceClamp, float maxDistanceClamp){
-		float dist = (float)first.distanceTo(second);
+	private static float getLineWidthFromDistance (Vec3d first, Vec3d second, float minDistanceClamp, float maxDistanceClamp) {
+		float dist = (float) first.distanceTo(second);
 		float normalized = MathHelper.clamp((dist - minDistanceClamp) / (maxDistanceClamp - minDistanceClamp), 0.0f, 1.0f);
 		float width = normalized * 0.7f + 0.3f;
 		return width;
@@ -137,24 +135,25 @@ public class RenderHelper {
 			this.alpha = alphaIn;
 		}
 
-		public static Color Lerp(Color one, Color two, float prog){
+		public static Color Lerp (Color one, Color two, float prog) {
 			Color lerped = new Color();
 
-			lerped.red = (float)MathHelper.clampedLerp(one.red, two.red, prog);
-			lerped.green = (float)MathHelper.clampedLerp(one.green, two.green, prog);
-			lerped.blue = (float)MathHelper.clampedLerp(one.blue, two.blue, prog);
-			lerped.alpha = (float)MathHelper.clampedLerp(one.alpha, two.alpha, prog);
+			lerped.red = (float) MathHelper.clampedLerp(one.red, two.red, prog);
+			lerped.green = (float) MathHelper.clampedLerp(one.green, two.green, prog);
+			lerped.blue = (float) MathHelper.clampedLerp(one.blue, two.blue, prog);
+			lerped.alpha = (float) MathHelper.clampedLerp(one.alpha, two.alpha, prog);
 			return lerped;
 		}
 
-		public static String FormatForLogger(Color c, boolean includeAlpha){
+		public static String FormatForLogger (Color c, boolean includeAlpha) {
 			String str = "";
-			str += "<R:"+c.red;
-			str += "  G:"+c.green;
-			str += "  B:"+c.blue;
+			str += "<R:" + c.red;
+			str += "  G:" + c.green;
+			str += "  B:" + c.blue;
 
-			if(includeAlpha)
-				str += "  A:"+c.alpha;
+			if (includeAlpha) {
+				str += "  A:" + c.alpha;
+			}
 			str += ">";
 
 			return str;

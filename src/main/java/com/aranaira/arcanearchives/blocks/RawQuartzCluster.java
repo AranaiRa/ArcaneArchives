@@ -1,7 +1,6 @@
 package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
-import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -28,7 +27,7 @@ public class RawQuartzCluster extends BlockDirectionalTemplate {
 	//public static final PropertyDirection DIRECTION = PropertyDirection.create("facing");
 	public static final String name = "raw_quartz_cluster";
 
-	public RawQuartzCluster() {
+	public RawQuartzCluster () {
 		super(name, Material.ROCK);
 		setLightLevel(16 / 16f);
 		setHardness(1.4f);
@@ -37,7 +36,7 @@ public class RawQuartzCluster extends BlockDirectionalTemplate {
 	}
 
 	@Override
-	public boolean canSilkHarvest(){
+	public boolean canSilkHarvest () {
 		return true;
 	}
 

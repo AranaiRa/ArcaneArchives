@@ -35,14 +35,12 @@ public class TomeOfArcanaItemBackground implements IBookBackground {
 	}
 
 	@Override
-	public Layout getLayout()
-	{
+	public Layout getLayout () {
 		return Layout.ONE_PAGE;
 	}
 
 	@Override
-	public void draw(float partialTicks, int bookHeight, float scalingFactor)
-	{
+	public void draw (float partialTicks, int bookHeight, float scalingFactor) {
 		GlStateManager.enableDepth();
 		GlStateManager.disableBlend();
 
@@ -62,8 +60,7 @@ public class TomeOfArcanaItemBackground implements IBookBackground {
 		gui.mc.getTextureManager().bindTexture(imageLocation);
 
 		// then because we're at the "center" of the gui draw the texture at half the texture size left and up
-		Gui.drawModalRectWithCustomSizedTexture(-imageWidth / 2, -imageHeight / 2,
-				imageX, imageY, imageWidth, imageHeight, imageFileWidth, imageFileHeight);
+		Gui.drawModalRectWithCustomSizedTexture(-imageWidth / 2, -imageHeight / 2, imageX, imageY, imageWidth, imageHeight, imageFileWidth, imageFileHeight);
 
 		// ====================================================================
 
@@ -75,21 +72,18 @@ public class TomeOfArcanaItemBackground implements IBookBackground {
 	}
 
 	@Override
-	public void startClosing()
-	{
+	public void startClosing () {
 		closing = true;
 	}
 
 	@Override
-	public boolean isFullyOpen()
-	{
+	public boolean isFullyOpen () {
 		// always fully open
 		return true;
 	}
 
 	@Override
-	public boolean update()
-	{
+	public boolean update () {
 		// if closing, than instantly closed, and reset
 		if (closing) {
 			closing = false;
@@ -100,15 +94,13 @@ public class TomeOfArcanaItemBackground implements IBookBackground {
 	}
 
 	@Override
-	public int getWidth()
-	{
-		return (int)(imageWidth * scale);
+	public int getWidth () {
+		return (int) (imageWidth * scale);
 	}
 
 	@Override
-	public int getHeight()
-	{
-		return (int)(imageHeight * scale);
+	public int getHeight () {
+		return (int) (imageHeight * scale);
 	}
 
 	@Override
@@ -132,8 +124,7 @@ public class TomeOfArcanaItemBackground implements IBookBackground {
 	}
 
 	@Override
-	public int getBookScaleMargin()
-	{
+	public int getBookScaleMargin () {
 		return 10;
 	}
 

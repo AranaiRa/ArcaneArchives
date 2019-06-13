@@ -136,7 +136,9 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity {
 	public void breakBlock (@Nullable IBlockState state, boolean harvest) {
 		super.breakBlock(state, harvest);
 
-		if (world.isRemote) return;
+		if (world.isRemote) {
+			return;
+		}
 
 		ServerNetwork network = NetworkHelper.getServerNetwork(networkId, world);
 		if (network != null) {

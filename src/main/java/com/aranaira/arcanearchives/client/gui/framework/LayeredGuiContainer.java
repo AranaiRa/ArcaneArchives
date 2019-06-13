@@ -85,7 +85,7 @@ public abstract class LayeredGuiContainer extends GuiContainer {
 	 * @param buttonIn {@link GuiButton} to add
 	 */
 	@Override
-	protected <T extends GuiButton> T addButton(T buttonIn) {
+	protected <T extends GuiButton> T addButton (T buttonIn) {
 		super.addButton(new LayeredButton(buttonIn));
 		return buttonIn;
 	}

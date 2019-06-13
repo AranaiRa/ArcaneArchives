@@ -7,7 +7,6 @@ import net.minecraft.item.ItemStack;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiPredicate;
 
 public class GCTRecipeWithConditionsCrafter extends GCTRecipeWithCrafter {
 	private List<GCTCondition> conditions = new ArrayList<>();
@@ -24,7 +23,9 @@ public class GCTRecipeWithConditionsCrafter extends GCTRecipeWithCrafter {
 	@Override
 	public boolean craftable (EntityPlayer player, GemCuttersTableTileEntity tile) {
 		for (GCTCondition condition : conditions) {
-			if (!condition.test(player, tile)) return false;
+			if (!condition.test(player, tile)) {
+				return false;
+			}
 		}
 
 		return true;

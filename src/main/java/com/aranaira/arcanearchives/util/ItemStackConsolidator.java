@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.util;
 
 import com.aranaira.arcanearchives.util.types.ManifestEntry;
+import com.aranaira.arcanearchives.util.types.ManifestItemEntry;
 import com.google.common.collect.Lists;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
@@ -8,8 +9,6 @@ import net.minecraft.util.NonNullList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import com.aranaira.arcanearchives.util.types.ManifestItemEntry;
 
 public class ItemStackConsolidator {
 	@Deprecated

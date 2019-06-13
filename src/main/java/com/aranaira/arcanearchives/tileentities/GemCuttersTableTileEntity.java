@@ -89,11 +89,8 @@ public class GemCuttersTableTileEntity extends AATileEntity {
 
 	@Override
 	public boolean hasCapability (Capability<?> capability, @Nullable EnumFacing facing) {
-		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-			return true;
-		}
+		return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
 
-		return false;
 	}
 
 	@Deprecated

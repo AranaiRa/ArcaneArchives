@@ -5,7 +5,6 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import com.aranaira.arcanearchives.util.DropHelper;
-import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -24,7 +23,6 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
 public class GemCuttersTable extends BlockDirectionalTemplate {
@@ -34,7 +32,7 @@ public class GemCuttersTable extends BlockDirectionalTemplate {
 		super(name, Material.IRON);
 		this.setHardness(2.5f);
 		setSize(2, 1, 1);
-		setLightLevel(16f/16f);
+		setLightLevel(16f / 16f);
 	}
 
 	@Override

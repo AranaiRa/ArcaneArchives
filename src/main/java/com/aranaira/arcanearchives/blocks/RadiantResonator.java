@@ -114,7 +114,8 @@ public class RadiantResonator extends BlockTemplate {
 			return 15;
 		}
 
-		return Math.max(1, Math.min((int) Math.floor(te.getPercentageComplete() / 7.14) + 1, 14));	}
+		return Math.max(1, Math.min((int) Math.floor(te.getPercentageComplete() / 7.14) + 1, 14));
+	}
 
 	@Override
 	public boolean hasTileEntity (IBlockState state) {

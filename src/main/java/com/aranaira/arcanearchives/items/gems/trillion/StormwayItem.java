@@ -1,16 +1,12 @@
 package com.aranaira.arcanearchives.items.gems.trillion;
 
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
-import com.aranaira.arcanearchives.network.NetworkHandler;
-import com.aranaira.arcanearchives.network.PacketArcaneGem;
 import com.aranaira.arcanearchives.util.NBTUtils;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -21,14 +17,13 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 import java.util.List;
 
 public class StormwayItem extends ArcaneGemItem {
 	public static final String NAME = "stormway";
 
-	public StormwayItem() {
+	public StormwayItem () {
 		super(NAME, GemCut.TRILLION, GemColor.YELLOW, 30, 150);
 	}
 
@@ -49,13 +44,11 @@ public class StormwayItem extends ArcaneGemItem {
 	}
 
 	@Override
-	public boolean onEntityItemUpdate(EntityItem entityItem)
-	{
+	public boolean onEntityItemUpdate (EntityItem entityItem) {
 		World world = entityItem.world;
 
-		if (!world.isRemote && world.isRaining())
-		{
-			if(world.canBlockSeeSky(new BlockPos(entityItem))) {
+		if (!world.isRemote && world.isRaining()) {
+			if (world.canBlockSeeSky(new BlockPos(entityItem))) {
 				if (GemUtil.getCharge(entityItem.getItem()) < GemUtil.getMaxCharge(entityItem.getItem())) {
 					GemUtil.restoreCharge(entityItem.getItem(), -1);
 					world.playSound(entityItem.posX, entityItem.posY, entityItem.posZ, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1.0f, 0.5f, false);
@@ -68,18 +61,18 @@ public class StormwayItem extends ArcaneGemItem {
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick (World world, EntityPlayer player, EnumHand hand) {
-		if(!world.isRemote) {
-			if(GemUtil.getCharge(player.getHeldItem(hand)) > 0) {
-				Vec3d start = new Vec3d(player.posX, player.posY+player.height, player.posZ);
+		if (!world.isRemote) {
+			if (GemUtil.getCharge(player.getHeldItem(hand)) > 0) {
+				Vec3d start = new Vec3d(player.posX, player.posY + player.height, player.posZ);
 				Vec3d dir = player.getLookVec();
 				Vec3d rayTarget = new Vec3d(start.x + dir.x * 30, start.y + dir.y * 30, start.z + dir.z * 30);
 
 				RayTraceResult ray = world.rayTraceBlocks(start, rayTarget, false, true, false);
 
-				if(ray != null) {
+				if (ray != null) {
 					BlockPos pos = ray.getBlockPos();
 					EnumFacing facing = ray.sideHit;
-					if(world.canBlockSeeSky(pos.offset(facing))) {
+					if (world.canBlockSeeSky(pos.offset(facing))) {
 						Vec3d end = new Vec3d(pos.offset(facing).getX(), pos.offset(facing).getY(), pos.offset(facing).getZ());
 
 						world.spawnEntity(new EntityLightningBolt(world, end.x, end.y, end.z, false));
@@ -96,18 +89,18 @@ public class StormwayItem extends ArcaneGemItem {
 		return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
 	}
 
-	public static void setStrikeCooldownTimer(ItemStack stack) {
+	public static void setStrikeCooldownTimer (ItemStack stack) {
 		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
 		nbt.setLong("cooldown", System.currentTimeMillis());
 		stack.setTagCompound(nbt);
 	}
 
-	public static boolean canBeStruck(ItemStack stack) {
+	public static boolean canBeStruck (ItemStack stack) {
 		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
-		if(nbt.hasKey("cooldown")) {
+		if (nbt.hasKey("cooldown")) {
 			return nbt.getLong("cooldown") + 1000 < System.currentTimeMillis();
-		}
-		else
+		} else {
 			return true;
+		}
 	}
 }

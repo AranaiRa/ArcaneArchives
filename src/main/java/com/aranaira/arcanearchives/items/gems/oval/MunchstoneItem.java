@@ -27,41 +27,7 @@ import java.util.List;
 
 public class MunchstoneItem extends ArcaneGemItem {
 	public static final String NAME = "munchstone";
-	public static EdibleBlock[] entries = {
-			new EdibleBlock(Blocks.LOG, 4, 1),
-			new EdibleBlock(Blocks.LOG2, 4, 1),
-			new EdibleBlock(Blocks.LEAVES, 2, 1),
-			new EdibleBlock(Blocks.LEAVES2, 2, 1),
-			new EdibleBlock(Blocks.HAY_BLOCK, 15, 1),
-			new EdibleBlock(Blocks.MELON_BLOCK, 15, 1),
-			new EdibleBlock(Blocks.BROWN_MUSHROOM_BLOCK, 8, 1),
-			new EdibleBlock(Blocks.BROWN_MUSHROOM, 4, 1),
-			new EdibleBlock(Blocks.RED_MUSHROOM_BLOCK, 8, 1),
-			new EdibleBlock(Blocks.RED_MUSHROOM, 4, 1),
-			new EdibleBlock(Blocks.NETHER_WART_BLOCK, 15, 1),
-			new EdibleBlock(Blocks.NETHER_WART, 4, 1),
-			new EdibleBlock(Blocks.CHORUS_FLOWER, 6, 1),
-			new EdibleBlock(Blocks.CHORUS_PLANT, 6, 1),
-			new EdibleBlock(Blocks.CACTUS, 6, 1),
-			new EdibleBlock(Blocks.COCOA, 4, 1),
-			new EdibleBlock(Blocks.DEADBUSH, 2, 1),
-			new EdibleBlock(Blocks.DOUBLE_PLANT, 2, 1),
-			new EdibleBlock(Blocks.PUMPKIN, 15, 1),
-			new EdibleBlock(Blocks.LIT_PUMPKIN, 16, 1),
-			new EdibleBlock(Blocks.PUMPKIN_STEM, 4, 1),
-			new EdibleBlock(Blocks.MELON_STEM, 4, 1),
-			new EdibleBlock(Blocks.RED_FLOWER, 2, 1),
-			new EdibleBlock(Blocks.YELLOW_FLOWER, 2, 1),
-			new EdibleBlock(Blocks.REEDS, 4, 1),
-			new EdibleBlock(Blocks.SAPLING, 2, 1),
-			new EdibleBlock(Blocks.TALLGRASS, 1, 1),
-			new EdibleBlock(Blocks.VINE, 2, 1),
-			new EdibleBlock(Blocks.WATERLILY, 4, 1),
-			new EdibleBlock(Blocks.WHEAT, 4, 1),
-			new EdibleBlock(Blocks.POTATOES, 4, 1),
-			new EdibleBlock(Blocks.CARROTS, 4, 1),
-			new EdibleBlock(Blocks.BEETROOTS, 4, 1)
-	};
+	public static EdibleBlock[] entries = {new EdibleBlock(Blocks.LOG, 4, 1), new EdibleBlock(Blocks.LOG2, 4, 1), new EdibleBlock(Blocks.LEAVES, 2, 1), new EdibleBlock(Blocks.LEAVES2, 2, 1), new EdibleBlock(Blocks.HAY_BLOCK, 15, 1), new EdibleBlock(Blocks.MELON_BLOCK, 15, 1), new EdibleBlock(Blocks.BROWN_MUSHROOM_BLOCK, 8, 1), new EdibleBlock(Blocks.BROWN_MUSHROOM, 4, 1), new EdibleBlock(Blocks.RED_MUSHROOM_BLOCK, 8, 1), new EdibleBlock(Blocks.RED_MUSHROOM, 4, 1), new EdibleBlock(Blocks.NETHER_WART_BLOCK, 15, 1), new EdibleBlock(Blocks.NETHER_WART, 4, 1), new EdibleBlock(Blocks.CHORUS_FLOWER, 6, 1), new EdibleBlock(Blocks.CHORUS_PLANT, 6, 1), new EdibleBlock(Blocks.CACTUS, 6, 1), new EdibleBlock(Blocks.COCOA, 4, 1), new EdibleBlock(Blocks.DEADBUSH, 2, 1), new EdibleBlock(Blocks.DOUBLE_PLANT, 2, 1), new EdibleBlock(Blocks.PUMPKIN, 15, 1), new EdibleBlock(Blocks.LIT_PUMPKIN, 16, 1), new EdibleBlock(Blocks.PUMPKIN_STEM, 4, 1), new EdibleBlock(Blocks.MELON_STEM, 4, 1), new EdibleBlock(Blocks.RED_FLOWER, 2, 1), new EdibleBlock(Blocks.YELLOW_FLOWER, 2, 1), new EdibleBlock(Blocks.REEDS, 4, 1), new EdibleBlock(Blocks.SAPLING, 2, 1), new EdibleBlock(Blocks.TALLGRASS, 1, 1), new EdibleBlock(Blocks.VINE, 2, 1), new EdibleBlock(Blocks.WATERLILY, 4, 1), new EdibleBlock(Blocks.WHEAT, 4, 1), new EdibleBlock(Blocks.POTATOES, 4, 1), new EdibleBlock(Blocks.CARROTS, 4, 1), new EdibleBlock(Blocks.BEETROOTS, 4, 1)};
 
 	public MunchstoneItem () {
 		super(NAME, GemCut.OVAL, GemColor.BLACK, 60, 240);
@@ -136,7 +102,7 @@ public class MunchstoneItem extends ArcaneGemItem {
 						}
 
 						int chargeConsumed = hungerMod + (int) saturationMod;
-						ArcaneArchives.logger.info("charge: "+chargeConsumed);
+						ArcaneArchives.logger.info("charge: " + chargeConsumed);
 
 						if (chargeConsumed > 0) {
 							player.getFoodStats().addStats(eb.hungerValue, eb.saturationValue);

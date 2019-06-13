@@ -9,7 +9,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
-import javax.swing.plaf.basic.BasicComboBoxUI.ItemHandler;
 import java.util.List;
 
 public interface IGCTRecipe {

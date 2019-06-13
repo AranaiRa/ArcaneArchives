@@ -29,7 +29,9 @@ public class GCTRecipeProvider extends RecipeProvider {
 	@Override
 	public ProvidedComponents provideRecipeComponents (@Nonnull ResourceLocation recipeKey) {
 		GCTRecipe recipe = GCTRecipeList.getRecipe(recipeKey);
-		if (recipe == null) return null;
+		if (recipe == null) {
+			return null;
+		}
 
 		ArrayList<ElementStack> stacks = new ArrayList<>();
 		VisualElement additionalRenderer = new VisualElement(new Size(), 0, 0, 0) {

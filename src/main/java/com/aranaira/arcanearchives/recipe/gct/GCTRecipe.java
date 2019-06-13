@@ -22,7 +22,7 @@ public class GCTRecipe implements IGCTRecipe {
 	private final ItemStack result;
 	private final ResourceLocation name;
 
-	public GCTRecipe (String name, @Nonnull ItemStack result, Object ... recipe) {
+	public GCTRecipe (String name, @Nonnull ItemStack result, Object... recipe) {
 		this(new ResourceLocation(ArcaneArchives.MODID, name), result, recipe);
 	}
 

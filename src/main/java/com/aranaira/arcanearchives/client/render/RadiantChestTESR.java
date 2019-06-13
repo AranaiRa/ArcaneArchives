@@ -6,8 +6,6 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.Vec3d;
@@ -17,9 +15,13 @@ public class RadiantChestTESR extends TileEntitySpecialRenderer<RadiantChestTile
 	public void render (RadiantChestTileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		EnumFacing facing = te.getDisplayFacing();
 		ItemStack stack = te.getDisplayStack();
-		if (facing == null || stack == null || stack.isEmpty()) return;
+		if (facing == null || stack == null || stack.isEmpty()) {
+			return;
+		}
 
-		if (facing == EnumFacing.UP || facing == EnumFacing.DOWN) return;
+		if (facing == EnumFacing.UP || facing == EnumFacing.DOWN) {
+			return;
+		}
 
 		Vec3d pos = (new Vec3d(x, y, z)).add(getOffset(facing));
 		GlStateManager.pushMatrix();

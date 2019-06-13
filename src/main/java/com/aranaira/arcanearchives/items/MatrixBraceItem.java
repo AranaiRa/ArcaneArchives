@@ -12,7 +12,7 @@ import java.util.List;
 public class MatrixBraceItem extends ItemTemplate {
 	public static final String NAME = "matrix_brace";
 
-	public MatrixBraceItem() {
+	public MatrixBraceItem () {
 		super(NAME);
 	}
 

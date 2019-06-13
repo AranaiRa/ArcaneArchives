@@ -15,7 +15,7 @@ import java.util.List;
 public class ContainmentFieldItem extends ItemTemplate {
 	public static final String NAME = "containment_field";
 
-	public ContainmentFieldItem() {
+	public ContainmentFieldItem () {
 		super(NAME);
 	}
 

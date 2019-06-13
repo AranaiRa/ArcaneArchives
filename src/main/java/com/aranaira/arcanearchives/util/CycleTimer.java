@@ -8,13 +8,12 @@
  */
 package com.aranaira.arcanearchives.util;
 
-import javax.annotation.Nullable;
-import java.util.List;
-
-import com.aranaira.arcanearchives.ArcaneArchives;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class CycleTimer {
@@ -24,7 +23,7 @@ public class CycleTimer {
 	private long drawTime;
 	private long pausedDuration = 0;
 
-	public CycleTimer(int offset) {
+	public CycleTimer (int offset) {
 		if (offset == -1) {
 			offset = (int) (Math.random() * 10000);
 		}
@@ -34,7 +33,7 @@ public class CycleTimer {
 	}
 
 	@Nullable
-	public <T> T getCycledItem(List<T> list) {
+	public <T> T getCycledItem (List<T> list) {
 		if (list.isEmpty()) {
 			return null;
 		}
@@ -42,7 +41,7 @@ public class CycleTimer {
 		return list.get(index.intValue());
 	}
 
-	public void onDraw() {
+	public void onDraw () {
 		if (!GuiScreen.isShiftKeyDown()) {
 			if (pausedDuration > 0) {
 				startTime += pausedDuration;

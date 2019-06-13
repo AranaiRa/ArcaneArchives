@@ -9,7 +9,6 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -31,7 +30,9 @@ public class PacketNetworks {
 
 		public static SynchroniseType fromOrdinal (int i) {
 			for (SynchroniseType type : values()) {
-				if (type.ordinal() == i) return type;
+				if (type.ordinal() == i) {
+					return type;
+				}
 			}
 
 			return INVALID;
