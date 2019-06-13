@@ -7,6 +7,7 @@ import com.aranaira.arcanearchives.network.PacketConfig.MaxDistance;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraftforge.common.config.Config;
+import net.minecraftforge.common.config.Config.RequiresMcRestart;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -83,6 +84,7 @@ public class ConfigHandler {
 	public static class ArsenalConfig {
 		@Config.Comment("Enable the Arcane Arsenal module. When disabled, items will still be registered but not craftable or visible in JEI.")
 		@Config.Name("Enable Arsenal")
+		@RequiresMcRestart
 		public boolean EnableArsenal = true;
 
 		@Config.Comment("Enable colour-blind mode for Arsenal. This replaces gem icons specifically with variants more clearly defined for types of colour-blindness")
