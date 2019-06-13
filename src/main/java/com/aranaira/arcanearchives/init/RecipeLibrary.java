@@ -147,8 +147,8 @@ public class RecipeLibrary {
 
 	@SubscribeEvent
 	public static void onRegisterRecipes (Register<IRecipe> event) {
-		if (Loader.isModLoaded("astralsorcery")) {
+		/*if (Loader.isModLoaded("astralsorcery")) {
 			Liquefaction.init();
-		}
+		}*/
 	}
 }
