@@ -281,3 +281,5 @@ arcanearchives.config.manifest=Manifest Settings
 arcanearchives.config.manifest.tooltip=Settings related to the client-side appearance and functionality of the manifest, including tracking distance.
 arcanearchives.config.general=General Settings
 arcanearchives.config.general.tooltip=General game settings.
+arcanearchives.config.arsenal=Arcane Arsenal
+arcanearchives.config.arsenal.tooltip=Settings releated to the Arcane Arsenal module.

@@ -5,7 +5,7 @@ import com.aranaira.arcanearchives.client.gui.framework.CustomCountSlot;
 import com.aranaira.arcanearchives.client.gui.framework.LayeredGuiContainer;
 import com.aranaira.arcanearchives.client.gui.framework.ScrollEventManager;
 import com.aranaira.arcanearchives.config.ConfigHandler;
-import com.aranaira.arcanearchives.config.ManifestConfig;
+import com.aranaira.arcanearchives.config.ConfigHandler.ManifestConfig;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.events.LineHandler;
@@ -197,7 +197,7 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 				} else {
 					this.mc.getTextureManager().bindTexture(GUIBaseTexturesSimple);
 				}
-				if (!ManifestConfig.DisableManifestGrid) {
+				if (!ConfigHandler.ManifestConfig.DisableManifestGrid) {
 					drawModalRectWithCustomSizedTexture(slot.xPos - 1, slot.yPos - 1, mSlotTextureLeftOffset, 0, mSlotTextureSize, mSlotTextureSize, mGUIBaseTexturesSize, mGUIBaseTexturesSize);
 				}
 				GlStateManager.enableLighting();
@@ -372,7 +372,7 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 					tooltip.add("" + TextFormatting.DARK_GRAY + I18n.format("arcanearchives.tooltip.manifest.chestsneak"));
 				}
 				if (entry.outOfRange) {
-					tooltip.add("" + TextFormatting.DARK_GRAY + I18n.format("arcanearchives.tooltip.manifest.outofrange", ManifestConfig.MaxDistance));
+					tooltip.add("" + TextFormatting.DARK_GRAY + I18n.format("arcanearchives.tooltip.manifest.outofrange", ConfigHandler.ManifestConfig.MaxDistance));
 				}
 			}
 		}

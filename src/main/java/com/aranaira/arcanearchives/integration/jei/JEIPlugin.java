@@ -1,7 +1,10 @@
 package com.aranaira.arcanearchives.integration.jei;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.config.ConfigHandler;
+import com.aranaira.arcanearchives.config.ConfigHandler.ArsenalConfig;
 import com.aranaira.arcanearchives.init.BlockRegistry;
+import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.integration.jei.gct.GCTCategory;
 import com.aranaira.arcanearchives.integration.jei.gct.GCTWrapper;
 import com.aranaira.arcanearchives.integration.jei.quartz.QuartzCategory;
@@ -11,12 +14,15 @@ import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import mezz.jei.api.*;
 import mezz.jei.api.gui.ICraftingGridHelper;
+import mezz.jei.api.ingredients.IIngredientRegistry;
+import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
+import java.util.stream.Collectors;
 
 @mezz.jei.api.JEIPlugin
 public class JEIPlugin implements IModPlugin {
@@ -28,6 +34,7 @@ public class JEIPlugin implements IModPlugin {
 	public static IJeiHelpers jeiHelpers;
 	public static ICraftingGridHelper craftingGridHelper;
 	public static IRecipeRegistry recipeRegistry;
+	public static IIngredientRegistry itemRegistry;
 	public static IJeiRuntime runtime;
 
 	@Override
@@ -40,6 +47,8 @@ public class JEIPlugin implements IModPlugin {
 	public void register (@Nonnull IModRegistry registry) {
 		jeiHelpers = registry.getJeiHelpers();
 		IGuiHelper guiHelper = jeiHelpers.getGuiHelper();
+
+		itemRegistry = registry.getIngredientRegistry();
 
 		// crafting helper used by the shaped table wrapper
 		craftingGridHelper = guiHelper.createCraftingGridHelper(craftInputSlot1, craftOutputSlot);
@@ -54,11 +63,15 @@ public class JEIPlugin implements IModPlugin {
 		registry.handleRecipes(FakeQuartzRecipe.class, QuartzWrapper::new, RADIANT_RESONATOR);
 		registry.addRecipes(Collections.singletonList(new FakeQuartzRecipe()), RADIANT_RESONATOR);
 		registry.addRecipeCatalyst(new ItemStack(BlockRegistry.RADIANT_RESONATOR), RADIANT_RESONATOR);
+
 	}
 
 	@Override
 	public void onRuntimeAvailable (@Nonnull IJeiRuntime jeiRuntime) {
 		runtime = jeiRuntime;
 		recipeRegistry = jeiRuntime.getRecipeRegistry();
+		if (!ConfigHandler.ArsenalConfig.EnableArsenal) {
+			itemRegistry.removeIngredientsAtRuntime(VanillaTypes.ITEM, ItemRegistry.ARSENAL_ITEMS.stream().map(ItemStack::new).collect(Collectors.toList()));
+		}
 	}
 }

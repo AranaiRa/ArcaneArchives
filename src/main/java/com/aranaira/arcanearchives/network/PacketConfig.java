@@ -1,7 +1,8 @@
 package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.config.ManifestConfig;
+import com.aranaira.arcanearchives.config.ConfigHandler;
+import com.aranaira.arcanearchives.config.ConfigHandler.ManifestConfig;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.network.NetworkHandler.ClientHandler;
@@ -70,7 +71,7 @@ public class PacketConfig {
 		public static class Handler extends ClientHandler<RequestMaxDistance> {
 			@Override
 			public void processMessage (RequestMaxDistance message, MessageContext ctx) {
-				MaxDistance packet = new MaxDistance(ManifestConfig.MaxDistance);
+				MaxDistance packet = new MaxDistance(ConfigHandler.ManifestConfig.MaxDistance);
 				NetworkHandler.CHANNEL.sendToServer(packet);
 			}
 		}

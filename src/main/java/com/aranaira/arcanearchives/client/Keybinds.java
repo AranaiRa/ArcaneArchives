@@ -1,7 +1,8 @@
 package com.aranaira.arcanearchives.client;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.config.ManifestConfig;
+import com.aranaira.arcanearchives.config.ConfigHandler;
+import com.aranaira.arcanearchives.config.ConfigHandler.ManifestConfig;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.events.LineHandler;
@@ -71,7 +72,7 @@ public class Keybinds {
 		Minecraft mc = Minecraft.getMinecraft();
 		if (manifestKey.isKeyDown() && mc.inGameHasFocus) {
 			boolean foundManifest = false;
-			if (ManifestConfig.ManifestPresence) {
+			if (ConfigHandler.ManifestConfig.ManifestPresence) {
 				for (int i = 0; i < 36; i++) {
 					ItemStack item = mc.player.inventory.getStackInSlot(i);
 					if (item.getItem() == ItemRegistry.MANIFEST) {
@@ -81,7 +82,7 @@ public class Keybinds {
 				}
 			}
 
-			if (foundManifest || !ManifestConfig.ManifestPresence) {
+			if (foundManifest || !ConfigHandler.ManifestConfig.ManifestPresence) {
 				if (mc.player.isSneaking()) {
 					LineHandler.clearChests(mc.player.dimension);
 				} else {

@@ -3,6 +3,9 @@ package com.aranaira.arcanearchives.items.gems;
 import baubles.api.BaubleType;
 import baubles.api.BaublesApi;
 import baubles.api.cap.IBaublesItemHandler;
+import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.config.ConfigHandler;
+import com.aranaira.arcanearchives.config.ConfigHandler.ArsenalConfig;
 import com.aranaira.arcanearchives.inventory.handlers.GemSocketHandler;
 import com.aranaira.arcanearchives.items.BaubleGemSocket;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
@@ -14,6 +17,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
@@ -36,6 +40,8 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 		this.maxChargeNormal = maxChargeNormal;
 		this.maxChargeUpgraded = maxChargeUpgraded;
 		setMaxStackSize(1);
+
+		addPropertyOverride(new ResourceLocation(ArcaneArchives.MODID, "colourblind"), (stack, worldIn, entityIn) -> ConfigHandler.ArsenalConfig.ColourblindMode ? 1 : 0);
 	}
 
 	public GemCut getGemCut () {

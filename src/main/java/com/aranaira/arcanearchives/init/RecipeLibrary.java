@@ -1,6 +1,8 @@
 package com.aranaira.arcanearchives.init;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.config.ConfigHandler;
+import com.aranaira.arcanearchives.config.ConfigHandler.ArsenalConfig;
 import com.aranaira.arcanearchives.data.*;
 import com.aranaira.arcanearchives.data.HiveSaveData.Hive;
 import com.aranaira.arcanearchives.integration.astralsorcery.Liquefaction;
@@ -120,21 +122,23 @@ public class RecipeLibrary {
 
 		RADIANT_AMPHORA_RECIPE = GCTRecipeList.makeAndAddRecipe("radiant_amphora", new ItemStack(ItemRegistry.RADIANT_AMPHORA), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 4), new ItemStack(Items.CLAY_BALL, 4), new ItemStack(Items.GOLD_NUGGET, 4));
 
-		GEM_SOCKET_RECIPE = GCTRecipeList.makeAndAddRecipe("gemsocket", new ItemStack(ItemRegistry.BAUBLE_GEMSOCKET), new ItemStack(ItemRegistry.COMPONENT_SCINTILLATINGINLAY, 1), new ItemStack(Items.GOLD_NUGGET, 4), new ItemStack(Items.BOWL, 1), new ItemStack(Items.LEATHER, 1));
+		if (ConfigHandler.ArsenalConfig.EnableArsenal) {
+			GEM_SOCKET_RECIPE = GCTRecipeList.makeAndAddRecipe("gemsocket", new ItemStack(ItemRegistry.BAUBLE_GEMSOCKET), new ItemStack(ItemRegistry.COMPONENT_SCINTILLATINGINLAY, 1), new ItemStack(Items.GOLD_NUGGET, 4), new ItemStack(Items.BOWL, 1), new ItemStack(Items.LEATHER, 1));
 
-		MURDERGLEAM_RECIPE = GCTRecipeList.makeAndAddRecipe("murdergleam", new ItemStack(ItemRegistry.MURDERGLEAM), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyeYellow", 4), new IngredientStack(Items.DIAMOND_SWORD), new IngredientStack(Ingredient.fromItem(Items.BLAZE_POWDER), 2));
+			MURDERGLEAM_RECIPE = GCTRecipeList.makeAndAddRecipe("murdergleam", new ItemStack(ItemRegistry.MURDERGLEAM), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyeYellow", 4), new IngredientStack(Items.DIAMOND_SWORD), new IngredientStack(Ingredient.fromItem(Items.BLAZE_POWDER), 2));
 
-		MUNCHSTONE_RECIPE = GCTRecipeList.makeAndAddRecipe("munchstone", new ItemStack(ItemRegistry.MUNCHSTONE), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyeBlack", 4), new IngredientStack(Items.CAKE), new IngredientStack(Ingredient.fromItem(Items.SPECKLED_MELON), 2));
+			MUNCHSTONE_RECIPE = GCTRecipeList.makeAndAddRecipe("munchstone", new ItemStack(ItemRegistry.MUNCHSTONE), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyeBlack", 4), new IngredientStack(Items.CAKE), new IngredientStack(Ingredient.fromItem(Items.SPECKLED_MELON), 2));
 
-		MINDSPINDLE_RECIPE = GCTRecipeList.makeAndAddRecipe("mindspindle", new ItemStack(ItemRegistry.MINDSPINDLE), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyeGreen", 4), new IngredientStack(Items.ENCHANTED_BOOK), new IngredientStack(Ingredient.fromItem(Items.EMERALD), 2));
+			MINDSPINDLE_RECIPE = GCTRecipeList.makeAndAddRecipe("mindspindle", new ItemStack(ItemRegistry.MINDSPINDLE), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyeGreen", 4), new IngredientStack(Items.ENCHANTED_BOOK), new IngredientStack(Ingredient.fromItem(Items.EMERALD), 2));
 
-		RIVERTEAR_RECIPE = GCTRecipeList.makeAndAddRecipe("rivertear", new ItemStack(ItemRegistry.RIVERTEAR), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack(Ingredient.fromItem(Items.SUGAR), 4), new IngredientStack(Ingredient.fromItem(Items.WATER_BUCKET)), new IngredientStack(Ingredient.fromItem(Items.WATER_BUCKET)));
+			RIVERTEAR_RECIPE = GCTRecipeList.makeAndAddRecipe("rivertear", new ItemStack(ItemRegistry.RIVERTEAR), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack(Ingredient.fromItem(Items.SUGAR), 4), new IngredientStack(Ingredient.fromItem(Items.WATER_BUCKET)), new IngredientStack(Ingredient.fromItem(Items.WATER_BUCKET)));
 
-		PARCHTEAR_RECIPE = GCTRecipeList.makeAndAddRecipe("parchtear", new ItemStack(ItemRegistry.PARCHTEAR), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyeBlack", 4), new IngredientStack(Blocks.HARDENED_CLAY, 4), new IngredientStack(Blocks.DEADBUSH, 4));
+			PARCHTEAR_RECIPE = GCTRecipeList.makeAndAddRecipe("parchtear", new ItemStack(ItemRegistry.PARCHTEAR), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyeBlack", 4), new IngredientStack(Blocks.HARDENED_CLAY, 4), new IngredientStack(Blocks.DEADBUSH, 4));
 
-		PHOENIXWAY_RECIPE = GCTRecipeList.makeAndAddRecipe("phoenixway", new ItemStack(ItemRegistry.PHOENIXWAY), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack(Ingredient.fromItem(Items.BLAZE_POWDER), 4), new IngredientStack(Ingredient.fromItem(Items.COAL), 4), new IngredientStack(Ingredient.fromItem(Items.FLINT_AND_STEEL)));
+			PHOENIXWAY_RECIPE = GCTRecipeList.makeAndAddRecipe("phoenixway", new ItemStack(ItemRegistry.PHOENIXWAY), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack(Ingredient.fromItem(Items.BLAZE_POWDER), 4), new IngredientStack(Ingredient.fromItem(Items.COAL), 4), new IngredientStack(Ingredient.fromItem(Items.FLINT_AND_STEEL)));
 
-		STORMWAY_RECIPE = GCTRecipeList.makeAndAddRecipe("stormway", new ItemStack(ItemRegistry.STORMWAY), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyeYellow", 4), new IngredientStack(Ingredient.fromItem(Items.REDSTONE), 16), new IngredientStack(Blocks.IRON_BARS), 8);
+			STORMWAY_RECIPE = GCTRecipeList.makeAndAddRecipe("stormway", new ItemStack(ItemRegistry.STORMWAY), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyeYellow", 4), new IngredientStack(Ingredient.fromItem(Items.REDSTONE), 16), new IngredientStack(Blocks.IRON_BARS), 8);
+		}
 
 		/*MATRIX_CORE_RECIPE = GCTRecipeList.makeAndAddRecipe("matrix_core", new ItemStack(BlockRegistry.MATRIX_CRYSTAL_CORE, 1), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 60), new IngredientStack("logWood", 12), new ItemStack(ItemRegistry.COMPONENT_SCINTILLATINGINLAY, 12), new IngredientStack(BlockRegistry.RADIANT_LANTERN, 4), new IngredientStack("bookshelf", 1));*/
 
