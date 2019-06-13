@@ -21,7 +21,7 @@
         <stack item="arcanearchives:radiant_resonator">RadiantResonator</stack>
         <stack item="arcanearchives:radiant_tank">RadiantTank</stack>
         <stack item="arcanearchives:radiant_trove">RadiantTrove</stack>
-        <stack item="arcanearchives:raw_quartz">DecorativeBlocks:raw_quartzCluster</stack>
+        <stack item="arcanearchives:raw_quartz">DecorativeBlocks:RawQuartzCluster</stack>
 
         <stack item="arcanearchives:containment_field">ContainmentField</stack>
         <stack item="arcanearchives:devouring_charm">DevouringCharm</stack>
@@ -32,10 +32,10 @@
         <stack item="arcanearchives:matrix_brace">MatrixBrace</stack>
         <stack item="arcanearchives:radiant_amphora">radiant_amphora</stack>
         <stack item="arcanearchives:radiant_dust">RadiantDust</stack>
-        <stack item="arcanearchives:raw_quartz">raw_quartz</stack>
+        <stack item="arcanearchives:raw_quartz">RawQuartz</stack>
         <stack item="arcanearchives:shaped_quartz">ShapedQuartz</stack>
-        <stack item="arcanearchives:scepter_manipulation">scepter_manipulation</stack>
-        <stack item="arcanearchives:scepter_revelation">scepter_revelation</stack>
+        <stack item="arcanearchives:scepter_manipulation">ScepterManipulation</stack>
+        <stack item="arcanearchives:scepter_revelation">ScepterRevelation</stack>
         <stack item="arcanearchives:scintillating_inlay">ScintillatingInlay</stack>
         <stack item="arcanearchives:writ_expulsion">WritExpulsion</stack>
 
@@ -82,10 +82,10 @@
             <p><stack item="arcanearchives:matrix_brace"/> <link ref="MatrixBrace">Matrix Brace</link></p>
             <p><stack item="arcanearchives:radiant_amphora"/> <link ref="radiant_amphora">Radiant Amphora</link></p>
             <p><stack item="arcanearchives:radiant_dust"/> <link ref="RadiantDust">Radiant Dust</link></p>
-            <p><stack item="arcanearchives:raw_quartz"/> <link ref="raw_quartz">Radiant Quartz (Raw)</link></p>
+            <p><stack item="arcanearchives:raw_quartz"/> <link ref="RawQuartz">Radiant Quartz (Raw)</link></p>
             <p><stack item="arcanearchives:shaped_quartz"/> <link ref="ShapedQuartz">Radiant Quartz (Shaped)</link></p>
-            <p><stack item="arcanearchives:scepter_manipulation"/> <link ref="scepter_manipulation">Scepter of Manipulation</link></p>
-            <p><stack item="arcanearchives:scepter_revelation"/> <link ref="scepter_revelation">Scepter of Revelation</link></p>
+            <p><stack item="arcanearchives:scepter_manipulation"/> <link ref="ScepterManipulation">Scepter of Manipulation</link></p>
+            <p><stack item="arcanearchives:scepter_revelation"/> <link ref="ScepterRevelation">Scepter of Revelation</link></p>
             <p><stack item="arcanearchives:scintillating_inlay"/> <link ref="ScintillatingInlay">Scintillating Inlay</link></p>
             <p><stack item="arcanearchives:writ_expulsion"/> <link ref="WritExpulsion">Writ of Expulsion</link></p>
         </section>
@@ -227,7 +227,7 @@
             </p>
             <horizontal_rule/>
         </section>
-        <section id="raw_quartzCluster">
+        <section id="RawQuartzCluster">
             <page_title>
                 <title>Raw Quartz Cluster</title>
             </page_title>
@@ -881,7 +881,7 @@
         </section>
     </chapter>
 
-    <chapter id="radiant_amphora">
+    <chapter id="RadiantAmphora">
         <section>
             <page_title>
                 <title>Radiant Amphora</title>
@@ -940,7 +940,7 @@
         </section>
     </chapter>
 
-    <chapter id="raw_quartz">
+    <chapter id="RawQuartz">
         <section>
             <page_title>
                 <title>Raw Radiant Quartz</title>
@@ -999,7 +999,7 @@
         </section>
     </chapter>
 
-    <chapter id="scepter_manipulation">
+    <chapter id="ScepterManipulation">
         <section>
             <page_title>
                 <title>Scepter of Manipulation</title>
@@ -1028,7 +1028,7 @@
         </section>
     </chapter>
 
-    <chapter id="scepter_revelation">
+    <chapter id="ScepterRevelation">
         <section>
             <page_title>
                 <title>Scepter of Revelation</title>
