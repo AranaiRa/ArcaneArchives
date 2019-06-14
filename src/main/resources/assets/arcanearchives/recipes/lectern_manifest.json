@@ -2,7 +2,7 @@
     "_comment": [
         "Craft a Manifest Lectern"
     ],
-    "type": "minecraft:crafting_shaped",
+    "type": "forge:ore_shaped",
     "pattern": [
         " M ",
         "SWS",
@@ -13,7 +13,8 @@
             "item": "arcanearchives:manifest"
         },
         "S": {
-            "item": "minecraft:stick"
+            "type": "forge:ore_dict",
+            "ore": "stickWood"
         },
         "W": {
             "type": "forge:ore_dict",

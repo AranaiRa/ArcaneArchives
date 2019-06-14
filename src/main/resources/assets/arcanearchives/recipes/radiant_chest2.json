@@ -2,7 +2,7 @@
     "_comment": [
         "Craft Radiant Chest from Chest"
     ],
-    "type": "minecraft:crafting_shapeless",
+    "type": "forge:ore_shapeless",
     "ingredients": [
         {   "item": "arcanearchives:raw_quartz" },
         {   "type": "forge:ore_dict", "ore": "chestWood" }

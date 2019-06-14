@@ -2,10 +2,10 @@
     "_comment": [
         "Craft a tome of arcana"
     ],
-    "type": "minecraft:crafting_shapeless",
+    "type": "forge:ore_shapeless",
     "ingredients": [
         {   "item": "minecraft:book" },
-        {   "item": "minecraft:gold_nugget" }
+        {   "type": "ore", "ore": "nuggetGold" }
     ],
     "result": {
         "item": "arcanearchives:tome_arcana",

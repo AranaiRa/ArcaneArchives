@@ -2,7 +2,7 @@
     "_comment": [
         "Craft Radiant Chest from planks"
     ],
-    "type": "minecraft:crafting_shaped",
+    "type": "forge:ore_shaped",
     "pattern":
     [
         "www",
