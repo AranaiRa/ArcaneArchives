@@ -20,7 +20,9 @@ public class EntityItemMountaintear extends EntityItem {
 
 	@Override
 	public boolean attackEntityFrom (DamageSource source, float amount) {
-		if (this.world.isRemote || this.isDead) return false;
+		if (this.world.isRemote || this.isDead) {
+			return false;
+		}
 
 		if (source.isFireDamage()) {
 			return false;

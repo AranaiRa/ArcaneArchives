@@ -17,7 +17,6 @@ import com.aranaira.arcanearchives.items.TomeOfArcanaItem;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.gems.asscher.MurdergleamItem;
 import com.aranaira.arcanearchives.items.gems.asscher.SalvegleamItem;
-import com.aranaira.arcanearchives.items.gems.oval.TransferstoneItem;
 import com.aranaira.arcanearchives.items.gems.trillion.StormwayItem;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketArcaneGemToggle;
@@ -27,7 +26,6 @@ import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import gigaherz.lirelent.guidebook.client.BookRegistryEvent;
-import javafx.scene.shape.Arc;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBookshelf;
 import net.minecraft.client.Minecraft;
@@ -484,7 +482,7 @@ public class AAEventHandler {
 
 	@SubscribeEvent
 	public static void onItemPickup (PlayerEvent.ItemPickupEvent event) {
-		if(!event.player.world.isRemote) {
+		if (!event.player.world.isRemote) {
 			/*boolean hasTransferstone = false;
 			ItemStack gem = null;
 			Item item = null;

@@ -1,12 +1,7 @@
 package com.aranaira.arcanearchives.items.gems.oval;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
-import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import com.aranaira.arcanearchives.util.NBTUtils;
-import com.aranaira.arcanearchives.util.WorldUtil;
-import crafttweaker.api.block.IBlock;
-import javafx.scene.shape.Arc;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAnvil;
 import net.minecraft.block.BlockDirt;
@@ -21,21 +16,17 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class OrderstoneItem extends ArcaneGemItem {
 	public static final String NAME = "orderstone";
 
-	public OrderstoneItem() {
+	public OrderstoneItem () {
 		super(NAME, GemCut.OVAL, GemColor.PINK, 100, 400);
 	}
 
@@ -56,7 +47,7 @@ public class OrderstoneItem extends ArcaneGemItem {
 	public EnumActionResult onItemUse (EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote) {
 			Block block = world.getBlockState(pos).getBlock();
-			if(GemUtil.getCharge(player.getHeldItemMainhand()) > 0) {
+			if (GemUtil.getCharge(player.getHeldItemMainhand()) > 0) {
 				int chargeCost = 0;
 				/**
 				 * Gravel -> Cobblestone -> Stone
@@ -64,12 +55,10 @@ public class OrderstoneItem extends ArcaneGemItem {
 				if (block == Blocks.GRAVEL) {
 					world.setBlockState(pos, Blocks.COBBLESTONE.getDefaultState(), 0);
 					chargeCost = 1;
-				}
-				else if (block == Blocks.COBBLESTONE) {
+				} else if (block == Blocks.COBBLESTONE) {
 					world.setBlockState(pos, Blocks.STONE.getDefaultState(), 0);
 					chargeCost = 1;
-				}
-				else if (block == Blocks.MOSSY_COBBLESTONE) {
+				} else if (block == Blocks.MOSSY_COBBLESTONE) {
 					world.setBlockState(pos, Blocks.COBBLESTONE.getDefaultState(), 0);
 					chargeCost = 1;
 				}
@@ -79,24 +68,20 @@ public class OrderstoneItem extends ArcaneGemItem {
 				else if (block == Blocks.SAND) {
 					world.setBlockState(pos, Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.COARSE_DIRT), 0);
 					chargeCost = 1;
-				}
-				else if (block == Blocks.DIRT) {
+				} else if (block == Blocks.DIRT) {
 					IBlockState state = world.getBlockState(pos);
 					BlockDirt.DirtType variant = state.getValue(BlockDirt.VARIANT);
-					if(variant == BlockDirt.DirtType.COARSE_DIRT) {
+					if (variant == BlockDirt.DirtType.COARSE_DIRT) {
 						world.setBlockState(pos, Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.DIRT), 0);
 						chargeCost = 1;
-					}
-					else if(variant == BlockDirt.DirtType.DIRT) {
+					} else if (variant == BlockDirt.DirtType.DIRT) {
 						world.setBlockState(pos, Blocks.MYCELIUM.getDefaultState(), 0);
 						chargeCost = 1;
-					}
-					else if(variant == BlockDirt.DirtType.PODZOL) {
+					} else if (variant == BlockDirt.DirtType.PODZOL) {
 						world.setBlockState(pos, Blocks.GRASS.getDefaultState(), 0);
 						chargeCost = 1;
 					}
-				}
-				else if (block == Blocks.MYCELIUM) {
+				} else if (block == Blocks.MYCELIUM) {
 					IBlockState state = world.getBlockState(pos);
 					BlockDirt.DirtType variant = Blocks.DIRT.getDefaultState().getValue(BlockDirt.VARIANT);
 					world.setBlockState(pos, Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.PODZOL), 0);
@@ -108,11 +93,10 @@ public class OrderstoneItem extends ArcaneGemItem {
 				else if (block == Blocks.STONEBRICK) {
 					IBlockState state = world.getBlockState(pos);
 					BlockStoneBrick.EnumType variant = state.getValue(BlockStoneBrick.VARIANT);
-					if(variant == BlockStoneBrick.EnumType.CRACKED || variant == BlockStoneBrick.EnumType.MOSSY) {
+					if (variant == BlockStoneBrick.EnumType.CRACKED || variant == BlockStoneBrick.EnumType.MOSSY) {
 						chargeCost = 1;
 						world.setBlockState(pos, state.withProperty(BlockStoneBrick.VARIANT, BlockStoneBrick.EnumType.DEFAULT), 0);
-					}
-					else if(variant == BlockStoneBrick.EnumType.DEFAULT) {
+					} else if (variant == BlockStoneBrick.EnumType.DEFAULT) {
 						chargeCost = 4;
 						world.setBlockState(pos, state.withProperty(BlockStoneBrick.VARIANT, BlockStoneBrick.EnumType.CHISELED), 0);
 					}
@@ -123,7 +107,7 @@ public class OrderstoneItem extends ArcaneGemItem {
 				else if (block == Blocks.ANVIL) {
 					IBlockState state = world.getBlockState(pos);
 					int damage = state.getValue(BlockAnvil.DAMAGE);
-					if(damage > 0) {
+					if (damage > 0) {
 						damage--;
 						chargeCost = 25;
 						world.setBlockState(pos, state.withProperty(BlockAnvil.DAMAGE, damage), 0);
