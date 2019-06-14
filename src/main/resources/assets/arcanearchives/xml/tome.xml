@@ -4,9 +4,11 @@
     <include ref="arcanearchives:xml/arcanearchives_templates.xml" />
 
     <conditions>
+        <false name="disabled"/>
         <mod-loaded name="ml_thaumcraft" modid="thaumcraft"/>
         <not name="no_thaumcraft"><mod-loaded modid="thaumcraft"/></not>
         <mod-loaded name="ml_astralsorcery" modid="astralsorcery"/>
+        <not name="no_astralsorcery"><mod-loaded modid="astralsorcery"/></not>
     </conditions>
 
     <stack-links>
@@ -30,7 +32,7 @@
         <stack item="arcanearchives:manifest">Manifest</stack>
         <stack item="arcanearchives:material_interface">MaterialInterface</stack>
         <stack item="arcanearchives:matrix_brace">MatrixBrace</stack>
-        <stack item="arcanearchives:radiant_amphora">radiant_amphora</stack>
+        <stack item="arcanearchives:radiant_amphora">RadiantAmphora</stack>
         <stack item="arcanearchives:radiant_dust">RadiantDust</stack>
         <stack item="arcanearchives:raw_quartz">RawQuartz</stack>
         <stack item="arcanearchives:shaped_quartz">ShapedQuartz</stack>
@@ -80,14 +82,14 @@
                 <title>Items</title>
             </page_title>
             <p><stack item="arcanearchives:containment_field"/> <link ref="ContainmentField">Containment Field</link></p>
-            <p><stack item="arcanearchives:devouring_charm"/> <link ref="DevouringCharm">Devouring Charm</link></p>
+            <p condition="disabled"><stack item="arcanearchives:devouring_charm"/> <link ref="DevouringCharm">Devouring Charm</link></p>
             <p><stack item="arcanearchives:gemsocket"/> <link ref="GemSocket">Gem Socket</link></p>
             <p><stack item="arcanearchives:letter_invitation"/> <link ref="LetterInvitation">Letter of Invitation</link></p>
             <p><stack item="arcanearchives:letter_resignation"/> <link ref="LetterResignation">Letter of Resignation</link></p>
             <p><stack item="arcanearchives:manifest"/> <link ref="Manifest">Manifest</link></p>
             <p><stack item="arcanearchives:material_interface"/> <link ref="MaterialInterface">Material Interface</link></p>
             <p><stack item="arcanearchives:matrix_brace"/> <link ref="MatrixBrace">Matrix Brace</link></p>
-            <p><stack item="arcanearchives:radiant_amphora"/> <link ref="radiant_amphora">Radiant Amphora</link></p>
+            <p condition="disabled"><stack item="arcanearchives:radiant_amphora"/> <link ref="radiant_amphora">Radiant Amphora</link></p>
             <p><stack item="arcanearchives:radiant_dust"/> <link ref="RadiantDust">Radiant Dust</link></p>
             <p><stack item="arcanearchives:raw_quartz"/> <link ref="RawQuartz">Radiant Quartz (Raw)</link></p>
             <p><stack item="arcanearchives:shaped_quartz"/> <link ref="ShapedQuartz">Radiant Quartz (Shaped)</link></p>
@@ -562,7 +564,7 @@
                 A Radiant Tank is a storage container that can contain up to 16 buckets of a single type of fluid. Using a Radiant Tank on a fluid inventory will transfer the target's fluid inventory into the held Radiant Tank.
             </p>
             <p>
-                <stack item="arcanearchives:radiant_amphora"/> <link ref="radiant_amphora">Radiant Amphorae</link> can fill and empty a Radiant Tank from anywhere, as long as the tank is in a loaded chunk.
+                <stack item="arcanearchives:radiant_amphora"/> <link ref="RadiantAmphora">Radiant Amphorae</link> can fill and empty a Radiant Tank from anywhere, as long as the tank is in a loaded chunk.
             </p>
             <p>
                 <stack item="arcanearchives:containment_field"/> By using a <link ref="ContainmentField">Containment Field</link> while sneaking, the maximum capacity can be increased by 16 buckets. Up to 9 such upgrades can be applied total.
@@ -617,6 +619,13 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Radiant Troves can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <p>
+                <recipe type="arcanearchives:gct_recipe">
+                    <recipe.result>
+                        <stack item="arcanearchives:scepter_revelation"/>
+                    </recipe.result>
+                </recipe>
+            </p>
         </section>
         <section>
             <page_title>
@@ -656,7 +665,7 @@
         </section>
     </chapter>
 
-    <chapter id="DevouringCharm">
+    <chapter id="DevouringCharm" condition="disabled">
         <section>
             <page_title>
                 <title>Devouring Charm</title>
@@ -899,7 +908,7 @@
         </section>
     </chapter>
 
-    <chapter id="RadiantAmphora">
+    <chapter id="RadiantAmphora" condition="disabled">
         <section>
             <page_title>
                 <title>Radiant Amphora</title>
