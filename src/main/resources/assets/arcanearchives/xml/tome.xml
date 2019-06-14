@@ -1326,14 +1326,20 @@
                 A Mountaintear is an Arcane Gem formed from an orange-spectrum piece of <link ref="shaped_quartz">Shaped Radiant Quartz</link> in a pendeloque cut.
             </p>
             <p>
+                When activated, a Mountaintear will conjure a block of lava at a distance of up to 40 blocks at the cost of one point of charge.
+            </p>
+            <p condition="ml_astralsorcery">
                 <stack item="astralsorcery:blockwell"/> When placed in a Lightwell with access to the sky, a Mountaintear generates lava at a slow rate. While it's possible for a Mountaintear to shatter, the chances of shattering are <span italics="true">astronomically</span> unlikely. For all intents and purposes, a Mountaintear lasts indefinitely unless its Lightwell is broken.
             </p>
-            <p>
+            <p condition="ml_astralsorcery">
                 Once placed in a Lightwell, a Mountaintear cannot be retrieved.
+            </p>
+            <p>
+                <image src="arcanearchives:items/gems/pendeloque/dun" tw="16" th="16"/> To recharge a dun Mountaintear, toss it in a block of lava.
             </p>
             <horizontal_rule/>
             <p>
-                Mountaintears cannot be crafted, and are only available via Creative mode.
+                <stack item="arcanearchives:gemcutters_table" /> Mountaintears can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
         </section>
     </chapter>
