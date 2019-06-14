@@ -401,7 +401,7 @@ public class AAEventHandler {
 		if (!event.getEntityLiving().world.isRemote) {
 			if (event.getEntityLiving() instanceof EntityAnimal) {
 				EntityAnimal animal = (EntityAnimal) event.getEntityLiving();
-				ArcaneArchives.logger.info("i like the part where it stopped moving");
+				//ArcaneArchives.logger.info("i like the part where it stopped moving");
 				if (event.getSource().getTrueSource() instanceof EntityPlayer) {
 					for (ItemStack gem : ArcaneGemItem.GemUtil.getAvailableGems((EntityPlayer) event.getSource().getTrueSource())) {
 						if (gem.getItem() instanceof SalvegleamItem) {

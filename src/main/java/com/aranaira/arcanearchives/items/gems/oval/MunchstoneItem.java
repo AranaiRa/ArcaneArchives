@@ -79,7 +79,7 @@ public class MunchstoneItem extends ArcaneGemItem {
 	public EnumActionResult onItemUse (EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote) {
 
-			ArcaneArchives.logger.info("munchstone trigger");
+			//ArcaneArchives.logger.info("munchstone trigger");
 			ItemStack gem = player.getHeldItemMainhand();
 
 			if (GemUtil.getCharge(gem) > 0) {
@@ -102,7 +102,7 @@ public class MunchstoneItem extends ArcaneGemItem {
 						}
 
 						int chargeConsumed = hungerMod + (int) saturationMod;
-						ArcaneArchives.logger.info("charge: " + chargeConsumed);
+						//ArcaneArchives.logger.info("charge: " + chargeConsumed);
 
 						if (chargeConsumed > 0) {
 							player.getFoodStats().addStats(eb.hungerValue, eb.saturationValue);

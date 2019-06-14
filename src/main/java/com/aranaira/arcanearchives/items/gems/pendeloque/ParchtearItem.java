@@ -56,7 +56,7 @@ public class ParchtearItem extends ArcaneGemItem {
 
 				if (ray != null) {
 					BlockPos root = ray.getBlockPos();
-					ArcaneArchives.logger.info("Hit " + world.getBlockState(root).getBlock().getLocalizedName() + " fluid block");
+					//ArcaneArchives.logger.info("Hit " + world.getBlockState(root).getBlock().getLocalizedName() + " fluid block");
 
 					if (!player.isSneaking()) {
 						positions = getPositionsInCuboidRadius(root, CUBOID_RADIUS);

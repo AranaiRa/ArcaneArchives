@@ -54,7 +54,7 @@ public class CleansegleamItem extends ArcaneGemItem {
 			if (GemUtil.getCharge(player.getHeldItemMainhand()) > 0) {
 				int chargeCost = 0;
 				if (player.isSneaking()) {
-					ArcaneArchives.logger.info("player is sneaking");
+					//ArcaneArchives.logger.info("player is sneaking");
 					Vec3d start = new Vec3d(player.posX, player.posY + player.getEyeHeight(), player.posZ);
 					Vec3d dir = player.getLookVec();
 					Vec3d rayTarget = new Vec3d(start.x + dir.x * 10, start.y + dir.y * 10, start.z + dir.z * 10);
@@ -62,9 +62,9 @@ public class CleansegleamItem extends ArcaneGemItem {
 					RayTraceResult ray = RayTracing.rayTraceServer(player, 10);
 
 					if (ray != null) {
-						ArcaneArchives.logger.info("entity=null? " + (ray.entityHit == null));
+						//ArcaneArchives.logger.info("entity=null? " + (ray.entityHit == null));
 						if (ray.entityHit instanceof EntityLivingBase) {
-							ArcaneArchives.logger.info("is livingbase");
+							//ArcaneArchives.logger.info("is livingbase");
 							chargeCost = removeEffects((EntityLivingBase) ray.entityHit, false);
 						}
 					}
