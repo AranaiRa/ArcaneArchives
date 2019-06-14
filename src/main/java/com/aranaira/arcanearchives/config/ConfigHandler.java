@@ -100,7 +100,7 @@ public class ConfigHandler {
 		@Config.Name("Radiant Chest Highlight")
 		public String ChestHighlight = "#1922C4";
 
-		@Config.Comment("Container classes to exclude from Mixin-based slot highlighting")
+		/*@Config.Comment("Container classes to exclude from Mixin-based slot highlighting")
 		@Config.Name("Container class to ignore")
 		public String[] ContainerClasses = new String[]{};
 
@@ -129,7 +129,7 @@ public class ConfigHandler {
 			}
 
 			return containerClasses;
-		}
+		}*/
 
 		@Config.Comment("Set to true to disable non-Arcane Archive container slots from being highlighted when tracking items")
 		@Config.Name("Disable non-mod slot highlighting")
