@@ -40,6 +40,10 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 		this.maxChargeUpgraded = maxChargeUpgraded;
 		setMaxStackSize(1);
 
+		if (!ConfigHandler.ArsenalConfig.EnableArsenal) {
+			setCreativeTab(null);
+		}
+
 		addPropertyOverride(new ResourceLocation(ArcaneArchives.MODID, "colourblind"), (stack, worldIn, entityIn) -> ConfigHandler.ArsenalConfig.ColourblindMode ? 1 : 0);
 	}
 
