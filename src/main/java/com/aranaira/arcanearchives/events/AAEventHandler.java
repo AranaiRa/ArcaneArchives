@@ -17,6 +17,7 @@ import com.aranaira.arcanearchives.items.TomeOfArcanaItem;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.gems.asscher.MurdergleamItem;
 import com.aranaira.arcanearchives.items.gems.asscher.SalvegleamItem;
+import com.aranaira.arcanearchives.items.gems.oval.TransferstoneItem;
 import com.aranaira.arcanearchives.items.gems.trillion.StormwayItem;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketArcaneGemToggle;
@@ -26,6 +27,7 @@ import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import gigaherz.lirelent.guidebook.client.BookRegistryEvent;
+import javafx.scene.shape.Arc;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBookshelf;
 import net.minecraft.client.Minecraft;
@@ -66,6 +68,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -240,15 +243,16 @@ public class AAEventHandler {
 
 		ArrayList<ItemStack> held = ArcaneGemItem.GemUtil.getAvailableGems(event.getEntityPlayer());
 
-		if (held.size() > 0) {
-			for (ItemStack stack : held) {
-				if (stack.getItem() == ItemRegistry.MINDSPINDLE) {
-					if (ArcaneGemItem.GemUtil.getCharge(stack) > 0) {
-						int chargeReduction = event.getOrb().xpValue;
-						event.getOrb().xpValue = Math.round(event.getOrb().xpValue * 1.5f);
-						event.getOrb().delayBeforeCanPickup = 0;
-						ArcaneGemItem.GemUtil.consumeCharge(stack, chargeReduction);
-					}
+		for (ItemStack stack : held) {
+			if (stack.getItem() == ItemRegistry.ORDERSTONE) {
+				ArcaneGemItem.GemUtil.restoreCharge(stack, event.getOrb().xpValue);
+			}
+			if (stack.getItem() == ItemRegistry.MINDSPINDLE) {
+				if (ArcaneGemItem.GemUtil.getCharge(stack) > 0) {
+					int chargeReduction = event.getOrb().xpValue;
+					event.getOrb().xpValue = Math.round(event.getOrb().xpValue * 1.5f);
+					event.getOrb().delayBeforeCanPickup = 0;
+					ArcaneGemItem.GemUtil.consumeCharge(stack, chargeReduction);
 				}
 			}
 		}
@@ -475,6 +479,48 @@ public class AAEventHandler {
 				save.markDirty();
 				world.getMapStorage().saveAllData();
 			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void onItemPickup (PlayerEvent.ItemPickupEvent event) {
+		if(!event.player.world.isRemote) {
+			/*boolean hasTransferstone = false;
+			ItemStack gem = null;
+			Item item = null;
+			ArrayList<ItemStack> matchedStacks = new ArrayList<>();
+			for(ItemStack stack : event.player.inventory.mainInventory) {
+				if(stack.getItem() instanceof TransferstoneItem) {
+					gem = stack;
+					item = TransferstoneItem.getLinkedItem(stack);
+					hasTransferstone = true;
+				}
+			}
+
+			if(hasTransferstone) {
+				for(ItemStack stack : event.player.inventory.mainInventory) {
+					if(stack.getItem() == item) {
+						matchedStacks.add(stack);
+					}
+				}
+			}
+
+			for(int i=matchedStacks.size()-1; i>=0; i--) {
+				ItemStack stack = matchedStacks.get(i);
+				if(i == 0) {
+					if(matchedStacks.get(0).getCount() == 1)
+						TransferstoneItem.insertLinkedItem(stack);
+					else {
+						ItemStack allButOne = stack.copy();
+						allButOne.setCount(stack.getCount()-1);
+						stack.shrink(allButOne.getCount());
+						TransferstoneItem.insertLinkedItem(allButOne);
+					}
+				}
+				else {
+					TransferstoneItem.insertLinkedItem(stack);
+				}
+			}*/
 		}
 	}
 }

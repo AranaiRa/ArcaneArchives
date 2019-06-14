@@ -4,9 +4,11 @@
     <include ref="arcanearchives:xml/arcanearchives_templates.xml" />
 
     <conditions>
+        <false name="disabled"/>
         <mod-loaded name="ml_thaumcraft" modid="thaumcraft"/>
         <not name="no_thaumcraft"><mod-loaded modid="thaumcraft"/></not>
         <mod-loaded name="ml_astralsorcery" modid="astralsorcery"/>
+        <not name="no_astralsorcery"><mod-loaded modid="astralsorcery"/></not>
     </conditions>
 
     <stack-links>
@@ -30,7 +32,7 @@
         <stack item="arcanearchives:manifest">Manifest</stack>
         <stack item="arcanearchives:material_interface">MaterialInterface</stack>
         <stack item="arcanearchives:matrix_brace">MatrixBrace</stack>
-        <stack item="arcanearchives:radiant_amphora">radiant_amphora</stack>
+        <stack item="arcanearchives:radiant_amphora">RadiantAmphora</stack>
         <stack item="arcanearchives:radiant_dust">RadiantDust</stack>
         <stack item="arcanearchives:raw_quartz">RawQuartz</stack>
         <stack item="arcanearchives:shaped_quartz">ShapedQuartz</stack>
@@ -42,10 +44,16 @@
         <stack item="arcanearchives:murdergleam">Murdergleam</stack>
         <stack item="arcanearchives:cleansegleam">Cleansegleam</stack>
         <stack item="arcanearchives:salvegleam">Salvegleam</stack>
+
+        <stack item="arcanearchives:munchgleam">Munchstone</stack>
+        <stack item="arcanearchives:ordergleam">Orderstone</stack>
+
         <stack item="arcanearchives:mindspindle">Mindspindle</stack>
+
         <stack item="arcanearchives:mountaintear">Mountaintear</stack>
         <stack item="arcanearchives:rivertear">Rivertear</stack>
         <stack item="arcanearchives:parchtear">Parchtear</stack>
+
         <stack item="arcanearchives:phoenixway">Phoenixway</stack>
         <stack item="arcanearchives:stormway">Stormway</stack>
 
@@ -57,7 +65,7 @@
             <page_title>
                 <title>Blocks</title>
             </page_title>
-            <p><stack item="arcanearchives:brazier_of_hoarding"/> <link ref="BrazierHoarding">Brazier of Hoarding</link></p>
+            <p condition="disabled"><stack item="arcanearchives:brazier_of_hoarding"/> <link ref="BrazierHoarding">Brazier of Hoarding</link></p>
             <p><stack item="arcanearchives:radiant_lantern"/> <link ref="DecorativeBlocks">Decorative Blocks</link></p>
             <p><stack item="arcanearchives:gemcutters_table"/> <link ref="GemCuttersTable">Gem Cutter's Table</link></p>
             <p><stack item="arcanearchives:lectern_manifest"/> <link ref="LecternManifest">Manifest Lectern</link></p>
@@ -74,14 +82,14 @@
                 <title>Items</title>
             </page_title>
             <p><stack item="arcanearchives:containment_field"/> <link ref="ContainmentField">Containment Field</link></p>
-            <p><stack item="arcanearchives:devouring_charm"/> <link ref="DevouringCharm">Devouring Charm</link></p>
+            <p condition="disabled"><stack item="arcanearchives:devouring_charm"/> <link ref="DevouringCharm">Devouring Charm</link></p>
             <p><stack item="arcanearchives:gemsocket"/> <link ref="GemSocket">Gem Socket</link></p>
             <p><stack item="arcanearchives:letter_invitation"/> <link ref="LetterInvitation">Letter of Invitation</link></p>
             <p><stack item="arcanearchives:letter_resignation"/> <link ref="LetterResignation">Letter of Resignation</link></p>
             <p><stack item="arcanearchives:manifest"/> <link ref="Manifest">Manifest</link></p>
             <p><stack item="arcanearchives:material_interface"/> <link ref="MaterialInterface">Material Interface</link></p>
             <p><stack item="arcanearchives:matrix_brace"/> <link ref="MatrixBrace">Matrix Brace</link></p>
-            <p><stack item="arcanearchives:radiant_amphora"/> <link ref="radiant_amphora">Radiant Amphora</link></p>
+            <p condition="disabled"><stack item="arcanearchives:radiant_amphora"/> <link ref="radiant_amphora">Radiant Amphora</link></p>
             <p><stack item="arcanearchives:radiant_dust"/> <link ref="RadiantDust">Radiant Dust</link></p>
             <p><stack item="arcanearchives:raw_quartz"/> <link ref="RawQuartz">Radiant Quartz (Raw)</link></p>
             <p><stack item="arcanearchives:shaped_quartz"/> <link ref="ShapedQuartz">Radiant Quartz (Shaped)</link></p>
@@ -99,6 +107,7 @@
             <p><stack item="arcanearchives:salvegleam"/> <link ref="Salvegleam">Salvegleam</link></p>
             <space height="8"/>
             <p><stack item="arcanearchives:munchstone"/> <link ref="Munchstone">Munchstone</link></p>
+            <p><stack item="arcanearchives:orderstone"/> <link ref="Orderstone">Orderstone</link></p>
             <space height="8"/>
             <p><stack item="arcanearchives:mindspindle"/> <link ref="Mindspindle">Mindspindle</link></p>
             <space height="8"/>
@@ -118,7 +127,7 @@
         </section>
     </chapter>
 
-    <chapter id="BrazierHoarding">
+    <chapter id="BrazierHoarding" condition="disabled">
         <section>
             <page_title>
                 <title>Brazier of Hoarding</title>
@@ -409,7 +418,7 @@
                 <stack item="arcanearchives:manifest"/> Items stored in Radiant Chests appear on a <link ref="Manifest">Manifest</link> as long as the Chest's chunk is loaded.
             </p>
             <p>
-                <stack item="arcanearchives:scepter_manipulation"/> Using a <link ref="ScepterManipulation">Scepter of Manipulation</link> on a Radiant Chest while holding an item in the other allows you to label the chest with the held item. The item is not consumed.
+                <stack item="arcanearchives:scepter_manipulation"/> Using a <link ref="ScepterManipulation">Scepter of Manipulation</link> on a Radiant Chest while holding an item in the other hand allows you to label the chest with the held item. The item is not consumed.
             </p>
             <p>
                 To clear the item, sneak and activate the chest while holding the Scepter of Manipulation with your main hand and nothing in your off hand.
@@ -554,13 +563,13 @@
             <p>
                 A Radiant Tank is a storage container that can contain up to 16 buckets of a single type of fluid. Using a Radiant Tank on a fluid inventory will transfer the target's fluid inventory into the held Radiant Tank.
             </p>
-            <p>
-                <stack item="arcanearchives:radiant_amphora"/> <link ref="radiant_amphora">Radiant Amphorae</link> can fill and empty a Radiant Tank from anywhere, as long as the tank is in a loaded chunk.
+            <p condition="disabled">
+                <stack item="arcanearchives:radiant_amphora"/> <link ref="RadiantAmphora">Radiant Amphorae</link> can fill and empty a Radiant Tank from anywhere, as long as the tank is in a loaded chunk.
             </p>
             <p>
                 <stack item="arcanearchives:containment_field"/> By using a <link ref="ContainmentField">Containment Field</link> while sneaking, the maximum capacity can be increased by 16 buckets. Up to 9 such upgrades can be applied total.
             </p>
-            <p>
+            <p condition="disabled">
                 <stack item="arcanearchives:devouring_charm"/> By using a <link ref="DevouringCharm">Devouring Charm</link> while sneaking, fluid added to the Tank in excess of its maximum capacity is destroyed.
             </p>
             <p>
@@ -597,7 +606,7 @@
             <p>
                 <stack item="arcanearchives:material_interface"/> By using a <link ref="MaterialInterface">Material Interface</link> while sneaking, the maximum capacity can be increased by 64 stacks. Up to 9 such upgrades can be applied total.
             </p>
-            <p>
+            <p condition="disabled">
                 <stack item="arcanearchives:devouring_charm"/> By using a <link ref="DevouringCharm">Devouring Charm</link> while sneaking, items added to the Trove in excess of its maximum capacity are destroyed.
             </p>
             <p>
@@ -609,6 +618,13 @@
             <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Radiant Troves can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+            </p>
+            <p>
+                <recipe type="arcanearchives:gct_recipe">
+                    <recipe.result>
+                        <stack item="arcanearchives:scepter_revelation"/>
+                    </recipe.result>
+                </recipe>
             </p>
         </section>
         <section>
@@ -649,7 +665,7 @@
         </section>
     </chapter>
 
-    <chapter id="DevouringCharm">
+    <chapter id="DevouringCharm" condition="disabled">
         <section>
             <page_title>
                 <title>Devouring Charm</title>
@@ -892,7 +908,7 @@
         </section>
     </chapter>
 
-    <chapter id="RadiantAmphora">
+    <chapter id="RadiantAmphora" condition="disabled">
         <section>
             <page_title>
                 <title>Radiant Amphora</title>
@@ -1285,6 +1301,55 @@
             <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Munchstones can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+            </p>
+        </section>
+    </chapter>
+
+    <chapter id="Orderstone">
+        <section>
+            <page_title>
+                <title>Orderstone</title>
+            </page_title>
+            <p align="center"><stack item="arcanearchives:orderstone" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                An Orderstone is an Arcane Gem formed from a pink-spectrum piece of <link ref="shaped_quartz">Shaped Radiant Quartz</link> in an oval cut.
+            </p>
+            <p>
+                When activated, an Orderstone transforms certain blocks into a more orderly state. The following pages list all valid transformations the Orderstone is capable of.
+            </p>
+            <p>
+                <image src="arcanearchives:items/gems/oval/dun" tw="16" th="16"/> To recharge a dun Orderstone, collect experience globes while holding the gem.
+            </p>
+            <horizontal_rule/>
+            <p>
+                <stack item="arcanearchives:gemcutters_table" /> Orderstones can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+            </p>
+        </section>
+        <section>
+            <page_title>
+                <title>Orderstone</title>
+            </page_title>
+            <p>
+                The following transformation sequences can be performed:
+            </p>
+            <p align="center">
+                <stack item="minecraft:sand" scale="2.0"/> <image src="arcanearchives:gui/guidebook/next" tw="8" th="16" scale="2.0"/> <stack item="minecraft:dirt" meta="1" scale="2.0"/> <image src="arcanearchives:gui/guidebook/next" tw="8" th="16" scale="2.0"/> <stack item="minecraft:dirt" scale="2.0"/> <image src="arcanearchives:gui/guidebook/next" tw="8" th="16" scale="2.0"/> <stack item="minecraft:mycelium" scale="2.0"/> <image src="arcanearchives:gui/guidebook/next" tw="8" th="16" scale="2.0"/> <stack item="minecraft:dirt" meta="2" scale="2.0"/> <image src="arcanearchives:gui/guidebook/next" tw="8" th="16" scale="2.0"/> <stack item="minecraft:grass" scale="2.0"/>
+            </p>
+            <p align="center">
+                <stack item="minecraft:gravel" scale="2.0"/> <image src="arcanearchives:gui/guidebook/next" tw="8" th="16" scale="2.0"/> <stack item="minecraft:cobblestone" scale="2.0"/> <image src="arcanearchives:gui/guidebook/next" tw="8" th="16" scale="2.0"/> <stack item="minecraft:stone" scale="2.0"/>
+            </p>
+            <p align="center">
+                <stack item="minecraft:mossy_cobblestone" scale="2.0"/> <image src="arcanearchives:gui/guidebook/next" tw="8" th="16" scale="2.0"/> <stack item="minecraft:cobblestone" scale="2.0"/> <image src="arcanearchives:gui/guidebook/next" tw="8" th="16" scale="2.0"/> <stack item="minecraft:stone" scale="2.0"/>
+            </p>
+            <p align="center">
+                <stack item="minecraft:stonebrick" meta="2" scale="2.0"/> <image src="arcanearchives:gui/guidebook/next" tw="8" th="16" scale="2.0"/> <stack item="minecraft:stonebrick" scale="2.0"/> <image src="arcanearchives:gui/guidebook/next" tw="8" th="16" scale="2.0"/> <stack item="minecraft:stonebrick" meta="3" scale="2.0"/>
+            </p>
+            <p align="center">
+                <stack item="minecraft:stonebrick" meta="1" scale="2.0"/> <image src="arcanearchives:gui/guidebook/next" tw="8" th="16" scale="2.0"/> <stack item="minecraft:stonebrick" scale="2.0"/> <image src="arcanearchives:gui/guidebook/next" tw="8" th="16" scale="2.0"/> <stack item="minecraft:stonebrick" meta="3" scale="2.0"/>
+            </p>
+            <p align="center">
+                <stack item="minecraft:anvil" meta="2" scale="2.0"/> <image src="arcanearchives:gui/guidebook/next" tw="8" th="16" scale="2.0"/> <stack item="minecraft:anvil" meta="1" scale="2.0"/> <image src="arcanearchives:gui/guidebook/next" tw="8" th="16" scale="2.0"/> <stack item="minecraft:anvil" scale="2.0"/>
             </p>
         </section>
     </chapter>

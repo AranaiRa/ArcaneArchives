@@ -113,7 +113,7 @@ public class MunchstoneItem extends ArcaneGemItem {
 							NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, pos.getX(), pos.getY(), pos.getZ(), 40);
 							NetworkHandler.CHANNEL.sendToAllAround(packet, tp);
 						}
-						break;
+						return EnumActionResult.SUCCESS;
 					}
 				}
 			}
