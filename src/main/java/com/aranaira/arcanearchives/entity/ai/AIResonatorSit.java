@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.entity;
+package com.aranaira.arcanearchives.entity.ai;
 
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import net.minecraft.block.Block;

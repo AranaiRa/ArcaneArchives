@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.items.gems.pendeloque;
 
+import com.aranaira.arcanearchives.entity.EntityItemMountaintear;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketArcaneGem;
@@ -33,7 +34,6 @@ public class MountaintearItem extends ArcaneGemItem {
 	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(I18n.format("arcanearchives.tooltip.gemcharge") + ": " + getTooltipData(stack));
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.gem.mountaintear"));
-		tooltip.add(TextFormatting.RED + I18n.format("arcanearchives.tooltip.creativeonly"));
 	}
 
 	@Override
@@ -46,12 +46,20 @@ public class MountaintearItem extends ArcaneGemItem {
 		World world = entityItem.world;
 
 		if (!world.isRemote && entityItem.isInLava()) {
-			if (GemUtil.getCharge(entityItem.getItem()) < GemUtil.getMaxCharge(entityItem.getItem())) {
-				GemUtil.restoreCharge(entityItem.getItem(), -1);
-				world.playSound(entityItem.posX, entityItem.posY, entityItem.posZ, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1.0f, 0.5f, false);
-				return true;
+			ItemStack stack = entityItem.getItem();
+			if (GemUtil.getCharge(stack) < GemUtil.getMaxCharge(stack)) {
+				GemUtil.restoreCharge(stack, -1);
 			}
+			if (!(entityItem instanceof EntityItemMountaintear)) {
+				EntityItem newStack = new EntityItemMountaintear(world, entityItem.posX, entityItem.posY, entityItem.posZ, stack);
+				world.spawnEntity(newStack);
+				entityItem.setDead();
+			}
+			world.playSound(entityItem.posX, entityItem.posY, entityItem.posZ, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1.0f, 0.5f, false);
+			//entityItem.motionY = 0.4f;
+			return true;
 		}
+
 		return super.onEntityItemUpdate(entityItem);
 	}
 
