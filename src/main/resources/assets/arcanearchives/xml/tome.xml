@@ -409,9 +409,17 @@
                 <stack item="arcanearchives:manifest"/> Items stored in Radiant Chests appear on a <link ref="Manifest">Manifest</link> as long as the Chest's chunk is loaded.
             </p>
             <p>
+                <stack item="arcanearchives:scepter_manipulation"/> Using a <link ref="ScepterManipulation">Scepter of Manipulation</link> on a Radiant Chest while holding an item in the other allows you to label the chest with the held item. The item is not consumed.
+            </p>
+            <p>
+                To clear the item, sneak and activate the chest while holding the Scepter of Manipulation with your main hand and nothing in your off hand.
+            </p>
+            <p>
                 <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="scepter_revelation">Scepter of Revelation</link> on a Radiant Chest will return the chest's name, and how many slots of its inventory are available.
             </p>
             <horizontal_rule/>
+        </section>
+        <section>
             <p>
                 <stack item="arcanearchives:raw_quartz"/> Radiant Chests can be crafted by using a piece of <link ref="RadiantQuartz">Raw Radiant Quartz</link> on a chest while sneaking. Any items inside the chest will be imported, and if used on a double vanilla chest, both chests' inventories will be imported into the new Radiant Chest.
             </p>
@@ -1013,6 +1021,7 @@
                 A Scepter of Manipulation is used modify properties of certain Arcane Archives blocks. The following blocks have interactions with a Scepter of Manipulation.
             </p>
             <p align="center">
+                <stack item="arcanearchives:radiant_chest" scale="2.0"/>
                 <stack item="arcanearchives:radiant_tank" scale="2.0"/>
                 <stack item="arcanearchives:radiant_trove" scale="2.0"/>
             </p>
@@ -1222,7 +1231,7 @@
                 If activated while sneaking, you can attempt to cure the target you're looking at of these effects instead.
             </p>
             <p>
-                <image src="arcanearchives:items/gems/asscher/dun" tw="16" th="16"/> To recharge a dun Cleansegleam, activate the gem while you have a bucket of milk in your inventory. The milk is conusmed, and the bucket is returned. Alternatively, if you have a Radiant Amphora linked to a Radiant Tank containing milk, the milk is deducted from the tank directly.
+                <image src="arcanearchives:items/gems/asscher/dun" tw="16" th="16"/> To recharge a dun Cleansegleam, activate the gem while you have a bucket of milk in your inventory. The milk is conusmed, and the bucket is returned. Alternatively, if you have a <link ref="RadiantAmphora">Radiant Amphora</link> linked to a <link ref="RadiantTank">Radiant Tank</link> containing milk, the milk is deducted from the tank directly.
             </p>
             <horizontal_rule/>
             <p>
