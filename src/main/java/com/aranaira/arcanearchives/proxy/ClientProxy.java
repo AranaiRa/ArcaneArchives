@@ -62,7 +62,7 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	@Override
-	public void preInit(FMLPreInitializationEvent event) {
+	public void preInit (FMLPreInitializationEvent event) {
 		super.preInit(event);
 		OBJLoader.INSTANCE.addDomain(ArcaneArchives.MODID);
 
@@ -76,7 +76,7 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void loadComplete (FMLLoadCompleteEvent event) {
-		if (Loader.isModLoaded("guidebook")) {
+		if (Loader.isModLoaded("gbook")) {
 			GBookInit.init();
 		}
 	}

@@ -18,7 +18,7 @@ import java.util.List;
 public class SwitchgleamItem extends ArcaneGemItem {
 	public static final String NAME = "switchgleam";
 
-	public SwitchgleamItem() {
+	public SwitchgleamItem () {
 		super(NAME, GemCut.ASSCHER, GemColor.PURPLE, 30, 150);
 	}
 
@@ -40,9 +40,9 @@ public class SwitchgleamItem extends ArcaneGemItem {
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick (World world, EntityPlayer player, EnumHand hand) {
-		if(!world.isRemote) {
+		if (!world.isRemote) {
 
 		}
-	    return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+		return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
 	}
 }

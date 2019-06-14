@@ -2,12 +2,10 @@ package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.util.types.TileList;
-import com.aranaira.arcanearchives.util.types.TileList.TileListIterable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
-import java.util.List;
 import java.util.UUID;
 
 public interface IServerNetwork extends IHiveBase {
@@ -15,6 +13,7 @@ public interface IServerNetwork extends IHiveBase {
 	 * Simply returns the network's uuid.
 	 */
 	UUID getUuid ();
+
 	World getWorld ();
 
 	/**
@@ -49,7 +48,7 @@ public interface IServerNetwork extends IHiveBase {
 	boolean containsTile (UUID tileID);
 
 	/**
-	*	Functions used for interacting with NetworkSaveData.
+	 * Functions used for interacting with NetworkSaveData.
 	 */
 	NBTTagCompound writeToSave ();
 
@@ -70,13 +69,19 @@ public interface IServerNetwork extends IHiveBase {
 	 * for return to the client.
 	 */
 	NBTTagCompound buildSynchroniseManifest ();
+
 	void rebuildManifest ();
+
 	TileList.TileListIterable getManifestTileEntities ();
+
 	EntityPlayer getPlayer ();
 
 	void removeTile (ImmanenceTileEntity te);
+
 	void removeTile (UUID tileID);
+
 	void synchroniseData ();
+
 	void synchroniseHiveInfo ();
 
 	/**
@@ -85,5 +90,6 @@ public interface IServerNetwork extends IHiveBase {
 	 * resonators and matrix cores.
 	 */
 	NBTTagCompound buildSynchroniseData ();
+
 	NBTTagCompound buildHiveMembershipData ();
 }

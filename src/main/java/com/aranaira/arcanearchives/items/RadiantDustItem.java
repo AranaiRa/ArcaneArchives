@@ -12,7 +12,7 @@ import java.util.List;
 public class RadiantDustItem extends ItemTemplate {
 	public static final String NAME = "radiant_dust";
 
-	public RadiantDustItem() {
+	public RadiantDustItem () {
 		super(NAME);
 	}
 

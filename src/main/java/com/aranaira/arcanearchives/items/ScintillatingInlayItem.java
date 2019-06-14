@@ -12,7 +12,7 @@ import java.util.List;
 public class ScintillatingInlayItem extends ItemTemplate {
 	public static final String NAME = "scintillating_inlay";
 
-	public ScintillatingInlayItem() {
+	public ScintillatingInlayItem () {
 		super(NAME);
 	}
 

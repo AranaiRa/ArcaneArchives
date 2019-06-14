@@ -15,7 +15,7 @@ import java.util.List;
 public class MaterialInterfaceItem extends ItemTemplate {
 	public static final String NAME = "material_interface";
 
-	public MaterialInterfaceItem() {
+	public MaterialInterfaceItem () {
 		super(NAME);
 	}
 

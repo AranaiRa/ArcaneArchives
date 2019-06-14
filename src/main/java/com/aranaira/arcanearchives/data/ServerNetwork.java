@@ -1,7 +1,6 @@
 package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.data.HiveSaveData.Hive;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketNetworks;
 import com.aranaira.arcanearchives.network.PacketNetworks.SynchroniseType;
@@ -194,7 +193,6 @@ public class ServerNetwork implements IServerNetwork {
 	/*public ManifestItemHandler getManifestHandler () {
 		return manifestHandler;
 	}*/
-
 	@Override
 	public int getTotalCores () {
 		return totalCores;

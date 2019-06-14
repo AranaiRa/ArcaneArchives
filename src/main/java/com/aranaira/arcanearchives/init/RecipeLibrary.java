@@ -2,16 +2,17 @@ package com.aranaira.arcanearchives.init;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.config.ConfigHandler;
-import com.aranaira.arcanearchives.config.ConfigHandler.ArsenalConfig;
-import com.aranaira.arcanearchives.data.*;
+import com.aranaira.arcanearchives.data.ClientNetwork;
+import com.aranaira.arcanearchives.data.HiveSaveData;
 import com.aranaira.arcanearchives.data.HiveSaveData.Hive;
+import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.integration.astralsorcery.Liquefaction;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import com.aranaira.arcanearchives.util.types.IngredientStack;
-import net.minecraft.init.Blocks;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -123,7 +124,7 @@ public class RecipeLibrary {
 
 		DEVOURING_CHARM_RECIPE = GCTRecipeList.makeAndAddRecipe("devouring_charm", new ItemStack(ItemRegistry.DEVOURING_CHARM, 4), new IngredientStack("ingotGold", 1), new IngredientStack(Blocks.OBSIDIAN, 2), new IngredientStack(Items.FLINT_AND_STEEL, 1));
 
-		RADIANT_AMPHORA_RECIPE = GCTRecipeList.makeAndAddRecipe("radiant_amphora", new ItemStack(ItemRegistry.RADIANT_AMPHORA), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 4), new ItemStack(Items.CLAY_BALL, 4), new ItemStack(Items.GOLD_NUGGET, 4));
+		//RADIANT_AMPHORA_RECIPE = GCTRecipeList.makeAndAddRecipe("radiant_amphora", new ItemStack(ItemRegistry.RADIANT_AMPHORA), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 4), new ItemStack(Items.CLAY_BALL, 4), new ItemStack(Items.GOLD_NUGGET, 4));
 
 		if (ConfigHandler.ArsenalConfig.EnableArsenal) {
 			GEM_SOCKET_RECIPE = GCTRecipeList.makeAndAddRecipe("gemsocket", new ItemStack(ItemRegistry.BAUBLE_GEMSOCKET), new ItemStack(ItemRegistry.COMPONENT_SCINTILLATINGINLAY, 1), new ItemStack(Items.GOLD_NUGGET, 4), new ItemStack(Items.BOWL, 1), new ItemStack(Items.LEATHER, 1));
@@ -155,9 +156,9 @@ public class RecipeLibrary {
 	}
 
 	@SubscribeEvent
-	public static void onRegisterRecipes (Register<IRecipe> event) {
-		/*if (Loader.isModLoaded("astralsorcery")) {
+	public static void integrationEventAS (Register<IRecipe> event) {
+		if (Loader.isModLoaded("astralsorcery")) {
 			Liquefaction.init();
-		}*/
+		}
 	}
 }

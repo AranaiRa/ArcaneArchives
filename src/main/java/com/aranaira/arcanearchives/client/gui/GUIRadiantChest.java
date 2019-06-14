@@ -5,7 +5,9 @@ import com.aranaira.arcanearchives.inventory.ContainerRadiantChest;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.ManifestTracking;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiPageButtonList;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,13 +16,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.common.Optional;
 import org.lwjgl.input.Keyboard;
+import vazkii.quark.api.IChestButtonCallback;
+import vazkii.quark.api.IItemSearchBar;
 
 import java.io.IOException;
 import java.util.List;
 
-//@Optional.InterfaceList({@Optional.Interface(modid = "quark", iface = "vazkii.quark.api.IChestButtonCallback", striprefs = true), @Optional.Interface(modid = "quark", iface = "vazkii.quark.api.IItemSearchBar", striprefs = true)})
-public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.GuiResponder { //implements IChestButtonCallback, IItemSearchBar {
+@Optional.InterfaceList({@Optional.Interface(modid = "quark", iface = "vazkii.quark.api.IChestButtonCallback", striprefs = true), @Optional.Interface(modid = "quark", iface = "vazkii.quark.api.IItemSearchBar", striprefs = true)})
+public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.GuiResponder, IChestButtonCallback, IItemSearchBar {
 	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/radiantchest.png");
 	private static final ResourceLocation GUITexturesSimple = new ResourceLocation("arcanearchives:textures/gui/simple/radiantchest.png");
 	private final int ImageHeight = 253, ImageWidth = 192, ImageScale = 256;
@@ -133,18 +138,18 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 		super.updateScreen();
 	}
 
-	/*@Optional.Method(modid = "quark")
+	@Optional.Method(modid = "quark")
 	@Override
 	public boolean onAddChestButton (GuiButton button, int buttonType) {
 		return true;
-	}*/
+	}
 
-	/*@Optional.Method(modid = "quark")
+	@Optional.Method(modid = "quark")
 	@Override
 	public void onSearchBarAdded (GuiTextField bar) {
 		bar.y = (height / 2) + 2;
 		bar.x = (width / 2) - bar.width / 2;
-	}*/
+	}
 
 	@Override
 	public void setEntryValue (int id, boolean value) {

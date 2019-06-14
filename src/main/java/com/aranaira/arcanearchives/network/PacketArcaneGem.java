@@ -1,15 +1,10 @@
 package com.aranaira.arcanearchives.network;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.client.particles.ParticleGenerator;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.network.NetworkHandler.ClientHandler;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SoundList;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -22,10 +17,10 @@ public class PacketArcaneGem implements IMessage {
 	private ArcaneGemItem.GemColor color;
 	private Vec3d pos1, pos2;
 
-	public PacketArcaneGem() {
+	public PacketArcaneGem () {
 	}
 
-	public PacketArcaneGem(ArcaneGemItem.GemCut cut, ArcaneGemItem.GemColor color, Vec3d pos1, Vec3d pos2) {
+	public PacketArcaneGem (ArcaneGemItem.GemCut cut, ArcaneGemItem.GemColor color, Vec3d pos1, Vec3d pos2) {
 		this.cut = cut;
 		this.color = color;
 		this.pos1 = pos1;
@@ -40,12 +35,12 @@ public class PacketArcaneGem implements IMessage {
 		double x = buf.readDouble();
 		double y = buf.readDouble();
 		double z = buf.readDouble();
-		this.pos1 = new Vec3d(x,y,z);
+		this.pos1 = new Vec3d(x, y, z);
 
 		x = buf.readDouble();
 		y = buf.readDouble();
 		z = buf.readDouble();
-		this.pos2 = new Vec3d(x,y,z);
+		this.pos2 = new Vec3d(x, y, z);
 	}
 
 	@Override
@@ -67,21 +62,18 @@ public class PacketArcaneGem implements IMessage {
 		public void processMessage (PacketArcaneGem packet, MessageContext context) {
 			//ArcaneArchives.logger.info("Received particles packet\n    Gem is "+packet.color.name()+" "+packet.cut.name()+"\n    pos1="+packet.pos1+"    pos2="+packet.pos2);
 
-			if(packet.cut == ArcaneGemItem.GemCut.OVAL) {
-				if(packet.color == ArcaneGemItem.GemColor.BLACK) {
+			if (packet.cut == ArcaneGemItem.GemCut.OVAL) {
+				if (packet.color == ArcaneGemItem.GemColor.BLACK) {
 					Minecraft.getMinecraft().player.playSound(SoundEvents.ENTITY_PLAYER_BURP, 1.0f, new Random().nextFloat() * 0.5f + 0.75f);
 				}
-			}
-			else if(packet.cut == ArcaneGemItem.GemCut.PENDELOQUE) {
+			} else if (packet.cut == ArcaneGemItem.GemCut.PENDELOQUE) {
 				//Do nothing right now
-			}
-			else if(packet.cut == ArcaneGemItem.GemCut.PAMPEL) {
-				if(packet.color == ArcaneGemItem.GemColor.GREEN) {
+			} else if (packet.cut == ArcaneGemItem.GemCut.PAMPEL) {
+				if (packet.color == ArcaneGemItem.GemColor.GREEN) {
 					Minecraft.getMinecraft().player.playSound(SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, 1.0F, 1.0F);
 				}
-			}
-			else if(packet.cut == ArcaneGemItem.GemCut.TRILLION) {
-				if(packet.color == ArcaneGemItem.GemColor.ORANGE) {
+			} else if (packet.cut == ArcaneGemItem.GemCut.TRILLION) {
+				if (packet.color == ArcaneGemItem.GemColor.ORANGE) {
 					Minecraft.getMinecraft().player.playSound(SoundEvents.ITEM_FIRECHARGE_USE, 1.0F, 1.0F);
 				}
 			}

@@ -1,7 +1,6 @@
 package com.aranaira.arcanearchives.integration.hwyla.providers;
 
 import com.aranaira.arcanearchives.inventory.handlers.TroveItemHandler;
-import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;

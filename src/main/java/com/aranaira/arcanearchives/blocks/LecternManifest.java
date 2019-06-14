@@ -3,11 +3,8 @@ package com.aranaira.arcanearchives.blocks;
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
-import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
-import com.aranaira.arcanearchives.events.LineHandler;
-import com.aranaira.arcanearchives.init.BlockRegistry;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -18,27 +15,24 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 public class LecternManifest extends BlockDirectionalTemplate {
 
 	public static final String name = "lectern_manifest";
 
-	public LecternManifest() {
+	public LecternManifest () {
 		super(name, Material.WOOD);
 		setHarvestLevel("axe", 0);
 		this.setHardness(1.5f);
 		setSize(1, 2, 1);
-		setLightLevel(16f/16f);
+		setLightLevel(16f / 16f);
 	}
 
 	@Override

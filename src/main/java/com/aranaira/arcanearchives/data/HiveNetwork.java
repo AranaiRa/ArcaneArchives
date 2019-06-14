@@ -15,7 +15,10 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class HiveNetwork implements IHiveBase {
 	private List<ServerNetwork> memberNetworks;
@@ -64,7 +67,9 @@ public class HiveNetwork implements IHiveBase {
 	@Nullable
 	public ServerNetwork getContainedNetwork (EntityPlayer player) {
 		for (ServerNetwork network : getCombinedNetworks()) {
-			if (network.getUuid().equals(player.getUniqueID())) return network;
+			if (network.getUuid().equals(player.getUniqueID())) {
+				return network;
+			}
 		}
 
 		return null;

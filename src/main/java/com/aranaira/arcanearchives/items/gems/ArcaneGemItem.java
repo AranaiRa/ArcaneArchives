@@ -5,7 +5,6 @@ import baubles.api.BaublesApi;
 import baubles.api.cap.IBaublesItemHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.config.ConfigHandler;
-import com.aranaira.arcanearchives.config.ConfigHandler.ArsenalConfig;
 import com.aranaira.arcanearchives.inventory.handlers.GemSocketHandler;
 import com.aranaira.arcanearchives.items.BaubleGemSocket;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
@@ -424,7 +423,7 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 		 */
 		public static void swapToggle (ItemStack stack) {
 			ArcaneGemItem gem = (ArcaneGemItem) stack.getItem();
-			if(gem.hasToggleMode()) {
+			if (gem.hasToggleMode()) {
 				NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
 				if (!nbt.hasKey("toggle")) {
 					nbt.setBoolean("toggle", true);
@@ -437,12 +436,13 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 
 		/**
 		 * Sets the gem's toggle state. Has no effect if the gem has no toggle functionality.
+		 *
 		 * @param stack The gem to modify
 		 * @param state The desired toggle state
 		 */
 		public static void setToggle (ItemStack stack, boolean state) {
 			ArcaneGemItem gem = (ArcaneGemItem) stack.getItem();
-			if(gem.hasToggleMode()) {
+			if (gem.hasToggleMode()) {
 				NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
 				nbt.setBoolean("toggle", state);
 				stack.setTagCompound(nbt);
@@ -623,12 +623,13 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 				return new Color(0.50f, 1.00f, 1.00f, 1.0f);
 			} else if (color == GemColor.BLUE) {
 				return new Color(0.50f, 0.65f, 1.00f, 1.0f);
-			} else if (color == GemColor.PURPLE)
+			} else if (color == GemColor.PURPLE) {
 				return new Color(0.80f, 0.50f, 1.00f, 1.0f);
-			else if (color == GemColor.PINK)
+			} else if (color == GemColor.PINK) {
 				return new Color(1.00f, 0.55f, 1.00f, 1.0f);
-			else if (color == GemColor.BLACK)
+			} else if (color == GemColor.BLACK) {
 				return new Color(0.00f, 0.00f, 0.00f, 1.0f);
+			}
 			return new Color(1, 1, 1, 1);
 		}
 	}

@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Config.LangKey("arcanearchives.config.general")
-@Config(modid= ArcaneArchives.MODID)
+@Config(modid = ArcaneArchives.MODID)
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class ConfigHandler {
 	@SubscribeEvent

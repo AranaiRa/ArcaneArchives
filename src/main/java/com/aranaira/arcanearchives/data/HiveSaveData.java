@@ -116,7 +116,9 @@ public class HiveSaveData extends WorldSavedData {
 				memberToOwner.put(member, oldest);
 			}
 		} else {
-			if (memberToOwner.remove(memberToRemove) != null && hive.members.remove(memberToRemove)) result = true;
+			if (memberToOwner.remove(memberToRemove) != null && hive.members.remove(memberToRemove)) {
+				result = true;
+			}
 		}
 		handlePotentialDisband(hive);
 		markDirty();
@@ -169,9 +171,13 @@ public class HiveSaveData extends WorldSavedData {
 		members.add(hive.owner);
 
 		for (UUID uuid : members) {
-			if (uuid.equals(newMember)) continue;
+			if (uuid.equals(newMember)) {
+				continue;
+			}
 			EntityPlayer player = world.getPlayerEntityByUUID(uuid);
-			if (player == null) continue; // Not online
+			if (player == null) {
+				continue; // Not online
+			}
 			if (joined) {
 				player.sendMessage(new TextComponentTranslation("arcanearchives.network.hive.joined_your_network", name).setStyle(new Style().setColor(TextFormatting.GOLD)));
 			} else {
@@ -223,9 +229,7 @@ public class HiveSaveData extends WorldSavedData {
 				if (this.owner.equals(incoming)) {
 					continue;
 				}
-				if (!this.members.contains(incoming)) {
-					this.members.add(incoming);
-				}
+				this.members.add(incoming);
 			}
 		}
 

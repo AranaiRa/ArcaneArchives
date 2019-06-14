@@ -7,8 +7,6 @@ import com.aranaira.arcanearchives.items.itemblocks.MonitoringCrystalItem;
 import com.aranaira.arcanearchives.items.itemblocks.RadiantTankItem;
 import com.aranaira.arcanearchives.items.templates.ItemBlockTemplate;
 import com.aranaira.arcanearchives.tileentities.*;
-import com.aranaira.arcanearchives.tileentities.unused.MatrixCoreTileEntity;
-import com.aranaira.arcanearchives.tileentities.unused.MatrixRepositoryTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.ItemBlock;
