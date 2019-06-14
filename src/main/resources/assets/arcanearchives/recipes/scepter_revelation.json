@@ -2,7 +2,7 @@
     "_comment": [
         "Craft a Scepter of Reveleation"
     ],
-    "type": "minecraft:crafting_shaped",
+    "type": "forge:ore_shaped",
     "pattern": [
         "  R",
         " G ",

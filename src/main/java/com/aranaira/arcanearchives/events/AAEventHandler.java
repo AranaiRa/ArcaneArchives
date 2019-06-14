@@ -3,10 +3,10 @@ package com.aranaira.arcanearchives.events;
 import baubles.api.BaubleType;
 import baubles.api.BaublesApi;
 import baubles.api.cap.IBaublesItemHandler;
-import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.gui.GUIGemcasting;
 import com.aranaira.arcanearchives.config.ConfigHandler;
-import com.aranaira.arcanearchives.entity.AIResonatorSit;
+import com.aranaira.arcanearchives.entity.EntityItemMountaintear;
+import com.aranaira.arcanearchives.entity.ai.AIResonatorSit;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.inventory.handlers.GemSocketHandler;
@@ -14,6 +14,7 @@ import com.aranaira.arcanearchives.items.BaubleGemSocket;
 import com.aranaira.arcanearchives.items.RadiantAmphoraItem.AmphoraUtil;
 import com.aranaira.arcanearchives.items.TomeOfArcanaItem;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
+import com.aranaira.arcanearchives.items.gems.ArcaneGemItem.GemUtil;
 import com.aranaira.arcanearchives.items.gems.asscher.MurdergleamItem;
 import com.aranaira.arcanearchives.items.gems.asscher.SalvegleamItem;
 import com.aranaira.arcanearchives.items.gems.oval.TransferstoneItem;
@@ -29,6 +30,7 @@ import gigaherz.lirelent.guidebook.client.BookRegistryEvent;
 import javafx.scene.shape.Arc;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
@@ -43,6 +45,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -66,6 +69,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -289,10 +293,19 @@ public class AAEventHandler {
 
 	@SubscribeEvent
 	public static void onEntityJoinedWorld (EntityJoinWorldEvent event) {
-		if (event.getEntity() instanceof EntityOcelot) {
-			EntityOcelot ocelot = (EntityOcelot) event.getEntity();
+		Entity entity = event.getEntity();
+		if (entity instanceof EntityOcelot) {
+			EntityOcelot ocelot = (EntityOcelot) entity;
 			ocelot.tasks.addTask(6, new AIResonatorSit(ocelot, 0.8D));
-		}
+		} /*else if (entity instanceof EntityItem && !(entity instanceof EntityItemMountaintear)) {
+			ItemStack stack = ((EntityItem) entity).getItem();
+			if (stack.getItem() == ItemRegistry.MOUNTAINTEAR) {
+				EntityItemMountaintear mountaintear = new EntityItemMountaintear(event.getWorld(), entity.posX, entity.posY, entity.posZ, stack);
+				mountaintear.setPickupDelay(40);
+				entity.setDead();
+				event.getWorld().spawnEntity(mountaintear);
+			}
+		}*/
 	}
 
 	@SubscribeEvent

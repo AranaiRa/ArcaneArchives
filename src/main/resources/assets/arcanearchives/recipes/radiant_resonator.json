@@ -2,7 +2,7 @@
     "_comment": [
         "Craft a Radiant Resonator"
     ],
-    "type": "minecraft:crafting_shaped",
+    "type": "forge:ore_shaped",
     "pattern": [
         "GIG",
         "WBW",
@@ -10,7 +10,8 @@
     ],
     "key": {
         "G": {
-            "item": "minecraft:gold_ingot"
+            "type": "forge:ore_dict",
+            "ore":  "ingotGold"
         },
         "I": {
             "item": "minecraft:iron_bars"

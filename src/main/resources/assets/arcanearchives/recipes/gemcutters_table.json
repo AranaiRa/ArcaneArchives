@@ -2,7 +2,7 @@
     "_comment": [
         "Craft a Radiant Resonator"
     ],
-    "type": "minecraft:crafting_shaped",
+    "type": "forge:ore_shaped",
     "pattern": [
         "DGP",
         "WCW",
@@ -14,13 +14,16 @@
             "data": 3
         },
         "G": {
-            "item": "minecraft:glass_pane"
+            "type": "forge:ore_dict",
+            "ore":  "paneGlass"
         },
         "P": {
-            "item": "minecraft:paper"
+            "type": "forge:ore_dict",
+            "ore": "paper"
         },
         "C": {
-            "item": "minecraft:crafting_table"
+            "type": "forge:ore_dict",
+            "ore": "workbench"
         },
         "Q": {
             "item": "arcanearchives:raw_quartz"
