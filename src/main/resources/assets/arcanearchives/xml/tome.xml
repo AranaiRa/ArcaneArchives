@@ -65,7 +65,7 @@
             <page_title>
                 <title>Blocks</title>
             </page_title>
-            <p><stack item="arcanearchives:brazier_of_hoarding"/> <link ref="BrazierHoarding">Brazier of Hoarding</link></p>
+            <p condition="disabled"><stack item="arcanearchives:brazier_of_hoarding"/> <link ref="BrazierHoarding">Brazier of Hoarding</link></p>
             <p><stack item="arcanearchives:radiant_lantern"/> <link ref="DecorativeBlocks">Decorative Blocks</link></p>
             <p><stack item="arcanearchives:gemcutters_table"/> <link ref="GemCuttersTable">Gem Cutter's Table</link></p>
             <p><stack item="arcanearchives:lectern_manifest"/> <link ref="LecternManifest">Manifest Lectern</link></p>
@@ -127,7 +127,7 @@
         </section>
     </chapter>
 
-    <chapter id="BrazierHoarding">
+    <chapter id="BrazierHoarding" condition="disabled">
         <section>
             <page_title>
                 <title>Brazier of Hoarding</title>
@@ -418,7 +418,7 @@
                 <stack item="arcanearchives:manifest"/> Items stored in Radiant Chests appear on a <link ref="Manifest">Manifest</link> as long as the Chest's chunk is loaded.
             </p>
             <p>
-                <stack item="arcanearchives:scepter_manipulation"/> Using a <link ref="ScepterManipulation">Scepter of Manipulation</link> on a Radiant Chest while holding an item in the other allows you to label the chest with the held item. The item is not consumed.
+                <stack item="arcanearchives:scepter_manipulation"/> Using a <link ref="ScepterManipulation">Scepter of Manipulation</link> on a Radiant Chest while holding an item in the other hand allows you to label the chest with the held item. The item is not consumed.
             </p>
             <p>
                 To clear the item, sneak and activate the chest while holding the Scepter of Manipulation with your main hand and nothing in your off hand.
@@ -563,13 +563,13 @@
             <p>
                 A Radiant Tank is a storage container that can contain up to 16 buckets of a single type of fluid. Using a Radiant Tank on a fluid inventory will transfer the target's fluid inventory into the held Radiant Tank.
             </p>
-            <p>
+            <p condition="disabled">
                 <stack item="arcanearchives:radiant_amphora"/> <link ref="RadiantAmphora">Radiant Amphorae</link> can fill and empty a Radiant Tank from anywhere, as long as the tank is in a loaded chunk.
             </p>
             <p>
                 <stack item="arcanearchives:containment_field"/> By using a <link ref="ContainmentField">Containment Field</link> while sneaking, the maximum capacity can be increased by 16 buckets. Up to 9 such upgrades can be applied total.
             </p>
-            <p>
+            <p condition="disabled">
                 <stack item="arcanearchives:devouring_charm"/> By using a <link ref="DevouringCharm">Devouring Charm</link> while sneaking, fluid added to the Tank in excess of its maximum capacity is destroyed.
             </p>
             <p>
@@ -606,7 +606,7 @@
             <p>
                 <stack item="arcanearchives:material_interface"/> By using a <link ref="MaterialInterface">Material Interface</link> while sneaking, the maximum capacity can be increased by 64 stacks. Up to 9 such upgrades can be applied total.
             </p>
-            <p>
+            <p condition="disabled">
                 <stack item="arcanearchives:devouring_charm"/> By using a <link ref="DevouringCharm">Devouring Charm</link> while sneaking, items added to the Trove in excess of its maximum capacity are destroyed.
             </p>
             <p>
