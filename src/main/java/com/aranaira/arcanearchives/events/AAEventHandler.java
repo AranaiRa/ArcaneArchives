@@ -58,6 +58,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -231,15 +232,16 @@ public class AAEventHandler {
 
 		ArrayList<ItemStack> held = ArcaneGemItem.GemUtil.getAvailableGems(event.getEntityPlayer());
 
-		if (held.size() > 0) {
-			for (ItemStack stack : held) {
-				if (stack.getItem() == ItemRegistry.MINDSPINDLE) {
-					if (ArcaneGemItem.GemUtil.getCharge(stack) > 0) {
-						int chargeReduction = event.getOrb().xpValue;
-						event.getOrb().xpValue = Math.round(event.getOrb().xpValue * 1.5f);
-						event.getOrb().delayBeforeCanPickup = 0;
-						ArcaneGemItem.GemUtil.consumeCharge(stack, chargeReduction);
-					}
+		for (ItemStack stack : held) {
+			if (stack.getItem() == ItemRegistry.ORDERSTONE) {
+				ArcaneGemItem.GemUtil.restoreCharge(stack, event.getOrb().xpValue);
+			}
+			if (stack.getItem() == ItemRegistry.MINDSPINDLE) {
+				if (ArcaneGemItem.GemUtil.getCharge(stack) > 0) {
+					int chargeReduction = event.getOrb().xpValue;
+					event.getOrb().xpValue = Math.round(event.getOrb().xpValue * 1.5f);
+					event.getOrb().delayBeforeCanPickup = 0;
+					ArcaneGemItem.GemUtil.consumeCharge(stack, chargeReduction);
 				}
 			}
 		}
