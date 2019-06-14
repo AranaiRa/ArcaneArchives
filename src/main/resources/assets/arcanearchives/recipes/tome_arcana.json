@@ -5,7 +5,7 @@
     "type": "forge:ore_shapeless",
     "ingredients": [
         {   "item": "minecraft:book" },
-        {   "type": "ore", "ore": "nuggetGold" }
+        {   "type": "forge:ore_dict", "ore": "nuggetGold" }
     ],
     "result": {
         "item": "arcanearchives:tome_arcana",
