@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.data;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.HiveSaveData.Hive;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -15,7 +16,6 @@ public class NetworkHelper {
 	public static UUID INVALID = UUID.fromString("00000000-0000-0000-0000-000000000000");
 	// TODO: This needs to be cleared whenever the player enters a new world
 	private static Map<UUID, ClientNetwork> CLIENT_MAP = new HashMap<>();
-	private static Map<UUID, HiveNetwork> HIVE_MAP = new HashMap<>();
 
 	public static void clearClientCache () {
 		CLIENT_MAP.clear();
@@ -43,6 +43,16 @@ public class NetworkHelper {
 		}
 
 		return saveData.getNetwork(uuid);
+	}
+
+	public static PlayerSaveData getPlayerData (World world, EntityPlayer player) {
+		PlayerSaveData saveData = (PlayerSaveData) world.getMapStorage().getOrLoadData(PlayerSaveData.class, PlayerSaveData.ID(player));
+		if (saveData == null) {
+			saveData = new PlayerSaveData(player);
+			world.getMapStorage().setData(saveData.getId(), saveData);
+		}
+
+		return saveData;
 	}
 
 	public static HiveSaveData getHiveData (World world) {

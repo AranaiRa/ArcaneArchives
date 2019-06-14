@@ -5,7 +5,8 @@ import baubles.api.BaublesApi;
 import baubles.api.cap.IBaublesItemHandler;
 import com.aranaira.arcanearchives.client.gui.GUIGemcasting;
 import com.aranaira.arcanearchives.config.ConfigHandler;
-import com.aranaira.arcanearchives.entity.EntityItemMountaintear;
+import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.data.PlayerSaveData;
 import com.aranaira.arcanearchives.entity.ai.AIResonatorSit;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.ItemRegistry;
@@ -14,7 +15,6 @@ import com.aranaira.arcanearchives.items.BaubleGemSocket;
 import com.aranaira.arcanearchives.items.RadiantAmphoraItem.AmphoraUtil;
 import com.aranaira.arcanearchives.items.TomeOfArcanaItem;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
-import com.aranaira.arcanearchives.items.gems.ArcaneGemItem.GemUtil;
 import com.aranaira.arcanearchives.items.gems.asscher.MurdergleamItem;
 import com.aranaira.arcanearchives.items.gems.asscher.SalvegleamItem;
 import com.aranaira.arcanearchives.items.gems.trillion.StormwayItem;
@@ -27,6 +27,7 @@ import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import gigaherz.lirelent.guidebook.client.BookRegistryEvent;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockBookshelf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -40,11 +41,15 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -61,12 +66,12 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -425,6 +430,50 @@ public class AAEventHandler {
 						}
 					}
 				}
+			}
+		}
+	}
+
+	private static void givePlayerBookMaybe (EntityPlayer player, World world, boolean bookshelf) {
+		PlayerSaveData save = NetworkHelper.getPlayerData(world, player);
+		if (save.receivedBook) {
+			return;
+		}
+		save.receivedBook = true;
+		save.markDirty();
+		ItemStack tome = new ItemStack(ItemRegistry.TOME_OF_ARCANA);
+		world.getMapStorage().saveAllData();
+		EntityItem tomeEntity = new EntityItem(world, player.posX, player.posY, player.posZ, tome);
+		tomeEntity.setPickupDelay(0);
+		if (bookshelf) {
+			player.sendMessage(new TextComponentTranslation("arcanearchives.message.book_received.bookshelf").setStyle(new Style().setColor(TextFormatting.GOLD)));
+		} else {
+			player.sendMessage(new TextComponentTranslation("arcanearchives.message.book_received.resonator").setStyle(new Style().setColor(TextFormatting.GOLD)));
+		}
+		world.spawnEntity(tomeEntity);
+		world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.BLOCK_CLOTH_FALL, SoundCategory.PLAYERS, 1f, 1f);
+	}
+
+	@SubscribeEvent
+	public static void onPlayerBreakBlock (BreakEvent event) {
+		if (!event.getWorld().isRemote && event.getState().getBlock() instanceof BlockBookshelf) {
+			givePlayerBookMaybe(event.getPlayer(), event.getWorld(), true);
+		}
+	}
+
+	@SubscribeEvent
+	public static void onPlayerCrafted (ItemCraftedEvent event) {
+		if (!event.player.world.isRemote) {
+			Item item = event.crafting.getItem();
+			if (item instanceof ItemBlock && ((ItemBlock) item).getBlock() == BlockRegistry.RADIANT_RESONATOR) {
+				givePlayerBookMaybe(event.player, event.player.world, false);
+			} else if (item == ItemRegistry.TOME_OF_ARCANA) {
+				World world = event.player.world;
+				EntityPlayer player = event.player;
+				PlayerSaveData save = NetworkHelper.getPlayerData(world, player);
+				save.receivedBook = true;
+				save.markDirty();
+				world.getMapStorage().saveAllData();
 			}
 		}
 	}
