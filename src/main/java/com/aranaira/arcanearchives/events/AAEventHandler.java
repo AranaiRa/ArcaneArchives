@@ -16,6 +16,7 @@ import com.aranaira.arcanearchives.items.TomeOfArcanaItem;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.gems.asscher.MurdergleamItem;
 import com.aranaira.arcanearchives.items.gems.asscher.SalvegleamItem;
+import com.aranaira.arcanearchives.items.gems.oval.TransferstoneItem;
 import com.aranaira.arcanearchives.items.gems.trillion.StormwayItem;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketArcaneGemToggle;
@@ -25,6 +26,7 @@ import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import gigaherz.lirelent.guidebook.client.BookRegistryEvent;
+import javafx.scene.shape.Arc;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLiving;
@@ -413,6 +415,48 @@ public class AAEventHandler {
 							}
 						}
 					}
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void onItemPickup (PlayerEvent.ItemPickupEvent event) {
+		if(!event.player.world.isRemote) {
+			boolean hasTransferstone = false;
+			ItemStack gem = null;
+			Item item = null;
+			ArrayList<ItemStack> matchedStacks = new ArrayList<>();
+			for(ItemStack stack : event.player.inventory.mainInventory) {
+				if(stack.getItem() instanceof TransferstoneItem) {
+					gem = stack;
+					item = TransferstoneItem.getLinkedItem(stack);
+					hasTransferstone = true;
+				}
+			}
+
+			if(hasTransferstone) {
+				for(ItemStack stack : event.player.inventory.mainInventory) {
+					if(stack.getItem() == item) {
+						matchedStacks.add(stack);
+					}
+				}
+			}
+
+			for(int i=matchedStacks.size()-1; i>=0; i--) {
+				ItemStack stack = matchedStacks.get(i);
+				if(i == 0) {
+					if(matchedStacks.get(0).getCount() == 1)
+						TransferstoneItem.insertLinkedItem(stack);
+					else {
+						ItemStack allButOne = stack.copy();
+						allButOne.setCount(stack.getCount()-1);
+						stack.shrink(allButOne.getCount());
+						TransferstoneItem.insertLinkedItem(allButOne);
+					}
+				}
+				else {
+					TransferstoneItem.insertLinkedItem(stack);
 				}
 			}
 		}

@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.items.gems.oval;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.BlockRegistry;
+import com.aranaira.arcanearchives.inventory.handlers.TroveItemHandler;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketArcaneGem;
@@ -16,6 +17,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -27,11 +29,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.ChunkCoordComparator;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nullable;
 import java.lang.ref.WeakReference;
@@ -48,12 +52,12 @@ public class TransferstoneItem extends ArcaneGemItem {
 	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 
 		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
-		if(!nbt.hasKey("infinite")) {
-			nbt.setBoolean("infinite", true);
-			stack.setTagCompound(nbt);
-		}
 		tooltip.add(I18n.format("arcanearchives.tooltip.gemcharge") + ": " + getTooltipData(stack));
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.gem.transferstone"));
+		if(nbt.hasKey("troveLocation")) {
+			BlockPos bp = BlockPos.fromLong(nbt.getLong("troveLocation"));
+			tooltip.add("Linked to " + bp.getX() + "/" + bp.getY() + "/" + bp.getZ() + " in \"" + DimensionType.getById(nbt.getInteger("dimID")).getName() + "\"");
+		}
 	}
 
 	@Override
@@ -73,7 +77,7 @@ public class TransferstoneItem extends ArcaneGemItem {
 				ArcaneArchives.logger.info("sneaking");
 				if(world.getBlockState(pos).getBlock() == BlockRegistry.RADIANT_TROVE) {
 					ArcaneArchives.logger.info("trove detected");
-
+					setLinkedTrove(player.getHeldItemMainhand(), pos, player.dimension);
 				}
 			}
 			return EnumActionResult.SUCCESS;
@@ -81,7 +85,16 @@ public class TransferstoneItem extends ArcaneGemItem {
 		return EnumActionResult.PASS;
 	}
 
-	public static ItemStack extractLinkedItem(@Nullable ItemStack stack, boolean doFullStack) {
+	public static void setLinkedTrove(ItemStack stack, BlockPos pos, int dimension) {
+		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+
+		nbt.setLong("troveLocation", pos.toLong());
+		nbt.setInteger("troveDimID", dimension);
+
+		stack.setTagCompound(nbt);
+	}
+
+	public static ItemStack extractLinkedItem(ItemStack stack, boolean doFullStack) {
 		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
 		ItemStack output = null;
 
@@ -96,6 +109,43 @@ public class TransferstoneItem extends ArcaneGemItem {
 						output = te.getInventory().extractItem(0, 64, false);
 					else
 						output = te.getInventory().extractItem(0, 1, false);
+				}
+			}
+		}
+
+		return output;
+	}
+
+	public static ItemStack insertLinkedItem(ItemStack stack) {
+		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+		ItemStack output = null;
+
+		if(nbt.hasKey("troveLocation"))  {
+			BlockPos pos = BlockPos.fromLong(nbt.getLong("troveLocation"));
+			int dimID = nbt.getInteger("troveDimID");
+			if(WorldUtil.isChunkLoaded(DimensionManager.getWorld(dimID), pos)) {
+				RadiantTroveTileEntity te = WorldUtil.getTileEntity(RadiantTroveTileEntity.class, dimID, pos);
+				if(te != null) {
+					TroveItemHandler handler = te.getInventory();
+					handler.insertItem(1, stack, false);
+				}
+			}
+		}
+
+		return output;
+	}
+
+	public static Item getLinkedItem(ItemStack stack) {
+		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+		Item output = null;
+
+		if(nbt.hasKey("troveLocation"))  {
+			BlockPos pos = BlockPos.fromLong(nbt.getLong("troveLocation"));
+			int dimID = nbt.getInteger("troveDimID");
+			if(WorldUtil.isChunkLoaded(DimensionManager.getWorld(dimID), pos)) {
+				RadiantTroveTileEntity te = WorldUtil.getTileEntity(RadiantTroveTileEntity.class, dimID, pos);
+				if (te != null) {
+					output = te.getInventory().extractItem(0, 1, true).getItem();
 				}
 			}
 		}
