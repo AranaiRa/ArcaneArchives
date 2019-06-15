@@ -46,6 +46,7 @@ public class RecipeLibrary {
 	public static GCTRecipe LETTER_OF_INVITATION_RECIPE;
 	public static GCTRecipe LETTER_OF_RESIGNATION_RECIPE;
 	public static GCTRecipe WRIT_OF_EXPULSION_RECIPE;
+	public static GCTRecipe BRAZIER_RECIPE;
 
 	public static GCTRecipe SLAUGHTERGLEAM_RECIPE;
 	public static GCTRecipe MURDERGLEAM_RECIPE;
@@ -115,9 +116,11 @@ public class RecipeLibrary {
 
 		MONITORING_CRYSTAL_RECIPE = GCTRecipeList.makeAndAddRecipe("monitoring_crystal", new ItemStack(BlockRegistry.MONITORING_CRYSTAL), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("nuggetGold", 2), new IngredientStack("stickWood", 4));
 
-		/*MATRIX_REPOSITORY_RECIPE = GCTRecipeList.makeAndAddRecipe("matrix_repository", new ItemStack(BlockRegistry.MATRIX_REPOSITORY, 1), BlockRegistry.MATRIX_STORAGE, ItemRegistry.COMPONENT_MATERIALINTERFACE, ItemRegistry.COMPONENT_MATERIALINTERFACE);*/
+		SCINTILLATING_INLAY_RECIPE = GCTRecipeList.makeAndAddRecipe("scintillating_inlay", new ItemStack(ItemRegistry.COMPONENT_SCINTILLATINGINLAY, 1), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 6), new IngredientStack("dustRedstone", 12), new IngredientStack("ingotGold"), new IngredientStack("nuggetGold", 6));
 
-		SCINTILLATING_INLAY_RECIPE = GCTRecipeList.makeAndAddRecipe("scintillat_inginlay", new ItemStack(ItemRegistry.COMPONENT_SCINTILLATINGINLAY, 1), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 6), new IngredientStack("dustRedstone", 12), new IngredientStack("ingotGold"), new IngredientStack("nuggetGold", 6));
+		BRAZIER_RECIPE = GCTRecipeList.makeAndAddRecipe("brazier", new ItemStack(BlockRegistry.BRAZIER_OF_HOARDING, 1), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 4), new IngredientStack(Items.COAL, 8), new IngredientStack("ingotGold", 2), new IngredientStack("logWood", 3));
+
+		/*MATRIX_REPOSITORY_RECIPE = GCTRecipeList.makeAndAddRecipe("matrix_repository", new ItemStack(BlockRegistry.MATRIX_REPOSITORY, 1), BlockRegistry.MATRIX_STORAGE, ItemRegistry.COMPONENT_MATERIALINTERFACE, ItemRegistry.COMPONENT_MATERIALINTERFACE);*/
 
 		MATRIX_BRACE_RECIPE = GCTRecipeList.makeAndAddRecipe("matrix_brace", new ItemStack(ItemRegistry.COMPONENT_MATRIXBRACE, 1), ItemRegistry.COMPONENT_SCINTILLATINGINLAY, new IngredientStack("ingotGold", 2));
 
