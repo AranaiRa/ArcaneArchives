@@ -47,11 +47,14 @@ public class RecipeLibrary {
 	public static GCTRecipe LETTER_OF_RESIGNATION_RECIPE;
 	public static GCTRecipe WRIT_OF_EXPULSION_RECIPE;
 
+	public static GCTRecipe SLAUGHTERGLEAM_RECIPE;
 	public static GCTRecipe MURDERGLEAM_RECIPE;
 	public static GCTRecipe CLEANSEGLEAM_RECIPE;
 	public static GCTRecipe SALVEGLEAM_RECIPE;
 	public static GCTRecipe MUNCHSTONE_RECIPE;
+	public static GCTRecipe ORDERSTONE_RECIPE;
 	public static GCTRecipe MINDSPINDLE_RECIPE;
+	public static GCTRecipe ELIXIRSPINDLE_RECIPE;
 	public static GCTRecipe RIVERTEAR_RECIPE;
 	public static GCTRecipe MOUNTAINTEAR_RECIPE;
 	public static GCTRecipe PARCHTEAR_RECIPE;
@@ -131,13 +134,19 @@ public class RecipeLibrary {
 
 			MURDERGLEAM_RECIPE = GCTRecipeList.makeAndAddRecipe("murdergleam", new ItemStack(ItemRegistry.MURDERGLEAM), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyeYellow", 4), new IngredientStack(Items.DIAMOND_SWORD), new IngredientStack(Ingredient.fromItem(Items.BLAZE_POWDER), 2));
 
+			SLAUGHTERGLEAM_RECIPE = GCTRecipeList.makeAndAddRecipe("slaughtergleam", new ItemStack(ItemRegistry.SLAUGHTERGLEAM), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyeRed", 4), new IngredientStack(Items.DIAMOND), new IngredientStack(Items.GOLD_INGOT, 2), new IngredientStack(Blocks.LAPIS_BLOCK, 2));
+
 			CLEANSEGLEAM_RECIPE = GCTRecipeList.makeAndAddRecipe("cleansestone", new ItemStack(ItemRegistry.CLEANSEGLEAM), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyeBlue", 4), new IngredientStack(Items.POISONOUS_POTATO), new IngredientStack(Ingredient.fromItem(Items.MILK_BUCKET), 1), new IngredientStack(Ingredient.fromItem(Items.MILK_BUCKET), 1));
 
 			SALVEGLEAM_RECIPE = GCTRecipeList.makeAndAddRecipe("salvegleam", new ItemStack(ItemRegistry.SALVEGLEAM), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyePink", 4), new IngredientStack(Items.GOLDEN_APPLE), new IngredientStack(Items.SPECKLED_MELON), new IngredientStack(Items.GOLDEN_CARROT));
 
 			MUNCHSTONE_RECIPE = GCTRecipeList.makeAndAddRecipe("munchstone", new ItemStack(ItemRegistry.MUNCHSTONE), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyeBlack", 4), new IngredientStack(Items.CAKE), new IngredientStack(Ingredient.fromItem(Items.SPECKLED_MELON), 2));
 
+			ORDERSTONE_RECIPE = GCTRecipeList.makeAndAddRecipe("orderstone", new ItemStack(ItemRegistry.ORDERSTONE), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyePink", 4), new IngredientStack(Blocks.ANVIL), new IngredientStack(Ingredient.fromItem(Items.SIGN), 30));
+
 			MINDSPINDLE_RECIPE = GCTRecipeList.makeAndAddRecipe("mindspindle", new ItemStack(ItemRegistry.MINDSPINDLE), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyeGreen", 4), new IngredientStack(Items.ENCHANTED_BOOK), new IngredientStack(Ingredient.fromItem(Items.EMERALD), 2));
+
+			ELIXIRSPINDLE_RECIPE = GCTRecipeList.makeAndAddRecipe("elixirspindle", new ItemStack(ItemRegistry.ELIXIRSPINDLE), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyePurple", 4), new IngredientStack(Blocks.BREWING_STAND), new IngredientStack(Items.EMERALD, 2), new IngredientStack(Items.REDSTONE, 4), new IngredientStack(Items.GLOWSTONE_DUST, 4));
 
 			RIVERTEAR_RECIPE = GCTRecipeList.makeAndAddRecipe("rivertear", new ItemStack(ItemRegistry.RIVERTEAR), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack(Ingredient.fromItem(Items.SUGAR), 4), new IngredientStack(Ingredient.fromItem(Items.WATER_BUCKET)), new IngredientStack(Ingredient.fromItem(Items.WATER_BUCKET)));
 
