@@ -100,6 +100,7 @@ public class ConfigHandler {
 		@Config.Name("Radiant Chest Highlight")
 		public String ChestHighlight = "#1922C4";
 
+		@Config.Ignore
 		@Config.Comment("Container classes to exclude from Mixin-based slot highlighting")
 		@Config.Name("Container class to ignore")
 		public String[] ContainerClasses = new String[]{};

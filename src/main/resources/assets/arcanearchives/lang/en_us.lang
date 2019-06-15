@@ -293,3 +293,6 @@ arcanearchives.config.general=General Settings
 arcanearchives.config.general.tooltip=General game settings.
 arcanearchives.config.arsenal=Arcane Arsenal
 arcanearchives.config.arsenal.tooltip=Settings releated to the Arcane Arsenal module.
+
+arcanearchives.message.book_received.bookshelf=Something precious was hidden inside that block!
+arcanearchives.message.book_received.resonator=You don't remember it being there before, but you find a book on the ground by your crafting table.
