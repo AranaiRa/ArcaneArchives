@@ -260,7 +260,7 @@ arcanearchives.gui.missing_manifest=You have no Manifest on you to peruse!
 text.copyToClipboard.line1=The book wants to put text in your clipboard.
 text.copyToClipboard.line2=Are you sure you want to allow this?
 text.copyToClipboard.success=Text successfully copied.
-cmd.gbook.guide.done=Reloading complete
+cmd.arc_gbook.guide.done=Reloading complete
 
 jei.gui.resonator=Every %.1f minutes.
 

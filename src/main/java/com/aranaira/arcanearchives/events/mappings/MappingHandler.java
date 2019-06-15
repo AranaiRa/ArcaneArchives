@@ -17,8 +17,14 @@ public class MappingHandler {
 	@SubscribeEvent
 	public static void onItemMappingsEvent (MissingMappings<Item> event) {
 		for (Mapping<Item> entry : event.getAllMappings()) {
+			Item item = null;
 			if (entry.key.getNamespace().equals(ArcaneArchives.MODID)) {
-				entry.remap(lookupItem(entry.key));
+				item = lookupItem(entry.key);
+			} else if (entry.key.getNamespace().equals("gbook") && entry.key.getPath().equals("guidebook")) {
+				item = Item.REGISTRY.getObject(new ResourceLocation("arc_gbook:guidebook"));
+			}
+			if (item != null) {
+				entry.remap(item);
 			}
 		}
 	}
@@ -87,9 +93,9 @@ public class MappingHandler {
 				return ItemRegistry.WRIT_OF_EXPULSION;
 			default:
 				ArcaneArchives.logger.error("#############################################################");
-				ArcaneArchives.logger.error("Unable to handle missing mapping for ResourceLocation " + resource.toString() + " and it has been replaced with air.");
+				ArcaneArchives.logger.error("Unable to handle missing mapping for ResourceLocation " + resource.toString() + " and it has not been replaced.");
 				ArcaneArchives.logger.error("#############################################################");
-				return Items.AIR;
+				return null;
 		}
 	}
 }

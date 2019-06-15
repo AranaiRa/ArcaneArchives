@@ -290,7 +290,7 @@ public class AAEventHandler {
 		}
 	}
 
-	@Optional.Method(modid = "gbook")
+	@Optional.Method(modid = "arc_gbook")
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	@SuppressWarnings("unused")
