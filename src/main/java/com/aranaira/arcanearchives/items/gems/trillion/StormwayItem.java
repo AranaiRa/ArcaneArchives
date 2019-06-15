@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.items.gems.trillion;
 
-import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
+import com.aranaira.arcanearchives.items.gems.*;
 import com.aranaira.arcanearchives.util.NBTUtils;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;

@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.items.gems.asscher;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
+import com.aranaira.arcanearchives.items.gems.*;
 import mcp.mobius.waila.overlay.RayTracing;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;

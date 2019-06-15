@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.items.gems.oval;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
+import com.aranaira.arcanearchives.items.gems.*;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import com.aranaira.arcanearchives.util.NBTUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;

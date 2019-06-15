@@ -41,6 +41,7 @@
         <stack item="arcanearchives:scintillating_inlay">ScintillatingInlay</stack>
         <stack item="arcanearchives:writ_expulsion">WritExpulsion</stack>
 
+        <stack item="arcanearchives:slaughtergleam">Slaughtergleam</stack>
         <stack item="arcanearchives:murdergleam">Murdergleam</stack>
         <stack item="arcanearchives:cleansegleam">Cleansegleam</stack>
         <stack item="arcanearchives:salvegleam">Salvegleam</stack>
@@ -103,6 +104,7 @@
             <page_title>
                 <title>Arcane Gems</title>
             </page_title>
+            <p><stack item="arcanearchives:slaughtergleam"/> <link ref="Slaughtergleam">Slaughtergleam</link></p>
             <p><stack item="arcanearchives:murdergleam"/> <link ref="Murdergleam">Murdergleam</link></p>
             <p><stack item="arcanearchives:cleansegleam"/> <link ref="Cleansegleam">Cleansegleam</link></p>
             <p><stack item="arcanearchives:salvegleam"/> <link ref="Salvegleam">Salvegleam</link></p>
@@ -1203,6 +1205,29 @@
             </p>
             <p>
                 ...1670, Spring’s Height
+            </p>
+        </section>
+    </chapter>
+
+    <chapter id="Slaughtergleam">
+        <section>
+            <page_title>
+                <title>Slaughtergleam</title>
+            </page_title>
+            <p align="center"><stack item="arcanearchives:slaughtergleam" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                A Slaughtergleam is an Arcane Gem formed from a red-spectrum piece of <link ref="shaped_quartz">Shaped Radiant Quartz</link> in an asscher cut.
+            </p>
+            <p>
+                When held, your attacks are considered to have one level of the Looting enchantment. If you are wielding a weapon with the Looting enchantment, its level is increased by one instead.
+            </p>
+            <p>
+                <image src="arcanearchives:items/gems/asscher/dun" tw="16" th="16"/> To recharge a dun Slaughtergleam, activate the gem while you have a gold nugget in your inventory. The gold nugget is consumed.
+            </p>
+            <horizontal_rule/>
+            <p>
+                <stack item="arcanearchives:gemcutters_table" /> Murdergleams can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
         </section>
     </chapter>
