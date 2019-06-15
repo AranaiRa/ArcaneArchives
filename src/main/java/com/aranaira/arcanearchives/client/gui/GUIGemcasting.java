@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.client.gui;
 
-import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
+import com.aranaira.arcanearchives.items.gems.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
@@ -41,7 +41,7 @@ public class GUIGemcasting {
 				}
 
 				//checkbox fill
-				if (ArcaneGemItem.GemUtil.isToggledOn(stack)) {
+				if (GemUtil.isToggledOn(stack)) {
 					if (mode == EnumGemGuiMode.LEFT) {
 						minecraft.ingameGUI.drawTexturedModalRect(anchorX - 37, anchorY + 5, fill_x, fill_y + getColorOffset(gem), 3, fill_h);
 					} else if (mode == EnumGemGuiMode.RIGHT) {
@@ -89,7 +89,7 @@ public class GUIGemcasting {
 			}
 
 			//bar fill
-			int fillAmount = (int) (ArcaneGemItem.GemUtil.getChargePercent(stack) * 20);
+			int fillAmount = (int) (GemUtil.getChargePercent(stack) * 20);
 			if (mode == EnumGemGuiMode.LEFT) {
 				minecraft.ingameGUI.drawTexturedModalRect(anchorX + 11 - leftShiftFill + (20 - fillAmount), anchorY + 5, fill_x, fill_y + getColorOffset(gem), fillAmount, fill_h);
 			} else if (mode == EnumGemGuiMode.RIGHT) {

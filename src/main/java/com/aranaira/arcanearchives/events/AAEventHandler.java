@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.events;
 import baubles.api.BaubleType;
 import baubles.api.BaublesApi;
 import baubles.api.cap.IBaublesItemHandler;
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.gui.GUIGemcasting;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.NetworkHelper;
@@ -15,8 +16,11 @@ import com.aranaira.arcanearchives.items.BaubleGemSocket;
 import com.aranaira.arcanearchives.items.RadiantAmphoraItem.AmphoraUtil;
 import com.aranaira.arcanearchives.items.TomeOfArcanaItem;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
+import com.aranaira.arcanearchives.items.gems.GemUtil;
 import com.aranaira.arcanearchives.items.gems.asscher.MurdergleamItem;
 import com.aranaira.arcanearchives.items.gems.asscher.SalvegleamItem;
+import com.aranaira.arcanearchives.items.gems.asscher.Slaughtergleam;
+import com.aranaira.arcanearchives.items.gems.pampel.Elixirspindle;
 import com.aranaira.arcanearchives.items.gems.trillion.StormwayItem;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketArcaneGemToggle;
@@ -42,8 +46,11 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.PotionType;
+import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
@@ -54,10 +61,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingDestroyBlockEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
@@ -239,18 +243,18 @@ public class AAEventHandler {
 			return;
 		}
 
-		ArrayList<ItemStack> held = ArcaneGemItem.GemUtil.getAvailableGems(event.getEntityPlayer());
+		ArrayList<ItemStack> held = GemUtil.getAvailableGems(event.getEntityPlayer());
 
 		for (ItemStack stack : held) {
 			if (stack.getItem() == ItemRegistry.ORDERSTONE) {
-				ArcaneGemItem.GemUtil.restoreCharge(stack, event.getOrb().xpValue);
+				GemUtil.restoreCharge(stack, event.getOrb().xpValue);
 			}
 			if (stack.getItem() == ItemRegistry.MINDSPINDLE) {
-				if (ArcaneGemItem.GemUtil.getCharge(stack) > 0) {
+				if (GemUtil.getCharge(stack) > 0) {
 					int chargeReduction = event.getOrb().xpValue;
 					event.getOrb().xpValue = Math.round(event.getOrb().xpValue * 1.5f);
 					event.getOrb().delayBeforeCanPickup = 0;
-					ArcaneGemItem.GemUtil.consumeCharge(stack, chargeReduction);
+					GemUtil.consumeCharge(stack, chargeReduction);
 				}
 			}
 		}
@@ -263,18 +267,18 @@ public class AAEventHandler {
 				EntityPlayer player = (EntityPlayer) event.getEntity();
 
 				if (!player.world.isRemote) {
-					ArrayList<ItemStack> held = ArcaneGemItem.GemUtil.getAvailableGems(player);
+					ArrayList<ItemStack> held = GemUtil.getAvailableGems(player);
 					if (held.size() > 0) {
 						for (ItemStack stack : held) {
 							if (stack.getItem() == ItemRegistry.PHOENIXWAY) {
 								if (player.isPotionActive(MobEffects.FIRE_RESISTANCE)) {
 									continue;
 								}
-								if (ArcaneGemItem.GemUtil.getCharge(stack) >= 0) {
+								if (GemUtil.getCharge(stack) >= 0) {
 									if (event.getSource() == DamageSource.ON_FIRE || event.getSource() == DamageSource.IN_FIRE) {
 										Minecraft.getMinecraft().player.playSound(SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, 1.0F, 1.0F);
 										player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 600, 0));
-										ArcaneGemItem.GemUtil.consumeCharge(stack, 12);
+										GemUtil.consumeCharge(stack, 12);
 										event.setCanceled(true);
 									}
 								}
@@ -314,19 +318,19 @@ public class AAEventHandler {
 	@SubscribeEvent
 	public static void onCriticalHitLanded (CriticalHitEvent event) {
 		if (!event.getEntityPlayer().world.isRemote) {
-			for (ItemStack stack : ArcaneGemItem.GemUtil.getAvailableGems(event.getEntityPlayer())) {
+			for (ItemStack stack : GemUtil.getAvailableGems(event.getEntityPlayer())) {
 				if (stack.getItem() instanceof MurdergleamItem) {
-					if (ArcaneGemItem.GemUtil.isToggledOn(stack) && ArcaneGemItem.GemUtil.getCharge(stack) > 0) {
+					if (GemUtil.isToggledOn(stack) && GemUtil.getCharge(stack) > 0) {
 						event.setDamageModifier(1.5f);
 						event.setResult(Event.Result.ALLOW);
-						ArcaneGemItem.GemUtil.consumeCharge(stack, 1);
-						if (ArcaneGemItem.GemUtil.getCharge(stack) == 0) {
-							ArcaneGemItem.GemUtil.swapToggle(stack);
+						GemUtil.consumeCharge(stack, 1);
+						if (GemUtil.getCharge(stack) == 0) {
+							GemUtil.swapToggle(stack);
 						}
 					} else if (event.isVanillaCritical()) {
-						ArcaneGemItem.GemUtil.restoreCharge(stack, 3);
-						if (ArcaneGemItem.GemUtil.getCharge(stack) == ArcaneGemItem.GemUtil.getMaxCharge(stack)) {
-							ArcaneGemItem.GemUtil.swapToggle(stack);
+						GemUtil.restoreCharge(stack, 3);
+						if (GemUtil.getCharge(stack) == GemUtil.getMaxCharge(stack)) {
+							GemUtil.swapToggle(stack);
 						}
 					}
 				}
@@ -341,9 +345,9 @@ public class AAEventHandler {
 				if (event.getSource().getTrueSource() instanceof EntityLiving) {
 					EntityLivingBase source = (EntityLivingBase) event.getSource().getTrueSource();
 					EntityPlayer player = (EntityPlayer) event.getEntityLiving();
-					for (ItemStack gem : ArcaneGemItem.GemUtil.getAvailableGems(player)) {
+					for (ItemStack gem : GemUtil.getAvailableGems(player)) {
 						if (gem.getItem() instanceof StormwayItem) {
-							if (ArcaneGemItem.GemUtil.isToggledOn(gem) && ArcaneGemItem.GemUtil.getCharge(gem) > 0 && event.getSource().isProjectile()) {
+							if (GemUtil.isToggledOn(gem) && GemUtil.getCharge(gem) > 0 && event.getSource().isProjectile()) {
 								source.world.spawnEntity(new EntityLightningBolt(source.world, source.posX, source.posY + 0.5, source.posZ, false));
 
 								if (source.isEntityUndead()) {
@@ -352,7 +356,7 @@ public class AAEventHandler {
 									source.addPotionEffect(new PotionEffect(MobEffects.INSTANT_DAMAGE, 1, 10));
 								}
 
-								ArcaneGemItem.GemUtil.consumeCharge(gem, 1);
+								GemUtil.consumeCharge(gem, 1);
 							}
 						}
 					}
@@ -366,14 +370,14 @@ public class AAEventHandler {
 		if (!event.getEntity().world.isRemote) {
 			if (event.getEntity() instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer) event.getEntity();
-				for (ItemStack gem : ArcaneGemItem.GemUtil.getAvailableGems(player)) {
+				for (ItemStack gem : GemUtil.getAvailableGems(player)) {
 					if (gem.getItem() instanceof StormwayItem) {
-						if (ArcaneGemItem.GemUtil.getCharge(gem) > 0 && StormwayItem.canBeStruck(gem)) {
+						if (GemUtil.getCharge(gem) > 0 && StormwayItem.canBeStruck(gem)) {
 							player.addPotionEffect(new PotionEffect(MobEffects.SPEED, 1200, 2));
 							player.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 1200, 0));
 							player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 1200, 0));
 
-							ArcaneGemItem.GemUtil.consumeCharge(gem, 6);
+							GemUtil.consumeCharge(gem, 6);
 							StormwayItem.setStrikeCooldownTimer(gem);
 						}
 					}
@@ -386,18 +390,18 @@ public class AAEventHandler {
 	public static void onEntityUpdate (LivingEvent.LivingUpdateEvent event) {
 		if (!event.getEntityLiving().world.isRemote && event.getEntityLiving() instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) event.getEntityLiving();
-			for (ItemStack gem : ArcaneGemItem.GemUtil.getAvailableGems(player)) {
+			for (ItemStack gem : GemUtil.getAvailableGems(player)) {
 				/**
 				 * Salvegleam
 				 */
 				if (gem.getItem() instanceof SalvegleamItem) {
-					if (ArcaneGemItem.GemUtil.getCharge(gem) > 0 && ArcaneGemItem.GemUtil.isToggledOn(gem)) {
+					if (GemUtil.getCharge(gem) > 0 && GemUtil.isToggledOn(gem)) {
 						if (player.getHealth() < player.getMaxHealth()) {
 							if (SalvegleamItem.canDoHealingPulse(gem)) {
 								player.heal(1.0f);
-								ArcaneGemItem.GemUtil.consumeCharge(gem, 1);
-								if (ArcaneGemItem.GemUtil.getCharge(gem) == 0) {
-									ArcaneGemItem.GemUtil.setToggle(gem, false);
+								GemUtil.consumeCharge(gem, 1);
+								if (GemUtil.getCharge(gem) == 0) {
+									GemUtil.setToggle(gem, false);
 								}
 							}
 						}
@@ -407,8 +411,8 @@ public class AAEventHandler {
 				 * Stormway
 				 */
 				else if (gem.getItem() instanceof StormwayItem) {
-					if (ArcaneGemItem.GemUtil.getCharge(gem) < ArcaneGemItem.GemUtil.getMaxCharge(gem) && player.world.isRaining()) {
-						ArcaneGemItem.GemUtil.restoreCharge(gem, -1);
+					if (GemUtil.getCharge(gem) < GemUtil.getMaxCharge(gem) && player.world.isRaining()) {
+						GemUtil.restoreCharge(gem, -1);
 						player.playSound(SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, 1.0F, 1.0F);
 					}
 				}
@@ -423,11 +427,11 @@ public class AAEventHandler {
 				EntityAnimal animal = (EntityAnimal) event.getEntityLiving();
 				//ArcaneArchives.logger.info("i like the part where it stopped moving");
 				if (event.getSource().getTrueSource() instanceof EntityPlayer) {
-					for (ItemStack gem : ArcaneGemItem.GemUtil.getAvailableGems((EntityPlayer) event.getSource().getTrueSource())) {
+					for (ItemStack gem : GemUtil.getAvailableGems((EntityPlayer) event.getSource().getTrueSource())) {
 						if (gem.getItem() instanceof SalvegleamItem) {
-							ArcaneGemItem.GemUtil.restoreCharge(gem, (int) event.getEntityLiving().getMaxHealth() / 2);
-							if (ArcaneGemItem.GemUtil.getCharge(gem) == ArcaneGemItem.GemUtil.getMaxCharge(gem)) {
-								ArcaneGemItem.GemUtil.setToggle(gem, true);
+							GemUtil.restoreCharge(gem, (int) event.getEntityLiving().getMaxHealth() / 2);
+							if (GemUtil.getCharge(gem) == GemUtil.getMaxCharge(gem)) {
+								GemUtil.setToggle(gem, true);
 							}
 						}
 					}
@@ -519,6 +523,55 @@ public class AAEventHandler {
 					TransferstoneItem.insertLinkedItem(stack);
 				}
 			}*/
+		}
+	}
+
+	@SubscribeEvent
+	public static void onItemUse (LivingEntityUseItemEvent event) {
+		if (!event.getEntityLiving().world.isRemote && event.getEntityLiving() instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+			for (ItemStack gem : GemUtil.getAvailableGems(player)) {
+				/**
+				 * Elixirspindle
+				 */
+				if (gem.getItem() instanceof Elixirspindle && GemUtil.getCharge(gem) > 0) {
+					if (event.getEntityLiving().getHeldItemMainhand().getItem() instanceof ItemPotion) {
+						PotionType potion = PotionUtils.getPotionFromItem(player.getHeldItemMainhand());
+						boolean potionAlreadyActive = false;
+						for (PotionEffect effect : potion.getEffects()) {
+							if (player.getActivePotionMap().containsKey(effect.getPotion())) {
+								potionAlreadyActive = true;
+							}
+						}
+						if (!potionAlreadyActive) {
+							for (PotionEffect effect : potion.getEffects()) {
+								player.addPotionEffect(effect);
+							}
+							GemUtil.consumeCharge(gem, 1);
+						}
+						event.setCanceled(true);
+					}
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void onLooting (LootingLevelEvent event) {
+		if (!event.getEntityLiving().world.isRemote) {
+			ArcaneArchives.logger.info("looting event fired");
+			if (event.getDamageSource().getTrueSource() instanceof EntityPlayer) {
+				EntityPlayer player = (EntityPlayer) event.getDamageSource().getTrueSource();
+				for (ItemStack gem : GemUtil.getAvailableGems(player)) {
+					if (gem.getItem() instanceof Slaughtergleam) {
+						if (GemUtil.getCharge(gem) > 0) {
+							event.setLootingLevel(event.getLootingLevel() + 1);
+							ArcaneArchives.logger.info("terminal point");
+							GemUtil.consumeCharge(gem, 1);
+						}
+					}
+				}
+			}
 		}
 	}
 }

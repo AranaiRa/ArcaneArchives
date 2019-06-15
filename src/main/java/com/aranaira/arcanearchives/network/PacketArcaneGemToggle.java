@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.network;
 
-import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
+import com.aranaira.arcanearchives.items.gems.*;
 import com.aranaira.arcanearchives.network.NetworkHandler.ServerHandler;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -25,7 +25,7 @@ public class PacketArcaneGemToggle implements IMessage {
 		public void processMessage (PacketArcaneGemToggle packet, MessageContext context) {
 			//ArcaneArchives.logger.info("Received toggle packet");
 			EntityPlayerMP player = context.getServerHandler().player;
-			ArcaneGemItem.GemUtil.swapToggle(player.getHeldItemMainhand());
+			GemUtil.swapToggle(player.getHeldItemMainhand());
 		}
 	}
 }

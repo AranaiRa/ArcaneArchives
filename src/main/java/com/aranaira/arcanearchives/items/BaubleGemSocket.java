@@ -4,7 +4,7 @@ import baubles.api.BaubleType;
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.inventory.handlers.GemSocketHandler;
-import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
+import com.aranaira.arcanearchives.items.gems.*;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -35,8 +35,8 @@ public class BaubleGemSocket extends ItemTemplate implements baubles.api.IBauble
 				ItemStack containedStack = GemSocketHandler.getHandler(stack).getInventory().getStackInSlot(0);
 				if (containedStack.getItem() instanceof ArcaneGemItem) {
 					String name = containedStack.getItem().getItemStackDisplayName(containedStack);
-					int chargeCur = ArcaneGemItem.GemUtil.getCharge(containedStack);
-					int chargeMax = ArcaneGemItem.GemUtil.getMaxCharge(containedStack);
+					int chargeCur = GemUtil.getCharge(containedStack);
+					int chargeMax = GemUtil.getMaxCharge(containedStack);
 					tooltip.add(I18n.format("arcanearchives.tooltip.bauble.gemsocket.contains") + " " + name + " [" + chargeCur + "/" + chargeMax + "]");
 				}
 			}

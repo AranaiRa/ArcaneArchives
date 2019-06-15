@@ -1,6 +1,11 @@
 package com.aranaira.arcanearchives.items.gems.pendeloque;
 
+<<<<<<< HEAD
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
+=======
+import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.items.gems.*;
+>>>>>>> 1c5e06139cf0ae170d358763352f884b0d3651b5
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDynamicLiquid;
 import net.minecraft.block.BlockStaticLiquid;

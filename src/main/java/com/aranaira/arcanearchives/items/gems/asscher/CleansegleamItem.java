@@ -1,6 +1,8 @@
 package com.aranaira.arcanearchives.items.gems.asscher;
 
+
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
+import com.aranaira.arcanearchives.items.gems.GemUtil;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;

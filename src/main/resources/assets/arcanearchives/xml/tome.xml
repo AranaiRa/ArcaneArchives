@@ -41,6 +41,7 @@
         <stack item="arcanearchives:scintillating_inlay">ScintillatingInlay</stack>
         <stack item="arcanearchives:writ_expulsion">WritExpulsion</stack>
 
+        <stack item="arcanearchives:slaughtergleam">Slaughtergleam</stack>
         <stack item="arcanearchives:murdergleam">Murdergleam</stack>
         <stack item="arcanearchives:cleansegleam">Cleansegleam</stack>
         <stack item="arcanearchives:salvegleam">Salvegleam</stack>
@@ -49,6 +50,7 @@
         <stack item="arcanearchives:ordergleam">Orderstone</stack>
 
         <stack item="arcanearchives:mindspindle">Mindspindle</stack>
+        <stack item="arcanearchives:elixirspindle">Elixirspindle</stack>
 
         <stack item="arcanearchives:mountaintear">Mountaintear</stack>
         <stack item="arcanearchives:rivertear">Rivertear</stack>
@@ -65,7 +67,7 @@
             <page_title>
                 <title>Blocks</title>
             </page_title>
-            <p condition="disabled"><stack item="arcanearchives:brazier_of_hoarding"/> <link ref="BrazierHoarding">Brazier of Hoarding</link></p>
+            <p><stack item="arcanearchives:brazier_of_hoarding"/> <link ref="BrazierHoarding">Brazier of Hoarding</link></p>
             <p><stack item="arcanearchives:radiant_lantern"/> <link ref="DecorativeBlocks">Decorative Blocks</link></p>
             <p><stack item="arcanearchives:gemcutters_table"/> <link ref="GemCuttersTable">Gem Cutter's Table</link></p>
             <p><stack item="arcanearchives:lectern_manifest"/> <link ref="LecternManifest">Manifest Lectern</link></p>
@@ -82,14 +84,14 @@
                 <title>Items</title>
             </page_title>
             <p><stack item="arcanearchives:containment_field"/> <link ref="ContainmentField">Containment Field</link></p>
-            <p condition="disabled"><stack item="arcanearchives:devouring_charm"/> <link ref="DevouringCharm">Devouring Charm</link></p>
+            <p><stack item="arcanearchives:devouring_charm"/> <link ref="DevouringCharm">Devouring Charm</link></p>
             <p><stack item="arcanearchives:gemsocket"/> <link ref="GemSocket">Gem Socket</link></p>
             <p><stack item="arcanearchives:letter_invitation"/> <link ref="LetterInvitation">Letter of Invitation</link></p>
             <p><stack item="arcanearchives:letter_resignation"/> <link ref="LetterResignation">Letter of Resignation</link></p>
             <p><stack item="arcanearchives:manifest"/> <link ref="Manifest">Manifest</link></p>
             <p><stack item="arcanearchives:material_interface"/> <link ref="MaterialInterface">Material Interface</link></p>
             <p><stack item="arcanearchives:matrix_brace"/> <link ref="MatrixBrace">Matrix Brace</link></p>
-            <p condition="disabled"><stack item="arcanearchives:radiant_amphora"/> <link ref="radiant_amphora">Radiant Amphora</link></p>
+            <p><stack item="arcanearchives:radiant_amphora"/> <link ref="radiant_amphora">Radiant Amphora</link></p>
             <p><stack item="arcanearchives:radiant_dust"/> <link ref="RadiantDust">Radiant Dust</link></p>
             <p><stack item="arcanearchives:raw_quartz"/> <link ref="RawQuartz">Radiant Quartz (Raw)</link></p>
             <p><stack item="arcanearchives:shaped_quartz"/> <link ref="ShapedQuartz">Radiant Quartz (Shaped)</link></p>
@@ -102,6 +104,7 @@
             <page_title>
                 <title>Arcane Gems</title>
             </page_title>
+            <p><stack item="arcanearchives:slaughtergleam"/> <link ref="Slaughtergleam">Slaughtergleam</link></p>
             <p><stack item="arcanearchives:murdergleam"/> <link ref="Murdergleam">Murdergleam</link></p>
             <p><stack item="arcanearchives:cleansegleam"/> <link ref="Cleansegleam">Cleansegleam</link></p>
             <p><stack item="arcanearchives:salvegleam"/> <link ref="Salvegleam">Salvegleam</link></p>
@@ -110,6 +113,7 @@
             <p><stack item="arcanearchives:orderstone"/> <link ref="Orderstone">Orderstone</link></p>
             <space height="8"/>
             <p><stack item="arcanearchives:mindspindle"/> <link ref="Mindspindle">Mindspindle</link></p>
+            <p><stack item="arcanearchives:elixirspindle"/> <link ref="Elixirspindle">Elixirspindle</link></p>
             <space height="8"/>
             <p><stack item="arcanearchives:mountaintear"/> <link ref="Mountaintear">Mountaintear</link></p>
             <p><stack item="arcanearchives:rivertear"/> <link ref="Rivertear">Rivertear</link></p>
@@ -127,7 +131,7 @@
         </section>
     </chapter>
 
-    <chapter id="BrazierHoarding" condition="disabled">
+    <chapter id="BrazierHoarding">
         <section>
             <page_title>
                 <title>Brazier of Hoarding</title>
@@ -563,13 +567,13 @@
             <p>
                 A Radiant Tank is a storage container that can contain up to 16 buckets of a single type of fluid. Using a Radiant Tank on a fluid inventory will transfer the target's fluid inventory into the held Radiant Tank.
             </p>
-            <p condition="disabled">
+            <p>
                 <stack item="arcanearchives:radiant_amphora"/> <link ref="RadiantAmphora">Radiant Amphorae</link> can fill and empty a Radiant Tank from anywhere, as long as the tank is in a loaded chunk.
             </p>
             <p>
                 <stack item="arcanearchives:containment_field"/> By using a <link ref="ContainmentField">Containment Field</link> while sneaking, the maximum capacity can be increased by 16 buckets. Up to 9 such upgrades can be applied total.
             </p>
-            <p condition="disabled">
+            <p>
                 <stack item="arcanearchives:devouring_charm"/> By using a <link ref="DevouringCharm">Devouring Charm</link> while sneaking, fluid added to the Tank in excess of its maximum capacity is destroyed.
             </p>
             <p>
@@ -606,7 +610,7 @@
             <p>
                 <stack item="arcanearchives:material_interface"/> By using a <link ref="MaterialInterface">Material Interface</link> while sneaking, the maximum capacity can be increased by 64 stacks. Up to 9 such upgrades can be applied total.
             </p>
-            <p condition="disabled">
+            <p>
                 <stack item="arcanearchives:devouring_charm"/> By using a <link ref="DevouringCharm">Devouring Charm</link> while sneaking, items added to the Trove in excess of its maximum capacity are destroyed.
             </p>
             <p>
@@ -665,7 +669,7 @@
         </section>
     </chapter>
 
-    <chapter id="DevouringCharm" condition="disabled">
+    <chapter id="DevouringCharm">
         <section>
             <page_title>
                 <title>Devouring Charm</title>
@@ -738,6 +742,7 @@
                 <stack item="arcanearchives:murdergleam" scale="2.0"/>
                 <stack item="arcanearchives:salvegleam" scale="2.0"/>
                 <stack item="arcanearchives:mindspindle" scale="2.0"/>
+                <stack item="arcanearchives:elixirspindle" scale="2.0"/>
                 <stack item="arcanearchives:phoenixway" scale="2.0"/>
                 <stack item="arcanearchives:stormway" scale="2.0"/>
             </p>
@@ -908,7 +913,7 @@
         </section>
     </chapter>
 
-    <chapter id="RadiantAmphora" condition="disabled">
+    <chapter id="RadiantAmphora">
         <section>
             <page_title>
                 <title>Radiant Amphora</title>
@@ -1204,6 +1209,29 @@
         </section>
     </chapter>
 
+    <chapter id="Slaughtergleam">
+        <section>
+            <page_title>
+                <title>Slaughtergleam</title>
+            </page_title>
+            <p align="center"><stack item="arcanearchives:slaughtergleam" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                A Slaughtergleam is an Arcane Gem formed from a red-spectrum piece of <link ref="shaped_quartz">Shaped Radiant Quartz</link> in an asscher cut.
+            </p>
+            <p>
+                When held, your attacks are considered to have one level of the Looting enchantment. If you are wielding a weapon with the Looting enchantment, its level is increased by one instead.
+            </p>
+            <p>
+                <image src="arcanearchives:items/gems/asscher/dun" tw="16" th="16"/> To recharge a dun Slaughtergleam, activate the gem while you have a gold nugget in your inventory. The gold nugget is consumed.
+            </p>
+            <horizontal_rule/>
+            <p>
+                <stack item="arcanearchives:gemcutters_table" /> Murdergleams can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+            </p>
+        </section>
+    </chapter>
+
     <chapter id="Murdergleam">
         <section>
             <page_title>
@@ -1376,6 +1404,29 @@
             <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Mindspindles can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+            </p>
+        </section>
+    </chapter>
+
+    <chapter id="Elixirspindle">
+        <section>
+            <page_title>
+                <title>Elixirspindle</title>
+            </page_title>
+            <p align="center"><stack item="arcanearchives:elixirspindle" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                An Elixirspindle is an Arcane Gem formed from a purple-spectrum piece of <link ref="shaped_quartz">Shaped Radiant Quartz</link> in a pampel cut.
+            </p>
+            <p>
+                When held, you can use potions, splash potions, and lingering potions without consuming them at the cost of one point of charge. Additionally, if you use a potion you do not need to drink it and instead benefit from its effects immediately.
+            </p>
+            <p>
+                <image src="arcanearchives:items/gems/pampel/dun" tw="16" th="16"/> To recharge a dun Elixirspindle, activate the gem while you have nether wart in your inventory. Five pieces of nether wart are necessary to fully refill the gem, and if you have less than five pieces the gem will only be partially recharged. The nether wart is consumed.
+            </p>
+            <horizontal_rule/>
+            <p>
+                <stack item="arcanearchives:gemcutters_table" /> Elixirspindles can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
         </section>
     </chapter>

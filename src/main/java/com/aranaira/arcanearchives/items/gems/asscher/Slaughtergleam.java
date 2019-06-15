@@ -1,6 +1,7 @@
-package com.aranaira.arcanearchives.items.gems.pampel;
+package com.aranaira.arcanearchives.items.gems.asscher;
 
-import com.aranaira.arcanearchives.items.gems.*;
+import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
+import com.aranaira.arcanearchives.items.gems.GemUtil;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketArcaneGem;
 import net.minecraft.client.resources.I18n;
@@ -20,17 +21,22 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 import java.util.List;
 
-public class MindspindleItem extends ArcaneGemItem {
-	public static final String NAME = "mindspindle";
+public class Slaughtergleam extends ArcaneGemItem {
+	public static final String NAME = "slaughtergleam";
 
-	public MindspindleItem () {
-		super(NAME, GemCut.PAMPEL, GemColor.GREEN, 800, 3600);
+	public Slaughtergleam() {
+		super(NAME, GemCut.ASSCHER, GemColor.RED, 30, 150);
 	}
 
 	@Override
 	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(I18n.format("arcanearchives.tooltip.gemcharge") + ": " + getTooltipData(stack));
-		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.gem.mindspindle"));
+		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.gem.slaughtergleam"));
+	}
+
+	@Override
+	public boolean hasToggleMode () {
+		return true;
 	}
 
 	@Override
@@ -45,9 +51,9 @@ public class MindspindleItem extends ArcaneGemItem {
 			if (GemUtil.getCharge(gem) == 0) {
 				for (int i = 0; i < player.inventory.mainInventory.size(); i++) {
 					ItemStack stack = player.inventory.mainInventory.get(i);
-					if (stack.getItem() == Items.BOOK) {
+					if (stack.getItem() == Items.GOLD_NUGGET) {
 						GemUtil.restoreCharge(gem, -1);
-						stack.shrink(1);
+						stack.shrink(3);
 						//TODO: Play a particle effect
 						Vec3d pos = player.getPositionVector().add(0, 1, 0);
 						PacketArcaneGem packet = new PacketArcaneGem(cut, color, pos, pos);

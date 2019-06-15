@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.items.gems.oval;
 
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
+import com.aranaira.arcanearchives.items.gems.GemUtil;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketArcaneGem;
 import net.minecraft.block.Block;

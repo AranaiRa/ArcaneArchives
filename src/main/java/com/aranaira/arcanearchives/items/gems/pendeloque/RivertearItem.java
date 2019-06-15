@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.items.gems.pendeloque;
 
-import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
+import com.aranaira.arcanearchives.items.gems.*;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketArcaneGem;
 import net.minecraft.block.state.IBlockState;
