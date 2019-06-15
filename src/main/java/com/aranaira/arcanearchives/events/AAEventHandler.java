@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.events;
 import baubles.api.BaubleType;
 import baubles.api.BaublesApi;
 import baubles.api.cap.IBaublesItemHandler;
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.gui.GUIGemcasting;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.entity.EntityItemMountaintear;
@@ -18,6 +19,7 @@ import com.aranaira.arcanearchives.items.gems.ArcaneGemItem.GemUtil;
 import com.aranaira.arcanearchives.items.gems.asscher.MurdergleamItem;
 import com.aranaira.arcanearchives.items.gems.asscher.SalvegleamItem;
 import com.aranaira.arcanearchives.items.gems.oval.TransferstoneItem;
+import com.aranaira.arcanearchives.items.gems.pampel.Elixirspindle;
 import com.aranaira.arcanearchives.items.gems.trillion.StormwayItem;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketArcaneGemToggle;
@@ -42,8 +44,12 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.PotionType;
+import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
@@ -51,10 +57,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingDestroyBlockEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
@@ -470,6 +473,35 @@ public class AAEventHandler {
 				}
 				else {
 					TransferstoneItem.insertLinkedItem(stack);
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void onItemUse(LivingEntityUseItemEvent event) {
+		if(!event.getEntityLiving().world.isRemote && event.getEntityLiving() instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer)event.getEntityLiving();
+			for(ItemStack gem : GemUtil.getAvailableGems(player)) {
+				/**
+				 * Elixirspindle
+				 */
+				if(gem.getItem() instanceof Elixirspindle && GemUtil.getCharge(gem) > 0) {
+					if (event.getEntityLiving().getHeldItemMainhand().getItem() instanceof ItemPotion) {
+						PotionType potion = PotionUtils.getPotionFromItem(player.getHeldItemMainhand());
+						boolean potionAlreadyActive = false;
+						for(PotionEffect effect : potion.getEffects()) {
+							if(player.getActivePotionMap().containsKey(effect.getPotion()))
+								potionAlreadyActive = true;
+						}
+						if(!potionAlreadyActive){
+							for(PotionEffect effect : potion.getEffects()) {
+								player.addPotionEffect(effect);
+							}
+							GemUtil.consumeCharge(gem, 1);
+						}
+						event.setCanceled(true);
+					}
 				}
 			}
 		}
