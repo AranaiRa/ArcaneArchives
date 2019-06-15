@@ -44,10 +44,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemPotion;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
@@ -539,8 +536,9 @@ public class AAEventHandler {
 						PotionType potion = PotionUtils.getPotionFromItem(player.getHeldItemMainhand());
 						boolean potionAlreadyActive = false;
 						for (PotionEffect effect : potion.getEffects()) {
-							if (player.getActivePotionMap().containsKey(effect.getPotion())) {
+							if (!effect.getPotion().isInstant() && player.getActivePotionMap().containsKey(effect.getPotion())) {
 								potionAlreadyActive = true;
+								break;
 							}
 						}
 						if (!potionAlreadyActive) {
@@ -551,6 +549,12 @@ public class AAEventHandler {
 						}
 						event.setCanceled(true);
 					}
+					else if(event.getEntityLiving().getHeldItemMainhand().getItem() instanceof ItemSplashPotion) {
+
+					}
+					else if(event.getEntityLiving().getHeldItemMainhand().getItem() instanceof ItemLingeringPotion) {
+
+					}
 				}
 			}
 		}
@@ -559,14 +563,27 @@ public class AAEventHandler {
 	@SubscribeEvent
 	public static void onLooting (LootingLevelEvent event) {
 		if (!event.getEntityLiving().world.isRemote) {
-			ArcaneArchives.logger.info("looting event fired");
 			if (event.getDamageSource().getTrueSource() instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer) event.getDamageSource().getTrueSource();
 				for (ItemStack gem : GemUtil.getAvailableGems(player)) {
 					if (gem.getItem() instanceof Slaughtergleam) {
 						if (GemUtil.getCharge(gem) > 0) {
 							event.setLootingLevel(event.getLootingLevel() + 1);
-							ArcaneArchives.logger.info("terminal point");
+						}
+					}
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void onEntityLivingDeath(LivingDeathEvent event) {
+		if (!event.getEntityLiving().world.isRemote) {
+			if (event.getSource().getTrueSource() instanceof EntityPlayer) {
+				EntityPlayer player = (EntityPlayer) event.getSource().getTrueSource();
+				for (ItemStack gem : GemUtil.getAvailableGems(player)) {
+					if (gem.getItem() instanceof Slaughtergleam) {
+						if (GemUtil.getCharge(gem) > 0) {
 							GemUtil.consumeCharge(gem, 1);
 						}
 					}
