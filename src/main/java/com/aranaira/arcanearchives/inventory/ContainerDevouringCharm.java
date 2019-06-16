@@ -8,6 +8,7 @@ import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.gems.GemUtil;
 import com.aranaira.arcanearchives.items.gems.pendeloque.ParchtearItem;
 import com.aranaira.arcanearchives.items.itemblocks.RadiantTankItem;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
@@ -84,8 +85,8 @@ public class ContainerDevouringCharm extends Container {
 			ItemStack stack = slot.getStack();
 			slotStack = stack.copy();
 
-			if (index >= 36) { //Player Inventory -> Socket
-				if (!mergeItemStack(stack, 0, 7, false)) {
+			if (index < 36) { //Player Inventory -> Socket
+				if (!mergeItemStack(stack, 36, 43, false)) {
 					return ItemStack.EMPTY;
 				}
 			} else {
@@ -107,6 +108,17 @@ public class ContainerDevouringCharm extends Container {
 	@Override
 	@Nonnull
 	public ItemStack slotClick (int slotID, int dragType, ClickType clickType, EntityPlayer player) {
+		ArcaneArchives.logger.info(slotID);
 		return super.slotClick(slotID, dragType, clickType, player);
+	}
+
+	@Override
+	public void onContainerClosed(EntityPlayer player) {
+		if(!player.world.isRemote) {
+			ItemStack stack = getSlot(36).getStack();
+			if (stack != null) {
+				player.world.spawnEntity(new EntityItem(player.world, player.posX, player.posY, player.posZ, stack));
+			}
+		}
 	}
 }
