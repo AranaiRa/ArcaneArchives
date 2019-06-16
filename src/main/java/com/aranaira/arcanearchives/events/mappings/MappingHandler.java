@@ -60,27 +60,27 @@ public class MappingHandler {
 			case "item_fabrial":
 				return ItemRegistry.FABRIAL;
 			case "item_murdergleam":
-				return ItemRegistry.LETTER_OF_INVITATION;
-			case "item_munchstone":
-				return ItemRegistry.LETTER_OF_RESIGNATION;
-			case "item_mindspindle":
-				return ItemRegistry.MANIFEST;
-			case "item_mountaintear":
-				return ItemRegistry.MINDSPINDLE;
-			case "item_rivertear":
-				return ItemRegistry.MOUNTAINTEAR;
-			case "item_phoenixway":
-				return ItemRegistry.MUNCHSTONE;
-			case "item_letterofinvitation":
 				return ItemRegistry.MURDERGLEAM;
-			case "item_letterofresignation":
-				return ItemRegistry.PHOENIXWAY;
-			case "item_manifest":
-				return ItemRegistry.RADIANT_AMPHORA;
-			case "item_radiantamphora":
-				return ItemRegistry.RAW_RADIANT_QUARTZ;
-			case "item_rawquartz":
+			case "item_munchstone":
+				return ItemRegistry.MUNCHSTONE;
+			case "item_mindspindle":
+				return ItemRegistry.MINDSPINDLE;
+			case "item_mountaintear":
+				return ItemRegistry.MOUNTAINTEAR;
+			case "item_rivertear":
 				return ItemRegistry.RIVERTEAR;
+			case "item_phoenixway":
+				return ItemRegistry.PHOENIXWAY;
+			case "item_letterofinvitation":
+				return ItemRegistry.LETTER_OF_INVITATION;
+			case "item_letterofresignation":
+				return ItemRegistry.LETTER_OF_RESIGNATION;
+			case "item_manifest":
+				return ItemRegistry.MANIFEST;
+			case "item_radiantamphora":
+				return ItemRegistry.RADIANT_AMPHORA;
+			case "item_rawquartz":
+				return ItemRegistry.RAW_RADIANT_QUARTZ;
 			case "item_sceptermanipulation":
 				return ItemRegistry.SCEPTER_MANIPULATION;
 			case "item_scepterrevelation":
