@@ -1,12 +1,23 @@
 package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
+import com.aranaira.arcanearchives.tileentities.BrazierTileEntity;
+import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.stats.StatList;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
@@ -55,5 +66,33 @@ public class Brazier extends BlockTemplate {
 	@Override
 	public BlockRenderLayer getRenderLayer () {
 		return BlockRenderLayer.CUTOUT;
+	}
+
+	@Override
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+	{
+		if (!worldIn.isRemote)
+		{
+			BrazierTileEntity bte = WorldUtil.getTileEntity(BrazierTileEntity.class, playerIn.dimension, pos);
+			if(bte != null) {
+				bte.tryInsert(playerIn.getHeldItemMainhand());
+			}
+		}
+
+		return true;
+	}
+
+	@Override
+	public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entityIn)
+	{
+		if(!entityIn.world.isRemote && entityIn instanceof EntityItem) {
+			EntityItem ei = (EntityItem)entityIn;
+			BrazierTileEntity bte = (BrazierTileEntity) worldIn.getTileEntity(pos);
+			if(bte != null) {
+				if(bte.tryInsert(ei.getItem())) {
+					entityIn.setDead();
+				}
+			}
+		}
 	}
 }

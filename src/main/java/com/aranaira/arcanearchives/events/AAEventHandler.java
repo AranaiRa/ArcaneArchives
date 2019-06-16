@@ -29,6 +29,7 @@ import com.aranaira.arcanearchives.network.PacketRadiantAmphora;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
+import com.sun.javafx.applet.Splash;
 import gigaherz.lirelent.guidebook.client.BookRegistryEvent;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBookshelf;
@@ -42,6 +43,8 @@ import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.projectile.EntityPotion;
+import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.*;
@@ -527,12 +530,13 @@ public class AAEventHandler {
 	public static void onItemUse (LivingEntityUseItemEvent event) {
 		if (!event.getEntityLiving().world.isRemote && event.getEntityLiving() instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+			ItemStack stack = player.getHeldItemMainhand();
 			for (ItemStack gem : GemUtil.getAvailableGems(player)) {
 				/**
 				 * Elixirspindle
 				 */
 				if (gem.getItem() instanceof Elixirspindle && GemUtil.getCharge(gem) > 0) {
-					if (event.getEntityLiving().getHeldItemMainhand().getItem() instanceof ItemPotion) {
+					if (stack.getItem() instanceof ItemPotion) {
 						PotionType potion = PotionUtils.getPotionFromItem(player.getHeldItemMainhand());
 						boolean potionAlreadyActive = false;
 						for (PotionEffect effect : potion.getEffects()) {
@@ -548,12 +552,6 @@ public class AAEventHandler {
 							GemUtil.consumeCharge(gem, 1);
 						}
 						event.setCanceled(true);
-					}
-					else if(event.getEntityLiving().getHeldItemMainhand().getItem() instanceof ItemSplashPotion) {
-
-					}
-					else if(event.getEntityLiving().getHeldItemMainhand().getItem() instanceof ItemLingeringPotion) {
-
 					}
 				}
 			}
