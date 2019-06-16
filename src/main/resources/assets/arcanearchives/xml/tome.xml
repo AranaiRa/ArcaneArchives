@@ -1224,6 +1224,9 @@
             <p>
                 Most Arcane Gems have an internal reservoir of light, called <span bold="true">charge</span>. Once a gem's charge runs out, it becomes <span bold="true">dun</span> and cannot be used until recharged. Each gem has a unique method of recharging noted on its individual page.
             </p>
+            <p>
+                <span bold="true">Please be aware that all Arcane Gem recipes are temporary.</span>Arcane Gems will not be craftable on the <link ref="GemCuttersTable">Gem Cutter's Table</link> in the future.
+            </p>
             <horizontal_rule/>
             <p>
                 The shape of an Arcane Gem is an indicator of the nature of its function.

@@ -1,5 +1,8 @@
 package com.aranaira.arcanearchives.tileentities;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.util.types.IteRef;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -45,5 +48,13 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 	public static class Tags {
 		private Tags () {
 		}
+	}
+
+	public boolean tryInsert(ItemStack stack) {
+		boolean inserted = false;
+
+		ArcaneArchives.logger.info("Trying to insert "+stack.getItem()+" into network belonging to "+getServerNetwork().getPlayer().getName());
+
+		return true;//inserted;
 	}
 }
