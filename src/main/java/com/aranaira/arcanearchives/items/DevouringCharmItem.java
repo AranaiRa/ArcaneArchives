@@ -1,15 +1,21 @@
 package com.aranaira.arcanearchives.items;
 
+import com.aranaira.arcanearchives.AAGuiHandler;
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class DevouringCharmItem extends ItemTemplate {
@@ -27,5 +33,15 @@ public class DevouringCharmItem extends ItemTemplate {
 	@Override
 	public boolean doesSneakBypassUse (ItemStack stack, IBlockAccess world, BlockPos pos, EntityPlayer player) {
 		return true;
+	}
+
+	@Override
+	@Nonnull
+	public ActionResult<ItemStack> onItemRightClick (World world, EntityPlayer player, @Nonnull EnumHand hand) {
+		if (world.isRemote) {
+			return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+		}
+		player.openGui(ArcaneArchives.instance, AAGuiHandler.DEVOURING_CHARM, world, (int) player.posX, (int) player.posY, (int) player.posZ);
+		return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
 	}
 }
