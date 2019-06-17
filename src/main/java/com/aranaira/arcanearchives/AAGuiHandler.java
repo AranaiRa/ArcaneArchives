@@ -24,6 +24,7 @@ public class AAGuiHandler implements IGuiHandler {
 	public static final int MATRIX_REPOSITORY = 6;
 	public static final int MATRIX_RESERVOIR = 6;
 	public static final int BAUBLE_GEMSOCKET = 7;
+	public static final int DEVOURING_CHARM = 8;
 
 	@Override
 	public Object getServerGuiElement (int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -39,6 +40,8 @@ public class AAGuiHandler implements IGuiHandler {
 				return null; // return new ContainerManifest(player, true);
 			case BAUBLE_GEMSOCKET:
 				return new ContainerGemSocket(player);
+			case DEVOURING_CHARM:
+				return new ContainerDevouringCharm(player);
 		}
 
 		if (!(te instanceof AATileEntity)) {
@@ -78,6 +81,8 @@ public class AAGuiHandler implements IGuiHandler {
 				return new GUIManifest(player, new ContainerManifest(player));
 			case BAUBLE_GEMSOCKET:
 				return new GUIGemSocket(new ContainerGemSocket(player));
+			case DEVOURING_CHARM:
+				return new GUIDevouringCharm(new ContainerDevouringCharm(player));
 		}
 
 		if (!(te instanceof AATileEntity)) {

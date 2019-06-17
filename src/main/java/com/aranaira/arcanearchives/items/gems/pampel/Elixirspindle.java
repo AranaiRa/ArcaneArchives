@@ -42,7 +42,7 @@ public class Elixirspindle extends ArcaneGemItem {
 	public ActionResult<ItemStack> onItemRightClick (World world, EntityPlayer player, EnumHand hand) {
 		if (!world.isRemote) {
 			ItemStack gem = player.getHeldItemMainhand();
-			if (GemUtil.getCharge(gem) == 0) {
+			if (GemUtil.getCharge(gem) == 0 && gem.getItem() instanceof Elixirspindle) {
 				for (int i = 0; i < player.inventory.mainInventory.size(); i++) {
 					ItemStack stack = player.inventory.mainInventory.get(i);
 					if (stack.getItem() == Items.NETHER_WART) {
