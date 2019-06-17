@@ -1,10 +1,15 @@
 package com.aranaira.arcanearchives.network;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
+import com.aranaira.arcanearchives.items.gems.asscher.CleansegleamItem;
 import com.aranaira.arcanearchives.network.NetworkHandler.ClientHandler;
 import io.netty.buffer.ByteBuf;
+import javafx.scene.chart.Axis;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -62,7 +67,10 @@ public class PacketArcaneGem implements IMessage {
 		public void processMessage (PacketArcaneGem packet, MessageContext context) {
 			//ArcaneArchives.logger.info("Received particles packet\n    Gem is "+packet.color.name()+" "+packet.cut.name()+"\n    pos1="+packet.pos1+"    pos2="+packet.pos2);
 
-			if (packet.cut == ArcaneGemItem.GemCut.OVAL) {
+			if (packet.cut == ArcaneGemItem.GemCut.ASSCHER) {
+				if (packet.color == ArcaneGemItem.GemColor.BLUE) {
+				}
+			} else if (packet.cut == ArcaneGemItem.GemCut.OVAL) {
 				if (packet.color == ArcaneGemItem.GemColor.BLACK) {
 					Minecraft.getMinecraft().player.playSound(SoundEvents.ENTITY_PLAYER_BURP, 1.0f, new Random().nextFloat() * 0.5f + 0.75f);
 				}

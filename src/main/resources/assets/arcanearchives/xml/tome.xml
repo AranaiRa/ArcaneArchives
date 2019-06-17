@@ -1313,7 +1313,7 @@
                 When activated, a Cleansegleam will purge the user of Hunger, Nausea, and Poison at the cost of a point of charge.
             </p>
             <p>
-                If activated while sneaking, you can attempt to cure the target you're looking at of these effects instead.
+                If activated while sneaking, you can attempt to all targets within three blocks of you of these effects instead.
             </p>
             <p>
                 <image src="arcanearchives:items/gems/asscher/dun" tw="16" th="16"/> To recharge a dun Cleansegleam, activate the gem while you have a bucket of milk in your inventory. The milk is conusmed, and the bucket is returned. Alternatively, if you have a <link ref="RadiantAmphora">Radiant Amphora</link> linked to a <link ref="RadiantTank">Radiant Tank</link> containing milk, the milk is deducted from the tank directly.
