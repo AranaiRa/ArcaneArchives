@@ -741,6 +741,7 @@
                 The following Arcane Gems have passive effects. Gems with toggles might need to be turned on before inserting before their passive effects take place.
             </p>
             <p align="center">
+                <stack item="arcanearchives:slaughtergleam" scale="2.0"/>
                 <stack item="arcanearchives:murdergleam" scale="2.0"/>
                 <stack item="arcanearchives:salvegleam" scale="2.0"/>
                 <stack item="arcanearchives:mindspindle" scale="2.0"/>
