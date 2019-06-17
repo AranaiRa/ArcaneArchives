@@ -228,12 +228,6 @@ public class GemUtil {
 	 * @return true if charge remains, false if gem is now empty
 	 */
 
-	// This function should only be used when it is absolutely certain that the gem
-	// is not contained within a socket.
-	public static boolean manuallyConsumeCharge (ItemStack gem, int amount) {
-		return consumeCharge(gem, amount);
-	}
-
 	public static boolean consumeCharge (GemStack gem, int amount) {
 		boolean result = consumeCharge(gem.getStack(), amount);
 		gem.markDirty();
