@@ -116,7 +116,7 @@ public class ContainerDevouringCharm extends Container {
 	public void onContainerClosed(EntityPlayer player) {
 		if(!player.world.isRemote) {
 			ItemStack stack = getSlot(36).getStack();
-			if (stack != null) {
+			if (!stack.isEmpty()) {
 				EntityItem item = new EntityItem(player.world, player.posX, player.posY, player.posZ, stack);
 				item.setPickupDelay(0);
 				player.world.spawnEntity(item);
