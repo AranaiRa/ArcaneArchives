@@ -8,11 +8,16 @@ import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.handlers.GemSocketHandler;
 import com.aranaira.arcanearchives.items.BaubleGemSocket;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
+import com.aranaira.arcanearchives.network.NetworkHandler;
+import com.aranaira.arcanearchives.network.PacketArcaneGem;
 import com.aranaira.arcanearchives.util.NBTUtils;
+import ibxm.Player;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
@@ -21,6 +26,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -177,6 +187,41 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 			return new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
 		} else {
 			return new Vec3d(pos.getX(), pos.getY(), pos.getZ());
+		}
+	}
+
+	protected void consumeInventoryItemForChargeRecovery(EntityPlayer player, GemUtil.AvailableGemsHandler handler, Item targetItem, int needed, int maxCharge) {
+		for (int i = 0; i < player.inventory.mainInventory.size(); i++) {
+			ItemStack stack = player.inventory.mainInventory.get(i);
+			if (stack.getItem() == targetItem) {
+				int numConsumed = needed;
+				if (numConsumed > stack.getCount()) {
+					numConsumed = stack.getCount();
+				}
+				GemUtil.restoreCharge(handler.getHeld(), (int)Math.ceil(maxCharge * ((float)numConsumed / (float)needed)));
+				stack.shrink(numConsumed);
+				break;
+			} else {
+				continue;
+			}
+		}
+	}
+
+	protected void consumeFluidForChargeRecovery(EntityPlayer player, GemUtil.AvailableGemsHandler handler, Fluid targetFluid, int needed, int maxCharge) {
+		for (int i = 0; i < player.inventory.mainInventory.size(); i++) {
+			ItemStack stack = player.inventory.mainInventory.get(i);
+			IFluidHandler cap = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
+			if (cap.drain(1000, false).getFluid() == targetFluid) {
+				int numConsumed = cap.drain(1000, true).amount;
+				if (numConsumed > stack.getCount()) {
+					numConsumed = stack.getCount();
+				}
+				GemUtil.restoreCharge(handler.getHeld(), (int)Math.ceil(maxCharge * ((float)numConsumed / (float)needed)));
+				stack.shrink(numConsumed);
+				break;
+			} else {
+				continue;
+			}
 		}
 	}
 

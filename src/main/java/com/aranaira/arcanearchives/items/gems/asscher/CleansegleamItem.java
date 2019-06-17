@@ -8,6 +8,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
@@ -15,10 +16,13 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,29 +55,24 @@ public class CleansegleamItem extends ArcaneGemItem {
 	public ActionResult<ItemStack> onItemRightClick (World world, EntityPlayer player, EnumHand hand) {
 		if (!world.isRemote) {
 			AvailableGemsHandler handler = GemUtil.getHeldGem(player, hand);
-			if (handler.getHeld() != null && GemUtil.getCharge(handler.getHeld()) > 0) {
-				int chargeCost = 0;
-				if (player.isSneaking()) {
-					/*//ArcaneArchives.logger.info("player is sneaking");
-					Vec3d start = new Vec3d(player.posX, player.posY + player.getEyeHeight(), player.posZ);
-					Vec3d dir = player.getLookVec();
-					Vec3d rayTarget = new Vec3d(start.x + dir.x * 10, start.y + dir.y * 10, start.z + dir.z * 10);
-
-					RayTraceResult ray = player.rayTrace(10, 1.0f);
-
-					if (ray != null) {
-						//ArcaneArchives.logger.info("entity=null? " + (ray.entityHit == null));
-						if (ray.entityHit instanceof EntityLivingBase) {
-							//ArcaneArchives.logger.info("is livingbase");
-							chargeCost = removeEffects((EntityLivingBase) ray.entityHit, false);
-						}
-					}*/
-				} else {
-					chargeCost = removeEffects(player, false);
+			if (handler.getHeld() != null) {
+				if(GemUtil.getCharge(handler.getHeld()) == 0) {
+					consumeFluidForChargeRecovery(player, handler, FluidRegistry.getFluid("milk"), 1, GemUtil.getMaxCharge(handler.getHeld()));
+					//TODO: Check for amphora linked to milk
 				}
+				else {
+					int chargeCost = removeEffects(player, false);
+					if (player.isSneaking()) {
+						double boxRadius = 3.5;
+						AxisAlignedBB aabb = new AxisAlignedBB(player.posX - boxRadius, player.posY - boxRadius, player.posZ - boxRadius, player.posX + boxRadius, player.posY + boxRadius, player.posZ + boxRadius);
+						for (EntityLivingBase entity : player.world.getEntitiesWithinAABB(EntityLivingBase.class, aabb)) {
+							chargeCost += removeEffects(entity, false);
+						}
+					}
 
-				if (chargeCost > 0) {
-					GemUtil.consumeCharge(handler.getHeld(), chargeCost);
+					if (chargeCost > 0) {
+						GemUtil.consumeCharge(handler.getHeld(), chargeCost);
+					}
 				}
 			}
 		}
