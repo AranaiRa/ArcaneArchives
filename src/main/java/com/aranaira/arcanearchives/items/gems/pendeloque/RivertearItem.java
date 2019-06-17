@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.items.gems.pendeloque;
 
 import com.aranaira.arcanearchives.items.gems.*;
+import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketArcaneGem;
 import net.minecraft.block.state.IBlockState;
@@ -57,8 +58,8 @@ public class RivertearItem extends ArcaneGemItem {
 		World world = entityItem.world;
 
 		if (!world.isRemote && entityItem.isInWater()) {
-			if (GemUtil.getCharge(entityItem.getItem()) < GemUtil.getMaxCharge(entityItem.getItem())) {
-				GemUtil.restoreCharge(entityItem.getItem(), -1);
+			if (GemUtil.getCharge(entityItem) < GemUtil.getMaxCharge(entityItem)) {
+				GemUtil.restoreCharge(entityItem, -1);
 				world.playSound(entityItem.posX, entityItem.posY, entityItem.posZ, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1.0f, 0.5f, false);
 				return true;
 			}
@@ -69,7 +70,8 @@ public class RivertearItem extends ArcaneGemItem {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick (World world, EntityPlayer player, EnumHand hand) {
 		if (!world.isRemote) {
-			if (GemUtil.getCharge(player.getHeldItem(hand)) > 0) {
+			AvailableGemsHandler handler = GemUtil.getHeldGem(player, hand);
+			if (GemUtil.getCharge(handler.getHeld()) > 0) {
 				Vec3d start = new Vec3d(player.posX, player.posY + player.getEyeHeight(), player.posZ);
 				Vec3d dir = player.getLookVec();
 				Vec3d rayTarget = new Vec3d(start.x + dir.x * 40, start.y + dir.y * 40, start.z + dir.z * 40);
@@ -87,7 +89,7 @@ public class RivertearItem extends ArcaneGemItem {
 					Blocks.WATER.neighborChanged(water, world, pos.offset(facing), Blocks.WATER, null);
 
 					if (!player.capabilities.isCreativeMode) {
-						GemUtil.consumeCharge(player.getHeldItemMainhand(), 1);
+						GemUtil.consumeCharge(handler.getHeld(), 1);
 					}
 
 					PacketArcaneGem packet = new PacketArcaneGem(cut, color, start, end);

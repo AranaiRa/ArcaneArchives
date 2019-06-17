@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.items.gems.trillion;
 
 import com.aranaira.arcanearchives.items.gems.*;
+import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketArcaneGem;
 import net.minecraft.client.resources.I18n;
@@ -44,7 +45,8 @@ public class PhoenixwayItem extends ArcaneGemItem {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick (World world, EntityPlayer player, EnumHand hand) {
 		if (!world.isRemote) {
-			if (GemUtil.getCharge(player.getHeldItemMainhand()) == 0) {
+			AvailableGemsHandler handler = GemUtil.getHeldGem(player, hand);
+			if (GemUtil.getCharge(handler.getHeld()) == 0) {
 				for (int i = 0; i < player.inventory.mainInventory.size(); i++) {
 					ItemStack stack = player.inventory.mainInventory.get(i);
 					if (stack.getItem() == Items.GUNPOWDER) {
@@ -52,7 +54,7 @@ public class PhoenixwayItem extends ArcaneGemItem {
 						if (numConsumed > stack.getCount()) {
 							numConsumed = stack.getCount();
 						}
-						GemUtil.restoreCharge(player.getHeldItemMainhand(), numConsumed * 25);
+						GemUtil.restoreCharge(handler.getHeld(), numConsumed * 25);
 						stack.shrink(numConsumed);
 						//TODO: Play a particle effect
 						Vec3d pos = player.getPositionVector().add(0, 1, 0);
@@ -65,7 +67,7 @@ public class PhoenixwayItem extends ArcaneGemItem {
 					}
 				}
 			}
-			if (GemUtil.getCharge(player.getHeldItemMainhand()) > 0) {
+			if (GemUtil.getCharge(handler.getHeld()) > 0) {
 				Vec3d start = new Vec3d(player.posX, player.posY + player.height, player.posZ);
 				Vec3d dir = player.getLookVec();
 				Vec3d rayTarget = new Vec3d(start.x + dir.x * 40, start.y + dir.y * 40, start.z + dir.z * 40);
@@ -77,7 +79,7 @@ public class PhoenixwayItem extends ArcaneGemItem {
 					EnumFacing facing = ray.sideHit;
 
 					world.setBlockState(pos.offset(facing), Blocks.FIRE.getDefaultState());
-					GemUtil.consumeCharge(player.getHeldItemMainhand(), 1);
+					GemUtil.consumeCharge(handler.getHeld(), 1);
 
 					Vec3d end = new Vec3d(pos.offset(facing).getX(), pos.offset(facing).getY(), pos.offset(facing).getZ());
 

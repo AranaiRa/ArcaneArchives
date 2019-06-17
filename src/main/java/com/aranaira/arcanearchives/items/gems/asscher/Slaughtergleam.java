@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.items.gems.asscher;
 
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.gems.GemUtil;
+import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketArcaneGem;
 import net.minecraft.client.resources.I18n;
@@ -47,12 +48,12 @@ public class Slaughtergleam extends ArcaneGemItem {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick (World world, EntityPlayer player, EnumHand hand) {
 		if (!world.isRemote) {
-			ItemStack gem = player.getHeldItemMainhand();
-			if (GemUtil.getCharge(gem) == 0) {
+			AvailableGemsHandler handler = GemUtil.getHeldGem(player, hand);
+			if (handler.getHeld() != null && GemUtil.getCharge(handler.getHeld()) == 0) {
 				for (int i = 0; i < player.inventory.mainInventory.size(); i++) {
 					ItemStack stack = player.inventory.mainInventory.get(i);
 					if (stack.getItem() == Items.GOLD_NUGGET) {
-						GemUtil.restoreCharge(gem, -1);
+						GemUtil.restoreCharge(handler.getHeld(), -1);
 						stack.shrink(3);
 						//TODO: Play a particle effect
 						Vec3d pos = player.getPositionVector().add(0, 1, 0);

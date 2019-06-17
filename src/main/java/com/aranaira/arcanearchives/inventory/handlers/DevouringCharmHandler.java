@@ -1,9 +1,11 @@
 package com.aranaira.arcanearchives.inventory.handlers;
 
+import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.gems.GemUtil;
 import com.aranaira.arcanearchives.items.gems.pendeloque.ParchtearItem;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
@@ -25,12 +27,7 @@ public class DevouringCharmHandler implements INBTSerializable<NBTTagCompound> {
 		@Override
 		public boolean isItemValid (int slot, @Nonnull ItemStack stack) {
 			if(slot == 0) {
-				if(stack.getItem() instanceof ParchtearItem) {
-					GemUtil.restoreCharge(stack, -1);
-					return true;
-				}
-
-				return stack.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
+				return stack.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null) || stack.getItem() == ItemRegistry.PARCHTEAR;
 			}
 			else {
 				return true;
@@ -48,6 +45,13 @@ public class DevouringCharmHandler implements INBTSerializable<NBTTagCompound> {
 					cap.drain(drain, true);
 				}
 			}
+
+			if (slot == 0 && stack.getItem() == ItemRegistry.PARCHTEAR) {
+				if(stack.getItem() instanceof ParchtearItem) {
+					GemUtil.manuallyRestoreCharge(stack, -1);
+				}
+			}
+
 			super.onContentsChanged(slot);
 		}
 	};

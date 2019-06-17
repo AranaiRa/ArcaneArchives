@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.items.gems.oval;
 
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.gems.GemUtil;
+import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketArcaneGem;
 import net.minecraft.block.Block;
@@ -47,9 +48,9 @@ public class MunchstoneItem extends ArcaneGemItem {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick (World world, EntityPlayer player, EnumHand hand) {
 		if (!world.isRemote) {
-			ItemStack gem = player.getHeldItemMainhand();
+			AvailableGemsHandler handler = GemUtil.getHeldGem(player, hand);
 
-			if (GemUtil.getCharge(gem) == 0) {
+			if (handler.getHeld() != null && GemUtil.getCharge(handler.getHeld()) == 0) {
 				for (int i = 0; i < player.inventory.mainInventory.size(); i++) {
 					ItemStack stack = player.inventory.mainInventory.get(i);
 					if (stack.getItem() == Items.DYE && stack.getMetadata() == 15) {
@@ -57,7 +58,7 @@ public class MunchstoneItem extends ArcaneGemItem {
 						if (numConsumed > stack.getCount()) {
 							numConsumed = stack.getCount();
 						}
-						GemUtil.restoreCharge(gem, numConsumed * 12);
+						GemUtil.restoreCharge(handler.getHeld(), numConsumed * 12);
 						stack.shrink(numConsumed);
 						//TODO: Play a particle effect
 						Vec3d pos = player.getPositionVector().add(0, 1, 0);
@@ -80,9 +81,9 @@ public class MunchstoneItem extends ArcaneGemItem {
 		if (!world.isRemote) {
 
 			//ArcaneArchives.logger.info("munchstone trigger");
-			ItemStack gem = player.getHeldItemMainhand();
+			AvailableGemsHandler handler = GemUtil.getHeldGem(player, hand);
 
-			if (GemUtil.getCharge(gem) > 0) {
+			if (handler.getHeld() != null && GemUtil.getCharge(handler.getHeld()) > 0) {
 				Block block = world.getBlockState(pos).getBlock();
 
 				for (EdibleBlock eb : entries) {
@@ -106,7 +107,7 @@ public class MunchstoneItem extends ArcaneGemItem {
 
 						if (chargeConsumed > 0) {
 							player.getFoodStats().addStats(eb.hungerValue, eb.saturationValue);
-							GemUtil.consumeCharge(gem, chargeConsumed);
+							GemUtil.consumeCharge(handler.getHeld(), chargeConsumed);
 							world.setBlockState(pos, Blocks.AIR.getDefaultState());
 
 							PacketArcaneGem packet = new PacketArcaneGem(cut, color, blockPosToVector(pos, true), blockPosToVector(pos, true));

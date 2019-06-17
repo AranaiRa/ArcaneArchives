@@ -39,6 +39,10 @@ public class GemSocketHandler implements INBTSerializable<NBTTagCompound> {
 		handler.deserializeNBT(nbt);
 	}
 
+	public ItemStack getGem () {
+		return handler.getStackInSlot(0);
+	}
+
 	public ItemStackHandler getInventory () {
 		return handler;
 	}

@@ -1,6 +1,8 @@
 package com.aranaira.arcanearchives.items.gems.trillion;
 
 import com.aranaira.arcanearchives.items.gems.*;
+import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler;
+import com.aranaira.arcanearchives.items.gems.GemUtil.GemStack;
 import com.aranaira.arcanearchives.util.NBTUtils;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -49,8 +51,8 @@ public class StormwayItem extends ArcaneGemItem {
 
 		if (!world.isRemote && world.isRaining()) {
 			if (world.canBlockSeeSky(new BlockPos(entityItem))) {
-				if (GemUtil.getCharge(entityItem.getItem()) < GemUtil.getMaxCharge(entityItem.getItem())) {
-					GemUtil.restoreCharge(entityItem.getItem(), -1);
+				if (GemUtil.getCharge(entityItem) < GemUtil.getMaxCharge(entityItem)) {
+					GemUtil.restoreCharge(entityItem, -1);
 					world.playSound(entityItem.posX, entityItem.posY, entityItem.posZ, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1.0f, 0.5f, false);
 					return true;
 				}
@@ -62,7 +64,8 @@ public class StormwayItem extends ArcaneGemItem {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick (World world, EntityPlayer player, EnumHand hand) {
 		if (!world.isRemote) {
-			if (GemUtil.getCharge(player.getHeldItem(hand)) > 0) {
+			AvailableGemsHandler handler = GemUtil.getHeldGem(player, hand);
+			if (handler.getHeld() != null && GemUtil.getCharge(handler.getHeld()) > 0) {
 				Vec3d start = new Vec3d(player.posX, player.posY + player.height, player.posZ);
 				Vec3d dir = player.getLookVec();
 				Vec3d rayTarget = new Vec3d(start.x + dir.x * 30, start.y + dir.y * 30, start.z + dir.z * 30);
@@ -77,7 +80,7 @@ public class StormwayItem extends ArcaneGemItem {
 
 						world.spawnEntity(new EntityLightningBolt(world, end.x, end.y, end.z, false));
 
-						GemUtil.consumeCharge(player.getHeldItemMainhand(), 1);
+						GemUtil.consumeCharge(handler.getHeld(), 1);
 
 						//PacketArcaneGem packet = new PacketArcaneGem(cut, color, start, end);
 						//NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, start.x, start.y, start.z, 160);
@@ -89,14 +92,13 @@ public class StormwayItem extends ArcaneGemItem {
 		return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
 	}
 
-	public static void setStrikeCooldownTimer (ItemStack stack) {
-		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+	public static void setStrikeCooldownTimer (GemStack stack) {
+		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack.getStack());
 		nbt.setLong("cooldown", System.currentTimeMillis());
-		stack.setTagCompound(nbt);
 	}
 
-	public static boolean canBeStruck (ItemStack stack) {
-		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+	public static boolean canBeStruck (GemStack stack) {
+		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack.getStack());
 		if (nbt.hasKey("cooldown")) {
 			return nbt.getLong("cooldown") + 1000 < System.currentTimeMillis();
 		} else {

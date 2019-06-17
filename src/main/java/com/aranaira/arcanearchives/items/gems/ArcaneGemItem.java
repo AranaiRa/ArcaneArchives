@@ -77,7 +77,7 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 		if (GemUtil.hasUnlimitedCharge(stack)) {
 			str += "[Unlimited]";
 		} else {
-			str += "[" + GemUtil.getCharge(stack) + " / " + GemUtil.getMaxCharge(stack) + "]";
+			str += "[" + GemUtil.getTooltipCharge(stack) + " / " + GemUtil.getTooltipMaxCharge(stack) + "]";
 		}
 
 		byte upgrades = GemUtil.getUpgrades(stack);

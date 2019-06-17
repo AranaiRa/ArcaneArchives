@@ -32,11 +32,11 @@ public class BaubleGemSocket extends ItemTemplate implements baubles.api.IBauble
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.bauble.gemsocket"));
 		if (stack.hasTagCompound()) {
 			if (stack.getTagCompound().hasKey("gem")) {
-				ItemStack containedStack = GemSocketHandler.getHandler(stack).getInventory().getStackInSlot(0);
+				ItemStack containedStack = GemSocketHandler.getHandler(stack).getGem();
 				if (containedStack.getItem() instanceof ArcaneGemItem) {
 					String name = containedStack.getItem().getItemStackDisplayName(containedStack);
-					int chargeCur = GemUtil.getCharge(containedStack);
-					int chargeMax = GemUtil.getMaxCharge(containedStack);
+					int chargeCur = GemUtil.getTooltipCharge(containedStack);
+					int chargeMax = GemUtil.getTooltipMaxCharge(containedStack);
 					tooltip.add(I18n.format("arcanearchives.tooltip.bauble.gemsocket.contains") + " " + name + " [" + chargeCur + "/" + chargeMax + "]");
 				}
 			}

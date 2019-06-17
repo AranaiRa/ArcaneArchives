@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.items.gems.pendeloque;
 
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.gems.GemUtil;
+import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDynamicLiquid;
 import net.minecraft.block.BlockStaticLiquid;
@@ -46,7 +47,8 @@ public class ParchtearItem extends ArcaneGemItem {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick (World world, EntityPlayer player, EnumHand hand) {
 		if (!world.isRemote) {
-			if (GemUtil.getCharge(player.getHeldItem(hand)) > 0) {
+			AvailableGemsHandler handler = GemUtil.getHeldGem(player, hand);
+			if (handler.getHeld() != null && GemUtil.getCharge(handler.getHeld()) > 0) {
 				ArrayList<BlockPos> positions = new ArrayList<>();
 				Vec3d start = new Vec3d(player.posX, player.posY + player.getEyeHeight(), player.posZ);
 				Vec3d dir = player.getLookVec();
@@ -73,7 +75,7 @@ public class ParchtearItem extends ArcaneGemItem {
 						}
 					}
 
-					GemUtil.consumeCharge(player.getHeldItemMainhand(), chargeCost);
+					GemUtil.consumeCharge(handler.getHeld(), chargeCost);
 				}
 
 			}

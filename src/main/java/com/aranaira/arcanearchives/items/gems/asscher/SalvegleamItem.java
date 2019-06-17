@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.items.gems.asscher;
 
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
+import com.aranaira.arcanearchives.items.gems.GemUtil.GemStack;
 import com.aranaira.arcanearchives.util.NBTUtils;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -49,10 +50,10 @@ public class SalvegleamItem extends ArcaneGemItem {
 		return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
 	}
 
-	public static boolean canDoHealingPulse (ItemStack stack) {
+	public static boolean canDoHealingPulse (GemStack stack) {
 		boolean thresholdPassed = false;
 
-		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack.getStack());
 		if (!nbt.hasKey("pulse")) {
 			thresholdPassed = true;
 			nbt.setInteger("pulse", PULSE_TICKS);
@@ -66,7 +67,6 @@ public class SalvegleamItem extends ArcaneGemItem {
 				nbt.setInteger("pulse", timer);
 			}
 		}
-		stack.setTagCompound(nbt);
 
 		return thresholdPassed;
 	}

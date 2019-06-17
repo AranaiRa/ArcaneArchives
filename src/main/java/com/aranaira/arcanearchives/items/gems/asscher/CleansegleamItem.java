@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.items.gems.asscher;
 
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.gems.GemUtil;
+import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
@@ -49,7 +50,8 @@ public class CleansegleamItem extends ArcaneGemItem {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick (World world, EntityPlayer player, EnumHand hand) {
 		if (!world.isRemote) {
-			if (GemUtil.getCharge(player.getHeldItemMainhand()) > 0) {
+			AvailableGemsHandler handler = GemUtil.getHeldGem(player, hand);
+			if (GemUtil.getCharge(handler.getHeld()) > 0) {
 				int chargeCost = 0;
 				if (player.isSneaking()) {
 					/*//ArcaneArchives.logger.info("player is sneaking");
@@ -71,7 +73,7 @@ public class CleansegleamItem extends ArcaneGemItem {
 				}
 
 				if (chargeCost > 0) {
-					GemUtil.consumeCharge(player.getHeldItemMainhand(), chargeCost);
+					GemUtil.manuallyConsumeCharge(player.getHeldItemMainhand(), chargeCost);
 				}
 			}
 		}
@@ -89,11 +91,11 @@ public class CleansegleamItem extends ArcaneGemItem {
 		ArrayList<Potion> toRemove = new ArrayList<>();
 		int cost = 0;
 		for (PotionEffect effect : target.getActivePotionEffects()) {
-			if (effect.getEffectName() == MobEffects.HUNGER.getName()) {
+			if (effect.getEffectName().equals(MobEffects.HUNGER.getName())) {
 				toRemove.add(effect.getPotion());
-			} else if (effect.getEffectName() == MobEffects.NAUSEA.getName()) {
+			} else if (effect.getEffectName().equals(MobEffects.NAUSEA.getName())) {
 				toRemove.add(effect.getPotion());
-			} else if (effect.getEffectName() == MobEffects.POISON.getName()) {
+			} else if (effect.getEffectName().equals(MobEffects.POISON.getName())) {
 				toRemove.add(effect.getPotion());
 			} else if (hasMatterUpgrade) {
 				if (effect.getPotion().isBadEffect()) {

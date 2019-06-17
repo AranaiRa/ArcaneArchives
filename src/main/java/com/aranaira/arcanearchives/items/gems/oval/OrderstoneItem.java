@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.items.gems.oval;
 
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.gems.GemUtil;
+import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler;
 import com.aranaira.arcanearchives.util.NBTUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAnvil;
@@ -48,7 +49,8 @@ public class OrderstoneItem extends ArcaneGemItem {
 	public EnumActionResult onItemUse (EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote) {
 			Block block = world.getBlockState(pos).getBlock();
-			if (GemUtil.getCharge(player.getHeldItemMainhand()) > 0) {
+			AvailableGemsHandler handler = GemUtil.getHeldGem(player, hand);
+			if (handler.getHeld() != null && GemUtil.getCharge(handler.getHeld()) > 0) {
 				int chargeCost = 0;
 				/**
 				 * Gravel -> Cobblestone -> Stone
@@ -114,7 +116,7 @@ public class OrderstoneItem extends ArcaneGemItem {
 						world.setBlockState(pos, state.withProperty(BlockAnvil.DAMAGE, damage), 0);
 					}
 				}
-				GemUtil.consumeCharge(player.getHeldItemMainhand(), chargeCost);
+				GemUtil.consumeCharge(handler.getHeld(), chargeCost);
 				return EnumActionResult.SUCCESS;
 			}
 		}

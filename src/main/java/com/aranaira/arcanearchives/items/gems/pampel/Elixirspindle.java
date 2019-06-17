@@ -1,6 +1,8 @@
 package com.aranaira.arcanearchives.items.gems.pampel;
 
+import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.items.gems.*;
+import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketArcaneGem;
 import net.minecraft.client.resources.I18n;
@@ -41,8 +43,8 @@ public class Elixirspindle extends ArcaneGemItem {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick (World world, EntityPlayer player, EnumHand hand) {
 		if (!world.isRemote) {
-			ItemStack gem = player.getHeldItemMainhand();
-			if (GemUtil.getCharge(gem) == 0 && gem.getItem() instanceof Elixirspindle) {
+			AvailableGemsHandler handler = GemUtil.getHeldGem(player, hand);
+			if (handler.getHeld() != null && GemUtil.getCharge(handler.getHeld()) == 0 && handler.getHeld().getItem() == ItemRegistry.ELIXIRSPINDLE) {
 				for (int i = 0; i < player.inventory.mainInventory.size(); i++) {
 					ItemStack stack = player.inventory.mainInventory.get(i);
 					if (stack.getItem() == Items.NETHER_WART) {
@@ -50,7 +52,7 @@ public class Elixirspindle extends ArcaneGemItem {
 						if (numConsumed > stack.getCount()) {
 							numConsumed = stack.getCount();
 						}
-						GemUtil.restoreCharge(gem, numConsumed);
+						GemUtil.restoreCharge(handler.getHeld(), numConsumed);
 						stack.shrink(numConsumed);
 						//TODO: Play a particle effect
 						Vec3d pos = player.getPositionVector().add(0, 1, 0);

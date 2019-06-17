@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.items.gems.pendeloque;
 
 import com.aranaira.arcanearchives.entity.EntityItemMountaintear;
 import com.aranaira.arcanearchives.items.gems.*;
+import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketArcaneGem;
 import net.minecraft.client.resources.I18n;
@@ -46,12 +47,11 @@ public class MountaintearItem extends ArcaneGemItem {
 		World world = entityItem.world;
 
 		if (!world.isRemote && entityItem.isInLava()) {
-			ItemStack stack = entityItem.getItem();
-			if (GemUtil.getCharge(stack) < GemUtil.getMaxCharge(stack)) {
-				GemUtil.restoreCharge(stack, -1);
+			if (GemUtil.getCharge(entityItem) < GemUtil.getMaxCharge(entityItem)) {
+				GemUtil.restoreCharge(entityItem, -1);
 			}
 			if (!(entityItem instanceof EntityItemMountaintear)) {
-				EntityItem newStack = new EntityItemMountaintear(world, entityItem.posX, entityItem.posY, entityItem.posZ, stack);
+				EntityItem newStack = new EntityItemMountaintear(world, entityItem.posX, entityItem.posY, entityItem.posZ, entityItem.getItem());
 				world.spawnEntity(newStack);
 				entityItem.setDead();
 			}
@@ -66,7 +66,8 @@ public class MountaintearItem extends ArcaneGemItem {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick (World world, EntityPlayer player, EnumHand hand) {
 		if (!world.isRemote) {
-			if (GemUtil.getCharge(player.getHeldItem(hand)) > 0) {
+			AvailableGemsHandler handler = GemUtil.getHeldGem(player, hand);
+			if (handler.getHeld() != null && GemUtil.getCharge(handler.getHeld()) > 0) {
 				Vec3d start = new Vec3d(player.posX, player.posY + player.getEyeHeight(), player.posZ);
 				Vec3d dir = player.getLookVec();
 				Vec3d rayTarget = new Vec3d(start.x + dir.x * 40, start.y + dir.y * 40, start.z + dir.z * 40);
@@ -83,7 +84,7 @@ public class MountaintearItem extends ArcaneGemItem {
 					Blocks.LAVA.neighborChanged(Blocks.LAVA.getDefaultState(), world, pos.offset(facing), Blocks.LAVA, null);
 
 					if (!player.capabilities.isCreativeMode) {
-						GemUtil.consumeCharge(player.getHeldItemMainhand(), 1);
+						GemUtil.consumeCharge(handler.getHeld(), 1);
 					}
 
 					PacketArcaneGem packet = new PacketArcaneGem(cut, color, start, end);
