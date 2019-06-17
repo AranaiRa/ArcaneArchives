@@ -149,7 +149,7 @@ public class RecipeLibrary {
 
 			MINDSPINDLE_RECIPE = GCTRecipeList.makeAndAddRecipe("mindspindle", new ItemStack(ItemRegistry.MINDSPINDLE), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyeGreen", 4), new IngredientStack(Items.ENCHANTED_BOOK), new IngredientStack(Ingredient.fromItem(Items.EMERALD), 2));
 
-			ELIXIRSPINDLE_RECIPE = GCTRecipeList.makeAndAddRecipe("elixirspindle", new ItemStack(ItemRegistry.ELIXIRSPINDLE), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyePurple", 4), new IngredientStack(Blocks.BREWING_STAND), new IngredientStack(Items.EMERALD, 2), new IngredientStack(Items.REDSTONE, 4), new IngredientStack(Items.GLOWSTONE_DUST, 4));
+			ELIXIRSPINDLE_RECIPE = GCTRecipeList.makeAndAddRecipe("elixirspindle", new ItemStack(ItemRegistry.ELIXIRSPINDLE), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyePurple", 4), new IngredientStack(Items.BREWING_STAND), new IngredientStack(Items.EMERALD, 2), new IngredientStack(Items.REDSTONE, 4), new IngredientStack(Items.GLOWSTONE_DUST, 4));
 
 			RIVERTEAR_RECIPE = GCTRecipeList.makeAndAddRecipe("rivertear", new ItemStack(ItemRegistry.RIVERTEAR), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack(Ingredient.fromItem(Items.SUGAR), 4), new IngredientStack(Ingredient.fromItem(Items.WATER_BUCKET)), new IngredientStack(Ingredient.fromItem(Items.WATER_BUCKET)));
 
