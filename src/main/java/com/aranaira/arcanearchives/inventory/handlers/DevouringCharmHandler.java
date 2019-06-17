@@ -9,7 +9,11 @@ import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.UniversalBucket;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
@@ -25,30 +29,25 @@ public class DevouringCharmHandler implements INBTSerializable<NBTTagCompound> {
 					GemUtil.restoreCharge(stack, -1);
 					return true;
 				}
-				boolean validItem = false;
-				validItem |= stack.getItem() == Items.WATER_BUCKET;
-				validItem |= stack.getItem() == Items.LAVA_BUCKET;
-				validItem |= stack.getItem() == Items.MILK_BUCKET;
-				validItem |= stack.getItem() instanceof UniversalBucket;
-				return validItem;
+
+				return stack.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
 			}
-			else
+			else {
 				return true;
+			}
 		}
 
 		@Override
 		protected void onContentsChanged (int slot) {
-			Item item = getStackInSlot(slot).getItem();
-			boolean shouldSwap = false;
-			shouldSwap |= item == Items.WATER_BUCKET;
-			shouldSwap |= item == Items.LAVA_BUCKET;
-			shouldSwap |= item == Items.MILK_BUCKET;
-			shouldSwap |= item instanceof UniversalBucket;
-
-			if(shouldSwap) {
-				setStackInSlot(slot, new ItemStack(Items.BUCKET));
+			ItemStack stack = getStackInSlot(slot);
+			IFluidHandlerItem cap = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
+			if (cap != null) {
+				IFluidTankProperties[] props = cap.getTankProperties();
+				if (props.length >= 1) {
+					FluidStack drain = props[0].getContents();
+					cap.drain(drain, true);
+				}
 			}
-			//TODO: Dump fluid contents of things with a fluid capability
 			super.onContentsChanged(slot);
 		}
 	};
