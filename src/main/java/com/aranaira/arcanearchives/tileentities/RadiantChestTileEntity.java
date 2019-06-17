@@ -1,6 +1,8 @@
 package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.capabilities.tracking.CapabilityItemTracking;
+import com.aranaira.arcanearchives.capabilities.tracking.ItemTrackingChest;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketRadiantChest;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
@@ -20,6 +22,7 @@ public class RadiantChestTileEntity extends ManifestTileEntity {
 	private final RadiantChestHandler inventory = new RadiantChestHandler(54);
 	private ItemStack displayStack = ItemStack.EMPTY;
 	private EnumFacing displayFacing = EnumFacing.NORTH;
+	private ItemTrackingChest capability = null;
 	public String chestName = "";
 
 	public RadiantChestTileEntity () {
@@ -116,6 +119,8 @@ public class RadiantChestTileEntity extends ManifestTileEntity {
 	public boolean hasCapability (@Nonnull Capability<?> capability, EnumFacing facing) {
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			return true;
+		} else if (capability == CapabilityItemTracking.ITEM_TRACKING_CAPABILITY) {
+			return true;
 		}
 		return super.hasCapability(capability, facing);
 	}
@@ -124,6 +129,11 @@ public class RadiantChestTileEntity extends ManifestTileEntity {
 	public <T> T getCapability (@Nonnull Capability<T> capability, EnumFacing facing) {
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(inventory);
+		} else if (capability == CapabilityItemTracking.ITEM_TRACKING_CAPABILITY) {
+			if (this.capability == null) {
+				this.capability = new ItemTrackingChest(inventory);
+			}
+			return CapabilityItemTracking.ITEM_TRACKING_CAPABILITY.cast(this.capability);
 		}
 		return super.getCapability(capability, facing);
 	}
@@ -148,7 +158,7 @@ public class RadiantChestTileEntity extends ManifestTileEntity {
 		}
 	}
 
-	private class RadiantChestHandler extends ItemStackHandler {
+	public class RadiantChestHandler extends ItemStackHandler {
 		public int emptySlots = 0;
 		public Int2IntOpenHashMap itemReference = new Int2IntOpenHashMap();
 

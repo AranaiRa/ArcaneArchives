@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.inventory.handlers;
 
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.util.ItemUtilities;
+import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -170,6 +171,10 @@ public class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCo
 
 	public ItemStack getItem () {
 		return this.reference;
+	}
+
+	public int getPacked () {
+		return RecipeItemHelper.pack(this.reference);
 	}
 
 	public void setItem (ItemStack reference) {

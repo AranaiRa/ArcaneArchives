@@ -1,5 +1,7 @@
 package com.aranaira.arcanearchives.tileentities;
 
+import com.aranaira.arcanearchives.capabilities.tracking.CapabilityItemTracking;
+import com.aranaira.arcanearchives.capabilities.tracking.ItemTrackingTrove;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.inventory.handlers.TroveItemHandler;
 import com.aranaira.arcanearchives.util.ItemUtilities;
@@ -23,6 +25,7 @@ public class RadiantTroveTileEntity extends ManifestTileEntity {
 	private long lastClick = 0;
 	private int lastTick = 0;
 	private UUID lastUUID = null;
+	private ItemTrackingTrove capability = null;
 
 	public void update () {
 		if (world.isRemote) {
@@ -187,6 +190,8 @@ public class RadiantTroveTileEntity extends ManifestTileEntity {
 	public boolean hasCapability (@Nonnull Capability<?> capability, EnumFacing facing) {
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			return true;
+		} else if (capability == CapabilityItemTracking.ITEM_TRACKING_CAPABILITY) {
+			return true;
 		}
 		return super.hasCapability(capability, facing);
 	}
@@ -195,6 +200,11 @@ public class RadiantTroveTileEntity extends ManifestTileEntity {
 	public <T> T getCapability (@Nonnull Capability<T> capability, EnumFacing facing) {
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(inventory);
+		} else if (capability == CapabilityItemTracking.ITEM_TRACKING_CAPABILITY) {
+			if (this.capability == null) {
+				this.capability = new ItemTrackingTrove(inventory);
+			}
+			return CapabilityItemTracking.ITEM_TRACKING_CAPABILITY.cast(this.capability);
 		}
 		return super.getCapability(capability, facing);
 	}
