@@ -117,7 +117,9 @@ public class ContainerDevouringCharm extends Container {
 		if(!player.world.isRemote) {
 			ItemStack stack = getSlot(36).getStack();
 			if (stack != null) {
-				player.world.spawnEntity(new EntityItem(player.world, player.posX, player.posY, player.posZ, stack));
+				EntityItem item = new EntityItem(player.world, player.posX, player.posY, player.posZ, stack);
+				item.setPickupDelay(0);
+				player.world.spawnEntity(item);
 			}
 		}
 	}
