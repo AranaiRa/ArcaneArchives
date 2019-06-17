@@ -55,10 +55,6 @@ public class MappingHandler {
 				return ItemRegistry.COMPONENT_RADIANTDUST;
 			case "item_component_scintillatinginlay":
 				return ItemRegistry.COMPONENT_SCINTILLATINGINLAY;
-			case "item_upgrade_devouringcharm":
-				return ItemRegistry.DEVOURING_CHARM;
-			case "item_fabrial":
-				return ItemRegistry.FABRIAL;
 			case "item_murdergleam":
 				return ItemRegistry.MURDERGLEAM;
 			case "item_munchstone":
@@ -77,8 +73,6 @@ public class MappingHandler {
 				return ItemRegistry.LETTER_OF_RESIGNATION;
 			case "item_manifest":
 				return ItemRegistry.MANIFEST;
-			case "item_radiantamphora":
-				return ItemRegistry.RADIANT_AMPHORA;
 			case "item_rawquartz":
 				return ItemRegistry.RAW_RADIANT_QUARTZ;
 			case "item_sceptermanipulation":
