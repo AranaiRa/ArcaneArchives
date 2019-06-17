@@ -51,7 +51,7 @@ public class CleansegleamItem extends ArcaneGemItem {
 	public ActionResult<ItemStack> onItemRightClick (World world, EntityPlayer player, EnumHand hand) {
 		if (!world.isRemote) {
 			AvailableGemsHandler handler = GemUtil.getHeldGem(player, hand);
-			if (GemUtil.getCharge(handler.getHeld()) > 0) {
+			if (handler.getHeld() != null && GemUtil.getCharge(handler.getHeld()) > 0) {
 				int chargeCost = 0;
 				if (player.isSneaking()) {
 					/*//ArcaneArchives.logger.info("player is sneaking");
@@ -73,7 +73,7 @@ public class CleansegleamItem extends ArcaneGemItem {
 				}
 
 				if (chargeCost > 0) {
-					GemUtil.manuallyConsumeCharge(player.getHeldItemMainhand(), chargeCost);
+					GemUtil.consumeCharge(handler.getHeld(), chargeCost);
 				}
 			}
 		}
