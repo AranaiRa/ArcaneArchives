@@ -18,6 +18,7 @@ import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.gems.GemUtil;
 import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler;
 import com.aranaira.arcanearchives.items.gems.GemUtil.GemStack;
+import com.aranaira.arcanearchives.items.gems.asscher.AgegleamItem;
 import com.aranaira.arcanearchives.items.gems.asscher.MurdergleamItem;
 import com.aranaira.arcanearchives.items.gems.asscher.SalvegleamItem;
 import com.aranaira.arcanearchives.items.gems.asscher.Slaughtergleam;
@@ -54,6 +55,7 @@ import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -79,6 +81,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
+import java.util.Iterator;
 import java.util.Random;
 
 @Mod.EventBusSubscriber
@@ -389,7 +392,7 @@ public class AAEventHandler {
 				/**
 				 * Salvegleam
 				 */
-				if (gem.getItem() instanceof SalvegleamItem) {
+				if (gem.getItem() == ItemRegistry.SALVEGLEAM) {
 					if (GemUtil.getCharge(gem) > 0 && GemUtil.isToggledOn(gem)) {
 						if (player.getHealth() < player.getMaxHealth()) {
 							if (SalvegleamItem.canDoHealingPulse(gem)) {
@@ -405,10 +408,18 @@ public class AAEventHandler {
 				/**
 				 * Stormway
 				 */
-				else if (gem.getItem() instanceof StormwayItem) {
+				else if (gem.getItem() == ItemRegistry.STORMWAY) {
 					if (GemUtil.getCharge(gem) < GemUtil.getMaxCharge(gem) && player.world.isRaining()) {
 						GemUtil.restoreCharge(gem, -1);
 						player.playSound(SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, 1.0F, 1.0F);
+					}
+				}
+				/**
+				 * Agegleam
+				 */
+				else if (gem.getItem() == ItemRegistry.AGEGLEAM) {
+					if (GemUtil.getCharge(gem) < GemUtil.getMaxCharge(gem)) {
+						AgegleamItem.processRechargeTime(gem);
 					}
 				}
 			}
@@ -480,48 +491,6 @@ public class AAEventHandler {
 	}
 
 	@SubscribeEvent
-	public static void onItemPickup (PlayerEvent.ItemPickupEvent event) {
-		if (!event.player.world.isRemote) {
-			/*boolean hasTransferstone = false;
-			ItemStack gem = null;
-			Item item = null;
-			ArrayList<ItemStack> matchedStacks = new ArrayList<>();
-			for(ItemStack stack : event.player.inventory.mainInventory) {
-				if(stack.getItem() instanceof TransferstoneItem) {
-					gem = stack;
-					item = TransferstoneItem.getLinkedItem(stack);
-					hasTransferstone = true;
-				}
-			}
-
-			if(hasTransferstone) {
-				for(ItemStack stack : event.player.inventory.mainInventory) {
-					if(stack.getItem() == item) {
-						matchedStacks.add(stack);
-					}
-				}
-			}
-
-			for(int i=matchedStacks.size()-1; i>=0; i--) {
-				ItemStack stack = matchedStacks.get(i);
-				if(i == 0) {
-					if(matchedStacks.get(0).getCount() == 1)
-						TransferstoneItem.insertLinkedItem(stack);
-					else {
-						ItemStack allButOne = stack.copy();
-						allButOne.setCount(stack.getCount()-1);
-						stack.shrink(allButOne.getCount());
-						TransferstoneItem.insertLinkedItem(allButOne);
-					}
-				}
-				else {
-					TransferstoneItem.insertLinkedItem(stack);
-				}
-			}*/
-		}
-	}
-
-	@SubscribeEvent
 	public static void onItemUse (LivingEntityUseItemEvent event) {
 		if (!event.getEntityLiving().world.isRemote && event.getEntityLiving() instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) event.getEntityLiving();
@@ -579,6 +548,25 @@ public class AAEventHandler {
 						if (GemUtil.getCharge(gem) > 0) {
 							GemUtil.consumeCharge(gem, 1);
 						}
+					}
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void onEndermanTeleport (EnderTeleportEvent event) {
+		if(!event.getEntityLiving().world.isRemote) {
+			EntityLivingBase target = event.getEntityLiving();
+			double cubeRadius = 10.5;
+			AxisAlignedBB aabb = new AxisAlignedBB(target.posX - cubeRadius, target.posY - cubeRadius, target.posZ - cubeRadius, target.posX + cubeRadius, target.posY + cubeRadius, target.posZ + cubeRadius);
+			for(EntityPlayer player : target.world.getEntitiesWithinAABB(EntityPlayer.class, aabb)) {
+				AvailableGemsHandler handler = GemUtil.getAvailableGems(player);
+				for (Iterator<GemStack> it = handler.iterator(); it.hasNext(); ) {
+					GemStack gem = it.next();
+					if(gem.getItem() == ItemRegistry.SWITCHGLEAM) {
+						GemUtil.restoreCharge(gem, 3);
+						event.setCanceled(true);
 					}
 				}
 			}

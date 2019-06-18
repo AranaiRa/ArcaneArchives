@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
 import com.aranaira.arcanearchives.init.BlockRegistry;
+import com.aranaira.arcanearchives.util.IHasModel;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
@@ -22,7 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class QuartzSliver extends BlockDirectionalTemplate {
+public class QuartzSliver extends BlockDirectionalTemplate implements IHasModel {
 
 	public static final String name = "quartz_sliver";
 
@@ -36,6 +37,9 @@ public class QuartzSliver extends BlockDirectionalTemplate {
 		IBlockState state = worldIn.getBlockState(pos);
 		return state.getBlock().canPlaceTorchOnTop(state, worldIn, pos);
 	}
+
+	@Override
+	public boolean hasOBJModel() { return true; }
 
 	@Override
 	public boolean canPlaceTorchOnTop (IBlockState state, IBlockAccess world, BlockPos pos) {
@@ -147,17 +151,17 @@ public class QuartzSliver extends BlockDirectionalTemplate {
 	public AxisAlignedBB getBoundingBox (IBlockState state, IBlockAccess source, BlockPos pos) {
 		EnumFacing facing = state.getValue(FACING);
 		if (facing == EnumFacing.UP) {
-			return new AxisAlignedBB(0.4375, 0.0, 0.4375, 0.5625, 0.375, 0.5625);
+			return new AxisAlignedBB(0.4, 0.0, 0.4, 0.6, 0.5, 0.6);
 		} else if (facing == EnumFacing.DOWN) {
-			return new AxisAlignedBB(0.4375, 0.625, 0.4375, 0.5625, 1.0, 0.5625);
+			return new AxisAlignedBB(0.4, 0.5, 0.4, 0.6, 1.0, 0.6);
 		} else if (facing == EnumFacing.SOUTH) {
-			return new AxisAlignedBB(0.4375, 0.4375, 0.0, 0.5625, 0.5625, 0.375);
+			return new AxisAlignedBB(0.4, 0.4, 0.0, 0.6, 0.6, 0.5);
 		} else if (facing == EnumFacing.NORTH) {
-			return new AxisAlignedBB(0.4375, 0.4375, 0.625, 0.5625, 0.5625, 1.0);
+			return new AxisAlignedBB(0.4, 0.4, 0.5, 0.6, 0.6, 1.0);
 		} else if (facing == EnumFacing.EAST) {
-			return new AxisAlignedBB(0.0, 0.4375, 0.4375, 0.375, 0.5625, 0.5625);
+			return new AxisAlignedBB(0.0, 0.4, 0.4, 0.5, 0.6, 0.6);
 		} else {
-			return new AxisAlignedBB(0.625, 0.4375, 0.4375, 1.0, 0.5625, 0.5625);
+			return new AxisAlignedBB(0.5, 0.4, 0.4, 1.0, 0.6, 0.6);
 		}
 	}
 
