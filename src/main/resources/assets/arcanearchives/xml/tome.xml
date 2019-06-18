@@ -43,7 +43,9 @@
 
         <stack item="arcanearchives:slaughtergleam">Slaughtergleam</stack>
         <stack item="arcanearchives:murdergleam">Murdergleam</stack>
+        <stack item="arcanearchives:agegleam">Agegleam</stack>
         <stack item="arcanearchives:cleansegleam">Cleansegleam</stack>
+        <stack item="arcanearchives:switchgleam">Switchgleam</stack>
         <stack item="arcanearchives:salvegleam">Salvegleam</stack>
 
         <stack item="arcanearchives:munchgleam">Munchstone</stack>
@@ -108,7 +110,9 @@
             <space height="8"/>
             <p><stack item="arcanearchives:slaughtergleam"/> <link ref="Slaughtergleam">Slaughtergleam</link></p>
             <p><stack item="arcanearchives:murdergleam"/> <link ref="Murdergleam">Murdergleam</link></p>
+            <p><stack item="arcanearchives:agegleam"/> <link ref="Agegleam">Agegleam</link></p>
             <p><stack item="arcanearchives:cleansegleam"/> <link ref="Cleansegleam">Cleansegleam</link></p>
+            <p><stack item="arcanearchives:switchgleam"/> <link ref="Switchgleam">Switchgleam</link></p>
             <p><stack item="arcanearchives:salvegleam"/> <link ref="Salvegleam">Salvegleam</link></p>
             <space height="8"/>
             <p><stack item="arcanearchives:munchstone"/> <link ref="Munchstone">Munchstone</link></p>
@@ -743,7 +747,11 @@
             <p align="center">
                 <stack item="arcanearchives:slaughtergleam" scale="2.0"/>
                 <stack item="arcanearchives:murdergleam" scale="2.0"/>
+                <stack item="arcanearchives:agegleam" scale="2.0"/>
+                <stack item="arcanearchives:switchgleam" scale="2.0"/>
                 <stack item="arcanearchives:salvegleam" scale="2.0"/>
+            </p>
+            <p align="center">
                 <stack item="arcanearchives:mindspindle" scale="2.0"/>
                 <stack item="arcanearchives:elixirspindle" scale="2.0"/>
                 <stack item="arcanearchives:phoenixway" scale="2.0"/>
@@ -1299,6 +1307,29 @@
         </section>
     </chapter>
 
+    <chapter id="Agegleam">
+        <section>
+            <page_title>
+                <title>Agegleam</title>
+            </page_title>
+            <p align="center"><stack item="arcanearchives:agegleam" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                An Agegleam is an Arcane Gem formed from a green-spectrum piece of <link ref="shaped_quartz">Shaped Radiant Quartz</link> in an asscher cut.
+            </p>
+            <p>
+                When activated, the amount of time until nearby animals grow up will be significantly reduced, at the cost of charge for each animal affected.
+            </p>
+            <p>
+                <image src="arcanearchives:items/gems/asscher/dun" tw="16" th="16"/> To recharge a dun Agegleam, simply hold onto it. It regains one point of charge every three minutes.
+            </p>
+            <horizontal_rule/>
+            <p>
+                <stack item="arcanearchives:gemcutters_table" /> Murdergleams can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+            </p>
+        </section>
+    </chapter>
+
     <chapter id="Cleansegleam">
         <section>
             <page_title>
@@ -1321,6 +1352,32 @@
             <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Cleansegleams can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+            </p>
+        </section>
+    </chapter>
+
+    <chapter id="Switchgleam">
+        <section>
+            <page_title>
+                <title>Switchgleam</title>
+            </page_title>
+            <p align="center"><stack item="arcanearchives:switchgleam" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                A Switchgleam is an Arcane Gem formed from a purple-spectrum piece of <link ref="shaped_quartz">Shaped Radiant Quartz</link> in an asscher cut.
+            </p>
+            <p>
+                When activated, a Switchgleam will swap the positions of you and the entity you're looking at, at the cost of one point of charge.
+            </p>
+            <p>
+                While held, Endermen within 10 blocks will have their teleportation attempts absorbed.
+            </p>
+            <p>
+                <image src="arcanearchives:items/gems/asscher/dun" tw="16" th="16"/> To recharge a dun Switchgleam, allow it to absorb Enderman teleportation. Each teleport attempt absorbed restores three points of charge.
+            </p>
+            <horizontal_rule/>
+            <p>
+                <stack item="arcanearchives:gemcutters_table" /> Salvegleams can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
         </section>
     </chapter>
