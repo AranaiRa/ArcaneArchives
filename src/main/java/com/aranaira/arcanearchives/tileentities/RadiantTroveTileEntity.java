@@ -20,7 +20,7 @@ import net.minecraftforge.items.IItemHandler;
 import javax.annotation.Nonnull;
 import java.util.UUID;
 
-public class RadiantTroveTileEntity extends ManifestTileEntity {
+public class RadiantTroveTileEntity extends ImmanenceTileEntity implements ManifestTileEntity {
 	private final TroveItemHandler inventory = new TroveItemHandler(this::update);
 	private long lastClick = 0;
 	private int lastTick = 0;

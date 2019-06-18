@@ -52,14 +52,6 @@ public class IteRef {
 		return tile.get();
 	}
 
-	public ManifestTileEntity getManifestServerTile () {
-		if (ManifestTileEntity.class.isAssignableFrom(this.clazz)) {
-			return (ManifestTileEntity) getServerTile();
-		} else {
-			return null;
-		}
-	}
-
 	@Nullable
 	public ImmanenceTileEntity getTile () {
 		if (tile == null) {

@@ -3,22 +3,18 @@ package com.aranaira.arcanearchives.tileentities;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 
-public abstract class ManifestTileEntity extends ImmanenceTileEntity {
-	public ManifestTileEntity (String name) {
-		super(name);
-	}
-
-	public boolean isSingleStackInventory () {
+public interface ManifestTileEntity {
+	default boolean isSingleStackInventory () {
 		return false;
 	}
 
-	public ItemStack getSingleStack () {
+	default ItemStack getSingleStack () {
 		return ItemStack.EMPTY;
 	}
 
-	public abstract String getDescriptor ();
+	String getDescriptor ();
 
-	public abstract String getChestName ();
+	String getChestName ();
 
-	public abstract IItemHandler getInventory ();
+	IItemHandler getInventory ();
 }

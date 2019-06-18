@@ -321,33 +321,34 @@ public class ServerNetwork implements IServerNetwork {
 		int maxDistance = getMaxDistance();
 
 		for (IteRef ref : getManifestTileEntities()) {
-			ManifestTileEntity ite = ref.getManifestServerTile();
+			ImmanenceTileEntity ite = ref.getTile();
+			ManifestTileEntity mte = (ManifestTileEntity) ite;
 			if (ite == null) {
 				continue;
 			}
 
-			if (done.contains(ite)) {
+			if (done.contains(mte)) {
 				continue;
 			}
 
 			boolean outOfRange = distanceSq(ite.getPos(), player.getPosition()) >= maxDistance;
 			int dimId = ite.getWorld().provider.getDimension();
 
-			if (ite.isSingleStackInventory()) {
-				ItemStack is = ite.getSingleStack();
+			if (mte.isSingleStackInventory()) {
+				ItemStack is = mte.getSingleStack();
 				if (!is.isEmpty()) {
-					preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(ite.getPos(), ite.getChestName(), is.getCount()), outOfRange));
+					preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(ite.getPos(), mte.getChestName(), is.getCount()), outOfRange));
 				}
 			} else {
 				if (ite instanceof MonitoringCrystalTileEntity) {
-					MonitoringCrystalTileEntity mte = (MonitoringCrystalTileEntity) ite;
+					MonitoringCrystalTileEntity mce = (MonitoringCrystalTileEntity) ite;
 
-					BlockPos tar = mte.getTarget();
+					BlockPos tar = mce.getTarget();
 					if (tar == null) {
 						continue;
 					}
 
-					BlockPosDimension ttar = new BlockPosDimension(tar, mte.dimension);
+					BlockPosDimension ttar = new BlockPosDimension(tar, mce.dimension);
 
 					if (positions.contains(ttar)) {
 						if (player != null) {
@@ -367,21 +368,21 @@ public class ServerNetwork implements IServerNetwork {
 								continue;
 							}
 
-							preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(mte.getTarget(), mte.getDescriptor(), is.getCount()), outOfRange));
+							preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(mce.getTarget(), mte.getDescriptor(), is.getCount()), outOfRange));
 						}
 					}
 				} else {
-					for (ItemStack is : new SlotIterable(ite.getInventory())) {
+					for (ItemStack is : new SlotIterable(mte.getInventory())) {
 						if (is.isEmpty()) {
 							continue;
 						}
 
-						preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(ite.getPos(), ite.getChestName(), is.getCount()), outOfRange));
+						preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(ite.getPos(), mte.getChestName(), is.getCount()), outOfRange));
 					}
 				}
 			}
 
-			done.add(ite);
+			done.add(mte);
 		}
 
 		List<ManifestEntry> consolidated = ItemStackConsolidator.ConsolidateManifest(preManifest);

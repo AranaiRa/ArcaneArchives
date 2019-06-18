@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.ManifestTileEntity;
 import com.aranaira.arcanearchives.tileentities.MonitoringCrystalTileEntity;
 import com.aranaira.arcanearchives.util.ItemStackConsolidator;
@@ -91,12 +92,13 @@ public class HiveNetwork implements IHiveBase {
 
 		for (ServerNetwork network : getCombinedNetworks()) {
 			for (IteRef ref : network.getManifestTileEntities()) {
-				ManifestTileEntity ite = ref.getManifestServerTile();
+				ImmanenceTileEntity ite = ref.getTile();
+				ManifestTileEntity mte = (ManifestTileEntity) ite;
 				if (ite == null) {
 					continue;
 				}
 
-				if (done.contains(ite)) {
+				if (done.contains(mte)) {
 					continue;
 				}
 
@@ -105,21 +107,21 @@ public class HiveNetwork implements IHiveBase {
 
 				int dimId = ite.getWorld().provider.getDimension();
 
-				if (ite.isSingleStackInventory()) {
-					ItemStack is = ite.getSingleStack();
+				if (mte.isSingleStackInventory()) {
+					ItemStack is = mte.getSingleStack();
 					if (!is.isEmpty()) {
-						preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(ite.getPos(), ite.getChestName(), is.getCount()), outOfRange));
+						preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(ite.getPos(), mte.getChestName(), is.getCount()), outOfRange));
 					}
 				} else {
-					if (ite instanceof MonitoringCrystalTileEntity) {
-						MonitoringCrystalTileEntity mte = (MonitoringCrystalTileEntity) ite;
+					if (mte instanceof MonitoringCrystalTileEntity) {
+						MonitoringCrystalTileEntity mce = (MonitoringCrystalTileEntity) ite;
 
-						BlockPos tar = mte.getTarget();
+						BlockPos tar = mce.getTarget();
 						if (tar == null) {
 							continue;
 						}
 
-						BlockPosDimension ttar = new BlockPosDimension(tar, mte.dimension);
+						BlockPosDimension ttar = new BlockPosDimension(tar, mce.dimension);
 
 						if (positions.contains(ttar)) {
 							if (player != null) {
@@ -139,21 +141,21 @@ public class HiveNetwork implements IHiveBase {
 									continue;
 								}
 
-								preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(mte.getTarget(), mte.getDescriptor(), is.getCount()), outOfRange));
+								preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(mce.getTarget(), mte.getDescriptor(), is.getCount()), outOfRange));
 							}
 						}
 					} else {
-						for (ItemStack is : new SlotIterable(ite.getInventory())) {
+						for (ItemStack is : new SlotIterable(mte.getInventory())) {
 							if (is.isEmpty()) {
 								continue;
 							}
 
-							preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(ite.getPos(), ite.getChestName(), is.getCount()), outOfRange));
+							preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(ite.getPos(), mte.getChestName(), is.getCount()), outOfRange));
 						}
 					}
 				}
 
-				done.add(ite);
+				done.add(mte);
 			}
 		}
 

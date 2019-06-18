@@ -19,7 +19,7 @@ public class TileList extends ReferenceList<IteRef> {
 		return new TileListIterable(Iterators.filter(iterator(), (f) -> f != null && f.isValid()));
 	}
 
-	public TileListIterable filterAssignableClass (Class<? extends AATileEntity> clazz) {
+	public TileListIterable filterAssignableClass (Class<?> clazz) {
 		invalidate();
 		return new TileListIterable(Iterators.filter(iterator(), (f) -> f != null && f.isValid() && clazz.isAssignableFrom(f.clazz)));
 	}

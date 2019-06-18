@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -18,7 +19,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 
-public class RadiantChestTileEntity extends ManifestTileEntity {
+public class RadiantChestTileEntity extends ImmanenceTileEntity implements ManifestTileEntity {
 	private final RadiantChestHandler inventory = new RadiantChestHandler(54);
 	private ItemStack displayStack = ItemStack.EMPTY;
 	private EnumFacing displayFacing = EnumFacing.NORTH;

@@ -12,7 +12,7 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class MonitoringCrystalTileEntity extends ManifestTileEntity {
+public class MonitoringCrystalTileEntity extends ImmanenceTileEntity implements ManifestTileEntity {
 	private BlockPos target = null;
 
 	public MonitoringCrystalTileEntity () {
