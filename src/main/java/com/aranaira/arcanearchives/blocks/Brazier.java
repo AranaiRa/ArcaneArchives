@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.tileentities.BrazierTileEntity;
+import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -11,11 +12,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -71,11 +69,14 @@ public class Brazier extends BlockTemplate {
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
-		if (!worldIn.isRemote)
+		// Checking for main hand even though we don't care because this event is fired multiple times
+		if (!worldIn.isRemote && hand == EnumHand.MAIN_HAND)
 		{
-			BrazierTileEntity bte = WorldUtil.getTileEntity(BrazierTileEntity.class, playerIn.dimension, pos);
-			if(bte != null) {
-				bte.tryInsert(playerIn.getHeldItemMainhand());
+			BrazierTileEntity te = WorldUtil.getTileEntity(BrazierTileEntity.class, playerIn.dimension, pos);
+			if(te != null) {
+				// This handles empty hand, right-click and double-right-click
+				// TODO: your sneak right click is in another castle
+				te.beginInsert(playerIn);
 			}
 		}
 
@@ -85,14 +86,25 @@ public class Brazier extends BlockTemplate {
 	@Override
 	public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entityIn)
 	{
-		if(!entityIn.world.isRemote && entityIn instanceof EntityItem) {
-			EntityItem ei = (EntityItem)entityIn;
-			BrazierTileEntity bte = (BrazierTileEntity) worldIn.getTileEntity(pos);
-			if(bte != null) {
-				if(bte.tryInsert(ei.getItem())) {
-					entityIn.setDead();
+		if(entityIn instanceof EntityItem) {
+			BrazierTileEntity te = WorldUtil.getTileEntity(BrazierTileEntity.class, worldIn, pos);
+			if(te != null) {
+				if (!worldIn.isRemote) {
+					te.beginInsert(entityIn);
 				}
+
+				entityIn.setDead();
 			}
 		}
+	}
+
+	@Override
+	public boolean hasTileEntity (IBlockState state) {
+		return true;
+	}
+
+	@Override
+	public TileEntity createTileEntity (World world, IBlockState state) {
+		return new BrazierTileEntity();
 	}
 }

@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity.RadiantCh
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.items.IItemHandler;
 
 public class ItemTrackingChest implements IItemTracking {
 	public final RadiantChestHandler handler;
@@ -42,7 +43,7 @@ public class ItemTrackingChest implements IItemTracking {
 	}
 
 	@Override
-	public Int2IntOpenHashMap internal () {
-		return this.handler.itemReference;
+	public IItemHandler internal () {
+		return this.handler;
 	}
 }

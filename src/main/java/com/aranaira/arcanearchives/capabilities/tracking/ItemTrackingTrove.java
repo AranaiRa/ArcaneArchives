@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.inventory.handlers.TroveItemHandler;
 import com.aranaira.arcanearchives.util.ItemUtilities;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.items.IItemHandler;
 
 public class ItemTrackingTrove implements IItemTracking {
 	private final TroveItemHandler handler;
@@ -48,7 +49,7 @@ public class ItemTrackingTrove implements IItemTracking {
 	}
 
 	@Override
-	public Int2IntOpenHashMap internal () {
-		return null;
+	public IItemHandler internal () {
+		return this.handler;
 	}
 }
