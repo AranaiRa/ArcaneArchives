@@ -37,6 +37,11 @@ public class QuartzSliver extends BlockDirectionalTemplate {
 		return state.getBlock().canPlaceTorchOnTop(state, worldIn, pos);
 	}
 
+	@Override
+	public boolean canPlaceTorchOnTop (IBlockState state, IBlockAccess world, BlockPos pos) {
+		return false;
+	}
+
 	protected boolean checkForDrop (World worldIn, BlockPos pos, IBlockState state) {
 		if (state.getBlock() == this && this.canPlaceAt(worldIn, pos, state.getValue(FACING))) {
 			return true;
