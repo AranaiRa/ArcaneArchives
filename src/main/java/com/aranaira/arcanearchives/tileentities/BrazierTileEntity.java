@@ -6,7 +6,6 @@ import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.util.ItemUtilities;
 import com.aranaira.arcanearchives.util.types.IteRef;
-import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.entity.Entity;
@@ -22,6 +21,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemHandlerHelper;
+import org.apache.commons.lang3.builder.CompareToBuilder;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -79,9 +79,13 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 				IntOpenHashSet doneSlots = new IntOpenHashSet();
 				// TODO: ignore hotbar slots
 				for (int i = 9; i < playerInventory.getSlots(); i++) {
-					if (doneSlots.contains(i)) continue;
+					if (doneSlots.contains(i)) {
+						continue;
+					}
 					ItemStack ref = playerInventory.getStackInSlot(i);
-					if (ref.isEmpty()) continue;
+					if (ref.isEmpty()) {
+						continue;
+					}
 					List<InventoryRef> references = collectReferences(player, ref);
 					for (InventoryRef ref2 : references) {
 						doneSlots.add(ref2.slot);
@@ -156,10 +160,8 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 
 	private List<CapabilityRef> collectCapabilities (ItemStack reference) {
 		int ref = RecipeItemHelper.pack(reference);
-		Comparator<CapabilityRef> comp1 = (o1, o2) -> Boolean.compare(o1.isTrove, o2.isTrove);
-		Comparator<CapabilityRef> comp2 = (o1, o2) -> Boolean.compare(o1.tracking.contains(ref), o2.tracking.contains(ref));
-		Comparator<CapabilityRef> comp3 = Comparator.comparingInt(o -> o.tracking.quantity(ref));
 
+		List<CapabilityRef> troves = new ArrayList<>();
 		List<CapabilityRef> trackings = new ArrayList<>();
 		ServerNetwork network = NetworkHelper.getServerNetwork(this.networkId, this.world);
 		if (network != null) {
@@ -168,13 +170,18 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 					IItemTracking cap = ref2.getTile().getCapability(CapabilityItemTracking.ITEM_TRACKING_CAPABILITY, null);
 					if (cap != null) {
 						IItemHandler cap2 = ref2.getTile().getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-						trackings.add(new CapabilityRef(cap, cap2, !ref2.clazz.equals(RadiantTroveTileEntity.class)));
+						if (ref2.clazz.equals(RadiantTroveTileEntity.class)) {
+							troves.add(new CapabilityRef(cap, cap2));
+						} else {
+							trackings.add(new CapabilityRef(cap, cap2));
+						}
 					}
 				}
 			}
 		}
-		trackings.sort(comp1.thenComparing(comp2).thenComparing(comp3));
-		return trackings;
+		trackings.sort(Comparator.comparingInt(o -> o.tracking.quantity(ref)));
+		troves.addAll(trackings);
+		return troves;
 	}
 
 	@Override
@@ -228,12 +235,10 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 	private static class CapabilityRef {
 		public IItemTracking tracking;
 		public IItemHandler handler;
-		public boolean isTrove;
 
-		public CapabilityRef (IItemTracking tracking, IItemHandler handler, boolean isTrove) {
+		public CapabilityRef (IItemTracking tracking, IItemHandler handler) {
 			this.tracking = tracking;
 			this.handler = handler;
-			this.isTrove = isTrove;
 		}
 	}
 }
