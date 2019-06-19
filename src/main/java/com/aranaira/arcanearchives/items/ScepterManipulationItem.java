@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.items;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.inventory.handlers.TroveItemHandler;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
+import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.Block;
@@ -44,51 +45,16 @@ public class ScepterManipulationItem extends ItemTemplate {
 
 	@Override
 	public EnumActionResult onItemUse (EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (hand != EnumHand.MAIN_HAND || !player.isSneaking() || world.isAirBlock(pos)) {
+		ImmanenceTileEntity te = WorldUtil.getTileEntity(ImmanenceTileEntity.class, world, pos);
+		if (te != null) {
+			player.swingArm(hand);
+
+			if (!world.isRemote) {
+				te.handleManipulationInterface(player, hand, facing, hitX, hitY, hitZ);
+			}
 			return EnumActionResult.SUCCESS;
+		} else {
+			return EnumActionResult.PASS;
 		}
-
-		player.swingArm(hand);
-
-		if (world.isRemote) {
-			return EnumActionResult.SUCCESS;
-		}
-
-		Style def = new Style().setColor(TextFormatting.GOLD);
-		Style error = new Style().setColor(TextFormatting.DARK_RED).setBold(true);
-
-		IBlockState state = world.getBlockState(pos);
-		Block block = state.getBlock();
-
-		if (block == BlockRegistry.RADIANT_TROVE) {
-			RadiantTroveTileEntity te = WorldUtil.getTileEntity(RadiantTroveTileEntity.class, world, pos);
-			if (te == null || te.getInventory() == null) {
-				player.sendStatusMessage(new TextComponentTranslation("arcanearchives.data.scepter.tile.invalid").setStyle(error), true);
-				return EnumActionResult.SUCCESS;
-			}
-
-			TroveItemHandler handler = te.getInventory();
-
-			int upgrades = handler.getUpgrades();
-			if (upgrades == 0) {
-				player.sendStatusMessage(new TextComponentTranslation("arcanearchives.data.scepter.tile.no_upgrades").setStyle(error), true);
-				return EnumActionResult.SUCCESS;
-			}
-
-			if (handler.downgrade()) {
-				ItemStack upgrade = new ItemStack(TroveItemHandler.UPGRADE_ITEM);
-				Block.spawnAsEntity(world, player.getPosition(), upgrade);
-				player.sendStatusMessage(new TextComponentTranslation("arcanearchives.data.scepter.tile.downgrade_success.trove", handler.getUpgrades(), TroveItemHandler.MAX_UPGRADES).setStyle(def), true);
-				return EnumActionResult.SUCCESS;
-			} else {
-				player.sendStatusMessage(new TextComponentTranslation("arcanearchives.data.scepter.tile.cant_downgrade.trove").setStyle(error), true);
-				return EnumActionResult.SUCCESS;
-			}
-
-		} else if (block == BlockRegistry.RADIANT_TANK) {
-
-		}
-
-		return EnumActionResult.SUCCESS;
 	}
 }
