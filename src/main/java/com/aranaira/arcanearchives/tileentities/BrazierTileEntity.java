@@ -159,7 +159,6 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 		Comparator<CapabilityRef> comp1 = (o1, o2) -> Boolean.compare(o1.isTrove, o2.isTrove);
 		Comparator<CapabilityRef> comp2 = (o1, o2) -> Boolean.compare(o1.tracking.contains(ref), o2.tracking.contains(ref));
 		Comparator<CapabilityRef> comp3 = Comparator.comparingInt(o -> o.tracking.quantity(ref));
-		Comparator<CapabilityRef> comp4 = Comparator.comparingInt(o -> o.tracking.emptySlots());
 
 		List<CapabilityRef> trackings = new ArrayList<>();
 		ServerNetwork network = NetworkHelper.getServerNetwork(this.networkId, this.world);
@@ -174,7 +173,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 				}
 			}
 		}
-		trackings.sort(comp1.thenComparing(comp2).thenComparing(comp3).thenComparing(comp4));
+		trackings.sort(comp1.thenComparing(comp2).thenComparing(comp3));
 		return trackings;
 	}
 
