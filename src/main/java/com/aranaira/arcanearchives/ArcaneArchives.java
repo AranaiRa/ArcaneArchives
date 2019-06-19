@@ -8,11 +8,11 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = ArcaneArchives.MODID, name = ArcaneArchives.NAME, version = ArcaneArchives.VERSION, dependencies = "required-after:arc_gbook;required-after:baubles")
+@Mod(modid = ArcaneArchives.MODID, name = ArcaneArchives.NAME, version = ArcaneArchives.VERSION, dependencies = "required-after:arc_gbook;required-after:baubles;required-before:mysticallib;required-after:endercore")
 public class ArcaneArchives {
 	public static final String MODID = "arcanearchives";
 	public static final String NAME = "Arcane Archives";
-	public static final String VERSION = "0.2.0-preview15-hotfix1";
+	public static final String VERSION = "0.2.0-preview15-hotfix3";
 	public static final CreativeTabAA TAB = new CreativeTabAA();
 
 	public static Logger logger;

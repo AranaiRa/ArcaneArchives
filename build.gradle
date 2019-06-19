@@ -90,6 +90,9 @@ repositories {
         name = "sponge"
         url = "http://repo.spongepowered.org/maven/"
     }
+    maven {
+        url = "http://maven.tterrag.com"
+    }
 }
 
 dependencies {
@@ -116,7 +119,9 @@ dependencies {
     deobfCompile("com.blamejared:MTLib:${mt_lib_version}") {
         exclude group: 'mezz.jei'
     }
-    
+    deobfCompile "epicsquid.mysticallib:mysticallib:1.12.2-1.2.1-2-4"
+    deobfCompile "com.enderio.core:EnderCore:1.12.2-0.5.58"
+
     // modified guidebook, note "lirelent" package
     deobfCompile "gigaherz.lirelent.guidebook:Guidebook-1.12.2:2.9.1.s1"
     embed "gigaherz.lirelent.guidebook:Guidebook-1.12.2:2.9.1.s1"
