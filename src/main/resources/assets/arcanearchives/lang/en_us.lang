@@ -114,6 +114,11 @@ arcanearchives.text.matrixstorage.storagelabel=Total Storage
 arcanearchives.text.matrixrepository.immanencelabel=Immanence
 arcanearchives.text.matrixrepository.storagelabel=Type Storage
 arcanearchives.text.radiantchest.unnamed_chest=Unnamed chest
+arcanearchives.text.brazier.radius=Radius:
+arcanearchives.text.brazier.unlimited=Unlimited
+arcanearchives.text.brazier.visualizer=Visualizer
+arcanearchives.text.brazier.visualizer=Enabled
+arcanearchives.text.brazier.visualizer=Disabled
 
 arcanearchives.error.toomanyplaced=You can only have %d %ss!
 arcanearchives.error.notenoughspace=Not enough space to place the %s!
