@@ -18,11 +18,6 @@ public class ItemTrackingChest implements IItemTracking {
 	}
 
 	@Override
-	public int emptySlots () {
-		return this.handler.emptySlots;
-	}
-
-	@Override
 	public boolean contains (ItemStack stack) {
 		return this.handler.itemReference.containsKey(RecipeItemHelper.pack(stack));
 	}

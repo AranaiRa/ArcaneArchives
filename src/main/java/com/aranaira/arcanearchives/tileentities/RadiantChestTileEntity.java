@@ -160,7 +160,6 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements Manif
 	}
 
 	public class RadiantChestHandler extends ItemStackHandler {
-		public int emptySlots = 0;
 		public Int2IntOpenHashMap itemReference = new Int2IntOpenHashMap();
 
 		public RadiantChestHandler (int size) {
@@ -179,12 +178,9 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements Manif
 		private void manualRecount () {
 			itemReference.clear();
 			itemReference.defaultReturnValue(0);
-			emptySlots = 0;
 			for (int i = 0; i < getSlots(); i++) {
 				ItemStack stack = getStackInSlot(i);
-				if (stack.isEmpty()) {
-					emptySlots++;
-				} else {
+				if (!stack.isEmpty()) {
 					int packed = RecipeItemHelper.pack(stack);
 					itemReference.put(packed, itemReference.get(packed) + stack.getCount());
 				}
@@ -195,14 +191,12 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements Manif
 		@Override
 		public void setStackInSlot (int slot, @Nonnull ItemStack stack) {
 			ItemStack curStack = getStackInSlot(slot);
-			int current = RecipeItemHelper.pack(getStackInSlot(slot));
+			int current = RecipeItemHelper.pack(curStack);
 			int count = itemReference.get(current);
 			if (count != -1) {
 				count -= curStack.getCount();
+				if (count <= 0) count = -1;
 				itemReference.put(current, count);
-			}
-			if (stack.isEmpty()) {
-				emptySlots++;
 			}
 			super.setStackInSlot(slot, stack);
 		}
@@ -211,11 +205,6 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements Manif
 		@Override
 		public ItemStack insertItem (int slot, @Nonnull ItemStack stack, boolean simulate) {
 			if (!simulate) {
-				ItemStack inSlot = getStackInSlot(slot);
-				if (inSlot.isEmpty()) {
-					emptySlots--;
-				}
-
 				ItemStack test = super.insertItem(slot, stack, true);
 				int current = RecipeItemHelper.pack(stack);
 				int count = stack.getCount();
@@ -223,10 +212,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements Manif
 					count -= test.getCount();
 				}
 				int curCount = itemReference.get(current);
-				if (curCount != -1) {
-					count += curCount;
-				}
-				itemReference.put(current, count);
+				itemReference.put(current, Math.max(-1, count + curCount));
 			}
 			return super.insertItem(slot, stack, simulate);
 		}
@@ -239,16 +225,10 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements Manif
 				int current = RecipeItemHelper.pack(test);
 				int curCount = itemReference.get(current);
 				if (curCount != -1) {
-					itemReference.put(current, curCount - test.getCount());
+					itemReference.put(current, Math.max(curCount - test.getCount(), -1));
 				}
 			}
-			ItemStack result = super.extractItem(slot, amount, simulate);
-			if (!simulate) {
-				if (getStackInSlot(slot).isEmpty()) {
-					emptySlots++;
-				}
-			}
-			return result;
+			return super.extractItem(slot, amount, simulate);
 		}
 	}
 }

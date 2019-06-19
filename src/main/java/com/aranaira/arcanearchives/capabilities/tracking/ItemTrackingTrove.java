@@ -18,11 +18,6 @@ public class ItemTrackingTrove implements IItemTracking {
 	}
 
 	@Override
-	public int emptySlots () {
-		return handler.getMaxCount() - handler.getCount();
-	}
-
-	@Override
 	public boolean contains (ItemStack stack) {
 		return ItemUtilities.areStacksEqualIgnoreSize(handler.getItem(), stack);
 	}

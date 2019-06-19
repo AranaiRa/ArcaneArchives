@@ -5,8 +5,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 
 public interface IItemTracking {
-	int emptySlots ();
-
 	boolean contains (ItemStack stack);
 	boolean contains (int packed);
 
