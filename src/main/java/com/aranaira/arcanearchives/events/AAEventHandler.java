@@ -3,7 +3,7 @@ package com.aranaira.arcanearchives.events;
 import baubles.api.BaubleType;
 import baubles.api.BaublesApi;
 import baubles.api.cap.IBaublesItemHandler;
-import com.aranaira.arcanearchives.client.gui.GUIGemcasting;
+import com.aranaira.arcanearchives.client.render.RenderGemcasting;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.PlayerSaveData;
@@ -73,7 +73,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -221,10 +220,10 @@ public class AAEventHandler {
 
 		if (event.getType() == RenderGameOverlayEvent.ElementType.ALL) {
 			if (player.getHeldItemMainhand().getItem() instanceof ArcaneGemItem) {
-				GUIGemcasting.draw(minecraft, player.getHeldItemMainhand(), event.getResolution().getScaledWidth(), event.getResolution().getScaledHeight(), GUIGemcasting.EnumGemGuiMode.RIGHT);
+				RenderGemcasting.draw(minecraft, player.getHeldItemMainhand(), event.getResolution().getScaledWidth(), event.getResolution().getScaledHeight(), RenderGemcasting.EnumGemGuiMode.RIGHT);
 			}
 			if (player.getHeldItemOffhand().getItem() instanceof ArcaneGemItem) {
-				GUIGemcasting.draw(minecraft, player.getHeldItemOffhand(), event.getResolution().getScaledWidth(), event.getResolution().getScaledHeight(), GUIGemcasting.EnumGemGuiMode.LEFT);
+				RenderGemcasting.draw(minecraft, player.getHeldItemOffhand(), event.getResolution().getScaledWidth(), event.getResolution().getScaledHeight(), RenderGemcasting.EnumGemGuiMode.LEFT);
 			}
 
 			IBaublesItemHandler handler = BaublesApi.getBaublesHandler(player);
@@ -232,7 +231,7 @@ public class AAEventHandler {
 				if (handler.getStackInSlot(i).getItem() instanceof BaubleGemSocket) {
 					if (handler.getStackInSlot(i).getTagCompound().hasKey("gem")) {
 						ItemStack containedStack = GemSocketHandler.getHandler(handler.getStackInSlot(i)).getGem();
-						GUIGemcasting.draw(minecraft, containedStack, event.getResolution().getScaledWidth(), event.getResolution().getScaledHeight(), GUIGemcasting.EnumGemGuiMode.SOCKET);
+						RenderGemcasting.draw(minecraft, containedStack, event.getResolution().getScaledWidth(), event.getResolution().getScaledHeight(), RenderGemcasting.EnumGemGuiMode.SOCKET);
 					}
 				}
 			}

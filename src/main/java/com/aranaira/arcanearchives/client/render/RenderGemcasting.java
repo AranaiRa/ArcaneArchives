@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.client.gui;
+package com.aranaira.arcanearchives.client.render;
 
 import com.aranaira.arcanearchives.items.gems.*;
 import net.minecraft.client.Minecraft;
@@ -9,7 +9,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GUIGemcasting {
+public class RenderGemcasting {
 
 	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/fabrial.png");
 	private static final ResourceLocation GUITexturesSimple = new ResourceLocation("arcanearchives:textures/gui/simple/fabrial.png");
