@@ -179,7 +179,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 				}
 			}
 		}
-		trackings.sort(Comparator.comparingInt(o -> o.tracking.quantity(ref)));
+		trackings.sort((o1, o2) -> Integer.compare(o2.tracking.quantity(ref), o1.tracking.quantity(ref)));
 		troves.addAll(trackings);
 		return troves;
 	}
