@@ -21,7 +21,7 @@ public class MappingHandler {
 			if (entry.key.getNamespace().equals(ArcaneArchives.MODID)) {
 				item = lookupItem(entry.key);
 			} else if (entry.key.getNamespace().equals("gbook") && entry.key.getPath().equals("guidebook")) {
-				item = Item.REGISTRY.getObject(new ResourceLocation("arc_gbook:guidebook"));
+				item = Item.REGISTRY.getObject(new ResourceLocation("gbook_snapshot:guidebook"));
 			}
 			if (item != null) {
 				entry.remap(item);

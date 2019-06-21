@@ -10,7 +10,7 @@
     "result": {
         "item": "arcanearchives:tome_arcana",
         "nbt": {
-            "Book": "xml/tome.xml"
+            "Book": "arcanearchives:xml/tome.xml"
         },
         "data": 0
     }
