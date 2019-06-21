@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.proxy;
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.capabilities.tracking.CapabilityItemTracking;
+import com.aranaira.arcanearchives.commands.CommandBrazier;
 import com.aranaira.arcanearchives.commands.CommandHive;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.events.ClientTickHandler;
@@ -45,6 +46,7 @@ public class CommonProxy {
 
 	public void serverStarting (FMLServerStartingEvent event) {
 		event.registerServerCommand(new CommandHive());
+		event.registerServerCommand(new CommandBrazier());
 	}
 
 	public void serverStarted (FMLServerStartedEvent event) {

@@ -118,7 +118,8 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 	}
 
 	private ItemStack tryInsert (ItemStack stack) {
-		List<CapabilityRef> caps = collectCapabilities(stack);
+		ServerNetwork network = NetworkHelper.getServerNetwork(this.networkId, this.world);
+		List<CapabilityRef> caps = collectCapabilities(network, stack);
 		for (CapabilityRef cap : caps) {
 			stack = ItemHandlerHelper.insertItemStacked(cap.handler, stack, false);
 			if (stack.isEmpty()) {
@@ -130,7 +131,8 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 
 	// Returns how many of each item to remove
 	private void tryInsert (List<InventoryRef> stacks, ItemStack reference) {
-		List<CapabilityRef> caps = collectCapabilities(reference);
+		ServerNetwork network = NetworkHelper.getServerNetwork(this.networkId, this.world);
+		List<CapabilityRef> caps = collectCapabilities(network, reference);
 		for (CapabilityRef cap : caps) {
 			for (InventoryRef ref : stacks) {
 				ItemStack result = ItemHandlerHelper.insertItemStacked(cap.handler, ref.stack, false);
@@ -158,12 +160,11 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 		}
 	}
 
-	private List<CapabilityRef> collectCapabilities (ItemStack reference) {
+	public static List<CapabilityRef> collectCapabilities (ServerNetwork network, ItemStack reference) {
 		int ref = RecipeItemHelper.pack(reference);
 
 		List<CapabilityRef> troves = new ArrayList<>();
 		List<CapabilityRef> trackings = new ArrayList<>();
-		ServerNetwork network = NetworkHelper.getServerNetwork(this.networkId, this.world);
 		if (network != null) {
 			for (IteRef ref2 : network.getManifestTileEntities()) {
 				if (ref2.tile != null && ref2.getTile() != null) {
@@ -232,7 +233,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 		}
 	}
 
-	private static class CapabilityRef {
+	public static class CapabilityRef {
 		public IItemTracking tracking;
 		public IItemHandler handler;
 

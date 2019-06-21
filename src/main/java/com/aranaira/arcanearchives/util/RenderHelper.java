@@ -4,6 +4,7 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.util.JsonUtils;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
@@ -76,6 +77,7 @@ public class RenderHelper {
 
 		GlStateManager.depthMask(true);
 		GlStateManager.popMatrix();
+		JsonUtils
 	}
 
 	@SideOnly(Side.CLIENT)

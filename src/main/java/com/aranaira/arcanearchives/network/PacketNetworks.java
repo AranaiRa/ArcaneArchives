@@ -137,7 +137,12 @@ public class PacketNetworks {
 		public static class Handler extends NetworkHandler.ClientHandler<Response> {
 			@SideOnly(Side.CLIENT)
 			public void processMessage (Response message, MessageContext context) {
+				Minecraft minecraft = Minecraft.getMinecraft();
+				if (minecraft == null) return;
+
 				EntityPlayer player = Minecraft.getMinecraft().player;
+				if (player == null) return;
+
 				ClientNetwork network = NetworkHelper.getClientNetwork(player.getUniqueID());
 
 				switch (message.type) {
