@@ -143,7 +143,6 @@ public class PacketNetworks {
 					player = Minecraft.getMinecraft().player;
 				} catch (NullPointerException e) {
 					System.out.println("Exception: missing player or Minecraft when handling packet: " + this.getClass().toString());
-					player = null;
 					return;
 				}
 
