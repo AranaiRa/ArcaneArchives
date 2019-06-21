@@ -5,6 +5,7 @@ import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.HiveNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
+import com.typesafe.config.ConfigException.Null;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -137,11 +138,14 @@ public class PacketNetworks {
 		public static class Handler extends NetworkHandler.ClientHandler<Response> {
 			@SideOnly(Side.CLIENT)
 			public void processMessage (Response message, MessageContext context) {
-				Minecraft minecraft = Minecraft.getMinecraft();
-				if (minecraft == null) return;
-
-				EntityPlayer player = Minecraft.getMinecraft().player;
-				if (player == null) return;
+				EntityPlayer player;
+				try {
+					player = Minecraft.getMinecraft().player;
+				} catch (NullPointerException e) {
+					System.out.println("Exception: missing player or Minecraft when handling packet: " + this.getClass().toString());
+					player = null;
+					return;
+				}
 
 				ClientNetwork network = NetworkHelper.getClientNetwork(player.getUniqueID());
 
