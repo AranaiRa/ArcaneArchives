@@ -15,6 +15,9 @@ public class ClientTickHandler {
 	private static LinkedList<QueueEntry> queue = new LinkedList<>();
 	private static LinkedList<WaitEntry> waitlist = new LinkedList<>();
 
+	//Used for shader input
+	public static int ticksInGame;
+
 	@SubscribeEvent
 	public static void clientTick (TickEvent.ClientTickEvent event) {
 		if (event.phase != TickEvent.Phase.END) {
@@ -38,6 +41,7 @@ public class ClientTickHandler {
 			}
 		}
 		waitlist.clear();
+		ticksInGame++;
 	}
 
 	public static void addRunnable (Runnable runnable) {
