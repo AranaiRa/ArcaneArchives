@@ -58,7 +58,7 @@ public class CommandBrazier extends CommandBase {
 			int i = 1;
 			for (CapabilityRef cap : caps) {
 				if (cap.handler instanceof TroveItemHandler) {
-					player.sendMessage(new TextComponentString("Cap #" + i + " is a trove containing " + ref));
+					player.sendMessage(new TextComponentString("Cap #" + i + " is a trove containing " + ((TroveItemHandler) cap.handler).getCount() + " of " + ref));
 				} else {
 					player.sendMessage(new TextComponentString("Cap #" + i + " is a chest containing " + cap.tracking.quantity(ref) + " of " + ref));
 				}
