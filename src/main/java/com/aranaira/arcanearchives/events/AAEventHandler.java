@@ -287,7 +287,7 @@ public class AAEventHandler {
 		}
 	}
 
-	@Optional.Method(modid = "arc_gbook")
+	@Optional.Method(modid = "gbook_snapshot")
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	@SuppressWarnings("unused")

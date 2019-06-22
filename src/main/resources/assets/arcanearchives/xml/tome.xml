@@ -1,6 +1,6 @@
 <book title="Tome of Arcana" background="arcanearchives:textures/gui/arcana_documentation.png" fontSize="0.6">
 
-    <include ref="arc_gbook:xml/standard.xml" />
+    <include ref="gbook_snapshot:xml/standard.xml" />
     <include ref="arcanearchives:xml/arcanearchives_templates.xml" />
 
     <conditions>
