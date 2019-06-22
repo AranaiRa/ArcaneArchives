@@ -7,6 +7,7 @@ import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
 import com.aranaira.arcanearchives.util.NBTUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
@@ -15,12 +16,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.DimensionType;
@@ -28,10 +27,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.*;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
@@ -97,61 +93,22 @@ public class RadiantAmphoraItem extends ItemTemplate {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick (World world, EntityPlayer player, EnumHand hand) {
-		ItemStack stack = player.getHeldItem(hand);
-		if (!world.isRemote) {
-			boolean result = onItemRightClickInternal(world, player, hand, stack);
-			if (result) {
-				return new ActionResult<>(EnumActionResult.SUCCESS, stack);
-			}
-		}
-		return new ActionResult<>(EnumActionResult.PASS, stack);
-	}
-
-	public boolean onItemRightClickInternal (World world, EntityPlayer player, EnumHand hand, ItemStack stack) {
-		//Only progress if linked to a tank
-		AmphoraUtil util = new AmphoraUtil(stack);
-
-		if (util.isLinked() && util.getMode() == TankMode.DRAIN) {
-			RayTraceResult raytraceresult = this.rayTrace(world, player, true);
-
-			// Actually nullable vvv
-			if (raytraceresult == null || raytraceresult.typeOfHit != RayTraceResult.Type.BLOCK) {
-				return false;
-			} else {
-				IFluidHandler cap = util.getCapability();
-				if (cap == null) {
-					player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.tankmissing"), true);
-					return true;
-				}
-
-				BlockPos pos = raytraceresult.getBlockPos();
-				Block block = world.getBlockState(pos).getBlock();
-				Fluid fluid = FluidRegistry.lookupFluidForBlock(block);
-
-				if (fluid == null) {
-					return false;
-				}
-				FluidStack fs = new FluidStack(fluid, 1000);
-				if (cap.fill(fs, false) == 1000) {
-					cap.fill(fs, true);
-					world.setBlockToAir(pos);
-					// TODO: Create a new sound event with a different subtitle (cf. recent Quark changes)
-					player.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
-				}
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	@Override
 	public EnumActionResult onItemUse (EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote) {
 			Block hit = world.getBlockState(pos).getBlock();
+			Block offsetHit = world.getBlockState(pos.offset(facing)).getBlock();
 			ItemStack stack = getHeldBucket(player);
 			AmphoraUtil util = new AmphoraUtil(stack);
+			if(offsetHit instanceof BlockLiquid || offsetHit instanceof IFluidBlock) {
+				if(util.getMode() == TankMode.FILL) {
+					boolean result = onItemRightClickInternal(world, player, player.getHeldItem(hand), pos.offset(facing));
+					if (result) {
+						return EnumActionResult.SUCCESS;
+					}
+				}
+
+				return EnumActionResult.PASS;
+			}
 
 			if (hit == BlockRegistry.RADIANT_TANK && player.isSneaking()) {
 				util.setHome(pos, player.dimension);
@@ -169,6 +126,39 @@ public class RadiantAmphoraItem extends ItemTemplate {
 			}
 		}
 		return EnumActionResult.PASS;
+	}
+
+	public boolean onItemRightClickInternal (World world, EntityPlayer player, ItemStack stack, BlockPos pos) {
+		//Only progress if linked to a tank
+		AmphoraUtil util = new AmphoraUtil(stack);
+
+		if (util.isLinked() && util.getMode() == TankMode.FILL) {
+			//RayTraceResult raytraceresult = this.rayTrace(world, player, true);
+
+			// Actually nullable vvv
+			IFluidHandler cap = util.getCapability();
+			if (cap == null) {
+				player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.tankmissing"), true);
+				return true;
+			}
+
+			Block block = world.getBlockState(pos).getBlock();
+			Fluid fluid = FluidRegistry.lookupFluidForBlock(block);
+
+			if (fluid == null) {
+				return false;
+			}
+			FluidStack fs = new FluidStack(fluid, 1000);
+			if (cap.fill(fs, false) == 1000) {
+				cap.fill(fs, true);
+				world.setBlockToAir(pos);
+				// TODO: Create a new sound event with a different subtitle (cf. recent Quark changes)
+				player.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
+			}
+			return true;
+		}
+
+		return false;
 	}
 
 	private ItemStack getHeldBucket (EntityPlayer player) {
@@ -423,14 +413,12 @@ public class RadiantAmphoraItem extends ItemTemplate {
 		@Override
 		public int fill (FluidStack resource, boolean doFill) {
 			validate();
-			if (tank == null) {
+
+			if (tank == null || util.getMode() == TankMode.DRAIN) {
 				return 0;
 			}
 
-			if (util.getMode() == TankMode.DRAIN) {
-				return 0;
-			}
-
+			resource.amount = 1000;
 			return tank.fill(resource, doFill);
 		}
 
@@ -438,14 +426,12 @@ public class RadiantAmphoraItem extends ItemTemplate {
 		@Nullable
 		public FluidStack drain (FluidStack resource, boolean doDrain) {
 			validate();
-			if (tank == null) {
+
+			if (tank == null || util.getMode() == TankMode.FILL) {
 				return null;
 			}
 
-			if (util.getMode() == TankMode.FILL) {
-				return null;
-			}
-
+			resource.amount = 1000;
 			return tank.drain(resource, doDrain);
 		}
 
@@ -453,15 +439,12 @@ public class RadiantAmphoraItem extends ItemTemplate {
 		@Nullable
 		public FluidStack drain (int maxDrain, boolean doDrain) {
 			validate();
-			if (tank == null) {
+
+			if (tank == null || util.getMode() == TankMode.FILL) {
 				return null;
 			}
 
-			if (util.getMode() == TankMode.FILL) {
-				return null;
-			}
-
-			return tank.drain(maxDrain, doDrain);
+			return tank.drain(1000, doDrain);
 		}
 
 		@Nonnull

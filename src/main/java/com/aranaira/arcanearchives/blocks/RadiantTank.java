@@ -115,31 +115,34 @@ public class RadiantTank extends BlockTemplate {
 
 	@Override
 	public boolean onBlockActivated (World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		LineHandler.removeLine(pos);
+		if(!world.isRemote) {
+			LineHandler.removeLine(pos);
 
-		ItemStack heldItem = player.getHeldItemMainhand();
-		if (heldItem.isEmpty()) {
-			heldItem = player.getHeldItemOffhand();
-		}
+			ItemStack heldItem = player.getHeldItemMainhand();
+			if (heldItem.isEmpty()) {
+				heldItem = player.getHeldItemOffhand();
+			}
 
-		RadiantTankTileEntity te = WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, pos);
-		if (te == null) {
-			return !(heldItem.getItem() instanceof ItemBlock);
-		}
+			RadiantTankTileEntity te = WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, pos);
+			if (te == null) {
+				return !(heldItem.getItem() instanceof ItemBlock);
+			}
 
-		if (heldItem.getItem() == ItemRegistry.COMPONENT_CONTAINMENTFIELD) {
-			if (!world.isRemote) {
+			if (heldItem.getItem() == ItemRegistry.COMPONENT_CONTAINMENTFIELD) {
 				if (player.isSneaking()) {
 					te.onRightClickUpgrade(player, heldItem);
 				} else {
 					player.sendStatusMessage(new TextComponentTranslation("arcanearchives.warning.sneak_to_upgrade_tank"), true);
 				}
+
+				return true;
 			}
-			return true;
+
+			IFluidHandler handler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing);
+			return FluidUtil.interactWithFluidHandler(player, hand, handler);
 		}
 
-		IFluidHandler handler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing);
-		return FluidUtil.interactWithFluidHandler(player, hand, handler);
+		return false;
 	}
 
 	@Override

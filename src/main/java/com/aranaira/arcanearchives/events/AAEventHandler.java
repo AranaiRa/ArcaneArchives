@@ -158,11 +158,10 @@ public class AAEventHandler {
 	@SideOnly(Side.CLIENT)
 	public static void onLeftClickEmpty (PlayerInteractEvent.LeftClickEmpty event) {
 		Item item = event.getEntityPlayer().inventory.getCurrentItem().getItem();
-		if (item == ItemRegistry.RADIANT_AMPHORA) {
+		if (item == ItemRegistry.RADIANT_AMPHORA && event.getEntityPlayer().isSneaking()) {
 			PacketRadiantAmphora packet = new PacketRadiantAmphora();
 			NetworkHandler.CHANNEL.sendToServer(packet);
-		}
-		if (item instanceof ArcaneGemItem) {
+		}else if (item instanceof ArcaneGemItem) {
 			ItemStack stack = event.getEntityPlayer().getHeldItemMainhand();
 			ArcaneGemItem agi = (ArcaneGemItem) stack.getItem();
 
@@ -181,8 +180,7 @@ public class AAEventHandler {
 				ItemStack stack = event.getEntityPlayer().getHeldItemMainhand();
 				AmphoraUtil util = new AmphoraUtil(stack);
 				util.toggleMode();
-			}
-			if (item == ItemRegistry.RAW_RADIANT_QUARTZ) {
+			}else if (item == ItemRegistry.RAW_RADIANT_QUARTZ) {
 				ItemStack stack = event.getEntityPlayer().getHeldItemMainhand();
 				Random rng = new Random();
 				int num = rng.nextInt(5);
