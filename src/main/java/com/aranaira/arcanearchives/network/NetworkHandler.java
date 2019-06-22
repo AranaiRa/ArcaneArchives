@@ -27,6 +27,7 @@ public class NetworkHandler {
 		registerPacks(PacketRadiantAmphora.Handler.class, PacketRadiantAmphora.class, Side.SERVER);
 		registerPacks(PacketArcaneGem.Handler.class, PacketArcaneGem.class, Side.CLIENT);
 		registerPacks(PacketArcaneGemToggle.Handler.class, PacketArcaneGemToggle.class, Side.SERVER);
+		registerPacks(PacketGemSocket.Handler.class, PacketGemSocket.class, Side.SERVER);
 	}
 
 	private static <REQ extends IMessage, REPLY extends IMessage> void registerPacks (Class<? extends IMessageHandler<REQ, REPLY>> messageHandler, Class<REQ> requestMessageType, Side side) {

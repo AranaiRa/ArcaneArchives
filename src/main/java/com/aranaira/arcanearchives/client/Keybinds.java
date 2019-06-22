@@ -8,6 +8,8 @@ import com.aranaira.arcanearchives.events.LineHandler;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.integration.jei.JEIUnderMouse;
 import com.aranaira.arcanearchives.items.ManifestItem;
+import com.aranaira.arcanearchives.network.NetworkHandler;
+import com.aranaira.arcanearchives.network.PacketGemSocket;
 import com.aranaira.arcanearchives.util.ManifestTracking;
 import com.aranaira.arcanearchives.util.types.ManifestEntry;
 import net.minecraft.client.Minecraft;
@@ -37,13 +39,18 @@ public class Keybinds {
 	public static final String ARCARC_GROUP = "arcanearchives.gui.keygroup";
 	public static final String ARCARC_BINDS = "arcanearchives.gui.keybinds";
 	public static KeyBinding manifestKey = null;
+	public static KeyBinding socketKey = null;
 
-	public static boolean skip = false;
 
 	public static void initKeybinds () {
 		KeyBinding kb = new KeyBinding(ARCARC_BINDS + ".manifest", 0, ARCARC_GROUP);
 		ClientRegistry.registerKeyBinding(kb);
 		manifestKey = kb;
+		if (ConfigHandler.ArsenalConfig.EnableArsenal) {
+			kb = new KeyBinding(ARCARC_BINDS + ".socket", 0, ARCARC_GROUP);
+			ClientRegistry.registerKeyBinding(kb);
+			socketKey = kb;
+		}
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -90,6 +97,9 @@ public class Keybinds {
 			} else {
 				mc.player.sendMessage(new TextComponentTranslation("arcanearchives.gui.missing_manifest").setStyle(new Style().setColor(TextFormatting.YELLOW)));
 			}
+		} else if (socketKey != null && socketKey.isKeyDown() && mc.inGameHasFocus) {
+			PacketGemSocket packet = new PacketGemSocket();
+			NetworkHandler.CHANNEL.sendToServer(packet);
 		}
 	}
 

@@ -22,8 +22,7 @@ public class ContainerGemSocket extends Container {
 	public ContainerGemSocket (EntityPlayer player) {
 		//ArcaneArchives.logger.info("CONTAINER CLASS INSTANTIATED");
 		this.player = player;
-		socket = player.getHeldItemMainhand();
-
+		socket = GemSocketHandler.findSocket(player);
 		handler = GemSocketHandler.getHandler(socket);
 
 		createPlayerInventory(player.inventory);

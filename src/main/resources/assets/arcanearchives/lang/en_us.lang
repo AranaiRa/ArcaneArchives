@@ -263,6 +263,7 @@ arcanearchives.data.scepter.tile.downgrade_success.trove=Successfully removed an
 arcanearchives.gui.keygroup=Arcane Archives
 arcanearchives.gui.keybinds.manifest=Activate Manifest
 arcanearchives.gui.missing_manifest=You have no Manifest on you to peruse!
+arcanearchives.gui.keybinds.socket=Activate Gem Socket
 
 text.copyToClipboard.line1=The book wants to put text in your clipboard.
 text.copyToClipboard.line2=Are you sure you want to allow this?
