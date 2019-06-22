@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
@@ -33,20 +34,33 @@ public class RadiantTankTESR extends TileEntitySpecialRenderer<RadiantTankTileEn
 	@Override
 	public void render (RadiantTankTileEntity te, double _x, double _y, double _z, float partialTicks, int destroyStage, float alpha) {
 		if (te != null) {
+			if (this.rendererDispatcher == null) {
+				this.setRendererDispatcher(TileEntityRendererDispatcher.instance);
+			}
+
 			GlStateManager.pushMatrix();
 			GlStateManager.enableBlend();
+			GlStateManager.pushMatrix();
+			RenderHelper.disableStandardItemLighting();
+			GlStateManager.enableBlend();
+			GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+
+			if (Minecraft.isAmbientOcclusionEnabled()) {
+				GL11.glShadeModel(GL11.GL_SMOOTH);
+			} else {
+				GL11.glShadeModel(GL11.GL_FLAT);
+			}
+
 			FluidTank tank = te.getInventory();
 			render(tank.getFluid(), tank.getCapacity(), te.getPos());
 			GlStateManager.disableBlend();
+			GlStateManager.popMatrix();
+			RenderHelper.enableStandardItemLighting();
 			GlStateManager.popMatrix();
 		}
 	}
 
 	public void render (FluidStack fluidStack, int capacity, BlockPos pos) {
-		if (rendererDispatcher == null) {
-			setRendererDispatcher(TileEntityRendererDispatcher.instance);
-		}
-
 		if (fluidStack != null && fluidStack.amount > 0) {
 			double x = orig.x;
 			double y = orig.y;
@@ -73,17 +87,6 @@ public class RadiantTankTESR extends TileEntitySpecialRenderer<RadiantTankTileEn
 
 			buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
 			mc.renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-
-			GlStateManager.pushMatrix();
-			RenderHelper.disableStandardItemLighting();
-			GlStateManager.enableBlend();
-			GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-
-			if (Minecraft.isAmbientOcclusionEnabled()) {
-				GL11.glShadeModel(GL11.GL_SMOOTH);
-			} else {
-				GL11.glShadeModel(GL11.GL_FLAT);
-			}
 
 			GlStateManager.translate(orig.x, orig.y, orig.z);
 
@@ -198,23 +201,27 @@ public class RadiantTankTESR extends TileEntitySpecialRenderer<RadiantTankTileEn
 
 			tessellator.draw();
 
-			// Per Funwayguy
 			GlStateManager.color(1f, 1f, 1f, 1f);
-			//GlStateManager.disableBlend();
-			RenderHelper.enableStandardItemLighting();
-			GlStateManager.popMatrix();
 		}
 	}
 
 	public void render (ItemStack stack) {
 		if (stack.hasTagCompound() && stack.getItem() == BlockRegistry.RADIANT_TANK.getItemBlock()) {
+			if (this.rendererDispatcher == null) {
+				this.setRendererDispatcher(TileEntityRendererDispatcher.instance);
+			}
+
 			NBTTagCompound tag = stack.getTagCompound();
 			FluidHandlerItemStack handler = (FluidHandlerItemStack) stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
+			EntityPlayer player = Minecraft.getMinecraft().player;
+
 			if (handler != null) {
 				FluidStack fluid = handler.getFluid();
 				int capacity = RadiantTankTileEntity.BASE_CAPACITY * (tag.getInteger("upgrades") + 1);
 				render(fluid, capacity, BlockPos.ORIGIN);
 			}
+
+
 		}
 	}
 }
