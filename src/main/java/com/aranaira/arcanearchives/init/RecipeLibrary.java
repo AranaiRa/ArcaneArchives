@@ -21,6 +21,7 @@ import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.oredict.OreIngredient;
 
 @SuppressWarnings("unused")
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
@@ -151,9 +152,9 @@ public class RecipeLibrary {
 
 			ELIXIRSPINDLE_RECIPE = GCTRecipeList.makeAndAddRecipe("elixirspindle", new ItemStack(ItemRegistry.ELIXIRSPINDLE), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyePurple", 4), new IngredientStack(Items.BREWING_STAND), new IngredientStack(Items.EMERALD, 2), new IngredientStack(Items.REDSTONE, 4), new IngredientStack(Items.GLOWSTONE_DUST, 4));
 
-			RIVERTEAR_RECIPE = GCTRecipeList.makeAndAddRecipe("rivertear", new ItemStack(ItemRegistry.RIVERTEAR), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack(Ingredient.fromItem(Items.SUGAR), 4), new IngredientStack(Ingredient.fromItem(Items.WATER_BUCKET)), new IngredientStack(Ingredient.fromItem(Items.WATER_BUCKET)));
+			RIVERTEAR_RECIPE = GCTRecipeList.makeAndAddRecipe("rivertear", new ItemStack(ItemRegistry.RIVERTEAR), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack(Ingredient.fromItem(Items.SUGAR), 4), new IngredientStack(Ingredient.fromItem(Items.WATER_BUCKET)), new IngredientStack(new OreIngredient("dyeBlue"), 4));
 
-			MOUNTAINTEAR_RECIPE = GCTRecipeList.makeAndAddRecipe("mountaintear", new ItemStack(ItemRegistry.MOUNTAINTEAR), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyeOrange", 4), new IngredientStack(Blocks.MAGMA, 4), new IngredientStack(Ingredient.fromItem(Items.LAVA_BUCKET)), new IngredientStack(Ingredient.fromItem(Items.LAVA_BUCKET)));
+			MOUNTAINTEAR_RECIPE = GCTRecipeList.makeAndAddRecipe("mountaintear", new ItemStack(ItemRegistry.MOUNTAINTEAR), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyeOrange", 4), new IngredientStack(Blocks.MAGMA, 4), new IngredientStack(Ingredient.fromItem(Items.LAVA_BUCKET)));
 
 			PARCHTEAR_RECIPE = GCTRecipeList.makeAndAddRecipe("parchtear", new ItemStack(ItemRegistry.PARCHTEAR), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyeBlack", 4), new IngredientStack(Blocks.HARDENED_CLAY, 4), new IngredientStack(Blocks.DEADBUSH, 4));
 

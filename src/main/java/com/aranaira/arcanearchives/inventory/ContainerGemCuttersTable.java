@@ -65,27 +65,8 @@ public class ContainerGemCuttersTable extends Container {
 				GCTRecipe recipe = tile.getCurrentRecipe();
 				for (Entry entry : recipe.getMatchingSlots(combinedInventory).int2IntEntrySet()) {
 					ItemStack result = combinedInventory.extractItem(entry.getIntKey(), entry.getIntValue(), false);
-					if (result.getItem() instanceof ItemBucket) {
-						ItemStack returned = new ItemStack(Items.BUCKET);
-						ItemStack result2 = ItemHandlerHelper.insertItemStacked(tileInventory, returned, false);
-						if (result2.isEmpty()) {
-							continue;
-						}
-						if (!world.isRemote) {
-							Block.spawnAsEntity(world, thePlayer.getPosition(), returned);
-						}
-					}
-					if (result.getItem() instanceof ItemFlintAndSteel) {
-						ItemStack returned = result.copy();
-						returned.setItemDamage(returned.getItemDamage() - 1);
-
-						ItemStack result2 = ItemHandlerHelper.insertItemStacked(tileInventory, returned, false);
-						if (result2.isEmpty()) {
-							continue;
-						}
-						if (!world.isRemote) {
-							Block.spawnAsEntity(world, thePlayer.getPosition(), returned);
-						}
+					if (!player.world.isRemote) {
+						recipe.handleItemResult(world, player, tile, result);
 					}
 				}
 				if (!player.world.isRemote) {

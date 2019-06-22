@@ -1,73 +1,73 @@
 package com.aranaira.arcanearchives.util.types;
 
 import it.unimi.dsi.fastutil.ints.*;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.client.util.RecipeItemHelper;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 
 public class IngredientsMatcher {
-	private final Int2IntMap counter = new Int2IntOpenHashMap();
-	private final IntSet ingredientsSet = new IntOpenHashSet();
-	private final Int2IntMap ingredientsMap = new Int2IntOpenHashMap();
+	private final Object2IntOpenHashMap<Ingredient> counts = new Object2IntOpenHashMap<>();
 	private final List<IngredientStack> ingredients;
 
 	public IngredientsMatcher (List<IngredientStack> ingredients) {
 		this.ingredients = ingredients;
+		rebuildCounts();
+	}
 
-		for (int i = 0; i < ingredients.size(); i++) {
-			IngredientStack stack = ingredients.get(i);
-			counter.put(i, stack.getCount());
-			IntList packs = stack.getValidItemStacksPacked();
-			this.ingredientsSet.addAll(packs);
-			for (int pack : packs) {
-				this.ingredientsMap.put(pack, i);
-			}
+	public void rebuildCounts () {
+		for (IngredientStack ingredient : ingredients) {
+			int count = ingredient.getCount();
+			Ingredient ing = ingredient.getIngredient();
+			counts.put(ing, count);
 		}
-
-		//0 is a valid value for this map
-		ingredientsMap.defaultReturnValue(-1);
 	}
 
 	public boolean matches (@Nonnull IItemHandler inv) {
 		for (int i = 0; i < inv.getSlots(); ++i) {
 			ItemStack itemstack = inv.getStackInSlot(i);
 			if (!itemstack.isEmpty()) {
-				int stack = RecipeItemHelper.pack(itemstack);
-				if (ingredientsSet.contains(stack)) {
-					account(itemstack);
+				for (IngredientStack ingredient : ingredients) {
+					if (ingredient.apply(itemstack)) {
+						account(ingredient.getIngredient(), itemstack);
+					}
 				}
 			}
 		}
 
-		return counter.isEmpty();
+		return counts.isEmpty();
 	}
 
-	public void account (ItemStack stack) {
-		int packed = RecipeItemHelper.pack(stack);
-		int index = ingredientsMap.get(packed);
-		if (counter.containsKey(index)) {
-			int val = counter.get(index);
-			int newVal = Math.max(0, val - stack.getCount());
-			if (newVal == 0) {
-				counter.remove(index);
+	public void account (Ingredient ingredient, ItemStack stack) {
+		if (counts.containsKey(ingredient)) {
+			int curTotal = counts.getInt(ingredient);
+			if (curTotal - stack.getCount() <= 0) {
+				counts.remove(ingredient, curTotal);
 			} else {
-				counter.put(index, newVal);
+				counts.put(ingredient, curTotal);
 			}
 		}
 	}
 
 	public Int2IntMap getMatchingSlots (@Nonnull IItemHandler inv) {
+		rebuildCounts();
 		Int2IntMap matchingSlots = new Int2IntOpenHashMap();
 
 		for (int slot = 0; slot < inv.getSlots(); ++slot) {
 			ItemStack itemstack = inv.getStackInSlot(slot);
 			if (!itemstack.isEmpty()) {
-				int discount = discount(itemstack);
-				if (discount != -1) {
-					matchingSlots.put(slot, discount);
+				for (IngredientStack ingredient : ingredients) {
+					if (ingredient.apply(itemstack)) {
+						int discount = discount(ingredient.getIngredient(), itemstack);
+						if (discount != -1) {
+							matchingSlots.put(slot, discount);
+						}
+					}
 				}
 			}
 		}
@@ -75,18 +75,16 @@ public class IngredientsMatcher {
 		return matchingSlots;
 	}
 
-	public int discount (ItemStack stack) {
-		int packed = RecipeItemHelper.pack(stack);
-		int index = ingredientsMap.get(packed);
+	public int discount (Ingredient ingredient, ItemStack stack) {
 		int res = -1;
-		if (counter.containsKey(index)) {
+		if (counts.containsKey(ingredient)) {
 			int thisAmount = stack.getCount();
-			int neededAmount = counter.get(index);
+			int neededAmount = counts.getInt(ingredient);
 			if (thisAmount >= neededAmount) {
 				res = neededAmount;
-				counter.remove(index);
+				counts.remove(ingredient, neededAmount);
 			} else {
-				counter.put(index, neededAmount - thisAmount);
+				counts.put(ingredient, neededAmount - thisAmount);
 				res = thisAmount;
 			}
 		}
