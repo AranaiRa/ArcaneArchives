@@ -171,8 +171,10 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 					IItemTracking cap = ref2.getTile().getCapability(CapabilityItemTracking.ITEM_TRACKING_CAPABILITY, null);
 					if (cap != null) {
 						IItemHandler cap2 = ref2.getTile().getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-						if (ref2.clazz.equals(RadiantTroveTileEntity.class) && cap.contains(ref)) {
-							troves.add(new CapabilityRef(cap, cap2));
+						if (ref2.clazz.equals(RadiantTroveTileEntity.class)) {
+							if (cap.contains(ref)) {
+								troves.add(new CapabilityRef(cap, cap2));
+							}
 						} else {
 							trackings.add(new CapabilityRef(cap, cap2));
 						}

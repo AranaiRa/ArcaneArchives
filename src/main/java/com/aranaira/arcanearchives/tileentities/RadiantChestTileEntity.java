@@ -190,15 +190,8 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements Manif
 
 		@Override
 		public void setStackInSlot (int slot, @Nonnull ItemStack stack) {
-			ItemStack curStack = getStackInSlot(slot);
-			int current = RecipeItemHelper.pack(curStack);
-			int count = itemReference.get(current);
-			if (count != -1) {
-				count -= curStack.getCount();
-				if (count <= 0) count = -1;
-				itemReference.put(current, count);
-			}
 			super.setStackInSlot(slot, stack);
+			manualRecount();
 		}
 
 		@Nonnull
