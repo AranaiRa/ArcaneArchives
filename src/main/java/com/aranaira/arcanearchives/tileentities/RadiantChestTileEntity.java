@@ -1,8 +1,6 @@
 package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.capabilities.tracking.CapabilityItemTracking;
-import com.aranaira.arcanearchives.capabilities.tracking.ItemTrackingChest;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketRadiantChest;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
@@ -11,7 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -23,11 +20,21 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements Manif
 	private final RadiantChestHandler inventory = new RadiantChestHandler(54);
 	private ItemStack displayStack = ItemStack.EMPTY;
 	private EnumFacing displayFacing = EnumFacing.NORTH;
-	private ItemTrackingChest capability = null;
 	public String chestName = "";
 
 	public RadiantChestTileEntity () {
 		super("radiantchest");
+	}
+
+	public Int2IntOpenHashMap getOrCalculateReference (boolean force) {
+		if (force) {
+			inventory.manualRecount();
+		}
+		return inventory.getItemReference();
+	}
+
+	public Int2IntOpenHashMap getOrCalculateReference () {
+		return getOrCalculateReference(false);
 	}
 
 	public ItemStack getDisplayStack () {
@@ -120,8 +127,6 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements Manif
 	public boolean hasCapability (@Nonnull Capability<?> capability, EnumFacing facing) {
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			return true;
-		} else if (capability == CapabilityItemTracking.ITEM_TRACKING_CAPABILITY) {
-			return true;
 		}
 		return super.hasCapability(capability, facing);
 	}
@@ -130,11 +135,6 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements Manif
 	public <T> T getCapability (@Nonnull Capability<T> capability, EnumFacing facing) {
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(inventory);
-		} else if (capability == CapabilityItemTracking.ITEM_TRACKING_CAPABILITY) {
-			if (this.capability == null) {
-				this.capability = new ItemTrackingChest(inventory);
-			}
-			return CapabilityItemTracking.ITEM_TRACKING_CAPABILITY.cast(this.capability);
 		}
 		return super.getCapability(capability, facing);
 	}
@@ -160,11 +160,15 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements Manif
 	}
 
 	public class RadiantChestHandler extends ItemStackHandler {
-		public Int2IntOpenHashMap itemReference = new Int2IntOpenHashMap();
+		private Int2IntOpenHashMap itemReference = new Int2IntOpenHashMap();
 
 		public RadiantChestHandler (int size) {
 			super(size);
-			itemReference.defaultReturnValue(-1);
+			itemReference.defaultReturnValue(0);
+		}
+
+		public Int2IntOpenHashMap getItemReference () {
+			return itemReference;
 		}
 
 		@Override
@@ -176,8 +180,6 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements Manif
 		}
 
 		private void manualRecount () {
-			itemReference.clear();
-			itemReference.defaultReturnValue(0);
 			for (int i = 0; i < getSlots(); i++) {
 				ItemStack stack = getStackInSlot(i);
 				if (!stack.isEmpty()) {
@@ -185,13 +187,18 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements Manif
 					itemReference.put(packed, itemReference.get(packed) + stack.getCount());
 				}
 			}
-			itemReference.defaultReturnValue(-1);
 		}
 
-		@Override
 		public void setStackInSlot (int slot, @Nonnull ItemStack stack) {
-			super.setStackInSlot(slot, stack);
-			manualRecount();
+			ItemStack currentlyInSlot = getStackInSlot(slot);
+			// Reimplement setStackInSlot using extract
+			if (!currentlyInSlot.isEmpty()) {
+				extractItem(slot, currentlyInSlot.getCount(), false);
+			}
+			ItemStack result = insertItem(slot, stack, false);
+			if (!result.isEmpty()) {
+				ArcaneArchives.logger.error("Error trying to insert " + stack.getTranslationKey() + " into slot " + slot + " of a radiant chest inventory: returned itemstack was not empty (contained " + result.getCount() + " versus " + stack.getCount() + " originally).");
+			}
 		}
 
 		@Nonnull
@@ -217,8 +224,8 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements Manif
 				ItemStack test = super.extractItem(slot, amount, true);
 				int current = RecipeItemHelper.pack(test);
 				int curCount = itemReference.get(current);
-				if (curCount != -1) {
-					itemReference.put(current, Math.max(curCount - test.getCount(), -1));
+				if (curCount > 0) {
+					itemReference.put(current, Math.max(curCount - test.getCount(), 0));
 				}
 			}
 			return super.extractItem(slot, amount, simulate);

@@ -1,12 +1,13 @@
 package com.aranaira.arcanearchives.tileentities;
 
-import com.aranaira.arcanearchives.capabilities.tracking.CapabilityItemTracking;
-import com.aranaira.arcanearchives.capabilities.tracking.IItemTracking;
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
+import com.aranaira.arcanearchives.inventory.handlers.TroveItemHandler;
 import com.aranaira.arcanearchives.util.ItemUtilities;
 import com.aranaira.arcanearchives.util.types.IteRef;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
+import javafx.scene.shape.Arc;
 import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -21,13 +22,9 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemHandlerHelper;
-import org.apache.commons.lang3.builder.CompareToBuilder;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class BrazierTileEntity extends ImmanenceTileEntity {
 	private UUID lastUUID = null;
@@ -168,21 +165,23 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 		if (network != null) {
 			for (IteRef ref2 : network.getManifestTileEntities()) {
 				if (ref2.tile != null && ref2.getTile() != null) {
-					IItemTracking cap = ref2.getTile().getCapability(CapabilityItemTracking.ITEM_TRACKING_CAPABILITY, null);
-					if (cap != null) {
-						IItemHandler cap2 = ref2.getTile().getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-						if (ref2.clazz.equals(RadiantTroveTileEntity.class)) {
-							if (cap.contains(ref)) {
-								troves.add(new CapabilityRef(cap, cap2));
-							}
-						} else {
-							trackings.add(new CapabilityRef(cap, cap2));
+					ImmanenceTileEntity ite = ref2.getTile();
+					if (ite instanceof RadiantChestTileEntity) {
+						RadiantChestTileEntity rcte = (RadiantChestTileEntity) ite;
+						trackings.add(new CapabilityRef(rcte.getOrCalculateReference(), rcte.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)));
+					} else if (ite instanceof RadiantTroveTileEntity) {
+						TroveItemHandler handler = ((RadiantTroveTileEntity) ite).getInventory();
+						if (handler.getPacked() == ref) {
+							Map<Integer, Integer> map = Collections.singletonMap(ref, handler.getCount());
+							troves.add(new CapabilityRef(map, handler));
 						}
+
+						// Ignore other troves
 					}
 				}
 			}
 		}
-		trackings.sort((o1, o2) -> Integer.compare(o2.tracking.quantity(ref), o1.tracking.quantity(ref)));
+		trackings.sort((o1, o2) -> Integer.compare(o2.map.getOrDefault(ref, 0), o1.map.getOrDefault(ref, 0)));
 		troves.addAll(trackings);
 		return troves;
 	}
@@ -236,11 +235,11 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 	}
 
 	public static class CapabilityRef {
-		public IItemTracking tracking;
+		public Map<Integer, Integer> map;
 		public IItemHandler handler;
 
-		public CapabilityRef (IItemTracking tracking, IItemHandler handler) {
-			this.tracking = tracking;
+		public CapabilityRef (Map<Integer, Integer> map, IItemHandler handler) {
+			this.map = map;
 			this.handler = handler;
 		}
 	}
