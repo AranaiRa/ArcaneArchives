@@ -30,7 +30,7 @@ public class TileList extends ReferenceList<IteRef> {
 	}
 
 	private void invalidate () {
-		removeIf(ite -> !ite.isValid());
+		removeIf(ite -> ite.tile != null && ite.getTile() != null && ite.getTile().isInvalid());
 	}
 
 	public boolean containsUUID (UUID uuid) {

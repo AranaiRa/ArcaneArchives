@@ -72,12 +72,10 @@ public class IteRef {
 	public boolean isValid () {
 		if (tile == null) return false;
 		if (tile.get() == null) return false;
-		if (!tile.get().isInvalid()) {
-			tile = null;
+		if (tile.get().isInvalid()) {
 			return false;
 		}
 		if (!tile.get().getWorld().isBlockLoaded(pos)) {
-			tile = null;
 			return false;
 		}
 		return true;
