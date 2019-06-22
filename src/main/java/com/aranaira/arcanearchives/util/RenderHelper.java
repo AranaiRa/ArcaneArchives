@@ -16,7 +16,6 @@ import java.util.Set;
 public class RenderHelper {
 	@SideOnly(Side.CLIENT)
 	public static void drawRays (long worldTime, Vec3d player_pos, Set<Vec3d> target_pos, float width) {
-		//GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
 		GlStateManager.pushMatrix();
 		GlStateManager.disableCull();
 		GlStateManager.disableLighting();
@@ -38,7 +37,6 @@ public class RenderHelper {
 			bufferBuilder.pos(vec.x + 0.5, vec.y + 0.5, vec.z + 0.5).color(c.red, c.green, c.blue, c.alpha).endVertex();
 			tessellator.draw();
 		}
-		//ArcaneArchives.logger.info(GL11.glGetFloat(GL11.GL_LINE_WIDTH));
 
 		GlStateManager.depthMask(true);
 		GlStateManager.popMatrix();
