@@ -17,12 +17,12 @@ public class IteRef {
 	public WeakReference<ImmanenceTileEntity> tile;
 	public Class<? extends ImmanenceTileEntity> clazz;
 
-	public IteRef (BlockPos pos, int dimension, UUID tileID, Class<? extends ImmanenceTileEntity> clazz) {
+	/*public IteRef (BlockPos pos, int dimension, UUID tileID, Class<? extends ImmanenceTileEntity> clazz) {
 		this.pos = pos;
 		this.dimension = dimension;
 		this.clazz = clazz;
 		this.uuid = tileID;
-	}
+	}*/
 
 	public IteRef (ImmanenceTileEntity tile) {
 		this.pos = tile.getPos();
@@ -32,7 +32,7 @@ public class IteRef {
 		this.tile = new WeakReference<>(tile);
 	}
 
-	public ImmanenceTileEntity getWorldTile (World world) {
+	/*public ImmanenceTileEntity getWorldTile (World world) {
 		if (world.provider.getDimension() != dimension && !world.isRemote) {
 			return getServerTile();
 		}
@@ -42,15 +42,15 @@ public class IteRef {
 		}
 
 		return tile.get();
-	}
+	}*/
 
-	public ImmanenceTileEntity getServerTile () {
+	/*public ImmanenceTileEntity getServerTile () {
 		if (tile == null || tile.get() == null) {
 			tile = new WeakReference<>(WorldUtil.getTileEntity(clazz, dimension, pos));
 		}
 
 		return tile.get();
-	}
+	}*/
 
 	@Nullable
 	public ImmanenceTileEntity getTile () {
@@ -61,16 +61,26 @@ public class IteRef {
 		return tile.get();
 	}
 
-	public void updateTile (ImmanenceTileEntity tile) {
+	/*public void updateTile (ImmanenceTileEntity tile) {
 		if (this.isValid() || tile.getPos() != this.pos || tile.dimension != this.dimension || !this.clazz.equals(tile.getClass()) || !this.uuid.equals(tile.uuid)) {
 			return;
 		}
 
 		this.tile = new WeakReference<>(tile);
-	}
+	}*/
 
 	public boolean isValid () {
-		return tile != null && tile.get() != null && !tile.get().isInvalid() && tile.get().getWorld().isBlockLoaded(pos);
+		if (tile == null) return false;
+		if (tile.get() == null) return false;
+		if (!tile.get().isInvalid()) {
+			tile = null;
+			return false;
+		}
+		if (!tile.get().getWorld().isBlockLoaded(pos)) {
+			tile = null;
+			return false;
+		}
+		return true;
 	}
 
 	public boolean isActive () {
