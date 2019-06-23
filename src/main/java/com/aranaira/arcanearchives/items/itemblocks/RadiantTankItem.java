@@ -11,11 +11,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
@@ -32,7 +34,7 @@ public class RadiantTankItem extends ItemBlock {
 			if (nbt != null) {
 				capacity *= (nbt.getInteger("upgrades") + 1);
 			}
-			return new FluidHandlerItemStack(stack, capacity);
+			return new RadiantTankFluidHandlerItemStack(stack, capacity);
 		}
 		return super.initCapabilities(stack, nbt);
 	}
@@ -59,5 +61,19 @@ public class RadiantTankItem extends ItemBlock {
 		}
 
 		super.addInformation(stack, worldIn, tooltip, flagIn);
+	}
+
+	public static class RadiantTankFluidHandlerItemStack extends FluidHandlerItemStack {
+		/**
+		 * @param container The container itemStack, data is stored on it directly as NBT.
+		 * @param capacity  The maximum capacity of this fluid tank.
+		 */
+		public RadiantTankFluidHandlerItemStack (@Nonnull ItemStack container, int capacity) {
+			super(container, capacity);
+		}
+
+		public void setCapacity (int capacity) {
+			this.capacity = capacity;
+		}
 	}
 }

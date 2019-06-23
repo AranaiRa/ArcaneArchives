@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.events.LineHandler;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.ItemRegistry;
+import com.aranaira.arcanearchives.items.itemblocks.RadiantTankItem.RadiantTankFluidHandlerItemStack;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
 import com.aranaira.arcanearchives.util.ItemUtilities;
 import com.aranaira.arcanearchives.util.WorldUtil;
@@ -32,6 +33,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
+import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -88,6 +91,12 @@ public class RadiantTank extends BlockTemplate {
 		}
 
 		te.serializeStack(tag);
+
+		IFluidHandlerItem cap = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
+		if (cap instanceof RadiantTankFluidHandlerItemStack) {
+			RadiantTankFluidHandlerItemStack cap2 = (RadiantTankFluidHandlerItemStack) cap;
+			cap2.setCapacity(te.getCapacity());
+		}
 
 		return stack;
 	}
