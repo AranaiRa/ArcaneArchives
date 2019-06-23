@@ -115,9 +115,9 @@ public class RadiantTank extends BlockTemplate {
 
 	@Override
 	public boolean onBlockActivated (World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if(!world.isRemote) {
-			LineHandler.removeLine(pos);
+		LineHandler.removeLine(pos);
 
+		if(!world.isRemote) {
 			ItemStack heldItem = player.getHeldItemMainhand();
 			if (heldItem.isEmpty()) {
 				heldItem = player.getHeldItemOffhand();
@@ -142,7 +142,7 @@ public class RadiantTank extends BlockTemplate {
 			return FluidUtil.interactWithFluidHandler(player, hand, handler);
 		}
 
-		return false;
+		return true;
 	}
 
 	@Override

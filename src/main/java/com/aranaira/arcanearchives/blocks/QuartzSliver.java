@@ -35,7 +35,7 @@ public class QuartzSliver extends BlockDirectionalTemplate implements IHasModel 
 
 	private boolean canPlaceOn (World worldIn, BlockPos pos) {
 		IBlockState state = worldIn.getBlockState(pos);
-		return state.getBlock().canPlaceTorchOnTop(state, worldIn, pos);
+		return state.getBlock().canPlaceTorchOnTop(state, worldIn, pos) && state.getBlock() != this;
 	}
 
 	@Override
@@ -63,6 +63,7 @@ public class QuartzSliver extends BlockDirectionalTemplate implements IHasModel 
 		BlockPos blockpos = pos.offset(facing.getOpposite());
 		IBlockState iblockstate = worldIn.getBlockState(blockpos);
 		Block block = iblockstate.getBlock();
+		if (block == this) return false;
 		BlockFaceShape blockfaceshape = iblockstate.getBlockFaceShape(worldIn, blockpos, facing);
 
 		if (facing.equals(EnumFacing.UP) && this.canPlaceOn(worldIn, blockpos)) {
