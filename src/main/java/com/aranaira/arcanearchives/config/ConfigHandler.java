@@ -65,6 +65,11 @@ public class ConfigHandler {
 	@Config.Name("Use Pretty GUIs")
 	public static boolean UsePrettyGUIs = true;
 
+	@Config.Comment("The multiplier applied to Radiant Chest slots")
+	@Config.Name("Radiant Chest Slot Multiplier")
+	@Config.RangeInt(min=1, max=8)
+	public static int RadiantMultiplier = 4;
+
 	//public static boolean bJarvisModeEnabled = false;
 
 	/*public static int iRadiantResonatorDrain = 20;

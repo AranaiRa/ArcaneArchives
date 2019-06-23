@@ -50,7 +50,7 @@ public class AAGuiHandler implements IGuiHandler {
 
 		switch (ID) {
 			case RADIANT_CHEST:
-				return new ContainerRadiantChest((RadiantChestTileEntity) te, player, true);
+				return new ContainerRadiantChest((RadiantChestTileEntity) te, player);
 			case GEMCUTTERS_TABLE:
 				ServerNetwork network = NetworkHelper.getServerNetwork(player.getUniqueID(), world);
 				network.synchroniseHiveInfo();
@@ -91,7 +91,7 @@ public class AAGuiHandler implements IGuiHandler {
 
 		switch (ID) {
 			case RADIANT_CHEST:
-				return new GUIRadiantChest(new ContainerRadiantChest((RadiantChestTileEntity) te, player, false), player);
+				return new GUIRadiantChest(new com.aranaira.arcanearchives.inventory.ContainerRadiantChest((RadiantChestTileEntity) te, player), player.inventory);
 			case GEMCUTTERS_TABLE:
 				GemCuttersTableTileEntity gct = (GemCuttersTableTileEntity) te;
 				return new GUIGemCuttersTable(player, new ContainerGemCuttersTable(gct.getInventory(), gct, player));

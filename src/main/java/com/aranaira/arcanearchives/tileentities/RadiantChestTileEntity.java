@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.inventory.handlers.ExtendedItemStackHandler;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketRadiantChest;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
@@ -12,7 +13,6 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 
@@ -76,7 +76,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements Manif
 		}
 	}
 
-	public ItemStackHandler getInventory () {
+	public RadiantChestHandler getInventory () {
 		return inventory;
 	}
 
@@ -159,7 +159,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements Manif
 		}
 	}
 
-	public class RadiantChestHandler extends ItemStackHandler {
+	public class RadiantChestHandler extends ExtendedItemStackHandler {
 		private Int2IntOpenHashMap itemReference = new Int2IntOpenHashMap();
 
 		public RadiantChestHandler (int size) {
@@ -190,15 +190,8 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements Manif
 		}
 
 		public void setStackInSlot (int slot, @Nonnull ItemStack stack) {
-			ItemStack currentlyInSlot = getStackInSlot(slot);
-			// Reimplement setStackInSlot using extract
-			if (!currentlyInSlot.isEmpty()) {
-				extractItem(slot, currentlyInSlot.getCount(), false);
-			}
-			ItemStack result = insertItem(slot, stack, false);
-			if (!result.isEmpty()) {
-				ArcaneArchives.logger.error("Error trying to insert " + stack.getTranslationKey() + " into slot " + slot + " of a radiant chest inventory: returned itemstack was not empty (contained " + result.getCount() + " versus " + stack.getCount() + " originally).");
-			}
+			super.setStackInSlot(slot, stack);
+			manualRecount();
 		}
 
 		@Nonnull

@@ -1,7 +1,5 @@
 package com.aranaira.arcanearchives.client.render;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
@@ -12,27 +10,28 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
-import netherchest.common.Config;
+
+import javax.annotation.Nullable;
 
 public class RenderItemExtended {
 
 	RenderItem itemRender = Minecraft.getMinecraft().getRenderItem();
 	public static final RenderItemExtended INSTANCE = new RenderItemExtended();
 
-	public void setZLevel(float z) {
+	public void setZLevel (float z) {
 		itemRender.zLevel = z;
 	}
 
-	public float getZLevel() {
+	public float getZLevel () {
 		return itemRender.zLevel;
 	}
 
-	public void modifyZLevel(float amount) {
+	public void modifyZLevel (float amount) {
 		itemRender.zLevel += amount;
 	}
 
-	public void renderItemOverlayIntoGUI(FontRenderer fr, ItemStack stack, int xPosition, int yPosition,
-			@Nullable String text) {
+	public void renderItemOverlayIntoGUI (
+			FontRenderer fr, ItemStack stack, int xPosition, int yPosition, @Nullable String text) {
 		if (!stack.isEmpty()) {
 
 			if (stack.getItem().showDurabilityBar(stack)) {
@@ -55,17 +54,16 @@ public class RenderItemExtended {
 				GlStateManager.enableLighting();
 				GlStateManager.enableDepth();
 			}
-			
+
 			if (stack.getCount() != 1 || text != null) {
 				String s = text == null ? String.valueOf(stack.getCount()) : text;
 				GlStateManager.disableLighting();
 				GlStateManager.disableDepth();
 				GlStateManager.disableBlend();
 				GlStateManager.pushMatrix();
-				float scale = Config.TEXT_SCALE;
+				float scale = 0.75f;
 				GlStateManager.scale(scale, scale, 1.0F);
-				fr.drawStringWithShadow(s, (float) (xPosition + 19 - 2 - (fr.getStringWidth(s)*scale))/scale,
-						(float) (yPosition + 6 + 3 + (1 / (scale * scale) - 1) )/scale, 16777215);
+				fr.drawStringWithShadow(s, (float) (xPosition + 19 - 2 - (fr.getStringWidth(s) * scale)) / scale, (float) (yPosition + 6 + 3 + (1 / (scale * scale) - 1)) / scale, 16777215);
 				GlStateManager.popMatrix();
 				GlStateManager.enableLighting();
 				GlStateManager.enableDepth();
@@ -76,9 +74,7 @@ public class RenderItemExtended {
 			}
 
 			EntityPlayerSP entityplayersp = Minecraft.getMinecraft().player;
-			float f3 = entityplayersp == null ? 0.0F
-					: entityplayersp.getCooldownTracker().getCooldown(stack.getItem(),
-							Minecraft.getMinecraft().getRenderPartialTicks());
+			float f3 = entityplayersp == null ? 0.0F : entityplayersp.getCooldownTracker().getCooldown(stack.getItem(), Minecraft.getMinecraft().getRenderPartialTicks());
 
 			if (f3 > 0.0F) {
 				GlStateManager.disableLighting();
@@ -86,8 +82,7 @@ public class RenderItemExtended {
 				GlStateManager.disableTexture2D();
 				Tessellator tessellator1 = Tessellator.getInstance();
 				BufferBuilder vertexbuffer1 = tessellator1.getBuffer();
-				this.draw(vertexbuffer1, xPosition, yPosition + MathHelper.floor(16.0F * (1.0F - f3)), 16,
-						MathHelper.ceil(16.0F * f3), 255, 255, 255, 127);
+				this.draw(vertexbuffer1, xPosition, yPosition + MathHelper.floor(16.0F * (1.0F - f3)), 16, MathHelper.ceil(16.0F * f3), 255, 255, 255, 127);
 				GlStateManager.enableTexture2D();
 				GlStateManager.enableLighting();
 				GlStateManager.enableDepth();
@@ -95,8 +90,8 @@ public class RenderItemExtended {
 		}
 	}
 
-	private void draw(BufferBuilder renderer, int x, int y, int width, int height, int red, int green, int blue,
-			int alpha) {
+	private void draw (
+			BufferBuilder renderer, int x, int y, int width, int height, int red, int green, int blue, int alpha) {
 		renderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
 		renderer.pos((double) (x + 0), (double) (y + 0), 0.0D).color(red, green, blue, alpha).endVertex();
 		renderer.pos((double) (x + 0), (double) (y + height), 0.0D).color(red, green, blue, alpha).endVertex();

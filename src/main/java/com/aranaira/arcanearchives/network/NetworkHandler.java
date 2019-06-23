@@ -8,7 +8,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
-import sun.plugin2.message.Message;
 
 //Used Precision Crafting as a reference. https://github.com/Daomephsta/Precision-Crafting/blob/master/src/main/java/leviathan143/precisioncrafting/common/packets/PacketHandler.java
 public class NetworkHandler {
@@ -29,7 +28,8 @@ public class NetworkHandler {
 		registerPacks(PacketArcaneGem.Handler.class, PacketArcaneGem.class, Side.CLIENT);
 		registerPacks(PacketArcaneGemToggle.Handler.class, PacketArcaneGemToggle.class, Side.SERVER);
 		registerPacks(PacketGemSocket.Handler.class, PacketGemSocket.class, Side.SERVER);
-		registerPacks(MessageClickWindowExtended.Handler.class, MessageClickWindowExtended.class, Side.CLIENT);
+		registerPacks(PacketRadiantChest.MessageClickWindowExtended.Handler.class, PacketRadiantChest.MessageClickWindowExtended.class, Side.CLIENT);
+		registerPacks(PacketRadiantChest.MessageSyncExtendedSlotContents.Handler.class, PacketRadiantChest.MessageSyncExtendedSlotContents.class, Side.CLIENT);
 	}
 
 	private static <REQ extends IMessage, REPLY extends IMessage> void registerPacks (Class<? extends IMessageHandler<REQ, REPLY>> messageHandler, Class<REQ> requestMessageType, Side side) {
