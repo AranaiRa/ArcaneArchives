@@ -17,6 +17,8 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Optional;
+import thaumcraft.api.crafting.IInfusionStabiliser;
+import thaumcraft.api.crafting.IInfusionStabiliserExt;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -24,7 +26,7 @@ import java.util.List;
 
 @SuppressWarnings("deprecation")
 @Optional.Interface(modid = "thaumcraft", iface = "thaumcraft.api.crafting.IInfusionStabiliser")
-public class RawQuartzCluster extends BlockDirectionalTemplate {
+public class RawQuartzCluster extends BlockDirectionalTemplate implements IInfusionStabiliser {
 
 	//public static final PropertyDirection DIRECTION = PropertyDirection.create("facing");
 	public static final String name = "raw_quartz_cluster";
@@ -97,6 +99,11 @@ public class RawQuartzCluster extends BlockDirectionalTemplate {
 
 	@Override
 	public boolean hasOBJModel () {
+		return true;
+	}
+
+	@Override
+	public boolean canStabaliseInfusion (World world, BlockPos blockPos) {
 		return true;
 	}
 }
