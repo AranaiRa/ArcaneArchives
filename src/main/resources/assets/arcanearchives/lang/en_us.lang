@@ -164,6 +164,7 @@ arcanearchives.tooltip.tank.fluid=Fluid: %s
 arcanearchives.tooltip.tank.amount=Amount: %s/%smb
 arcanearchives.tooltip.amphora.unknown_fluid=unknown fluid
 
+arcanearchives.tooltip.device.brazier=Items tossed in are sent to Radiant Storage. Troves are filled first, then Chests.
 arcanearchives.tooltip.device.radiant_chest=Storage. Used to contain items.
 arcanearchives.tooltip.device.radiant_tank=Storage. Used to contain fluids.
 arcanearchives.tooltip.device.radiant_resonator=Generates Raw Radiant Quartz over time if the block above itself is open.
