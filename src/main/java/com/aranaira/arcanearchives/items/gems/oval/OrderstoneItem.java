@@ -38,6 +38,7 @@ public class OrderstoneItem extends ArcaneGemItem {
 		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
 		tooltip.add(I18n.format("arcanearchives.tooltip.gemcharge") + ": " + getTooltipData(stack));
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.gem.orderstone"));
+		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.gem.recharge.orderstone"));
 	}
 
 	@Override
