@@ -38,6 +38,7 @@ public class TransferstoneItem extends ArcaneGemItem {
 		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
 		tooltip.add(I18n.format("arcanearchives.tooltip.gemcharge") + ": " + getTooltipData(stack));
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.gem.transferstone"));
+		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.gem.recharge.transferstone"));
 		if (nbt.hasKey("troveLocation")) {
 			BlockPos bp = BlockPos.fromLong(nbt.getLong("troveLocation"));
 			tooltip.add("Linked to " + bp.getX() + "/" + bp.getY() + "/" + bp.getZ() + " in \"" + DimensionType.getById(nbt.getInteger("dimID")).getName() + "\"");

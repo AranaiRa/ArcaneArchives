@@ -37,6 +37,7 @@ public class ParchtearItem extends ArcaneGemItem {
 	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(I18n.format("arcanearchives.tooltip.gemcharge") + ": " + getTooltipData(stack));
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.gem.parchtear"));
+		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.gem.recharge.parchtear"));
 	}
 
 	@Override
