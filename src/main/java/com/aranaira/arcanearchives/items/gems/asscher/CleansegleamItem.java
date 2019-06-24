@@ -4,6 +4,8 @@ package com.aranaira.arcanearchives.items.gems.asscher;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.gems.GemUtil;
 import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler;
+import com.aranaira.arcanearchives.network.PacketGemSocket;
+import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
@@ -15,6 +17,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -23,6 +26,9 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +64,24 @@ public class CleansegleamItem extends ArcaneGemItem {
 			AvailableGemsHandler handler = GemUtil.getHeldGem(player, hand);
 			if (handler.getHeld() != null) {
 				if(GemUtil.getCharge(handler.getHeld()) == 0) {
-					consumeFluidForChargeRecovery(player, handler, FluidRegistry.getFluid("milk"), 1, GemUtil.getMaxCharge(handler.getHeld()));
+					IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+					for (int i = 0; i < playerInventory.getSlots(); i++) {
+						ItemStack bucket = ItemStack.EMPTY;
+						ItemStack stackInSlot = playerInventory.getStackInSlot(i);
+						if (stackInSlot.getItem() == Items.MILK_BUCKET) {
+							playerInventory.extractItem(i, 1, false);
+							if (bucket.isEmpty()) {
+								bucket = new ItemStack(Items.BUCKET);
+							} else {
+								bucket.setCount(bucket.getCount()+1);
+							}
+						}
+						ItemStack result = ItemHandlerHelper.insertItemStacked(playerInventory, bucket, false);
+						if (!result.isEmpty()) {
+							Block.spawnAsEntity(world, player.getPosition(), result);
+						}
+					}
+					//consumeFluidForChargeRecovery(player, handler, FluidRegistry.getFluid("milk"), 1, GemUtil.getMaxCharge(handler.getHeld()));
 					//TODO: Check for amphora linked to milk
 				}
 				else {
