@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.util;
 
+import net.minecraft.block.Block;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -15,12 +16,14 @@ public class DropHelper {
 		}
 
 		for (int i = 0; i < inventory.getSlots(); i++) {
-			ItemStack toDrop = inventory.extractItem(i, 64, false);
-			if (toDrop.isEmpty()) {
-				continue;
+			while (true) {
+				ItemStack toDrop = inventory.extractItem(i, 64, false);
+				if (!toDrop.isEmpty()) {
+					Block.spawnAsEntity(world, pos, toDrop);
+				} else {
+					break;
+				}
 			}
-
-			InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), toDrop);
 		}
 	}
 }

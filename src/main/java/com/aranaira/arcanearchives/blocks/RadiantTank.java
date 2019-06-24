@@ -22,6 +22,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -71,6 +72,10 @@ public class RadiantTank extends BlockTemplate {
 		return false;
 	}
 
+	@Override
+	public void getDrops (NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+		super.getDrops(drops, world, pos, state, fortune);
+	}
 
 	public static ItemStack generateStack (IBlockState state, IBlockAccess world, BlockPos pos, EntityPlayer player) {
 		ItemStack stack = new ItemStack(BlockRegistry.RADIANT_TANK.getItemBlock());
