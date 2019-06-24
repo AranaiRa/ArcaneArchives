@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
 
 public class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCompound> {
 	private static int COUNT_MULTIPLIER_PER_UPGRADE = 1;
-	private static int BASE_COUNT = 64 * 64;
+	private static int BASE_COUNT = 64 * 1024;
 	public static int MAX_UPGRADES = 9;
 	public static Item UPGRADE_ITEM = ItemRegistry.COMPONENT_MATERIALINTERFACE;
 	private int upgrades = 0;
