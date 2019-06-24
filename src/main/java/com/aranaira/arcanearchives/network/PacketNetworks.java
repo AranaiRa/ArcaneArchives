@@ -66,6 +66,7 @@ public class PacketNetworks {
 		}
 
 		public static class Handler extends NetworkHandler.ServerHandler<Request> {
+			@Override
 			public void processMessage (Request message, MessageContext context) {
 				MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
 				if (server == null) {
@@ -136,6 +137,7 @@ public class PacketNetworks {
 		}
 
 		public static class Handler extends NetworkHandler.ClientHandler<Response> {
+			@Override
 			@SideOnly(Side.CLIENT)
 			public void processMessage (Response message, MessageContext context) {
 				EntityPlayer player;

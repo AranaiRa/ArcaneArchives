@@ -251,6 +251,7 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 		RenderItemExtended.INSTANCE.setZLevel(this.itemRender.zLevel);
 	}
 
+	@Override
 	public void drawSlot (Slot slotIn) {
 		ItemStack stack = slotIn.getStack();
 		if (!stack.isEmpty()) {

@@ -56,6 +56,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements Manif
 		return "chest";
 	}
 
+	@Override
 	public String getChestName () {
 		return chestName;
 	}
@@ -76,6 +77,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements Manif
 		}
 	}
 
+	@Override
 	public RadiantChestHandler getInventory () {
 		return inventory;
 	}
@@ -189,6 +191,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements Manif
 			}
 		}
 
+		@Override
 		public void setStackInSlot (int slot, @Nonnull ItemStack stack) {
 			super.setStackInSlot(slot, stack);
 			manualRecount();

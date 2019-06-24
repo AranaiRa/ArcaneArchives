@@ -57,6 +57,7 @@ public class PacketRadiantChest {
 		}
 
 		public static class Handler extends NetworkHandler.ServerHandler<SetName> {
+			@Override
 			public void processMessage (SetName message, MessageContext ctx) {
 				RadiantChestTileEntity te = WorldUtil.getTileEntity(RadiantChestTileEntity.class, message.dimension, message.pos);
 				if (te != null) {
@@ -121,6 +122,7 @@ public class PacketRadiantChest {
 				if (player == null) return null;
 
 				player.getServerWorld().addScheduledTask(new Runnable() {
+					@Override
 					public void run() {
 						processMessage(message, player);
 					}
@@ -224,6 +226,7 @@ public class PacketRadiantChest {
 				if (player == null) return null;
 
 				mc.addScheduledTask(new Runnable() {
+					@Override
 					public void run() {
 						processMessage(message, player);
 					}

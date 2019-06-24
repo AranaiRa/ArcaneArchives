@@ -27,6 +27,7 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity {
 		super("radianttank");
 	}
 
+	@Override
 	public void update () {
 		if (world.isRemote) {
 			return;

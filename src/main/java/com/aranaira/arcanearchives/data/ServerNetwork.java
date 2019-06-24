@@ -94,6 +94,7 @@ public class ServerNetwork implements IServerNetwork {
 	 * Attempts to fetch the player associated with this network.
 	 * Returns null if they do not exist or are offline.
 	 */
+	@Override
 	@Nullable
 	public EntityPlayer getPlayer () {
 		MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
@@ -244,6 +245,7 @@ public class ServerNetwork implements IServerNetwork {
 		}
 	}
 
+	@Override
 	public NBTTagCompound buildHiveMembershipData () {
 		return NetworkHelper.getHiveMembershipInfo(uuid, getWorld());
 	}
@@ -310,6 +312,7 @@ public class ServerNetwork implements IServerNetwork {
 	/**
 	 * Rebuilds the manifestItems list.
 	 */
+	@Override
 	public void rebuildManifest () {
 		manifestItems.clear();
 
@@ -393,6 +396,7 @@ public class ServerNetwork implements IServerNetwork {
 	 * Fetches only manifest tile entites: radiant chests & troves.
 	 * TODO: Get rid of additional classes and use the predicate instead.
 	 */
+	@Override
 	public TileList.TileListIterable getManifestTileEntities () {
 		return tiles.filterAssignableClass(ManifestTileEntity.class);
 	}

@@ -35,6 +35,7 @@ public class PacketConfig {
 		}
 
 		public static class Handler extends NetworkHandler.ServerHandler<MaxDistance> {
+			@Override
 			public void processMessage (MaxDistance message, MessageContext context) {
 				MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
 				if (server == null) {

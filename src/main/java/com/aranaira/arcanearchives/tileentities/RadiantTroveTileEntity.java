@@ -24,6 +24,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements Manif
 	private int lastTick = 0;
 	private UUID lastUUID = null;
 
+	@Override
 	public void update () {
 		if (world.isRemote) {
 			return;
@@ -225,6 +226,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements Manif
 		return "";
 	}
 
+	@Override
 	public TroveItemHandler getInventory () {
 		return inventory;
 	}
