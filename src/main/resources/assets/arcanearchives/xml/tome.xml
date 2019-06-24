@@ -795,7 +795,28 @@
                 <title>Letter of Invitation</title>
             </page_title>
             <p italics="true">
-                ...Lore fragment TBD
+                To whom it may concern:
+            </p><space height="4"/>
+            <p italics="true">
+                The Omencasters believe that a child with magical inclinations resides in a village called Brightmeadow. On behalf of the Ministry of Recruitment, you are charged to collect this child and bring it to the Eternal University for assessment.
+            </p><space height="4"/>
+            <p italics="true">
+                According to their divinations, the child has begun performing magical workings beyond the scope of the hedge magic that the peasantry usually practices. See if you can convince the child to show you its workings. Feign interest, no matter how primitive its spellcraft is.
+            </p><space height="4"/>
+            <p italics="true">
+                Your job will be easiest if you can convince the child and its parents to release it to us of their own choosing. Make sure to speak slowly and with simple words. Should the peasantry of Brightmeadow show resistance to giving up the child, offer some small magical enhancements to improve their lives in exchange; perhaps an iron golem or a water purifying charm.
+            </p><space height="4"/>
+            <p italics="true">
+                If you cannot convince the village to willingly part, eliminate the child from their memories and take it anyway. Do not worry about resistance or traumatizing it, as its memories will be eliminated and replaced with more convenient ones. This method is to be considered a last resort, the additional work it will incur will significantly damage your standing with the Ministry of Recruitment.
+            </p><space height="4"/>
+            <p italics="true">
+                Bask in the light of your Enlightenment, and walk ever on the path of Wisdom.
+            </p><space height="4"/>
+            <p bole="true">
+                Official recruitment charge, Ministry of Recruitment
+            </p>
+            <p>
+                ...1647, Winter’s End
             </p>
         </section>
     </chapter>
