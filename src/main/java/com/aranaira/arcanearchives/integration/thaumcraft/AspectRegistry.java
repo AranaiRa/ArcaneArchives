@@ -18,8 +18,6 @@ import thaumcraft.api.aspects.AspectRegistryEvent;
 public class AspectRegistry {
     @SubscribeEvent
     public static void registerAspects(AspectRegistryEvent event) {
-        ArcaneArchives.logger.info("&&&&&&& Attempting to register Arcane Archives blocks and items with Thaumcraft aspects.");
-
         try {
             AspectRegisterHelper helper = new AspectRegisterHelper(event);
 
@@ -333,6 +331,7 @@ public class AspectRegistry {
 
         } catch(Exception e) {
             ArcaneArchives.logger.info("&&&&&&& Error registering Thaumcraft aspects: "+e.getLocalizedMessage());
+            e.printStackTrace();
         }
     }
 
