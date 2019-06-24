@@ -1,6 +1,8 @@
 package com.aranaira.arcanearchives.items.itemblocks;
 
+import com.aranaira.arcanearchives.inventory.handlers.TankItemFluidHandler;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
+import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -13,6 +15,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -29,14 +32,7 @@ public class RadiantTankItem extends ItemBlock {
 	@Nullable
 	@Override
 	public ICapabilityProvider initCapabilities (ItemStack stack, @Nullable NBTTagCompound nbt) {
-		if (!stack.isEmpty()) {
-			int capacity = RadiantTankTileEntity.BASE_CAPACITY;
-			if (nbt != null) {
-				capacity *= (nbt.getInteger("upgrades") + 1);
-			}
-			return new RadiantTankFluidHandlerItemStack(stack, capacity);
-		}
-		return super.initCapabilities(stack, nbt);
+		return new TankItemFluidHandler(stack);
 	}
 
 	@Override
@@ -57,23 +53,12 @@ public class RadiantTankItem extends ItemBlock {
 					tooltip.add(I18n.format("arcanearchives.tooltip.tank.fluid", "None"));
 					tooltip.add(I18n.format("arcanearchives.tooltip.tank.amount", 0, RadiantTankTileEntity.BASE_CAPACITY * (tag.getInteger("upgrades") + 1)));
 				}
+				if (tank.getTankProperties().length > 0) {
+					tooltip.add("Capacity is: " + tank.getTankProperties()[0].getCapacity());
+				}
 			}
 		}
 
 		super.addInformation(stack, worldIn, tooltip, flagIn);
-	}
-
-	public static class RadiantTankFluidHandlerItemStack extends FluidHandlerItemStack {
-		/**
-		 * @param container The container itemStack, data is stored on it directly as NBT.
-		 * @param capacity  The maximum capacity of this fluid tank.
-		 */
-		public RadiantTankFluidHandlerItemStack (@Nonnull ItemStack container, int capacity) {
-			super(container, capacity);
-		}
-
-		public void setCapacity (int capacity) {
-			this.capacity = capacity;
-		}
 	}
 }
