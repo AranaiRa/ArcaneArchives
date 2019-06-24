@@ -30,7 +30,7 @@ public class ParchtearItem extends ArcaneGemItem {
 	public static final int CUBOID_RADIUS = 1;
 
 	public ParchtearItem () {
-		super(NAME, GemCut.PENDELOQUE, GemColor.BLACK, 1000, 3375);
+		super(NAME, GemCut.PENDELOQUE, GemColor.BLACK, 8000, 27000);
 	}
 
 	@Override
