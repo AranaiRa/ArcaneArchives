@@ -7,6 +7,7 @@ import com.aranaira.arcanearchives.client.render.RenderGemcasting;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.PlayerSaveData;
+import com.aranaira.arcanearchives.entity.EntityItemMountaintear;
 import com.aranaira.arcanearchives.entity.ai.AIResonatorSit;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.ItemRegistry;
@@ -299,7 +300,7 @@ public class AAEventHandler {
 		if (entity instanceof EntityOcelot) {
 			EntityOcelot ocelot = (EntityOcelot) entity;
 			ocelot.tasks.addTask(6, new AIResonatorSit(ocelot, 0.8D));
-		} /*else if (entity instanceof EntityItem && !(entity instanceof EntityItemMountaintear)) {
+		} else if (entity instanceof EntityItem && !(entity instanceof EntityItemMountaintear)) {
 			ItemStack stack = ((EntityItem) entity).getItem();
 			if (stack.getItem() == ItemRegistry.MOUNTAINTEAR) {
 				EntityItemMountaintear mountaintear = new EntityItemMountaintear(event.getWorld(), entity.posX, entity.posY, entity.posZ, stack);
@@ -307,7 +308,7 @@ public class AAEventHandler {
 				entity.setDead();
 				event.getWorld().spawnEntity(mountaintear);
 			}
-		}*/
+		}
 	}
 
 	@SubscribeEvent
