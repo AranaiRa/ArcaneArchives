@@ -10,9 +10,21 @@ import javax.annotation.Nonnull;
 
 public class GUIGemSocket extends GuiContainer {
 
-	private static final ResourceLocation TEXTURE_PLAYERINV = new ResourceLocation("arcanearchives:textures/gui/player_inv.png"), TEXTURE_PLAYERINV_SIMPLE = new ResourceLocation("arcanearchives:textures/gui/simple/player_inv.png"), TEXTURE_FABRIAL = new ResourceLocation("arcanearchives:textures/gui/fabrial.png"), TEXTURE_FABRIAL_SIMPLE = new ResourceLocation("arcanearchives:textures/gui/simple/fabrial.png");
+	private static final ResourceLocation TEXTURE_PLAYERINV = new ResourceLocation("arcanearchives:textures/gui/player_inv.png");
+	private static final ResourceLocation TEXTURE_PLAYERINV_SIMPLE = new ResourceLocation("arcanearchives:textures/gui/simple/player_inv.png");
+	private static final ResourceLocation TEXTURE_FABRIAL = new ResourceLocation("arcanearchives:textures/gui/fabrial.png");
+	private static final ResourceLocation TEXTURE_SINGLESLOT_SIMPLE = new ResourceLocation("arcanearchives:textures/gui/simple/single_slot.png");
 
-	private static final int FABRIAL_X = 102, FABRIAL_Y = 0, FABRIAL_S = 22, STRAP_X = 0, STRAP_Y = 101, STRAP_W = 94, STRAP_H = 37, INVENTORY_W = 181, INVENTORY_H = 101;
+	private static final int
+			FABRIAL_X = 102,
+			FABRIAL_Y = 0,
+			FABRIAL_S = 22,
+			STRAP_X = 0,
+			STRAP_Y = 101,
+			STRAP_W = 94,
+			STRAP_H = 37,
+			INVENTORY_W = 181,
+			INVENTORY_H = 101;
 
 
 	private ContainerGemSocket containerGemSocket;
@@ -35,17 +47,26 @@ public class GUIGemSocket extends GuiContainer {
 	protected void drawGuiContainerBackgroundLayer (float partialTicks, int mouseX, int mouseY) {
 		GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
 
-		if (ConfigHandler.UsePrettyGUIs) {
-			float i = (this.width - this.xSize) / 2;
-			float j = (this.height - this.ySize) / 2;
+		float i = (this.width - this.xSize) / 2;
+		float j = (this.height - this.ySize) / 2;
 
+		if(ConfigHandler.UsePrettyGUIs)
 			this.mc.getTextureManager().bindTexture(TEXTURE_PLAYERINV);
-			this.drawTexturedModalRect(i, j + 22 + FABRIAL_S, 0, 0, INVENTORY_W, INVENTORY_H);
+		else
+			this.mc.getTextureManager().bindTexture(TEXTURE_PLAYERINV_SIMPLE);
+		this.drawTexturedModalRect(i, j + 22 + FABRIAL_S, 0, 0, INVENTORY_W, INVENTORY_H);
 
+		if(ConfigHandler.UsePrettyGUIs) //No strap on simple GUI, so just skip
 			this.drawTexturedModalRect(i + 42, j + 11, STRAP_X, STRAP_Y, STRAP_W, STRAP_H);
 
+		if(ConfigHandler.UsePrettyGUIs) {
 			this.mc.getTextureManager().bindTexture(TEXTURE_FABRIAL);
 			this.drawTexturedModalRect(i + 78, j, FABRIAL_X, FABRIAL_Y, FABRIAL_S, FABRIAL_S);
 		}
+		else {
+			this.mc.getTextureManager().bindTexture(TEXTURE_SINGLESLOT_SIMPLE);
+			this.drawTexturedModalRect(i + 73, j - 5, 0, 0, 32, 32);
+		}
+
 	}
 }

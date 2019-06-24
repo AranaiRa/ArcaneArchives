@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.client.gui;
 
+import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
 import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
@@ -27,8 +28,10 @@ import java.util.*;
 @MouseTweaksDisableWheelTweak
 public class GUIGemCuttersTable extends GuiContainer {
 	private static final ResourceLocation GUI_TEXTURES = new ResourceLocation("arcanearchives:textures/gui/gemcutterstable.png");
+	private static final ResourceLocation GUI_TEXTURES_SIMPLE = new ResourceLocation("arcanearchives:textures/gui/simple/gemcutterstable.png");
 
 	private static final int OVERLAY = 0xaa1e3340;
+	private static final int OVERLAY_SIMPLE = 0x80808080;
 
 	private final ContainerGemCuttersTable container;
 	private final EntityPlayer player;
@@ -91,7 +94,10 @@ public class GUIGemCuttersTable extends GuiContainer {
 	protected void drawGuiContainerBackgroundLayer (float partialTicks, int mouseX, int mouseY) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.enableColorMaterial();
-		this.mc.getTextureManager().bindTexture(GUI_TEXTURES);
+		if(ConfigHandler.UsePrettyGUIs)
+			this.mc.getTextureManager().bindTexture(GUI_TEXTURES);
+		else
+			this.mc.getTextureManager().bindTexture(GUI_TEXTURES_SIMPLE);
 
 		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, 206, 256, 256, 256);
 	}
@@ -112,7 +118,10 @@ public class GUIGemCuttersTable extends GuiContainer {
 				wasEnabled = true;
 				GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 				GlStateManager.enableColorMaterial();
-				this.mc.getTextureManager().bindTexture(GUI_TEXTURES);
+				if(ConfigHandler.UsePrettyGUIs)
+					this.mc.getTextureManager().bindTexture(GUI_TEXTURES);
+				else
+					this.mc.getTextureManager().bindTexture(GUI_TEXTURES_SIMPLE);
 				this.drawTexturedModalRect(slot.xPos - 2, slot.yPos - 2, 206, 0, 20, 20);
 			}
 
@@ -124,10 +133,17 @@ public class GUIGemCuttersTable extends GuiContainer {
 
 	private void dimSlot (Slot slot, boolean wasEnabled) {
 		if (wasEnabled) {
-			this.mc.getTextureManager().deleteTexture(GUI_TEXTURES);
+			if(ConfigHandler.UsePrettyGUIs)
+				this.mc.getTextureManager().deleteTexture(GUI_TEXTURES);
+			else
+				this.mc.getTextureManager().deleteTexture(GUI_TEXTURES_SIMPLE);
 		}
 		GlStateManager.disableDepth();
-		drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, OVERLAY);
+
+		if(ConfigHandler.UsePrettyGUIs)
+			drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, OVERLAY);
+		else
+			drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, OVERLAY_SIMPLE);
 	}
 
 	@Override

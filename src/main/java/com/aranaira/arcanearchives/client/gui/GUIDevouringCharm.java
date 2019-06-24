@@ -45,15 +45,19 @@ public class GUIDevouringCharm extends GuiContainer {
 	protected void drawGuiContainerBackgroundLayer (float partialTicks, int mouseX, int mouseY) {
 		GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
 
-		if (ConfigHandler.UsePrettyGUIs) {
-			float i = (this.width - this.xSize) / 2;
-			float j = (this.height - this.ySize) / 2;
+		float i = (this.width - this.xSize) / 2;
+		float j = (this.height - this.ySize) / 2;
 
+		if (ConfigHandler.UsePrettyGUIs)
 			this.mc.getTextureManager().bindTexture(TEXTURE_DEVOURINGCHARM);
-			this.drawTexturedModalRect(i + 25, j + 58, DEVOURINGCHARM_X, DEVOURINGCHARM_Y, DEVOURINGCHARM_S, DEVOURINGCHARM_S);
+		else
+			this.mc.getTextureManager().bindTexture(TEXTURE_DEVOURINGCHARM_SIMPLE);
+		this.drawTexturedModalRect(i + 25, j + 58, DEVOURINGCHARM_X, DEVOURINGCHARM_Y, DEVOURINGCHARM_S, DEVOURINGCHARM_S);
 
+		if (ConfigHandler.UsePrettyGUIs)
 			this.mc.getTextureManager().bindTexture(TEXTURE_PLAYERINV);
-			this.drawTexturedModalRect(i, j + 22 + DEVOURINGCHARM_S, 0, 0, INVENTORY_W, INVENTORY_H);
-		}
+		else
+			this.mc.getTextureManager().bindTexture(TEXTURE_PLAYERINV_SIMPLE);
+		this.drawTexturedModalRect(i, j + 22 + DEVOURINGCHARM_S, 0, 0, INVENTORY_W, INVENTORY_H);
 	}
 }

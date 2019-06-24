@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.client.gui;
 
+import com.aranaira.arcanearchives.config.ConfigHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
@@ -12,6 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * A {@link GuiButton} with a texture from {@link #BUTTON_TEXTURES}
  */ public class TexturedButton extends GuiButton {
 	private static final ResourceLocation BUTTON_TEXTURES = new ResourceLocation("arcanearchives:textures/gui/buttons.png");
+	private static final ResourceLocation BUTTON_TEXTURES_SIMPLE = new ResourceLocation("arcanearchives:textures/gui/simple/buttons.png");
 	private static final int[] TEXTURE_X_START = new int[]{0};
 	private static final int[] TEXTURE_Y_START = new int[]{0};
 	private static final int[] TEXTURE_HEIGHT = new int[]{12};
@@ -40,7 +42,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 			this.mouseDragged(mc, mouseX, mouseY);
 
 			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-			mc.getTextureManager().bindTexture(BUTTON_TEXTURES);
+			if(ConfigHandler.UsePrettyGUIs)
+				mc.getTextureManager().bindTexture(BUTTON_TEXTURES);
+			else
+				mc.getTextureManager().bindTexture(BUTTON_TEXTURES_SIMPLE);
 			int x = TEXTURE_X_START[mTextureId];
 			int y = TEXTURE_Y_START[mTextureId];
 
