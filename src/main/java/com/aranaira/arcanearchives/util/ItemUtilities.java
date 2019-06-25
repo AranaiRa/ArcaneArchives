@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.util;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.inventory.handlers.TroveItemHandler;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
@@ -23,12 +24,12 @@ public class ItemUtilities {
 		} else if (te instanceof RadiantTroveTileEntity) {
 			RadiantTroveTileEntity trove = (RadiantTroveTileEntity) te;
 			TroveItemHandler handler = trove.getInventory();
-			float f = handler.getMaxCount() / (float) handler.getCount();
+			float f = (float) handler.getCount() / handler.getMaxCount();
 			return MathHelper.floor(f * 14.0F) + (handler.getCount() > 0 ? 1 : 0);
 		} else if (te instanceof RadiantTankTileEntity) {
 			RadiantTankTileEntity tank = (RadiantTankTileEntity) te;
 			int amount = tank.getInventory().getFluidAmount();
-			float f = tank.getCapacity() / (float) amount;
+			float f = (float) amount / tank.getCapacity();
 			return MathHelper.floor(f * 14.0F) + (amount > 0 ? 1 : 0);
 		}
 		return 0;
@@ -45,12 +46,13 @@ public class ItemUtilities {
 				ItemStack itemstack = handler.getStackInSlot(j);
 
 				if (!itemstack.isEmpty()) {
-					f += (float) itemstack.getCount() / (float) Math.min(handler.getSlotLimit(j), itemstack.getMaxStackSize());
+					f += (float) itemstack.getCount() / (float) handler.getSlotLimit(i);//(float) Math.min(handler.getSlotLimit(j), itemstack.getMaxStackSize());
 					++i;
 				}
 			}
 
 			f = f / (float) handler.getSlots();
+
 			return MathHelper.floor(f * 14.0F) + (i > 0 ? 1 : 0);
 		}
 	}
