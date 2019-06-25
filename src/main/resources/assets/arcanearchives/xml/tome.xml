@@ -445,9 +445,14 @@
             <p>
                 <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="scepter_revelation">Scepter of Revelation</link> on a Radiant Chest will return the chest's name, and how many slots of its inventory are available.
             </p>
-            <horizontal_rule/>
+            <p>
+                <stack item="minecraft:comparator"/> When monitored with a Redstone Comparator, a Radiant Chest ouptuts a signal based on how full it is (in total items, rather than number of slots filled).
+            </p>
         </section>
         <section>
+            <page_title>
+                <title>Radiant Chest</title>
+            </page_title>
             <p>
                 <stack item="arcanearchives:raw_quartz"/> Radiant Chests can be crafted by using a piece of <link ref="RadiantQuartz">Raw Radiant Quartz</link> on a chest while sneaking. Any items inside the chest will be imported, and if used on a double vanilla chest, both chests' inventories will be imported into the new Radiant Chest.
             </p>
@@ -597,7 +602,9 @@
             <p>
                 <stack item="arcanearchives:scepter_manipulation"/> Using a <link ref="scepter_manipulation">Scepter of Manipulation</link> on a Radiant Tank will remove one installed upgrade, so long as the storage that upgrade provided is currently unused.
             </p>
-            <horizontal_rule/>
+            <p>
+                <stack item="minecraft:comparator"/> When monitored with a Redstone Comparator, a Radiant Tank ouptuts a signal based on how full it is.
+            </p>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Radiant Tanks can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
@@ -633,6 +640,9 @@
             </p>
             <p>
                 <stack item="arcanearchives:scepter_manipulation"/> Using a <link ref="scepter_manipulation">Scepter of Manipulation</link> on a Radiant Trove will remove one installed upgrade, so long as the storage that upgrade provided is currently unused.
+            </p>
+            <p>
+                <stack item="minecraft:comparator"/> When monitored with a Redstone Comparator, a Radiant Trove ouptuts a signal based on how full it is.
             </p>
             <horizontal_rule/>
             <p>
@@ -804,7 +814,7 @@
                 <title>Letter of Invitation</title>
             </page_title>
             <p italics="true">
-                To whom it may concern:
+                Journeyman Yailan:
             </p><space height="4"/>
             <p italics="true">
                 The Omencasters believe that a child with magical inclinations resides in a village called Brightmeadow. On behalf of the Ministry of Recruitment, you are charged to collect this child and bring it to the Eternal University for assessment.
@@ -821,11 +831,11 @@
             <p italics="true">
                 Bask in the light of your Enlightenment, and walk ever on the path of Wisdom.
             </p><space height="4"/>
-            <p bole="true">
+            <p bold="true">
                 Official recruitment charge, Ministry of Recruitment
             </p>
             <p>
-                ...1647, Winter’s End
+                ...1627, Winter’s End
             </p>
         </section>
     </chapter>
@@ -853,7 +863,25 @@
                 <title>Letter of Resignation</title>
             </page_title>
             <p italics="true">
-                ...Lore fragment TBD
+                To my esteemed colleagues of the Eternal University,
+            </p><space height="4"/>
+            <p italics="true">
+                All of my Enlighted existence I have labored tirelessly to bring Enlightenment to all whom the Magistocracy have deemed worthy to share in its light. I have strived to be a beacon of Enlightenment to all, but no longer can I turn a blind eye to the delusions that this University has allowed to fester.
+            </p><space height="4"/>
+            <p italics="true">
+                The Enlightenment that the Grand Architects shared was not meant for the vulgar peasantry. Enlightenment is for the pure; we cannot continue to dilute our ranks with crude Novices who will never become anything more than Journeymen.
+            </p><space height="4"/>
+            <p italics="true">
+                Due to the increase of this practice, despite my many protests, I no longer feel that Enlightenment is truly the highest goal of the Council of Masters.
+            </p><space height="4"/>
+            <p italics="true">
+                I have decided therefore, to resign from this once great fellowship effective immediately.
+            </p><space height="4"/>
+            <p bold="true">
+                Official Resignation of Master Rashelon
+            </p>
+            <p>
+                ...1634, Spring's Birth
             </p>
         </section>
     </chapter>
@@ -1713,14 +1741,6 @@
             </p>
             <p>
                 <stack item="arcanearchives:writ_expulsion"/> By using a <link ref="WritExpulsion">Writ of Expulsion</link> named on an anvil, you can force a player in a hybrid network to leave the network.
-            </p>
-        </section>
-        <section>
-            <page_title>
-                <title>Networks</title>
-            </page_title>
-            <p italics="true">
-                ...Lore fragment TBD
             </p>
         </section>
     </chapter>
