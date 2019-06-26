@@ -28,7 +28,7 @@ public class GCTRecipeProvider extends RecipeProvider {
 	@Nullable
 	@Override
 	public ProvidedComponents provideRecipeComponents (@Nonnull ResourceLocation recipeKey) {
-		GCTRecipe recipe = GCTRecipeList.getRecipe(recipeKey);
+		GCTRecipe recipe = GCTRecipeList.instance.getRecipe(recipeKey);
 		if (recipe == null) {
 			return null;
 		}

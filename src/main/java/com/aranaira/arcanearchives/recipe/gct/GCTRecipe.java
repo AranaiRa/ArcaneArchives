@@ -66,7 +66,7 @@ public class GCTRecipe implements IGCTRecipe {
 
 	@Override
 	public int getIndex () {
-		return GCTRecipeList.indexOf(this);
+		return GCTRecipeList.instance.indexOf(this);
 	}
 
 	@Override

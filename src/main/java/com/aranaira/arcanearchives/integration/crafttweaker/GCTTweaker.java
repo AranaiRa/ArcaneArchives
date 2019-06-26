@@ -49,11 +49,11 @@ public class GCTTweaker {
 
 		@Override
 		public void apply () {
-			GCTRecipe recipe = GCTRecipeList.getRecipeByOutput(output);
+			GCTRecipe recipe = GCTRecipeList.instance.getRecipeByOutput(output);
 			if (recipe == null) {
 				CraftTweakerAPI.logError("Invalid recipe for " + output.getItem().getRegistryName().toString());
 			} else {
-				GCTRecipeList.removeRecipe(recipe);
+				GCTRecipeList.instance.removeRecipe(recipe);
 			}
 		}
 	}
@@ -77,7 +77,7 @@ public class GCTTweaker {
 				stacks.add(new IngredientStack(CraftTweakerMC.getIngredient(ingredient), ingredient.getAmount()));
 			}
 			GCTRecipe recipe = new GCTRecipe(name, output, stacks);
-			GCTRecipeList.addRecipe(recipe);
+			GCTRecipeList.instance.addRecipe(recipe);
 		}
 	}
 }

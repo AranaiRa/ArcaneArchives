@@ -70,7 +70,7 @@ public class PacketGemCutters {
 
 		@Override
 		public void fromBytes (ByteBuf buf) {
-			recipe = GCTRecipeList.getRecipe(new ResourceLocation(ByteBufUtils.readUTF8String(buf)));
+			recipe = GCTRecipeList.instance.getRecipe(new ResourceLocation(ByteBufUtils.readUTF8String(buf)));
 		}
 
 		@Override

@@ -49,7 +49,7 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements Ma
 	}
 
 	public void setRecipe (ResourceLocation name) {
-		currentRecipe = GCTRecipeList.getRecipe(name);
+		currentRecipe = GCTRecipeList.instance.getRecipe(name);
 	}
 
 	public void setRecipe (int index) {
@@ -63,7 +63,7 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements Ma
 	}
 
 	public void manuallySetRecipe (int index) {
-		currentRecipe = GCTRecipeList.getRecipeByIndex(index);
+		currentRecipe = GCTRecipeList.instance.getRecipeByIndex(index);
 	}
 
 	public static final ResourceLocation INVALID = new ResourceLocation(ArcaneArchives.MODID, "invalid_gct_recipe");
@@ -175,7 +175,7 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements Ma
 	}
 
 	public void nextPage () {
-		if (GCTRecipeList.getSize() > (page + 1) * RECIPE_PAGE_LIMIT) {
+		if (GCTRecipeList.instance.getSize() > (page + 1) * RECIPE_PAGE_LIMIT) {
 			setPage(page + 1);
 		}
 	}

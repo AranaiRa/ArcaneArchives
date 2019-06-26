@@ -191,6 +191,33 @@ jar {
     rename '(.+_at.cfg)', 'META-INF/$1'
 }
 
+task deobfJar(type: Jar) {
+    from(sourceSets.main.output)
+    archiveName = "${baseName}-${version}-deobf.${extension}"
+}
+
+task apiJar(type: Jar) {
+    from (sourceSets.main.allJava)
+    from (sourceSets.main.output)
+    include 'com/aranaira/arcanearchives/api/**'
+
+    classifier = 'api'
+
+    archiveName = "${baseName}-${version}-api.${extension}"
+}
+
+task srcJar(type: Jar) {
+    from (sourceSets.main.output)
+
+    classifier = 'sources'
+
+    archiveName = "${baseName}-${version}-sources.${extension}"
+}
+
+artifacts {
+    archives srcJar, apiJar, deobfJar
+}
+
 mixin {
     add sourceSets.main, "mixins.arcanearchives.refmap.json"
 }

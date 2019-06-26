@@ -23,7 +23,7 @@ public class SlotRecipeHandler extends Slot {
 	}
 
 	public GCTRecipe getRecipe () {
-		return GCTRecipeList.getRecipeByIndex(getRelativeIndex());
+		return GCTRecipeList.instance.getRecipeByIndex(getRelativeIndex());
 	}
 
 	public int getRelativeIndex () {
@@ -48,8 +48,8 @@ public class SlotRecipeHandler extends Slot {
 	@Override
 	public ItemStack getStack () {
 		int slot = getRelativeIndex();
-		if (slot < GCTRecipeList.getSize()) {
-			return GCTRecipeList.getOutputByIndex(slot).copy();
+		if (slot < GCTRecipeList.instance.getSize()) {
+			return GCTRecipeList.instance.getOutputByIndex(slot).copy();
 		}
 
 		return ItemStack.EMPTY;

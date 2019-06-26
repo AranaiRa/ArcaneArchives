@@ -255,7 +255,7 @@ public class ContainerGemCuttersTable extends Container {
 	public Map<GCTRecipe, Boolean> updateRecipeStatus () {
 		Map<GCTRecipe, Boolean> map = new HashMap<>();
 
-		for (GCTRecipe recipe : GCTRecipeList.getRecipeList()) {
+		for (GCTRecipe recipe : GCTRecipeList.instance.getRecipeList()) {
 			map.put(recipe, recipe.matches(combinedInventory));
 		}
 

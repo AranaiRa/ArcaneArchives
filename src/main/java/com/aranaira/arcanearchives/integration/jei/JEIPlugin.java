@@ -56,7 +56,7 @@ public class JEIPlugin implements IModPlugin {
 		registry.addRecipeCatalyst(new ItemStack(BlockRegistry.RADIANT_CRAFTING_TABLE, 1, 0), VanillaRecipeCategoryUid.CRAFTING);
 
 		registry.handleRecipes(GCTRecipe.class, GCTWrapper::new, GEM_CUTTERS_TABLE);
-		registry.addRecipes(GCTRecipeList.getRecipeList(), GEM_CUTTERS_TABLE);
+		registry.addRecipes(GCTRecipeList.instance.getRecipeList(), GEM_CUTTERS_TABLE);
 		registry.addRecipeCatalyst(new ItemStack(BlockRegistry.GEMCUTTERS_TABLE), GEM_CUTTERS_TABLE);
 
 		registry.handleRecipes(FakeQuartzRecipe.class, QuartzWrapper::new, RADIANT_RESONATOR);
