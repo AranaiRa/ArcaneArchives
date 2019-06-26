@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.api;
 
-import com.aranaira.arcanearchives.api.IGCTRecipeList;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 public class GCTRecipeEvent extends Event {
