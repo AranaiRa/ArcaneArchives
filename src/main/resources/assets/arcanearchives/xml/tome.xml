@@ -23,7 +23,7 @@
         <stack item="arcanearchives:radiant_resonator">RadiantResonator</stack>
         <stack item="arcanearchives:radiant_tank">RadiantTank</stack>
         <stack item="arcanearchives:radiant_trove">RadiantTrove</stack>
-        <stack item="arcanearchives:raw_quartz">DecorativeBlocks:RawQuartzCluster</stack>
+        <stack item="arcanearchives:raw_quartz">RawQuartzCluster</stack>
 
         <stack item="arcanearchives:containment_field">ContainmentField</stack>
         <stack item="arcanearchives:devouring_charm">DevouringCharm</stack>
@@ -34,11 +34,14 @@
         <stack item="arcanearchives:matrix_brace">MatrixBrace</stack>
         <stack item="arcanearchives:radiant_amphora">RadiantAmphora</stack>
         <stack item="arcanearchives:radiant_dust">RadiantDust</stack>
-        <stack item="arcanearchives:raw_quartz">RawQuartz</stack>
+        <stack item="arcanearchives:radiant_lantern">DecorativeBlocks:RadiantLantern</stack>
+        <stack item="arcanearchives:raw_quartz_cluster">DecorativeBlocks:RawQuartzCluster</stack>
         <stack item="arcanearchives:shaped_quartz">ShapedQuartz</stack>
         <stack item="arcanearchives:scepter_manipulation">ScepterManipulation</stack>
         <stack item="arcanearchives:scepter_revelation">ScepterRevelation</stack>
         <stack item="arcanearchives:scintillating_inlay">ScintillatingInlay</stack>
+        <stack item="arcanearchives:storage_raw_quartz">DecorativeBlocks:RawQuartzBlock</stack>
+        <stack item="arcanearchives:storage_shaped_quartz">DecorativeBlocks:ShapedQuartzBlock</stack>
         <stack item="arcanearchives:writ_expulsion">WritExpulsion</stack>
 
         <stack item="arcanearchives:slaughtergleam">Slaughtergleam</stack>
@@ -79,7 +82,7 @@
             <p><stack item="arcanearchives:radiant_resonator"/> <link ref="RadiantResonator">Radiant Resonator</link></p>
             <p><stack item="arcanearchives:radiant_tank"/> <link ref="RadiantTank">Radiant Tank</link></p>
             <p><stack item="arcanearchives:radiant_trove"/> <link ref="RadiantTrove">Radiant Trove</link></p>
-            <p><stack item="arcanearchives:raw_quartz"/> <link ref="DecorativeBlocks:RawQuartzCluster">Raw Quartz Cluster</link></p>
+            <p><stack item="arcanearchives:raw_quartz_cluster"/> <link ref="DecorativeBlocks:RawQuartzCluster">Raw Quartz Cluster</link></p>
         </section>
         <section>
             <page_title_shorter>
@@ -191,11 +194,11 @@
                 <stack item="arcanearchives:radiant_lantern" scale="2.0"/>
             </p>
             <p align="center">
-                <stack item="arcanearchives:raw_quartz" scale="2.0"/>
+                <stack item="arcanearchives:raw_quartz_cluster" scale="2.0"/>
                 <stack item="arcanearchives:quartz_sliver" scale="2.0"/>
             </p>
         </section>
-        <section>
+        <section id="RawQuartzBlock">
             <page_title_shorter>
                 <title>Block of Raw Radiant Quartz</title>
             </page_title_shorter>
@@ -216,7 +219,7 @@
             <space height="8"/>
             <horizontal_rule/>
         </section>
-        <section>
+        <section id="ShapedQuartzBlock">
             <page_title_shorter>
                 <title>Block of Shaped Radiant Quartz</title>
             </page_title_shorter>
@@ -237,7 +240,7 @@
             <space height="8"/>
             <horizontal_rule/>
         </section>
-        <section>
+        <section id="RadiantLantern">
             <page_title_shorter>
                 <title>Radiant Lantern</title>
             </page_title_shorter>
@@ -245,9 +248,6 @@
             <horizontal_rule/>
             <p>
                 Radiant Lanterns are a light source.
-            </p>
-            <p condition="ml_thaumcraft">
-                <stack item="thaumcraft:infusion_matrix"/> Radiant Lanterns can be used as an infusion stabilizer.
             </p>
             <horizontal_rule/>
             <p>
@@ -258,7 +258,7 @@
             <page_title_shorter>
                 <title>Raw Quartz Cluster</title>
             </page_title_shorter>
-            <p align="center"><stack item="arcanearchives:raw_quartz" scale="3.0"/></p>
+            <p align="center"><stack item="arcanearchives:raw_quartz_cluster" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
                 Raw Quartz Clusters are a light source. They can be collected with a pick bearing the Silk Touch enchantment; otherwise breaking a Raw Quartz Cluster will return a piece of <link ref="raw_quartz">Raw Radiant Quartz</link>.

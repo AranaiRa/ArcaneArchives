@@ -30,23 +30,25 @@ public class ContainerUpgrades extends Container {
 	}
 
 	private void createUpgradeInventory () {
-		int xOffset = 10;
-		int yOffset = 57;
+		int xOffset = 57;
+		int yOffset = 8;
+		int xSpacing = 25;
+		int ySpacing = 36;
 
 		// First row of upgrade slots for size
 		for (int i = 0; i < 3; i++) {
-			addSlotToContainer(new SlotItemHandler(sizeHandler, i, xOffset + i * 18, 20));
+			addSlotToContainer(new SlotItemHandler(sizeHandler, i, xOffset + i * xSpacing, yOffset));
 		}
 
 		// Second row of upgrade slots for option upgrades
 		for (int i = 0; i < 3; i++) {
-			addSlotToContainer(new SlotItemHandler(optionalHandler, i, xOffset + i * 18, 40));
+			addSlotToContainer(new SlotItemHandler(optionalHandler, i, xOffset + i * xSpacing, yOffset + ySpacing));
 		}
 	}
 
 	private void createPlayerInventory (InventoryPlayer inventoryPlayer) {
 		int xOffset = 10;
-		int yOffset = 57;
+		int yOffset = 80;
 
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 9; j++) {
