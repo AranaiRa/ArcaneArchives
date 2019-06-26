@@ -107,7 +107,6 @@ dependencies {
     compileOnly "mcjty.theoneprobe:TheOneProbe-${top_version}"
     compileOnly "vazkii.quark:Quark:${quark_version}:api"
     deobfCompile "com.azanor:Baubles:${version_baubles}"
-    compileOnly "vazkii.botania:Botania:r1.10-357.7:api"
     compileOnly "hellfirepvp.astralsorcery:astralsorcery:1.12.2-1.10.17-v124"
     compileOnly 'mouse-tweaks:MouseTweaks:2.10:mc1.12.2'
     compileOnly 'inventory-tweaks:InventoryTweaks:1.64+dev.146'
