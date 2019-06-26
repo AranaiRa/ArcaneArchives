@@ -144,16 +144,6 @@ public class RadiantTank extends BlockTemplate {
 				return !(heldItem.getItem() instanceof ItemBlock);
 			}
 
-			if (heldItem.getItem() == ItemRegistry.COMPONENT_CONTAINMENTFIELD) {
-				if (player.isSneaking()) {
-					te.onRightClickUpgrade(player, heldItem);
-				} else {
-					player.sendStatusMessage(new TextComponentTranslation("arcanearchives.warning.sneak_to_upgrade_tank"), true);
-				}
-
-				return true;
-			}
-
 			IFluidHandler handler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing);
 			return FluidUtil.interactWithFluidHandler(player, hand, handler);
 		}

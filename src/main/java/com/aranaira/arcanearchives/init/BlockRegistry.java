@@ -5,6 +5,7 @@ import com.aranaira.arcanearchives.blocks.*;
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.items.itemblocks.MonitoringCrystalItem;
 import com.aranaira.arcanearchives.items.itemblocks.RadiantTankItem;
+import com.aranaira.arcanearchives.items.itemblocks.StorageShapedQuartzItem;
 import com.aranaira.arcanearchives.items.templates.ItemBlockTemplate;
 import com.aranaira.arcanearchives.tileentities.*;
 import net.minecraft.block.Block;
@@ -75,7 +76,7 @@ public class BlockRegistry {
 		//MATRIX_STORAGE.setItemBlock(new ItemBlockTemplate(MATRIX_STORAGE));
 		//MATRIX_DISTILLATE.setItemBlock(new ItemBlockTemplate(MATRIX_DISTILLATE));
 		STORAGE_RAW_QUARTZ.setItemBlock(new ItemBlock(STORAGE_RAW_QUARTZ));
-		STORAGE_SHAPED_QUARTZ.setItemBlock(new ItemBlock(STORAGE_SHAPED_QUARTZ));
+		STORAGE_SHAPED_QUARTZ.setItemBlock(new StorageShapedQuartzItem(STORAGE_SHAPED_QUARTZ));
 		RADIANT_CHEST.setItemBlock(new ItemBlockTemplate(RADIANT_CHEST));
 		RADIANT_CRAFTING_TABLE.setItemBlock(new ItemBlock(RADIANT_CRAFTING_TABLE));
 		RADIANT_LANTERN.setItemBlock(new ItemBlock(RADIANT_LANTERN));

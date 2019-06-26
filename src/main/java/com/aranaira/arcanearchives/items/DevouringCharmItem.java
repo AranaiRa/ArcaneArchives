@@ -3,6 +3,9 @@ package com.aranaira.arcanearchives.items;
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
+import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
+import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
+import com.aranaira.arcanearchives.util.types.UpgradeType;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,9 +19,10 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
+import java.util.Arrays;
 import java.util.List;
 
-public class DevouringCharmItem extends ItemTemplate {
+public class DevouringCharmItem extends ItemTemplate implements IUpgradeItem {
 	public static final String NAME = "devouring_charm";
 
 	public DevouringCharmItem () {
@@ -43,5 +47,27 @@ public class DevouringCharmItem extends ItemTemplate {
 		}
 		player.openGui(ArcaneArchives.instance, AAGuiHandler.DEVOURING_CHARM, world, (int) player.posX, (int) player.posY, (int) player.posZ);
 		return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+	}
+
+	@Override
+	public UpgradeType getUpgradeType (ItemStack stack) {
+		return UpgradeType.VOID;
+	}
+
+	@Override
+	public int getUpgradeSize (ItemStack stack) {
+		return -1;
+	}
+
+	@Override
+	public int getSlotIsUpgradeFor (ItemStack stack) {
+		return -1;
+	}
+
+	public static List<Class<?>> UPGRADE_FOR = Arrays.asList(RadiantTankTileEntity.class, RadiantTroveTileEntity.class);
+
+	@Override
+	public List<Class<?>> upgradeFor () {
+		return UPGRADE_FOR;
 	}
 }

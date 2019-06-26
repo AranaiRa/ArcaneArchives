@@ -1,7 +1,12 @@
 package com.aranaira.arcanearchives.tileentities;
 
+import com.aranaira.arcanearchives.AAGuiHandler;
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.ItemRegistry;
+import com.aranaira.arcanearchives.inventory.handlers.OptionalUpgradesHandler;
+import com.aranaira.arcanearchives.inventory.handlers.SizeUpgradeItemHandler;
 import com.aranaira.arcanearchives.inventory.handlers.TroveItemHandler;
+import com.aranaira.arcanearchives.inventory.handlers.TroveUpgradeItemHandler;
 import com.aranaira.arcanearchives.util.ItemUtilities;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,19 +15,24 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.Constants.NBT;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
 import java.util.UUID;
 
-public class RadiantTroveTileEntity extends ImmanenceTileEntity implements ManifestTileEntity {
+public class RadiantTroveTileEntity extends ImmanenceTileEntity implements ManifestTileEntity, IUpgradeableStorage {
 	private final TroveItemHandler inventory = new TroveItemHandler(this::update);
 	private long lastClick = 0;
 	private int lastTick = 0;
 	private UUID lastUUID = null;
+
+	private TroveUpgradeItemHandler sizeUpgrades = new TroveUpgradeItemHandler();
+	private OptionalUpgradesHandler optionalUpgrades = new OptionalUpgradesHandler();
 
 	@Override
 	public void update () {
@@ -168,6 +178,8 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements Manif
 	public NBTTagCompound writeToNBT (NBTTagCompound compound) {
 		super.writeToNBT(compound);
 		compound.setTag(Tags.HANDLER_ITEM, this.inventory.serializeNBT());
+		compound.setTag(Tags.SIZE_UPGRADES, this.sizeUpgrades.serializeNBT());
+		compound.setTag(Tags.OPTIONAL_UPGRADES, this.optionalUpgrades.serializeNBT());
 
 		return compound;
 	}
@@ -176,6 +188,8 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements Manif
 	public void readFromNBT (NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		this.inventory.deserializeNBT(compound.getCompoundTag(Tags.HANDLER_ITEM));
+		this.sizeUpgrades.deserializeNBT(compound.getTagList(Tags.SIZE_UPGRADES, NBT.TAG_BYTE));
+		this.optionalUpgrades.deserializeNBT(compound.getCompoundTag(Tags.OPTIONAL_UPGRADES));
 	}
 
 	@Override
@@ -231,8 +245,32 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements Manif
 		return inventory;
 	}
 
+	@Override
+	public SizeUpgradeItemHandler getSizeUpgradesHandler () {
+		return sizeUpgrades;
+	}
+
+	@Override
+	public OptionalUpgradesHandler getOptionalUpgradesHandler () {
+		return optionalUpgrades;
+	}
+
+	@Override
+	public int getModifiedCapacity () {
+		return sizeUpgrades.getUpgradesCount();
+	}
+
+	@Override
+	public void handleManipulationInterface (EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if (player.world.isRemote) return;
+
+		player.openGui(ArcaneArchives.instance, AAGuiHandler.UPGRADES, world, pos.getX(), pos.getY(), pos.getZ());
+	}
+
 	public static class Tags {
 		public static final String HANDLER_ITEM = "handler_item";
+		public static final String SIZE_UPGRADES = "size_upgrades";
+		public static final String OPTIONAL_UPGRADES = "optional_upgrades";
 
 		private Tags () {
 		}
