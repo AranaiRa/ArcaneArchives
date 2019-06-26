@@ -3,7 +3,9 @@ package com.aranaira.arcanearchives.inventory;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.inventory.handlers.DevouringCharmHandler;
+import com.aranaira.arcanearchives.inventory.slots.SlotImmutable;
 import com.aranaira.arcanearchives.items.gems.GemUtil;
+import com.aranaira.arcanearchives.util.ItemUtilities;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -51,32 +53,28 @@ public class ContainerDevouringCharm extends Container {
 		int xOffset = 82;
 		int yOffset = 71;
 		addSlotToContainer(new SlotItemHandler(handler.getInventory(), 0, xOffset, yOffset) {
-			private void consumeFluid () {
-				ItemStack stack = getStack();
+			private ItemStack consumeFluid (ItemStack stack) {
 				if (!stack.isEmpty()) {
 					if (stack.getItem() == ItemRegistry.PARCHTEAR) {
 						GemUtil.manuallyRestoreCharge(stack, -1);
 					} else {
 						IFluidHandlerItem cap = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
 						if (cap != null) {
+							boolean didDrain = false;
 							for (IFluidTankProperties props : cap.getTankProperties()) {
 								FluidStack drain = props.getContents();
-								cap.drain(drain, true);
+								FluidStack result = cap.drain(drain, true);
+								if (result != null && result.amount > 0) {
+									didDrain = true;
+								}
 							}
-							if ((stack.getItem() instanceof ItemBucket || stack.getItem() instanceof UniversalBucket)) {
+							if (didDrain && (stack.getItem() instanceof ItemBucket || stack.getItem() instanceof UniversalBucket)) {
 								stack = cap.getContainer();
 							}
 						}
 					}
-					if (!player.world.isRemote) {
-						IItemHandler inventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
-						ItemStack result = ItemHandlerHelper.insertItemStacked(inventory, stack, false);
-						if (!result.isEmpty()) {
-							Block.spawnAsEntity(player.world, player.getPosition(), result);
-						}
-					}
-					putStack(ItemStack.EMPTY);
 				}
+				return stack;
 			}
 
 			@Override
@@ -86,22 +84,7 @@ public class ContainerDevouringCharm extends Container {
 
 			@Override
 			public void putStack (@Nonnull ItemStack stack) {
-				super.putStack(stack);
-				consumeFluid();
-			}
-
-			@Override
-			public void onSlotChange (@Nonnull ItemStack p_75220_1_, @Nonnull ItemStack p_75220_2_) {
-				super.onSlotChange(p_75220_1_, p_75220_2_);
-				consumeFluid();
-			}
-
-			@Nonnull
-			@Override
-			public ItemStack decrStackSize (int amount) {
-				ItemStack result = super.decrStackSize(amount);
-				consumeFluid();
-				return result;
+				super.putStack(consumeFluid(stack));
 			}
 		});
 	}
@@ -122,11 +105,20 @@ public class ContainerDevouringCharm extends Container {
 
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 9; j++) {
-				addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9, xOffset + j * 18, yOffset + i * 18));
+				int index = j + i * 9 + 9;
+				if (inventoryPlayer.getStackInSlot(index).getItem() == ItemRegistry.DEVOURING_CHARM) {
+					addSlotToContainer(new SlotImmutable(inventoryPlayer, index, xOffset + j * 18, yOffset + i * 18));
+				} else {
+					addSlotToContainer(new Slot(inventoryPlayer, index, xOffset + j * 18, yOffset + i * 18));
+				}
 			}
 		}
 		for (int i = 0; i < 9; i++) {
-			addSlotToContainer(new Slot(inventoryPlayer, i, xOffset + i * 18, yOffset + 58));
+			if (inventoryPlayer.getStackInSlot(i).getItem() == ItemRegistry.DEVOURING_CHARM) {
+				addSlotToContainer(new SlotImmutable(inventoryPlayer, i, xOffset + i * 18, yOffset + 58));
+			} else {
+				addSlotToContainer(new Slot(inventoryPlayer, i, xOffset + i * 18, yOffset + 58));
+			}
 		}
 	}
 
@@ -138,9 +130,18 @@ public class ContainerDevouringCharm extends Container {
 
 		if (slot != null && slot.getHasStack()) {
 			ItemStack stack = slot.getStack();
+			if (stack.getItem() == ItemRegistry.DEVOURING_CHARM) {
+				return ItemStack.EMPTY;
+			}
 			slotStack = stack.copy();
 			if (index < 36) { //Player Inventory -> Socket
 				if (stack.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null)) {
+					Slot fluid = getSlot(36);
+					IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+					if (ItemHandlerHelper.insertItemStacked(playerInventory, fluid.getStack(), false).isEmpty()) {
+						fluid.putStack(ItemStack.EMPTY);
+					}
+
 					if (!mergeItemStack(stack, 36, 37, false)) {
 						return ItemStack.EMPTY;
 					}
@@ -174,5 +175,14 @@ public class ContainerDevouringCharm extends Container {
 
 	@Override
 	public void onContainerClosed (EntityPlayer player) {
+		Slot fluid = getSlot(36);
+		if (fluid.getHasStack()) {
+			ItemStack slotItem = fluid.getStack();
+			IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+			ItemStack result = ItemHandlerHelper.insertItemStacked(playerInventory, slotItem, false);
+			if (!result.isEmpty() && !player.world.isRemote) {
+				Block.spawnAsEntity(player.world, player.getPosition(), result);
+			}
+		}
 	}
 }
