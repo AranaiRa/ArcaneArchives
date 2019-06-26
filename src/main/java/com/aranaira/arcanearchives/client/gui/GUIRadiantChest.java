@@ -628,7 +628,14 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 
 	@Override
 	protected void keyTyped (char typedChar, int keyCode) throws IOException {
-		if (keyCode == 1 || this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode)) {
+		switch (keyCode) {
+			case Keyboard.KEY_ESCAPE: {
+				Minecraft.getMinecraft().displayGuiScreen(null);
+				break;
+			}
+		}
+
+		if (this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode)) {
 			this.mc.player.closeScreen();
 		}
 
