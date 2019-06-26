@@ -10,6 +10,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -80,18 +81,18 @@ public class RenderHUD {
 							mc.fontRenderer.drawStringWithShadow(TextFormatting.GOLD + s, (float) (x - 19 - mc.fontRenderer.getStringWidth(s) / 2), (float) (y), 16777215);
 						} else {
 							if (mc.player.ticksExisted - lastDrew >= 40) {
-								ArcaneArchives.logger.error("DEBUG: Not drawing a trove as it appears to be un-upgraded and empty.");
 								lastDrew = mc.player.ticksExisted;
 							}
 						}
 					} else {
 						if (mc.player.ticksExisted - lastDrew >= 40) {
-							ArcaneArchives.logger.error("DEBUG: Can't draw trove as there isn't a tile entity to access!");
 							lastDrew = mc.player.ticksExisted;
 						}
 					}
 				}
 			}
 		}
+
+		GlStateManager.color(1f, 1f, 1f);
 	}
 }
