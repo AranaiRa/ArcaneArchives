@@ -249,9 +249,6 @@
             <p>
                 Radiant Lanterns are a light source.
             </p>
-            <p condition="ml_thaumcraft">
-                <stack item="thaumcraft:infusion_matrix"/> Radiant Lanterns can be used as an infusion stabilizer.
-            </p>
             <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Radiant Lanterns can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
