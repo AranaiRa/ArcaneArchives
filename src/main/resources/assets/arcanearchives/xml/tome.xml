@@ -79,7 +79,7 @@
             <p><stack item="arcanearchives:radiant_resonator"/> <link ref="RadiantResonator">Radiant Resonator</link></p>
             <p><stack item="arcanearchives:radiant_tank"/> <link ref="RadiantTank">Radiant Tank</link></p>
             <p><stack item="arcanearchives:radiant_trove"/> <link ref="RadiantTrove">Radiant Trove</link></p>
-            <p><stack item="arcanearchives:raw_quartz"/> <link ref="DecorativeBlocks:raw_quartzCluster">Raw Quartz Cluster</link></p>
+            <p><stack item="arcanearchives:raw_quartz"/> <link ref="DecorativeBlocks:RawQuartzCluster">Raw Quartz Cluster</link></p>
         </section>
         <section>
             <page_title>
@@ -547,6 +547,9 @@
             </p>
             <p>
                 <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="scepter_revelation">Scepter of Revelation</link> on a Radiant Resonator will return its current process, and whether it is running or not.
+            </p>
+            <p>
+                <stack item="minecraft:comparator"/> When monitored with a Redstone Comparator, a Radiant Resonator ouptuts a signal based on its progress towards creating a new <link ref="DecorativeBlocks:RawQuartzCluster">Radiant Quartz Cluster</link>.
             </p>
             <horizontal_rule/>
             <p>
@@ -1062,7 +1065,7 @@
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:radiant_resonator" /> Raw Radiant Quartz is created over time on top of a <link ref="RadiantResonator">Radiant Resonator</link> in the form of a <link ref="DecorativeBlocks:raw_quartzCluster">Raw Quartz Cluster</link>.
+                <stack item="arcanearchives:radiant_resonator" /> Raw Radiant Quartz is created over time on top of a <link ref="RadiantResonator">Radiant Resonator</link> in the form of a <link ref="DecorativeBlocks:RawQuartzCluster">Raw Quartz Cluster</link>.
             </p>
         </section>
         <section>
