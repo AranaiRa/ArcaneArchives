@@ -4,7 +4,9 @@ import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
 import com.aranaira.arcanearchives.events.LineHandler;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.ItemRegistry;
+import com.aranaira.arcanearchives.inventory.handlers.OptionalUpgradesHandler;
 import com.aranaira.arcanearchives.inventory.handlers.TroveItemHandler;
+import com.aranaira.arcanearchives.tileentities.IUpgradeableStorage;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import com.aranaira.arcanearchives.util.ItemUtilities;
 import com.aranaira.arcanearchives.util.WorldUtil;
@@ -23,6 +25,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -127,7 +130,20 @@ public class RadiantTrove extends BlockDirectionalTemplate {
 					ItemStack stack = handler.extractItem(0, 64, false);
 					spawnAsEntity(world, pos, stack);
 				}
-				// TODO: Also when change the upgrade system remove these
+				IItemHandler optionals = te.getOptionalUpgradesHandler();
+				IItemHandler size = te.getSizeUpgradesHandler();
+				for (int i = 0; i < optionals.getSlots(); i++) {
+					ItemStack stack = optionals.getStackInSlot(i);
+					if (!stack.isEmpty()) {
+						spawnAsEntity(world, pos, stack);
+					}
+				}
+				for (int i = 0; i < size.getSlots(); i++) {
+					ItemStack stack = size.getStackInSlot(i);
+					if (!stack.isEmpty()) {
+						spawnAsEntity(world, pos, stack);
+					}
+				}
 			}
 		}
 
