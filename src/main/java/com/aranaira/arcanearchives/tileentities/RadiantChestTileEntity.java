@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.inventory.handlers.ExtendedItemStackHandler;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketRadiantChest;
@@ -194,6 +195,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements Manif
 		public void setStackInSlot (int slot, @Nonnull ItemStack stack) {
 			super.setStackInSlot(slot, stack);
 			manualRecount();
+			world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);
 		}
 
 		@Nonnull
@@ -209,6 +211,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements Manif
 				int curCount = itemReference.get(current);
 				itemReference.put(current, Math.max(-1, count + curCount));
 			}
+			world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);
 			return super.insertItem(slot, stack, simulate);
 		}
 
@@ -223,6 +226,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements Manif
 					itemReference.put(current, Math.max(curCount - test.getCount(), 0));
 				}
 			}
+			world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);
 			return super.extractItem(slot, amount, simulate);
 		}
 	}
