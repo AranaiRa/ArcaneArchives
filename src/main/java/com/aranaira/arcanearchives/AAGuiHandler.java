@@ -4,10 +4,7 @@ import com.aranaira.arcanearchives.client.gui.*;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.inventory.*;
-import com.aranaira.arcanearchives.tileentities.AATileEntity;
-import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
-import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
-import com.aranaira.arcanearchives.tileentities.RadiantCraftingTableTileEntity;
+import com.aranaira.arcanearchives.tileentities.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -25,6 +22,7 @@ public class AAGuiHandler implements IGuiHandler {
 	public static final int MATRIX_RESERVOIR = 6;
 	public static final int BAUBLE_GEMSOCKET = 7;
 	public static final int DEVOURING_CHARM = 8;
+	public static final int UPGRADES = 9;
 
 	@Override
 	public Object getServerGuiElement (int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -62,6 +60,8 @@ public class AAGuiHandler implements IGuiHandler {
 				return new ContainerMatrixStorage((MatrixStorageTileEntity) te, player.inventory);
 			case MATRIX_REPOSITORY:
 				return new ContainerMatrixRepository((MatrixRepositoryTileEntity) te, player.inventory);*/
+			case UPGRADES:
+				return new ContainerUpgrades(player, (ImmanenceTileEntity) te);
 			default: {
 				ArcaneArchives.logger.info(String.format("Invalid Container ID of %d was passed in; null was returned to the server", ID));
 				return null;
@@ -97,6 +97,8 @@ public class AAGuiHandler implements IGuiHandler {
 				return new GUIGemCuttersTable(player, new ContainerGemCuttersTable(gct.getInventory(), gct, player));
 			case RADIANT_CRAFTING_TABLE:
 				return new GUIRadiantCraftingTable(player, new ContainerRadiantCraftingTable((RadiantCraftingTableTileEntity) te, player, player.inventory));
+			case UPGRADES:
+				return new GUIUpgrades(new ContainerUpgrades(player, (ImmanenceTileEntity) te), player, (ImmanenceTileEntity) te);
 			/*case MATRIX_STORAGE:
 				return new GUIMatrixStorage(player, new ContainerMatrixStorage((MatrixStorageTileEntity) te, player.inventory));
 			case MATRIX_REPOSITORY:

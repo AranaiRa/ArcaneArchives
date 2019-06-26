@@ -44,13 +44,13 @@ public class ScepterManipulationItem extends ItemTemplate {
 	}
 
 	@Override
-	public EnumActionResult onItemUse (EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public EnumActionResult onItemUseFirst (EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
 		ImmanenceTileEntity te = WorldUtil.getTileEntity(ImmanenceTileEntity.class, world, pos);
 		if (te != null) {
 			player.swingArm(hand);
 
 			if (!world.isRemote) {
-				te.handleManipulationInterface(player, hand, facing, hitX, hitY, hitZ);
+				te.handleManipulationInterface(player, hand, side, hitX, hitY, hitZ);
 			}
 			return EnumActionResult.SUCCESS;
 		} else {

@@ -35,6 +35,11 @@ public class MatrixBraceItem extends ItemTemplate implements IUpgradeItem {
 		return 2;
 	}
 
+	@Override
+	public int getSlotIsUpgradeFor (ItemStack stack) {
+		return 0;
+	}
+
 	public static List<Class<?>> UPGRADE_FOR = Arrays.asList(RadiantTankTileEntity.class, RadiantTroveTileEntity.class);
 
 	@Override

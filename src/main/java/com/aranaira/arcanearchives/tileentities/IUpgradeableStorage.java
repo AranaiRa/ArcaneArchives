@@ -1,16 +1,13 @@
 package com.aranaira.arcanearchives.tileentities;
 
-import net.minecraft.item.ItemStack;
+import com.aranaira.arcanearchives.inventory.handlers.OptionalUpgradesHandler;
+import com.aranaira.arcanearchives.inventory.handlers.SizeUpgradeItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 public interface IUpgradeableStorage {
-	IItemHandler getSizeUpgradesHandler ();
+	SizeUpgradeItemHandler getSizeUpgradesHandler ();
 
-	IItemHandler getOptionalUpgradesHandler ();
-
-	int getMultiplierForUpgrade (ItemStack stack);
-
-	boolean canModifierBeApplied (ItemStack stack);
+	OptionalUpgradesHandler getOptionalUpgradesHandler ();
 
 	int getModifiedCapacity ();
 }

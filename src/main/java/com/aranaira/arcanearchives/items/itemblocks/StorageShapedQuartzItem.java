@@ -38,6 +38,11 @@ public class StorageShapedQuartzItem extends ItemBlockTemplate implements IUpgra
 		return 4;
 	}
 
+	@Override
+	public int getSlotIsUpgradeFor (ItemStack stack) {
+		return 2;
+	}
+
 	public static List<Class<?>> UPGRADE_FOR = Arrays.asList(RadiantTroveTileEntity.class, RadiantTankTileEntity.class);
 
 	@Override

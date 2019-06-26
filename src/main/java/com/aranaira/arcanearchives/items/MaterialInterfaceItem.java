@@ -42,6 +42,11 @@ public class MaterialInterfaceItem extends ItemTemplate implements IUpgradeItem 
 		return 3;
 	}
 
+	@Override
+	public int getSlotIsUpgradeFor (ItemStack stack) {
+		return 1;
+	}
+
 	public static List<Class<?>> UPGRADE_FOR = Collections.singletonList(RadiantTroveTileEntity.class);
 
 	@Override

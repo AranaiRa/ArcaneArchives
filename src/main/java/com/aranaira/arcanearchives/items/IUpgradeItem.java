@@ -14,6 +14,9 @@ public interface IUpgradeItem {
 	// Otherwise returns the size of **this upgrade**
 	int getUpgradeSize (ItemStack stack);
 
+	// Returns -1 if any slot
+	int getSlotIsUpgradeFor (ItemStack stack);
+
 	List<Class<?>> upgradeFor ();
 
 	default boolean isUpgradeFor (ImmanenceTileEntity entity) {

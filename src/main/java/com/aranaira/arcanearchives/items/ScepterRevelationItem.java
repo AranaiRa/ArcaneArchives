@@ -121,7 +121,6 @@ public class ScepterRevelationItem extends ItemTemplate {
 			IFluidHandler cap = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, facing);
 			FluidStack fluid = te.getInventory().getFluid();
 			int amount = te.getInventory().getFluidAmount();
-			int upgrades = te.getUpgrades();
 			int maxCount = te.getCapacity();
 
 			if (fluid == null) {
@@ -131,7 +130,6 @@ public class ScepterRevelationItem extends ItemTemplate {
 			}
 
 			player.sendMessage(new TextComponentTranslation("arcanearchives.data.scepter.radiant_tank.count", amount, maxCount).setStyle(def));
-			player.sendMessage(new TextComponentTranslation("arcanearchives.data.scepter.radiant_tank.upgrades", upgrades).setStyle(def));
 		} else if (block == BlockRegistry.RADIANT_TROVE) {
 			RadiantTroveTileEntity te = WorldUtil.getTileEntity(RadiantTroveTileEntity.class, world, pos);
 			if (te == null) {

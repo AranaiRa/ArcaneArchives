@@ -59,6 +59,11 @@ public class DevouringCharmItem extends ItemTemplate implements IUpgradeItem {
 		return -1;
 	}
 
+	@Override
+	public int getSlotIsUpgradeFor (ItemStack stack) {
+		return -1;
+	}
+
 	public static List<Class<?>> UPGRADE_FOR = Arrays.asList(RadiantTankTileEntity.class, RadiantTroveTileEntity.class);
 
 	@Override
