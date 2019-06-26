@@ -82,6 +82,10 @@ repositories {
         name = "local jars"
         dirs 'embed'
     }
+    flatDir {
+        name = "thaumcraft jars"
+        dirs 'thaumcraft'
+    }
     maven {
         name = "HellfirePVP"
         url = "https://maven.hellfiredev.net"
@@ -126,6 +130,8 @@ dependencies {
     // modified guidebook, note "lirelent" package
     deobfCompile "gigaherz.lirelent.guidebook:Guidebook-1.12.2:2.9.1.s2"
     embed "gigaherz.lirelent.guidebook:Guidebook-1.12.2:2.9.1.s2"
+
+    compileOnly 'thaumcraft:Thaumcraft:1.12.2:6.1.BETA26'
 
     shade("org.spongepowered:mixin:0.7.11-SNAPSHOT") {
         transitive = false
@@ -215,6 +221,6 @@ task rmKeyStore(type: Delete) {
   delete 'kstore.jks'
 }
 
-//build.dependsOn rmKeyStore
-//rmKeyStore.dependsOn signJar
-//signJar.dependsOn mkKeyStore
+build.dependsOn rmKeyStore
+rmKeyStore.dependsOn signJar
+signJar.dependsOn mkKeyStore

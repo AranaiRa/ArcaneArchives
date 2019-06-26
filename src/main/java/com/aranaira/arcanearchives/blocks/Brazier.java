@@ -24,14 +24,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import thaumcraft.api.crafting.IInfusionStabiliser;
 import thaumcraft.api.crafting.IInfusionStabiliserExt;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 
-@Optional.Interface(modid = "thaumcraft", iface = "thaumcraft.api.crafting.IInfusionStabiliser")
-public class Brazier extends BlockTemplate implements IInfusionStabiliser {
+@Optional.Interface(modid = "thaumcraft", iface = "thaumcraft.api.crafting.IInfusionStabiliserExt")
+public class Brazier extends BlockTemplate implements IInfusionStabiliserExt {
 
 	public static final String name = "brazier_of_hoarding";
 
@@ -114,5 +113,10 @@ public class Brazier extends BlockTemplate implements IInfusionStabiliser {
 	@Override
 	public boolean canStabaliseInfusion (World world, BlockPos blockPos) {
 		return true;
+	}
+
+	@Override
+	public float getStabilizationAmount (World world, BlockPos blockPos) {
+		return 0.2f;
 	}
 }

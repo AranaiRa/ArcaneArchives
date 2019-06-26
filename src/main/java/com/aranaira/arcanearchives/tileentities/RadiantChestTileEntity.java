@@ -141,7 +141,6 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements Manif
 		return super.getCapability(capability, facing);
 	}
 
-	@Deprecated
 	public int countEmptySlots () {
 		int empty = 0;
 		for (int i = 0; i < inventory.getSlots(); i++) {
