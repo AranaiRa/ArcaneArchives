@@ -56,7 +56,7 @@ public class ServerNetwork implements IServerNetwork {
 		return maxDistance * maxDistance;
 	}
 
-	public void setMaxDistance (int maxDistan) {
+	public void setMaxDistance (int maxDistance) {
 		this.maxDistance = maxDistance;
 	}
 
