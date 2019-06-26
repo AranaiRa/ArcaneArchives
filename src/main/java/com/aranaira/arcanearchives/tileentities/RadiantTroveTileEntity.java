@@ -38,6 +38,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements Manif
 				RadiantTroveTileEntity.this.markDirty();
 				RadiantTroveTileEntity.this.defaultServerSideUpdate();
 			}
+			inventory.setUpgrades(getModifiedCapacity());
 		}
 
 		@Override
