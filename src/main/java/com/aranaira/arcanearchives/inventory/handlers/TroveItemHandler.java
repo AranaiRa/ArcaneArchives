@@ -62,7 +62,11 @@ public class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCo
 	@Nonnull
 	@Override
 	public ItemStack insertItem (int slot, @Nonnull ItemStack stack, boolean simulate) {
-		if (ItemUtilities.areStacksEqualIgnoreSize(reference, stack)) {
+		if (ItemUtilities.areStacksEqualIgnoreSize(reference, stack) || reference.isEmpty()) {
+			if (reference.isEmpty()) {
+				reference = stack.copy();
+				reference.setCount(1);
+			}
 			int thisCount = stack.getCount();
 			int diff = 0;
 
