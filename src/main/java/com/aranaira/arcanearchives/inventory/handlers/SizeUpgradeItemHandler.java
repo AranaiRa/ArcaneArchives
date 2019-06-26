@@ -135,6 +135,14 @@ public abstract class SizeUpgradeItemHandler implements IItemHandler, IItemHandl
 		return count;
 	}
 
+	public boolean hasUpgrade (ItemStack stack) {
+		return upgrades[((IUpgradeItem) stack.getItem()).getSlotIsUpgradeFor(stack)];
+	}
+
+	public boolean hasUpgrade (int slot) {
+		return hasUpgrade(new ItemStack(getUpgradeForSlot(slot)));
+	}
+
 	public int getUpgradesCount () {
 		int count = 0;
 		if (resolveUpgradesIncluding(0)) {

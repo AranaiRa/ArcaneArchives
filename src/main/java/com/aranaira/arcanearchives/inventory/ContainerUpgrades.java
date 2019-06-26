@@ -2,8 +2,10 @@ package com.aranaira.arcanearchives.inventory;
 
 import com.aranaira.arcanearchives.inventory.handlers.OptionalUpgradesHandler;
 import com.aranaira.arcanearchives.inventory.handlers.SizeUpgradeItemHandler;
+import com.aranaira.arcanearchives.items.IUpgradeItem;
 import com.aranaira.arcanearchives.tileentities.IUpgradeableStorage;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
+import com.aranaira.arcanearchives.util.types.UpgradeType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -65,5 +67,68 @@ public class ContainerUpgrades extends Container {
 	@Override
 	public boolean canInteractWith (EntityPlayer playerIn) {
 		return true;
+	}
+
+	@Override
+	public ItemStack transferStackInSlot (EntityPlayer playerIn, int index) {
+		Slot slot = getSlot(index);
+		ItemStack returned;
+		if (slot != null && slot.getHasStack()) {
+			ItemStack stack = slot.getStack();
+			returned = stack.copy();
+			if (index < 36) {
+				if (!(stack.getItem() instanceof IUpgradeItem)) return returned;
+				IUpgradeItem upgrade = (IUpgradeItem) stack.getItem();
+				// From player inventory to the
+				int upgradeSlot = 36;
+				if (upgrade.getUpgradeType(stack) == UpgradeType.SIZE) {
+					int upSlot = upgrade.getSlotIsUpgradeFor(stack);
+					upgradeSlot += upSlot;
+					Slot target = getSlot(upgradeSlot);
+					switch (upSlot) {
+						case 0:
+							if (target.getHasStack()) return returned;
+							if (!mergeItemStack(stack, upgradeSlot, upgradeSlot + 1, false)) return ItemStack.EMPTY;
+							break;
+						case 1:
+							if (!sizeHandler.hasUpgrade(0)) return returned;
+							if (target.getHasStack()) return returned;
+							if (!mergeItemStack(stack, upgradeSlot, upgradeSlot + 1, false)) return ItemStack.EMPTY;
+							break;
+						case 2:
+							if (!sizeHandler.hasUpgrade(0) || !sizeHandler.hasUpgrade(1)) return returned;
+							if (target.getHasStack()) return returned;
+							if (!mergeItemStack(stack, upgradeSlot, upgradeSlot + 1, false)) return ItemStack.EMPTY;
+							break;
+					}
+				} else {
+					upgradeSlot += 3;
+					UpgradeType type = upgrade.getUpgradeType(stack);
+					if (optionalHandler.hasUpgrade(type)) return returned;
+					Slot target = getSlot(upgradeSlot);
+					while (target != null && target.getHasStack()) {
+						upgradeSlot++;
+						target = getSlot(upgradeSlot);
+					}
+					if (target == null) return returned;
+					if (!mergeItemStack(stack, upgradeSlot, upgradeSlot + 1, false)) return ItemStack.EMPTY;
+				}
+			} else {
+				if (index >= 36 && index < 39) {
+					int upSlot = Math.min(index - 36, 0);
+					if (upSlot == 2) {
+						if (!mergeItemStack(stack, 0, 36, false)) return ItemStack.EMPTY;
+					} else if (upSlot == 1) {
+						if (!sizeHandler.hasUpgrade(2) && !mergeItemStack(stack, 0, 36, false)) return ItemStack.EMPTY;
+					} else if (upSlot == 0) {
+						if (!sizeHandler.hasUpgrade(2) && !sizeHandler.hasUpgrade(1) && !mergeItemStack(stack, 0, 36, false)) return ItemStack.EMPTY;
+					}
+				} else if (index >= 39 && index < 42) {
+					if (!mergeItemStack(stack, 0, 36, false)) return ItemStack.EMPTY;
+				}
+			}
+		}
+
+		return super.transferStackInSlot(playerIn, index);
 	}
 }
