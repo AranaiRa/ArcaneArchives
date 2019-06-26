@@ -16,7 +16,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'org.spongepowered.mixin'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
-version = "0.2.0-preview16-hotfix2"
+version = "0.2.0-preview16-hotfix3"
 group = "com.aranairra.arcanearchives"
 archivesBaseName = "arcanearchives"
 
@@ -99,13 +99,14 @@ dependencies {
     deobfProvided "mezz.jei:jei_${minecraft_version}:${jei_version}:api"
     // at runtime, use the full JEI jar
     runtime "mezz.jei:jei_${minecraft_version}:${jei_version}"
-    deobfCompile "mcp.mobius.waila:Hwyla:${project.hwyla_version}"
-    deobfCompile "mcjty.theoneprobe:TheOneProbe-${top_version}"
-    deobfCompile "vazkii.quark:Quark:${quark_version}"
-    deobfCompile "vazkii.autoreglib:AutoRegLib:${autoreglib_version}"
+    compileOnly "mcp.mobius.waila:Hwyla:${project.hwyla_version}"
+    compileOnly "mcjty.theoneprobe:TheOneProbe-${top_version}"
+    compileOnly "vazkii.quark:Quark:${quark_version}:api"
     deobfCompile "com.azanor:Baubles:${version_baubles}"
-    //deobfCompile "vazkii.botania:Botania:r1.10-357.7"
-    deobfCompile "hellfirepvp.astralsorcery:astralsorcery:1.12.2-1.10.17-v124"
+    compileOnly "vazkii.botania:Botania:r1.10-357.7:api"
+    compileOnly "hellfirepvp.astralsorcery:astralsorcery:1.12.2-1.10.17-v124"
+    compileOnly "inventory-tweaks:InventoryTweaks:${inventorytweaks_version}:api"
+    compileOnly 'mouse-tweaks:MouseTweaks:2.10:mc1.12.2'
 
     // guidebook dependencies
     deobfCompile "gigaherz.commons:gigaherz.commons-1.12.1:0.6.4"
@@ -214,6 +215,6 @@ task rmKeyStore(type: Delete) {
   delete 'kstore.jks'
 }
 
-build.dependsOn rmKeyStore
-rmKeyStore.dependsOn signJar
-signJar.dependsOn mkKeyStore
+//build.dependsOn rmKeyStore
+//rmKeyStore.dependsOn signJar
+//signJar.dependsOn mkKeyStore

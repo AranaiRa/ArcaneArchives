@@ -23,6 +23,7 @@ import net.minecraft.item.ItemFlintAndSteel;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.Optional.Method;
 import net.minecraftforge.items.*;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
@@ -283,6 +284,7 @@ public class ContainerGemCuttersTable extends Container {
 
 	public Map<ContainerSection, List<Slot>> map = null;
 
+	@Method(modid="invtweaks")
 	@ContainerSectionCallback
 	public Map<ContainerSection, List<Slot>> containerSectionListMap () {
 		if (map == null) {
