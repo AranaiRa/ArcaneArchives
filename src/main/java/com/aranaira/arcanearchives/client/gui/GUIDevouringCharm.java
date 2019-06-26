@@ -11,11 +11,10 @@ import javax.annotation.Nonnull;
 
 public class GUIDevouringCharm extends GuiContainer {
 
-	private static final ResourceLocation
-			TEXTURE_PLAYERINV = new ResourceLocation("arcanearchives:textures/gui/player_inv.png"),
-			TEXTURE_PLAYERINV_SIMPLE = new ResourceLocation("arcanearchives:textures/gui/simple/player_inv.png"),
-			TEXTURE_DEVOURINGCHARM = new ResourceLocation("arcanearchives:textures/gui/devouring_charm.png"),
-			TEXTURE_DEVOURINGCHARM_SIMPLE = new ResourceLocation("arcanearchives:textures/gui/simple/devouring_charm.png");
+	private static final ResourceLocation TEXTURE_PLAYERINV = new ResourceLocation("arcanearchives:textures/gui/player_inv.png");
+	private static final ResourceLocation TEXTURE_PLAYERINV_SIMPLE = new ResourceLocation("arcanearchives:textures/gui/simple/player_inv.png");
+	private static final ResourceLocation TEXTURE_DEVOURINGCHARM = new ResourceLocation("arcanearchives:textures/gui/devouring_charm.png");
+	private static final ResourceLocation TEXTURE_DEVOURINGCHARM_SIMPLE = new ResourceLocation("arcanearchives:textures/gui/simple/devouring_charm.png");
 
 	private static final int
 			DEVOURINGCHARM_X = 0,
