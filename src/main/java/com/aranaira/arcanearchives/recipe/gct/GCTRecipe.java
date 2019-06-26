@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.recipe.gct;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.api.IGCTRecipe;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import com.aranaira.arcanearchives.util.types.IngredientStack;
 import com.aranaira.arcanearchives.util.types.IngredientsMatcher;
@@ -11,6 +12,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemFlintAndSteel;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -25,7 +27,7 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GCTRecipe {
+public class GCTRecipe implements IGCTRecipe {
 	private final List<IngredientStack> ingredients = new ArrayList<>();
 	private final ItemStack result;
 	private final ResourceLocation name;
@@ -62,41 +64,50 @@ public class GCTRecipe {
 		}
 	}
 
+	@Override
 	public int getIndex () {
 		return GCTRecipeList.indexOf(this);
 	}
 
+	@Override
 	public ResourceLocation getName () {
 		return name;
 	}
 
+	@Override
 	public boolean matches (@Nonnull IItemHandler inv) {
 		return new IngredientsMatcher(ingredients).matches(inv);
 	}
 
-	public boolean craftable (EntityPlayer player, GemCuttersTableTileEntity tile) {
+	@Override
+	public boolean craftable (EntityPlayer player, TileEntity craftingInventory) {
 		return true;
 	}
 
+	@Override
 	public Int2IntMap getMatchingSlots (@Nonnull IItemHandler inv) {
 		return new IngredientsMatcher(ingredients).getMatchingSlots(inv);
 	}
 
+	@Override
 	public ItemStack getRecipeOutput () {
 		return result.copy();
 	}
 
+	@Override
 	public List<IngredientStack> getIngredients () {
 		return ingredients;
 	}
 
 	// Only called on the server side, in theory
+	@Override
 	public ItemStack onCrafted (EntityPlayer player, ItemStack output) {
 		return output;
 	}
 
 	// Also only called on the server side
-	public void handleItemResult (World world, EntityPlayer player, GemCuttersTableTileEntity tile, ItemStack ingredient) {
+	@Override
+	public void handleItemResult (World world, EntityPlayer player, TileEntity craftingTile, ItemStack ingredient) {
 		boolean doReturn = false;
 
 		IFluidHandlerItem cap = ingredient.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
@@ -113,7 +124,7 @@ public class GCTRecipe {
 		}
 
 		if (doReturn) {
-			IItemHandler drawer = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+			IItemHandler drawer = craftingTile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 			ItemStack result = ItemHandlerHelper.insertItemStacked(drawer, ingredient, false);
 			if (!result.isEmpty()) {
 				IItemHandler inventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);

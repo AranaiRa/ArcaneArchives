@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.recipe.gct;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class GCTRecipeWithConditionsCrafter extends GCTRecipeWithCrafter {
 	}
 
 	@Override
-	public boolean craftable (EntityPlayer player, GemCuttersTableTileEntity tile) {
+	public boolean craftable (EntityPlayer player, TileEntity tile) {
 		for (GCTCondition condition : conditions) {
 			if (!condition.test(player, tile)) {
 				return false;
@@ -33,6 +34,6 @@ public class GCTRecipeWithConditionsCrafter extends GCTRecipeWithCrafter {
 
 	@FunctionalInterface
 	public interface GCTCondition {
-		boolean test (EntityPlayer player, GemCuttersTableTileEntity tile);
+		boolean test (EntityPlayer player, TileEntity tile);
 	}
 }
