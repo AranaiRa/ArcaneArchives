@@ -8,11 +8,6 @@ import net.minecraft.item.ItemStack;
 
 public class TroveUpgradeItemHandler extends SizeUpgradeItemHandler {
 	@Override
-	public ItemStack getStackInSlot (int slot) {
-		return new ItemStack(getUpgradeForSlot(slot));
-	}
-
-	@Override
 	public Item getUpgradeForSlot (int slot) {
 		switch (slot) {
 			case 0:

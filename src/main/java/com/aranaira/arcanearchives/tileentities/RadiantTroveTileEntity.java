@@ -31,7 +31,21 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements Manif
 	private int lastTick = 0;
 	private UUID lastUUID = null;
 
-	private TroveUpgradeItemHandler sizeUpgrades = new TroveUpgradeItemHandler();
+	private TroveUpgradeItemHandler sizeUpgrades = new TroveUpgradeItemHandler() {
+		@Override
+		public void onContentsChanged () {
+			if (!RadiantTroveTileEntity.this.world.isRemote) {
+				RadiantTroveTileEntity.this.markDirty();
+				RadiantTroveTileEntity.this.defaultServerSideUpdate();
+			}
+		}
+
+		@Override
+		public boolean canReduceMultiplierTo (int size) {
+			RadiantTroveTileEntity te = RadiantTroveTileEntity.this;
+			return te.inventory.getCount() <= te.inventory.getMaxCount(size);
+		}
+	};
 	private OptionalUpgradesHandler optionalUpgrades = new OptionalUpgradesHandler();
 
 	@Override
@@ -57,19 +71,6 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements Manif
 		}
 
 		this.markDirty();
-
-		if (mainhand.getItem() == ItemRegistry.COMPONENT_MATERIALINTERFACE && player.isSneaking()) {
-			if (inventory.upgrade()) {
-				mainhand.shrink(1);
-				if (!player.world.isRemote) {
-					player.sendStatusMessage(new TextComponentTranslation("arcanearchives.success.upgraded_trove", inventory.getUpgrades(), TroveItemHandler.MAX_UPGRADES), true);
-				}
-				return;
-			} else {
-				player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.upgrade_trove_failed", inventory.getUpgrades(), TroveItemHandler.MAX_UPGRADES), true);
-				return;
-			}
-		}
 
 		if (inventory.isEmpty()) {
 			inventory.setItem(mainhand);
@@ -188,7 +189,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements Manif
 	public void readFromNBT (NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		this.inventory.deserializeNBT(compound.getCompoundTag(Tags.HANDLER_ITEM));
-		this.sizeUpgrades.deserializeNBT(compound.getTagList(Tags.SIZE_UPGRADES, NBT.TAG_BYTE));
+		this.sizeUpgrades.deserializeNBT(compound.getCompoundTag(Tags.SIZE_UPGRADES));
 		this.optionalUpgrades.deserializeNBT(compound.getCompoundTag(Tags.OPTIONAL_UPGRADES));
 	}
 

@@ -1,9 +1,7 @@
 package com.aranaira.arcanearchives.inventory.handlers;
 
-import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.util.ItemUtilities;
 import net.minecraft.client.util.RecipeItemHelper;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -12,10 +10,7 @@ import net.minecraftforge.items.IItemHandler;
 import javax.annotation.Nonnull;
 
 public class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCompound> {
-	private static int COUNT_MULTIPLIER_PER_UPGRADE = 1;
 	private static int BASE_COUNT = 64 * 1024;
-	public static int MAX_UPGRADES = 9;
-	public static Item UPGRADE_ITEM = ItemRegistry.COMPONENT_MATERIALINTERFACE;
 	private int upgrades = 0;
 	private int count = 0;
 	private ItemStack reference = ItemStack.EMPTY;
@@ -47,16 +42,20 @@ public class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCo
 		}
 	}
 
+	public void setUpgrades (int upgrades) {
+		this.upgrades = upgrades;
+	}
+
 	public int getUpgrades () {
 		return upgrades;
 	}
 
 	public int getMaxCount () {
-		return BASE_COUNT + BASE_COUNT * (upgrades * COUNT_MULTIPLIER_PER_UPGRADE);
+		return getMaxCount(this.upgrades);
 	}
 
-	public int getUpgradeCount () {
-		return BASE_COUNT * COUNT_MULTIPLIER_PER_UPGRADE;
+	public int getMaxCount (int upgrades) {
+		return BASE_COUNT * (upgrades + 1);
 	}
 
 	@Nonnull
@@ -141,32 +140,6 @@ public class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCo
 	@Override
 	public boolean isItemValid (int slot, @Nonnull ItemStack stack) {
 		return ItemUtilities.areStacksEqualIgnoreSize(reference, stack);
-	}
-
-	public boolean upgrade () {
-		if (upgrades + 1 <= MAX_UPGRADES) {
-			upgrades += 1;
-			update();
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean downgrade () {
-		if (upgrades - 1 > 0) {
-			int new_max = getMaxCount() - getUpgradeCount();
-			if (getCount() >= new_max) {
-				return false;
-			} else {
-				upgrades -= 1;
-				update();
-
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	public int getCount () {

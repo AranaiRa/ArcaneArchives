@@ -151,7 +151,6 @@ public class AATileEntity extends TileEntity {
 
 		IBlockState state = world.getBlockState(getPos());
 		world.notifyBlockUpdate(getPos(), state, state, 8);
-		this.markDirty();
 	}
 
 	public static class Tags {

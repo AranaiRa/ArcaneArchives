@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.inventory.handlers.OptionalUpgradesHandler;
 import com.aranaira.arcanearchives.inventory.handlers.SizeUpgradeItemHandler;
+import com.aranaira.arcanearchives.inventory.handlers.TankUpgradeItemHandler;
 import com.aranaira.arcanearchives.inventory.handlers.TroveUpgradeItemHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -24,7 +25,21 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity implements IUpgra
 	public static final int BASE_CAPACITY = Fluid.BUCKET_VOLUME * 16;
 	private final FluidTank inventory = new FluidTank(BASE_CAPACITY);
 
-	private TroveUpgradeItemHandler sizeUpgrades = new TroveUpgradeItemHandler();
+	private TankUpgradeItemHandler sizeUpgrades = new TankUpgradeItemHandler() {
+		@Override
+		public void onContentsChanged () {
+			if (!RadiantTankTileEntity.this.world.isRemote) {
+				RadiantTankTileEntity.this.markDirty();
+				RadiantTankTileEntity.this.defaultServerSideUpdate();
+			}
+		}
+
+		@Override
+		public boolean canReduceMultiplierTo (int size) {
+			RadiantTankTileEntity te = RadiantTankTileEntity.this;
+			return te.inventory.getFluidAmount() <= te.getCapacity(size);
+		}
+	};
 	private OptionalUpgradesHandler optionalUpgrades = new OptionalUpgradesHandler();
 
 	public boolean wasCreativeDrop = false;
@@ -42,8 +57,12 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity implements IUpgra
 		defaultServerSideUpdate();
 	}
 
+	public int getCapacity (int capacity) {
+		return BASE_CAPACITY * (capacity + 1);
+	}
+
 	public int getCapacity () {
-		return BASE_CAPACITY * (getModifiedCapacity() + 1);
+		return getCapacity(getModifiedCapacity());
 	}
 
 	@Override
@@ -60,7 +79,7 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity implements IUpgra
 	@Override
 	public void readFromNBT (NBTTagCompound compound) {
 		super.readFromNBT(compound);
-		this.sizeUpgrades.deserializeNBT(compound.getTagList(Tags.SIZE_UPGRADES, NBT.TAG_BYTE));
+		this.sizeUpgrades.deserializeNBT(compound.getCompoundTag(Tags.SIZE_UPGRADES));
 		this.optionalUpgrades.deserializeNBT(compound.getCompoundTag(Tags.OPTIONAL_UPGRADES));
 		validateCapacity();
 		this.inventory.readFromNBT(compound.getCompoundTag(Tags.HANDLER_ITEM));
@@ -95,7 +114,7 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity implements IUpgra
 	}
 
 	public void deserializeStack (NBTTagCompound tag) {
-		this.sizeUpgrades.deserializeNBT(tag.getTagList(Tags.SIZE_UPGRADES, NBT.TAG_BYTE));
+		this.sizeUpgrades.deserializeNBT(tag.getCompoundTag(Tags.SIZE_UPGRADES));
 		this.optionalUpgrades.deserializeNBT(tag.getCompoundTag(Tags.OPTIONAL_UPGRADES));
 		this.validateCapacity();
 		this.inventory.readFromNBT(tag.getCompoundTag(FluidHandlerItemStack.FLUID_NBT_KEY));
