@@ -66,9 +66,9 @@
 
     <chapter id="TableOfContents">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Blocks</title>
-            </page_title>
+            </page_title_shorter>
             <p><stack item="arcanearchives:brazier_of_hoarding"/> <link ref="BrazierHoarding">Brazier of Hoarding</link></p>
             <p><stack item="arcanearchives:radiant_lantern"/> <link ref="DecorativeBlocks">Decorative Blocks</link></p>
             <p><stack item="arcanearchives:gemcutters_table"/> <link ref="GemCuttersTable">Gem Cutter's Table</link></p>
@@ -79,12 +79,12 @@
             <p><stack item="arcanearchives:radiant_resonator"/> <link ref="RadiantResonator">Radiant Resonator</link></p>
             <p><stack item="arcanearchives:radiant_tank"/> <link ref="RadiantTank">Radiant Tank</link></p>
             <p><stack item="arcanearchives:radiant_trove"/> <link ref="RadiantTrove">Radiant Trove</link></p>
-            <p><stack item="arcanearchives:raw_quartz"/> <link ref="DecorativeBlocks:raw_quartzCluster">Raw Quartz Cluster</link></p>
+            <p><stack item="arcanearchives:raw_quartz"/> <link ref="DecorativeBlocks:RawQuartzCluster">Raw Quartz Cluster</link></p>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Items</title>
-            </page_title>
+            </page_title_shorter>
             <p><stack item="arcanearchives:containment_field"/> <link ref="ContainmentField">Containment Field</link></p>
             <p><stack item="arcanearchives:devouring_charm"/> <link ref="DevouringCharm">Devouring Charm</link></p>
             <p><stack item="arcanearchives:gemsocket"/> <link ref="GemSocket">Gem Socket</link></p>
@@ -103,9 +103,9 @@
             <p><stack item="arcanearchives:writ_expulsion"/> <link ref="WritExpulsion">Writ of Expulsion</link></p>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Arcane Gems</title>
-            </page_title>
+            </page_title_shorter>
             <p><image src="arcanearchives:gui/guidebook/gems" tw="16" th="16"/> <link ref="ArcaneGems">Arcane Gems</link></p>
             <space height="8"/>
             <p><stack item="arcanearchives:slaughtergleam"/> <link ref="Slaughtergleam">Slaughtergleam</link></p>
@@ -129,9 +129,9 @@
             <p><stack item="arcanearchives:stormway"/> <link ref="Stormway">Stormway</link></p>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Concepts</title>
-            </page_title>
+            </page_title_shorter>
             <p><image src="arcanearchives:gui/guidebook/networks" tw="16" th="16" /> <link ref="Networks">Networks</link></p>
             <p><image src="arcanearchives:gui/guidebook/otherwhere" tw="16" th="16" /> <link ref="Otherwhere">Otherwhere</link></p>
         </section>
@@ -139,9 +139,9 @@
 
     <chapter id="BrazierHoarding">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Brazier of Hoarding</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:brazier_of_hoarding" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -168,9 +168,9 @@
             </p>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Brazier of Hoarding</title>
-            </page_title>
+            </page_title_shorter>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -179,9 +179,9 @@
 
     <chapter id="DecorativeBlocks">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Decorative Blocks</title>
-            </page_title>
+            </page_title_shorter>
             <p>
                 The following blocks are included primarily for decorative purposes.
             </p>
@@ -196,9 +196,9 @@
             </p>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Block of Raw Radiant Quartz</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:storage_raw_quartz" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -217,9 +217,9 @@
             <horizontal_rule/>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Block of Shaped Radiant Quartz</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:storage_shaped_quartz" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -238,9 +238,9 @@
             <horizontal_rule/>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Radiant Lantern</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:radiant_lantern" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -255,9 +255,9 @@
             </p>
         </section>
         <section id="RawQuartzCluster">
-            <page_title>
+            <page_title_shorter>
                 <title>Raw Quartz Cluster</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:raw_quartz" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -272,9 +272,9 @@
             </p>
         </section>
         <section id="SliverOfLight">
-            <page_title>
+            <page_title_shorter>
                 <title>Sliver of Light</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:quartz_sliver" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -289,9 +289,9 @@
 
     <chapter id="GemCuttersTable">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Gem Cutter's Table</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:gemcutters_table" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -311,9 +311,9 @@
             </recipe>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Gem Cutter's Table</title>
-            </page_title>
+            </page_title_shorter>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -322,9 +322,9 @@
 
     <chapter id="LecternManifest">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Manifest Lectern</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:lectern_manifest" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -344,9 +344,9 @@
             </recipe>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Manifest Lectern</title>
-            </page_title>
+            </page_title_shorter>
             <p italics="true">
                 I remember the awe I felt in my first days as an apprentice at the Eternal University. The soaring, gold-domed towers, perpetual twilit sky abuzz with luminous wisps, the impossibly large spaces contained within far too small buildings.
             </p><space height="4"/>
@@ -376,9 +376,9 @@
 
     <chapter id="MonitoringCrystal">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Monitoring Crystal</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:monitoring_crystal" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -396,9 +396,9 @@
             </p>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Monitoring Crystal</title>
-            </page_title>
+            </page_title_shorter>
             <p bold="true" italics="true">
                 The Creed of Branding
             </p><space height="12"/>
@@ -422,9 +422,9 @@
 
     <chapter id="RadiantChest">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Radiant Chest</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:radiant_chest" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -450,9 +450,9 @@
             </p>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Radiant Chest</title>
-            </page_title>
+            </page_title_shorter>
             <p>
                 <stack item="arcanearchives:raw_quartz"/> Radiant Chests can be crafted by using a piece of <link ref="RadiantQuartz">Raw Radiant Quartz</link> on a chest while sneaking. Any items inside the chest will be imported, and if used on a double vanilla chest, both chests' inventories will be imported into the new Radiant Chest.
             </p>
@@ -466,9 +466,9 @@
             </recipe>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Radiant Chest</title>
-            </page_title>
+            </page_title_shorter>
             <p italics="true">
                 Upon further examination, the glowing crystalline substance I was imparted with seems to have spatial (temporal?) distortion properties. Further research is required; I have an idea I wish to test out.
             </p><space height="4"/>
@@ -492,9 +492,9 @@
 
     <chapter id="RadiantCraftingTable">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Radiant Crafting Table</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:radiant_crafting_table" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -520,9 +520,9 @@
             </recipe>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Radiant Crafting Table</title>
-            </page_title>
+            </page_title_shorter>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -531,9 +531,9 @@
 
     <chapter id="RadiantResonator">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Radiant Resonator</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:radiant_resonator" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -548,6 +548,9 @@
             <p>
                 <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="scepter_revelation">Scepter of Revelation</link> on a Radiant Resonator will return its current process, and whether it is running or not.
             </p>
+            <p>
+                <stack item="minecraft:comparator"/> When monitored with a Redstone Comparator, a Radiant Resonator ouptuts a signal based on its progress towards creating a new <link ref="DecorativeBlocks:RawQuartzCluster">Radiant Quartz Cluster</link>.
+            </p>
             <horizontal_rule/>
             <p>
                 <stack item="minecraft:crafting_table"/> Radiant Resonators can be crafted conventionally.
@@ -559,9 +562,9 @@
             </recipe>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Radiant Resonator</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center">
                 <image src="arcanearchives:gui/guidebook/lore_resonator" tw="256" th="200"/>
             </p><space height="16"/>
@@ -579,9 +582,9 @@
 
     <chapter id="RadiantTank">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Radiant Tank</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:radiant_tank" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -610,9 +613,9 @@
             </p>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Radiant Tank</title>
-            </page_title>
+            </page_title_shorter>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -621,9 +624,9 @@
 
     <chapter id="RadiantTrove">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Radiant Trove</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:radiant_trove" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -657,9 +660,9 @@
             </p>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Radiant Trove</title>
-            </page_title>
+            </page_title_shorter>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -668,9 +671,9 @@
 
     <chapter id="ContainmentField">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Containment Field</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:containment_field" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -685,9 +688,9 @@
             </p>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Containment Field</title>
-            </page_title>
+            </page_title_shorter>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -696,9 +699,9 @@
 
     <chapter id="DevouringCharm">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Devouring Charm</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:devouring_charm" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -719,9 +722,9 @@
             </p>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Devouring Charm</title>
-            </page_title>
+            </page_title_shorter>
             <p italics="true">
                 The Eternal University makes these simple charms available to all apprentices. Inside the mouth of the charm is a portal similar in many ways to a portal to the Nether, save that the connection is one-way.
             </p><space height="4"/>
@@ -748,9 +751,9 @@
 
     <chapter id="GemSocket">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Gem Socket</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:gemsocket" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -782,9 +785,9 @@
             </p>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Gem Socket</title>
-            </page_title>
+            </page_title_shorter>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -793,9 +796,9 @@
 
     <chapter id="LetterInvitation">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Letter of Invitation</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:letter_invitation" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -810,9 +813,9 @@
             </p>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Letter of Invitation</title>
-            </page_title>
+            </page_title_shorter>
             <p italics="true">
                 Journeyman Yailan:
             </p><space height="4"/>
@@ -842,9 +845,9 @@
 
     <chapter id="LetterResignation">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Letter of Resignation</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:letter_resignation" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -859,9 +862,9 @@
             </p>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Letter of Resignation</title>
-            </page_title>
+            </page_title_shorter>
             <p italics="true">
                 To my esteemed colleagues of the Eternal University,
             </p><space height="4"/>
@@ -888,9 +891,9 @@
 
     <chapter id="Manifest">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Manifest</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:manifest" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -905,9 +908,9 @@
             </p>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Manifest</title>
-            </page_title>
+            </page_title_shorter>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -916,9 +919,9 @@
 
     <chapter id="MaterialInterface">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Material Interface</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:material_interface" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -933,9 +936,9 @@
             </p>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Material Interface</title>
-            </page_title>
+            </page_title_shorter>
             <p italics="true">
                 My tests with the mysterious crystal indicate that each facet, no matter how small or how minutely different from its neighbors, lead to a different part of this strange Otherwhere.
             </p><space height="4"/>
@@ -959,9 +962,9 @@
 
     <chapter id="MatrixBrace">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Matrix Brace</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:matrix_brace" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -973,9 +976,9 @@
             </p>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Matrix Brace</title>
-            </page_title>
+            </page_title_shorter>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -984,9 +987,9 @@
 
     <chapter id="RadiantAmphora">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Radiant Amphora</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:radiant_amphora" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -1007,9 +1010,9 @@
             </p>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Radiant Amphora</title>
-            </page_title>
+            </page_title_shorter>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -1018,9 +1021,9 @@
 
     <chapter id="RadiantDust">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Radiant Dust</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:radiant_dust" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -1032,9 +1035,9 @@
             </p>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Radiant Dust</title>
-            </page_title>
+            </page_title_shorter>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -1043,9 +1046,9 @@
 
     <chapter id="RawQuartz">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Raw Radiant Quartz</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:raw_quartz" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -1062,13 +1065,13 @@
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:radiant_resonator" /> Raw Radiant Quartz is created over time on top of a <link ref="RadiantResonator">Radiant Resonator</link> in the form of a <link ref="DecorativeBlocks:raw_quartzCluster">Raw Quartz Cluster</link>.
+                <stack item="arcanearchives:radiant_resonator" /> Raw Radiant Quartz is created over time on top of a <link ref="RadiantResonator">Radiant Resonator</link> in the form of a <link ref="DecorativeBlocks:RawQuartzCluster">Raw Quartz Cluster</link>.
             </p>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Raw Radiant Quartz</title>
-            </page_title>
+            </page_title_shorter>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -1077,9 +1080,9 @@
 
     <chapter id="ShapedQuartz">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Shaped Radiant Quartz</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:shaped_quartz" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -1091,9 +1094,9 @@
             </p>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Shaped Radiant Quartz</title>
-            </page_title>
+            </page_title_shorter>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -1102,9 +1105,9 @@
 
     <chapter id="ScepterManipulation">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Scepter of Manipulation</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:scepter_manipulation" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -1121,9 +1124,9 @@
             </p>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Scepter of Manipulation</title>
-            </page_title>
+            </page_title_shorter>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -1132,9 +1135,9 @@
 
     <chapter id="ScepterRevelation">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Scepter of Revelation</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:scepter_revelation" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -1164,9 +1167,9 @@
             </recipe>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Scepter of Revelation</title>
-            </page_title>
+            </page_title_shorter>
             <p italics="true">
                 A series of simple divination spells grants this scepter a number of useful information divining abilities. It is standard University procedure to gather data from your experiments using primarily your Scepter of Revelation.
             </p><space height="4"/>
@@ -1206,9 +1209,9 @@
 
     <chapter id="ScintillatingInlay">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Scintillating Inlay</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:scintillating_inlay" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -1220,9 +1223,9 @@
             </p>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Scintillating Inlay</title>
-            </page_title>
+            </page_title_shorter>
             <p italics="true">
                 ...Lore fragment TBD
             </p>
@@ -1231,9 +1234,9 @@
 
     <chapter id="WritExpulsion">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Writ of Expulsion</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:writ_expulsion" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -1248,9 +1251,9 @@
             </p>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Writ of Expulsion</title>
-            </page_title>
+            </page_title_shorter>
             <p italics="true">
                 Master Sharaveda, it has become painfully clear that you no longer possess the objectivity necessary to act as a Master of the Eternal University.
             </p><space height="4"/>
@@ -1280,9 +1283,9 @@
 
     <chapter id="ArcaneGems">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Arcane Gems</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><image src="arcanearchives:gui/guidebook/gems" tw="16" th="16" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -1318,9 +1321,9 @@
 
     <chapter id="Slaughtergleam">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Slaughtergleam</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:slaughtergleam" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -1341,9 +1344,9 @@
 
     <chapter id="Murdergleam">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Murdergleam</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:murdergleam" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -1367,9 +1370,9 @@
 
     <chapter id="Agegleam">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Agegleam</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:agegleam" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -1390,9 +1393,9 @@
 
     <chapter id="Cleansegleam">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Cleansegleam</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:cleansegleam" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -1416,9 +1419,9 @@
 
     <chapter id="Switchgleam">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Switchgleam</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:switchgleam" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -1442,9 +1445,9 @@
 
     <chapter id="Salvegleam">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Salvegleam</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:salvegleam" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -1465,9 +1468,9 @@
 
     <chapter id="Munchstone">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Munchstone</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:munchstone" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -1491,9 +1494,9 @@
 
     <chapter id="Orderstone">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Orderstone</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:orderstone" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -1511,9 +1514,9 @@
             </p>
         </section>
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Orderstone</title>
-            </page_title>
+            </page_title_shorter>
             <p>
                 The following transformation sequences can be performed:
             </p>
@@ -1540,9 +1543,9 @@
 
     <chapter id="Mindspindle">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Mindspindle</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:mindspindle" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -1566,9 +1569,9 @@
 
     <chapter id="Elixirspindle">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Elixirspindle</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:elixirspindle" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -1589,9 +1592,9 @@
 
     <chapter id="Mountaintear">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Mountaintear</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:mountaintear" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -1618,9 +1621,9 @@
 
     <chapter id="Rivertear">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Rivertear</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:rivertear" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -1644,9 +1647,9 @@
 
     <chapter id="Parchtear">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Parchtear</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:parchtear" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -1667,9 +1670,9 @@
 
     <chapter id="Phoenixway">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Phoenixway</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:phoenixway" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -1693,9 +1696,9 @@
 
     <chapter id="Stormway">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Stormway</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><stack item="arcanearchives:stormway" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -1722,9 +1725,9 @@
 
     <chapter id="Networks">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Networks</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><image src="arcanearchives:gui/guidebook/networks" tw="16" th="16" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
@@ -1747,9 +1750,9 @@
 
     <chapter id="Otherwhere">
         <section>
-            <page_title>
+            <page_title_shorter>
                 <title>Otherwhere</title>
-            </page_title>
+            </page_title_shorter>
             <p align="center"><image src="arcanearchives:gui/guidebook/otherwhere" tw="16" th="16" scale="3.0"/></p>
             <horizontal_rule/>
             <p italics="true">
