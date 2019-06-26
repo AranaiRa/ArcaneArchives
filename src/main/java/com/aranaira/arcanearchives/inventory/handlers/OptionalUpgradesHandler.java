@@ -35,4 +35,9 @@ public class OptionalUpgradesHandler extends ItemStackHandler {
 
 		return !hasUpgrade(upgrade.getUpgradeType(stack));
 	}
+
+	@Override
+	public int getSlotLimit (int slot) {
+		return 1;
+	}
 }
