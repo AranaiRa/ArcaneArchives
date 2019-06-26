@@ -73,8 +73,16 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements Manif
 		if (mainhand.isEmpty()) {
 			mainhand = player.getHeldItemOffhand();
 		}
+
+		boolean fake_hand = false;
+
 		if (mainhand.isEmpty()) {
-			return;
+			if (inventory.isEmpty()) {
+				return;
+			} else {
+				mainhand = inventory.getItem();
+				fake_hand = true;
+			}
 		}
 
 		this.markDirty();
@@ -85,11 +93,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements Manif
 
 		ItemStack reference = inventory.getItem();
 
-		if (!ItemUtilities.areStacksEqualIgnoreSize(reference, mainhand)) {
-			if (mainhand.getItem() == ItemRegistry.COMPONENT_MATERIALINTERFACE) {
-				player.sendStatusMessage(new TextComponentTranslation("arcanearchives.warning.sneak_to_upgrade"), true);
-				return;
-			}
+		if (!ItemUtilities.areStacksEqualIgnoreSize(reference, mainhand) && !fake_hand) {
 			player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.trove_insertion_failed.wrong"), true);
 			return;
 		}
@@ -97,21 +101,24 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements Manif
 		UUID playerId = player.getUniqueID();
 		boolean doubleClick = false;
 
-		if (lastUUID == playerId && (System.currentTimeMillis() - lastClick) <= 15) {
+		if (lastUUID == playerId && (System.currentTimeMillis() - lastClick) <= 1500) {
 			doubleClick = true;
 		}
 
 		lastUUID = playerId;
 		lastClick = System.currentTimeMillis();
 
-		ItemStack result = inventory.insertItem(0, mainhand, false);
+		ItemStack result;
+		if (!fake_hand) {
+			result = inventory.insertItem(0, mainhand, false);
 
-		if (!result.isEmpty()) {
-			player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.trove_insertion_failed.full"), true);
-			mainhand.setCount(result.getCount());
-			return;
-		} else {
-			mainhand.setCount(0);
+			if (!result.isEmpty()) {
+				player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.trove_insertion_failed.full"), true);
+				mainhand.setCount(result.getCount());
+				return;
+			} else {
+				mainhand.setCount(0);
+			}
 		}
 
 		if (doubleClick) {
