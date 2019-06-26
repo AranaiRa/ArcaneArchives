@@ -139,6 +139,10 @@ public class RadiantChest extends BlockTemplate {
 
 	@Override
 	public int getComparatorInputOverride (IBlockState blockState, World worldIn, BlockPos pos) {
-		return ItemUtilities.calculateRedstoneFromTileEntity(worldIn.getTileEntity(pos));
+		RadiantChestTileEntity te = WorldUtil.getTileEntity(RadiantChestTileEntity.class, worldIn, pos);
+		if (te != null) {
+			return te.getInventory().calcRedstone();
+		}
+		return 0;
 	}
 }
