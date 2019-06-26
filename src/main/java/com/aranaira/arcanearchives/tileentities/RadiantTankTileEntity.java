@@ -2,10 +2,8 @@ package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.inventory.handlers.OptionalUpgradesHandler;
-import com.aranaira.arcanearchives.inventory.handlers.SizeUpgradeItemHandler;
-import com.aranaira.arcanearchives.inventory.handlers.TankUpgradeItemHandler;
-import com.aranaira.arcanearchives.inventory.handlers.TroveUpgradeItemHandler;
+import com.aranaira.arcanearchives.inventory.handlers.*;
+import com.aranaira.arcanearchives.util.types.UpgradeType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -23,7 +21,7 @@ import javax.annotation.Nonnull;
 
 public class RadiantTankTileEntity extends ImmanenceTileEntity implements IUpgradeableStorage {
 	public static final int BASE_CAPACITY = Fluid.BUCKET_VOLUME * 16;
-	private final FluidTank inventory = new FluidTank(BASE_CAPACITY);
+	private final VoidingFluidTank inventory = new VoidingFluidTank(BASE_CAPACITY);
 
 	private TankUpgradeItemHandler sizeUpgrades = new TankUpgradeItemHandler() {
 		@Override
@@ -41,7 +39,13 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity implements IUpgra
 			return te.inventory.getFluidAmount() <= te.getCapacity(size);
 		}
 	};
-	private OptionalUpgradesHandler optionalUpgrades = new OptionalUpgradesHandler();
+
+	private OptionalUpgradesHandler optionalUpgrades = new OptionalUpgradesHandler() {
+		@Override
+		protected void onContentsChanged (int slot) {
+			inventory.setVoiding(this.hasUpgrade(UpgradeType.VOID));
+		}
+	};
 
 	public boolean wasCreativeDrop = false;
 

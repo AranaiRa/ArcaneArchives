@@ -15,9 +15,18 @@ public class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCo
 	private int count = 0;
 	private ItemStack reference = ItemStack.EMPTY;
 	private final Runnable updater;
+	private boolean voiding = false;
 
 	public TroveItemHandler (Runnable updater) {
 		this.updater = updater;
+	}
+
+	public boolean isVoiding () {
+		return voiding;
+	}
+
+	public void setVoiding (boolean voiding) {
+		this.voiding = voiding;
 	}
 
 	private void update () {
@@ -87,6 +96,7 @@ public class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCo
 				ItemStack result = stack.copy();
 				result.setCount(diff);
 				update();
+				if (voiding) return ItemStack.EMPTY;
 				return result;
 			} else {
 				count += stack.getCount();

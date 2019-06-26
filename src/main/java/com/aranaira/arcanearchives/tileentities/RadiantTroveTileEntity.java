@@ -8,6 +8,7 @@ import com.aranaira.arcanearchives.inventory.handlers.SizeUpgradeItemHandler;
 import com.aranaira.arcanearchives.inventory.handlers.TroveItemHandler;
 import com.aranaira.arcanearchives.inventory.handlers.TroveUpgradeItemHandler;
 import com.aranaira.arcanearchives.util.ItemUtilities;
+import com.aranaira.arcanearchives.util.types.UpgradeType;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -47,7 +48,12 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements Manif
 			return te.inventory.getCount() <= te.inventory.getMaxCount(size);
 		}
 	};
-	private OptionalUpgradesHandler optionalUpgrades = new OptionalUpgradesHandler();
+	private OptionalUpgradesHandler optionalUpgrades = new OptionalUpgradesHandler() {
+		@Override
+		protected void onContentsChanged (int slot) {
+			inventory.setVoiding(this.hasUpgrade(UpgradeType.VOID));
+		}
+	};
 
 	@Override
 	public void update () {
