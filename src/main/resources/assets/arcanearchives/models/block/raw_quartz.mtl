@@ -1,5 +1,5 @@
 # Blender MTL File: 'rawquartz.blend'
 # Material Count: 1
 
-newmtl None
+newmtl mat_rawQuartz
 map_Kd arcanearchives:blocks/block_storage_rawquartz

@@ -3,6 +3,3 @@
 
 newmtl mat_arcanearchives_master
 map_Kd arcanearchives:blocks/block_arcanearchives_master
-
-newmtl mat_arcanearchives_matrixcore_crystal
-map_Kd arcanearchives:blocks/block_matrixcore
