@@ -46,7 +46,8 @@ public class ScepterRevelationItem extends ItemTemplate {
 	}
 
 	@Override
-	public EnumActionResult onItemUse (EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public EnumActionResult onItemUseFirst (EntityPlayer player, World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, EnumHand hand) {
+
 		if (hand != EnumHand.MAIN_HAND) {
 			return EnumActionResult.SUCCESS;
 		}
