@@ -32,6 +32,7 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity implements IUpgra
 				RadiantTankTileEntity.this.markDirty();
 				RadiantTankTileEntity.this.defaultServerSideUpdate();
 			}
+			inventory.setCapacity(getCapacity());
 		}
 
 		@Override
