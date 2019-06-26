@@ -5,6 +5,7 @@ import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketGemCutters;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
+import com.aranaira.arcanearchives.util.ManifestTracking;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -20,9 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
-public class GemCuttersTableTileEntity extends AATileEntity {
+public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements ManifestTileEntity {
 	private final ItemStackHandler inventory = new ItemStackHandler(18);
 	public static final int RECIPE_PAGE_LIMIT = 7;
 	private GCTRecipe currentRecipe;
@@ -31,10 +30,20 @@ public class GemCuttersTableTileEntity extends AATileEntity {
 	private int page;
 
 	public GemCuttersTableTileEntity () {
-		super();
-		setName("gemcutterstable");
+		super("gemcutterstable");
 	}
 
+	@Override
+	public String getDescriptor () {
+		return "Gem Cutter's Table";
+	}
+
+	@Override
+	public String getChestName () {
+		return "";
+	}
+
+	@Override
 	public IItemHandlerModifiable getInventory () {
 		return inventory;
 	}

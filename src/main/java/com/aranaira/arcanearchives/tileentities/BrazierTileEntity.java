@@ -1,13 +1,11 @@
 package com.aranaira.arcanearchives.tileentities;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.inventory.handlers.TroveItemHandler;
 import com.aranaira.arcanearchives.util.ItemUtilities;
 import com.aranaira.arcanearchives.util.types.IteRef;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
-import javafx.scene.shape.Arc;
 import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;

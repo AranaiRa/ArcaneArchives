@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.ManifestTileEntity;
 import com.aranaira.arcanearchives.tileentities.MonitoringCrystalTileEntity;
+import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.ItemStackConsolidator;
 import com.aranaira.arcanearchives.util.LargeItemNBTUtil;
 import com.aranaira.arcanearchives.util.types.*;
@@ -110,7 +111,7 @@ public class HiveNetwork implements IHiveBase {
 				if (mte.isSingleStackInventory()) {
 					ItemStack is = mte.getSingleStack();
 					if (!is.isEmpty()) {
-						preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(ite.getPos(), mte.getChestName(), is.getCount()), outOfRange));
+						preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(ite.getPos(), mte.getDescriptor(), is.getCount()), outOfRange));
 					}
 				} else {
 					if (mte instanceof MonitoringCrystalTileEntity) {
@@ -145,12 +146,16 @@ public class HiveNetwork implements IHiveBase {
 							}
 						}
 					} else {
+						String descriptor = mte.getChestName();
+						if (descriptor.isEmpty() && !(mte instanceof RadiantChestTileEntity)) {
+							descriptor = mte.getDescriptor();
+						}
 						for (ItemStack is : new SlotIterable(mte.getInventory())) {
 							if (is.isEmpty()) {
 								continue;
 							}
 
-							preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(ite.getPos(), mte.getChestName(), is.getCount()), outOfRange));
+							preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(ite.getPos(), descriptor, is.getCount()), outOfRange));
 						}
 					}
 				}

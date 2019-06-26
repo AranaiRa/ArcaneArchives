@@ -218,7 +218,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements Manif
 
 	@Override
 	public String getDescriptor () {
-		return "trove";
+		return "Trove";
 	}
 
 	@Override
