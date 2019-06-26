@@ -118,13 +118,10 @@ public class ContainerUpgrades extends Container {
 				return ItemStack.EMPTY;
 			} else {
 				if (index >= 36 && index < 39) {
-					int upSlot = Math.min(index - 36, 0);
-					if (upSlot == 2) {
-						if (!mergeItemStack(stack, 0, 36, false)) return ItemStack.EMPTY;
-					} else if (upSlot == 1) {
-						if (!sizeHandler.hasUpgrade(2) && !mergeItemStack(stack, 0, 36, false)) return ItemStack.EMPTY;
-					} else if (upSlot == 0) {
-						if (!sizeHandler.hasUpgrade(2) && !sizeHandler.hasUpgrade(1) && !mergeItemStack(stack, 0, 36, false)) return ItemStack.EMPTY;
+					int upSlot = Math.max(index - 36, 0);
+					if (!sizeHandler.extractItem(upSlot, 1, true).isEmpty()) {
+						mergeItemStack(stack, 0, 36, false);
+						sizeHandler.extractItem(upSlot, 1, false);
 					}
 				} else if (index >= 39 && index < 42) {
 					if (!mergeItemStack(stack, 0, 36, false)) return ItemStack.EMPTY;
