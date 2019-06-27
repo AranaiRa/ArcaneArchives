@@ -118,8 +118,9 @@ public class IngredientStack {
 	public List<ItemStack> getMatchingStacksWithSizes () {
 		List<ItemStack> result = new ArrayList<>();
 		for (ItemStack stack : getMatchingStacks()) {
-			stack.setCount(getCount());
-			result.add(stack);
+			ItemStack copy = stack.copy();
+			copy.setCount(getCount());
+			result.add(copy);
 		}
 		return result;
 	}
