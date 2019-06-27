@@ -24,6 +24,8 @@ import yalter.mousetweaks.api.MouseTweaksDisableWheelTweak;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @MouseTweaksDisableWheelTweak
 public class GUIGemCuttersTable extends GuiContainer {
@@ -178,7 +180,7 @@ public class GUIGemCuttersTable extends GuiContainer {
 					for (IngredientStack ing : recipe.getIngredients()) {
 						ItemStack[] stacks = ing.getMatchingStacks();
 						assert stacks.length != 0;
-						ingredients.add(Arrays.asList(stacks));
+						ingredients.add(Stream.of(stacks).map(ItemStack::copy).collect(Collectors.toList()));
 						counts.add(ing.getCount());
 					}
 

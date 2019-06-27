@@ -8,6 +8,7 @@ import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
@@ -48,7 +49,7 @@ public class GCTCategory implements IRecipeCategory<GCTWrapper> {
 			GCTRecipe recipe = recipeWrapper.recipe;
 			for (int i = 0; i < recipe.getIngredients().size(); i++) {
 				group.init(i, true, i % 2 == 0 ? 0 : 18, (i / 2) * 18);
-				group.set(i, Arrays.asList(recipe.getIngredients().get(i).getMatchingStacks()));
+				group.set(i, ingredients.getInputs(VanillaTypes.ITEM).get(i));
 			}
 			group.init(8, false, 98, 27);
 			group.set(8, recipe.getRecipeOutput());

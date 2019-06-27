@@ -9,6 +9,8 @@ import net.minecraft.item.ItemStack;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class GCTWrapper implements IRecipeWrapper {
 	public GCTRecipe recipe;
@@ -21,7 +23,7 @@ public class GCTWrapper implements IRecipeWrapper {
 	public void getIngredients (IIngredients ingredients) {
 		if (recipe != null) {
 			for (IngredientStack stack : recipe.getIngredients()) {
-				List<ItemStack> stacks = Arrays.asList(stack.getMatchingStacks());
+				List<ItemStack> stacks = Stream.of(stack.getMatchingStacks()).map(ItemStack::copy).collect(Collectors.toList());
 				for (ItemStack s : stacks) {
 					s.setCount(stack.getCount());
 				}

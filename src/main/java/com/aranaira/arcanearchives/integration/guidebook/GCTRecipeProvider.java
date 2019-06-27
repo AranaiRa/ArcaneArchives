@@ -41,8 +41,9 @@ public class GCTRecipeProvider extends RecipeProvider {
 			IngredientStack stack = recipe.getIngredients().get(i);
 			ElementStack inputSlot = new ElementStack(false, false);
 			for (ItemStack s : stack.getMatchingStacks()) {
-				s.setCount(stack.getCount());
-				inputSlot.stacks.add(s.copy());
+				ItemStack c = s.copy();
+				c.setCount(stack.getCount());
+				inputSlot.stacks.add(c);
 			}
 
 			inputSlot.x = (i % 2 == 0) ? 0 : 18;
