@@ -639,7 +639,7 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 			this.mc.player.closeScreen();
 		}
 
-		if (nameBox.textboxKeyTyped(typedChar, keyCode)) {
+		if (nameBox.isFocused() && nameBox.textboxKeyTyped(typedChar, keyCode)) {
 			return;
 		}
 

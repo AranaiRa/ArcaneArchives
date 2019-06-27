@@ -317,7 +317,7 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 			}
 		}
 
-		if (searchBox.textboxKeyTyped(typedChar, keyCode)) {
+		if (searchBox.isFocused() && searchBox.textboxKeyTyped(typedChar, keyCode)) {
 			return;
 		}
 
