@@ -53,6 +53,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
@@ -512,13 +513,29 @@ public class AAEventHandler {
 							}
 						}
 						if (!potionAlreadyActive) {
-							for (PotionEffect effect : potion.getEffects()) {
-								player.addPotionEffect(effect);
+							for (PotionEffect effect : PotionUtils.getEffectsFromStack(player.getHeldItemMainhand())) {
+								player.addPotionEffect(new PotionEffect(effect));
 							}
 							GemUtil.consumeCharge(gem, 1);
 						}
 						event.setCanceled(true);
 					}
+				}
+			}
+		}
+
+		/**
+		 * Clientside
+		 */
+		if (event.getEntityLiving().world.isRemote && event.getEntityLiving() instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+			ItemStack stack = player.getHeldItemMainhand();
+			for (GemStack gem : GemUtil.getAvailableGems(player)) {
+				/**
+				 * Elixirspindle
+				 */
+				if (gem.getItem() instanceof Elixirspindle && GemUtil.getCharge(gem) > 0) {
+						event.setCanceled(true);
 				}
 			}
 		}
