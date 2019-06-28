@@ -70,6 +70,7 @@ public class ContainerGemCuttersTable extends Container {
 				if (!player.world.isRemote) {
 					stack = recipe.onCrafted(player, stack);
 				}
+				updateRecipe();
 				return super.onTake(player, stack);
 			}
 
