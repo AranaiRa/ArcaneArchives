@@ -1,17 +1,23 @@
 package com.aranaira.arcanearchives.util;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.opengl.ARBMultitexture;
+import org.lwjgl.opengl.ARBShaderObjects;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.function.Consumer;
 
 public class RenderHelper {
 	@SideOnly(Side.CLIENT)
@@ -83,6 +89,26 @@ public class RenderHelper {
 		float normalized = MathHelper.clamp((dist - minDistanceClamp) / (maxDistanceClamp - minDistanceClamp), 0.0f, 1.0f);
 		float width = normalized * 0.7f + 0.3f;
 		return width;
+	}
+
+	public static Consumer<Integer> generateBloomCallback(ResourceLocation textureLoc, float[] color) {
+		return generateBloomCallback(textureLoc, color, new float[] {1, 1, 1, 1});
+	}
+
+	public static Consumer<Integer> generateBloomCallback(ResourceLocation textureLoc, float[] color, float[] brightColor) {
+		return (Integer shader) -> {
+			int textureUniform = ARBShaderObjects.glGetUniformLocationARB(shader, "texture");
+			int colorUniform = ARBShaderObjects.glGetUniformLocationARB(shader, "color");
+			int brightColorUniform = ARBShaderObjects.glGetUniformLocationARB(shader, "brightColor");
+
+			OpenGlHelper.setActiveTexture(ARBMultitexture.GL_TEXTURE0_ARB);
+			GlStateManager.enableTexture2D();
+			Minecraft.getMinecraft().getTextureManager().bindTexture(textureLoc);
+			ARBShaderObjects.glUniform1iARB(textureUniform, 0);
+
+			ARBShaderObjects.glUniform4fARB(colorUniform, color[0], color[1], color[2], color[2]);
+			ARBShaderObjects.glUniform4fARB(brightColorUniform, brightColor[0], brightColor[1], brightColor[2], brightColor[2]);
+		};
 	}
 
 	@SideOnly(Side.CLIENT)
