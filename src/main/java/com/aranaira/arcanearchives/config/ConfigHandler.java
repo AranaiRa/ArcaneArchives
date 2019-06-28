@@ -98,8 +98,9 @@ public class ConfigHandler {
 		@Config.Name("Colourblind Mode")
 		public boolean ColourblindMode = false;
 
-		@Config.Comment("What blocks a Munchstone can eat. First value is a block (such as minecraft:log), second value is the amount of hunger restored. Saturation always equals the hunger restoration. Entries are delineated with either a comma or a new line.")
+		@Config.Comment("What blocks a Munchstone can eat. First value is a block (such as minecraft:log), second value is the amount of hunger restored. Saturation always equals the hunger restoration.")
 		@Config.Name("Valid Munchstone Blocks")
+		@Config.RequiresMcRestart
 		public String[] EdibleBlocks = MunchstoneItem.DEFAULT_ENTRIES;
 	}
 
