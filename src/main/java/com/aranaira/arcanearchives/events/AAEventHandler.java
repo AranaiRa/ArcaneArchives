@@ -162,7 +162,7 @@ public class AAEventHandler {
 	@SideOnly(Side.CLIENT)
 	public static void onLeftClickEmpty (PlayerInteractEvent.LeftClickEmpty event) {
 		Item item = event.getEntityPlayer().inventory.getCurrentItem().getItem();
-		if (item == ItemRegistry.RADIANT_AMPHORA && event.getEntityPlayer().isSneaking()) {
+		if (item == ItemRegistry.RADIANT_AMPHORA) {
 			PacketRadiantAmphora packet = new PacketRadiantAmphora();
 			NetworkHandler.CHANNEL.sendToServer(packet);
 		}else if (item instanceof ArcaneGemItem) {
