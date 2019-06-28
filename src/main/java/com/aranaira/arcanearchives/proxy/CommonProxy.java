@@ -4,10 +4,12 @@ import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.commands.CommandBrazier;
 import com.aranaira.arcanearchives.commands.CommandHive;
+import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.events.ClientTickHandler;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.RecipeLibrary;
+import com.aranaira.arcanearchives.items.gems.oval.MunchstoneItem;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -24,6 +26,7 @@ public class CommonProxy {
 		NetworkRegistry.INSTANCE.registerGuiHandler(ArcaneArchives.instance, new AAGuiHandler());
 
 		NetworkHandler.registerPackets();
+		MunchstoneItem.EdibleBlock.parseConfig();
 	}
 
 	public void init (FMLInitializationEvent event) {
@@ -34,6 +37,7 @@ public class CommonProxy {
 	}
 
 	public void postInit (FMLPostInitializationEvent event) {
+		MunchstoneItem.EdibleBlock.parseConfig();
 	}
 
 	public void registerItemRenderer (Item item, int meta, String id) {

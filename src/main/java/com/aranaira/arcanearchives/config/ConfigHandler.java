@@ -2,10 +2,12 @@ package com.aranaira.arcanearchives.config;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.gui.GUIManifest;
+import com.aranaira.arcanearchives.items.gems.oval.MunchstoneItem;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketConfig.MaxDistance;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.init.Blocks;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.Config.RequiresMcRestart;
 import net.minecraftforge.common.config.ConfigManager;
@@ -95,6 +97,10 @@ public class ConfigHandler {
 		@Config.Comment("Enable colour-blind mode for Arsenal. This replaces gem icons specifically with variants more clearly defined for types of colour-blindness")
 		@Config.Name("Colourblind Mode")
 		public boolean ColourblindMode = false;
+
+		@Config.Comment("What blocks a Munchstone can eat. First value is a block (such as minecraft:log), second value is the amount of hunger restored. Saturation always equals the hunger restoration. Entries are delineated with either a comma or a new line.")
+		@Config.Name("Valid Munchstone Blocks")
+		public String[] EdibleBlocks = MunchstoneItem.DEFAULT_ENTRIES;
 	}
 
 	@Config.LangKey("arcanearchives.config.item_tracking")

@@ -495,6 +495,9 @@ public class AAEventHandler {
 
 	@SubscribeEvent
 	public static void onItemUse (LivingEntityUseItemEvent event) {
+		/**
+		 * Serverside
+		 */
 		if (!event.getEntityLiving().world.isRemote && event.getEntityLiving() instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) event.getEntityLiving();
 			ItemStack stack = player.getHeldItemMainhand();
