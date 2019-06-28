@@ -28,10 +28,7 @@ import net.minecraftforge.items.*;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @InventoryContainer
 public class ContainerGemCuttersTable extends Container {
@@ -45,6 +42,9 @@ public class ContainerGemCuttersTable extends Container {
 	private final EntityPlayer player;
 	private final World world;
 	private Runnable updateRecipeGUI;
+	private List<Slot> playerSlots = new ArrayList<>();
+	private List<Slot> tileSlots = new ArrayList<>();
+	private List<Slot> playerHotbar = new ArrayList<>();
 
 	public ContainerGemCuttersTable (IItemHandlerModifiable tileInventory, GemCuttersTableTileEntity tile, EntityPlayer player) {
 		this.tileInventory = tileInventory;
@@ -92,37 +92,43 @@ public class ContainerGemCuttersTable extends Container {
 		//Player Inventory
 		for (int i = 0; i < 3; ++i) {
 			for (int j = 0; j < 9; ++j) {
-				this.addSlotToContainer(new Slot(playerInventory, j + i * 9 + 9, 23 + j * 18, 166 + i * 18) {
+				Slot thisSlot = new Slot(playerInventory, j + i * 9 + 9, 23 + j * 18, 166 + i * 18) {
 					@Override
 					public void onSlotChanged () {
 						super.onSlotChanged();
 						updateRecipe();
 					}
-				});
+				};
+				this.addSlotToContainer(thisSlot);
+				playerSlots.add(thisSlot);
 			}
 		}
 
 		//Player Hotbar
 		for (int k = 0; k < 9; ++k) {
-			this.addSlotToContainer(new Slot(playerInventory, k, 23 + k * 18, 224) {
+			Slot thisSlot = new Slot(playerInventory, k, 23 + k * 18, 224) {
 				@Override
 				public void onSlotChanged () {
 					super.onSlotChanged();
 					updateRecipe();
 				}
-			});
+			};
+			this.addSlotToContainer(thisSlot);
+			playerHotbar.add(thisSlot);
 		}
 
 		//GCT Inventory
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 9; j++) {
-				this.addSlotToContainer(new SlotItemHandler(tileInventory, i * 9 + j, 23 + j * 18, 105 + i * 18) {
+				Slot thisSlot = new SlotItemHandler(tileInventory, i * 9 + j, 23 + j * 18, 105 + i * 18) {
 					@Override
 					public void onSlotChanged () {
 						super.onSlotChanged();
 						updateRecipe();
 					}
-				});
+				};
+				this.addSlotToContainer(thisSlot);
+				inventorySlots.add(thisSlot);
 			}
 		}
 
@@ -284,13 +290,15 @@ public class ContainerGemCuttersTable extends Container {
 
 	public Map<ContainerSection, List<Slot>> map = null;
 
-	@Method(modid="invtweaks")
 	@ContainerSectionCallback
+	@SuppressWarnings("unused")
 	public Map<ContainerSection, List<Slot>> containerSectionListMap () {
 		if (map == null) {
 			map = new HashMap<>();
-			map.put(ContainerSection.INVENTORY, getSlotRange(1, 37));
-			map.put(ContainerSection.CHEST, getSlotRange(37, 55));
+			map.put(ContainerSection.INVENTORY, playerSlots);
+			map.put(ContainerSection.CRAFTING_OUT, Collections.singletonList(slotOutput));
+			map.put(ContainerSection.INVENTORY_HOTBAR, playerHotbar);
+			map.put(ContainerSection.CHEST, inventorySlots);
 		}
 
 		return map;
