@@ -7,6 +7,7 @@ import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.item.ItemStack;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,13 +23,15 @@ public class GCTWrapper implements IRecipeWrapper {
 	@Override
 	public void getIngredients (IIngredients ingredients) {
 		if (recipe != null) {
+			List<List<ItemStack>> lists = new ArrayList<>();
 			for (IngredientStack stack : recipe.getIngredients()) {
 				List<ItemStack> stacks = Stream.of(stack.getMatchingStacks()).map(ItemStack::copy).collect(Collectors.toList());
 				for (ItemStack s : stacks) {
 					s.setCount(stack.getCount());
 				}
-				ingredients.setInputs(VanillaTypes.ITEM, stacks);
+				lists.add(stacks);
 			}
+			ingredients.setInputLists(VanillaTypes.ITEM, lists);
 			ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
 		}
 	}

@@ -90,8 +90,8 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable {
 		}
 	}
 
-	public void handleManipulationInterface (EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-
+	public boolean handleManipulationInterface (EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		return false;
 	}
 
 	@Override

@@ -50,11 +50,11 @@ public class ScepterManipulationItem extends ItemTemplate {
 			player.swingArm(hand);
 
 			if (!world.isRemote) {
-				te.handleManipulationInterface(player, hand, side, hitX, hitY, hitZ);
+				if (te.handleManipulationInterface(player, hand, side, hitX, hitY, hitZ)) {
+					return EnumActionResult.SUCCESS;
+				}
 			}
-			return EnumActionResult.SUCCESS;
-		} else {
-			return EnumActionResult.PASS;
 		}
+		return EnumActionResult.PASS;
 	}
 }

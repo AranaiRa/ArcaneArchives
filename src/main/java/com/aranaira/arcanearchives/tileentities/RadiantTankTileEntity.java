@@ -165,10 +165,11 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity implements IUpgra
 	}
 
 	@Override
-	public void handleManipulationInterface (EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (player.world.isRemote) return;
+	public boolean handleManipulationInterface (EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if (player.world.isRemote) return true;
 
 		player.openGui(ArcaneArchives.instance, AAGuiHandler.UPGRADES, world, pos.getX(), pos.getY(), pos.getZ());
+		return true;
 	}
 
 	@Override
