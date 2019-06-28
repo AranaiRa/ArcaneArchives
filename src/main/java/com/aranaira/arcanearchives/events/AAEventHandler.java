@@ -4,6 +4,7 @@ import baubles.api.BaubleType;
 import baubles.api.BaublesApi;
 import baubles.api.cap.IBaublesItemHandler;
 import com.aranaira.arcanearchives.client.render.RenderGemcasting;
+import com.aranaira.arcanearchives.client.render.RenderGemcasting.EnumGemGuiMode;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.PlayerSaveData;
@@ -11,8 +12,9 @@ import com.aranaira.arcanearchives.entity.EntityItemMountaintear;
 import com.aranaira.arcanearchives.entity.ai.AIResonatorSit;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.ItemRegistry;
+import com.aranaira.arcanearchives.integration.baubles.BaubleBodyCapabilityHandler;
 import com.aranaira.arcanearchives.inventory.handlers.GemSocketHandler;
-import com.aranaira.arcanearchives.items.BaubleGemSocket;
+import com.aranaira.arcanearchives.items.GemSocket;
 import com.aranaira.arcanearchives.items.RadiantAmphoraItem.AmphoraUtil;
 import com.aranaira.arcanearchives.items.TomeOfArcanaItem;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
@@ -53,7 +55,6 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
@@ -66,6 +67,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.living.*;
@@ -221,21 +223,15 @@ public class AAEventHandler {
 		}
 
 		if (event.getType() == RenderGameOverlayEvent.ElementType.ALL) {
-			if (player.getHeldItemMainhand().getItem() instanceof ArcaneGemItem) {
-				RenderGemcasting.draw(minecraft, player.getHeldItemMainhand(), event.getResolution().getScaledWidth(), event.getResolution().getScaledHeight(), RenderGemcasting.EnumGemGuiMode.RIGHT);
-			}
-			if (player.getHeldItemOffhand().getItem() instanceof ArcaneGemItem) {
-				RenderGemcasting.draw(minecraft, player.getHeldItemOffhand(), event.getResolution().getScaledWidth(), event.getResolution().getScaledHeight(), RenderGemcasting.EnumGemGuiMode.LEFT);
-			}
-
-			IBaublesItemHandler handler = BaublesApi.getBaublesHandler(player);
-			for (int i : BaubleType.BODY.getValidSlots()) {
-				if (handler.getStackInSlot(i).getItem() instanceof BaubleGemSocket) {
-					if (handler.getStackInSlot(i).getTagCompound().hasKey("gem")) {
-						ItemStack containedStack = GemSocketHandler.getHandler(handler.getStackInSlot(i)).getGem();
-						RenderGemcasting.draw(minecraft, containedStack, event.getResolution().getScaledWidth(), event.getResolution().getScaledHeight(), RenderGemcasting.EnumGemGuiMode.SOCKET);
-					}
+			for (GemStack gem : GemUtil.getAvailableGems(player)) {
+				EnumGemGuiMode mode = EnumGemGuiMode.SOCKET;
+				if (gem.getStack().equals(player.getHeldItemMainhand())) {
+					mode = EnumGemGuiMode.RIGHT;
+				} else if (gem.getStack().equals(player.getHeldItemOffhand())) {
+					mode = EnumGemGuiMode.LEFT;
 				}
+
+				RenderGemcasting.draw(minecraft, gem.getStack(), event.getResolution().getScaledWidth(), event.getResolution().getScaledHeight(), mode);
 			}
 		}
 	}
@@ -592,6 +588,14 @@ public class AAEventHandler {
 					}
 				}
 			}
+		}
+	}
+
+	@SubscribeEvent
+	@Optional.Method(modid="baubles")
+	public static void onAttachCapabilities (AttachCapabilitiesEvent<ItemStack> event) {
+		if (event.getObject().getItem() == ItemRegistry.BAUBLE_GEMSOCKET) {
+			event.addCapability(BaubleBodyCapabilityHandler.NAME, BaubleBodyCapabilityHandler.instance);
 		}
 	}
 }

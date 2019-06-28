@@ -19,10 +19,10 @@ import net.minecraft.world.World;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class BaubleGemSocket extends ItemTemplate implements baubles.api.IBauble {
+public class GemSocket extends ItemTemplate {
 	public static final String NAME = "gemsocket";
 
-	public BaubleGemSocket () {
+	public GemSocket () {
 		super(NAME);
 		setMaxStackSize(1);
 	}
@@ -41,11 +41,6 @@ public class BaubleGemSocket extends ItemTemplate implements baubles.api.IBauble
 				}
 			}
 		}
-	}
-
-	@Override
-	public BaubleType getBaubleType (ItemStack itemStack) {
-		return BaubleType.BODY;
 	}
 
 	@Override

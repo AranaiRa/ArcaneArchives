@@ -1,23 +1,22 @@
 package com.aranaira.arcanearchives.inventory.handlers;
 
-import baubles.api.BaubleType;
-import baubles.api.BaublesApi;
-import baubles.api.cap.IBaublesItemHandler;
 import com.aranaira.arcanearchives.init.ItemRegistry;
+import com.aranaira.arcanearchives.integration.baubles.BaubleGemUtil;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 //Shamelessly pillaged from Roots' QuiverHandler
 public class GemSocketHandler implements INBTSerializable<NBTTagCompound> {
+	private int baubleSlot = -1;
 	private ItemStack socket;
 	private ItemStackHandler handler = new ItemStackHandler(1) {
 		@Override
@@ -35,6 +34,14 @@ public class GemSocketHandler implements INBTSerializable<NBTTagCompound> {
 
 	public GemSocketHandler (ItemStack socket) {
 		this.socket = socket;
+	}
+
+	public int getBaubleSlot () {
+		return baubleSlot;
+	}
+
+	public void setBaubleSlot (int baubleSlot) {
+		this.baubleSlot = baubleSlot;
 	}
 
 	@Override
@@ -60,16 +67,19 @@ public class GemSocketHandler implements INBTSerializable<NBTTagCompound> {
 			return player.getHeldItemMainhand();
 		}
 
-		IBaublesItemHandler handler = BaublesApi.getBaublesHandler(player);
-		for (int i : BaubleType.BODY.getValidSlots()) {
-			ItemStack stack = handler.getStackInSlot(i);
-			if (stack.getItem() == ItemRegistry.BAUBLE_GEMSOCKET) return stack;
+		if (Loader.isModLoaded("baubles")) {
+			ItemStack stack = BaubleGemUtil.findSocket(player);
+			if (!stack.isEmpty()) {
+				return stack;
+			}
 		}
 
 		IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 		for (int i = 0; i < playerInventory.getSlots(); i++) {
 			ItemStack stack = playerInventory.getStackInSlot(i);
-			if (stack.getItem() == ItemRegistry.BAUBLE_GEMSOCKET) return stack;
+			if (stack.getItem() == ItemRegistry.BAUBLE_GEMSOCKET) {
+				return stack;
+			}
 		}
 
 		return ItemStack.EMPTY;

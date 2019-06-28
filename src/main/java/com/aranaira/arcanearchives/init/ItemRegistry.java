@@ -83,7 +83,7 @@ public class ItemRegistry {
 
 	public static List<Item> ARSENAL_ITEMS = Arrays.asList(/*FABRIAL, */SLAUGHTERGLEAM, MURDERGLEAM, CLEANSEGLEAM, SWITCHGLEAM, SALVEGLEAM, MUNCHSTONE, /*TRANSFERSTONE,*/ ORDERSTONE, MINDSPINDLE, ELIXIRSPINDLE, MOUNTAINTEAR, RIVERTEAR, PARCHTEAR, PHOENIXWAY, STORMWAY);
 	//BAUBLES
-	public static final BaubleGemSocket BAUBLE_GEMSOCKET = new BaubleGemSocket();
+	public static final GemSocket BAUBLE_GEMSOCKET = new GemSocket();
 
 	//SPIRIT SPHERES
 	//public static final SpiritOrbItem SPIRIT_ORB = new SpiritOrbItem();

@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.inventory;
 
 import com.aranaira.arcanearchives.inventory.handlers.GemSocketHandler;
-import com.aranaira.arcanearchives.items.BaubleGemSocket;
+import com.aranaira.arcanearchives.items.GemSocket;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -94,7 +94,7 @@ public class ContainerGemSocket extends Container {
 	public ItemStack slotClick (int slotID, int dragType, ClickType clickType, EntityPlayer player) {
 		if (slotID >= 0) {
 			ItemStack stack = getSlot(slotID).getStack();
-			if (stack.getItem() instanceof BaubleGemSocket) {
+			if (stack.getItem() instanceof GemSocket) {
 				return ItemStack.EMPTY;
 			}
 		}

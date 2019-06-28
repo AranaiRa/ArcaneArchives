@@ -1,22 +1,16 @@
 package com.aranaira.arcanearchives.items.gems;
 
-import baubles.api.BaubleType;
-import baubles.api.BaublesApi;
-import baubles.api.cap.IBaublesItemHandler;
-import baubles.common.network.PacketHandler;
-import baubles.common.network.PacketSync;
-import com.aranaira.arcanearchives.init.ItemRegistry;
+import com.aranaira.arcanearchives.integration.baubles.BaubleGemUtil;
 import com.aranaira.arcanearchives.inventory.handlers.GemSocketHandler;
-import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler;
 import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler.HandedGemsHandler;
 import com.aranaira.arcanearchives.util.NBTUtils;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumHand;
+import net.minecraftforge.fml.common.Loader;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -390,10 +384,8 @@ public class GemUtil {
 
 		public void markDirty () {
 			this.handler.saveToStack();
-			if (!this.player.world.isRemote && baubleSlot != -1) {
-				IBaublesItemHandler	baubles = BaublesApi.getBaublesHandler(player);
-				PacketSync packet = new PacketSync(player, baubleSlot, baubles.getStackInSlot(baubleSlot));
-				PacketHandler.INSTANCE.sendTo(packet, (EntityPlayerMP) player);
+			if (Loader.isModLoaded("baubles")) {
+				BaubleGemUtil.markDirty(player, baubleSlot);
 			}
 		}
 
@@ -409,13 +401,12 @@ public class GemUtil {
 					gems.add(new GemStack(this, player.getHeldItemOffhand()));
 				}
 
-				IBaublesItemHandler	baubles = BaublesApi.getBaublesHandler(player);
-				for (int i : BaubleType.BODY.getValidSlots()) {
-					ItemStack stack = baubles.getStackInSlot(i);
-					if (stack.getItem() == ItemRegistry.BAUBLE_GEMSOCKET) {
-						this.handler = GemSocketHandler.getHandler(stack);
-						this.baubleSlot = i;
-						gems.add(new GemStack(this, this.handler.getGem(), true));
+				if (Loader.isModLoaded("baubles")) {
+					GemSocketHandler handler = BaubleGemUtil.getSocket(player);
+					if (handler != null) {
+						this.handler = handler;
+						this.baubleSlot = handler.getBaubleSlot();
+						gems.add(new GemStack(this, handler.getGem(), true));
 					}
 				}
 			}
