@@ -13,17 +13,19 @@
 
     <stack-links>
         <stack item="arcanearchives:brazier_of_hoarding">:BrazierHoarding</stack>
-        <stack item="arcanearchives:radiant_lantern">:DecorativeBlocks</stack>
+        <stack item="arcanearchives:radiant_lantern">:RadiantLantern</stack>
         <stack item="arcanearchives:lectern_manifest">LecternManifest</stack>
         <stack item="arcanearchives:gemcutters_table">GemCuttersTable</stack>
         <stack item="arcanearchives:monitoring_crystal">MonitoringCrystal</stack>
-        <stack item="arcanearchives:quartz_sliver">DecorativeBlocks:SliverOfLight</stack>
+        <stack item="arcanearchives:quartz_sliver">SliverOfLight</stack>
         <stack item="arcanearchives:radiant_chest">RadiantChest</stack>
         <stack item="arcanearchives:radiant_crafting_table">RadiantCraftingTable</stack>
         <stack item="arcanearchives:radiant_resonator">RadiantResonator</stack>
         <stack item="arcanearchives:radiant_tank">RadiantTank</stack>
         <stack item="arcanearchives:radiant_trove">RadiantTrove</stack>
         <stack item="arcanearchives:raw_quartz">RawQuartzCluster</stack>
+        <stack item="arcanearchives:storage_raw_quartz">RawQuartz</stack>
+        <stack item="arcanearchives:storage_shaped_quartz">ShapedQuartz</stack>
 
         <stack item="arcanearchives:containment_field">ContainmentField</stack>
         <stack item="arcanearchives:devouring_charm">DevouringCharm</stack>
@@ -34,14 +36,10 @@
         <stack item="arcanearchives:matrix_brace">MatrixBrace</stack>
         <stack item="arcanearchives:radiant_amphora">RadiantAmphora</stack>
         <stack item="arcanearchives:radiant_dust">RadiantDust</stack>
-        <stack item="arcanearchives:radiant_lantern">DecorativeBlocks:RadiantLantern</stack>
-        <stack item="arcanearchives:raw_quartz_cluster">DecorativeBlocks:RawQuartzCluster</stack>
         <stack item="arcanearchives:shaped_quartz">ShapedQuartz</stack>
         <stack item="arcanearchives:scepter_manipulation">ScepterManipulation</stack>
         <stack item="arcanearchives:scepter_revelation">ScepterRevelation</stack>
         <stack item="arcanearchives:scintillating_inlay">ScintillatingInlay</stack>
-        <stack item="arcanearchives:storage_raw_quartz">DecorativeBlocks:RawQuartzBlock</stack>
-        <stack item="arcanearchives:storage_shaped_quartz">DecorativeBlocks:ShapedQuartzBlock</stack>
         <stack item="arcanearchives:writ_expulsion">WritExpulsion</stack>
 
         <stack item="arcanearchives:slaughtergleam">Slaughtergleam</stack>
@@ -73,16 +71,16 @@
                 <title>Blocks</title>
             </page_title_shorter>
             <p><stack item="arcanearchives:brazier_of_hoarding"/> <link ref="BrazierHoarding">Brazier of Hoarding</link></p>
-            <p><stack item="arcanearchives:radiant_lantern"/> <link ref="DecorativeBlocks">Decorative Blocks</link></p>
             <p><stack item="arcanearchives:gemcutters_table"/> <link ref="GemCuttersTable">Gem Cutter's Table</link></p>
             <p><stack item="arcanearchives:lectern_manifest"/> <link ref="LecternManifest">Manifest Lectern</link></p>
             <p><stack item="arcanearchives:monitoring_crystal"/> <link ref="MonitoringCrystal">Monitoring Crystal</link></p>
             <p><stack item="arcanearchives:radiant_chest"/> <link ref="RadiantChest">Radiant Chest</link></p>
             <p><stack item="arcanearchives:radiant_crafting_table"/> <link ref="RadiantCraftingTable">Radiant Crafting Table</link></p>
+            <p><stack item="arcanearchives:radiant_lantern"/> <link ref="RadiantLantern">Radiant Lantern</link></p>
             <p><stack item="arcanearchives:radiant_resonator"/> <link ref="RadiantResonator">Radiant Resonator</link></p>
             <p><stack item="arcanearchives:radiant_tank"/> <link ref="RadiantTank">Radiant Tank</link></p>
             <p><stack item="arcanearchives:radiant_trove"/> <link ref="RadiantTrove">Radiant Trove</link></p>
-            <p><stack item="arcanearchives:raw_quartz_cluster"/> <link ref="DecorativeBlocks:RawQuartzCluster">Raw Quartz Cluster</link></p>
+            <p><stack item="arcanearchives:raw_quartz_cluster"/> <link ref="RawQuartzCluster">Raw Quartz Cluster</link></p>
         </section>
         <section>
             <page_title_shorter>
@@ -103,6 +101,7 @@
             <p><stack item="arcanearchives:scepter_manipulation"/> <link ref="ScepterManipulation">Scepter of Manipulation</link></p>
             <p><stack item="arcanearchives:scepter_revelation"/> <link ref="ScepterRevelation">Scepter of Revelation</link></p>
             <p><stack item="arcanearchives:scintillating_inlay"/> <link ref="ScintillatingInlay">Scintillating Inlay</link></p>
+            <p><stack item="arcanearchives:quartz_sliver"/> <link ref="SliverOfLight">Sliver of Light</link></p>
             <p><stack item="arcanearchives:writ_expulsion"/> <link ref="WritExpulsion">Writ of Expulsion</link></p>
         </section>
         <section>
@@ -136,7 +135,6 @@
                 <title>Concepts</title>
             </page_title_shorter>
             <p><image src="arcanearchives:gui/guidebook/networks" tw="16" th="16" /> <link ref="Networks">Networks</link></p>
-            <p><image src="arcanearchives:gui/guidebook/otherwhere" tw="16" th="16" /> <link ref="Otherwhere">Otherwhere</link></p>
         </section>
     </chapter>
 
@@ -170,121 +168,6 @@
                 <stack item="arcanearchives:gemcutters_table"/> Braziers of Hoarding can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
         </section>
-        <section>
-            <page_title_shorter>
-                <title>Brazier of Hoarding</title>
-            </page_title_shorter>
-            <p italics="true">
-                ...Lore fragment TBD
-            </p>
-        </section>
-    </chapter>
-
-    <chapter id="DecorativeBlocks">
-        <section>
-            <page_title_shorter>
-                <title>Decorative Blocks</title>
-            </page_title_shorter>
-            <p>
-                The following blocks are included primarily for decorative purposes.
-            </p>
-            <p align="center">
-                <stack item="arcanearchives:storage_raw_quartz" scale="2.0"/>
-                <stack item="arcanearchives:storage_shaped_quartz" scale="2.0"/>
-                <stack item="arcanearchives:radiant_lantern" scale="2.0"/>
-            </p>
-            <p align="center">
-                <stack item="arcanearchives:raw_quartz_cluster" scale="2.0"/>
-                <stack item="arcanearchives:quartz_sliver" scale="2.0"/>
-            </p>
-        </section>
-        <section id="RawQuartzBlock">
-            <page_title_shorter>
-                <title>Block of Raw Radiant Quartz</title>
-            </page_title_shorter>
-            <p align="center"><stack item="arcanearchives:storage_raw_quartz" scale="3.0"/></p>
-            <horizontal_rule/>
-            <p>
-                Blocks of Raw Quartz are a light source.
-            </p>
-            <horizontal_rule/>
-            <p>
-                <stack item="minecraft:crafting_table"/> Blocks of Raw Quartz can be crafted conventionally.
-            </p>
-            <recipe type="shaped">
-                <recipe.result>
-                    <stack item="arcanearchives:storage_raw_quartz"/>
-                </recipe.result>
-            </recipe>
-            <space height="8"/>
-            <horizontal_rule/>
-        </section>
-        <section id="ShapedQuartzBlock">
-            <page_title_shorter>
-                <title>Block of Shaped Radiant Quartz</title>
-            </page_title_shorter>
-            <p align="center"><stack item="arcanearchives:storage_shaped_quartz" scale="3.0"/></p>
-            <horizontal_rule/>
-            <p>
-                Blocks of Shaped Quartz are a light source.
-            </p>
-            <horizontal_rule/>
-            <p>
-                <stack item="minecraft:crafting_table"/> Blocks of Shaped Quartz can be crafted conventionally.
-            </p>
-            <recipe type="shaped">
-                <recipe.result>
-                    <stack item="arcanearchives:storage_shaped_quartz"/>
-                </recipe.result>
-            </recipe>
-            <space height="8"/>
-            <horizontal_rule/>
-        </section>
-        <section id="RadiantLantern">
-            <page_title_shorter>
-                <title>Radiant Lantern</title>
-            </page_title_shorter>
-            <p align="center"><stack item="arcanearchives:radiant_lantern" scale="3.0"/></p>
-            <horizontal_rule/>
-            <p>
-                Radiant Lanterns are a light source.
-            </p>
-            <horizontal_rule/>
-            <p>
-                <stack item="arcanearchives:gemcutters_table" /> Radiant Lanterns can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
-            </p>
-        </section>
-        <section id="RawQuartzCluster">
-            <page_title_shorter>
-                <title>Raw Quartz Cluster</title>
-            </page_title_shorter>
-            <p align="center"><stack item="arcanearchives:raw_quartz_cluster" scale="3.0"/></p>
-            <horizontal_rule/>
-            <p>
-                Raw Quartz Clusters are a light source. They can be collected with a pick bearing the Silk Touch enchantment; otherwise breaking a Raw Quartz Cluster will return a piece of <link ref="raw_quartz">Raw Radiant Quartz</link>.
-            </p>
-            <p condition="ml_thaumcraft">
-                <stack item="thaumcraft:infusion_matrix"/> Raw Quartz Clusters can be used as an infusion stabilizer.
-            </p>
-            <horizontal_rule/>
-            <p>
-                <stack item="arcanearchives:radiant_resonator" /> Raw Quartz Clusters are created over time on top of a <link ref="RadiantResonator">Radiant Resonator</link>.
-            </p>
-        </section>
-        <section id="SliverOfLight">
-            <page_title_shorter>
-                <title>Sliver of Light</title>
-            </page_title_shorter>
-            <p align="center"><stack item="arcanearchives:quartz_sliver" scale="3.0"/></p>
-            <horizontal_rule/>
-            <p>
-                Slivers of Light are a light source, and an alternative to torches.
-            </p>
-            <horizontal_rule/>
-            <p>
-                <stack item="minecraft:stone"/> Slivers of Light can be crafted by bashing a piece of <link ref="raw_quartz">Raw Radiant Quartz</link> against another block. Each bash has a 40% chance of creating a single sliver, and a 20% chance of creating a handful of slivers but destroying the piece of Raw Radiant Quartz.
-            </p>
-        </section>
     </chapter>
 
     <chapter id="GemCuttersTable">
@@ -309,14 +192,6 @@
                     <stack item="arcanearchives:gemcutters_table"/>
                 </recipe.result>
             </recipe>
-        </section>
-        <section>
-            <page_title_shorter>
-                <title>Gem Cutter's Table</title>
-            </page_title_shorter>
-            <p italics="true">
-                ...Lore fragment TBD
-            </p>
         </section>
     </chapter>
 
@@ -388,7 +263,7 @@
                 <stack item="arcanearchives:manifest"/> The contents of inventories with an attached Monitoring Crystal can be seen on a <link ref="Manifest">Manifest</link>.
             </p>
             <p>
-                <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="scepter_revelation">Scepter of Revelation</link> on a Monitoring Crystal will return what direction the Monitoring Crystal is pointing towards.
+                <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Monitoring Crystal will return what direction the Monitoring Crystal is pointing towards.
             </p>
             <horizontal_rule/>
             <p>
@@ -443,7 +318,7 @@
                 To clear the item, sneak and activate the chest while holding the Scepter of Manipulation with your main hand and nothing in your off hand.
             </p>
             <p>
-                <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="scepter_revelation">Scepter of Revelation</link> on a Radiant Chest will return the chest's name, and how many slots of its inventory are available.
+                <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Radiant Chest will return the chest's name, and how many slots of its inventory are available.
             </p>
             <p>
                 <stack item="minecraft:comparator"/> When monitored with a Redstone Comparator, a Radiant Chest ouptuts a signal based on how full it is (in total items, rather than number of slots filled).
@@ -504,7 +379,7 @@
                 After crafting an item, you can click on one of the slots on the right side of the interface to save the recipe. If enough items are present in your inventory, clicking on a slot with a saved recipe crafts the item without requiring you to set items on the crafting grid. Shift clicking clears the recipe in a slot.
             </p>
             <p>
-                <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="scepter_revelation">Scepter of Revelation</link> on a Radiant Crafting Table will return what items are present in the crafting grid.
+                <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Radiant Crafting Table will return what items are present in the crafting grid.
             </p>
             <p>
                 <stack item="arcanearchives:raw_quartz"/> Radiant Crafting Tables can be crafted by using a piece of <link ref="RadiantQuartz">Raw Radiant Quartz</link> on a vanilla crafting table while sneaking.
@@ -519,12 +394,21 @@
                 </recipe.result>
             </recipe>
         </section>
+    </chapter>
+
+    <chapter id="RadiantLantern">
         <section>
             <page_title_shorter>
-                <title>Radiant Crafting Table</title>
+                <title>Radiant Lantern</title>
             </page_title_shorter>
-            <p italics="true">
-                ...Lore fragment TBD
+            <p align="center"><stack item="arcanearchives:radiant_lantern" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                Radiant Lanterns are a light source.
+            </p>
+            <horizontal_rule/>
+            <p>
+                <stack item="arcanearchives:gemcutters_table" /> Radiant Lanterns can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
         </section>
     </chapter>
@@ -546,10 +430,10 @@
                 Radiant Resonators only run while you’re online, even if the chunk is loaded.
             </p>
             <p>
-                <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="scepter_revelation">Scepter of Revelation</link> on a Radiant Resonator will return its current process, and whether it is running or not.
+                <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Radiant Resonator will return its current process, and whether it is running or not.
             </p>
             <p>
-                <stack item="minecraft:comparator"/> When monitored with a Redstone Comparator, a Radiant Resonator ouptuts a signal based on its progress towards creating a new <link ref="DecorativeBlocks:RawQuartzCluster">Radiant Quartz Cluster</link>.
+                <stack item="minecraft:comparator"/> When monitored with a Redstone Comparator, a Radiant Resonator ouptuts a signal based on its progress towards creating a new <link ref="RawQuartzCluster">Radiant Quartz Cluster</link>.
             </p>
             <horizontal_rule/>
             <p>
@@ -600,10 +484,10 @@
                 <stack item="arcanearchives:radiant_amphora"/> <link ref="RadiantAmphora">Radiant Amphorae</link> can fill and empty a Radiant Tank from anywhere, as long as the tank is in a loaded chunk.
             </p>
             <p>
-                <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="scepter_revelation">Scepter of Revelation</link> on a Radiant Tank will return what type of fluid is stored, its current and maximum capacity, and how many upgrades have been installed.
+                <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Radiant Tank will return what type of fluid is stored, its current and maximum capacity, and how many upgrades have been installed.
             </p>
             <p>
-                <stack item="arcanearchives:scepter_manipulation"/> Using a <link ref="scepter_manipulation">Scepter of Manipulation</link> on a Radiant Trove opens a GUI that allows you to see and modify what upgrades are installed.
+                <stack item="arcanearchives:scepter_manipulation"/> Using a <link ref="ScepterManipulation">Scepter of Manipulation</link> on a Radiant Trove opens a GUI that allows you to see and modify what upgrades are installed.
             </p>
             <p>
                 <stack item="minecraft:comparator"/> When monitored with a Redstone Comparator, a Radiant Tank ouptuts a signal based on how full it is.
@@ -615,14 +499,6 @@
             </page_title_shorter>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Radiant Tanks can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
-            </p>
-        </section>
-        <section>
-            <page_title_shorter>
-                <title>Radiant Tank</title>
-            </page_title_shorter>
-            <p italics="true">
-                ...Lore fragment TBD
             </p>
         </section>
     </chapter>
@@ -644,10 +520,10 @@
                 <stack item="arcanearchives:devouring_charm"/> If used as an upgrade, a <link ref="DevouringCharm">Devouring Charm</link> causes items added to the Trove in excess of its maximum capacity are destroyed.
             </p>
             <p>
-                <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="scepter_revelation">Scepter of Revelation</link> on a Radiant Trove will return what type of item is stored, its current and maximum capacity, and how many upgrades have been installed.
+                <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Radiant Trove will return what type of item is stored, its current and maximum capacity, and how many upgrades have been installed.
             </p>
             <p>
-                <stack item="arcanearchives:scepter_manipulation"/> Using a <link ref="scepter_manipulation">Scepter of Manipulation</link> on a Radiant Trove opens a GUI that allows you to see and modify what upgrades are installed.
+                <stack item="arcanearchives:scepter_manipulation"/> Using a <link ref="ScepterManipulation">Scepter of Manipulation</link> on a Radiant Trove opens a GUI that allows you to see and modify what upgrades are installed.
             </p>
             <p>
                 <stack item="minecraft:comparator"/> When monitored with a Redstone Comparator, a Radiant Trove ouptuts a signal based on how full it is.
@@ -659,17 +535,29 @@
             <p>
                 <recipe type="arcanearchives:gct_recipe">
                     <recipe.result>
-                        <stack item="arcanearchives:scepter_revelation"/>
+                        <stack item="arcanearchives:radiant_trove"/>
                     </recipe.result>
                 </recipe>
             </p>
         </section>
+    </chapter>
+
+    <chapter id="RawQuartzCluster">
         <section>
             <page_title_shorter>
-                <title>Radiant Trove</title>
+                <title>Raw Quartz Cluster</title>
             </page_title_shorter>
-            <p italics="true">
-                ...Lore fragment TBD
+            <p align="center"><stack item="arcanearchives:raw_quartz_cluster" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                Raw Quartz Clusters are a light source. They can be collected with a pick bearing the Silk Touch enchantment; otherwise breaking a Raw Quartz Cluster will return a piece of <link ref="raw_quartz">Raw Radiant Quartz</link>.
+            </p>
+            <p condition="ml_thaumcraft">
+                <stack item="thaumcraft:infusion_matrix"/> Raw Quartz Clusters can be used as an infusion stabilizer.
+            </p>
+            <horizontal_rule/>
+            <p>
+                <stack item="arcanearchives:radiant_resonator" /> Raw Quartz Clusters are created over time on top of a <link ref="RadiantResonator">Radiant Resonator</link>.
             </p>
         </section>
     </chapter>
@@ -690,14 +578,6 @@
             <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Containment Fields can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
-            </p>
-        </section>
-        <section>
-            <page_title_shorter>
-                <title>Containment Field</title>
-            </page_title_shorter>
-            <p italics="true">
-                ...Lore fragment TBD
             </p>
         </section>
     </chapter>
@@ -787,14 +667,6 @@
             <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Gem Sockets can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
-            </p>
-        </section>
-        <section>
-            <page_title_shorter>
-                <title>Gem Socket</title>
-            </page_title_shorter>
-            <p italics="true">
-                ...Lore fragment TBD
             </p>
         </section>
     </chapter>
@@ -912,14 +784,6 @@
                 <stack item="arcanearchives:gemcutters_table"/> Manifests can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
         </section>
-        <section>
-            <page_title_shorter>
-                <title>Manifest</title>
-            </page_title_shorter>
-            <p italics="true">
-                ...Lore fragment TBD
-            </p>
-        </section>
     </chapter>
 
     <chapter id="MaterialInterface">
@@ -980,14 +844,6 @@
                 <stack item="arcanearchives:gemcutters_table" /> Matrix Braces can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
         </section>
-        <section>
-            <page_title_shorter>
-                <title>Matrix Brace</title>
-            </page_title_shorter>
-            <p italics="true">
-                ...Lore fragment TBD
-            </p>
-        </section>
     </chapter>
 
     <chapter id="RadiantAmphora">
@@ -1014,14 +870,6 @@
                 <stack item="arcanearchives:gemcutters_table" /> Radiant Amphorae can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
         </section>
-        <section>
-            <page_title_shorter>
-                <title>Radiant Amphora</title>
-            </page_title_shorter>
-            <p italics="true">
-                ...Lore fragment TBD
-            </p>
-        </section>
     </chapter>
 
     <chapter id="RadiantDust">
@@ -1037,14 +885,6 @@
             <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Radiant Dust can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
-            </p>
-        </section>
-        <section>
-            <page_title_shorter>
-                <title>Radiant Dust</title>
-            </page_title_shorter>
-            <p italics="true">
-                ...Lore fragment TBD
             </p>
         </section>
     </chapter>
@@ -1066,20 +906,31 @@
                 <stack item="minecraft:crafting_table" /> Raw Radiant Quartz can be used to convert a crafting table into a <link ref="RadiantCraftingTable">Radiant Crafting Table</link>.
             </p>
             <p>
-                <stack item="arcanearchives:quartz_sliver" /> Raw Radiant Quartz can be used to create <link ref="DecorativeBlocks:SliverOfLight">Slivers of Light</link> by bashing a piece against another block.
+                <stack item="arcanearchives:quartz_sliver" /> Raw Radiant Quartz can be used to create <link ref="SliverOfLight">Slivers of Light</link> by bashing a piece against another block.
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:radiant_resonator" /> Raw Radiant Quartz is created over time on top of a <link ref="RadiantResonator">Radiant Resonator</link> in the form of a <link ref="DecorativeBlocks:RawQuartzCluster">Raw Quartz Cluster</link>.
+                <stack item="arcanearchives:radiant_resonator" /> Raw Radiant Quartz is created over time on top of a <link ref="RadiantResonator">Radiant Resonator</link> in the form of a <link ref="RawQuartzCluster">Raw Quartz Cluster</link>.
             </p>
         </section>
         <section>
             <page_title_shorter>
                 <title>Raw Radiant Quartz</title>
             </page_title_shorter>
-            <p italics="true">
-                ...Lore fragment TBD
+            <p align="center"><stack item="arcanearchives:storage_raw_quartz" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                Raw Radiant Quartz can also be compressed into a storage block. Blocks of Raw Radiant Quartz are a light source.
             </p>
+            <horizontal_rule/>
+            <p>
+                <stack item="minecraft:crafting_table"/> Blocks of Raw Radiant Quartz can be crafted conventionally.
+            </p>
+            <recipe type="shaped">
+                <recipe.result>
+                    <stack item="arcanearchives:storage_raw_quartz"/>
+                </recipe.result>
+            </recipe>
         </section>
     </chapter>
 
@@ -1102,9 +953,26 @@
             <page_title_shorter>
                 <title>Shaped Radiant Quartz</title>
             </page_title_shorter>
-            <p italics="true">
-                ...Lore fragment TBD
+            <p align="center"><stack item="arcanearchives:storage_shaped_quartz" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                Shaped Radiant Quartz can also be compressed into a storage block. Blocks of Shaped Radiant Quartz are a light source.
             </p>
+            <p>
+                <stack item="arcanearchives:radiant_tank"/> Blocks of Shaped Radiant Quartz can be used to upgrade <link ref="RadiantTank">Radiant Tanks</link>.
+            </p>
+            <p>
+                <stack item="arcanearchives:radiant_trove"/> Blocks of Shaped Radiant Quartz can be used to upgrade <link ref="RadiantTrove">Radiant Troves</link>.
+            </p>
+            <horizontal_rule/>
+            <p>
+                <stack item="minecraft:crafting_table"/> Blocks of Shaped Radiant Quartz can be crafted conventionally.
+            </p>
+            <recipe type="shaped">
+                <recipe.result>
+                    <stack item="arcanearchives:storage_shaped_quartz"/>
+                </recipe.result>
+            </recipe>
         </section>
     </chapter>
 
@@ -1126,14 +994,6 @@
             <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Scepters of Manipulation can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
-            </p>
-        </section>
-        <section>
-            <page_title_shorter>
-                <title>Scepter of Manipulation</title>
-            </page_title_shorter>
-            <p italics="true">
-                ...Lore fragment TBD
             </p>
         </section>
     </chapter>
@@ -1227,12 +1087,21 @@
                 <stack item="arcanearchives:gemcutters_table" /> Scintillating Inlay can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
         </section>
+    </chapter>
+
+    <chapter id="SliverOfLight">
         <section>
             <page_title_shorter>
-                <title>Scintillating Inlay</title>
+                <title>Sliver of Light</title>
             </page_title_shorter>
-            <p italics="true">
-                ...Lore fragment TBD
+            <p align="center"><stack item="arcanearchives:quartz_sliver" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                Slivers of Light are a light source, and an alternative to torches. Unlike torches, they can be placed on the bottom surface of blocks, and are not broken by fluids.
+            </p>
+            <horizontal_rule/>
+            <p>
+                <stack item="minecraft:stone"/> Slivers of Light can be crafted by bashing a piece of <link ref="raw_quartz">Raw Radiant Quartz</link> against another block. Each bash has a 40% chance of creating a single sliver, and a 20% chance of creating a handful of slivers but destroying the piece of Raw Radiant Quartz.
             </p>
         </section>
     </chapter>
@@ -1749,19 +1618,6 @@
             </p>
             <p>
                 <stack item="arcanearchives:writ_expulsion"/> By using a <link ref="WritExpulsion">Writ of Expulsion</link> named on an anvil, you can force a player in a hybrid network to leave the network.
-            </p>
-        </section>
-    </chapter>
-
-    <chapter id="Otherwhere">
-        <section>
-            <page_title_shorter>
-                <title>Otherwhere</title>
-            </page_title_shorter>
-            <p align="center"><image src="arcanearchives:gui/guidebook/otherwhere" tw="16" th="16" scale="3.0"/></p>
-            <horizontal_rule/>
-            <p italics="true">
-                ...Lore fragment TBD
             </p>
         </section>
     </chapter>

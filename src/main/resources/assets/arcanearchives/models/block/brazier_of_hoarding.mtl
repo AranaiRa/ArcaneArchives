@@ -2,7 +2,7 @@
 # Material Count: 2
 
 newmtl Fire
-map_Kd minecraft:blocks/fire_layer_0
+map_Kd minecraft:blocks/fire_layer_1
 
 newmtl Master
 map_Kd arcanearchives:blocks/block_arcanearchives_master
