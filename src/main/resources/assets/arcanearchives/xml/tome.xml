@@ -135,7 +135,6 @@
                 <title>Concepts</title>
             </page_title_shorter>
             <p><image src="arcanearchives:gui/guidebook/networks" tw="16" th="16" /> <link ref="Networks">Networks</link></p>
-            <p><image src="arcanearchives:gui/guidebook/otherwhere" tw="16" th="16" /> <link ref="Otherwhere">Otherwhere</link></p>
         </section>
     </chapter>
 
@@ -193,14 +192,6 @@
                     <stack item="arcanearchives:gemcutters_table"/>
                 </recipe.result>
             </recipe>
-        </section>
-        <section>
-            <page_title_shorter>
-                <title>Gem Cutter's Table</title>
-            </page_title_shorter>
-            <p italics="true">
-                ...Lore fragment TBD
-            </p>
         </section>
     </chapter>
 
@@ -510,14 +501,6 @@
                 <stack item="arcanearchives:gemcutters_table" /> Radiant Tanks can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
         </section>
-        <section>
-            <page_title_shorter>
-                <title>Radiant Tank</title>
-            </page_title_shorter>
-            <p italics="true">
-                ...Lore fragment TBD
-            </p>
-        </section>
     </chapter>
 
     <chapter id="RadiantTrove">
@@ -555,14 +538,6 @@
                         <stack item="arcanearchives:radiant_trove"/>
                     </recipe.result>
                 </recipe>
-            </p>
-        </section>
-        <section>
-            <page_title_shorter>
-                <title>Radiant Trove</title>
-            </page_title_shorter>
-            <p italics="true">
-                ...Lore fragment TBD
             </p>
         </section>
     </chapter>
@@ -603,14 +578,6 @@
             <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Containment Fields can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
-            </p>
-        </section>
-        <section>
-            <page_title_shorter>
-                <title>Containment Field</title>
-            </page_title_shorter>
-            <p italics="true">
-                ...Lore fragment TBD
             </p>
         </section>
     </chapter>
@@ -700,14 +667,6 @@
             <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Gem Sockets can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
-            </p>
-        </section>
-        <section>
-            <page_title_shorter>
-                <title>Gem Socket</title>
-            </page_title_shorter>
-            <p italics="true">
-                ...Lore fragment TBD
             </p>
         </section>
     </chapter>
@@ -825,14 +784,6 @@
                 <stack item="arcanearchives:gemcutters_table"/> Manifests can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
         </section>
-        <section>
-            <page_title_shorter>
-                <title>Manifest</title>
-            </page_title_shorter>
-            <p italics="true">
-                ...Lore fragment TBD
-            </p>
-        </section>
     </chapter>
 
     <chapter id="MaterialInterface">
@@ -893,14 +844,6 @@
                 <stack item="arcanearchives:gemcutters_table" /> Matrix Braces can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
         </section>
-        <section>
-            <page_title_shorter>
-                <title>Matrix Brace</title>
-            </page_title_shorter>
-            <p italics="true">
-                ...Lore fragment TBD
-            </p>
-        </section>
     </chapter>
 
     <chapter id="RadiantAmphora">
@@ -925,14 +868,6 @@
             <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Radiant Amphorae can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
-            </p>
-        </section>
-        <section>
-            <page_title_shorter>
-                <title>Radiant Amphora</title>
-            </page_title_shorter>
-            <p italics="true">
-                ...Lore fragment TBD
             </p>
         </section>
     </chapter>
@@ -1061,14 +996,6 @@
                 <stack item="arcanearchives:gemcutters_table" /> Scepters of Manipulation can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
         </section>
-        <section>
-            <page_title_shorter>
-                <title>Scepter of Manipulation</title>
-            </page_title_shorter>
-            <p italics="true">
-                ...Lore fragment TBD
-            </p>
-        </section>
     </chapter>
 
     <chapter id="ScepterRevelation">
@@ -1158,14 +1085,6 @@
             <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Scintillating Inlay can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
-            </p>
-        </section>
-        <section>
-            <page_title_shorter>
-                <title>Scintillating Inlay</title>
-            </page_title_shorter>
-            <p italics="true">
-                ...Lore fragment TBD
             </p>
         </section>
     </chapter>
@@ -1699,19 +1618,6 @@
             </p>
             <p>
                 <stack item="arcanearchives:writ_expulsion"/> By using a <link ref="WritExpulsion">Writ of Expulsion</link> named on an anvil, you can force a player in a hybrid network to leave the network.
-            </p>
-        </section>
-    </chapter>
-
-    <chapter id="Otherwhere">
-        <section>
-            <page_title_shorter>
-                <title>Otherwhere</title>
-            </page_title_shorter>
-            <p align="center"><image src="arcanearchives:gui/guidebook/otherwhere" tw="16" th="16" scale="3.0"/></p>
-            <horizontal_rule/>
-            <p italics="true">
-                ...Lore fragment TBD
             </p>
         </section>
     </chapter>
