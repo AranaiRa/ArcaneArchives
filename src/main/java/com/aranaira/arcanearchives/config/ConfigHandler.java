@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.config;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.gui.GUIManifest;
 import com.aranaira.arcanearchives.items.gems.oval.MunchstoneItem;
+import com.aranaira.arcanearchives.items.gems.oval.OrderstoneItem;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketConfig.MaxDistance;
 import net.minecraft.client.Minecraft;
@@ -101,7 +102,12 @@ public class ConfigHandler {
 		@Config.Comment("What blocks a Munchstone can eat. First value is a block (such as minecraft:log), second value is the amount of hunger restored. Saturation always equals the hunger restoration.")
 		@Config.Name("Valid Munchstone Blocks")
 		@Config.RequiresMcRestart
-		public String[] EdibleBlocks = MunchstoneItem.DEFAULT_ENTRIES;
+		public String[] MunchstoneValidEntries = MunchstoneItem.DEFAULT_ENTRIES;
+
+		//@Config.Comment("What blocks an Orderstone can transmute. First value is the transmutation cost for each step of the sequence, all subsequent values are blocks (such as minecraft:log). Please be aware that sequences longer than six blocks will display poorly in the Tome of Arcana.")
+		//@Config.Name("Valid Orderstone Block Sequences")
+		//@Config.RequiresMcRestart
+		//public String[] OrderstoneValidEntries = OrderstoneItem.DEFAULT_ENTRIES;
 	}
 
 	@Config.LangKey("arcanearchives.config.item_tracking")

@@ -22,6 +22,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import scala.Int;
 
 import java.util.List;
 
@@ -31,6 +32,8 @@ public class OrderstoneItem extends ArcaneGemItem {
 	public OrderstoneItem () {
 		super(NAME, GemCut.OVAL, GemColor.PINK, 100, 400);
 	}
+
+	public static final String[] DEFAULT_ENTRIES = {"1, minecraft:sand, minecraft:dirt:1, minecraft:dirt, minecraft:mycelium, minecraft:dirt:2, minecraft:grass", "1, minecraft:gravel, minecraft:cobblestone, minecraft:stone", "1, minecraft:mossy_cobblestone, minecraft:cobblestone, minecraft:stone", "3, minecraft:stonebrick:2, minecraft:stonebrick, minecraft:stonebrick:3", "3, minecraft:stonebrick:1, minecraft:stonebrick, minecraft:stonebrick:3", "25, minecraft:anvil:2, minecraft:anvil:1, minecraft:anvil"};
 
 	@Override
 	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
@@ -122,5 +125,19 @@ public class OrderstoneItem extends ArcaneGemItem {
 			}
 		}
 		return EnumActionResult.PASS;
+	}
+
+	public class OrderstoneTransmutationSequence {
+		public int transmutationCost;
+		public IBlockState[] sequence;
+
+		public OrderstoneTransmutationSequence(String in) {
+			String[] parse = in.split(",");
+			transmutationCost = Integer.parseInt(parse[0]);
+			sequence = new IBlockState[parse.length-1];
+			for(int i=1; i<parse.length-1; i++) {
+				String address = parse[i].trim();
+			}
+		}
 	}
 }

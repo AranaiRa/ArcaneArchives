@@ -145,12 +145,12 @@ public class MunchstoneItem extends ArcaneGemItem {
 		}
 
 		public static void parseConfig() {
-			EdibleBlock[] output = new EdibleBlock[ConfigHandler.ArsenalConfig.EdibleBlocks.length];
+			EdibleBlock[] output = new EdibleBlock[ConfigHandler.ArsenalConfig.MunchstoneValidEntries.length];
 			ArrayList<EdibleBlock> verifiedEBs = new ArrayList<>();
 			ArcaneArchives.logger.info("[MUNCHSTONE] Attempting configuration using "+output.length+" entries.");
 
-			for (int i = 0; i < ConfigHandler.ArsenalConfig.EdibleBlocks.length; i++) {
-				String entry = ConfigHandler.ArsenalConfig.EdibleBlocks[i];
+			for (int i = 0; i < ConfigHandler.ArsenalConfig.MunchstoneValidEntries.length; i++) {
+				String entry = ConfigHandler.ArsenalConfig.MunchstoneValidEntries[i];
 				String[] parse = entry.split(",");
 				Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(parse[0].trim()));
 				int feed = 0;
@@ -177,7 +177,7 @@ public class MunchstoneItem extends ArcaneGemItem {
 			ArcaneArchives.logger.info("[MUNCHSTONE] Configured with "+output.length+" entries.");
 			MunchstoneItem.entries = output;
 
-			/*String input = ConfigHandler.ArsenalConfig.EdibleBlocks;
+			/*String input = ConfigHandler.ArsenalConfig.MunchstoneValidEntries;
 			String[] parseEntries = input.split("[,\n]");
 			int start = 0;
 			for(int i=0; i<parseEntries.length; i++) {
