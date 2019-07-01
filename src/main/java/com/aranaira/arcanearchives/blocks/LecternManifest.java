@@ -54,11 +54,13 @@ public class LecternManifest extends BlockDirectionalTemplate {
 
 	@Override
 	public boolean onBlockActivated (World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		ClientNetwork network = NetworkHelper.getClientNetwork(playerIn.getUniqueID());
-		network.manifestItems.clear();
-		network.synchroniseManifest();
-
-		playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.MANIFEST, worldIn, pos.getX(), pos.getY(), pos.getZ());
+		if (worldIn.isRemote) {
+			ClientNetwork network = NetworkHelper.getClientNetwork(playerIn.getUniqueID());
+			network.manifestItems.clear();
+			network.synchroniseManifest();
+		} else {
+			playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.MANIFEST, worldIn, pos.getX(), pos.getY(), pos.getZ());
+		}
 
 		return true;
 	}
