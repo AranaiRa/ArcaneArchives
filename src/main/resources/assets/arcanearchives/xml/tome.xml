@@ -13,13 +13,13 @@
 
     <stack-links>
         <stack item="arcanearchives:brazier_of_hoarding">:BrazierHoarding</stack>
-        <stack item="arcanearchives:radiant_lantern">:RadiantLantern</stack>
         <stack item="arcanearchives:lectern_manifest">LecternManifest</stack>
         <stack item="arcanearchives:gemcutters_table">GemCuttersTable</stack>
         <stack item="arcanearchives:monitoring_crystal">MonitoringCrystal</stack>
         <stack item="arcanearchives:quartz_sliver">SliverOfLight</stack>
         <stack item="arcanearchives:radiant_chest">RadiantChest</stack>
         <stack item="arcanearchives:radiant_crafting_table">RadiantCraftingTable</stack>
+        <stack item="arcanearchives:radiant_lantern">:RadiantLantern</stack>
         <stack item="arcanearchives:radiant_resonator">RadiantResonator</stack>
         <stack item="arcanearchives:radiant_tank">RadiantTank</stack>
         <stack item="arcanearchives:radiant_trove">RadiantTrove</stack>
@@ -68,7 +68,7 @@
     <chapter id="Home">
         <section>
             <space height="14"/>
-            <p align="center"><image src="arcanearchives:gui/guidebook/home_title" tw="298" th="136"/></p>
+            <p align="center"><image src="arcanearchives:gui/guidebook/home_title" tw="310" th="136"/></p>
             <space height="24"/>
             <horizontal_rule/>
             <space height="22"/>
