@@ -148,18 +148,20 @@ public class PacketNetworks {
 					return;
 				}
 
-				ClientNetwork network = NetworkHelper.getClientNetwork(player.getUniqueID());
+				if (player != null) {
+					ClientNetwork network = NetworkHelper.getClientNetwork(player.getUniqueID());
 
-				switch (message.type) {
-					case DATA:
-						network.deserializeData(message.data);
-						break;
-					case MANIFEST:
-						network.deserializeManifest(message.data);
-						break;
-					case HIVE_STATUS:
-						network.deserializeHive(message.data);
-						break;
+					switch (message.type) {
+						case DATA:
+							network.deserializeData(message.data);
+							break;
+						case MANIFEST:
+							network.deserializeManifest(message.data);
+							break;
+						case HIVE_STATUS:
+							network.deserializeHive(message.data);
+							break;
+					}
 				}
 			}
 		}

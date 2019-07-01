@@ -124,7 +124,6 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity implements IUpgra
 		this.validateCapacity();
 		this.inventory.readFromNBT(tag.getCompoundTag(FluidHandlerItemStack.FLUID_NBT_KEY));
 		this.validateCapacity();
-
 	}
 
 	@Override

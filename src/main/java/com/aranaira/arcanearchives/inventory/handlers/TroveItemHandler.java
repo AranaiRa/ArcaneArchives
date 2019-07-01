@@ -10,7 +10,7 @@ import net.minecraftforge.items.IItemHandler;
 import javax.annotation.Nonnull;
 
 public class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCompound> {
-	private static int BASE_COUNT = 64 * 256;
+	private static int BASE_COUNT = 64 * 512;
 	private int upgrades = 0;
 	private int count = 0;
 	private ItemStack reference = ItemStack.EMPTY;
