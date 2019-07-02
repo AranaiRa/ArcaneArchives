@@ -86,17 +86,17 @@ public class MunchstoneItem extends ArcaneGemItem {
 
 			//ArcaneArchives.logger.info("munchstone trigger");
 			AvailableGemsHandler handler = GemUtil.getHeldGem(player, hand);
-			if (player.isSneaking())
+			/*if (player.isSneaking())
 			{
-				for(EdibleBlock eb : entries) {
+				for(EdibleBlock eb : getConfig()) {
 					ArcaneArchives.logger.info(eb.block.getLocalizedName());
 				}
-			}
+			}*/
 
 			if (handler.getHeld() != null && GemUtil.getCharge(handler.getHeld()) > 0) {
 				Block block = world.getBlockState(pos).getBlock();
 
-				for (EdibleBlock eb : entries) {
+				for (EdibleBlock eb : getConfig()) {
 					if (eb == null) continue;
 					if (block == eb.block) {
 						int hungerLevel = player.getFoodStats().getFoodLevel();
@@ -143,8 +143,10 @@ public class MunchstoneItem extends ArcaneGemItem {
 			this.hungerValue = hungerValue;
 			this.saturationValue = saturationValue;
 		}
+	}
 
-		public static void parseConfig() {
+	public EdibleBlock[] getConfig() {
+		if(entries == null) {
 			EdibleBlock[] output = new EdibleBlock[ConfigHandler.ArsenalConfig.MunchstoneValidEntries.length];
 			ArrayList<EdibleBlock> verifiedEBs = new ArrayList<>();
 			ArcaneArchives.logger.info("[MUNCHSTONE] Attempting configuration using "+output.length+" entries.");
@@ -176,32 +178,7 @@ public class MunchstoneItem extends ArcaneGemItem {
 
 			ArcaneArchives.logger.info("[MUNCHSTONE] Configured with "+output.length+" entries.");
 			MunchstoneItem.entries = output;
-
-			/*String input = ConfigHandler.ArsenalConfig.MunchstoneValidEntries;
-			String[] parseEntries = input.split("[,\n]");
-			int start = 0;
-			for(int i=0; i<parseEntries.length; i++) {
-				if(parseEntries[i].trim().length() == 0)
-					start++;
-				else
-					break;
-			}
-			ArcaneArchives.logger.info("Starting Munchstone configuration at entry "+start+".");
-
-			//try {
-				for (int i = start; i < parseEntries.length; i += 2) {
-					Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(parseEntries[i].trim()));
-					EdibleBlock eb = new EdibleBlock(block, Integer.parseInt(parseEntries[i + 1].trim()), 1.0F);
-					output[i/2] = eb;
-				}
-				ArcaneArchives.logger.info("Munchstone configured with "+output.length+" entries.");
-				MunchstoneItem.entries = output;
-				for(EdibleBlock check : MunchstoneItem.entries) {
-					ArcaneArchives.logger.info(check.block.getLocalizedName());
-				}
-			//} catch (Exception e) {
-			//	ArcaneArchives.logger.error("Unable to parse Munchstone config. Reverting to default values.");
-			//}*/
 		}
+		return entries;
 	}
 }
