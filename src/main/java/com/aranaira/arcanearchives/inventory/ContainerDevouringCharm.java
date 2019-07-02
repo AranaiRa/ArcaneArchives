@@ -42,6 +42,7 @@ public class ContainerDevouringCharm extends Container {
 		createPlayerInventory(player.inventory);
 		createBucketSlot();
 		createVoidSlots();
+		createDevourSlots();
 	}
 
 	@Override
@@ -97,6 +98,15 @@ public class ContainerDevouringCharm extends Container {
 				addSlotToContainer(new SlotItemHandler(handler.getInventory(), j + i * 3 + 1, xOffset + j * 18, yOffset + i * 18));
 			}
 		}
+	}
+
+	private void createDevourSlots () {
+		addSlotToContainer(new SlotItemHandler(handler.getInventory(), 0, 0, 105));
+		addSlotToContainer(new SlotItemHandler(handler.getInventory(), 1, 12, 76));
+		addSlotToContainer(new SlotItemHandler(handler.getInventory(), 2, 30, 49));
+		addSlotToContainer(new SlotItemHandler(handler.getInventory(), 3, 134, 49));
+		addSlotToContainer(new SlotItemHandler(handler.getInventory(), 4, 152, 76));
+		addSlotToContainer(new SlotItemHandler(handler.getInventory(), 5, 164, 105));
 	}
 
 	private void createPlayerInventory (InventoryPlayer inventoryPlayer) {

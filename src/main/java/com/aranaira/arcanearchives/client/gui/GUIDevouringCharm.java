@@ -15,13 +15,18 @@ public class GUIDevouringCharm extends GuiContainer {
 	private static final ResourceLocation TEXTURE_PLAYERINV_SIMPLE = new ResourceLocation("arcanearchives:textures/gui/simple/player_inv.png");
 	private static final ResourceLocation TEXTURE_DEVOURINGCHARM = new ResourceLocation("arcanearchives:textures/gui/devouring_charm.png");
 	private static final ResourceLocation TEXTURE_DEVOURINGCHARM_SIMPLE = new ResourceLocation("arcanearchives:textures/gui/simple/devouring_charm.png");
+	private static final ResourceLocation TEXTURE_FABRIAL = new ResourceLocation("arcanearchives:textures/gui/fabrial.png");
+	private static final ResourceLocation TEXTURE_SINGLESLOT_SIMPLE = new ResourceLocation("arcanearchives:textures/gui/simple/single_slot.png");
 
 	private static final int
 			DEVOURINGCHARM_X = 0,
 			DEVOURINGCHARM_Y = 0,
 			DEVOURINGCHARM_S = 130,
+			SLOT_X = 102,
+			SLOT_Y = 0,
+			SLOT_S = 22,
 			INVENTORY_W = 181,
-			INVENTORY_H = 181;
+			INVENTORY_H = 101;
 
 
 	private ContainerDevouringCharm containerDevouringCharm;
@@ -58,5 +63,17 @@ public class GUIDevouringCharm extends GuiContainer {
 		else
 			this.mc.getTextureManager().bindTexture(TEXTURE_PLAYERINV_SIMPLE);
 		this.drawTexturedModalRect(i, j + 22 + DEVOURINGCHARM_S, 0, 0, INVENTORY_W, INVENTORY_H);
+
+		if (ConfigHandler.UsePrettyGUIs) {
+			this.mc.getTextureManager().bindTexture(TEXTURE_FABRIAL);
+			this.drawTexturedModalRect(i + 27, j + 46, SLOT_X, SLOT_Y, SLOT_S, SLOT_S);
+			this.drawTexturedModalRect(i + 9, j + 73, SLOT_X, SLOT_Y, SLOT_S, SLOT_S);
+			this.drawTexturedModalRect(i - 3, j + 102, SLOT_X, SLOT_Y, SLOT_S, SLOT_S);
+			this.drawTexturedModalRect(i + 131, j + 46, SLOT_X, SLOT_Y, SLOT_S, SLOT_S);
+			this.drawTexturedModalRect(i + 149, j + 73, SLOT_X, SLOT_Y, SLOT_S, SLOT_S);
+			this.drawTexturedModalRect(i + 161, j + 102, SLOT_X, SLOT_Y, SLOT_S, SLOT_S);
+		}
+		else
+			this.mc.getTextureManager().bindTexture(TEXTURE_SINGLESLOT_SIMPLE);
 	}
 }
