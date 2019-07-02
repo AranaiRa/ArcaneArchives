@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = ArcaneArchives.MODID, name = ArcaneArchives.NAME, version = ArcaneArchives.VERSION, dependencies = "required-after:gbook_snapshot;after:baubles;required-before:mysticallib;after:thaumcraft;after:betternether")
+@Mod(modid = ArcaneArchives.MODID, name = ArcaneArchives.NAME, version = ArcaneArchives.VERSION, dependencies = "required-after:gbook_snapshot;after:baubles;required-before:mysticallib;after:thaumcraft")
 public class ArcaneArchives {
 	public static final String MODID = "arcanearchives";
 	public static final String NAME = "Arcane Archives";
