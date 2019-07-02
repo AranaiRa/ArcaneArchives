@@ -25,6 +25,9 @@ public class GUIDevouringCharm extends GuiContainer {
 			SLOT_X = 102,
 			SLOT_Y = 0,
 			SLOT_S = 22,
+			SLOT_SIMPLE_X = 60,
+			SLOT_SIMPLE_Y = 0,
+			SLOT_SIMPLE_S = 26,
 			INVENTORY_W = 181,
 			INVENTORY_H = 101;
 
@@ -73,7 +76,14 @@ public class GUIDevouringCharm extends GuiContainer {
 			this.drawTexturedModalRect(i + 149, j + 73, SLOT_X, SLOT_Y, SLOT_S, SLOT_S);
 			this.drawTexturedModalRect(i + 161, j + 102, SLOT_X, SLOT_Y, SLOT_S, SLOT_S);
 		}
-		else
+		else {
 			this.mc.getTextureManager().bindTexture(TEXTURE_SINGLESLOT_SIMPLE);
+			this.drawTexturedModalRect(i + 25, j + 44, SLOT_SIMPLE_X, SLOT_SIMPLE_Y, SLOT_SIMPLE_S, SLOT_SIMPLE_S);
+			this.drawTexturedModalRect(i + 7, j + 71, SLOT_SIMPLE_X, SLOT_SIMPLE_Y, SLOT_SIMPLE_S, SLOT_SIMPLE_S);
+			this.drawTexturedModalRect(i - 5, j + 100, SLOT_SIMPLE_X, SLOT_SIMPLE_Y, SLOT_SIMPLE_S, SLOT_SIMPLE_S);
+			this.drawTexturedModalRect(i + 129, j + 44, SLOT_SIMPLE_X, SLOT_SIMPLE_Y, SLOT_SIMPLE_S, SLOT_SIMPLE_S);
+			this.drawTexturedModalRect(i + 147, j + 71, SLOT_SIMPLE_X, SLOT_SIMPLE_Y, SLOT_SIMPLE_S, SLOT_SIMPLE_S);
+			this.drawTexturedModalRect(i + 159, j + 100, SLOT_SIMPLE_X, SLOT_SIMPLE_Y, SLOT_SIMPLE_S, SLOT_SIMPLE_S);
+		}
 	}
 }
