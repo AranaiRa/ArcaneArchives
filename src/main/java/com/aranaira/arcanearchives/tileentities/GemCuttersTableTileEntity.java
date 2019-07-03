@@ -177,6 +177,8 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements Ma
 	public void nextPage () {
 		if (GCTRecipeList.instance.getSize() > (page + 1) * RECIPE_PAGE_LIMIT) {
 			setPage(page + 1);
+		} else {
+			setPage(0);
 		}
 	}
 
