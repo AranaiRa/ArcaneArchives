@@ -31,7 +31,7 @@ public class MunchstoneItem extends ArcaneGemItem {
 	public static final String NAME = "munchstone";
 	public static EdibleBlock[] entries;
 
-	public static final String[] DEFAULT_ENTRIES = { "minecraft:log, 4","minecraft:log2, 4","minecraft:leaves, 2","minecraft:leaves2, 2","minecraft:hay_block, 15","minecraft:melon_block, 15","minecraft:brown_mushroom_block, 8","minecraft:brown_mushroom, 4","minecraft:red_mushroom_block, 8","minecraft:red_mushroom, 4","minecraft:nether_wart_block, 15","minecraft:nether_wart, 4","minecraft:chorus_flower, 6","minecraft:chorus_plant, 6","minecraft:cactus, 6","minecraft:cocoa, 4","minecraft:deadbush, 2","minecraft:double_plant, 2","minecraft:pumpkin, 15","minecraft:lit_pumpkin, 16","minecraft:pumpkin_stem, 4","minecraft:melon_stem, 4","minecraft:red_flower, 2","minecraft:yellow_flower, 2","minecraft:reeds, 4","minecraft:sapling, 2","minecraft:tallgrass, 1","minecraft:vine, 2","minecraft:waterlily, 4","minecraft:wheat, 4","minecraft:potatoes, 4","minecraft:carrots, 4","minecraft:beetroots, 4","betternether:agave, 3","betternether:barrel_cactus, 4","betternether:black_bush, 1","betternether:egg_plant, 1","betternether:gray_mold, 1","betternether:lucis_spore, 1","betternether:nether_cactus, 1","betternether:nether_grass, 1","betternether:nether_reed, 1","betternether:orange_mushroom, 1","betternether:red_mold, 1","thaumcraft:sapling_greatwood, 2","thaumcraft:sapling_silverwood, 3","thaumcraft:log_greatwood, 4","thaumcraft:log_silverwood, 5","thaumcraft:leaves_greatwood, 2","thaumcraft:leaves_silverwood, 3","thaumcraft:cinderpearl, 3","thaumcraft:shimmerleaf, 3","thaumcraft:vishroom, 3" };
+	public static final String[] DEFAULT_ENTRIES = { "minecraft:log, 4","minecraft:log2, 4","minecraft:leaves, 2","minecraft:leaves2, 2","minecraft:hay_block, 15","minecraft:melon_block, 15","minecraft:brown_mushroom_block, 8","minecraft:brown_mushroom, 4","minecraft:red_mushroom_block, 8","minecraft:red_mushroom, 4","minecraft:nether_wart_block, 15","minecraft:nether_wart, 4","minecraft:chorus_flower, 6","minecraft:chorus_plant, 6","minecraft:cactus, 6","minecraft:cocoa, 4","minecraft:deadbush, 2","minecraft:double_plant, 2","minecraft:pumpkin, 15","minecraft:lit_pumpkin, 16","minecraft:pumpkin_stem, 4","minecraft:melon_stem, 4","minecraft:red_flower, 2","minecraft:yellow_flower, 2","minecraft:reeds, 4","minecraft:sapling, 2","minecraft:tallgrass, 1","minecraft:vine, 2","minecraft:waterlily, 4","minecraft:wheat, 4","minecraft:potatoes, 4","minecraft:carrots, 4","minecraft:beetroots, 4","mysticalworld:aubergine_crop, 4","mysticalworld:thatch, 3","betternether:agave, 3","betternether:barrel_cactus, 4","betternether:black_bush, 1","betternether:egg_plant, 1","betternether:gray_mold, 1","betternether:lucis_spore, 1","betternether:nether_cactus, 1","betternether:nether_grass, 1","betternether:nether_reed, 1","betternether:orange_mushroom, 1","betternether:red_mold, 1","roots:baffle_cap_mushroom, 4","roots:baffle_cap_huge_stem, 8","roots:baffle_cap_huge_top, 8","roots:moonglow_crop, 4","roots:pereskia_crop, 4","roots:spirit_herb_crop, 4","roots:wildroot_crop, 4","roots:wildewheet_crop, 4","roots:cloud_berry_crop, 4","roots:infernal_bulb_crop, 4","roots:dewgonia_crop, 4","roots:stalicripe_crop, 4","roots:wildwood_log, 8","roots:wildwood_leaves, 4","roots:wildwood_sapling, 20","rustic:log, 4", "rustic:sapling, 2", "rustic:leaves, 2", "rustic:leaves_apple, 3", "rustic:wildberry_bush, 3", "rustic:grape_stem, 4", "rustic:aloe_vera, 3", "rustic:blood_orchid, 3", "rustic:chamomile, 3", "rustic:cohosh, 3", "rustic:deathstalk_mushroom, 3", "rustic:horsetail, 3", "rustic:mooncap_mushroom, 3", "rustic:wind_thistle, 3", "rustic:cloudsbluff, 3", "rustic:core_root, 3", "rustic:ginseng, 3", "rustic:marsh_mallow, 3","thaumcraft:sapling_greatwood, 2","thaumcraft:sapling_silverwood, 3","thaumcraft:log_greatwood, 4","thaumcraft:log_silverwood, 5","thaumcraft:leaves_greatwood, 2","thaumcraft:leaves_silverwood, 3","thaumcraft:cinderpearl, 3","thaumcraft:shimmerleaf, 3","thaumcraft:vishroom, 3" };
 
 	public MunchstoneItem () {
 		super(NAME, GemCut.OVAL, GemColor.BLACK, 60, 240);
@@ -86,17 +86,17 @@ public class MunchstoneItem extends ArcaneGemItem {
 
 			//ArcaneArchives.logger.info("munchstone trigger");
 			AvailableGemsHandler handler = GemUtil.getHeldGem(player, hand);
-			if (player.isSneaking())
+			/*if (player.isSneaking())
 			{
-				for(EdibleBlock eb : entries) {
+				for(EdibleBlock eb : getConfig()) {
 					ArcaneArchives.logger.info(eb.block.getLocalizedName());
 				}
-			}
+			}*/
 
 			if (handler.getHeld() != null && GemUtil.getCharge(handler.getHeld()) > 0) {
 				Block block = world.getBlockState(pos).getBlock();
 
-				for (EdibleBlock eb : entries) {
+				for (EdibleBlock eb : getConfig()) {
 					if (eb == null) continue;
 					if (block == eb.block) {
 						int hungerLevel = player.getFoodStats().getFoodLevel();
@@ -143,14 +143,16 @@ public class MunchstoneItem extends ArcaneGemItem {
 			this.hungerValue = hungerValue;
 			this.saturationValue = saturationValue;
 		}
+	}
 
-		public static void parseConfig() {
-			EdibleBlock[] output = new EdibleBlock[ConfigHandler.ArsenalConfig.EdibleBlocks.length];
+	public EdibleBlock[] getConfig() {
+		if(entries == null) {
+			EdibleBlock[] output = new EdibleBlock[ConfigHandler.ArsenalConfig.MunchstoneValidEntries.length];
 			ArrayList<EdibleBlock> verifiedEBs = new ArrayList<>();
 			ArcaneArchives.logger.info("[MUNCHSTONE] Attempting configuration using "+output.length+" entries.");
 
-			for (int i = 0; i < ConfigHandler.ArsenalConfig.EdibleBlocks.length; i++) {
-				String entry = ConfigHandler.ArsenalConfig.EdibleBlocks[i];
+			for (int i = 0; i < ConfigHandler.ArsenalConfig.MunchstoneValidEntries.length; i++) {
+				String entry = ConfigHandler.ArsenalConfig.MunchstoneValidEntries[i];
 				String[] parse = entry.split(",");
 				Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(parse[0].trim()));
 				int feed = 0;
@@ -176,32 +178,7 @@ public class MunchstoneItem extends ArcaneGemItem {
 
 			ArcaneArchives.logger.info("[MUNCHSTONE] Configured with "+output.length+" entries.");
 			MunchstoneItem.entries = output;
-
-			/*String input = ConfigHandler.ArsenalConfig.EdibleBlocks;
-			String[] parseEntries = input.split("[,\n]");
-			int start = 0;
-			for(int i=0; i<parseEntries.length; i++) {
-				if(parseEntries[i].trim().length() == 0)
-					start++;
-				else
-					break;
-			}
-			ArcaneArchives.logger.info("Starting Munchstone configuration at entry "+start+".");
-
-			//try {
-				for (int i = start; i < parseEntries.length; i += 2) {
-					Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(parseEntries[i].trim()));
-					EdibleBlock eb = new EdibleBlock(block, Integer.parseInt(parseEntries[i + 1].trim()), 1.0F);
-					output[i/2] = eb;
-				}
-				ArcaneArchives.logger.info("Munchstone configured with "+output.length+" entries.");
-				MunchstoneItem.entries = output;
-				for(EdibleBlock check : MunchstoneItem.entries) {
-					ArcaneArchives.logger.info(check.block.getLocalizedName());
-				}
-			//} catch (Exception e) {
-			//	ArcaneArchives.logger.error("Unable to parse Munchstone config. Reverting to default values.");
-			//}*/
 		}
+		return entries;
 	}
 }

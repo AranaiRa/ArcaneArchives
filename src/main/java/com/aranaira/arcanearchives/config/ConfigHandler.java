@@ -3,11 +3,14 @@ package com.aranaira.arcanearchives.config;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.gui.GUIManifest;
 import com.aranaira.arcanearchives.items.gems.oval.MunchstoneItem;
+import com.aranaira.arcanearchives.items.gems.oval.OrderstoneItem;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketConfig.MaxDistance;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.Config.RequiresMcRestart;
 import net.minecraftforge.common.config.ConfigManager;
@@ -15,6 +18,7 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -92,25 +96,6 @@ public class ConfigHandler {
 	public static int iRepositoryMatrixItemCap = 256;
 	public static int iStorageMatrixItemCap = 256;*/
 
-	@Config.LangKey("arcanearchives.config.arsenal")
-	public static ArsenalConfig ArsenalConfig = new ArsenalConfig();
-
-	public static class ArsenalConfig {
-		@Config.Comment("Enable the Arcane Arsenal module. When disabled, items will still be registered but not craftable or visible in JEI.")
-		@Config.Name("Enable Arsenal")
-		@RequiresMcRestart
-		public boolean EnableArsenal = true;
-
-		@Config.Comment("Enable colour-blind mode for Arsenal. This replaces gem icons specifically with variants more clearly defined for types of colour-blindness")
-		@Config.Name("Colourblind Mode")
-		public boolean ColourblindMode = false;
-
-		@Config.Comment("What blocks a Munchstone can eat. First value is a block (such as minecraft:log), second value is the amount of hunger restored. Saturation always equals the hunger restoration.")
-		@Config.Name("Valid Munchstone Blocks")
-		@Config.RequiresMcRestart
-		public String[] EdibleBlocks = MunchstoneItem.DEFAULT_ENTRIES;
-	}
-
 	@Config.LangKey("arcanearchives.config.item_tracking")
 	public static ItemTrackingConfig ItemTrackingConfig = new ItemTrackingConfig();
 
@@ -171,5 +156,29 @@ public class ConfigHandler {
 		@Config.Comment("Maximum distance in blocks to track chests from for the Manifest")
 		@Config.Name("[Hive Network] Max track distance")
 		public int MaxDistance = 100;
+	}
+
+	@Config.LangKey("arcanearchives.config.arsenal")
+	public static ArsenalConfig ArsenalConfig = new ArsenalConfig();
+
+	public static class ArsenalConfig {
+		@Config.Comment("Enable the Arcane Arsenal module. When disabled, items will still be registered but not craftable or visible in JEI.")
+		@Config.Name("Enable Arsenal")
+		@RequiresMcRestart
+		public boolean EnableArsenal = true;
+
+		@Config.Comment("Enable colour-blind mode for Arsenal. This replaces gem icons specifically with variants more clearly defined for types of colour-blindness")
+		@Config.Name("Colourblind Mode")
+		public boolean ColourblindMode = false;
+
+		@Config.Comment("What blocks a Munchstone can eat. First value is a block (such as minecraft:log), second value is the amount of hunger restored. Saturation always equals the hunger restoration.")
+		@Config.Name("Valid Munchstone Blocks")
+		@Config.RequiresMcRestart
+		public String[] MunchstoneValidEntries = MunchstoneItem.DEFAULT_ENTRIES;
+
+		//@Config.Comment("What blocks an Orderstone can transmute. First value is the transmutation cost for each step of the sequence, all subsequent values are blocks (such as minecraft:log). Please be aware that sequences longer than six blocks will display poorly in the Tome of Arcana.")
+		//@Config.Name("Valid Orderstone Block Sequences")
+		//@Config.RequiresMcRestart
+		//public String[] OrderstoneValidEntries = OrderstoneItem.DEFAULT_ENTRIES;
 	}
 }

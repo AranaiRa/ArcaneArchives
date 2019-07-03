@@ -26,7 +26,6 @@ public class CommonProxy {
 		NetworkRegistry.INSTANCE.registerGuiHandler(ArcaneArchives.instance, new AAGuiHandler());
 
 		NetworkHandler.registerPackets();
-		MunchstoneItem.EdibleBlock.parseConfig();
 	}
 
 	public void init (FMLInitializationEvent event) {
@@ -36,9 +35,7 @@ public class CommonProxy {
 		FMLInterModComms.sendFunctionMessage("theoneprobe", "getTheOneProbe", "com.aranaira.arcanearchives.integration.top.TOPPlugin");
 	}
 
-	public void postInit (FMLPostInitializationEvent event) {
-		MunchstoneItem.EdibleBlock.parseConfig();
-	}
+	public void postInit (FMLPostInitializationEvent event) { }
 
 	public void registerItemRenderer (Item item, int meta, String id) {
 	}

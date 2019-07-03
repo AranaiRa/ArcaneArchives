@@ -13,13 +13,13 @@
 
     <stack-links>
         <stack item="arcanearchives:brazier_of_hoarding">:BrazierHoarding</stack>
-        <stack item="arcanearchives:radiant_lantern">:RadiantLantern</stack>
         <stack item="arcanearchives:lectern_manifest">LecternManifest</stack>
         <stack item="arcanearchives:gemcutters_table">GemCuttersTable</stack>
         <stack item="arcanearchives:monitoring_crystal">MonitoringCrystal</stack>
         <stack item="arcanearchives:quartz_sliver">SliverOfLight</stack>
         <stack item="arcanearchives:radiant_chest">RadiantChest</stack>
         <stack item="arcanearchives:radiant_crafting_table">RadiantCraftingTable</stack>
+        <stack item="arcanearchives:radiant_lantern">RadiantLantern</stack>
         <stack item="arcanearchives:radiant_resonator">RadiantResonator</stack>
         <stack item="arcanearchives:radiant_tank">RadiantTank</stack>
         <stack item="arcanearchives:radiant_trove">RadiantTrove</stack>
@@ -65,8 +65,21 @@
         <stack item="arcanearchives:gemsocket">GemSocket</stack>
     </stack-links>
 
-    <chapter id="TableOfContents">
+    <chapter id="Home">
         <section>
+            <space height="14"/>
+            <p align="center"><image src="arcanearchives:gui/guidebook/home_title" tw="310" th="136"/></p>
+            <space height="24"/>
+            <horizontal_rule/>
+            <space height="22"/>
+            <p align="center"><link ref="TableOfContents:Blocks"><image src="arcanearchives:gui/guidebook/home_blocks" tw="163" th="48"/></link>       <link ref="TableOfContents:Items"><image src="arcanearchives:gui/guidebook/home_items" tw="163" th="48"/></link></p>
+            <space height="6"/>
+            <p align="center"><link ref="TableOfContents:ArcaneGems"><image src="arcanearchives:gui/guidebook/home_arcana" tw="163" th="48"/></link>       <link ref="TableOfContents:Concepts"><image src="arcanearchives:gui/guidebook/home_concepts" tw="163" th="48"/></link></p>
+        </section>
+    </chapter>
+
+    <chapter id="TableOfContents">
+        <section id="Blocks">
             <page_title_shorter>
                 <title>Blocks</title>
             </page_title_shorter>
@@ -82,7 +95,7 @@
             <p><stack item="arcanearchives:radiant_trove"/> <link ref="RadiantTrove">Radiant Trove</link></p>
             <p><stack item="arcanearchives:raw_quartz_cluster"/> <link ref="RawQuartzCluster">Raw Quartz Cluster</link></p>
         </section>
-        <section>
+        <section id="Items">
             <page_title_shorter>
                 <title>Items</title>
             </page_title_shorter>
@@ -104,7 +117,7 @@
             <p><stack item="arcanearchives:quartz_sliver"/> <link ref="SliverOfLight">Sliver of Light</link></p>
             <p><stack item="arcanearchives:writ_expulsion"/> <link ref="WritExpulsion">Writ of Expulsion</link></p>
         </section>
-        <section>
+        <section id="ArcaneGems">
             <page_title_shorter>
                 <title>Arcane Gems</title>
             </page_title_shorter>
@@ -130,7 +143,7 @@
             <p><stack item="arcanearchives:phoenixway"/> <link ref="Phoenixway">Phoenixway</link></p>
             <p><stack item="arcanearchives:stormway"/> <link ref="Stormway">Stormway</link></p>
         </section>
-        <section>
+        <section id="Concepts">
             <page_title_shorter>
                 <title>Concepts</title>
             </page_title_shorter>
@@ -1211,7 +1224,7 @@
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Murdergleams can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Slaughtergleams can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
         </section>
     </chapter>
