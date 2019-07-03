@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.init.RecipeLibrary;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketGemCutters;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
@@ -31,6 +32,7 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements Ma
 
 	public GemCuttersTableTileEntity () {
 		super("gemcutterstable");
+		currentRecipe = RecipeLibrary.RADIANT_DUST_RECIPE;
 	}
 
 	@Override
