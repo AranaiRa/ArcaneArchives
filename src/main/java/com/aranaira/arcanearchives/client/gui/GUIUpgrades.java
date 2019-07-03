@@ -40,6 +40,13 @@ public class GUIUpgrades extends GuiContainer {
 	}
 
 	@Override
+	public void drawScreen (int mouseX, int mouseY, float partialTicks) {
+		drawDefaultBackground();
+		super.drawScreen(mouseX, mouseY, partialTicks);
+		this.renderHoveredToolTip(mouseX, mouseY);
+	}
+
+	@Override
 	protected void drawGuiContainerBackgroundLayer (float partialTicks, int mouseX, int mouseY) {
 		float i = (this.width - this.xSize) / 2;
 		float j = (this.height - this.ySize) / 2;
