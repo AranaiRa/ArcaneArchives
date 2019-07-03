@@ -15,6 +15,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
@@ -50,6 +51,10 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 		SLASH_X = 240,
 		SLASH_Y = 0,
 		SLASH_S = 16,
+		ROUTING_TOOLTIP_X = 277,
+		ROUTING_TOOLTIP_Y = 255,
+		ROUTING_TOOLTIP_W = 33,
+		ROUTING_TOOLTIP_H = 16,
 		ImageScale = 256;
 
 	private Slot hoveredSlot;
@@ -258,9 +263,18 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 	}
 
 	@Override
-	protected void renderHoveredToolTip (int p_191948_1_, int p_191948_2_) {
+	protected void renderHoveredToolTip (int mouseX, int mouseY) {
+		if (mouseY >= ROUTING_TOOLTIP_Y && mouseY <= ROUTING_TOOLTIP_Y+ROUTING_TOOLTIP_H) {
+			if (mouseX >= ROUTING_TOOLTIP_X && mouseX <= ROUTING_TOOLTIP_X + ROUTING_TOOLTIP_W) {
+				if(container.getTile().getRoutingType() == IBrazierRouting.BrazierRoutingType.NO_NEW_STACKS)
+					this.drawHoveringText(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.radiantchest.routingmode.nonewitems"), mouseX, mouseY);
+				else
+					this.drawHoveringText(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.radiantchest.routingmode.any"), mouseX, mouseY);
+			}
+		}
+
 		if (this.mc.player.inventory.getItemStack().isEmpty() && this.hoveredSlot != null && this.hoveredSlot.getHasStack()) {
-			this.renderToolTip(this.hoveredSlot.getStack(), p_191948_1_, p_191948_2_);
+			this.renderToolTip(this.hoveredSlot.getStack(), mouseX, mouseY);
 		}
 	}
 
