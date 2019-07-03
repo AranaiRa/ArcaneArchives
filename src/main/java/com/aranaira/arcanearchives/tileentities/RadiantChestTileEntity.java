@@ -193,8 +193,10 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 
 		@Override
 		public void setStackInSlot (int slot, @Nonnull ItemStack stack) {
+			ItemStack inSlot = getStackInSlot(slot);
+			subtraction(inSlot, -1);
 			super.setStackInSlot(slot, stack);
-			manualRecount();
+			addition(stack, ItemStack.EMPTY);
 			world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);
 		}
 
@@ -203,13 +205,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 		public ItemStack insertItem (int slot, @Nonnull ItemStack stack, boolean simulate) {
 			if (!simulate) {
 				ItemStack test = super.insertItem(slot, stack, true);
-				int current = RecipeItemHelper.pack(stack);
-				int count = stack.getCount();
-				if (!test.isEmpty()) {
-					count -= test.getCount();
-				}
-				int curCount = itemReference.get(current);
-				itemReference.put(current, Math.max(-1, count + curCount));
+				addition(stack, test);
 			}
 			world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);
 			return super.insertItem(slot, stack, simulate);
@@ -219,15 +215,36 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 		@Override
 		public ItemStack extractItem (int slot, int amount, boolean simulate) {
 			if (!simulate) {
-				ItemStack test = super.extractItem(slot, amount, true);
-				int current = RecipeItemHelper.pack(test);
-				int curCount = itemReference.get(current);
-				if (curCount > 0) {
-					itemReference.put(current, Math.max(curCount - test.getCount(), 0));
-				}
+				ItemStack test = getStackInSlot(slot);
+				subtraction(test, amount);
 			}
 			world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);
 			return super.extractItem(slot, amount, simulate);
+		}
+
+		private void addition (ItemStack stack, ItemStack spare) {
+			if (stack.isEmpty()) return;
+
+			int ref = RecipeItemHelper.pack(stack);
+			int count = stack.getCount();
+
+			if (!spare.isEmpty()) {
+				count -= spare.getCount();
+			}
+
+			int curCount = itemReference.get(ref);
+			itemReference.put(ref, Math.max(-1, count + curCount));
+		}
+
+		private void subtraction (ItemStack stack, int count) {
+			if (stack.isEmpty()) return;
+			if (count == -1) count = stack.getCount();
+
+			int ref = RecipeItemHelper.pack(stack);
+			int curCount = itemReference.get(ref);
+			if (curCount > 0) {
+				itemReference.put(ref, Math.max(curCount - count, 0));
+			}
 		}
 	}
 }
