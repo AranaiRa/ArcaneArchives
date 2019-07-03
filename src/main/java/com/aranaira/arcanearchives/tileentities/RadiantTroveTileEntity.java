@@ -8,6 +8,7 @@ import com.aranaira.arcanearchives.inventory.handlers.TroveItemHandler;
 import com.aranaira.arcanearchives.inventory.handlers.TroveUpgradeItemHandler;
 import com.aranaira.arcanearchives.util.ItemUtilities;
 import com.aranaira.arcanearchives.util.types.UpgradeType;
+import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -24,7 +25,7 @@ import net.minecraftforge.items.IItemHandler;
 import javax.annotation.Nonnull;
 import java.util.UUID;
 
-public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IManifestTileEntity, IUpgradeableStorage {
+public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IManifestTileEntity, IUpgradeableStorage, IBrazierRouting {
 	private final TroveItemHandler inventory = new TroveItemHandler(this::update);
 	private long lastClick = 0;
 	private int lastTick = 0;
@@ -282,6 +283,16 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 
 		player.openGui(ArcaneArchives.instance, AAGuiHandler.UPGRADES, world, pos.getX(), pos.getY(), pos.getZ());
 		return true;
+	}
+
+	@Override
+	public Int2IntOpenHashMap getOrCalculateReference () {
+		return null;
+	}
+
+	@Override
+	public BrazierRoutingType getRoutingType () {
+		return BrazierRoutingType.NO_NEW_STACKS;
 	}
 
 	public static class Tags {

@@ -7,7 +7,7 @@ import com.aranaira.arcanearchives.network.PacketRadiantChest.MessageSyncExtende
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketNetworks;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
-import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity.RadiantChestHandler;
+import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity.TrackingExtendedItemStackHandler;
 import com.google.common.collect.Sets;
 import invtweaks.api.container.ChestContainer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -89,7 +89,7 @@ public class ContainerRadiantChest extends Container {
 	}
 
 	public void addOwnSlots () {
-		RadiantChestHandler handler = this.tile.getInventory();
+		TrackingExtendedItemStackHandler handler = this.tile.getInventory();
 		int slotIndex = 0;
 		for (int row = 0; row < 6; ++row) {
 			for (int col = 0; col < 9; ++col) {

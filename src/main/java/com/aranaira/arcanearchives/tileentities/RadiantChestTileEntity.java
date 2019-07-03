@@ -7,7 +7,6 @@ import com.aranaira.arcanearchives.inventory.handlers.ITrackingHandler;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketRadiantChest;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
-import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -18,8 +17,8 @@ import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nonnull;
 
-public class RadiantChestTileEntity extends ImmanenceTileEntity implements IManifestTileEntity {
-	private final RadiantChestHandler inventory = new RadiantChestHandler(54);
+public class RadiantChestTileEntity extends ImmanenceTileEntity implements IManifestTileEntity, IBrazierRouting {
+	private final TrackingExtendedItemStackHandler inventory = new TrackingExtendedItemStackHandler(54);
 	private ItemStack displayStack = ItemStack.EMPTY;
 	private EnumFacing displayFacing = EnumFacing.NORTH;
 	public String chestName = "";
@@ -35,8 +34,14 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 		return inventory.getItemReference();
 	}
 
+	@Override
 	public Int2IntOpenHashMap getOrCalculateReference () {
 		return getOrCalculateReference(false);
+	}
+
+	@Override
+	public BrazierRoutingType getRoutingType () {
+		return null;
 	}
 
 	public ItemStack getDisplayStack () {
@@ -80,7 +85,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 	}
 
 	@Override
-	public RadiantChestHandler getInventory () {
+	public TrackingExtendedItemStackHandler getInventory () {
 		return inventory;
 	}
 
@@ -162,10 +167,10 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 		}
 	}
 
-	public class RadiantChestHandler extends ExtendedItemStackHandler implements ITrackingHandler {
+	public class TrackingExtendedItemStackHandler extends ExtendedItemStackHandler implements ITrackingHandler {
 		private Int2IntOpenHashMap itemReference = new Int2IntOpenHashMap();
 
-		public RadiantChestHandler (int size) {
+		public TrackingExtendedItemStackHandler (int size) {
 			super(size);
 			itemReference.defaultReturnValue(0);
 		}
