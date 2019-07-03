@@ -5,6 +5,7 @@ import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.inventory.handlers.TroveItemHandler;
 import com.aranaira.arcanearchives.util.ItemUtilities;
 import com.aranaira.arcanearchives.util.types.IteRef;
+import com.aranaira.arcanearchives.util.types.UpgradeType;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.entity.Entity;
@@ -23,10 +24,12 @@ import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class BrazierTileEntity extends ImmanenceTileEntity {
 	private UUID lastUUID = null;
 	private long lastClick = -1;
+	private Map<EntityPlayer, ItemStack> playerToStackMap = new ConcurrentHashMap<>();
 
 	public BrazierTileEntity () {
 		super("brazier");
@@ -44,16 +47,24 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 			// Test for double-click
 			boolean doubleClick = false;
 			long diff = System.currentTimeMillis() - lastClick;
-			if (player.getUniqueID() == lastUUID && diff <= 15) {
+			ItemStack lastItem = ItemStack.EMPTY;
+			if (player.getUniqueID() == lastUUID && diff <= 1500) {
 				doubleClick = true;
+				lastItem = playerToStackMap.getOrDefault(player, ItemStack.EMPTY);
+			} else if (diff > 20000) {
+				playerToStackMap.clear();
 			}
 			lastUUID = player.getUniqueID();
 			lastClick = System.currentTimeMillis();
+
 
 			ItemStack item = player.getHeldItemMainhand();
 			if (item.isEmpty()) {
 				item = player.getHeldItemOffhand();
 				hand = EnumHand.OFF_HAND;
+			}
+			if (!item.isEmpty() && !doubleClick) {
+				playerToStackMap.put(player, item.copy());
 			}
 			if (!item.isEmpty()) {
 				if (!doubleClick) {
@@ -69,7 +80,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 					tryInsert(references, item);
 					consumeItems(player, references);
 				}
-			} else if (!item.isEmpty() && doubleClick) {
+			} else if ((!item.isEmpty() && doubleClick) || (!lastItem.isEmpty() && doubleClick)) {
 				IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
 				IntOpenHashSet doneSlots = new IntOpenHashSet();
 				// TODO: ignore hotbar slots
@@ -172,9 +183,10 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 						if (handler.getPacked() == ref) {
 							Map<Integer, Integer> map = Collections.singletonMap(ref, handler.getCount());
 							troves.add(new CapabilityRef(map, handler));
+							if (((RadiantTroveTileEntity) ite).getOptionalUpgradesHandler().hasUpgrade(UpgradeType.VOID)) {
+								return Collections.singletonList(new CapabilityRef(map, handler));
+							}
 						}
-
-						// Ignore other troves
 					}
 				}
 			}
