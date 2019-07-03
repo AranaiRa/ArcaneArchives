@@ -12,7 +12,7 @@
     </conditions>
 
     <stack-links>
-        <stack item="arcanearchives:brazier_of_hoarding">:BrazierHoarding</stack>
+        <stack item="arcanearchives:brazier_of_hoarding">BrazierHoarding</stack>
         <stack item="arcanearchives:lectern_manifest">LecternManifest</stack>
         <stack item="arcanearchives:gemcutters_table">GemCuttersTable</stack>
         <stack item="arcanearchives:monitoring_crystal">MonitoringCrystal</stack>
@@ -195,6 +195,9 @@
             </p><space height="4"/>
             <p>
                 Unlike conventional crafting, there are no shape requirements for a Gem Cutter's Table recipe. After selecting the desired item you can simply remove it from the output slot if enough ingredients are present.
+            </p>
+            <p>
+                <stack item="arcanearchives:brazier_of_hoarding"/> The internal inventory of a Gem Cutter's Table can be filled by a <link ref="BrazierHoarding">Brazier of Hoarding</link>. Slots with existing items will be filled, but new items will never be added to empty slots.
             </p>
             <horizontal_rule/>
             <p>
