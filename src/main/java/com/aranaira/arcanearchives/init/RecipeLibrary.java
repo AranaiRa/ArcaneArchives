@@ -142,7 +142,7 @@ public class RecipeLibrary {
 
 			SLAUGHTERGLEAM_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("slaughtergleam", new ItemStack(ItemRegistry.SLAUGHTERGLEAM), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyeRed", 4), new IngredientStack(Items.DIAMOND), new IngredientStack(Items.GOLD_INGOT, 2), new IngredientStack(Blocks.LAPIS_BLOCK, 2));
 
-			CLEANSEGLEAM_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("cleansestone", new ItemStack(ItemRegistry.CLEANSEGLEAM), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyeBlue", 4), new IngredientStack(Items.POISONOUS_POTATO), new IngredientStack(Ingredient.fromItem(Items.MILK_BUCKET), 1), new IngredientStack(Ingredient.fromItem(Items.MILK_BUCKET), 1));
+			CLEANSEGLEAM_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("cleansestone", new ItemStack(ItemRegistry.CLEANSEGLEAM), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyeBlue", 4), new IngredientStack(Items.POISONOUS_POTATO), new IngredientStack(Ingredient.fromItem(Items.MILK_BUCKET), 1));
 
 			SALVEGLEAM_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("salvegleam", new ItemStack(ItemRegistry.SALVEGLEAM), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyePink", 4), new IngredientStack(Items.GOLDEN_APPLE), new IngredientStack(Items.SPECKLED_MELON), new IngredientStack(Items.GOLDEN_CARROT));
 
