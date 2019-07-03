@@ -5,6 +5,7 @@ import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.inventory.handlers.TroveItemHandler;
 import com.aranaira.arcanearchives.util.ItemUtilities;
 import com.aranaira.arcanearchives.util.types.IteRef;
+import com.aranaira.arcanearchives.util.types.UpgradeType;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.entity.Entity;
@@ -182,9 +183,10 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 						if (handler.getPacked() == ref) {
 							Map<Integer, Integer> map = Collections.singletonMap(ref, handler.getCount());
 							troves.add(new CapabilityRef(map, handler));
+							if (((RadiantTroveTileEntity) ite).getOptionalUpgradesHandler().hasUpgrade(UpgradeType.VOID)) {
+								return Collections.singletonList(new CapabilityRef(map, handler));
+							}
 						}
-
-						// Ignore other troves
 					}
 				}
 			}
