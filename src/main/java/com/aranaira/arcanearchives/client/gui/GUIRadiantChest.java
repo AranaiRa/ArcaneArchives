@@ -1,9 +1,11 @@
 package com.aranaira.arcanearchives.client.gui;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.render.RenderItemExtended;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerRadiantChest;
 import com.aranaira.arcanearchives.inventory.slots.SlotExtended;
+import com.aranaira.arcanearchives.tileentities.IBrazierRouting;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.ManifestTracking;
 import net.minecraft.client.Minecraft;
@@ -39,7 +41,16 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 
 	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/radiantchest.png");
 	private static final ResourceLocation GUITexturesSimple = new ResourceLocation("arcanearchives:textures/gui/simple/radiantchest.png");
-	private final int ImageHeight = 253, ImageWidth = 192, ImageScale = 256;
+	private final int
+		MAIN_W = 192,
+		MAIN_H = 253,
+		CHECK_X = 234,
+		CHECK_Y = 0,
+		CHECK_S = 6,
+		SLASH_X = 240,
+		SLASH_Y = 0,
+		SLASH_S = 16,
+		ImageScale = 256;
 
 	private Slot hoveredSlot;
 	/**
@@ -87,6 +98,8 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 	private int mNameTextWidth = 88;
 	private int mNameTextHeight = 10;
 
+	private GuiButton toggleButton;
+
 	public GUIRadiantChest (ContainerRadiantChest container, InventoryPlayer playerinventory) {
 		super(container);
 
@@ -94,8 +107,8 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 
 		this.playerinventory = playerinventory;
 		this.tile = container.getTile();
-		xSize = ImageWidth;
-		ySize = ImageHeight;
+		xSize = MAIN_W;
+		ySize = MAIN_H;
 
 		this.ignoreMouseUp = true;
 
@@ -114,6 +127,17 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 		nameBox.setEnableBackgroundDrawing(false);
 
 		buttonList.clear();
+
+		toggleButton = new InvisibleButton(0, guiLeft + 161, guiTop + 236, 12, 12, "");
+		addButton(toggleButton);
+	}
+
+	@Override
+	protected void actionPerformed(GuiButton button) throws IOException {
+		if(button.id == 0) { //toggle button
+			container.getTile().toggleRoutingType();
+			ArcaneArchives.logger.info("button pushed; routing type is "+container.getTile().getRoutingType());
+		}
 	}
 
 	@Override
@@ -123,7 +147,12 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 		} else {
 			mc.getTextureManager().bindTexture(GUITexturesSimple);
 		}
-		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, ImageScale, ImageScale, ImageScale, ImageScale);
+		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, MAIN_W, MAIN_H, ImageScale, ImageScale);
+
+		if (container.getTile().getRoutingType() == IBrazierRouting.BrazierRoutingType.NO_NEW_STACKS) {
+			this.drawTexturedModalRect(guiLeft + 164, guiTop + 239, CHECK_X, CHECK_Y, CHECK_S, CHECK_S);
+			this.drawTexturedModalRect(guiLeft + 176, guiTop + 234, SLASH_X, SLASH_Y, SLASH_S, SLASH_S);
+		}
 	}
 
 	@Override
