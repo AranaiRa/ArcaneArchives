@@ -1546,6 +1546,9 @@
                 When activated, the Parchtear destroys a radius 1 cuboid area of fluid. If you are sneaking, it instead destroys a single block of fluid. Each fluid block destroyed consumes a point of charge.
             </p>
             <p>
+                Once fluid has been destroyed, other fluid is blocked from flowing into the same space for ten seconds.
+            </p>
+            <p>
                 <image src="arcanearchives:items/gems/pendeloque/dun" tw="16" th="16"/> To recharge a dun Parchtear, place it in the bucket voiding slot of a <link ref="DevouringCharm">Devouring Charm</link>.
             </p>
             <horizontal_rule/>
