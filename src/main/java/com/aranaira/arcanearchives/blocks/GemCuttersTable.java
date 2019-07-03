@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.blocks;
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
+import com.aranaira.arcanearchives.events.LineHandler;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import com.aranaira.arcanearchives.util.DropHelper;
 import net.minecraft.block.material.Material;
@@ -48,6 +49,7 @@ public class GemCuttersTable extends BlockDirectionalTemplate {
 	@Override
 	// TODO: Is this called when accessors are broken?
 	public void breakBlock (World world, BlockPos pos, IBlockState state) {
+		LineHandler.removeLine(pos);
 		TileEntity te = world.getTileEntity(pos);
 		if (te instanceof GemCuttersTableTileEntity) {
 			IItemHandler inv = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
@@ -87,6 +89,8 @@ public class GemCuttersTable extends BlockDirectionalTemplate {
 
 	@Override
 	public boolean onBlockActivated (World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		LineHandler.removeLine(pos);
+
 		if (worldIn.isRemote) {
 			return true;
 		}
