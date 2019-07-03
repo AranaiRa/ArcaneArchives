@@ -2,14 +2,14 @@ package com.aranaira.arcanearchives.client.gui;
 
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerDevouringCharm;
-import com.aranaira.arcanearchives.inventory.ContainerGemSocket;
+import com.aranaira.arcanearchives.inventory.ContainerDevouringCharmBackside;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public class GUIDevouringCharm extends GuiContainer {
+public class GUIDevouringCharmBackside extends GuiContainer {
 
 	private static final ResourceLocation TEXTURE_PLAYERINV = new ResourceLocation("arcanearchives:textures/gui/player_inv.png");
 	private static final ResourceLocation TEXTURE_PLAYERINV_SIMPLE = new ResourceLocation("arcanearchives:textures/gui/simple/player_inv.png");
@@ -19,8 +19,8 @@ public class GUIDevouringCharm extends GuiContainer {
 	private static final ResourceLocation TEXTURE_SINGLESLOT_SIMPLE = new ResourceLocation("arcanearchives:textures/gui/simple/single_slot.png");
 
 	private static final int
-			DEVOURINGCHARM_X = 0,
-			DEVOURINGCHARM_Y = 0,
+			DEVOURINGCHARM_X = 126,
+			DEVOURINGCHARM_Y = 127,
 			DEVOURINGCHARM_W = 130,
 			DEVOURINGCHARM_H = 129,
 			FLIP_X = 231,
@@ -31,11 +31,11 @@ public class GUIDevouringCharm extends GuiContainer {
 			INVENTORY_H = 101;
 
 
-	private ContainerDevouringCharm containerDevouringCharm;
+	private ContainerDevouringCharmBackside containerDevouringCharmBackside;
 
-	public GUIDevouringCharm(@Nonnull ContainerDevouringCharm containerDevouringCharm) {
-		super(containerDevouringCharm);
-		this.containerDevouringCharm = containerDevouringCharm;
+	public GUIDevouringCharmBackside(@Nonnull ContainerDevouringCharmBackside containerDevouringCharmBackside) {
+		super(containerDevouringCharmBackside);
+		this.containerDevouringCharmBackside = containerDevouringCharmBackside;
 		xSize = INVENTORY_W;
 		ySize = 300;
 	}

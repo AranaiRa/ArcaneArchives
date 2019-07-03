@@ -5,7 +5,6 @@ import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.inventory.handlers.DevouringCharmHandler;
 import com.aranaira.arcanearchives.inventory.slots.SlotImmutable;
 import com.aranaira.arcanearchives.items.gems.GemUtil;
-import com.aranaira.arcanearchives.util.ItemUtilities;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -27,13 +26,13 @@ import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
 
-public class ContainerDevouringCharm extends Container {
+public class ContainerDevouringCharmBackside extends Container {
 
 	private DevouringCharmHandler handler;
 	private EntityPlayer player;
 	private ItemStack socket;
 
-	public ContainerDevouringCharm (EntityPlayer player) {
+	public ContainerDevouringCharmBackside(EntityPlayer player) {
 		this.player = player;
 		socket = player.getHeldItemMainhand();
 
