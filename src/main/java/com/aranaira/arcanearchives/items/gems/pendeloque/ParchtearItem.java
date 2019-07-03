@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.items.gems.pendeloque;
 
+import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.gems.GemUtil;
 import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler;
@@ -71,7 +72,7 @@ public class ParchtearItem extends ArcaneGemItem {
 					for (BlockPos pos : positions) {
 						Block block = world.getBlockState(pos).getBlock();
 						if (block instanceof IFluidBlock || block instanceof BlockStaticLiquid || block instanceof BlockDynamicLiquid) {
-							world.setBlockState(pos, Blocks.AIR.getDefaultState());
+							world.setBlockState(pos, BlockRegistry.FAKE_AIR.getDefaultState());
 							chargeCost++;
 						}
 					}

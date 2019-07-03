@@ -169,15 +169,18 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements Manif
 
 		this.markDirty();
 
-		int count = 64;
+		int count = 1;
 
-		if (player.isSneaking()) {
-			count = 1;
-		}
-		ItemStack stack = inventory.extractItem(0, count, false);
+		ItemStack stack = inventory.extractItem(0, count, true);
 		if (stack.isEmpty()) {
 			return;
 		}
+
+		if (player.isSneaking()) {
+			count = stack.getMaxStackSize();
+		}
+
+		stack = inventory.extractItem(0, count, false);
 
 		EntityItem item = new EntityItem(world, player.posX, player.posY, player.posZ, stack);
 		world.spawnEntity(item);

@@ -13,6 +13,7 @@ import net.minecraftforge.common.config.Config.RequiresMcRestart;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -24,11 +25,17 @@ import java.util.List;
 @Config(modid = ArcaneArchives.MODID)
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class ConfigHandler {
-	@SubscribeEvent
-	@SideOnly(Side.CLIENT)
+	@SubscribeEvent(priority=EventPriority.HIGH)
 	public static void onConfigChanged (ConfigChangedEvent.OnConfigChangedEvent event) {
 		if (event.getModID().equals(ArcaneArchives.MODID)) {
 			ConfigManager.sync(ArcaneArchives.MODID, Config.Type.INSTANCE);
+		}
+	}
+
+	@SubscribeEvent(priority=EventPriority.LOWEST)
+	@SideOnly(Side.CLIENT)
+	public static void onClientConfigChanged (ConfigChangedEvent.OnConfigChangedEvent event) {
+		if (event.getModID().equals(ArcaneArchives.MODID)) {
 			parseColours();
 			MaxDistance packet = new MaxDistance(ManifestConfig.MaxDistance);
 			NetworkHandler.CHANNEL.sendToServer(packet);
