@@ -1,10 +1,7 @@
 package com.aranaira.arcanearchives.util.types;
 
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
-import com.aranaira.arcanearchives.tileentities.ManifestTileEntity;
-import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.lang.ref.WeakReference;

@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class MonitoringCrystalTileEntity extends ImmanenceTileEntity implements ManifestTileEntity {
+public class MonitoringCrystalTileEntity extends ImmanenceTileEntity implements IManifestTileEntity {
 	private BlockPos target = null;
 
 	public MonitoringCrystalTileEntity () {

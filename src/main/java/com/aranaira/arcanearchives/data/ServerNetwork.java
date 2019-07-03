@@ -314,7 +314,7 @@ public class ServerNetwork implements IServerNetwork {
 		manifestItems.clear();
 
 		List<ManifestItemEntry> preManifest = new ArrayList<>();
-		Set<ManifestTileEntity> done = new HashSet<>();
+		Set<IManifestTileEntity> done = new HashSet<>();
 		Set<BlockPosDimension> positions = new HashSet<>();
 		EntityPlayer player = getPlayer();
 
@@ -322,7 +322,7 @@ public class ServerNetwork implements IServerNetwork {
 
 		for (IteRef ref : getManifestTileEntities()) {
 			ImmanenceTileEntity ite = ref.getTile();
-			ManifestTileEntity mte = (ManifestTileEntity) ite;
+			IManifestTileEntity mte = (IManifestTileEntity) ite;
 			if (ite == null) {
 				continue;
 			}
@@ -399,7 +399,7 @@ public class ServerNetwork implements IServerNetwork {
 	 */
 	@Override
 	public TileList.TileListIterable getManifestTileEntities () {
-		return tiles.filterAssignableClass(ManifestTileEntity.class);
+		return tiles.filterAssignableClass(IManifestTileEntity.class);
 	}
 
 	@Override

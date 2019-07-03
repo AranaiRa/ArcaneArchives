@@ -6,8 +6,6 @@ import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketGemCutters;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
-import com.aranaira.arcanearchives.util.ManifestTracking;
-import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -20,9 +18,8 @@ import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
 
-public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements ManifestTileEntity {
+public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IManifestTileEntity {
 	private final ItemStackHandler inventory = new ItemStackHandler(18);
 	public static final int RECIPE_PAGE_LIMIT = 7;
 	private GCTRecipe currentRecipe;

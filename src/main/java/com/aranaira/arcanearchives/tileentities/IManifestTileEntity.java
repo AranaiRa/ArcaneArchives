@@ -3,7 +3,7 @@ package com.aranaira.arcanearchives.tileentities;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 
-public interface ManifestTileEntity {
+public interface IManifestTileEntity {
 	default boolean isSingleStackInventory () {
 		return false;
 	}

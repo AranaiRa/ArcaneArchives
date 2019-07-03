@@ -17,7 +17,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nonnull;
 
-public class RadiantChestTileEntity extends ImmanenceTileEntity implements ManifestTileEntity {
+public class RadiantChestTileEntity extends ImmanenceTileEntity implements IManifestTileEntity {
 	private final RadiantChestHandler inventory = new RadiantChestHandler(54);
 	private ItemStack displayStack = ItemStack.EMPTY;
 	private EnumFacing displayFacing = EnumFacing.NORTH;

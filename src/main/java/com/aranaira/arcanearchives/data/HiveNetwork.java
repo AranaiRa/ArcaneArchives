@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
-import com.aranaira.arcanearchives.tileentities.ManifestTileEntity;
+import com.aranaira.arcanearchives.tileentities.IManifestTileEntity;
 import com.aranaira.arcanearchives.tileentities.MonitoringCrystalTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.ItemStackConsolidator;
@@ -88,13 +88,13 @@ public class HiveNetwork implements IHiveBase {
 		int maxDistance = playerNetwork.getMaxDistance();
 
 		List<ManifestItemEntry> preManifest = new ArrayList<>();
-		Set<ManifestTileEntity> done = new HashSet<>();
+		Set<IManifestTileEntity> done = new HashSet<>();
 		Set<BlockPosDimension> positions = new HashSet<>();
 
 		for (ServerNetwork network : getCombinedNetworks()) {
 			for (IteRef ref : network.getManifestTileEntities()) {
 				ImmanenceTileEntity ite = ref.getTile();
-				ManifestTileEntity mte = (ManifestTileEntity) ite;
+				IManifestTileEntity mte = (IManifestTileEntity) ite;
 				if (ite == null) {
 					continue;
 				}
