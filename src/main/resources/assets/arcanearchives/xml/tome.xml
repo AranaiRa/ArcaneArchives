@@ -503,7 +503,7 @@
                 <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Radiant Tank will return what type of fluid is stored, its current and maximum capacity, and how many upgrades have been installed.
             </p>
             <p>
-                <stack item="arcanearchives:scepter_manipulation"/> Using a <link ref="ScepterManipulation">Scepter of Manipulation</link> on a Radiant Trove opens a GUI that allows you to see and modify what upgrades are installed.
+                <stack item="arcanearchives:scepter_manipulation"/> Using a <link ref="ScepterManipulation">Scepter of Manipulation</link> on a Radiant Tank opens a GUI that allows you to see and modify what upgrades are installed.
             </p>
             <p>
                 <stack item="minecraft:comparator"/> When monitored with a Redstone Comparator, a Radiant Tank ouptuts a signal based on how full it is.
@@ -511,7 +511,7 @@
         </section>
         <section>
             <page_title_shorter>
-                <title>Radiant Trove</title>
+                <title>Radiant Tank</title>
             </page_title_shorter>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Radiant Tanks can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
