@@ -1224,7 +1224,7 @@
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Murdergleams can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Slaughtergleams can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
         </section>
     </chapter>
