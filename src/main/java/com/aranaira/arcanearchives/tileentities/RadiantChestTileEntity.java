@@ -21,6 +21,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 	private final TrackingExtendedItemStackHandler inventory = new TrackingExtendedItemStackHandler(54);
 	private ItemStack displayStack = ItemStack.EMPTY;
 	private EnumFacing displayFacing = EnumFacing.NORTH;
+	private BrazierRoutingType routingType = BrazierRoutingType.ANY;
 	public String chestName = "";
 
 	public RadiantChestTileEntity () {
@@ -41,7 +42,15 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 
 	@Override
 	public BrazierRoutingType getRoutingType () {
-		return null;
+		return routingType;
+	}
+
+	public void toggleRoutingType () {
+		if (routingType == BrazierRoutingType.ANY) {
+			this.routingType = BrazierRoutingType.NO_NEW_STACKS;
+		} else {
+			this.routingType = BrazierRoutingType.ANY;
+		}
 	}
 
 	public ItemStack getDisplayStack () {
@@ -110,6 +119,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 		compound.setString(Tags.CHEST_NAME, chestName);
 		compound.setInteger(Tags.DISPLAY_FACING, displayFacing.getIndex());
 		compound.setTag(Tags.DISPLAY_STACK, displayStack.serializeNBT());
+		compound.setInteger(Tags.ROUTING_TYPE, routingType.ordinal());
 
 		return compound;
 	}
@@ -124,6 +134,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 		chestName = compound.getString(Tags.CHEST_NAME);
 		displayFacing = EnumFacing.byIndex(compound.getInteger(Tags.DISPLAY_FACING));
 		displayStack = new ItemStack(compound.getCompoundTag(Tags.DISPLAY_STACK));
+		routingType = BrazierRoutingType.fromInt(compound.getInteger(Tags.ROUTING_TYPE));
 	}
 
 	@Override
@@ -162,6 +173,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 		public static final String CHEST_NAME = "chestName";
 		public static final String DISPLAY_STACK = "displayStack";
 		public static final String DISPLAY_FACING = "displayFacing";
+		public static final String ROUTING_TYPE = "routingType";
 
 		private Tags () {
 		}

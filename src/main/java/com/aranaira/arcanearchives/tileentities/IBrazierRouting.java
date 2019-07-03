@@ -14,6 +14,11 @@ public interface IBrazierRouting {
 
 	enum BrazierRoutingType {
 		ANY,
-		NO_NEW_STACKS
+		NO_NEW_STACKS;
+
+		static BrazierRoutingType fromInt (int index) {
+			if (index == 0) return ANY;
+			return NO_NEW_STACKS;
+		}
 	}
 }
