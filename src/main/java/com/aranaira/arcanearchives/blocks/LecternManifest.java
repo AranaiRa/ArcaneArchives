@@ -5,7 +5,9 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -33,6 +35,7 @@ public class LecternManifest extends BlockDirectionalTemplate {
 		this.setHardness(1.5f);
 		setSize(1, 2, 1);
 		setLightLevel(16f / 16f);
+		this.setDefaultState(this.getDefaultState().withProperty(ACCESSOR, false));
 	}
 
 	@Override
@@ -58,7 +61,6 @@ public class LecternManifest extends BlockDirectionalTemplate {
 			ClientNetwork network = NetworkHelper.getClientNetwork(playerIn.getUniqueID());
 			network.manifestItems.clear();
 			network.synchroniseManifest();
-		} else {
 			playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.MANIFEST, worldIn, pos.getX(), pos.getY(), pos.getZ());
 		}
 
@@ -71,11 +73,36 @@ public class LecternManifest extends BlockDirectionalTemplate {
 	}
 
 	@Override
-	public void breakBlock (World world, BlockPos pos, IBlockState state) {
-		if (!world.isAirBlock(pos.up())) {
-			world.setBlockState(pos.up(), Blocks.AIR.getDefaultState());
+	@SuppressWarnings("deprecation")
+	public IBlockState getStateFromMeta (int meta) {
+		return getDefaultState().withProperty(FACING, EnumFacing.byIndex(meta >> 1)).withProperty(ACCESSOR, (meta & 1) != 0);
+	}
+
+	@Override
+	public int getMetaFromState (IBlockState state) {
+		return state.getValue(FACING).getIndex() << 1 ^ (state.getValue(ACCESSOR) ? 1 : 0);
+	}
+
+	@Override
+	@SuppressWarnings("deprecation")
+	public void neighborChanged (IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
+		if (state.getValue(ACCESSOR)) {
+			if (world.isAirBlock(pos.down())) {
+				world.setBlockToAir(pos);
+			}
+		} else {
+			if (world.isAirBlock(pos.up())) {
+				// TODO: PARTICLES
+				world.setBlockToAir(pos);
+			}
 		}
 
-		super.breakBlock(world, pos, state);
+		super.neighborChanged(state, world, pos, blockIn, fromPos);
 	}
+
+	@Override
+	protected BlockStateContainer createBlockState () {
+		return new BlockStateContainer(this, FACING, ACCESSOR);
+	}
+
 }
