@@ -32,6 +32,7 @@ import vazkii.quark.api.IChestButtonCallback;
 import vazkii.quark.api.IItemSearchBar;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Optional.InterfaceList({@Optional.Interface(modid = "quark", iface = "vazkii.quark.api.IChestButtonCallback", striprefs = true), @Optional.Interface(modid = "quark", iface = "vazkii.quark.api.IItemSearchBar", striprefs = true)})
@@ -51,8 +52,8 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 		SLASH_X = 240,
 		SLASH_Y = 0,
 		SLASH_S = 16,
-		ROUTING_TOOLTIP_X = 277,
-		ROUTING_TOOLTIP_Y = 255,
+		ROUTING_TOOLTIP_X = 159,
+		ROUTING_TOOLTIP_Y = 234,
 		ROUTING_TOOLTIP_W = 33,
 		ROUTING_TOOLTIP_H = 16,
 		ImageScale = 256;
@@ -264,12 +265,19 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 
 	@Override
 	protected void renderHoveredToolTip (int mouseX, int mouseY) {
-		if (mouseY >= ROUTING_TOOLTIP_Y && mouseY <= ROUTING_TOOLTIP_Y+ROUTING_TOOLTIP_H) {
-			if (mouseX >= ROUTING_TOOLTIP_X && mouseX <= ROUTING_TOOLTIP_X + ROUTING_TOOLTIP_W) {
-				if(container.getTile().getRoutingType() == IBrazierRouting.BrazierRoutingType.NO_NEW_STACKS)
-					this.drawHoveringText(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.radiantchest.routingmode.nonewitems"), mouseX, mouseY);
-				else
-					this.drawHoveringText(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.radiantchest.routingmode.any"), mouseX, mouseY);
+		if (mouseY >= guiTop+ROUTING_TOOLTIP_Y && mouseY <= guiTop+ROUTING_TOOLTIP_Y+ROUTING_TOOLTIP_H) {
+			if (mouseX >= guiLeft+ROUTING_TOOLTIP_X && mouseX <= guiLeft+ROUTING_TOOLTIP_X+ROUTING_TOOLTIP_W) {
+				List<String> tooltip = new ArrayList<>();
+				if(container.getTile().getRoutingType() == IBrazierRouting.BrazierRoutingType.NO_NEW_STACKS) {
+					tooltip.add(I18n.format("arcanearchives.tooltip.radiantchest.routingmode.nonewitems1"));
+					tooltip.add(I18n.format("arcanearchives.tooltip.radiantchest.routingmode.nonewitems2"));
+				}
+				else {
+					tooltip.add(I18n.format("arcanearchives.tooltip.radiantchest.routingmode.any1"));
+					tooltip.add(I18n.format("arcanearchives.tooltip.radiantchest.routingmode.any2"));
+				}
+				this.drawHoveringText(tooltip, mouseX, mouseY);
+				return;
 			}
 		}
 
