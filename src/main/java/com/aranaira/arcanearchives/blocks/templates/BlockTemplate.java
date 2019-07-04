@@ -1,9 +1,7 @@
 package com.aranaira.arcanearchives.blocks.templates;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.tileentities.AATileEntity;
-import com.aranaira.arcanearchives.tileentities.AccessorTileEntity;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.util.IHasModel;
 import com.aranaira.arcanearchives.util.types.Size;
@@ -105,6 +103,7 @@ public class BlockTemplate extends Block implements IHasModel {
 
 	@Override
 	public void breakBlock (World world, BlockPos pos, IBlockState state) {
+		// TODO: Fix with accessor change
 		if (hasAccessors() && !world.isRemote) {
 			TileEntity te = world.getTileEntity(pos);
 			if (te instanceof AATileEntity) {
@@ -142,7 +141,7 @@ public class BlockTemplate extends Block implements IHasModel {
 			}
 
 			// The item block has already taken care of to make sure that the points can be replaced.
-			if (this.hasAccessors() || this == BlockRegistry.LECTERN_MANIFEST) {
+			/*if (this.hasAccessors() || this == BlockRegistry.LECTERN_MANIFEST) {
 				for (BlockPos point : calculateAccessors(world, pos)) {
 					world.setBlockState(point, (this == BlockRegistry.LECTERN_MANIFEST) ? BlockRegistry.LECTERN_ACCESSOR.getDefaultState() : BlockRegistry.ACCESSOR.getDefaultState());
 					TileEntity ate = world.getTileEntity(point);
@@ -153,7 +152,7 @@ public class BlockTemplate extends Block implements IHasModel {
 						ArcaneArchives.logger.info("Block had TileEntity accessors but no TileEntity exists to link to it. WTF?");
 					}
 				}
-			}
+			}*/
 		}
 	}
 

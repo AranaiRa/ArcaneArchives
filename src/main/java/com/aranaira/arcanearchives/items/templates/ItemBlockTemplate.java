@@ -75,7 +75,7 @@ public class ItemBlockTemplate extends ItemBlock {
 			return EnumActionResult.FAIL;
 		}
 
-		if (blockTemplate.hasAccessors() || blockTemplate == BlockRegistry.LECTERN_MANIFEST) {
+		if (blockTemplate.hasAccessors()) {
 			boolean safe = true;
 
 			EnumFacing dir = EnumFacing.fromAngle(player.rotationYaw - 90);
@@ -98,7 +98,7 @@ public class ItemBlockTemplate extends ItemBlock {
 		}
 
 		if (placeLimit != -1 && world.isRemote) {
-			ArcaneArchives.logger.info(String.format("[DEBUG ONLY MESSAGE] Successfully placed %s, with %d total resonators and %d total cores in the client network.", blockTemplate.getLocalizedName(), totalResonators, totalCores));
+			//ArcaneArchives.logger.info(String.format("[DEBUG ONLY MESSAGE] Successfully placed %s, with %d total resonators and %d total cores in the client network.", blockTemplate.getLocalizedName(), totalResonators, totalCores));
 		}
 
 		return super.onItemUseFirst(player, world, pos, side, hitX, hitY, hitZ, hand);

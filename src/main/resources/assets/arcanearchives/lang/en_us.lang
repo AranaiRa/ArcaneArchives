@@ -84,7 +84,6 @@ tile.matrix_storage.name=Storage Matrix
 tile.matrix_reservoir.name=Reservoir Matrix
 tile.matrix_distillate.name=Distillate Matrix
 
-tile.accessorblock.name=Accessor
 tile.lectern_manifest.name=Manifest Lectern
 tile.dominion_crystal.name=Dominion Crystal
 tile.gemcutters_table.name=Gem Cutter's Table
@@ -276,9 +275,6 @@ arcanearchives.data.scepter.radiant_resonator.progress=Radiant Resonator current
 arcanearchives.data.scepter.radiant_resonator.status=Current status: %s.
 
 arcanearchives.data.scepter.monitoring_crystal.facing=Monitoring Crystal is facing %s.
-
-arcanearchives.data.scepter.accessor.accessor_to=Accessor to %s at %d/%d/%d.
-arcanearchives.data.scepter.accessor.invalid=Invalid accessor block with no parent.
 
 arcanearchives.data.scepter.tile.invalid=Invalid tile entity for this block!
 arcanearchives.data.scepter.tile.no_upgrades=No upgrades to remove from this device.
