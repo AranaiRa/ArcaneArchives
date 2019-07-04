@@ -48,9 +48,6 @@ public class ContainerRadiantChest extends Container {
 		addOwnSlots();
 		addPlayerSlots(player.inventory);
 		this.player = player;
-		if (!player.world.isRemote) {
-			this.addListener(new RadiantChestListener());
-		}
 	}
 
 	public RadiantChestTileEntity getTile () {
@@ -578,51 +575,5 @@ public class ContainerRadiantChest extends Container {
 
 	public void setName (String name) {
 		tile.setChestName(name);
-	}
-
-	public class RadiantChestListener implements IContainerListener {
-		private ServerNetwork network;
-		private int lastUpdated = 0;
-
-		public RadiantChestListener () {
-			this.network = NetworkHelper.getServerNetwork(player.getUniqueID(), player.world);
-			this.lastUpdated = player.ticksExisted;
-		}
-
-		@Override
-		public void sendAllContents (Container containerToSend, NonNullList<ItemStack> itemsList) {
-		}
-
-		@Override
-		public void sendSlotContents (Container containerToSend, int slotInd, ItemStack stack) {
-			if (slotInd < 54) {
-				sendManifestUpdate();
-			}
-		}
-
-		private void sendManifestUpdate () {
-			if (network != null && (player.ticksExisted - lastUpdated > 80 || player.ticksExisted < lastUpdated)) {
-				MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-				if (server != null) {
-					EntityPlayerMP player = server.getPlayerList().getPlayerByUUID(network.getUuid());
-					if (player != null) {
-						NBTTagCompound output = network.buildSynchroniseManifest();
-						if (output != null) {
-							PacketNetworks.Response packet = new PacketNetworks.Response(PacketNetworks.SynchroniseType.DATA, output);
-							NetworkHandler.CHANNEL.sendTo(packet, player);
-						}
-					}
-				}
-				lastUpdated = player.ticksExisted;
-			}
-		}
-
-		@Override
-		public void sendWindowProperty (Container containerIn, int varToUpdate, int newValue) {
-		}
-
-		@Override
-		public void sendAllWindowProperties (Container containerIn, IInventory inventory) {
-		}
 	}
 }
