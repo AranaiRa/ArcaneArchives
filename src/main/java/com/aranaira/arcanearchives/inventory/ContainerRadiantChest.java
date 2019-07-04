@@ -6,6 +6,7 @@ import com.aranaira.arcanearchives.inventory.slots.SlotExtended;
 import com.aranaira.arcanearchives.network.PacketRadiantChest.MessageSyncExtendedSlotContents;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketNetworks;
+import com.aranaira.arcanearchives.network.PacketRadiantChest.SetName;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity.TrackingExtendedItemStackHandler;
 import com.google.common.collect.Sets;
@@ -574,6 +575,7 @@ public class ContainerRadiantChest extends Container {
 	}
 
 	public void setName (String name) {
-		tile.setChestName(name);
+		SetName packet = new SetName(tile.getPos(), name, tile.dimension);
+		NetworkHandler.CHANNEL.sendToServer(packet);
 	}
 }

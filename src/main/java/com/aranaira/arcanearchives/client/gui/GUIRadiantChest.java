@@ -732,24 +732,6 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 	}
 
 	@Override
-	protected void handleMouseClick (Slot slotIn, int slotId, int mouseButton, ClickType type) {
-		super.handleMouseClick(slotIn, slotId, mouseButton, type);
-        /*if (slotIn != null) {
-            slotId = slotIn.slotNumber;
-        }
-        
-    	short short1 = this.mc.player.openContainer.getNextTransactionID(this.mc.player.inventory);
-        ItemStack itemstack = this.mc.player.openContainer.slotClick(slotId, mouseButton, type, this.mc.player);
-        INetHandler h = FMLClientHandler.instance().getClientPlayHandler();
-        if (h != null && h instanceof NetHandlerPlayClient) {
-        	//PacketHandler.INSTANCE.sendToServer(new MessageClickWindowExtended(this.inventorySlots.windowId, slotId, mouseButton, type, itemstack, short1));
-        } else {
-        	this.mc.playerController.windowClick(this.inventorySlots.windowId, slotId, mouseButton, type, this.mc.player);
-        }
-        */
-	}
-
-	@Override
 	public void onGuiClosed () {
 		super.onGuiClosed();
 
@@ -773,10 +755,12 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 
 	@Override
 	public void setEntryValue (int id, boolean value) {
+
 	}
 
 	@Override
 	public void setEntryValue (int id, float value) {
+
 	}
 
 	@Override
