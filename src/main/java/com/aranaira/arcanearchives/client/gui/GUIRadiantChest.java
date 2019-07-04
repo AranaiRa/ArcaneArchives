@@ -690,12 +690,13 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 			}
 		}
 
-		if (this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode)) {
-			this.mc.player.closeScreen();
+		if (nameBox.isFocused()) {
+			nameBox.textboxKeyTyped(typedChar, keyCode);
+			return;
 		}
 
-		if (nameBox.isFocused() && nameBox.textboxKeyTyped(typedChar, keyCode)) {
-			return;
+		if (this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode)) {
+			this.mc.player.closeScreen();
 		}
 
 		this.checkHotbarKeys(keyCode);
