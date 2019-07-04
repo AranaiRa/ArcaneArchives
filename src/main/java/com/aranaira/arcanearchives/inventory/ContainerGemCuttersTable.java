@@ -64,7 +64,9 @@ public class ContainerGemCuttersTable extends Container {
 				for (Entry entry : recipe.getMatchingSlots(combinedInventory).int2IntEntrySet()) {
 					ItemStack result = combinedInventory.extractItem(entry.getIntKey(), entry.getIntValue(), false);
 					if (!player.world.isRemote) {
-						recipe.handleItemResult(world, player, tile, result);
+						if (recipe.handleItemResult(world, player, tile, result)) {
+							detectAndSendChanges();
+						}
 					}
 				}
 				if (!player.world.isRemote) {

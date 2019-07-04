@@ -2,7 +2,6 @@ package com.aranaira.arcanearchives.recipe.gct;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.api.IGCTRecipe;
-import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import com.aranaira.arcanearchives.util.types.IngredientStack;
 import com.aranaira.arcanearchives.util.types.IngredientsMatcher;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
@@ -107,7 +106,7 @@ public class GCTRecipe implements IGCTRecipe {
 
 	// Also only called on the server side
 	@Override
-	public void handleItemResult (World world, EntityPlayer player, TileEntity craftingTile, ItemStack ingredient) {
+	public boolean handleItemResult (World world, EntityPlayer player, TileEntity craftingTile, ItemStack ingredient) {
 		boolean doReturn = false;
 
 		IFluidHandlerItem cap = ingredient.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
@@ -134,5 +133,7 @@ public class GCTRecipe implements IGCTRecipe {
 				}
 			}
 		}
+
+		return doReturn;
 	}
 }

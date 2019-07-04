@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.api;
 
-import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import com.aranaira.arcanearchives.util.types.IngredientStack;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,5 +31,5 @@ public interface IGCTRecipe {
 	ItemStack onCrafted (EntityPlayer player, ItemStack output);
 
 	// Also only called on the server side
-	void handleItemResult (World world, EntityPlayer player, TileEntity craftingTable, ItemStack ingredient);
+	boolean handleItemResult (World world, EntityPlayer player, TileEntity craftingTable, ItemStack ingredient);
 }
