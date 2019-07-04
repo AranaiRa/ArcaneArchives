@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.tileentities.AATileEntity;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.google.common.collect.Iterators;
 
+import javax.annotation.Nullable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -43,6 +44,7 @@ public class TileList extends ReferenceList<IteRef> {
 		return false;
 	}
 
+	@Nullable
 	public ImmanenceTileEntity getByUUID (UUID uuid) {
 		for (IteRef ref : this) {
 			if (ref.uuid.equals(uuid)) {

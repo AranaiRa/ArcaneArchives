@@ -1,7 +1,11 @@
 package com.aranaira.arcanearchives.network;
 
+import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.inventory.ContainerRadiantChest;
+import com.aranaira.arcanearchives.network.NetworkHandler.EmptyMessageServer;
 import com.aranaira.arcanearchives.network.NetworkHandler.ServerHandler;
+import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.NetworkUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
@@ -25,6 +29,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.io.IOException;
+import java.util.UUID;
 
 public class PacketRadiantChest {
 	public static class SetName implements IMessage {
@@ -63,6 +68,43 @@ public class PacketRadiantChest {
 				RadiantChestTileEntity te = WorldUtil.getTileEntity(RadiantChestTileEntity.class, message.dimension, message.pos);
 				if (te != null) {
 					te.setChestName(message.name);
+				}
+			}
+		}
+	}
+
+	public static class ToggleBrazier implements IMessage {
+		private UUID networkId;
+		private UUID tileId;
+
+		public ToggleBrazier () {
+		}
+
+		public ToggleBrazier (UUID networkId, UUID tileId) {
+			this.networkId = networkId;
+			this.tileId = tileId;
+		}
+
+		@Override
+		public void fromBytes (ByteBuf buf) {
+
+		}
+
+		@Override
+		public void toBytes (ByteBuf buf) {
+
+		}
+
+		public static class Handler implements ServerHandler<ToggleBrazier> {
+			@Override
+			public void processMessage (ToggleBrazier message, MessageContext ctx) {
+				ServerNetwork network = NetworkHelper.getServerNetwork(message.networkId, ctx.getServerHandler().player.world);
+				if (network != null) {
+					ImmanenceTileEntity tile = network.getImmanenceTile(message.tileId);
+					if (tile instanceof RadiantChestTileEntity) {
+						((RadiantChestTileEntity) tile).toggleRoutingType();
+						tile.defaultServerSideUpdate();
+					}
 				}
 			}
 		}
@@ -246,5 +288,4 @@ public class PacketRadiantChest {
 		}
 
 	}
-
 }

@@ -60,6 +60,11 @@ public class ServerNetwork implements IServerNetwork {
 		this.maxDistance = maxDistance;
 	}
 
+	@Nullable
+	public ImmanenceTileEntity getImmanenceTile (UUID tileId) {
+		return tiles.getByUUID(tileId);
+	}
+
 	/***
 	 * Static entrypoint used by NetworkSaveData
 	 */
