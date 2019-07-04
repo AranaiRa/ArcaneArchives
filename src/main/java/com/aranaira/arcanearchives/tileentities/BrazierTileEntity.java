@@ -3,9 +3,10 @@ package com.aranaira.arcanearchives.tileentities;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.inventory.handlers.TroveItemHandler;
+import com.aranaira.arcanearchives.tileentities.IBrazierRouting.BrazierRoutingType;
 import com.aranaira.arcanearchives.util.ItemUtilities;
 import com.aranaira.arcanearchives.util.types.IteRef;
-import com.aranaira.arcanearchives.util.types.UpgradeType;
+import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.entity.Entity;
@@ -48,7 +49,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 			boolean doubleClick = false;
 			long diff = System.currentTimeMillis() - lastClick;
 			ItemStack lastItem = ItemStack.EMPTY;
-			if (player.getUniqueID() == lastUUID && diff <= 1500) {
+			if (player.getUniqueID() == lastUUID && diff <= 2000) {
 				doubleClick = true;
 				lastItem = playerToStackMap.getOrDefault(player, ItemStack.EMPTY);
 			} else if (diff > 20000) {
@@ -170,30 +171,44 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 		int ref = RecipeItemHelper.pack(reference);
 
 		List<CapabilityRef> troves = new ArrayList<>();
-		List<CapabilityRef> trackings = new ArrayList<>();
+		List<CapabilityRef> chests = new ArrayList<>();
+		List<CapabilityRef> gcts = new ArrayList<>();
 		if (network != null) {
 			for (IteRef ref2 : network.getManifestTileEntities()) {
 				if (ref2.tile != null && ref2.getTile() != null) {
+
 					ImmanenceTileEntity ite = ref2.getTile();
-					if (ite instanceof RadiantChestTileEntity) {
-						RadiantChestTileEntity rcte = (RadiantChestTileEntity) ite;
-						trackings.add(new CapabilityRef(rcte.getOrCalculateReference(), rcte.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)));
-					} else if (ite instanceof RadiantTroveTileEntity) {
+					if (!(ite instanceof IBrazierRouting)) continue;
+
+					IBrazierRouting routing = (IBrazierRouting) ite;
+					Int2IntOpenHashMap referenceMap = routing.getOrCalculateReference();
+					IItemHandler inventory = ite.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+					if (routing.getRoutingType() != BrazierRoutingType.ANY && referenceMap.get(ref) <= 0) continue;
+					if (routing.isVoidingTrove(reference)) {
+						return Collections.singletonList(new CapabilityRef(referenceMap, inventory));
+					}
+					if (ite instanceof RadiantTroveTileEntity) {
 						TroveItemHandler handler = ((RadiantTroveTileEntity) ite).getInventory();
 						if (handler.getPacked() == ref) {
-							Map<Integer, Integer> map = Collections.singletonMap(ref, handler.getCount());
-							troves.add(new CapabilityRef(map, handler));
-							if (((RadiantTroveTileEntity) ite).getOptionalUpgradesHandler().hasUpgrade(UpgradeType.VOID)) {
-								return Collections.singletonList(new CapabilityRef(map, handler));
-							}
+							troves.add(new CapabilityRef(referenceMap, handler));
+						}
+					} else if (ite instanceof RadiantChestTileEntity) {
+						if (routing.getRoutingType() == BrazierRoutingType.ANY || referenceMap.get(ref) > 0) {
+							chests.add(new CapabilityRef(referenceMap, inventory));
+						}
+					} else if (ite instanceof GemCuttersTableTileEntity) {
+						if (referenceMap.get(ref) > 0) {
+							gcts.add(new CapabilityRef(referenceMap, inventory));
 						}
 					}
 				}
 			}
 		}
-		trackings.sort((o1, o2) -> Integer.compare(o2.map.getOrDefault(ref, 0), o1.map.getOrDefault(ref, 0)));
-		troves.addAll(trackings);
-		return troves;
+		chests.sort((o1, o2) -> Integer.compare(o2.map.getOrDefault(ref, 0), o1.map.getOrDefault(ref, 0)));
+		gcts.sort((o1, o2) -> Integer.compare(o2.map.getOrDefault(ref, 0), o1.map.getOrDefault(ref, 0)));
+		gcts.addAll(troves);
+		gcts.addAll(chests);
+		return gcts;
 	}
 
 	@Override

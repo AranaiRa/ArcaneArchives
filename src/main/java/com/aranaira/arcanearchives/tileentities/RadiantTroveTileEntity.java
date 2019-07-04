@@ -9,6 +9,7 @@ import com.aranaira.arcanearchives.inventory.handlers.TroveUpgradeItemHandler;
 import com.aranaira.arcanearchives.util.ItemUtilities;
 import com.aranaira.arcanearchives.util.types.UpgradeType;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
+import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -23,6 +24,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
+import java.util.Collections;
 import java.util.UUID;
 
 public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IManifestTileEntity, IUpgradeableStorage, IBrazierRouting {
@@ -285,14 +287,24 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 		return true;
 	}
 
+	private Int2IntOpenHashMap result = new Int2IntOpenHashMap();
+
 	@Override
 	public Int2IntOpenHashMap getOrCalculateReference () {
-		return null;
+		result.put(RecipeItemHelper.pack(inventory.getItem()), inventory.getCount());
+		return result;
 	}
 
 	@Override
 	public BrazierRoutingType getRoutingType () {
 		return BrazierRoutingType.NO_NEW_STACKS;
+	}
+
+	@Override
+	public boolean isVoidingTrove (ItemStack stack) {
+		if (!ItemUtilities.areStacksEqualIgnoreSize(stack, inventory.getItem())) return false;
+
+		return optionalUpgrades.hasUpgrade(UpgradeType.VOID);
 	}
 
 	public static class Tags {
