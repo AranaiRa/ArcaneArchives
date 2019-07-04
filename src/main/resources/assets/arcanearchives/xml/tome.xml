@@ -337,13 +337,17 @@
                 <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Radiant Chest will return the chest's name, and how many slots of its inventory are available.
             </p>
             <p>
-                <stack item="minecraft:comparator"/> When monitored with a Redstone Comparator, a Radiant Chest ouptuts a signal based on how full it is (in total items, rather than number of slots filled).
+                <stack item="arcanearchives:brazier_of_hoarding"/> In the lower right corner of a Radiant Chest's interface, you can choose how <link ref="BrazierHoarding">Braziers of Hoarding</link> adds items to the Chest. By default, a Brazier will be capable of adding any item to the chest; if the checkbox is ticked on, only items that already exist within the chest can be added.
             </p>
         </section>
         <section>
             <page_title_shorter>
                 <title>Radiant Chest</title>
             </page_title_shorter>
+            <p>
+                <stack item="minecraft:comparator"/> When monitored with a Redstone Comparator, a Radiant Chest ouptuts a signal based on how full it is (in total items, rather than number of slots filled).
+            </p>
+            <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:raw_quartz"/> Radiant Chests can be crafted by using a piece of <link ref="RadiantQuartz">Raw Radiant Quartz</link> on a chest while sneaking. Any items inside the chest will be imported, and if used on a double vanilla chest, both chests' inventories will be imported into the new Radiant Chest.
             </p>
