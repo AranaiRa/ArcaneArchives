@@ -577,5 +577,6 @@ public class ContainerRadiantChest extends Container {
 	public void setName (String name) {
 		SetName packet = new SetName(tile.getPos(), name, tile.dimension);
 		NetworkHandler.CHANNEL.sendToServer(packet);
+		tile.setChestName(name);
 	}
 }

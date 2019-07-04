@@ -80,18 +80,6 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 
 	public void setChestName (String newName) {
 		this.chestName = (newName == null) ? "" : newName;
-		this.updateChestName();
-	}
-
-	private void updateChestName () {
-		if (world == null) {
-			return;
-		}
-
-		if (this.world.isRemote) {
-			PacketRadiantChest.SetName packet = new PacketRadiantChest.SetName(getPos(), getChestName(), world.provider.getDimension());
-			NetworkHandler.CHANNEL.sendToServer(packet);
-		}
 	}
 
 	@Override

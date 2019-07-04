@@ -69,6 +69,8 @@ public class PacketRadiantChest {
 				RadiantChestTileEntity te = WorldUtil.getTileEntity(RadiantChestTileEntity.class, message.dimension, message.pos);
 				if (te != null) {
 					te.setChestName(message.name);
+					te.markDirty();
+					te.defaultServerSideUpdate();
 				}
 			}
 		}
