@@ -153,6 +153,7 @@ arcanearchives.tooltip.gemupgrade.power=POWER
 arcanearchives.tooltip.gemupgrade.space=SPACE
 arcanearchives.tooltip.gemupgrade.time=TIME
 
+arcanearchives.tooltip.devouringcharm.flip=Flip the Devouring Charm over.
 arcanearchives.tooltip.manifest.inanotherdim=This chest is located in %s.
 arcanearchives.tooltip.manifest.chestsneak=[Hold shift to view chest locations.]
 arcanearchives.tooltip.manifest.entry=%s at (%d,%d,%d) contains %d.

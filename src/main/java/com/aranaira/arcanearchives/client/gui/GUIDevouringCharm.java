@@ -1,13 +1,20 @@
 package com.aranaira.arcanearchives.client.gui;
 
+import com.aranaira.arcanearchives.AAGuiHandler;
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerDevouringCharm;
 import com.aranaira.arcanearchives.inventory.ContainerGemSocket;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
 
 import javax.annotation.Nonnull;
+import java.io.IOException;
 
 public class GUIDevouringCharm extends GuiContainer {
 
@@ -30,14 +37,28 @@ public class GUIDevouringCharm extends GuiContainer {
 			INVENTORY_W = 181,
 			INVENTORY_H = 101;
 
+	private GuiButton flipButton;
 
-	private ContainerDevouringCharm containerDevouringCharm;
+	private ContainerDevouringCharm container;
 
 	public GUIDevouringCharm(@Nonnull ContainerDevouringCharm containerDevouringCharm) {
 		super(containerDevouringCharm);
-		this.containerDevouringCharm = containerDevouringCharm;
+		this.container = containerDevouringCharm;
 		xSize = INVENTORY_W;
 		ySize = 300;
+	}
+
+	@Override
+	public void initGui () {
+		super.initGui();
+
+		float i = (this.width - this.xSize) / 2;
+		float j = (this.height - this.ySize) / 2;
+
+		buttonList.clear();
+
+		flipButton = new InvisibleButton(0, (int)i, (int)j + 60, FLIP_W, FLIP_H, "");
+		addButton(flipButton);
 	}
 
 	@Override
@@ -45,6 +66,14 @@ public class GUIDevouringCharm extends GuiContainer {
 		drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		this.renderHoveredToolTip(mouseX, mouseY);
+	}
+
+	@Override
+	protected void actionPerformed(GuiButton button) throws IOException {
+		if(button.id == 0) { //flip button
+			EntityPlayer player = Minecraft.getMinecraft().player;
+			player.openGui(ArcaneArchives.instance, AAGuiHandler.DEVOURING_CHARM_BACKSIDE, player.world, (int) player.posX, (int) player.posY, (int) player.posZ);
+		}
 	}
 
 	@Override
