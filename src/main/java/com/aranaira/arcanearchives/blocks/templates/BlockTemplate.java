@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.blocks.templates;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.tileentities.AATileEntity;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.util.IHasModel;
@@ -9,6 +10,8 @@ import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -17,6 +20,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -34,6 +38,8 @@ import java.util.List;
 import java.util.UUID;
 
 public class BlockTemplate extends Block implements IHasModel {
+	public static PropertyBool ACCESSOR = PropertyBool.create("accessor");
+
 	public Size size;
 	private int placeLimit = -1;
 	private Class<? extends AATileEntity> entityClass;
@@ -102,18 +108,6 @@ public class BlockTemplate extends Block implements IHasModel {
 	}
 
 	@Override
-	public void breakBlock (World world, BlockPos pos, IBlockState state) {
-		// TODO: Fix with accessor change
-		if (hasAccessors() && !world.isRemote) {
-			TileEntity te = world.getTileEntity(pos);
-			if (te instanceof AATileEntity) {
-				((AATileEntity) te).breakBlock(state, false);
-			}
-		}
-		super.breakBlock(world, pos, state);
-	}
-
-	@Override
 	public void onBlockPlacedBy (@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityLivingBase placer, @Nonnull ItemStack stack) {
 		super.onBlockPlacedBy(world, pos, state, placer, stack);
 
@@ -141,18 +135,11 @@ public class BlockTemplate extends Block implements IHasModel {
 			}
 
 			// The item block has already taken care of to make sure that the points can be replaced.
-			/*if (this.hasAccessors() || this == BlockRegistry.LECTERN_MANIFEST) {
+			if (this.hasAccessors() || this == BlockRegistry.LECTERN_MANIFEST) {
 				for (BlockPos point : calculateAccessors(world, pos)) {
-					world.setBlockState(point, (this == BlockRegistry.LECTERN_MANIFEST) ? BlockRegistry.LECTERN_ACCESSOR.getDefaultState() : BlockRegistry.ACCESSOR.getDefaultState());
-					TileEntity ate = world.getTileEntity(point);
-					if (ate != null) {
-						((AccessorTileEntity) ate).setParent(pos);
-					} else if (this != BlockRegistry.LECTERN_MANIFEST) {
-						// TODO: Include more information
-						ArcaneArchives.logger.info("Block had TileEntity accessors but no TileEntity exists to link to it. WTF?");
-					}
+					world.setBlockState(point, this.getDefaultState().withProperty(ACCESSOR, true).withProperty(BlockDirectionalTemplate.FACING, EnumFacing.fromAngle(placer.rotationYaw - 90)));
 				}
-			}*/
+			}
 		}
 	}
 
@@ -228,12 +215,18 @@ public class BlockTemplate extends Block implements IHasModel {
 	}
 
 	@Override
-	protected BlockStateContainer createBlockState () {
-		if (hasTileEntity(getDefaultState())) {
-			return new ExtendedBlockState(this, new IProperty[]{}, new IUnlistedProperty[]{Properties.AnimationProperty});
-		}
+	public EnumBlockRenderType getRenderType (IBlockState state) {
+		return EnumBlockRenderType.MODEL;
+	}
 
-		return new ExtendedBlockState(this, new IProperty[]{}, new IUnlistedProperty[]{});
+	@Override
+	protected BlockStateContainer createBlockState () {
+		/*if (hasTileEntity(getDefaultState())) {
+			return new ExtendedBlockState(this, new IProperty[]{}, new IUnlistedProperty[]{Properties.AnimationProperty});
+		}*/
+
+		return new BlockStateContainer(this);
+		//new ExtendedBlockState(this, new IProperty[]{}, new IUnlistedProperty[]{});
 	}
 }
 

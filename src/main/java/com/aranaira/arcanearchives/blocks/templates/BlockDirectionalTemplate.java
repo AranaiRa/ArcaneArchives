@@ -48,11 +48,12 @@ public class BlockDirectionalTemplate extends BlockTemplate {
 
 	@Override
 	protected BlockStateContainer createBlockState () {
-		if (hasTileEntity(getDefaultState())) {
+		/*if (hasTileEntity(getDefaultState())) {
 			return new ExtendedBlockState(this, new IProperty[]{FACING}, new IUnlistedProperty[]{Properties.AnimationProperty});
-		}
+		}*/
 
-		return new ExtendedBlockState(this, new IProperty[]{FACING}, new IUnlistedProperty[]{});
+		return new BlockStateContainer(this, FACING);
+		//ExtendedBlockState(this, new IProperty[]{FACING}, new IUnlistedProperty[]{});
 	}
 
 	@Override

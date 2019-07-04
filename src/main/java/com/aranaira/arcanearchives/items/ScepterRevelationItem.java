@@ -171,20 +171,6 @@ public class ScepterRevelationItem extends ItemTemplate {
 
 			EnumFacing te_facing = state.getValue(MonitoringCrystal.FACING).getOpposite();
 			player.sendMessage(new TextComponentTranslation("arcanearchives.data.scepter.monitoring_crystal.facing", te_facing.getName()).setStyle(def));
-		} else if (block == BlockRegistry.ACCESSOR) {
-			AccessorTileEntity te = WorldUtil.getTileEntity(AccessorTileEntity.class, world, pos);
-			if (te == null) {
-				player.sendMessage(new TextComponentTranslation("arcanearchives.data.scepter.missing_te").setStyle(error));
-				return EnumActionResult.SUCCESS;
-			}
-
-			BlockTemplate parent = te.getParentBlock();
-			BlockPos parentPos = te.getParent();
-			if (parent == null) {
-				player.sendMessage(new TextComponentTranslation("arcanearchives.data.scepter.accessor.invalid").setStyle(error));
-			} else {
-				player.sendMessage(new TextComponentTranslation("arcanearchives.data.scepter.accessor.accessor_to", new TextComponentTranslation(parent.getTranslationKey() + ".name"), parentPos.getX(), parentPos.getY(), parentPos.getZ()).setStyle(def));
-			}
 		}
 
 		return EnumActionResult.SUCCESS;

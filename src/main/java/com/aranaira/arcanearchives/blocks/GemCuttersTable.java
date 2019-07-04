@@ -6,7 +6,9 @@ import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
 import com.aranaira.arcanearchives.events.LineHandler;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import com.aranaira.arcanearchives.util.DropHelper;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -20,6 +22,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -34,9 +38,22 @@ public class GemCuttersTable extends BlockDirectionalTemplate {
 		this.setHardness(2.5f);
 		setSize(2, 1, 1);
 		setLightLevel(16f / 16f);
+		this.setDefaultState(this.getDefaultState().withProperty(ACCESSOR, false));
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
+	public IBlockState getStateFromMeta (int meta) {
+		return getDefaultState().withProperty(FACING, EnumFacing.byIndex(meta >> 1)).withProperty(ACCESSOR, (meta & 1) != 0);
+	}
+
+	@Override
+	public int getMetaFromState (IBlockState state) {
+		return state.getValue(FACING).getIndex() << 1 ^ (state.getValue(ACCESSOR) ? 1 : 0);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
 	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.device.gemcutters_table"));
 	}
@@ -47,9 +64,11 @@ public class GemCuttersTable extends BlockDirectionalTemplate {
 	}
 
 	@Override
-	// TODO: Is this called when accessors are broken?
 	public void breakBlock (World world, BlockPos pos, IBlockState state) {
+		if (state.getValue(ACCESSOR)) return;
+
 		LineHandler.removeLine(pos);
+
 		TileEntity te = world.getTileEntity(pos);
 		if (te instanceof GemCuttersTableTileEntity) {
 			IItemHandler inv = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
@@ -59,9 +78,27 @@ public class GemCuttersTable extends BlockDirectionalTemplate {
 		super.breakBlock(world, pos, state);
 	}
 
+	public BlockPos getConnectedPos (BlockPos pos, IBlockState state) {
+		return pos.offset(state.getValue(FACING));
+	}
+
 	@Override
-	public void onBlockPlacedBy (World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
+	@SuppressWarnings("deprecation")
+	public void neighborChanged (IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
+		if (state.getValue(ACCESSOR)) {
+			if (world.isAirBlock(getConnectedPos(pos, state))) {
+				world.setBlockToAir(pos);
+			}
+		} else {
+			BlockPos thingy = pos.offset(EnumFacing.fromAngle(state.getValue(FACING).getHorizontalAngle() - 180));
+			if (world.isAirBlock(thingy)) {
+				// TODO: PARTICLES
+				this.breakBlock(world, pos, state);
+				world.setBlockToAir(pos);
+			}
+		}
+
+		super.neighborChanged(state, world, pos, blockIn, fromPos);
 	}
 
 	@Override
@@ -89,6 +126,10 @@ public class GemCuttersTable extends BlockDirectionalTemplate {
 
 	@Override
 	public boolean onBlockActivated (World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if (state.getValue(ACCESSOR)) {
+			pos = getConnectedPos(pos, state);
+		}
+
 		LineHandler.removeLine(pos);
 
 		if (worldIn.isRemote) {
@@ -102,11 +143,18 @@ public class GemCuttersTable extends BlockDirectionalTemplate {
 
 	@Override
 	public boolean hasTileEntity (IBlockState state) {
-		return true;
+		return !state.getValue(ACCESSOR);
 	}
 
 	@Override
 	public TileEntity createTileEntity (World world, IBlockState state) {
+		if (state.getValue(ACCESSOR)) return null;
+
 		return new GemCuttersTableTileEntity();
+	}
+
+	@Override
+	protected BlockStateContainer createBlockState () {
+		return new BlockStateContainer(this, FACING, ACCESSOR);
 	}
 }
