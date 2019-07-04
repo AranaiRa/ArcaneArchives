@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "arcanearchives:radiant_amphora"
+    },
+    "title": {
+      "translate": "advancement.arcanearchives.amphora"
+    },
+    "description": {
+      "translate": "advancement.arcanearchives.amphora.desc"
+    }
+  },
+  "parent": "arcanearchives:tank",
+  "criteria": {
+    "book": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "arcanearchives:radiant_amphora"
+          }
+        ]
+      }
+    }
+  }
+}

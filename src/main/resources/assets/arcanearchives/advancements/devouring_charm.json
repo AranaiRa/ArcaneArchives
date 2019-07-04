@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "arcanearchives:devouring_charm"
+    },
+    "title": {
+      "translate": "advancement.arcanearchives.devouring_charm"
+    },
+    "description": {
+      "translate": "advancement.arcanearchives.devouring_charm.desc"
+    }
+  },
+  "parent": "arcanearchives:scepter_manipulation",
+  "criteria": {
+    "book": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "arcanearchives:devouring_charm"
+          }
+        ]
+      }
+    }
+  }
+}

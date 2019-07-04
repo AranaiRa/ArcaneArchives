@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "arcanearchives:radiant_crafting_table"
+    },
+    "title": {
+      "translate": "advancement.arcanearchives.crafting_table"
+    },
+    "description": {
+      "translate": "advancement.arcanearchives.crafting_table.desc"
+    }
+  },
+  "parent": "arcanearchives:raw_quartz",
+  "criteria": {
+    "book": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "arcanearchives:radiant_crafting_table"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "arcanearchives:raw_quartz"
+    },
+    "title": {
+      "translate": "advancement.arcanearchives.raw_quartz"
+    },
+    "description": {
+      "translate": "advancement.arcanearchives.raw_quartz.desc"
+    }
+  },
+  "parent": "arcanearchives:resonator",
+  "criteria": {
+    "book": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "arcanearchives:raw_quartz"
+          }
+        ]
+      }
+    }
+  }
+}

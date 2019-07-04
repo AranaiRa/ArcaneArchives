@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "arcanearchives:lectern_manifest"
+    },
+    "title": {
+      "translate": "advancement.arcanearchives.lectern_manifest"
+    },
+    "description": {
+      "translate": "advancement.arcanearchives.lectern_manifest.desc"
+    }
+  },
+  "parent": "arcanearchives:manifest",
+  "criteria": {
+    "book": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "arcanearchives:lectern_manifest"
+          }
+        ]
+      }
+    }
+  }
+}

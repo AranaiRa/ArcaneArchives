@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "arcanearchives:radiant_trove"
+    },
+    "title": {
+      "translate": "advancement.arcanearchives.trove"
+    },
+    "description": {
+      "translate": "advancement.arcanearchives.trove.desc"
+    }
+  },
+  "parent": "arcanearchives:gemcutters_table",
+  "criteria": {
+    "book": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "arcanearchives:radiant_trove"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "arcanearchives:material_interface"
+    },
+    "title": {
+      "translate": "advancement.arcanearchives.material_interface"
+    },
+    "description": {
+      "translate": "advancement.arcanearchives.material_interface.desc"
+    }
+  },
+  "parent": "arcanearchives:scepter_manipulation",
+  "criteria": {
+    "book": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "arcanearchives:material_interface"
+          }
+        ]
+      }
+    }
+  }
+}

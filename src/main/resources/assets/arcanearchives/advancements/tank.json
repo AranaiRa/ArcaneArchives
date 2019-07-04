@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "arcanearchives:radiant_tank"
+    },
+    "title": {
+      "translate": "advancement.arcanearchives.tank"
+    },
+    "description": {
+      "translate": "advancement.arcanearchives.tank.desc"
+    }
+  },
+  "parent": "arcanearchives:gemcutters_table",
+  "criteria": {
+    "book": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "arcanearchives:radiant_tank"
+          }
+        ]
+      }
+    }
+  }
+}

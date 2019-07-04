@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "arcanearchives:manifest"
+    },
+    "title": {
+      "translate": "advancement.arcanearchives.manifest"
+    },
+    "description": {
+      "translate": "advancement.arcanearchives.manifest.desc"
+    }
+  },
+  "parent": "arcanearchives:gemcutters_table",
+  "criteria": {
+    "book": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "arcanearchives:manifest"
+          }
+        ]
+      }
+    }
+  }
+}

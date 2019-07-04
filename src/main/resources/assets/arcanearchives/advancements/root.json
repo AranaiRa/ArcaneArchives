@@ -1,0 +1,21 @@
+{
+    "display": {
+        "icon": {
+            "item": "arcanearchives:shaped_quartz"
+        },
+        "title": {
+            "translate": "advancement.arcanearchives.root"
+        },
+        "description": {
+            "translate": "advancement.arcaneachives.root.desc"
+        },
+        "background": "arcanearchives:textures/blocks/block_storage_rawquartz.png",
+        "show_toast": false,
+        "announce_to_chat" : false
+    },
+    "criteria": {
+        "auto": {
+            "trigger": "minecraft:location"
+        }
+    }
+}
