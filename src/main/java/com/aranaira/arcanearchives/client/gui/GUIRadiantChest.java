@@ -5,6 +5,9 @@ import com.aranaira.arcanearchives.client.render.RenderItemExtended;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerRadiantChest;
 import com.aranaira.arcanearchives.inventory.slots.SlotExtended;
+import com.aranaira.arcanearchives.network.NetworkHandler;
+import com.aranaira.arcanearchives.network.PacketRadiantAmphora.Toggle;
+import com.aranaira.arcanearchives.network.PacketRadiantChest.ToggleBrazier;
 import com.aranaira.arcanearchives.tileentities.IBrazierRouting;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.ManifestTracking;
@@ -141,7 +144,8 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
 		if(button.id == 0) { //toggle button
-			container.getTile().toggleRoutingType();
+			ToggleBrazier packet = new ToggleBrazier(mc.player.getUniqueID(), tile.getUuid());
+			NetworkHandler.CHANNEL.sendToServer(packet);
 			ArcaneArchives.logger.info("button pushed; routing type is "+container.getTile().getRoutingType());
 		}
 	}

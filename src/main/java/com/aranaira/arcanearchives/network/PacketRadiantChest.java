@@ -17,6 +17,7 @@ import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.play.server.SPacketConfirmTransaction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -87,12 +88,24 @@ public class PacketRadiantChest {
 
 		@Override
 		public void fromBytes (ByteBuf buf) {
-
+			long most = buf.readLong();
+			long least = buf.readLong();
+			this.networkId = new UUID(most, least);
+			most = buf.readLong();
+			least = buf.readLong();
+			this.tileId = new UUID(most, least);
 		}
 
 		@Override
 		public void toBytes (ByteBuf buf) {
-
+			long most = networkId.getMostSignificantBits();
+			long least = networkId.getLeastSignificantBits();
+			buf.writeLong(most);
+			buf.writeLong(least);
+			most = tileId.getMostSignificantBits();
+			least = tileId.getLeastSignificantBits();
+			buf.writeLong(most);
+			buf.writeLong(least);
 		}
 
 		public static class Handler implements ServerHandler<ToggleBrazier> {
