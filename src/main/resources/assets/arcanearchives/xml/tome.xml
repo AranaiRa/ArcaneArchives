@@ -337,7 +337,7 @@
                 <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Radiant Chest will return the chest's name, and how many slots of its inventory are available.
             </p>
             <p>
-                <stack item="arcanearchives:brazier_of_hoarding"/> In the lower right corner of a Radiant Chest's interface, you can choose how <link ref="BrazierHoarding">Braziers of Hoarding</link> adds items to the Chest. By default, a Brazier will be capable of adding any item to the chest; if the checkbox is ticked on, only items that already exist within the chest can be added.
+                <stack item="arcanearchives:brazier_of_hoarding"/> In the lower right corner of a Radiant Chest's interface, you can choose how <link ref="BrazierHoarding">Braziers of Hoarding</link> route items to the Chest. By default, a Brazier will be capable of routing any item to the chest; if the checkbox is ticked on, only items that already exist within the chest can be routed.
             </p>
         </section>
         <section>
