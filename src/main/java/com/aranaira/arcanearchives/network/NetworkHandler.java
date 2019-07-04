@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -59,6 +60,28 @@ public class NetworkHandler {
 			ArcaneArchives.proxy.scheduleTask(() -> processMessage(message, ctx), Side.CLIENT);
 
 			return null;
+		}
+	}
+
+	public static abstract class EmptyMessageServer extends ServerHandler<EmptyMessageServer> implements IMessage {
+		@Override
+		public void fromBytes (ByteBuf buf) {
+		}
+
+		@Override
+		public void toBytes (ByteBuf buf) {
+		}
+	}
+
+	public static abstract class EmptyMessageClient extends ClientHandler<EmptyMessageClient> implements IMessage {
+		@Override
+		public void fromBytes (ByteBuf buf) {
+
+		}
+
+		@Override
+		public void toBytes (ByteBuf buf) {
+
 		}
 	}
 }
