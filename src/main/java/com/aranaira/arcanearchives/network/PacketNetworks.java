@@ -5,6 +5,8 @@ import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.HiveNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
+import com.aranaira.arcanearchives.network.NetworkHandler.ClientHandler;
+import com.aranaira.arcanearchives.network.NetworkHandler.ServerHandler;
 import com.typesafe.config.ConfigException.Null;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -65,7 +67,7 @@ public class PacketNetworks {
 			buf.writeShort(this.type.ordinal());
 		}
 
-		public static class Handler extends NetworkHandler.ServerHandler<Request> {
+		public static class Handler implements ServerHandler<Request> {
 			@Override
 			public void processMessage (Request message, MessageContext context) {
 				MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
@@ -136,7 +138,7 @@ public class PacketNetworks {
 			ByteBufUtils.writeTag(buf, this.data);
 		}
 
-		public static class Handler extends NetworkHandler.ClientHandler<Response> {
+		public static class Handler implements ClientHandler<Response> {
 			@Override
 			@SideOnly(Side.CLIENT)
 			public void processMessage (Response message, MessageContext context) {

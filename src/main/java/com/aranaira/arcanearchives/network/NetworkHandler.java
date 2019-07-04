@@ -22,13 +22,12 @@ public class NetworkHandler {
 		registerPacks(PacketNetworks.Response.Handler.class, PacketNetworks.Response.class, Side.CLIENT);
 		registerPacks(PacketNetworks.Request.Handler.class, PacketNetworks.Request.class, Side.SERVER);
 		registerPacks(PacketRadiantCrafting.LastRecipe.Handler.class, PacketRadiantCrafting.LastRecipe.class, Side.CLIENT);
-		registerPacks(PacketRadiantAmphora.Handler.class, PacketRadiantAmphora.class, Side.SERVER);
 		registerPacks(PacketConfig.MaxDistance.Handler.class, PacketConfig.MaxDistance.class, Side.SERVER);
-		registerPacks(PacketConfig.RequestMaxDistance.Handler.class, PacketConfig.RequestMaxDistance.class, Side.CLIENT);
-		registerPacks(PacketRadiantAmphora.Handler.class, PacketRadiantAmphora.class, Side.SERVER);
+		registerPacks(PacketConfig.RequestMaxDistance.class, PacketConfig.RequestMaxDistance.class, Side.CLIENT);
+		registerPacks(PacketRadiantAmphora.Toggle.class, Side.SERVER);
 		registerPacks(PacketArcaneGems.GemParticle.Handler.class, PacketArcaneGems.GemParticle.class, Side.CLIENT);
-		registerPacks(PacketArcaneGems.Toggle.class, PacketArcaneGems.Toggle.class, Side.SERVER);
-		registerPacks(PacketArcaneGems.OpenSocket.Handler.class, PacketArcaneGems.OpenSocket.class, Side.SERVER);
+		registerPacks(PacketArcaneGems.Toggle.class, Side.SERVER);
+		registerPacks(PacketArcaneGems.OpenSocket.class, PacketArcaneGems.OpenSocket.class, Side.SERVER);
 		registerPacks(PacketRadiantChest.MessageClickWindowExtended.Handler.class, PacketRadiantChest.MessageClickWindowExtended.class, Side.CLIENT);
 		registerPacks(PacketRadiantChest.MessageSyncExtendedSlotContents.Handler.class, PacketRadiantChest.MessageSyncExtendedSlotContents.class, Side.CLIENT);
 	}
@@ -38,50 +37,44 @@ public class NetworkHandler {
 		packetID++;
 	}
 
-	public static abstract class BaseHandler<T extends IMessage> implements IMessageHandler<T, IMessage> {
-		@Override
-		public abstract IMessage onMessage (T message, MessageContext ctx);
+	private static <T extends EmptyMessage<T> & BaseHandler<T>> void registerPacks (Class<T> handlerAndMessage, Side side) {
+		CHANNEL.registerMessage(handlerAndMessage, handlerAndMessage, packetID, side);
+		packetID++;
+	}
 
+	public interface BaseHandler<T extends IMessage> extends IMessageHandler<T, IMessage> {
 		public abstract void processMessage (T message, MessageContext ctx);
 	}
 
-	public static abstract class ServerHandler<T extends IMessage> extends BaseHandler<T> {
-		@Override
-		public IMessage onMessage (T message, MessageContext ctx) {
+	public interface ServerHandler<T extends IMessage> extends BaseHandler<T> {
+		default IMessage onMessage (T message, MessageContext ctx) {
 			FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> processMessage(message, ctx));
 
 			return null;
 		}
 	}
 
-	public static abstract class ClientHandler<T extends IMessage> extends BaseHandler<T> {
-		@Override
-		public IMessage onMessage (T message, MessageContext ctx) {
+	public interface ClientHandler<T extends IMessage> extends BaseHandler<T> {
+		default IMessage onMessage (T message, MessageContext ctx) {
 			ArcaneArchives.proxy.scheduleTask(() -> processMessage(message, ctx), Side.CLIENT);
 
 			return null;
 		}
 	}
 
-	public static abstract class EmptyMessageServer<T extends IMessage> extends ServerHandler<T> implements IMessage {
-		@Override
-		public void fromBytes (ByteBuf buf) {
+	public interface EmptyMessage<T extends IMessage> extends IMessage, BaseHandler<T> {
+		default void fromBytes (ByteBuf buf) {
 		}
 
 		@Override
-		public void toBytes (ByteBuf buf) {
+		default void toBytes (ByteBuf buf) {
 		}
 	}
 
-	public static abstract class EmptyMessageClient<T extends IMessage> extends ClientHandler<EmptyMessageClient> implements IMessage {
-		@Override
-		public void fromBytes (ByteBuf buf) {
+	public interface EmptyMessageServer<T extends IMessage> extends EmptyMessage<T>, ServerHandler<T> {
+	}
 
-		}
+	public interface EmptyMessageClient<T extends IMessage> extends EmptyMessage<T>, ClientHandler<T> {
 
-		@Override
-		public void toBytes (ByteBuf buf) {
-
-		}
 	}
 }

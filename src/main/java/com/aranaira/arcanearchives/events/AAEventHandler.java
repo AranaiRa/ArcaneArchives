@@ -23,9 +23,8 @@ import com.aranaira.arcanearchives.items.gems.asscher.Slaughtergleam;
 import com.aranaira.arcanearchives.items.gems.pampel.Elixirspindle;
 import com.aranaira.arcanearchives.items.gems.trillion.StormwayItem;
 import com.aranaira.arcanearchives.network.NetworkHandler;
-import com.aranaira.arcanearchives.network.PacketArcaneGems.Toggle;
 import com.aranaira.arcanearchives.network.PacketConfig.RequestMaxDistance;
-import com.aranaira.arcanearchives.network.PacketRadiantAmphora;
+import com.aranaira.arcanearchives.network.PacketRadiantAmphora.Toggle;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import com.aranaira.arcanearchives.util.NBTUtils;
@@ -160,14 +159,14 @@ public class AAEventHandler {
 	public static void onLeftClickEmpty (PlayerInteractEvent.LeftClickEmpty event) {
 		Item item = event.getEntityPlayer().inventory.getCurrentItem().getItem();
 		if (item == ItemRegistry.RADIANT_AMPHORA) {
-			PacketRadiantAmphora packet = new PacketRadiantAmphora();
+			Toggle packet = new Toggle();
 			NetworkHandler.CHANNEL.sendToServer(packet);
 		}else if (item instanceof ArcaneGemItem) {
 			ItemStack stack = event.getEntityPlayer().getHeldItemMainhand();
 			ArcaneGemItem agi = (ArcaneGemItem) stack.getItem();
 
 			if (agi.hasToggleMode()) {
-				Toggle packet = new Toggle();
+				com.aranaira.arcanearchives.network.PacketArcaneGems.Toggle packet = new com.aranaira.arcanearchives.network.PacketArcaneGems.Toggle();
 				NetworkHandler.CHANNEL.sendToServer(packet);
 			}
 		}

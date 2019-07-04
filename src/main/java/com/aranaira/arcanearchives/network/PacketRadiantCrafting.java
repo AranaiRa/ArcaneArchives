@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.inventory.ContainerRadiantCraftingTable;
+import com.aranaira.arcanearchives.network.NetworkHandler.ClientHandler;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.Container;
@@ -30,7 +31,7 @@ public class PacketRadiantCrafting {
 			buf.writeInt(CraftingManager.REGISTRY.getIDForObject(recipe));
 		}
 
-		public static class Handler extends NetworkHandler.ClientHandler<LastRecipe> {
+		public static class Handler implements ClientHandler<LastRecipe> {
 			@Override
 			public void processMessage (LastRecipe message, MessageContext ctx) {
 				Container container = Minecraft.getMinecraft().player.openContainer;

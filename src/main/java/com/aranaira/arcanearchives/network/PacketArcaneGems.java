@@ -68,7 +68,7 @@ public class PacketArcaneGems {
 			buf.writeDouble(pos2.z);
 		}
 
-		public static class Handler extends ClientHandler<GemParticle> {
+		public static class Handler implements ClientHandler<GemParticle> {
 			@Override
 			public void processMessage (GemParticle packet, MessageContext context) {
 				//ArcaneArchives.logger.info("Received particles packet\n    Gem is "+packet.color.name()+" "+packet.cut.name()+"\n    pos1="+packet.pos1+"    pos2="+packet.pos2);
@@ -95,7 +95,7 @@ public class PacketArcaneGems {
 		}
 	}
 
-	public static class Toggle extends EmptyMessageServer<Toggle> {
+	public static class Toggle implements EmptyMessageServer<Toggle> {
 		public Toggle () {
 		}
 
@@ -108,7 +108,7 @@ public class PacketArcaneGems {
 		}
 	}
 
-	public static class OpenSocket extends EmptyMessageServer<OpenSocket> {
+	public static class OpenSocket implements EmptyMessageServer<OpenSocket> {
 		public OpenSocket () {
 		}
 

@@ -1,6 +1,8 @@
 package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
+import com.aranaira.arcanearchives.network.NetworkHandler.ClientHandler;
+import com.aranaira.arcanearchives.network.NetworkHandler.ServerHandler;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
@@ -46,7 +48,7 @@ public class PacketGemCutters {
 			buf.writeInt(dimension);
 		}
 
-		public static class Handler extends NetworkHandler.ServerHandler<ChangeRecipe> {
+		public static class Handler implements ServerHandler<ChangeRecipe> {
 			@Override
 			public void processMessage (ChangeRecipe message, MessageContext ctx) {
 				GemCuttersTableTileEntity te = WorldUtil.getTileEntity(GemCuttersTableTileEntity.class, message.dimension, message.pos);
@@ -78,7 +80,7 @@ public class PacketGemCutters {
 			buf.writeInt(recipe.getIndex());
 		}
 
-		public static class Handler extends NetworkHandler.ClientHandler<LastRecipe> {
+		public static class Handler implements ClientHandler<LastRecipe> {
 			@Override
 			public void processMessage (LastRecipe message, MessageContext ctx) {
 				Container container = Minecraft.getMinecraft().player.openContainer;

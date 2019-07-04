@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.inventory.ContainerRadiantChest;
+import com.aranaira.arcanearchives.network.NetworkHandler.ServerHandler;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.NetworkUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
@@ -56,7 +57,7 @@ public class PacketRadiantChest {
 			buf.writeInt(dimension);
 		}
 
-		public static class Handler extends NetworkHandler.ServerHandler<SetName> {
+		public static class Handler implements ServerHandler<SetName> {
 			@Override
 			public void processMessage (SetName message, MessageContext ctx) {
 				RadiantChestTileEntity te = WorldUtil.getTileEntity(RadiantChestTileEntity.class, message.dimension, message.pos);
