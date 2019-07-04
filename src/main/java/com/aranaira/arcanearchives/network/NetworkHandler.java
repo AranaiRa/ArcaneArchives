@@ -26,8 +26,8 @@ public class NetworkHandler {
 		registerPacks(PacketConfig.MaxDistance.Handler.class, PacketConfig.MaxDistance.class, Side.SERVER);
 		registerPacks(PacketConfig.RequestMaxDistance.Handler.class, PacketConfig.RequestMaxDistance.class, Side.CLIENT);
 		registerPacks(PacketRadiantAmphora.Handler.class, PacketRadiantAmphora.class, Side.SERVER);
-		registerPacks(PacketArcaneGem.Handler.class, PacketArcaneGem.class, Side.CLIENT);
-		registerPacks(PacketArcaneGemToggle.Handler.class, PacketArcaneGemToggle.class, Side.SERVER);
+		registerPacks(PacketArcaneGems.GemParticle.Handler.class, PacketArcaneGems.GemParticle.class, Side.CLIENT);
+		registerPacks(PacketArcaneGems.Toggle.Handler.class, PacketArcaneGems.Toggle.class, Side.SERVER);
 		registerPacks(PacketGemSocket.Handler.class, PacketGemSocket.class, Side.SERVER);
 		registerPacks(PacketRadiantChest.MessageClickWindowExtended.Handler.class, PacketRadiantChest.MessageClickWindowExtended.class, Side.CLIENT);
 		registerPacks(PacketRadiantChest.MessageSyncExtendedSlotContents.Handler.class, PacketRadiantChest.MessageSyncExtendedSlotContents.class, Side.CLIENT);

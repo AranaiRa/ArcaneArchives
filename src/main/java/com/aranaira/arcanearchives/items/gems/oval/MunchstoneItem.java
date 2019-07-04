@@ -6,7 +6,7 @@ import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.gems.GemUtil;
 import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler;
 import com.aranaira.arcanearchives.network.NetworkHandler;
-import com.aranaira.arcanearchives.network.PacketArcaneGem;
+import com.aranaira.arcanearchives.network.PacketArcaneGems.GemParticle;
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -66,7 +66,7 @@ public class MunchstoneItem extends ArcaneGemItem {
 						stack.shrink(numConsumed);
 						//TODO: Play a particle effect
 						Vec3d pos = player.getPositionVector().add(0, 1, 0);
-						PacketArcaneGem packet = new PacketArcaneGem(cut, color, pos, pos);
+						GemParticle packet = new GemParticle(cut, color, pos, pos);
 						NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, pos.x, pos.y, pos.z, 160);
 						NetworkHandler.CHANNEL.sendToAllAround(packet, tp);
 						break;
@@ -121,7 +121,7 @@ public class MunchstoneItem extends ArcaneGemItem {
 							GemUtil.consumeCharge(handler.getHeld(), chargeConsumed);
 							world.setBlockState(pos, Blocks.AIR.getDefaultState());
 
-							PacketArcaneGem packet = new PacketArcaneGem(cut, color, blockPosToVector(pos, true), blockPosToVector(pos, true));
+							GemParticle packet = new GemParticle(cut, color, blockPosToVector(pos, true), blockPosToVector(pos, true));
 							NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, pos.getX(), pos.getY(), pos.getZ(), 40);
 							NetworkHandler.CHANNEL.sendToAllAround(packet, tp);
 						}

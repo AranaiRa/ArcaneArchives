@@ -46,10 +46,14 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 	}
 
 	public void toggleRoutingType () {
-		if (routingType == BrazierRoutingType.ANY) {
-			this.routingType = BrazierRoutingType.NO_NEW_STACKS;
+		if (!world.isRemote) {
+			if (routingType == BrazierRoutingType.ANY) {
+				this.routingType = BrazierRoutingType.NO_NEW_STACKS;
+			} else {
+				this.routingType = BrazierRoutingType.ANY;
+			}
 		} else {
-			this.routingType = BrazierRoutingType.ANY;
+
 		}
 	}
 

@@ -1,8 +1,5 @@
 package com.aranaira.arcanearchives.events;
 
-import baubles.api.BaubleType;
-import baubles.api.BaublesApi;
-import baubles.api.cap.IBaublesItemHandler;
 import com.aranaira.arcanearchives.client.render.RenderGemcasting;
 import com.aranaira.arcanearchives.client.render.RenderGemcasting.EnumGemGuiMode;
 import com.aranaira.arcanearchives.config.ConfigHandler;
@@ -13,8 +10,6 @@ import com.aranaira.arcanearchives.entity.ai.AIResonatorSit;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.integration.baubles.BaubleBodyCapabilityHandler;
-import com.aranaira.arcanearchives.inventory.handlers.GemSocketHandler;
-import com.aranaira.arcanearchives.items.GemSocket;
 import com.aranaira.arcanearchives.items.RadiantAmphoraItem.AmphoraUtil;
 import com.aranaira.arcanearchives.items.TomeOfArcanaItem;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
@@ -28,7 +23,7 @@ import com.aranaira.arcanearchives.items.gems.asscher.Slaughtergleam;
 import com.aranaira.arcanearchives.items.gems.pampel.Elixirspindle;
 import com.aranaira.arcanearchives.items.gems.trillion.StormwayItem;
 import com.aranaira.arcanearchives.network.NetworkHandler;
-import com.aranaira.arcanearchives.network.PacketArcaneGemToggle;
+import com.aranaira.arcanearchives.network.PacketArcaneGems.Toggle;
 import com.aranaira.arcanearchives.network.PacketConfig.RequestMaxDistance;
 import com.aranaira.arcanearchives.network.PacketRadiantAmphora;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
@@ -172,7 +167,7 @@ public class AAEventHandler {
 			ArcaneGemItem agi = (ArcaneGemItem) stack.getItem();
 
 			if (agi.hasToggleMode()) {
-				PacketArcaneGemToggle packet = new PacketArcaneGemToggle();
+				Toggle packet = new Toggle();
 				NetworkHandler.CHANNEL.sendToServer(packet);
 			}
 		}

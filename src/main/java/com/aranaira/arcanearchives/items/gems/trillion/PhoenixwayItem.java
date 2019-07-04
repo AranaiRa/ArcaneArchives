@@ -3,7 +3,7 @@ package com.aranaira.arcanearchives.items.gems.trillion;
 import com.aranaira.arcanearchives.items.gems.*;
 import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler;
 import com.aranaira.arcanearchives.network.NetworkHandler;
-import com.aranaira.arcanearchives.network.PacketArcaneGem;
+import com.aranaira.arcanearchives.network.PacketArcaneGems.GemParticle;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
@@ -59,7 +59,7 @@ public class PhoenixwayItem extends ArcaneGemItem {
 						stack.shrink(numConsumed);
 						//TODO: Play a particle effect
 						Vec3d pos = player.getPositionVector().add(0, 1, 0);
-						PacketArcaneGem packet = new PacketArcaneGem(cut, color, pos, pos);
+						GemParticle packet = new GemParticle(cut, color, pos, pos);
 						NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, pos.x, pos.y, pos.z, 160);
 						NetworkHandler.CHANNEL.sendToAllAround(packet, tp);
 						break;
@@ -84,7 +84,7 @@ public class PhoenixwayItem extends ArcaneGemItem {
 
 					Vec3d end = new Vec3d(pos.offset(facing).getX(), pos.offset(facing).getY(), pos.offset(facing).getZ());
 
-					PacketArcaneGem packet = new PacketArcaneGem(cut, color, start, end);
+					GemParticle packet = new GemParticle(cut, color, start, end);
 					NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, start.x, start.y, start.z, 160);
 					NetworkHandler.CHANNEL.sendToAllAround(packet, tp);
 				}
