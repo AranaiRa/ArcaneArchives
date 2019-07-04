@@ -9,7 +9,7 @@ import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.integration.jei.JEIUnderMouse;
 import com.aranaira.arcanearchives.items.ManifestItem;
 import com.aranaira.arcanearchives.network.NetworkHandler;
-import com.aranaira.arcanearchives.network.PacketGemSocket;
+import com.aranaira.arcanearchives.network.PacketArcaneGems.OpenSocket;
 import com.aranaira.arcanearchives.util.ManifestTracking;
 import com.aranaira.arcanearchives.util.types.ManifestEntry;
 import net.minecraft.client.Minecraft;
@@ -98,7 +98,7 @@ public class Keybinds {
 				mc.player.sendMessage(new TextComponentTranslation("arcanearchives.gui.missing_manifest").setStyle(new Style().setColor(TextFormatting.YELLOW)));
 			}
 		} else if (socketKey != null && socketKey.isKeyDown() && mc.inGameHasFocus) {
-			PacketGemSocket packet = new PacketGemSocket();
+			OpenSocket packet = new OpenSocket();
 			NetworkHandler.CHANNEL.sendToServer(packet);
 		}
 	}

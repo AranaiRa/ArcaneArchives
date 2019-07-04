@@ -27,8 +27,8 @@ public class NetworkHandler {
 		registerPacks(PacketConfig.RequestMaxDistance.Handler.class, PacketConfig.RequestMaxDistance.class, Side.CLIENT);
 		registerPacks(PacketRadiantAmphora.Handler.class, PacketRadiantAmphora.class, Side.SERVER);
 		registerPacks(PacketArcaneGems.GemParticle.Handler.class, PacketArcaneGems.GemParticle.class, Side.CLIENT);
-		registerPacks(PacketArcaneGems.Toggle.Handler.class, PacketArcaneGems.Toggle.class, Side.SERVER);
-		registerPacks(PacketGemSocket.Handler.class, PacketGemSocket.class, Side.SERVER);
+		registerPacks(PacketArcaneGems.Toggle.class, PacketArcaneGems.Toggle.class, Side.SERVER);
+		registerPacks(PacketArcaneGems.OpenSocket.Handler.class, PacketArcaneGems.OpenSocket.class, Side.SERVER);
 		registerPacks(PacketRadiantChest.MessageClickWindowExtended.Handler.class, PacketRadiantChest.MessageClickWindowExtended.class, Side.CLIENT);
 		registerPacks(PacketRadiantChest.MessageSyncExtendedSlotContents.Handler.class, PacketRadiantChest.MessageSyncExtendedSlotContents.class, Side.CLIENT);
 	}
@@ -63,7 +63,7 @@ public class NetworkHandler {
 		}
 	}
 
-	public static abstract class EmptyMessageServer extends ServerHandler<EmptyMessageServer> implements IMessage {
+	public static abstract class EmptyMessageServer<T extends IMessage> extends ServerHandler<T> implements IMessage {
 		@Override
 		public void fromBytes (ByteBuf buf) {
 		}
@@ -73,7 +73,7 @@ public class NetworkHandler {
 		}
 	}
 
-	public static abstract class EmptyMessageClient extends ClientHandler<EmptyMessageClient> implements IMessage {
+	public static abstract class EmptyMessageClient<T extends IMessage> extends ClientHandler<EmptyMessageClient> implements IMessage {
 		@Override
 		public void fromBytes (ByteBuf buf) {
 

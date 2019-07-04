@@ -1,14 +1,19 @@
 package com.aranaira.arcanearchives.network;
 
+import com.aranaira.arcanearchives.AAGuiHandler;
+import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.inventory.handlers.GemSocketHandler;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.gems.GemUtil;
 import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler;
 import com.aranaira.arcanearchives.network.NetworkHandler.ClientHandler;
-import com.aranaira.arcanearchives.network.NetworkHandler.ServerHandler;
+import com.aranaira.arcanearchives.network.NetworkHandler.EmptyMessageServer;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -90,26 +95,29 @@ public class PacketArcaneGems {
 		}
 	}
 
-	public static class Toggle implements IMessage {
-
+	public static class Toggle extends EmptyMessageServer<Toggle> {
 		public Toggle () {
 		}
 
 		@Override
-		public void fromBytes (ByteBuf buf) {
+		public void processMessage (Toggle packet, MessageContext context) {
+			//ArcaneArchives.logger.info("Received toggle packet");
+			EntityPlayerMP player = context.getServerHandler().player;
+			AvailableGemsHandler handler = GemUtil.getHeldGem(player, EnumHand.MAIN_HAND);
+			GemUtil.swapToggle(handler.getHeld());
+		}
+	}
+
+	public static class OpenSocket extends EmptyMessageServer<OpenSocket> {
+		public OpenSocket () {
 		}
 
 		@Override
-		public void toBytes (ByteBuf buf) {
-		}
-
-		public static class Handler extends ServerHandler<Toggle> {
-			@Override
-			public void processMessage (Toggle packet, MessageContext context) {
-				//ArcaneArchives.logger.info("Received toggle packet");
-				EntityPlayerMP player = context.getServerHandler().player;
-				AvailableGemsHandler handler = GemUtil.getHeldGem(player, EnumHand.MAIN_HAND);
-				GemUtil.swapToggle(handler.getHeld());
+		public void processMessage (OpenSocket message, MessageContext ctx) {
+			EntityPlayer player = ctx.getServerHandler().player;
+			ItemStack stack = GemSocketHandler.findSocket(player);
+			if (!stack.isEmpty()) {
+				player.openGui(ArcaneArchives.instance, AAGuiHandler.BAUBLE_GEMSOCKET, player.world, (int) player.posX, (int) player.posY, (int) player.posZ);
 			}
 		}
 	}
