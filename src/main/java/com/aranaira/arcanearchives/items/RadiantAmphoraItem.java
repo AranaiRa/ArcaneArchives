@@ -8,6 +8,7 @@ import com.aranaira.arcanearchives.util.NBTUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
+import net.minecraft.block.BlockStaticLiquid;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
@@ -97,9 +98,13 @@ public class RadiantAmphoraItem extends ItemTemplate {
 		if (!world.isRemote) {
 			Block hit = world.getBlockState(pos).getBlock();
 			Block offsetHit = world.getBlockState(pos.offset(facing)).getBlock();
+			if (!world.isBlockModifiable(player, pos) || !world.isBlockModifiable(player, pos.offset(facing))) return EnumActionResult.PASS;
 			ItemStack stack = getHeldBucket(player);
 			AmphoraUtil util = new AmphoraUtil(stack);
 			if(offsetHit instanceof BlockLiquid || offsetHit instanceof IFluidBlock) {
+				if (offsetHit instanceof IFluidBlock) {
+					IFluidBlock hitFluid = (IFluidBlock) offsetHit;
+				}
 				if(util.getMode() == TankMode.FILL) {
 					boolean result = onItemRightClickInternal(world, player, player.getHeldItem(hand), pos.offset(facing));
 					if (result) {

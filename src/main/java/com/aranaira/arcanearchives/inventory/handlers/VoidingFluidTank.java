@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.inventory.handlers;
 
+import com.aranaira.arcanearchives.util.types.UpgradeType;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;
@@ -8,9 +9,14 @@ import javax.annotation.Nullable;
 
 public class VoidingFluidTank extends FluidTank {
 	private boolean voiding = false;
+	private OptionalUpgradesHandler optionals = null;
 
 	public VoidingFluidTank (int capacity) {
 		super(capacity);
+	}
+
+	public void setOptions (OptionalUpgradesHandler optionals) {
+		this.optionals = optionals;
 	}
 
 	public VoidingFluidTank (@Nullable FluidStack fluidStack, int capacity) {
@@ -22,16 +28,12 @@ public class VoidingFluidTank extends FluidTank {
 	}
 
 	public boolean isVoiding () {
-		return voiding;
-	}
-
-	public void setVoiding (boolean voiding) {
-		this.voiding = voiding;
+		return optionals.hasUpgrade(UpgradeType.VOID) && getCapacity() == getFluidAmount();
 	}
 
 	@Override
 	public int fillInternal (FluidStack resource, boolean doFill) {
-		if (voiding && resource != null && fluid.isFluidEqual(resource)) {
+		if (isVoiding() && resource != null && fluid != null && fluid.isFluidEqual(resource)) {
 			int result = resource.amount;
 			super.fillInternal(resource, doFill);
 			resource.amount = 0;
@@ -42,7 +44,7 @@ public class VoidingFluidTank extends FluidTank {
 
 	@Override
 	public boolean canFill () {
-		if (voiding) {
+		if (isVoiding()) {
 			return true;
 		}
 		return super.canFill();

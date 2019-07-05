@@ -40,17 +40,13 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity implements IUpgra
 		}
 	};
 
-	private OptionalUpgradesHandler optionalUpgrades = new OptionalUpgradesHandler() {
-		@Override
-		protected void onContentsChanged (int slot) {
-			inventory.setVoiding(this.hasUpgrade(UpgradeType.VOID));
-		}
-	};
+	private OptionalUpgradesHandler optionalUpgrades = new OptionalUpgradesHandler();
 
 	public boolean wasCreativeDrop = false;
 
 	public RadiantTankTileEntity () {
 		super("radianttank");
+		this.inventory.setOptions(optionalUpgrades);
 	}
 
 	@Override
