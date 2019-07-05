@@ -2,13 +2,13 @@ package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.ItemRegistry;
+import com.aranaira.arcanearchives.items.RadiantAmphoraItem.AmphoraUtil;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
 import com.aranaira.arcanearchives.util.NBTUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
-import net.minecraft.block.BlockStaticLiquid;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
@@ -98,14 +98,16 @@ public class RadiantAmphoraItem extends ItemTemplate {
 		if (!world.isRemote) {
 			Block hit = world.getBlockState(pos).getBlock();
 			Block offsetHit = world.getBlockState(pos.offset(facing)).getBlock();
-			if (!world.isBlockModifiable(player, pos) || !world.isBlockModifiable(player, pos.offset(facing))) return EnumActionResult.PASS;
+			if (!world.isBlockModifiable(player, pos) || !world.isBlockModifiable(player, pos.offset(facing))) {
+				return EnumActionResult.PASS;
+			}
 			ItemStack stack = getHeldBucket(player);
 			AmphoraUtil util = new AmphoraUtil(stack);
-			if(offsetHit instanceof BlockLiquid || offsetHit instanceof IFluidBlock) {
+			if (offsetHit instanceof BlockLiquid || offsetHit instanceof IFluidBlock) {
 				if (offsetHit instanceof IFluidBlock) {
 					IFluidBlock hitFluid = (IFluidBlock) offsetHit;
 				}
-				if(util.getMode() == TankMode.FILL) {
+				if (util.getMode() == TankMode.FILL) {
 					boolean result = onItemRightClickInternal(world, player, player.getHeldItem(hand), pos.offset(facing));
 					if (result) {
 						return EnumActionResult.SUCCESS;
@@ -233,16 +235,18 @@ public class RadiantAmphoraItem extends ItemTemplate {
 
 		@SideOnly(Side.CLIENT)
 		public String getFluidType () {
-			if (!nbt.hasKey("fluidType")) {
-				return I18n.format("arcanearchives.tooltip.amphora.unknown_fluid");
+			IFluidHandler handler = getCapability();
+			if (handler != null) {
+				FluidStack stack = getFluidStack(handler);
+
+				if (net.minecraft.util.text.translation.I18n.canTranslate(stack.getFluid().getName())) {
+					return net.minecraft.util.text.translation.I18n.translateToLocal(stack.getFluid().getName());
+				}
+
+				return net.minecraft.util.text.translation.I18n.translateToLocalFormatted(stack.getLocalizedName());
 			}
 
-			String key = nbt.getString("fluidType");
-			if (!I18n.format(key + ".name").equals(key + ".name")) {
-				key = key.replace("fluid.", "") + ".name";
-			}
-
-			return I18n.format(key);
+			return "unknown tank";
 		}
 
 		public Fluid getFluid (IFluidHandler capability) {
