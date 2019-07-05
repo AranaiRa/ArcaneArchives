@@ -64,6 +64,9 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 				item = player.getHeldItemOffhand();
 				hand = EnumHand.OFF_HAND;
 			}
+			if (!item.isEmpty() && item.hasTagCompound() && item.getTagCompound().hasKey("Quark:FavoriteItem")) {
+				return;
+			}
 			if (!item.isEmpty() && !doubleClick) {
 				playerToStackMap.put(player, item.copy());
 			}
@@ -125,6 +128,8 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 	}
 
 	private ItemStack tryInsert (ItemStack stack) {
+		if (stack.hasTagCompound() && stack.getTagCompound().hasKey("Quark:FavoriteItem")) return stack;
+
 		ServerNetwork network = NetworkHelper.getServerNetwork(this.networkId, this.world);
 		List<CapabilityRef> caps = collectCapabilities(network, stack);
 		for (CapabilityRef cap : caps) {
