@@ -36,6 +36,15 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 		super("brazier");
 	}
 
+	private boolean isFavourite (ItemStack stack) {
+		if (!stack.hasTagCompound()) return false;
+
+		NBTTagCompound tag = stack.getTagCompound();
+		if (tag == null) return false;
+
+		return tag.hasKey("Quark:FavoriteItem");
+	}
+
 	public void beginInsert (Entity entity) {
 		if (entity.world.isRemote) {
 			return; // This should never trigger.
@@ -64,11 +73,14 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 				item = player.getHeldItemOffhand();
 				hand = EnumHand.OFF_HAND;
 			}
-			if (!item.isEmpty() && item.hasTagCompound() && item.getTagCompound().hasKey("Quark:FavoriteItem")) {
+			if (!item.isEmpty() && item.hasTagCompound() && isFavourite(item)) {
 				return;
 			}
 			if (!item.isEmpty() && !doubleClick) {
 				playerToStackMap.put(player, item.copy());
+			}
+			if (item.isEmpty() && !doubleClick) {
+				playerToStackMap.put(player, ItemStack.EMPTY);
 			}
 			if (!item.isEmpty()) {
 				if (!doubleClick) {
@@ -85,6 +97,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 					consumeItems(player, references);
 				}
 			} else if ((!item.isEmpty() && doubleClick) || (!lastItem.isEmpty() && doubleClick)) {
+				ItemStack toCompare = item.isEmpty() ? lastItem : item;
 				IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
 				IntOpenHashSet doneSlots = new IntOpenHashSet();
 				for (int i = 0; i < playerInventory.getSlots(); i++) {
@@ -92,7 +105,25 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 						continue;
 					}
 					ItemStack ref = playerInventory.getStackInSlot(i);
-					if (ref.isEmpty()) {
+					if (ref.isEmpty() || !ItemUtilities.areStacksEqualIgnoreSize(toCompare, ref) || isFavourite(ref)) {
+						continue;
+					}
+					List<InventoryRef> references = collectReferences(player, ref);
+					for (InventoryRef ref2 : references) {
+						doneSlots.add(ref2.slot);
+					}
+					tryInsert(references, ref);
+					consumeItems(player, references);
+				}
+			} else if (item.isEmpty() && lastItem.isEmpty() && doubleClick && player.isSneaking()) {
+				IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+				IntOpenHashSet doneSlots = new IntOpenHashSet();
+				for (int i = 9; i < playerInventory.getSlots(); i++) {
+					if (doneSlots.contains(i)) {
+						continue;
+					}
+					ItemStack ref = playerInventory.getStackInSlot(i);
+					if (ref.isEmpty() || isFavourite(ref)) {
 						continue;
 					}
 					List<InventoryRef> references = collectReferences(player, ref);
@@ -127,7 +158,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 	}
 
 	private ItemStack tryInsert (ItemStack stack) {
-		if (stack.hasTagCompound() && stack.getTagCompound().hasKey("Quark:FavoriteItem")) return stack;
+		if (isFavourite(stack)) return stack;
 
 		ServerNetwork network = NetworkHelper.getServerNetwork(this.networkId, this.world);
 		List<CapabilityRef> caps = collectCapabilities(network, stack);
@@ -146,6 +177,8 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 		List<CapabilityRef> caps = collectCapabilities(network, reference);
 		for (CapabilityRef cap : caps) {
 			for (InventoryRef ref : stacks) {
+				if (isFavourite(ref.stack)) continue;
+
 				ItemStack result = ItemHandlerHelper.insertItemStacked(cap.handler, ref.stack, false);
 				if (!result.isEmpty()) {
 					ref.count = result.getCount();
@@ -197,7 +230,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 							troves.add(new CapabilityRef(referenceMap, handler));
 						}
 					} else if (ite instanceof RadiantChestTileEntity) {
-						if (routing.getRoutingType() == BrazierRoutingType.ANY || referenceMap.get(ref) > 0) {
+						if (routing.getRoutingType() == BrazierRoutingType.ANY || (referenceMap.get(ref) < reference.getMaxStackSize() && referenceMap.get(ref) > 0)) {
 							chests.add(new CapabilityRef(referenceMap, inventory));
 						}
 					} else if (ite instanceof GemCuttersTableTileEntity) {
