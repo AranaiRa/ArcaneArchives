@@ -87,8 +87,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 			} else if ((!item.isEmpty() && doubleClick) || (!lastItem.isEmpty() && doubleClick)) {
 				IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
 				IntOpenHashSet doneSlots = new IntOpenHashSet();
-				// TODO: ignore hotbar slots
-				for (int i = 9; i < playerInventory.getSlots(); i++) {
+				for (int i = 0; i < playerInventory.getSlots(); i++) {
 					if (doneSlots.contains(i)) {
 						continue;
 					}
