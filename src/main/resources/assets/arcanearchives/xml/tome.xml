@@ -9,6 +9,8 @@
         <not name="no_thaumcraft"><mod-loaded modid="thaumcraft"/></not>
         <mod-loaded name="ml_astralsorcery" modid="astralsorcery"/>
         <not name="no_astralsorcery"><mod-loaded modid="astralsorcery"/></not>
+        <mod-loaded name="ml_quark" modid="quark"/>
+        <not name="no_quark"><mod-loaded modid="quark"></mod-loaded></not>
     </conditions>
 
     <stack-links>
@@ -170,8 +172,8 @@
             <p>
                 If no storage can be found, items are ejected from the Brazier of Hoarding.
             </p>
-            <p>
-                <stack item="arcanearchives:scepter_manipulation"/> Using a <link ref="scepter_manipulation">Scepter of Manipulation</link> on a Brazier of Hoarding will toggle whether it is allowed to place items in Radiant Chests that don't already contain a copy of the item.
+            <p condition="ml_quark">
+                <image src="arcanearchives:gui/guidebook/quark_lock" tw="16" th="16"/> If you have an item set as a Quark favorite, it cannot be inserted into a Brazier of Hoarding by right clicking.
             </p>
             <p condition="ml_thaumcraft">
                 <stack item="thaumcraft:infusion_matrix"/> Braziers of Hoarding can be used as an infusion stabilizer.
