@@ -89,7 +89,10 @@ public class RenderGemcasting {
 			}
 
 			//bar fill
-			int fillAmount = (int) (GemUtil.getChargePercent(stack) * 20);
+			float gcp = GemUtil.getChargePercent(stack);
+			int fillAmount = (int) (gcp) * 20;
+			if(gcp > 0 && fillAmount == 0)
+				fillAmount = 1;
 			if (mode == EnumGemGuiMode.LEFT) {
 				minecraft.ingameGUI.drawTexturedModalRect(anchorX + 11 - leftShiftFill + (20 - fillAmount), anchorY + 5, fill_x, fill_y + getColorOffset(gem), fillAmount, fill_h);
 			} else if (mode == EnumGemGuiMode.RIGHT) {
