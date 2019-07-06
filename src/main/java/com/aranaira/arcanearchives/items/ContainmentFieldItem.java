@@ -44,7 +44,7 @@ public class ContainmentFieldItem extends ItemTemplate implements IUpgradeItem {
 
 	@Override
 	public int getSlotIsUpgradeFor (ItemStack stack) {
-		return 2;
+		return 1;
 	}
 
 	public static List<Class<?>> UPGRADE_FOR = Collections.singletonList(RadiantTankTileEntity.class);
