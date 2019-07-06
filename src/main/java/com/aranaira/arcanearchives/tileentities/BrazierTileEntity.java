@@ -28,13 +28,38 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class BrazierTileEntity extends ImmanenceTileEntity {
+	public static int STEP = 10;
+
 	private UUID lastUUID = null;
 	private long lastClick = -1;
 	private Map<EntityPlayer, ItemStack> playerToStackMap = new ConcurrentHashMap<>();
+	private int radius = 150;
+	private boolean subnetworkOnly = false;
 
 	public BrazierTileEntity () {
 		super("brazier");
 	}
+
+	public int getRadius () {
+		return radius;
+	}
+
+	public int reduceRadius () {
+		return radius = Math.max(0, radius - STEP);
+	}
+
+	public int increaseRadius () {
+		return radius = Math.max(300, radius + STEP);
+	}
+
+	public boolean getNetworkMode () {
+		return subnetworkOnly;
+	}
+
+	public void toggleNetworkMode () {
+		subnetworkOnly = !subnetworkOnly;
+	}
+
 
 	private boolean isFavourite (ItemStack stack) {
 		if (!stack.hasTagCompound()) return false;
