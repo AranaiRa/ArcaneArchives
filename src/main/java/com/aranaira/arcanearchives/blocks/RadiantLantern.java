@@ -74,7 +74,7 @@ public class RadiantLantern extends BlockDirectionalTemplate {
 		} else if (facing == EnumFacing.EAST) {
 			return new AxisAlignedBB(0.0, 0.35, 0.35, 1.0, 0.65, 0.65);
 		} else {
-			return new AxisAlignedBB(1.0, 0.35, 0.35, 1.0, 0.65, 0.65);
+			return new AxisAlignedBB(0.0, 0.35, 0.35, 1.0, 0.65, 0.65);
 		}
 	}
 
