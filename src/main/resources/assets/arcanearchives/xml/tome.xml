@@ -74,9 +74,9 @@
             <space height="24"/>
             <horizontal_rule/>
             <space height="22"/>
-            <p align="center"><link ref="TableOfContents:Blocks"><image src="arcanearchives:gui/guidebook/home_blocks" tw="163" th="48"/></link>       <link ref="TableOfContents:Items"><image src="arcanearchives:gui/guidebook/home_items" tw="163" th="48"/></link></p>
+            <p align="center"><link ref="TableOfContents:Blocks"><image src="arcanearchives:gui/guidebook/home_blocks" tw="163" th="48" hoverSrc="arcanearchives:gui/guidebook/home_blocks_hover"/></link>       <link ref="TableOfContents:Items"><image src="arcanearchives:gui/guidebook/home_items" tw="163" th="48" hoverSrc="arcanearchives:gui/guidebook/home_items_hover"/></link></p>
             <space height="6"/>
-            <p align="center"><link ref="TableOfContents:ArcaneGems"><image src="arcanearchives:gui/guidebook/home_arcana" tw="163" th="48"/></link>       <link ref="TableOfContents:Concepts"><image src="arcanearchives:gui/guidebook/home_concepts" tw="163" th="48"/></link></p>
+            <p align="center"><link ref="TableOfContents:ArcaneGems"><image src="arcanearchives:gui/guidebook/home_arcana" tw="163" th="48" hoverSrc="arcanearchives:gui/guidebook/home_arcana_hover"/></link>       <link ref="TableOfContents:Concepts"><image src="arcanearchives:gui/guidebook/home_concepts" tw="163" th="48" hoverSrc="arcanearchives:gui/guidebook/home_concepts_hover"/></link></p>
         </section>
     </chapter>
 
