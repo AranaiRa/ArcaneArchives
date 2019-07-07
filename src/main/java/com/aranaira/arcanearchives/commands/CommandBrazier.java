@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.commands;
 
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
-import com.aranaira.arcanearchives.inventory.handlers.TroveItemHandler;
+import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler;
 import com.aranaira.arcanearchives.tileentities.BrazierTileEntity;
 import com.aranaira.arcanearchives.tileentities.BrazierTileEntity.CapabilityRef;
 import net.minecraft.client.util.RecipeItemHelper;

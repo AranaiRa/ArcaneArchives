@@ -1,9 +1,8 @@
 package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.blocks.MonitoringCrystal;
-import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.init.BlockRegistry;
-import com.aranaira.arcanearchives.inventory.handlers.TroveItemHandler;
+import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.tileentities.*;
 import com.aranaira.arcanearchives.util.WorldUtil;
