@@ -43,7 +43,7 @@ public class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCo
 	public ItemStack getStackInSlot (int slot) {
 		if (slot == 0) {
 			ItemStack result = reference.copy();
-			result.setCount(Math.min(this.count, result.getMaxStackSize()));
+			result.setCount(this.count);
 
 			return result;
 		} else {
