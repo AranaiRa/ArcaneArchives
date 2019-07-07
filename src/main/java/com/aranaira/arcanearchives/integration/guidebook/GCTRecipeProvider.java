@@ -17,12 +17,12 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 
 public class GCTRecipeProvider extends RecipeProvider {
-	public static final ResourceLocation BACKGROUND = new ResourceLocation(ArcaneArchives.MODID, "textures/gui/jei/gem_cutters_table.png");
+	public static final ResourceLocation BACKGROUND = new ResourceLocation(ArcaneArchives.MODID, "gui/jei/gem_cutters_table");
 
 	@Nullable
 	@Override
 	public ProvidedComponents provideRecipeComponents (@Nonnull ItemStack targetOutput, int recipeIndex) {
-		return null;
+		return provideRecipeComponents(targetOutput.getItem().getRegistryName());
 	}
 
 	@Nullable
