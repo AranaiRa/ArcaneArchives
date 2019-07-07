@@ -488,5 +488,9 @@ public class GemUtil {
 				this.handler.markDirty();
 			}
 		}
+
+		public boolean hasHandler () {
+			return bauble;
+		}
 	}
 }
