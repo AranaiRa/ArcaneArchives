@@ -27,6 +27,7 @@ public class ContainerGemSocket extends Container {
 
 		createPlayerInventory(player.inventory);
 		createGemSlot();
+		createPlayerOffhand(player.inventory);
 	}
 
 	@Override
@@ -52,6 +53,10 @@ public class ContainerGemSocket extends Container {
 		for (int i = 0; i < 9; i++) {
 			addSlotToContainer(new Slot(inventoryPlayer, i, xOffset + i * 18, yOffset + 58));
 		}
+	}
+
+	private void createPlayerOffhand (InventoryPlayer inventoryPlayer) {
+		addSlotToContainer(new Slot(inventoryPlayer, 37, -23, 115));
 	}
 
 	@Override

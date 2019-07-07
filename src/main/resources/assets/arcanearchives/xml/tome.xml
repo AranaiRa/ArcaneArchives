@@ -74,9 +74,9 @@
             <space height="24"/>
             <horizontal_rule/>
             <space height="22"/>
-            <p align="center"><link ref="TableOfContents:Blocks"><image src="arcanearchives:gui/guidebook/home_blocks" tw="163" th="48"/></link>       <link ref="TableOfContents:Items"><image src="arcanearchives:gui/guidebook/home_items" tw="163" th="48"/></link></p>
+            <p align="center"><link ref="TableOfContents:Blocks"><image src="arcanearchives:gui/guidebook/home_blocks" tw="163" th="48" hoverSrc="arcanearchives:gui/guidebook/home_blocks_hover"/></link>       <link ref="TableOfContents:Items"><image src="arcanearchives:gui/guidebook/home_items" tw="163" th="48" hoverSrc="arcanearchives:gui/guidebook/home_items_hover"/></link></p>
             <space height="6"/>
-            <p align="center"><link ref="TableOfContents:ArcaneGems"><image src="arcanearchives:gui/guidebook/home_arcana" tw="163" th="48"/></link>       <link ref="TableOfContents:Concepts"><image src="arcanearchives:gui/guidebook/home_concepts" tw="163" th="48"/></link></p>
+            <p align="center"><link ref="TableOfContents:ArcaneGems"><image src="arcanearchives:gui/guidebook/home_arcana" tw="163" th="48" hoverSrc="arcanearchives:gui/guidebook/home_arcana_hover"/></link>       <link ref="TableOfContents:Concepts"><image src="arcanearchives:gui/guidebook/home_concepts" tw="163" th="48" hoverSrc="arcanearchives:gui/guidebook/home_concepts_hover"/></link></p>
         </section>
     </chapter>
 
@@ -554,13 +554,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Radiant Troves can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
-            <p>
-                <recipe type="arcanearchives:gct_recipe">
-                    <recipe.result>
-                        <stack item="arcanearchives:radiant_trove"/>
-                    </recipe.result>
-                </recipe>
-            </p>
+            <recipe type="arcanearchives:gct_recipe">
+                <recipe.result>
+                    <stack item="arcanearchives:radiant_trove"/>
+                </recipe.result>
+            </recipe>
         </section>
     </chapter>
 
