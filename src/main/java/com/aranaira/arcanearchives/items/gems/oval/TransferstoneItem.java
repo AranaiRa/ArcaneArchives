@@ -22,6 +22,8 @@ import net.minecraft.world.DimensionType;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
@@ -33,6 +35,7 @@ public class TransferstoneItem extends ArcaneGemItem {
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 
 		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);

@@ -22,6 +22,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import scala.Int;
 
 import java.util.List;
@@ -36,6 +38,7 @@ public class OrderstoneItem extends ArcaneGemItem {
 	public static final String[] DEFAULT_ENTRIES = {"1, minecraft:sand, minecraft:dirt:1, minecraft:dirt, minecraft:mycelium, minecraft:dirt:2, minecraft:grass", "1, minecraft:gravel, minecraft:cobblestone, minecraft:stone", "1, minecraft:mossy_cobblestone, minecraft:cobblestone, minecraft:stone", "3, minecraft:stonebrick:2, minecraft:stonebrick, minecraft:stonebrick:3", "3, minecraft:stonebrick:1, minecraft:stonebrick, minecraft:stonebrick:3", "25, minecraft:anvil:2, minecraft:anvil:1, minecraft:anvil"};
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 
 		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
