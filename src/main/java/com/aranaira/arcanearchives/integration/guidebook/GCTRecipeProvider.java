@@ -17,7 +17,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 
 public class GCTRecipeProvider extends RecipeProvider {
-	public static final ResourceLocation BACKGROUND = new ResourceLocation(ArcaneArchives.MODID, "gui/jei/gem_cutters_table");
+	public static final ResourceLocation BACKGROUND = new ResourceLocation(ArcaneArchives.MODID, "gui/guidebook/recipe_gct");
 
 	@Nullable
 	@Override
@@ -46,15 +46,15 @@ public class GCTRecipeProvider extends RecipeProvider {
 				inputSlot.stacks.add(c);
 			}
 
-			inputSlot.x = (i % 2 == 0) ? 0 : 18;
-			inputSlot.y = (i / 2) * 18;
+			inputSlot.x = (i % 4) * 22 + 3;
+			inputSlot.y = (i / 4) * 22 + 3;
 			stacks.add(inputSlot);
 		}
 
 		ElementStack outputSlot = new ElementStack(false, false);
 		outputSlot.stacks.add(recipe.getRecipeOutput().copy());
-		outputSlot.x = 98;
-		outputSlot.y = 27;
+		outputSlot.x = 107;
+		outputSlot.y = 14;
 		stacks.add(outputSlot);
 
 		ElementImage background = new ElementImage(false, false);
@@ -63,8 +63,8 @@ public class GCTRecipeProvider extends RecipeProvider {
 		background.y = 0;
 		background.tx = 0;
 		background.ty = 0;
-		background.w = 120;
-		background.h = 72;
+		background.w = 127;
+		background.h = 44;
 
 		return new ProvidedComponents(72, stacks.toArray(new ElementStack[]{}), background, additionalRenderer);
 	}

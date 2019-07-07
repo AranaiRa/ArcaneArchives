@@ -2,11 +2,13 @@ package com.aranaira.arcanearchives.client.gui;
 
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerGemSocket;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
+import java.io.IOException;
 
 public class GUIGemSocket extends GuiContainer {
 
@@ -36,6 +38,7 @@ public class GUIGemSocket extends GuiContainer {
 			RECHARGE_Y = 33,
 			RECHARGE_S = 18;
 
+	private GuiButton chargeButton;
 
 	private ContainerGemSocket containerGemSocket;
 
@@ -44,6 +47,23 @@ public class GUIGemSocket extends GuiContainer {
 		this.containerGemSocket = containerGemSocket;
 		xSize = INVENTORY_W;
 		ySize = INVENTORY_H + 22 + FABRIAL_S;
+	}
+
+	@Override
+	public void initGui () {
+		super.initGui();
+
+		buttonList.clear();
+
+		chargeButton = new InvisibleButton(0, guiLeft + 153, guiTop + 2, 18, 18, "");
+		addButton(chargeButton);
+	}
+
+	@Override
+	protected void actionPerformed(GuiButton button) throws IOException {
+		if(button.id == 0) { //recharge button
+
+		}
 	}
 
 	@Override

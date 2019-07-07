@@ -24,6 +24,7 @@ public class AAGuiHandler implements IGuiHandler {
 	public static final int DEVOURING_CHARM = 8;
 	public static final int DEVOURING_CHARM_BACKSIDE = 9;
 	public static final int UPGRADES = 10;
+	public static final int BRAZIER = 11;
 
 	@Override
 	public Object getServerGuiElement (int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -65,6 +66,8 @@ public class AAGuiHandler implements IGuiHandler {
 				return new ContainerMatrixRepository((MatrixRepositoryTileEntity) te, player.inventory);*/
 			case UPGRADES:
 				return new ContainerUpgrades(player, (ImmanenceTileEntity) te);
+			case BRAZIER:
+				return new ContainerBrazier((BrazierTileEntity) te, player);
 			default: {
 				ArcaneArchives.logger.info(String.format("Invalid Container ID of %d was passed in; null was returned to the server", ID));
 				return null;
@@ -102,6 +105,8 @@ public class AAGuiHandler implements IGuiHandler {
 				return new GUIRadiantCraftingTable(player, new ContainerRadiantCraftingTable((RadiantCraftingTableTileEntity) te, player, player.inventory));
 			case UPGRADES:
 				return new GUIUpgrades(new ContainerUpgrades(player, (ImmanenceTileEntity) te), player, (ImmanenceTileEntity) te);
+			case BRAZIER:
+				return new GUIBrazier(new ContainerBrazier((BrazierTileEntity) te, player));
 			/*case MATRIX_STORAGE:
 				return new GUIMatrixStorage(player, new ContainerMatrixStorage((MatrixStorageTileEntity) te, player.inventory));
 			case MATRIX_REPOSITORY:
