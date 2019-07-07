@@ -18,12 +18,14 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -35,6 +37,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 	private Map<EntityPlayer, ItemStack> playerToStackMap = new ConcurrentHashMap<>();
 	private int radius = 150;
 	private boolean subnetworkOnly = false;
+	private FakeHandler fakeHandler = new FakeHandler();
 
 	public BrazierTileEntity () {
 		super("brazier");
@@ -71,6 +74,17 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 		}
 
 		return tag.hasKey("Quark:FavoriteItem");
+	}
+
+	@Override
+	public boolean hasCapability (Capability<?> capability, @Nullable EnumFacing facing) {
+		return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
+	}
+
+	@Nullable
+	@Override
+	public <T> T getCapability (Capability<T> capability, @Nullable EnumFacing facing) {
+		return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ? CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(fakeHandler) : null;
 	}
 
 	public void beginInsert (Entity entity) {
@@ -346,6 +360,42 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 		public CapabilityRef (Map<Integer, Integer> map, IItemHandler handler) {
 			this.map = map;
 			this.handler = handler;
+		}
+	}
+
+	public class FakeHandler implements IItemHandlerModifiable {
+
+		@Override
+		public void setStackInSlot (int slot, @Nonnull ItemStack stack) {
+			tryInsert(stack);
+		}
+
+		@Override
+		public int getSlots () {
+			return 999;
+		}
+
+		@Nonnull
+		@Override
+		public ItemStack getStackInSlot (int slot) {
+			return ItemStack.EMPTY;
+		}
+
+		@Nonnull
+		@Override
+		public ItemStack insertItem (int slot, @Nonnull ItemStack stack, boolean simulate) {
+			return tryInsert(stack);
+		}
+
+		@Nonnull
+		@Override
+		public ItemStack extractItem (int slot, int amount, boolean simulate) {
+			return ItemStack.EMPTY;
+		}
+
+		@Override
+		public int getSlotLimit (int slot) {
+			return 64;
 		}
 	}
 }
