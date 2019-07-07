@@ -1,5 +1,7 @@
 package com.aranaira.arcanearchives.tileentities;
 
+import com.aranaira.arcanearchives.AAGuiHandler;
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.inventory.handlers.TroveItemHandler;
@@ -397,5 +399,12 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 		public int getSlotLimit (int slot) {
 			return 64;
 		}
+	}
+
+	@Override
+	public boolean handleManipulationInterface(EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if (player.world.isRemote) return true;
+			player.openGui(ArcaneArchives.instance, AAGuiHandler.BRAZIER, world, pos.getX(), pos.getY(), pos.getZ());
+		return true;
 	}
 }
