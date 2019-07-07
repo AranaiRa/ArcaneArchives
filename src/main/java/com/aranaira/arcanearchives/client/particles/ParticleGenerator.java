@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.client.particles;
 
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
-import com.aranaira.arcanearchives.util.RenderHelper;
+import com.aranaira.arcanearchives.client.render.RenderHelper;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;

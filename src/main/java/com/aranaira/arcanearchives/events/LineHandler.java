@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.events;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.util.ManifestTracking;
-import com.aranaira.arcanearchives.util.RenderHelper;
+import com.aranaira.arcanearchives.client.render.RenderHelper;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;

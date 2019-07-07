@@ -1,5 +1,7 @@
 package com.aranaira.arcanearchives.util;
 
+import com.aranaira.arcanearchives.client.render.RenderHelper;
+
 public class ColorHelper {
 	public static RenderHelper.Color COLORSTEP_0 = new RenderHelper.Color(1.00f, 0.50f, 0.50f, 1.0f), //Red
 			COLORSTEP_1 = new RenderHelper.Color(1.00f, 0.75f, 0.50f, 1.0f), //Orange

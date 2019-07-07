@@ -1,5 +1,6 @@
-package com.aranaira.arcanearchives.util;
+package com.aranaira.arcanearchives.client.render;
 
+import com.aranaira.arcanearchives.util.ColorHelper;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
