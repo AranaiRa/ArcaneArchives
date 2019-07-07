@@ -24,7 +24,17 @@ public class GUIGemSocket extends GuiContainer {
 			STRAP_W = 94,
 			STRAP_H = 37,
 			INVENTORY_W = 181,
-			INVENTORY_H = 101;
+			INVENTORY_H = 101,
+			OFFHAND_X = 207,
+			OFFHAND_Y = 0,
+			OFFHAND_W = 49,
+			OFFHAND_H = 33,
+			OFFHAND_SIMPLE_X = 32,
+			OFFHAND_SIMPLE_Y = 0,
+			OFFHAND_SIMPLE_S = 28,
+			RECHARGE_X = 238,
+			RECHARGE_Y = 33,
+			RECHARGE_S = 18;
 
 
 	private ContainerGemSocket containerGemSocket;
@@ -50,11 +60,21 @@ public class GUIGemSocket extends GuiContainer {
 		float i = (this.width - this.xSize) / 2;
 		float j = (this.height - this.ySize) / 2;
 
+		if(ConfigHandler.UsePrettyGUIs) {
+			this.mc.getTextureManager().bindTexture(TEXTURE_PLAYERINV);
+			this.drawTexturedModalRect(i - 32, j + 106, OFFHAND_X, OFFHAND_Y, OFFHAND_W, OFFHAND_H);
+		}
+		else {
+			this.mc.getTextureManager().bindTexture(TEXTURE_SINGLESLOT_SIMPLE);
+			this.drawTexturedModalRect(i - 29, j + 109, OFFHAND_SIMPLE_X, OFFHAND_SIMPLE_Y, OFFHAND_SIMPLE_S, OFFHAND_SIMPLE_S);
+		}
+
 		if(ConfigHandler.UsePrettyGUIs)
 			this.mc.getTextureManager().bindTexture(TEXTURE_PLAYERINV);
 		else
 			this.mc.getTextureManager().bindTexture(TEXTURE_PLAYERINV_SIMPLE);
 		this.drawTexturedModalRect(i, j + 22 + FABRIAL_S, 0, 0, INVENTORY_W, INVENTORY_H);
+		this.drawTexturedModalRect(i + 153, j + 2, RECHARGE_X, RECHARGE_Y, RECHARGE_S, RECHARGE_S);
 
 		if(ConfigHandler.UsePrettyGUIs) //No strap on simple GUI, so just skip
 			this.drawTexturedModalRect(i + 42, j + 11, STRAP_X, STRAP_Y, STRAP_W, STRAP_H);
