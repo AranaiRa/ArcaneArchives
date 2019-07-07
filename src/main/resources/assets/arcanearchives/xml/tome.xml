@@ -182,6 +182,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table"/> Braziers of Hoarding can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:brazier_of_hoarding"/>
+                </recipe.result>
+            </recipe>
         </section>
     </chapter>
 
@@ -287,6 +292,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Monitoring Crystals can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:monitoring_crystal"/>
+                </recipe.result>
+            </recipe>
         </section>
         <section>
             <page_title_shorter>
@@ -426,12 +436,17 @@
             <p align="center"><stack item="arcanearchives:radiant_lantern" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                Radiant Lanterns are a light source.
+                Radiant Lanterns are a light source. They can be placed in any orientation, and will not pop off if the block they're attached to is removed.
             </p>
             <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Radiant Lanterns can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:radiant_lantern"/>
+                </recipe.result>
+            </recipe>
         </section>
     </chapter>
 
@@ -522,6 +537,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Radiant Tanks can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:radiant_tank"/>
+                </recipe.result>
+            </recipe>
         </section>
     </chapter>
 
@@ -554,7 +574,7 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Radiant Troves can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
-            <recipe type="arcanearchives:gct_recipe">
+            <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
                     <stack item="arcanearchives:radiant_trove"/>
                 </recipe.result>
@@ -599,6 +619,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Containment Fields can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:containment_field"/>
+                </recipe.result>
+            </recipe>
         </section>
     </chapter>
 
@@ -625,6 +650,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Devouring Charms can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:devouring_charm"/>
+                </recipe.result>
+            </recipe>
         </section>
         <section>
             <page_title_shorter>
@@ -688,6 +718,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Gem Sockets can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:gemsocket"/>
+                </recipe.result>
+            </recipe>
         </section>
     </chapter>
 
@@ -708,6 +743,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Letters of Invitation can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:letter_invitation"/>
+                </recipe.result>
+            </recipe>
         </section>
         <section>
             <page_title_shorter>
@@ -757,6 +797,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Letters of Resignation can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:letter_resignation"/>
+                </recipe.result>
+            </recipe>
         </section>
         <section>
             <page_title_shorter>
@@ -803,6 +848,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table"/> Manifests can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:manifest"/>
+                </recipe.result>
+            </recipe>
         </section>
     </chapter>
 
@@ -823,6 +873,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Material Interfaces can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:material_interface"/>
+                </recipe.result>
+            </recipe>
         </section>
         <section>
             <page_title_shorter>
@@ -863,6 +918,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Matrix Braces can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:matrix_brace"/>
+                </recipe.result>
+            </recipe>
         </section>
     </chapter>
 
@@ -889,6 +949,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Radiant Amphorae can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:radiant_amphora"/>
+                </recipe.result>
+            </recipe>
         </section>
     </chapter>
 
@@ -906,6 +971,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Radiant Dust can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:radiant_dust"/>
+                </recipe.result>
+            </recipe>
         </section>
     </chapter>
 
@@ -968,6 +1038,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Shaped Radiant Quartz can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:shaped_quartz"/>
+                </recipe.result>
+            </recipe>
         </section>
         <section>
             <page_title_shorter>
@@ -1015,6 +1090,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Scepters of Manipulation can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:scepter_manipulation"/>
+                </recipe.result>
+            </recipe>
         </section>
     </chapter>
 
@@ -1106,6 +1186,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Scintillating Inlay can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:scintillating_inlay"/>
+                </recipe.result>
+            </recipe>
         </section>
     </chapter>
 
@@ -1143,6 +1228,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Writs of Expulsion can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:writ_expulsion"/>
+                </recipe.result>
+            </recipe>
         </section>
         <section>
             <page_title_shorter>
@@ -1233,6 +1323,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Slaughtergleams can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:slaughtergleam"/>
+                </recipe.result>
+            </recipe>
         </section>
     </chapter>
 
@@ -1259,6 +1354,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Murdergleams can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:murdergleam"/>
+                </recipe.result>
+            </recipe>
         </section>
     </chapter>
 
@@ -1282,6 +1382,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Murdergleams can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:agegleam"/>
+                </recipe.result>
+            </recipe>
         </section>
     </chapter>
 
@@ -1308,6 +1413,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Cleansegleams can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:cleansegleam"/>
+                </recipe.result>
+            </recipe>
         </section>
     </chapter>
 
@@ -1334,6 +1444,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Salvegleams can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:switchgleam"/>
+                </recipe.result>
+            </recipe>
         </section>
     </chapter>
 
@@ -1357,6 +1472,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Salvegleams can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:salvegleam"/>
+                </recipe.result>
+            </recipe>
         </section>
     </chapter>
 
@@ -1383,6 +1503,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Munchstones can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:munchstone"/>
+                </recipe.result>
+            </recipe>
         </section>
     </chapter>
 
@@ -1406,6 +1531,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Orderstones can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:orderstone"/>
+                </recipe.result>
+            </recipe>
         </section>
         <section>
             <page_title_shorter>
@@ -1458,6 +1588,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Mindspindles can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:mindspindle"/>
+                </recipe.result>
+            </recipe>
         </section>
     </chapter>
 
@@ -1481,6 +1616,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Elixirspindles can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:elixirspindle"/>
+                </recipe.result>
+            </recipe>
         </section>
     </chapter>
 
@@ -1510,6 +1650,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Mountaintears can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:mountaintear"/>
+                </recipe.result>
+            </recipe>
         </section>
     </chapter>
 
@@ -1536,6 +1681,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Rivertears can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:rivertear"/>
+                </recipe.result>
+            </recipe>
         </section>
     </chapter>
 
@@ -1562,6 +1712,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Parchtear can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:parchtear"/>
+                </recipe.result>
+            </recipe>
         </section>
     </chapter>
 
@@ -1588,6 +1743,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Phoenixways can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:phoenixway"/>
+                </recipe.result>
+            </recipe>
         </section>
     </chapter>
 
@@ -1617,6 +1777,11 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Stormways can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:stormway"/>
+                </recipe.result>
+            </recipe>
         </section>
     </chapter>
 
