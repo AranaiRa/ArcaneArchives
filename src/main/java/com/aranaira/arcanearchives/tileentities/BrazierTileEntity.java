@@ -18,31 +18,73 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class BrazierTileEntity extends ImmanenceTileEntity {
+	public static int STEP = 10;
+
 	private UUID lastUUID = null;
 	private long lastClick = -1;
 	private Map<EntityPlayer, ItemStack> playerToStackMap = new ConcurrentHashMap<>();
+	private int radius = 150;
+	private boolean subnetworkOnly = false;
+	private FakeHandler fakeHandler = new FakeHandler();
 
 	public BrazierTileEntity () {
 		super("brazier");
 	}
 
+	public int getRadius () {
+		return radius;
+	}
+
+	public int reduceRadius () {
+		return radius = Math.max(0, radius - STEP);
+	}
+
+	public int increaseRadius () {
+		return radius = Math.max(300, radius + STEP);
+	}
+
+	public boolean getNetworkMode () {
+		return subnetworkOnly;
+	}
+
+	public void toggleNetworkMode () {
+		subnetworkOnly = !subnetworkOnly;
+	}
+
 	private boolean isFavourite (ItemStack stack) {
-		if (!stack.hasTagCompound()) return false;
+		if (!stack.hasTagCompound()) {
+			return false;
+		}
 
 		NBTTagCompound tag = stack.getTagCompound();
-		if (tag == null) return false;
+		if (tag == null) {
+			return false;
+		}
 
 		return tag.hasKey("Quark:FavoriteItem");
+	}
+
+	@Override
+	public boolean hasCapability (Capability<?> capability, @Nullable EnumFacing facing) {
+		return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
+	}
+
+	@Nullable
+	@Override
+	public <T> T getCapability (Capability<T> capability, @Nullable EnumFacing facing) {
+		return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ? CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(fakeHandler) : null;
 	}
 
 	public void beginInsert (Entity entity) {
@@ -99,37 +141,23 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 			} else if ((!item.isEmpty() && doubleClick) || (!lastItem.isEmpty() && doubleClick)) {
 				ItemStack toCompare = item.isEmpty() ? lastItem : item;
 				IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
-				IntOpenHashSet doneSlots = new IntOpenHashSet();
 				for (int i = 0; i < playerInventory.getSlots(); i++) {
-					if (doneSlots.contains(i)) {
-						continue;
-					}
 					ItemStack ref = playerInventory.getStackInSlot(i);
 					if (ref.isEmpty() || !ItemUtilities.areStacksEqualIgnoreSize(toCompare, ref) || isFavourite(ref)) {
 						continue;
 					}
 					List<InventoryRef> references = collectReferences(player, ref);
-					for (InventoryRef ref2 : references) {
-						doneSlots.add(ref2.slot);
-					}
 					tryInsert(references, ref);
 					consumeItems(player, references);
 				}
 			} else if (item.isEmpty() && lastItem.isEmpty() && doubleClick && player.isSneaking()) {
 				IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
-				IntOpenHashSet doneSlots = new IntOpenHashSet();
 				for (int i = 9; i < playerInventory.getSlots(); i++) {
-					if (doneSlots.contains(i)) {
-						continue;
-					}
 					ItemStack ref = playerInventory.getStackInSlot(i);
 					if (ref.isEmpty() || isFavourite(ref)) {
 						continue;
 					}
 					List<InventoryRef> references = collectReferences(player, ref);
-					for (InventoryRef ref2 : references) {
-						doneSlots.add(ref2.slot);
-					}
 					tryInsert(references, ref);
 					consumeItems(player, references);
 				}
@@ -158,8 +186,31 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 	}
 
 	private ItemStack tryInsert (ItemStack stack) {
-		if (isFavourite(stack)) return stack;
+		if (isFavourite(stack)) {
+			return stack;
+		}
 
+		IItemHandler handler = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+		if (handler != null) {
+			for (int i = 0; i < handler.getSlots(); i++) {
+				ItemStack inSlot = handler.getStackInSlot(i);
+				if (!inSlot.isEmpty()) {
+					int count = inSlot.getCount();
+					ItemStack result = collectAndInsertStack(inSlot);
+					if (result.isEmpty()) {
+						handler.extractItem(i, count, false);
+					} else {
+						handler.extractItem(i, count - result.getCount(), false);
+					}
+				}
+			}
+			return stack;
+		} else {
+			return collectAndInsertStack(stack);
+		}
+	}
+
+	private ItemStack collectAndInsertStack (ItemStack stack) {
 		ServerNetwork network = NetworkHelper.getServerNetwork(this.networkId, this.world);
 		List<CapabilityRef> caps = collectCapabilities(network, stack);
 		for (CapabilityRef cap : caps) {
@@ -177,7 +228,9 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 		List<CapabilityRef> caps = collectCapabilities(network, reference);
 		for (CapabilityRef cap : caps) {
 			for (InventoryRef ref : stacks) {
-				if (isFavourite(ref.stack)) continue;
+				if (isFavourite(ref.stack)) {
+					continue;
+				}
 
 				ItemStack result = ItemHandlerHelper.insertItemStacked(cap.handler, ref.stack, false);
 				if (!result.isEmpty()) {
@@ -215,12 +268,16 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 				if (ref2.tile != null && ref2.getTile() != null) {
 
 					ImmanenceTileEntity ite = ref2.getTile();
-					if (!(ite instanceof IBrazierRouting)) continue;
+					if (!(ite instanceof IBrazierRouting)) {
+						continue;
+					}
 
 					IBrazierRouting routing = (IBrazierRouting) ite;
 					Int2IntOpenHashMap referenceMap = routing.getOrCalculateReference();
 					IItemHandler inventory = ite.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-					if (routing.getRoutingType() != BrazierRoutingType.ANY && referenceMap.get(ref) <= 0) continue;
+					if (routing.getRoutingType() != BrazierRoutingType.ANY && referenceMap.get(ref) <= 0) {
+						continue;
+					}
 					if (routing.isVoidingTrove(reference)) {
 						return Collections.singletonList(new CapabilityRef(referenceMap, inventory));
 					}
@@ -303,6 +360,42 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 		public CapabilityRef (Map<Integer, Integer> map, IItemHandler handler) {
 			this.map = map;
 			this.handler = handler;
+		}
+	}
+
+	public class FakeHandler implements IItemHandlerModifiable {
+
+		@Override
+		public void setStackInSlot (int slot, @Nonnull ItemStack stack) {
+			tryInsert(stack);
+		}
+
+		@Override
+		public int getSlots () {
+			return 999;
+		}
+
+		@Nonnull
+		@Override
+		public ItemStack getStackInSlot (int slot) {
+			return ItemStack.EMPTY;
+		}
+
+		@Nonnull
+		@Override
+		public ItemStack insertItem (int slot, @Nonnull ItemStack stack, boolean simulate) {
+			return tryInsert(stack);
+		}
+
+		@Nonnull
+		@Override
+		public ItemStack extractItem (int slot, int amount, boolean simulate) {
+			return ItemStack.EMPTY;
+		}
+
+		@Override
+		public int getSlotLimit (int slot) {
+			return 64;
 		}
 	}
 }
