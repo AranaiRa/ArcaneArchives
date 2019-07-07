@@ -10,15 +10,25 @@ import net.minecraftforge.items.ItemStackHandler;
 import java.util.Arrays;
 import java.util.List;
 
-public class RadiantCraftingTableTileEntity extends AATileEntity {
+public class RadiantCraftingTableTileEntity extends ImmanenceTileEntity implements IManifestTileEntity {
 	private ItemStackHandler persistentMatrix = new ItemStackHandler(9);
 	private List<IRecipe> recipeList = Arrays.asList(new IRecipe[3]);
 
 	public RadiantCraftingTableTileEntity () {
-		super();
-		setName("radiantcraftingtable");
+		super("radiantcraftingtable");
 	}
 
+	@Override
+	public String getDescriptor () {
+		return "Radiant Crafting Table";
+	}
+
+	@Override
+	public String getChestName () {
+		return "";
+	}
+
+	@Override
 	public ItemStackHandler getInventory () {
 		return persistentMatrix;
 	}

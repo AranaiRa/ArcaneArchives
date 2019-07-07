@@ -29,7 +29,7 @@ import java.util.List;
 // nearly the same as ContainerWorkbench but uses the TileEntities inventory
 @Mod.EventBusSubscriber
 public class ContainerRadiantCraftingTable extends Container {
-	protected final BlockPos pos;
+	public final BlockPos pos;
 	protected final World world;
 	private final ItemStackHandler itemHandler;
 	private final EntityPlayer player;
