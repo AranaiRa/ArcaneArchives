@@ -87,7 +87,7 @@ public class RenderHelper {
 	}
 
 	@SideOnly(Side.CLIENT)
-	static class Color {
+	public static class Color {
 		public float red;
 		public float green;
 		public float blue;
@@ -126,6 +126,14 @@ public class RenderHelper {
 			str += ">";
 
 			return str;
+		}
+
+		public int toInteger () {
+			int result = (int) (alpha * 255) << 8;
+			result = (result + (int) (red * 255)) << 8;
+			result = (result + (int) (green * 255)) << 8;
+			result = result + (int) (blue * 255);
+			return result;
 		}
 	}
 }

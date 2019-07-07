@@ -1,7 +1,9 @@
 package com.aranaira.arcanearchives.mixins;
 
+import com.aranaira.arcanearchives.client.render.RenderHelper.Color;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.events.LineHandler;
+import com.aranaira.arcanearchives.util.ColorHelper;
 import com.aranaira.arcanearchives.util.ManifestTracking;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -28,8 +30,9 @@ public abstract class MixinGuiContainer {
 		if (!stack.isEmpty()) {
 			if (ManifestTracking.matches(stack)) {
 				GlStateManager.disableDepth();
-				float partialTicks = ((GuiContainer) (Object) this).mc.getTickLength();
-				GuiContainer.drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, ConfigHandler.MANIFEST_HIGHLIGHT);
+				long worldTime = ((GuiContainer) (Object) this).mc.player.world.getWorldTime();
+				Color c = ColorHelper.getColorFromTime(worldTime);
+				GuiContainer.drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, c.toInteger());
 				GlStateManager.enableDepth();
 			}
 		}

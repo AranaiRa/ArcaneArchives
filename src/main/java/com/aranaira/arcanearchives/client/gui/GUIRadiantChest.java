@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.client.gui;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.client.render.RenderHelper.Color;
 import com.aranaira.arcanearchives.client.render.RenderItemExtended;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerRadiantChest;
@@ -10,6 +11,7 @@ import com.aranaira.arcanearchives.network.PacketRadiantAmphora.Toggle;
 import com.aranaira.arcanearchives.network.PacketRadiantChest.ToggleBrazier;
 import com.aranaira.arcanearchives.tileentities.IBrazierRouting;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
+import com.aranaira.arcanearchives.util.ColorHelper;
 import com.aranaira.arcanearchives.util.ManifestTracking;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
@@ -312,8 +314,9 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 		if (!stack.isEmpty()) {
 			if (tracked != null && !tracked.isEmpty() && ManifestTracking.matches(stack, tracked)) {
 				GlStateManager.disableDepth();
-				float partialTicks = this.mc.getTickLength();
-				drawRect(slotIn.xPos, slotIn.yPos, slotIn.xPos + 16, slotIn.yPos + 16, ConfigHandler.MANIFEST_HIGHLIGHT);
+				long worldTime = this.mc.player.world.getWorldTime();
+				Color c = ColorHelper.getColorFromTime(worldTime);
+				GuiContainer.drawRect(slotIn.xPos, slotIn.yPos, slotIn.xPos + 16, slotIn.yPos + 16, c.toInteger());
 				GlStateManager.enableDepth();
 			}
 		}

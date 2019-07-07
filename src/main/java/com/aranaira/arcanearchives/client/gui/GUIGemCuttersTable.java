@@ -1,11 +1,14 @@
 package com.aranaira.arcanearchives.client.gui;
 
+import com.aranaira.arcanearchives.client.render.RenderHelper.Color;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
 import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
+import com.aranaira.arcanearchives.util.ColorHelper;
 import com.aranaira.arcanearchives.util.CycleTimer;
+import com.aranaira.arcanearchives.util.ManifestTracking;
 import com.aranaira.arcanearchives.util.types.IngredientStack;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
@@ -17,6 +20,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import org.lwjgl.opengl.GL11;
@@ -42,6 +46,7 @@ public class GUIGemCuttersTable extends GuiContainer {
 	private InvisibleButton prevPageButton;
 	private InvisibleButton nextPageButton;
 	private int timesChanged;
+	private List<Ingredient> tracked;
 
 	private CycleTimer cycleTimer;
 
@@ -56,6 +61,7 @@ public class GUIGemCuttersTable extends GuiContainer {
 		updateRecipeStatus();
 		this.timesChanged = this.player.inventory.getTimesChanged();
 		this.cycleTimer = new CycleTimer(-1);
+		tracked = ManifestTracking.get(player.dimension, tile.getPos());
 	}
 
 	public void updateRecipeStatus () {
@@ -106,6 +112,17 @@ public class GUIGemCuttersTable extends GuiContainer {
 
 	@Override
 	public void drawSlot (Slot slot) {
+		ItemStack stack = slot.getStack();
+		if (!stack.isEmpty()) {
+			if (tracked != null && !tracked.isEmpty() && ManifestTracking.matches(stack, tracked)) {
+				GlStateManager.disableDepth();
+				long worldTime = this.mc.player.world.getWorldTime();
+				Color c = ColorHelper.getColorFromTime(worldTime);
+				GuiContainer.drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, c.toInteger());
+				GlStateManager.enableDepth();
+			}
+		}
+
 		super.drawSlot(slot);
 
 		boolean wasEnabled = false;
