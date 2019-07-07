@@ -554,13 +554,12 @@
             <p>
                 <stack item="arcanearchives:gemcutters_table" /> Radiant Troves can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
             </p>
-            <p>
-                <recipe type="arcanearchives:gct_recipe">
-                    <recipe.result>
-                        <stack item="arcanearchives:radiant_trove"/>
-                    </recipe.result>
-                </recipe>
-            </p>
+            <section-break />
+            <recipe type="arcanearchives:gct_recipe">
+                <recipe.result>
+                    <stack item="arcanearchives:radiant_trove"/>
+                </recipe.result>
+            </recipe>
         </section>
     </chapter>
 
