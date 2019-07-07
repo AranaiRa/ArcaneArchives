@@ -1,38 +1,47 @@
 package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.init.BlockRegistry;
-import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.items.RadiantAmphoraItem.AmphoraUtil;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
 import com.aranaira.arcanearchives.util.NBTUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockLiquid;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.init.Bootstrap.BehaviorDispenseOptional;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.stats.StatList;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.fluids.*;
+import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.event.entity.player.FillBucketEvent;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidActionResult;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
+import net.minecraftforge.fml.common.eventhandler.Event;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -43,8 +52,6 @@ import java.util.List;
 
 public class RadiantAmphoraItem extends ItemTemplate {
 	public static final String NAME = "radiant_amphora";
-	// Check delay in milliseconds for fluid types
-	public static long CHECK_DELAY = 15000L;
 
 	public RadiantAmphoraItem () {
 		super(NAME);
@@ -93,7 +100,8 @@ public class RadiantAmphoraItem extends ItemTemplate {
 		}
 	}
 
-	@Override
+	private void oldCode () {
+	/* @Override
 	public EnumActionResult onItemUse (EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote) {
 			Block hit = world.getBlockState(pos).getBlock();
@@ -166,16 +174,123 @@ public class RadiantAmphoraItem extends ItemTemplate {
 		}
 
 		return false;
+	} */
 	}
 
-	private ItemStack getHeldBucket (EntityPlayer player) {
-		for (ItemStack stack : player.getHeldEquipment()) {
-			if (stack.getItem() == ItemRegistry.RADIANT_AMPHORA) {
-				return stack;
-			}
+	@Override
+	public EnumActionResult onItemUseFirst (EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
+		IBlockState state = world.getBlockState(pos);
+		ItemStack stack = player.getHeldItem(hand);
+		if (state.getBlock() == BlockRegistry.RADIANT_TANK && stack.getItem() == this && player.isSneaking()) {
+			AmphoraUtil util = new AmphoraUtil(stack);
+			util.setHome(pos, world.provider.getDimension());
+			return EnumActionResult.SUCCESS;
 		}
 
-		return ItemStack.EMPTY;
+		return super.onItemUseFirst(player, world, pos, side, hitX, hitY, hitZ, hand);
+	}
+
+	@Override
+	@Nonnull
+	public ActionResult<ItemStack> onItemRightClick (@Nonnull World world, @Nonnull EntityPlayer player, @Nonnull EnumHand hand) {
+		ItemStack itemstack = player.getHeldItem(hand);
+		AmphoraUtil util = new AmphoraUtil(itemstack);
+
+		if (util.getMode() == TankMode.FILL) {
+			RayTraceResult mop = this.rayTrace(world, player, true);
+
+			ActionResult<ItemStack> result = ForgeEventFactory.onBucketUse(player, world, itemstack, mop);
+			if (result == null) {
+				return ActionResult.newResult(EnumActionResult.FAIL, itemstack);
+			} else {
+				return result;
+			}
+		} else {
+			RayTraceResult mop = this.rayTrace(world, player, false);
+
+			if (mop == null || mop.typeOfHit != RayTraceResult.Type.BLOCK) {
+				return ActionResult.newResult(EnumActionResult.PASS, itemstack);
+			}
+
+			IFluidHandler cap = util.getCapability();
+			boolean canDrain = false;
+			for (IFluidTankProperties prop : cap.getTankProperties()) {
+				if (prop.getCapacity() < 1000) {
+					continue;
+				}
+				canDrain = true;
+				break;
+			}
+			if (!canDrain) {
+				return ActionResult.newResult(EnumActionResult.FAIL, itemstack);
+			}
+
+			FluidStack fluidStack = util.getFluidStack(cap); // This is a fake fluid stack
+
+			BlockPos clickPos = mop.getBlockPos();
+			// can we place liquid there?
+			if (world.isBlockModifiable(player, clickPos)) {
+				// the block adjacent to the side we clicked on
+				BlockPos targetPos = clickPos.offset(mop.sideHit);
+
+				// can the player place there?
+				if (player.canPlayerEdit(targetPos, mop.sideHit, itemstack)) {
+					// try placing liquid
+					if (!world.isRemote) {
+						FluidActionResult result = FluidUtil.tryPlaceFluid(player, world, targetPos, itemstack, fluidStack);
+						if (result.isSuccess()) {
+							// success!
+							player.addStat(StatList.getObjectUseStats(this));
+
+							return ActionResult.newResult(EnumActionResult.SUCCESS, itemstack);
+						}
+					} else {
+						return ActionResult.newResult(EnumActionResult.SUCCESS, itemstack);
+					}
+				}
+			}
+
+			// couldn't place liquid there2
+			return ActionResult.newResult(EnumActionResult.FAIL, itemstack);
+		}
+	}
+
+	@SubscribeEvent(priority = EventPriority.LOW) // low priority so other mods can handle their stuff first
+	public void onFillBucket (FillBucketEvent event) {
+		if (event.getResult() != Event.Result.DEFAULT) {
+			return;
+		}
+
+		if (event.getEmptyBucket().getItem() != this) {
+			return;
+		}
+
+		if (event.getWorld().isRemote) {
+			return;
+		}
+
+		ItemStack amphora = event.getEmptyBucket();
+		AmphoraUtil util = new AmphoraUtil(amphora);
+
+		if (util.getMode() != TankMode.FILL) {
+			return;
+		}
+
+		RayTraceResult target = event.getTarget();
+		if (target == null || target.typeOfHit != RayTraceResult.Type.BLOCK) {
+			return;
+		}
+
+		World world = event.getWorld();
+		BlockPos pos = target.getBlockPos();
+
+		FluidActionResult filledResult = FluidUtil.tryPickUpFluid(amphora, event.getEntityPlayer(), world, pos, target.sideHit);
+		if (filledResult.isSuccess()) {
+			event.setResult(Event.Result.ALLOW);
+			event.setFilledBucket(filledResult.getResult());
+		} else {
+			event.setCanceled(true);
+		}
 	}
 
 	public static class AmphoraUtil {
@@ -190,6 +305,14 @@ public class RadiantAmphoraItem extends ItemTemplate {
 
 		public ItemStack getStack () {
 			return stack;
+		}
+
+		public boolean isRemote () {
+			if (te == null || te.get() == null) {
+				return true;
+			}
+
+			return te.get().getWorld().isRemote;
 		}
 
 		public void setHome (BlockPos pos, int dimension) {
@@ -234,6 +357,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 		}
 
 		@SideOnly(Side.CLIENT)
+		@SuppressWarnings("deprecation")
 		public String getFluidType () {
 			IFluidHandler handler = getCapability();
 			if (handler != null) {
@@ -247,6 +371,14 @@ public class RadiantAmphoraItem extends ItemTemplate {
 			}
 
 			return "unknown tank";
+		}
+
+		public Fluid getFluid () {
+			IFluidHandler cap = getCapability();
+			if (cap == null) {
+				return null;
+			}
+			return getFluid(cap);
 		}
 
 		public Fluid getFluid (IFluidHandler capability) {
@@ -268,6 +400,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 			if (fluid == null) {
 				return null;
 			}
+
 
 			return new FluidStack(fluid, 1000);
 		}
@@ -303,30 +436,6 @@ public class RadiantAmphoraItem extends ItemTemplate {
 				return null;
 			}
 
-			boolean doCheck = true;
-
-			if (nbt.hasKey("fluidType") && nbt.hasKey("fluidTimer")) {
-				long lastCheck = nbt.getLong("fluidTimer");
-				if ((System.currentTimeMillis() - lastCheck) < CHECK_DELAY) {
-					doCheck = false;
-				}
-			}
-
-			if (!doCheck) {
-				return capability;
-			}
-
-			IFluidTankProperties props = capability.getTankProperties()[0];
-			FluidStack content = props.getContents();
-			if (content == null) {
-				return capability;
-			}
-
-			nbt.setString("fluidType", content.getUnlocalizedName());
-			nbt.setLong("fluidTimer", System.currentTimeMillis());
-			// This is unneccessaarryyy?
-			stack.setTagCompound(nbt);
-
 			return capability;
 		}
 
@@ -335,48 +444,6 @@ public class RadiantAmphoraItem extends ItemTemplate {
 		}
 	}
 
-	private static class FluidTankPropWrapper implements IFluidTankProperties {
-		private FluidStack fluid;
-		private int capacity;
-		private AmphoraUtil util;
-
-		public FluidTankPropWrapper (FluidStack fluid, int capacity, AmphoraUtil util) {
-			this.fluid = fluid;
-			this.capacity = capacity;
-			this.util = util;
-		}
-
-		@Nullable
-		@Override
-		public FluidStack getContents () {
-			return fluid;
-		}
-
-		@Override
-		public int getCapacity () {
-			return capacity;
-		}
-
-		@Override
-		public boolean canFill () {
-			return util.getMode() == TankMode.FILL;
-		}
-
-		@Override
-		public boolean canDrain () {
-			return util.getMode() == TankMode.DRAIN;
-		}
-
-		@Override
-		public boolean canFillFluidType (FluidStack fluidStack) {
-			return ((fluid == null || fluid.getFluid().equals(fluidStack.getFluid())) && util.getMode() == TankMode.FILL);
-		}
-
-		@Override
-		public boolean canDrainFluidType (FluidStack fluidStack) {
-			return ((fluid == null || fluid.getFluid().equals(fluidStack.getFluid())) && util.getMode() == TankMode.DRAIN);
-		}
-	}
 
 	private static class FluidTankWrapper implements IFluidHandlerItem {
 		private static long VALIDITY_DELAY = 5000;
@@ -415,8 +482,10 @@ public class RadiantAmphoraItem extends ItemTemplate {
 				return new IFluidTankProperties[]{};
 			}
 
-			IFluidTankProperties[] props = tank.getTankProperties();
-			return new IFluidTankProperties[]{new FluidTankPropWrapper(props[0].getContents(), props[0].getCapacity(), util)};
+			return tank.getTankProperties();
+
+			/*IFluidTankProperties[] props = tank.getTankProperties();
+			return new IFluidTankProperties[]{new FluidTankPropWrapper(props[0].getContents(), props[0].getCapacity(), util)};*/
 		}
 
 		@Override
@@ -427,8 +496,12 @@ public class RadiantAmphoraItem extends ItemTemplate {
 				return 0;
 			}
 
-			resource.amount = 1000;
+			//resource.amount = Math.min(resource.amount, 1000);
+			//if (!util.isRemote()) {
 			return tank.fill(resource, doFill);
+			//} else {
+			//	return tank.fill(resource, false);
+			//}
 		}
 
 		@Override
@@ -440,8 +513,12 @@ public class RadiantAmphoraItem extends ItemTemplate {
 				return null;
 			}
 
-			resource.amount = 1000;
+			//resource.amount = Math.min(resource.amount, 1000);
+			//if (!util.isRemote()) {
 			return tank.drain(resource, doDrain);
+			//} else {
+			//	return tank.drain(resource, false);
+			//}
 		}
 
 		@Override
@@ -453,7 +530,11 @@ public class RadiantAmphoraItem extends ItemTemplate {
 				return null;
 			}
 
-			return tank.drain(1000, doDrain);
+			//if (!util.isRemote()) {
+			return tank.drain(maxDrain, doDrain);
+			//} else {
+			//	return tank.drain(maxDrain, false);
+			//}
 		}
 
 		@Nonnull
@@ -496,6 +577,13 @@ public class RadiantAmphoraItem extends ItemTemplate {
 				return DRAIN;
 			}
 			return FILL;
+		}
+	}
+
+	public static class BehaviorDispenseAmphora extends BehaviorDispenseOptional {
+		@Override
+		protected ItemStack dispenseStack (IBlockSource source, ItemStack stack) {
+			return super.dispenseStack(source, stack);
 		}
 	}
 }

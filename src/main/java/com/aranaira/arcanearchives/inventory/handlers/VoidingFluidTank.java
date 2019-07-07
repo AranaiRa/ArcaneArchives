@@ -49,4 +49,26 @@ public class VoidingFluidTank extends FluidTank {
 		}
 		return super.canFill();
 	}
+
+	@Override
+	public FluidStack drain (FluidStack resource, boolean doDrain) {
+		return super.drain(resource, doDrain);
+	}
+
+	@Override
+	public FluidStack drain (int maxDrain, boolean doDrain) {
+		return super.drain(maxDrain, doDrain);
+	}
+
+	@Nullable
+	@Override
+	public FluidStack drainInternal (FluidStack resource, boolean doDrain) {
+		return super.drainInternal(resource, doDrain);
+	}
+
+	@Nullable
+	@Override
+	public FluidStack drainInternal (int maxDrain, boolean doDrain) {
+		return super.drainInternal(maxDrain, doDrain);
+	}
 }
