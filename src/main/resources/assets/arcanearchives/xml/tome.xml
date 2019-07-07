@@ -164,13 +164,13 @@
                 A Brazier of Hoarding is an organization device that can act as a drop-off point to store items in your <link ref="Networks">Network</link>. Braziers of Hoarding are also a light source.
             </p>
             <p>
-                <stack item="arcanearchives:radiant_trove"/> Any items used on, or dropped on top of, a Brazier of Hoarding will be transported to a <link ref="RadiantTrove">Radiant Trove</link> that contains the item.
-            </p>
-            <p>
-                <stack item="arcanearchives:radiant_chest"/> If no appropriate Radiant Troves exist in your network, items will be placed in <link ref="RadiantChest">Radiant Chests</link>, starting with chests that already contain an instance of the item.
+                <stack item="arcanearchives:radiant_trove"/> Any items used on, or dropped on top of, a Brazier of Hoarding will be transported to appropriate storage, starting with <link ref="RadiantTrove">Radiant Troves</link>. If no appropriate Radiant Troves exist in your network, items will be placed in <link ref="RadiantChest">Radiant Chests</link>, starting with chests that already contain an instance of the item.
             </p>
             <p>
                 If no storage can be found, items are ejected from the Brazier of Hoarding.
+            </p>
+            <p>
+                <stack item="minecraft:purple_shulker_box"/> If you right click an item that itself is an inventory (such as a shulker box, backpack, or satchel) onto a Brazier of Hoarding, its contents will be deposited into the Brazier instead.
             </p>
             <p condition="ml_quark">
                 <image src="arcanearchives:gui/guidebook/quark_lock" tw="16" th="16"/> If you have an item set as a Quark favorite, it cannot be inserted into a Brazier of Hoarding by right clicking.
