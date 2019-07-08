@@ -160,7 +160,7 @@ public class MunchstoneItem extends ArcaneGemItem {
 		if (entries == null) {
 			EdibleBlock[] output = new EdibleBlock[ConfigHandler.ArsenalConfig.MunchstoneValidEntries.length];
 			ArrayList<EdibleBlock> verifiedEBs = new ArrayList<>();
-			ArcaneArchives.logger.info("[MUNCHSTONE] Attempting configuration using " + output.length + " entries.");
+			//ArcaneArchives.logger.info("[MUNCHSTONE] Attempting configuration using " + output.length + " entries.");
 
 			for (int i = 0; i < ConfigHandler.ArsenalConfig.MunchstoneValidEntries.length; i++) {
 				String entry = ConfigHandler.ArsenalConfig.MunchstoneValidEntries[i];
@@ -173,13 +173,13 @@ public class MunchstoneItem extends ArcaneGemItem {
 				}
 				EdibleBlock eb = new EdibleBlock(block, feed, 1.0F);
 				if (block == Blocks.AIR) {
-					ArcaneArchives.logger.info("[MUNCHSTONE] Couldn't find \"" + parse[0].trim() + "\"; skipping.");
+					//ArcaneArchives.logger.info("[MUNCHSTONE] Couldn't find \"" + parse[0].trim() + "\"; skipping.");
 					continue;
 				} else if (feed <= 0) {
-					ArcaneArchives.logger.info("[MUNCHSTONE] Hunger restoration value for \"" + parse[0].trim() + "\" was invalid or couldn't be parsed; skipping.");
+					//ArcaneArchives.logger.info("[MUNCHSTONE] Hunger restoration value for \"" + parse[0].trim() + "\" was invalid or couldn't be parsed; skipping.");
 					continue;
 				} else {
-					ArcaneArchives.logger.info("[MUNCHSTONE] Registering \"" + parse[0].trim() + "\" as " + block.getLocalizedName());
+					//ArcaneArchives.logger.info("[MUNCHSTONE] Registering \"" + parse[0].trim() + "\" as " + block.getLocalizedName());
 					verifiedEBs.add(eb);
 				}
 			}
@@ -188,7 +188,7 @@ public class MunchstoneItem extends ArcaneGemItem {
 				output[i] = verifiedEBs.get(i);
 			}
 
-			ArcaneArchives.logger.info("[MUNCHSTONE] Configured with " + output.length + " entries.");
+			//ArcaneArchives.logger.info("[MUNCHSTONE] Configured with " + output.length + " entries.");
 			MunchstoneItem.entries = output;
 		}
 		return entries;

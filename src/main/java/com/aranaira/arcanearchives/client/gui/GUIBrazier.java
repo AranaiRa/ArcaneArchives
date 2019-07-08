@@ -58,7 +58,7 @@ public class GUIBrazier extends GuiContainer implements GuiPageButtonList.GuiRes
 
 		radiusField = new RightClickTextField(0, fontRenderer, guiLeft + 14, guiTop + 4, 36, 12);
 		radiusField.setText("" + containerBrazier.getTile().getRadius());
-		ArcaneArchives.logger.info("text field should be "+containerBrazier.getTile().getRadius());
+		//ArcaneArchives.logger.info("text field should be "+containerBrazier.getTile().getRadius());
 		radiusField.setGuiResponder(this);
 		radiusField.setEnableBackgroundDrawing(false);
 	}
