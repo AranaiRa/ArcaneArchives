@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.items.gems;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.config.ConfigHandler;
+import com.aranaira.arcanearchives.items.gems.GemUtil.GemStack;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -13,6 +14,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -173,6 +175,10 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 		} else {
 			return new Vec3d(pos.getX(), pos.getY(), pos.getZ());
 		}
+	}
+
+	public boolean recharge (World world, EntityPlayer player, GemStack gem) {
+		return false;
 	}
 
 	protected void consumeInventoryItemForChargeRecovery(EntityPlayer player, GemUtil.AvailableGemsHandler handler, Item targetItem, int needed, int maxCharge) {

@@ -1,8 +1,10 @@
 package com.aranaira.arcanearchives.items.gems.pampel;
 
 import com.aranaira.arcanearchives.init.ItemRegistry;
-import com.aranaira.arcanearchives.items.gems.*;
+import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
+import com.aranaira.arcanearchives.items.gems.GemUtil;
 import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler;
+import com.aranaira.arcanearchives.items.gems.GemUtil.GemStack;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketArcaneGems.GemParticle;
 import net.minecraft.client.resources.I18n;
@@ -27,7 +29,7 @@ import java.util.List;
 public class Elixirspindle extends ArcaneGemItem {
 	public static final String NAME = "elixirspindle";
 
-	public Elixirspindle() {
+	public Elixirspindle () {
 		super(NAME, GemCut.PAMPEL, GemColor.PURPLE, 5, 20);
 	}
 
@@ -48,29 +50,32 @@ public class Elixirspindle extends ArcaneGemItem {
 	public ActionResult<ItemStack> onItemRightClick (World world, EntityPlayer player, EnumHand hand) {
 		if (!world.isRemote) {
 			AvailableGemsHandler handler = GemUtil.getHeldGem(player, hand);
-			if (handler.getHeld() != null && GemUtil.getCharge(handler.getHeld()) == 0 && handler.getHeld().getItem() == ItemRegistry.ELIXIRSPINDLE) {
-				for (int i = 0; i < player.inventory.mainInventory.size(); i++) {
-					ItemStack stack = player.inventory.mainInventory.get(i);
-					if (stack.getItem() == Items.NETHER_WART) {
-						int numConsumed = 5;
-						if (numConsumed > stack.getCount()) {
-							numConsumed = stack.getCount();
-						}
-						GemUtil.restoreCharge(handler.getHeld(), numConsumed);
-						stack.shrink(numConsumed);
-						//TODO: Play a particle effect
-						Vec3d pos = player.getPositionVector().add(0, 1, 0);
-						GemParticle packet = new GemParticle(cut, color, pos, pos);
-						NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, pos.x, pos.y, pos.z, 160);
-						NetworkHandler.CHANNEL.sendToAllAround(packet, tp);
-						break;
-					} else {
-						continue;
-					}
+			GemStack gem = handler.getHeld();
+			recharge(world, player, gem);
+		}
+
+		return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+	}
+
+	@Override
+	public boolean recharge (World world, EntityPlayer player, GemStack gem) {
+		if (gem != null && GemUtil.getCharge(gem) == 0 && gem.getItem() == ItemRegistry.ELIXIRSPINDLE) {
+			for (int i = 0; i < player.inventory.mainInventory.size(); i++) {
+				ItemStack stack = player.inventory.mainInventory.get(i);
+				if (stack.getItem() == Items.NETHER_WART) {
+					int numConsumed = Math.min(stack.getCount(), 5);
+					GemUtil.restoreCharge(gem, numConsumed);
+					stack.shrink(numConsumed);
+					//TODO: Play a particle effect
+					Vec3d pos = player.getPositionVector().add(0, 1, 0);
+					GemParticle packet = new GemParticle(cut, color, pos, pos);
+					NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, pos.x, pos.y, pos.z, 160);
+					NetworkHandler.CHANNEL.sendToAllAround(packet, tp);
+					return true;
 				}
 			}
 		}
 
-		return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+		return false;
 	}
 }

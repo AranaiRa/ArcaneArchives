@@ -1,7 +1,9 @@
 package com.aranaira.arcanearchives.items.gems.trillion;
 
-import com.aranaira.arcanearchives.items.gems.*;
+import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
+import com.aranaira.arcanearchives.items.gems.GemUtil;
 import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler;
+import com.aranaira.arcanearchives.items.gems.GemUtil.GemStack;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketArcaneGems.GemParticle;
 import net.minecraft.client.resources.I18n;
@@ -50,49 +52,56 @@ public class PhoenixwayItem extends ArcaneGemItem {
 	public ActionResult<ItemStack> onItemRightClick (World world, EntityPlayer player, EnumHand hand) {
 		if (!world.isRemote) {
 			AvailableGemsHandler handler = GemUtil.getHeldGem(player, hand);
-			if (GemUtil.getCharge(handler.getHeld()) == 0) {
-				for (int i = 0; i < player.inventory.mainInventory.size(); i++) {
-					ItemStack stack = player.inventory.mainInventory.get(i);
-					if (stack.getItem() == Items.GUNPOWDER) {
-						int numConsumed = 3;
-						if (numConsumed > stack.getCount()) {
-							numConsumed = stack.getCount();
-						}
-						GemUtil.restoreCharge(handler.getHeld(), numConsumed * 25);
-						stack.shrink(numConsumed);
-						//TODO: Play a particle effect
-						Vec3d pos = player.getPositionVector().add(0, 1, 0);
-						GemParticle packet = new GemParticle(cut, color, pos, pos);
-						NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, pos.x, pos.y, pos.z, 160);
+			GemStack gem = handler.getHeld();
+			if (!recharge(world, player, gem)) {
+				if (GemUtil.getCharge(handler.getHeld()) > 0) {
+					Vec3d start = new Vec3d(player.posX, player.posY + player.height, player.posZ);
+					Vec3d dir = player.getLookVec();
+					Vec3d rayTarget = new Vec3d(start.x + dir.x * 40, start.y + dir.y * 40, start.z + dir.z * 40);
+
+					RayTraceResult ray = world.rayTraceBlocks(start, rayTarget, false, true, false);
+
+					if (ray != null) {
+						BlockPos pos = ray.getBlockPos();
+						EnumFacing facing = ray.sideHit;
+
+						world.setBlockState(pos.offset(facing), Blocks.FIRE.getDefaultState());
+						GemUtil.consumeCharge(handler.getHeld(), 1);
+
+						Vec3d end = new Vec3d(pos.offset(facing).getX(), pos.offset(facing).getY(), pos.offset(facing).getZ());
+
+						GemParticle packet = new GemParticle(cut, color, start, end);
+						NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, start.x, start.y, start.z, 160);
 						NetworkHandler.CHANNEL.sendToAllAround(packet, tp);
-						break;
-					} else {
-						continue;
 					}
-				}
-			}
-			if (GemUtil.getCharge(handler.getHeld()) > 0) {
-				Vec3d start = new Vec3d(player.posX, player.posY + player.height, player.posZ);
-				Vec3d dir = player.getLookVec();
-				Vec3d rayTarget = new Vec3d(start.x + dir.x * 40, start.y + dir.y * 40, start.z + dir.z * 40);
-
-				RayTraceResult ray = world.rayTraceBlocks(start, rayTarget, false, true, false);
-
-				if (ray != null) {
-					BlockPos pos = ray.getBlockPos();
-					EnumFacing facing = ray.sideHit;
-
-					world.setBlockState(pos.offset(facing), Blocks.FIRE.getDefaultState());
-					GemUtil.consumeCharge(handler.getHeld(), 1);
-
-					Vec3d end = new Vec3d(pos.offset(facing).getX(), pos.offset(facing).getY(), pos.offset(facing).getZ());
-
-					GemParticle packet = new GemParticle(cut, color, start, end);
-					NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, start.x, start.y, start.z, 160);
-					NetworkHandler.CHANNEL.sendToAllAround(packet, tp);
 				}
 			}
 		}
 		return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+	}
+
+	@Override
+	public boolean recharge (World world, EntityPlayer player, GemStack gem) {
+		if (GemUtil.getCharge(gem) == 0) {
+			for (int i = 0; i < player.inventory.mainInventory.size(); i++) {
+				ItemStack stack = player.inventory.mainInventory.get(i);
+				if (stack.getItem() == Items.GUNPOWDER) {
+					int numConsumed = 3;
+					if (numConsumed > stack.getCount()) {
+						numConsumed = stack.getCount();
+					}
+					GemUtil.restoreCharge(gem, numConsumed * 25);
+					stack.shrink(numConsumed);
+					//TODO: Play a particle effect
+					Vec3d pos = player.getPositionVector().add(0, 1, 0);
+					GemParticle packet = new GemParticle(cut, color, pos, pos);
+					NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, pos.x, pos.y, pos.z, 160);
+					NetworkHandler.CHANNEL.sendToAllAround(packet, tp);
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 }
