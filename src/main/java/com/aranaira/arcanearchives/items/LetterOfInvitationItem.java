@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.items;
 
+import com.aranaira.arcanearchives.advancements.Advancements;
 import com.aranaira.arcanearchives.data.HiveSaveData;
 import com.aranaira.arcanearchives.data.HiveSaveData.Hive;
 import com.aranaira.arcanearchives.data.NetworkHelper;
@@ -8,6 +9,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextComponentString;
@@ -47,6 +49,11 @@ public class LetterOfInvitationItem extends LetterTemplate {
 		HiveSaveData saveData = NetworkHelper.getHiveData(world);
 		Hive hive = saveData.getHiveByOwner(network);
 		if (saveData.addMember(hive, playerId)) {
+			Advancements.JOIN_NETWORK_TRIGGER.trigger((EntityPlayerMP) player, null);
+			EntityPlayer owner = world.getPlayerEntityByUUID(network);
+			if (owner != null) {
+				Advancements.JOIN_NETWORK_TRIGGER.trigger((EntityPlayerMP) owner, null);
+			}
 			player.sendStatusMessage(new TextComponentTranslation("arcanearchives.network.hive.joined", tag.getString("creator_name")), true);
 			saveData.alertMembers(world, hive, player.getUniqueID(), true);
 		} else {

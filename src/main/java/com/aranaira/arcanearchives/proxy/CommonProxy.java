@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.proxy;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.advancements.Advancements;
 import com.aranaira.arcanearchives.commands.CommandBrazier;
 import com.aranaira.arcanearchives.commands.CommandHive;
 import com.aranaira.arcanearchives.config.ConfigHandler;
@@ -55,6 +56,9 @@ public class CommonProxy {
 	public void loadComplete (FMLLoadCompleteEvent event) {
 		// Ensure Bookshelf has an ore dictionary entry
 		OreDictionary.registerOre("bookshelf", Blocks.BOOKSHELF);
+
+		// Set up advancements
+		Advancements.init();
 	}
 
 	public void scheduleTask (Runnable runnable, Side side) {

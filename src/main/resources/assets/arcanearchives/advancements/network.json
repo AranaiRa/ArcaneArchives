@@ -13,14 +13,7 @@
   "parent": "arcanearchives:gemcutters_table",
   "criteria": {
     "book": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "arcanearchives:letter_invitation"
-          }
-        ]
-      }
+      "trigger": "minecraft:join_network"
     }
   }
 }

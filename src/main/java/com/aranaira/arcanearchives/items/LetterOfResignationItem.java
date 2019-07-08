@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.items;
 
+import com.aranaira.arcanearchives.advancements.Advancements;
 import com.aranaira.arcanearchives.data.HiveSaveData;
 import com.aranaira.arcanearchives.data.HiveSaveData.Hive;
 import com.aranaira.arcanearchives.data.NetworkHelper;
@@ -8,6 +9,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextComponentString;
@@ -45,6 +47,7 @@ public class LetterOfResignationItem extends LetterTemplate {
 		HiveSaveData saveData = NetworkHelper.getHiveData(world);
 		Hive hive = saveData.getHiveByMember(player.getUniqueID());
 		if (hive != null && saveData.removeMember(hive, player.getUniqueID())) {
+			Advancements.LEAVE_NETWORK_TRIGGER.trigger((EntityPlayerMP) player, null);
 			saveData.alertMembers(world, hive, player.getUniqueID(), false);
 			player.sendStatusMessage(new TextComponentTranslation("arcanearchives.network.hive.left"), true);
 		} else {
