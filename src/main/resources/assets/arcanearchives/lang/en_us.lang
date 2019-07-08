@@ -47,6 +47,19 @@ item.stormway.name=Stormway
 item.earthway.name=Earthway
 item.nightway.name=Nightway
 
+item.chromatic_powder.name=Impossibly Colorless Chromatic Powder
+item.chromatic_powder.red.name=Red Chromatic Powder
+item.chromatic_powder.orange.name=Orange Chromatic Powder
+item.chromatic_powder.yellow.name=Yellow Chromatic Powder
+item.chromatic_powder.green.name=Green Chromatic Powder
+item.chromatic_powder.cyan.name=Cyan Chromatic Powder
+item.chromatic_powder.blue.name=Blue Chromatic Powder
+item.chromatic_powder.purple.name=Purple Chromatic Powder
+item.chromatic_powder.pink.name=Pink Chromatic Powder
+item.chromatic_powder.black.name=Black Chromatic Powder
+item.chromatic_powder.white.name=White Chromatic Powder
+item.full_spectrum_chromatic_powder.name=Full-Spectrum Chromatic Powder
+
 item.spiritorb.empty.name=Unaspected Planetary Orb
 item.spiritorb.crown_mote.name=Crown Orb
 item.spiritorb.crown_juve.name=Grand Crown Orb

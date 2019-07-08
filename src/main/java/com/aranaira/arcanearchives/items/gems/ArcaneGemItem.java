@@ -359,6 +359,15 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 			}
 			return new Color(1, 1, 1, 1);
 		}
+
+		public static GemColor fromOrdinal(int ordinal) {
+			int i=0;
+			for(GemColor c : values()) {
+				if(i == ordinal) return c;
+				i++;
+			}
+			return NOCOLOR;
+		}
 	}
 
 	public enum GemUpgrades {
