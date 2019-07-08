@@ -90,7 +90,7 @@ public class RenderGemcasting {
 
 			//bar fill
 			float gcp = GemUtil.getChargePercent(stack);
-			int fillAmount = (int) (gcp) * 20;
+			int fillAmount = (int) (gcp * 20);
 			if(gcp > 0 && fillAmount == 0)
 				fillAmount = 1;
 			if (mode == EnumGemGuiMode.LEFT) {
