@@ -77,8 +77,8 @@ public class PacketRadiantChest {
 	}
 
 	public static class ToggleBrazier implements IMessage {
-		private UUID networkId;
-		private UUID tileId;
+		private UUID networkId = NetworkHelper.INVALID;
+		private UUID tileId = NetworkHelper.INVALID;
 
 		public ToggleBrazier () {
 		}
@@ -100,6 +100,9 @@ public class PacketRadiantChest {
 
 		@Override
 		public void toBytes (ByteBuf buf) {
+			if (networkId == null) networkId = NetworkHelper.INVALID;
+			if (tileId == null) tileId = NetworkHelper.INVALID;
+
 			long most = networkId.getMostSignificantBits();
 			long least = networkId.getLeastSignificantBits();
 			buf.writeLong(most);
@@ -113,6 +116,8 @@ public class PacketRadiantChest {
 		public static class Handler implements ServerHandler<ToggleBrazier> {
 			@Override
 			public void processMessage (ToggleBrazier message, MessageContext ctx) {
+				if (message.networkId.equals(NetworkHelper.INVALID) || message.tileId.equals(NetworkHelper.INVALID)) return;
+
 				ServerNetwork network = NetworkHelper.getServerNetwork(message.networkId, ctx.getServerHandler().player.world);
 				if (network != null) {
 					ImmanenceTileEntity tile = network.getImmanenceTile(message.tileId);

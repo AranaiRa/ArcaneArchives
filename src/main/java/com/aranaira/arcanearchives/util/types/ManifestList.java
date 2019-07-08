@@ -88,14 +88,7 @@ public class ManifestList extends ReferenceList<ManifestEntry> {
 			filter = filter.replaceFirst("@", "");
 		}
 
-		boolean tip = false;
-		if (filter.startsWith("!")) {
-			tip = true;
-			filter = filter.replaceFirst("!", "");
-		}
-
 		final boolean modFilter = mod;
-		final boolean tipFilter = tip;
 
 		String finalFilter = filter;
 		ManifestList filtered = stream().filter((entry) -> {
@@ -109,7 +102,7 @@ public class ManifestList extends ReferenceList<ManifestEntry> {
 				return ItemUtilities.areStacksEqualIgnoreSize(searchItem, stack);
 			}
 
-			if (!modFilter && !tipFilter) {
+			if (!modFilter) {
 				String display = stack.getDisplayName().toLowerCase();
 				if (display.contains(finalFilter)) {
 					return true;
@@ -127,17 +120,9 @@ public class ManifestList extends ReferenceList<ManifestEntry> {
 				if (resource.contains(finalFilter)) {
 					return true;
 				}
-			} else if (tipFilter && listener != null) {
-				Minecraft mc = Minecraft.getMinecraft();
-				List<String> tooltip = stack.getTooltip(mc.player, ITooltipFlag.TooltipFlags.NORMAL);
-				for (String line : tooltip) {
-					if (line.toLowerCase().contains(finalFilter)) {
-						return true;
-					}
-				}
 			}
 
-			if (!modFilter && !tipFilter) {
+			if (!modFilter) {
 				// Other hooks to be added at a later point
 				if (stack.getItem() == Items.ENCHANTED_BOOK) {
 					Map<Enchantment, Integer> map = EnchantmentHelper.getEnchantments(stack);

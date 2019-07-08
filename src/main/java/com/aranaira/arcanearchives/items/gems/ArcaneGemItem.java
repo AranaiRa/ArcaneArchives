@@ -15,8 +15,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.Fluid;
@@ -235,12 +234,12 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 	 */
 	@SideOnly(Side.CLIENT)
 	protected void informPlayerOfItemConsumption(EntityPlayer player, ArcaneGemItem gem, Item item, int quantity) {
-		String message = I18n.format(item.getTranslationKey()+".name");
-		if(quantity > 1)
-			message += " x"+quantity;
-		message += " " + I18n.format("arcanearchives.message.usedtorecharge");
-		message += " " + I18n.format(gem.getTranslationKey()+".name");
-		player.sendStatusMessage(new TextComponentString(message), true);
+		String quantityString = "";
+		if (quantity > 1) {
+			quantityString = " x" + quantity;
+		}
+		ITextComponent message = new TextComponentTranslation("arcanearchives.message.usedtorecharge", new TextComponentTranslation(item.getTranslationKey()+".name"), quantityString, gem.getTranslationKey()+".name").setStyle(new Style().setColor(TextFormatting.GOLD).setBold(true));
+		player.sendStatusMessage(message, true);
 	}
 
 	/**
