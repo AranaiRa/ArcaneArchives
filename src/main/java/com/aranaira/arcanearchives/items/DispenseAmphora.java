@@ -6,7 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
+import net.minecraft.dispenser.IBehaviorDispenseItem;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -17,9 +17,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.IFluidBlock;
 
-import javax.annotation.Nonnull;
-
-public class DispenseAmphora extends BehaviorDefaultDispenseItem {
+public class DispenseAmphora implements IBehaviorDispenseItem {
 	private static final DispenseAmphora INSTANCE = new DispenseAmphora();
 
 	public static DispenseAmphora getInstance () {
@@ -29,12 +27,13 @@ public class DispenseAmphora extends BehaviorDefaultDispenseItem {
 	private DispenseAmphora () {
 	}
 
-	/**
-	 * Dispense the specified stack, play the dispense sound and spawn particles.
-	 */
+	private void success (IBlockSource source) {
+		this.playDispenseSound(source);
+		this.spawnDispenseParticles(source, source.getBlockState().getValue(BlockDispenser.FACING));
+	}
+
 	@Override
-	@Nonnull
-	public ItemStack dispenseStack (@Nonnull IBlockSource source, @Nonnull ItemStack stack) {
+	public ItemStack dispense (IBlockSource source, ItemStack stack) {
 		World world = source.getWorld();
 		EnumFacing facing = source.getBlockState().getValue(BlockDispenser.FACING);
 		BlockPos target = source.getBlockPos().offset(facing);
@@ -49,13 +48,13 @@ public class DispenseAmphora extends BehaviorDefaultDispenseItem {
 			FluidStack output = util.getFluidStack(util.getCapability());
 			if (output == null) {
 				return stack;
-				//return super.dispenseStack(source, stack);
 			}
 
 			util.setMode(TankMode.DRAIN);
 			FluidActionResult result = FluidUtil.tryPlaceFluid(null, world, target, stack, output);
 			util.setMode(originalMode);
 			if (result.isSuccess()) {
+				success(source);
 				return result.getResult();
 			}
 
@@ -64,11 +63,26 @@ public class DispenseAmphora extends BehaviorDefaultDispenseItem {
 			util.setMode(TankMode.FILL);
 			FluidActionResult actionResult = FluidUtil.tryPickUpFluid(stack, null, world, target, facing.getOpposite());
 			util.setMode(originalMode);
-			ItemStack resultStack = actionResult.getResult();
-			//if (!actionResult.isSuccess() || resultStack.isEmpty()) {
-			//	return super.dispenseStack(source, stack);
-			//}
-			return resultStack;
+			success(source);
+			return actionResult.getResult();
 		}
+	}
+
+	/**
+	 * Play the dispense sound from the specified block.
+	 */
+	protected void playDispenseSound (IBlockSource source) {
+		source.getWorld().playEvent(1000, source.getBlockPos(), 0);
+	}
+
+	/**
+	 * Order clients to display dispense particles from the specified block and facing.
+	 */
+	protected void spawnDispenseParticles (IBlockSource source, EnumFacing facingIn) {
+		source.getWorld().playEvent(2000, source.getBlockPos(), this.getWorldEventDataFrom(facingIn));
+	}
+
+	private int getWorldEventDataFrom (EnumFacing facingIn) {
+		return facingIn.getXOffset() + 1 + (facingIn.getZOffset() + 1) * 3;
 	}
 }
