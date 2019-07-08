@@ -205,7 +205,8 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 
 			if(cap.getStackInSlot(i).getItem() == ItemRegistry.CHROMATIC_POWDER) {
 				if(GemRechargePowder.getColor(cap.getStackInSlot(i)) == gem.getArcaneGemItem().getGemColor()) {
-					informPlayerOfItemConsumption(player, gem, cap.getStackInSlot(i).getItem(), 1);
+					//if(world.isRemote)
+						informPlayerOfItemConsumption(player, gem, cap.getStackInSlot(i), 1);
 					cap.getStackInSlot(i).shrink(1);
 					GemUtil.restoreCharge(gem, -1);
 					recharged = true;
@@ -215,8 +216,8 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 		}
 
 		if(fscp > -1 && !recharged) {
-			if(world.isRemote)
-				informPlayerOfItemConsumption(player, gem, cap.getStackInSlot(fscp).getItem(), 1);
+			//if(world.isRemote)
+				informPlayerOfItemConsumption(player, gem, cap.getStackInSlot(fscp), 1);
 			cap.getStackInSlot(fscp).shrink(1);
 			GemUtil.restoreCharge(gem, -1);
 			recharged = true;
@@ -233,12 +234,12 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 	 * @param quantity How many items were consumed
 	 */
 	@SideOnly(Side.CLIENT)
-	protected void informPlayerOfItemConsumption(EntityPlayer player, ArcaneGemItem gem, Item item, int quantity) {
+	protected void informPlayerOfItemConsumption(EntityPlayer player, ArcaneGemItem gem, ItemStack item, int quantity) {
 		String quantityString = "";
 		if (quantity > 1) {
 			quantityString = " x" + quantity;
 		}
-		ITextComponent message = new TextComponentTranslation("arcanearchives.message.usedtorecharge", new TextComponentTranslation(item.getTranslationKey()+".name"), quantityString, gem.getTranslationKey()+".name").setStyle(new Style().setColor(TextFormatting.GOLD).setBold(true));
+		ITextComponent message = new TextComponentTranslation("arcanearchives.message.usedtorecharge", new TextComponentTranslation(item.getTranslationKey()+".name"), quantityString, I18n.format(gem.getTranslationKey()+".name")).setStyle(new Style().setColor(TextFormatting.GOLD).setBold(true));
 		player.sendStatusMessage(message, true);
 	}
 
@@ -249,7 +250,7 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 	 * @param item Which item was consumed
 	 * @param quantity How many items were consumed
 	 */
-	protected void informPlayerOfItemConsumption(EntityPlayer player, GemStack gem, Item item, int quantity) {
+	protected void informPlayerOfItemConsumption(EntityPlayer player, GemStack gem, ItemStack item, int quantity) {
 		informPlayerOfItemConsumption(player, gem.getArcaneGemItem(), item, quantity);
 	}
 
