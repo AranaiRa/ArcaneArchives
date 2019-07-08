@@ -191,12 +191,12 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 		int alphaQuantShift = 0;
 		if(container.getSortingType() == ManifestList.SortingType.QUANTITY)
 			alphaQuantShift = mAlphaQuantButtonSize;
-		drawModalRectWithCustomSizedTexture(112, 10, mAlphaQuantButtonLeftOffset, mAlphaQuantButtonTopOffset, mAlphaQuantButtonSize, mAlphaQuantButtonSize + alphaQuantShift, mGUIForegroundTexturesSize, mGUIForegroundTexturesSize);
+		drawModalRectWithCustomSizedTexture(112, 10, mAlphaQuantButtonLeftOffset, mAlphaQuantButtonTopOffset + alphaQuantShift, mAlphaQuantButtonSize, mAlphaQuantButtonSize, mGUIForegroundTexturesSize, mGUIForegroundTexturesSize);
 
 		int ascDescShift = 0;
 		if(container.getSortingDirection() == ManifestList.SortingDirection.ASCENDING)
 			ascDescShift = mAscDescButtonSize;
-		drawModalRectWithCustomSizedTexture(130, 10, mAscDescButtonLeftOffset, mAscDescButtonTopOffset, mAscDescButtonSize, mAscDescButtonSize + ascDescShift, mGUIForegroundTexturesSize, mGUIForegroundTexturesSize);
+		drawModalRectWithCustomSizedTexture(130, 10, mAscDescButtonLeftOffset, mAscDescButtonTopOffset + ascDescShift, mAscDescButtonSize, mAscDescButtonSize, mGUIForegroundTexturesSize, mGUIForegroundTexturesSize);
 	}
 
 	@Override
