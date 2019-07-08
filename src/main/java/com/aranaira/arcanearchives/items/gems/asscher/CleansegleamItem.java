@@ -1,9 +1,13 @@
 package com.aranaira.arcanearchives.items.gems.asscher;
 
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.gems.GemUtil;
 import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler;
+import com.tmtravlr.potioncore.PotionCore;
+import com.tmtravlr.potioncore.PotionCoreEffects;
+import com.tmtravlr.potioncore.PotionCoreTypes;
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -23,6 +27,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -61,6 +67,9 @@ public class CleansegleamItem extends ArcaneGemItem {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick (World world, EntityPlayer player, EnumHand hand) {
 		if (!world.isRemote) {
+			for(String s : PotionCoreEffects.POTIONS.keySet()) {
+				ArcaneArchives.logger.info("\""+s+"\"");
+			}
 			AvailableGemsHandler handler = GemUtil.getHeldGem(player, hand);
 			if (handler.getHeld() != null) {
 				if(GemUtil.getCharge(handler.getHeld()) == 0) {
@@ -113,6 +122,8 @@ public class CleansegleamItem extends ArcaneGemItem {
 	private int removeEffects (EntityLivingBase target, boolean hasMatterUpgrade) {
 		ArrayList<Potion> toRemove = new ArrayList<>();
 		int cost = 0;
+		boolean hasAntidote = false;
+		boolean hasPurity = false;
 		for (PotionEffect effect : target.getActivePotionEffects()) {
 			if (effect.getEffectName().equals(MobEffects.HUNGER.getName())) {
 				toRemove.add(effect.getPotion());
@@ -125,6 +136,24 @@ public class CleansegleamItem extends ArcaneGemItem {
 					toRemove.add(effect.getPotion());
 					cost = 3;
 				}
+			}
+
+			if(effect.getEffectName().equals("effect.antidote")) hasAntidote = true;
+			if(effect.getEffectName().equals("effect.purity")) hasPurity = true;
+		}
+
+		if(Loader.isModLoaded("potioncore")) {
+			if(!hasAntidote) {
+				Potion antidote = PotionCoreEffects.POTIONS.get("antidote");
+				target.addPotionEffect(new PotionEffect(antidote, 60 * 20));
+				if (cost == 0) cost = 1;
+
+				ArcaneArchives.logger.info("should have added antidote");
+			}
+			if(!hasPurity && hasMatterUpgrade) {
+				Potion purity = PotionCoreEffects.POTIONS.get("purity");
+				target.addPotionEffect(new PotionEffect(purity, 60 * 20));
+				if (cost == 0) cost = 1;
 			}
 		}
 
@@ -139,5 +168,10 @@ public class CleansegleamItem extends ArcaneGemItem {
 		//If potion core is loaded, add Antidote/Purity on a cleanse
 
 		return cost;
+	}
+
+	@Optional.Method(modid = "potioncore")
+	private void applyPotionCoreBuffs(){
+
 	}
 }
