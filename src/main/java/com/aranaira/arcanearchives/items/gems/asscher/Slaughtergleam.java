@@ -53,25 +53,35 @@ public class Slaughtergleam extends ArcaneGemItem {
 	public ActionResult<ItemStack> onItemRightClick (World world, EntityPlayer player, EnumHand hand) {
 		if (!world.isRemote) {
 			AvailableGemsHandler handler = GemUtil.getHeldGem(player, hand);
-			if (handler.getHeld() != null && GemUtil.getCharge(handler.getHeld()) == 0) {
-				for (int i = 0; i < player.inventory.mainInventory.size(); i++) {
-					ItemStack stack = player.inventory.mainInventory.get(i);
-					if (stack.getItem() == Items.GOLD_NUGGET) {
-						GemUtil.restoreCharge(handler.getHeld(), -1);
-						stack.shrink(3);
-						//TODO: Play a particle effect
-						Vec3d pos = player.getPositionVector().add(0, 1, 0);
-						GemParticle packet = new GemParticle(cut, color, pos, pos);
-						NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, pos.x, pos.y, pos.z, 160);
-						NetworkHandler.CHANNEL.sendToAllAround(packet, tp);
-						break;
-					} else {
-						continue;
+			GemUtil.GemStack gem = handler.getHeld();
+			recharge(world, player, gem);
+		}
+
+		return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+	}
+
+	@Override
+	public boolean recharge (World world, EntityPlayer player, GemUtil.GemStack gem) {
+		if (gem != null && GemUtil.getCharge(gem) == 0) {
+			for (int i = 0; i < player.inventory.mainInventory.size(); i++) {
+				ItemStack stack = player.inventory.mainInventory.get(i);
+				if (stack.getItem() == Items.GOLD_NUGGET) {
+					int numConsumed = 5;
+					if (numConsumed > stack.getCount()) {
+						numConsumed = stack.getCount();
 					}
+					GemUtil.restoreCharge(gem, numConsumed * 12);
+					stack.shrink(numConsumed);
+					//TODO: Play a particle effect
+					Vec3d pos = player.getPositionVector().add(0, 1, 0);
+					GemParticle packet = new GemParticle(cut, color, pos, pos);
+					NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, pos.x, pos.y, pos.z, 160);
+					NetworkHandler.CHANNEL.sendToAllAround(packet, tp);
+					return true;
 				}
 			}
 		}
 
-		return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+		return false;
 	}
 }
