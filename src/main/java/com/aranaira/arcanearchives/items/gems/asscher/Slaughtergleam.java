@@ -57,6 +57,7 @@ public class Slaughtergleam extends ArcaneGemItem {
 				for (int i = 0; i < player.inventory.mainInventory.size(); i++) {
 					ItemStack stack = player.inventory.mainInventory.get(i);
 					if (stack.getItem() == Items.GOLD_NUGGET) {
+						informPlayerOfItemConsumption(player, this, Items.GOLD_NUGGET, 1);
 						GemUtil.restoreCharge(handler.getHeld(), -1);
 						stack.shrink(3);
 						//TODO: Play a particle effect
