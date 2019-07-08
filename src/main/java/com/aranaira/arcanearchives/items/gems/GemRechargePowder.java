@@ -6,17 +6,33 @@ import com.aranaira.arcanearchives.items.gems.ArcaneGemItem.*;
 import com.aranaira.arcanearchives.util.NBTUtils;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 public class GemRechargePowder extends ItemTemplate {
     public static final String NAME = "chromatic_powder";
 
     public GemRechargePowder() {
         super(NAME);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+        String key = "arcanearchives.tooltip."+getTranslationKey(stack);
+        tooltip.add(I18n.format(key));
+        tooltip.add(TextFormatting.RED + I18n.format("arcanearchives.tooltip.creativeonly"));
     }
 
     @Override

@@ -939,7 +939,7 @@
             <p align="center"><stack item="arcanearchives:radiant_amphora" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:radiant_tank"/>A Radiant Amphora acts as a long distance connection to a specific <link ref="RadiantTank">Radiant Tank</link>. You can bind a Radiant Amphora to a Radiant Tank by using the amphora on the desired tank while sneaking. The amphora will become colorized to signify that a connection was made.
+                <stack item="arcanearchives:radiant_tank"/> A Radiant Amphora acts as a long distance connection to a specific <link ref="RadiantTank">Radiant Tank</link>. You can bind a Radiant Amphora to a Radiant Tank by using the amphora on the desired tank while sneaking. The amphora will become colorized to signify that a connection was made.
             </p>
             <p>
                 <image src="arcanearchives:items/item_radiantamphora" tw="16" th="16"/> While in <span bold="true">Fill</span> mode, picking up fluid directly places it into the linked Radiant Tank.
@@ -949,6 +949,9 @@
             </p>
             <p>
                 You can switch the Radiant Amphora's current mode by left clicking the air.
+            </p>
+            <p>
+                <stack item="minecraft:dispenser"/> A Radiant Amphora placed in a Dispenser will attempt to place fluid from its linked tank if the speace in front of the Dispenser is empty. If the space in front of the Dispenser has a fluid block, the Amphora will instead attempt to pick it up and send it to its linked tank.
             </p>
             <horizontal_rule/>
             <p>
