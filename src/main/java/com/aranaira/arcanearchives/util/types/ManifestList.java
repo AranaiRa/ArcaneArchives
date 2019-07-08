@@ -102,12 +102,16 @@ public class ManifestList extends ReferenceList<ManifestEntry> {
 				if (display.contains(finalFilter)) {
 					return true;
 				}
+				String registry = stack.getItem().getRegistryName().getPath().toLowerCase();
+				if (registry.contains(finalFilter)) {
+					return true;
+				}
 			} else if (modFilter) {
 				String modName = getAdustedModName(stack);
 				if (modName.contains(finalFilter)) {
 					return true;
 				}
-				String resource = stack.getItem().getRegistryName().toString().toLowerCase();
+				String resource = stack.getItem().getRegistryName().getNamespace().toLowerCase();
 				if (resource.contains(finalFilter)) {
 					return true;
 				}
