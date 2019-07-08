@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.items.gems;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.config.ConfigHandler;
+import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.items.gems.GemUtil.GemStack;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import net.minecraft.client.renderer.block.model.ModelBakery;
@@ -10,15 +11,19 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 import java.awt.*;
 
@@ -178,7 +183,49 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 	}
 
 	public boolean recharge (World world, EntityPlayer player, GemStack gem) {
-		return false;
+		return tryRechargingWithPowder(world, player, gem);
+	}
+
+	protected boolean tryRechargingWithPowder(World world, EntityPlayer player, GemStack gem) {
+		IItemHandler cap = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+		int fscp = -1;
+		boolean recharged = false;
+		for(int i=0; i<cap.getSlots(); i++) {
+			if(cap.getStackInSlot(i).getItem() == ItemRegistry.RAINBOW_CHROMATIC_POWDER)
+				fscp = i;
+
+			if(cap.getStackInSlot(i).getItem() == ItemRegistry.CHROMATIC_POWDER) {
+				if(GemRechargePowder.getColor(cap.getStackInSlot(i)) == gem.getArcaneGemItem().getGemColor()) {
+					informPlayerOfItemConsumption(player, gem, cap.getStackInSlot(i).getItem(), 1);
+					cap.getStackInSlot(i).shrink(1);
+					GemUtil.restoreCharge(gem, -1);
+					recharged = true;
+					break;
+				}
+			}
+		}
+
+		if(fscp > -1 && !recharged) {
+			informPlayerOfItemConsumption(player, gem, cap.getStackInSlot(fscp).getItem(), 1);
+			cap.getStackInSlot(fscp).shrink(1);
+			GemUtil.restoreCharge(gem, -1);
+			recharged = true;
+		}
+
+		return recharged;
+	}
+
+	protected void informPlayerOfItemConsumption(EntityPlayer player, ArcaneGemItem gem, Item item, int quantity) {
+		String message = I18n.format(item.getTranslationKey()+".name");
+		if(quantity > 1)
+			message += " x"+quantity;
+		message += " " + I18n.format("arcanearchives.message.usedtorecharge");
+		message += " " + I18n.format(gem.getTranslationKey()+".name");
+		player.sendStatusMessage(new TextComponentString(message), true);
+	}
+
+	protected void informPlayerOfItemConsumption(EntityPlayer player, GemStack gem, Item item, int quantity) {
+		informPlayerOfItemConsumption(player, gem.getArcaneGemItem(), item, quantity);
 	}
 
 	protected void consumeInventoryItemForChargeRecovery(EntityPlayer player, GemUtil.AvailableGemsHandler handler, Item targetItem, int needed, int maxCharge) {

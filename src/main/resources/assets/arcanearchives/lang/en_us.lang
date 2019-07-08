@@ -356,6 +356,7 @@ arcanearchives.config.arsenal.tooltip=Settings releated to the Arcane Arsenal mo
 
 arcanearchives.message.book_received.bookshelf=Something precious was hidden inside that block!
 arcanearchives.message.book_received.resonator=You don't remember it being there before, but you find a book on the ground by your crafting table.
+arcanearchives.message.usedtorecharge=used to recharge
 
 advancement.arcanearchives.amphora=A bucket by any other name...
 advancement.arcanearchives.amphora.desc=Craft a Radiant Amphora and link to your tanks for easy fluid transfer!

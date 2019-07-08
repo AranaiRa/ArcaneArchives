@@ -78,6 +78,7 @@ public class CleansegleamItem extends ArcaneGemItem {
 						ItemStack bucket = ItemStack.EMPTY;
 						ItemStack stackInSlot = playerInventory.getStackInSlot(i);
 						if (stackInSlot.getItem() == Items.MILK_BUCKET) {
+							informPlayerOfItemConsumption(player, this, Items.MILK_BUCKET, 1);
 							playerInventory.extractItem(i, 1, false);
 							if (bucket.isEmpty()) {
 								bucket = new ItemStack(Items.BUCKET);
