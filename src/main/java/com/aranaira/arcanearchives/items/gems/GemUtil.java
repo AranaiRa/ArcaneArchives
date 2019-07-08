@@ -1,11 +1,13 @@
 package com.aranaira.arcanearchives.items.gems;
 
 import com.aranaira.arcanearchives.integration.baubles.BaubleGemUtil;
+import com.aranaira.arcanearchives.inventory.ContainerGemSocket;
 import com.aranaira.arcanearchives.inventory.handlers.GemSocketHandler;
 import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler.HandedGemsHandler;
 import com.aranaira.arcanearchives.util.NBTUtils;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -416,12 +418,20 @@ public class GemUtil {
 					gems.add(new GemStack(this, player.getHeldItemOffhand()));
 				}
 
-				if (Loader.isModLoaded("baubles")) {
-					GemSocketHandler handler = BaubleGemUtil.getSocket(player);
-					if (handler != null) {
-						this.handler = handler;
-						this.baubleSlot = handler.getBaubleSlot();
-						gems.add(new GemStack(this, handler.getGem(), true));
+				if (player.openContainer instanceof ContainerGemSocket) {
+					ContainerGemSocket container = (ContainerGemSocket) player.openContainer;
+					Slot slot = container.getSlot(37); // The socket
+					if (slot.getHasStack() && slot.getStack().getItem() instanceof ArcaneGemItem) {
+						gems.add(new GemStack(this, slot.getStack()));
+					}
+				} else {
+					if (Loader.isModLoaded("baubles")) {
+						GemSocketHandler handler = BaubleGemUtil.getSocket(player);
+						if (handler != null) {
+							this.handler = handler;
+							this.baubleSlot = handler.getBaubleSlot();
+							gems.add(new GemStack(this, handler.getGem(), true));
+						}
 					}
 				}
 			}

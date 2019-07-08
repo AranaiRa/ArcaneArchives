@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.proxy;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.advancements.Advancements;
 import com.aranaira.arcanearchives.commands.CommandBrazier;
 import com.aranaira.arcanearchives.commands.CommandHive;
 import com.aranaira.arcanearchives.config.ConfigHandler;
@@ -26,6 +27,8 @@ public class CommonProxy {
 		NetworkRegistry.INSTANCE.registerGuiHandler(ArcaneArchives.instance, new AAGuiHandler());
 
 		NetworkHandler.registerPackets();
+		// Set up advancements
+		Advancements.init();
 	}
 
 	public void init (FMLInitializationEvent event) {

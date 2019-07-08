@@ -13,13 +13,7 @@
   "parent": "arcanearchives:network",
   "criteria": {
     "book": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "arcanearchives:letter_resignation"
-          }
-        ]
+      "trigger": "arcanearchives:leave_network"
       }
     }
   }

@@ -151,8 +151,10 @@ public class ContainerDevouringCharm extends Container {
 					return ItemStack.EMPTY;
 				}
 			} else {
-				if (!mergeItemStack(stack, 0, 36, false)) {
-					return ItemStack.EMPTY;
+				if (!mergeItemStack(stack, 27, 36, false)) {
+					if (!mergeItemStack(stack, 0, 27, false)) {
+						return ItemStack.EMPTY;
+					}
 				}
 			}
 
@@ -169,7 +171,7 @@ public class ContainerDevouringCharm extends Container {
 	@Override
 	@Nonnull
 	public ItemStack slotClick (int slotID, int dragType, ClickType clickType, EntityPlayer player) {
-		ArcaneArchives.logger.info(slotID);
+		//ArcaneArchives.logger.info(slotID);
 		return super.slotClick(slotID, dragType, clickType, player);
 	}
 
