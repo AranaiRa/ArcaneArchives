@@ -156,6 +156,13 @@ public class GemUtil {
 		}
 	}
 
+	public static void rechargeGems (EntityPlayer player) {
+		AvailableGemsHandler handler = GemUtil.getAvailableGems(player);
+		for (GemStack gem : handler) {
+			gem.getArcaneGemItem().recharge(player.world, player, gem);
+		}
+	}
+
 	/**
 	 * Gets the current charge amount of a gem as a value between 0..1
 	 *
@@ -225,6 +232,10 @@ public class GemUtil {
 	public static boolean consumeCharge (GemStack gem, int amount) {
 		boolean result = consumeCharge(gem.getStack(), amount);
 		gem.markDirty();
+		if (!result) {
+			EntityPlayer player = gem.getHandler().getPlayer();
+			gem.getArcaneGemItem().recharge(player.world, player, gem);
+		}
 		return result;
 	}
 
@@ -389,6 +400,10 @@ public class GemUtil {
 			}
 		}
 
+		public EntityPlayer getPlayer () {
+			return player;
+		}
+
 		protected List<GemStack> getAvailableGems () {
 			if (gems == null || handler == null) {
 				gems = new ArrayList<>();
@@ -469,8 +484,16 @@ public class GemUtil {
 			return stack;
 		}
 
+		public AvailableGemsHandler getHandler () {
+			return handler;
+		}
+
 		public Item getItem () {
 			return stack.getItem();
+		}
+
+		public ArcaneGemItem getArcaneGemItem () {
+			return (ArcaneGemItem) stack.getItem();
 		}
 
 		public GemStack (AvailableGemsHandler handler, ItemStack stack) {

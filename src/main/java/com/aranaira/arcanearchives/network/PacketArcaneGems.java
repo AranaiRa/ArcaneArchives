@@ -6,6 +6,7 @@ import com.aranaira.arcanearchives.inventory.handlers.GemSocketHandler;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.gems.GemUtil;
 import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler;
+import com.aranaira.arcanearchives.items.gems.GemUtil.GemStack;
 import com.aranaira.arcanearchives.network.NetworkHandler.ClientHandler;
 import com.aranaira.arcanearchives.network.NetworkHandler.EmptyMessageServer;
 import io.netty.buffer.ByteBuf;
@@ -119,6 +120,18 @@ public class PacketArcaneGems {
 			if (!stack.isEmpty()) {
 				player.openGui(ArcaneArchives.instance, AAGuiHandler.BAUBLE_GEMSOCKET, player.world, (int) player.posX, (int) player.posY, (int) player.posZ);
 			}
+		}
+	}
+
+	public static class RequestRecharge implements EmptyMessageServer<RequestRecharge> {
+		public RequestRecharge () {
+
+		}
+
+		@Override
+		public void processMessage (RequestRecharge message, MessageContext ctx) {
+			EntityPlayer player = ctx.getServerHandler().player;
+			GemUtil.rechargeGems(player);
 		}
 	}
 }

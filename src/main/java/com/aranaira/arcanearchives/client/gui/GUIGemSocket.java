@@ -3,6 +3,8 @@ package com.aranaira.arcanearchives.client.gui;
 import com.aranaira.arcanearchives.client.gui.controls.InvisibleButton;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerGemSocket;
+import com.aranaira.arcanearchives.network.NetworkHandler;
+import com.aranaira.arcanearchives.network.PacketArcaneGems.RequestRecharge;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -63,7 +65,8 @@ public class GUIGemSocket extends GuiContainer {
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
 		if(button.id == 0) { //recharge button
-
+			RequestRecharge packet = new RequestRecharge();
+			NetworkHandler.CHANNEL.sendToServer(packet);
 		}
 	}
 
