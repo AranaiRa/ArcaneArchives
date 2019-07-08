@@ -32,6 +32,26 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 	private int lastTick = 0;
 	private UUID lastUUID = null;
 
+	public long getLastClick () {
+		return lastClick;
+	}
+
+	public int getLastTick () {
+		return lastTick;
+	}
+
+	public UUID getLastUUID () {
+		return lastUUID;
+	}
+
+	public TroveUpgradeItemHandler getSizeUpgrades () {
+		return sizeUpgrades;
+	}
+
+	public OptionalUpgradesHandler getOptionalUpgrades () {
+		return optionalUpgrades;
+	}
+
 	private TroveUpgradeItemHandler sizeUpgrades = new TroveUpgradeItemHandler() {
 		@Override
 		public void onContentsChanged () {

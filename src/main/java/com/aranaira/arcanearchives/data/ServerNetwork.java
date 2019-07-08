@@ -65,6 +65,10 @@ public class ServerNetwork implements IServerNetwork {
 		return tiles.getByUUID(tileId);
 	}
 
+	public TileList getTiles () {
+		return tiles;
+	}
+
 	/***
 	 * Static entrypoint used by NetworkSaveData
 	 */

@@ -102,7 +102,7 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity implements IUpgra
 		return tag;
 	}
 
-	public FluidTank getInventory () {
+	public VoidingFluidTank getInventory () {
 		return inventory;
 	}
 

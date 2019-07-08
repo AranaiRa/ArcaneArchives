@@ -45,6 +45,17 @@ public class TileList extends ReferenceList<IteRef> {
 	}
 
 	@Nullable
+	public IteRef getReference (UUID uuid) {
+		for (IteRef ref : this) {
+			if (ref.uuid.equals(uuid)) {
+				return ref;
+			}
+		}
+
+		return null;
+	}
+
+	@Nullable
 	public ImmanenceTileEntity getByUUID (UUID uuid) {
 		for (IteRef ref : this) {
 			if (ref.uuid.equals(uuid)) {
