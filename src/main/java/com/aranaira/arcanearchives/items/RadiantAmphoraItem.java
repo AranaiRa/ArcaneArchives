@@ -1,19 +1,21 @@
 package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.init.BlockRegistry;
-import com.aranaira.arcanearchives.items.RadiantAmphoraItem.AmphoraUtil;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
 import com.aranaira.arcanearchives.util.NBTUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockDispenser;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Bootstrap.BehaviorDispenseOptional;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.StatList;
@@ -31,10 +33,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidActionResult;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.*;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
@@ -56,6 +55,8 @@ public class RadiantAmphoraItem extends ItemTemplate {
 	public RadiantAmphoraItem () {
 		super(NAME);
 		setMaxStackSize(1);
+
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(this, DispenseAmphora.getInstance());
 	}
 
 	@Nullable
@@ -262,6 +263,12 @@ public class RadiantAmphoraItem extends ItemTemplate {
 			return TankMode.fromOrdinal(nbt.getInteger("mode"));
 		}
 
+		public void setMode (TankMode mode) {
+			if (nbt != null) {
+				nbt.setInteger("mode", mode.ordinal());
+			}
+		}
+
 		public void toggleMode () {
 			if (!nbt.hasKey("mode")) {
 				nbt.setInteger("mode", TankMode.FILL.ordinal());
@@ -286,6 +293,10 @@ public class RadiantAmphoraItem extends ItemTemplate {
 			if (handler != null) {
 				FluidStack stack = getFluidStack(handler);
 
+				if (stack == null) {
+					return "Unknown fluid";
+				}
+
 				if (net.minecraft.util.text.translation.I18n.canTranslate(stack.getFluid().getName())) {
 					return net.minecraft.util.text.translation.I18n.translateToLocal(stack.getFluid().getName());
 				}
@@ -293,7 +304,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 				return net.minecraft.util.text.translation.I18n.translateToLocalFormatted(stack.getLocalizedName());
 			}
 
-			return "unknown tank";
+			return "Unknown fluid";
 		}
 
 		public Fluid getFluid () {
@@ -503,10 +514,57 @@ public class RadiantAmphoraItem extends ItemTemplate {
 		}
 	}
 
-	public static class BehaviorDispenseAmphora extends BehaviorDispenseOptional {
+	public static class DispenseAmphora extends BehaviorDefaultDispenseItem {
+		private static final DispenseAmphora INSTANCE = new DispenseAmphora();
+
+		public static DispenseAmphora getInstance () {
+			return INSTANCE;
+		}
+
+		private DispenseAmphora () {
+		}
+
+		/**
+		 * Dispense the specified stack, play the dispense sound and spawn particles.
+		 */
 		@Override
-		protected ItemStack dispenseStack (IBlockSource source, ItemStack stack) {
-			return super.dispenseStack(source, stack);
+		@Nonnull
+		public ItemStack dispenseStack (@Nonnull IBlockSource source, @Nonnull ItemStack stack) {
+			World world = source.getWorld();
+			EnumFacing facing = source.getBlockState().getValue(BlockDispenser.FACING);
+			BlockPos target = source.getBlockPos().offset(facing);
+			IBlockState targetState = world.getBlockState(target);
+			Block targetBlock = targetState.getBlock();
+
+			AmphoraUtil util = new AmphoraUtil(stack);
+			TankMode originalMode = util.getMode();
+
+			if (targetState.getBlock().isReplaceable(world, target) && !(targetBlock instanceof BlockLiquid) && !(targetBlock instanceof IFluidBlock)) {
+				// Try dispensing
+				FluidStack output = util.getFluidStack(util.getCapability());
+				if (output == null) {
+					return stack;
+					//return super.dispenseStack(source, stack);
+				}
+
+				util.setMode(TankMode.DRAIN);
+				FluidActionResult result = FluidUtil.tryPlaceFluid(null, world, target, stack, output);
+				util.setMode(originalMode);
+				if (result.isSuccess()) {
+					return result.getResult();
+				}
+
+				return stack; //super.dispenseStack(source, stack);
+			} else {
+				util.setMode(TankMode.FILL);
+				FluidActionResult actionResult = FluidUtil.tryPickUpFluid(stack, null, world, target, facing.getOpposite());
+				util.setMode(originalMode);
+				ItemStack resultStack = actionResult.getResult();
+				//if (!actionResult.isSuccess() || resultStack.isEmpty()) {
+				//	return super.dispenseStack(source, stack);
+				//}
+				return resultStack;
+			}
 		}
 	}
 }
