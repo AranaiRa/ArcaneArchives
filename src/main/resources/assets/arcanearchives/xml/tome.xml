@@ -1006,6 +1006,9 @@
             <p>
                 <stack item="arcanearchives:quartz_sliver" /> Raw Radiant Quartz can be used to create <link ref="SliverOfLight">Slivers of Light</link> by bashing a piece against another block.
             </p>
+            <p condition="ml_astralsorcery">
+                <stack item="astralsorcery:blockwell"/> When placed in a Lightwell with access to the sky, Raw Radiant Quartz creates Liquid Starlight over time. Compared to Aquamarine, its production rate is significantly lower, but is much more resistant to shattering.
+            </p>
             <horizontal_rule/>
             <p>
                 <stack item="arcanearchives:radiant_resonator" /> Raw Radiant Quartz is created over time on top of a <link ref="RadiantResonator">Radiant Resonator</link> in the form of a <link ref="RawQuartzCluster">Raw Quartz Cluster</link>.
@@ -1041,6 +1044,9 @@
             <horizontal_rule/>
             <p>
                 Shaped Radiant Quartz is cut and polished Radiant Quartz that is suitable for more advanced uses. It is primarily a crafting component.
+            </p>
+            <p condition="ml_astralsorcery">
+                <stack item="astralsorcery:blockwell"/> When placed in a Lightwell with access to the sky, Shaped Radiant Quartz creates Liquid Starlight over time. Compared to Aquamarine, its production rate is significantly lower, but is much more resistant to shattering. Shaped Radiant Quartz is a bit more efficient than <link ref="RawQuartz">Raw Radiant Quartz</link>.
             </p>
             <horizontal_rule/>
             <p>
