@@ -23,19 +23,9 @@ public class ManifestItemHandler implements IItemHandlerModifiable {
 		this.numSlots = 81;
 	}
 
-	private boolean shouldSort () {
-		if (manifestActive == null) return true;
-
-		return (manifestBase.getSortingDirection() == manifestActive.getSortingDirection() && manifestBase.getSortingType() == manifestActive.getSortingType());
-	}
-
 	private void updateManifest () {
 		if (manifestActive == null) {
-			if (shouldSort()) {
-				manifestActive = manifestBase.sorted().filtered();
-			} else {
-				manifestActive = manifestBase.filtered();
-			}
+			manifestActive = manifestBase.sorted().filtered();
 		}
 	}
 
@@ -89,29 +79,17 @@ public class ManifestItemHandler implements IItemHandlerModifiable {
 
 	public void setSearchText (String s) {
 		manifestBase.setSearchText(s);
-		if (shouldSort()) {
-			manifestActive = manifestBase.sorted().filtered();
-		} else {
-			manifestActive = manifestBase.filtered();
-		}
+		manifestActive = manifestBase.sorted().filtered();
 	}
 
 	public void setSearchItem (ItemStack s) {
 		manifestBase.setSearchItem(s);
-		if (shouldSort()) {
-			manifestActive = manifestBase.sorted().filtered();
-		} else {
-			manifestActive = manifestBase.filtered();
-		}
+		manifestActive = manifestBase.sorted().filtered();
 	}
 
 	public void clear () {
 		manifestBase.setSearchText(null);
-		if (shouldSort()) {
-			manifestActive = manifestBase.sorted().filtered();
-		} else {
-			manifestActive = manifestBase.filtered();
-		}
+		manifestActive = manifestBase.sorted().filtered();
 	}
 
 	public void nullify () {
@@ -119,30 +97,26 @@ public class ManifestItemHandler implements IItemHandlerModifiable {
 	}
 
 	public SortingDirection getSortingDirection () {
-		if (manifestActive != null) return manifestActive.getSortingDirection();
+		if (manifestActive != null) {
+			return manifestActive.getSortingDirection();
+		}
 		return manifestBase.getSortingDirection();
 	}
 
 	public void setSortingDirection (SortingDirection sortingDirection) {
 		manifestBase.setSortingDirection(sortingDirection);
-		if (shouldSort()) {
-			manifestActive = manifestBase.sorted().filtered();
-		} else {
-			manifestActive = manifestBase.filtered();
-		}
+		manifestActive = manifestBase.sorted().filtered();
 	}
 
 	public SortingType getSortingType () {
-		if (manifestActive != null) return manifestActive.getSortingType();
+		if (manifestActive != null) {
+			return manifestActive.getSortingType();
+		}
 		return manifestBase.getSortingType();
 	}
 
 	public void setSortingType (SortingType sortingType) {
 		manifestBase.setSortingType(sortingType);
-		if (shouldSort()) {
-			manifestActive = manifestBase.sorted().filtered();
-		} else {
-			manifestActive = manifestBase.filtered();
-		}
+		manifestActive = manifestBase.sorted().filtered();
 	}
 }
