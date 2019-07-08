@@ -358,7 +358,7 @@ arcanearchives.message.book_received.bookshelf=Something precious was hidden ins
 arcanearchives.message.book_received.resonator=You don't remember it being there before, but you find a book on the ground by your crafting table.
 arcanearchives.message.usedtorecharge=used to recharge
 
-advancement.arcanearchives.amphora=C'est ne pas un seau
+advancement.arcanearchives.amphora=Ceci n'est pas un seau
 advancement.arcanearchives.amphora.desc=Craft a Radiant Amphora for easy fluid transfer with tanks.
 advancement.arcanearchives.brazier=Hoarders
 advancement.arcanearchives.brazier.desc=Sort your items quickly! With ... fire?
