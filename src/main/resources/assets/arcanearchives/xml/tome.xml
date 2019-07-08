@@ -9,6 +9,8 @@
         <not name="no_thaumcraft"><mod-loaded modid="thaumcraft"/></not>
         <mod-loaded name="ml_astralsorcery" modid="astralsorcery"/>
         <not name="no_astralsorcery"><mod-loaded modid="astralsorcery"/></not>
+        <mod-loaded name="ml_potioncore" modid="potioncore"/>
+        <not name="no_potioncore"><mod-loaded modid="potioncore"></mod-loaded></not>
         <mod-loaded name="ml_quark" modid="quark"/>
         <not name="no_quark"><mod-loaded modid="quark"></mod-loaded></not>
     </conditions>
@@ -43,6 +45,9 @@
         <stack item="arcanearchives:scepter_revelation">ScepterRevelation</stack>
         <stack item="arcanearchives:scintillating_inlay">ScintillatingInlay</stack>
         <stack item="arcanearchives:writ_expulsion">WritExpulsion</stack>
+
+        <stack item="arcanearchives:chromatic_powder">ArcaneGems:RechargingGems</stack>
+        <stack item="arcanearchives:full_spectrum_chromatic_powder">ArcaneGems:RechargingGems</stack>
 
         <stack item="arcanearchives:slaughtergleam">Slaughtergleam</stack>
         <stack item="arcanearchives:murdergleam">Murdergleam</stack>
@@ -934,7 +939,7 @@
             <p align="center"><stack item="arcanearchives:radiant_amphora" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:radiant_tank"/>A Radiant Amphora acts as a long distance connection to a specific <link ref="RadiantTank">Radiant Tank</link>. You can bind a Radiant Amphora to a Radiant Tank by using the amphora on the desired tank while sneaking. The amphora will become colorized to signify that a connection was made.
+                <stack item="arcanearchives:radiant_tank"/> A Radiant Amphora acts as a long distance connection to a specific <link ref="RadiantTank">Radiant Tank</link>. You can bind a Radiant Amphora to a Radiant Tank by using the amphora on the desired tank while sneaking. The amphora will become colorized to signify that a connection was made.
             </p>
             <p>
                 <image src="arcanearchives:items/item_radiantamphora" tw="16" th="16"/> While in <span bold="true">Fill</span> mode, picking up fluid directly places it into the linked Radiant Tank.
@@ -944,6 +949,9 @@
             </p>
             <p>
                 You can switch the Radiant Amphora's current mode by left clicking the air.
+            </p>
+            <p>
+                <stack item="minecraft:dispenser"/> A Radiant Amphora placed in a Dispenser will attempt to place fluid from its linked tank if the speace in front of the Dispenser is empty. If the space in front of the Dispenser has a fluid block, the Amphora will instead attempt to pick it up and send it to its linked tank.
             </p>
             <horizontal_rule/>
             <p>
@@ -1273,13 +1281,10 @@
             <p align="center"><image src="arcanearchives:gui/guidebook/gems" tw="16" th="16" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                Arcane Gems are specially cut pieces of Radiant Quartz, modified to only glow with a specific color of light. Each gem has unique magical properties.
+                Arcane Gems are specially cut pieces of Radiant Quartz, modified to only glow with a specific color of light. Each gem has unique magical properties described further on their individual pages.
             </p>
             <p>
-                Most Arcane Gems have an internal reservoir of light, called <span bold="true">charge</span>. Once a gem's charge runs out, it becomes <span bold="true">dun</span> and cannot be used until recharged. Each gem has a unique method of recharging noted on its individual page.
-            </p>
-            <p>
-                <span bold="true">Please be aware that all Arcane Gem recipes are temporary. </span>Arcane Gems will not be craftable on the <link ref="GemCuttersTable">Gem Cutter's Table</link> in the future.
+                <span bold="true">Please be aware that all Arcane Gem recipes are temporary.</span> Arcane Gems will not be craftable on the <link ref="GemCuttersTable">Gem Cutter's Table</link> in the future.
             </p>
             <horizontal_rule/>
             <p>
@@ -1299,6 +1304,28 @@
             </p>
             <p>
                 <image src="arcanearchives:items/gems/trillion/dun" tw="16" th="16"/> Gems with a <span bold="true">Trillion</span> cut generally affect energy in some way.
+            </p>
+        </section>
+        <section id="RechargingGems">
+            <page_title_shorter>
+                <title>Arcane Gems</title>
+            </page_title_shorter>
+            <space height="16"/>
+            <p bold="true" italics="true" align="center">
+                Recharging Arcane Gems
+            </p>
+            <space height="8"/>
+            <p>
+                Most Arcane Gems have an internal reservoir of light, called <span bold="true">charge</span>. Once a gem's charge runs out, it becomes <span bold="true">dun</span> and cannot be used until recharged. When a gem goes dun, you can attempt to recharge it, usually by activating the dun gem while holding it. Each gem has a unique method of recharging noted on its individual page.
+            </p>
+            <p>
+                <stack item="arcanearchives:chromatic_powder"/> In addition to their own unique recharging methods, Arcane Gems can be recharged by consuming a handful of <span bold="true">Chromatic Powder</span> matching its color. In the case of gems that can consume specific items to recharge, the specific item will always be consumed before the Chromatic Powder.
+            </p>
+            <p>
+                <stack item="arcanearchives:full_spectrum_chromatic_powder"/> In addition to Chromatic Powder matching a its color, any Arcane Gem can be recharged with <span bold="true">Full-Spectrum Chromatic Powder</span>. An Arcane Gem will always try to consume single-color powder before consuming full-spectrum powder.
+            </p>
+            <p>
+                <stack item="arcanearchives:gemsocket"/> Gems contained within a <link ref="GemSocket">Gem Socket</link> will attempt to recharge themselves once upon going dun.
             </p>
         </section>
     </chapter>
@@ -1405,6 +1432,9 @@
             </p>
             <p>
                 If activated while sneaking, you can attempt to all targets within three blocks of you of these effects instead.
+            </p>
+            <p condition="ml_potioncore">
+                <image src="potioncore:gui/potion/antidote" tw="16" th="16"/> Any target affected by a Cleansegleam will also be immunized from poison for 60 seconds. This functionality only occurs when Potion Core is installed.
             </p>
             <p>
                 <image src="arcanearchives:items/gems/asscher/dun" tw="16" th="16"/> To recharge a dun Cleansegleam, activate the gem while you have a bucket of milk in your inventory. The milk is conusmed, and the bucket is returned. Alternatively, if you have a <link ref="RadiantAmphora">Radiant Amphora</link> linked to a <link ref="RadiantTank">Radiant Tank</link> containing milk, the milk is deducted from the tank directly.

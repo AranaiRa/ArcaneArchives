@@ -47,6 +47,19 @@ item.stormway.name=Stormway
 item.earthway.name=Earthway
 item.nightway.name=Nightway
 
+item.chromatic_powder.name=Impossibly Colorless Chromatic Powder
+item.chromatic_powder.red.name=Red Chromatic Powder
+item.chromatic_powder.orange.name=Orange Chromatic Powder
+item.chromatic_powder.yellow.name=Yellow Chromatic Powder
+item.chromatic_powder.green.name=Green Chromatic Powder
+item.chromatic_powder.cyan.name=Cyan Chromatic Powder
+item.chromatic_powder.blue.name=Blue Chromatic Powder
+item.chromatic_powder.purple.name=Purple Chromatic Powder
+item.chromatic_powder.pink.name=Pink Chromatic Powder
+item.chromatic_powder.black.name=Black Chromatic Powder
+item.chromatic_powder.white.name=White Chromatic Powder
+item.full_spectrum_chromatic_powder.name=Full-Spectrum Chromatic Powder
+
 item.spiritorb.empty.name=Unaspected Planetary Orb
 item.spiritorb.crown_mote.name=Crown Orb
 item.spiritorb.crown_juve.name=Grand Crown Orb
@@ -201,6 +214,19 @@ arcanearchives.tooltip.item.storage_shaped_quartz=A decorative block. Can also b
 arcanearchives.tooltip.item.tome_arcana=Provides documentation for Arcane Archives.
 arcanearchives.tooltip.item.writ_expulsion=Allows you to kick a player from your Arcane Network. Rename on an anvil to set the player to kick.
 arcanearchives.tooltip.item.writ_expulsion.named=A writ to remove %s from your Arcane Network.
+
+arcanearchives.tooltip.item.chromatic_powder=There was a problem; this type of powder shouldn't exist!
+arcanearchives.tooltip.item.chromatic_powder.red=Consumed by Red-Spectrum Arcane Gems to recharge.
+arcanearchives.tooltip.item.chromatic_powder.orange=Consumed by Orange-Spectrum Arcane Gems to recharge.
+arcanearchives.tooltip.item.chromatic_powder.yellow=Consumed by Yellow-Spectrum Arcane Gems to recharge.
+arcanearchives.tooltip.item.chromatic_powder.green=Consumed by Green-Spectrum Arcane Gems to recharge.
+arcanearchives.tooltip.item.chromatic_powder.cyan=Consumed by Cyan-Spectrum Arcane Gems to recharge.
+arcanearchives.tooltip.item.chromatic_powder.blue=Consumed by Blue-Spectrum Arcane Gems to recharge.
+arcanearchives.tooltip.item.chromatic_powder.purple=Consumed by Purple-Spectrum Arcane Gems to recharge.
+arcanearchives.tooltip.item.chromatic_powder.pink=Consumed by Pink-Spectrum Arcane Gems to recharge.
+arcanearchives.tooltip.item.chromatic_powder.black=Consumed by Black-Spectrum Arcane Gems to recharge.
+arcanearchives.tooltip.item.chromatic_powder.white=Consumed by White-Spectrum Arcane Gems to recharge.
+arcanearchives.tooltip.item.full_spectrum_chromatic_powder=Consumed by Arcane Gems of any color to recharge.
 
 arcanearchives.tooltip.gem.slaughtergleam=Increases your looting level.
 arcanearchives.tooltip.gem.murdergleam=Forces all attacks to become critical hits.
