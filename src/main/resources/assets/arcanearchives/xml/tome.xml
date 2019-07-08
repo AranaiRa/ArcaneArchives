@@ -46,6 +46,9 @@
         <stack item="arcanearchives:scintillating_inlay">ScintillatingInlay</stack>
         <stack item="arcanearchives:writ_expulsion">WritExpulsion</stack>
 
+        <stack item="arcanearchives:chromatic_powder">ArcaneGems:RechargingGems</stack>
+        <stack item="arcanearchives:full_spectrum_chromatic_powder">ArcaneGems:RechargingGems</stack>
+
         <stack item="arcanearchives:slaughtergleam">Slaughtergleam</stack>
         <stack item="arcanearchives:murdergleam">Murdergleam</stack>
         <stack item="arcanearchives:agegleam">Agegleam</stack>
@@ -1275,13 +1278,10 @@
             <p align="center"><image src="arcanearchives:gui/guidebook/gems" tw="16" th="16" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                Arcane Gems are specially cut pieces of Radiant Quartz, modified to only glow with a specific color of light. Each gem has unique magical properties.
+                Arcane Gems are specially cut pieces of Radiant Quartz, modified to only glow with a specific color of light. Each gem has unique magical properties described further on their individual pages.
             </p>
             <p>
-                Most Arcane Gems have an internal reservoir of light, called <span bold="true">charge</span>. Once a gem's charge runs out, it becomes <span bold="true">dun</span> and cannot be used until recharged. Each gem has a unique method of recharging noted on its individual page.
-            </p>
-            <p>
-                <span bold="true">Please be aware that all Arcane Gem recipes are temporary. </span>Arcane Gems will not be craftable on the <link ref="GemCuttersTable">Gem Cutter's Table</link> in the future.
+                <span bold="true">Please be aware that all Arcane Gem recipes are temporary.</span> Arcane Gems will not be craftable on the <link ref="GemCuttersTable">Gem Cutter's Table</link> in the future.
             </p>
             <horizontal_rule/>
             <p>
@@ -1301,6 +1301,28 @@
             </p>
             <p>
                 <image src="arcanearchives:items/gems/trillion/dun" tw="16" th="16"/> Gems with a <span bold="true">Trillion</span> cut generally affect energy in some way.
+            </p>
+        </section>
+        <section id="RechargingGems">
+            <page_title_shorter>
+                <title>Arcane Gems</title>
+            </page_title_shorter>
+            <space height="16"/>
+            <p bold="true" italics="true" align="center">
+                Recharging Arcane Gems
+            </p>
+            <space height="8"/>
+            <p>
+                Most Arcane Gems have an internal reservoir of light, called <span bold="true">charge</span>. Once a gem's charge runs out, it becomes <span bold="true">dun</span> and cannot be used until recharged. When a gem goes dun, you can attempt to recharge it, usually by activating the dun gem while holding it. Each gem has a unique method of recharging noted on its individual page.
+            </p>
+            <p>
+                <stack item="arcanearchives:chromatic_powder"/> In addition to their own unique recharging methods, Arcane Gems can be recharged by consuming a handful of <span bold="true">Chromatic Powder</span> matching its color. In the case of gems that can consume specific items to recharge, the specific item will always be consumed before the Chromatic Powder.
+            </p>
+            <p>
+                <stack item="arcanearchives:full_spectrum_chromatic_powder"/> In addition to Chromatic Powder matching a its color, any Arcane Gem can be recharged with <span bold="true">Full-Spectrum Chromatic Powder</span>. An Arcane Gem will always try to consume single-color powder before consuming full-spectrum powder.
+            </p>
+            <p>
+                <stack item="arcanearchives:gemsocket"/> Gems contained within a <link ref="GemSocket">Gem Socket</link> will attempt to recharge themselves once upon going dun.
             </p>
         </section>
     </chapter>
