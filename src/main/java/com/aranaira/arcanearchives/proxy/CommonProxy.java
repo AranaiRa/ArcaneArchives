@@ -27,6 +27,8 @@ public class CommonProxy {
 		NetworkRegistry.INSTANCE.registerGuiHandler(ArcaneArchives.instance, new AAGuiHandler());
 
 		NetworkHandler.registerPackets();
+		// Set up advancements
+		Advancements.init();
 	}
 
 	public void init (FMLInitializationEvent event) {
@@ -56,9 +58,6 @@ public class CommonProxy {
 	public void loadComplete (FMLLoadCompleteEvent event) {
 		// Ensure Bookshelf has an ore dictionary entry
 		OreDictionary.registerOre("bookshelf", Blocks.BOOKSHELF);
-
-		// Set up advancements
-		Advancements.init();
 	}
 
 	public void scheduleTask (Runnable runnable, Side side) {
