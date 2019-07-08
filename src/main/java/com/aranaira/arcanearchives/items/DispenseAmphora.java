@@ -64,7 +64,11 @@ public class DispenseAmphora implements IBehaviorDispenseItem {
 			FluidActionResult actionResult = FluidUtil.tryPickUpFluid(stack, null, world, target, facing.getOpposite());
 			util.setMode(originalMode);
 			success(source);
-			return actionResult.getResult();
+			if (actionResult.isSuccess()) {
+				return actionResult.getResult();
+			} else {
+				return stack;
+			}
 		}
 	}
 
