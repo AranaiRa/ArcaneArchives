@@ -300,7 +300,6 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 			else
 				container.setSortingType(ManifestList.SortingType.QUANTITY);
 		} else if (button.id == mAscDescButton.id) {
-			ArcaneArchives.logger.info(container.getSortingDirection());
 			if(container.getSortingDirection() == ManifestList.SortingDirection.ASCENDING)
 				container.setSortingDirection(ManifestList.SortingDirection.DESCENDING);
 			else
