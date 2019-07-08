@@ -22,6 +22,8 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -186,6 +188,14 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 		return tryRechargingWithPowder(world, player, gem);
 	}
 
+	/**
+	 * Tries to use matching colored Chromatic Powder to recharge, or failing that Full-Spectrum Chromatic Powder.
+	 * Separate method from recharge() because this needs to happen after specific methods, not before.
+	 * @param world
+	 * @param player
+	 * @param gem
+	 * @return
+	 */
 	protected boolean tryRechargingWithPowder(World world, EntityPlayer player, GemStack gem) {
 		IItemHandler cap = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
 		int fscp = -1;
@@ -206,7 +216,8 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 		}
 
 		if(fscp > -1 && !recharged) {
-			informPlayerOfItemConsumption(player, gem, cap.getStackInSlot(fscp).getItem(), 1);
+			if(world.isRemote)
+				informPlayerOfItemConsumption(player, gem, cap.getStackInSlot(fscp).getItem(), 1);
 			cap.getStackInSlot(fscp).shrink(1);
 			GemUtil.restoreCharge(gem, -1);
 			recharged = true;
@@ -215,6 +226,14 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 		return recharged;
 	}
 
+	/**
+	 * Convenience method to print what was consumed to a screen message.
+	 * @param player The player to inform
+	 * @param gem Which gem was recharged
+	 * @param item Which item was consumed
+	 * @param quantity How many items were consumed
+	 */
+	@SideOnly(Side.CLIENT)
 	protected void informPlayerOfItemConsumption(EntityPlayer player, ArcaneGemItem gem, Item item, int quantity) {
 		String message = I18n.format(item.getTranslationKey()+".name");
 		if(quantity > 1)
@@ -224,6 +243,13 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 		player.sendStatusMessage(new TextComponentString(message), true);
 	}
 
+	/**
+	 * Convenience method to print what was consumed to a screen message.
+	 * @param player The player to inform
+	 * @param gem Which gem was recharged
+	 * @param item Which item was consumed
+	 * @param quantity How many items were consumed
+	 */
 	protected void informPlayerOfItemConsumption(EntityPlayer player, GemStack gem, Item item, int quantity) {
 		informPlayerOfItemConsumption(player, gem.getArcaneGemItem(), item, quantity);
 	}
