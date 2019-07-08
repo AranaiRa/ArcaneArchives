@@ -6,14 +6,19 @@ buildscript {
             name = 'sponge'
             url = 'https://repo.spongepowered.org/maven'
         }
+        maven {
+          url "https://plugins.gradle.org/m2/"
+        }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
         classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
+        classpath "com.wynprice.cursemaven:CurseMaven:1.1.0"
     }
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'org.spongepowered.mixin'
+apply plugin: 'com.wynprice.cursemaven'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 version = "0.2.0-preview17-hotfix3"
@@ -131,6 +136,8 @@ dependencies {
     embed "gigaherz.lirelent.guidebook:Guidebook-1.12.2:2.9.1.s5"
 
     compileOnly 'thaumcraft:Thaumcraft:1.12.2:6.1.BETA26'
+    compileOnly curse.resolve("electroblobs-wizardry", "2656626")
+    compileOnly curse.resolve("potion-core", "2736248")
 
     shade("org.spongepowered:mixin:0.7.11-SNAPSHOT") {
         transitive = false
