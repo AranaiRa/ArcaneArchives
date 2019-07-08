@@ -391,6 +391,6 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 
 	@Override
 	public void setEntryValue (int id, String value) {
-		container.SetSearchString(value);
+		container.setSearchString(value);
 	}
 }

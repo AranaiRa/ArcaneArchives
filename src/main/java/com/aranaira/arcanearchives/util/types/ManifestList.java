@@ -13,28 +13,28 @@ import java.util.stream.Collectors;
 
 public class ManifestList extends ReferenceList<ManifestEntry> {
 	private ContainerManifest mListener;
-	private String mFilterText;
-	private ItemStack mSearchItem;
+	private String filterText;
+	private ItemStack searchItem;
 
 	public ManifestList (List<ManifestEntry> reference) {
 		super(reference);
-		this.mFilterText = null;
+		this.filterText = null;
 	}
 
 	public ManifestList (List<ManifestEntry> reference, String filterText) {
 		super(reference);
-		this.mFilterText = filterText;
+		this.filterText = filterText;
 	}
 
 	public ManifestList filtered () {
-		if (mFilterText == null && mSearchItem == null) {
+		if (filterText == null && searchItem == null) {
 			return this;
 		}
 
 		String filter = "";
 
-		if (mFilterText != null) {
-			filter = mFilterText.toLowerCase();
+		if (filterText != null) {
+			filter = filterText.toLowerCase();
 		}
 
 		String finalFilter = filter;
@@ -45,8 +45,8 @@ public class ManifestList extends ReferenceList<ManifestEntry> {
 
 			ItemStack stack = entry.getStack();
 
-			if (mSearchItem != null) {
-				return ItemUtilities.areStacksEqualIgnoreSize(mSearchItem, stack);
+			if (searchItem != null) {
+				return ItemUtilities.areStacksEqualIgnoreSize(searchItem, stack);
 			}
 
 			String display = stack.getDisplayName().toLowerCase();
@@ -115,19 +115,19 @@ public class ManifestList extends ReferenceList<ManifestEntry> {
 	}
 
 	public String getSearchText () {
-		return this.mFilterText;
+		return this.filterText;
 	}
 
 	public ItemStack getSearchItem () {
-		return this.mSearchItem;
+		return this.searchItem;
 	}
 
 	public void setSearchText (String searchTerm) {
-		this.mFilterText = searchTerm;
+		this.filterText = searchTerm;
 	}
 
 	public void setSearchItem (ItemStack stack) {
-		this.mSearchItem = stack;
+		this.searchItem = stack;
 	}
 
 	@Override

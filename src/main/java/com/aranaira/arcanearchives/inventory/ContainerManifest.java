@@ -191,7 +191,7 @@ public class ContainerManifest extends Container implements IScrollableContainer
 		return true;
 	}
 
-	public void SetSearchString (String SearchText) {
+	public void setSearchString (String SearchText) {
 		handler.setSearchText(SearchText);
 		handler.setSearchItem(null);
 	}
