@@ -89,6 +89,7 @@ public class ManifestItemHandler implements IItemHandlerModifiable {
 
 	public void clear () {
 		manifestBase.setSearchText(null);
+		manifestBase.setSearchItem(ItemStack.EMPTY);
 		manifestActive = manifestBase.sorted().filtered();
 	}
 
