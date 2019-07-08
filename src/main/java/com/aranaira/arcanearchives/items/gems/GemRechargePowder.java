@@ -31,7 +31,7 @@ public class GemRechargePowder extends ItemTemplate {
     @SideOnly(Side.CLIENT)
     public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
         String key = "arcanearchives.tooltip."+getTranslationKey(stack);
-        tooltip.add(I18n.format(key));
+        tooltip.add(TextFormatting.GOLD + I18n.format(key));
         tooltip.add(TextFormatting.RED + I18n.format("arcanearchives.tooltip.creativeonly"));
     }
 

@@ -22,7 +22,7 @@ public class GemRechargePowderRainbow extends ItemTemplate {
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        tooltip.add(I18n.format("arcanearchives.tooltip.item.full_spectrum_chromatic_powder"));
+        tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.full_spectrum_chromatic_powder"));
         tooltip.add(TextFormatting.RED + I18n.format("arcanearchives.tooltip.creativeonly"));
     }
 }

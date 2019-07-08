@@ -77,6 +77,8 @@ item.spiritorb.time_mote.name=Time Orb
 item.spiritorb.time_juve.name=Elder Time Orb
 item.spiritorb.time_eld.name=Saturnine Time Orb
 
+item.debugorb.name=Dhi Bogh's Sphere of Divination
+
 tile.storage_raw_quartz.name=Raw Radiant Quartz Block
 tile.storage_shaped_quartz.name=Shaped Radiant Quartz Block
 tile.quartz_sliver.name=Sliver of Light
@@ -196,6 +198,7 @@ arcanearchives.tooltip.item.raw_quartz=A crafting ingredient. Can also be used t
 arcanearchives.tooltip.item.shaped_quartz=A crafting ingredient.
 arcanearchives.tooltip.item.containment_field=A crafting ingredient. Can also be used as a second tier upgrade for Radiant Tanks.
 arcanearchives.tooltip.item.devouring_charm=Voids items and fluids. Can also be used as an optional upgrade to add voiding to Radiant Tanks and Radiant Troves.
+arcanearchives.tooltip.item.debugorb=Used to debug network problems. Very technical.
 arcanearchives.tooltip.item.letter_invitation=Allows you to invite another player to your Arcane Network.
 arcanearchives.tooltip.item.letter_invitation.named=An invitation to join the Arcane Network of %s.
 arcanearchives.tooltip.item.letter_resignation=Allows you to leave an Arcane Network.
