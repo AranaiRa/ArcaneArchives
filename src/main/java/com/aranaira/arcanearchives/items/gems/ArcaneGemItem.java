@@ -205,8 +205,7 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 
 			if(cap.getStackInSlot(i).getItem() == ItemRegistry.CHROMATIC_POWDER) {
 				if(GemRechargePowder.getColor(cap.getStackInSlot(i)) == gem.getArcaneGemItem().getGemColor()) {
-					//if(world.isRemote)
-						informPlayerOfItemConsumption(player, gem, cap.getStackInSlot(i), 1);
+					informPlayerOfItemConsumption(player, gem, cap.getStackInSlot(i), 1);
 					cap.getStackInSlot(i).shrink(1);
 					GemUtil.restoreCharge(gem, -1);
 					recharged = true;
@@ -216,8 +215,7 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 		}
 
 		if(fscp > -1 && !recharged) {
-			//if(world.isRemote)
-				informPlayerOfItemConsumption(player, gem, cap.getStackInSlot(fscp), 1);
+			informPlayerOfItemConsumption(player, gem, cap.getStackInSlot(fscp), 1);
 			cap.getStackInSlot(fscp).shrink(1);
 			GemUtil.restoreCharge(gem, -1);
 			recharged = true;
