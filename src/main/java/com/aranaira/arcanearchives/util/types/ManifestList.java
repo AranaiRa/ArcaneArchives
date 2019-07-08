@@ -98,7 +98,7 @@ public class ManifestList extends ReferenceList<ManifestEntry> {
 		final boolean tipFilter = tip;
 
 		String finalFilter = filter;
-		return stream().filter((entry) -> {
+		ManifestList filtered = stream().filter((entry) -> {
 			if (entry == null) {
 				return false;
 			}
@@ -152,6 +152,11 @@ public class ManifestList extends ReferenceList<ManifestEntry> {
 
 			return false;
 		}).collect(Collectors.toCollection(ManifestList::new));
+		filtered.sortingDirection = sortingDirection;
+		filtered.sortingType = sortingType;
+		filtered.searchItem = searchItem;
+		filtered.filterText = filterText;
+		return filtered;
 	}
 
 	public ManifestList () {

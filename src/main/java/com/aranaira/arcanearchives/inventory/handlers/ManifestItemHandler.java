@@ -125,7 +125,11 @@ public class ManifestItemHandler implements IItemHandlerModifiable {
 
 	public void setSortingDirection (SortingDirection sortingDirection) {
 		manifestBase.setSortingDirection(sortingDirection);
-		manifestActive = manifestBase.filtered();
+		if (shouldSort()) {
+			manifestActive = manifestBase.sorted().filtered();
+		} else {
+			manifestActive = manifestBase.filtered();
+		}
 	}
 
 	public SortingType getSortingType () {
@@ -135,6 +139,10 @@ public class ManifestItemHandler implements IItemHandlerModifiable {
 
 	public void setSortingType (SortingType sortingType) {
 		manifestBase.setSortingType(sortingType);
-		manifestActive = manifestBase.filtered();
+		if (shouldSort()) {
+			manifestActive = manifestBase.sorted().filtered();
+		} else {
+			manifestActive = manifestBase.filtered();
+		}
 	}
 }

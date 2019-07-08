@@ -1,0 +1,16 @@
+{
+    "_comment": [
+        "Make a debug orb out of glass"
+    ],
+    "type": "forge:ore_shapeless",
+    "ingredients": [
+        {   
+            "type":  "forge:ore_dict",
+            "ore":  "blockGlass"
+        }
+    ],
+    "result": {
+        "item": "arcanearchives:debugorb",
+        "count": 1
+    }
+}
