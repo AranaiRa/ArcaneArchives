@@ -26,8 +26,8 @@ public class ContainerGemSocket extends Container {
 		handler = GemSocketHandler.getHandler(socket);
 
 		createPlayerInventory(player.inventory);
-		createGemSlot();
 		createPlayerOffhand(player.inventory);
+		createGemSlot();
 	}
 
 	@Override
@@ -67,27 +67,47 @@ public class ContainerGemSocket extends Container {
 
 		if (slot != null && slot.getHasStack()) {
 			ItemStack stack = slot.getStack();
-			slotStack = stack.copy();
 
 			boolean isGem = stack.getItem() instanceof ArcaneGemItem;
 
-			if (isGem && index < 36) { //Player Inventory -> Socket
-				if (!mergeItemStack(stack, 36, 37, false)) {
-					handler.saveToStack();
-					return ItemStack.EMPTY;
+			if (isGem) { //Player Inventory -> Socket
+				if (index == 36) { // Off-hand to socket
+					if (!mergeItemStack(stack, 37, 38, false)) {
+						if (!mergeItemStack(stack, 27, 36, false)) {
+							if (!mergeItemStack(stack, 0, 27, false)) {
+								handler.saveToStack();
+								slot.onSlotChanged();
+								return ItemStack.EMPTY;
+							}
+						}
+					}
+				} else if (index == 37) { // Socket to offhand
+					if (!mergeItemStack(stack, 36, 37, false)) {
+						if (!mergeItemStack(stack, 27, 36, false)) {
+							if (!mergeItemStack(stack, 0, 27, false)) {
+								handler.saveToStack();
+								slot.onSlotChanged();
+								return ItemStack.EMPTY;
+							}
+						}
+					}
+				} else {
+					if (!mergeItemStack(stack, 37, 38, false)) { // prioritise the socket
+						if (!mergeItemStack(stack, 36, 37, false)) {
+							handler.saveToStack();
+							slot.onSlotChanged();
+							return ItemStack.EMPTY;
+						}
+					} else {
+						handler.saveToStack();
+						slot.onSlotChanged();
+						return ItemStack.EMPTY;
+					}
 				}
 			} else {
-				if (!mergeItemStack(stack, 0, 36, false)) {
-					handler.saveToStack();
-					return ItemStack.EMPTY;
-				}
+				slot.onSlotChanged();
+				return ItemStack.EMPTY;
 			}
-
-			if (stack.isEmpty()) {
-				slot.putStack(ItemStack.EMPTY);
-			}
-
-			slot.onSlotChanged();
 		}
 
 		handler.saveToStack();
