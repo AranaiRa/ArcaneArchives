@@ -394,7 +394,7 @@ public class ServerNetwork implements IServerNetwork {
 			done.add(mte);
 		}
 
-		List<ManifestEntry> consolidated = ItemStackConsolidator.ConsolidateManifest(preManifest);
+		List<ManifestEntry> consolidated = ItemStackConsolidator.consolidateManifest(preManifest);
 		manifestItems.addAll(consolidated);
 	}
 

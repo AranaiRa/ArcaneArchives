@@ -164,7 +164,7 @@ public class HiveNetwork implements IHiveBase {
 			}
 		}
 
-		List<ManifestEntry> consolidated = ItemStackConsolidator.ConsolidateManifest(preManifest, maxDistance);
+		List<ManifestEntry> consolidated = ItemStackConsolidator.consolidateManifest(preManifest, maxDistance);
 		manifestItems.addAll(consolidated);
 
 		NBTTagList manifest = new NBTTagList();

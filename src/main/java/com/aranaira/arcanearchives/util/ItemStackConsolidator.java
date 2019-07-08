@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class ItemStackConsolidator {
 	@Deprecated
-	public static NonNullList<ItemStack> ConsolidateItems (NonNullList<ItemStack> list) {
+	public static NonNullList<ItemStack> consolidateItems (NonNullList<ItemStack> list) {
 		NonNullList<ItemStack> tempList = NonNullList.create();
 
 		for (ItemStack s : list) {
@@ -32,7 +32,7 @@ public class ItemStackConsolidator {
 		return tempList;
 	}
 
-	public static List<ItemStack> ConsolidatedItems (NonNullList<ItemStack> list) {
+	public static List<ItemStack> consolidatedItems (NonNullList<ItemStack> list) {
 		List<ItemStack> input = new ArrayList<>(list);
 		List<ItemStack> output = new ArrayList<>();
 
@@ -69,11 +69,11 @@ public class ItemStackConsolidator {
 		return output;
 	}
 
-	public static List<ManifestEntry> ConsolidateManifest (List<ManifestItemEntry> input) {
-		return ConsolidateManifest(input, -1);
+	public static List<ManifestEntry> consolidateManifest (List<ManifestItemEntry> input) {
+		return consolidateManifest(input, -1);
 	}
 
-	public static List<ManifestEntry> ConsolidateManifest (List<ManifestItemEntry> input, int maxDistance) {
+	public static List<ManifestEntry> consolidateManifest (List<ManifestItemEntry> input, int maxDistance) {
 		List<ManifestEntry> output = new ArrayList<>();
 
 		if (input.size() == 0) {

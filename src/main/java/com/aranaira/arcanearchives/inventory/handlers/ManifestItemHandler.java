@@ -2,6 +2,8 @@ package com.aranaira.arcanearchives.inventory.handlers;
 
 import com.aranaira.arcanearchives.util.types.ManifestEntry;
 import com.aranaira.arcanearchives.util.types.ManifestList;
+import com.aranaira.arcanearchives.util.types.ManifestList.SortingDirection;
+import com.aranaira.arcanearchives.util.types.ManifestList.SortingType;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -14,31 +16,41 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class ManifestItemHandler implements IItemHandlerModifiable {
 	private ManifestList manifestBase;
 	private ManifestList manifestActive = null;
-	private int mNumSlots;
+	private int numSlots;
 
 	public ManifestItemHandler (ManifestList manifest) {
 		this.manifestBase = manifest;
-		this.mNumSlots = 81;
+		this.numSlots = 81;
 	}
 
-	private void updateManifet () {
+	private boolean shouldSort () {
+		if (manifestActive == null) return true;
+
+		return (manifestBase.getSortingDirection() == manifestActive.getSortingDirection() && manifestBase.getSortingType() == manifestActive.getSortingType());
+	}
+
+	private void updateManifest () {
 		if (manifestActive == null) {
-			manifestActive = manifestBase.filtered();
+			if (shouldSort()) {
+				manifestActive = manifestBase.sorted().filtered();
+			} else {
+				manifestActive = manifestBase.filtered();
+			}
 		}
 	}
 
 	@Override
 	public int getSlots () {
-		return mNumSlots;
+		return numSlots;
 	}
 
 	public void setSlots (int numSlots) {
-		this.mNumSlots = numSlots;
+		this.numSlots = numSlots;
 	}
 
 	@Override
 	public ItemStack getStackInSlot (int slot) {
-		updateManifet();
+		updateManifest();
 		return manifestActive.getItemStackForSlot(slot);
 	}
 
@@ -59,7 +71,7 @@ public class ManifestItemHandler implements IItemHandlerModifiable {
 
 	@Nullable
 	public ManifestEntry getManifestEntryInSlot (int slot) {
-		updateManifet();
+		updateManifest();
 		return manifestActive.getEntryForSlot(slot);
 	}
 
@@ -77,20 +89,52 @@ public class ManifestItemHandler implements IItemHandlerModifiable {
 
 	public void setSearchText (String s) {
 		manifestBase.setSearchText(s);
-		manifestActive = manifestBase.filtered();
+		if (shouldSort()) {
+			manifestActive = manifestBase.sorted().filtered();
+		} else {
+			manifestActive = manifestBase.filtered();
+		}
 	}
 
 	public void setSearchItem (ItemStack s) {
 		manifestBase.setSearchItem(s);
-		manifestActive = manifestBase.filtered();
+		if (shouldSort()) {
+			manifestActive = manifestBase.sorted().filtered();
+		} else {
+			manifestActive = manifestBase.filtered();
+		}
 	}
 
 	public void clear () {
 		manifestBase.setSearchText(null);
-		manifestActive = manifestBase.filtered();
+		if (shouldSort()) {
+			manifestActive = manifestBase.sorted().filtered();
+		} else {
+			manifestActive = manifestBase.filtered();
+		}
 	}
 
 	public void nullify () {
 		manifestActive = null;
+	}
+
+	public SortingDirection getSortingDirection () {
+		if (manifestActive != null) return manifestActive.getSortingDirection();
+		return manifestBase.getSortingDirection();
+	}
+
+	public void setSortingDirection (SortingDirection sortingDirection) {
+		manifestBase.setSortingDirection(sortingDirection);
+		manifestActive = manifestBase.filtered();
+	}
+
+	public SortingType getSortingType () {
+		if (manifestActive != null) return manifestActive.getSortingType();
+		return manifestBase.getSortingType();
+	}
+
+	public void setSortingType (SortingType sortingType) {
+		manifestBase.setSortingType(sortingType);
+		manifestActive = manifestBase.filtered();
 	}
 }

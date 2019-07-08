@@ -11,6 +11,8 @@ import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
 import com.aranaira.arcanearchives.util.ManifestTracking;
 import com.aranaira.arcanearchives.util.MathUtils;
 import com.aranaira.arcanearchives.util.types.ManifestEntry;
+import com.aranaira.arcanearchives.util.types.ManifestList.SortingDirection;
+import com.aranaira.arcanearchives.util.types.ManifestList.SortingType;
 import invtweaks.api.container.InventoryContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -202,5 +204,21 @@ public class ContainerManifest extends Container implements IScrollableContainer
 		}
 
 		return handler.getSearchText();
+	}
+
+	public SortingType getSortingType () {
+		return handler.getSortingType();
+	}
+
+	public SortingDirection getSortingDirection () {
+		return handler.getSortingDirection();
+	}
+
+	public void setSortingType (SortingType type) {
+		handler.setSortingType(type);
+	}
+
+	public void setSortingDirection (SortingDirection direction) {
+		handler.setSortingDirection(direction);
 	}
 }

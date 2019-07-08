@@ -2,7 +2,6 @@ package com.aranaira.arcanearchives.util.types;
 
 import com.aranaira.arcanearchives.inventory.ContainerManifest;
 import com.aranaira.arcanearchives.util.ItemUtilities;
-import com.aranaira.arcanearchives.util.types.ReferenceList.ReferenceListIterable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
@@ -13,7 +12,10 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ManifestList extends ReferenceList<ManifestEntry> {
@@ -21,6 +23,8 @@ public class ManifestList extends ReferenceList<ManifestEntry> {
 	private ContainerManifest listener = null;
 	private String filterText;
 	private ItemStack searchItem;
+	private SortingDirection sortingDirection = null;
+	private SortingType sortingType = null;
 
 	public ManifestList (List<ManifestEntry> reference) {
 		super(reference);
@@ -40,20 +44,28 @@ public class ManifestList extends ReferenceList<ManifestEntry> {
 	}
 
 	public static String getModName (ItemStack stack) {
-		if (stack.isEmpty()) return "";
+		if (stack.isEmpty()) {
+			return "";
+		}
 
 		String modId = stack.getItem().getCreatorModId(stack);
-		if (modId == null) return "";
+		if (modId == null) {
+			return "";
+		}
 
 		ModContainer mod = getModList().get(modId);
-		if (mod == null) return "";
+		if (mod == null) {
+			return "";
+		}
 
 		return mod.getName();
 	}
 
 	public static String getAdustedModName (ItemStack stack) {
 		String name = getModName(stack);
-		if (name.isEmpty()) return "";
+		if (name.isEmpty()) {
+			return "";
+		}
 
 		return name.replace(" ", "").toLowerCase();
 	}
@@ -199,15 +211,51 @@ public class ManifestList extends ReferenceList<ManifestEntry> {
 		this.searchItem = stack;
 	}
 
+	public SortingDirection getSortingDirection () {
+		return sortingDirection;
+	}
+
+	public void setSortingDirection (SortingDirection sortingDirection) {
+		this.sortingDirection = sortingDirection;
+	}
+
+	public SortingType getSortingType () {
+		return sortingType;
+	}
+
+	public void setSortingType (SortingType sortingType) {
+		this.sortingType = sortingType;
+	}
+
 	@Override
 	public ManifestListIterable iterable () {
 		return new ManifestListIterable(new ManifestIterator(iterator()));
 	}
 
-	public ManifestList sorted (Comparator<ManifestEntry> c) {
+	public ManifestList sorted () {
 		ManifestList copy = new ManifestList(new ArrayList<>(), null);
+		copy.filterText = filterText;
+		copy.searchItem = searchItem;
+		copy.sortingDirection = sortingDirection;
+		copy.sortingType = sortingType;
+
 		copy.addAll(this);
-		copy.sort(c);
+		copy.sort((o1, o2) -> {
+			if (copy.sortingType == SortingType.NAME) {
+				if (copy.sortingDirection == SortingDirection.ASCENDING) {
+					return o1.stack.getDisplayName().compareTo(o2.stack.getDisplayName());
+				} else {
+					return o2.stack.getDisplayName().compareTo(o1.stack.getDisplayName());
+				}
+			} else {
+				if (copy.sortingDirection == SortingDirection.ASCENDING) {
+					return Integer.compare(o1.stack.getCount(), o2.stack.getCount());
+				} else {
+					return Integer.compare(o2.stack.getCount(), o1.stack.getCount());
+				}
+			}
+		});
+
 		return copy;
 	}
 
@@ -248,5 +296,13 @@ public class ManifestList extends ReferenceList<ManifestEntry> {
 			slot++;
 			return iter.next();
 		}
+	}
+
+	public enum SortingDirection {
+		ASCENDING, DESCENDING
+	}
+
+	public enum SortingType {
+		NAME, QUANTITY
 	}
 }
