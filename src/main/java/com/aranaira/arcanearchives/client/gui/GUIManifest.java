@@ -294,13 +294,11 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 			GuiConfig config = new GuiConfig(this, ArcaneArchives.MODID, false, false, ArcaneArchives.NAME, ConfigHandler.class);
 			this.mc.displayGuiScreen(config);
 		} else if (button.id == mAlphaQuantButton.id) {
-			ArcaneArchives.logger.info(container.getSortingType());
 			if(container.getSortingType() == ManifestList.SortingType.QUANTITY)
 				container.setSortingType(ManifestList.SortingType.NAME);
 			else
 				container.setSortingType(ManifestList.SortingType.QUANTITY);
 		} else if (button.id == mAscDescButton.id) {
-			ArcaneArchives.logger.info(container.getSortingDirection());
 			if(container.getSortingDirection() == ManifestList.SortingDirection.ASCENDING)
 				container.setSortingDirection(ManifestList.SortingDirection.DESCENDING);
 			else
