@@ -155,6 +155,11 @@
                 <title>Concepts</title>
             </page_title_shorter>
             <p><image src="arcanearchives:gui/guidebook/networks" tw="16" th="16" /> <link ref="Networks">Networks</link></p>
+            <space height="8"/>
+            <p><stack item="astralsorcery:itemjournal"/> <link ref="CompatAstralSorcery">Astral Sorcery Compatibility</link></p>
+            <p><stack item="minecraft:brewing_stand"/> <link ref="CompatPotionCore">Potion Core Compatibility</link></p>
+            <p><stack item="quark:pickarang"/> <link ref="CompatQuark">Quark Compatibility</link></p>
+            <p><stack item="thaumcraft:thaumonomicon"/> <link ref="CompatThaumcraft">Thaumcraft Compatibility</link></p>
         </section>
     </chapter>
 
@@ -1842,6 +1847,75 @@
             </p>
             <p>
                 <stack item="arcanearchives:writ_expulsion"/> By using a <link ref="WritExpulsion">Writ of Expulsion</link> named on an anvil, you can force a player in a hybrid network to leave the network.
+            </p>
+        </section>
+    </chapter>
+
+    <chapter id="CompatAstralSorcery" condition="ml_astralsorcery">
+        <section>
+            <page_title_shorter>
+                <title>Astral Sorcery Compatibility</title>
+            </page_title_shorter>
+            <p scale="2.0"><stack item="astralsorcery:blockwell" scale="2.0"/> Lightwell</p>
+            <p indent="10">
+                <stack item="arcanearchives:raw_quartz"/> <link ref="RawQuartz">Raw Radiant Quartz</link> generates Liquid Starlight. It is long lasting, but low production.
+            </p>
+            <p indent="10">
+                <stack item="arcanearchives:shaped_quartz"/> <link ref="ShapedQuartz">Shaped Radiant Quartz</link> also generates Liquid Starlight. It is a bit more efficient than Raw Radiant Quartz.
+            </p>
+            <p indent="10">
+                <stack item="arcanearchives:rivertear"/> <link ref="Rivertear">Rivertears</link> generates water at about 2 buckets per tick. It is effectively infinite, but due to technical limits there is a ridiculously small chance of shattering.
+            </p>
+            <p indent="10">
+                <stack item="arcanearchives:mountaintear"/> <link ref="Mountaintear">Mountaintears</link> generates water at about 2 buckets per tick. It is effectively infinite, but due to technical limits there is a ridiculously small chance of shattering.
+            </p>
+        </section>
+    </chapter>
+
+    <chapter id="CompatPotionCore" condition="ml_potioncore">
+        <section>
+            <page_title_shorter>
+                <title>Potion Core Compatibility</title>
+            </page_title_shorter>
+            <p scale="2.0"><stack item="minecraft:potion" scale="2.0"/> Effects</p>
+            <p indent="10">
+                <stack item="arcanearchives:cleansegleam"/> A <link ref="Cleansegleam">Cleansegleam</link> applies the Antidote effect when used.
+            </p>
+        </section>
+    </chapter>
+
+    <chapter id="CompatQuark" condition="ml_quark">
+        <section>
+            <page_title_shorter>
+                <title>Quark Compatibility</title>
+            </page_title_shorter>
+            <p scale="2.0"><stack item="minecraft:chest" scale="2.0"/> Inventory Management</p>
+            <p indent="10">
+                <stack item="arcanearchives:radiant_chest"/> <link ref="RadiantChest">Radiant Chests</link> make use of Quark's inventory search bar, and its Sort, Deposit, Merge, Extract, and Restock buttons.
+            </p>
+            <space height="8"/>
+            <horizontal_rule/>
+            <p scale="2.0"><image src="arcanearchives:gui/guidebook/quark_lock" tw="16" th="16" scale="2.0"/> Favoriting</p>
+            <p indent="10">
+                <stack item="arcanearchives:brazier_of_hoarding"/> Items marked as favorites will not be deposited into a <link ref="BrazierHoarding">Brazier of Hoarding</link> on right click. Favorited items can still be inserted into a Brazier of Hoarding when thrown.
+            </p>
+        </section>
+    </chapter>
+
+    <chapter id="CompatThaumcraft" condition="ml_thaumcraft">
+        <section>
+            <page_title_shorter>
+                <title>Thaumcraft Compatibility</title>
+            </page_title_shorter>
+            <p scale="2.0"><image src="thaumcraft:aspects/auram" tw="16" th="16" scale="2.0"/> Aspects</p>
+            <p indent="10">
+                All Arcane Archives items and blocks have registered Thaumcraft aspects. Notably, Radiant Quartz is a source of Praecantatio.
+            </p>
+            <space height="8"/>
+            <horizontal_rule/>
+            <p scale="2.0"><stack item="thaumcraft:infusion_matrix" scale="2.0"/> Infusion</p>
+            <p indent="10">
+                <stack item="arcanearchives:raw_quartz_cluster"/> <link ref="RawQuartzCluster">Raw Quartz Clusters</link> can be used as an infusion stabilizer.
             </p>
         </section>
     </chapter>
