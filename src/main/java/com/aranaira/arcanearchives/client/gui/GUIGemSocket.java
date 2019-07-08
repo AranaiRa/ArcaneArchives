@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.client.gui;
 
+import com.aranaira.arcanearchives.client.gui.controls.InvisibleButton;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerGemSocket;
 import net.minecraft.client.gui.GuiButton;

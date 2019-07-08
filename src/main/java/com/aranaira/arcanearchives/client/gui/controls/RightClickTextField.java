@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.client.gui;
+package com.aranaira.arcanearchives.client.gui.controls;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiTextField;

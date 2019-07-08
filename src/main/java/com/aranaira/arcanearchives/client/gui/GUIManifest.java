@@ -1,6 +1,9 @@
 package com.aranaira.arcanearchives.client.gui;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.client.gui.controls.InvisibleButton;
+import com.aranaira.arcanearchives.client.gui.controls.ManifestSearchField;
+import com.aranaira.arcanearchives.client.gui.controls.ScrollBar;
 import com.aranaira.arcanearchives.client.gui.framework.CustomCountSlot;
 import com.aranaira.arcanearchives.client.gui.framework.LayeredGuiContainer;
 import com.aranaira.arcanearchives.client.gui.framework.ScrollEventManager;
@@ -81,7 +84,7 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 	 */
 	private static int OTHER_DIMENSION = 0x77000000;
 
-	private RightClickTextField searchBox;
+	private ManifestSearchField searchBox;
 	private ScrollBar mScrollBar;
 	private GuiButton mEndTrackButton;
 	private GuiButton mRefreashButton;
@@ -112,10 +115,11 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 			searchText = "";
 		}
 
-		searchBox = new RightClickTextField(1, fontRenderer, guiLeft + mTextLeftOffset, guiTop + mTextTopOffset, mTextWidth, mTextHeight);
+		searchBox = new ManifestSearchField(1, fontRenderer, guiLeft + mTextLeftOffset, guiTop + mTextTopOffset, mTextWidth, mTextHeight);
 		searchBox.setText(searchText);
 		searchBox.setGuiResponder(this);
 		searchBox.setEnableBackgroundDrawing(false);
+		searchBox.syncFromJEI();
 
 		mScrollBar = new ScrollBar(10, guiLeft + mScrollBarLeftOffset, guiTop + mScrollBarTopOffset, guiTop + mScrollBarBottomOffset);
 		scrollEventManager.registerListener(mScrollBar);
@@ -391,6 +395,6 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 
 	@Override
 	public void setEntryValue (int id, String value) {
-		container.SetSearchString(value);
+		container.setSearchString(value);
 	}
 }

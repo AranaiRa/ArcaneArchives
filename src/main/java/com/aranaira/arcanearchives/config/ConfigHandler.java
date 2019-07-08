@@ -156,6 +156,10 @@ public class ConfigHandler {
 		@Config.Comment("Maximum distance in blocks to track chests from for the Manifest")
 		@Config.Name("[Hive Network] Max track distance")
 		public int MaxDistance = 100;
+
+		@Config.Comment("Synchronise the currently searched item in JEI to the Manifest when opening for the first time, and then synchronise changes to the text field back into JEI. [Requires JEI installed]")
+		@Config.Name("JEI Synchronise")
+		public boolean jeiSynchronise = true;
 	}
 
 	@Config.LangKey("arcanearchives.config.arsenal")
