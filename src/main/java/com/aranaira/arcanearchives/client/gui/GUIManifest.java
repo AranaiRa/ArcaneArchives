@@ -13,6 +13,7 @@ import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.events.LineHandler;
 import com.aranaira.arcanearchives.inventory.ContainerManifest;
 import com.aranaira.arcanearchives.util.types.ManifestEntry;
+import com.aranaira.arcanearchives.util.types.ManifestList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -51,32 +52,40 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 	private ContainerManifest container;
 	private ScrollEventManager scrollEventManager;
 	// offset and size of search box
-	private static int mTextTopOffset = 13;
-	private static int mTextLeftOffset = 13;
-	private static int mTextWidth = 89;
-	private static int mTextHeight = 11;
+	private static final int mTextTopOffset = 13;
+	private static final int mTextLeftOffset = 13;
+	private static final int mTextWidth = 89;
+	private static final int mTextHeight = 11;
 	// offset and size of "End Tracking" button
-	private static int mEndTrackingLeftOffset = 48;
-	private static int mEndTrackingTopOffset = 200;
-	private static int mEndTrackingButtonWidth = 88;
-	private static int mEndTrackingButtonHeight = 12;
+	private static final int mEndTrackingLeftOffset = 48;
+	private static final int mEndTrackingTopOffset = 200;
+	private static final int mEndTrackingButtonWidth = 88;
+	private static final int mEndTrackingButtonHeight = 12;
 	// offset and size of refresh button
-	private static int mRefreshButtonLeftOffset = 178;
-	private static int mRefreshButtonTopOffset = 200;
-	private static int mRefreshButtonWidth = 14;
-	private static int mRefreshButtonHeight = 14;
+	private static final int mRefreshButtonLeftOffset = 178;
+	private static final int mRefreshButtonTopOffset = 200;
+	private static final int mRefreshButtonWidth = 14;
+	private static final int mRefreshButtonHeight = 14;
 	// offset and side of config button
-	private static int mConfigButtonLeftOffset = 158;
-	private static int mConfigButtonTopOffset = 200;
-	private static int mConfigButtonWidth = 14;
-	private static int mConfigButtonHeight = 14;
+	private static final int mConfigButtonLeftOffset = 158;
+	private static final int mConfigButtonTopOffset = 200;
+	private static final int mConfigButtonWidth = 14;
+	private static final int mConfigButtonHeight = 14;
 	// scroll bar area
-	private static int mScrollBarTopOffset = 29;
-	private static int mScrollBarBottomOffset = 191;
-	private static int mScrollBarLeftOffset = 178;
+	private static final int mScrollBarTopOffset = 29;
+	private static final int mScrollBarBottomOffset = 191;
+	private static final int mScrollBarLeftOffset = 178;
 	// offset and size of slot texture in #GUIBaseTextures
-	private static int mSlotTextureLeftOffset = 224;
-	private static int mSlotTextureSize = 18;
+	private static final int mSlotTextureLeftOffset = 224;
+	private static final int mSlotTextureSize = 18;
+	// offset and size of alphabetical/quantity button
+	private static final int mAlphaQuantButtonLeftOffset = 242;
+	private static final int mAlphaQuantButtonTopOffset = 28;
+	private static final int mAlphaQuantButtonSize = 14;
+	// offset and size of ascending/descending button
+	private static final int mAscDescButtonLeftOffset = 242;
+	private static final int mAscDescButtonTopOffset = 56;
+	private static final int mAscDescButtonSize = 14;
 
 
 	/**
@@ -89,6 +98,8 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 	private GuiButton mEndTrackButton;
 	private GuiButton mRefreashButton;
 	private GuiButton mConfigButton;
+	private GuiButton mAlphaQuantButton;
+	private GuiButton mAscDescButton;
 
 	public GUIManifest (EntityPlayer player, ContainerManifest container) {
 		super(container);
@@ -134,6 +145,12 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 
 		mConfigButton = new InvisibleButton(2, guiLeft + mConfigButtonLeftOffset, guiTop + mConfigButtonTopOffset, mConfigButtonWidth, mConfigButtonHeight, "");
 		addButton(mConfigButton);
+
+		mAlphaQuantButton = new InvisibleButton(3, guiLeft + 112, guiTop + 10, mAlphaQuantButtonSize, mAlphaQuantButtonSize, "");
+		addButton(mAlphaQuantButton);
+
+		mAscDescButton = new InvisibleButton(4, guiLeft + 130, guiTop + 10, mAscDescButtonSize, mAscDescButtonSize, "");
+		addButton(mAscDescButton);
 	}
 
 	@Override
@@ -164,6 +181,22 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 
 		// for some reason this seems to be relative x and y position
 		drawModalRectWithCustomSizedTexture(0, 0, 0f, 0f, xSize, ySize, mGUIForegroundTexturesSize, mGUIForegroundTexturesSize);
+
+		if (ConfigHandler.UsePrettyGUIs) {
+			this.mc.getTextureManager().bindTexture(GUIBaseTextures);
+		} else {
+			this.mc.getTextureManager().bindTexture(GUIBaseTexturesSimple);
+		}
+
+		int alphaQuantShift = 0;
+		if(container.getSortingType() == ManifestList.SortingType.QUANTITY)
+			alphaQuantShift = mAlphaQuantButtonSize;
+		drawModalRectWithCustomSizedTexture(112, 10, mAlphaQuantButtonLeftOffset, mAlphaQuantButtonTopOffset, mAlphaQuantButtonSize, mAlphaQuantButtonSize + alphaQuantShift, mGUIForegroundTexturesSize, mGUIForegroundTexturesSize);
+
+		int ascDescShift = 0;
+		if(container.getSortingDirection() == ManifestList.SortingDirection.ASCENDING)
+			ascDescShift = mAscDescButtonSize;
+		drawModalRectWithCustomSizedTexture(130, 10, mAscDescButtonLeftOffset, mAscDescButtonTopOffset, mAscDescButtonSize, mAscDescButtonSize + ascDescShift, mGUIForegroundTexturesSize, mGUIForegroundTexturesSize);
 	}
 
 	@Override
@@ -260,6 +293,18 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 		} else if (button.id == mConfigButton.id) {
 			GuiConfig config = new GuiConfig(this, ArcaneArchives.MODID, false, false, ArcaneArchives.NAME, ConfigHandler.class);
 			this.mc.displayGuiScreen(config);
+		} else if (button.id == mAlphaQuantButton.id) {
+			ArcaneArchives.logger.info(container.getSortingType());
+			if(container.getSortingType() == ManifestList.SortingType.QUANTITY)
+				container.setSortingType(ManifestList.SortingType.NAME);
+			else
+				container.setSortingType(ManifestList.SortingType.QUANTITY);
+		} else if (button.id == mAscDescButton.id) {
+			ArcaneArchives.logger.info(container.getSortingDirection());
+			if(container.getSortingDirection() == ManifestList.SortingDirection.ASCENDING)
+				container.setSortingDirection(ManifestList.SortingDirection.DESCENDING);
+			else
+				container.setSortingDirection(ManifestList.SortingDirection.ASCENDING);
 		}
 
 		super.actionPerformed(button);
