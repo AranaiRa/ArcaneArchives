@@ -553,16 +553,20 @@ public class ContainerRadiantChest extends Container {
 
 	public void syncInventory (EntityPlayerMP player) {
 		for (int i = 0; i < this.inventorySlots.size(); i++) {
-			ItemStack stack = (this.inventorySlots.get(i)).getStack();
+			if (this.inventorySlots.get(i) instanceof SlotExtended) {
+				ItemStack stack = (this.inventorySlots.get(i)).getStack();
 
-			NetworkHandler.CHANNEL.sendTo(new MessageSyncExtendedSlotContents(this.windowId, i, stack), player);
+				NetworkHandler.CHANNEL.sendTo(new MessageSyncExtendedSlotContents(this.windowId, i, stack), player);
+			}
 		}
 
 		player.connection.sendPacket(new SPacketSetSlot(-1, -1, player.inventory.getItemStack()));
 	}
 
 	public void syncSlot (EntityPlayerMP player, int slot, ItemStack stack) {
-		NetworkHandler.CHANNEL.sendTo(new MessageSyncExtendedSlotContents(this.windowId, slot, stack), player);
+		if (getSlot(slot) instanceof SlotExtended) {
+			NetworkHandler.CHANNEL.sendTo(new MessageSyncExtendedSlotContents(this.windowId, slot, stack), player);
+		}
 	}
 
 	@Override
