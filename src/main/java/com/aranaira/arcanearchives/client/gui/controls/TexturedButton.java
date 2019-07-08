@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.client.gui;
+package com.aranaira.arcanearchives.client.gui.controls;
 
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import net.minecraft.client.Minecraft;

@@ -2,16 +2,15 @@ package com.aranaira.arcanearchives.client.gui;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.client.gui.controls.InvisibleButton;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerDevouringCharm;
-import com.aranaira.arcanearchives.inventory.ContainerGemSocket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.MinecraftForge;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;

@@ -1,9 +1,10 @@
 package com.aranaira.arcanearchives.client.gui;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.client.gui.controls.InvisibleButton;
+import com.aranaira.arcanearchives.client.gui.controls.RightClickTextField;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerBrazier;
-import com.aranaira.arcanearchives.inventory.ContainerGemSocket;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiPageButtonList;
 import net.minecraft.client.gui.GuiTextField;
