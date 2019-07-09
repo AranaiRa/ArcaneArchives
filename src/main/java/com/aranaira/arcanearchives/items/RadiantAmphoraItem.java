@@ -133,6 +133,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 			}
 
 			IFluidHandler cap = util.getCapability();
+			if (cap == null) return ActionResult.newResult(EnumActionResult.FAIL, itemstack);
 			boolean canDrain = false;
 			for (IFluidTankProperties prop : cap.getTankProperties()) {
 				if (prop.getCapacity() < 1000) {
