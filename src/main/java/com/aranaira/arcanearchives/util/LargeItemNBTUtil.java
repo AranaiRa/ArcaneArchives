@@ -18,7 +18,7 @@ public class LargeItemNBTUtil {
 	@Nonnull
 	public static NBTTagCompound writeToNBT (NBTTagCompound nbt, ItemStack item) {
 		item.writeToNBT(nbt);
-		nbt.setShort("Count", (short) item.getCount());
+		nbt.setInteger("Count", item.getCount());
 
 		return nbt;
 	}
@@ -26,7 +26,7 @@ public class LargeItemNBTUtil {
 	public static ItemStack readFromNBT (NBTTagCompound compound) {
 		ItemStack item = new ItemStack(compound);
 
-		item.setCount(compound.getShort("Count"));
+		item.setCount(compound.getInteger("Count"));
 
 		return item;
 	}
