@@ -26,6 +26,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -71,6 +72,17 @@ public class DebugOrbItem extends ItemTemplate {
 		ImmanenceTileEntity ite = WorldUtil.getTileEntity(ImmanenceTileEntity.class, world, pos);
 		if (ite == null) {
 			return EnumActionResult.PASS;
+		}
+
+		if (player.isSneaking() && block instanceof RadiantTrove && ite instanceof RadiantTroveTileEntity) {
+			RadiantTroveTileEntity rte = (RadiantTroveTileEntity) ite;
+			TroveItemHandler handler = rte.getInventory();
+			if (handler.getItem().isEmpty()) {
+				handler.setItem(new ItemStack(Items.SNOWBALL));
+				handler.setCount(handler.getMaxCount());
+				player.sendStatusMessage(new TextComponentString("Filled your empty trove!").setStyle(new Style().setColor(TextFormatting.GOLD).setBold(true)), true);
+				return EnumActionResult.SUCCESS;
+			}
 		}
 
 		ServerNetwork sNetwork = null;

@@ -483,6 +483,10 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 			return count;
 		}
 
+		public void setCount (int count) {
+			this.count = count;
+		}
+
 		public ItemStack getItem () {
 			return this.reference;
 		}

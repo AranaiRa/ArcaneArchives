@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
+import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler;
 import com.aranaira.arcanearchives.tileentities.IBrazierRouting.BrazierRoutingType;
 import com.aranaira.arcanearchives.util.ItemUtilities;
@@ -65,6 +66,8 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 	}
 
 	private boolean isFavourite (ItemStack stack) {
+		if (stack.getItem() == ItemRegistry.DEBUG_ORB) return true;
+
 		if (!stack.hasTagCompound()) {
 			return false;
 		}
