@@ -68,8 +68,6 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 	}
 
 	private boolean isFavourite (ItemStack stack) {
-		if (stack.getItem() == ItemRegistry.DEBUG_ORB) return true;
-
 		if (!stack.hasTagCompound()) {
 			return false;
 		}
@@ -123,6 +121,9 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 				hand = EnumHand.OFF_HAND;
 			}
 			if (!item.isEmpty() && item.hasTagCompound() && isFavourite(item)) {
+				return;
+			}
+			if (item.getItem() == ItemRegistry.SCEPTER_MANIPULATION || item.getItem() == ItemRegistry.SCEPTER_MANIPULATION || item.getItem() == ItemRegistry.DEBUG_ORB) {
 				return;
 			}
 			if (!item.isEmpty() && !doubleClick) {
