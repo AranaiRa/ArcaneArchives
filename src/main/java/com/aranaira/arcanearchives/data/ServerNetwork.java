@@ -92,6 +92,10 @@ public class ServerNetwork implements IServerNetwork {
 		return uuid;
 	}
 
+	public void refreshTiles () {
+		tiles.refresh(getWorld());
+	}
+
 	public boolean isSafe (UUID id) {
 		return safeLimitedIDs.contains(id);
 	}
@@ -140,6 +144,8 @@ public class ServerNetwork implements IServerNetwork {
 		tileEntityInstance.tryGenerateUUID();
 
 		if (tiles.containsUUID(tileEntityInstance.uuid)) {
+			IteRef ref = tiles.getReference(tileEntityInstance.uuid);
+			ref.refreshTile(tileEntityInstance.getWorld(), tileEntityInstance.getWorld().provider.getDimension());
 			return;
 		}
 

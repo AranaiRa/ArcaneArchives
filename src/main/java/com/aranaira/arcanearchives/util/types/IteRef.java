@@ -1,7 +1,9 @@
 package com.aranaira.arcanearchives.util.types;
 
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
+import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.lang.ref.WeakReference;
@@ -58,13 +60,21 @@ public class IteRef {
 		return tile.get();
 	}
 
-	/*public void updateTile (ImmanenceTileEntity tile) {
-		if (this.isValid() || tile.getPos() != this.pos || tile.dimension != this.dimension || !this.clazz.equals(tile.getClass()) || !this.uuid.equals(tile.uuid)) {
-			return;
-		}
+	public void refreshTile (World world, int dimension) {
+		if (world.isRemote) return;
 
+		if (this.dimension != dimension) return;
+
+		if (this.tile == null || this.tile.get() == null) {
+			if (world.isBlockLoaded(this.pos)) {
+				this.tile = new WeakReference<>(WorldUtil.getTileEntity(clazz, world, pos));
+			}
+		}
+	}
+
+	public void updateTile (ImmanenceTileEntity tile) {
 		this.tile = new WeakReference<>(tile);
-	}*/
+	}
 
 	public boolean isValid () {
 		if (tile == null) return false;

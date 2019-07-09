@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.util.types;
 import com.aranaira.arcanearchives.tileentities.AATileEntity;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.google.common.collect.Iterators;
+import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.Iterator;
@@ -91,6 +92,21 @@ public class TileList extends ReferenceList<IteRef> {
 		if (toRemove != null) {
 			this.remove(toRemove);
 		}
+	}
+
+	public void refresh (World world) {
+		if (world.isRemote) return;
+
+		int dim = world.provider.getDimension();
+		this.forEach((ref) -> ref.refreshTile(world, dim));
+	}
+
+	public void refresh (ImmanenceTileEntity tile) {
+		if (tile.getWorld().isRemote) return;
+
+		int dim = tile.getWorld().provider.getDimension();
+		IteRef ref = getReference(tile.getUuid());
+		ref.updateTile(tile);
 	}
 
 	@Override
