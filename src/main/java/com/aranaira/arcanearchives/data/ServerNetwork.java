@@ -328,6 +328,8 @@ public class ServerNetwork implements IServerNetwork {
 	public void rebuildManifest () {
 		manifestItems.clear();
 
+		refreshTiles();
+
 		List<ManifestItemEntry> preManifest = new ArrayList<>();
 		Set<IManifestTileEntity> done = new HashSet<>();
 		Set<BlockPosDimension> positions = new HashSet<>();
