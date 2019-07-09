@@ -64,7 +64,7 @@ public class Elixirspindle extends ArcaneGemItem {
 				ItemStack stack = player.inventory.mainInventory.get(i);
 				if (stack.getItem() == Items.NETHER_WART) {
 					int numConsumed = Math.min(stack.getCount(), 5);
-					informPlayerOfItemConsumption(player, gem, Items.NETHER_WART, numConsumed);
+					informPlayerOfItemConsumption(player, gem, stack, numConsumed);
 					GemUtil.restoreCharge(gem, numConsumed);
 					stack.shrink(numConsumed);
 					//TODO: Play a particle effect

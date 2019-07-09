@@ -62,7 +62,7 @@ public class MindspindleItem extends ArcaneGemItem {
 			for (int i = 0; i < player.inventory.mainInventory.size(); i++) {
 				ItemStack stack = player.inventory.mainInventory.get(i);
 				if (stack.getItem() == Items.BOOK) {
-					informPlayerOfItemConsumption(player, gem, Items.BOOK, 1);
+					informPlayerOfItemConsumption(player, gem, stack, 1);
 					GemUtil.restoreCharge(gem, -1);
 					stack.shrink(1);
 					//TODO: Play a particle effect
