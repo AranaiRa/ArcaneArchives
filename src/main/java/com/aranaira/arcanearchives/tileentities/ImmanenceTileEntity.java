@@ -86,6 +86,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable {
 			ServerNetwork network = getServerNetwork();
 			if (network != null) {
 				this.uuid = network.generateTileUuid();
+				defaultServerSideUpdate();
 			}
 		}
 	}
