@@ -72,6 +72,9 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable {
 		super.onLoad();
 	}
 
+	public void joinedNetwork (ServerNetwork network) {
+	}
+
 	@Nullable
 	public ServerNetwork getServerNetwork () {
 		if (network == null && networkId != null) {

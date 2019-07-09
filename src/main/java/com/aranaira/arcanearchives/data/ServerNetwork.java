@@ -165,6 +165,8 @@ public class ServerNetwork implements IServerNetwork {
 			safeLimitedIDs.add(tileEntityInstance.uuid);
 			rebuildTotals();
 		}
+
+		tileEntityInstance.joinedNetwork(this);
 	}
 
 	/**

@@ -5,6 +5,7 @@ import com.aranaira.arcanearchives.client.gui.GUIManifest;
 import com.aranaira.arcanearchives.items.gems.oval.MunchstoneItem;
 import com.aranaira.arcanearchives.items.gems.oval.OrderstoneItem;
 import com.aranaira.arcanearchives.network.NetworkHandler;
+import com.aranaira.arcanearchives.network.PacketConfig.DefaultRoutingType;
 import com.aranaira.arcanearchives.network.PacketConfig.MaxDistance;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -43,6 +44,9 @@ public class ConfigHandler {
 			parseColours();
 			MaxDistance packet = new MaxDistance(ManifestConfig.MaxDistance);
 			NetworkHandler.CHANNEL.sendToServer(packet);
+
+			DefaultRoutingType packet2 = new DefaultRoutingType(defaultRoutingNoNewItems);
+			NetworkHandler.CHANNEL.sendToServer(packet2);
 
 			Minecraft minecraft = Minecraft.getMinecraft();
 			if (minecraft.currentScreen instanceof GUIManifest) {
