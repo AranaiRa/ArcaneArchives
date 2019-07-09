@@ -83,6 +83,10 @@ public class ConfigHandler {
 	@Config.RangeInt(min=1, max=8)
 	public static int RadiantMultiplier = 4;
 
+	@Config.Comment("Set to true to mark all new chests with the no-new-items routing type")
+	@Config.Name("Default to No New Items routing")
+	public static boolean defaultRoutingNoNewItems = false;
+
 	//public static boolean bJarvisModeEnabled = false;
 
 	/*public static int iRadiantResonatorDrain = 20;

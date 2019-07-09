@@ -46,10 +46,19 @@ public class ServerNetwork implements IServerNetwork {
 	private int totalCores = 0;
 	private int totalResonators = 0;
 	private int maxDistance = 0;
+	private boolean defaultRoutingNoNewItems = false;
 
 	// Initial set-up
 	public ServerNetwork (UUID id) {
 		uuid = id;
+	}
+
+	public boolean getNoNewDefault () {
+		return defaultRoutingNoNewItems;
+	}
+
+	public void setNoNewDefault (boolean defaultRoutingNoNewItems) {
+		this.defaultRoutingNoNewItems = defaultRoutingNoNewItems;
 	}
 
 	public int getMaxDistance () {
