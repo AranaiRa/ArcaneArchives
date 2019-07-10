@@ -27,7 +27,7 @@ import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IManifestTileEntity, IUpgradeableStorage, IBrazierRouting {
-	private final TroveItemHandler inventory = new TroveItemHandler(this::update);
+	private final TroveItemHandler inventory = new TroveItemHandler(this);
 	private long lastClick = 0;
 	private int lastTick = 0;
 	private UUID lastUUID = null;
@@ -68,12 +68,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 			return te.inventory.getCount() <= te.inventory.getMaxCount(size);
 		}
 	};
-	private OptionalUpgradesHandler optionalUpgrades = new OptionalUpgradesHandler() {
-		@Override
-		protected void onContentsChanged (int slot) {
-			inventory.setVoiding(this.hasUpgrade(UpgradeType.VOID));
-		}
-	};
+	private OptionalUpgradesHandler optionalUpgrades = new OptionalUpgradesHandler();
 
 	@Override
 	public void update () {
@@ -340,23 +335,18 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 		private int upgrades = 0;
 		private int count = 0;
 		private ItemStack reference = ItemStack.EMPTY;
-		private final Runnable updater;
-		private boolean voiding = false;
+		private RadiantTroveTileEntity tile;
 
-		public TroveItemHandler (Runnable updater) {
-			this.updater = updater;
+		public TroveItemHandler (RadiantTroveTileEntity tile) {
+			this.tile = tile;
 		}
 
 		public boolean isVoiding () {
-			return voiding;
-		}
-
-		public void setVoiding (boolean voiding) {
-			this.voiding = voiding;
+			return this.tile.getOptionalUpgrades().hasUpgrade(UpgradeType.VOID);
 		}
 
 		private void update () {
-			this.updater.run();
+			this.tile.update();
 		}
 
 		@Override
@@ -414,7 +404,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 					}
 					ItemStack result = stack.copy();
 					result.setCount(diff);
-					if (voiding) return ItemStack.EMPTY;
+					if (isVoiding()) return ItemStack.EMPTY;
 					return result;
 				}
 
@@ -423,7 +413,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 					ItemStack result = stack.copy();
 					result.setCount(diff);
 					update();
-					if (voiding) return ItemStack.EMPTY;
+					if (isVoiding()) return ItemStack.EMPTY;
 					return result;
 				} else {
 					count += stack.getCount();
