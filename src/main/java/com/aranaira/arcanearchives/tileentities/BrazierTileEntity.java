@@ -281,6 +281,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 		List<CapabilityRef> troves = new ArrayList<>();
 		List<CapabilityRef> chests = new ArrayList<>();
 		List<CapabilityRef> gcts = new ArrayList<>();
+		List<CapabilityRef> uniques = new ArrayList<>();
 		if (network != null) {
 			for (IteRef ref2 : network.getManifestTileEntities()) {
 				if (ref2.tile != null && ref2.getTile() != null) {
@@ -295,31 +296,40 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 					IItemHandler inventory = ite.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 					if (routing.getRoutingType() != BrazierRoutingType.ANY && referenceMap.get(ref) <= 0) {
 						continue;
-					}
-					if (routing.isVoidingTrove(reference)) {
-						return Collections.singletonList(new CapabilityRef(referenceMap, inventory));
-					}
-					if (ite instanceof RadiantTroveTileEntity) {
-						TroveItemHandler handler = ((RadiantTroveTileEntity) ite).getInventory();
-						if (handler.getPacked() == ref) {
-							troves.add(new CapabilityRef(referenceMap, handler));
+					} else if (routing.getRoutingType() == BrazierRoutingType.NO_NEW_STACKS && referenceMap.get(ref) > 0) {
+						uniques.add(new CapabilityRef(referenceMap, inventory));
+					} else {
+						if (routing.isVoidingTrove(reference)) {
+							return Collections.singletonList(new CapabilityRef(referenceMap, inventory));
 						}
-					} else if (ite instanceof RadiantChestTileEntity) {
-						if (routing.getRoutingType() == BrazierRoutingType.ANY || (referenceMap.get(ref) < reference.getMaxStackSize() && referenceMap.get(ref) > 0)) {
+						if (ite instanceof RadiantTroveTileEntity) {
+							TroveItemHandler handler = ((RadiantTroveTileEntity) ite).getInventory();
+							if (handler.getPacked() == ref) {
+								troves.add(new CapabilityRef(referenceMap, handler));
+							}
+						} else if (ite instanceof RadiantChestTileEntity) {
 							chests.add(new CapabilityRef(referenceMap, inventory));
-						}
-					} else if (ite instanceof GemCuttersTableTileEntity) {
-						if (referenceMap.get(ref) > 0) {
-							gcts.add(new CapabilityRef(referenceMap, inventory));
+						} else if (ite instanceof GemCuttersTableTileEntity) {
+							if (referenceMap.get(ref) > 0) {
+								int refCount = referenceMap.get(ref);
+								if (refCount + reference.getCount() <= reference.getMaxStackSize()) {
+									gcts.add(new CapabilityRef(referenceMap, inventory));
+								}
+							}
 						}
 					}
 				}
 			}
 		}
+		uniques.sort((o1, o2) -> Integer.compare(o2.map.getOrDefault(ref, 0), o1.map.getOrDefault(ref, 0)));
+		chests.sort((o1, o2) -> Integer.compare(o2.map.getOrDefault(ref, 0), o1.map.getOrDefault(ref, 0)));
 		chests.sort((o1, o2) -> Integer.compare(o2.map.getOrDefault(ref, 0), o1.map.getOrDefault(ref, 0)));
 		gcts.sort((o1, o2) -> Integer.compare(o2.map.getOrDefault(ref, 0), o1.map.getOrDefault(ref, 0)));
 		gcts.addAll(troves);
-		gcts.addAll(chests);
+		gcts.addAll(uniques);
+		if (uniques.isEmpty()) {
+			gcts.addAll(chests);
+		}
 		return gcts;
 	}
 
