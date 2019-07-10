@@ -148,31 +148,20 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 				}
 			} else if ((!item.isEmpty() && doubleClick) || (!lastItem.isEmpty() && doubleClick)) {
 				ItemStack toCompare = item.isEmpty() ? lastItem : item;
-				IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
-				doneSlots.clear();
-				for (int i = 0; i < playerInventory.getSlots(); i++) {
-					if (doneSlots.contains(i)) continue;
-					ItemStack ref = playerInventory.getStackInSlot(i);
-					if (ref.isEmpty() || !ItemUtilities.areStacksEqualIgnoreSize(toCompare, ref) || isFavourite(ref)) {
-						continue;
-					}
-					List<InventoryRef> references = collectReferences(player, ref);
-					for (InventoryRef r : references) {
-						doneSlots.add(r.slot);
-					}
-					tryInsert(references, ref);
-					consumeItems(player, references);
-				}
+				List<InventoryRef> references = collectReferences(player, toCompare);
+				tryInsert(references, toCompare);
+				consumeItems(player, references);
 			} else if (item.isEmpty() && lastItem.isEmpty() && doubleClick && player.isSneaking()) {
 				IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
 				doneSlots.clear();
+				List<InventoryRef> references = new ArrayList<>();
 				for (int i = 9; i < playerInventory.getSlots(); i++) {
 					if (doneSlots.contains(i)) continue;
 					ItemStack ref = playerInventory.getStackInSlot(i);
 					if (ref.isEmpty() || isFavourite(ref)) {
 						continue;
 					}
-					List<InventoryRef> references = collectReferences(player, ref);
+					references.addAll(collectReferences(player, ref));
 					for (InventoryRef r : references) {
 						doneSlots.add(r.slot);
 					}
@@ -196,7 +185,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 		IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
 		for (int i = 0; i < playerInventory.getSlots(); i++) {
 			ItemStack stack = playerInventory.getStackInSlot(i);
-			if (ItemUtilities.areStacksEqualIgnoreSize(item, stack)) {
+			if (ItemUtilities.areStacksEqualIgnoreSize(item, stack) && !isFavourite(stack)) {
 				references.add(new InventoryRef(stack, i, stack.getCount()));
 			}
 		}
