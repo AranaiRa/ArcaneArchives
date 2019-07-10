@@ -10,6 +10,7 @@ import com.aranaira.arcanearchives.tileentities.IBrazierRouting.BrazierRoutingTy
 import com.aranaira.arcanearchives.util.ItemUtilities;
 import com.aranaira.arcanearchives.util.types.IteRef;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.client.util.RecipeItemHelper;
@@ -115,7 +116,6 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 
 
 			ItemStack item = player.getHeldItemMainhand();
-			IntOpenHashSet doneSlots = new IntOpenHashSet();
 			if (item.isEmpty()) {
 				item = player.getHeldItemOffhand();
 				hand = EnumHand.OFF_HAND;
@@ -146,27 +146,45 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 					tryInsert(references, item);
 					consumeItems(player, references);
 				}
-			} else if ((!item.isEmpty() && doubleClick) || (!lastItem.isEmpty() && doubleClick)) {
+			} else if (doubleClick && (!item.isEmpty() || !lastItem.isEmpty())) {
 				ItemStack toCompare = item.isEmpty() ? lastItem : item;
 				List<InventoryRef> references = collectReferences(player, toCompare);
 				tryInsert(references, toCompare);
 				consumeItems(player, references);
-			} else if (item.isEmpty() && lastItem.isEmpty() && doubleClick && player.isSneaking()) {
+			} else if (false && item.isEmpty() && lastItem.isEmpty() && doubleClick && player.isSneaking()) {
 				IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
-				doneSlots.clear();
-				List<InventoryRef> references = new ArrayList<>();
+				Int2ObjectOpenHashMap<List<InventoryRef>> references = new Int2ObjectOpenHashMap<>();
 				for (int i = 9; i < playerInventory.getSlots(); i++) {
-					if (doneSlots.contains(i)) continue;
 					ItemStack ref = playerInventory.getStackInSlot(i);
 					if (ref.isEmpty() || isFavourite(ref)) {
 						continue;
 					}
-					references.addAll(collectReferences(player, ref));
-					for (InventoryRef r : references) {
-						doneSlots.add(r.slot);
+					int packed = RecipeItemHelper.pack(ref);
+					if (references.containsKey(packed)) {
+						references.get(packed).addAll(collectReferences(player, ref));
+					} else {
+						references.put(packed, collectReferences(player, ref));
 					}
-					tryInsert(references, ref);
-					consumeItems(player, references);
+				}
+
+				for (List<InventoryRef> refs : references.values()) {
+					IntOpenHashSet doneSlots = new IntOpenHashSet();
+					Iterator<InventoryRef> iterator = refs.iterator();
+					while (iterator.hasNext()) {
+						InventoryRef ref = iterator.next();
+						if (doneSlots.contains(ref.slot)) {
+							iterator.remove();
+						} else {
+							doneSlots.add(ref.slot);
+						}
+					}
+				}
+
+				for (List<InventoryRef> refs : references.values()) {
+					if (refs.isEmpty()) continue;
+
+					tryInsert(refs, refs.get(0).stack);
+					consumeItems(player, refs);
 				}
 			}
 		} else {
