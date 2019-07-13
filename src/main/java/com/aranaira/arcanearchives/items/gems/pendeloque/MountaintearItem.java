@@ -96,7 +96,15 @@ public class MountaintearItem extends ArcaneGemItem {
 					NetworkHandler.CHANNEL.sendToAllAround(packet, tp);
 				}
 			}
+			else {
+				recharge(world, player, handler.getHeld());
+			}
 		}
 		return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+	}
+
+	@Override
+	public boolean recharge (World world, EntityPlayer player, GemUtil.GemStack gem) {
+		return tryRechargingWithPowder(world, player, gem);
 	}
 }
