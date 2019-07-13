@@ -315,6 +315,26 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 	}
 
 	@Override
+	public int totalEmptySlots () {
+		return inventory.getMaxCount() - inventory.getCount();
+	}
+
+	@Override
+	public int totalSlots () {
+		return 1;
+	}
+
+	@Override
+	public int slotMultiplier () {
+		return 1;
+	}
+
+	@Override
+	public ItemStack acceptStack (ItemStack stack) {
+		return null;
+	}
+
+	@Override
 	public boolean isVoidingTrove (ItemStack stack) {
 		if (!ItemUtilities.areStacksEqualIgnoreSize(stack, inventory.getItem())) return false;
 

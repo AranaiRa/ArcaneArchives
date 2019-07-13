@@ -7,14 +7,22 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 
 public interface ITrackingHandler extends IItemHandlerModifiable {
 	Int2IntOpenHashMap getItemReference ();
+	int totalSlots ();
+	int getEmptyCount ();
+	void setEmptyCount (int amount);
+	void incrementEmptyCount ();
+	void decrementEmptyCount ();
 
 	default void manualRecount () {
 		Int2IntOpenHashMap itemReference = getItemReference();
+		setEmptyCount(0);
 		for (int i = 0; i < getSlots(); i++) {
 			ItemStack stack = getStackInSlot(i);
 			if (!stack.isEmpty()) {
 				int packed = RecipeItemHelper.pack(stack);
 				itemReference.put(packed, itemReference.get(packed) + stack.getCount());
+			} else {
+				incrementEmptyCount();
 			}
 		}
 	}
@@ -33,7 +41,8 @@ public interface ITrackingHandler extends IItemHandlerModifiable {
 		}
 
 		int curCount = itemReference.get(ref);
-		itemReference.put(ref, Math.max(-1, count + curCount));
+		int total = count + curCount;
+		itemReference.put(ref, Math.max(-1, total));
 	}
 
 	default void subtraction (ItemStack stack, int count) {

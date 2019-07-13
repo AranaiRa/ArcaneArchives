@@ -203,12 +203,33 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 		return BrazierRoutingType.NO_NEW_STACKS;
 	}
 
+	@Override
+	public int totalEmptySlots () {
+		return inventory.getEmptyCount();
+	}
+
+	@Override
+	public int totalSlots () {
+		return inventory.getSlots();
+	}
+
+	@Override
+	public int slotMultiplier () {
+		return 1;
+	}
+
+	@Override
+	public ItemStack acceptStack (ItemStack stack) {
+		return null;
+	}
+
 	public static class Tags {
 		public static final String RECIPE = "recipe";
 	}
 
 	public class TrackingGCTHandler extends ItemStackHandler implements ITrackingHandler {
 		private Int2IntOpenHashMap itemReference = new Int2IntOpenHashMap();
+		private int emptySlots = 0;
 
 		public TrackingGCTHandler (int size) {
 			super(size);
@@ -228,17 +249,46 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 		}
 
 		@Override
+		public int totalSlots () {
+			return getSlots();
+		}
+
+		@Override
+		public int getEmptyCount () {
+			return emptySlots;
+		}
+
+		@Override
+		public void setEmptyCount (int amount) {
+			this.emptySlots = amount;
+		}
+
+		@Override
+		public void incrementEmptyCount () {
+			this.emptySlots++;
+		}
+
+		@Override
+		public void decrementEmptyCount () {
+			this.emptySlots--;
+		}
+
+		@Override
 		public void setStackInSlot (int slot, @Nonnull ItemStack stack) {
 			ItemStack inSlot = getStackInSlot(slot);
+			if (inSlot.isEmpty()) decrementEmptyCount();
 			subtraction(inSlot, -1);
 			super.setStackInSlot(slot, stack);
 			addition(stack, ItemStack.EMPTY);
+			if (stack.isEmpty()) incrementEmptyCount();
 		}
 
 		@Nonnull
 		@Override
 		public ItemStack insertItem (int slot, @Nonnull ItemStack stack, boolean simulate) {
 			if (!simulate) {
+				ItemStack inSlot = getStackInSlot(slot);
+				if (inSlot.isEmpty()) decrementEmptyCount();
 				ItemStack test = super.insertItem(slot, stack, true);
 				addition(stack, test);
 			}
@@ -252,7 +302,12 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 				ItemStack test = getStackInSlot(slot);
 				subtraction(test, amount);
 			}
-			return super.extractItem(slot, amount, simulate);
+			ItemStack result = super.extractItem(slot, amount, simulate);
+			if (!simulate) {
+				ItemStack inSlot = getStackInSlot(slot);
+				if (inSlot.isEmpty()) incrementEmptyCount();
+			}
+			return result;
 		}
 	}
 }

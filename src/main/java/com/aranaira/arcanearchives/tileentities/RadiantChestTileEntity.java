@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.inventory.handlers.ExtendedItemStackHandler;
@@ -54,6 +55,26 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 	@Override
 	public BrazierRoutingType getRoutingType () {
 		return routingType;
+	}
+
+	@Override
+	public int totalEmptySlots () {
+		return inventory.getEmptyCount();
+	}
+
+	@Override
+	public int totalSlots () {
+		return inventory.getSlots();
+	}
+
+	@Override
+	public int slotMultiplier () {
+		return ConfigHandler.RadiantMultiplier;
+	}
+
+	@Override
+	public ItemStack acceptStack (ItemStack stack) {
+		return null;
 	}
 
 	public void toggleRoutingType () {
@@ -181,6 +202,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 
 	public class TrackingExtendedItemStackHandler extends ExtendedItemStackHandler implements ITrackingHandler {
 		private Int2IntOpenHashMap itemReference = new Int2IntOpenHashMap();
+		private int emptySlots = 0;
 
 		public TrackingExtendedItemStackHandler (int size) {
 			super(size);
@@ -200,18 +222,51 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 		}
 
 		@Override
+		public int totalSlots () {
+			return getSlots();
+		}
+
+		@Override
+		public int getEmptyCount () {
+			return emptySlots;
+		}
+
+		@Override
+		public void setEmptyCount (int amount) {
+			this.emptySlots = amount;
+		}
+
+		@Override
+		public void incrementEmptyCount () {
+			this.emptySlots++;
+		}
+
+		@Override
+		public void decrementEmptyCount () {
+			this.emptySlots--;
+		}
+
+		@Override
 		public void setStackInSlot (int slot, @Nonnull ItemStack stack) {
 			ItemStack inSlot = getStackInSlot(slot);
+			if (inSlot.isEmpty()) {
+				decrementEmptyCount();
+			}
 			subtraction(inSlot, -1);
 			super.setStackInSlot(slot, stack);
 			addition(stack, ItemStack.EMPTY);
 			world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);
+			if (stack.isEmpty()) incrementEmptyCount();
 		}
 
 		@Nonnull
 		@Override
 		public ItemStack insertItem (int slot, @Nonnull ItemStack stack, boolean simulate) {
 			if (!simulate) {
+				ItemStack inSlot = getStackInSlot(slot);
+				if (inSlot.isEmpty()) {
+					decrementEmptyCount();
+				}
 				ItemStack test = super.insertItem(slot, stack, true);
 				addition(stack, test);
 			}
@@ -227,7 +282,12 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 				subtraction(test, amount);
 			}
 			world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);
-			return super.extractItem(slot, amount, simulate);
+			ItemStack result = super.extractItem(slot, amount, simulate);
+			if (!simulate) {
+				ItemStack inSlot = getStackInSlot(slot);
+				if (inSlot.isEmpty()) incrementEmptyCount();
+			}
+			return result;
 		}
 	}
 }
