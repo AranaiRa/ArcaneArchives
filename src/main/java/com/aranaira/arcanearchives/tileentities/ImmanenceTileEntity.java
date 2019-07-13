@@ -72,6 +72,9 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable {
 		super.onLoad();
 	}
 
+	public void joinedNetwork (ServerNetwork network) {
+	}
+
 	@Nullable
 	public ServerNetwork getServerNetwork () {
 		if (network == null && networkId != null) {
@@ -86,6 +89,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable {
 			ServerNetwork network = getServerNetwork();
 			if (network != null) {
 				this.uuid = network.generateTileUuid();
+				defaultServerSideUpdate();
 			}
 		}
 	}

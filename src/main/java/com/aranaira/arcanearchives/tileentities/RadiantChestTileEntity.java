@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.inventory.handlers.ExtendedItemStackHandler;
 import com.aranaira.arcanearchives.inventory.handlers.ITrackingHandler;
@@ -26,6 +27,16 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 
 	public RadiantChestTileEntity () {
 		super("radiantchest");
+	}
+
+	@Override
+	public void joinedNetwork (ServerNetwork network) {
+		super.joinedNetwork(network);
+
+		if (network.getNoNewDefault()) {
+			this.routingType = BrazierRoutingType.NO_NEW_STACKS;
+			defaultServerSideUpdate();
+		}
 	}
 
 	public Int2IntOpenHashMap getOrCalculateReference (boolean force) {

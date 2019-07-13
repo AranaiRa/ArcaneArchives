@@ -39,7 +39,7 @@ public class RadiantTrove extends BlockDirectionalTemplate {
 		super(NAME, Material.WOOD);
 		setSize(1, 1, 1);
 		setLightLevel(16 / 16f);
-		setHardness(1.7f);
+		setHardness(3f);
 		setResistance(6000F);
 		setHarvestLevel("axe", 0);
 	}

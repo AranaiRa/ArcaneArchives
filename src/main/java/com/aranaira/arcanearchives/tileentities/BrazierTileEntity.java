@@ -4,11 +4,15 @@ import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
+import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler;
 import com.aranaira.arcanearchives.tileentities.IBrazierRouting.BrazierRoutingType;
 import com.aranaira.arcanearchives.util.ItemUtilities;
 import com.aranaira.arcanearchives.util.types.IteRef;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -119,6 +123,9 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 			if (!item.isEmpty() && item.hasTagCompound() && isFavourite(item)) {
 				return;
 			}
+			if (item.getItem() == ItemRegistry.SCEPTER_MANIPULATION || item.getItem() == ItemRegistry.SCEPTER_MANIPULATION || item.getItem() == ItemRegistry.DEBUG_ORB) {
+				return;
+			}
 			if (!item.isEmpty() && !doubleClick) {
 				playerToStackMap.put(player, item.copy());
 			}
@@ -139,28 +146,45 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 					tryInsert(references, item);
 					consumeItems(player, references);
 				}
-			} else if ((!item.isEmpty() && doubleClick) || (!lastItem.isEmpty() && doubleClick)) {
+			} else if (doubleClick && (!item.isEmpty() || !lastItem.isEmpty())) {
 				ItemStack toCompare = item.isEmpty() ? lastItem : item;
+				List<InventoryRef> references = collectReferences(player, toCompare);
+				tryInsert(references, toCompare);
+				consumeItems(player, references);
+			} else if (false && item.isEmpty() && lastItem.isEmpty() && doubleClick && player.isSneaking()) {
 				IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
-				for (int i = 0; i < playerInventory.getSlots(); i++) {
-					ItemStack ref = playerInventory.getStackInSlot(i);
-					if (ref.isEmpty() || !ItemUtilities.areStacksEqualIgnoreSize(toCompare, ref) || isFavourite(ref)) {
-						continue;
-					}
-					List<InventoryRef> references = collectReferences(player, ref);
-					tryInsert(references, ref);
-					consumeItems(player, references);
-				}
-			} else if (item.isEmpty() && lastItem.isEmpty() && doubleClick && player.isSneaking()) {
-				IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+				Int2ObjectOpenHashMap<List<InventoryRef>> references = new Int2ObjectOpenHashMap<>();
 				for (int i = 9; i < playerInventory.getSlots(); i++) {
 					ItemStack ref = playerInventory.getStackInSlot(i);
 					if (ref.isEmpty() || isFavourite(ref)) {
 						continue;
 					}
-					List<InventoryRef> references = collectReferences(player, ref);
-					tryInsert(references, ref);
-					consumeItems(player, references);
+					int packed = RecipeItemHelper.pack(ref);
+					if (references.containsKey(packed)) {
+						references.get(packed).addAll(collectReferences(player, ref));
+					} else {
+						references.put(packed, collectReferences(player, ref));
+					}
+				}
+
+				for (List<InventoryRef> refs : references.values()) {
+					IntOpenHashSet doneSlots = new IntOpenHashSet();
+					Iterator<InventoryRef> iterator = refs.iterator();
+					while (iterator.hasNext()) {
+						InventoryRef ref = iterator.next();
+						if (doneSlots.contains(ref.slot)) {
+							iterator.remove();
+						} else {
+							doneSlots.add(ref.slot);
+						}
+					}
+				}
+
+				for (List<InventoryRef> refs : references.values()) {
+					if (refs.isEmpty()) continue;
+
+					tryInsert(refs, refs.get(0).stack);
+					consumeItems(player, refs);
 				}
 			}
 		} else {
@@ -179,7 +203,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 		IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
 		for (int i = 0; i < playerInventory.getSlots(); i++) {
 			ItemStack stack = playerInventory.getStackInSlot(i);
-			if (ItemUtilities.areStacksEqualIgnoreSize(item, stack)) {
+			if (ItemUtilities.areStacksEqualIgnoreSize(item, stack) && !isFavourite(stack)) {
 				references.add(new InventoryRef(stack, i, stack.getCount()));
 			}
 		}
@@ -264,6 +288,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 		List<CapabilityRef> troves = new ArrayList<>();
 		List<CapabilityRef> chests = new ArrayList<>();
 		List<CapabilityRef> gcts = new ArrayList<>();
+		List<CapabilityRef> uniques = new ArrayList<>();
 		if (network != null) {
 			for (IteRef ref2 : network.getManifestTileEntities()) {
 				if (ref2.tile != null && ref2.getTile() != null) {
@@ -278,31 +303,40 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 					IItemHandler inventory = ite.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 					if (routing.getRoutingType() != BrazierRoutingType.ANY && referenceMap.get(ref) <= 0) {
 						continue;
-					}
-					if (routing.isVoidingTrove(reference)) {
-						return Collections.singletonList(new CapabilityRef(referenceMap, inventory));
-					}
-					if (ite instanceof RadiantTroveTileEntity) {
-						TroveItemHandler handler = ((RadiantTroveTileEntity) ite).getInventory();
-						if (handler.getPacked() == ref) {
-							troves.add(new CapabilityRef(referenceMap, handler));
+					} else if (routing.getRoutingType() == BrazierRoutingType.NO_NEW_STACKS && referenceMap.get(ref) > 0) {
+						uniques.add(new CapabilityRef(referenceMap, inventory));
+					} else {
+						if (routing.isVoidingTrove(reference)) {
+							return Collections.singletonList(new CapabilityRef(referenceMap, inventory));
 						}
-					} else if (ite instanceof RadiantChestTileEntity) {
-						if (routing.getRoutingType() == BrazierRoutingType.ANY || (referenceMap.get(ref) < reference.getMaxStackSize() && referenceMap.get(ref) > 0)) {
+						if (ite instanceof RadiantTroveTileEntity) {
+							TroveItemHandler handler = ((RadiantTroveTileEntity) ite).getInventory();
+							if (handler.getPacked() == ref) {
+								troves.add(new CapabilityRef(referenceMap, handler));
+							}
+						} else if (ite instanceof RadiantChestTileEntity) {
 							chests.add(new CapabilityRef(referenceMap, inventory));
-						}
-					} else if (ite instanceof GemCuttersTableTileEntity) {
-						if (referenceMap.get(ref) > 0) {
-							gcts.add(new CapabilityRef(referenceMap, inventory));
+						} else if (ite instanceof GemCuttersTableTileEntity) {
+							if (referenceMap.get(ref) > 0) {
+								int refCount = referenceMap.get(ref);
+								if (refCount + reference.getCount() <= reference.getMaxStackSize()) {
+									gcts.add(new CapabilityRef(referenceMap, inventory));
+								}
+							}
 						}
 					}
 				}
 			}
 		}
+		uniques.sort((o1, o2) -> Integer.compare(o2.map.getOrDefault(ref, 0), o1.map.getOrDefault(ref, 0)));
+		chests.sort((o1, o2) -> Integer.compare(o2.map.getOrDefault(ref, 0), o1.map.getOrDefault(ref, 0)));
 		chests.sort((o1, o2) -> Integer.compare(o2.map.getOrDefault(ref, 0), o1.map.getOrDefault(ref, 0)));
 		gcts.sort((o1, o2) -> Integer.compare(o2.map.getOrDefault(ref, 0), o1.map.getOrDefault(ref, 0)));
 		gcts.addAll(troves);
-		gcts.addAll(chests);
+		gcts.addAll(uniques);
+		if (uniques.isEmpty()) {
+			gcts.addAll(chests);
+		}
 		return gcts;
 	}
 

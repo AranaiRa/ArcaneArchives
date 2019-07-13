@@ -231,13 +231,12 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 	 * @param item Which item was consumed
 	 * @param quantity How many items were consumed
 	 */
-	@SideOnly(Side.CLIENT)
 	protected void informPlayerOfItemConsumption(EntityPlayer player, ArcaneGemItem gem, ItemStack item, int quantity) {
 		String quantityString = "";
 		if (quantity > 1) {
 			quantityString = " x" + quantity;
 		}
-		ITextComponent message = new TextComponentTranslation("arcanearchives.message.usedtorecharge", new TextComponentTranslation(item.getTranslationKey()+".name"), quantityString, I18n.format(gem.getTranslationKey()+".name")).setStyle(new Style().setColor(TextFormatting.GOLD).setBold(true));
+		ITextComponent message = new TextComponentTranslation("arcanearchives.message.usedtorecharge", new TextComponentTranslation(item.getTranslationKey()+".name"), quantityString, new TextComponentTranslation(gem.getTranslationKey()+".name")).setStyle(new Style().setColor(TextFormatting.GOLD).setBold(true));
 		player.sendStatusMessage(message, true);
 	}
 

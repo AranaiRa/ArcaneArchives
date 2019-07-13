@@ -5,6 +5,7 @@ import com.aranaira.arcanearchives.client.gui.GUIManifest;
 import com.aranaira.arcanearchives.items.gems.oval.MunchstoneItem;
 import com.aranaira.arcanearchives.items.gems.oval.OrderstoneItem;
 import com.aranaira.arcanearchives.network.NetworkHandler;
+import com.aranaira.arcanearchives.network.PacketConfig.DefaultRoutingType;
 import com.aranaira.arcanearchives.network.PacketConfig.MaxDistance;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -44,6 +45,9 @@ public class ConfigHandler {
 			MaxDistance packet = new MaxDistance(ManifestConfig.MaxDistance);
 			NetworkHandler.CHANNEL.sendToServer(packet);
 
+			DefaultRoutingType packet2 = new DefaultRoutingType(defaultRoutingNoNewItems);
+			NetworkHandler.CHANNEL.sendToServer(packet2);
+
 			Minecraft minecraft = Minecraft.getMinecraft();
 			if (minecraft.currentScreen instanceof GUIManifest) {
 				((GUIManifest) minecraft.currentScreen).doRefresh();
@@ -82,6 +86,10 @@ public class ConfigHandler {
 	@Config.Name("Radiant Chest Slot Multiplier")
 	@Config.RangeInt(min=1, max=8)
 	public static int RadiantMultiplier = 4;
+
+	@Config.Comment("Set to true to mark all new chests with the no-new-items routing type")
+	@Config.Name("Default to No New Items routing")
+	public static boolean defaultRoutingNoNewItems = false;
 
 	//public static boolean bJarvisModeEnabled = false;
 

@@ -46,10 +46,19 @@ public class ServerNetwork implements IServerNetwork {
 	private int totalCores = 0;
 	private int totalResonators = 0;
 	private int maxDistance = 0;
+	private boolean defaultRoutingNoNewItems = false;
 
 	// Initial set-up
 	public ServerNetwork (UUID id) {
 		uuid = id;
+	}
+
+	public boolean getNoNewDefault () {
+		return defaultRoutingNoNewItems;
+	}
+
+	public void setNoNewDefault (boolean defaultRoutingNoNewItems) {
+		this.defaultRoutingNoNewItems = defaultRoutingNoNewItems;
 	}
 
 	public int getMaxDistance () {
@@ -90,6 +99,10 @@ public class ServerNetwork implements IServerNetwork {
 	@Override
 	public UUID getUuid () {
 		return uuid;
+	}
+
+	public void refreshTiles () {
+		tiles.refresh(getWorld());
 	}
 
 	public boolean isSafe (UUID id) {
@@ -140,6 +153,8 @@ public class ServerNetwork implements IServerNetwork {
 		tileEntityInstance.tryGenerateUUID();
 
 		if (tiles.containsUUID(tileEntityInstance.uuid)) {
+			IteRef ref = tiles.getReference(tileEntityInstance.uuid);
+			ref.refreshTile(tileEntityInstance.getWorld(), tileEntityInstance.getWorld().provider.getDimension());
 			return;
 		}
 
@@ -150,6 +165,8 @@ public class ServerNetwork implements IServerNetwork {
 			safeLimitedIDs.add(tileEntityInstance.uuid);
 			rebuildTotals();
 		}
+
+		tileEntityInstance.joinedNetwork(this);
 	}
 
 	/**
@@ -321,6 +338,8 @@ public class ServerNetwork implements IServerNetwork {
 	@Override
 	public void rebuildManifest () {
 		manifestItems.clear();
+
+		refreshTiles();
 
 		List<ManifestItemEntry> preManifest = new ArrayList<>();
 		Set<IManifestTileEntity> done = new HashSet<>();

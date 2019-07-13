@@ -22,6 +22,11 @@ public class CommandCopy extends CommandBase {
 	}
 
 	@Override
+	public int getRequiredPermissionLevel () {
+		return 0;
+	}
+
+	@Override
 	public void execute (MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 		StringBuilder message = new StringBuilder();
 		for (int i = 0; i < args.length; i++) {

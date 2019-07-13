@@ -23,6 +23,7 @@ import com.aranaira.arcanearchives.items.gems.asscher.Slaughtergleam;
 import com.aranaira.arcanearchives.items.gems.pampel.Elixirspindle;
 import com.aranaira.arcanearchives.items.gems.trillion.StormwayItem;
 import com.aranaira.arcanearchives.network.NetworkHandler;
+import com.aranaira.arcanearchives.network.PacketConfig.RequestDefaultRoutingType;
 import com.aranaira.arcanearchives.network.PacketConfig.RequestMaxDistance;
 import com.aranaira.arcanearchives.network.PacketRadiantAmphora.Toggle;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
@@ -91,6 +92,8 @@ public class AAEventHandler {
 		if (!player.world.isRemote) {
 			RequestMaxDistance packet = new RequestMaxDistance();
 			NetworkHandler.CHANNEL.sendTo(packet, (EntityPlayerMP) player);
+			RequestDefaultRoutingType packet2 = new RequestDefaultRoutingType();
+			NetworkHandler.CHANNEL.sendTo(packet2, (EntityPlayerMP) player);
 		}
 	}
 

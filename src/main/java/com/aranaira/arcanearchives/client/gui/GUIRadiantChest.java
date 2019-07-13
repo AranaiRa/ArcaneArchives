@@ -147,7 +147,7 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
 		if(button.id == 0) { //toggle button
-			if (tile.getUuid() != null) {
+			if (tile.getUuid() != null && mc.player.getUniqueID() != null) {
 				ToggleBrazier packet = new ToggleBrazier(mc.player.getUniqueID(), tile.getUuid());
 				NetworkHandler.CHANNEL.sendToServer(packet);
 			}

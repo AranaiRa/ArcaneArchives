@@ -23,7 +23,7 @@ public class NetworkHandler {
 		registerPacks(PacketNetworks.Request.Handler.class, PacketNetworks.Request.class, Side.SERVER);
 		registerPacks(PacketRadiantCrafting.LastRecipe.Handler.class, PacketRadiantCrafting.LastRecipe.class, Side.CLIENT);
 		registerPacks(PacketConfig.MaxDistance.Handler.class, PacketConfig.MaxDistance.class, Side.SERVER);
-		registerPacks(PacketConfig.RequestMaxDistance.class, PacketConfig.RequestMaxDistance.class, Side.CLIENT);
+		registerPacks(PacketConfig.RequestMaxDistance.class, Side.CLIENT);
 		registerPacks(PacketRadiantAmphora.Toggle.class, Side.SERVER);
 		registerPacks(PacketArcaneGems.GemParticle.Handler.class, PacketArcaneGems.GemParticle.class, Side.CLIENT);
 		registerPacks(PacketArcaneGems.Toggle.class, Side.SERVER);
@@ -33,6 +33,8 @@ public class NetworkHandler {
 		registerPacks(PacketRadiantChest.ToggleBrazier.Handler.class, PacketRadiantChest.ToggleBrazier.class, Side.SERVER);
 		registerPacks(PacketArcaneGems.RequestRecharge.class, Side.SERVER);
 		registerPacks(PacketClipboard.CopyToClipboard.Handler.class, PacketClipboard.CopyToClipboard.class, Side.CLIENT);
+		registerPacks(PacketConfig.RequestDefaultRoutingType.class, Side.CLIENT);
+		registerPacks(PacketConfig.DefaultRoutingType.Handler.class, PacketConfig.DefaultRoutingType.class, Side.SERVER);
 	}
 
 	private static <REQ extends IMessage, REPLY extends IMessage> void registerPacks (Class<? extends IMessageHandler<REQ, REPLY>> messageHandler, Class<REQ> requestMessageType, Side side) {

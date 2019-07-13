@@ -110,7 +110,7 @@ public class ContainerRadiantChest extends Container {
 			itemstack = itemstack1.copy();
 
 			if (index < 6 * 9) {
-				if (!this.mergeItemStack(itemstack1, 6 * 9, this.inventorySlots.size(), true)) {
+				if (!this.mergeItemStack(itemstack1, 6 * 9, this.inventorySlots.size(), false)) {
 					return ItemStack.EMPTY;
 				}
 			} else if (!this.mergeItemStack(itemstack1, 0, 6 * 9, false)) {
