@@ -301,6 +301,9 @@ public class AAEventHandler {
 			if (stack.getItem() == ItemRegistry.MOUNTAINTEAR) {
 				EntityItemMountaintear mountaintear = new EntityItemMountaintear(event.getWorld(), entity.posX, entity.posY, entity.posZ, stack);
 				mountaintear.setPickupDelay(40);
+				mountaintear.motionX = entity.motionX;
+				mountaintear.motionY = entity.motionY;
+				mountaintear.motionZ = entity.motionZ;
 				entity.setDead();
 				event.getWorld().spawnEntity(mountaintear);
 			}
