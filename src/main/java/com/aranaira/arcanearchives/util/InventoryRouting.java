@@ -7,14 +7,15 @@ import com.aranaira.arcanearchives.tileentities.IBrazierRouting;
 import com.aranaira.arcanearchives.tileentities.IBrazierRouting.BrazierRoutingType;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.util.types.IteRef;
+import com.google.common.collect.Lists;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
+import net.darkhax.bookshelf.lib.WeightedSelector.WeightedEntry;
 import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import org.apache.logging.log4j.core.jmx.Server;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class InventoryRouting {
@@ -27,6 +28,15 @@ public class InventoryRouting {
 		BrazierRoutingType type = inventory.getRoutingType();
 		int packed = RecipeItemHelper.pack(stack);
 		int total = packedMap.get(packed);
+
+		// This function allows voiding troves to decide what their priority is
+		// If they are voiding and they do match, they will return 350 if they are
+		// full of the item, or 500 if they aren't full. This means that for
+		// multiple voiding troves, they will all eventually be filled.
+		int voidingTrove = inventory.isVoidingTrove(stack);
+		if (voidingTrove != -1) {
+			return voidingTrove;
+		}
 		if ((type == BrazierRoutingType.NO_NEW_STACKS || type == BrazierRoutingType.GCT)) {
 			if (total == 0) {
 				return -1;
@@ -34,13 +44,18 @@ public class InventoryRouting {
 				return 200;
 			} else if (type == BrazierRoutingType.GCT) {
 				if (stack.getMaxStackSize() >= total) {
-					return 200;
+					return 250;
 				}
 			}
 		} else if (type == BrazierRoutingType.PRIORITY && total > 0) {
-			return 200;
+			return 250;
+		} else if (type == BrazierRoutingType.TROVE) {
+			if (inventory.willAcceptStack(stack)) {
+				return 300;
+			} else {
+				return -1;
+			}
 		}
-
 		// Otherwise weight is calculated as a value between 0 and 200
 		// Factors considered positively that increase weight: quantity
 		// of similar items already stored.
@@ -81,6 +96,35 @@ public class InventoryRouting {
 
 		workspace.sort(Comparator.comparingInt(o -> o.weight));
 		return workspace.stream().map(o -> o.entry).collect(Collectors.toList());
+	}
+
+	/**
+	 *
+	 * @param brazier The TileEntity of the brazier currently requesting information.
+	 * @param network
+	 * @param inputs
+	 * @return
+	 */
+	public List<ItemStack> tryInsertItems (BrazierTileEntity brazier, ServerNetwork network, ItemStack reference, List<ItemStack> inputs) {
+		List<IBrazierRouting> routing = buildNetwork(brazier, network, reference);
+		routes: for (IBrazierRouting route : routing) {
+			ListIterator<ItemStack> iterator = inputs.listIterator();
+			while (iterator.hasNext()) {
+				ItemStack potential = iterator.next();
+				iterator.remove();
+
+				ItemStack result = route.acceptStack(potential);
+				if (!result.isEmpty()) {
+					iterator.add(result);
+					continue routes;
+				}
+			}
+		}
+		return inputs;
+	}
+
+	public List<ItemStack> tryInsertItems (BrazierTileEntity brazier, ServerNetwork network, ItemStack reference) {
+		return tryInsertItems(brazier, network, reference, Collections.singletonList(reference));
 	}
 
 	public static class WeightedEntry<T> {

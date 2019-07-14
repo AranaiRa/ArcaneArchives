@@ -335,10 +335,14 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 	}
 
 	@Override
-	public boolean isVoidingTrove (ItemStack stack) {
-		if (!ItemUtilities.areStacksEqualIgnoreSize(stack, inventory.getItem())) return false;
+	public int isVoidingTrove (ItemStack stack) {
+		if (!ItemUtilities.areStacksEqualIgnoreSize(stack, inventory.getItem())) return -1;
 
-		return optionalUpgrades.hasUpgrade(UpgradeType.VOID);
+		if (!optionalUpgrades.hasUpgrade(UpgradeType.VOID)) return -1;
+
+		if (inventory.getCount() < inventory.getMaxCount()) return 500;
+
+		return 350;
 	}
 
 	public static class Tags {
