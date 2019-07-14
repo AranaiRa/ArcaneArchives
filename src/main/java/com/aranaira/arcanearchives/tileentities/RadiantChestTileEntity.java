@@ -16,6 +16,7 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
 
@@ -74,7 +75,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 
 	@Override
 	public ItemStack acceptStack (ItemStack stack) {
-		return null;
+		return ItemHandlerHelper.insertItemStacked(this.inventory, stack, false);
 	}
 
 	public void toggleRoutingType () {

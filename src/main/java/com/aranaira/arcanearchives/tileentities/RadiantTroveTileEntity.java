@@ -22,6 +22,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
 import java.util.UUID;
@@ -331,7 +332,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 
 	@Override
 	public ItemStack acceptStack (ItemStack stack) {
-		return null;
+		return ItemHandlerHelper.insertItemStacked(this.inventory, stack, false);
 	}
 
 	@Override

@@ -9,7 +9,9 @@ import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketGemCutters;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
+import com.aranaira.arcanearchives.util.ItemUtilities;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
+import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -220,7 +222,14 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 
 	@Override
 	public ItemStack acceptStack (ItemStack stack) {
-		return null;
+		for (int i = 0; i < inventory.getSlots(); i++) {
+			ItemStack inSlot = inventory.getStackInSlot(i);
+			if (ItemUtilities.areStacksEqualIgnoreSize(stack, inSlot)) {
+				stack = inventory.insertItem(i, stack, false);
+				if (stack.isEmpty()) return stack;
+			}
+		}
+		return stack;
 	}
 
 	public static class Tags {

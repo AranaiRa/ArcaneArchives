@@ -43,9 +43,7 @@ public class InventoryRouting {
 			} else if (type == BrazierRoutingType.NO_NEW_STACKS) {
 				return 200;
 			} else if (type == BrazierRoutingType.GCT) {
-				if (stack.getMaxStackSize() >= total) {
-					return 250;
-				}
+				return 250;
 			}
 		} else if (type == BrazierRoutingType.PRIORITY && total > 0) {
 			return 250;
