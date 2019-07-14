@@ -127,6 +127,7 @@ public class ManifestList extends ReferenceList<ManifestEntry> {
 				if (stack.getItem() == Items.ENCHANTED_BOOK) {
 					Map<Enchantment, Integer> map = EnchantmentHelper.getEnchantments(stack);
 					for (Map.Entry<Enchantment, Integer> ench : map.entrySet()) {
+						if (ench.getKey() == null) continue; // Yes, it is possible for this value to be null. WHO KNEW.
 						String enchName = ench.getKey().getTranslatedName(ench.getValue());
 						if (enchName.toLowerCase().contains(finalFilter)) {
 							return true;

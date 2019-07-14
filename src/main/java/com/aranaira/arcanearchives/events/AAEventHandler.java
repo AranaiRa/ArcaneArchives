@@ -299,10 +299,15 @@ public class AAEventHandler {
 		} else if (entity instanceof EntityItem && !(entity instanceof EntityItemMountaintear)) {
 			ItemStack stack = ((EntityItem) entity).getItem();
 			if (stack.getItem() == ItemRegistry.MOUNTAINTEAR) {
-				EntityItemMountaintear mountaintear = new EntityItemMountaintear(event.getWorld(), entity.posX, entity.posY, entity.posZ, stack);
-				mountaintear.setPickupDelay(40);
+				if (!event.getWorld().isRemote) {
+					EntityItemMountaintear mountaintear = new EntityItemMountaintear(event.getWorld(), entity.posX, entity.posY, entity.posZ, stack);
+					mountaintear.setDefaultPickupDelay();
+					mountaintear.motionX = entity.motionX;
+					mountaintear.motionY = entity.motionY;
+					mountaintear.motionZ = entity.motionZ;
+					event.getWorld().spawnEntity(mountaintear);
+				}
 				entity.setDead();
-				event.getWorld().spawnEntity(mountaintear);
 			}
 		}
 	}
