@@ -249,6 +249,11 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 	}
 
 	@SideOnly(Side.CLIENT)
+	public void toggleShowRange () {
+		setShowingRange(!isShowingRange());
+	}
+
+	@SideOnly(Side.CLIENT)
 	public void setShowingRange (boolean showingRange) {
 		this.showingRange = showingRange;
 		if (showingRange) {
