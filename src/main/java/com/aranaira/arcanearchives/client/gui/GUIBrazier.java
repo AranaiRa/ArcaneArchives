@@ -20,10 +20,16 @@ public class GUIBrazier extends GuiContainer implements GuiPageButtonList.GuiRes
 	private static final ResourceLocation TEXTURE_BRAZIER = new ResourceLocation("arcanearchives:textures/gui/brazier_hoarding.png");
 
 	private static final int
-			SELECTOR_X = 0,
-			SELECTOR_Y = 0,
-			SELECTOR_W = 74,
-			SELECTOR_H = 38,
+			BACKGROUND_X = 0,
+			BACKGROUND_Y = 0,
+			BACKGROUND_W = 98,
+			BACKGROUND_H = 41,
+			EYE_OPEN_X = 222,
+			EYE_OPEN_Y = 0,
+			EYE_CLOSED_X = 210,
+			EYE_CLOSED_Y = 0,
+			EYE_W = 12,
+			EYE_H = 10,
 			SLASH_X = 240,
 			SLASH_Y = 0,
 			SLASH_S = 16,
@@ -31,7 +37,7 @@ public class GUIBrazier extends GuiContainer implements GuiPageButtonList.GuiRes
 			CHECK_Y = 0,
 			CHECK_S = 6;
 
-	private GuiButton reduceButton, expandButton, fullNetworkToggleButton;
+	private GuiButton reduceButton, expandButton, fullNetworkToggleButton, visualizerButton;
 	private GuiTextField radiusField;
 
 	private ContainerBrazier containerBrazier;
@@ -39,8 +45,8 @@ public class GUIBrazier extends GuiContainer implements GuiPageButtonList.GuiRes
 	public GUIBrazier(@Nonnull ContainerBrazier containerBrazier) {
 		super(containerBrazier);
 		this.containerBrazier = containerBrazier;
-		xSize = SELECTOR_W;
-		ySize = SELECTOR_H;
+		xSize = BACKGROUND_W;
+		ySize = BACKGROUND_H;
 	}
 
 	@Override
@@ -49,12 +55,14 @@ public class GUIBrazier extends GuiContainer implements GuiPageButtonList.GuiRes
 
 		buttonList.clear();
 
-		reduceButton = new InvisibleButton(0, guiLeft, guiTop + 2, 8, 16, "");
-		expandButton = new InvisibleButton(1, guiLeft + 56, guiTop + 2, 8, 16, "");
-		fullNetworkToggleButton = new InvisibleButton(2, guiLeft + 38, guiTop + 24, 12, 12, "");
+		reduceButton = new InvisibleButton(0, guiLeft + 29, guiTop + 2, 8, 16, "");
+		expandButton = new InvisibleButton(1, guiLeft + 85, guiTop + 2, 8, 16, "");
+		fullNetworkToggleButton = new InvisibleButton(2, guiLeft + 67, guiTop + 27, 12, 12, "");
+		visualizerButton = new InvisibleButton(3, guiLeft + 6, guiTop + 6, 14, 14, "");
 		addButton(reduceButton);
 		addButton(expandButton);
 		addButton(fullNetworkToggleButton);
+		addButton(visualizerButton);
 
 		radiusField = new RightClickTextField(0, fontRenderer, guiLeft + 14, guiTop + 4, 36, 12);
 		radiusField.setText("" + containerBrazier.getTile().getRadius());
@@ -76,6 +84,9 @@ public class GUIBrazier extends GuiContainer implements GuiPageButtonList.GuiRes
 		if(button.id == 2) { //network insertion type button
 			containerBrazier.getTile().toggleNetworkMode();
 		}
+		if(button.id == 3) { //visualizer button
+			containerBrazier.getTile().toggleShowRange();
+		}
 	}
 
 
@@ -96,13 +107,18 @@ public class GUIBrazier extends GuiContainer implements GuiPageButtonList.GuiRes
 
 		if(ConfigHandler.UsePrettyGUIs) {
 			this.mc.getTextureManager().bindTexture(TEXTURE_BRAZIER);
-			this.drawTexturedModalRect(i, j, SELECTOR_X, SELECTOR_Y, SELECTOR_W, SELECTOR_H);
+			this.drawTexturedModalRect(i, j, BACKGROUND_X, BACKGROUND_Y, BACKGROUND_W, BACKGROUND_H);
 		}
 
 		if(containerBrazier.getTile().getNetworkMode()) {
-			this.drawTexturedModalRect(i + 41, j + 27, CHECK_X, CHECK_Y, CHECK_S, CHECK_S);
-			this.drawTexturedModalRect(i + 53, j + 22, SLASH_X, SLASH_Y, SLASH_S, SLASH_S);
+			this.drawTexturedModalRect(i + 70, j + 30, CHECK_X, CHECK_Y, CHECK_S, CHECK_S);
+			this.drawTexturedModalRect(i + 82, j + 25, SLASH_X, SLASH_Y, SLASH_S, SLASH_S);
 		}
+
+		if(containerBrazier.getTile().isShowingRange())
+			this.drawTexturedModalRect(i + 7, j + 8, EYE_OPEN_X, EYE_OPEN_Y, EYE_W, EYE_H);
+		else
+			this.drawTexturedModalRect(i + 7, j + 8, EYE_CLOSED_X, EYE_CLOSED_Y, EYE_W, EYE_H);
 	}
 
 	@Override
