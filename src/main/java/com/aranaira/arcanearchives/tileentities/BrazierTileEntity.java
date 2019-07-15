@@ -6,6 +6,10 @@ import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.util.InventoryRouting;
 import com.aranaira.arcanearchives.util.ItemUtilities;
+import com.crazypants.enderio.base.render.ranged.IRanged;
+import com.crazypants.enderio.base.render.ranged.RangeParticle;
+import com.enderio.core.client.render.BoundingBox;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -15,6 +19,8 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -28,7 +34,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class BrazierTileEntity extends ImmanenceTileEntity {
+public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 	public static int STEP = 10;
 
 	private UUID lastUUID = null;
@@ -37,6 +43,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 	private int radius = 150;
 	private boolean subnetworkOnly = false;
 	private FakeHandler fakeHandler = new FakeHandler();
+	private boolean showingRange = false;
 
 	public BrazierTileEntity () {
 		super("brazier");
@@ -233,6 +240,26 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 		}
 		player.openGui(ArcaneArchives.instance, AAGuiHandler.BRAZIER, world, pos.getX(), pos.getY(), pos.getZ());
 		return true;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean isShowingRange () {
+		return showingRange;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void setShowingRange (boolean showingRange) {
+		this.showingRange = showingRange;
+		if (showingRange) {
+			Minecraft.getMinecraft().effectRenderer.addEffect(new RangeParticle<BrazierTileEntity>(this));
+		}
+	}
+
+	@Nonnull
+	@Override
+	public BoundingBox getBounds () {
+		return new BoundingBox(getPos()).expand(radius);
 	}
 
 	public static class Tags {
