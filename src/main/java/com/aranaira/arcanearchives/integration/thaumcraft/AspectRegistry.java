@@ -124,6 +124,11 @@ public class AspectRegistry {
 
 			helper.registerTCObjectTag(ItemRegistry.STORMWAY, new AspectList().add(Aspect.MAGIC, 30).add(Aspect.CRYSTAL, 30).add(Aspect.ENERGY, 30));
 
+			//GEM RECHARGE POWDER
+			helper.registerTCObjectTag(ItemRegistry.CHROMATIC_POWDER, new AspectList().add(Aspect.ENERGY, 20).add(Aspect.SENSES, 10).add(Aspect.AURA, 5));
+
+			helper.registerTCObjectTag(ItemRegistry.RAINBOW_CHROMATIC_POWDER, new AspectList().add(Aspect.ENERGY, 180).add(Aspect.SENSES, 90).add(Aspect.AURA, 45));
+
 		} catch (Exception e) {
 			ArcaneArchives.logger.info("&&&&&&& Error registering Thaumcraft aspects: " + e.getLocalizedMessage());
 			e.printStackTrace();
