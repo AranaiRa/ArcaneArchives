@@ -9,7 +9,7 @@ import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.util.types.IteRef;
 import com.google.common.collect.Lists;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
-import net.darkhax.bookshelf.lib.WeightedSelector.WeightedEntry;
+//import net.darkhax.bookshelf.lib.WeightedSelector.WeightedEntry;
 import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
