@@ -22,6 +22,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
 import java.util.UUID;
@@ -315,10 +316,34 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 	}
 
 	@Override
-	public boolean isVoidingTrove (ItemStack stack) {
-		if (!ItemUtilities.areStacksEqualIgnoreSize(stack, inventory.getItem())) return false;
+	public int totalEmptySlots () {
+		return inventory.getMaxCount() - inventory.getCount();
+	}
 
-		return optionalUpgrades.hasUpgrade(UpgradeType.VOID);
+	@Override
+	public int totalSlots () {
+		return 1;
+	}
+
+	@Override
+	public int slotMultiplier () {
+		return 1;
+	}
+
+	@Override
+	public ItemStack acceptStack (ItemStack stack) {
+		return ItemHandlerHelper.insertItemStacked(this.inventory, stack, false);
+	}
+
+	@Override
+	public int isVoidingTrove (ItemStack stack) {
+		if (!ItemUtilities.areStacksEqualIgnoreSize(stack, inventory.getItem())) return -1;
+
+		if (!optionalUpgrades.hasUpgrade(UpgradeType.VOID)) return -1;
+
+		if (inventory.getCount() < inventory.getMaxCount()) return 500;
+
+		return 350;
 	}
 
 	public static class Tags {

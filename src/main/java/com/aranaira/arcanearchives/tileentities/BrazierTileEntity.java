@@ -2,19 +2,14 @@ package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.init.ItemRegistry;
-import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler;
-import com.aranaira.arcanearchives.tileentities.IBrazierRouting.BrazierRoutingType;
+import com.aranaira.arcanearchives.util.InventoryRouting;
 import com.aranaira.arcanearchives.util.ItemUtilities;
-import com.aranaira.arcanearchives.util.types.IteRef;
-import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
-import it.unimi.dsi.fastutil.ints.IntArrayList;
-import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
-import net.minecraft.client.util.RecipeItemHelper;
-import net.minecraft.entity.Entity;
+import com.crazypants.enderio.base.render.ranged.IRanged;
+import com.crazypants.enderio.base.render.ranged.RangeParticle;
+import com.enderio.core.client.render.BoundingBox;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -24,6 +19,8 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -31,10 +28,13 @@ import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class BrazierTileEntity extends ImmanenceTileEntity {
+public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 	public static int STEP = 10;
 
 	private UUID lastUUID = null;
@@ -43,6 +43,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 	private int radius = 150;
 	private boolean subnetworkOnly = false;
 	private FakeHandler fakeHandler = new FakeHandler();
+	private boolean showingRange = false;
 
 	public BrazierTileEntity () {
 		super("brazier");
@@ -92,264 +93,125 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 		return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ? CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(fakeHandler) : null;
 	}
 
-	public void beginInsert (Entity entity) {
-		if (entity.world.isRemote) {
-			return; // This should never trigger.
+	// Handle entities that hit
+	public void beginInsert (EntityItem item) {
+		List<ItemStack> stack = InventoryRouting.tryInsertItems(this, getServerNetwork(), item.getItem());
+		if (!stack.isEmpty()) {
+			rejectItemStacks(stack);
+		}
+	}
+
+	public void rejectItemStacks (List<ItemStack> stacks) {
+		for (ItemStack stack : stacks) {
+			rejectItemStack(stack);
+		}
+	}
+
+	public void rejectItemStack (ItemStack stack) {
+		if (world.isRemote) {
+			return;
 		}
 
-		if (entity instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) entity;
-			EnumHand hand = EnumHand.MAIN_HAND;
+		EntityItem item = new EntityItem(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, stack);
+		item.setPickupDelay(20);
+		world.spawnEntity(item);
+	}
 
-			// Test for double-click
-			boolean doubleClick = false;
-			long diff = System.currentTimeMillis() - lastClick;
-			ItemStack lastItem = ItemStack.EMPTY;
-			if (player.getUniqueID() == lastUUID && diff <= 2000) {
-				doubleClick = true;
-				lastItem = playerToStackMap.getOrDefault(player, ItemStack.EMPTY);
-			} else if (diff > 20000) {
-				playerToStackMap.clear();
-			}
-			lastUUID = player.getUniqueID();
-			lastClick = System.currentTimeMillis();
+	public boolean beginInsert (EntityPlayer player, EnumHand hand, EnumFacing facing) {
+		// Test for double-click
+		boolean doubleClick = false;
+		long diff = System.currentTimeMillis() - lastClick;
+		ItemStack lastItem = ItemStack.EMPTY;
+		if (player.getUniqueID() == lastUUID && diff <= 2000) {
+			doubleClick = true;
+			lastItem = playerToStackMap.getOrDefault(player, ItemStack.EMPTY);
+		} else if (diff > 20000) {
+			playerToStackMap.clear();
+		}
+		lastUUID = player.getUniqueID();
+		lastClick = System.currentTimeMillis();
 
+		boolean wasHeld = true;
 
-			ItemStack item = player.getHeldItemMainhand();
-			if (item.isEmpty()) {
-				item = player.getHeldItemOffhand();
-				hand = EnumHand.OFF_HAND;
+		ItemStack item = player.getHeldItem(hand).copy();
+		if (item.isEmpty() && doubleClick) {
+			item = lastItem;
+			wasHeld = false;
+		}
+
+		if (item.isEmpty() || isFavourite(item)) {
+			return false;
+		}
+
+		if (item.getItem() == ItemRegistry.SCEPTER_MANIPULATION || item.getItem() == ItemRegistry.SCEPTER_MANIPULATION || item.getItem() == ItemRegistry.DEBUG_ORB) {
+			return false;
+		}
+
+		ServerNetwork network = getServerNetwork();
+		if (network == null) {
+			return false;
+		}
+
+		List<ItemStack> toInsert = new ArrayList<>();
+
+		IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP); // We don't care about the off-hand
+
+		if (wasHeld) {
+			toInsert.add(playerInventory.extractItem(player.inventory.currentItem, item.getCount(), false));
+		}
+
+		if (!doubleClick) {
+			playerToStackMap.put(player, item.copy());
+		} else {
+			// Collect all the items
+			for (int i = 0; i < playerInventory.getSlots(); i++) {
+				ItemStack inSlot = playerInventory.getStackInSlot(i);
+				if (ItemUtilities.areStacksEqualIgnoreSize(inSlot, item)) {
+					toInsert.add(playerInventory.extractItem(i, inSlot.getCount(), false));
+				}
 			}
-			if (!item.isEmpty() && item.hasTagCompound() && isFavourite(item)) {
-				return;
-			}
-			if (item.getItem() == ItemRegistry.SCEPTER_MANIPULATION || item.getItem() == ItemRegistry.SCEPTER_MANIPULATION || item.getItem() == ItemRegistry.DEBUG_ORB) {
-				return;
-			}
-			if (!item.isEmpty() && !doubleClick) {
-				playerToStackMap.put(player, item.copy());
-			}
-			if (item.isEmpty() && !doubleClick) {
-				playerToStackMap.put(player, ItemStack.EMPTY);
-			}
-			if (!item.isEmpty()) {
-				if (!doubleClick) {
-					// Boolean result here means "the entire stack was deposited,
-					// go ahead and empty out the player's mainhand.".
-					// If it was only partially submitted, the reduction in the
-					// stack size will already take
-					player.setHeldItem(hand, tryInsert(item));
+		}
+
+		if (toInsert.isEmpty()) {
+			throw new NullPointerException("wat");
+		}
+
+		List<ItemStack> remainder = InventoryRouting.tryInsertItems(this, network, item, toInsert);
+
+		if (!remainder.isEmpty()) {
+			List<ItemStack> toThrow = new ArrayList<>();
+			for (ItemStack stack : remainder) {
+				ItemStack result;
+				if (wasHeld) {
+					result = playerInventory.insertItem(player.inventory.currentItem, stack, false);
+					wasHeld = false;
 				} else {
-					// Collect the references for the inventory
-					// this also compensates for the main hand
-					List<InventoryRef> references = collectReferences(player, item);
-					tryInsert(references, item);
-					consumeItems(player, references);
+					result = ItemHandlerHelper.insertItemStacked(playerInventory, stack, false);
 				}
-			} else if (doubleClick && (!item.isEmpty() || !lastItem.isEmpty())) {
-				ItemStack toCompare = item.isEmpty() ? lastItem : item;
-				List<InventoryRef> references = collectReferences(player, toCompare);
-				tryInsert(references, toCompare);
-				consumeItems(player, references);
-			} else if (false && item.isEmpty() && lastItem.isEmpty() && doubleClick && player.isSneaking()) {
-				IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
-				Int2ObjectOpenHashMap<List<InventoryRef>> references = new Int2ObjectOpenHashMap<>();
-				for (int i = 9; i < playerInventory.getSlots(); i++) {
-					ItemStack ref = playerInventory.getStackInSlot(i);
-					if (ref.isEmpty() || isFavourite(ref)) {
-						continue;
-					}
-					int packed = RecipeItemHelper.pack(ref);
-					if (references.containsKey(packed)) {
-						references.get(packed).addAll(collectReferences(player, ref));
-					} else {
-						references.put(packed, collectReferences(player, ref));
-					}
-				}
-
-				for (List<InventoryRef> refs : references.values()) {
-					IntOpenHashSet doneSlots = new IntOpenHashSet();
-					Iterator<InventoryRef> iterator = refs.iterator();
-					while (iterator.hasNext()) {
-						InventoryRef ref = iterator.next();
-						if (doneSlots.contains(ref.slot)) {
-							iterator.remove();
-						} else {
-							doneSlots.add(ref.slot);
-						}
-					}
-				}
-
-				for (List<InventoryRef> refs : references.values()) {
-					if (refs.isEmpty()) continue;
-
-					tryInsert(refs, refs.get(0).stack);
-					consumeItems(player, refs);
-				}
-			}
-		} else {
-			// It's an entity item
-			EntityItem item = (EntityItem) entity;
-			ItemStack stack = tryInsert(item.getItem());
-			if (!stack.isEmpty()) {
-				EntityItem newEntity = new EntityItem(world, item.posX, item.posY, item.posZ, stack);
-				world.spawnEntity(newEntity);
-			}
-		}
-	}
-
-	private List<InventoryRef> collectReferences (EntityPlayer player, ItemStack item) {
-		List<InventoryRef> references = new ArrayList<>();
-		IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
-		for (int i = 0; i < playerInventory.getSlots(); i++) {
-			ItemStack stack = playerInventory.getStackInSlot(i);
-			if (ItemUtilities.areStacksEqualIgnoreSize(item, stack) && !isFavourite(stack)) {
-				references.add(new InventoryRef(stack, i, stack.getCount()));
-			}
-		}
-		return references;
-	}
-
-	private ItemStack tryInsert (ItemStack stack) {
-		if (isFavourite(stack)) {
-			return stack;
-		}
-
-		IItemHandler handler = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-		if (handler != null) {
-			for (int i = 0; i < handler.getSlots(); i++) {
-				ItemStack inSlot = handler.getStackInSlot(i);
-				if (!inSlot.isEmpty()) {
-					int count = inSlot.getCount();
-					ItemStack result = collectAndInsertStack(inSlot);
-					if (result.isEmpty()) {
-						handler.extractItem(i, count, false);
-					} else {
-						handler.extractItem(i, count - result.getCount(), false);
-					}
-				}
-			}
-			return stack;
-		} else {
-			return collectAndInsertStack(stack);
-		}
-	}
-
-	private ItemStack collectAndInsertStack (ItemStack stack) {
-		ServerNetwork network = NetworkHelper.getServerNetwork(this.networkId, this.world);
-		List<CapabilityRef> caps = collectCapabilities(network, stack);
-		for (CapabilityRef cap : caps) {
-			stack = ItemHandlerHelper.insertItemStacked(cap.handler, stack, false);
-			if (stack.isEmpty()) {
-				return stack;
-			}
-		}
-		return stack;
-	}
-
-	// Returns how many of each item to remove
-	private void tryInsert (List<InventoryRef> stacks, ItemStack reference) {
-		ServerNetwork network = NetworkHelper.getServerNetwork(this.networkId, this.world);
-		List<CapabilityRef> caps = collectCapabilities(network, reference);
-		for (CapabilityRef cap : caps) {
-			for (InventoryRef ref : stacks) {
-				if (isFavourite(ref.stack)) {
-					continue;
-				}
-
-				ItemStack result = ItemHandlerHelper.insertItemStacked(cap.handler, ref.stack, false);
 				if (!result.isEmpty()) {
-					ref.count = result.getCount();
-				} else {
-					ref.count = 0;
+					toThrow.add(result);
 				}
 			}
+			rejectItemStacks(toThrow);
 		}
-	}
 
-	private void consumeItems (EntityPlayer player, List<InventoryRef> stacks) {
-		IItemHandlerModifiable handler = (IItemHandlerModifiable) player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
-		for (InventoryRef ref : stacks) {
-			ItemStack inSlot = handler.getStackInSlot(ref.slot);
-			if (inSlot.getCount() != ref.count) {
-				if (ref.count == 0) {
-					inSlot = ItemStack.EMPTY;
-				} else {
-					inSlot.setCount(ref.count);
-				}
-			}
-			handler.setStackInSlot(ref.slot, inSlot);
-		}
-	}
-
-	public static List<CapabilityRef> collectCapabilities (ServerNetwork network, ItemStack reference) {
-		int ref = RecipeItemHelper.pack(reference);
-
-		List<CapabilityRef> troves = new ArrayList<>();
-		List<CapabilityRef> chests = new ArrayList<>();
-		List<CapabilityRef> gcts = new ArrayList<>();
-		List<CapabilityRef> uniques = new ArrayList<>();
-		if (network != null) {
-			for (IteRef ref2 : network.getManifestTileEntities()) {
-				if (ref2.tile != null && ref2.getTile() != null) {
-
-					ImmanenceTileEntity ite = ref2.getTile();
-					if (!(ite instanceof IBrazierRouting)) {
-						continue;
-					}
-
-					IBrazierRouting routing = (IBrazierRouting) ite;
-					Int2IntOpenHashMap referenceMap = routing.getOrCalculateReference();
-					IItemHandler inventory = ite.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-					if (routing.getRoutingType() != BrazierRoutingType.ANY && referenceMap.get(ref) <= 0) {
-						continue;
-					} else if (routing.getRoutingType() == BrazierRoutingType.NO_NEW_STACKS && referenceMap.get(ref) > 0) {
-						uniques.add(new CapabilityRef(referenceMap, inventory));
-					} else {
-						if (routing.isVoidingTrove(reference)) {
-							return Collections.singletonList(new CapabilityRef(referenceMap, inventory));
-						}
-						if (ite instanceof RadiantTroveTileEntity) {
-							TroveItemHandler handler = ((RadiantTroveTileEntity) ite).getInventory();
-							if (handler.getPacked() == ref) {
-								troves.add(new CapabilityRef(referenceMap, handler));
-							}
-						} else if (ite instanceof RadiantChestTileEntity) {
-							chests.add(new CapabilityRef(referenceMap, inventory));
-						} else if (ite instanceof GemCuttersTableTileEntity) {
-							if (referenceMap.get(ref) > 0) {
-								int refCount = referenceMap.get(ref);
-								if (refCount + reference.getCount() <= reference.getMaxStackSize()) {
-									gcts.add(new CapabilityRef(referenceMap, inventory));
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		uniques.sort((o1, o2) -> Integer.compare(o2.map.getOrDefault(ref, 0), o1.map.getOrDefault(ref, 0)));
-		chests.sort((o1, o2) -> Integer.compare(o2.map.getOrDefault(ref, 0), o1.map.getOrDefault(ref, 0)));
-		chests.sort((o1, o2) -> Integer.compare(o2.map.getOrDefault(ref, 0), o1.map.getOrDefault(ref, 0)));
-		gcts.sort((o1, o2) -> Integer.compare(o2.map.getOrDefault(ref, 0), o1.map.getOrDefault(ref, 0)));
-		gcts.addAll(troves);
-		gcts.addAll(uniques);
-		if (uniques.isEmpty()) {
-			gcts.addAll(chests);
-		}
-		return gcts;
+		return true;
 	}
 
 	@Override
 	@Nonnull
 	public NBTTagCompound writeToNBT (NBTTagCompound compound) {
 		super.writeToNBT(compound);
+		compound.setInteger(Tags.RANGE, radius);
 		return compound;
 	}
 
 	@Override
 	public void readFromNBT (NBTTagCompound compound) {
 		super.readFromNBT(compound);
+		if (compound.hasKey(Tags.RANGE)) {
+			radius = compound.getInteger(Tags.RANGE);
+		}
 	}
 
 	@Override
@@ -371,30 +233,39 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 		super.onDataPacket(net, pkt);
 	}
 
+	@Override
+	public boolean handleManipulationInterface (EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if (player.world.isRemote) {
+			return true;
+		}
+		player.openGui(ArcaneArchives.instance, AAGuiHandler.BRAZIER, world, pos.getX(), pos.getY(), pos.getZ());
+		return true;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean isShowingRange () {
+		return showingRange;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void setShowingRange (boolean showingRange) {
+		this.showingRange = showingRange;
+		if (showingRange) {
+			Minecraft.getMinecraft().effectRenderer.addEffect(new RangeParticle<BrazierTileEntity>(this));
+		}
+	}
+
+	@Nonnull
+	@Override
+	public BoundingBox getBounds () {
+		return new BoundingBox(getPos()).expand(radius);
+	}
+
 	public static class Tags {
+		public static final String RANGE = "range";
+
 		private Tags () {
-		}
-	}
-
-	private static class InventoryRef {
-		public ItemStack stack;
-		public int slot;
-		public int count;
-
-		public InventoryRef (ItemStack stack, int slot, int count) {
-			this.stack = stack;
-			this.slot = slot;
-			this.count = count;
-		}
-	}
-
-	public static class CapabilityRef {
-		public Map<Integer, Integer> map;
-		public IItemHandler handler;
-
-		public CapabilityRef (Map<Integer, Integer> map, IItemHandler handler) {
-			this.map = map;
-			this.handler = handler;
 		}
 	}
 
@@ -402,7 +273,8 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 
 		@Override
 		public void setStackInSlot (int slot, @Nonnull ItemStack stack) {
-			tryInsert(stack);
+			List<ItemStack> result = InventoryRouting.tryInsertItems(BrazierTileEntity.this, BrazierTileEntity.this.getServerNetwork(), stack);
+			rejectItemStacks(result);
 		}
 
 		@Override
@@ -419,7 +291,19 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 		@Nonnull
 		@Override
 		public ItemStack insertItem (int slot, @Nonnull ItemStack stack, boolean simulate) {
-			return tryInsert(stack);
+			if (simulate) {
+				return ItemStack.EMPTY;
+			}
+
+			List<ItemStack> result = InventoryRouting.tryInsertItems(BrazierTileEntity.this, BrazierTileEntity.this.getServerNetwork(), stack);
+			if (!result.isEmpty()) {
+				if (result.size() == 1) {
+					return result.get(0);
+				}
+				rejectItemStacks(result);
+			}
+
+			return ItemStack.EMPTY;
 		}
 
 		@Nonnull
@@ -430,14 +314,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 
 		@Override
 		public int getSlotLimit (int slot) {
-			return 64;
+			return 999;
 		}
-	}
-
-	@Override
-	public boolean handleManipulationInterface(EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (player.world.isRemote) return true;
-			player.openGui(ArcaneArchives.instance, AAGuiHandler.BRAZIER, world, pos.getX(), pos.getY(), pos.getZ());
-		return true;
 	}
 }

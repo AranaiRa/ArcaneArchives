@@ -8,17 +8,34 @@ public interface IBrazierRouting {
 
 	BrazierRoutingType getRoutingType ();
 
-	default boolean isVoidingTrove (ItemStack stack) {
-		return false;
+	int totalEmptySlots ();
+	int totalSlots ();
+	int slotMultiplier ();
+
+	ItemStack acceptStack (ItemStack stack);
+
+	default boolean willAcceptStack (ItemStack stack) {
+		return true;
+	}
+
+	default int isVoidingTrove (ItemStack stack) {
+		return -1;
 	}
 
 	enum BrazierRoutingType {
 		ANY,
-		NO_NEW_STACKS;
+		NO_NEW_STACKS,
+		PRIORITY,
+		TROVE,
+		GCT;
 
 		static BrazierRoutingType fromInt (int index) {
-			if (index == 0) return ANY;
-			return NO_NEW_STACKS;
+			int i = 0;
+			for (BrazierRoutingType type : values()) {
+				if (index == i) return type;
+				i++;
+			}
+			return null;
 		}
 	}
 }
