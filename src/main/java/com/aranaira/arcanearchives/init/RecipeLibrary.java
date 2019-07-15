@@ -54,6 +54,8 @@ public class RecipeLibrary {
 	public static GCTRecipe SLAUGHTERGLEAM_RECIPE;
 	public static GCTRecipe MURDERGLEAM_RECIPE;
 	public static GCTRecipe CLEANSEGLEAM_RECIPE;
+	public static GCTRecipe AGEGLEAM_RECIPE;
+	public static GCTRecipe SWITCHGLEAM_RECIPE;
 	public static GCTRecipe SALVEGLEAM_RECIPE;
 	public static GCTRecipe MUNCHSTONE_RECIPE;
 	public static GCTRecipe ORDERSTONE_RECIPE;
@@ -68,7 +70,7 @@ public class RecipeLibrary {
 	public static void buildRecipes () {
 		RADIANT_DUST_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("radiant_dust", new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 2), ItemRegistry.RAW_RADIANT_QUARTZ);
 
-		SHAPED_RADIANT_QUARTZ_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("shaped_radiant_quartz", new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new ItemStack(ItemRegistry.RAW_RADIANT_QUARTZ, 2));
+		SHAPED_RADIANT_QUARTZ_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("shaped_quartz", new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new ItemStack(ItemRegistry.RAW_RADIANT_QUARTZ, 2));
 
 		MANIFEST_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("manifest", new ItemStack(ItemRegistry.MANIFEST, 1), new IngredientStack("paper", 1), new IngredientStack("dyeBlack", 1), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 2));
 
@@ -96,7 +98,7 @@ public class RecipeLibrary {
 			}
 		});
 
-		WRIT_OF_EXPULSION_RECIPE = GCTRecipeList.instance.makeAndAddRecipeWithCreatorAndCondition("writ_explusion", new ItemStack(ItemRegistry.WRIT_OF_EXPULSION, 1), new IngredientStack("paper", 3), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 1), new IngredientStack("dyeRed", 1)).addCondition((EntityPlayer player, TileEntity tile) -> {
+		WRIT_OF_EXPULSION_RECIPE = GCTRecipeList.instance.makeAndAddRecipeWithCreatorAndCondition("writ_expulsion", new ItemStack(ItemRegistry.WRIT_OF_EXPULSION, 1), new IngredientStack("paper", 3), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 1), new IngredientStack("dyeRed", 1)).addCondition((EntityPlayer player, TileEntity tile) -> {
 			if (!player.world.isRemote) {
 				HiveSaveData saveData = NetworkHelper.getHiveData(player.world);
 				Hive hive = saveData.getHiveByMember(player.getUniqueID());
@@ -121,7 +123,7 @@ public class RecipeLibrary {
 
 		SCINTILLATING_INLAY_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("scintillating_inlay", new ItemStack(ItemRegistry.COMPONENT_SCINTILLATINGINLAY, 1), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 6), new IngredientStack("dustRedstone", 12), new IngredientStack("ingotGold"), new IngredientStack("nuggetGold", 6));
 
-		BRAZIER_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("brazier", new ItemStack(BlockRegistry.BRAZIER_OF_HOARDING, 1), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 4), new IngredientStack(Items.COAL, 8), new IngredientStack("ingotGold", 2), new IngredientStack("logWood", 3));
+		BRAZIER_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("brazier_of_hoarding", new ItemStack(BlockRegistry.BRAZIER_OF_HOARDING, 1), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 4), new IngredientStack(Items.COAL, 8), new IngredientStack("ingotGold", 2), new IngredientStack("logWood", 3));
 
 		/*MATRIX_REPOSITORY_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("matrix_repository", new ItemStack(BlockRegistry.MATRIX_REPOSITORY, 1), BlockRegistry.MATRIX_STORAGE, ItemRegistry.COMPONENT_MATERIALINTERFACE, ItemRegistry.COMPONENT_MATERIALINTERFACE);*/
 
@@ -142,7 +144,11 @@ public class RecipeLibrary {
 
 			SLAUGHTERGLEAM_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("slaughtergleam", new ItemStack(ItemRegistry.SLAUGHTERGLEAM), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyeRed", 4), new IngredientStack(Items.DIAMOND), new IngredientStack(Items.GOLD_INGOT, 2), new IngredientStack(Blocks.LAPIS_BLOCK, 2));
 
-			CLEANSEGLEAM_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("cleansestone", new ItemStack(ItemRegistry.CLEANSEGLEAM), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyeBlue", 4), new IngredientStack(Items.POISONOUS_POTATO), new IngredientStack(Ingredient.fromItem(Items.MILK_BUCKET), 1));
+			AGEGLEAM_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("agegleam", new ItemStack(ItemRegistry.AGEGLEAM), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyeGreen", 4), new IngredientStack(Items.WHEAT, 9), new IngredientStack(Items.CARROT, 9), new IngredientStack(Items.WHEAT_SEEDS, 9));
+
+			CLEANSEGLEAM_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("cleansegleam", new ItemStack(ItemRegistry.CLEANSEGLEAM), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyeBlue", 4), new IngredientStack(Items.POISONOUS_POTATO), new IngredientStack(Ingredient.fromItem(Items.MILK_BUCKET), 1));
+
+			SWITCHGLEAM_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("switchgleam", new ItemStack(ItemRegistry.SWITCHGLEAM), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyePurple", 4), new IngredientStack(Blocks.TRIPWIRE_HOOK), new IngredientStack(Items.ENDER_PEARL));
 
 			SALVEGLEAM_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("salvegleam", new ItemStack(ItemRegistry.SALVEGLEAM), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1), new IngredientStack("dyePink", 4), new IngredientStack(Items.GOLDEN_APPLE), new IngredientStack(Items.SPECKLED_MELON), new IngredientStack(Items.GOLDEN_CARROT));
 
