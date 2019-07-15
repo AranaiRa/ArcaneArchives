@@ -32,7 +32,7 @@ public class ExtendedItemStackHandler extends ItemStackHandler {
 
 	@Override
 	public int getStackLimit (int slot, @Nonnull ItemStack stack) {
-		return Math.min(getSlotLimit(slot), stack.getMaxStackSize() * 8);
+		return Math.min(getSlotLimit(slot), stack.getMaxStackSize() * ConfigHandler.RadiantMultiplier);
 	}
 
 	@Override
