@@ -82,7 +82,14 @@ public class DebugOrbItem extends ItemTemplate {
 				handler.setCount(handler.getMaxCount());
 				player.sendStatusMessage(new TextComponentString("Filled your empty trove!").setStyle(new Style().setColor(TextFormatting.GOLD).setBold(true)), true);
 				return EnumActionResult.SUCCESS;
+			} else {
+				handler.setItem(ItemStack.EMPTY);
+				handler.setCount(0);
+				player.sendStatusMessage(new TextComponentString("Hope you didn't need what was in there!").setStyle(new Style().setColor(TextFormatting.DARK_RED).setBold(true)), true);
+				return EnumActionResult.SUCCESS;
 			}
+		} else if (player.isSneaking()) {
+			return EnumActionResult.SUCCESS;
 		}
 
 		ServerNetwork sNetwork = null;

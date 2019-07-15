@@ -72,7 +72,7 @@ public class Brazier extends BlockTemplate implements IInfusionStabiliserExt {
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
-		if (hand == EnumHand.MAIN_HAND)
+		if (hand == EnumHand.MAIN_HAND && !worldIn.isRemote)
 		{
 			BrazierTileEntity te = WorldUtil.getTileEntity(BrazierTileEntity.class, playerIn.dimension, pos);
 			if(te != null) {
@@ -80,7 +80,7 @@ public class Brazier extends BlockTemplate implements IInfusionStabiliserExt {
 			}
 		}
 
-		return true;
+		return false;
 	}
 
 	@Override

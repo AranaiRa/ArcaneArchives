@@ -80,19 +80,15 @@ public class InventoryRouting {
 		BlockPos bPos = brazier.getPos();
 		network.refreshTiles();
 		for (IteRef ite : network.getValidTiles()) {
-			if (ite.clazz.isInstance(IBrazierRouting.class) && network.distanceSq(bPos, ite.pos) <= radius && ite.dimension == brazier.dimension) {
+			if (IBrazierRouting.class.isAssignableFrom(ite.clazz) && network.distanceSq(bPos, ite.pos) <= radius && ite.dimension == brazier.dimension) {
 				ImmanenceTileEntity tile = ite.getTile();
-				if (tile == null) {
-					ArcaneArchives.logger.info("Skipped a tile?");
-					continue;
-				}
 				int weight = calculateWeight((IBrazierRouting) tile, stack);
-				if (weight == -1) continue;
+				if (weight <= -1) continue;
 				workspace.add(new WeightedEntry<>((IBrazierRouting) tile, weight));
 			}
 		}
 
-		workspace.sort(Comparator.comparingInt(o -> o.weight));
+		workspace.sort((o1, o2) -> Integer.compare(o2.weight, o1.weight));
 		return workspace.stream().map(o -> o.entry).collect(Collectors.toList());
 	}
 

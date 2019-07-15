@@ -88,10 +88,6 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 
 	// Handle entities that hit
 	public void beginInsert (EntityItem item) {
-		if (item.world.isRemote) {
-			return;
-		}
-
 		List<ItemStack> stack = InventoryRouting.tryInsertItems(this, getServerNetwork(), item.getItem());
 		if (!stack.isEmpty()) {
 			rejectItemStacks(stack);
@@ -130,7 +126,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 
 		boolean wasHeld = true;
 
-		ItemStack item = player.getHeldItem(hand);
+		ItemStack item = player.getHeldItem(hand).copy();
 		if (item.isEmpty() && doubleClick) {
 			item = lastItem;
 			wasHeld = false;
@@ -142,10 +138,6 @@ public class BrazierTileEntity extends ImmanenceTileEntity {
 
 		if (item.getItem() == ItemRegistry.SCEPTER_MANIPULATION || item.getItem() == ItemRegistry.SCEPTER_MANIPULATION || item.getItem() == ItemRegistry.DEBUG_ORB) {
 			return false;
-		}
-
-		if (player.world.isRemote) {
-			return true;
 		}
 
 		ServerNetwork network = getServerNetwork();
