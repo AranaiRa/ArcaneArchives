@@ -74,7 +74,7 @@ public class InventoryRouting {
 		return percentageEmpty + percentageUsed;
 	}
 
-	public List<IBrazierRouting> buildNetwork (BrazierTileEntity brazier, ServerNetwork network, ItemStack stack) {
+	public static List<IBrazierRouting> buildNetwork (BrazierTileEntity brazier, ServerNetwork network, ItemStack stack) {
 		List<WeightedEntry<IBrazierRouting>> workspace = new ArrayList<>();
 		int radius = brazier.getRadius() * brazier.getRadius();
 		BlockPos bPos = brazier.getPos();
@@ -103,7 +103,7 @@ public class InventoryRouting {
 	 * @param inputs
 	 * @return
 	 */
-	public List<ItemStack> tryInsertItems (BrazierTileEntity brazier, ServerNetwork network, ItemStack reference, List<ItemStack> inputs) {
+	public static List<ItemStack> tryInsertItems (BrazierTileEntity brazier, ServerNetwork network, ItemStack reference, List<ItemStack> inputs) {
 		List<IBrazierRouting> routing = buildNetwork(brazier, network, reference);
 		routes: for (IBrazierRouting route : routing) {
 			ListIterator<ItemStack> iterator = inputs.listIterator();
@@ -121,7 +121,7 @@ public class InventoryRouting {
 		return inputs;
 	}
 
-	public List<ItemStack> tryInsertItems (BrazierTileEntity brazier, ServerNetwork network, ItemStack reference) {
+	public static List<ItemStack> tryInsertItems (BrazierTileEntity brazier, ServerNetwork network, ItemStack reference) {
 		return tryInsertItems(brazier, network, reference, Collections.singletonList(reference));
 	}
 

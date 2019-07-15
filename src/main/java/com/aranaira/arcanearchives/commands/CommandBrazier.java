@@ -1,11 +1,5 @@
 package com.aranaira.arcanearchives.commands;
 
-import com.aranaira.arcanearchives.data.NetworkHelper;
-import com.aranaira.arcanearchives.data.ServerNetwork;
-import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler;
-import com.aranaira.arcanearchives.tileentities.BrazierTileEntity;
-import com.aranaira.arcanearchives.tileentities.BrazierTileEntity.CapabilityRef;
-import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -50,7 +44,7 @@ public class CommandBrazier extends CommandBase {
 				player.sendMessage(new TextComponentString("Can't trace an empty hand."));
 				return;
 			}
-			ServerNetwork network = NetworkHelper.getServerNetwork(player.getUniqueID(), player.world);
+			/*ServerNetwork network = NetworkHelper.getServerNetwork(player.getUniqueID(), player.world);
 			int ref = RecipeItemHelper.pack(item);
 			player.sendMessage(new TextComponentString("Target is \"" + item.getDisplayName() + "\" packed to " + ref));
 			List<CapabilityRef> caps = BrazierTileEntity.collectCapabilities(network, item);
@@ -65,7 +59,7 @@ public class CommandBrazier extends CommandBase {
 					player.sendMessage(new TextComponentString("Cap #" + i + " is just a chest."));
 				}
 				i++;
-			}
+			}*/
 		}
 	}
 }

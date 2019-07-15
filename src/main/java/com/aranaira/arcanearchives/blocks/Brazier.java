@@ -72,14 +72,11 @@ public class Brazier extends BlockTemplate implements IInfusionStabiliserExt {
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
-		// Checking for main hand even though we don't care because this event is fired multiple times
-		if (!worldIn.isRemote && hand == EnumHand.MAIN_HAND)
+		if (hand == EnumHand.MAIN_HAND)
 		{
 			BrazierTileEntity te = WorldUtil.getTileEntity(BrazierTileEntity.class, playerIn.dimension, pos);
 			if(te != null) {
-				// This handles empty hand, right-click and double-right-click
-				// TODO: your sneak right click is in another castle
-				te.beginInsert(playerIn);
+				return te.beginInsert(playerIn, hand, facing);
 			}
 		}
 
@@ -93,7 +90,7 @@ public class Brazier extends BlockTemplate implements IInfusionStabiliserExt {
 			BrazierTileEntity te = WorldUtil.getTileEntity(BrazierTileEntity.class, worldIn, pos);
 			if(te != null) {
 				if (!worldIn.isRemote) {
-					te.beginInsert(entityIn);
+					te.beginInsert((EntityItem) entityIn);
 				}
 
 				entityIn.setDead();
