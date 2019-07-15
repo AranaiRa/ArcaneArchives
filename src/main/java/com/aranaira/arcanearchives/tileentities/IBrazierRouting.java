@@ -14,11 +14,11 @@ public interface IBrazierRouting {
 
 	ItemStack acceptStack (ItemStack stack);
 
-	default boolean willAcceptStack (ItemStack stack) {
-		return true;
+	default boolean willAvoidStack (ItemStack stack) {
+		return false;
 	}
 
-	default int isVoidingTrove (ItemStack stack) {
+	default int troveScore (ItemStack stack) {
 		return -1;
 	}
 

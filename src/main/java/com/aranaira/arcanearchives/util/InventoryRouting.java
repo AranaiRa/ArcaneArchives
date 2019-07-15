@@ -1,19 +1,15 @@
 package com.aranaira.arcanearchives.util;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.tileentities.BrazierTileEntity;
 import com.aranaira.arcanearchives.tileentities.IBrazierRouting;
 import com.aranaira.arcanearchives.tileentities.IBrazierRouting.BrazierRoutingType;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.util.types.IteRef;
-import com.google.common.collect.Lists;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
-import net.darkhax.bookshelf.lib.WeightedSelector.WeightedEntry;
 import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
-import org.apache.logging.log4j.core.jmx.Server;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -29,13 +25,9 @@ public class InventoryRouting {
 		int packed = RecipeItemHelper.pack(stack);
 		int total = packedMap.get(packed);
 
-		// This function allows voiding troves to decide what their priority is
-		// If they are voiding and they do match, they will return 350 if they are
-		// full of the item, or 500 if they aren't full. This means that for
-		// multiple voiding troves, they will all eventually be filled.
-		int voidingTrove = inventory.isVoidingTrove(stack);
-		if (voidingTrove != -1) {
-			return voidingTrove;
+		int troveScore = inventory.troveScore(stack);
+		if (troveScore != -1) {
+			return troveScore;
 		}
 		if ((type == BrazierRoutingType.NO_NEW_STACKS || type == BrazierRoutingType.GCT)) {
 			if (total == 0) {
@@ -43,16 +35,10 @@ public class InventoryRouting {
 			} else if (type == BrazierRoutingType.NO_NEW_STACKS) {
 				return 200;
 			} else if (type == BrazierRoutingType.GCT) {
-				return 250;
+				return 400;
 			}
 		} else if (type == BrazierRoutingType.PRIORITY && total > 0) {
 			return 250;
-		} else if (type == BrazierRoutingType.TROVE) {
-			if (inventory.willAcceptStack(stack)) {
-				return 300;
-			} else {
-				return -1;
-			}
 		}
 		// Otherwise weight is calculated as a value between 0 and 200
 		// Factors considered positively that increase weight: quantity
