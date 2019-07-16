@@ -54,6 +54,10 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 		super("brazier");
 	}
 
+	public BrazierTileEntity (boolean fake) {
+		super("brazier", fake);
+	}
+
 	@SideOnly(Side.CLIENT)
 	public void addUpdateHook (Runnable hook) {
 		clientHooks.add(hook);
@@ -121,7 +125,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 		if (item.world.isRemote) return;
 		if (item.getEntityData().hasKey("rejected")) return;
 
-		List<ItemStack> stack = InventoryRouting.tryInsertItems(this, getServerNetwork(), item.getItem());
+		List<ItemStack> stack = InventoryRouting.tryInsertItems(this, item.getItem());
 		if (!stack.isEmpty()) {
 			rejectItemStacks(stack);
 		}
@@ -206,7 +210,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 			throw new NullPointerException("wat");
 		}
 
-		List<ItemStack> remainder = InventoryRouting.tryInsertItems(this, network, item, toInsert);
+		List<ItemStack> remainder = InventoryRouting.tryInsertItems(this, item, toInsert);
 
 		boolean doUpdate = wasHeld;
 
@@ -328,7 +332,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 
 		@Override
 		public void setStackInSlot (int slot, @Nonnull ItemStack stack) {
-			List<ItemStack> result = InventoryRouting.tryInsertItems(BrazierTileEntity.this, BrazierTileEntity.this.getServerNetwork(), stack);
+			List<ItemStack> result = InventoryRouting.tryInsertItems(BrazierTileEntity.this, stack);
 			rejectItemStacks(result);
 		}
 
@@ -350,7 +354,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 				return ItemStack.EMPTY;
 			}
 
-			List<ItemStack> result = InventoryRouting.tryInsertItems(BrazierTileEntity.this, BrazierTileEntity.this.getServerNetwork(), stack);
+			List<ItemStack> result = InventoryRouting.tryInsertItems(BrazierTileEntity.this, stack);
 			if (!result.isEmpty()) {
 				if (result.size() == 1) {
 					return result.get(0);

@@ -1,5 +1,12 @@
 package com.aranaira.arcanearchives.commands;
 
+import com.aranaira.arcanearchives.tileentities.BrazierTileEntity;
+import com.aranaira.arcanearchives.tileentities.IBrazierRouting;
+import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
+import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler;
+import com.aranaira.arcanearchives.util.InventoryRouting;
+import com.aranaira.arcanearchives.util.InventoryRouting.WeightedEntry;
+import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -36,7 +43,7 @@ public class CommandBrazier extends CommandBase {
 	}
 
 	@Override
-	public void execute (MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+	public void execute (MinecraftServer server, ICommandSender sender, String[] args) {
 		if (sender instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) sender;
 			ItemStack item = player.getHeldItemMainhand();
@@ -44,22 +51,20 @@ public class CommandBrazier extends CommandBase {
 				player.sendMessage(new TextComponentString("Can't trace an empty hand."));
 				return;
 			}
-			/*ServerNetwork network = NetworkHelper.getServerNetwork(player.getUniqueID(), player.world);
-			int ref = RecipeItemHelper.pack(item);
-			player.sendMessage(new TextComponentString("Target is \"" + item.getDisplayName() + "\" packed to " + ref));
-			List<CapabilityRef> caps = BrazierTileEntity.collectCapabilities(network, item);
-			player.sendMessage(new TextComponentString("Total number of potential targets: " + caps.size()));
+			BrazierTileEntity fake = new BrazierTileEntity(true);
+			fake.setWorld(player.world);
+			fake.setNetworkId(player.getUniqueID());
+			fake.setPos(player.getPosition());
+			List<WeightedEntry<IBrazierRouting>> weights = InventoryRouting.buildNetworkWeights(fake, item);
+			player.sendMessage(new TextComponentString("Target is \"" + item.getTranslationKey() + "x" + item.getCount() + "\""));
+			player.sendMessage(new TextComponentString("Total number of potential targets: " + weights.size()));
 			int i = 1;
-			for (CapabilityRef cap : caps) {
-				if (cap.handler instanceof TroveItemHandler) {
-					player.sendMessage(new TextComponentString("Cap #" + i + " is a trove containing " + cap.map.get(ref) + " of " + ref));
-				} else if (cap.map.containsKey(ref)) {
-					player.sendMessage(new TextComponentString("Cap #" + i + " is a chest containing " + cap.map.get(ref) + " of " + ref));
-				} else {
-					player.sendMessage(new TextComponentString("Cap #" + i + " is just a chest."));
-				}
+			for (WeightedEntry<IBrazierRouting> entry : weights) {
+				ImmanenceTileEntity ite = (ImmanenceTileEntity) entry.entry;
+				String description = entry.entry.getClass().toString().replace("com.aranaira.arcanearchives.tileentities.", "");
+				player.sendMessage(new TextComponentString("Entry #" + i + " " + description + " weight: " + entry.weight + " pos: " + String.format("%d,%d,%d", ite.getPos().getX(), ite.getPos().getY(), ite.getPos().getZ())));
 				i++;
-			}*/
+			}
 		}
 	}
 }

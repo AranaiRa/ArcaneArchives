@@ -28,10 +28,15 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable {
 	public Size size;
 	private ServerNetwork network;
 	private int ticks = 0;
-	private boolean fresh = false;
+	private boolean fake = false;
 
 	public ImmanenceTileEntity (String name) {
 		setName(name);
+	}
+
+	public ImmanenceTileEntity (String name, boolean fake) {
+		this(name);
+		this.fake = fake;
 	}
 
 	// TODO: Fix these up at some point to be less cancerous
@@ -63,7 +68,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable {
 
 	@Override
 	public void onLoad () {
-		if (world != null && !world.isRemote) {
+		if (world != null && !world.isRemote && !fake) {
 			ServerTickHandler.incomingITE(this);
 			ArcaneArchives.logger.debug(String.format("Loaded a tile entity with the class %s into the queue.", this.getClass().getName()));
 		} else if (world == null) {
@@ -89,7 +94,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable {
 	}
 
 	public void tryGenerateUUID () {
-		if (this.world != null && !this.world.isRemote && this.networkId != null && this.uuid == null) {
+		if (this.world != null && !this.world.isRemote && this.networkId != null && this.uuid == null && !fake) {
 			ServerNetwork network = getServerNetwork();
 			if (network != null) {
 				this.uuid = network.generateTileUuid();
