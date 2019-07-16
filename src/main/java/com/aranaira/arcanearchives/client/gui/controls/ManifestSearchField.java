@@ -8,10 +8,14 @@ import org.lwjgl.input.Keyboard;
 
 public class ManifestSearchField extends RightClickTextField {
 	private int id;
+	private String storedJEI;
 
 	public ManifestSearchField (int componentId, FontRenderer fontrendererObj, int x, int y, int par5Width, int par6Height) {
 		super(componentId, fontrendererObj, x, y, par5Width, par6Height);
 		this.id = componentId;
+		if (Loader.isModLoaded("jei")) {
+			this.storedJEI = JEIPlugin.runtime.getIngredientFilter().getFilterText();
+		}
 	}
 
 	@Override
@@ -62,6 +66,14 @@ public class ManifestSearchField extends RightClickTextField {
 
 		setText(filterText);
 		setResponderEntryValue(this.id, filterText);
+	}
+
+	public void restoreFromJEI () {
+		if (!Loader.isModLoaded("jei")) {
+			return;
+		}
+
+		JEIPlugin.runtime.getIngredientFilter().setFilterText(storedJEI);
 	}
 
 	@Override

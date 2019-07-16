@@ -41,12 +41,24 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 	private long lastClick = -1;
 	private Map<EntityPlayer, ItemStack> playerToStackMap = new ConcurrentHashMap<>();
 	private int radius = 150;
-	private boolean subnetworkOnly = false;
+	private boolean subnetworkOnly;
 	private FakeHandler fakeHandler = new FakeHandler();
-	private boolean showingRange = false;
+	private boolean showingRange;
+
+	private List<Runnable> clientHooks = new ArrayList<>();
 
 	public BrazierTileEntity () {
 		super("brazier");
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void addUpdateHook (Runnable hook) {
+		clientHooks.add(hook);
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void removeUpdateHook (Runnable hook) {
+		clientHooks.remove(hook);
 	}
 
 	public int getRadius () {
@@ -61,12 +73,20 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 		return radius = Math.min(300, radius + STEP);
 	}
 
+	public void setRadius (int radius) {
+		this.radius = Math.min(300, Math.max(radius, 0));
+	}
+
 	public boolean getNetworkMode () {
 		return subnetworkOnly;
 	}
 
 	public void toggleNetworkMode () {
 		subnetworkOnly = !subnetworkOnly;
+	}
+
+	public void setNetworkMode (boolean networkMode) {
+		this.subnetworkOnly = networkMode;
 	}
 
 	private boolean isFavourite (ItemStack stack) {
@@ -203,6 +223,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 	public NBTTagCompound writeToNBT (NBTTagCompound compound) {
 		super.writeToNBT(compound);
 		compound.setInteger(Tags.RANGE, radius);
+		compound.setBoolean(Tags.SUBNETWORK, subnetworkOnly);
 		return compound;
 	}
 
@@ -211,6 +232,13 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 		super.readFromNBT(compound);
 		if (compound.hasKey(Tags.RANGE)) {
 			radius = compound.getInteger(Tags.RANGE);
+		}
+		if (compound.hasKey(Tags.SUBNETWORK)) {
+			subnetworkOnly = compound.getBoolean(Tags.SUBNETWORK);
+		}
+
+		if (world != null && world.isRemote && !clientHooks.isEmpty()) {
+			clientHooks.forEach(Runnable::run);
 		}
 	}
 
@@ -248,11 +276,13 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 		return showingRange;
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void toggleShowRange () {
 		setShowingRange(!isShowingRange());
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void setShowingRange (boolean showingRange) {
 		this.showingRange = showingRange;
@@ -269,6 +299,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 
 	public static class Tags {
 		public static final String RANGE = "range";
+		public static final String SUBNETWORK = "subnetwork";
 
 		private Tags () {
 		}

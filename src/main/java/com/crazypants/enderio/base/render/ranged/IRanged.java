@@ -12,6 +12,12 @@ public interface IRanged {
   @SideOnly(Side.CLIENT)
   boolean isShowingRange ();
 
+  @SideOnly(Side.CLIENT)
+  void toggleShowRange ();
+
+  @SideOnly(Side.CLIENT)
+  void setShowingRange (boolean showingRange);
+
   @Nonnull
   BoundingBox getBounds ();
 

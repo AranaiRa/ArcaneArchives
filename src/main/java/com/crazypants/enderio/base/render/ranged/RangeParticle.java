@@ -38,6 +38,10 @@ public class RangeParticle<T extends TileEntity & IRanged> extends Particle {
 
   @Override
   public void onUpdate() {
+    if (!isAlive() || isExpired) {
+      owner.setShowingRange(false);
+    }
+
     age++;
   }
 
@@ -103,5 +107,4 @@ public class RangeParticle<T extends TileEntity & IRanged> extends Particle {
   private double scale(double x0, double x1, double scale) {
     return x0 * (1 - scale) + x1 * scale;
   }
-
 }
