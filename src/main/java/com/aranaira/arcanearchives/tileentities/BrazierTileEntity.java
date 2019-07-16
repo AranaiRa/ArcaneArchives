@@ -12,9 +12,11 @@ import com.enderio.core.client.render.BoundingBox;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketSetSlot;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -142,10 +144,10 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 		boolean doubleClick = false;
 		long diff = System.currentTimeMillis() - lastClick;
 		ItemStack lastItem = ItemStack.EMPTY;
-		if (player.getUniqueID() == lastUUID && diff <= 2000) {
+		if (player.getUniqueID() == lastUUID && diff <= 300) {
 			doubleClick = true;
 			lastItem = playerToStackMap.getOrDefault(player, ItemStack.EMPTY);
-		} else if (diff > 20000) {
+		} else if (diff > 950) {
 			playerToStackMap.clear();
 		}
 		lastUUID = player.getUniqueID();
@@ -198,6 +200,8 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 
 		List<ItemStack> remainder = InventoryRouting.tryInsertItems(this, network, item, toInsert);
 
+		boolean doUpdate = wasHeld;
+
 		if (!remainder.isEmpty()) {
 			List<ItemStack> toThrow = new ArrayList<>();
 			for (ItemStack stack : remainder) {
@@ -213,6 +217,13 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 				}
 			}
 			rejectItemStacks(toThrow);
+		}
+
+		if (doUpdate || doubleClick) {
+			EntityPlayerMP mpPlayer = (EntityPlayerMP) player;
+			for (int i = 0; i < playerInventory.getSlots(); i++) {
+				mpPlayer.connection.sendPacket(new SPacketSetSlot(-2, i, mpPlayer.inventory.getStackInSlot(i)));
+			}
 		}
 
 		return true;

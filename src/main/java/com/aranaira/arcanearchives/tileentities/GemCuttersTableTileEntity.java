@@ -202,7 +202,7 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 
 	@Override
 	public BrazierRoutingType getRoutingType () {
-		return BrazierRoutingType.NO_NEW_STACKS;
+		return BrazierRoutingType.GCT;
 	}
 
 	@Override
@@ -229,6 +229,7 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 				if (stack.isEmpty()) return stack;
 			}
 		}
+		this.markDirty();
 		return stack;
 	}
 

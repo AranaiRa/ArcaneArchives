@@ -28,6 +28,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable {
 	public Size size;
 	private ServerNetwork network;
 	private int ticks = 0;
+	private boolean fresh = false;
 
 	public ImmanenceTileEntity (String name) {
 		setName(name);
@@ -75,6 +76,9 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable {
 	public void joinedNetwork (ServerNetwork network) {
 	}
 
+	public void firstJoinedNetwork (ServerNetwork network) {
+	}
+
 	@Nullable
 	public ServerNetwork getServerNetwork () {
 		if (network == null && networkId != null) {
@@ -89,6 +93,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable {
 			ServerNetwork network = getServerNetwork();
 			if (network != null) {
 				this.uuid = network.generateTileUuid();
+				firstJoinedNetwork(getServerNetwork());
 				defaultServerSideUpdate();
 			}
 		}

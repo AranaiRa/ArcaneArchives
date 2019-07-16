@@ -32,9 +32,11 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 	}
 
 	@Override
-	public void joinedNetwork (ServerNetwork network) {
-		super.joinedNetwork(network);
+	public void firstJoinedNetwork (ServerNetwork network) {
+		super.firstJoinedNetwork(network);
 
+		// TODO: This might cause problems in the future with chests randomly changing behaviour when
+		// loaded or unloaded.
 		if (network.getNoNewDefault()) {
 			this.routingType = BrazierRoutingType.NO_NEW_STACKS;
 			defaultServerSideUpdate();
@@ -75,7 +77,9 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 
 	@Override
 	public ItemStack acceptStack (ItemStack stack) {
-		return ItemHandlerHelper.insertItemStacked(this.inventory, stack, false);
+		ItemStack result = ItemHandlerHelper.insertItemStacked(this.inventory, stack, false);
+		this.markDirty();
+		return result;
 	}
 
 	public void toggleRoutingType () {

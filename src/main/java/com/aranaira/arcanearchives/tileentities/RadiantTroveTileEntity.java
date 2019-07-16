@@ -332,7 +332,9 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 
 	@Override
 	public ItemStack acceptStack (ItemStack stack) {
-		return ItemHandlerHelper.insertItemStacked(this.inventory, stack, false);
+		ItemStack result = ItemHandlerHelper.insertItemStacked(this.inventory, stack, false);
+		this.markDirty();
+		return result;
 	}
 
 	@Override

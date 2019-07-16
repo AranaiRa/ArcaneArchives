@@ -6,6 +6,7 @@ import com.aranaira.arcanearchives.tileentities.IBrazierRouting;
 import com.aranaira.arcanearchives.tileentities.IBrazierRouting.BrazierRoutingType;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.util.types.IteRef;
+import com.google.common.collect.Lists;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.item.ItemStack;
@@ -104,7 +105,7 @@ public class InventoryRouting {
 	}
 
 	public static List<ItemStack> tryInsertItems (BrazierTileEntity brazier, ServerNetwork network, ItemStack reference) {
-		return tryInsertItems(brazier, network, reference, Collections.singletonList(reference));
+		return tryInsertItems(brazier, network, reference, Lists.newArrayList(reference));
 	}
 
 	public static class WeightedEntry<T> {
