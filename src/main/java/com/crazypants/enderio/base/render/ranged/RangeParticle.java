@@ -27,7 +27,7 @@ public class RangeParticle<T extends TileEntity & IRanged> extends Particle {
   private int age = 0;
 
   public RangeParticle(T owner) {
-    this(owner, new Vector4f(1, 1, 1, 0.4f));
+    this(owner, new Vector4f(0.78f, 0.54, 0.19, 0.4f));
   }
 
   public RangeParticle(T owner, Vector4f color) {
