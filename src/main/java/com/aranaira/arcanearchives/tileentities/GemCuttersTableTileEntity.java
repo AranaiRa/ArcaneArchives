@@ -206,6 +206,15 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 	}
 
 	@Override
+	public int countEmptySlots () {
+		int empty = 0;
+		for (int i = 0; i < inventory.getSlots(); i++) {
+			if (inventory.getStackInSlot(i).isEmpty()) empty++;
+		}
+		return empty;
+	}
+
+	@Override
 	public int totalEmptySlots () {
 		return inventory.getEmptyCount();
 	}

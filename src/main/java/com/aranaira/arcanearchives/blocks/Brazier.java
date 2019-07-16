@@ -89,11 +89,7 @@ public class Brazier extends BlockTemplate implements IInfusionStabiliserExt {
 		if(entityIn instanceof EntityItem) {
 			BrazierTileEntity te = WorldUtil.getTileEntity(BrazierTileEntity.class, worldIn, pos);
 			if(te != null) {
-				if (!worldIn.isRemote) {
-					te.beginInsert((EntityItem) entityIn);
-				}
-
-				entityIn.setDead();
+				te.beginInsert((EntityItem) entityIn);
 			}
 		}
 	}

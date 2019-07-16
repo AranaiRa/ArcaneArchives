@@ -8,6 +8,7 @@ public interface IBrazierRouting {
 
 	BrazierRoutingType getRoutingType ();
 
+	int countEmptySlots ();
 	int totalEmptySlots ();
 	int totalSlots ();
 	int slotMultiplier ();

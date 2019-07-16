@@ -45,49 +45,59 @@ public class InventoryRouting {
 		// Factors considered positively that increase weight: quantity
 		// of similar items already stored.
 		// Quantity of empty slots.
-		int empty = inventory.totalEmptySlots();
+		int empty = inventory.countEmptySlots();
 		int slotCount = inventory.totalSlots();
+		if (empty == slotCount) return 150;
 
 		int stackSize = stack.getMaxStackSize();
 		if (inventory.slotMultiplier() > 1) {
 			stackSize = (stackSize == 1) ? 1 : stackSize * inventory.slotMultiplier();
 		}
 
-		int usedSlots = (int) Math.floor((double) slotCount / (double) stackSize);
+		int usedSlots;
 
-		int percentageUsed = (int) Math.floor(((double) slotCount / (double) usedSlots) * 100);
-		int percentageEmpty = (int) Math.floor(((double) empty / (double) usedSlots) * 100);
+		if (total < stackSize && total > 0) {
+			usedSlots = 1;
+		} else {
+			usedSlots = (int) Math.floor((double) total / (double) stackSize);
+		}
+
+		int percentageUsed = (int) Math.floor(((double) usedSlots / (double) slotCount) * 100) * 2;
+		int percentageEmpty = (int) Math.floor(((double) empty / (double) slotCount) * 100);
 
 		return percentageEmpty + percentageUsed;
 	}
 
-	public static List<IBrazierRouting> buildNetwork (BrazierTileEntity brazier, ServerNetwork network, ItemStack stack) {
+	public static List<WeightedEntry<IBrazierRouting>> buildNetworkWeights (BrazierTileEntity brazier, ItemStack stack) {
 		List<WeightedEntry<IBrazierRouting>> workspace = new ArrayList<>();
 		int radius = brazier.getRadius() * brazier.getRadius();
 		BlockPos bPos = brazier.getPos();
+		ServerNetwork network = brazier.getServerNetwork();
 		network.refreshTiles();
 		for (IteRef ite : network.getValidTiles()) {
 			if (IBrazierRouting.class.isAssignableFrom(ite.clazz) && network.distanceSq(bPos, ite.pos) <= radius && ite.dimension == brazier.dimension) {
 				ImmanenceTileEntity tile = ite.getTile();
 				int weight = calculateWeight((IBrazierRouting) tile, stack);
-				if (weight <= -1) continue;
 				workspace.add(new WeightedEntry<>((IBrazierRouting) tile, weight));
 			}
 		}
 
 		workspace.sort((o1, o2) -> Integer.compare(o2.weight, o1.weight));
-		return workspace.stream().map(o -> o.entry).collect(Collectors.toList());
+		return workspace;
+	}
+
+	public static List<IBrazierRouting> buildNetwork (BrazierTileEntity brazier, ItemStack stack) {
+		return buildNetworkWeights(brazier, stack).stream().filter(r -> r.weight > 0).map(r -> r.entry).collect(Collectors.toList());
 	}
 
 	/**
 	 *
 	 * @param brazier The TileEntity of the brazier currently requesting information.
-	 * @param network
 	 * @param inputs
 	 * @return
 	 */
-	public static List<ItemStack> tryInsertItems (BrazierTileEntity brazier, ServerNetwork network, ItemStack reference, List<ItemStack> inputs) {
-		List<IBrazierRouting> routing = buildNetwork(brazier, network, reference);
+	public static List<ItemStack> tryInsertItems (BrazierTileEntity brazier, ItemStack reference, List<ItemStack> inputs) {
+		List<IBrazierRouting> routing = buildNetwork(brazier, reference);
 		routes: for (IBrazierRouting route : routing) {
 			ListIterator<ItemStack> iterator = inputs.listIterator();
 			while (iterator.hasNext()) {
@@ -104,8 +114,8 @@ public class InventoryRouting {
 		return inputs;
 	}
 
-	public static List<ItemStack> tryInsertItems (BrazierTileEntity brazier, ServerNetwork network, ItemStack reference) {
-		return tryInsertItems(brazier, network, reference, Lists.newArrayList(reference));
+	public static List<ItemStack> tryInsertItems (BrazierTileEntity brazier, ItemStack reference) {
+		return tryInsertItems(brazier, reference, Lists.newArrayList(reference));
 	}
 
 	public static class WeightedEntry<T> {

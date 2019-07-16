@@ -9,6 +9,7 @@ import com.aranaira.arcanearchives.util.ItemUtilities;
 import com.crazypants.enderio.base.render.ranged.IRanged;
 import com.crazypants.enderio.base.render.ranged.RangeParticle;
 import com.enderio.core.client.render.BoundingBox;
+import epicsquid.mysticallib.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -117,10 +118,14 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 
 	// Handle entities that hit
 	public void beginInsert (EntityItem item) {
+		if (item.world.isRemote) return;
+		if (item.getEntityData().hasKey("rejected")) return;
+
 		List<ItemStack> stack = InventoryRouting.tryInsertItems(this, getServerNetwork(), item.getItem());
 		if (!stack.isEmpty()) {
 			rejectItemStacks(stack);
 		}
+		item.setDead();
 	}
 
 	public void rejectItemStacks (List<ItemStack> stacks) {
@@ -135,7 +140,10 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 		}
 
 		EntityItem item = new EntityItem(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, stack);
+		item.motionZ = Math.min(0.4f, Math.min((Util.rand.nextFloat() - 0.5f) * 0.6f, 0.2f));
+		item.motionX = Math.min(0.4f, Math.min((Util.rand.nextFloat() - 0.5f) * 0.6f, 0.2f));
 		item.setPickupDelay(20);
+		item.getEntityData().setBoolean("rejected", true);
 		world.spawnEntity(item);
 	}
 

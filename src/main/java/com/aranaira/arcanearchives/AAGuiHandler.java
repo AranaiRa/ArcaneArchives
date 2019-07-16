@@ -37,7 +37,7 @@ public class AAGuiHandler implements IGuiHandler {
 				return null;
 			//return new NetworkCraftingContainer(player.inventory, world, new BlockPos(0, 0, 0));
 			case MANIFEST:
-				return null; // return new ContainerManifest(player, true);
+				return new ContainerFakeManifest(player);
 			case BAUBLE_GEMSOCKET:
 				return new ContainerGemSocket(player);
 			case DEVOURING_CHARM:
