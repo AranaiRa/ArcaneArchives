@@ -8,6 +8,7 @@ import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.ItemStackConsolidator;
 import com.aranaira.arcanearchives.util.LargeItemNBTUtil;
 import com.aranaira.arcanearchives.util.types.*;
+import com.aranaira.arcanearchives.util.types.TileList.TileListIterable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -58,6 +59,11 @@ public class HiveNetwork implements IHiveBase {
 	@Override
 	public boolean isHiveNetwork () {
 		return true;
+	}
+
+	@Override
+	public ITileList getValidTiles () {
+		return null;
 	}
 
 	@Nullable

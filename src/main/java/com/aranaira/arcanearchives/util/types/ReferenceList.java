@@ -32,8 +32,11 @@ public class ReferenceList<T> extends ForwardingList<T> {
 		return new ReferenceListIterable<>(iterator());
 	}
 
-	public class ReferenceListIterable<U> implements Iterable<U> {
-		Iterator<U> iter;
+	public static class ReferenceListIterable<U> implements Iterable<U> {
+		protected Iterator<U> iter;
+
+		public ReferenceListIterable () {
+		}
 
 		ReferenceListIterable (Iterator<U> iter) {
 			this.iter = iter;
@@ -43,6 +46,10 @@ public class ReferenceList<T> extends ForwardingList<T> {
 		@Nonnull
 		public Iterator<U> iterator () {
 			return this.iter;
+		}
+
+		public void setIterator(Iterator<U> iterator) {
+			this.iter = iterator;
 		}
 	}
 }

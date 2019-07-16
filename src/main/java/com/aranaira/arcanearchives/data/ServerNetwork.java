@@ -8,6 +8,7 @@ import com.aranaira.arcanearchives.tileentities.*;
 import com.aranaira.arcanearchives.tileentities.unused.MatrixCoreTileEntity;
 import com.aranaira.arcanearchives.util.ItemStackConsolidator;
 import com.aranaira.arcanearchives.util.LargeItemNBTUtil;
+import com.aranaira.arcanearchives.util.TileUtils;
 import com.aranaira.arcanearchives.util.types.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -125,8 +126,8 @@ public class ServerNetwork implements IServerNetwork {
 	}
 
 	@Override
-	public TileList.TileListIterable getValidTiles () {
-		return tiles.filterValid();
+	public Iterable<IteRef> getValidTiles () {
+		return TileUtils.filterValid(this.tiles);
 	}
 
 	@Override
@@ -427,7 +428,7 @@ public class ServerNetwork implements IServerNetwork {
 	 */
 	@Override
 	public TileList.TileListIterable getManifestTileEntities () {
-		return tiles.filterAssignableClass(IManifestTileEntity.class);
+		return TileUtils.filterAssignableClass(this.tiles, IManifestTileEntity.class);
 	}
 
 	@Override

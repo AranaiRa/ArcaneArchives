@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.util;
 
+import com.aranaira.arcanearchives.data.HiveNetwork;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.tileentities.BrazierTileEntity;
 import com.aranaira.arcanearchives.tileentities.IBrazierRouting;
@@ -12,7 +13,9 @@ import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.stream.Collectors;
 
 public class InventoryRouting {
@@ -47,7 +50,9 @@ public class InventoryRouting {
 		// Quantity of empty slots.
 		int empty = inventory.countEmptySlots();
 		int slotCount = inventory.totalSlots();
-		if (empty == slotCount) return 150;
+		if (empty == slotCount) {
+			return 150;
+		}
 
 		int stackSize = stack.getMaxStackSize();
 		if (inventory.slotMultiplier() > 1) {
@@ -74,7 +79,14 @@ public class InventoryRouting {
 		BlockPos bPos = brazier.getPos();
 		ServerNetwork network = brazier.getServerNetwork();
 		network.refreshTiles();
-		for (IteRef ite : network.getValidTiles()) {
+		HiveNetwork hive = network.getHiveNetwork();
+		Iterable<IteRef> tiles;
+		if (hive == null || brazier.getNetworkMode()) {
+			tiles = network.getValidTiles();
+		} else {
+			tiles = hive.getValidTiles();
+		}
+		for (IteRef ite : tiles) {
 			if (IBrazierRouting.class.isAssignableFrom(ite.clazz) && network.distanceSq(bPos, ite.pos) <= radius && ite.dimension == brazier.dimension) {
 				ImmanenceTileEntity tile = ite.getTile();
 				int weight = calculateWeight((IBrazierRouting) tile, stack);
@@ -91,14 +103,14 @@ public class InventoryRouting {
 	}
 
 	/**
-	 *
 	 * @param brazier The TileEntity of the brazier currently requesting information.
 	 * @param inputs
 	 * @return
 	 */
 	public static List<ItemStack> tryInsertItems (BrazierTileEntity brazier, ItemStack reference, List<ItemStack> inputs) {
 		List<IBrazierRouting> routing = buildNetwork(brazier, reference);
-		routes: for (IBrazierRouting route : routing) {
+		routes:
+		for (IBrazierRouting route : routing) {
 			ListIterator<ItemStack> iterator = inputs.listIterator();
 			while (iterator.hasNext()) {
 				ItemStack potential = iterator.next();

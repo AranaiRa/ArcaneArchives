@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
+import com.aranaira.arcanearchives.util.types.IteRef;
 import com.aranaira.arcanearchives.util.types.TileList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -15,11 +16,6 @@ public interface IServerNetwork extends IHiveBase {
 	UUID getUuid ();
 
 	World getWorld ();
-
-	/**
-	 * Function for retrieving the current list of valid tiles from the network.
-	 */
-	TileList.TileListIterable getValidTiles ();
 
 	/**
 	 * Attempts to return a unique tile id.
