@@ -58,7 +58,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 	}
 
 	public int increaseRadius () {
-		return radius = Math.max(300, radius + STEP);
+		return radius = Math.min(300, radius + STEP);
 	}
 
 	public boolean getNetworkMode () {
