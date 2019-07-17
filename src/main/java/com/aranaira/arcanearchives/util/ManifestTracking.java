@@ -1,7 +1,8 @@
 package com.aranaira.arcanearchives.util;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.util.types.ManifestEntry;
+import com.aranaira.arcanearchives.util.ManifestUtil.CollatedEntry;
+import com.aranaira.arcanearchives.util.ManifestUtil.EntryDescriptor;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import net.minecraft.item.ItemStack;
@@ -32,9 +33,9 @@ public class ManifestTracking {
 		allTracked.clear();
 	}
 
-	public static void add (ManifestEntry entry) {
-		for (ManifestEntry.ItemEntry innerEntry : entry.getEntries()) {
-			add(entry.getStack(), entry.getDimension(), innerEntry.getPosition());
+	public static void add (CollatedEntry entry) {
+		for (EntryDescriptor innerEntry : entry.descriptions) {
+			add(entry.getStack(), innerEntry.dimension, innerEntry.pos);
 		}
 	}
 

@@ -2,6 +2,9 @@ package com.aranaira.arcanearchives.util.types;
 
 import com.aranaira.arcanearchives.inventory.ContainerManifest;
 import com.aranaira.arcanearchives.util.ItemUtilities;
+import com.aranaira.arcanearchives.util.ManifestUtil.CollatedEntry;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
@@ -18,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ManifestList extends ReferenceList<ManifestEntry> {
+public class ManifestList extends ReferenceList<CollatedEntry> implements ISerializeByteBuf<ManifestList> {
 	private static Map<String, ModContainer> modList = null;
 	private ContainerManifest listener = null;
 	private String filterText;
@@ -26,14 +29,19 @@ public class ManifestList extends ReferenceList<ManifestEntry> {
 	private SortingDirection sortingDirection = null;
 	private SortingType sortingType = null;
 
-	public ManifestList (List<ManifestEntry> reference) {
+	public ManifestList (List<CollatedEntry> reference) {
 		super(reference);
 		this.filterText = null;
 	}
 
-	public ManifestList (List<ManifestEntry> reference, String filterText) {
+	public ManifestList (List<CollatedEntry> reference, String filterText) {
 		super(reference);
 		this.filterText = filterText;
+	}
+
+	public static ManifestList deserialize (ByteBuf buf) {
+		ManifestList list = new ManifestList();
+		return list.fromBytes(buf);
 	}
 
 	public static Map<String, ModContainer> getModList () {
@@ -172,7 +180,7 @@ public class ManifestList extends ReferenceList<ManifestEntry> {
 	}
 
 	@Nullable
-	public ManifestEntry getEntryForSlot (int slot) {
+	public CollatedEntry getEntryForSlot (int slot) {
 		if (slot < size() && slot >= 0) {
 			return get(slot);
 		}
@@ -234,15 +242,15 @@ public class ManifestList extends ReferenceList<ManifestEntry> {
 		copy.sort((o1, o2) -> {
 			if (copy.sortingType == SortingType.NAME) {
 				if (copy.sortingDirection == SortingDirection.ASCENDING) {
-					return o1.stack.getDisplayName().compareTo(o2.stack.getDisplayName());
+					return o1.finalStack.getDisplayName().compareTo(o2.finalStack.getDisplayName());
 				} else {
-					return o2.stack.getDisplayName().compareTo(o1.stack.getDisplayName());
+					return o2.finalStack.getDisplayName().compareTo(o1.finalStack.getDisplayName());
 				}
 			} else {
 				if (copy.sortingDirection == SortingDirection.ASCENDING) {
-					return Integer.compare(o1.stack.getCount(), o2.stack.getCount());
+					return Integer.compare(o1.finalStack.getCount(), o2.finalStack.getCount());
 				} else {
-					return Integer.compare(o2.stack.getCount(), o1.stack.getCount());
+					return Integer.compare(o2.finalStack.getCount(), o1.finalStack.getCount());
 				}
 			}
 		});
@@ -255,7 +263,25 @@ public class ManifestList extends ReferenceList<ManifestEntry> {
 		super.clear();
 	}
 
-	public class ManifestListIterable extends ReferenceListIterable<ManifestEntry> {
+	@Override
+	public ManifestList fromBytes (ByteBuf buf) {
+		this.clear();
+		int entries = buf.readInt();
+		for (int i = 0; i < entries; i++) {
+			this.add(CollatedEntry.deserialize(buf));
+		}
+		return this;
+	}
+
+	@Override
+	public void toBytes (ByteBuf buf) {
+		buf.writeInt(this.size());
+		for (CollatedEntry entry : this) {
+			entry.toBytes(buf);
+		}
+	}
+
+	public class ManifestListIterable extends ReferenceListIterable<CollatedEntry> {
 		ManifestListIterable (ManifestIterator iter) {
 			super(iter);
 		}
@@ -265,11 +291,11 @@ public class ManifestList extends ReferenceList<ManifestEntry> {
 		}
 	}
 
-	public class ManifestIterator implements Iterator<ManifestEntry> {
+	public class ManifestIterator implements Iterator<CollatedEntry> {
 		private int slot = 0;
-		private Iterator<ManifestEntry> iter;
+		private Iterator<CollatedEntry> iter;
 
-		public ManifestIterator (Iterator<ManifestEntry> iter) {
+		public ManifestIterator (Iterator<CollatedEntry> iter) {
 			this.iter = iter;
 		}
 
@@ -283,7 +309,7 @@ public class ManifestList extends ReferenceList<ManifestEntry> {
 		}
 
 		@Override
-		public ManifestEntry next () {
+		public CollatedEntry next () {
 			slot++;
 			return iter.next();
 		}

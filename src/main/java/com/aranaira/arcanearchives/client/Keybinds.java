@@ -11,7 +11,7 @@ import com.aranaira.arcanearchives.items.ManifestItem;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketArcaneGems.OpenSocket;
 import com.aranaira.arcanearchives.util.ManifestTracking;
-import com.aranaira.arcanearchives.util.types.ManifestEntry;
+import com.aranaira.arcanearchives.util.ManifestUtil.CollatedEntry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -116,11 +116,11 @@ public class Keybinds {
 						handler.setSearchItem(stack);
 						boolean addedValues = false;
 						for (int i = 0; i < handler.getSlots(); i++) {
-							ManifestEntry entry = handler.getManifestEntryInSlot(i);
+							CollatedEntry entry = handler.getManifestEntryInSlot(i);
 							if (entry == null) {
 								continue;
 							}
-							if (mc.player.dimension != entry.dimension) {
+							if (mc.player.dimension != entry.descriptions.get(0).dimension) {
 								continue;
 							}
 

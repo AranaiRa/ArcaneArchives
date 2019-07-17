@@ -1,7 +1,10 @@
 package com.aranaira.arcanearchives.data;
 
+import com.aranaira.arcanearchives.data.NetworkHelper.HiveMembershipInfo;
+import com.aranaira.arcanearchives.data.ServerNetwork.SynchroniseInfo;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
-import com.aranaira.arcanearchives.util.types.IteRef;
+import com.aranaira.arcanearchives.util.types.ISerializeByteBuf;
+import com.aranaira.arcanearchives.util.types.ManifestList;
 import com.aranaira.arcanearchives.util.types.TileList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -68,7 +71,7 @@ public interface IServerNetwork extends IHiveBase {
 	 * Converts the manifestItems list into an NBT form
 	 * for return to the client.
 	 */
-	NBTTagCompound buildSynchroniseManifest ();
+	ISerializeByteBuf<ManifestList> buildSynchroniseManifest ();
 
 	void rebuildManifest ();
 
@@ -89,7 +92,7 @@ public interface IServerNetwork extends IHiveBase {
 	 * Currently this only contains the total number of
 	 * resonators and matrix cores.
 	 */
-	NBTTagCompound buildSynchroniseData ();
+	SynchroniseInfo buildSynchroniseData ();
 
-	NBTTagCompound buildHiveMembershipData ();
+	ISerializeByteBuf<HiveMembershipInfo> buildHiveMembershipData ();
 }

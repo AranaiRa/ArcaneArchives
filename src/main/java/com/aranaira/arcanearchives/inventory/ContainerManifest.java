@@ -9,8 +9,8 @@ import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.events.LineHandler;
 import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
 import com.aranaira.arcanearchives.util.ManifestTracking;
+import com.aranaira.arcanearchives.util.ManifestUtil.CollatedEntry;
 import com.aranaira.arcanearchives.util.MathUtils;
-import com.aranaira.arcanearchives.util.types.ManifestEntry;
 import com.aranaira.arcanearchives.util.types.ManifestList.SortingDirection;
 import com.aranaira.arcanearchives.util.types.ManifestList.SortingType;
 import invtweaks.api.container.InventoryContainer;
@@ -154,7 +154,7 @@ public class ContainerManifest extends Container implements IScrollableContainer
 	}
 
 	@Nullable
-	public ManifestEntry getEntry (int slotId) {
+	public CollatedEntry getEntry (int slotId) {
 		return handler.getManifestEntryInSlot(slotId);
 	}
 
@@ -165,13 +165,13 @@ public class ContainerManifest extends Container implements IScrollableContainer
 			return ItemStack.EMPTY;
 		}
 
-		ManifestEntry entry = handler.getManifestEntryInSlot(slotId);
+		CollatedEntry entry = handler.getManifestEntryInSlot(slotId);
 
 		if (entry == null) {
 			return ItemStack.EMPTY;
 		}
 
-		if (entry.getDimension() != player.dimension) {
+		if (entry.descriptions.get(0).dimension != player.dimension) {
 			return ItemStack.EMPTY;
 		}
 

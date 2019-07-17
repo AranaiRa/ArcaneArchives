@@ -20,6 +20,7 @@ public interface IHiveBase {
 
 	boolean isHiveNetwork ();
 
+	ITileList getTiles();
 	Iterable<IteRef> getValidTiles ();
 
 	@Nullable

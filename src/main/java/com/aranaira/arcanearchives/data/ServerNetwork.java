@@ -1,27 +1,30 @@
 package com.aranaira.arcanearchives.data;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.data.NetworkHelper.HiveMembershipInfo;
 import com.aranaira.arcanearchives.network.NetworkHandler;
 import com.aranaira.arcanearchives.network.PacketNetworks;
 import com.aranaira.arcanearchives.network.PacketNetworks.SynchroniseType;
-import com.aranaira.arcanearchives.tileentities.*;
+import com.aranaira.arcanearchives.tileentities.IManifestTileEntity;
+import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
+import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
 import com.aranaira.arcanearchives.tileentities.unused.MatrixCoreTileEntity;
-import com.aranaira.arcanearchives.util.ItemStackConsolidator;
-import com.aranaira.arcanearchives.util.LargeItemNBTUtil;
+import com.aranaira.arcanearchives.util.ManifestUtil;
+import com.aranaira.arcanearchives.util.ManifestUtil.CollatedEntry;
+import com.aranaira.arcanearchives.util.ManifestUtil.ItemEntry;
 import com.aranaira.arcanearchives.util.TileUtils;
-import com.aranaira.arcanearchives.util.types.*;
+import com.aranaira.arcanearchives.util.types.ISerializeByteBuf;
+import com.aranaira.arcanearchives.util.types.IteRef;
+import com.aranaira.arcanearchives.util.types.ManifestList;
+import com.aranaira.arcanearchives.util.types.TileList;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
 import java.lang.ref.WeakReference;
@@ -212,12 +215,6 @@ public class ServerNetwork implements IServerNetwork {
 		this.uuid = tag.getUniqueId("playerId");
 	}
 
-	/**
-	 * Entrypoint only used by ContainerManifest previously
-	 */
-	/*public ManifestItemHandler getManifestHandler () {
-		return manifestHandler;
-	}*/
 	@Override
 	public int getTotalCores () {
 		return totalCores;
@@ -245,6 +242,12 @@ public class ServerNetwork implements IServerNetwork {
 		synchroniseData();
 	}
 
+	@Override
+	public ManifestList buildSynchroniseManifest () {
+		rebuildManifest();
+		return manifestItems;
+	}
+
 	/**
 	 * Attempts to synchronsie the rebuilt core total back to the client,
 	 * where the information is used to prevent additional placement of
@@ -255,7 +258,7 @@ public class ServerNetwork implements IServerNetwork {
 	public void synchroniseData () {
 		EntityPlayer player = getPlayer();
 		if (player != null) {
-			IMessage packet = new PacketNetworks.Response(PacketNetworks.SynchroniseType.DATA, buildSynchroniseData());
+			IMessage packet = new PacketNetworks.DataResponse(buildSynchroniseData());
 			NetworkHandler.CHANNEL.sendTo(packet, (EntityPlayerMP) player);
 		}
 	}
@@ -264,13 +267,13 @@ public class ServerNetwork implements IServerNetwork {
 	public void synchroniseHiveInfo () {
 		EntityPlayer player = getPlayer();
 		if (player != null) {
-			IMessage packet = new PacketNetworks.Response(SynchroniseType.HIVE_STATUS, buildHiveMembershipData());
+			IMessage packet = new PacketNetworks.HiveResponse(buildHiveMembershipData());
 			NetworkHandler.CHANNEL.sendTo(packet, (EntityPlayerMP) player);
 		}
 	}
 
 	@Override
-	public NBTTagCompound buildHiveMembershipData () {
+	public HiveMembershipInfo buildHiveMembershipData () {
 		return NetworkHelper.getHiveMembershipInfo(uuid, getWorld());
 	}
 
@@ -307,32 +310,6 @@ public class ServerNetwork implements IServerNetwork {
 		}
 	}
 
-	@Override
-	public NBTTagCompound buildSynchroniseManifest () {
-		// Step one: iterate loaded chests and get item stacks.
-		rebuildManifest();
-
-		NBTTagList manifest = new NBTTagList();
-
-		for (ManifestEntry entry : manifestItems) {
-			NBTTagCompound itemEntry = new NBTTagCompound();
-			LargeItemNBTUtil.writeToNBT(itemEntry, entry.getStack());
-			NBTTagList entries = new NBTTagList();
-			for (ManifestEntry.ItemEntry iEntry : entry.getEntries()) {
-				entries.appendTag(iEntry.serializeNBT());
-			}
-			itemEntry.setTag(NetworkTags.ENTRIES, entries);
-			itemEntry.setInteger(NetworkTags.DIMENSION, entry.getDimension());
-			itemEntry.setBoolean(NetworkTags.OUT_OF_RANGE, entry.outOfRange);
-			manifest.appendTag(itemEntry);
-		}
-
-		NBTTagCompound result = new NBTTagCompound();
-		result.setTag(NetworkTags.MANIFEST, manifest);
-
-		return result;
-	}
-
 	/**
 	 * Rebuilds the manifestItems list.
 	 */
@@ -342,90 +319,10 @@ public class ServerNetwork implements IServerNetwork {
 
 		refreshTiles();
 
-		List<ManifestItemEntry> preManifest = new ArrayList<>();
-		Set<IManifestTileEntity> done = new HashSet<>();
-		Set<BlockPosDimension> positions = new HashSet<>();
-		EntityPlayer player = getPlayer();
+		Map<Integer, List<ItemEntry>> preManifest = ManifestUtil.buildItemEntryList(this);
+		List<CollatedEntry> manifestList = ManifestUtil.parsePreManifest(preManifest, this);
 
-		int maxDistance = getMaxDistance();
-
-		ITileList tiles = this.tiles;
-		if (this.isHiveMember()) {
-			HiveNetwork hive = getHiveNetwork();
-			tiles = hive.getValidTiles();
-		}
-
-		for (IteRef ref : TileUtils.filterAssignableClass(tiles, IManifestTileEntity.class)) {
-			ImmanenceTileEntity ite = ref.getTile();
-			IManifestTileEntity mte = (IManifestTileEntity) ite;
-			if (ite == null) {
-				continue;
-			}
-
-			if (done.contains(mte)) {
-				continue;
-			}
-
-			boolean outOfRange = distanceSq(ite.getPos(), player.getPosition()) >= maxDistance;
-			int dimId = ite.getWorld().provider.getDimension();
-
-			if (mte.isSingleStackInventory()) {
-				ItemStack is = mte.getSingleStack();
-				if (!is.isEmpty()) {
-					preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(ite.getPos(), mte.getDescriptor(), is.getCount()), outOfRange));
-				}
-			} else {
-				if (ite instanceof MonitoringCrystalTileEntity) {
-					MonitoringCrystalTileEntity mce = (MonitoringCrystalTileEntity) ite;
-
-					BlockPos tar = mce.getTarget();
-					if (tar == null) {
-						continue;
-					}
-
-					BlockPosDimension ttar = new BlockPosDimension(tar, mce.dimension);
-
-					if (positions.contains(ttar)) {
-						if (player != null) {
-							player.sendMessage(new TextComponentTranslation("arcanearchives.error.monitoring_crystal", tar.getX(), tar.getY(), tar.getZ(), ttar.dimension));
-						} else {
-							ArcaneArchives.logger.error("Multiple Monitoring Crystals were found for network " + uuid.toString() + " targeting " + String.format("%d/%d/%d in dimension %d", tar.getX(), tar.getY(), tar.getZ(), ttar.dimension));
-						}
-						continue;
-					}
-
-					positions.add(ttar);
-
-					IItemHandler handler = mte.getInventory();
-					if (handler != null) {
-						for (ItemStack is : new SlotIterable(handler)) {
-							if (is.isEmpty()) {
-								continue;
-							}
-
-							preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(mce.getTarget(), mte.getDescriptor(), is.getCount()), outOfRange));
-						}
-					}
-				} else {
-					String descriptor = mte.getChestName();
-					if (descriptor.isEmpty() && !(mte instanceof RadiantChestTileEntity)) {
-						descriptor = mte.getDescriptor();
-					}
-					for (ItemStack is : new SlotIterable(mte.getInventory())) {
-						if (is.isEmpty()) {
-							continue;
-						}
-
-						preManifest.add(new ManifestItemEntry(is.copy(), dimId, new ManifestEntry.ItemEntry(ite.getPos(), descriptor, is.getCount()), outOfRange));
-					}
-				}
-			}
-
-			done.add(mte);
-		}
-
-		List<ManifestEntry> consolidated = ItemStackConsolidator.consolidateManifest(preManifest);
-		manifestItems.addAll(consolidated);
+		manifestItems.addAll(manifestList);
 	}
 
 	/**
@@ -437,14 +334,36 @@ public class ServerNetwork implements IServerNetwork {
 		return TileUtils.filterAssignableClass(this.tiles, IManifestTileEntity.class);
 	}
 
+	public static class SynchroniseInfo implements ISerializeByteBuf<SynchroniseInfo> {
+		public int totalResonators = 0;
+		public int totalCores = 0;
+
+		@Override
+		public SynchroniseInfo fromBytes (ByteBuf buf) {
+			this.totalResonators = buf.readInt();
+			this.totalCores = buf.readInt();
+			return this;
+		}
+
+		@Override
+		public void toBytes (ByteBuf buf) {
+			buf.writeInt(totalResonators);
+			buf.writeInt(totalCores);
+		}
+
+		public static SynchroniseInfo deserialize (ByteBuf buf) {
+			SynchroniseInfo info = new SynchroniseInfo();
+			return info.fromBytes(buf);
+		}
+	}
+
 	@Override
-	public NBTTagCompound buildSynchroniseData () {
-		NBTTagCompound tag = new NBTTagCompound();
+	public SynchroniseInfo buildSynchroniseData () {
+		SynchroniseInfo info = new SynchroniseInfo();
+		info.totalResonators = getTotalResonators();
+		info.totalCores = getTotalCores();
 
-		tag.setInteger(NetworkTags.TOTAL_RESONATORS, getTotalResonators());
-		tag.setInteger(NetworkTags.TOTAL_CORES, getTotalCores());
-
-		return tag;
+		return info;
 	}
 
 	public int distanceSq (BlockPos pos1, BlockPos pos2) {
@@ -452,5 +371,9 @@ public class ServerNetwork implements IServerNetwork {
 		int d2 = pos1.getY() - pos2.getY();
 		int d3 = pos1.getZ() - pos2.getZ();
 		return Math.abs(d1 * d1 + d2 * d2 + d3 * d3);
+	}
+
+	public boolean inRange (BlockPos pos1, BlockPos pos2) {
+		return distanceSq(pos1, pos2) < getMaxDistance();
 	}
 }
