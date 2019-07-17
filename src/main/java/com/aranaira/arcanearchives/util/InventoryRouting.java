@@ -79,13 +79,14 @@ public class InventoryRouting {
 		BlockPos bPos = brazier.getPos();
 		ServerNetwork network = brazier.getServerNetwork();
 		network.refreshTiles();
-		HiveNetwork hive = network.getHiveNetwork();
 		Iterable<IteRef> tiles;
-		if (hive == null || brazier.getNetworkMode()) {
+		if (!network.isHiveMember() || brazier.getNetworkMode()) {
 			tiles = network.getValidTiles();
 		} else {
+			HiveNetwork hive = network.getHiveNetwork();
 			tiles = hive.getValidTiles();
 		}
+		if (tiles == null) return workspace;
 		for (IteRef ite : tiles) {
 			if (IBrazierRouting.class.isAssignableFrom(ite.clazz) && network.distanceSq(bPos, ite.pos) <= radius && ite.dimension == brazier.dimension) {
 				ImmanenceTileEntity tile = ite.getTile();

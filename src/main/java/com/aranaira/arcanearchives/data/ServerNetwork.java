@@ -304,7 +304,12 @@ public class ServerNetwork implements IServerNetwork {
 	@Override
 	@Nullable
 	public HiveNetwork getHiveNetwork () {
-		return NetworkHelper.getHiveNetwork(uuid, getWorld());
+		World world = getWorld();
+		if (NetworkHelper.isHiveMember(uuid, world)) {
+			return NetworkHelper.getHiveNetwork(uuid, world);
+		} else {
+			return null;
+		}
 	}
 
 	@Override

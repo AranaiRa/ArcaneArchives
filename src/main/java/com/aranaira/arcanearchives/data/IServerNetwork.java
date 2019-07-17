@@ -28,6 +28,10 @@ public interface IServerNetwork extends IHiveBase {
 	 * inserts it under its new uuid. I don't know what circumstances
 	 * there could be that would involve this actually happening
 	 * though.
+	 * I guess the idea is that the tile was given a new ID
+	 * from the network, but then it properly loaded its
+	 * actual state with its correct ID. This should never
+	 * happen.
 	 */
 	void handleTileIdChange (UUID oldId, UUID newId);
 

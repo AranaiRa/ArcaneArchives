@@ -63,7 +63,11 @@ public class HiveNetwork implements IHiveBase {
 
 	@Override
 	public ITileList getValidTiles () {
-		return null;
+		List<ITileList> tiles = new ArrayList<>();
+		for (ServerNetwork network : getCombinedNetworks()) {
+			tiles.add(network.getTiles());
+		}
+		return new CombinedTileList(tiles);
 	}
 
 	@Nullable
