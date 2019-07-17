@@ -107,7 +107,11 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 
 	@Override
 	public String getDescriptor () {
-		return "chest";
+		if (getChestName().isEmpty()) {
+			return "Chest";
+		} else {
+			return "Chest: " + getChestName();
+		}
 	}
 
 	@Override

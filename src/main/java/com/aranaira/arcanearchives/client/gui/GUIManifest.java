@@ -12,7 +12,8 @@ import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.events.LineHandler;
 import com.aranaira.arcanearchives.inventory.ContainerManifest;
-import com.aranaira.arcanearchives.util.types.ManifestEntry;
+import com.aranaira.arcanearchives.util.ManifestUtil.CollatedEntry;
+import com.aranaira.arcanearchives.util.ManifestUtil.EntryDescriptor;
 import com.aranaira.arcanearchives.util.types.ManifestList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -189,13 +190,15 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 		}
 
 		int alphaQuantShift = 0;
-		if(container.getSortingType() == ManifestList.SortingType.QUANTITY)
+		if (container.getSortingType() == ManifestList.SortingType.QUANTITY) {
 			alphaQuantShift = mAlphaQuantButtonSize;
+		}
 		drawModalRectWithCustomSizedTexture(112, 10, mAlphaQuantButtonLeftOffset, mAlphaQuantButtonTopOffset + alphaQuantShift, mAlphaQuantButtonSize, mAlphaQuantButtonSize, mGUIForegroundTexturesSize, mGUIForegroundTexturesSize);
 
 		int ascDescShift = 0;
-		if(container.getSortingDirection() == ManifestList.SortingDirection.ASCENDING)
+		if (container.getSortingDirection() == ManifestList.SortingDirection.ASCENDING) {
 			ascDescShift = mAscDescButtonSize;
+		}
 		drawModalRectWithCustomSizedTexture(130, 10, mAscDescButtonLeftOffset, mAscDescButtonTopOffset + ascDescShift, mAscDescButtonSize, mAscDescButtonSize, mGUIForegroundTexturesSize, mGUIForegroundTexturesSize);
 	}
 
@@ -221,7 +224,7 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 				((CustomCountSlot) slot).renderCount(this.fontRenderer);
 			}
 
-			ManifestEntry entry = container.getEntry(slot.getSlotIndex());
+			CollatedEntry entry = container.getEntry(slot.getSlotIndex());
 			if (entry == null) {
 				return;
 			}
@@ -294,15 +297,17 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 			GuiConfig config = new GuiConfig(this, ArcaneArchives.MODID, false, false, ArcaneArchives.NAME, ConfigHandler.class);
 			this.mc.displayGuiScreen(config);
 		} else if (button.id == mAlphaQuantButton.id) {
-			if(container.getSortingType() == ManifestList.SortingType.QUANTITY)
+			if (container.getSortingType() == ManifestList.SortingType.QUANTITY) {
 				container.setSortingType(ManifestList.SortingType.NAME);
-			else
+			} else {
 				container.setSortingType(ManifestList.SortingType.QUANTITY);
+			}
 		} else if (button.id == mAscDescButton.id) {
-			if(container.getSortingDirection() == ManifestList.SortingDirection.ASCENDING)
+			if (container.getSortingDirection() == ManifestList.SortingDirection.ASCENDING) {
 				container.setSortingDirection(ManifestList.SortingDirection.DESCENDING);
-			else
+			} else {
 				container.setSortingDirection(ManifestList.SortingDirection.ASCENDING);
+			}
 		}
 
 		super.actionPerformed(button);
@@ -385,7 +390,7 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 		Slot slot = this.getSlotUnderMouse();
 
 		if (slot != null) {
-			ManifestEntry entry = container.getEntry(slot.slotNumber);
+			CollatedEntry entry = container.getEntry(slot.slotNumber);
 			if (entry != null && entry.getDimension() != player.dimension) {
 				DimensionType dim = DimensionType.getById(entry.getDimension());
 				String name = WordUtils.capitalize(dim.getName().replace("_", " "));
@@ -398,14 +403,14 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 			if (entry != null) {
 				if (GuiScreen.isShiftKeyDown()) {
 					tooltip.add("");
-					List<ManifestEntry.ItemEntry> positions = entry.consolidateEntries(false);
+					List<EntryDescriptor> descriptors = entry.descriptions;
 					int unnamed_count = 1;
-					int limit = Math.min(10, positions.size());
-					int diff = Math.max(0, positions.size() - limit);
+					int limit = Math.min(10, descriptors.size());
+					int diff = Math.max(0, descriptors.size() - limit);
 					for (int i = 0; i < limit; i++) {
-						ManifestEntry.ItemEntry thisEntry = positions.get(i);
-						String chestName = thisEntry.getChestName();
-						BlockPos pos = thisEntry.getPosition();
+						EntryDescriptor thisEntry = descriptors.get(i);
+						String chestName = thisEntry.string;
+						BlockPos pos = thisEntry.pos;
 						if (chestName.isEmpty()) {
 							chestName = String.format("%s %d", I18n.format("arcanearchives.text.radiantchest.unnamed_chest"), unnamed_count++);
 						}

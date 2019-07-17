@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.util.types;
 
+import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.Objects;
@@ -18,6 +19,18 @@ public class BlockPosDimension {
 		this.dimension = dimension;
 	}
 
+	public int getX () {
+		return pos.getX();
+	}
+
+	public int getY () {
+		return pos.getY();
+	}
+
+	public int getZ () {
+		return pos.getZ();
+	}
+
 	@Override
 	public boolean equals (Object o) {
 		if (this == o) {
@@ -33,5 +46,9 @@ public class BlockPosDimension {
 	@Override
 	public int hashCode () {
 		return Objects.hash(pos, dimension);
+	}
+
+	public static BlockPosDimension fromITE (ImmanenceTileEntity ite) {
+		return new BlockPosDimension(ite.getPos(), ite.dimension);
 	}
 }

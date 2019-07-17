@@ -2,21 +2,20 @@ package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.ClientNetwork;
-import com.aranaira.arcanearchives.data.HiveNetwork;
 import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.data.NetworkHelper.HiveMembershipInfo;
 import com.aranaira.arcanearchives.data.ServerNetwork;
+import com.aranaira.arcanearchives.data.ServerNetwork.SynchroniseInfo;
 import com.aranaira.arcanearchives.network.NetworkHandler.ClientHandler;
 import com.aranaira.arcanearchives.network.NetworkHandler.ServerHandler;
-import com.aranaira.arcanearchives.network.PacketNetworks.SynchroniseType;
-import com.typesafe.config.ConfigException.Null;
+import com.aranaira.arcanearchives.util.types.ISerializeByteBuf;
+import com.aranaira.arcanearchives.util.types.ManifestList;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
@@ -48,7 +47,7 @@ public class PacketNetworks {
 	}
 
 	public static class Request implements IMessage {
-		SynchroniseType type;
+		protected SynchroniseType type;
 
 		public Request () {
 			this.type = SynchroniseType.DATA;
@@ -81,87 +80,135 @@ public class PacketNetworks {
 
 				ServerNetwork network = NetworkHelper.getServerNetwork(player.getUniqueID(), server.getWorld(0));
 				if (network == null) {
-					ArcaneArchives.logger.error(() -> "Network was null when processing sync packet for " + player.getUniqueID());
+					ArcaneArchives.logger.error("Network was null when processing sync packet for " + player.getUniqueID());
 					return;
 				}
 
-				NBTTagCompound output = null;
+				IMessage response = null;
 
 				switch (message.type) {
 					case DATA:
-						output = network.buildSynchroniseData();
+						response = new DataResponse(network.buildSynchroniseData());
 						break;
 					case HIVE_STATUS:
-						// TODO:
-						// is_member, is_owner
-						output = network.buildHiveMembershipData();
+						response = new HiveResponse(network.buildHiveMembershipData());
 						break;
 					case MANIFEST:
-						output = network.buildSynchroniseManifest();
+						response = new ManifestResponse(network.buildSynchroniseManifest());
 						break;
 				}
 
-				Response response = new Response(message.type, output);
-
-				if (output != null) {
+				if (response != null) {
 					NetworkHandler.CHANNEL.sendTo(response, player);
 				}
 			}
 		}
 	}
 
-	public static class Response extends Request {
-		private NBTTagCompound data;
+	public static class ManifestResponse implements IMessage {
+		private ManifestList data;
 
-		public Response () {
-			super();
+		public ManifestResponse () {
 		}
 
-		public Response (SynchroniseType type, NBTTagCompound data) {
-			super(type);
+		public ManifestResponse (ManifestList data) {
 			this.data = data;
 		}
 
 		@Override
 		public void fromBytes (ByteBuf buf) {
-			super.fromBytes(buf);
-			this.data = ByteBufUtils.readTag(buf);
+			this.data = ManifestList.deserialize(buf);
 		}
 
 		@Override
 		public void toBytes (ByteBuf buf) {
-			super.toBytes(buf);
-			ByteBufUtils.writeTag(buf, this.data);
+			this.data.toBytes(buf);
 		}
 
-		public static class Handler implements ClientHandler<Response> {
+		public static class Handler extends ResponseHandler<ManifestResponse> {
 			@Override
-			@SideOnly(Side.CLIENT)
-			public void processMessage (Response message, MessageContext context) {
-				EntityPlayer player;
-				try {
-					player = Minecraft.getMinecraft().player;
-				} catch (NullPointerException e) {
-					System.out.println("Exception: missing player or Minecraft when handling packet: " + this.getClass().toString());
-					return;
-				}
-
-				if (player != null) {
-					ClientNetwork network = NetworkHelper.getClientNetwork(player.getUniqueID());
-
-					switch (message.type) {
-						case DATA:
-							network.deserializeData(message.data);
-							break;
-						case MANIFEST:
-							network.deserializeManifest(message.data);
-							break;
-						case HIVE_STATUS:
-							network.deserializeHive(message.data);
-							break;
-					}
-				}
+			public void processMessage (ManifestResponse message, MessageContext ctx, EntityPlayer player, ClientNetwork network) {
+				network.deserializeManifest(message.data);
 			}
 		}
+	}
+
+	public static class DataResponse implements IMessage {
+		private SynchroniseInfo data;
+
+		public DataResponse () {
+		}
+
+		public DataResponse (SynchroniseInfo data) {
+			this.data = data;
+		}
+
+		@Override
+		public void fromBytes (ByteBuf buf) {
+			this.data = SynchroniseInfo.deserialize(buf);
+		}
+
+		@Override
+		public void toBytes (ByteBuf buf) {
+			this.data.toBytes(buf);
+		}
+
+		public static class Handler extends ResponseHandler<DataResponse> {
+			@Override
+			public void processMessage (DataResponse message, MessageContext ctx, EntityPlayer player, ClientNetwork network) {
+				network.deserializeData(message.data);
+			}
+		}
+	}
+
+	public static class HiveResponse implements IMessage {
+		private HiveMembershipInfo data;
+
+		public HiveResponse () {
+		}
+
+		public HiveResponse (HiveMembershipInfo data) {
+			this.data = data;
+		}
+
+		@Override
+		public void fromBytes (ByteBuf buf) {
+			this.data = HiveMembershipInfo.deserialize(buf);
+		}
+
+		@Override
+		public void toBytes (ByteBuf buf) {
+			this.data.toBytes(buf);
+		}
+
+		public static class Handler extends ResponseHandler<HiveResponse> {
+			@Override
+			public void processMessage (HiveResponse message, MessageContext ctx, EntityPlayer player, ClientNetwork network) {
+				network.deserializeHive(message.data);
+			}
+		}
+	}
+
+	public static abstract class ResponseHandler<T extends IMessage> implements ClientHandler<T> {
+		@Override
+		@SideOnly(Side.CLIENT)
+		public void processMessage (T message, MessageContext context) {
+			EntityPlayer player;
+			try {
+				player = Minecraft.getMinecraft().player;
+			} catch (NullPointerException e) {
+				System.out.println("Exception: missing player or Minecraft when handling packet: " + this.getClass().toString());
+				return;
+			}
+
+			if (player == null) {
+				return;
+			}
+
+			ClientNetwork network = NetworkHelper.getClientNetwork(player.getUniqueID());
+			processMessage(message, context, player, network);
+		}
+
+		public abstract void processMessage (T message, MessageContext ctx, EntityPlayer player, ClientNetwork network);
 	}
 }

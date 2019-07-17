@@ -1,7 +1,9 @@
 package com.aranaira.arcanearchives.data;
 
+import com.aranaira.arcanearchives.util.TileUtils;
 import com.aranaira.arcanearchives.util.types.CombinedTileList;
 import com.aranaira.arcanearchives.util.types.ITileList;
+import com.aranaira.arcanearchives.util.types.IteRef;
 import net.minecraft.entity.player.EntityPlayer;
 
 import javax.annotation.Nullable;
@@ -47,12 +49,17 @@ public class HiveNetwork implements IHiveBase {
 	}
 
 	@Override
-	public ITileList getValidTiles () {
+	public ITileList getTiles () {
 		List<ITileList> tiles = new ArrayList<>();
 		for (ServerNetwork network : getCombinedNetworks()) {
 			tiles.add(network.getTiles());
 		}
 		return new CombinedTileList(tiles);
+	}
+
+	@Override
+	public Iterable<IteRef> getValidTiles () {
+		return TileUtils.filterValid(getTiles());
 	}
 
 	@Nullable

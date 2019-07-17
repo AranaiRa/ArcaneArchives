@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.inventory.handlers;
 
-import com.aranaira.arcanearchives.util.types.ManifestEntry;
+import com.aranaira.arcanearchives.util.ManifestUtil.CollatedEntry;
 import com.aranaira.arcanearchives.util.types.ManifestList;
 import com.aranaira.arcanearchives.util.types.ManifestList.SortingDirection;
 import com.aranaira.arcanearchives.util.types.ManifestList.SortingType;
@@ -60,7 +60,7 @@ public class ManifestItemHandler implements IItemHandlerModifiable {
 	}
 
 	@Nullable
-	public ManifestEntry getManifestEntryInSlot (int slot) {
+	public CollatedEntry getManifestEntryInSlot (int slot) {
 		updateManifest();
 		return manifestActive.getEntryForSlot(slot);
 	}

@@ -2,6 +2,8 @@ package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.HiveSaveData.Hive;
+import com.aranaira.arcanearchives.util.types.ISerializeByteBuf;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -65,28 +67,49 @@ public class NetworkHelper {
 		return saveData;
 	}
 
-	public static NBTTagCompound getHiveMembershipInfo (UUID uuid, World world) {
+	public static class HiveMembershipInfo implements ISerializeByteBuf<HiveMembershipInfo> {
+		public boolean isOwner = false;
+		public boolean inHive = false;
+
+		@Override
+		public HiveMembershipInfo fromBytes (ByteBuf buf) {
+			isOwner = buf.readBoolean();
+			inHive = buf.readBoolean();
+			return this;
+		}
+
+		@Override
+		public void toBytes (ByteBuf buf) {
+			buf.writeBoolean(isOwner);
+			buf.writeBoolean(inHive);
+		}
+
+		public static HiveMembershipInfo deserialize (ByteBuf buf) {
+			HiveMembershipInfo info = new HiveMembershipInfo();
+			return info.fromBytes(buf);
+		}
+	}
+
+	public static HiveMembershipInfo getHiveMembershipInfo (UUID uuid, World world) {
 		HiveSaveData saveData = getHiveData(world);
 		Hive hive = saveData.getHiveByMember(uuid);
 
-		NBTTagCompound result = new NBTTagCompound();
-		result.setBoolean("is_owner", false);
-		result.setBoolean("in_hive", false);
+		HiveMembershipInfo info = new HiveMembershipInfo();
 
 		if (hive == null) {
-			return result;
+			return info;
 		}
 
 		if (hive.owner.equals(uuid)) {
-			result.setBoolean("is_owner", true);
-			result.setBoolean("in_hive", true);
+			info.isOwner = true;
+			info.inHive = true;
 		}
 
 		if (hive.members.contains(uuid)) {
-			result.setBoolean("in_hive", true);
+			info.inHive = true;
 		}
 
-		return result;
+		return info;
 	}
 
 	public static boolean isHiveMember (UUID uuid, World world) {
