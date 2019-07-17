@@ -49,10 +49,6 @@ public class ClientNetwork {
 		return manifestItemHandler;
 	}
 
-	public ManifestList getManifestItems () {
-		return manifestItems;
-	}
-
 	// This requests a synchronise packet from the server
 	// but does not include the manifest info.
 	public void synchroniseData () {

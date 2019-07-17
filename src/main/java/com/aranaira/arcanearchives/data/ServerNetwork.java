@@ -374,6 +374,8 @@ public class ServerNetwork implements IServerNetwork {
 	}
 
 	public boolean inRange (BlockPos pos1, BlockPos pos2) {
-		return distanceSq(pos1, pos2) < getMaxDistance();
+		int maxDistance = getMaxDistance();
+		int distance = distanceSq(pos1, pos2);
+		return distance < maxDistance;
 	}
 }

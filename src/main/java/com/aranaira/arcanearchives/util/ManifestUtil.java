@@ -72,13 +72,15 @@ public class ManifestUtil {
 					inRange.consume(itemEntry.stack);
 				}
 			}
-			if (inRange.finalStack.getCount() > 0 && !inRange.descriptions.isEmpty()) {
+			if (!inRange.descriptions.isEmpty()) {
 				inRange.finalStack.shrink(1);
 				phase2.add(inRange);
-			} else if (outOfDimension.finalStack.getCount() > 0 && !outOfDimension.descriptions.isEmpty()) {
+			}
+			if (!outOfDimension.descriptions.isEmpty()) {
 				outOfDimension.finalStack.shrink(1);
 				phase2.add(outOfDimension);
-			} else if (outOfRange.finalStack.getCount() > 0 && !outOfRange.descriptions.isEmpty()) {
+			}
+			if (!outOfRange.descriptions.isEmpty()) {
 				outOfRange.finalStack.shrink(1);
 				phase2.add(outOfRange);
 			}
