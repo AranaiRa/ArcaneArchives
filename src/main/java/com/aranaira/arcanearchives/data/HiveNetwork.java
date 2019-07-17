@@ -1,27 +1,12 @@
 package com.aranaira.arcanearchives.data;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
-import com.aranaira.arcanearchives.tileentities.IManifestTileEntity;
-import com.aranaira.arcanearchives.tileentities.MonitoringCrystalTileEntity;
-import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
-import com.aranaira.arcanearchives.util.ItemStackConsolidator;
-import com.aranaira.arcanearchives.util.LargeItemNBTUtil;
-import com.aranaira.arcanearchives.util.types.*;
-import com.aranaira.arcanearchives.util.types.TileList.TileListIterable;
+import com.aranaira.arcanearchives.util.types.CombinedTileList;
+import com.aranaira.arcanearchives.util.types.ITileList;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class HiveNetwork implements IHiveBase {
 	private List<ServerNetwork> memberNetworks;

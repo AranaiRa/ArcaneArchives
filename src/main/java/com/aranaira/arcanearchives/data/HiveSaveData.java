@@ -13,13 +13,13 @@ import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.common.util.Constants.NBT;
 
 import javax.annotation.Nullable;
+import java.rmi.server.UID;
 import java.util.*;
 
 public class HiveSaveData extends WorldSavedData {
 	public static final String ID = "Archane-Archives-Hives";
 
 	public Map<UUID, Hive> ownerToHive = new HashMap<>();
-	public Map<UUID, UUID> memberToOwner = new HashMap<>();
 
 	public HiveSaveData (String name) {
 		super(name);
@@ -36,9 +36,6 @@ public class HiveSaveData extends WorldSavedData {
 			Hive hive = Hive.fromNBT(list.getCompoundTagAt(i));
 			if (hive != null) {
 				ownerToHive.put(hive.owner, hive);
-				for (UUID member : hive.members) {
-					memberToOwner.put(member, hive.owner);
-				}
 			}
 		}
 	}
@@ -63,17 +60,42 @@ public class HiveSaveData extends WorldSavedData {
 		return ownerToHive.get(owner);
 	}
 
+	// Validates that the hive has the specific owner or member contained
+	public boolean validateHive (Hive hive, @Nullable UUID owner, @Nullable UUID member) {
+		if (hive.members.isEmpty()) {
+			ownerToHive.remove(hive.owner);
+			if (owner != null) {
+				ownerToHive.remove(owner);
+			}
+			return false;
+		} else if (owner != null && !hive.owner.equals(owner)) {
+			ownerToHive.remove(owner);
+			ownerToHive.put(hive.owner, hive);
+			if (member != null && !hive.members.contains(member)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	@Nullable
 	public Hive getHiveByMember (UUID member) {
 		// Check to see if they have an owner first
 		Hive ownerHive = ownerToHive.get(member);
 		if (ownerHive != null) {
-			return ownerHive;
+			if (validateHive(ownerHive, member, null)) {
+				return ownerHive;
+			}
 		}
 
-		UUID owner = memberToOwner.get(member);
-		if (owner != null) {
-			return getHiveByOwner(owner);
+		// Else check the hives
+		for (Hive hive : ownerToHive.values()) {
+			if (hive.members.contains(member)) {
+				if (validateHive(hive, null, member)) {
+					return hive;
+				}
+			}
 		}
 
 		return null;
@@ -90,14 +112,12 @@ public class HiveSaveData extends WorldSavedData {
 			return false;
 		}
 
-		UUID oldOwner = memberToOwner.get(newMember);
-		if (oldOwner != null || !hive.owner.equals(oldOwner)) {
-			memberToOwner.remove(newMember);
+		if (getHiveByMember(newMember) != null) {
+			return false;
 		}
 
 		hive.members.add(newMember);
 
-		memberToOwner.put(newMember, hive.owner);
 		markDirty();
 		return true;
 	}
@@ -109,14 +129,11 @@ public class HiveSaveData extends WorldSavedData {
 			result = true;
 			UUID oldest = hive.getOldestMember();
 			hive.members.remove(oldest);
-			memberToOwner.remove(oldest);
 			hive.owner = oldest;
-			for (UUID member : hive.members) {
-				memberToOwner.remove(member);
-				memberToOwner.put(member, oldest);
-			}
+			ownerToHive.remove(memberToRemove);
+			ownerToHive.put(oldest, hive);
 		} else {
-			if (memberToOwner.remove(memberToRemove) != null && hive.members.remove(memberToRemove)) {
+			if (hive.members.remove(memberToRemove)) {
 				result = true;
 			}
 		}
@@ -138,16 +155,6 @@ public class HiveSaveData extends WorldSavedData {
 			}
 		}
 		if (doDisband) {
-			List<UUID> toRemove = new ArrayList<>();
-			for (Map.Entry<UUID, UUID> membership : memberToOwner.entrySet()) {
-				if (membership.getValue().equals(hive.owner)) {
-					toRemove.add(membership.getKey());
-				}
-			}
-			for (UUID member : toRemove) {
-				memberToOwner.remove(member);
-			}
-
 			ownerToHive.remove(hive.owner);
 			hive.disbanded = true;
 		}
