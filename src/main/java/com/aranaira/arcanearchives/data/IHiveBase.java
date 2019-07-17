@@ -24,6 +24,4 @@ public interface IHiveBase {
 
 	@Nullable
 	List<ServerNetwork> getContainedNetworks ();
-
-	NBTTagCompound buildHiveManifest (EntityPlayer player);
 }

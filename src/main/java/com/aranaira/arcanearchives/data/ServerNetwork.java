@@ -291,11 +291,6 @@ public class ServerNetwork implements IServerNetwork {
 	}
 
 	@Override
-	public NBTTagCompound buildHiveManifest (EntityPlayer player) {
-		return null;
-	}
-
-	@Override
 	@Nullable
 	public ServerNetwork getOwnerNetwork () {
 		return null;
@@ -354,7 +349,13 @@ public class ServerNetwork implements IServerNetwork {
 
 		int maxDistance = getMaxDistance();
 
-		for (IteRef ref : getManifestTileEntities()) {
+		ITileList tiles = this.tiles;
+		if (this.isHiveMember()) {
+			HiveNetwork hive = getHiveNetwork();
+			tiles = hive.getValidTiles();
+		}
+
+		for (IteRef ref : TileUtils.filterAssignableClass(tiles, IManifestTileEntity.class)) {
 			ImmanenceTileEntity ite = ref.getTile();
 			IManifestTileEntity mte = (IManifestTileEntity) ite;
 			if (ite == null) {

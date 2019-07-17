@@ -7,6 +7,7 @@ import com.aranaira.arcanearchives.data.NetworkHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.network.NetworkHandler.ClientHandler;
 import com.aranaira.arcanearchives.network.NetworkHandler.ServerHandler;
+import com.aranaira.arcanearchives.network.PacketNetworks.SynchroniseType;
 import com.typesafe.config.ConfigException.Null;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -96,12 +97,7 @@ public class PacketNetworks {
 						output = network.buildHiveMembershipData();
 						break;
 					case MANIFEST:
-						if (network.isHiveMember()) {
-							HiveNetwork hive = network.getHiveNetwork();
-							output = hive.buildHiveManifest(player);
-						} else {
-							output = network.buildSynchroniseManifest();
-						}
+						output = network.buildSynchroniseManifest();
 						break;
 				}
 
