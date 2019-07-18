@@ -11,7 +11,7 @@ import com.aranaira.arcanearchives.integration.guidebook.GBookInit;
 import com.aranaira.arcanearchives.items.itemblocks.RadiantTankItem;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
-import com.enderio.core.client.render.IconUtil;
+import com.aranaira.enderio.core.client.render.IconUtil;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;

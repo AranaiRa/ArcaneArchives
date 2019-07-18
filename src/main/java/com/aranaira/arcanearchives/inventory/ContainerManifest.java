@@ -221,4 +221,14 @@ public class ContainerManifest extends Container implements IScrollableContainer
 	public void setSortingDirection (SortingDirection direction) {
 		handler.setSortingDirection(direction);
 	}
+
+	// Potentially handle weird instances of putting stacks in slots
+	// when those slots don't actually exist yet.
+	@Override
+	public void putStackInSlot (int slotID, ItemStack stack) {
+		Slot slot = getSlot(slotID);
+		if (slot != null) {
+			super.putStackInSlot(slotID, stack);
+		}
+	}
 }
