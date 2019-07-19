@@ -1,11 +1,11 @@
 package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
-import com.aranaira.arcanearchives.events.LineHandler;
+import com.aranaira.arcanearchives.client.render.LineHandler;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
-import com.aranaira.arcanearchives.util.ItemUtilities;
+import com.aranaira.arcanearchives.util.ItemUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -165,6 +165,6 @@ public class RadiantTrove extends BlockDirectionalTemplate {
 
 	@Override
 	public int getComparatorInputOverride (IBlockState blockState, World worldIn, BlockPos pos) {
-		return ItemUtilities.calculateRedstoneFromTileEntity(worldIn.getTileEntity(pos));
+		return ItemUtils.calculateRedstoneFromTileEntity(worldIn.getTileEntity(pos));
 	}
 }

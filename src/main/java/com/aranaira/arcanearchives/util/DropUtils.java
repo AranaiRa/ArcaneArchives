@@ -9,7 +9,7 @@ import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
 
-public class DropHelper {
+public class DropUtils {
 	public static void dropInventoryItems (World world, BlockPos pos, @Nullable IItemHandler inventory) {
 		if (inventory == null) {
 			return;

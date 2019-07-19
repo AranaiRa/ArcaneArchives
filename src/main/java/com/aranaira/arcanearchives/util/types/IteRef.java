@@ -16,13 +16,6 @@ public class IteRef {
 	public WeakReference<ImmanenceTileEntity> tile;
 	public Class<? extends ImmanenceTileEntity> clazz;
 
-	/*public IteRef (BlockPos pos, int dimension, UUID tileID, Class<? extends ImmanenceTileEntity> clazz) {
-		this.pos = pos;
-		this.dimension = dimension;
-		this.clazz = clazz;
-		this.uuid = tileID;
-	}*/
-
 	public IteRef (ImmanenceTileEntity tile) {
 		this.pos = tile.getPos();
 		this.dimension = tile.dimension;
@@ -30,26 +23,6 @@ public class IteRef {
 		this.uuid = tile.uuid;
 		this.tile = new WeakReference<>(tile);
 	}
-
-	/*public ImmanenceTileEntity getWorldTile (World world) {
-		if (world.provider.getDimension() != dimension && !world.isRemote) {
-			return getServerTile();
-		}
-
-		if (tile == null || tile.get() == null) {
-			tile = new WeakReference<>(WorldUtil.getTileEntity(clazz, world, pos));
-		}
-
-		return tile.get();
-	}*/
-
-	/*public ImmanenceTileEntity getServerTile () {
-		if (tile == null || tile.get() == null) {
-			tile = new WeakReference<>(WorldUtil.getTileEntity(clazz, dimension, pos));
-		}
-
-		return tile.get();
-	}*/
 
 	@Nullable
 	public ImmanenceTileEntity getTile () {

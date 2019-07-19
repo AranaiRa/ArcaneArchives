@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.data;
 
-import com.aranaira.arcanearchives.util.types.ITileList;
+import com.aranaira.arcanearchives.util.types.lists.ITileList;
 import com.aranaira.arcanearchives.util.types.IteRef;
 
 import javax.annotation.Nullable;

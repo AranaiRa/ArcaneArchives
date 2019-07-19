@@ -3,7 +3,7 @@ package com.aranaira.arcanearchives.items.gems.trillion;
 import com.aranaira.arcanearchives.items.gems.*;
 import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler;
 import com.aranaira.arcanearchives.items.gems.GemUtil.GemStack;
-import com.aranaira.arcanearchives.util.NBTUtils;
+import com.aranaira.arcanearchives.util.ItemUtils;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.effect.EntityLightningBolt;
@@ -97,12 +97,12 @@ public class StormwayItem extends ArcaneGemItem {
 	}
 
 	public static void setStrikeCooldownTimer (GemStack stack) {
-		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack.getStack());
+		NBTTagCompound nbt = ItemUtils.getOrCreateTagCompound(stack.getStack());
 		nbt.setLong("cooldown", System.currentTimeMillis());
 	}
 
 	public static boolean canBeStruck (GemStack stack) {
-		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack.getStack());
+		NBTTagCompound nbt = ItemUtils.getOrCreateTagCompound(stack.getStack());
 		if (nbt.hasKey("cooldown")) {
 			return nbt.getLong("cooldown") + 1000 < System.currentTimeMillis();
 		} else {

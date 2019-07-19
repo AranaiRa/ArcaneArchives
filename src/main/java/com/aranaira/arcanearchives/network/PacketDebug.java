@@ -1,9 +1,8 @@
 package com.aranaira.arcanearchives.network;
 
-import com.aranaira.arcanearchives.events.LineHandler;
+import com.aranaira.arcanearchives.client.render.LineHandler;
 import com.aranaira.arcanearchives.network.Handlers.ClientHandler;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;

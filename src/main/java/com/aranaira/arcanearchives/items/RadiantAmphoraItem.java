@@ -3,7 +3,7 @@ package com.aranaira.arcanearchives.items;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
-import com.aranaira.arcanearchives.util.NBTUtils;
+import com.aranaira.arcanearchives.util.ItemUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.block.state.IBlockState;
@@ -221,7 +221,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 
 		public AmphoraUtil (ItemStack incoming) {
 			stack = incoming;
-			nbt = NBTUtils.getOrCreateTagCompound(stack);
+			nbt = ItemUtils.getOrCreateTagCompound(stack);
 		}
 
 		public ItemStack getStack () {

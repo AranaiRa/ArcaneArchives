@@ -7,7 +7,7 @@ import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketGemCutters;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
-import com.aranaira.arcanearchives.util.ItemUtilities;
+import com.aranaira.arcanearchives.util.ItemUtils;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -230,7 +230,7 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 	public ItemStack acceptStack (ItemStack stack) {
 		for (int i = 0; i < inventory.getSlots(); i++) {
 			ItemStack inSlot = inventory.getStackInSlot(i);
-			if (ItemUtilities.areStacksEqualIgnoreSize(stack, inSlot)) {
+			if (ItemUtils.areStacksEqualIgnoreSize(stack, inSlot)) {
 				stack = inventory.insertItem(i, stack, false);
 				if (stack.isEmpty()) return stack;
 			}

@@ -2,8 +2,7 @@ package com.aranaira.arcanearchives.items.gems.asscher;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
-import com.aranaira.arcanearchives.util.DetectorUtil;
-import hellfirepvp.astralsorcery.common.util.RaytraceAssist;
+import com.aranaira.arcanearchives.util.RayTracingUtils;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
@@ -50,7 +49,7 @@ public class SwitchgleamItem extends ArcaneGemItem {
 			Vec3d pos = blockPosToVector(player.getPosition(), false).add(0, player.getEyeHeight(), 0);
 			Vec3d look = player.getLook(0).scale(40);
 			ArrayList<RayTraceResult> rays = new ArrayList<>();
-			DetectorUtil.raytraceAll(rays, world, player, pos, pos.add(look));
+			RayTracingUtils.raytraceAll(rays, world, player, pos, pos.add(look));
 
 			for(RayTraceResult ray : rays) {
 				if (ray != null) {

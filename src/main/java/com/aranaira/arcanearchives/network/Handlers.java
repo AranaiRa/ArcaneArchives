@@ -28,7 +28,7 @@ public class Handlers {
 		}
 	}
 
-	public interface TileHandlerServer<T extends TileMessage> extends ServerHandler<T> {
+	public interface TileHandlerServer<T extends Messages.TileMessage> extends ServerHandler<T> {
 		@Override
 		default void processMessage (T message, MessageContext ctx) {
 			processMessage(message, ctx, getTile(message, ctx));
@@ -64,28 +64,4 @@ public class Handlers {
 		}
 	}
 
-	public interface EmptyMessage<T extends IMessage> extends IMessage, BaseHandler<T> {
-		default void fromBytes (ByteBuf buf) {
-		}
-
-		@Override
-		default void toBytes (ByteBuf buf) {
-		}
-	}
-
-	public interface EmptyMessageServer<T extends IMessage> extends EmptyMessage<T>, ServerHandler<T> {
-	}
-
-	public interface EmptyMessageClient<T extends IMessage> extends EmptyMessage<T>, ClientHandler<T> {
-
-	}
-
-	public static abstract class EmptyTileMessageServer<T extends TileMessage> extends TileMessage implements TileHandlerServer<T>, EmptyMessage<T> {
-		public EmptyTileMessageServer () {
-		}
-
-		public EmptyTileMessageServer (UUID tileId) {
-			super(tileId);
-		}
-	}
 }

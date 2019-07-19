@@ -5,10 +5,10 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
-import com.aranaira.arcanearchives.events.LineHandler;
+import com.aranaira.arcanearchives.client.render.LineHandler;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
-import com.aranaira.arcanearchives.util.DropHelper;
+import com.aranaira.arcanearchives.util.DropUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -126,7 +126,7 @@ public class RadiantChest extends BlockTemplate {
 
 				// This is never an IInventory
 				IItemHandler inv = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-				DropHelper.dropInventoryItems(worldIn, pos, inv);
+				DropUtils.dropInventoryItems(worldIn, pos, inv);
 			}
 		}
 

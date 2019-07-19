@@ -5,6 +5,7 @@ import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -12,7 +13,7 @@ import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
 
-public class ItemUtilities {
+public class ItemUtils {
 	public static boolean areStacksEqualIgnoreSize (ItemStack stackA, ItemStack stackB) {
 		return ItemStack.areItemsEqual(stackA, stackB) && ItemStack.areItemStackTagsEqual(stackA, stackB);
 	}
@@ -54,5 +55,14 @@ public class ItemUtilities {
 
 			return MathHelper.floor(f * 14.0F) + (i > 0 ? 1 : 0);
 		}
+	}
+
+	public static NBTTagCompound getOrCreateTagCompound (ItemStack stack) {
+		NBTTagCompound tagCompound = stack.getTagCompound();
+		if (tagCompound == null) {
+			tagCompound = new NBTTagCompound();
+			stack.setTagCompound(tagCompound);
+		}
+		return tagCompound;
 	}
 }

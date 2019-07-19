@@ -1,14 +1,14 @@
 package com.aranaira.arcanearchives.client.gui;
 
 import com.aranaira.arcanearchives.client.gui.controls.InvisibleButton;
-import com.aranaira.arcanearchives.client.render.RenderHelper.Color;
+import com.aranaira.arcanearchives.util.ColorUtils;
+import com.aranaira.arcanearchives.util.ColorUtils.Color;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
 import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
-import com.aranaira.arcanearchives.util.ColorHelper;
-import com.aranaira.arcanearchives.util.CycleTimer;
+import com.aranaira.arcanearchives.util.types.CycleTimer;
 import com.aranaira.arcanearchives.util.ManifestTracking;
 import com.aranaira.arcanearchives.util.types.IngredientStack;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
@@ -118,7 +118,7 @@ public class GUIGemCuttersTable extends GuiContainer {
 			if (tracked != null && !tracked.isEmpty() && ManifestTracking.matches(stack, tracked)) {
 				GlStateManager.disableDepth();
 				long worldTime = this.mc.player.world.getWorldTime();
-				Color c = ColorHelper.getColorFromTime(worldTime);
+				Color c = ColorUtils.getColorFromTime(worldTime);
 				GuiContainer.drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, c.toInteger());
 				GlStateManager.enableDepth();
 			}

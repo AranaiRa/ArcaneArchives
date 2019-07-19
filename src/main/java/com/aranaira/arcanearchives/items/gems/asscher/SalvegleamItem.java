@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.items.gems.asscher;
 
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.gems.GemUtil.GemStack;
-import com.aranaira.arcanearchives.util.NBTUtils;
+import com.aranaira.arcanearchives.util.ItemUtils;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
@@ -57,7 +57,7 @@ public class SalvegleamItem extends ArcaneGemItem {
 	public static boolean canDoHealingPulse (GemStack stack) {
 		boolean thresholdPassed = false;
 
-		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack.getStack());
+		NBTTagCompound nbt = ItemUtils.getOrCreateTagCompound(stack.getStack());
 		if (!nbt.hasKey("pulse")) {
 			thresholdPassed = true;
 			nbt.setInteger("pulse", PULSE_TICKS);

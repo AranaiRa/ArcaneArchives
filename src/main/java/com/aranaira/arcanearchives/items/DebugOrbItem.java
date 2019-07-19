@@ -15,11 +15,11 @@ import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler;
-import com.aranaira.arcanearchives.util.HasteUpload;
+import com.aranaira.arcanearchives.util.UploadUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import com.aranaira.arcanearchives.util.types.IteRef;
-import com.aranaira.arcanearchives.util.types.TileList;
-import com.aranaira.arcanearchives.util.types.UpgradeType;
+import com.aranaira.arcanearchives.util.types.lists.TileList;
+import com.aranaira.arcanearchives.util.types.enums.UpgradeType;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -255,7 +255,7 @@ public class DebugOrbItem extends ItemTemplate {
 		String url;
 		String identifier = world.isRemote ? "Client" : "Server";
 		try {
-			url = HasteUpload.uploadToHaste("debug" + identifier, debugOutput);
+			url = UploadUtils.uploadToHaste("debug" + identifier, debugOutput);
 		} catch (IOException e) {
 			player.sendMessage(new TextComponentString("Unable to upload " + identifier + " debug information to HasteBin."));
 			e.printStackTrace();

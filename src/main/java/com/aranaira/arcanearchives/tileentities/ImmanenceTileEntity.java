@@ -4,7 +4,7 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.events.ServerTickHandler;
-import com.aranaira.arcanearchives.util.types.Size;
+import com.aranaira.arcanearchives.util.types.MultiblockSize;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -21,7 +21,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable {
 	public UUID networkId = null; //UUID of network owner
 	public boolean hasBeenAddedToNetwork = false;
 	public int dimension;
-	public Size size;
+	public MultiblockSize size;
 	private ServerNetwork network;
 	private int ticks = 0;
 	private boolean fake = false;

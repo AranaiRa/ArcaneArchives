@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.client.render;
 
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
-import com.aranaira.arcanearchives.util.ColourUtil;
+import com.aranaira.arcanearchives.util.ColorUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -90,7 +90,7 @@ public class RadiantTankTESR extends TileEntitySpecialRenderer<RadiantTankTileEn
 
 			GlStateManager.translate(orig.x, orig.y, orig.z);
 
-			ColourUtil.ColourLight colour = ColourUtil.parseColour(color, light);
+			ColorUtils.ColourLight colour = ColorUtils.parseColour(color, light);
 
 			double minU;
 			double maxU;

@@ -1,9 +1,8 @@
 package com.aranaira.arcanearchives.items.gems;
 
-import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem.*;
-import com.aranaira.arcanearchives.util.NBTUtils;
+import com.aranaira.arcanearchives.util.ItemUtils;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
@@ -68,7 +67,7 @@ public class GemRechargePowder extends ItemTemplate {
     }
 
     public static GemColor getColor(ItemStack stack) {
-        NBTTagCompound tag = NBTUtils.getOrCreateTagCompound(stack);
+        NBTTagCompound tag = ItemUtils.getOrCreateTagCompound(stack);
         if(tag.hasKey("color")) return GemColor.fromOrdinal(tag.getInteger("color"));
         return GemColor.NOCOLOR;
     }
@@ -102,7 +101,7 @@ public class GemRechargePowder extends ItemTemplate {
             for(GemColor c : GemColor.values()) {
                 if(c == GemColor.NOCOLOR) continue;
                 ItemStack powder = new ItemStack(this);
-                NBTTagCompound tag = NBTUtils.getOrCreateTagCompound(powder);
+                NBTTagCompound tag = ItemUtils.getOrCreateTagCompound(powder);
                 tag.setInteger("color", c.ordinal());
                 subItems.add(powder);
             }

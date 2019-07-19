@@ -5,7 +5,7 @@ import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
-import com.aranaira.arcanearchives.util.NBTUtils;
+import com.aranaira.arcanearchives.util.ItemUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -38,7 +38,7 @@ public class TransferstoneItem extends ArcaneGemItem {
 	@SideOnly(Side.CLIENT)
 	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 
-		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+		NBTTagCompound nbt = ItemUtils.getOrCreateTagCompound(stack);
 		tooltip.add(I18n.format("arcanearchives.tooltip.gemcharge") + ": " + getTooltipData(stack));
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.gem.transferstone"));
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.gem.recharge.transferstone"));
@@ -74,7 +74,7 @@ public class TransferstoneItem extends ArcaneGemItem {
 	}
 
 	public static void setLinkedTrove (ItemStack stack, BlockPos pos, int dimension) {
-		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+		NBTTagCompound nbt = ItemUtils.getOrCreateTagCompound(stack);
 
 		nbt.setLong("troveLocation", pos.toLong());
 		nbt.setInteger("troveDimID", dimension);
@@ -83,7 +83,7 @@ public class TransferstoneItem extends ArcaneGemItem {
 	}
 
 	public static ItemStack extractLinkedItem (ItemStack stack, boolean doFullStack) {
-		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+		NBTTagCompound nbt = ItemUtils.getOrCreateTagCompound(stack);
 		ItemStack output = null;
 
 		if (nbt.hasKey("troveLocation")) {
@@ -107,7 +107,7 @@ public class TransferstoneItem extends ArcaneGemItem {
 	}
 
 	public static ItemStack insertLinkedItem (ItemStack stack) {
-		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+		NBTTagCompound nbt = ItemUtils.getOrCreateTagCompound(stack);
 		ItemStack output = null;
 
 		if (nbt.hasKey("troveLocation")) {
@@ -126,7 +126,7 @@ public class TransferstoneItem extends ArcaneGemItem {
 	}
 
 	public static Item getLinkedItem (ItemStack stack) {
-		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+		NBTTagCompound nbt = ItemUtils.getOrCreateTagCompound(stack);
 		Item output = null;
 
 		if (nbt.hasKey("troveLocation")) {

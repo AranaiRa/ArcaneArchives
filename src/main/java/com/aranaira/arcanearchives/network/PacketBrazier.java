@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.network;
 
-import com.aranaira.arcanearchives.network.Handlers.EmptyTileMessageServer;
+import com.aranaira.arcanearchives.network.Messages.EmptyTileMessageServer;
 import com.aranaira.arcanearchives.network.Handlers.TileHandlerServer;
 import com.aranaira.arcanearchives.tileentities.BrazierTileEntity;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import java.util.UUID;
 
 public class PacketBrazier {
-	public static class SetRadius extends TileMessage {
+	public static class SetRadius extends Messages.TileMessage {
 		private int radius;
 
 		public SetRadius (int radius, UUID tileId) {
@@ -48,7 +48,7 @@ public class PacketBrazier {
 		}
 	}
 
-	public static class SetSubnetworkMode extends TileMessage {
+	public static class SetSubnetworkMode extends Messages.TileMessage {
 		private boolean mode;
 
 		public SetSubnetworkMode () {

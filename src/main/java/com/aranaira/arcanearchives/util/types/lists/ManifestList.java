@@ -1,12 +1,10 @@
-package com.aranaira.arcanearchives.util.types;
+package com.aranaira.arcanearchives.util.types.lists;
 
 import com.aranaira.arcanearchives.inventory.ContainerManifest;
-import com.aranaira.arcanearchives.util.ItemUtilities;
+import com.aranaira.arcanearchives.util.ItemUtils;
 import com.aranaira.arcanearchives.util.ManifestUtil.CollatedEntry;
+import com.aranaira.arcanearchives.util.types.ISerializeByteBuf;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufUtil;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.init.Items;
@@ -107,7 +105,7 @@ public class ManifestList extends ReferenceList<CollatedEntry> implements ISeria
 			ItemStack stack = entry.getStack();
 
 			if (searchItem != null) {
-				return ItemUtilities.areStacksEqualIgnoreSize(searchItem, stack);
+				return ItemUtils.areStacksEqualIgnoreSize(searchItem, stack);
 			}
 
 			if (!modFilter) {
@@ -282,7 +280,7 @@ public class ManifestList extends ReferenceList<CollatedEntry> implements ISeria
 	}
 
 	public class ManifestListIterable extends ReferenceListIterable<CollatedEntry> {
-		ManifestListIterable (ManifestIterator iter) {
+		public ManifestListIterable (ManifestIterator iter) {
 			super(iter);
 		}
 

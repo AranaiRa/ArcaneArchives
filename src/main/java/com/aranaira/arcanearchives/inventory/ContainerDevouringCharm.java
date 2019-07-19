@@ -1,11 +1,9 @@
 package com.aranaira.arcanearchives.inventory;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.inventory.handlers.DevouringCharmHandler;
 import com.aranaira.arcanearchives.inventory.slots.SlotImmutable;
 import com.aranaira.arcanearchives.items.gems.GemUtil;
-import com.aranaira.arcanearchives.util.ItemUtilities;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;

@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.recipe.gct;
 
 import com.aranaira.arcanearchives.api.IGCTRecipeList;
-import com.aranaira.arcanearchives.util.ItemUtilities;
+import com.aranaira.arcanearchives.util.ItemUtils;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -27,7 +27,7 @@ public class GCTRecipeList implements IGCTRecipeList {
 	@Nullable
 	public GCTRecipe getRecipeByOutput (ItemStack output) {
 		for (GCTRecipe recipe : RECIPE_LIST.values()) {
-			if (ItemUtilities.areStacksEqualIgnoreSize(output, recipe.getRecipeOutput())) {
+			if (ItemUtils.areStacksEqualIgnoreSize(output, recipe.getRecipeOutput())) {
 				return recipe;
 			}
 		}

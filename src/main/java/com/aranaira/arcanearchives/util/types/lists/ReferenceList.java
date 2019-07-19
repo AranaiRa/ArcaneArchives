@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.util.types;
+package com.aranaira.arcanearchives.util.types.lists;
 
 import com.google.common.collect.ForwardingList;
 
@@ -38,7 +38,7 @@ public class ReferenceList<T> extends ForwardingList<T> {
 		public ReferenceListIterable () {
 		}
 
-		ReferenceListIterable (Iterator<U> iter) {
+		public ReferenceListIterable (Iterator<U> iter) {
 			this.iter = iter;
 		}
 

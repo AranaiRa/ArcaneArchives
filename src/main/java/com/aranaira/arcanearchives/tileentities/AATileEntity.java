@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
-import com.aranaira.arcanearchives.util.types.Size;
+import com.aranaira.arcanearchives.util.types.MultiblockSize;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
  */
 public class AATileEntity extends TileEntity {
 	public String name;
-	public Size size;
+	public MultiblockSize size;
 
 	/**
 	 * This boolean value is used to ensure that cascading break events do not
@@ -33,7 +33,7 @@ public class AATileEntity extends TileEntity {
 	/**
 	 * @return The current size associated with this tile entity. See `setSize`.
 	 */
-	public Size getSize () {
+	public MultiblockSize getSize () {
 		return this.size;
 	}
 
@@ -47,7 +47,7 @@ public class AATileEntity extends TileEntity {
 	 *                to calculate accessor block positions, and to determine if the block
 	 *                can actually be placed.
 	 */
-	public void setSize (Size newSize) {
+	public void setSize (MultiblockSize newSize) {
 		this.size = newSize;
 	}
 

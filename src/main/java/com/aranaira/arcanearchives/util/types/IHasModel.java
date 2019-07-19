@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.util;
+package com.aranaira.arcanearchives.util.types;
 
 public interface IHasModel {
 

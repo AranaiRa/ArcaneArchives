@@ -7,7 +7,7 @@ import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.gems.GemUtil;
 import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler;
 import com.aranaira.arcanearchives.network.Handlers.ClientHandler;
-import com.aranaira.arcanearchives.network.Handlers.EmptyMessageServer;
+import com.aranaira.arcanearchives.network.Messages.EmptyMessageServer;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;

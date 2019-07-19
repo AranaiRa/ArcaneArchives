@@ -5,8 +5,8 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.inventory.handlers.OptionalUpgradesHandler;
 import com.aranaira.arcanearchives.inventory.handlers.SizeUpgradeItemHandler;
 import com.aranaira.arcanearchives.inventory.handlers.TroveUpgradeItemHandler;
-import com.aranaira.arcanearchives.util.ItemUtilities;
-import com.aranaira.arcanearchives.util.types.UpgradeType;
+import com.aranaira.arcanearchives.util.ItemUtils;
+import com.aranaira.arcanearchives.util.types.enums.UpgradeType;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.entity.item.EntityItem;
@@ -109,7 +109,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 
 		ItemStack reference = inventory.getItem();
 
-		if (!ItemUtilities.areStacksEqualIgnoreSize(reference, mainhand) && !fake_hand) {
+		if (!ItemUtils.areStacksEqualIgnoreSize(reference, mainhand) && !fake_hand) {
 			player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.trove_insertion_failed.wrong"), true);
 			return;
 		}
@@ -142,7 +142,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 			if (playerMain != null) {
 				for (int i = 0; i < playerMain.getSlots(); i++) {
 					ItemStack inSlot = playerMain.getStackInSlot(i);
-					if (ItemUtilities.areStacksEqualIgnoreSize(reference, inSlot)) {
+					if (ItemUtils.areStacksEqualIgnoreSize(reference, inSlot)) {
 						result = inventory.insertItem(0, inSlot, true);
 						if (!result.isEmpty()) {
 							int diff = inSlot.getCount() - result.getCount();
@@ -344,7 +344,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 
 	@Override
 	public int troveScore (ItemStack stack) {
-		if (!ItemUtilities.areStacksEqualIgnoreSize(stack, inventory.getItem())) return -1;
+		if (!ItemUtils.areStacksEqualIgnoreSize(stack, inventory.getItem())) return -1;
 
 		if (!optionalUpgrades.hasUpgrade(UpgradeType.VOID)) return 350;
 
@@ -418,7 +418,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 		@Nonnull
 		@Override
 		public ItemStack insertItem (int slot, @Nonnull ItemStack stack, boolean simulate) {
-			if (ItemUtilities.areStacksEqualIgnoreSize(reference, stack) || reference.isEmpty()) {
+			if (ItemUtils.areStacksEqualIgnoreSize(reference, stack) || reference.isEmpty()) {
 				if (reference.isEmpty()) {
 					reference = stack.copy();
 					reference.setCount(1);
@@ -498,7 +498,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 
 		@Override
 		public boolean isItemValid (int slot, @Nonnull ItemStack stack) {
-			return ItemUtilities.areStacksEqualIgnoreSize(reference, stack);
+			return ItemUtils.areStacksEqualIgnoreSize(reference, stack);
 		}
 
 		public int getCount () {

@@ -6,7 +6,9 @@ import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.tileentities.IManifestTileEntity;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.MonitoringCrystalTileEntity;
+import com.aranaira.arcanearchives.util.types.iterators.SlotIterable;
 import com.aranaira.arcanearchives.util.types.*;
+import com.aranaira.arcanearchives.util.types.lists.ITileList;
 import io.netty.buffer.ByteBuf;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.client.util.RecipeItemHelper;
@@ -35,7 +37,7 @@ public class ManifestUtil {
 			phase:
 			for (ItemEntry entry : preManifest.get(packed)) {
 				for (ItemStack keyStack : phase1.keySet()) {
-					if (ItemUtilities.areStacksEqualIgnoreSize(entry.stack, keyStack)) {
+					if (ItemUtils.areStacksEqualIgnoreSize(entry.stack, keyStack)) {
 						List<ItemEntry> phaseList = phase1.computeIfAbsent(keyStack, k -> new ArrayList<>());
 						phaseList.add(entry);
 						continue phase;

@@ -4,14 +4,12 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.tileentities.AATileEntity;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
-import com.aranaira.arcanearchives.util.IHasModel;
-import com.aranaira.arcanearchives.util.types.Size;
+import com.aranaira.arcanearchives.util.types.IHasModel;
+import com.aranaira.arcanearchives.util.types.MultiblockSize;
 import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -27,9 +25,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.minecraftforge.common.property.ExtendedBlockState;
-import net.minecraftforge.common.property.IUnlistedProperty;
-import net.minecraftforge.common.property.Properties;
 import net.minecraftforge.common.util.FakePlayer;
 
 import javax.annotation.Nonnull;
@@ -40,7 +35,7 @@ import java.util.UUID;
 public class BlockTemplate extends Block implements IHasModel {
 	public static PropertyBool ACCESSOR = PropertyBool.create("accessor");
 
-	public Size size;
+	public MultiblockSize size;
 	private int placeLimit = -1;
 	private Class<? extends AATileEntity> entityClass;
 	private ItemBlock itemBlock = null;
@@ -93,7 +88,7 @@ public class BlockTemplate extends Block implements IHasModel {
 	}
 
 	public void setSize (int w, int h, int l) {
-		size = new Size(w, h, l);
+		size = new MultiblockSize(w, h, l);
 	}
 
 	public boolean hasOBJModel () {
@@ -143,14 +138,14 @@ public class BlockTemplate extends Block implements IHasModel {
 		}
 	}
 
-	public Size getSize () {
+	public MultiblockSize getSize () {
 		if (size == null) {
-			return new Size(0, 0, 0);
+			return new MultiblockSize(0, 0, 0);
 		}
 		return size;
 	}
 
-	public void setSize (Size newSize) {
+	public void setSize (MultiblockSize newSize) {
 		size = newSize;
 	}
 
@@ -164,7 +159,7 @@ public class BlockTemplate extends Block implements IHasModel {
 
 	// This always includes the parent location
 	public List<BlockPos> calculateAccessors (World world, BlockPos pos, @Nullable EnumFacing facing) {
-		Size size = getSize();
+		MultiblockSize size = getSize();
 
 		if (facing == null) {
 			facing = getFacing(world, pos);

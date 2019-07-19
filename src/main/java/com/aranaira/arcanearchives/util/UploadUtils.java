@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets;
     https://github.com/DimensionalDevelopment/VanillaFix/blob/master/src/main/java/org/dimdev/utils/HasteUpload.java
  */
 
-public class HasteUpload {
+public class UploadUtils {
     public static String baseUrl = "https://paste.dimdev.org";
 
     public static String uploadToHaste(String extension, String str) throws IOException {

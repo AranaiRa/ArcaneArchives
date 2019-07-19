@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.items.templates;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.util.IHasModel;
+import com.aranaira.arcanearchives.util.types.IHasModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;

@@ -4,18 +4,13 @@ package com.aranaira.arcanearchives.items.gems.asscher;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.gems.GemUtil;
 import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler;
-import com.aranaira.arcanearchives.util.NBTUtils;
+import com.aranaira.arcanearchives.util.ItemUtils;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -24,11 +19,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AgegleamItem extends ArcaneGemItem {
@@ -78,7 +71,7 @@ public class AgegleamItem extends ArcaneGemItem {
 	public static boolean processRechargeTime (GemUtil.GemStack stack) {
 		boolean thresholdPassed = false;
 
-		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack.getStack());
+		NBTTagCompound nbt = ItemUtils.getOrCreateTagCompound(stack.getStack());
 		if (!nbt.hasKey("recharge")) {
 			nbt.setInteger("recharge", CHARGE_TICKS);
 		} else {

@@ -1,18 +1,18 @@
 package com.aranaira.arcanearchives.util.types;
 
 @SuppressWarnings("WeakerAccess")
-public class Size {
+public class MultiblockSize {
 	public int width = 1;
 	public int height = 1;
 	public int length = 1;
 
-	public Size (int width, int height, int length) {
+	public MultiblockSize (int width, int height, int length) {
 		this.width = width;
 		this.height = height;
 		this.length = length;
 	}
 
-	public Size (int[] size) {
+	public MultiblockSize (int[] size) {
 		if (size.length == 3) {
 			this.width = size[0];
 			this.height = size[1];

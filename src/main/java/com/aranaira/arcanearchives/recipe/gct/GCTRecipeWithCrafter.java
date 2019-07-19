@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.recipe.gct;
 
-import com.aranaira.arcanearchives.util.NBTUtils;
+import com.aranaira.arcanearchives.util.ItemUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,7 +14,7 @@ public class GCTRecipeWithCrafter extends GCTRecipe {
 
 	@Override
 	public ItemStack onCrafted (EntityPlayer player, ItemStack output) {
-		NBTTagCompound tag = NBTUtils.getOrCreateTagCompound(output);
+		NBTTagCompound tag = ItemUtils.getOrCreateTagCompound(output);
 
 		// TODO: This may need to become more complex to handle other members of hives
 		tag.setUniqueId("creator", player.getUniqueID());

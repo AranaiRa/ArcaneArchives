@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.events;
+package com.aranaira.arcanearchives.client.render;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.util.ManifestTracking;

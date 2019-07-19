@@ -5,7 +5,7 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.util.InventoryRouting;
-import com.aranaira.arcanearchives.util.ItemUtilities;
+import com.aranaira.arcanearchives.util.ItemUtils;
 import com.aranaira.enderio.base.render.ranged.IRanged;
 import com.aranaira.enderio.base.render.ranged.RangeParticle;
 import com.aranaira.enderio.core.client.render.BoundingBox;
@@ -200,7 +200,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 			// Collect all the items
 			for (int i = 0; i < playerInventory.getSlots(); i++) {
 				ItemStack inSlot = playerInventory.getStackInSlot(i);
-				if (ItemUtilities.areStacksEqualIgnoreSize(inSlot, item)) {
+				if (ItemUtils.areStacksEqualIgnoreSize(inSlot, item)) {
 					toInsert.add(playerInventory.extractItem(i, inSlot.getCount(), false));
 				}
 			}

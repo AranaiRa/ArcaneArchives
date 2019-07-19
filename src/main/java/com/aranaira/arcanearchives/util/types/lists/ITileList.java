@@ -1,6 +1,8 @@
-package com.aranaira.arcanearchives.util.types;
+package com.aranaira.arcanearchives.util.types.lists;
 
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
+import com.aranaira.arcanearchives.util.types.IteRef;
+import com.aranaira.arcanearchives.util.types.iterators.TileListIterable;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;

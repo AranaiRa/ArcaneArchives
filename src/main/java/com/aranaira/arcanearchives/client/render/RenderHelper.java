@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.client.render;
 
-import com.aranaira.arcanearchives.util.ColorHelper;
+import com.aranaira.arcanearchives.util.ColorUtils;
+import com.aranaira.arcanearchives.util.ColorUtils.Color;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -26,7 +27,7 @@ public class RenderHelper {
 		GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 		GlStateManager.translate(-player_pos.x, -player_pos.y, -player_pos.z);
 
-		Color c = ColorHelper.getColorFromTime(worldTime);//new Color(0.601f, 0.164f, 0.734f, 1f);
+		Color c = ColorUtils.getColorFromTime(worldTime);//new Color(0.601f, 0.164f, 0.734f, 1f);
 		GlStateManager.color(c.red, c.green, c.blue, c.alpha);
 		GlStateManager.depthMask(false);
 		for (Vec3d vec : target_pos) {
@@ -86,54 +87,4 @@ public class RenderHelper {
 		return width;
 	}
 
-	@SideOnly(Side.CLIENT)
-	public static class Color {
-		public float red;
-		public float green;
-		public float blue;
-		public float alpha;
-
-		public Color () {
-			this(1.0F, 1.0F, 1.0F, 1.0F);
-		}
-
-		public Color (float redIn, float greenIn, float blueIn, float alphaIn) {
-			this.red = redIn;
-			this.green = greenIn;
-			this.blue = blueIn;
-			this.alpha = alphaIn;
-		}
-
-		public static Color Lerp (Color one, Color two, float prog) {
-			Color lerped = new Color();
-
-			lerped.red = (float) MathHelper.clampedLerp(one.red, two.red, prog);
-			lerped.green = (float) MathHelper.clampedLerp(one.green, two.green, prog);
-			lerped.blue = (float) MathHelper.clampedLerp(one.blue, two.blue, prog);
-			lerped.alpha = (float) MathHelper.clampedLerp(one.alpha, two.alpha, prog);
-			return lerped;
-		}
-
-		public static String FormatForLogger (Color c, boolean includeAlpha) {
-			String str = "";
-			str += "<R:" + c.red;
-			str += "  G:" + c.green;
-			str += "  B:" + c.blue;
-
-			if (includeAlpha) {
-				str += "  A:" + c.alpha;
-			}
-			str += ">";
-
-			return str;
-		}
-
-		public int toInteger () {
-			int result = (int) (alpha * 255) << 8;
-			result = (result + (int) (red * 255)) << 8;
-			result = (result + (int) (green * 255)) << 8;
-			result = result + (int) (blue * 255);
-			return result;
-		}
-	}
 }

@@ -4,7 +4,7 @@ import com.aranaira.arcanearchives.integration.baubles.BaubleGemUtil;
 import com.aranaira.arcanearchives.inventory.ContainerGemSocket;
 import com.aranaira.arcanearchives.inventory.handlers.GemSocketHandler;
 import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler.HandedGemsHandler;
-import com.aranaira.arcanearchives.util.NBTUtils;
+import com.aranaira.arcanearchives.util.ItemUtils;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
@@ -31,7 +31,7 @@ public class GemUtil {
 	 * @param upgrades The new upgrade bitmask to apply
 	 */
 	public static void setUpgrades (ItemStack stack, byte upgrades) {
-		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+		NBTTagCompound nbt = ItemUtils.getOrCreateTagCompound(stack);
 		nbt.setByte("upgrades", upgrades);
 	}
 
@@ -45,7 +45,7 @@ public class GemUtil {
 	 * @param timeUpgrade   Whether to apply a Time upgrade
 	 */
 	public static void setUpgrades (ItemStack stack, boolean matterUpgrade, boolean powerUpgrade, boolean spaceUpgrade, boolean timeUpgrade) {
-		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+		NBTTagCompound nbt = ItemUtils.getOrCreateTagCompound(stack);
 		byte upgrades = 0;
 		if (matterUpgrade) {
 			upgrades = (byte) (upgrades | ArcaneGemItem.UPGRADE_MATTER);
@@ -69,7 +69,7 @@ public class GemUtil {
 	 * @return
 	 */
 	public static byte getUpgrades (ItemStack stack) {
-		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+		NBTTagCompound nbt = ItemUtils.getOrCreateTagCompound(stack);
 		if (nbt.hasKey("upgrades")) {
 			return nbt.getByte("upgrades");
 		}
@@ -119,7 +119,7 @@ public class GemUtil {
 
 	private static int getMaxCharge (ItemStack stack) {
 		// TODO: NBT is unused here; presumably this is to be passed to "getMaxChargeUpgraded"?
-		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+		NBTTagCompound nbt = ItemUtils.getOrCreateTagCompound(stack);
 		boolean hasPowerUpgrade = hasUpgrade(stack, ArcaneGemItem.GemUpgrades.POWER);
 		ArcaneGemItem item = (ArcaneGemItem) stack.getItem();
 		if (hasPowerUpgrade) {
@@ -148,7 +148,7 @@ public class GemUtil {
 	}
 
 	private static int getCharge (ItemStack stack) {
-		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+		NBTTagCompound nbt = ItemUtils.getOrCreateTagCompound(stack);
 		if (nbt.hasKey("charge")) {
 			return nbt.getInteger("charge");
 		} else {
@@ -201,7 +201,7 @@ public class GemUtil {
 	}
 
 	private static boolean restoreCharge (ItemStack stack, int amount) {
-		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+		NBTTagCompound nbt = ItemUtils.getOrCreateTagCompound(stack);
 		int maximum = getMaxCharge(stack);
 		int currentCharge;
 		if (nbt.hasKey("charge")) {
@@ -242,7 +242,7 @@ public class GemUtil {
 	}
 
 	private static boolean consumeCharge (ItemStack stack, int amount) {
-		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+		NBTTagCompound nbt = ItemUtils.getOrCreateTagCompound(stack);
 		int currentCharge;
 		if (nbt.hasKey("charge")) {
 			currentCharge = nbt.getInteger("charge");
@@ -275,7 +275,7 @@ public class GemUtil {
 			return true;
 		}
 
-		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+		NBTTagCompound nbt = ItemUtils.getOrCreateTagCompound(stack);
 		if (nbt.hasKey("infinite")) {
 			return nbt.getBoolean("infinity");
 		} else {
@@ -291,7 +291,7 @@ public class GemUtil {
 	 * @return
 	 */
 	public static boolean isChargeEmpty (ItemStack stack) {
-		NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+		NBTTagCompound nbt = ItemUtils.getOrCreateTagCompound(stack);
 		if (!hasUnlimitedCharge(stack)) {
 			return getCharge(stack) == 0;
 		} else {
@@ -312,7 +312,7 @@ public class GemUtil {
 	public static boolean isToggledOn (ItemStack stack) {
 		ArcaneGemItem agi = (ArcaneGemItem) stack.getItem();
 		if (agi.hasToggleMode()) {
-			NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+			NBTTagCompound nbt = ItemUtils.getOrCreateTagCompound(stack);
 			if (!nbt.hasKey("toggle")) {
 				nbt.setBoolean("toggle", false);
 			}
@@ -334,7 +334,7 @@ public class GemUtil {
 	private static void swapToggle (ItemStack stack) {
 		ArcaneGemItem gem = (ArcaneGemItem) stack.getItem();
 		if (gem.hasToggleMode()) {
-			NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+			NBTTagCompound nbt = ItemUtils.getOrCreateTagCompound(stack);
 			if (!nbt.hasKey("toggle")) {
 				nbt.setBoolean("toggle", true);
 			} else {
@@ -358,7 +358,7 @@ public class GemUtil {
 	private static void setToggle (ItemStack stack, boolean state) {
 		ArcaneGemItem gem = (ArcaneGemItem) stack.getItem();
 		if (gem.hasToggleMode()) {
-			NBTTagCompound nbt = NBTUtils.getOrCreateTagCompound(stack);
+			NBTTagCompound nbt = ItemUtils.getOrCreateTagCompound(stack);
 			nbt.setBoolean("toggle", state);
 			stack.setTagCompound(nbt);
 		}

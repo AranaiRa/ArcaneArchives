@@ -4,7 +4,7 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
-import com.aranaira.arcanearchives.util.NumberUtil;
+import com.aranaira.arcanearchives.util.MathUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -60,7 +60,7 @@ public class RenderHUD {
 							RenderHelper.enableGUIStandardItemLighting();
 							mc.getRenderItem().renderItemIntoGUI(item, x - 40, y);
 							RenderHelper.disableStandardItemLighting();
-							String s = "x " + NumberUtil.format(handler.getCount());
+							String s = "x " + MathUtils.format(handler.getCount());
 							mc.fontRenderer.drawStringWithShadow(item.getDisplayName(), (float) (x - 19 - mc.fontRenderer.getStringWidth(item.getDisplayName()) / 2), (float) (y - 11), 16777215);
 							mc.fontRenderer.drawStringWithShadow(s, (float) (x - 20), (float) (y + 3), 16777215);
 							if (handler.getUpgrades() != 0) {

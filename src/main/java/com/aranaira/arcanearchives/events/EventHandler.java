@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.events;
 
+import com.aranaira.arcanearchives.client.render.LineHandler;
 import com.aranaira.arcanearchives.client.render.RenderGemcasting;
 import com.aranaira.arcanearchives.client.render.RenderGemcasting.EnumGemGuiMode;
 import com.aranaira.arcanearchives.config.ConfigHandler;
@@ -28,7 +29,7 @@ import com.aranaira.arcanearchives.network.PacketConfig.RequestMaxDistance;
 import com.aranaira.arcanearchives.network.PacketRadiantAmphora.Toggle;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
-import com.aranaira.arcanearchives.util.NBTUtils;
+import com.aranaira.arcanearchives.util.ItemUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import gigaherz.lirelent.guidebook.client.BookRegistryEvent;
 import net.minecraft.block.Block;
@@ -85,7 +86,7 @@ import java.util.Iterator;
 import java.util.Random;
 
 @Mod.EventBusSubscriber
-public class AAEventHandler {
+public class EventHandler {
 	@SubscribeEvent
 	public static void onPlayerJoined (PlayerLoggedInEvent event) {
 		EntityPlayer player = event.player;
@@ -453,7 +454,7 @@ public class AAEventHandler {
 		save.receivedBook = true;
 		save.markDirty();
 		ItemStack tome = new ItemStack(ItemRegistry.TOME_OF_ARCANA);
-		NBTTagCompound tag = NBTUtils.getOrCreateTagCompound(tome);
+		NBTTagCompound tag = ItemUtils.getOrCreateTagCompound(tome);
 		tag.setString("Book", TomeOfArcanaItem.TOME_OF_ARCANA.toString());
 		world.getMapStorage().saveAllData();
 		EntityItem tomeEntity = new EntityItem(world, player.posX, player.posY, player.posZ, tome);
