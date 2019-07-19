@@ -25,6 +25,18 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 public class ManifestUtils {
+	public static void resolveItemEntries (List<ItemEntry> entries, ItemEntry entry) {
+		if (entry.stack.getMaxStackSize() == 1) {
+			ItemStack stack = entry.stack.copy();
+			stack.setCount(1);
+			for (int i = 0; i < entry.stack.getCount(); i++) {
+				entries.add(entry.copy(stack.copy()));
+			}
+		} else {
+			entries.add(entry);
+		}
+	}
+
 	public static List<CollatedEntry> parsePreManifest (Map<Integer, List<ItemEntry>> preManifest, ServerNetwork network) {
 		// We need to collate all of these entries into the following:
 		// Unique entries should be collapsed (along with positions & descriptions)
@@ -39,14 +51,14 @@ public class ManifestUtils {
 				for (ItemStack keyStack : phase1.keySet()) {
 					if (ItemUtils.areStacksEqualIgnoreSize(entry.stack, keyStack)) {
 						List<ItemEntry> phaseList = phase1.computeIfAbsent(keyStack, k -> new ArrayList<>());
-						phaseList.add(entry);
+						resolveItemEntries(phaseList, entry);
 						continue phase;
 					}
 				}
 				ItemStack keyStack = entry.stack.copy();
 				keyStack.setCount(1);
 				List<ItemEntry> entries = new ArrayList<>();
-				entries.add(entry);
+				resolveItemEntries(entries, entry);
 				phase1.put(keyStack, entries);
 			}
 		}
@@ -186,6 +198,10 @@ public class ManifestUtils {
 			this.pos = pos;
 			this.dimension = dimension;
 			this.description = description;
+		}
+
+		public ItemEntry copy (ItemStack stack) {
+			return new ItemEntry(stack, this.pos, this.dimension, this.description);
 		}
 	}
 
