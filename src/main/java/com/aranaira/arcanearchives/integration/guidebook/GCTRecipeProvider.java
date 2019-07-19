@@ -18,7 +18,8 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 
 public class GCTRecipeProvider extends RecipeProvider {
-	public static final ResourceLocation BACKGROUND = new ResourceLocation(ArcaneArchives.MODID, "gui/guidebook/recipe_gct");
+	private static final ResourceLocation BACKGROUND = new ResourceLocation(ArcaneArchives.MODID, "gui/guidebook/recipe_gct");
+	private static final int LEFT_OFFSET = 60;
 
 	@Nullable
 	@Override
@@ -52,20 +53,20 @@ public class GCTRecipeProvider extends RecipeProvider {
 				inputSlot.stacks.add(c);
 			}
 
-			inputSlot.x = (i % 4) * 22 + 3;
+			inputSlot.x = (i % 4) * 22 + 3 + LEFT_OFFSET;
 			inputSlot.y = (i / 4) * 22 + 3;
 			stacks.add(inputSlot);
 		}
 
 		ElementStack outputSlot = new ElementStack(false, false);
 		outputSlot.stacks.add(recipe.getRecipeOutput().copy());
-		outputSlot.x = 107;
+		outputSlot.x = 107 + LEFT_OFFSET;
 		outputSlot.y = 14;
 		stacks.add(outputSlot);
 
 		ElementImage background = new ElementImage(false, false);
 		background.textureLocation = BACKGROUND;
-		background.x = 0;
+		background.x = 0 + LEFT_OFFSET;
 		background.y = 0;
 		background.tx = 0;
 		background.ty = 0;
