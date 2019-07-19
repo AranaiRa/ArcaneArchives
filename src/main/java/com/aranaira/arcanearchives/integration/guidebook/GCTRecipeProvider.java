@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import com.aranaira.arcanearchives.recipe.IngredientStack;
+import com.aranaira.arcanearchives.util.ItemUtils;
 import gigaherz.lirelent.guidebook.guidebook.drawing.VisualElement;
 import gigaherz.lirelent.guidebook.guidebook.elements.ElementImage;
 import gigaherz.lirelent.guidebook.guidebook.elements.ElementStack;
@@ -22,7 +23,12 @@ public class GCTRecipeProvider extends RecipeProvider {
 	@Nullable
 	@Override
 	public ProvidedComponents provideRecipeComponents (@Nonnull ItemStack targetOutput, int recipeIndex) {
-		return provideRecipeComponents(targetOutput.getItem().getRegistryName());
+		for (GCTRecipe recipe : GCTRecipeList.instance.getRecipeList()) {
+			if (ItemUtils.areStacksEqualIgnoreSize(recipe.getRecipeOutput(), targetOutput)) {
+				return provideRecipeComponents(recipe.getName());
+			}
+		}
+		return null;
 	}
 
 	@Nullable
