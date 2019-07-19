@@ -1,8 +1,8 @@
 package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
-import com.aranaira.arcanearchives.network.NetworkHandler.ClientHandler;
-import com.aranaira.arcanearchives.network.NetworkHandler.ServerHandler;
+import com.aranaira.arcanearchives.network.Handlers.ClientHandler;
+import com.aranaira.arcanearchives.network.Handlers.ServerHandler;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;

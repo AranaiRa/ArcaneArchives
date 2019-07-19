@@ -4,7 +4,7 @@ import com.aranaira.arcanearchives.client.gui.controls.InvisibleButton;
 import com.aranaira.arcanearchives.client.gui.controls.RightClickTextField;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerBrazier;
-import com.aranaira.arcanearchives.network.NetworkHandler;
+import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketBrazier.DecrementRadius;
 import com.aranaira.arcanearchives.network.PacketBrazier.IncrementRadius;
 import com.aranaira.arcanearchives.network.PacketBrazier.SetRadius;
@@ -65,16 +65,16 @@ public class GUIBrazier extends GuiContainer implements GuiPageButtonList.GuiRes
 	protected void actionPerformed (GuiButton button) throws IOException {
 		if (button.id == 0) { //reduce button
 			DecrementRadius packet = new DecrementRadius(containerBrazier.getTile().getUuid());
-			NetworkHandler.CHANNEL.sendToServer(packet);
+			Networking.CHANNEL.sendToServer(packet);
 		}
 		if (button.id == 1) { //expand button
 			IncrementRadius packet = new IncrementRadius(containerBrazier.getTile().getUuid());
-			NetworkHandler.CHANNEL.sendToServer(packet);
+			Networking.CHANNEL.sendToServer(packet);
 		}
 		if (button.id == 2) { //network insertion type button
 			boolean newMode = !containerBrazier.getTile().getNetworkMode();
 			SetSubnetworkMode packet = new SetSubnetworkMode(newMode, containerBrazier.getTile().getUuid());
-			NetworkHandler.CHANNEL.sendToServer(packet);
+			Networking.CHANNEL.sendToServer(packet);
 		}
 		if (button.id == 3) { //visualizer button
 			containerBrazier.getTile().toggleShowRange();
@@ -164,7 +164,7 @@ public class GUIBrazier extends GuiContainer implements GuiPageButtonList.GuiRes
 
 		if (newRadius > 0 && newRadius <= 300) {
 			SetRadius packet = new SetRadius(newRadius, containerBrazier.getTile().getUuid());
-			NetworkHandler.CHANNEL.sendToServer(packet);
+			Networking.CHANNEL.sendToServer(packet);
 		}
 	}
 

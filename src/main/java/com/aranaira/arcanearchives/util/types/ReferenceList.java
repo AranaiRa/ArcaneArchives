@@ -28,7 +28,7 @@ public class ReferenceList<T> extends ForwardingList<T> {
 		return reference;
 	}
 
-	public ReferenceListIterable<T> iterable () {
+	public Iterable<T> iterable () {
 		return new ReferenceListIterable<>(iterator());
 	}
 

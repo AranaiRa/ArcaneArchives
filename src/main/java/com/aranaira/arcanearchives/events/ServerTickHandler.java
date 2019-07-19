@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.events;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
@@ -36,11 +36,11 @@ public class ServerTickHandler {
 		if (!limitedITEs.isEmpty()) {
 			for (ImmanenceTileEntity ite : limitedITEs) {
 				UUID networkId = ite.networkId;
-				if (networkId == null || networkId.equals(NetworkHelper.INVALID)) {
+				if (networkId == null || networkId.equals(DataHelper.INVALID)) {
 					continue;
 				}
 
-				ServerNetwork network = NetworkHelper.getServerNetwork(networkId, ite.getWorld());
+				ServerNetwork network = DataHelper.getServerNetwork(networkId, ite.getWorld());
 				if (network == null) {
 					continue;
 				}
@@ -62,12 +62,12 @@ public class ServerTickHandler {
 				ArcaneArchives.logger.debug(String.format("Tile entity with the class %s spent 30 ticks in the queue and is being discarded.", ite.getClass().getName()));
 			} else {
 				UUID networkId = ite.networkId;
-				if (networkId == null || networkId.equals(NetworkHelper.INVALID)) {
+				if (networkId == null || networkId.equals(DataHelper.INVALID)) {
 					ite.tick();
 					continue;
 				}
 
-				ServerNetwork network = NetworkHelper.getServerNetwork(networkId, ite.getWorld());
+				ServerNetwork network = DataHelper.getServerNetwork(networkId, ite.getWorld());
 				if (network == null) {
 					continue;
 				}
@@ -109,7 +109,7 @@ public class ServerTickHandler {
 
 	@SubscribeEvent
 	public static void onPlayerLoggedIn (PlayerEvent.PlayerLoggedInEvent event) {
-		ServerNetwork network = NetworkHelper.getServerNetwork(event.player.getUniqueID(), event.player.world);
+		ServerNetwork network = DataHelper.getServerNetwork(event.player.getUniqueID(), event.player.world);
 		if (network != null) {
 			network.rebuildTotals();
 		}

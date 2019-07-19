@@ -4,23 +4,29 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.util.ManifestTracking;
 import com.aranaira.arcanearchives.client.render.RenderHelper;
 import com.google.common.collect.ImmutableSet;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID, value = Side.CLIENT)
 public class LineHandler {
 	public static boolean mIsDrawingLine;
-	private static Set<Vec3d> mBlockPositions = new HashSet<>();
+	private static Int2ObjectOpenHashMap<Set<Vec3d>> positionsByDimension = new Int2ObjectOpenHashMap<>();
 
 	private static final int NUM_X_BITS = 1 + MathHelper.log2(MathHelper.smallestEncompassingPowerOfTwo(30000000));
 	private static final int NUM_Z_BITS = NUM_X_BITS;
@@ -32,46 +38,60 @@ public class LineHandler {
 	private static final long Z_MASK = (1L << NUM_Z_BITS) - 1L;
 
 	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
 	public static void renderOverlay (RenderWorldLastEvent event) {
-		if (mBlockPositions.size() > 0) {
-			RenderHelper.drawRays(Minecraft.getMinecraft().player.world.getTotalWorldTime(), Minecraft.getMinecraft().player.getPositionVector(), ImmutableSet.copyOf(mBlockPositions), 15);
+		Set<Vec3d> positions = getPositions(Minecraft.getMinecraft().player.dimension);
+		if (!positions.isEmpty()) {
+			RenderHelper.drawRays(Minecraft.getMinecraft().player.world.getTotalWorldTime(), Minecraft.getMinecraft().player.getPositionVector(), ImmutableSet.copyOf(positions));
 		}
 	}
 
-	public static void addLine (Vec3d line) {
-		if (mBlockPositions.contains(line)) {
-			return;
-		}
-
-		mBlockPositions.add(line);
+	@Nullable
+	public static Set<Vec3d> getPositions (int dimension) {
+		return positionsByDimension.computeIfAbsent(dimension, k -> new HashSet<>());
 	}
 
-	public static void removeLine (BlockPos pos) {
+	public static void addLine (Vec3d line, int dimension) {
+		Set<Vec3d> positions = getPositions(dimension);
+		positions.add(line);
+	}
+
+	public static void addLine (BlockPos pos, int dimension) {
+		addLine(new Vec3d(pos.getX(), pos.getY(), pos.getZ()), dimension);
+	}
+
+	public static void addLines (List<BlockPos> positions, int dimension) {
+		positions.forEach(k -> addLine(k, dimension));
+	}
+
+	public static void removeLine (BlockPos pos, int dimension) {
 		Vec3d bpos = new Vec3d(pos.getX(), pos.getY(), pos.getZ());
-		removeLine(bpos);
+		removeLine(bpos, dimension);
 	}
 
-	public static void removeLine (Vec3d line) {
-		mBlockPositions.remove(line);
+	public static void removeLine (Vec3d line, int dimension) {
+		Set<Vec3d> positions = getPositions(dimension);
+		positions.remove(line);
 	}
 
-	public static void checkClear () {
-		if (mBlockPositions.isEmpty()) {
+	public static void checkClear (int dimension) {
+		if (getPositions(dimension).isEmpty()) {
 			ManifestTracking.clear();
 		}
 	}
 
 	@SubscribeEvent
 	public static void playerLoggedIn (PlayerLoggedInEvent event) {
-		mBlockPositions.clear();
+		positionsByDimension.clear();
 		mIsDrawingLine = false;
 	}
 
 	public static void clearChests (int dimension) {
-		for (Vec3d pos : mBlockPositions) {
+		Set<Vec3d> positions = getPositions(dimension);
+		for (Vec3d pos : positions) {
 			ManifestTracking.remove(dimension, vec3dToLong(pos));
 		}
-		mBlockPositions.clear();
+		positions.clear();
 	}
 
 	public static long vec3dToLong (Vec3d pos) {

@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives;
 
 import com.aranaira.arcanearchives.client.gui.*;
-import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.inventory.*;
 import com.aranaira.arcanearchives.tileentities.*;
@@ -54,7 +54,7 @@ public class AAGuiHandler implements IGuiHandler {
 			case RADIANT_CHEST:
 				return new ContainerRadiantChest((RadiantChestTileEntity) te, player);
 			case GEMCUTTERS_TABLE:
-				ServerNetwork network = NetworkHelper.getServerNetwork(player.getUniqueID(), world);
+				ServerNetwork network = DataHelper.getServerNetwork(player.getUniqueID(), world);
 				network.synchroniseHiveInfo();
 				GemCuttersTableTileEntity gct = (GemCuttersTableTileEntity) te;
 				return new ContainerGemCuttersTable(gct.getInventory(), gct, player);

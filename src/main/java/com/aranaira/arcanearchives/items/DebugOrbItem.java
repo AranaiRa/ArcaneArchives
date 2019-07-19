@@ -4,8 +4,7 @@ import com.aranaira.arcanearchives.blocks.RadiantChest;
 import com.aranaira.arcanearchives.blocks.RadiantTank;
 import com.aranaira.arcanearchives.blocks.RadiantTrove;
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
-import com.aranaira.arcanearchives.data.ClientNetwork;
-import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.inventory.handlers.OptionalUpgradesHandler;
 import com.aranaira.arcanearchives.inventory.handlers.SizeUpgradeItemHandler;
@@ -94,7 +93,7 @@ public class DebugOrbItem extends ItemTemplate {
 
 		ServerNetwork sNetwork = null;
 		if (!world.isRemote) {
-			sNetwork = NetworkHelper.getServerNetwork(ite.getNetworkId(), world);
+			sNetwork = DataHelper.getServerNetwork(ite.getNetworkId(), world);
 		}
 
 		if (world.isRemote) {

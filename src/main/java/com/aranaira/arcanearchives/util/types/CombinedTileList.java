@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.util.types;
 
-import com.aranaira.arcanearchives.util.types.TileList.TileListIterable;
 import net.minecraft.world.World;
 
 import java.util.ArrayDeque;
@@ -37,7 +36,16 @@ public class CombinedTileList implements ITileList {
 
 	@Override
 	public TileListIterable iterable () {
-		return null;
+		return new TileListIterable(iterator());
+	}
+
+	@Override
+	public int getSize () {
+		int size = 0;
+		for (ITileList t : this.tileLists) {
+			size += t.getSize();
+		}
+		return size;
 	}
 
 	@Override

@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.util;
 
 import com.aranaira.arcanearchives.util.types.ITileList;
 import com.aranaira.arcanearchives.util.types.IteRef;
-import com.aranaira.arcanearchives.util.types.TileList.TileListIterable;
+import com.aranaira.arcanearchives.util.types.TileListIterable;
 import com.google.common.collect.Iterators;
 
 import java.util.function.Predicate;

@@ -67,7 +67,7 @@ public class GemCuttersTable extends BlockDirectionalTemplate {
 	public void breakBlock (World world, BlockPos pos, IBlockState state) {
 		if (state.getValue(ACCESSOR)) return;
 
-		LineHandler.removeLine(pos);
+		LineHandler.removeLine(pos, world.provider.getDimension());
 
 		TileEntity te = world.getTileEntity(pos);
 		if (te instanceof GemCuttersTableTileEntity) {
@@ -130,7 +130,7 @@ public class GemCuttersTable extends BlockDirectionalTemplate {
 			pos = getConnectedPos(pos, state);
 		}
 
-		LineHandler.removeLine(pos);
+		LineHandler.removeLine(pos, playerIn.dimension);
 
 		if (worldIn.isRemote) {
 			return true;

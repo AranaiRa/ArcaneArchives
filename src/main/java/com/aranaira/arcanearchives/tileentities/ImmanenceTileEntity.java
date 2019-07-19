@@ -1,19 +1,15 @@
 package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.events.ServerTickHandler;
 import com.aranaira.arcanearchives.util.types.Size;
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -87,7 +83,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable {
 	@Nullable
 	public ServerNetwork getServerNetwork () {
 		if (network == null && networkId != null) {
-			network = NetworkHelper.getServerNetwork(networkId, this.world);
+			network = DataHelper.getServerNetwork(networkId, this.world);
 		}
 
 		return network;

@@ -5,7 +5,7 @@ import com.aranaira.arcanearchives.client.gui.framework.IScrollabe;
 import com.aranaira.arcanearchives.client.gui.framework.IScrollableContainer;
 import com.aranaira.arcanearchives.client.gui.framework.ScrollEventManager;
 import com.aranaira.arcanearchives.data.ClientNetwork;
-import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.events.LineHandler;
 import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
 import com.aranaira.arcanearchives.util.ManifestTracking;
@@ -92,7 +92,7 @@ public class ContainerManifest extends Container implements IScrollableContainer
 				handler = serverNetwork.getManifestHandler();
 			}
 		} else {*/
-		clientNetwork = NetworkHelper.getClientNetwork(this.player.getUniqueID());
+		clientNetwork = DataHelper.getClientNetwork(this.player.getUniqueID());
 		handler = clientNetwork.getManifestHandler();
 	}
 
@@ -176,7 +176,7 @@ public class ContainerManifest extends Container implements IScrollableContainer
 		}
 
 		List<Vec3d> visPositions = entry.getVecPositions();
-		visPositions.forEach(LineHandler::addLine);
+		visPositions.forEach(k -> LineHandler.addLine(k, player.dimension));
 
 		ManifestTracking.add(entry);
 

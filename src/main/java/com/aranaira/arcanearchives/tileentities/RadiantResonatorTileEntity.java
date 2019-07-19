@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.blocks.RawQuartzCluster;
 import com.aranaira.arcanearchives.config.ConfigHandler;
-import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import net.minecraft.block.state.IBlockState;
@@ -40,7 +40,7 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity {
 		ticks++;
 
 		// Only tick on the client side
-		if (world.isRemote || networkId == null || networkId.equals(NetworkHelper.INVALID)) {
+		if (world.isRemote || networkId == null || networkId.equals(DataHelper.INVALID)) {
 			return;
 		}
 
@@ -140,7 +140,7 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity {
 			return;
 		}
 
-		ServerNetwork network = NetworkHelper.getServerNetwork(networkId, world);
+		ServerNetwork network = DataHelper.getServerNetwork(networkId, world);
 		if (network != null) {
 			network.removeTile(this);
 		}

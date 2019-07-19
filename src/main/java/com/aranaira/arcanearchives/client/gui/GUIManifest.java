@@ -9,7 +9,7 @@ import com.aranaira.arcanearchives.client.gui.framework.LayeredGuiContainer;
 import com.aranaira.arcanearchives.client.gui.framework.ScrollEventManager;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.ClientNetwork;
-import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.events.LineHandler;
 import com.aranaira.arcanearchives.inventory.ContainerManifest;
 import com.aranaira.arcanearchives.util.ManifestUtil.CollatedEntry;
@@ -108,7 +108,7 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 		this.scrollEventManager = new ScrollEventManager();
 		this.container = container;
 
-		ClientNetwork network = NetworkHelper.getClientNetwork(player.getUniqueID());
+		ClientNetwork network = DataHelper.getClientNetwork(player.getUniqueID());
 		network.manifestItems.setListener(container);
 		container.setScrollEventManager(scrollEventManager);
 
@@ -283,7 +283,7 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 	}
 
 	public void doRefresh () {
-		ClientNetwork network = NetworkHelper.getClientNetwork(player.getUniqueID());
+		ClientNetwork network = DataHelper.getClientNetwork(player.getUniqueID());
 		network.synchroniseManifest();
 	}
 

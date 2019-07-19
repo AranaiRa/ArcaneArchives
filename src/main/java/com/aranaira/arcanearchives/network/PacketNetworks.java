@@ -2,13 +2,12 @@ package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.ClientNetwork;
-import com.aranaira.arcanearchives.data.NetworkHelper;
-import com.aranaira.arcanearchives.data.NetworkHelper.HiveMembershipInfo;
+import com.aranaira.arcanearchives.data.DataHelper;
+import com.aranaira.arcanearchives.data.DataHelper.HiveMembershipInfo;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.data.ServerNetwork.SynchroniseInfo;
-import com.aranaira.arcanearchives.network.NetworkHandler.ClientHandler;
-import com.aranaira.arcanearchives.network.NetworkHandler.ServerHandler;
-import com.aranaira.arcanearchives.util.types.ISerializeByteBuf;
+import com.aranaira.arcanearchives.network.Handlers.ClientHandler;
+import com.aranaira.arcanearchives.network.Handlers.ServerHandler;
 import com.aranaira.arcanearchives.util.types.ManifestList;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -78,7 +77,7 @@ public class PacketNetworks {
 
 				EntityPlayerMP player = context.getServerHandler().player;
 
-				ServerNetwork network = NetworkHelper.getServerNetwork(player.getUniqueID(), server.getWorld(0));
+				ServerNetwork network = DataHelper.getServerNetwork(player.getUniqueID(), server.getWorld(0));
 				if (network == null) {
 					ArcaneArchives.logger.error("Network was null when processing sync packet for " + player.getUniqueID());
 					return;
@@ -99,7 +98,7 @@ public class PacketNetworks {
 				}
 
 				if (response != null) {
-					NetworkHandler.CHANNEL.sendTo(response, player);
+					Networking.CHANNEL.sendTo(response, player);
 				}
 			}
 		}
@@ -205,7 +204,7 @@ public class PacketNetworks {
 				return;
 			}
 
-			ClientNetwork network = NetworkHelper.getClientNetwork(player.getUniqueID());
+			ClientNetwork network = DataHelper.getClientNetwork(player.getUniqueID());
 			processMessage(message, context, player, network);
 		}
 

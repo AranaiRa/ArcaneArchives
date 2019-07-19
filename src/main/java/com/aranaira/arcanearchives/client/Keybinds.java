@@ -3,12 +3,12 @@ package com.aranaira.arcanearchives.client;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.ClientNetwork;
-import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.events.LineHandler;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.integration.jei.JEIUnderMouse;
 import com.aranaira.arcanearchives.items.ManifestItem;
-import com.aranaira.arcanearchives.network.NetworkHandler;
+import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketArcaneGems.OpenSocket;
 import com.aranaira.arcanearchives.util.ManifestTracking;
 import com.aranaira.arcanearchives.util.ManifestUtil.CollatedEntry;
@@ -99,7 +99,7 @@ public class Keybinds {
 			}
 		} else if (socketKey != null && socketKey.isKeyDown() && mc.inGameHasFocus) {
 			OpenSocket packet = new OpenSocket();
-			NetworkHandler.CHANNEL.sendToServer(packet);
+			Networking.CHANNEL.sendToServer(packet);
 		}
 	}
 
@@ -111,7 +111,7 @@ public class Keybinds {
 			if (mc.currentScreen != null) {
 				ItemStack stack = underMouse(mc);
 				if (stack != null && !stack.isEmpty()) {
-					ClientNetwork network = NetworkHelper.getClientNetwork();
+					ClientNetwork network = DataHelper.getClientNetwork();
 					network.synchroniseManifest(handler -> {
 						handler.setSearchItem(stack);
 						boolean addedValues = false;
@@ -125,7 +125,7 @@ public class Keybinds {
 							}
 
 							List<Vec3d> visPositions = entry.getVecPositions();
-							visPositions.forEach(LineHandler::addLine);
+							visPositions.forEach(l -> LineHandler.addLine(l, mc.player.dimension));
 
 							ManifestTracking.add(entry);
 

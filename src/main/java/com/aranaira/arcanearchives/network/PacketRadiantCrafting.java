@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.inventory.ContainerRadiantCraftingTable;
-import com.aranaira.arcanearchives.network.NetworkHandler.ClientHandler;
+import com.aranaira.arcanearchives.network.Handlers.ClientHandler;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.Container;

@@ -14,7 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.*;
 
-public class NetworkHelper {
+public class DataHelper {
 	public static UUID INVALID = UUID.fromString("00000000-0000-0000-0000-000000000000");
 	// TODO: This needs to be cleared whenever the player enters a new world
 	private static Map<UUID, ClientNetwork> CLIENT_MAP = new HashMap<>();

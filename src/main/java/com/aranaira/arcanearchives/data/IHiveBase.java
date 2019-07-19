@@ -2,9 +2,6 @@ package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.util.types.ITileList;
 import com.aranaira.arcanearchives.util.types.IteRef;
-import com.aranaira.arcanearchives.util.types.TileList.TileListIterable;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -20,7 +17,8 @@ public interface IHiveBase {
 
 	boolean isHiveNetwork ();
 
-	ITileList getTiles();
+	ITileList getTiles ();
+
 	Iterable<IteRef> getValidTiles ();
 
 	@Nullable

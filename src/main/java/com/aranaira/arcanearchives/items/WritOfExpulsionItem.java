@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.data.HiveSaveData;
 import com.aranaira.arcanearchives.data.HiveSaveData.Hive;
-import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.items.templates.LetterTemplate;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -51,7 +51,7 @@ public class WritOfExpulsionItem extends LetterTemplate {
 			return stack;
 		}
 
-		HiveSaveData saveData = NetworkHelper.getHiveData(world);
+		HiveSaveData saveData = DataHelper.getHiveData(world);
 		Hive hive = saveData.getHiveByMember(expelId);
 		if (!hive.owner.equals(playerId)) {
 			player.sendStatusMessage(new TextComponentTranslation("arcanearchives.network.hive.expel_no_permission"), true);

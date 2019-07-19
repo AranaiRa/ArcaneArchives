@@ -5,7 +5,7 @@ import com.aranaira.arcanearchives.client.Keybinds;
 import com.aranaira.arcanearchives.client.render.RadiantChestTESR;
 import com.aranaira.arcanearchives.client.render.RadiantTankTEISR;
 import com.aranaira.arcanearchives.client.render.RadiantTankTESR;
-import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.integration.guidebook.GBookInit;
 import com.aranaira.arcanearchives.items.itemblocks.RadiantTankItem;
@@ -43,7 +43,7 @@ public class ClientProxy extends CommonProxy {
 
 	@SubscribeEvent
 	public static void playerLoggedIn (PlayerEvent.PlayerLoggedInEvent event) {
-		NetworkHelper.clearClientCache();
+		DataHelper.clearClientCache();
 	}
 
 	@SubscribeEvent

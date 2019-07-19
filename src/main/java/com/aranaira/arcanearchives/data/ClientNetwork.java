@@ -1,21 +1,17 @@
 package com.aranaira.arcanearchives.data;
 
-import com.aranaira.arcanearchives.data.NetworkHelper.HiveMembershipInfo;
+import com.aranaira.arcanearchives.data.DataHelper.HiveMembershipInfo;
 import com.aranaira.arcanearchives.data.ServerNetwork.SynchroniseInfo;
 import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
-import com.aranaira.arcanearchives.network.NetworkHandler;
+import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketNetworks;
 import com.aranaira.arcanearchives.util.types.ManifestList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -53,12 +49,12 @@ public class ClientNetwork {
 	// but does not include the manifest info.
 	public void synchroniseData () {
 		PacketNetworks.Request request = new PacketNetworks.Request(PacketNetworks.SynchroniseType.DATA);
-		NetworkHandler.CHANNEL.sendToServer(request);
+		Networking.CHANNEL.sendToServer(request);
 	}
 
 	public void synchroniseManifest () {
 		PacketNetworks.Request request = new PacketNetworks.Request(PacketNetworks.SynchroniseType.MANIFEST);
-		NetworkHandler.CHANNEL.sendToServer(request);
+		Networking.CHANNEL.sendToServer(request);
 	}
 
 	public void synchroniseManifest (Consumer<ManifestItemHandler> callback) {

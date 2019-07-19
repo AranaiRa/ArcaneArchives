@@ -1,12 +1,11 @@
 package com.aranaira.arcanearchives.items.gems.oval;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.gems.GemUtil;
 import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler;
 import com.aranaira.arcanearchives.items.gems.GemUtil.GemStack;
-import com.aranaira.arcanearchives.network.NetworkHandler;
+import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketArcaneGems.GemParticle;
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
@@ -80,7 +79,7 @@ public class MunchstoneItem extends ArcaneGemItem {
 					Vec3d pos = player.getPositionVector().add(0, 1, 0);
 					GemParticle packet = new GemParticle(cut, color, pos, pos);
 					NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, pos.x, pos.y, pos.z, 160);
-					NetworkHandler.CHANNEL.sendToAllAround(packet, tp);
+					Networking.CHANNEL.sendToAllAround(packet, tp);
 					return true;
 				}
 			}
@@ -134,7 +133,7 @@ public class MunchstoneItem extends ArcaneGemItem {
 
 							GemParticle packet = new GemParticle(cut, color, blockPosToVector(pos, true), blockPosToVector(pos, true));
 							NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, pos.getX(), pos.getY(), pos.getZ(), 40);
-							NetworkHandler.CHANNEL.sendToAllAround(packet, tp);
+							Networking.CHANNEL.sendToAllAround(packet, tp);
 						}
 						return EnumActionResult.SUCCESS;
 					}

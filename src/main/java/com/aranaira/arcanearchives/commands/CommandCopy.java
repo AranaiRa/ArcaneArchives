@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.commands;
 
-import com.aranaira.arcanearchives.network.NetworkHandler;
+import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketClipboard.CopyToClipboard;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -38,7 +38,7 @@ public class CommandCopy extends CommandBase {
 
 		if (sender.getCommandSenderEntity() instanceof EntityPlayer) {
 			CopyToClipboard packet = new CopyToClipboard(message.toString());
-			NetworkHandler.CHANNEL.sendTo(packet, (EntityPlayerMP) sender);
+			Networking.CHANNEL.sendTo(packet, (EntityPlayerMP) sender);
 			sender.sendMessage(new TextComponentString("Copied to the clipboard."));
 		}
 	}

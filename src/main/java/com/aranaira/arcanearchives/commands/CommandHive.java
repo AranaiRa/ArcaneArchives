@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.commands;
 
 import com.aranaira.arcanearchives.data.HiveSaveData;
 import com.aranaira.arcanearchives.data.HiveSaveData.Hive;
-import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.data.DataHelper;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -45,7 +45,7 @@ public class CommandHive extends CommandBase {
 		if (sender instanceof EntityPlayer) {
 			PlayerProfileCache cache = server.getPlayerProfileCache();
 			EntityPlayer player = (EntityPlayer) sender;
-			HiveSaveData saveData = NetworkHelper.getHiveData(player.world);
+			HiveSaveData saveData = DataHelper.getHiveData(player.world);
 			Hive hive = saveData.getHiveByMember(player.getUniqueID());
 			if (hive == null) {
 				player.sendMessage(new TextComponentString("You are not in a hive."));

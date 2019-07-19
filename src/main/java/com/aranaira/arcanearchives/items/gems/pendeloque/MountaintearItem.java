@@ -3,7 +3,7 @@ package com.aranaira.arcanearchives.items.gems.pendeloque;
 import com.aranaira.arcanearchives.entity.EntityItemMountaintear;
 import com.aranaira.arcanearchives.items.gems.*;
 import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler;
-import com.aranaira.arcanearchives.network.NetworkHandler;
+import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketArcaneGems.GemParticle;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -93,7 +93,7 @@ public class MountaintearItem extends ArcaneGemItem {
 
 					GemParticle packet = new GemParticle(cut, color, start, end);
 					NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, start.x, start.y, start.z, 160);
-					NetworkHandler.CHANNEL.sendToAllAround(packet, tp);
+					Networking.CHANNEL.sendToAllAround(packet, tp);
 				}
 			}
 			else {

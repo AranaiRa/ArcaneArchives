@@ -5,7 +5,7 @@ import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.gems.GemUtil;
 import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler;
 import com.aranaira.arcanearchives.items.gems.GemUtil.GemStack;
-import com.aranaira.arcanearchives.network.NetworkHandler;
+import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketArcaneGems.GemParticle;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -71,7 +71,7 @@ public class Elixirspindle extends ArcaneGemItem {
 					Vec3d pos = player.getPositionVector().add(0, 1, 0);
 					GemParticle packet = new GemParticle(cut, color, pos, pos);
 					NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, pos.x, pos.y, pos.z, 160);
-					NetworkHandler.CHANNEL.sendToAllAround(packet, tp);
+					Networking.CHANNEL.sendToAllAround(packet, tp);
 					return true;
 				}
 			}

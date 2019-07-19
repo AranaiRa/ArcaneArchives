@@ -1,7 +1,6 @@
 package com.aranaira.arcanearchives.util.types;
 
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
-import com.aranaira.arcanearchives.util.types.TileList.TileListIterable;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -82,5 +81,10 @@ public interface ITileList extends Iterable<IteRef> {
 		ref.updateTile(tile);
 	}
 
-	TileListIterable iterable ();
+	default TileListIterable iterable () {
+		return new TileListIterable(iterator());
+	}
+
+	int getSize ();
+
 }

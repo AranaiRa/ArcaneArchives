@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.network;
 
-import com.aranaira.arcanearchives.network.NetworkHandler.ClientHandler;
+import com.aranaira.arcanearchives.network.Handlers.ClientHandler;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

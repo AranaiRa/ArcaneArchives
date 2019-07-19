@@ -1,11 +1,11 @@
 package com.aranaira.arcanearchives.data;
 
-import com.aranaira.arcanearchives.data.NetworkHelper.HiveMembershipInfo;
+import com.aranaira.arcanearchives.data.DataHelper.HiveMembershipInfo;
 import com.aranaira.arcanearchives.data.ServerNetwork.SynchroniseInfo;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.util.types.ISerializeByteBuf;
 import com.aranaira.arcanearchives.util.types.ManifestList;
-import com.aranaira.arcanearchives.util.types.TileList;
+import com.aranaira.arcanearchives.util.types.TileListIterable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -75,7 +75,7 @@ public interface IServerNetwork extends IHiveBase {
 
 	void rebuildManifest ();
 
-	TileList.TileListIterable getManifestTileEntities ();
+	TileListIterable getManifestTileEntities ();
 
 	EntityPlayer getPlayer ();
 

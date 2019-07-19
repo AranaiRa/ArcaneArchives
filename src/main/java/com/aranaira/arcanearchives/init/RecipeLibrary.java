@@ -6,7 +6,7 @@ import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.HiveSaveData;
 import com.aranaira.arcanearchives.data.HiveSaveData.Hive;
-import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.integration.astralsorcery.Liquefaction;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
@@ -78,33 +78,33 @@ public class RecipeLibrary {
 
 		LETTER_OF_INVITATION_RECIPE = GCTRecipeList.instance.makeAndAddRecipeWithCreatorAndCondition("letter_invitation", new ItemStack(ItemRegistry.LETTER_OF_INVITATION, 1), new IngredientStack("paper", 3), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 1), new IngredientStack("dyeLightBlue", 1)).addCondition((EntityPlayer player, TileEntity tile) -> {
 			if (!player.world.isRemote) {
-				HiveSaveData saveData = NetworkHelper.getHiveData(player.world);
+				HiveSaveData saveData = DataHelper.getHiveData(player.world);
 				Hive hive = saveData.getHiveByMember(player.getUniqueID());
 				return (hive == null || hive.owner.equals(player.getUniqueID()));
 			} else {
-				ClientNetwork network = NetworkHelper.getClientNetwork();
+				ClientNetwork network = DataHelper.getClientNetwork();
 				return network.ownsHive() || !network.inHive();
 			}
 		});
 
 		LETTER_OF_RESIGNATION_RECIPE = GCTRecipeList.instance.makeAndAddRecipeWithCreatorAndCondition("letter_resignation", new ItemStack(ItemRegistry.LETTER_OF_RESIGNATION, 1), new IngredientStack("paper", 3), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 1), new IngredientStack("dyePink", 1)).addCondition((EntityPlayer player, TileEntity tile) -> {
 			if (!player.world.isRemote) {
-				HiveSaveData saveData = NetworkHelper.getHiveData(player.world);
+				HiveSaveData saveData = DataHelper.getHiveData(player.world);
 				Hive hive = saveData.getHiveByMember(player.getUniqueID());
 				return hive != null;
 			} else {
-				ClientNetwork network = NetworkHelper.getClientNetwork();
+				ClientNetwork network = DataHelper.getClientNetwork();
 				return network.inHive();
 			}
 		});
 
 		WRIT_OF_EXPULSION_RECIPE = GCTRecipeList.instance.makeAndAddRecipeWithCreatorAndCondition("writ_expulsion", new ItemStack(ItemRegistry.WRIT_OF_EXPULSION, 1), new IngredientStack("paper", 3), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 1), new IngredientStack("dyeRed", 1)).addCondition((EntityPlayer player, TileEntity tile) -> {
 			if (!player.world.isRemote) {
-				HiveSaveData saveData = NetworkHelper.getHiveData(player.world);
+				HiveSaveData saveData = DataHelper.getHiveData(player.world);
 				Hive hive = saveData.getHiveByMember(player.getUniqueID());
 				return hive != null && hive.owner.equals(player.getUniqueID());
 			} else {
-				ClientNetwork network = NetworkHelper.getClientNetwork();
+				ClientNetwork network = DataHelper.getClientNetwork();
 				return network.inHive() && network.ownsHive();
 			}
 		});

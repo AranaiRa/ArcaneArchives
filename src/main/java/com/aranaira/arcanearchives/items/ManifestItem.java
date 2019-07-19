@@ -4,7 +4,7 @@ import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.Keybinds;
 import com.aranaira.arcanearchives.data.ClientNetwork;
-import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.events.LineHandler;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import mcp.MethodsReturnNonnullByDefault;
@@ -48,7 +48,7 @@ public class ManifestItem extends ItemTemplate {
 		if (playerIn.isSneaking()) {
 			LineHandler.clearChests(playerIn.dimension);
 		} else {
-			ClientNetwork network = NetworkHelper.getClientNetwork(playerIn.getUniqueID());
+			ClientNetwork network = DataHelper.getClientNetwork(playerIn.getUniqueID());
 			network.manifestItems.clear();
 			network.synchroniseManifest();
 

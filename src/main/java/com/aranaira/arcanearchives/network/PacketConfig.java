@@ -2,18 +2,16 @@ package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.config.ConfigHandler;
-import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
-import com.aranaira.arcanearchives.network.NetworkHandler.EmptyMessageClient;
-import com.aranaira.arcanearchives.network.NetworkHandler.EmptyMessageServer;
-import com.aranaira.arcanearchives.network.NetworkHandler.ServerHandler;
+import com.aranaira.arcanearchives.network.Handlers.EmptyMessageClient;
+import com.aranaira.arcanearchives.network.Handlers.ServerHandler;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import scala.tools.nsc.doc.model.Def;
 
 public class PacketConfig {
 	public static class MaxDistance implements IMessage {
@@ -48,7 +46,7 @@ public class PacketConfig {
 
 				EntityPlayerMP player = context.getServerHandler().player;
 
-				ServerNetwork network = NetworkHelper.getServerNetwork(player.getUniqueID(), server.getWorld(0));
+				ServerNetwork network = DataHelper.getServerNetwork(player.getUniqueID(), server.getWorld(0));
 				if (network == null) {
 					ArcaneArchives.logger.error(() -> "Network was null when processing sync packet for " + player.getUniqueID());
 					return;
@@ -66,7 +64,7 @@ public class PacketConfig {
 		@Override
 		public void processMessage (RequestMaxDistance message, MessageContext ctx) {
 			MaxDistance packet = new MaxDistance(ConfigHandler.ManifestConfig.MaxDistance);
-			NetworkHandler.CHANNEL.sendToServer(packet);
+			Networking.CHANNEL.sendToServer(packet);
 		}
 	}
 
@@ -77,7 +75,7 @@ public class PacketConfig {
 		@Override
 		public void processMessage (RequestDefaultRoutingType message, MessageContext ctx) {
 			DefaultRoutingType packet = new DefaultRoutingType(ConfigHandler.defaultRoutingNoNewItems);
-			NetworkHandler.CHANNEL.sendToServer(packet);
+			Networking.CHANNEL.sendToServer(packet);
 		}
 	}
 
@@ -112,7 +110,7 @@ public class PacketConfig {
 
 				EntityPlayerMP player = context.getServerHandler().player;
 
-				ServerNetwork network = NetworkHelper.getServerNetwork(player.getUniqueID(), server.getWorld(0));
+				ServerNetwork network = DataHelper.getServerNetwork(player.getUniqueID(), server.getWorld(0));
 				if (network == null) {
 					ArcaneArchives.logger.error(() -> "Network was null when processing sync packet for " + player.getUniqueID());
 					return;

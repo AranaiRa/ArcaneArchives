@@ -5,11 +5,12 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.commands.CommandBrazier;
 import com.aranaira.arcanearchives.commands.CommandCopy;
 import com.aranaira.arcanearchives.commands.CommandHive;
-import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.commands.CommandTiles;
+import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.events.ClientTickHandler;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.RecipeLibrary;
-import com.aranaira.arcanearchives.network.NetworkHandler;
+import com.aranaira.arcanearchives.network.Networking;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -24,7 +25,7 @@ public class CommonProxy {
 		ArcaneArchives.logger = event.getModLog();
 		NetworkRegistry.INSTANCE.registerGuiHandler(ArcaneArchives.instance, new AAGuiHandler());
 
-		NetworkHandler.registerPackets();
+		Networking.registerPackets();
 	}
 
 	public void init (FMLInitializationEvent event) {
@@ -47,10 +48,11 @@ public class CommonProxy {
 		event.registerServerCommand(new CommandHive());
 		event.registerServerCommand(new CommandBrazier());
 		event.registerServerCommand(new CommandCopy());
+		event.registerServerCommand(new CommandTiles());
 	}
 
 	public void serverStarted (FMLServerStartedEvent event) {
-		NetworkHelper.clearClientCache(); // has no effect on the server
+		DataHelper.clearClientCache(); // has no effect on the server
 	}
 
 	public void loadComplete (FMLLoadCompleteEvent event) {

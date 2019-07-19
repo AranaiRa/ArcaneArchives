@@ -3,15 +3,11 @@ package com.aranaira.arcanearchives.config;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.gui.GUIManifest;
 import com.aranaira.arcanearchives.items.gems.oval.MunchstoneItem;
-import com.aranaira.arcanearchives.items.gems.oval.OrderstoneItem;
-import com.aranaira.arcanearchives.network.NetworkHandler;
+import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketConfig.DefaultRoutingType;
 import com.aranaira.arcanearchives.network.PacketConfig.MaxDistance;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.Config.RequiresMcRestart;
 import net.minecraftforge.common.config.ConfigManager;
@@ -19,7 +15,6 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -43,10 +38,10 @@ public class ConfigHandler {
 		if (event.getModID().equals(ArcaneArchives.MODID)) {
 			parseColours();
 			MaxDistance packet = new MaxDistance(ManifestConfig.MaxDistance);
-			NetworkHandler.CHANNEL.sendToServer(packet);
+			Networking.CHANNEL.sendToServer(packet);
 
 			DefaultRoutingType packet2 = new DefaultRoutingType(defaultRoutingNoNewItems);
-			NetworkHandler.CHANNEL.sendToServer(packet2);
+			Networking.CHANNEL.sendToServer(packet2);
 
 			Minecraft minecraft = Minecraft.getMinecraft();
 			if (minecraft.currentScreen instanceof GUIManifest) {

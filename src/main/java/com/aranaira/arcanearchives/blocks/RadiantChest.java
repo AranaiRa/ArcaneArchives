@@ -3,13 +3,12 @@ package com.aranaira.arcanearchives.blocks;
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
-import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.events.LineHandler;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.DropHelper;
-import com.aranaira.arcanearchives.util.ItemUtilities;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -63,7 +62,7 @@ public class RadiantChest extends BlockTemplate {
 
 	@Override
 	public boolean onBlockActivated (World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		LineHandler.removeLine(pos);
+		LineHandler.removeLine(pos, playerIn.dimension);
 
 		if (worldIn.isRemote) {
 			return true;
@@ -118,12 +117,12 @@ public class RadiantChest extends BlockTemplate {
 
 	@Override
 	public void breakBlock (World worldIn, BlockPos pos, IBlockState state) {
-		LineHandler.removeLine(pos);
+		LineHandler.removeLine(pos, worldIn.provider.getDimension());
 
 		if (!worldIn.isRemote) {
 			TileEntity te = worldIn.getTileEntity(pos);
 			if (te instanceof RadiantChestTileEntity) {
-				ServerNetwork network = NetworkHelper.getServerNetwork(((RadiantChestTileEntity) te).networkId, worldIn);
+				ServerNetwork network = DataHelper.getServerNetwork(((RadiantChestTileEntity) te).networkId, worldIn);
 
 				// This is never an IInventory
 				IItemHandler inv = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);

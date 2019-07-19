@@ -1,11 +1,8 @@
 package com.aranaira.arcanearchives.inventory;
 
-import com.aranaira.arcanearchives.data.NetworkHelper;
-import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.inventory.slots.SlotExtended;
 import com.aranaira.arcanearchives.network.PacketRadiantChest.MessageSyncExtendedSlotContents;
-import com.aranaira.arcanearchives.network.NetworkHandler;
-import com.aranaira.arcanearchives.network.PacketNetworks;
+import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketRadiantChest.SetName;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity.TrackingExtendedItemStackHandler;
@@ -16,11 +13,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketSetSlot;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.NonNullList;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import javax.annotation.Nullable;
 import java.util.Set;
@@ -556,7 +549,7 @@ public class ContainerRadiantChest extends Container {
 			if (this.inventorySlots.get(i) instanceof SlotExtended) {
 				ItemStack stack = (this.inventorySlots.get(i)).getStack();
 
-				NetworkHandler.CHANNEL.sendTo(new MessageSyncExtendedSlotContents(this.windowId, i, stack), player);
+				Networking.CHANNEL.sendTo(new MessageSyncExtendedSlotContents(this.windowId, i, stack), player);
 			}
 		}
 
@@ -565,7 +558,7 @@ public class ContainerRadiantChest extends Container {
 
 	public void syncSlot (EntityPlayerMP player, int slot, ItemStack stack) {
 		if (getSlot(slot) instanceof SlotExtended) {
-			NetworkHandler.CHANNEL.sendTo(new MessageSyncExtendedSlotContents(this.windowId, slot, stack), player);
+			Networking.CHANNEL.sendTo(new MessageSyncExtendedSlotContents(this.windowId, slot, stack), player);
 		}
 	}
 
@@ -580,7 +573,7 @@ public class ContainerRadiantChest extends Container {
 
 	public void setName (String name) {
 		SetName packet = new SetName(tile.getPos(), name, tile.dimension);
-		NetworkHandler.CHANNEL.sendToServer(packet);
+		Networking.CHANNEL.sendToServer(packet);
 		tile.setChestName(name);
 	}
 }

@@ -5,6 +5,7 @@ import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.events.LineHandler;
 import com.aranaira.arcanearchives.util.ColorHelper;
 import com.aranaira.arcanearchives.util.ManifestTracking;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.inventory.Slot;
@@ -40,7 +41,7 @@ public abstract class MixinGuiContainer {
 
 	@Inject(method = "onGuiClosed", at = @At(value = "RETURN"))
 	private void onGuiClosed (CallbackInfo callbackInfo) {
-		LineHandler.checkClear();
+		LineHandler.checkClear(Minecraft.getMinecraft().player.dimension);
 	}
 }
 

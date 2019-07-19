@@ -134,7 +134,7 @@ public class RadiantTank extends BlockTemplate {
 
 	@Override
 	public boolean onBlockActivated (World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		LineHandler.removeLine(pos);
+		LineHandler.removeLine(pos, player.dimension);
 
 		if (!world.isRemote) {
 			ItemStack heldItem = player.getHeldItemMainhand();
@@ -176,7 +176,7 @@ public class RadiantTank extends BlockTemplate {
 	@Override
 	@ParametersAreNonnullByDefault
 	public void breakBlock (World world, BlockPos pos, IBlockState state) {
-		LineHandler.removeLine(pos);
+		LineHandler.removeLine(pos, world.provider.getDimension());
 
 		world.updateComparatorOutputLevel(pos, this);
 		super.breakBlock(world, pos, state);

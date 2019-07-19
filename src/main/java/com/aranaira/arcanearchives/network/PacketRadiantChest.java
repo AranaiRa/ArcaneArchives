@@ -1,10 +1,9 @@
 package com.aranaira.arcanearchives.network;
 
-import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.inventory.ContainerRadiantChest;
-import com.aranaira.arcanearchives.network.NetworkHandler.EmptyMessageServer;
-import com.aranaira.arcanearchives.network.NetworkHandler.ServerHandler;
+import com.aranaira.arcanearchives.network.Handlers.ServerHandler;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.NetworkUtils;
@@ -17,7 +16,6 @@ import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.play.server.SPacketConfirmTransaction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -77,8 +75,8 @@ public class PacketRadiantChest {
 	}
 
 	public static class ToggleBrazier implements IMessage {
-		private UUID networkId = NetworkHelper.INVALID;
-		private UUID tileId = NetworkHelper.INVALID;
+		private UUID networkId = DataHelper.INVALID;
+		private UUID tileId = DataHelper.INVALID;
 
 		public ToggleBrazier () {
 		}
@@ -100,8 +98,8 @@ public class PacketRadiantChest {
 
 		@Override
 		public void toBytes (ByteBuf buf) {
-			if (networkId == null) networkId = NetworkHelper.INVALID;
-			if (tileId == null) tileId = NetworkHelper.INVALID;
+			if (networkId == null) networkId = DataHelper.INVALID;
+			if (tileId == null) tileId = DataHelper.INVALID;
 
 			long most = networkId.getMostSignificantBits();
 			long least = networkId.getLeastSignificantBits();
@@ -116,9 +114,9 @@ public class PacketRadiantChest {
 		public static class Handler implements ServerHandler<ToggleBrazier> {
 			@Override
 			public void processMessage (ToggleBrazier message, MessageContext ctx) {
-				if (message.networkId.equals(NetworkHelper.INVALID) || message.tileId.equals(NetworkHelper.INVALID)) return;
+				if (message.networkId.equals(DataHelper.INVALID) || message.tileId.equals(DataHelper.INVALID)) return;
 
-				ServerNetwork network = NetworkHelper.getServerNetwork(message.networkId, ctx.getServerHandler().player.world);
+				ServerNetwork network = DataHelper.getServerNetwork(message.networkId, ctx.getServerHandler().player.world);
 				if (network != null) {
 					ImmanenceTileEntity tile = network.getImmanenceTile(message.tileId);
 					if (tile instanceof RadiantChestTileEntity) {

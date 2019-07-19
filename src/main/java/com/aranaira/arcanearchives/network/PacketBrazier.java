@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.network;
 
-import com.aranaira.arcanearchives.network.NetworkHandler.EmptyTileMessageServer;
-import com.aranaira.arcanearchives.network.NetworkHandler.TileHandlerServer;
+import com.aranaira.arcanearchives.network.Handlers.EmptyTileMessageServer;
+import com.aranaira.arcanearchives.network.Handlers.TileHandlerServer;
 import com.aranaira.arcanearchives.tileentities.BrazierTileEntity;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import io.netty.buffer.ByteBuf;

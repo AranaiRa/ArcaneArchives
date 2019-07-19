@@ -1,13 +1,11 @@
 package com.aranaira.arcanearchives.items.templates;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.RadiantResonator;
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.blocks.unused.MatrixCrystalCore;
 import com.aranaira.arcanearchives.data.ClientNetwork;
-import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
-import com.aranaira.arcanearchives.init.BlockRegistry;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -43,11 +41,11 @@ public class ItemBlockTemplate extends ItemBlock {
 
 		if (placeLimit != -1) {
 			if (world.isRemote) {
-				ClientNetwork network = NetworkHelper.getClientNetwork(player.getUniqueID());
+				ClientNetwork network = DataHelper.getClientNetwork(player.getUniqueID());
 				totalResonators = network.getTotalResonators();
 				totalCores = network.getTotalCores();
 			} else {
-				ServerNetwork network = NetworkHelper.getServerNetwork(player.getUniqueID(), world);
+				ServerNetwork network = DataHelper.getServerNetwork(player.getUniqueID(), world);
 				if (network == null) {
 					player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.invalidnetwork"), true);
 					return EnumActionResult.FAIL;

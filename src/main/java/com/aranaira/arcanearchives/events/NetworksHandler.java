@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.events;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.data.DataHelper;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
@@ -10,6 +10,6 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 public class NetworksHandler {
 	@SubscribeEvent
 	public static void playerLoggedIn (PlayerEvent.PlayerLoggedInEvent event) {
-		NetworkHelper.clearClientCache();
+		DataHelper.clearClientCache();
 	}
 }

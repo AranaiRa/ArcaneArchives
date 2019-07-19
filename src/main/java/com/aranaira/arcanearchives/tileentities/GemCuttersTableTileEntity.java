@@ -1,17 +1,14 @@
 package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.RecipeLibrary;
-import com.aranaira.arcanearchives.inventory.handlers.ExtendedItemStackHandler;
 import com.aranaira.arcanearchives.inventory.handlers.ITrackingHandler;
-import com.aranaira.arcanearchives.network.NetworkHandler;
+import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketGemCutters;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import com.aranaira.arcanearchives.util.ItemUtilities;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
-import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -86,7 +83,7 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 		}
 
 		PacketGemCutters.ChangeRecipe packet = new PacketGemCutters.ChangeRecipe(loc, getPos(), world.provider.getDimension());
-		NetworkHandler.CHANNEL.sendToServer(packet);
+		Networking.CHANNEL.sendToServer(packet);
 	}
 
 	@Override

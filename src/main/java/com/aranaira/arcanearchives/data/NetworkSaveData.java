@@ -34,7 +34,7 @@ public class NetworkSaveData extends WorldSavedData {
 
 	@Nullable
 	public ServerNetwork getNetwork (@Nullable UUID playerID) {
-		if (playerID == null || playerID == NetworkHelper.INVALID) {
+		if (playerID == null || playerID == DataHelper.INVALID) {
 			return null;
 		}
 

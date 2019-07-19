@@ -2,7 +2,6 @@ package com.aranaira.arcanearchives.util.types;
 
 import net.minecraft.world.World;
 
-import java.util.Iterator;
 import java.util.List;
 
 public class TileList extends ReferenceList<IteRef> implements ITileList {
@@ -35,11 +34,8 @@ public class TileList extends ReferenceList<IteRef> implements ITileList {
 		return new TileListIterable(iterator());
 	}
 
-	public static class TileListIterable extends ReferenceListIterable<IteRef> implements Iterable<IteRef> {
-		public TileListIterable (Iterator<IteRef> iter) {
-			super(iter);
-		}
+	@Override
+	public int getSize () {
+		return this.size();
 	}
-
-
 }

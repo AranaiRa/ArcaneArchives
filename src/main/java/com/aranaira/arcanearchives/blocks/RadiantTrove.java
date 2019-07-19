@@ -75,7 +75,7 @@ public class RadiantTrove extends BlockDirectionalTemplate {
 
 	@Override
 	public boolean onBlockActivated (World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		LineHandler.removeLine(pos);
+		LineHandler.removeLine(pos, player.dimension);
 
 		if (!world.isRemote && hand == EnumHand.MAIN_HAND) {
 			RadiantTroveTileEntity te = WorldUtil.getTileEntity(RadiantTroveTileEntity.class, world, pos);
@@ -93,7 +93,7 @@ public class RadiantTrove extends BlockDirectionalTemplate {
 	@Override
 	public void onBlockClicked (World world, BlockPos pos, EntityPlayer player) {
 		IBlockState state = world.getBlockState(pos);
-		LineHandler.removeLine(pos);
+		LineHandler.removeLine(pos, player.dimension);
 
 		if (state.getBlock() == BlockRegistry.RADIANT_TROVE) {
 			if (!world.isRemote) {
@@ -120,7 +120,7 @@ public class RadiantTrove extends BlockDirectionalTemplate {
 	@Override
 	@ParametersAreNonnullByDefault
 	public void breakBlock (World world, BlockPos pos, IBlockState state) {
-		LineHandler.removeLine(pos);
+		LineHandler.removeLine(pos, world.provider.getDimension());
 
 		if (!world.isRemote) {
 			RadiantTroveTileEntity te = WorldUtil.getTileEntity(RadiantTroveTileEntity.class, world, pos);

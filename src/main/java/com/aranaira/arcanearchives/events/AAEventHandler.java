@@ -3,7 +3,7 @@ package com.aranaira.arcanearchives.events;
 import com.aranaira.arcanearchives.client.render.RenderGemcasting;
 import com.aranaira.arcanearchives.client.render.RenderGemcasting.EnumGemGuiMode;
 import com.aranaira.arcanearchives.config.ConfigHandler;
-import com.aranaira.arcanearchives.data.NetworkHelper;
+import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.PlayerSaveData;
 import com.aranaira.arcanearchives.entity.EntityItemMountaintear;
 import com.aranaira.arcanearchives.entity.ai.AIResonatorSit;
@@ -22,7 +22,7 @@ import com.aranaira.arcanearchives.items.gems.asscher.SalvegleamItem;
 import com.aranaira.arcanearchives.items.gems.asscher.Slaughtergleam;
 import com.aranaira.arcanearchives.items.gems.pampel.Elixirspindle;
 import com.aranaira.arcanearchives.items.gems.trillion.StormwayItem;
-import com.aranaira.arcanearchives.network.NetworkHandler;
+import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketConfig.RequestDefaultRoutingType;
 import com.aranaira.arcanearchives.network.PacketConfig.RequestMaxDistance;
 import com.aranaira.arcanearchives.network.PacketRadiantAmphora.Toggle;
@@ -91,9 +91,9 @@ public class AAEventHandler {
 		EntityPlayer player = event.player;
 		if (!player.world.isRemote) {
 			RequestMaxDistance packet = new RequestMaxDistance();
-			NetworkHandler.CHANNEL.sendTo(packet, (EntityPlayerMP) player);
+			Networking.CHANNEL.sendTo(packet, (EntityPlayerMP) player);
 			RequestDefaultRoutingType packet2 = new RequestDefaultRoutingType();
-			NetworkHandler.CHANNEL.sendTo(packet2, (EntityPlayerMP) player);
+			Networking.CHANNEL.sendTo(packet2, (EntityPlayerMP) player);
 		}
 	}
 
@@ -154,7 +154,7 @@ public class AAEventHandler {
 
 	@SubscribeEvent
 	public static void onBlockActivated (PlayerInteractEvent.RightClickBlock event) {
-		LineHandler.removeLine(event.getPos());
+		LineHandler.removeLine(event.getPos(), event.getEntity().dimension);
 	}
 
 	@SubscribeEvent
@@ -163,14 +163,14 @@ public class AAEventHandler {
 		Item item = event.getEntityPlayer().inventory.getCurrentItem().getItem();
 		if (item == ItemRegistry.RADIANT_AMPHORA) {
 			Toggle packet = new Toggle();
-			NetworkHandler.CHANNEL.sendToServer(packet);
+			Networking.CHANNEL.sendToServer(packet);
 		}else if (item instanceof ArcaneGemItem) {
 			ItemStack stack = event.getEntityPlayer().getHeldItemMainhand();
 			ArcaneGemItem agi = (ArcaneGemItem) stack.getItem();
 
 			if (agi.hasToggleMode()) {
 				com.aranaira.arcanearchives.network.PacketArcaneGems.Toggle packet = new com.aranaira.arcanearchives.network.PacketArcaneGems.Toggle();
-				NetworkHandler.CHANNEL.sendToServer(packet);
+				Networking.CHANNEL.sendToServer(packet);
 			}
 		}
 	}
@@ -446,7 +446,7 @@ public class AAEventHandler {
 	}
 
 	private static void givePlayerBookMaybe (EntityPlayer player, World world, boolean bookshelf) {
-		PlayerSaveData save = NetworkHelper.getPlayerData(world, player);
+		PlayerSaveData save = DataHelper.getPlayerData(world, player);
 		if (save.receivedBook) {
 			return;
 		}
@@ -483,7 +483,7 @@ public class AAEventHandler {
 			} else if (item == ItemRegistry.TOME_OF_ARCANA) {
 				World world = event.player.world;
 				EntityPlayer player = event.player;
-				PlayerSaveData save = NetworkHelper.getPlayerData(world, player);
+				PlayerSaveData save = DataHelper.getPlayerData(world, player);
 				save.receivedBook = true;
 				save.markDirty();
 				world.getMapStorage().saveAllData();

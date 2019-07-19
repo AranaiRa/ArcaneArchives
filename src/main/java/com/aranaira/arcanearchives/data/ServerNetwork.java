@@ -1,9 +1,8 @@
 package com.aranaira.arcanearchives.data;
 
-import com.aranaira.arcanearchives.data.NetworkHelper.HiveMembershipInfo;
-import com.aranaira.arcanearchives.network.NetworkHandler;
+import com.aranaira.arcanearchives.data.DataHelper.HiveMembershipInfo;
+import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketNetworks;
-import com.aranaira.arcanearchives.network.PacketNetworks.SynchroniseType;
 import com.aranaira.arcanearchives.tileentities.IManifestTileEntity;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
@@ -12,10 +11,7 @@ import com.aranaira.arcanearchives.util.ManifestUtil;
 import com.aranaira.arcanearchives.util.ManifestUtil.CollatedEntry;
 import com.aranaira.arcanearchives.util.ManifestUtil.ItemEntry;
 import com.aranaira.arcanearchives.util.TileUtils;
-import com.aranaira.arcanearchives.util.types.ISerializeByteBuf;
-import com.aranaira.arcanearchives.util.types.IteRef;
-import com.aranaira.arcanearchives.util.types.ManifestList;
-import com.aranaira.arcanearchives.util.types.TileList;
+import com.aranaira.arcanearchives.util.types.*;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -259,7 +255,7 @@ public class ServerNetwork implements IServerNetwork {
 		EntityPlayer player = getPlayer();
 		if (player != null) {
 			IMessage packet = new PacketNetworks.DataResponse(buildSynchroniseData());
-			NetworkHandler.CHANNEL.sendTo(packet, (EntityPlayerMP) player);
+			Networking.CHANNEL.sendTo(packet, (EntityPlayerMP) player);
 		}
 	}
 
@@ -268,13 +264,13 @@ public class ServerNetwork implements IServerNetwork {
 		EntityPlayer player = getPlayer();
 		if (player != null) {
 			IMessage packet = new PacketNetworks.HiveResponse(buildHiveMembershipData());
-			NetworkHandler.CHANNEL.sendTo(packet, (EntityPlayerMP) player);
+			Networking.CHANNEL.sendTo(packet, (EntityPlayerMP) player);
 		}
 	}
 
 	@Override
 	public HiveMembershipInfo buildHiveMembershipData () {
-		return NetworkHelper.getHiveMembershipInfo(uuid, getWorld());
+		return DataHelper.getHiveMembershipInfo(uuid, getWorld());
 	}
 
 	@Override
@@ -284,7 +280,7 @@ public class ServerNetwork implements IServerNetwork {
 
 	@Override
 	public boolean isHiveMember () {
-		return NetworkHelper.isHiveMember(uuid, getWorld());
+		return DataHelper.isHiveMember(uuid, getWorld());
 	}
 
 	@Override
@@ -303,8 +299,8 @@ public class ServerNetwork implements IServerNetwork {
 	@Nullable
 	public HiveNetwork getHiveNetwork () {
 		World world = getWorld();
-		if (NetworkHelper.isHiveMember(uuid, world)) {
-			return NetworkHelper.getHiveNetwork(uuid, world);
+		if (DataHelper.isHiveMember(uuid, world)) {
+			return DataHelper.getHiveNetwork(uuid, world);
 		} else {
 			return null;
 		}
@@ -330,7 +326,7 @@ public class ServerNetwork implements IServerNetwork {
 	 * TODO: Get rid of additional classes and use the predicate instead.
 	 */
 	@Override
-	public TileList.TileListIterable getManifestTileEntities () {
+	public TileListIterable getManifestTileEntities () {
 		return TileUtils.filterAssignableClass(this.tiles, IManifestTileEntity.class);
 	}
 

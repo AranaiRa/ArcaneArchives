@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.client.gui;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.gui.controls.InvisibleButton;
 import com.aranaira.arcanearchives.client.gui.controls.RightClickTextField;
 import com.aranaira.arcanearchives.client.render.RenderHelper.Color;
@@ -8,7 +7,7 @@ import com.aranaira.arcanearchives.client.render.RenderItemExtended;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerRadiantChest;
 import com.aranaira.arcanearchives.inventory.slots.SlotExtended;
-import com.aranaira.arcanearchives.network.NetworkHandler;
+import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketRadiantChest.ToggleBrazier;
 import com.aranaira.arcanearchives.tileentities.IBrazierRouting;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
@@ -149,7 +148,7 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 		if(button.id == 0) { //toggle button
 			if (tile.getUuid() != null && mc.player.getUniqueID() != null) {
 				ToggleBrazier packet = new ToggleBrazier(mc.player.getUniqueID(), tile.getUuid());
-				NetworkHandler.CHANNEL.sendToServer(packet);
+				Networking.CHANNEL.sendToServer(packet);
 			}
 		}
 	}

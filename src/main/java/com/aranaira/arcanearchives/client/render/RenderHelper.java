@@ -16,7 +16,7 @@ import java.util.Set;
 
 public class RenderHelper {
 	@SideOnly(Side.CLIENT)
-	public static void drawRays (long worldTime, Vec3d player_pos, Set<Vec3d> target_pos, float width) {
+	public static void drawRays (long worldTime, Vec3d player_pos, Set<Vec3d> target_pos) {
 		GlStateManager.pushMatrix();
 		GlStateManager.disableCull();
 		GlStateManager.disableLighting();
