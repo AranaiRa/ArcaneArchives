@@ -45,7 +45,9 @@ public class ManifestUtils {
 				}
 				ItemStack keyStack = entry.stack.copy();
 				keyStack.setCount(1);
-				phase1.put(keyStack, new ArrayList<>());
+				List<ItemEntry> entries = new ArrayList<>();
+				entries.add(entry);
+				phase1.put(keyStack, entries);
 			}
 		}
 
@@ -157,6 +159,7 @@ public class ManifestUtils {
 						entries.add(new ItemEntry(is, ite.getPos(), ite.dimension, mte.getDescriptor()));
 					}
 				}
+				done.add(new BlockPosDimension(ite.getPos(), ite.dimension));
 			}
 		}
 
