@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.client.render;
 
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
+import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity.Tags;
 import com.aranaira.arcanearchives.util.ColorUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -213,15 +214,22 @@ public class RadiantTankTESR extends TileEntitySpecialRenderer<RadiantTankTileEn
 
 			NBTTagCompound tag = stack.getTagCompound();
 			FluidHandlerItemStack handler = (FluidHandlerItemStack) stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
-			EntityPlayer player = Minecraft.getMinecraft().player;
+			int maximumCapacity = 16000;
+			if (tag.hasKey(Tags.MAXIMUM_CAPACITY)) {
+				maximumCapacity = tag.getInteger(Tags.MAXIMUM_CAPACITY);
+			}
 
 			if (handler != null) {
 				FluidStack fluid = handler.getFluid();
-				int capacity = RadiantTankTileEntity.BASE_CAPACITY * (tag.getInteger("upgrades") + 1);
-				render(fluid, capacity, BlockPos.ORIGIN);
+				boolean lighting = GL11.glIsEnabled(GL11.GL_LIGHTING);
+				if (!lighting) {
+					render(fluid, maximumCapacity, BlockPos.ORIGIN);
+				} else {
+					GlStateManager.disableLighting();
+					render(fluid, maximumCapacity, BlockPos.ORIGIN);
+					GlStateManager.enableLighting();
+				}
 			}
-
-
 		}
 	}
 }

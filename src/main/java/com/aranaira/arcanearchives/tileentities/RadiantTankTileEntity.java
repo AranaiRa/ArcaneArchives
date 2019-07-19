@@ -94,6 +94,8 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity implements IUpgra
 		if (inventory.getFluid() != null) {
 			tag.setTag(FluidHandlerItemStack.FLUID_NBT_KEY, inventory.writeToNBT(new NBTTagCompound()));
 		}
+		tag.setInteger(Tags.UPGRADE_COUNT, sizeUpgrades.getUpgradesCount());
+		tag.setInteger(Tags.MAXIMUM_CAPACITY, getCapacity());
 		tag.setTag(Tags.SIZE_UPGRADES, sizeUpgrades.serializeNBT());
 		tag.setTag(Tags.OPTIONAL_UPGRADES, optionalUpgrades.serializeNBT());
 		return tag;
@@ -173,6 +175,8 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity implements IUpgra
 		public static final String HANDLER_ITEM = "handler_item";
 		public static final String SIZE_UPGRADES = "size_upgrades";
 		public static final String OPTIONAL_UPGRADES = "optional_upgrades";
+		public static final String UPGRADE_COUNT = "upgrade_count";
+		public static final String MAXIMUM_CAPACITY = "maximum_capacity";
 
 		private Tags () {
 		}

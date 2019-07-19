@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.items.itemblocks;
 
 import com.aranaira.arcanearchives.inventory.handlers.TankItemFluidHandler;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
+import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity.Tags;
 import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
@@ -46,12 +47,16 @@ public class RadiantTankItem extends ItemBlock {
 			if (handler instanceof FluidHandlerItemStack) {
 				FluidHandlerItemStack tank = (FluidHandlerItemStack) handler;
 				fluid = tank.getFluid();
+				int maximumCapacity = 16000;
+				if (tag.hasKey(Tags.MAXIMUM_CAPACITY)) {
+					maximumCapacity = tag.getInteger(Tags.MAXIMUM_CAPACITY);
+				}
 				if (fluid != null) {
 					tooltip.add(I18n.format("arcanearchives.tooltip.tank.fluid", fluid.getLocalizedName()));
-					tooltip.add(I18n.format("arcanearchives.tooltip.tank.amount", fluid.amount, RadiantTankTileEntity.BASE_CAPACITY * (tag.getInteger("upgrades") + 1)));
+					tooltip.add(I18n.format("arcanearchives.tooltip.tank.amount", fluid.amount, maximumCapacity));
 				} else {
 					tooltip.add(I18n.format("arcanearchives.tooltip.tank.fluid", "None"));
-					tooltip.add(I18n.format("arcanearchives.tooltip.tank.amount", 0, RadiantTankTileEntity.BASE_CAPACITY * (tag.getInteger("upgrades") + 1)));
+					tooltip.add(I18n.format("arcanearchives.tooltip.tank.amount", 0, maximumCapacity));
 				}
 				if (tank.getTankProperties().length > 0) {
 					tooltip.add("Capacity is: " + tank.getTankProperties()[0].getCapacity());
