@@ -1,8 +1,8 @@
 package com.aranaira.arcanearchives.util;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.util.ManifestUtil.CollatedEntry;
-import com.aranaira.arcanearchives.util.ManifestUtil.EntryDescriptor;
+import com.aranaira.arcanearchives.util.ManifestUtils.CollatedEntry;
+import com.aranaira.arcanearchives.util.ManifestUtils.EntryDescriptor;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import net.minecraft.item.ItemStack;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
-public class ManifestTracking {
+public class ManifestTrackingUtils {
 	private static Int2ObjectOpenHashMap<Long2ObjectOpenHashMap<List<Ingredient>>> reference = new Int2ObjectOpenHashMap<>();
 	private static List<Ingredient> allTracked = new ArrayList<>();
 

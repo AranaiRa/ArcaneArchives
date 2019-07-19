@@ -10,8 +10,8 @@ import com.aranaira.arcanearchives.integration.jei.JEIUnderMouse;
 import com.aranaira.arcanearchives.items.ManifestItem;
 import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketArcaneGems.OpenSocket;
-import com.aranaira.arcanearchives.util.ManifestTracking;
-import com.aranaira.arcanearchives.util.ManifestUtil.CollatedEntry;
+import com.aranaira.arcanearchives.util.ManifestTrackingUtils;
+import com.aranaira.arcanearchives.util.ManifestUtils.CollatedEntry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -127,7 +127,7 @@ public class Keybinds {
 							List<Vec3d> visPositions = entry.getVecPositions();
 							visPositions.forEach(l -> LineHandler.addLine(l, mc.player.dimension));
 
-							ManifestTracking.add(entry);
+							ManifestTrackingUtils.add(entry);
 
 							addedValues = true;
 						}

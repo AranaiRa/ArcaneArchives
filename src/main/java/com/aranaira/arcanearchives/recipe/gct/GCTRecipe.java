@@ -2,8 +2,8 @@ package com.aranaira.arcanearchives.recipe.gct;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.api.IGCTRecipe;
-import com.aranaira.arcanearchives.util.types.IngredientStack;
-import com.aranaira.arcanearchives.util.types.IngredientsMatcher;
+import com.aranaira.arcanearchives.recipe.IngredientStack;
+import com.aranaira.arcanearchives.recipe.IngredientsMatcher;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;

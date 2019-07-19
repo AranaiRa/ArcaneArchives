@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.util.types;
+package com.aranaira.arcanearchives.recipe;
 
 import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.block.Block;

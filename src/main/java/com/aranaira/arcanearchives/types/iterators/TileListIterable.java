@@ -1,6 +1,6 @@
-package com.aranaira.arcanearchives.util.types.iterators;
+package com.aranaira.arcanearchives.types.iterators;
 
-import com.aranaira.arcanearchives.util.types.IteRef;
+import com.aranaira.arcanearchives.types.IteRef;
 
 import javax.annotation.Nonnull;
 import java.util.Iterator;

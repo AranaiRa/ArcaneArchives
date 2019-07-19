@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.inventory.handlers;
 
-import com.aranaira.arcanearchives.util.types.enums.UpgradeType;
+import com.aranaira.arcanearchives.types.enums.UpgradeType;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTank;

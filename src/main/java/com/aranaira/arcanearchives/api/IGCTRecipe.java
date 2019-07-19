@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.api;
 
-import com.aranaira.arcanearchives.util.types.IngredientStack;
+import com.aranaira.arcanearchives.recipe.IngredientStack;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

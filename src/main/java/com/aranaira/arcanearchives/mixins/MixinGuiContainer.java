@@ -4,7 +4,7 @@ import com.aranaira.arcanearchives.util.ColorUtils;
 import com.aranaira.arcanearchives.util.ColorUtils.Color;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.client.render.LineHandler;
-import com.aranaira.arcanearchives.util.ManifestTracking;
+import com.aranaira.arcanearchives.util.ManifestTrackingUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -29,7 +29,7 @@ public abstract class MixinGuiContainer {
 
 		ItemStack stack = slot.getStack();
 		if (!stack.isEmpty()) {
-			if (ManifestTracking.matches(stack)) {
+			if (ManifestTrackingUtils.matches(stack)) {
 				GlStateManager.disableDepth();
 				long worldTime = ((GuiContainer) (Object) this).mc.player.world.getWorldTime();
 				Color c = ColorUtils.getColorFromTime(worldTime);

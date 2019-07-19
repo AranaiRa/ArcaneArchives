@@ -6,7 +6,7 @@
  * See LICENSE.md in the root directory for a copy of the MIT License or visit:
  * https://opensource.org/licenses/MIT
  */
-package com.aranaira.arcanearchives.util.types;
+package com.aranaira.arcanearchives.client;
 
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.fml.relauncher.Side;

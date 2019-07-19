@@ -12,7 +12,7 @@ import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketRadiantChest.ToggleBrazier;
 import com.aranaira.arcanearchives.tileentities.IBrazierRouting;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
-import com.aranaira.arcanearchives.util.ManifestTracking;
+import com.aranaira.arcanearchives.util.ManifestTrackingUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -125,7 +125,7 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 
 		this.dimension = tile.dimension;
 		this.pos = tile.getPos();
-		tracked = ManifestTracking.get(dimension, pos);
+		tracked = ManifestTrackingUtils.get(dimension, pos);
 	}
 
 	@Override
@@ -313,7 +313,7 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 	public void drawSlot (Slot slotIn) {
 		ItemStack stack = slotIn.getStack();
 		if (!stack.isEmpty()) {
-			if (tracked != null && !tracked.isEmpty() && ManifestTracking.matches(stack, tracked)) {
+			if (tracked != null && !tracked.isEmpty() && ManifestTrackingUtils.matches(stack, tracked)) {
 				GlStateManager.disableDepth();
 				long worldTime = this.mc.player.world.getWorldTime();
 				Color c = ColorUtils.getColorFromTime(worldTime);
@@ -741,7 +741,7 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 		super.onGuiClosed();
 
 		if (tracked != null) {
-			ManifestTracking.remove(dimension, pos);
+			ManifestTrackingUtils.remove(dimension, pos);
 		}
 	}
 

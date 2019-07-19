@@ -4,7 +4,7 @@ import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.init.ItemRegistry;
-import com.aranaira.arcanearchives.util.InventoryRouting;
+import com.aranaira.arcanearchives.util.InventoryRoutingUtils;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import com.aranaira.enderio.base.render.ranged.IRanged;
 import com.aranaira.enderio.base.render.ranged.RangeParticle;
@@ -125,7 +125,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 		if (item.world.isRemote) return;
 		if (item.getEntityData().hasKey("rejected")) return;
 
-		List<ItemStack> stack = InventoryRouting.tryInsertItems(this, item.getItem());
+		List<ItemStack> stack = InventoryRoutingUtils.tryInsertItems(this, item.getItem());
 		if (!stack.isEmpty()) {
 			rejectItemStacks(stack);
 		}
@@ -210,7 +210,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 			throw new NullPointerException("wat");
 		}
 
-		List<ItemStack> remainder = InventoryRouting.tryInsertItems(this, item, toInsert);
+		List<ItemStack> remainder = InventoryRoutingUtils.tryInsertItems(this, item, toInsert);
 
 		boolean doUpdate = wasHeld;
 
@@ -332,7 +332,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 
 		@Override
 		public void setStackInSlot (int slot, @Nonnull ItemStack stack) {
-			List<ItemStack> result = InventoryRouting.tryInsertItems(BrazierTileEntity.this, stack);
+			List<ItemStack> result = InventoryRoutingUtils.tryInsertItems(BrazierTileEntity.this, stack);
 			rejectItemStacks(result);
 		}
 
@@ -354,7 +354,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 				return ItemStack.EMPTY;
 			}
 
-			List<ItemStack> result = InventoryRouting.tryInsertItems(BrazierTileEntity.this, stack);
+			List<ItemStack> result = InventoryRoutingUtils.tryInsertItems(BrazierTileEntity.this, stack);
 			if (!result.isEmpty()) {
 				if (result.size() == 1) {
 					return result.get(0);

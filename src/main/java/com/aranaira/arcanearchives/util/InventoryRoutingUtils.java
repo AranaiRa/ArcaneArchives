@@ -6,7 +6,7 @@ import com.aranaira.arcanearchives.tileentities.BrazierTileEntity;
 import com.aranaira.arcanearchives.tileentities.IBrazierRouting;
 import com.aranaira.arcanearchives.tileentities.IBrazierRouting.BrazierRoutingType;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
-import com.aranaira.arcanearchives.util.types.IteRef;
+import com.aranaira.arcanearchives.types.IteRef;
 import com.google.common.collect.Lists;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.client.util.RecipeItemHelper;
@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.stream.Collectors;
 
-public class InventoryRouting {
+public class InventoryRoutingUtils {
 	/*
 	 * Returns whether or not this inventory can *probably* contain an item. NBT checking
 	 * is not performed at this stage.

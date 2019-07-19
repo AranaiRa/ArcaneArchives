@@ -1,9 +1,9 @@
 package com.aranaira.arcanearchives.inventory.handlers;
 
-import com.aranaira.arcanearchives.util.ManifestUtil.CollatedEntry;
-import com.aranaira.arcanearchives.util.types.lists.ManifestList;
-import com.aranaira.arcanearchives.util.types.lists.ManifestList.SortingDirection;
-import com.aranaira.arcanearchives.util.types.lists.ManifestList.SortingType;
+import com.aranaira.arcanearchives.util.ManifestUtils.CollatedEntry;
+import com.aranaira.arcanearchives.types.lists.ManifestList;
+import com.aranaira.arcanearchives.types.lists.ManifestList.SortingDirection;
+import com.aranaira.arcanearchives.types.lists.ManifestList.SortingType;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandlerModifiable;

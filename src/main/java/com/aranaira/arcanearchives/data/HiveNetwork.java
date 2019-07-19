@@ -1,9 +1,9 @@
 package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.util.TileUtils;
-import com.aranaira.arcanearchives.util.types.lists.CombinedTileList;
-import com.aranaira.arcanearchives.util.types.lists.ITileList;
-import com.aranaira.arcanearchives.util.types.IteRef;
+import com.aranaira.arcanearchives.types.lists.CombinedTileList;
+import com.aranaira.arcanearchives.types.lists.ITileList;
+import com.aranaira.arcanearchives.types.IteRef;
 import net.minecraft.entity.player.EntityPlayer;
 
 import javax.annotation.Nullable;

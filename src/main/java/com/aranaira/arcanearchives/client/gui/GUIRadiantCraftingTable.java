@@ -4,7 +4,7 @@ import com.aranaira.arcanearchives.util.ColorUtils;
 import com.aranaira.arcanearchives.util.ColorUtils.Color;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerRadiantCraftingTable;
-import com.aranaira.arcanearchives.util.ManifestTracking;
+import com.aranaira.arcanearchives.util.ManifestTrackingUtils;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -27,7 +27,7 @@ public class GUIRadiantCraftingTable extends GuiContainer {
 		this.xSize = 206;
 		this.ySize = 203;
 
-		tracked = ManifestTracking.get(player.dimension, container.pos);
+		tracked = ManifestTrackingUtils.get(player.dimension, container.pos);
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class GUIRadiantCraftingTable extends GuiContainer {
 	public void drawSlot (Slot slot) {
 		ItemStack stack = slot.getStack();
 		if (!stack.isEmpty()) {
-			if (tracked != null && !tracked.isEmpty() && ManifestTracking.matches(stack, tracked)) {
+			if (tracked != null && !tracked.isEmpty() && ManifestTrackingUtils.matches(stack, tracked)) {
 				GlStateManager.disableDepth();
 				long worldTime = this.mc.player.world.getWorldTime();
 				Color c = ColorUtils.getColorFromTime(worldTime);

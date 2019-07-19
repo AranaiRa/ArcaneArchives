@@ -1,9 +1,9 @@
-package com.aranaira.arcanearchives.util.types.lists;
+package com.aranaira.arcanearchives.types.lists;
 
 import com.aranaira.arcanearchives.inventory.ContainerManifest;
 import com.aranaira.arcanearchives.util.ItemUtils;
-import com.aranaira.arcanearchives.util.ManifestUtil.CollatedEntry;
-import com.aranaira.arcanearchives.util.types.ISerializeByteBuf;
+import com.aranaira.arcanearchives.util.ManifestUtils.CollatedEntry;
+import com.aranaira.arcanearchives.types.ISerializeByteBuf;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;

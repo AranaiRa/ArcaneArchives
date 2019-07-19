@@ -1,7 +1,7 @@
-package com.aranaira.arcanearchives.util.types.lists;
+package com.aranaira.arcanearchives.types.lists;
 
-import com.aranaira.arcanearchives.util.types.IteRef;
-import com.aranaira.arcanearchives.util.types.iterators.TileListIterable;
+import com.aranaira.arcanearchives.types.IteRef;
+import com.aranaira.arcanearchives.types.iterators.TileListIterable;
 import net.minecraft.world.World;
 
 import java.util.List;

@@ -8,9 +8,9 @@ import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
 import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
-import com.aranaira.arcanearchives.util.types.CycleTimer;
-import com.aranaira.arcanearchives.util.ManifestTracking;
-import com.aranaira.arcanearchives.util.types.IngredientStack;
+import com.aranaira.arcanearchives.client.CycleTimer;
+import com.aranaira.arcanearchives.util.ManifestTrackingUtils;
+import com.aranaira.arcanearchives.recipe.IngredientStack;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
@@ -62,7 +62,7 @@ public class GUIGemCuttersTable extends GuiContainer {
 		updateRecipeStatus();
 		this.timesChanged = this.player.inventory.getTimesChanged();
 		this.cycleTimer = new CycleTimer(-1);
-		tracked = ManifestTracking.get(player.dimension, tile.getPos());
+		tracked = ManifestTrackingUtils.get(player.dimension, tile.getPos());
 	}
 
 	public void updateRecipeStatus () {
@@ -115,7 +115,7 @@ public class GUIGemCuttersTable extends GuiContainer {
 	public void drawSlot (Slot slot) {
 		ItemStack stack = slot.getStack();
 		if (!stack.isEmpty()) {
-			if (tracked != null && !tracked.isEmpty() && ManifestTracking.matches(stack, tracked)) {
+			if (tracked != null && !tracked.isEmpty() && ManifestTrackingUtils.matches(stack, tracked)) {
 				GlStateManager.disableDepth();
 				long worldTime = this.mc.player.world.getWorldTime();
 				Color c = ColorUtils.getColorFromTime(worldTime);

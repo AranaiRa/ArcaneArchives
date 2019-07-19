@@ -3,7 +3,7 @@ package com.aranaira.arcanearchives.integration.guidebook;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
-import com.aranaira.arcanearchives.util.types.IngredientStack;
+import com.aranaira.arcanearchives.recipe.IngredientStack;
 import gigaherz.lirelent.guidebook.guidebook.drawing.VisualElement;
 import gigaherz.lirelent.guidebook.guidebook.elements.ElementImage;
 import gigaherz.lirelent.guidebook.guidebook.elements.ElementStack;

@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.util.types;
+package com.aranaira.arcanearchives.types;
 
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;

@@ -7,14 +7,14 @@ import com.aranaira.arcanearchives.tileentities.IManifestTileEntity;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
 import com.aranaira.arcanearchives.tileentities.unused.MatrixCoreTileEntity;
-import com.aranaira.arcanearchives.util.ManifestUtil;
-import com.aranaira.arcanearchives.util.ManifestUtil.CollatedEntry;
-import com.aranaira.arcanearchives.util.ManifestUtil.ItemEntry;
+import com.aranaira.arcanearchives.util.ManifestUtils;
+import com.aranaira.arcanearchives.util.ManifestUtils.CollatedEntry;
+import com.aranaira.arcanearchives.util.ManifestUtils.ItemEntry;
 import com.aranaira.arcanearchives.util.TileUtils;
-import com.aranaira.arcanearchives.util.types.*;
-import com.aranaira.arcanearchives.util.types.iterators.TileListIterable;
-import com.aranaira.arcanearchives.util.types.lists.ManifestList;
-import com.aranaira.arcanearchives.util.types.lists.TileList;
+import com.aranaira.arcanearchives.types.*;
+import com.aranaira.arcanearchives.types.iterators.TileListIterable;
+import com.aranaira.arcanearchives.types.lists.ManifestList;
+import com.aranaira.arcanearchives.types.lists.TileList;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -318,8 +318,8 @@ public class ServerNetwork implements IServerNetwork {
 
 		refreshTiles();
 
-		Map<Integer, List<ItemEntry>> preManifest = ManifestUtil.buildItemEntryList(this);
-		List<CollatedEntry> manifestList = ManifestUtil.parsePreManifest(preManifest, this);
+		Map<Integer, List<ItemEntry>> preManifest = ManifestUtils.buildItemEntryList(this);
+		List<CollatedEntry> manifestList = ManifestUtils.parsePreManifest(preManifest, this);
 
 		manifestItems.addAll(manifestList);
 	}

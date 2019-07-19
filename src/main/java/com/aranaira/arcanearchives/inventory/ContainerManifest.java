@@ -8,11 +8,11 @@ import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.client.render.LineHandler;
 import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
-import com.aranaira.arcanearchives.util.ManifestTracking;
-import com.aranaira.arcanearchives.util.ManifestUtil.CollatedEntry;
+import com.aranaira.arcanearchives.util.ManifestTrackingUtils;
+import com.aranaira.arcanearchives.util.ManifestUtils.CollatedEntry;
 import com.aranaira.arcanearchives.util.MathUtils;
-import com.aranaira.arcanearchives.util.types.lists.ManifestList.SortingDirection;
-import com.aranaira.arcanearchives.util.types.lists.ManifestList.SortingType;
+import com.aranaira.arcanearchives.types.lists.ManifestList.SortingDirection;
+import com.aranaira.arcanearchives.types.lists.ManifestList.SortingType;
 import invtweaks.api.container.InventoryContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -178,7 +178,7 @@ public class ContainerManifest extends Container implements IScrollableContainer
 		List<Vec3d> visPositions = entry.getVecPositions();
 		visPositions.forEach(k -> LineHandler.addLine(k, player.dimension));
 
-		ManifestTracking.add(entry);
+		ManifestTrackingUtils.add(entry);
 
 		if (!GuiScreen.isShiftKeyDown()) {
 			Minecraft mc = Minecraft.getMinecraft();

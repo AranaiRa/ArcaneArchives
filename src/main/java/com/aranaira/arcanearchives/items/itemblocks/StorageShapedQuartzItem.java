@@ -5,7 +5,7 @@ import com.aranaira.arcanearchives.items.IUpgradeItem;
 import com.aranaira.arcanearchives.items.templates.ItemBlockTemplate;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
-import com.aranaira.arcanearchives.util.types.enums.UpgradeType;
+import com.aranaira.arcanearchives.types.enums.UpgradeType;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;

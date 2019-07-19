@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.util.types.lists;
+package com.aranaira.arcanearchives.types.lists;
 
 import com.google.common.collect.ForwardingList;
 

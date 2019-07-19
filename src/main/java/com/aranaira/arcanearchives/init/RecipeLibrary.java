@@ -10,7 +10,7 @@ import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.integration.astralsorcery.Liquefaction;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
-import com.aranaira.arcanearchives.util.types.IngredientStack;
+import com.aranaira.arcanearchives.recipe.IngredientStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;

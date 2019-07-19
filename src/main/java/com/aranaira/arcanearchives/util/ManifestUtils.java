@@ -6,9 +6,9 @@ import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.tileentities.IManifestTileEntity;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.MonitoringCrystalTileEntity;
-import com.aranaira.arcanearchives.util.types.iterators.SlotIterable;
-import com.aranaira.arcanearchives.util.types.*;
-import com.aranaira.arcanearchives.util.types.lists.ITileList;
+import com.aranaira.arcanearchives.types.iterators.SlotIterable;
+import com.aranaira.arcanearchives.types.*;
+import com.aranaira.arcanearchives.types.lists.ITileList;
 import io.netty.buffer.ByteBuf;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.client.util.RecipeItemHelper;
@@ -24,7 +24,7 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-public class ManifestUtil {
+public class ManifestUtils {
 	public static List<CollatedEntry> parsePreManifest (Map<Integer, List<ItemEntry>> preManifest, ServerNetwork network) {
 		// We need to collate all of these entries into the following:
 		// Unique entries should be collapsed (along with positions & descriptions)

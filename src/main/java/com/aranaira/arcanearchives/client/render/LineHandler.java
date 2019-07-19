@@ -1,15 +1,13 @@
 package com.aranaira.arcanearchives.client.render;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.util.ManifestTracking;
-import com.aranaira.arcanearchives.client.render.RenderHelper;
+import com.aranaira.arcanearchives.util.ManifestTrackingUtils;
 import com.google.common.collect.ImmutableSet;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -21,7 +19,6 @@ import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID, value = Side.CLIENT)
 public class LineHandler {
@@ -76,7 +73,7 @@ public class LineHandler {
 
 	public static void checkClear (int dimension) {
 		if (getPositions(dimension).isEmpty()) {
-			ManifestTracking.clear();
+			ManifestTrackingUtils.clear();
 		}
 	}
 
@@ -89,7 +86,7 @@ public class LineHandler {
 	public static void clearChests (int dimension) {
 		Set<Vec3d> positions = getPositions(dimension);
 		for (Vec3d pos : positions) {
-			ManifestTracking.remove(dimension, vec3dToLong(pos));
+			ManifestTrackingUtils.remove(dimension, vec3dToLong(pos));
 		}
 		positions.clear();
 	}

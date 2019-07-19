@@ -6,7 +6,7 @@ import com.aranaira.arcanearchives.inventory.handlers.OptionalUpgradesHandler;
 import com.aranaira.arcanearchives.inventory.handlers.SizeUpgradeItemHandler;
 import com.aranaira.arcanearchives.inventory.handlers.TroveUpgradeItemHandler;
 import com.aranaira.arcanearchives.util.ItemUtils;
-import com.aranaira.arcanearchives.util.types.enums.UpgradeType;
+import com.aranaira.arcanearchives.types.enums.UpgradeType;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.entity.item.EntityItem;
