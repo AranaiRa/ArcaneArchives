@@ -81,6 +81,13 @@ public class ServerNetwork implements IServerNetwork {
 		return tiles;
 	}
 
+	public void tileEntityMoved (UUID tileId, BlockPos newPosition) {
+		IteRef ref = getTiles().getReference(tileId);
+		if (ref == null) return;
+
+		ref.pos = newPosition;
+	}
+
 	/***
 	 * Static entrypoint used by NetworkSaveData
 	 */

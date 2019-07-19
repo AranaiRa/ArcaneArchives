@@ -10,6 +10,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -22,6 +23,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable {
 	public boolean hasBeenAddedToNetwork = false;
 	public int dimension;
 	public MultiblockSize size;
+	private BlockPos lastPosition;
 	private ServerNetwork network;
 	private int ticks = 0;
 	private boolean fake = false;
@@ -144,9 +146,18 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable {
 		return super.writeToNBT(compound);
 	}
 
+	public void tileMoved (BlockPos oldPosition, BlockPos newPosition) {
+		ServerNetwork network = getServerNetwork();
+		network.tileEntityMoved(this.uuid, newPosition);
+	}
+
 	@Override
 	public void update () {
-		// nop
+		if (lastPosition == null) lastPosition = getPos();
+
+		if (!getPos().equals(lastPosition)) {
+			tileMoved(getPos(), lastPosition);
+		}
 	}
 
 	public static class Tags {
