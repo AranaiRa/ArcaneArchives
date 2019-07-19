@@ -11,6 +11,7 @@ import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.client.render.LineHandler;
+import com.aranaira.arcanearchives.integration.jei.JEIPlugin;
 import com.aranaira.arcanearchives.inventory.ContainerManifest;
 import com.aranaira.arcanearchives.util.ManifestUtils.CollatedEntry;
 import com.aranaira.arcanearchives.util.ManifestUtils.EntryDescriptor;
@@ -34,6 +35,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.DimensionType;
 import net.minecraftforge.fml.client.config.GuiConfig;
+import net.minecraftforge.fml.common.Loader;
 import org.apache.commons.lang3.text.WordUtils;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -102,6 +104,7 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 	private GuiButton mAlphaQuantButton;
 	private GuiButton mAscDescButton;
 	private GuiButton mJEIsync;
+	private String storedJEI = "";
 
 	public GUIManifest (EntityPlayer player, ContainerManifest container) {
 		super(container);
@@ -117,6 +120,10 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 		this.ySize = 224;
 
 		this.player = player;
+
+		if (Loader.isModLoaded("jei") && ConfigHandler.ManifestConfig.jeiSynchronise) {
+			this.storedJEI = JEIPlugin.runtime.getIngredientFilter().getFilterText();
+		}
 	}
 
 	@Override
@@ -346,6 +353,14 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 		}
 	}
 
+	public void maybeRestoreJEI () {
+		if (Loader.isModLoaded("jei")) {
+			if (!storedJEI.isEmpty()) {
+				JEIPlugin.runtime.getIngredientFilter().setFilterText(storedJEI);
+			}
+		}
+	}
+
 	@Override
 	protected void keyTyped (char typedChar, int keyCode) throws IOException {
 		if (searchBox.isFocused() && searchBox.textboxKeyTyped(typedChar, keyCode)) {
@@ -354,6 +369,7 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 
 		switch (keyCode) {
 			case Keyboard.KEY_ESCAPE: {
+				maybeRestoreJEI();
 				Minecraft.getMinecraft().displayGuiScreen(null);
 				break;
 			}
@@ -450,5 +466,10 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 	@Override
 	public void setEntryValue (int id, String value) {
 		container.setSearchString(value);
+	}
+
+	@Override
+	public void onGuiClosed () {
+		maybeRestoreJEI();
 	}
 }

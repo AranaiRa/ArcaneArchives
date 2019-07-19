@@ -13,9 +13,6 @@ public class ManifestSearchField extends RightClickTextField {
 	public ManifestSearchField (int componentId, FontRenderer fontrendererObj, int x, int y, int par5Width, int par6Height) {
 		super(componentId, fontrendererObj, x, y, par5Width, par6Height);
 		this.id = componentId;
-		if (Loader.isModLoaded("jei")) {
-			this.storedJEI = JEIPlugin.runtime.getIngredientFilter().getFilterText();
-		}
 	}
 
 	@Override
