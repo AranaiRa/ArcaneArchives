@@ -190,11 +190,18 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 
 		IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP); // We don't care about the off-hand
 
-		if (wasHeld) {
+		IItemHandler cap = item.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+
+		if (wasHeld && cap == null) {
 			toInsert.add(playerInventory.extractItem(player.inventory.currentItem, item.getCount(), false));
 		}
 
-		if (!doubleClick) {
+		if (cap != null) {
+			for (int i = 0; i < cap.getSlots(); i++) {
+				this.fakeHandler.insertItem(0, cap.extractItem(i, cap.getStackInSlot(i).getCount(), false), false);
+			}
+			return true;
+		} else if (!doubleClick) {
 			playerToStackMap.put(player, item.copy());
 		} else {
 			// Collect all the items
