@@ -101,6 +101,7 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 	private GuiButton mConfigButton;
 	private GuiButton mAlphaQuantButton;
 	private GuiButton mAscDescButton;
+	private GuiButton mJEIsync;
 
 	public GUIManifest (EntityPlayer player, ContainerManifest container) {
 		super(container);
@@ -152,6 +153,9 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 
 		mAscDescButton = new InvisibleButton(4, guiLeft + 130, guiTop + 10, mAscDescButtonSize, mAscDescButtonSize, "");
 		addButton(mAscDescButton);
+
+		mJEIsync = new InvisibleButton(5, guiLeft + 148, guiTop + 10, mAscDescButtonSize, mAscDescButtonSize, "");
+		addButton(mJEIsync);
 	}
 
 	@Override
@@ -308,6 +312,8 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 			} else {
 				container.setSortingDirection(ManifestList.SortingDirection.ASCENDING);
 			}
+		} else if (button.id == mJEIsync.id) {
+			//TODO: Toggle JEI linkage
 		}
 
 		super.actionPerformed(button);
