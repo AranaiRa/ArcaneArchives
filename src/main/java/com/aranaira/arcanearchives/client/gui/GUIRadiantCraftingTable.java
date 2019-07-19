@@ -20,7 +20,7 @@ public class GUIRadiantCraftingTable extends GuiContainer {
 	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/radiantcraftingtable.png");
 	private static final ResourceLocation GUITexturesSimple = new ResourceLocation("arcanearchives:textures/gui/simple/radiantcraftingtable.png");
 
-	private List<Ingredient> tracked;
+	private List<ItemStack> tracked;
 
 	public GUIRadiantCraftingTable (EntityPlayer player, ContainerRadiantCraftingTable container) {
 		super(container);

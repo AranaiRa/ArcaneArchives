@@ -98,7 +98,7 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 
 	private RadiantChestTileEntity tile;
 	private InventoryPlayer playerinventory;
-	private List<Ingredient> tracked;
+	private List<ItemStack> tracked;
 	private int dimension;
 	private BlockPos pos;
 	private RightClickTextField nameBox;

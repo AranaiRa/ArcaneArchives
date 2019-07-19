@@ -47,7 +47,7 @@ public class GUIGemCuttersTable extends GuiContainer {
 	private InvisibleButton prevPageButton;
 	private InvisibleButton nextPageButton;
 	private int timesChanged;
-	private List<Ingredient> tracked;
+	private List<ItemStack> tracked;
 
 	private CycleTimer cycleTimer;
 

@@ -20,8 +20,8 @@ import java.util.List;
 
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class ManifestTrackingUtils {
-	private static Int2ObjectOpenHashMap<Long2ObjectOpenHashMap<List<Ingredient>>> reference = new Int2ObjectOpenHashMap<>();
-	private static List<Ingredient> allTracked = new ArrayList<>();
+	private static Int2ObjectOpenHashMap<Long2ObjectOpenHashMap<List<ItemStack>>> reference = new Int2ObjectOpenHashMap<>();
+	private static List<ItemStack> allTracked = new ArrayList<>();
 
 	@SubscribeEvent
 	public static void onPlayerLoggedIn (PlayerEvent.PlayerLoggedInEvent event) {
@@ -40,27 +40,17 @@ public class ManifestTrackingUtils {
 	}
 
 	public static void add (ItemStack stack, int dimension, BlockPos pos) {
-		NBTTagCompound tag = stack.getTagCompound();
-
-		List<Ingredient> dim = getDimension(dimension).getOrDefault(pos.toLong(), null);
+		List<ItemStack> dim = getDimension(dimension).getOrDefault(pos.toLong(), null);
 		if (dim == null) {
 			dim = new ArrayList<>();
 			getDimension(dimension).put(pos.toLong(), dim);
 		}
 
-		Ingredient ing;
-
-		if (tag == null || tag.isEmpty()) {
-			ing = Ingredient.fromStacks(stack);
-		} else {
-			ing = IngredientNBT.fromStacks(stack);
-		}
-
-		dim.add(ing);
-		allTracked.add(ing);
+		dim.add(stack);
+		allTracked.add(stack);
 	}
 
-	private static Long2ObjectOpenHashMap<List<Ingredient>> getDimension (int dimension) {
+	private static Long2ObjectOpenHashMap<List<ItemStack>> getDimension (int dimension) {
 		return reference.computeIfAbsent(dimension, Long2ObjectOpenHashMap::new);
 	}
 
@@ -69,18 +59,18 @@ public class ManifestTrackingUtils {
 	}
 
 	public static void remove (int dimension, long pos) {
-		Long2ObjectOpenHashMap<List<Ingredient>> dim = getDimension(dimension);
+		Long2ObjectOpenHashMap<List<ItemStack>> dim = getDimension(dimension);
 		if (dim.containsKey(pos)) {
 			dim.remove(pos);
 		}
 	}
 
 	@Nullable
-	public static List<Ingredient> get (int dimension, BlockPos pos) {
+	public static List<ItemStack> get (int dimension, BlockPos pos) {
 		return getDimension(dimension).getOrDefault(pos.toLong(), null);
 	}
 
-	public static List<Ingredient> getAllTracked () {
+	public static List<ItemStack> getAllTracked () {
 		return allTracked;
 	}
 
@@ -88,7 +78,7 @@ public class ManifestTrackingUtils {
 		return matches(stack, allTracked);
 	}
 
-	public static boolean matches (ItemStack stack, List<Ingredient> ingredients) {
+	public static boolean matches (ItemStack stack, List<ItemStack> ingredients) {
 		if (ingredients.isEmpty()) {
 			return false;
 		}
@@ -97,8 +87,8 @@ public class ManifestTrackingUtils {
 			return false;
 		}
 
-		for (Ingredient ing : ingredients) {
-			if (ing.apply(stack)) {
+		for (ItemStack otherStack : ingredients) {
+			if (ItemUtils.areStacksEqualIgnoreSize(stack, otherStack)) {
 				return true;
 			}
 		}
