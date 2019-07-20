@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.events;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.render.LineHandler;
 import com.aranaira.arcanearchives.client.render.RenderGemcasting;
 import com.aranaira.arcanearchives.client.render.RenderGemcasting.EnumGemGuiMode;
@@ -11,6 +12,7 @@ import com.aranaira.arcanearchives.entity.ai.AIResonatorSit;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.integration.baubles.BaubleBodyCapabilityHandler;
+import com.aranaira.arcanearchives.inventory.handlers.DevouringCharmHandler;
 import com.aranaira.arcanearchives.items.RadiantAmphoraItem.AmphoraUtil;
 import com.aranaira.arcanearchives.items.TomeOfArcanaItem;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
@@ -68,6 +70,7 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
+import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
@@ -75,6 +78,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -82,6 +86,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -589,6 +594,28 @@ public class EventHandler {
 						GemUtil.restoreCharge(gem, 3);
 						event.setCanceled(true);
 					}
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void onItemPickup(EntityItemPickupEvent event) {
+		if(event.getEntityPlayer() != null) {
+			ArrayList<ItemStack> devouringCharms = new ArrayList<>();
+			for (ItemStack stack : event.getEntityPlayer().inventory.mainInventory) {
+				if (stack.getItem() == ItemRegistry.DEVOURING_CHARM)
+					devouringCharms.add(stack);
+			}
+
+			for (ItemStack dCharm : devouringCharms) {
+				DevouringCharmHandler handler = DevouringCharmHandler.getHandler(dCharm);
+				if (!handler.shouldVoidItem(event.getItem().getItem()))
+					continue;
+				else {
+					event.getItem().getItem().shrink(event.getItem().getItem().getCount());
+					event.setResult(Event.Result.DENY);
+					break;
 				}
 			}
 		}
