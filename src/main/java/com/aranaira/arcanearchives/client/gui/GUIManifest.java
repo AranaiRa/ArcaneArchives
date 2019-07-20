@@ -167,6 +167,7 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 
 	@Override
 	protected void drawTopLevelElements (int mouseX, int mouseY) {
+		searchBox.syncFromJEI();
 		searchBox.drawTextBox();
 
 		// make sure tool tip is on top of everything else

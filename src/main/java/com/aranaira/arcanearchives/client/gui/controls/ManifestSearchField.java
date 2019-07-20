@@ -57,10 +57,6 @@ public class ManifestSearchField extends RightClickTextField {
 		// It will override any value in the manifest current.
 
 		String filterText = JEIPlugin.runtime.getIngredientFilter().getFilterText();
-		if (filterText.trim().toLowerCase().isEmpty()) {
-			return;
-		}
-
 		setText(filterText);
 		setResponderEntryValue(this.id, filterText);
 	}
