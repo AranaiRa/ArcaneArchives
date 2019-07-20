@@ -344,7 +344,7 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 			}
 		} else if (button.id == mJEIsync.id) {
 			if (!doJEIsync) {
-				this.searchBox.syncToJEI();
+				this.searchBox.syncToJEI(true);
 			}
 			this.toggleJEISync();
 		}
