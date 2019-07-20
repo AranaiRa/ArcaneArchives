@@ -9,6 +9,7 @@ import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.types.IteRef;
 import com.google.common.collect.Lists;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
+import net.darkhax.bookshelf.lib.WeightedSelector.WeightedEntry;
 import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -51,7 +52,7 @@ public class InventoryRoutingUtils {
 		int empty = inventory.countEmptySlots();
 		int slotCount = inventory.totalSlots();
 		if (empty == slotCount) {
-			return 100;
+			return 0;
 		}
 
 		int stackSize = stack.getMaxStackSize();
@@ -65,6 +66,10 @@ public class InventoryRoutingUtils {
 			usedSlots = 1;
 		} else {
 			usedSlots = (int) Math.floor((double) total / (double) stackSize);
+		}
+
+		if (usedSlots == 0) {
+			return slotCount - empty;
 		}
 
 		int percentageUsed = (int) Math.floor(((double) usedSlots / (double) slotCount) * 100) * 2;
