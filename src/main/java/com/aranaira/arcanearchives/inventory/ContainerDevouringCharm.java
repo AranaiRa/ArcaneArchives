@@ -111,11 +111,11 @@ public class ContainerDevouringCharm extends Container {
 	}
 
 	private void createAutoVoidSlots () {
-		int xOffset = 64;
-		int yOffset = 113;
+		int xOffset = 58;
+		int yOffset = 99;
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 3; j++) {
-				addSlotToContainer(new SlotAutovoidHandler(handler.getAutovoidInventory(), j + i * 3, xOffset + j * 18, yOffset + i * 18));
+				addSlotToContainer(new SlotAutovoidHandler(handler.getAutovoidInventory(), j + i * 3, xOffset + j * 24, yOffset + i * 24));
 			}
 		}
 	}

@@ -30,6 +30,10 @@ public class GUIDevouringCharm extends GuiContainer {
 			DEVOURINGCHARM_Y = 0,
 			DEVOURINGCHARM_W = 130,
 			DEVOURINGCHARM_H = 129,
+			DEVOURINGCHARM_BACK_X = 126,
+			DEVOURINGCHARM_BACK_Y = 127,
+			DEVOURINGCHARM_BACK_W = 130,
+			DEVOURINGCHARM_BACK_H = 129,
 			FLIP_X = 231,
 			FLIP_Y = 0,
 			FLIP_W = 25,
@@ -85,16 +89,15 @@ public class GUIDevouringCharm extends GuiContainer {
 		float i = (this.width - this.xSize) / 2;
 		float j = (this.height - this.ySize) / 2;
 
-		if (FLIPPED) {
-			this.mc.getTextureManager().bindTexture(TEMP_TEXTURE_DEVOURINGCHARM_BACK);
-		} else {
-			if (ConfigHandler.UsePrettyGUIs)
-				this.mc.getTextureManager().bindTexture(TEXTURE_DEVOURINGCHARM);
-			else
-				this.mc.getTextureManager().bindTexture(TEXTURE_DEVOURINGCHARM_SIMPLE);
-		}
+		if (ConfigHandler.UsePrettyGUIs)
+			this.mc.getTextureManager().bindTexture(TEXTURE_DEVOURINGCHARM);
+		else
+			this.mc.getTextureManager().bindTexture(TEXTURE_DEVOURINGCHARM_SIMPLE);
 		// TODO: This is the place where FLIPPED should be checked for moving the UV
-		this.drawTexturedModalRect(i + 25, j + 58, DEVOURINGCHARM_X, DEVOURINGCHARM_Y, DEVOURINGCHARM_W, DEVOURINGCHARM_H);
+		if(!FLIPPED)
+			this.drawTexturedModalRect(i + 25, j + 58, DEVOURINGCHARM_X, DEVOURINGCHARM_Y, DEVOURINGCHARM_W, DEVOURINGCHARM_H);
+		else
+			this.drawTexturedModalRect(i + 25, j + 58, DEVOURINGCHARM_BACK_X, DEVOURINGCHARM_BACK_Y, DEVOURINGCHARM_BACK_W, DEVOURINGCHARM_BACK_H);
 		this.drawTexturedModalRect(i, j + 60, FLIP_X, FLIP_Y, FLIP_W, FLIP_H);
 
 		if (ConfigHandler.UsePrettyGUIs)
