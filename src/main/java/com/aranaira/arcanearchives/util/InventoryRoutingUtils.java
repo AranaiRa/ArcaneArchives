@@ -51,7 +51,7 @@ public class InventoryRoutingUtils {
 		int empty = inventory.countEmptySlots();
 		int slotCount = inventory.totalSlots();
 		if (empty == slotCount) {
-			return 150;
+			return 100;
 		}
 
 		int stackSize = stack.getMaxStackSize();
