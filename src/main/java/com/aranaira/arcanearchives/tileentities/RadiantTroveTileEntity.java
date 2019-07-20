@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.inventory.handlers.ITroveItemHandler;
 import com.aranaira.arcanearchives.inventory.handlers.OptionalUpgradesHandler;
 import com.aranaira.arcanearchives.inventory.handlers.SizeUpgradeItemHandler;
 import com.aranaira.arcanearchives.inventory.handlers.TroveUpgradeItemHandler;
@@ -32,6 +33,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 	private long lastClick = 0;
 	private int lastTick = 0;
 	private UUID lastUUID = null;
+	public boolean wasCreativeDrop = false;
 
 	public long getLastClick () {
 		return lastClick;
@@ -362,8 +364,8 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 		}
 	}
 
-	public static class TroveItemHandler implements IItemHandler, INBTSerializable<NBTTagCompound> {
-		private static int BASE_COUNT = 64 * 512;
+	public static class TroveItemHandler implements ITroveItemHandler, INBTSerializable<NBTTagCompound> {
+		public static int BASE_COUNT = 64 * 512;
 		private int upgrades = 0;
 		private int count = 0;
 		private ItemStack reference = ItemStack.EMPTY;
@@ -373,30 +375,19 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 			this.tile = tile;
 		}
 
+		@Override
 		public boolean isVoiding () {
 			return this.tile.getOptionalUpgrades().hasUpgrade(UpgradeType.VOID);
 		}
 
-		private void update () {
+		@Override
+		public void update () {
 			this.tile.update();
 		}
 
 		@Override
 		public int getSlots () {
 			return 2;
-		}
-
-		@Nonnull
-		@Override
-		public ItemStack getStackInSlot (int slot) {
-			if (slot == 0) {
-				ItemStack result = reference.copy();
-				result.setCount(this.count);
-
-				return result;
-			} else {
-				return ItemStack.EMPTY;
-			}
 		}
 
 		public void setUpgrades (int upgrades) {
@@ -407,54 +398,13 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 			return upgrades;
 		}
 
+		@Override
 		public int getMaxCount () {
 			return getMaxCount(this.upgrades);
 		}
 
 		public int getMaxCount (int upgrades) {
 			return BASE_COUNT * (upgrades + 1);
-		}
-
-		@Nonnull
-		@Override
-		public ItemStack insertItem (int slot, @Nonnull ItemStack stack, boolean simulate) {
-			if (ItemUtils.areStacksEqualIgnoreSize(reference, stack) || reference.isEmpty()) {
-				if (reference.isEmpty()) {
-					reference = stack.copy();
-					reference.setCount(1);
-				}
-				int thisCount = stack.getCount();
-				int diff = 0;
-
-				if (count + thisCount > getMaxCount()) {
-					diff = (count + thisCount) - getMaxCount();
-				}
-
-				if (simulate) {
-					if (diff == 0) {
-						return ItemStack.EMPTY;
-					}
-					ItemStack result = stack.copy();
-					result.setCount(diff);
-					if (isVoiding()) return ItemStack.EMPTY;
-					return result;
-				}
-
-				if (diff != 0) {
-					count += thisCount - diff;
-					ItemStack result = stack.copy();
-					result.setCount(diff);
-					update();
-					if (isVoiding()) return ItemStack.EMPTY;
-					return result;
-				} else {
-					count += stack.getCount();
-					update();
-					return ItemStack.EMPTY;
-				}
-			} else {
-				return stack;
-			}
 		}
 
 		public ItemStack getItemCurrent () {
@@ -465,64 +415,34 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 			return this.reference;
 		}
 
-		@Nonnull
 		@Override
-		public ItemStack extractItem (int slot, int amount, boolean simulate) {
-			if (amount > reference.getMaxStackSize()) {
-				amount = reference.getMaxStackSize();
-			}
-
-			if (this.count < amount) {
-				amount = this.count;
-			}
-
-			ItemStack result = getStackInSlot(0);
-
-			if (amount < result.getCount()) {
-				result.setCount(amount);
-			}
-			if (simulate) {
-				return result;
-			}
-
-			this.count -= amount;
-			update();
-
-			return result;
+		public ItemStack getReference () {
+			return this.reference;
 		}
 
 		@Override
-		public int getSlotLimit (int slot) {
-			return reference.getMaxStackSize();
-		}
-
-		@Override
-		public boolean isItemValid (int slot, @Nonnull ItemStack stack) {
-			return ItemUtils.areStacksEqualIgnoreSize(reference, stack);
-		}
-
 		public int getCount () {
 			return count;
 		}
 
+		@Override
 		public void setCount (int count) {
 			this.count = count;
 		}
 
+		@Override
 		public ItemStack getItem () {
 			return this.reference;
 		}
 
-		public int getPacked () {
-			return RecipeItemHelper.pack(this.reference);
-		}
-
+		@Override
 		public void setItem (ItemStack reference) {
 			this.reference = reference.copy();
 			this.reference.setCount(1);
 			update();
 		}
 
+		@Override
 		public boolean isEmpty () {
 			return count == 0;
 		}

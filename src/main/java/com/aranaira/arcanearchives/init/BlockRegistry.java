@@ -5,6 +5,7 @@ import com.aranaira.arcanearchives.blocks.*;
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.items.itemblocks.MonitoringCrystalItem;
 import com.aranaira.arcanearchives.items.itemblocks.RadiantTankItem;
+import com.aranaira.arcanearchives.items.itemblocks.RadiantTroveItem;
 import com.aranaira.arcanearchives.items.itemblocks.StorageShapedQuartzItem;
 import com.aranaira.arcanearchives.items.templates.ItemBlockTemplate;
 import com.aranaira.arcanearchives.tileentities.*;
@@ -84,7 +85,7 @@ public class BlockRegistry {
 		//DOMINION_CRYSTAL.setItemBlock(new ItemBlockTemplate(DOMINION_CRYSTAL));
 		GEMCUTTERS_TABLE.setItemBlock(new ItemBlockTemplate(GEMCUTTERS_TABLE));
 		BRAZIER_OF_HOARDING.setItemBlock(new ItemBlockTemplate(BRAZIER_OF_HOARDING));
-		RADIANT_TROVE.setItemBlock(new ItemBlockTemplate(RADIANT_TROVE));
+		RADIANT_TROVE.setItemBlock(new RadiantTroveItem(RADIANT_TROVE));
 		MONITORING_CRYSTAL.setItemBlock(new MonitoringCrystalItem(MONITORING_CRYSTAL));
 		// TODO: Fix this
 		RADIANT_TANK.setItemBlock(new RadiantTankItem(RADIANT_TANK));

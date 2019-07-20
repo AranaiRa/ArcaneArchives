@@ -131,8 +131,8 @@ arcanearchives.text.radiantchest.unnamed_chest=Unnamed chest
 arcanearchives.text.brazier.radius=Radius:
 arcanearchives.text.brazier.unlimited=Unlimited
 arcanearchives.text.brazier.visualizer=Visualizer
-arcanearchives.text.brazier.visualizer=Enabled
-arcanearchives.text.brazier.visualizer=Disabled
+arcanearchives.text.brazier.visualizer.enabled=Enabled
+arcanearchives.text.brazier.visualizer.disabled=Disabled
 
 arcanearchives.error.toomanyplaced=You can only have %d %ss!
 arcanearchives.error.notenoughspace=Not enough space to place the %s!
@@ -182,6 +182,9 @@ arcanearchives.tooltip.radiantchest.routingmode.nonewitems2=that this Radiant Ch
 arcanearchives.tooltip.tank.fluid=Fluid: %s
 arcanearchives.tooltip.tank.amount=Amount: %s/%smb
 arcanearchives.tooltip.amphora.unknown_fluid=unknown fluid
+
+arcanearchives.tooltip.trove.items=Item: %s
+arcanearchives.tooltip.trove.contains=Contains: %d/%d
 
 arcanearchives.tooltip.device.brazier=Items tossed in are sent to Radiant Storage. Troves are filled first, then Chests.
 arcanearchives.tooltip.device.radiant_chest=Storage. Used to contain items.
