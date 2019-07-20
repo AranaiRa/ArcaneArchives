@@ -10,6 +10,7 @@ import gigaherz.lirelent.guidebook.guidebook.elements.ElementImage;
 import gigaherz.lirelent.guidebook.guidebook.elements.ElementStack;
 import gigaherz.lirelent.guidebook.guidebook.recipe.RecipeProvider;
 import gigaherz.lirelent.guidebook.guidebook.util.Size;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
@@ -25,7 +26,7 @@ public class GCTRecipeProvider extends RecipeProvider {
 	@Override
 	public ProvidedComponents provideRecipeComponents (@Nonnull ItemStack targetOutput, int recipeIndex) {
 		for (GCTRecipe recipe : GCTRecipeList.instance.getRecipeList()) {
-			if (ItemUtils.areStacksEqualIgnoreSize(recipe.getRecipeOutput(), targetOutput)) {
+			if (ItemStack.areItemsEqual(targetOutput, recipe.getRecipeOutput())) {
 				return provideRecipeComponents(recipe.getName());
 			}
 		}

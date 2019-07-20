@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItem
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -15,6 +16,9 @@ import javax.annotation.Nullable;
 
 public class ItemUtils {
 	public static boolean areStacksEqualIgnoreSize (ItemStack stackA, ItemStack stackB) {
+		/*if (stackA.getItem() instanceof ItemBlock && stackB.getItem() instanceof ItemBlock) {
+			return ItemStack.areItemsEqual(stackA, stackB);
+		}*/
 		return ItemStack.areItemsEqual(stackA, stackB) && ItemStack.areItemStackTagsEqual(stackA, stackB);
 	}
 
