@@ -35,6 +35,7 @@ public class QuartzSliver extends BlockDirectionalTemplate implements IHasModel 
 		setLightLevel(16 / 16f);
 		setHardness(0.0f);
 		setTickRandomly(true);
+		setDefaultState(this.getDefaultState().withProperty(FACING, EnumFacing.DOWN));
 	}
 
 	@Override

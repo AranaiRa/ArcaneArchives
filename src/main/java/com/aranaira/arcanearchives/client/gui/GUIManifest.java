@@ -90,6 +90,7 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 	private static final int mAscDescButtonTopOffset = 56;
 	private static final int mAscDescButtonSize = 14;
 
+	private boolean doJEIsync = false;
 
 	/**
 	 * Color to overlay items in another minecraft dimension than the one that the player is currently in
@@ -121,9 +122,18 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 
 		this.player = player;
 
-		if (Loader.isModLoaded("jei") && ConfigHandler.ManifestConfig.jeiSynchronise) {
+		if (Loader.isModLoaded("jei")) {
+			this.doJEIsync = ConfigHandler.ManifestConfig.jeiSynchronise;
 			this.storedJEI = JEIPlugin.runtime.getIngredientFilter().getFilterText();
 		}
+	}
+
+	public boolean getJEISync () {
+		return this.doJEIsync;
+	}
+
+	public void toggleJEISync () {
+		this.doJEIsync = !this.doJEIsync;
 	}
 
 	@Override
@@ -135,7 +145,7 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 			searchText = "";
 		}
 
-		searchBox = new ManifestSearchField(1, fontRenderer, guiLeft + mTextLeftOffset, guiTop + mTextTopOffset, mTextWidth, mTextHeight);
+		searchBox = new ManifestSearchField(this, 1, fontRenderer, guiLeft + mTextLeftOffset, guiTop + mTextTopOffset, mTextWidth, mTextHeight);
 		searchBox.setText(searchText);
 		searchBox.setGuiResponder(this);
 		searchBox.setEnableBackgroundDrawing(false);
@@ -167,7 +177,9 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 
 	@Override
 	protected void drawTopLevelElements (int mouseX, int mouseY) {
-		searchBox.syncFromJEI();
+		if (doJEIsync) {
+			searchBox.syncFromJEI();
+		}
 		searchBox.drawTextBox();
 
 		// make sure tool tip is on top of everything else
@@ -321,7 +333,10 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 				container.setSortingDirection(ManifestList.SortingDirection.ASCENDING);
 			}
 		} else if (button.id == mJEIsync.id) {
-			//TODO: Toggle JEI linkage
+			if (!doJEIsync) {
+				this.searchBox.syncToJEI();
+			}
+			this.toggleJEISync();
 		}
 
 		super.actionPerformed(button);

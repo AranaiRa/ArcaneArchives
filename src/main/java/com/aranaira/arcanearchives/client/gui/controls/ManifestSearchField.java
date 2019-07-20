@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.client.gui.controls;
 
+import com.aranaira.arcanearchives.client.gui.GUIManifest;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.integration.jei.JEIPlugin;
 import net.minecraft.client.gui.FontRenderer;
@@ -8,11 +9,12 @@ import org.lwjgl.input.Keyboard;
 
 public class ManifestSearchField extends RightClickTextField {
 	private int id;
-	private String storedJEI;
+	private GUIManifest gui;
 
-	public ManifestSearchField (int componentId, FontRenderer fontrendererObj, int x, int y, int par5Width, int par6Height) {
+	public ManifestSearchField (GUIManifest gui, int componentId, FontRenderer fontrendererObj, int x, int y, int par5Width, int par6Height) {
 		super(componentId, fontrendererObj, x, y, par5Width, par6Height);
 		this.id = componentId;
+		this.gui = gui;
 	}
 
 	@Override
@@ -30,7 +32,11 @@ public class ManifestSearchField extends RightClickTextField {
 	}
 
 	public void syncToJEI () {
-		if (!ConfigHandler.ManifestConfig.jeiSynchronise) {
+		syncToJEI(false);
+	}
+
+	public void syncToJEI (boolean force) {
+		if (!this.gui.getJEISync() && !force) {
 			return;
 		}
 
@@ -45,7 +51,7 @@ public class ManifestSearchField extends RightClickTextField {
 	}
 
 	public void syncFromJEI () {
-		if (!ConfigHandler.ManifestConfig.jeiSynchronise) {
+		if (!this.gui.getJEISync()) {
 			return;
 		}
 
@@ -59,14 +65,6 @@ public class ManifestSearchField extends RightClickTextField {
 		String filterText = JEIPlugin.runtime.getIngredientFilter().getFilterText();
 		setText(filterText);
 		setResponderEntryValue(this.id, filterText);
-	}
-
-	public void restoreFromJEI () {
-		if (!Loader.isModLoaded("jei")) {
-			return;
-		}
-
-		JEIPlugin.runtime.getIngredientFilter().setFilterText(storedJEI);
 	}
 
 	@Override
