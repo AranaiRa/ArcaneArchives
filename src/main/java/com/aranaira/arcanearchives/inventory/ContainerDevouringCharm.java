@@ -27,6 +27,8 @@ import javax.annotation.Nonnull;
 
 public class ContainerDevouringCharm extends Container {
 
+	public boolean FLIPPED = false;
+
 	private DevouringCharmHandler handler;
 	private EntityPlayer player;
 	private ItemStack socket;
@@ -40,6 +42,7 @@ public class ContainerDevouringCharm extends Container {
 		createPlayerInventory(player.inventory);
 		createBucketSlot();
 		createVoidSlots();
+		createAutoVoidSlots();
 	}
 
 	@Override
@@ -84,6 +87,11 @@ public class ContainerDevouringCharm extends Container {
 			public void putStack (@Nonnull ItemStack stack) {
 				super.putStack(consumeFluid(stack));
 			}
+
+			@Override
+			public boolean isEnabled () {
+				return !FLIPPED;
+			}
 		});
 	}
 
@@ -92,7 +100,22 @@ public class ContainerDevouringCharm extends Container {
 		int yOffset = 113;
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 3; j++) {
-				addSlotToContainer(new SlotItemHandler(handler.getInventory(), j + i * 3 + 1, xOffset + j * 18, yOffset + i * 18));
+				addSlotToContainer(new SlotItemHandler(handler.getInventory(), j + i * 3 + 1, xOffset + j * 18, yOffset + i * 18) {
+					@Override
+					public boolean isEnabled () {
+						return !FLIPPED;
+					}
+				});
+			}
+		}
+	}
+
+	private void createAutoVoidSlots () {
+		int xOffset = 64;
+		int yOffset = 113;
+		for (int i = 0; i < 2; i++) {
+			for (int j = 0; j < 3; j++) {
+				addSlotToContainer(new SlotAutovoidHandler(handler.getAutovoidInventory(), j + i * 3, xOffset + j * 18, yOffset + i * 18));
 			}
 		}
 	}
@@ -126,51 +149,48 @@ public class ContainerDevouringCharm extends Container {
 		ItemStack slotStack = ItemStack.EMPTY;
 		Slot slot = inventorySlots.get(index);
 
-		if (slot != null && slot.getHasStack()) {
-			ItemStack stack = slot.getStack();
-			if (stack.getItem() == ItemRegistry.DEVOURING_CHARM) {
-				return ItemStack.EMPTY;
-			}
-			slotStack = stack.copy();
-			if (index < 36) { //Player Inventory -> Socket
-				if (stack.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null)) {
-					Slot fluid = getSlot(36);
-					IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
-					if (ItemHandlerHelper.insertItemStacked(playerInventory, fluid.getStack(), false).isEmpty()) {
-						fluid.putStack(ItemStack.EMPTY);
-					}
-
-					if (!mergeItemStack(stack, 36, 37, false)) {
-						return ItemStack.EMPTY;
-					}
-				}
-
-				if (!mergeItemStack(stack, 36, 43, false)) {
+		if (FLIPPED) {
+			return ItemStack.EMPTY;
+		} else {
+			if (slot != null && slot.getHasStack()) {
+				ItemStack stack = slot.getStack();
+				if (stack.getItem() == ItemRegistry.DEVOURING_CHARM) {
 					return ItemStack.EMPTY;
 				}
-			} else {
-				if (!mergeItemStack(stack, 27, 36, false)) {
-					if (!mergeItemStack(stack, 0, 27, false)) {
+				slotStack = stack.copy();
+				if (index < 36) { //Player Inventory -> Socket
+					if (stack.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null)) {
+						Slot fluid = getSlot(36);
+						IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+						if (ItemHandlerHelper.insertItemStacked(playerInventory, fluid.getStack(), false).isEmpty()) {
+							fluid.putStack(ItemStack.EMPTY);
+						}
+
+						if (!mergeItemStack(stack, 36, 37, false)) {
+							return ItemStack.EMPTY;
+						}
+					}
+
+					if (!mergeItemStack(stack, 36, 43, false)) {
 						return ItemStack.EMPTY;
 					}
+				} else {
+					if (!mergeItemStack(stack, 27, 36, false)) {
+						if (!mergeItemStack(stack, 0, 27, false)) {
+							return ItemStack.EMPTY;
+						}
+					}
 				}
-			}
 
-			if (stack.isEmpty()) {
-				slot.putStack(ItemStack.EMPTY);
-			}
+				if (stack.isEmpty()) {
+					slot.putStack(ItemStack.EMPTY);
+				}
 
-			slot.onSlotChanged();
+				slot.onSlotChanged();
+			}
 		}
 
 		return slotStack;
-	}
-
-	@Override
-	@Nonnull
-	public ItemStack slotClick (int slotID, int dragType, ClickType clickType, EntityPlayer player) {
-		//ArcaneArchives.logger.info(slotID);
-		return super.slotClick(slotID, dragType, clickType, player);
 	}
 
 	@Override
@@ -183,6 +203,51 @@ public class ContainerDevouringCharm extends Container {
 			if (!result.isEmpty() && !player.world.isRemote) {
 				Block.spawnAsEntity(player.world, player.getPosition(), result);
 			}
+		}
+	}
+
+	@Override
+	public ItemStack slotClick (int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player) {
+		Slot slot = slotId < 0 ? null : this.inventorySlots.get(slotId);
+		if (slot instanceof SlotAutovoidHandler) {
+			if (dragType == 2) {
+				slot.putStack(ItemStack.EMPTY);
+			} else {
+				slot.putStack(player.inventory.getItemStack());
+			}
+			return player.inventory.getItemStack();
+		}
+		return super.slotClick(slotId, dragType, clickTypeIn, player);
+	}
+
+	public class SlotAutovoidHandler extends SlotItemHandler {
+		public SlotAutovoidHandler (IItemHandler itemHandler, int index, int xPosition, int yPosition) {
+			super(itemHandler, index, xPosition, yPosition);
+		}
+
+		@Override
+		public void putStack (@Nonnull ItemStack stack) {
+			getItemHandler().insertItem(getSlotIndex(), stack, false);
+		}
+
+		@Override
+		public boolean canTakeStack (EntityPlayer playerIn) {
+			return true;
+		}
+
+		@Override
+		public boolean isItemValid (@Nonnull ItemStack stack) {
+			return true;
+		}
+
+		@Override
+		public boolean isEnabled () {
+			return FLIPPED;
+		}
+
+		@Override
+		public int getItemStackLimit (@Nonnull ItemStack stack) {
+			return 1;
 		}
 	}
 }

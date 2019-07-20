@@ -41,7 +41,10 @@ public abstract class MixinGuiContainer {
 
 	@Inject(method = "onGuiClosed", at = @At(value = "RETURN"))
 	private void onGuiClosed (CallbackInfo callbackInfo) {
-		LineHandler.checkClear(Minecraft.getMinecraft().player.dimension);
+		Minecraft _mc = ((GuiContainer) (Object) this).mc;
+		if (_mc != null && _mc.player != null) {
+			LineHandler.checkClear(_mc.player.dimension);
+		}
 	}
 }
 

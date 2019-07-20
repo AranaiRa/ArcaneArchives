@@ -42,8 +42,6 @@ public class AAGuiHandler implements IGuiHandler {
 				return new ContainerGemSocket(player);
 			case DEVOURING_CHARM:
 				return new ContainerDevouringCharm(player);
-			case DEVOURING_CHARM_BACKSIDE:
-				return new ContainerDevouringCharmBackside(player);
 		}
 
 		if (!(te instanceof AATileEntity)) {

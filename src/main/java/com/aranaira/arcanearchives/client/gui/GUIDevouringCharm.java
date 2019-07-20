@@ -20,6 +20,7 @@ public class GUIDevouringCharm extends GuiContainer {
 	private static final ResourceLocation TEXTURE_PLAYERINV = new ResourceLocation("arcanearchives:textures/gui/player_inv.png");
 	private static final ResourceLocation TEXTURE_PLAYERINV_SIMPLE = new ResourceLocation("arcanearchives:textures/gui/simple/player_inv.png");
 	private static final ResourceLocation TEXTURE_DEVOURINGCHARM = new ResourceLocation("arcanearchives:textures/gui/devouring_charm.png");
+	private static final ResourceLocation TEMP_TEXTURE_DEVOURINGCHARM_BACK = new ResourceLocation("arcanearchives:textures/gui/devouring_charm_back.png");
 	private static final ResourceLocation TEXTURE_DEVOURINGCHARM_SIMPLE = new ResourceLocation("arcanearchives:textures/gui/simple/devouring_charm.png");
 	private static final ResourceLocation TEXTURE_FABRIAL = new ResourceLocation("arcanearchives:textures/gui/fabrial.png");
 	private static final ResourceLocation TEXTURE_SINGLESLOT_SIMPLE = new ResourceLocation("arcanearchives:textures/gui/simple/single_slot.png");
@@ -35,6 +36,8 @@ public class GUIDevouringCharm extends GuiContainer {
 			FLIP_H = 15,
 			INVENTORY_W = 181,
 			INVENTORY_H = 101;
+
+	private boolean FLIPPED = false;
 
 	private GuiButton flipButton;
 
@@ -70,8 +73,8 @@ public class GUIDevouringCharm extends GuiContainer {
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
 		if(button.id == 0) { //flip button
-			EntityPlayer player = Minecraft.getMinecraft().player;
-			player.openGui(ArcaneArchives.instance, AAGuiHandler.DEVOURING_CHARM_BACKSIDE, player.world, (int) player.posX, (int) player.posY, (int) player.posZ);
+			FLIPPED = !FLIPPED;
+			this.container.FLIPPED = FLIPPED;
 		}
 	}
 
@@ -82,10 +85,15 @@ public class GUIDevouringCharm extends GuiContainer {
 		float i = (this.width - this.xSize) / 2;
 		float j = (this.height - this.ySize) / 2;
 
-		if (ConfigHandler.UsePrettyGUIs)
-			this.mc.getTextureManager().bindTexture(TEXTURE_DEVOURINGCHARM);
-		else
-			this.mc.getTextureManager().bindTexture(TEXTURE_DEVOURINGCHARM_SIMPLE);
+		if (FLIPPED) {
+			this.mc.getTextureManager().bindTexture(TEMP_TEXTURE_DEVOURINGCHARM_BACK);
+		} else {
+			if (ConfigHandler.UsePrettyGUIs)
+				this.mc.getTextureManager().bindTexture(TEXTURE_DEVOURINGCHARM);
+			else
+				this.mc.getTextureManager().bindTexture(TEXTURE_DEVOURINGCHARM_SIMPLE);
+		}
+		// TODO: This is the place where FLIPPED should be checked for moving the UV
 		this.drawTexturedModalRect(i + 25, j + 58, DEVOURINGCHARM_X, DEVOURINGCHARM_Y, DEVOURINGCHARM_W, DEVOURINGCHARM_H);
 		this.drawTexturedModalRect(i, j + 60, FLIP_X, FLIP_Y, FLIP_W, FLIP_H);
 
