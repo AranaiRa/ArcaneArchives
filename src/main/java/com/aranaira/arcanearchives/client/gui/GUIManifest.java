@@ -89,6 +89,10 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 	private static final int mAscDescButtonLeftOffset = 242;
 	private static final int mAscDescButtonTopOffset = 56;
 	private static final int mAscDescButtonSize = 14;
+	// offset and size of JEI sync button
+	private static final int mJEISyncButtonLeftOffset = 242;
+	private static final int mJEISyncButtonTopOffset = 84;
+	private static final int mJEISyncButtonSize = 14;
 
 	private boolean doJEIsync = false;
 
@@ -224,6 +228,12 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 			ascDescShift = mAscDescButtonSize;
 		}
 		drawModalRectWithCustomSizedTexture(130, 10, mAscDescButtonLeftOffset, mAscDescButtonTopOffset + ascDescShift, mAscDescButtonSize, mAscDescButtonSize, mGUIForegroundTexturesSize, mGUIForegroundTexturesSize);
+
+		int JEISyncShift = 0;
+		if (getJEISync()) {
+			JEISyncShift = mJEISyncButtonSize;
+		}
+		drawModalRectWithCustomSizedTexture(148, 10, mJEISyncButtonLeftOffset, mJEISyncButtonTopOffset + JEISyncShift, mJEISyncButtonSize, mJEISyncButtonSize, mGUIForegroundTexturesSize, mGUIForegroundTexturesSize);
 	}
 
 	@Override

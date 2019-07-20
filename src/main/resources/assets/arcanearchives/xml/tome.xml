@@ -158,7 +158,7 @@
             <space height="8"/>
             <p><stack item="astralsorcery:itemjournal"/> <link ref="CompatAstralSorcery">Astral Sorcery Compatibility</link></p>
             <p><stack item="minecraft:brewing_stand"/> <link ref="CompatPotionCore">Potion Core Compatibility</link></p>
-            <p><stack item="quark:pickarang"/> <link ref="CompatQuark">Quark Compatibility</link></p>
+            <p><stack item="quark:ancient_tome"/> <link ref="CompatQuark">Quark Compatibility</link></p>
             <p><stack item="thaumcraft:thaumonomicon"/> <link ref="CompatThaumcraft">Thaumcraft Compatibility</link></p>
         </section>
     </chapter>
