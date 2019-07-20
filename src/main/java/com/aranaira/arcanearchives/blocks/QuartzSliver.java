@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.blocks;
 import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockTorch;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
@@ -10,6 +11,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -23,20 +25,16 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Random;
 
 public class QuartzSliver extends BlockDirectionalTemplate implements IHasModel {
-
 	public static final String name = "quartz_sliver";
 
 	public QuartzSliver () {
 		super(name, Material.GLASS);
 		setLightLevel(16 / 16f);
 		setHardness(0.0f);
-	}
-
-	private boolean canPlaceOn (World worldIn, BlockPos pos) {
-		IBlockState state = worldIn.getBlockState(pos);
-		return state.getBlock().canPlaceTorchOnTop(state, worldIn, pos) && state.getBlock() != this;
+		setTickRandomly(true);
 	}
 
 	@Override
@@ -47,81 +45,9 @@ public class QuartzSliver extends BlockDirectionalTemplate implements IHasModel 
 		return false;
 	}
 
-	protected boolean checkForDrop (World worldIn, BlockPos pos, IBlockState state) {
-		if (state.getBlock() == this && this.canPlaceAt(worldIn, pos, state.getValue(FACING))) {
-			return true;
-		} else {
-			if (worldIn.getBlockState(pos).getBlock() == this) {
-				this.dropBlockAsItem(worldIn, pos, state, 0);
-				worldIn.setBlockToAir(pos);
-			}
-
-			return false;
-		}
-	}
-
-	private boolean canPlaceAt (World worldIn, BlockPos pos, EnumFacing facing) {
-		BlockPos blockpos = pos.offset(facing.getOpposite());
-		IBlockState iblockstate = worldIn.getBlockState(blockpos);
-		Block block = iblockstate.getBlock();
-		if (block == this) return false;
-		BlockFaceShape blockfaceshape = iblockstate.getBlockFaceShape(worldIn, blockpos, facing);
-
-		if (facing.equals(EnumFacing.UP) && this.canPlaceOn(worldIn, blockpos)) {
-			return true;
-		} else if (facing != EnumFacing.UP && facing != EnumFacing.DOWN) {
-			return !isExceptBlockForAttachWithPiston(block) && blockfaceshape == BlockFaceShape.SOLID;
-		} else {
-			return false;
-		}
-	}
-
 	@Override
-	@SuppressWarnings("deprecation")
-	public void neighborChanged (IBlockState state, World world, BlockPos pos, Block block, BlockPos fromPos) {
-		this.onNeighborChangeInternal(world, pos, state);
-		//TODO: make sure changed block is the one that the sliver is attached to
-		//world.setBlockState(pos, Blocks.AIR.getDefaultState());
-		//this.dropBlockAsItem(world, pos, getDefaultState(), 0);
-	}
-
-	/**
-	 * Shamelessly stolen from BlockTorch
-	 *
-	 * @param worldIn
-	 * @param pos
-	 * @param state
-	 * @return
-	 */
-	protected boolean onNeighborChangeInternal (World worldIn, BlockPos pos, IBlockState state) {
-		if (!this.checkForDrop(worldIn, pos, state)) {
-			return true;
-		} else {
-			EnumFacing enumfacing = state.getValue(FACING);
-			EnumFacing.Axis enumfacing$axis = enumfacing.getAxis();
-			EnumFacing enumfacing1 = enumfacing.getOpposite();
-			BlockPos blockpos = pos.offset(enumfacing1);
-			boolean flag = false;
-
-			if (enumfacing$axis.isHorizontal() && worldIn.getBlockState(blockpos).getBlockFaceShape(worldIn, blockpos, enumfacing) != BlockFaceShape.SOLID) {
-				flag = true;
-			} else if (enumfacing$axis.isVertical() && !this.canPlaceOn(worldIn, blockpos)) {
-				flag = true;
-			}
-
-			if (flag) {
-				this.dropBlockAsItem(worldIn, pos, state, 0);
-				worldIn.setBlockToAir(pos);
-				return true;
-			} else {
-				return false;
-			}
-		}
-	}
-
-	@Override
-	public void getDrops (@Nonnull NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, @Nonnull IBlockState state, int fortune) {
-		drops.add(new ItemStack(BlockRegistry.QUARTZ_SLIVER, 1));
+	public Item getItemDropped (IBlockState state, Random rand, int fortune) {
+		return getItemBlock();
 	}
 
 	@Override
@@ -147,6 +73,16 @@ public class QuartzSliver extends BlockDirectionalTemplate implements IHasModel 
 	public boolean isFullCube (IBlockState state) {
 		return false;
 	}
+
+	/*@Override
+	public void onNeighborChange (IBlockAccess world, BlockPos pos, BlockPos neighbor) {
+		IBlockState state = world.getBlockState(pos);
+		EnumFacing facing = state.getValue(FACING).getOpposite();
+		if (pos.offset(facing).equals(neighbor) && (world.isAirBlock(neighbor))) {
+			((World) world).setBlockToAir(pos);
+			this.dropBlockAsItem((World) world, pos, state, 0);
+		}
+	}*/
 
 	@Override
 	@Nonnull
@@ -199,9 +135,7 @@ public class QuartzSliver extends BlockDirectionalTemplate implements IHasModel 
 
 	@Override
 	public IBlockState getStateFromMeta (int meta) {
-		IBlockState iblockstate = this.getDefaultState();
-		iblockstate = iblockstate.withProperty(FACING, EnumFacing.byIndex(meta));
-		return iblockstate;
+		return getDefaultState().withProperty(FACING, EnumFacing.byIndex(meta));
 	}
 
 	@Override
