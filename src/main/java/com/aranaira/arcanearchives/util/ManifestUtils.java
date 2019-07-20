@@ -89,14 +89,21 @@ public class ManifestUtils {
 				}
 			}
 			if (!inRange.descriptions.isEmpty()) {
-				inRange.finalStack.shrink(1);
+				if (inRange.finalStack.getCount() > 1) {
+					inRange.finalStack.shrink(1);
+				}
 				phase2.add(inRange);
 			}
 			if (!outOfDimension.descriptions.isEmpty()) {
-				outOfDimension.finalStack.shrink(1);
+				if (outOfDimension.finalStack.getCount() > 1) {
+					outOfDimension.finalStack.shrink(1);
+				}
 				phase2.add(outOfDimension);
 			}
 			if (!outOfRange.descriptions.isEmpty()) {
+				if (outOfRange.finalStack.getCount() > 1) {
+					outOfRange.finalStack.shrink(1);
+				}
 				outOfRange.finalStack.shrink(1);
 				phase2.add(outOfRange);
 			}
