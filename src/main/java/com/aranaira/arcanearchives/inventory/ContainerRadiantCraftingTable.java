@@ -300,11 +300,7 @@ public class ContainerRadiantCraftingTable extends Container {
 		if (!world.isRemote) {
 			result.setInventorySlotContents(0, itemstack);
 			EntityPlayerMP entityplayermp = (EntityPlayerMP) player;
-			if (lastLastRecipe != lastRecipe) {
-				entityplayermp.connection.sendPacket(new SPacketSetSlot(this.windowId, 0, itemstack));
-			} else if (lastLastRecipe != null && !ItemStack.areItemStacksEqual(lastLastRecipe.getCraftingResult(inv), lastRecipe.getCraftingResult(inv))) {
-				entityplayermp.connection.sendPacket(new SPacketSetSlot(this.windowId, 0, itemstack));
-			}
+			entityplayermp.connection.sendPacket(new SPacketSetSlot(this.windowId, 0, itemstack));
 			Networking.CHANNEL.sendTo(new PacketRadiantCrafting.LastRecipe(lastRecipe), entityplayermp);
 		}
 
