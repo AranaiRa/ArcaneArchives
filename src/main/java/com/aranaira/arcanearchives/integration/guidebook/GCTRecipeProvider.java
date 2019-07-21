@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class GCTRecipeProvider extends RecipeProvider {
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(ArcaneArchives.MODID, "gui/guidebook/recipe_gct");
-	private static final int LEFT_OFFSET = 60;
+	private static final int LEFT_OFFSET = 105;
 
 	@Nullable
 	@Override
