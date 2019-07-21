@@ -2,8 +2,6 @@ package com.aranaira.arcanearchives.client.gui;
 
 import com.aranaira.arcanearchives.client.gui.controls.InvisibleButton;
 import com.aranaira.arcanearchives.client.gui.controls.RightClickTextField;
-import com.aranaira.arcanearchives.util.ColorUtils;
-import com.aranaira.arcanearchives.util.ColorUtils.Color;
 import com.aranaira.arcanearchives.client.render.RenderItemExtended;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerRadiantChest;
@@ -12,9 +10,14 @@ import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketRadiantChest.ToggleBrazier;
 import com.aranaira.arcanearchives.tileentities.IBrazierRouting;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
+import com.aranaira.arcanearchives.util.ColorUtils;
+import com.aranaira.arcanearchives.util.ColorUtils.Color;
 import com.aranaira.arcanearchives.util.ManifestTrackingUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.*;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiPageButtonList;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -26,7 +29,6 @@ import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -42,26 +44,9 @@ import java.util.List;
 
 @Optional.InterfaceList({@Optional.Interface(modid = "quark", iface = "vazkii.quark.api.IChestButtonCallback", striprefs = true), @Optional.Interface(modid = "quark", iface = "vazkii.quark.api.IItemSearchBar", striprefs = true)})
 public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.GuiResponder, IChestButtonCallback, IItemSearchBar {
-
-	public static final int WIDTH = 176;
-	public static final int HEIGHT = 166;
-
 	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/radiantchest.png");
 	private static final ResourceLocation GUITexturesSimple = new ResourceLocation("arcanearchives:textures/gui/simple/radiantchest.png");
-	private final int
-		MAIN_W = 192,
-		MAIN_H = 253,
-		CHECK_X = 234,
-		CHECK_Y = 0,
-		CHECK_S = 6,
-		SLASH_X = 240,
-		SLASH_Y = 0,
-		SLASH_S = 16,
-		ROUTING_TOOLTIP_X = 159,
-		ROUTING_TOOLTIP_Y = 234,
-		ROUTING_TOOLTIP_W = 33,
-		ROUTING_TOOLTIP_H = 16,
-		ImageScale = 256;
+	private final int MAIN_W = 192, MAIN_H = 253, CHECK_X = 234, CHECK_Y = 0, CHECK_S = 6, SLASH_X = 240, SLASH_Y = 0, SLASH_S = 16, ROUTING_TOOLTIP_X = 159, ROUTING_TOOLTIP_Y = 234, ROUTING_TOOLTIP_W = 33, ROUTING_TOOLTIP_H = 16, ImageScale = 256;
 
 	private Slot hoveredSlot;
 	/**
@@ -133,7 +118,7 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 		super.initGui();
 
 		nameBox = new RightClickTextField(1, fontRenderer, guiLeft + mNameTextLeftOffset, guiTop + mNameTextTopOffset, mNameTextWidth, mNameTextHeight);
-		nameBox.setText(container.getName());
+		// TODO: nameBox.setText(container.getName());
 		nameBox.setGuiResponder(this);
 		nameBox.setEnableBackgroundDrawing(false);
 
@@ -144,8 +129,8 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 	}
 
 	@Override
-	protected void actionPerformed(GuiButton button) throws IOException {
-		if(button.id == 0) { //toggle button
+	protected void actionPerformed (GuiButton button) throws IOException {
+		if (button.id == 0) { //toggle button
 			if (tile.getUuid() != null && mc.player.getUniqueID() != null) {
 				ToggleBrazier packet = new ToggleBrazier(mc.player.getUniqueID(), tile.getUuid());
 				Networking.CHANNEL.sendToServer(packet);
@@ -180,10 +165,10 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 		GlStateManager.disableDepth();
 
 		for (int k = 0; k < this.buttonList.size(); ++k) {
-			((GuiButton) this.buttonList.get(k)).drawButton(this.mc, mouseX, mouseY, partialTicks);
+			(this.buttonList.get(k)).drawButton(this.mc, mouseX, mouseY, partialTicks);
 		}
 		for (int l = 0; l < this.labelList.size(); ++l) {
-			((GuiLabel) this.labelList.get(l)).drawLabel(this.mc, mouseX, mouseY);
+			(this.labelList.get(l)).drawLabel(this.mc, mouseX, mouseY);
 		}
 
 		RenderHelper.enableGUIStandardItemLighting();
@@ -272,14 +257,13 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 
 	@Override
 	protected void renderHoveredToolTip (int mouseX, int mouseY) {
-		if (mouseY >= guiTop+ROUTING_TOOLTIP_Y && mouseY <= guiTop+ROUTING_TOOLTIP_Y+ROUTING_TOOLTIP_H) {
-			if (mouseX >= guiLeft+ROUTING_TOOLTIP_X && mouseX <= guiLeft+ROUTING_TOOLTIP_X+ROUTING_TOOLTIP_W) {
+		if (mouseY >= guiTop + ROUTING_TOOLTIP_Y && mouseY <= guiTop + ROUTING_TOOLTIP_Y + ROUTING_TOOLTIP_H) {
+			if (mouseX >= guiLeft + ROUTING_TOOLTIP_X && mouseX <= guiLeft + ROUTING_TOOLTIP_X + ROUTING_TOOLTIP_W) {
 				List<String> tooltip = new ArrayList<>();
-				if(container.getTile().getRoutingType() == IBrazierRouting.BrazierRoutingType.NO_NEW_STACKS) {
+				if (container.getTile().getRoutingType() == IBrazierRouting.BrazierRoutingType.NO_NEW_STACKS) {
 					tooltip.add(I18n.format("arcanearchives.tooltip.radiantchest.routingmode.nonewitems1"));
 					tooltip.add(I18n.format("arcanearchives.tooltip.radiantchest.routingmode.nonewitems2"));
-				}
-				else {
+				} else {
 					tooltip.add(I18n.format("arcanearchives.tooltip.radiantchest.routingmode.any1"));
 					tooltip.add(I18n.format("arcanearchives.tooltip.radiantchest.routingmode.any2"));
 				}
@@ -387,8 +371,6 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 		this.itemRender.zLevel = 0.0F;
 		this.zLevel = 0.0F;
 		RenderItemExtended.INSTANCE.setZLevel(this.itemRender.zLevel);
-
-
 	}
 
 	private void updateDragSplitting () {
@@ -687,19 +669,12 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 
 	@Override
 	protected void keyTyped (char typedChar, int keyCode) throws IOException {
-		switch (keyCode) {
-			case Keyboard.KEY_ESCAPE: {
-				Minecraft.getMinecraft().displayGuiScreen(null);
-				break;
-			}
-		}
-
 		if (nameBox.isFocused()) {
 			nameBox.textboxKeyTyped(typedChar, keyCode);
 			return;
 		}
 
-		if (this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode)) {
+		if (keyCode == 1 || this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode)) {
 			this.mc.player.closeScreen();
 		}
 
@@ -712,8 +687,6 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 				this.handleMouseClick(this.hoveredSlot, this.hoveredSlot.slotNumber, isCtrlKeyDown() ? 1 : 0, ClickType.THROW);
 			}
 		}
-
-
 	}
 
 	@Override
@@ -770,6 +743,6 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 
 	@Override
 	public void setEntryValue (int id, String value) {
-		container.setName(value);
+		// TODO: container.setName(value);
 	}
 }

@@ -34,14 +34,12 @@ public class ContainerRadiantChest extends Container {
 	/**
 	 * The list of slots where the itemstack holds will be distributed
 	 */
-	protected final Set<Slot> dragSlots = Sets.<Slot>newHashSet();
-	private EntityPlayer player;
+	protected final Set<Slot> dragSlots = Sets.newHashSet();
 
 	public ContainerRadiantChest (RadiantChestTileEntity te, EntityPlayer player) {
 		this.tile = te;
 		addOwnSlots();
 		addPlayerSlots(player.inventory);
-		this.player = player;
 	}
 
 	public RadiantChestTileEntity getTile () {
@@ -523,6 +521,8 @@ public class ContainerRadiantChest extends Container {
 						EntityPlayerMP player = (EntityPlayerMP) listener;
 
 						this.syncSlot(player, i, itemstack1);
+					} else {
+						listener.sendSlotContents(this, i, itemstack1);
 					}
 				}
 			}
@@ -560,20 +560,5 @@ public class ContainerRadiantChest extends Container {
 		if (getSlot(slot) instanceof SlotExtended) {
 			Networking.CHANNEL.sendTo(new MessageSyncExtendedSlotContents(this.windowId, slot, stack), player);
 		}
-	}
-
-	@Override
-	public void setCanCraft (EntityPlayer player, boolean canCraft) {
-		super.setCanCraft(player, canCraft);
-	}
-
-	public String getName () {
-		return tile.getChestName();
-	}
-
-	public void setName (String name) {
-		SetName packet = new SetName(tile.getPos(), name, tile.dimension);
-		Networking.CHANNEL.sendToServer(packet);
-		tile.setChestName(name);
 	}
 }

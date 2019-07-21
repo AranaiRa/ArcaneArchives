@@ -30,6 +30,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.client.CPacketCloseWindow;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
@@ -396,8 +397,9 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 		switch (keyCode) {
 			case Keyboard.KEY_ESCAPE: {
 				maybeRestoreJEI();
-				Minecraft.getMinecraft().displayGuiScreen(null);
-				break;
+				mc.player.connection.sendPacket(new CPacketCloseWindow(mc.player.openContainer.windowId));
+				mc.player.openContainer = mc.player.inventoryContainer;
+				mc.player.inventoryContainer.windowId = 0; // DON'T ASK ME I STOLE THIS FROM HELLFIRE				break;
 			}
 			case Keyboard.KEY_UP: {
 				scrollEventManager.arrowUp();
