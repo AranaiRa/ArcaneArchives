@@ -86,6 +86,11 @@ public class RadiantCraftingTableTileEntity extends ImmanenceTileEntity implemen
 	}
 
 	@Override
+	public NBTTagCompound getUpdateTag () {
+		return writeToNBT(new NBTTagCompound());
+	}
+
+	@Override
 	public void onDataPacket (NetworkManager net, SPacketUpdateTileEntity pkt) {
 		readFromNBT(pkt.getNbtCompound());
 		super.onDataPacket(net, pkt);

@@ -128,7 +128,7 @@ public class ContainerRadiantCraftingTable extends Container {
 		ItemStack itemstack = slot.getStack().copy();
 
 		// slot that was clicked on not empty?
-		int end = this.inventorySlots.size();
+		int end = this.inventorySlots.size() - 3;
 
 		// Is it a slot in the main inventory? (aka not player inventory)
 		if (index < 10) {
