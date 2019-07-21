@@ -120,7 +120,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 	}
 
 	public void setChestName (String newName) {
-		this.chestName = (newName == null) ? "" : newName;
+		this.chestName = newName;
 	}
 
 	@Override
@@ -146,9 +146,13 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 	public NBTTagCompound writeToNBT (NBTTagCompound compound) {
 		super.writeToNBT(compound);
 		compound.setTag(AATileEntity.Tags.INVENTORY, inventory.serializeNBT());
-		compound.setString(Tags.CHEST_NAME, chestName);
+		if (chestName != null && !chestName.isEmpty()) {
+			compound.setString(Tags.CHEST_NAME, chestName);
+		}
 		compound.setInteger(Tags.DISPLAY_FACING, displayFacing.getIndex());
-		compound.setTag(Tags.DISPLAY_STACK, displayStack.serializeNBT());
+		if (!displayStack.isEmpty()) {
+			compound.setTag(Tags.DISPLAY_STACK, displayStack.serializeNBT());
+		}
 		compound.setInteger(Tags.ROUTING_TYPE, routingType.ordinal());
 
 		return compound;
@@ -161,9 +165,18 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 			ArcaneArchives.logger.info(String.format("Radiant Chest tile entity at %d/%d/%d is missing its inventory.", pos.getX(), pos.getY(), pos.getZ()));
 		}
 		inventory.deserializeNBT(compound.getCompoundTag(AATileEntity.Tags.INVENTORY));
-		chestName = compound.getString(Tags.CHEST_NAME);
+
+		if (compound.hasKey(Tags.CHEST_NAME)) {
+			chestName = compound.getString(Tags.CHEST_NAME);
+		} else {
+			chestName = "";
+		}
 		displayFacing = EnumFacing.byIndex(compound.getInteger(Tags.DISPLAY_FACING));
-		displayStack = new ItemStack(compound.getCompoundTag(Tags.DISPLAY_STACK));
+		if (compound.hasKey(Tags.DISPLAY_STACK)) {
+			displayStack = new ItemStack(compound.getCompoundTag(Tags.DISPLAY_STACK));
+		} else {
+			displayStack = ItemStack.EMPTY;
+		}
 		routingType = BrazierRoutingType.fromInt(compound.getInteger(Tags.ROUTING_TYPE));
 	}
 

@@ -7,6 +7,7 @@ import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerRadiantChest;
 import com.aranaira.arcanearchives.inventory.slots.SlotExtended;
 import com.aranaira.arcanearchives.network.Networking;
+import com.aranaira.arcanearchives.network.PacketRadiantChest.SetName;
 import com.aranaira.arcanearchives.network.PacketRadiantChest.ToggleBrazier;
 import com.aranaira.arcanearchives.tileentities.interfaces.IBrazierRouting;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
@@ -733,16 +734,15 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 
 	@Override
 	public void setEntryValue (int id, boolean value) {
-
 	}
 
 	@Override
 	public void setEntryValue (int id, float value) {
-
 	}
 
 	@Override
 	public void setEntryValue (int id, String value) {
-		// TODO: container.setName(value);
+		SetName packet = new SetName(tile.getPos(), value, tile.dimension);
+		Networking.CHANNEL.sendToServer(packet);
 	}
 }
