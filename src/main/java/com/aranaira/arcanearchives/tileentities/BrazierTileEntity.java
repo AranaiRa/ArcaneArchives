@@ -6,6 +6,7 @@ import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.util.InventoryRoutingUtils;
 import com.aranaira.arcanearchives.util.ItemUtils;
+import com.aranaira.arcanearchives.util.PlayerUtil;
 import com.aranaira.enderio.base.render.ranged.IRanged;
 import com.aranaira.enderio.base.render.ranged.RangeParticle;
 import com.aranaira.enderio.core.client.render.BoundingBox;
@@ -239,8 +240,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 		}
 
 		if (doUpdate || doubleClick) {
-			EntityPlayerMP mpPlayer = (EntityPlayerMP) player;
-			mpPlayer.sendAllContents(mpPlayer.inventoryContainer, mpPlayer.inventoryContainer.getInventory());
+			PlayerUtil.Server.syncInventory((EntityPlayerMP) player);
 		}
 
 		return true;
