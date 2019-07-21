@@ -111,7 +111,7 @@ public class RadiantTrove extends BlockDirectionalTemplate {
 		}
 
 		NBTTagCompound tag = new NBTTagCompound();
-		te.writeToNBT(tag);
+		te.serializeStack(tag);
 
 		ItemStack stack = new ItemStack(BlockRegistry.RADIANT_TROVE.getItemBlock());
 		stack.setTagCompound(tag);
@@ -244,7 +244,9 @@ public class RadiantTrove extends BlockDirectionalTemplate {
 		if (stack.hasTagCompound()) {
 			RadiantTroveTileEntity te = WorldUtil.getTileEntity(RadiantTroveTileEntity.class, world, pos);
 			if (te != null) {
-				te.readFromNBT(stack.getTagCompound());
+				te.deserializeStack(stack.getTagCompound());
+				te.markDirty();
+				te.defaultServerSideUpdate();
 			}
 		}
 

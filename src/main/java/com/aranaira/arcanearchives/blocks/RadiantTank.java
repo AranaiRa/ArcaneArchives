@@ -188,6 +188,8 @@ public class RadiantTank extends BlockTemplate {
 			RadiantTankTileEntity te = WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, pos);
 			if (te != null) {
 				te.deserializeStack(stack.getTagCompound());
+				te.markDirty();
+				te.defaultServerSideUpdate();
 			}
 		}
 	}
