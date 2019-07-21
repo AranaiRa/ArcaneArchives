@@ -240,9 +240,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 
 		if (doUpdate || doubleClick) {
 			EntityPlayerMP mpPlayer = (EntityPlayerMP) player;
-			for (int i = 0; i < playerInventory.getSlots(); i++) {
-				mpPlayer.connection.sendPacket(new SPacketSetSlot(-2, i, mpPlayer.inventory.getStackInSlot(i)));
-			}
+			mpPlayer.sendAllContents(mpPlayer.inventoryContainer, mpPlayer.inventoryContainer.getInventory());
 		}
 
 		return true;
