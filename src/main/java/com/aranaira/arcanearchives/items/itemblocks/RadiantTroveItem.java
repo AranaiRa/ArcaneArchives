@@ -52,7 +52,7 @@ public class RadiantTroveItem extends ItemBlock {
 			OptionalUpgradesHandler optionals = new OptionalUpgradesHandler();
 			optionals.deserializeNBT(tag.getCompoundTag(RadiantTroveTileEntity.Tags.OPTIONAL_UPGRADES));
 			if (optionals.hasUpgrade(UpgradeType.VOID)) {
-				tooltip.add(TextFormatting.LIGHT_PURPLE + "" + TextFormatting.BOLD + I18n.format("arcanearchives.tooltip.trove.voiding"));
+				tooltip.add(TextFormatting.DARK_PURPLE + "" + TextFormatting.BOLD + I18n.format("arcanearchives.tooltip.trove.voiding"));
 			}
 		}
 

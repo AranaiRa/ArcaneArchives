@@ -6,6 +6,7 @@ import com.aranaira.arcanearchives.inventory.handlers.ITroveItemHandler;
 import com.aranaira.arcanearchives.inventory.handlers.OptionalUpgradesHandler;
 import com.aranaira.arcanearchives.inventory.handlers.SizeUpgradeItemHandler;
 import com.aranaira.arcanearchives.inventory.handlers.TroveUpgradeItemHandler;
+import com.aranaira.arcanearchives.items.templates.IItemScepter;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import com.aranaira.arcanearchives.types.enums.UpgradeType;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
@@ -176,6 +177,10 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 
 	public void onLeftClickTrove (EntityPlayer player) {
 		if (world.isRemote) {
+			return;
+		}
+
+		if (player.isSneaking() && player.inventory.getCurrentItem().getItem() instanceof IItemScepter) {
 			return;
 		}
 
