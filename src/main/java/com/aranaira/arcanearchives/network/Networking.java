@@ -41,6 +41,8 @@ public class Networking {
 		registerPacks(PacketBrazier.IncrementRadius.class, Side.SERVER);
 		registerPacks(PacketBrazier.DecrementRadius.class, Side.SERVER);
 		registerPacks(PacketDebug.TrackPositions.Handler.class, PacketDebug.TrackPositions.class, Side.CLIENT);
+		registerPacks(PacketRadiantCrafting.SetRecipe.Handler.class, PacketRadiantCrafting.SetRecipe.class, Side.SERVER);
+		registerPacks(PacketRadiantCrafting.UnsetRecipe.Handler.class, PacketRadiantCrafting.UnsetRecipe.class, Side.SERVER);
 	}
 
 	private static <REQ extends IMessage, REPLY extends IMessage> void registerPacks (Class<? extends IMessageHandler<REQ, REPLY>> messageHandler, Class<REQ> requestMessageType, Side side) {

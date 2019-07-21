@@ -6,6 +6,7 @@ import com.aranaira.arcanearchives.network.Handlers.ServerHandler;
 import com.aranaira.arcanearchives.network.Handlers.TileHandlerServer;
 import com.aranaira.arcanearchives.util.ByteUtils;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 import java.util.UUID;
@@ -28,7 +29,9 @@ public class Messages {
 	}
 
 	public abstract static class TileMessage implements IMessage {
-		private UUID tileId;
+		private UUID tileId = null;
+		private BlockPos pos;
+		private int dimension;
 
 		public TileMessage () {
 		}
@@ -37,18 +40,44 @@ public class Messages {
 			this.tileId = tileId;
 		}
 
+		public TileMessage (BlockPos pos, int dimension) {
+			this.pos = pos;
+			this.dimension = dimension;
+		}
+
 		@Override
 		public void fromBytes (ByteBuf buf) {
-			tileId = ByteUtils.readUUID(buf);
+			boolean uuid = buf.readBoolean();
+			if (uuid) {
+				tileId = ByteUtils.readUUID(buf);
+			} else {
+				pos = BlockPos.fromLong(buf.readLong());
+				dimension = buf.readInt();
+			}
 		}
 
 		@Override
 		public void toBytes (ByteBuf buf) {
-			ByteUtils.writeUUID(buf, tileId);
+			if (tileId != null) {
+				buf.writeBoolean(true);
+				ByteUtils.writeUUID(buf, tileId);
+			} else {
+				buf.writeBoolean(false);
+				buf.writeLong(pos.toLong());
+				buf.writeInt(dimension);
+			}
 		}
 
 		public UUID getTileId () {
 			return this.tileId;
+		}
+
+		public BlockPos getPos () {
+			return pos;
+		}
+
+		public int getDimension () {
+			return dimension;
 		}
 	}
 

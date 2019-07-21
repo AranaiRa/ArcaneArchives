@@ -1,6 +1,8 @@
 package com.aranaira.arcanearchives.util;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 
 import java.util.UUID;
@@ -34,5 +36,13 @@ public class ByteUtils {
 		} else {
 			return "";
 		}
+	}
+
+	public static void writeIRecipe (ByteBuf buf, IRecipe recipe) {
+		buf.writeInt(CraftingManager.REGISTRY.getIDForObject(recipe));
+	}
+
+	public static IRecipe readIRecipe (ByteBuf buf) {
+		return CraftingManager.REGISTRY.getObjectById(buf.readInt());
 	}
 }

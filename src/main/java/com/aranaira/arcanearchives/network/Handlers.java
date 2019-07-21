@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.network;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
+import com.aranaira.arcanearchives.network.Handlers.BaseHandler;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.types.IteRef;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -43,11 +44,17 @@ public class Handlers {
 
 			ServerNetwork network = DataHelper.getServerNetwork(networkId, player.world);
 
-			IteRef ref = network.getTiles().getReference(message.getTileId());
+			IteRef ref;
+
+			if (message.getTileId() != null) {
+				ref = network.getTiles().getReference(message.getTileId());
+			} else {
+				ref = network.getTiles().getReference(message.getPos(), message.getDimension());
+			}
+
 			if (ref == null) {
 				return null;
 			}
-
 			ref.refreshTile(player.world, player.dimension);
 			return ref.getTile();
 		}
