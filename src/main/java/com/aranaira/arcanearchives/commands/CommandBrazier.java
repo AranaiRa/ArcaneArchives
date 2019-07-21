@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.commands;
 
 import com.aranaira.arcanearchives.tileentities.BrazierTileEntity;
-import com.aranaira.arcanearchives.tileentities.IBrazierRouting;
+import com.aranaira.arcanearchives.tileentities.interfaces.IBrazierRouting;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.util.InventoryRoutingUtils;
 import com.aranaira.arcanearchives.util.InventoryRoutingUtils.WeightedEntry;

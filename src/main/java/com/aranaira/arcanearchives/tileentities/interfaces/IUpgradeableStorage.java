@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tileentities;
+package com.aranaira.arcanearchives.tileentities.interfaces;
 
 import com.aranaira.arcanearchives.inventory.handlers.OptionalUpgradesHandler;
 import com.aranaira.arcanearchives.inventory.handlers.SizeUpgradeItemHandler;

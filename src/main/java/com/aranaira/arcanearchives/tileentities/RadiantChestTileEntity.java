@@ -6,6 +6,8 @@ import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.inventory.handlers.ExtendedItemStackHandler;
 import com.aranaira.arcanearchives.inventory.handlers.ITrackingHandler;
+import com.aranaira.arcanearchives.tileentities.interfaces.IBrazierRouting;
+import com.aranaira.arcanearchives.tileentities.interfaces.IManifestTileEntity;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
