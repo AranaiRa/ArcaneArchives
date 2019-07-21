@@ -1,9 +1,11 @@
 package com.aranaira.arcanearchives.items.itemblocks;
 
+import com.aranaira.arcanearchives.inventory.handlers.OptionalUpgradesHandler;
 import com.aranaira.arcanearchives.inventory.handlers.TroveItemBlockItemHandler;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler.Tags;
+import com.aranaira.arcanearchives.types.enums.UpgradeType;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
@@ -11,6 +13,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
@@ -39,8 +42,18 @@ public class RadiantTroveItem extends ItemBlock {
 			int count = incoming.getInteger(Tags.COUNT);
 			ItemStack stored = new ItemStack(incoming.getCompoundTag(Tags.REFERENCE));
 			int maxCapacity = (incoming.getInteger(Tags.UPGRADES) + 1) * TroveItemHandler.BASE_COUNT;
-			tooltip.add(I18n.format("arcanearchives.tooltip.trove.items", stored.getDisplayName()));
+			String displayName = stored.getDisplayName();
+			if (stored.hasDisplayName()) {
+				displayName = TextFormatting.ITALIC + displayName;
+			}
+			displayName = stored.getItem().getForgeRarity(stored).getColor() + displayName + TextFormatting.RESET;
+			tooltip.add(I18n.format("arcanearchives.tooltip.trove.items", displayName));
 			tooltip.add(I18n.format("arcanearchives.tooltip.trove.contains", count, maxCapacity));
+			OptionalUpgradesHandler optionals = new OptionalUpgradesHandler();
+			optionals.deserializeNBT(tag.getCompoundTag(RadiantTroveTileEntity.Tags.OPTIONAL_UPGRADES));
+			if (optionals.hasUpgrade(UpgradeType.VOID)) {
+				tooltip.add(TextFormatting.LIGHT_PURPLE + "" + TextFormatting.BOLD + I18n.format("arcanearchives.tooltip.trove.voiding"));
+			}
 		}
 
 		super.addInformation(stack, worldIn, tooltip, flagIn);
