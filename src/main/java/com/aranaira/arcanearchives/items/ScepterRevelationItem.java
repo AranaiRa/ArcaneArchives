@@ -2,9 +2,10 @@ package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.blocks.MonitoringCrystal;
 import com.aranaira.arcanearchives.init.BlockRegistry;
-import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler;
+import com.aranaira.arcanearchives.items.templates.IItemScepter;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.tileentities.*;
+import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -33,7 +34,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ScepterRevelationItem extends ItemTemplate {
+public class ScepterRevelationItem extends ItemTemplate implements IItemScepter {
 	public static final String NAME = "scepter_revelation";
 
 	public ScepterRevelationItem () {

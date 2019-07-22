@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.items;
 
+import com.aranaira.arcanearchives.items.templates.IItemScepter;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
@@ -20,7 +21,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ScepterManipulationItem extends ItemTemplate {
+public class ScepterManipulationItem extends ItemTemplate implements IItemScepter {
 	public static final String NAME = "scepter_manipulation";
 
 	public ScepterManipulationItem () {

@@ -6,6 +6,7 @@ import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.MathHelper;
@@ -68,5 +69,19 @@ public class ItemUtils {
 			stack.setTagCompound(tagCompound);
 		}
 		return tagCompound;
+	}
+
+	public static boolean ingredientsMatch (Ingredient ingredient1, Ingredient ingredient2) {
+		if (ingredient1.isSimple() != ingredient2.isSimple()) return false;
+
+		for (ItemStack stack : ingredient2.getMatchingStacks()) {
+			if (!ingredient1.apply(stack)) return false;
+		}
+
+		for (ItemStack stack : ingredient1.getMatchingStacks()) {
+			if (!ingredient2.apply(stack)) return false;
+		}
+
+		return true;
 	}
 }

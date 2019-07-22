@@ -56,14 +56,7 @@ public class ContainerGemCuttersTable extends Container {
 			@Override
 			public ItemStack onTake (EntityPlayer thePlayer, ItemStack stack) {
 				GCTRecipe recipe = tile.getCurrentRecipe();
-				for (Entry entry : recipe.getMatchingSlots(combinedInventory).int2IntEntrySet()) {
-					ItemStack result = combinedInventory.extractItem(entry.getIntKey(), entry.getIntValue(), false);
-					if (!player.world.isRemote) {
-						if (recipe.handleItemResult(world, player, tile, result)) {
-							detectAndSendChanges();
-						}
-					}
-				}
+				recipe.consumeAndHandleInventory(recipe, combinedInventory, player, tile, ContainerGemCuttersTable.this::detectAndSendChanges, recipe::handleItemResult);
 				if (!player.world.isRemote) {
 					stack = recipe.onCrafted(player, stack);
 				}

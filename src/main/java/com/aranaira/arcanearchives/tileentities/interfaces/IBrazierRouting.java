@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tileentities;
+package com.aranaira.arcanearchives.tileentities.interfaces;
 
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.item.ItemStack;
@@ -30,7 +30,7 @@ public interface IBrazierRouting {
 		TROVE,
 		GCT;
 
-		static BrazierRoutingType fromInt (int index) {
+		public static BrazierRoutingType fromInt (int index) {
 			int i = 0;
 			for (BrazierRoutingType type : values()) {
 				if (index == i) return type;

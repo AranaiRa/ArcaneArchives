@@ -47,7 +47,7 @@ public class IngredientsMatcher {
 			if (curTotal - stack.getCount() <= 0) {
 				counts.remove(ingredient, curTotal);
 			} else {
-				counts.put(ingredient, curTotal);
+				counts.put(ingredient, curTotal - stack.getCount());
 			}
 		}
 	}

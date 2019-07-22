@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tileentities;
+package com.aranaira.arcanearchives.tileentities.interfaces;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;

@@ -18,6 +18,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.client.CPacketCloseWindow;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -132,7 +133,7 @@ public class Keybinds {
 							addedValues = true;
 						}
 						if (!GuiScreen.isShiftKeyDown() && addedValues) {
-							mc.displayGuiScreen(null);
+							mc.player.closeScreen();
 						}
 					});
 				}

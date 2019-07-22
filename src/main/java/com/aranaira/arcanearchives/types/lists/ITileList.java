@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.types.lists;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.types.IteRef;
 import com.aranaira.arcanearchives.types.iterators.TileListIterable;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -25,6 +26,17 @@ public interface ITileList extends Iterable<IteRef> {
 	default IteRef getReference (UUID uuid) {
 		for (IteRef ref : this) {
 			if (ref.uuid.equals(uuid)) {
+				return ref;
+			}
+		}
+
+		return null;
+	}
+
+	@Nullable
+	default IteRef getReference (BlockPos pos, int dimension) {
+		for (IteRef ref : this) {
+			if (ref.pos.equals(pos) && ref.dimension == dimension) {
 				return ref;
 			}
 		}

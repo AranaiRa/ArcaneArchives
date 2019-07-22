@@ -21,6 +21,8 @@ import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.client.CPacketAnimation;
+import net.minecraft.network.play.client.CPacketCloseWindow;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -65,6 +67,7 @@ public class ContainerManifest extends Container implements IScrollableContainer
 		@Override
 		@SideOnly(Side.CLIENT)
 		public boolean isEnabled () {
+			if (getStack().isEmpty()) return false;
 			return isEnabled;
 		}
 	}
@@ -182,7 +185,7 @@ public class ContainerManifest extends Container implements IScrollableContainer
 
 		if (!GuiScreen.isShiftKeyDown()) {
 			Minecraft mc = Minecraft.getMinecraft();
-			mc.displayGuiScreen(null);
+			mc.player.closeScreen();
 		}
 
 		return ItemStack.EMPTY;

@@ -2,7 +2,6 @@ package com.aranaira.arcanearchives.inventory;
 
 import com.aranaira.arcanearchives.inventory.handlers.InventoryCraftingPersistent;
 import com.aranaira.arcanearchives.inventory.slots.SlotCraftingFastWorkbench;
-import com.aranaira.arcanearchives.inventory.slots.SlotIRecipe;
 import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketRadiantCrafting;
 import com.aranaira.arcanearchives.tileentities.RadiantCraftingTableTileEntity;
@@ -23,12 +22,14 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 // nearly the same as ContainerWorkbench but uses the TileEntities inventory
 @Mod.EventBusSubscriber
 public class ContainerRadiantCraftingTable extends Container {
+	public static IInventory emptyInventory = new InventoryBasic("[Null]", true, 0);
 	public final BlockPos pos;
 	protected final World world;
 	private final ItemStackHandler itemHandler;
@@ -37,11 +38,19 @@ public class ContainerRadiantCraftingTable extends Container {
 	private final InventoryCraftResult craftResult;
 	private IRecipe lastRecipe;
 	private IRecipe lastLastRecipe;
-	private IRecipe actualLastLastRecipe;
-	private IRecipe actualLastRecipe;
 	private List<SlotIRecipe> recipeSlots = Arrays.asList(new SlotIRecipe[3]);
 
-	private RadiantCraftingTableTileEntity tile;
+	private IRecipe lastCraftedRecipe;
+
+	public IRecipe getLastCraftedRecipe () {
+		return lastCraftedRecipe;
+	}
+
+	public IRecipe getCurrentRecipe () {
+		return lastRecipe;
+	}
+
+	public RadiantCraftingTableTileEntity tile;
 
 	public ContainerRadiantCraftingTable (RadiantCraftingTableTileEntity tile, EntityPlayer player, InventoryPlayer playerInventory) {
 		super();
@@ -82,13 +91,11 @@ public class ContainerRadiantCraftingTable extends Container {
 			index++;
 		}
 
-		/*this.recipeSlots.set(0, new SlotIRecipe(this, index++, tile, player, 0, 174, 16));
-		this.recipeSlots.set(1, new SlotIRecipe(this, index++, tile, player, 1, 174, 42));
-		this.recipeSlots.set(2, new SlotIRecipe(this, index, tile, player, 2, 174, 68));
+		this.recipeSlots.set(0, new SlotIRecipe(this, 0, 174, 16));
+		this.recipeSlots.set(1, new SlotIRecipe(this, 1, 174, 42));
+		this.recipeSlots.set(2, new SlotIRecipe(this, 2, 174, 68));
 
-		this.addSlotToContainer(recipeSlots.get(0));
-		this.addSlotToContainer(recipeSlots.get(1));
-		this.addSlotToContainer(recipeSlots.get(2));*/
+		this.recipeSlots.forEach(this::addSlotToContainer);
 	}
 
 	@SubscribeEvent
@@ -105,8 +112,7 @@ public class ContainerRadiantCraftingTable extends Container {
 	}
 
 	public void saveLastRecipe () {
-		actualLastLastRecipe = actualLastRecipe;
-		actualLastRecipe = lastRecipe;
+		this.lastCraftedRecipe = lastRecipe;
 	}
 
 	@Nonnull
@@ -122,7 +128,7 @@ public class ContainerRadiantCraftingTable extends Container {
 		ItemStack itemstack = slot.getStack().copy();
 
 		// slot that was clicked on not empty?
-		int end = this.inventorySlots.size();
+		int end = this.inventorySlots.size() - 3;
 
 		// Is it a slot in the main inventory? (aka not player inventory)
 		if (index < 10) {
@@ -333,6 +339,48 @@ public class ContainerRadiantCraftingTable extends Container {
 			return lastRecipe.getRemainingItems(craftMatrix);
 		}
 		return craftMatrix.stackList;
+	}
+
+	public class SlotIRecipe extends Slot {
+		private int recipe;
+
+		public SlotIRecipe (ContainerRadiantCraftingTable container, int index, int xPosition, int yPosition) {
+			super(emptyInventory, index, xPosition, yPosition);
+
+			recipe = index;
+		}
+
+		public int getRecipe () {
+			return recipe;
+		}
+
+		@Override
+		public boolean isItemValid (ItemStack stack) {
+			return false;
+		}
+
+		@Override
+		public ItemStack getStack () {
+			if (tile.getRecipe(recipe) != null) {
+				return tile.getRecipe(recipe).getRecipeOutput();
+			} else {
+				return ItemStack.EMPTY;
+			}
+		}
+
+		@Override
+		public void putStack (ItemStack stack) {
+		}
+
+		@Override
+		public ItemStack decrStackSize (int amount) {
+			return ItemStack.EMPTY;
+		}
+
+		@Override
+		public boolean canTakeStack (EntityPlayer playerIn) {
+			return true;
+		}
 	}
 }
 

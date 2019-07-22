@@ -185,6 +185,7 @@ arcanearchives.tooltip.amphora.unknown_fluid=unknown fluid
 
 arcanearchives.tooltip.trove.items=Item: %s
 arcanearchives.tooltip.trove.contains=Contains: %d/%d
+arcanearchives.tooltip.trove.voiding=Voids excess items.
 
 arcanearchives.tooltip.device.brazier=Items tossed in are sent to Radiant Storage. Troves are filled first, then Chests.
 arcanearchives.tooltip.device.radiant_chest=Storage. Used to contain items.

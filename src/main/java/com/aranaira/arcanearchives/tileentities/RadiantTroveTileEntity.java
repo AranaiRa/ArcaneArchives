@@ -6,6 +6,10 @@ import com.aranaira.arcanearchives.inventory.handlers.ITroveItemHandler;
 import com.aranaira.arcanearchives.inventory.handlers.OptionalUpgradesHandler;
 import com.aranaira.arcanearchives.inventory.handlers.SizeUpgradeItemHandler;
 import com.aranaira.arcanearchives.inventory.handlers.TroveUpgradeItemHandler;
+import com.aranaira.arcanearchives.items.templates.IItemScepter;
+import com.aranaira.arcanearchives.tileentities.interfaces.IBrazierRouting;
+import com.aranaira.arcanearchives.tileentities.interfaces.IManifestTileEntity;
+import com.aranaira.arcanearchives.tileentities.interfaces.IUpgradeableStorage;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import com.aranaira.arcanearchives.types.enums.UpgradeType;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
@@ -179,6 +183,10 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 			return;
 		}
 
+		if (player.isSneaking() && player.inventory.getCurrentItem().getItem() instanceof IItemScepter) {
+			return;
+		}
+
 		int curTick = world.getMinecraftServer().getTickCounter();
 		if (curTick - lastTick < 3) {
 			return;
@@ -213,16 +221,23 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 	@Nonnull
 	public NBTTagCompound writeToNBT (NBTTagCompound compound) {
 		super.writeToNBT(compound);
+		return this.serializeStack(compound);
+	}
+
+	public NBTTagCompound serializeStack (NBTTagCompound compound) {
 		compound.setTag(Tags.HANDLER_ITEM, this.inventory.serializeNBT());
 		compound.setTag(Tags.SIZE_UPGRADES, this.sizeUpgrades.serializeNBT());
 		compound.setTag(Tags.OPTIONAL_UPGRADES, this.optionalUpgrades.serializeNBT());
-
 		return compound;
 	}
 
 	@Override
 	public void readFromNBT (NBTTagCompound compound) {
 		super.readFromNBT(compound);
+		this.deserializeStack(compound);
+	}
+
+	public void deserializeStack (NBTTagCompound compound) {
 		this.inventory.deserializeNBT(compound.getCompoundTag(Tags.HANDLER_ITEM));
 		this.sizeUpgrades.deserializeNBT(compound.getCompoundTag(Tags.SIZE_UPGRADES));
 		this.optionalUpgrades.deserializeNBT(compound.getCompoundTag(Tags.OPTIONAL_UPGRADES));

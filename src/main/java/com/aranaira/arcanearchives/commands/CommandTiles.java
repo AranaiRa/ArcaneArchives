@@ -5,7 +5,7 @@ import com.aranaira.arcanearchives.data.HiveNetwork;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketDebug.TrackPositions;
-import com.aranaira.arcanearchives.tileentities.IManifestTileEntity;
+import com.aranaira.arcanearchives.tileentities.interfaces.IManifestTileEntity;
 import com.aranaira.arcanearchives.util.TileUtils;
 import com.aranaira.arcanearchives.types.lists.ITileList;
 import com.aranaira.arcanearchives.types.IteRef;

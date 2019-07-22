@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.tileentities;
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.inventory.handlers.*;
+import com.aranaira.arcanearchives.tileentities.interfaces.IUpgradeableStorage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -67,21 +68,14 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity implements IUpgra
 	@Nonnull
 	public NBTTagCompound writeToNBT (NBTTagCompound compound) {
 		super.writeToNBT(compound);
-		compound.setTag(Tags.HANDLER_ITEM, this.inventory.writeToNBT(new NBTTagCompound()));
-		compound.setTag(Tags.OPTIONAL_UPGRADES, this.optionalUpgrades.serializeNBT());
-		compound.setTag(Tags.SIZE_UPGRADES, this.sizeUpgrades.serializeNBT());
-
+		serializeStack(compound);
 		return compound;
 	}
 
 	@Override
 	public void readFromNBT (NBTTagCompound compound) {
 		super.readFromNBT(compound);
-		this.sizeUpgrades.deserializeNBT(compound.getCompoundTag(Tags.SIZE_UPGRADES));
-		this.optionalUpgrades.deserializeNBT(compound.getCompoundTag(Tags.OPTIONAL_UPGRADES));
-		validateCapacity();
-		this.inventory.readFromNBT(compound.getCompoundTag(Tags.HANDLER_ITEM));
-		validateCapacity();
+		this.deserializeStack(compound);
 	}
 
 	private void validateCapacity () {

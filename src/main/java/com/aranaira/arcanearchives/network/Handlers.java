@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.network;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
+import com.aranaira.arcanearchives.network.Handlers.BaseHandler;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.types.IteRef;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -27,13 +28,13 @@ public class Handlers {
 		}
 	}
 
-	public interface TileHandlerServer<T extends Messages.TileMessage> extends ServerHandler<T> {
+	public interface TileHandlerServer<T extends Messages.TileMessage, V extends ImmanenceTileEntity> extends ServerHandler<T> {
 		@Override
 		default void processMessage (T message, MessageContext ctx) {
 			processMessage(message, ctx, getTile(message, ctx));
 		}
 
-		default ImmanenceTileEntity getTile (T message, MessageContext ctx) {
+		default V getTile (T message, MessageContext ctx) {
 			EntityPlayerMP player = ctx.getServerHandler().player;
 			if (player == null) {
 				return null;
@@ -43,16 +44,27 @@ public class Handlers {
 
 			ServerNetwork network = DataHelper.getServerNetwork(networkId, player.world);
 
-			IteRef ref = network.getTiles().getReference(message.getTileId());
+			IteRef ref;
+
+			if (message.getTileId() != null) {
+				ref = network.getTiles().getReference(message.getTileId());
+			} else {
+				ref = network.getTiles().getReference(message.getPos(), message.getDimension());
+			}
+
 			if (ref == null) {
 				return null;
 			}
-
 			ref.refreshTile(player.world, player.dimension);
-			return ref.getTile();
+			try {
+				return (V) ref.getTile();
+			} catch (ClassCastException exception) {
+				ArcaneArchives.logger.error("Attempted to cast to an invalid tile entity: " + ref.getTile().getClass());
+				return null;
+			}
 		}
 
-		void processMessage (T message, MessageContext ctx, ImmanenceTileEntity tile);
+		void processMessage (T message, MessageContext ctx, V tile);
 	}
 
 	public interface ClientHandler<T extends IMessage> extends BaseHandler<T> {

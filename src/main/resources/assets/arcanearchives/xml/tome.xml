@@ -156,10 +156,10 @@
             </page_title_shorter>
             <p><image src="arcanearchives:gui/guidebook/networks" tw="16" th="16" /> <link ref="Networks">Networks</link></p>
             <space height="8"/>
-            <p><stack item="astralsorcery:itemjournal"/> <link ref="CompatAstralSorcery">Astral Sorcery Compatibility</link></p>
-            <p><stack item="minecraft:brewing_stand"/> <link ref="CompatPotionCore">Potion Core Compatibility</link></p>
-            <p><stack item="quark:ancient_tome"/> <link ref="CompatQuark">Quark Compatibility</link></p>
-            <p><stack item="thaumcraft:thaumonomicon"/> <link ref="CompatThaumcraft">Thaumcraft Compatibility</link></p>
+            <p condition="ml_astralsorcery"><stack item="astralsorcery:itemjournal"/> <link ref="CompatAstralSorcery">Astral Sorcery Compatibility</link></p>
+            <p condition="ml_potioncore"><stack item="minecraft:brewing_stand"/> <link ref="CompatPotionCore">Potion Core Compatibility</link></p>
+            <p condition="ml_quark"><stack item="quark:ancient_tome"/> <link ref="CompatQuark">Quark Compatibility</link></p>
+            <p condition="ml_thaumcraft"><stack item="thaumcraft:thaumonomicon"/> <link ref="CompatThaumcraft">Thaumcraft Compatibility</link></p>
         </section>
     </chapter>
 

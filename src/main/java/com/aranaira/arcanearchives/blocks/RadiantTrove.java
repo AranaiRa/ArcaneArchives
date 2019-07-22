@@ -3,9 +3,9 @@ package com.aranaira.arcanearchives.blocks;
 import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
 import com.aranaira.arcanearchives.client.render.LineHandler;
 import com.aranaira.arcanearchives.init.BlockRegistry;
-import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
-import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler;
+import com.aranaira.arcanearchives.items.templates.IItemScepter;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
+import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.material.Material;
@@ -90,11 +90,37 @@ public class RadiantTrove extends BlockDirectionalTemplate {
 		}
 
 		harvesters.set(player);
-		List<ItemStack> items = new java.util.ArrayList<>();
-		items.add(generateStack(te, worldIn, pos));
-		net.minecraftforge.event.ForgeEventFactory.fireBlockHarvesting(items, worldIn, pos, state, 0, 1.0f, true, player);
-		for (ItemStack item : items) {
-			spawnAsEntity(worldIn, pos, item);
+		if (player.inventory.getCurrentItem().getItem() instanceof IItemScepter && player.isSneaking() && te instanceof RadiantTroveTileEntity) {
+			RadiantTroveTileEntity rte = (RadiantTroveTileEntity) te;
+			if (rte != null) {
+				TroveItemHandler handler = rte.getInventory();
+				while (!handler.isEmpty()) {
+					ItemStack s = handler.extractItem(0, 64, false);
+					spawnAsEntity(worldIn, pos, s);
+				}
+				IItemHandler optionals = rte.getOptionalUpgradesHandler();
+				IItemHandler size = rte.getSizeUpgradesHandler();
+				for (int i = 0; i < optionals.getSlots(); i++) {
+					ItemStack s = optionals.getStackInSlot(i);
+					if (!stack.isEmpty()) {
+						spawnAsEntity(worldIn, pos, s);
+					}
+				}
+				for (int i = 0; i < size.getSlots(); i++) {
+					ItemStack s = size.getStackInSlot(i);
+					if (!stack.isEmpty()) {
+						spawnAsEntity(worldIn, pos, s);
+					}
+				}
+				spawnAsEntity(worldIn, pos, new ItemStack(getItemBlock()));
+			}
+		} else {
+			List<ItemStack> items = new java.util.ArrayList<>();
+			items.add(generateStack(te, worldIn, pos));
+			net.minecraftforge.event.ForgeEventFactory.fireBlockHarvesting(items, worldIn, pos, state, 0, 1.0f, true, player);
+			for (ItemStack item : items) {
+				spawnAsEntity(worldIn, pos, item);
+			}
 		}
 		harvesters.set(null);
 	}
@@ -111,7 +137,7 @@ public class RadiantTrove extends BlockDirectionalTemplate {
 		}
 
 		NBTTagCompound tag = new NBTTagCompound();
-		te.writeToNBT(tag);
+		te.serializeStack(tag);
 
 		ItemStack stack = new ItemStack(BlockRegistry.RADIANT_TROVE.getItemBlock());
 		stack.setTagCompound(tag);
@@ -177,40 +203,6 @@ public class RadiantTrove extends BlockDirectionalTemplate {
 		return new RadiantTroveTileEntity();
 	}
 
-	/*@Override
-	@ParametersAreNonnullByDefault
-	public void breakBlock (World world, BlockPos pos, IBlockState state) {
-		LineHandler.removeLine(pos, world.provider.getDimension());
-
-		if (!world.isRemote) {
-			RadiantTroveTileEntity te = WorldUtil.getTileEntity(RadiantTroveTileEntity.class, world, pos);
-			if (te != null) {
-				TroveItemHandler handler = te.getInventory();
-				while (!handler.isEmpty()) {
-					ItemStack stack = handler.extractItem(0, 64, false);
-					spawnAsEntity(world, pos, stack);
-				}
-				IItemHandler optionals = te.getOptionalUpgradesHandler();
-				IItemHandler size = te.getSizeUpgradesHandler();
-				for (int i = 0; i < optionals.getSlots(); i++) {
-					ItemStack stack = optionals.getStackInSlot(i);
-					if (!stack.isEmpty()) {
-						spawnAsEntity(world, pos, stack);
-					}
-				}
-				for (int i = 0; i < size.getSlots(); i++) {
-					ItemStack stack = size.getStackInSlot(i);
-					if (!stack.isEmpty()) {
-						spawnAsEntity(world, pos, stack);
-					}
-				}
-			}
-		}
-
-		world.updateComparatorOutputLevel(pos, this);
-		super.breakBlock(world, pos, state);
-	}*/
-
 	@Override
 	@ParametersAreNonnullByDefault
 	public void breakBlock (World world, BlockPos pos, IBlockState state) {
@@ -244,9 +236,20 @@ public class RadiantTrove extends BlockDirectionalTemplate {
 		if (stack.hasTagCompound()) {
 			RadiantTroveTileEntity te = WorldUtil.getTileEntity(RadiantTroveTileEntity.class, world, pos);
 			if (te != null) {
-				te.readFromNBT(stack.getTagCompound());
+				te.deserializeStack(stack.getTagCompound());
+				te.markDirty();
+				te.defaultServerSideUpdate();
 			}
 		}
+	}
 
+	@Override
+	@SuppressWarnings("warning")
+	public float getPlayerRelativeBlockHardness (IBlockState state, EntityPlayer player, World worldIn, BlockPos pos) {
+		if (player.inventory.getCurrentItem().getItem() instanceof IItemScepter) {
+			float hardness = state.getBlockHardness(worldIn, pos);
+			return 5f / hardness / 30F;
+		}
+		return super.getPlayerRelativeBlockHardness(state, player, worldIn, pos);
 	}
 }
