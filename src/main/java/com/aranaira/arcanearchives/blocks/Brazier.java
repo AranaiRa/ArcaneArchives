@@ -38,6 +38,7 @@ public class Brazier extends BlockTemplate implements IInfusionStabiliserExt {
 		super(name, Material.IRON);
 		setLightLevel(16 / 16f);
 		setHardness(3f);
+		setHarvestLevel("pickaxe", 0);
 	}
 
 	@Override

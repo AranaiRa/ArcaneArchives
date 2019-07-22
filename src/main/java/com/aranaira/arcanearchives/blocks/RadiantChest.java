@@ -39,7 +39,7 @@ public class RadiantChest extends BlockTemplate {
 		setLightLevel(16 / 16f);
 		setHardness(3f);
 		setResistance(6000F);
-		setHarvestLevel("axe", 0);
+		setHarvestLevel("pickaxe", 0);
 	}
 
 	@Override

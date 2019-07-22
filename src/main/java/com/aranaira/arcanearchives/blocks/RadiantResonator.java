@@ -33,8 +33,8 @@ public class RadiantResonator extends BlockTemplate {
 	public RadiantResonator () {
 		super(name, Material.IRON);
 		setPlaceLimit(ConfigHandler.ResonatorLimit);
-		setHardness(1.1f);
-		setHarvestLevel("axe", 0);
+		setHardness(3f);
+		setHarvestLevel("pickaxe", 0);
 		setEntityClass(RadiantResonatorTileEntity.class);
 	}
 

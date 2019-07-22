@@ -35,7 +35,7 @@ public class MonitoringCrystal extends BlockDirectionalTemplate {
 	public MonitoringCrystal () {
 		super(NAME, Material.GLASS);
 		setLightLevel(16 / 16f);
-		setHardness(0.3f);
+		setHardness(0.8f);
 		setHarvestLevel("pickaxe", 0);
 	}
 

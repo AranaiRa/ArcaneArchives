@@ -49,7 +49,7 @@ public class RadiantTank extends BlockTemplate {
 		super(NAME, Material.GLASS);
 		setSize(1, 1, 1);
 		setLightLevel(16 / 16f);
-		setHardness(1.7f);
+		setHardness(3f);
 		setHarvestLevel("pickaxe", 0);
 	}
 

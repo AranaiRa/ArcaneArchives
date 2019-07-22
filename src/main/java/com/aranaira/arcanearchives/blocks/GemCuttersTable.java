@@ -34,9 +34,10 @@ public class GemCuttersTable extends BlockDirectionalTemplate {
 
 	public GemCuttersTable () {
 		super(name, Material.IRON);
-		this.setHardness(2.5f);
+		this.setHardness(3f);
 		setSize(2, 1, 1);
 		setLightLevel(16f / 16f);
+		setHarvestLevel("axe", 0);
 		this.setDefaultState(this.getDefaultState().withProperty(ACCESSOR, false));
 	}
 
