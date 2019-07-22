@@ -67,6 +67,7 @@ public class ContainerManifest extends Container implements IScrollableContainer
 		@Override
 		@SideOnly(Side.CLIENT)
 		public boolean isEnabled () {
+			if (getStack().isEmpty()) return false;
 			return isEnabled;
 		}
 	}
