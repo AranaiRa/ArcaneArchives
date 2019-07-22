@@ -5,6 +5,7 @@ import com.aranaira.arcanearchives.inventory.ContainerRadiantCraftingTable;
 import com.aranaira.arcanearchives.inventory.ContainerRadiantCraftingTable.SlotIRecipe;
 import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketRadiantCrafting.SetRecipe;
+import com.aranaira.arcanearchives.network.PacketRadiantCrafting.TryCraftRecipe;
 import com.aranaira.arcanearchives.network.PacketRadiantCrafting.UnsetRecipe;
 import com.aranaira.arcanearchives.util.ColorUtils;
 import com.aranaira.arcanearchives.util.ColorUtils.Color;
@@ -88,6 +89,9 @@ public class GUIRadiantCraftingTable extends GuiContainer {
 				SetRecipe packet = new SetRecipe(container.tile.getPos(), container.tile.dimension, slot.getRecipe(), toUse);
 				Networking.CHANNEL.sendToServer(packet);
 				return;
+			} else if (slot.getHasStack() && !shiftDown) {
+				TryCraftRecipe packet = new TryCraftRecipe(container.tile.getPos(), container.tile.dimension, slot.getRecipe());
+				Networking.CHANNEL.sendToServer(packet);
 			}
 		}
 

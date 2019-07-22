@@ -8,6 +8,7 @@ import com.aranaira.arcanearchives.network.Messages.TileMessage;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantCraftingTableTileEntity;
 import com.aranaira.arcanearchives.util.ByteUtils;
+import com.aranaira.arcanearchives.util.PlayerUtil;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.Container;
@@ -78,15 +79,12 @@ public class PacketRadiantCrafting {
 			ByteUtils.writeIRecipe(buf, this.recipe);
 		}
 
-		public static class Handler implements TileHandlerServer<SetRecipe> {
+		public static class Handler implements TileHandlerServer<SetRecipe, RadiantCraftingTableTileEntity> {
 			@Override
-			public void processMessage (SetRecipe message, MessageContext ctx, ImmanenceTileEntity tile) {
-				if (tile instanceof RadiantCraftingTableTileEntity) {
-					RadiantCraftingTableTileEntity rcte = (RadiantCraftingTableTileEntity) tile;
-					rcte.setRecipe(message.index, message.recipe);
-					rcte.markDirty();
-					rcte.defaultServerSideUpdate();
-				}
+			public void processMessage (SetRecipe message, MessageContext ctx, RadiantCraftingTableTileEntity tile) {
+				tile.setRecipe(message.index, message.recipe);
+				tile.markDirty();
+				tile.defaultServerSideUpdate();
 			}
 		}
 	}
@@ -114,15 +112,44 @@ public class PacketRadiantCrafting {
 			buf.writeInt(this.index);
 		}
 
-		public static class Handler implements TileHandlerServer<UnsetRecipe> {
+		public static class Handler implements TileHandlerServer<UnsetRecipe, RadiantCraftingTableTileEntity> {
 			@Override
-			public void processMessage (UnsetRecipe message, MessageContext ctx, ImmanenceTileEntity tile) {
-				if (tile instanceof RadiantCraftingTableTileEntity) {
-					RadiantCraftingTableTileEntity rcte = (RadiantCraftingTableTileEntity) tile;
-					rcte.setRecipe(message.index, null);
-					rcte.markDirty();
-					rcte.defaultServerSideUpdate();
-				}
+			public void processMessage (UnsetRecipe message, MessageContext ctx, RadiantCraftingTableTileEntity tile) {
+				tile.setRecipe(message.index, null);
+				tile.markDirty();
+				tile.defaultServerSideUpdate();
+			}
+		}
+	}
+
+	public static class TryCraftRecipe extends TileMessage {
+		private int index;
+
+		public TryCraftRecipe () {
+		}
+
+		public TryCraftRecipe (BlockPos pos, int dimension, int index) {
+			super(pos, dimension);
+			this.index = index;
+		}
+
+		@Override
+		public void fromBytes (ByteBuf buf) {
+			super.fromBytes(buf);
+			this.index = buf.readInt();
+		}
+
+		@Override
+		public void toBytes (ByteBuf buf) {
+			super.toBytes(buf);
+			buf.writeInt(this.index);
+		}
+
+		public static class Handler implements TileHandlerServer<TryCraftRecipe, RadiantCraftingTableTileEntity> {
+			@Override
+			public void processMessage (TryCraftRecipe message, MessageContext ctx, RadiantCraftingTableTileEntity tile) {
+				tile.tryCraftingRecipe(ctx.getServerHandler().player, message.index);
+				PlayerUtil.Server.syncContainer(ctx.getServerHandler().player);
 			}
 		}
 	}

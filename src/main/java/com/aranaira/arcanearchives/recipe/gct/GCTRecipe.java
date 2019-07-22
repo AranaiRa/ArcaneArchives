@@ -4,7 +4,10 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.api.IGCTRecipe;
 import com.aranaira.arcanearchives.recipe.IngredientStack;
 import com.aranaira.arcanearchives.recipe.IngredientsMatcher;
+import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
+import it.unimi.dsi.fastutil.ints.Int2IntMap.Entry;
+import jdk.nashorn.internal.objects.annotations.Function;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -23,6 +26,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -123,8 +127,11 @@ public class GCTRecipe implements IGCTRecipe {
 		}
 
 		if (doReturn) {
-			IItemHandler drawer = craftingTile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-			ItemStack result = ItemHandlerHelper.insertItemStacked(drawer, ingredient, false);
+			ItemStack result = ingredient;
+			if (craftingTile != null) {
+				IItemHandler drawer = craftingTile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+				result = ItemHandlerHelper.insertItemStacked(drawer, ingredient, false);
+			}
 			if (!result.isEmpty()) {
 				IItemHandler inventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
 				result = ItemHandlerHelper.insertItemStacked(inventory, result, false);
@@ -135,5 +142,19 @@ public class GCTRecipe implements IGCTRecipe {
 		}
 
 		return doReturn;
+	}
+
+	@Override
+	public void consumeAndHandleInventory (IGCTRecipe recipe, IItemHandler inventory, EntityPlayer player, @Nullable TileEntity tile, @Nullable Runnable callback, @Nullable RecipeIngredientHandler handler) {
+		for (Entry entry : recipe.getMatchingSlots(inventory).int2IntEntrySet()) {
+			ItemStack result = inventory.extractItem(entry.getIntKey(), entry.getIntValue(), false);
+			if (!player.world.isRemote) {
+				if (handler != null && handler.test(player.world, player, tile, result)) {
+					if (callback != null) {
+						callback.run();
+					}
+				}
+			}
+		}
 	}
 }

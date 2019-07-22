@@ -28,13 +28,13 @@ public class Handlers {
 		}
 	}
 
-	public interface TileHandlerServer<T extends Messages.TileMessage> extends ServerHandler<T> {
+	public interface TileHandlerServer<T extends Messages.TileMessage, V extends ImmanenceTileEntity> extends ServerHandler<T> {
 		@Override
 		default void processMessage (T message, MessageContext ctx) {
 			processMessage(message, ctx, getTile(message, ctx));
 		}
 
-		default ImmanenceTileEntity getTile (T message, MessageContext ctx) {
+		default V getTile (T message, MessageContext ctx) {
 			EntityPlayerMP player = ctx.getServerHandler().player;
 			if (player == null) {
 				return null;
@@ -56,10 +56,15 @@ public class Handlers {
 				return null;
 			}
 			ref.refreshTile(player.world, player.dimension);
-			return ref.getTile();
+			try {
+				return (V) ref.getTile();
+			} catch (ClassCastException exception) {
+				ArcaneArchives.logger.error("Attempted to cast to an invalid tile entity: " + ref.getTile().getClass());
+				return null;
+			}
 		}
 
-		void processMessage (T message, MessageContext ctx, ImmanenceTileEntity tile);
+		void processMessage (T message, MessageContext ctx, V tile);
 	}
 
 	public interface ClientHandler<T extends IMessage> extends BaseHandler<T> {

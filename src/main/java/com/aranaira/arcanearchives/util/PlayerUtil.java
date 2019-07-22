@@ -7,5 +7,9 @@ public class PlayerUtil {
 		public static void syncInventory (EntityPlayerMP mpPlayer) {
 			mpPlayer.sendAllContents(mpPlayer.inventoryContainer, mpPlayer.inventoryContainer.getInventory());
 		}
+
+		public static void syncContainer (EntityPlayerMP mpPlayer) {
+			mpPlayer.sendAllContents(mpPlayer.openContainer, mpPlayer.openContainer.getInventory());
+		}
 	}
 }

@@ -1,19 +1,26 @@
 package com.aranaira.arcanearchives.tileentities;
 
+import com.aranaira.arcanearchives.inventory.ContainerRadiantCraftingTable;
+import com.aranaira.arcanearchives.inventory.handlers.InventoryCraftingPersistent;
+import com.aranaira.arcanearchives.recipe.fastcrafting.FastCraftingRecipe;
 import com.aranaira.arcanearchives.tileentities.interfaces.IManifestTileEntity;
 import com.aranaira.arcanearchives.util.NBTUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
+import net.minecraft.block.Block;
+import net.minecraft.client.gui.recipebook.RecipeList;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.items.ItemStackHandler;
+import net.minecraft.util.EnumFacing;
+import net.minecraftforge.items.*;
+import net.minecraftforge.items.wrapper.CombinedInvWrapper;
+import net.minecraftforge.items.wrapper.InvWrapper;
 
 import javax.annotation.Nonnull;
-import java.util.Arrays;
-import java.util.List;
 
 public class RadiantCraftingTableTileEntity extends ImmanenceTileEntity implements IManifestTileEntity {
 	private ItemStackHandler persistentMatrix = new ItemStackHandler(9);
@@ -99,6 +106,29 @@ public class RadiantCraftingTableTileEntity extends ImmanenceTileEntity implemen
 	public void blockBroken () {
 		if (!world.isRemote) {
 			WorldUtil.spawnInventoryInWorld(world, getPos(), persistentMatrix);
+		}
+	}
+
+	public void tryCraftingRecipe (EntityPlayer player, int index) {
+		IRecipe recipe = recipeList.get(index);
+		if (recipe == null) {
+			return;
+		}
+
+		if (player.openContainer instanceof ContainerRadiantCraftingTable) {
+			InventoryCrafting matrix = ((ContainerRadiantCraftingTable) player.openContainer).getCraftMatrix();
+
+			FastCraftingRecipe fast = new FastCraftingRecipe(recipe);
+			IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+			CombinedInvWrapper inv = new CombinedInvWrapper((IItemHandlerModifiable) playerInventory, new InvWrapper(matrix));
+			if (fast.matches(inv)) {
+				fast.consumeAndHandleInventory(fast, inv, player, null, null, null, null);
+				ItemStack result = fast.getRecipeOutput();
+				result = ItemHandlerHelper.insertItemStacked(playerInventory, result, false);
+				if (!result.isEmpty()) {
+					Block.spawnAsEntity(world, getPos(), result);
+				}
+			}
 		}
 	}
 

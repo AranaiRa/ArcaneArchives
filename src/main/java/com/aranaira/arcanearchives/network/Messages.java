@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.network.Handlers.BaseHandler;
 import com.aranaira.arcanearchives.network.Handlers.ClientHandler;
 import com.aranaira.arcanearchives.network.Handlers.ServerHandler;
 import com.aranaira.arcanearchives.network.Handlers.TileHandlerServer;
+import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.util.ByteUtils;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.util.math.BlockPos;
@@ -81,7 +82,7 @@ public class Messages {
 		}
 	}
 
-	public static abstract class EmptyTileMessageServer<T extends TileMessage> extends TileMessage implements TileHandlerServer<T>, EmptyMessage<T> {
+	public static abstract class EmptyTileMessageServer<T extends TileMessage, V extends ImmanenceTileEntity> extends TileMessage implements TileHandlerServer<T, V>, EmptyMessage<T> {
 		public EmptyTileMessageServer () {
 		}
 

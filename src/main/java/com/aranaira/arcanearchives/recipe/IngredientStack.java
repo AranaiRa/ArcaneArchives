@@ -14,7 +14,7 @@ import java.util.List;
 
 public class IngredientStack {
 	private final Ingredient ingredient;
-	private final int count;
+	private int count;
 
 	@Nullable
 	private final NBTTagCompound nbt;
@@ -104,6 +104,22 @@ public class IngredientStack {
 
 	public int getCount () {
 		return count;
+	}
+
+	public void shrink (int amount) {
+		this.count -= amount;
+	}
+
+	public void grow (int amount) {
+		this.count += amount;
+	}
+
+	public void shrink () {
+		shrink(1);
+	}
+
+	public void grow () {
+		grow(1);
 	}
 
 	public Ingredient getIngredient () {

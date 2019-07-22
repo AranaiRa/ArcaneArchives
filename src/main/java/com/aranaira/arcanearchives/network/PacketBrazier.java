@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.network;
 
+import com.aranaira.arcanearchives.blocks.Brazier;
 import com.aranaira.arcanearchives.network.Messages.EmptyTileMessageServer;
 import com.aranaira.arcanearchives.network.Handlers.TileHandlerServer;
 import com.aranaira.arcanearchives.tileentities.BrazierTileEntity;
@@ -33,17 +34,12 @@ public class PacketBrazier {
 			buf.writeInt(radius);
 		}
 
-		public static class Handler implements TileHandlerServer<SetRadius> {
+		public static class Handler implements TileHandlerServer<SetRadius, BrazierTileEntity> {
 			@Override
-			public void processMessage (SetRadius message, MessageContext ctx, ImmanenceTileEntity tile) {
-				if (!(tile instanceof BrazierTileEntity)) {
-					return;
-				}
-
-				BrazierTileEntity bte = (BrazierTileEntity) tile;
-				bte.setRadius(message.radius);
-				bte.markDirty();
-				bte.defaultServerSideUpdate();
+			public void processMessage (SetRadius message, MessageContext ctx, BrazierTileEntity tile) {
+				tile.setRadius(message.radius);
+				tile.markDirty();
+				tile.defaultServerSideUpdate();
 			}
 		}
 	}
@@ -71,22 +67,17 @@ public class PacketBrazier {
 			buf.writeBoolean(mode);
 		}
 
-		public static class Handler implements TileHandlerServer<SetSubnetworkMode> {
+		public static class Handler implements TileHandlerServer<SetSubnetworkMode, BrazierTileEntity> {
 			@Override
-			public void processMessage (SetSubnetworkMode message, MessageContext ctx, ImmanenceTileEntity tile) {
-				if (!(tile instanceof BrazierTileEntity)) {
-					return;
-				}
-
-				BrazierTileEntity bte = (BrazierTileEntity) tile;
-				bte.setNetworkMode(message.mode);
-				bte.markDirty();
-				bte.defaultServerSideUpdate();
+			public void processMessage (SetSubnetworkMode message, MessageContext ctx, BrazierTileEntity tile) {
+				tile.setNetworkMode(message.mode);
+				tile.markDirty();
+				tile.defaultServerSideUpdate();
 			}
 		}
 	}
 
-	public static class IncrementRadius extends EmptyTileMessageServer<IncrementRadius> {
+	public static class IncrementRadius extends EmptyTileMessageServer<IncrementRadius, BrazierTileEntity> {
 		public IncrementRadius (UUID tileId) {
 			super(tileId);
 		}
@@ -95,19 +86,14 @@ public class PacketBrazier {
 		}
 
 		@Override
-		public void processMessage (IncrementRadius message, MessageContext ctx, ImmanenceTileEntity tile) {
-			if (!(tile instanceof BrazierTileEntity)) {
-				return;
-			}
-
-			BrazierTileEntity bte = (BrazierTileEntity) tile;
-			bte.increaseRadius();
-			bte.markDirty();
-			bte.defaultServerSideUpdate();
+		public void processMessage (IncrementRadius message, MessageContext ctx, BrazierTileEntity tile) {
+			tile.increaseRadius();
+			tile.markDirty();
+			tile.defaultServerSideUpdate();
 		}
 	}
 
-	public static class DecrementRadius extends EmptyTileMessageServer<DecrementRadius> {
+	public static class DecrementRadius extends EmptyTileMessageServer<DecrementRadius, BrazierTileEntity> {
 		public DecrementRadius (UUID tileId) {
 			super(tileId);
 		}
@@ -116,15 +102,10 @@ public class PacketBrazier {
 		}
 
 		@Override
-		public void processMessage (DecrementRadius message, MessageContext ctx, ImmanenceTileEntity tile) {
-			if (!(tile instanceof BrazierTileEntity)) {
-				return;
-			}
-
-			BrazierTileEntity bte = (BrazierTileEntity) tile;
-			bte.reduceRadius();
-			bte.markDirty();
-			bte.defaultServerSideUpdate();
+		public void processMessage (DecrementRadius message, MessageContext ctx, BrazierTileEntity tile) {
+			tile.reduceRadius();
+			tile.markDirty();
+			tile.defaultServerSideUpdate();
 		}
 	}
 }
