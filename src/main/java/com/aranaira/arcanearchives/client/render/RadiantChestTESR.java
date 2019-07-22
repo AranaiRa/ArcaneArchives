@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.client.render;
 
+import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -9,39 +10,51 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.Vec3d;
+import org.lwjgl.opengl.GL11;
 
 public class RadiantChestTESR extends TileEntitySpecialRenderer<RadiantChestTileEntity> {
 	@Override
 	public void render (RadiantChestTileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		EnumFacing facing = te.getDisplayFacing();
 		ItemStack stack = te.getDisplayStack();
-		if (facing == null || stack == null || stack.isEmpty()) {
-			return;
+		if (!(facing == null || stack == null || stack.isEmpty() || facing == EnumFacing.UP || facing == EnumFacing.DOWN)) {
+			Vec3d pos = (new Vec3d(x, y, z)).add(getOffset(facing));
+			GlStateManager.pushMatrix();
+			GlStateManager.translate(pos.x, pos.y + 0.435, pos.z);
+			GlStateManager.rotate(getAngle(facing), 0f, 1f, 0f);
+
+			// Render the item
+			GlStateManager.pushMatrix();
+			GlStateManager.disableLighting();
+			GlStateManager.scale(0.6f, 0.6f, 0.6f);
+			GlStateManager.pushAttrib();
+			RenderHelper.enableStandardItemLighting();
+			Minecraft.getMinecraft().getRenderItem().renderItem(stack, TransformType.FIXED);
+			RenderHelper.disableStandardItemLighting();
+			GlStateManager.popAttrib();
+			GlStateManager.enableLighting();
+			GlStateManager.popMatrix();
+
+			// Finish rendering the item
+			GlStateManager.popMatrix();
 		}
 
-		if (facing == EnumFacing.UP || facing == EnumFacing.DOWN) {
-			return;
+		if (te.isBeingTracked() && ConfigHandler.ItemTrackingConfig.chestsGlow) {
+			GlStateManager.pushMatrix();
+			GL11.glTranslated(x, y, z);
+			boolean wasLighting = GL11.glIsEnabled(GL11.GL_LIGHTING);
+			GlStateManager.disableLighting();
+			GlStateManager.disableDepth();
+			GlStateManager.enableBlend();
+			GlStateManager.blendFunc(770, 771);
+			// Do bounding box stuff here!
+			if (wasLighting) {
+				GlStateManager.enableLighting();
+			}
+			GlStateManager.enableDepth();
+			GL11.glTranslated(-x, -y, -z);
+			GlStateManager.popMatrix();
 		}
-
-		Vec3d pos = (new Vec3d(x, y, z)).add(getOffset(facing));
-		GlStateManager.pushMatrix();
-		GlStateManager.translate(pos.x, pos.y + 0.435, pos.z);
-		GlStateManager.rotate(getAngle(facing), 0f, 1f, 0f);
-
-		// Render the item
-		GlStateManager.pushMatrix();
-		GlStateManager.disableLighting();
-		GlStateManager.scale(0.6f, 0.6f, 0.6f);
-		GlStateManager.pushAttrib();
-		RenderHelper.enableStandardItemLighting();
-		Minecraft.getMinecraft().getRenderItem().renderItem(stack, TransformType.FIXED);
-		RenderHelper.disableStandardItemLighting();
-		GlStateManager.popAttrib();
-		GlStateManager.enableLighting();
-		GlStateManager.popMatrix();
-
-		// Finish rendering the item
-		GlStateManager.popMatrix();
 	}
 
 	private Vec3d getOffset (EnumFacing facing) {

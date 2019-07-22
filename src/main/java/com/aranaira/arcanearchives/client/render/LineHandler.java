@@ -39,7 +39,7 @@ public class LineHandler {
 	public static void renderOverlay (RenderWorldLastEvent event) {
 		Set<Vec3d> positions = getPositions(Minecraft.getMinecraft().player.dimension);
 		if (!positions.isEmpty()) {
-			RenderHelper.drawRays(Minecraft.getMinecraft().player.world.getTotalWorldTime(), Minecraft.getMinecraft().player.getPositionVector(), ImmutableSet.copyOf(positions));
+			RenderUtils.drawRays(Minecraft.getMinecraft().player.world.getTotalWorldTime(), Minecraft.getMinecraft().player.getPositionVector(), ImmutableSet.copyOf(positions));
 		}
 	}
 

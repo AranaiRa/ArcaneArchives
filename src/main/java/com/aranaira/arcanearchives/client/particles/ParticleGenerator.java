@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.client.particles;
 
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
-import com.aranaira.arcanearchives.client.render.RenderHelper;
+import com.aranaira.arcanearchives.client.render.RenderUtils;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -42,7 +42,7 @@ public class ParticleGenerator {
 			//Minecraft.getMinecraft().effectRenderer.addEffect(p);
 			verts.add(pos);
 		}
-		RenderHelper.drawSegmentedLine(world.getWorldTime(), ArcaneGemItem.GemColor.getColor(ArcaneGemItem.GemColor.ORANGE), 1, start, verts);
+		RenderUtils.drawSegmentedLine(world.getWorldTime(), ArcaneGemItem.GemColor.getColor(ArcaneGemItem.GemColor.ORANGE), 1, start, verts);
 	}
 
 	public static void makeDefaultBurst (World world, Vec3d point, int radialCount, int heightCount, double radius, double speedMin, double speedMax) {

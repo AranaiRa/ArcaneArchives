@@ -5,12 +5,15 @@ import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.events.ServerTickHandler;
 import com.aranaira.arcanearchives.blocks.MultiblockSize;
+import com.aranaira.arcanearchives.util.ManifestTrackingUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -158,6 +161,11 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable {
 		if (!getPos().equals(lastPosition)) {
 			tileMoved(getPos(), lastPosition);
 		}
+	}
+
+	@SideOnly(Side.CLIENT)
+	public boolean isBeingTracked () {
+		return ManifestTrackingUtils.get(dimension, getPos()) != null;
 	}
 
 	public static class Tags {

@@ -5,12 +5,14 @@ import com.aranaira.arcanearchives.client.Keybinds;
 import com.aranaira.arcanearchives.client.render.RadiantChestTESR;
 import com.aranaira.arcanearchives.client.render.RadiantTankTEISR;
 import com.aranaira.arcanearchives.client.render.RadiantTankTESR;
+import com.aranaira.arcanearchives.client.render.RadiantTroveTESR;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.integration.guidebook.GBookInit;
 import com.aranaira.arcanearchives.items.itemblocks.RadiantTankItem;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
+import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import com.aranaira.enderio.core.client.render.IconUtil;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
@@ -40,6 +42,8 @@ public class ClientProxy extends CommonProxy {
 	public static RadiantTankTEISR itemTESR;
 	@SideOnly(Side.CLIENT)
 	public static RadiantChestTESR chestTESR;
+	@SideOnly(Side.CLIENT)
+	public static RadiantTroveTESR troveTESR;
 
 	@SubscribeEvent
 	public static void playerLoggedIn (PlayerEvent.PlayerLoggedInEvent event) {
@@ -60,6 +64,9 @@ public class ClientProxy extends CommonProxy {
 		//
 		chestTESR = new RadiantChestTESR();
 		ClientRegistry.bindTileEntitySpecialRenderer(RadiantChestTileEntity.class, chestTESR);
+		//
+		troveTESR = new RadiantTroveTESR();
+		ClientRegistry.bindTileEntitySpecialRenderer(RadiantTroveTileEntity.class, troveTESR);
 	}
 
 	@Override

@@ -103,6 +103,10 @@ public class ConfigHandler {
 	public static ItemTrackingConfig ItemTrackingConfig = new ItemTrackingConfig();
 
 	public static class ItemTrackingConfig {
+		@Config.Comment("Whether or not radiant chests and troves should glow if being tracked")
+		@Config.Name("Chests & Troves glow when Tracked")
+		public boolean chestsGlow = true;
+
 		@Config.Comment("Radiant chest highlight colour (use HTML syntax i.e., #FFFFFF")
 		@Config.Name("Radiant Chest Highlight")
 		public String ChestHighlight = "#1922C4";

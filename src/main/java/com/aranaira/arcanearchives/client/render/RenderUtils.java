@@ -2,12 +2,20 @@ package com.aranaira.arcanearchives.client.render;
 
 import com.aranaira.arcanearchives.util.ColorUtils;
 import com.aranaira.arcanearchives.util.ColorUtils.Color;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.client.renderer.vertex.VertexBuffer;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
@@ -15,7 +23,7 @@ import org.lwjgl.opengl.GL11;
 import java.util.ArrayList;
 import java.util.Set;
 
-public class RenderHelper {
+public class RenderUtils {
 	@SideOnly(Side.CLIENT)
 	public static void drawRays (long worldTime, Vec3d player_pos, Set<Vec3d> target_pos) {
 		GlStateManager.pushMatrix();
@@ -85,6 +93,34 @@ public class RenderHelper {
 		float normalized = MathHelper.clamp((dist - minDistanceClamp) / (maxDistanceClamp - minDistanceClamp), 0.0f, 1.0f);
 		float width = normalized * 0.7f + 0.3f;
 		return width;
+	}
+
+	public static void renderBlockModel (World world, BlockPos pos, IBlockState state, boolean translateToOrigin) {
+		BufferBuilder buffer = Tessellator.getInstance().getBuffer();
+		buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
+		if (translateToOrigin) {
+			buffer.setTranslation(-pos.getX(), -pos.getY(), -pos.getZ());
+		}
+		Minecraft mc = Minecraft.getMinecraft();
+		BlockRendererDispatcher dispatcher = mc.getBlockRendererDispatcher();
+		BlockModelShapes shapes = dispatcher.getBlockModelShapes();
+		IBakedModel thisBlock = shapes.getModelForState(state);
+
+		final IBlockAccess wrapper = world;
+		mc.renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+
+		for (BlockRenderLayer layer : BlockRenderLayer.values()) {
+			if (state.getBlock().canRenderInLayer(state, layer)) {
+				ForgeHooksClient.setRenderLayer(layer);
+				dispatcher.getBlockModelRenderer().renderModel(wrapper, thisBlock, state, pos, buffer, false);
+			}
+		}
+
+		ForgeHooksClient.setRenderLayer(null);
+		if (translateToOrigin) {
+			buffer.setTranslation(0, 0, 0);
+		}
+		Tessellator.getInstance().draw();
 	}
 
 }
