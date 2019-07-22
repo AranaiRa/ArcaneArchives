@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.init;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.api.GCTRecipeEvent;
+import com.aranaira.arcanearchives.api.IGCTRecipe;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.HiveSaveData;
@@ -28,44 +29,44 @@ import net.minecraftforge.oredict.OreIngredient;
 @SuppressWarnings("unused")
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class RecipeLibrary {
-	public static GCTRecipe SHAPED_RADIANT_QUARTZ_RECIPE;
-	public static GCTRecipe MANIFEST_RECIPE;
-	public static GCTRecipe CONTAINMENT_FIELD_RECIPE;
-	public static GCTRecipe MATERIAL_INTERFACE_RECIPE;
-	public static GCTRecipe MATRIX_BRACE_RECIPE;
-	public static GCTRecipe RADIANT_DUST_RECIPE;
-	public static GCTRecipe SCINTILLATING_INLAY_RECIPE;
-	public static GCTRecipe DEVOURING_CHARM_RECIPE;
-	/*public static GCTRecipe MATRIX_CORE_RECIPE;
-	public static GCTRecipe MATRIX_STORAGE_RECIPE;
-	public static GCTRecipe MATRIX_REPOSITORY_RECIPE;*/
-	public static GCTRecipe GEM_SOCKET_RECIPE;
-	public static GCTRecipe RADIANT_LANTERN_RECIPE;
-	public static GCTRecipe RADIANT_TROVE_RECIPE;
-	public static GCTRecipe RADIANT_TANK_RECIPE;
-	public static GCTRecipe MONITORING_CRYSTAL_RECIPE;
-	public static GCTRecipe SCEPTER_MANIPULATION_RECIPE;
-	public static GCTRecipe RADIANT_AMPHORA_RECIPE;
-	public static GCTRecipe LETTER_OF_INVITATION_RECIPE;
-	public static GCTRecipe LETTER_OF_RESIGNATION_RECIPE;
-	public static GCTRecipe WRIT_OF_EXPULSION_RECIPE;
-	public static GCTRecipe BRAZIER_RECIPE;
+	public static IGCTRecipe SHAPED_RADIANT_QUARTZ_RECIPE;
+	public static IGCTRecipe MANIFEST_RECIPE;
+	public static IGCTRecipe CONTAINMENT_FIELD_RECIPE;
+	public static IGCTRecipe MATERIAL_INTERFACE_RECIPE;
+	public static IGCTRecipe MATRIX_BRACE_RECIPE;
+	public static IGCTRecipe RADIANT_DUST_RECIPE;
+	public static IGCTRecipe SCINTILLATING_INLAY_RECIPE;
+	public static IGCTRecipe DEVOURING_CHARM_RECIPE;
+	/*public static IGCTRecipe MATRIX_CORE_RECIPE;
+	public static IGCTRecipe MATRIX_STORAGE_RECIPE;
+	public static IGCTRecipe MATRIX_REPOSITORY_RECIPE;*/
+	public static IGCTRecipe GEM_SOCKET_RECIPE;
+	public static IGCTRecipe RADIANT_LANTERN_RECIPE;
+	public static IGCTRecipe RADIANT_TROVE_RECIPE;
+	public static IGCTRecipe RADIANT_TANK_RECIPE;
+	public static IGCTRecipe MONITORING_CRYSTAL_RECIPE;
+	public static IGCTRecipe SCEPTER_MANIPULATION_RECIPE;
+	public static IGCTRecipe RADIANT_AMPHORA_RECIPE;
+	public static IGCTRecipe LETTER_OF_INVITATION_RECIPE;
+	public static IGCTRecipe LETTER_OF_RESIGNATION_RECIPE;
+	public static IGCTRecipe WRIT_OF_EXPULSION_RECIPE;
+	public static IGCTRecipe BRAZIER_RECIPE;
 
-	public static GCTRecipe SLAUGHTERGLEAM_RECIPE;
-	public static GCTRecipe MURDERGLEAM_RECIPE;
-	public static GCTRecipe CLEANSEGLEAM_RECIPE;
-	public static GCTRecipe AGEGLEAM_RECIPE;
-	public static GCTRecipe SWITCHGLEAM_RECIPE;
-	public static GCTRecipe SALVEGLEAM_RECIPE;
-	public static GCTRecipe MUNCHSTONE_RECIPE;
-	public static GCTRecipe ORDERSTONE_RECIPE;
-	public static GCTRecipe MINDSPINDLE_RECIPE;
-	public static GCTRecipe ELIXIRSPINDLE_RECIPE;
-	public static GCTRecipe RIVERTEAR_RECIPE;
-	public static GCTRecipe MOUNTAINTEAR_RECIPE;
-	public static GCTRecipe PARCHTEAR_RECIPE;
-	public static GCTRecipe PHOENIXWAY_RECIPE;
-	public static GCTRecipe STORMWAY_RECIPE;
+	public static IGCTRecipe SLAUGHTERGLEAM_RECIPE;
+	public static IGCTRecipe MURDERGLEAM_RECIPE;
+	public static IGCTRecipe CLEANSEGLEAM_RECIPE;
+	public static IGCTRecipe AGEGLEAM_RECIPE;
+	public static IGCTRecipe SWITCHGLEAM_RECIPE;
+	public static IGCTRecipe SALVEGLEAM_RECIPE;
+	public static IGCTRecipe MUNCHSTONE_RECIPE;
+	public static IGCTRecipe ORDERSTONE_RECIPE;
+	public static IGCTRecipe MINDSPINDLE_RECIPE;
+	public static IGCTRecipe ELIXIRSPINDLE_RECIPE;
+	public static IGCTRecipe RIVERTEAR_RECIPE;
+	public static IGCTRecipe MOUNTAINTEAR_RECIPE;
+	public static IGCTRecipe PARCHTEAR_RECIPE;
+	public static IGCTRecipe PHOENIXWAY_RECIPE;
+	public static IGCTRecipe STORMWAY_RECIPE;
 
 	public static void buildRecipes () {
 		RADIANT_DUST_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("radiant_dust", new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 2), ItemRegistry.RAW_RADIANT_QUARTZ);

@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.inventory;
 
+import com.aranaira.arcanearchives.api.IGCTRecipe;
 import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
 import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketGemCutters;
@@ -55,7 +56,7 @@ public class ContainerGemCuttersTable extends Container {
 		this.slotOutput = new SlotItemHandler(outputInv, SLOT_OUTPUT, 95, 18) {
 			@Override
 			public ItemStack onTake (EntityPlayer thePlayer, ItemStack stack) {
-				GCTRecipe recipe = tile.getCurrentRecipe();
+				IGCTRecipe recipe = tile.getCurrentRecipe();
 				recipe.consumeAndHandleInventory(recipe, combinedInventory, player, tile, ContainerGemCuttersTable.this::detectAndSendChanges, recipe::handleItemResult);
 				if (!player.world.isRemote) {
 					stack = recipe.onCrafted(player, stack);
@@ -129,7 +130,7 @@ public class ContainerGemCuttersTable extends Container {
 
 		ItemStack itemstack;
 
-		GCTRecipe curRecipe = tile.getCurrentRecipe();
+		IGCTRecipe curRecipe = tile.getCurrentRecipe();
 		if (curRecipe != null) {
 			itemstack = curRecipe.getRecipeOutput().copy();
 			if (curRecipe.matches(combinedInventory)) {
@@ -240,17 +241,17 @@ public class ContainerGemCuttersTable extends Container {
 		return true;
 	}
 
-	public Map<GCTRecipe, Boolean> updateRecipeStatus () {
-		Map<GCTRecipe, Boolean> map = new HashMap<>();
+	public Map<IGCTRecipe, Boolean> updateRecipeStatus () {
+		Map<IGCTRecipe, Boolean> map = new HashMap<>();
 
-		for (GCTRecipe recipe : GCTRecipeList.instance.getRecipeList()) {
+		for (IGCTRecipe recipe : GCTRecipeList.instance.getRecipeList()) {
 			map.put(recipe, recipe.matches(combinedInventory));
 		}
 
 		return map;
 	}
 
-	public void updateLastRecipeFromServer (GCTRecipe recipe) {
+	public void updateLastRecipeFromServer (IGCTRecipe recipe) {
 		tile.setLastRecipe(recipe);
 		if (recipe != null) {
 			tileInventory.setStackInSlot(0, recipe.getRecipeOutput());

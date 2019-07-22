@@ -12,6 +12,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
+/**
+ * This is an internal recipe interface not intended for overriding
+ * or public use.
+ */
 public interface IArcaneArchivesRecipe {
 	boolean matches (@Nonnull IItemHandler inv);
 

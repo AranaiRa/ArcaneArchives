@@ -1,7 +1,5 @@
 package com.aranaira.arcanearchives.api;
 
-import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
-import com.aranaira.arcanearchives.recipe.gct.GCTRecipeWithConditionsCrafter;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
@@ -11,31 +9,31 @@ import java.util.List;
 import java.util.Map;
 
 public interface IGCTRecipeList {
-	Map<ResourceLocation, GCTRecipe> getRecipes ();
+	Map<ResourceLocation, IGCTRecipe> getRecipes ();
 
 	@Nullable
-	GCTRecipe getRecipeByOutput (ItemStack output);
+	IGCTRecipe getRecipeByOutput (ItemStack output);
 
-	List<GCTRecipe> getRecipeList ();
+	List<IGCTRecipe> getRecipeList ();
 
-	GCTRecipe makeAndAddRecipe (String name, @Nonnull ItemStack result, Object... recipe);
+	IGCTRecipe makeAndAddRecipe (String name, @Nonnull ItemStack result, Object... recipe);
 
-	GCTRecipeWithConditionsCrafter makeAndAddRecipeWithCreatorAndCondition (String name, @Nonnull ItemStack result, Object... recipe);
+	IGCTRecipe makeAndAddRecipeWithCreatorAndCondition (String name, @Nonnull ItemStack result, Object... recipe);
 
-	void addRecipe (GCTRecipe recipe);
+	void addRecipe (IGCTRecipe recipe);
 
 	@Nullable
-	GCTRecipe getRecipe (ResourceLocation name);
+	IGCTRecipe getRecipe (ResourceLocation name);
 
-	void removeRecipe (GCTRecipe recipe);
+	void removeRecipe (IGCTRecipe recipe);
 
 	void removeRecipe (ResourceLocation name);
 
 	ItemStack getOutputByIndex (int index);
 
-	GCTRecipe getRecipeByIndex (int index);
+	IGCTRecipe getRecipeByIndex (int index);
 
-	int indexOf (GCTRecipe recipe);
+	int indexOf (IGCTRecipe recipe);
 
 	int getSize ();
 }

@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.api.IGCTRecipe;
 import com.aranaira.arcanearchives.init.RecipeLibrary;
 import com.aranaira.arcanearchives.inventory.handlers.ITrackingHandler;
 import com.aranaira.arcanearchives.network.Networking;
@@ -28,9 +29,9 @@ import javax.annotation.Nullable;
 public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IManifestTileEntity, IBrazierRouting {
 	private final TrackingGCTHandler inventory = new TrackingGCTHandler(18);
 	public static final int RECIPE_PAGE_LIMIT = 7;
-	private GCTRecipe currentRecipe;
-	private GCTRecipe lastRecipe;
-	private GCTRecipe penultimateRecipe;
+	private IGCTRecipe currentRecipe;
+	private IGCTRecipe lastRecipe;
+	private IGCTRecipe penultimateRecipe;
 	private int page;
 
 	public GemCuttersTableTileEntity () {
@@ -97,7 +98,7 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 	}
 
 	@Nullable
-	public GCTRecipe getCurrentRecipe () {
+	public IGCTRecipe getCurrentRecipe () {
 		return currentRecipe;
 	}
 
@@ -119,7 +120,7 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 		manuallySetRecipe(compound.getInteger(Tags.RECIPE)); // is this server-side or client-side?
 	}
 
-	public GCTRecipe getLastRecipe () {
+	public IGCTRecipe getLastRecipe () {
 		return lastRecipe;
 	}
 
@@ -134,7 +135,7 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 		return compound;
 	}
 
-	public void setLastRecipe (GCTRecipe lastRecipe) {
+	public void setLastRecipe (IGCTRecipe lastRecipe) {
 		this.lastRecipe = lastRecipe;
 	}
 
@@ -143,7 +144,7 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 		return writeToNBT(new NBTTagCompound());
 	}
 
-	public GCTRecipe getPenultimateRecipe () {
+	public IGCTRecipe getPenultimateRecipe () {
 		return penultimateRecipe;
 	}
 

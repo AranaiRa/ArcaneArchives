@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.client.gui;
 
+import com.aranaira.arcanearchives.api.IGCTRecipe;
 import com.aranaira.arcanearchives.client.gui.controls.InvisibleButton;
 import com.aranaira.arcanearchives.util.ColorUtils;
 import com.aranaira.arcanearchives.util.ColorUtils.Color;
@@ -42,7 +43,7 @@ public class GUIGemCuttersTable extends GuiContainer {
 
 	private final ContainerGemCuttersTable container;
 	private final EntityPlayer player;
-	private final Object2BooleanMap<GCTRecipe> recipeStatus = new Object2BooleanOpenHashMap<>();
+	private final Object2BooleanMap<IGCTRecipe> recipeStatus = new Object2BooleanOpenHashMap<>();
 	private final GemCuttersTableTileEntity tile;
 	private InvisibleButton prevPageButton;
 	private InvisibleButton nextPageButton;
@@ -129,7 +130,7 @@ public class GUIGemCuttersTable extends GuiContainer {
 		boolean wasEnabled = false;
 
 		if (slot instanceof SlotRecipeHandler) {
-			GCTRecipe recipe = ((SlotRecipeHandler) slot).getRecipe();
+			IGCTRecipe recipe = ((SlotRecipeHandler) slot).getRecipe();
 			if (recipe == null) {
 				return;
 			}
@@ -171,8 +172,8 @@ public class GUIGemCuttersTable extends GuiContainer {
 		return false;
 	}
 
-	private Map<GCTRecipe, List<List<ItemStack>>> recipeIngredients = new HashMap<>();
-	private Map<GCTRecipe, IntArrayList> recipeCounts = new HashMap<>();
+	private Map<IGCTRecipe, List<List<ItemStack>>> recipeIngredients = new HashMap<>();
+	private Map<IGCTRecipe, IntArrayList> recipeCounts = new HashMap<>();
 
 	@Override
 	protected void renderToolTip (ItemStack stack, int x, int y) {
@@ -181,7 +182,7 @@ public class GUIGemCuttersTable extends GuiContainer {
 		if (slot instanceof SlotRecipeHandler) {
 			FontRenderer font = stack.getItem().getFontRenderer(stack);
 			List<String> tooltip = new ArrayList<>();
-			GCTRecipe recipe = ((SlotRecipeHandler) slot).getRecipe();
+			IGCTRecipe recipe = ((SlotRecipeHandler) slot).getRecipe();
 			if (recipe != null) {
 				if (recipeStatus.getBoolean(recipe)) {// Valid
 					tooltip.add(TextFormatting.GREEN + stack.getDisplayName());

@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.integration.guidebook;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.api.IGCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import com.aranaira.arcanearchives.recipe.IngredientStack;
@@ -25,7 +26,7 @@ public class GCTRecipeProvider extends RecipeProvider {
 	@Nullable
 	@Override
 	public ProvidedComponents provideRecipeComponents (@Nonnull ItemStack targetOutput, int recipeIndex) {
-		for (GCTRecipe recipe : GCTRecipeList.instance.getRecipeList()) {
+		for (IGCTRecipe recipe : GCTRecipeList.instance.getRecipeList()) {
 			if (ItemStack.areItemsEqual(targetOutput, recipe.getRecipeOutput())) {
 				return provideRecipeComponents(recipe.getName());
 			}
@@ -36,7 +37,7 @@ public class GCTRecipeProvider extends RecipeProvider {
 	@Nullable
 	@Override
 	public ProvidedComponents provideRecipeComponents (@Nonnull ResourceLocation recipeKey) {
-		GCTRecipe recipe = GCTRecipeList.instance.getRecipe(recipeKey);
+		IGCTRecipe recipe = GCTRecipeList.instance.getRecipe(recipeKey);
 		if (recipe == null) {
 			return null;
 		}

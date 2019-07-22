@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.recipe.gct;
 
+import com.aranaira.arcanearchives.api.IGCTRecipe;
 import com.aranaira.arcanearchives.api.IGCTRecipeList;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import com.google.common.collect.ImmutableList;
@@ -15,18 +16,18 @@ import java.util.Map;
 public class GCTRecipeList implements IGCTRecipeList {
 	public static final GCTRecipeList instance = new GCTRecipeList();
 
-	private final LinkedHashMap<ResourceLocation, GCTRecipe> RECIPE_LIST = new LinkedHashMap<>();
-	private ImmutableList<GCTRecipe> IMMUTABLE_COPY = null;
+	private final LinkedHashMap<ResourceLocation, IGCTRecipe> RECIPE_LIST = new LinkedHashMap<>();
+	private ImmutableList<IGCTRecipe> IMMUTABLE_COPY = null;
 
 	@Override
-	public Map<ResourceLocation, GCTRecipe> getRecipes () {
+	public Map<ResourceLocation, IGCTRecipe> getRecipes () {
 		return RECIPE_LIST;
 	}
 
 	@Override
 	@Nullable
-	public GCTRecipe getRecipeByOutput (ItemStack output) {
-		for (GCTRecipe recipe : RECIPE_LIST.values()) {
+	public IGCTRecipe getRecipeByOutput (ItemStack output) {
+		for (IGCTRecipe recipe : RECIPE_LIST.values()) {
 			if (ItemUtils.areStacksEqualIgnoreSize(output, recipe.getRecipeOutput())) {
 				return recipe;
 			}
@@ -36,7 +37,7 @@ public class GCTRecipeList implements IGCTRecipeList {
 	}
 
 	@Override
-	public List<GCTRecipe> getRecipeList () {
+	public List<IGCTRecipe> getRecipeList () {
 		if (IMMUTABLE_COPY == null) {
 			IMMUTABLE_COPY = ImmutableList.copyOf(RECIPE_LIST.values());
 		}
@@ -45,33 +46,33 @@ public class GCTRecipeList implements IGCTRecipeList {
 	}
 
 	@Override
-	public GCTRecipe makeAndAddRecipe (String name, @Nonnull ItemStack result, Object... recipe) {
+	public IGCTRecipe makeAndAddRecipe (String name, @Nonnull ItemStack result, Object... recipe) {
 		GCTRecipe newRecipe = new GCTRecipe(name, result, recipe);
 		addRecipe(newRecipe);
 		return newRecipe;
 	}
 
 	@Override
-	public GCTRecipeWithConditionsCrafter makeAndAddRecipeWithCreatorAndCondition (String name, @Nonnull ItemStack result, Object... recipe) {
+	public IGCTRecipe makeAndAddRecipeWithCreatorAndCondition (String name, @Nonnull ItemStack result, Object... recipe) {
 		GCTRecipeWithConditionsCrafter newRecipe = new GCTRecipeWithConditionsCrafter(name, result, recipe);
 		addRecipe(newRecipe);
 		return newRecipe;
 	}
 
 	@Override
-	public void addRecipe (GCTRecipe recipe) {
+	public void addRecipe (IGCTRecipe recipe) {
 		IMMUTABLE_COPY = null;
 		RECIPE_LIST.put(recipe.getName(), recipe);
 	}
 
 	@Override
 	@Nullable
-	public GCTRecipe getRecipe (ResourceLocation name) {
+	public IGCTRecipe getRecipe (ResourceLocation name) {
 		return RECIPE_LIST.get(name);
 	}
 
 	@Override
-	public void removeRecipe (GCTRecipe recipe) {
+	public void removeRecipe (IGCTRecipe recipe) {
 		IMMUTABLE_COPY = null;
 		RECIPE_LIST.remove(recipe.getName());
 	}
@@ -92,7 +93,7 @@ public class GCTRecipeList implements IGCTRecipeList {
 	}
 
 	@Override
-	public GCTRecipe getRecipeByIndex (int index) {
+	public IGCTRecipe getRecipeByIndex (int index) {
 		if (index < 0 || index >= RECIPE_LIST.size()) {
 			return null;
 		}
@@ -101,7 +102,7 @@ public class GCTRecipeList implements IGCTRecipeList {
 	}
 
 	@Override
-	public int indexOf (GCTRecipe recipe) {
+	public int indexOf (IGCTRecipe recipe) {
 		if (recipe == null || !RECIPE_LIST.containsKey(recipe.getName())) {
 			return -1;
 		}

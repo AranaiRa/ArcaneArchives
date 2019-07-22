@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.network;
 
+import com.aranaira.arcanearchives.api.IGCTRecipe;
 import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
 import com.aranaira.arcanearchives.network.Handlers.ClientHandler;
 import com.aranaira.arcanearchives.network.Handlers.ServerHandler;
@@ -61,12 +62,12 @@ public class PacketGemCutters {
 	}
 
 	public static class LastRecipe implements IMessage {
-		private GCTRecipe recipe;
+		private IGCTRecipe recipe;
 
 		public LastRecipe () {
 		}
 
-		public LastRecipe (GCTRecipe recipe) {
+		public LastRecipe (IGCTRecipe recipe) {
 			this.recipe = recipe;
 		}
 

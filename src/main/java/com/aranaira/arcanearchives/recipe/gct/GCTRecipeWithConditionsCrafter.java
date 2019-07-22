@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.recipe.gct;
 
+import com.aranaira.arcanearchives.api.IGCTRecipe;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -16,7 +17,7 @@ public class GCTRecipeWithConditionsCrafter extends GCTRecipeWithCrafter {
 		super(name, result, recipe);
 	}
 
-	public GCTRecipeWithConditionsCrafter addCondition (GCTCondition predicate) {
+	public IGCTRecipe addCondition (GCTCondition predicate) {
 		this.conditions.add(predicate);
 		return this;
 	}
