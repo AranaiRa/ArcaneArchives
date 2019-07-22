@@ -14,7 +14,7 @@ public class BrazierTESR extends TileEntitySpecialRenderer<BrazierTileEntity> {
 		boolean wasLighting = GL11.glIsEnabled(GL11.GL_LIGHTING);
 		GlStateManager.disableLighting();
 
-		GL11.glTranslated(x, y + 0.6, z);
+		GL11.glTranslated(x, y, z);
 		RenderUtils.renderBlockModel(te.getWorld(), te.getPos(), BlockRegistry.BRAZIER_FIRE.getDefaultState(), true);
 
 		if (wasLighting) {
