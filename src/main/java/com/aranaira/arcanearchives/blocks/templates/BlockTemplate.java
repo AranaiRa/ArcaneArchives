@@ -210,6 +210,7 @@ public class BlockTemplate extends Block implements IHasModel {
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
 	public EnumBlockRenderType getRenderType (IBlockState state) {
 		return EnumBlockRenderType.MODEL;
 	}
