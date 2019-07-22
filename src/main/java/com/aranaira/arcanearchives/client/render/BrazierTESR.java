@@ -2,8 +2,17 @@ package com.aranaira.arcanearchives.client.render;
 
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.tileentities.BrazierTileEntity;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BlockModelShapes;
+import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.client.ForgeHooksClient;
 import org.lwjgl.opengl.GL11;
 
 public class BrazierTESR extends TileEntitySpecialRenderer<BrazierTileEntity> {
@@ -15,12 +24,17 @@ public class BrazierTESR extends TileEntitySpecialRenderer<BrazierTileEntity> {
 		GlStateManager.disableLighting();
 
 		GL11.glTranslated(x, y, z);
-		RenderUtils.renderBlockModel(te.getWorld(), te.getPos(), BlockRegistry.BRAZIER_FIRE.getDefaultState(), true);
+		Minecraft mc = Minecraft.getMinecraft();
+		BlockRendererDispatcher dispatcher = mc.getBlockRendererDispatcher();
+		BlockModelShapes shapes = dispatcher.getBlockModelShapes();
+		IBakedModel thisBlock = shapes.getModelForState(BlockRegistry.BRAZIER_FIRE.getDefaultState());
+		mc.renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+		dispatcher.getBlockModelRenderer().renderModelBrightnessColor(thisBlock, 1f, 1f, 1f, 1f);
 
 		if (wasLighting) {
 			GlStateManager.enableLighting();
 		}
-		GL11.glTranslated(-x, -y + 0.6, -z);
+		GL11.glTranslated(-x, -y, -z);
 
 		GlStateManager.popMatrix();
 	}
