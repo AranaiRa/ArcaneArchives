@@ -24,6 +24,7 @@ import com.aranaira.arcanearchives.items.gems.asscher.MurdergleamItem;
 import com.aranaira.arcanearchives.items.gems.asscher.SalvegleamItem;
 import com.aranaira.arcanearchives.items.gems.asscher.Slaughtergleam;
 import com.aranaira.arcanearchives.items.gems.pampel.Elixirspindle;
+import com.aranaira.arcanearchives.items.gems.pendeloque.RivertearItem;
 import com.aranaira.arcanearchives.items.gems.trillion.StormwayItem;
 import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketConfig.RequestDefaultRoutingType;
@@ -36,6 +37,7 @@ import com.aranaira.arcanearchives.util.WorldUtil;
 import gigaherz.lirelent.guidebook.client.BookRegistryEvent;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBookshelf;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -59,6 +61,7 @@ import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -85,6 +88,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import vazkii.botania.api.item.IPetalApothecary;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -211,6 +215,42 @@ public class EventHandler {
 					ei.motionZ = rng.nextFloat() * 0.4f - 0.2f;
 					ei.motionY = rng.nextFloat() * 0.2f + 0.2f;
 					event.getWorld().spawnEntity(ei);
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void onRightClickBlock (PlayerInteractEvent.RightClickBlock event) {
+		if (!event.getWorld().isRemote) {
+			BlockPos pos = new BlockPos(event.getHitVec());
+			Block block = event.getWorld().getBlockState(pos).getBlock();
+			IPetalApothecary ipate = WorldUtil.getTileEntity(IPetalApothecary.class, event.getEntity().dimension, pos);
+			if(ipate != null) {
+				boolean hasRivertear = false;
+				AvailableGemsHandler availableGems = GemUtil.getAvailableGems(event.getEntityPlayer());
+				while(availableGems.iterator().hasNext()) {
+					if(availableGems.iterator().next().getItem() == ItemRegistry.RIVERTEAR) {
+						hasRivertear = true;
+						break;
+					}
+				}
+				//check the inventory if it's not in a provider slot
+				if(!hasRivertear) {
+					for(ItemStack stack : event.getEntityPlayer().inventory.mainInventory) {
+						if(stack.getItem() == ItemRegistry.RIVERTEAR) {
+							hasRivertear = true;
+							break;
+						}
+					}
+				}
+
+				if(hasRivertear) {
+					if (!ipate.hasWater()) {
+						ipate.setWater(true);
+					}
+
+					//TODO: Decide whether to use charge
 				}
 			}
 		}

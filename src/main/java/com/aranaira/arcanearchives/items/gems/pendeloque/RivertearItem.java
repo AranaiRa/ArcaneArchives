@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.items.gems.*;
 import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler;
 import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketArcaneGems.GemParticle;
+import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -22,6 +23,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import vazkii.botania.api.item.IPetalApothecary;
 
 import java.util.List;
 
@@ -84,21 +86,23 @@ public class RivertearItem extends ArcaneGemItem {
 
 				if (ray != null) {
 					BlockPos pos = ray.getBlockPos();
-					EnumFacing facing = ray.sideHit;
+					if(WorldUtil.getTileEntity(IPetalApothecary.class, player.dimension, pos) == null) { //Cancel normal use if the target block is a petal apothecary
+						EnumFacing facing = ray.sideHit;
 
-					Vec3d end = new Vec3d(pos.offset(facing).getX(), pos.offset(facing).getY(), pos.offset(facing).getZ());
+						Vec3d end = new Vec3d(pos.offset(facing).getX(), pos.offset(facing).getY(), pos.offset(facing).getZ());
 
-					IBlockState water = Blocks.WATER.getDefaultState();
-					world.setBlockState(pos.offset(facing), water);
-					Blocks.WATER.neighborChanged(water, world, pos.offset(facing), Blocks.WATER, null);
+						IBlockState water = Blocks.WATER.getDefaultState();
+						world.setBlockState(pos.offset(facing), water);
+						Blocks.WATER.neighborChanged(water, world, pos.offset(facing), Blocks.WATER, null);
 
-					if (!player.capabilities.isCreativeMode) {
-						GemUtil.consumeCharge(handler.getHeld(), 1);
+						if (!player.capabilities.isCreativeMode) {
+							GemUtil.consumeCharge(handler.getHeld(), 1);
+						}
+
+						GemParticle packet = new GemParticle(cut, color, start, end);
+						NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, start.x, start.y, start.z, 160);
+						Networking.CHANNEL.sendToAllTracking(packet, tp);
 					}
-
-					GemParticle packet = new GemParticle(cut, color, start, end);
-					NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, start.x, start.y, start.z, 160);
-					Networking.CHANNEL.sendToAllTracking(packet, tp);
 				}
 			}
 		}
