@@ -183,6 +183,9 @@
                 If no storage can be found, items are ejected from the Brazier of Hoarding.
             </p>
             <p>
+                <stack item="arcanearchives:scepter_manipulation"/> If you right click a brazier with a <link ref="ScepterManipulation">Scepter of Manipulation</link>, you can set the maximum radius in which it will search for Radiant storage to insert items into, as well as whether the Brazier will fill any located device in your network, or only devices that you placed personally. You can also enable an option to visualize the size of the insertion area.
+            </p>
+            <p>
                 <stack item="minecraft:purple_shulker_box"/> If you right click an item that itself is an inventory (such as a shulker box, backpack, or satchel) onto a Brazier of Hoarding, its contents will be deposited into the Brazier instead.
             </p>
             <p condition="ml_quark">
