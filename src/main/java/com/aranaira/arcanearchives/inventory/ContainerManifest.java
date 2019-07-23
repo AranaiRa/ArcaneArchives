@@ -234,4 +234,14 @@ public class ContainerManifest extends Container implements IScrollableContainer
 			super.putStackInSlot(slotID, stack);
 		}
 	}
+
+	@Override
+	@Nullable
+	public Slot getSlot (int slotId) {
+		try {
+			return super.getSlot(slotId);
+		} catch (IndexOutOfBoundsException e) {
+			return null;
+		}
+	}
 }
