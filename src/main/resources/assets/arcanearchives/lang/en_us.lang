@@ -167,6 +167,15 @@ arcanearchives.tooltip.gemupgrade.power=POWER
 arcanearchives.tooltip.gemupgrade.space=SPACE
 arcanearchives.tooltip.gemupgrade.time=TIME
 
+arcanearchives.tooltip.brazier.routingmode.all1=Items will be routed to
+arcanearchives.tooltip.brazier.routingmode.all2=any device in your network.
+arcanearchives.tooltip.brazier.routingmode.mine1=Items will be routed only
+arcanearchives.tooltip.brazier.routingmode.mine2=to devices you placed personally.
+arcanearchives.tooltip.brazier.visualizer.show1=Click to display a visualizer for
+arcanearchives.tooltip.brazier.visualizer.show2=the range this Brazier is operating in.
+arcanearchives.tooltip.brazier.visualizer.hide=Click to hide the range visualizer.
+arcanearchives.tooltip.brazier.radius.decrease=Decrease Brazier range by 10.
+arcanearchives.tooltip.brazier.radius.increase=Increase Brazier range by 10.
 arcanearchives.tooltip.devouringcharm.flip=Flip the Devouring Charm over.
 arcanearchives.tooltip.manifest.inanotherdim=This chest is located in %s.
 arcanearchives.tooltip.manifest.chestsneak=[Hold shift to view chest locations.]

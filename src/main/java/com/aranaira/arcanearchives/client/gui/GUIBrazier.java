@@ -9,22 +9,42 @@ import com.aranaira.arcanearchives.network.PacketBrazier.DecrementRadius;
 import com.aranaira.arcanearchives.network.PacketBrazier.IncrementRadius;
 import com.aranaira.arcanearchives.network.PacketBrazier.SetRadius;
 import com.aranaira.arcanearchives.network.PacketBrazier.SetSubnetworkMode;
+import com.aranaira.arcanearchives.tileentities.interfaces.IBrazierRouting;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiPageButtonList;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GUIBrazier extends GuiContainer implements GuiPageButtonList.GuiResponder {
 
 	private static final ResourceLocation TEXTURE_BRAZIER = new ResourceLocation("arcanearchives:textures/gui/brazier_hoarding.png");
 
-	private static final int BACKGROUND_X = 0, BACKGROUND_Y = 0, BACKGROUND_W = 98, BACKGROUND_H = 41, EYE_OPEN_X = 222, EYE_OPEN_Y = 0, EYE_CLOSED_X = 210, EYE_CLOSED_Y = 0, EYE_W = 12, EYE_H = 10, SLASH_X = 240, SLASH_Y = 0, SLASH_S = 16, CHECK_X = 234, CHECK_Y = 0, CHECK_S = 6;
+	private static final int BACKGROUND_X = 0, BACKGROUND_Y = 0, BACKGROUND_W = 98, BACKGROUND_H = 41, EYE_OPEN_X = 222, EYE_OPEN_Y = 0, EYE_CLOSED_X = 210, EYE_CLOSED_Y = 0, EYE_W = 12, EYE_H = 10, SLASH_X = 240, SLASH_Y = 0, SLASH_S = 16, CHECK_X = 234, CHECK_Y = 0, CHECK_S = 6,
+	ROUTING_TOOLTIP_X = 67,
+	ROUTING_TOOLTIP_Y = 28,
+	ROUTING_TOOLTIP_W = 31,
+	ROUTING_TOOLTIP_H = 16,
+	VISUALIZER_TOOLTIP_X = 6,
+	VISUALIZER_TOOLTIP_Y = 7,
+	VISUALIZER_TOOLTIP_W = 13,
+	VISUALIZER_TOOLTIP_H = 12,
+	RADIUS_LEFT_TOOLTIP_X = 29,
+	RADIUS_LEFT_TOOLTIP_Y = 6,
+	RADIUS_LEFT_TOOLTIP_W = 8,
+	RADIUS_LEFT_TOOLTIP_H = 16,
+	RADIUS_RIGHT_TOOLTIP_X = 85,
+	RADIUS_RIGHT_TOOLTIP_Y = 6,
+	RADIUS_RIGHT_TOOLTIP_W = 8,
+	RADIUS_RIGHT_TOOLTIP_H = 16;
 
 	private GuiButton reduceButton, expandButton, fullNetworkToggleButton, visualizerButton;
 	private GuiTextField radiusField;
@@ -175,5 +195,52 @@ public class GUIBrazier extends GuiContainer implements GuiPageButtonList.GuiRes
 	@Override
 	public void onGuiClosed () {
 		containerBrazier.getTile().removeUpdateHook(this::updateHook);
+	}
+
+	@Override
+	protected void renderHoveredToolTip (int mouseX, int mouseY) {
+		if (mouseY >= guiTop + ROUTING_TOOLTIP_Y && mouseY <= guiTop + ROUTING_TOOLTIP_Y + ROUTING_TOOLTIP_H) {
+			if (mouseX >= guiLeft + ROUTING_TOOLTIP_X && mouseX <= guiLeft + ROUTING_TOOLTIP_X + ROUTING_TOOLTIP_W) {
+				List<String> tooltip = new ArrayList<>();
+				if (containerBrazier.getTile().getNetworkMode()) {
+					tooltip.add(I18n.format("arcanearchives.tooltip.brazier.routingmode.mine1"));
+					tooltip.add(I18n.format("arcanearchives.tooltip.brazier.routingmode.mine2"));
+				} else {
+					tooltip.add(I18n.format("arcanearchives.tooltip.brazier.routingmode.all1"));
+					tooltip.add(I18n.format("arcanearchives.tooltip.brazier.routingmode.all2"));
+				}
+				this.drawHoveringText(tooltip, mouseX, mouseY);
+				return;
+			}
+		}
+		if (mouseY >= guiTop + VISUALIZER_TOOLTIP_Y && mouseY <= guiTop + VISUALIZER_TOOLTIP_Y + VISUALIZER_TOOLTIP_H) {
+			if (mouseX >= guiLeft + VISUALIZER_TOOLTIP_X && mouseX <= guiLeft + VISUALIZER_TOOLTIP_X + VISUALIZER_TOOLTIP_W) {
+				List<String> tooltip = new ArrayList<>();
+				if (containerBrazier.getTile().isShowingRange()) {
+					tooltip.add(I18n.format("arcanearchives.tooltip.brazier.visualizer.hide"));
+				} else {
+					tooltip.add(I18n.format("arcanearchives.tooltip.brazier.visualizer.show1"));
+					tooltip.add(I18n.format("arcanearchives.tooltip.brazier.visualizer.show2"));
+				}
+				this.drawHoveringText(tooltip, mouseX, mouseY);
+				return;
+			}
+		}
+		if (mouseY >= guiTop + RADIUS_LEFT_TOOLTIP_Y && mouseY <= guiTop + RADIUS_LEFT_TOOLTIP_Y + RADIUS_LEFT_TOOLTIP_H) {
+			if (mouseX >= guiLeft + RADIUS_LEFT_TOOLTIP_X && mouseX <= guiLeft + RADIUS_LEFT_TOOLTIP_X + RADIUS_LEFT_TOOLTIP_W) {
+				List<String> tooltip = new ArrayList<>();
+				tooltip.add(I18n.format("arcanearchives.tooltip.brazier.radius.decrease"));
+				this.drawHoveringText(tooltip, mouseX, mouseY);
+				return;
+			}
+		}
+		if (mouseY >= guiTop + RADIUS_RIGHT_TOOLTIP_Y && mouseY <= guiTop + RADIUS_RIGHT_TOOLTIP_Y + RADIUS_RIGHT_TOOLTIP_H) {
+			if (mouseX >= guiLeft + RADIUS_RIGHT_TOOLTIP_X && mouseX <= guiLeft + RADIUS_RIGHT_TOOLTIP_X + RADIUS_RIGHT_TOOLTIP_W) {
+				List<String> tooltip = new ArrayList<>();
+				tooltip.add(I18n.format("arcanearchives.tooltip.brazier.radius.increase"));
+				this.drawHoveringText(tooltip, mouseX, mouseY);
+				return;
+			}
+		}
 	}
 }
