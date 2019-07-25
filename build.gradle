@@ -130,7 +130,7 @@ dependencies {
     deobfCompile("com.blamejared:MTLib:${mt_lib_version}") {
         exclude group: 'mezz.jei'
     }
-    deobfCompile "epicsquid.mysticallib:mysticallib:1.12.2-1.3.0-9"
+    deobfCompile "epicsquid.mysticallib:mysticallib:1.12.2-1.3.1-11"
     //deobfCompile "com.enderio.core:EnderCore:1.12.2-0.5.58"
 
     // modified guidebook, note "lirelent" package
