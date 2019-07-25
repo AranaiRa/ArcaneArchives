@@ -95,7 +95,8 @@ public class RenderUtils {
 		return width;
 	}
 
-	public static void renderBlockModel (World world, BlockPos pos, IBlockState state, boolean translateToOrigin) {
+	public static void renderFullbrightBlockModel (World world, BlockPos pos, IBlockState state, boolean translateToOrigin) {
+		GlStateManager.pushMatrix();
 		BufferBuilder buffer = Tessellator.getInstance().getBuffer();
 		buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
 		if (translateToOrigin) {
@@ -108,6 +109,7 @@ public class RenderUtils {
 
 		final IBlockAccess wrapper = world;
 		mc.renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+		long rand = MathHelper.getPositionRandom(pos);
 
 		for (BlockRenderLayer layer : BlockRenderLayer.values()) {
 			if (state.getBlock().canRenderInLayer(state, layer)) {
@@ -120,6 +122,13 @@ public class RenderUtils {
 		if (translateToOrigin) {
 			buffer.setTranslation(0, 0, 0);
 		}
+		int colour = Minecraft.getMinecraft().getBlockColors().colorMultiplier(state, world, pos, 0);
+		float[] argb = ColorUtils.getARGB(colour);
+		float bright = 2f;
+		//buffer.putColorRGB_F4(255, 255, 255);
+		//argb[1] * bright, argb[2] * bright, argb[3] * bright);
+		//buffer.putBrightness4(0, 255, 255, 0);
+		buffer.putBrightness4(255, 255, 255, 255);
 		Tessellator.getInstance().draw();
 	}
 

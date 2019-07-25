@@ -86,6 +86,10 @@ public class ColorUtils {
 		}
 	}
 
+	public static float[] getARGB (int colour) {
+		return new float[]{colour >> 24 & 0xFF, colour >> 16 & 0xFF, colour >> 8 & 0xFF, colour & 0xFF};
+	}
+
 	@SideOnly(Side.CLIENT)
 	public static class Color {
 		public float red;

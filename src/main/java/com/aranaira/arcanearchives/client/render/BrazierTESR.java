@@ -24,6 +24,7 @@ public class BrazierTESR extends TileEntitySpecialRenderer<BrazierTileEntity> {
 		GlStateManager.disableLighting();
 
 		GL11.glTranslated(x, y, z);
+		//RenderUtils.renderFullbrightBlockModel(te.getWorld(), te.getPos(), BlockRegistry.BRAZIER_FIRE.getDefaultState(), true);
 		Minecraft mc = Minecraft.getMinecraft();
 		BlockRendererDispatcher dispatcher = mc.getBlockRendererDispatcher();
 		BlockModelShapes shapes = dispatcher.getBlockModelShapes();

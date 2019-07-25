@@ -5,7 +5,7 @@
             
         },
         "model": "arcanearchives:brazier_of_hoarding_fire.obj",
-        "custom": { "flip-v": true }
+        "custom": { "flip-v": true, "ambient":  false}
      },
     "variants": {
         "normal": [{}],

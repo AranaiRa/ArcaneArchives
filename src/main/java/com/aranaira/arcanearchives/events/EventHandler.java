@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.events;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.render.LineHandler;
 import com.aranaira.arcanearchives.client.render.RenderGemcasting;
 import com.aranaira.arcanearchives.client.render.RenderGemcasting.EnumGemGuiMode;
@@ -24,7 +23,6 @@ import com.aranaira.arcanearchives.items.gems.asscher.MurdergleamItem;
 import com.aranaira.arcanearchives.items.gems.asscher.SalvegleamItem;
 import com.aranaira.arcanearchives.items.gems.asscher.Slaughtergleam;
 import com.aranaira.arcanearchives.items.gems.pampel.Elixirspindle;
-import com.aranaira.arcanearchives.items.gems.pendeloque.RivertearItem;
 import com.aranaira.arcanearchives.items.gems.trillion.StormwayItem;
 import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketConfig.RequestDefaultRoutingType;
@@ -37,7 +35,6 @@ import com.aranaira.arcanearchives.util.WorldUtil;
 import gigaherz.lirelent.guidebook.client.BookRegistryEvent;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBookshelf;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -75,15 +72,16 @@ import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -177,7 +175,7 @@ public class EventHandler {
 		if (item == ItemRegistry.RADIANT_AMPHORA) {
 			Toggle packet = new Toggle();
 			Networking.CHANNEL.sendToServer(packet);
-		}else if (item instanceof ArcaneGemItem) {
+		} else if (item instanceof ArcaneGemItem) {
 			ItemStack stack = event.getEntityPlayer().getHeldItemMainhand();
 			ArcaneGemItem agi = (ArcaneGemItem) stack.getItem();
 
@@ -196,7 +194,7 @@ public class EventHandler {
 				ItemStack stack = event.getEntityPlayer().getHeldItemMainhand();
 				AmphoraUtil util = new AmphoraUtil(stack);
 				util.toggleMode();
-			}else if (item == ItemRegistry.RAW_RADIANT_QUARTZ) {
+			} else if (item == ItemRegistry.RAW_RADIANT_QUARTZ) {
 				ItemStack stack = event.getEntityPlayer().getHeldItemMainhand();
 				Random rng = new Random();
 				int num = rng.nextInt(5);
@@ -223,45 +221,57 @@ public class EventHandler {
 		}
 	}
 
-	@SubscribeEvent
-	public static void onRightClickBlock (PlayerInteractEvent.RightClickBlock event) {
-		if (!event.getWorld().isRemote) {
-			BlockPos pos = event.getPos();
-			Block block = event.getWorld().getBlockState(pos).getBlock();
-			IPetalApothecary ipate = WorldUtil.getTileEntity(IPetalApothecary.class, event.getEntity().dimension, pos);
-			if(ipate != null) {
-				boolean hasRivertear = getHasRivertear(event.getEntityPlayer());
+	@Optional.Method(modid = "botania")
+	public static void tryPetalApothecary (RightClickBlock event) {
+		IPetalApothecary ipate = WorldUtil.getTileEntity(IPetalApothecary.class, event.getEntity().dimension, event.getPos());
+		if (ipate != null) {
+			boolean hasRivertear = getHasRivertear(event.getEntityPlayer());
 
-				if(hasRivertear) {
-					if (!ipate.hasWater()) {
-						ipate.setWater(true);
-					}
-
-					//TODO: Decide whether to use charge
+			if (hasRivertear) {
+				if (!ipate.hasWater()) {
+					ipate.setWater(true);
 				}
-			}
 
-			TileCrucible tc = WorldUtil.getTileEntity(TileCrucible.class, event.getEntity().dimension, pos);
-			if(tc != null) {
-				int amount = tc.fill(new FluidStack(FluidRegistry.WATER, 1000), false);
-				tc.fill(new FluidStack(FluidRegistry.WATER, amount), true);
+				//TODO: Decide whether to use charge
 			}
 		}
 	}
 
-	private static boolean getHasRivertear(EntityPlayer player) {
+	@Optional.Method(modid = "thaumcraft")
+	public static void tryThaumcraftCrucible (RightClickBlock event) {
+		TileCrucible tc = WorldUtil.getTileEntity(TileCrucible.class, event.getEntity().dimension, event.getPos());
+		if (tc != null) {
+			int amount = tc.fill(new FluidStack(FluidRegistry.WATER, 1000), false);
+			tc.fill(new FluidStack(FluidRegistry.WATER, amount), true);
+		}
+	}
+
+	@SubscribeEvent
+	public static void onRightClickBlock (PlayerInteractEvent.RightClickBlock event) {
+		if (!event.getWorld().isRemote) {
+			if (Loader.isModLoaded("Botania")) {
+				tryPetalApothecary(event);
+			}
+
+			if (Loader.isModLoaded("thaumcraft")) {
+				tryThaumcraftCrucible(event);
+			}
+		}
+	}
+
+	private static boolean getHasRivertear (EntityPlayer player) {
 		boolean hasRivertear = false;
 		AvailableGemsHandler availableGems = GemUtil.getAvailableGems(player);
-		while(availableGems.iterator().hasNext()) {
-			if(availableGems.iterator().next().getItem() == ItemRegistry.RIVERTEAR) {
+		while (availableGems.iterator().hasNext()) {
+			if (availableGems.iterator().next().getItem() == ItemRegistry.RIVERTEAR) {
 				hasRivertear = true;
 				break;
 			}
 		}
 		//check the inventory if it's not in a provider slot
-		if(!hasRivertear) {
-			for(ItemStack stack : player.inventory.mainInventory) {
-				if(stack.getItem() == ItemRegistry.RIVERTEAR) {
+		if (!hasRivertear) {
+			for (ItemStack stack : player.inventory.mainInventory) {
+				if (stack.getItem() == ItemRegistry.RIVERTEAR) {
 					hasRivertear = true;
 					break;
 				}
@@ -597,7 +607,7 @@ public class EventHandler {
 				 * Elixirspindle
 				 */
 				if (gem.getItem() instanceof Elixirspindle && GemUtil.getCharge(gem) > 0) {
-						event.setCanceled(true);
+					event.setCanceled(true);
 				}
 			}
 		}
@@ -637,15 +647,15 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public static void onEndermanTeleport (EnderTeleportEvent event) {
-		if(!event.getEntityLiving().world.isRemote) {
+		if (!event.getEntityLiving().world.isRemote) {
 			EntityLivingBase target = event.getEntityLiving();
 			double cubeRadius = 10.5;
 			AxisAlignedBB aabb = new AxisAlignedBB(target.posX - cubeRadius, target.posY - cubeRadius, target.posZ - cubeRadius, target.posX + cubeRadius, target.posY + cubeRadius, target.posZ + cubeRadius);
-			for(EntityPlayer player : target.world.getEntitiesWithinAABB(EntityPlayer.class, aabb)) {
+			for (EntityPlayer player : target.world.getEntitiesWithinAABB(EntityPlayer.class, aabb)) {
 				AvailableGemsHandler handler = GemUtil.getAvailableGems(player);
 				for (Iterator<GemStack> it = handler.iterator(); it.hasNext(); ) {
 					GemStack gem = it.next();
-					if(gem.getItem() == ItemRegistry.SWITCHGLEAM) {
+					if (gem.getItem() == ItemRegistry.SWITCHGLEAM) {
 						GemUtil.restoreCharge(gem, 3);
 						event.setCanceled(true);
 					}
@@ -655,19 +665,20 @@ public class EventHandler {
 	}
 
 	@SubscribeEvent
-	public static void onItemPickup(EntityItemPickupEvent event) {
-		if(event.getEntityPlayer() != null) {
+	public static void onItemPickup (EntityItemPickupEvent event) {
+		if (event.getEntityPlayer() != null) {
 			ArrayList<ItemStack> devouringCharms = new ArrayList<>();
 			for (ItemStack stack : event.getEntityPlayer().inventory.mainInventory) {
-				if (stack.getItem() == ItemRegistry.DEVOURING_CHARM)
+				if (stack.getItem() == ItemRegistry.DEVOURING_CHARM) {
 					devouringCharms.add(stack);
+				}
 			}
 
 			for (ItemStack dCharm : devouringCharms) {
 				DevouringCharmHandler handler = DevouringCharmHandler.getHandler(dCharm);
-				if (!handler.shouldVoidItem(event.getItem().getItem()))
+				if (!handler.shouldVoidItem(event.getItem().getItem())) {
 					continue;
-				else {
+				} else {
 					event.getItem().getItem().shrink(event.getItem().getItem().getCount());
 					event.setResult(Event.Result.DENY);
 					break;
@@ -677,7 +688,7 @@ public class EventHandler {
 	}
 
 	@SubscribeEvent
-	@Optional.Method(modid="baubles")
+	@Optional.Method(modid = "baubles")
 	public static void onAttachCapabilities (AttachCapabilitiesEvent<ItemStack> event) {
 		if (event.getObject().getItem() == ItemRegistry.BAUBLE_GEMSOCKET) {
 			event.addCapability(BaubleBodyCapabilityHandler.NAME, BaubleBodyCapabilityHandler.instance);
