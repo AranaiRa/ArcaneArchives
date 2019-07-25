@@ -36,7 +36,6 @@ public class ConfigHandler {
 	@SideOnly(Side.CLIENT)
 	public static void onClientConfigChanged (ConfigChangedEvent.OnConfigChangedEvent event) {
 		if (event.getModID().equals(ArcaneArchives.MODID)) {
-			parseColours();
 			MaxDistance packet = new MaxDistance(ManifestConfig.MaxDistance);
 			Networking.CHANNEL.sendToServer(packet);
 
@@ -52,14 +51,6 @@ public class ConfigHandler {
 
 	@Config.Ignore
 	public static int MANIFEST_HIGHLIGHT = 0x991922c4;
-
-	public static void parseColours () {
-		try {
-			MANIFEST_HIGHLIGHT = Long.decode(ItemTrackingConfig.ChestHighlight.toLowerCase()).intValue();
-		} catch (NumberFormatException event) {
-			ArcaneArchives.logger.error("Invalid manifest highlight colour: " + ItemTrackingConfig.ChestHighlight, event);
-		}
-	}
 
 	@Config.Comment("Limit of resonators per player's network")
 	@Config.Name("Resonator Limit")
@@ -103,13 +94,9 @@ public class ConfigHandler {
 	public static ItemTrackingConfig ItemTrackingConfig = new ItemTrackingConfig();
 
 	public static class ItemTrackingConfig {
-		@Config.Comment("Whether or not radiant chests and troves should glow if being tracked")
-		@Config.Name("Chests & Troves glow when Tracked")
-		public boolean chestsGlow = true;
-
-		@Config.Comment("Radiant chest highlight colour (use HTML syntax i.e., #FFFFFF")
-		@Config.Name("Radiant Chest Highlight")
-		public String ChestHighlight = "#1922C4";
+		//@Config.Comment("Whether or not radiant chests and troves should glow if being tracked")
+		//@Config.Name("Chests & Troves glow when Tracked")
+		//public boolean chestsGlow = true;
 
 		@Config.Ignore
 		@Config.Comment("Container classes to exclude from Mixin-based slot highlighting")

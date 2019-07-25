@@ -65,8 +65,8 @@ public class ClientProxy extends CommonProxy {
 		chestTESR = new RadiantChestTESR();
 		ClientRegistry.bindTileEntitySpecialRenderer(RadiantChestTileEntity.class, chestTESR);
 		//
-		troveTESR = new RadiantTroveTESR();
-		ClientRegistry.bindTileEntitySpecialRenderer(RadiantTroveTileEntity.class, troveTESR);
+		//troveTESR = new RadiantTroveTESR();
+		//ClientRegistry.bindTileEntitySpecialRenderer(RadiantTroveTileEntity.class, troveTESR);
 		//
 		brazierTESR = new BrazierTESR();
 		ClientRegistry.bindTileEntitySpecialRenderer(BrazierTileEntity.class, brazierTESR);

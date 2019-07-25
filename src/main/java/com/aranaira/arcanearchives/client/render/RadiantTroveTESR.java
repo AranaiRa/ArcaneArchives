@@ -10,7 +10,7 @@ public class RadiantTroveTESR extends TileEntitySpecialRenderer<RadiantTroveTile
 	@Override
 	public void render (RadiantTroveTileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		super.render(te, x, y, z, partialTicks, destroyStage, alpha);
-		if (te.isBeingTracked() && ConfigHandler.ItemTrackingConfig.chestsGlow) {
+		if (false/*te.isBeingTracked() && ConfigHandler.ItemTrackingConfig.chestsGlow*/) { //TODO: uncomment this when overlays are added
 			GlStateManager.pushMatrix();
 			GL11.glTranslated(x, y, z);
 			boolean wasLighting = GL11.glIsEnabled(GL11.GL_LIGHTING);
