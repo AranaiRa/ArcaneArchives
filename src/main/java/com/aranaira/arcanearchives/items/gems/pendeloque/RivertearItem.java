@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.items.gems.pendeloque;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.items.gems.*;
 import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler;
 import com.aranaira.arcanearchives.network.Networking;
@@ -20,9 +21,12 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import thaumcraft.common.tiles.crafting.TileCrucible;
 import vazkii.botania.api.item.IPetalApothecary;
 
 import java.util.List;
@@ -86,7 +90,9 @@ public class RivertearItem extends ArcaneGemItem {
 
 				if (ray != null) {
 					BlockPos pos = ray.getBlockPos();
-					if(WorldUtil.getTileEntity(IPetalApothecary.class, player.dimension, pos) == null) { //Cancel normal use if the target block is a petal apothecary
+					IPetalApothecary ipa = WorldUtil.getTileEntity(IPetalApothecary.class, player.dimension, pos);
+					TileCrucible tc = WorldUtil.getTileEntity(TileCrucible.class, player.dimension, pos);
+					if(ipa == null) { //Cancel normal use if the target block is a petal apothecary
 						EnumFacing facing = ray.sideHit;
 
 						Vec3d end = new Vec3d(pos.offset(facing).getX(), pos.offset(facing).getY(), pos.offset(facing).getZ());

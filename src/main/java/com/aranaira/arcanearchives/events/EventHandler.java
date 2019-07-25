@@ -77,6 +77,8 @@ import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.Event;
@@ -88,6 +90,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import thaumcraft.common.tiles.crafting.TileCrucible;
 import vazkii.botania.api.item.IPetalApothecary;
 
 import java.util.ArrayList;
@@ -223,27 +226,11 @@ public class EventHandler {
 	@SubscribeEvent
 	public static void onRightClickBlock (PlayerInteractEvent.RightClickBlock event) {
 		if (!event.getWorld().isRemote) {
-			BlockPos pos = new BlockPos(event.getHitVec());
+			BlockPos pos = event.getPos();
 			Block block = event.getWorld().getBlockState(pos).getBlock();
 			IPetalApothecary ipate = WorldUtil.getTileEntity(IPetalApothecary.class, event.getEntity().dimension, pos);
 			if(ipate != null) {
-				boolean hasRivertear = false;
-				AvailableGemsHandler availableGems = GemUtil.getAvailableGems(event.getEntityPlayer());
-				while(availableGems.iterator().hasNext()) {
-					if(availableGems.iterator().next().getItem() == ItemRegistry.RIVERTEAR) {
-						hasRivertear = true;
-						break;
-					}
-				}
-				//check the inventory if it's not in a provider slot
-				if(!hasRivertear) {
-					for(ItemStack stack : event.getEntityPlayer().inventory.mainInventory) {
-						if(stack.getItem() == ItemRegistry.RIVERTEAR) {
-							hasRivertear = true;
-							break;
-						}
-					}
-				}
+				boolean hasRivertear = getHasRivertear(event.getEntityPlayer());
 
 				if(hasRivertear) {
 					if (!ipate.hasWater()) {
@@ -253,7 +240,35 @@ public class EventHandler {
 					//TODO: Decide whether to use charge
 				}
 			}
+
+			TileCrucible tc = WorldUtil.getTileEntity(TileCrucible.class, event.getEntity().dimension, pos);
+			if(tc != null) {
+				int amount = tc.fill(new FluidStack(FluidRegistry.WATER, 1000), false);
+				tc.fill(new FluidStack(FluidRegistry.WATER, amount), true);
+			}
 		}
+	}
+
+	private static boolean getHasRivertear(EntityPlayer player) {
+		boolean hasRivertear = false;
+		AvailableGemsHandler availableGems = GemUtil.getAvailableGems(player);
+		while(availableGems.iterator().hasNext()) {
+			if(availableGems.iterator().next().getItem() == ItemRegistry.RIVERTEAR) {
+				hasRivertear = true;
+				break;
+			}
+		}
+		//check the inventory if it's not in a provider slot
+		if(!hasRivertear) {
+			for(ItemStack stack : player.inventory.mainInventory) {
+				if(stack.getItem() == ItemRegistry.RIVERTEAR) {
+					hasRivertear = true;
+					break;
+				}
+			}
+		}
+
+		return hasRivertear;
 	}
 
 	@SideOnly(Side.CLIENT)

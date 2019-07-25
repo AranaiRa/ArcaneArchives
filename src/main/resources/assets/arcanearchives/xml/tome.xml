@@ -1724,6 +1724,9 @@
             <p condition="ml_botania">
                 <stack item="botania:altar"/> If you have a Rivertear somewhere in your inventory (or slotted in a <link ref="GemSocket">Gem Socket</link>), right clicking on a Petal Apothecary will refill it with water.
             </p>
+            <p condition="ml_thaumcraft">
+                <stack item="thaumcraft:crucible"/> If you have a Rivertear somewhere in your inventory (or slotted in a <link ref="GemSocket">Gem Socket</link>), right clicking on a Crucible will refill it with water.
+            </p>
             <p>
                 <image src="arcanearchives:items/gems/pendeloque/dun" tw="16" th="16"/> To recharge a dun Rivertear, toss it in a block of water.
             </p>
@@ -1865,7 +1868,7 @@
             <page_title_shorter>
                 <title>Astral Sorcery Compatibility</title>
             </page_title_shorter>
-            <p scale="2.0"><stack item="astralsorcery:blockwell" scale="2.0"/> Lightwell</p>
+            <p scale="1.5"><stack item="astralsorcery:blockwell" scale="1.5"/> Lightwell</p>
             <p indent="10">
                 <stack item="arcanearchives:raw_quartz"/> <link ref="RawQuartz">Raw Radiant Quartz</link> generates Liquid Starlight. It is long lasting, but low production.
             </p>
@@ -1883,7 +1886,7 @@
             <page_title_shorter>
                 <title>Botania Compatibility</title>
             </page_title_shorter>
-            <p scale="2.0"><stack item="botania:altar" scale="2.0"/> Petal Apothecary</p>
+            <p scale="1.5"><stack item="botania:altar" scale="1.5"/> Petal Apothecary</p>
             <p indent="10">
                 <stack item="arcanearchives:rivertear"/> If you have a <link ref="Rivertear">Rivertear</link> somewhere in your inventory (or slotted in a <link ref="GemSocket">Gem Socket</link>), right clicking a Petal Apothecary will refill it with water.
             </p>
@@ -1892,7 +1895,7 @@
             <page_title_shorter>
                 <title>Potion Core Compatibility</title>
             </page_title_shorter>
-            <p scale="2.0"><stack item="minecraft:potion" scale="2.0"/> Effects</p>
+            <p scale="1.5"><stack item="minecraft:potion" scale="1.5"/> Effects</p>
             <p indent="10">
                 <stack item="arcanearchives:cleansegleam"/> A <link ref="Cleansegleam">Cleansegleam</link> applies the Antidote effect when used.
             </p>
@@ -1901,13 +1904,13 @@
             <page_title_shorter>
                 <title>Quark Compatibility</title>
             </page_title_shorter>
-            <p scale="2.0"><stack item="minecraft:chest" scale="2.0"/> Inventory Management</p>
+            <p scale="1.5"><stack item="minecraft:chest" scale="1.5"/> Inventory Management</p>
             <p indent="10">
                 <stack item="arcanearchives:radiant_chest"/> <link ref="RadiantChest">Radiant Chests</link> make use of Quark's inventory search bar, and its Sort, Deposit, Merge, Extract, and Restock buttons.
             </p>
             <space height="8"/>
             <horizontal_rule/>
-            <p scale="2.0"><image src="arcanearchives:gui/guidebook/quark_lock" tw="16" th="16" scale="2.0"/> Favoriting</p>
+            <p scale="1.5"><image src="arcanearchives:gui/guidebook/quark_lock" tw="16" th="16" scale="1.5"/> Favoriting</p>
             <p indent="10">
                 <stack item="arcanearchives:brazier_of_hoarding"/> Items marked as favorites will not be deposited into a <link ref="BrazierHoarding">Brazier of Hoarding</link> on right click. Favorited items can still be inserted into a Brazier of Hoarding when thrown.
             </p>
@@ -1916,13 +1919,18 @@
             <page_title_shorter>
                 <title>Thaumcraft Compatibility</title>
             </page_title_shorter>
-            <p scale="2.0"><image src="thaumcraft:aspects/auram" tw="16" th="16" scale="2.0"/> Aspects</p>
+            <p scale="1.5"><image src="thaumcraft:aspects/auram" tw="16" th="16" scale="1.5"/> Aspects</p>
             <p indent="10">
                 All Arcane Archives items and blocks have registered Thaumcraft aspects. Notably, Radiant Quartz is a source of Praecantatio.
             </p>
             <space height="8"/>
             <horizontal_rule/>
-            <p scale="2.0"><stack item="thaumcraft:infusion_matrix" scale="2.0"/> Infusion</p>
+            <p scale="1.5"><stack item="thaumcraft:crucible" scale="1.5"/> Crucible</p>
+            <p indent="10">
+                <stack item="arcanearchives:rivertear"/> If you have a <link ref="Rivertear">Rivertear</link> somewhere in your inventory (or slotted in a <link ref="GemSocket">Gem Socket</link>), right clicking a Crucible will refill it with water.
+            </p>
+            <horizontal_rule/>
+            <p scale="1.5"><stack item="thaumcraft:infusion_matrix" scale="1.5"/> Infusion</p>
             <p indent="10">
                 <stack item="arcanearchives:raw_quartz_cluster"/> <link ref="RawQuartzCluster">Raw Quartz Clusters</link> can be used as an infusion stabilizer.
             </p>
