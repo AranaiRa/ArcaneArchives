@@ -127,7 +127,7 @@ public class CommandTiles extends CommandBase {
 				if (ref.tile != null) {
 					result += " has valid reference";
 				} else {
-					result += " has INVALID reference";
+					result += " has invalid reference";
 				}
 				if (ref != null) {
 					if (ref.getTile() != null) {
