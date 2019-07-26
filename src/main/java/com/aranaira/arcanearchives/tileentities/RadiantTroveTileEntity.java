@@ -12,10 +12,12 @@ import com.aranaira.arcanearchives.tileentities.interfaces.IManifestTileEntity;
 import com.aranaira.arcanearchives.tileentities.interfaces.IUpgradeableStorage;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import com.aranaira.arcanearchives.types.enums.UpgradeType;
+import com.aranaira.arcanearchives.util.PlayerUtil;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -164,6 +166,8 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 				}
 			}
 		}
+
+		PlayerUtil.Server.syncInventory((EntityPlayerMP) player);
 	}
 
 	@Override
