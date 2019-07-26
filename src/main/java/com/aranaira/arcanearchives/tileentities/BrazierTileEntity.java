@@ -58,8 +58,13 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 	public BrazierTileEntity (boolean fake) {
 		super("brazier", fake);
 	}
-
-	@SideOnly(Side.CLIENT)
+    
+    @Override
+    public boolean hasFastRenderer() {
+        return true;
+    }
+    
+    @SideOnly(Side.CLIENT)
 	public void addUpdateHook (Runnable hook) {
 		clientHooks.add(hook);
 	}
