@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.items;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.RadiantChest;
 import com.aranaira.arcanearchives.blocks.RadiantTank;
 import com.aranaira.arcanearchives.blocks.RadiantTrove;
@@ -38,13 +39,18 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.LeftClickBlock;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.Event.Result;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.io.IOException;
 import java.util.List;
 
+@Mod.EventBusSubscriber(modid= ArcaneArchives.MODID)
 public class DebugOrbItem extends ItemTemplate {
 	public static final String NAME = "debugorb";
 
@@ -275,5 +281,38 @@ public class DebugOrbItem extends ItemTemplate {
 		style.setHoverEvent(hoverEvent);
 
 		return new TextComponentString(message).setStyle(style);
+	}
+
+	public static long lastHit = 0;
+
+	@SubscribeEvent
+	public static void onLeftClickBlock (LeftClickBlock event) {
+		World world = event.getWorld();
+		BlockPos pos = event.getPos();
+		IBlockState state = world.getBlockState(pos);
+		Block block = state.getBlock();
+		if (!(block instanceof BlockTemplate)) return;
+
+		if (block instanceof RadiantChest) {
+			long diff = System.currentTimeMillis() - lastHit;
+			lastHit = System.currentTimeMillis();
+			event.setUseBlock(Result.DENY);
+			event.setUseItem(Result.DENY);
+			RadiantChestTileEntity te = WorldUtil.getTileEntity(RadiantChestTileEntity.class, world, pos);
+			EntityPlayer player = event.getEntityPlayer();
+			player.sendMessage(new TextComponentString(world.isRemote ? "Client-side data:" : "Server-side data:"));
+			if (te == null) {
+				player.sendMessage(new TextComponentString("There's no Radiant Chest tile entity! WTF?"));
+			}
+
+			player.sendMessage(new TextComponentString("Radiant chest is named: " + te.getChestName()));
+			EnumFacing facing = te.getDisplayFacing();
+			ItemStack display = te.getDisplayStack();
+			if (display.isEmpty()) {
+				player.sendMessage(new TextComponentString("Radiant chest has no item stack on display."));
+			} else {
+				player.sendMessage(new TextComponentString("Radiant chest has a display item facing " + facing.toString() + " which is: " + display.toString()));
+			}
+		}
 	}
 }
