@@ -104,7 +104,7 @@ public class InventoryRoutingUtils {
 	}
 
 	public static List<IBrazierRouting> buildNetwork (BrazierTileEntity brazier, ItemStack stack) {
-		return buildNetworkWeights(brazier, stack).stream().filter(r -> r.weight > 0).map(r -> r.entry).collect(Collectors.toList());
+		return buildNetworkWeights(brazier, stack).stream().filter(r -> r.weight >= 0).map(r -> r.entry).collect(Collectors.toList());
 	}
 
 	/**
