@@ -95,7 +95,7 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 	private static final int mJEISyncButtonTopOffset = 84;
 	private static final int mJEISyncButtonSize = 14;
 
-	private boolean doJEIsync = false;
+	public static boolean doJEIsync = false;
 
 	/**
 	 * Color to overlay items in another minecraft dimension than the one that the player is currently in
@@ -128,17 +128,17 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 		this.player = player;
 
 		if (Loader.isModLoaded("jei")) {
-			this.doJEIsync = ConfigHandler.ManifestConfig.jeiSynchronise;
+			doJEIsync = ConfigHandler.ManifestConfig.jeiSynchronise;
 			this.storedJEI = JEIPlugin.runtime.getIngredientFilter().getFilterText();
 		}
 	}
 
 	public boolean getJEISync () {
-		return this.doJEIsync;
+		return doJEIsync;
 	}
 
 	public void toggleJEISync () {
-		this.doJEIsync = !this.doJEIsync;
+		doJEIsync = !doJEIsync;
 	}
 
 	@Override
