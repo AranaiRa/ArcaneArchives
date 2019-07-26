@@ -2,6 +2,8 @@ package com.aranaira.arcanearchives.inventory.handlers;
 
 
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
+import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity.Tags;
+import com.aranaira.arcanearchives.util.NBTUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.FluidTankProperties;
@@ -15,22 +17,12 @@ public class TankItemFluidHandler extends FluidHandlerItemStack {
 	protected ItemStack container;
 
 	public TankItemFluidHandler (@Nonnull ItemStack container) {
-		super(container, RadiantTankTileEntity.BASE_CAPACITY);
+		super(container, NBTUtils.defaultInt(container, Tags.MAXIMUM_CAPACITY, RadiantTankTileEntity.BASE_CAPACITY));
 		this.container = container;
 	}
 
 	public int getCapacity () {
-		int capacity = RadiantTankTileEntity.BASE_CAPACITY;
-
-		if (!container.hasTagCompound()) {
-			return capacity;
-		} else if (!container.getTagCompound().hasKey("upgrades")) {
-			return capacity;
-		}
-
-		capacity *= (container.getTagCompound().getInteger("upgrades") + 1);
-
-		return capacity;
+		return NBTUtils.defaultInt(container, Tags.MAXIMUM_CAPACITY, RadiantTankTileEntity.BASE_CAPACITY);
 	}
 
 	@Override

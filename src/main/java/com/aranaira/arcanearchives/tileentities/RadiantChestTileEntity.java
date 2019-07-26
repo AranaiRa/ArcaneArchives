@@ -168,14 +168,10 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 
 		if (compound.hasKey(Tags.CHEST_NAME)) {
 			chestName = compound.getString(Tags.CHEST_NAME);
-		} else {
-			chestName = "";
 		}
 		displayFacing = EnumFacing.byIndex(compound.getInteger(Tags.DISPLAY_FACING));
 		if (compound.hasKey(Tags.DISPLAY_STACK)) {
 			displayStack = new ItemStack(compound.getCompoundTag(Tags.DISPLAY_STACK));
-		} else {
-			displayStack = ItemStack.EMPTY;
 		}
 		routingType = BrazierRoutingType.fromInt(compound.getInteger(Tags.ROUTING_TYPE));
 	}
