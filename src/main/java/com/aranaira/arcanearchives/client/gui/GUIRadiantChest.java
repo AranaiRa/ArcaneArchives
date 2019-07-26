@@ -119,7 +119,7 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 		super.initGui();
 
 		nameBox = new RightClickTextField(1, fontRenderer, guiLeft + mNameTextLeftOffset, guiTop + mNameTextTopOffset, mNameTextWidth, mNameTextHeight);
-		// TODO: nameBox.setText(container.getName());
+		nameBox.setText(container.getTile().getChestName());
 		nameBox.setGuiResponder(this);
 		nameBox.setEnableBackgroundDrawing(false);
 

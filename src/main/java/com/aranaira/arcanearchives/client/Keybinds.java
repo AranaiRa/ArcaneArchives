@@ -121,9 +121,6 @@ public class Keybinds {
 							if (entry == null || entry.outOfDimension || entry.outOfRange) {
 								continue;
 							}
-							if (mc.player.dimension != entry.descriptions.get(0).dimension) {
-								continue;
-							}
 
 							List<Vec3d> visPositions = entry.getVecPositions();
 							visPositions.forEach(l -> LineHandler.addLine(l, mc.player.dimension));
