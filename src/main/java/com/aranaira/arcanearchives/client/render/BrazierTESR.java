@@ -1,42 +1,53 @@
 package com.aranaira.arcanearchives.client.render;
 
-import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.tileentities.BrazierTileEntity;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BlockModelShapes;
-import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.client.ForgeHooksClient;
-import org.lwjgl.opengl.GL11;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.texture.*;
+import net.minecraftforge.client.model.animation.FastTESR;
 
-public class BrazierTESR extends TileEntitySpecialRenderer<BrazierTileEntity> {
-	@Override
-	public void render (BrazierTileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-		GlStateManager.pushMatrix();
+import java.nio.ByteBuffer;
 
-		boolean wasLighting = GL11.glIsEnabled(GL11.GL_LIGHTING);
-		GlStateManager.disableLighting();
-
-		GL11.glTranslated(x, y, z);
-		//RenderUtils.renderFullbrightBlockModel(te.getWorld(), te.getPos(), BlockRegistry.BRAZIER_FIRE.getDefaultState(), true);
-		/*Minecraft mc = Minecraft.getMinecraft();
-		BlockRendererDispatcher dispatcher = mc.getBlockRendererDispatcher();
-		BlockModelShapes shapes = dispatcher.getBlockModelShapes();
-		IBakedModel thisBlock = shapes.getModelForState(BlockRegistry.BRAZIER_FIRE.getDefaultState());
-		mc.renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-		dispatcher.getBlockModelRenderer().renderModelBrightnessColor(thisBlock, 1f, 1f, 1f, 1f);*/
-
-		if (wasLighting) {
-			GlStateManager.enableLighting();
-		}
-		GL11.glTranslated(-x, -y, -z);
-
-		GlStateManager.popMatrix();
-	}
+public class BrazierTESR extends FastTESR<BrazierTileEntity> {
+    
+    @Override
+    public void renderTileEntityFast(BrazierTileEntity brazierTileEntity, double x, double y, double z, float partialTicks, int destroyStage, float partial, BufferBuilder buff) {
+        Minecraft mc = Minecraft.getMinecraft();
+        mc.renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+        TextureAtlasSprite sprite = mc.getTextureMapBlocks().getTextureExtry("minecraft:blocks/fire_layer_0");
+        
+        lightEnd(color(buff.pos(x + 0.50, y + 1.25, z + 0.25)).tex(sprite.getMinU(), sprite.getMinV()));
+        lightEnd(color(buff.pos(x + 0.50, y + 1.25, z + 0.75)).tex(sprite.getMaxU(), sprite.getMinV()));
+        lightEnd(color(buff.pos(x + 0.25, y + 0.75, z + 0.75)).tex(sprite.getMaxU(), sprite.getMaxV()));
+        lightEnd(color(buff.pos(x + 0.25, y + 0.75, z + 0.25)).tex(sprite.getMinU(), sprite.getMaxV()));
+        
+        lightEnd(color(buff.pos(x + 0.50, y + 1.25, z + 0.25)).tex(sprite.getMinU(), sprite.getMinV()));
+        lightEnd(color(buff.pos(x + 0.50, y + 1.25, z + 0.75)).tex(sprite.getMaxU(), sprite.getMinV()));
+        lightEnd(color(buff.pos(x + 0.75, y + 0.75, z + 0.75)).tex(sprite.getMaxU(), sprite.getMaxV()));
+        lightEnd(color(buff.pos(x + 0.75, y + 0.75, z + 0.25)).tex(sprite.getMinU(), sprite.getMaxV()));
+        
+        lightEnd(color(buff.pos(x + 0.25, y + 1.25, z + 0.50)).tex(sprite.getMinU(), sprite.getMinV()));
+        lightEnd(color(buff.pos(x + 0.75, y + 1.25, z + 0.50)).tex(sprite.getMaxU(), sprite.getMinV()));
+        lightEnd(color(buff.pos(x + 0.75, y + 0.75, z + 0.25)).tex(sprite.getMaxU(), sprite.getMaxV()));
+        lightEnd(color(buff.pos(x + 0.25, y + 0.75, z + 0.25)).tex(sprite.getMinU(), sprite.getMaxV()));
+        
+        lightEnd(color(buff.pos(x + 0.25, y + 1.25, z + 0.50)).tex(sprite.getMinU(), sprite.getMinV()));
+        lightEnd(color(buff.pos(x + 0.75, y + 1.25, z + 0.50)).tex(sprite.getMaxU(), sprite.getMinV()));
+        lightEnd(color(buff.pos(x + 0.75, y + 0.75, z + 0.75)).tex(sprite.getMaxU(), sprite.getMaxV()));
+        lightEnd(color(buff.pos(x + 0.25, y + 0.75, z + 0.75)).tex(sprite.getMinU(), sprite.getMaxV()));
+    
+    
+    }
+    
+    // Helper method for duplicate code
+    private BufferBuilder color(BufferBuilder buff){
+        return buff.color(1f, 1f, 1f, 1f);
+    }
+    
+    // Helper method for duplicate code
+    private void lightEnd(BufferBuilder buff){
+        // 200/200 are just values that I use, at 255 it is transparent
+        buff.lightmap(200,200).endVertex();
+    }
+    
 }
