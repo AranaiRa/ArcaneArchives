@@ -381,7 +381,7 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 	}
 
 	public void maybeRestoreJEI () {
-		if (Loader.isModLoaded("jei")) {
+		if (Loader.isModLoaded("jei") && GUIManifest.doJEIsync) {
 			if (!storedJEI.isEmpty()) {
 				JEIPlugin.runtime.getIngredientFilter().setFilterText(storedJEI);
 			}
