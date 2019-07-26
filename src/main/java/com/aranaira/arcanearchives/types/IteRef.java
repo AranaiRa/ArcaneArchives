@@ -15,6 +15,7 @@ public class IteRef {
 	public int dimension;
 	public WeakReference<ImmanenceTileEntity> tile;
 	public Class<? extends ImmanenceTileEntity> clazz;
+	private boolean cull = false;
 
 	public IteRef (ImmanenceTileEntity tile) {
 		this.pos = tile.getPos();
@@ -22,6 +23,10 @@ public class IteRef {
 		this.clazz = tile.getClass();
 		this.uuid = tile.uuid;
 		this.tile = new WeakReference<>(tile);
+	}
+
+	public boolean shouldCull () {
+		return cull;
 	}
 
 	@Nullable
@@ -34,13 +39,28 @@ public class IteRef {
 	}
 
 	public void refreshTile (World world, int dimension) {
-		if (world.isRemote) return;
+		if (world.isRemote) {
+			return;
+		}
 
-		if (this.dimension != dimension) return;
+		if (this.dimension != dimension) {
+			return;
+		}
+
+		if (world.provider.getDimension() != this.dimension) {
+			return;
+		}
 
 		if (this.tile == null || this.tile.get() == null) {
 			if (world.isBlockLoaded(this.pos)) {
-				this.tile = new WeakReference<>(WorldUtil.getTileEntity(clazz, world, pos));
+				ImmanenceTileEntity te = WorldUtil.getTileEntity(clazz, world, pos);
+				if (te == null) {
+					cull = true;
+				} else {
+					this.tile = new WeakReference<>(te);
+				}
+			} else {
+				cull = true;
 			}
 		}
 	}
@@ -50,8 +70,12 @@ public class IteRef {
 	}
 
 	public boolean isValid () {
-		if (tile == null) return false;
-		if (tile.get() == null) return false;
+		if (tile == null) {
+			return false;
+		}
+		if (tile.get() == null) {
+			return false;
+		}
 		if (tile.get().isInvalid()) {
 			return false;
 		}

@@ -13,7 +13,7 @@ public class TileList extends ReferenceList<IteRef> implements ITileList {
 
 	@Override
 	public void invalidate () {
-		removeIf(ite -> ite.tile != null && ite.getTile() != null && ite.getTile().isInvalid());
+		removeIf(ite -> ite.shouldCull() || (ite.tile != null && ite.getTile() != null && ite.getTile().isInvalid()));
 	}
 
 	@Override

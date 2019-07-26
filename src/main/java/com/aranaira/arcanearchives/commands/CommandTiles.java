@@ -98,6 +98,8 @@ public class CommandTiles extends CommandBase {
 				}
 			}
 
+			tiles.refresh(world);
+
 			Int2ObjectOpenHashMap<List<BlockPos>> positions = new Int2ObjectOpenHashMap<>();
 
 			TileListIterable iterable = null;
