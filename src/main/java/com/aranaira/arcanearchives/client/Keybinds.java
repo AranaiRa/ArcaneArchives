@@ -118,7 +118,7 @@ public class Keybinds {
 						boolean addedValues = false;
 						for (int i = 0; i < handler.getSlots(); i++) {
 							CollatedEntry entry = handler.getManifestEntryInSlot(i);
-							if (entry == null) {
+							if (entry == null || entry.outOfDimension || entry.outOfRange) {
 								continue;
 							}
 							if (mc.player.dimension != entry.descriptions.get(0).dimension) {
