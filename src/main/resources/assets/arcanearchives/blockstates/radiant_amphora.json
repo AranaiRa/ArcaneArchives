@@ -1,0 +1,20 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "inventory": {
+      "model": "arcanearchives:baked_amphora",
+      "textures": {
+        "base": "arcanearchives:items/item_radiantamphora",
+        "fluid": "arcanearchives:items/item_radiantamphora_fluidmask_fill",
+        "baseRotated": "arcanearchives:items/item_radiantamphora_tilted",
+        "liquidRotated": "arcanearchives:items/item_radiantamphora_fluidmask_empty",
+        "unlinked": "arcanearchives:items/item_radiantamphora_unlinked"
+      },
+      "transform": "forge:default-item",
+      "custom": {
+        "fluid": "water"
+      }
+    },
+    "normal": {}
+  }
+}
