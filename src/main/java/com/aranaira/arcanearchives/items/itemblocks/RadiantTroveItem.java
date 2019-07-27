@@ -41,7 +41,7 @@ public class RadiantTroveItem extends ItemBlock {
 			NBTTagCompound incoming = tag.getCompoundTag(RadiantTroveTileEntity.Tags.HANDLER_ITEM);
 			int count = incoming.getInteger(Tags.COUNT);
 			ItemStack stored = new ItemStack(incoming.getCompoundTag(Tags.REFERENCE));
-			int maxCapacity = (incoming.getInteger(Tags.UPGRADES) + 1) * TroveItemHandler.BASE_COUNT;
+			int maxCapacity = (incoming.getInteger(Tags.UPGRADES) + 1) * RadiantTroveTileEntity.BASE_COUNT;
 			String displayName = stored.getDisplayName();
 			if (stored.hasDisplayName()) {
 				displayName = TextFormatting.ITALIC + displayName;

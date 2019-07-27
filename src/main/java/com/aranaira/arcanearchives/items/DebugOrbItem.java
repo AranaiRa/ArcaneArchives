@@ -10,7 +10,7 @@ import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.inventory.handlers.OptionalUpgradesHandler;
 import com.aranaira.arcanearchives.inventory.handlers.SizeUpgradeItemHandler;
-import com.aranaira.arcanearchives.inventory.handlers.VoidingFluidTank;
+import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity.VoidingFluidTank;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;

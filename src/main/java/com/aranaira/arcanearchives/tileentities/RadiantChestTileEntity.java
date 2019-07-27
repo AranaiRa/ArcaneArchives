@@ -275,6 +275,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 			addition(stack, ItemStack.EMPTY);
 			world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);
 			if (stack.isEmpty()) incrementEmptyCount();
+			markDirty();
 		}
 
 		@Nonnull
@@ -288,8 +289,10 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 				ItemStack test = super.insertItem(slot, stack, true);
 				addition(stack, test);
 			}
+			ItemStack result = super.insertItem(slot, stack, simulate);
 			world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);
-			return super.insertItem(slot, stack, simulate);
+			markDirty();
+			return result;
 		}
 
 		@Nonnull
@@ -299,12 +302,13 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 				ItemStack test = getStackInSlot(slot);
 				subtraction(test, amount);
 			}
-			world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);
 			ItemStack result = super.extractItem(slot, amount, simulate);
 			if (!simulate) {
 				ItemStack inSlot = getStackInSlot(slot);
 				if (inSlot.isEmpty()) incrementEmptyCount();
 			}
+			world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);
+			markDirty();
 			return result;
 		}
 	}

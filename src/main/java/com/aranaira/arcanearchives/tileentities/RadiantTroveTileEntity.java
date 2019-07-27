@@ -35,6 +35,7 @@ import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IManifestTileEntity, IUpgradeableStorage, IBrazierRouting {
+	public static int BASE_COUNT = 64 * 512;
 	private final TroveItemHandler inventory = new TroveItemHandler(this);
 	private long lastClick = 0;
 	private int lastTick = 0;
@@ -383,8 +384,8 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 		}
 	}
 
-	public static class TroveItemHandler implements ITroveItemHandler, INBTSerializable<NBTTagCompound> {
-		public static int BASE_COUNT = 64 * 512;
+	public class TroveItemHandler implements ITroveItemHandler, INBTSerializable<NBTTagCompound> {
+
 		private int upgrades = 0;
 		private int count = 0;
 		private ItemStack reference = ItemStack.EMPTY;
@@ -447,6 +448,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 		@Override
 		public void setCount (int count) {
 			this.count = count;
+			markDirty();
 		}
 
 		@Override
@@ -458,6 +460,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 		public void setItem (ItemStack reference) {
 			this.reference = reference.copy();
 			this.reference.setCount(1);
+			markDirty();
 			update();
 		}
 
@@ -482,7 +485,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 			this.upgrades = nbt.getInteger(Tags.UPGRADES);
 		}
 
-		public static class Tags {
+		public class Tags {
 			public static final String COUNT = "COUNT";
 			public static final String REFERENCE = "REFERENCE";
 			public static final String UPGRADES = "UPGRADES";

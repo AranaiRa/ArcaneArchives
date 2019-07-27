@@ -20,7 +20,7 @@ public class TroveItemBlockItemHandler implements ITroveItemHandler, ICapability
 	private OptionalUpgradesHandler optionals = new OptionalUpgradesHandler();
 	private ItemStack container;
 
-	private static int BASE_COUNT = TroveItemHandler.BASE_COUNT;
+	private static int BASE_COUNT = RadiantTroveTileEntity.BASE_COUNT;
 	private int count;
 	private ItemStack reference;
 

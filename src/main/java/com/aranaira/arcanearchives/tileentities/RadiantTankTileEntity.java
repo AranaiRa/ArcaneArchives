@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.inventory.handlers.*;
 import com.aranaira.arcanearchives.tileentities.interfaces.IUpgradeableStorage;
+import com.aranaira.arcanearchives.types.enums.UpgradeType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -12,10 +13,13 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class RadiantTankTileEntity extends ImmanenceTileEntity implements IUpgradeableStorage {
 	public static final int BASE_CAPACITY = Fluid.BUCKET_VOLUME * 16;
@@ -173,6 +177,58 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity implements IUpgra
 		public static final String MAXIMUM_CAPACITY = "maximum_capacity";
 
 		private Tags () {
+		}
+	}
+
+	public class VoidingFluidTank extends FluidTank {
+		private OptionalUpgradesHandler optionals = null;
+
+		public VoidingFluidTank (int capacity) {
+			super(capacity);
+		}
+
+		public void setOptions (OptionalUpgradesHandler optionals) {
+			this.optionals = optionals;
+		}
+
+		public boolean isVoiding () {
+			return optionals.hasUpgrade(UpgradeType.VOID) && getCapacity() == getFluidAmount();
+		}
+
+		@Override
+		public int fillInternal (FluidStack resource, boolean doFill) {
+			if (isVoiding() && resource != null && fluid != null && fluid.isFluidEqual(resource)) {
+				int result = resource.amount;
+				super.fillInternal(resource, doFill);
+				resource.amount = 0;
+				markDirty();
+				return result;
+			}
+			int result = super.fillInternal(resource, doFill);
+			markDirty();
+			return result;
+		}
+
+		@Override
+		public boolean canFill () {
+			if (isVoiding()) {
+				return true;
+			}
+			return super.canFill();
+		}
+
+		@Override
+		public FluidStack drain (FluidStack resource, boolean doDrain) {
+			FluidStack result = super.drain(resource, doDrain);
+			markDirty();
+			return result;
+		}
+
+		@Override
+		public FluidStack drain (int maxDrain, boolean doDrain) {
+			FluidStack result = super.drain(maxDrain, doDrain);
+			markDirty();
+			return result;
 		}
 	}
 }
