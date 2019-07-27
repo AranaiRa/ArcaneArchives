@@ -1868,7 +1868,7 @@
             <page_title_shorter>
                 <title>Astral Sorcery Compatibility</title>
             </page_title_shorter>
-            <p scale="1.5"><stack item="astralsorcery:blockwell" scale="1.5"/> Lightwell</p>
+            <p scale="1.5"><stack item="astralsorcery:blockwell" scale="1.5te"/> Lightwell</p>
             <p indent="10">
                 <stack item="arcanearchives:raw_quartz"/> <link ref="RawQuartz">Raw Radiant Quartz</link> generates Liquid Starlight. It is long lasting, but low production.
             </p>
