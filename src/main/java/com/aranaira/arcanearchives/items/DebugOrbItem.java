@@ -284,8 +284,6 @@ public class DebugOrbItem extends ItemTemplate {
 		return new TextComponentString(message).setStyle(style);
 	}
 
-	public static long lastHit = 0;
-
 	@SubscribeEvent
 	public static void onLeftClickBlock (LeftClickBlock event) {
 		World world = event.getWorld();
