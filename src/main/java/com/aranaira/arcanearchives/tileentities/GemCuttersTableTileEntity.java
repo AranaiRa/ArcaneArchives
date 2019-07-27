@@ -6,7 +6,6 @@ import com.aranaira.arcanearchives.init.RecipeLibrary;
 import com.aranaira.arcanearchives.inventory.handlers.ITrackingHandler;
 import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketGemCutters;
-import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import com.aranaira.arcanearchives.tileentities.interfaces.IBrazierRouting;
 import com.aranaira.arcanearchives.tileentities.interfaces.IManifestTileEntity;
@@ -209,7 +208,9 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 	public int countEmptySlots () {
 		int empty = 0;
 		for (int i = 0; i < inventory.getSlots(); i++) {
-			if (inventory.getStackInSlot(i).isEmpty()) empty++;
+			if (inventory.getStackInSlot(i).isEmpty()) {
+				empty++;
+			}
 		}
 		return empty;
 	}
@@ -235,7 +236,9 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 			ItemStack inSlot = inventory.getStackInSlot(i);
 			if (ItemUtils.areStacksEqualIgnoreSize(stack, inSlot)) {
 				stack = inventory.insertItem(i, stack, false);
-				if (stack.isEmpty()) return stack;
+				if (stack.isEmpty()) {
+					return stack;
+				}
 			}
 		}
 		this.markDirty();
@@ -295,11 +298,15 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 		@Override
 		public void setStackInSlot (int slot, @Nonnull ItemStack stack) {
 			ItemStack inSlot = getStackInSlot(slot);
-			if (inSlot.isEmpty()) decrementEmptyCount();
+			if (inSlot.isEmpty()) {
+				decrementEmptyCount();
+			}
 			subtraction(inSlot, -1);
 			super.setStackInSlot(slot, stack);
 			addition(stack, ItemStack.EMPTY);
-			if (stack.isEmpty()) incrementEmptyCount();
+			if (stack.isEmpty()) {
+				incrementEmptyCount();
+			}
 		}
 
 		@Nonnull
@@ -307,7 +314,9 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 		public ItemStack insertItem (int slot, @Nonnull ItemStack stack, boolean simulate) {
 			if (!simulate) {
 				ItemStack inSlot = getStackInSlot(slot);
-				if (inSlot.isEmpty()) decrementEmptyCount();
+				if (inSlot.isEmpty()) {
+					decrementEmptyCount();
+				}
 				ItemStack test = super.insertItem(slot, stack, true);
 				addition(stack, test);
 			}
@@ -324,7 +333,9 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 			ItemStack result = super.extractItem(slot, amount, simulate);
 			if (!simulate) {
 				ItemStack inSlot = getStackInSlot(slot);
-				if (inSlot.isEmpty()) incrementEmptyCount();
+				if (inSlot.isEmpty()) {
+					incrementEmptyCount();
+				}
 			}
 			return result;
 		}

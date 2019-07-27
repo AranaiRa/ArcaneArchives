@@ -98,8 +98,12 @@ public class PacketRadiantChest {
 
 		@Override
 		public void toBytes (ByteBuf buf) {
-			if (networkId == null) networkId = DataHelper.INVALID;
-			if (tileId == null) tileId = DataHelper.INVALID;
+			if (networkId == null) {
+				networkId = DataHelper.INVALID;
+			}
+			if (tileId == null) {
+				tileId = DataHelper.INVALID;
+			}
 
 			long most = networkId.getMostSignificantBits();
 			long least = networkId.getLeastSignificantBits();
@@ -114,7 +118,9 @@ public class PacketRadiantChest {
 		public static class Handler implements ServerHandler<ToggleBrazier> {
 			@Override
 			public void processMessage (ToggleBrazier message, MessageContext ctx) {
-				if (message.networkId.equals(DataHelper.INVALID) || message.tileId.equals(DataHelper.INVALID)) return;
+				if (message.networkId.equals(DataHelper.INVALID) || message.tileId.equals(DataHelper.INVALID)) {
+					return;
+				}
 
 				ServerNetwork network = DataHelper.getServerNetwork(message.networkId, ctx.getServerHandler().player.world);
 				if (network != null) {
@@ -137,11 +143,11 @@ public class PacketRadiantChest {
 		private ItemStack clickedItem = ItemStack.EMPTY;
 		private ClickType mode;
 
-		public MessageClickWindowExtended() {
+		public MessageClickWindowExtended () {
 
 		}
 
-		public MessageClickWindowExtended(int windowId, int slot, int mouseButton, ClickType mode, ItemStack clickedItem, short transactionId) {
+		public MessageClickWindowExtended (int windowId, int slot, int mouseButton, ClickType mode, ItemStack clickedItem, short transactionId) {
 			this.windowId = windowId;
 			this.slot = slot;
 			this.mouseButton = mouseButton;
@@ -151,7 +157,7 @@ public class PacketRadiantChest {
 		}
 
 		@Override
-		public void fromBytes(ByteBuf buf) {
+		public void fromBytes (ByteBuf buf) {
 			this.windowId = buf.readByte();
 			this.slot = buf.readInt();
 			this.mouseButton = buf.readByte();
@@ -165,7 +171,7 @@ public class PacketRadiantChest {
 		}
 
 		@Override
-		public void toBytes(ByteBuf buf) {
+		public void toBytes (ByteBuf buf) {
 			buf.writeByte(this.windowId);
 			buf.writeInt(this.slot);
 			buf.writeByte(this.mouseButton);
@@ -177,14 +183,16 @@ public class PacketRadiantChest {
 		public static class Handler implements IMessageHandler<MessageClickWindowExtended, IMessage> {
 
 			@Override
-			public IMessage onMessage(final MessageClickWindowExtended message, final MessageContext ctx) {
+			public IMessage onMessage (final MessageClickWindowExtended message, final MessageContext ctx) {
 				EntityPlayerMP player = ctx.getServerHandler().player;
 
-				if (player == null) return null;
+				if (player == null) {
+					return null;
+				}
 
 				player.getServerWorld().addScheduledTask(new Runnable() {
 					@Override
-					public void run() {
+					public void run () {
 						processMessage(message, player);
 					}
 				});
@@ -192,7 +200,7 @@ public class PacketRadiantChest {
 				return null;
 			}
 
-			public void processMessage(final MessageClickWindowExtended message, EntityPlayerMP player) {
+			public void processMessage (final MessageClickWindowExtended message, EntityPlayerMP player) {
 				player.markPlayerActive();
 
 				Container container = player.openContainer;
@@ -202,7 +210,7 @@ public class PacketRadiantChest {
 						if (container instanceof ContainerRadiantChest) {
 							((ContainerRadiantChest) container).syncInventory(player);
 						} else {
-							NonNullList<ItemStack> nonnulllist = NonNullList.<ItemStack>create();
+							NonNullList<ItemStack> nonnulllist = NonNullList.create();
 							for (int i = 0; i < container.inventorySlots.size(); ++i) {
 								nonnulllist.add(container.inventorySlots.get(i).getStack());
 							}
@@ -224,9 +232,9 @@ public class PacketRadiantChest {
 							if (container instanceof ContainerRadiantChest) {
 								((ContainerRadiantChest) container).syncInventory(player);
 							} else {
-								NonNullList<ItemStack> nonnulllist1 = NonNullList.<ItemStack>create();
+								NonNullList<ItemStack> nonnulllist1 = NonNullList.create();
 								for (int j = 0; j < container.inventorySlots.size(); ++j) {
-									ItemStack itemstack = ((Slot)container.inventorySlots.get(j)).getStack();
+									ItemStack itemstack = container.inventorySlots.get(j).getStack();
 									ItemStack itemstack1 = itemstack.isEmpty() ? ItemStack.EMPTY : itemstack;
 									nonnulllist1.add(itemstack1);
 								}
@@ -247,11 +255,11 @@ public class PacketRadiantChest {
 		private int slot = 0;
 		private ItemStack stack = ItemStack.EMPTY;
 
-		public MessageSyncExtendedSlotContents() {
+		public MessageSyncExtendedSlotContents () {
 
 		}
 
-		public MessageSyncExtendedSlotContents(int windowId, int slot, ItemStack stack) {
+		public MessageSyncExtendedSlotContents (int windowId, int slot, ItemStack stack) {
 			this.windowId = windowId;
 			this.slot = slot;
 			this.stack = stack.copy();
@@ -259,7 +267,7 @@ public class PacketRadiantChest {
 
 
 		@Override
-		public void fromBytes(ByteBuf buf) {
+		public void fromBytes (ByteBuf buf) {
 			this.windowId = buf.readByte();
 			this.slot = buf.readInt();
 			try {
@@ -270,7 +278,7 @@ public class PacketRadiantChest {
 		}
 
 		@Override
-		public void toBytes(ByteBuf buf) {
+		public void toBytes (ByteBuf buf) {
 			buf.writeByte(this.windowId);
 			buf.writeInt(this.slot);
 			NetworkUtils.writeExtendedItemStack(buf, stack);
@@ -280,15 +288,17 @@ public class PacketRadiantChest {
 
 			@SideOnly(Side.CLIENT)
 			@Override
-			public IMessage onMessage(final MessageSyncExtendedSlotContents message, final MessageContext ctx) {
+			public IMessage onMessage (final MessageSyncExtendedSlotContents message, final MessageContext ctx) {
 				Minecraft mc = FMLClientHandler.instance().getClient();
 				EntityPlayer player = mc.player;
 
-				if (player == null) return null;
+				if (player == null) {
+					return null;
+				}
 
 				mc.addScheduledTask(new Runnable() {
 					@Override
-					public void run() {
+					public void run () {
 						processMessage(message, player);
 					}
 				});
@@ -297,7 +307,7 @@ public class PacketRadiantChest {
 				return null;
 			}
 
-			public void processMessage(final MessageSyncExtendedSlotContents message, EntityPlayer player) {
+			public void processMessage (final MessageSyncExtendedSlotContents message, EntityPlayer player) {
 				if (player.openContainer instanceof ContainerRadiantChest && message.windowId == player.openContainer.windowId) {
 					player.openContainer.inventorySlots.get(message.slot).putStack(message.stack);
 				}

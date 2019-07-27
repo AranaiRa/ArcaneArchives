@@ -4,7 +4,6 @@ import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 
 public class TroveUpgradeItemHandler extends SizeUpgradeItemHandler {
 	@Override

@@ -15,14 +15,15 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.text.*;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -190,21 +191,23 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 	/**
 	 * Tries to use matching colored Chromatic Powder to recharge, or failing that Full-Spectrum Chromatic Powder.
 	 * Separate method from recharge() because this needs to happen after specific methods, not before.
+	 *
 	 * @param world
 	 * @param player
 	 * @param gem
 	 * @return
 	 */
-	protected boolean tryRechargingWithPowder(World world, EntityPlayer player, GemStack gem) {
+	protected boolean tryRechargingWithPowder (World world, EntityPlayer player, GemStack gem) {
 		IItemHandler cap = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
 		int fscp = -1;
 		boolean recharged = false;
-		for(int i=0; i<cap.getSlots(); i++) {
-			if(cap.getStackInSlot(i).getItem() == ItemRegistry.RAINBOW_CHROMATIC_POWDER)
+		for (int i = 0; i < cap.getSlots(); i++) {
+			if (cap.getStackInSlot(i).getItem() == ItemRegistry.RAINBOW_CHROMATIC_POWDER) {
 				fscp = i;
+			}
 
-			if(cap.getStackInSlot(i).getItem() == ItemRegistry.CHROMATIC_POWDER) {
-				if(GemRechargePowder.getColor(cap.getStackInSlot(i)) == gem.getArcaneGemItem().getGemColor()) {
+			if (cap.getStackInSlot(i).getItem() == ItemRegistry.CHROMATIC_POWDER) {
+				if (GemRechargePowder.getColor(cap.getStackInSlot(i)) == gem.getArcaneGemItem().getGemColor()) {
 					informPlayerOfItemConsumption(player, gem, cap.getStackInSlot(i), 1);
 					cap.getStackInSlot(i).shrink(1);
 					GemUtil.restoreCharge(gem, -1);
@@ -214,7 +217,7 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 			}
 		}
 
-		if(fscp > -1 && !recharged) {
+		if (fscp > -1 && !recharged) {
 			informPlayerOfItemConsumption(player, gem, cap.getStackInSlot(fscp), 1);
 			cap.getStackInSlot(fscp).shrink(1);
 			GemUtil.restoreCharge(gem, -1);
@@ -226,32 +229,34 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 
 	/**
 	 * Convenience method to print what was consumed to a screen message.
-	 * @param player The player to inform
-	 * @param gem Which gem was recharged
-	 * @param item Which item was consumed
+	 *
+	 * @param player   The player to inform
+	 * @param gem      Which gem was recharged
+	 * @param item     Which item was consumed
 	 * @param quantity How many items were consumed
 	 */
-	protected void informPlayerOfItemConsumption(EntityPlayer player, ArcaneGemItem gem, ItemStack item, int quantity) {
+	protected void informPlayerOfItemConsumption (EntityPlayer player, ArcaneGemItem gem, ItemStack item, int quantity) {
 		String quantityString = "";
 		if (quantity > 1) {
 			quantityString = " x" + quantity;
 		}
-		ITextComponent message = new TextComponentTranslation("arcanearchives.message.usedtorecharge", new TextComponentTranslation(item.getTranslationKey()+".name"), quantityString, new TextComponentTranslation(gem.getTranslationKey()+".name")).setStyle(new Style().setColor(TextFormatting.GOLD).setBold(true));
+		ITextComponent message = new TextComponentTranslation("arcanearchives.message.usedtorecharge", new TextComponentTranslation(item.getTranslationKey() + ".name"), quantityString, new TextComponentTranslation(gem.getTranslationKey() + ".name")).setStyle(new Style().setColor(TextFormatting.GOLD).setBold(true));
 		player.sendStatusMessage(message, true);
 	}
 
 	/**
 	 * Convenience method to print what was consumed to a screen message.
-	 * @param player The player to inform
-	 * @param gem Which gem was recharged
-	 * @param item Which item was consumed
+	 *
+	 * @param player   The player to inform
+	 * @param gem      Which gem was recharged
+	 * @param item     Which item was consumed
 	 * @param quantity How many items were consumed
 	 */
-	protected void informPlayerOfItemConsumption(EntityPlayer player, GemStack gem, ItemStack item, int quantity) {
+	protected void informPlayerOfItemConsumption (EntityPlayer player, GemStack gem, ItemStack item, int quantity) {
 		informPlayerOfItemConsumption(player, gem.getArcaneGemItem(), item, quantity);
 	}
 
-	protected void consumeInventoryItemForChargeRecovery(EntityPlayer player, GemUtil.AvailableGemsHandler handler, Item targetItem, int needed, int maxCharge) {
+	protected void consumeInventoryItemForChargeRecovery (EntityPlayer player, GemUtil.AvailableGemsHandler handler, Item targetItem, int needed, int maxCharge) {
 		for (int i = 0; i < player.inventory.mainInventory.size(); i++) {
 			ItemStack stack = player.inventory.mainInventory.get(i);
 			if (stack.getItem() == targetItem) {
@@ -259,7 +264,7 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 				if (numConsumed > stack.getCount()) {
 					numConsumed = stack.getCount();
 				}
-				GemUtil.restoreCharge(handler.getHeld(), (int)Math.ceil(maxCharge * ((float)numConsumed / (float)needed)));
+				GemUtil.restoreCharge(handler.getHeld(), (int) Math.ceil(maxCharge * ((float) numConsumed / (float) needed)));
 				stack.shrink(numConsumed);
 				break;
 			} else {
@@ -268,7 +273,7 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 		}
 	}
 
-	protected void consumeFluidForChargeRecovery(EntityPlayer player, GemUtil.AvailableGemsHandler handler, Fluid targetFluid, int needed, int maxCharge) {
+	protected void consumeFluidForChargeRecovery (EntityPlayer player, GemUtil.AvailableGemsHandler handler, Fluid targetFluid, int needed, int maxCharge) {
 		for (int i = 0; i < player.inventory.mainInventory.size(); i++) {
 			ItemStack stack = player.inventory.mainInventory.get(i);
 			IFluidHandler cap = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
@@ -277,7 +282,7 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 				if (numConsumed > stack.getCount()) {
 					numConsumed = stack.getCount();
 				}
-				GemUtil.restoreCharge(handler.getHeld(), (int)Math.ceil(maxCharge * ((float)numConsumed / (float)needed)));
+				GemUtil.restoreCharge(handler.getHeld(), (int) Math.ceil(maxCharge * ((float) numConsumed / (float) needed)));
 				stack.shrink(numConsumed);
 				break;
 			} else {
@@ -436,10 +441,12 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 			return new Color(1, 1, 1, 1);
 		}
 
-		public static GemColor fromOrdinal(int ordinal) {
-			int i=0;
-			for(GemColor c : values()) {
-				if(i == ordinal) return c;
+		public static GemColor fromOrdinal (int ordinal) {
+			int i = 0;
+			for (GemColor c : values()) {
+				if (i == ordinal) {
+					return c;
+				}
 				i++;
 			}
 			return NOCOLOR;

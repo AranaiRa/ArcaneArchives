@@ -3,8 +3,8 @@ package com.aranaira.arcanearchives.inventory;
 import com.aranaira.arcanearchives.inventory.handlers.OptionalUpgradesHandler;
 import com.aranaira.arcanearchives.inventory.handlers.SizeUpgradeItemHandler;
 import com.aranaira.arcanearchives.items.IUpgradeItem;
-import com.aranaira.arcanearchives.tileentities.interfaces.IUpgradeableStorage;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
+import com.aranaira.arcanearchives.tileentities.interfaces.IUpgradeableStorage;
 import com.aranaira.arcanearchives.types.enums.UpgradeType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -62,6 +62,7 @@ public class ContainerUpgrades extends Container {
 			addSlotToContainer(new Slot(inventoryPlayer, i, xOffset + i * 18, yOffset + 58));
 		}
 	}
+
 	@Override
 	public boolean canInteractWith (EntityPlayer playerIn) {
 		return true;
@@ -91,13 +92,19 @@ public class ContainerUpgrades extends Container {
 					Slot target = getSlot(upgradeSlot);
 					switch (upSlot) {
 						case 0:
-							if (!target.getHasStack() && !mergeItemStack(stack, upgradeSlot, upgradeSlot + 1, false)) return ItemStack.EMPTY;
+							if (!target.getHasStack() && !mergeItemStack(stack, upgradeSlot, upgradeSlot + 1, false)) {
+								return ItemStack.EMPTY;
+							}
 							break;
 						case 1:
-							if (sizeHandler.hasUpgrade(0) && !target.getHasStack() && !mergeItemStack(stack, upgradeSlot, upgradeSlot + 1, false)) return ItemStack.EMPTY;
+							if (sizeHandler.hasUpgrade(0) && !target.getHasStack() && !mergeItemStack(stack, upgradeSlot, upgradeSlot + 1, false)) {
+								return ItemStack.EMPTY;
+							}
 							break;
 						case 2:
-							if (sizeHandler.hasUpgrade(0) && sizeHandler.hasUpgrade(1) && !target.getHasStack() && !mergeItemStack(stack, upgradeSlot, upgradeSlot + 1, false)) return ItemStack.EMPTY;
+							if (sizeHandler.hasUpgrade(0) && sizeHandler.hasUpgrade(1) && !target.getHasStack() && !mergeItemStack(stack, upgradeSlot, upgradeSlot + 1, false)) {
+								return ItemStack.EMPTY;
+							}
 							break;
 					}
 				} else {
@@ -109,8 +116,9 @@ public class ContainerUpgrades extends Container {
 							upgradeSlot++;
 							target = getSlot(upgradeSlot);
 						}
-						if (target != null && mergeItemStack(stack, upgradeSlot, upgradeSlot + 1, false))
+						if (target != null && mergeItemStack(stack, upgradeSlot, upgradeSlot + 1, false)) {
 							return ItemStack.EMPTY;
+						}
 					}
 				}
 				return ItemStack.EMPTY;
@@ -122,7 +130,9 @@ public class ContainerUpgrades extends Container {
 						sizeHandler.extractItem(upSlot, 1, false);
 					}
 				} else if (index >= 39 && index < 42) {
-					if (!mergeItemStack(stack, 0, 36, false)) return ItemStack.EMPTY;
+					if (!mergeItemStack(stack, 0, 36, false)) {
+						return ItemStack.EMPTY;
+					}
 				}
 			}
 		}

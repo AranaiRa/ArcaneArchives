@@ -10,8 +10,8 @@ import com.aranaira.arcanearchives.items.templates.IItemScepter;
 import com.aranaira.arcanearchives.tileentities.interfaces.IBrazierRouting;
 import com.aranaira.arcanearchives.tileentities.interfaces.IManifestTileEntity;
 import com.aranaira.arcanearchives.tileentities.interfaces.IUpgradeableStorage;
-import com.aranaira.arcanearchives.util.ItemUtils;
 import com.aranaira.arcanearchives.types.enums.UpgradeType;
+import com.aranaira.arcanearchives.util.ItemUtils;
 import com.aranaira.arcanearchives.util.PlayerUtil;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.client.util.RecipeItemHelper;
@@ -319,7 +319,9 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 
 	@Override
 	public boolean handleManipulationInterface (EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (player.world.isRemote) return true;
+		if (player.world.isRemote) {
+			return true;
+		}
 
 		player.openGui(ArcaneArchives.instance, AAGuiHandler.UPGRADES, world, pos.getX(), pos.getY(), pos.getZ());
 		return true;
@@ -367,11 +369,17 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 
 	@Override
 	public int troveScore (ItemStack stack) {
-		if (!ItemUtils.areStacksEqualIgnoreSize(stack, inventory.getItem())) return -1;
+		if (!ItemUtils.areStacksEqualIgnoreSize(stack, inventory.getItem())) {
+			return -1;
+		}
 
-		if (!optionalUpgrades.hasUpgrade(UpgradeType.VOID)) return 350;
+		if (!optionalUpgrades.hasUpgrade(UpgradeType.VOID)) {
+			return 350;
+		}
 
-		if (inventory.getCount() < inventory.getMaxCount()) return 500;
+		if (inventory.getCount() < inventory.getMaxCount()) {
+			return 500;
+		}
 
 		return 400;
 	}

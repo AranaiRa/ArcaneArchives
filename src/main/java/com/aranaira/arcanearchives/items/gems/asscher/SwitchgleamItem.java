@@ -51,16 +51,17 @@ public class SwitchgleamItem extends ArcaneGemItem {
 			ArrayList<RayTraceResult> rays = new ArrayList<>();
 			RayTracingUtils.raytraceAll(rays, world, player, pos, pos.add(look));
 
-			for(RayTraceResult ray : rays) {
+			for (RayTraceResult ray : rays) {
 				if (ray != null) {
-					if(ray.entityHit == null) continue;
-					else if(ray.entityHit instanceof EntityLivingBase) {
-						ArcaneArchives.logger.info("pitch:"+player.rotationPitch+ "    yaw:"+player.rotationYaw);
+					if (ray.entityHit == null) {
+						continue;
+					} else if (ray.entityHit instanceof EntityLivingBase) {
+						ArcaneArchives.logger.info("pitch:" + player.rotationPitch + "    yaw:" + player.rotationYaw);
 						EntityLivingBase target = (EntityLivingBase) ray.entityHit;
 						Vec3d tPos = new Vec3d(target.posX, target.posY, target.posZ);
 						Vec3d pPos = new Vec3d(player.posX, player.posY, player.posZ);
-						target.setPositionAndRotation(pPos.x, pPos.y, pPos.z, target.rotationYaw+(float)Math.PI, target.rotationPitch);
-						player.setPositionAndRotation(tPos.x, tPos.y, tPos.z, player.rotationYaw+(float)Math.PI, player.rotationPitch);
+						target.setPositionAndRotation(pPos.x, pPos.y, pPos.z, target.rotationYaw + (float) Math.PI, target.rotationPitch);
+						player.setPositionAndRotation(tPos.x, tPos.y, tPos.z, player.rotationYaw + (float) Math.PI, player.rotationPitch);
 					}
 					break;
 				}

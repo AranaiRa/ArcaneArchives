@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.items.gems.trillion;
 
-import com.aranaira.arcanearchives.items.gems.*;
+import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
+import com.aranaira.arcanearchives.items.gems.GemUtil;
 import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler;
 import com.aranaira.arcanearchives.items.gems.GemUtil.GemStack;
 import com.aranaira.arcanearchives.util.ItemUtils;

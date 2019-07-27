@@ -1,9 +1,9 @@
 package com.aranaira.arcanearchives.mixins;
 
+import com.aranaira.arcanearchives.client.render.LineHandler;
+import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.util.ColorUtils;
 import com.aranaira.arcanearchives.util.ColorUtils.Color;
-import com.aranaira.arcanearchives.config.ConfigHandler;
-import com.aranaira.arcanearchives.client.render.LineHandler;
 import com.aranaira.arcanearchives.util.ManifestTrackingUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;

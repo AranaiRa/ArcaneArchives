@@ -1,10 +1,10 @@
 package com.aranaira.arcanearchives.items;
 
-import baubles.api.BaubleType;
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.inventory.handlers.GemSocketHandler;
-import com.aranaira.arcanearchives.items.gems.*;
+import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
+import com.aranaira.arcanearchives.items.gems.GemUtil;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;

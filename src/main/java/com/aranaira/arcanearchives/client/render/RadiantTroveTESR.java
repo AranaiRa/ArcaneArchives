@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.client.render;
 
-import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;

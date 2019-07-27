@@ -13,8 +13,6 @@ import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 
-import java.util.Arrays;
-
 public class GCTCategory implements IRecipeCategory<GCTWrapper> {
 	private final IDrawable background;
 

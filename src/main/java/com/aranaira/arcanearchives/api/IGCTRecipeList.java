@@ -29,7 +29,7 @@ public interface IGCTRecipeList {
 	/**
 	 * @return Returns an ordered list of recipes according to their
 	 * addition in the RecipeLibrary.
-	 *
+	 * <p>
 	 * By default this list is an Immutable copy.
 	 */
 	List<IGCTRecipe> getRecipeList ();
@@ -39,8 +39,8 @@ public interface IGCTRecipeList {
 	 * the name as the path of the ResourceLocation. The result is specified
 	 * and then the ingredients as varargs.
 	 *
-	 * @param name The string name used to refer to this recipe. Used in the
-	 *             ResourceLocation mapping.
+	 * @param name   The string name used to refer to this recipe. Used in the
+	 *               ResourceLocation mapping.
 	 * @param result The itemstack created by this recipe.
 	 * @param recipe The ingredients used to create this recipe. By default this
 	 *               can consist of any combination of ItemStack (with quantity),
@@ -57,7 +57,7 @@ public interface IGCTRecipeList {
 	 * allows for both the supply of the creator of the item to the item when
 	 * it is crafted, and supports and enforces conditions added via IGCTRecipe::addCondition.
 	 *
-	 * @param name See makeAndAddRecipe.
+	 * @param name   See makeAndAddRecipe.
 	 * @param result See makeAndAddRecipe.
 	 * @param recipe See makeAndAddRecipe.
 	 * @return An instance of IGCTRecipe which supports Creators and Conditions, which is
@@ -84,7 +84,7 @@ public interface IGCTRecipeList {
 
 	/**
 	 * Attempts to remove a recipe using the recipe instance.
-	 *
+	 * <p>
 	 * No indication of success or failure.
 	 *
 	 * @param recipe The recipe to be removed.

@@ -65,7 +65,9 @@ public class GemCuttersTable extends BlockDirectionalTemplate {
 
 	@Override
 	public void breakBlock (World world, BlockPos pos, IBlockState state) {
-		if (state.getValue(ACCESSOR)) return;
+		if (state.getValue(ACCESSOR)) {
+			return;
+		}
 
 		LineHandler.removeLine(pos, world.provider.getDimension());
 
@@ -148,7 +150,9 @@ public class GemCuttersTable extends BlockDirectionalTemplate {
 
 	@Override
 	public TileEntity createTileEntity (World world, IBlockState state) {
-		if (state.getValue(ACCESSOR)) return null;
+		if (state.getValue(ACCESSOR)) {
+			return null;
+		}
 
 		return new GemCuttersTableTileEntity();
 	}

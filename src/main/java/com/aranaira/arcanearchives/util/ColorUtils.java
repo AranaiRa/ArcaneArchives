@@ -5,7 +5,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ColorUtils {
-	public static Color COLORSTEP_0 = new Color(1.00f, 0.50f, 0.50f, 1.0f);	//Red
+	public static Color COLORSTEP_0 = new Color(1.00f, 0.50f, 0.50f, 1.0f);    //Red
 	public static Color COLORSTEP_1 = new Color(1.00f, 0.75f, 0.50f, 1.0f); //Orange
 	public static Color COLORSTEP_2 = new Color(1.00f, 1.00f, 0.50f, 1.0f); //Yellow
 	public static Color COLORSTEP_3 = new Color(0.50f, 1.00f, 0.60f, 1.0f); //Green

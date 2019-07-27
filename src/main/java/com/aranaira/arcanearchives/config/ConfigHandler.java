@@ -25,14 +25,14 @@ import java.util.List;
 @Config(modid = ArcaneArchives.MODID)
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class ConfigHandler {
-	@SubscribeEvent(priority=EventPriority.HIGH)
+	@SubscribeEvent(priority = EventPriority.HIGH)
 	public static void onConfigChanged (ConfigChangedEvent.OnConfigChangedEvent event) {
 		if (event.getModID().equals(ArcaneArchives.MODID)) {
 			ConfigManager.sync(ArcaneArchives.MODID, Config.Type.INSTANCE);
 		}
 	}
 
-	@SubscribeEvent(priority=EventPriority.LOWEST)
+	@SubscribeEvent(priority = EventPriority.LOWEST)
 	@SideOnly(Side.CLIENT)
 	public static void onClientConfigChanged (ConfigChangedEvent.OnConfigChangedEvent event) {
 		if (event.getModID().equals(ArcaneArchives.MODID)) {
@@ -70,7 +70,7 @@ public class ConfigHandler {
 
 	@Config.Comment("The multiplier applied to Radiant Chest slots")
 	@Config.Name("Radiant Chest Slot Multiplier")
-	@Config.RangeInt(min=1, max=8)
+	@Config.RangeInt(min = 1, max = 8)
 	public static int RadiantMultiplier = 4;
 
 	@Config.Comment("Set to true to mark all new chests with the no-new-items routing type")

@@ -1,7 +1,6 @@
 package com.aranaira.arcanearchives.inventory.handlers;
 
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
-import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler.Tags;
 import com.aranaira.arcanearchives.types.enums.UpgradeType;
 import com.aranaira.arcanearchives.util.ItemUtils;

@@ -48,7 +48,7 @@ public class ReferenceList<T> extends ForwardingList<T> {
 			return this.iter;
 		}
 
-		public void setIterator(Iterator<U> iterator) {
+		public void setIterator (Iterator<U> iterator) {
 			this.iter = iterator;
 		}
 	}

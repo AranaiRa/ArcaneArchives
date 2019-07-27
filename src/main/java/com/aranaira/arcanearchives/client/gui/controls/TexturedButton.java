@@ -42,10 +42,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 			this.mouseDragged(mc, mouseX, mouseY);
 
 			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-			if(ConfigHandler.UsePrettyGUIs)
+			if (ConfigHandler.UsePrettyGUIs) {
 				mc.getTextureManager().bindTexture(BUTTON_TEXTURES);
-			else
+			} else {
 				mc.getTextureManager().bindTexture(BUTTON_TEXTURES_SIMPLE);
+			}
 			int x = TEXTURE_X_START[mTextureId];
 			int y = TEXTURE_Y_START[mTextureId];
 

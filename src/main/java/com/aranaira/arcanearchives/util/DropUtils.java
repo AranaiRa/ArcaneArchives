@@ -1,7 +1,6 @@
 package com.aranaira.arcanearchives.util;
 
 import net.minecraft.block.Block;
-import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

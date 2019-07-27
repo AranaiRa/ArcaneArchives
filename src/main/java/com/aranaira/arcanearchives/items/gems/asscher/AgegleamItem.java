@@ -28,7 +28,7 @@ public class AgegleamItem extends ArcaneGemItem {
 	public static final String NAME = "agegleam";
 	public static final int CHARGE_TICKS = 3600;
 
-	public AgegleamItem() {
+	public AgegleamItem () {
 		super(NAME, GemCut.ASSCHER, GemColor.GREEN, 30, 150);
 	}
 
@@ -54,7 +54,7 @@ public class AgegleamItem extends ArcaneGemItem {
 				double boxRadius = 3.5;
 				AxisAlignedBB aabb = new AxisAlignedBB(player.posX - boxRadius, player.posY - boxRadius, player.posZ - boxRadius, player.posX + boxRadius, player.posY + boxRadius, player.posZ + boxRadius);
 				for (EntityAgeable entity : player.world.getEntitiesWithinAABB(EntityAgeable.class, aabb)) {
-					if(entity.isChild()) {
+					if (entity.isChild()) {
 						entity.setGrowingAge(entity.getGrowingAge() + 8000);
 						chargeCost += 1;
 					}

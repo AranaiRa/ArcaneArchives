@@ -13,9 +13,7 @@ public class ExportDocumentation {
 	public static void main (String[] args) {
 
 		String targetPath = "docs/zs/";
-		Class[] classes = {
-			GCTTweaker.class
-		};
+		Class[] classes = {GCTTweaker.class};
 
 		ZenDocExporter export = new ZenDocExporter();
 		Path path = Paths.get(targetPath);

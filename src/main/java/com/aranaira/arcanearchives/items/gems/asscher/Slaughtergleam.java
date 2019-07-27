@@ -27,7 +27,7 @@ import java.util.List;
 public class Slaughtergleam extends ArcaneGemItem {
 	public static final String NAME = "slaughtergleam";
 
-	public Slaughtergleam() {
+	public Slaughtergleam () {
 		super(NAME, GemCut.ASSCHER, GemColor.RED, 30, 150);
 	}
 

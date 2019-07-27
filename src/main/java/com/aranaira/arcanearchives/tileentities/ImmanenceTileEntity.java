@@ -1,10 +1,10 @@
 package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.blocks.MultiblockSize;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.events.ServerTickHandler;
-import com.aranaira.arcanearchives.blocks.MultiblockSize;
 import com.aranaira.arcanearchives.util.ManifestTrackingUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -156,7 +156,9 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable {
 
 	@Override
 	public void update () {
-		if (lastPosition == null) lastPosition = getPos();
+		if (lastPosition == null) {
+			lastPosition = getPos();
+		}
 
 		if (!getPos().equals(lastPosition)) {
 			tileMoved(getPos(), lastPosition);

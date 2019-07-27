@@ -4,7 +4,6 @@ import com.aranaira.arcanearchives.api.IGCTRecipe;
 import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
 import com.aranaira.arcanearchives.network.Handlers.ClientHandler;
 import com.aranaira.arcanearchives.network.Handlers.ServerHandler;
-import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;

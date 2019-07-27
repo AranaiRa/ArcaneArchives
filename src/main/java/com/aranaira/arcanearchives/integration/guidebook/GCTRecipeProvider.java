@@ -2,16 +2,13 @@ package com.aranaira.arcanearchives.integration.guidebook;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.api.IGCTRecipe;
-import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
-import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import com.aranaira.arcanearchives.recipe.IngredientStack;
-import com.aranaira.arcanearchives.util.ItemUtils;
+import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import gigaherz.lirelent.guidebook.guidebook.drawing.VisualElement;
 import gigaherz.lirelent.guidebook.guidebook.elements.ElementImage;
 import gigaherz.lirelent.guidebook.guidebook.elements.ElementStack;
 import gigaherz.lirelent.guidebook.guidebook.recipe.RecipeProvider;
 import gigaherz.lirelent.guidebook.guidebook.util.Size;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 

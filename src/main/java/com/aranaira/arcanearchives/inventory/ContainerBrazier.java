@@ -1,17 +1,14 @@
 package com.aranaira.arcanearchives.inventory;
 
 import com.aranaira.arcanearchives.tileentities.BrazierTileEntity;
-import com.google.common.collect.Sets;
-import invtweaks.api.container.ChestContainer;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.*;
-import java.util.Set;
+import net.minecraft.inventory.Container;
 
 public class ContainerBrazier extends Container {
 
 	protected BrazierTileEntity tile;
 
-	public ContainerBrazier(BrazierTileEntity te, EntityPlayer player) {
+	public ContainerBrazier (BrazierTileEntity te, EntityPlayer player) {
 		this.tile = te;
 	}
 

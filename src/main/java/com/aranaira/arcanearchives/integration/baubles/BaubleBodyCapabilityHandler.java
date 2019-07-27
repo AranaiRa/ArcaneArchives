@@ -9,7 +9,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import scala.reflect.internal.Mirrors.Roots;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

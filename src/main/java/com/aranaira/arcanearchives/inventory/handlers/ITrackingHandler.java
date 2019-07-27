@@ -7,10 +7,15 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 
 public interface ITrackingHandler extends IItemHandlerModifiable {
 	Int2IntOpenHashMap getItemReference ();
+
 	int totalSlots ();
+
 	int getEmptyCount ();
+
 	void setEmptyCount (int amount);
+
 	void incrementEmptyCount ();
+
 	void decrementEmptyCount ();
 
 	default void manualRecount () {

@@ -133,11 +133,11 @@ public class OrderstoneItem extends ArcaneGemItem {
 		public int transmutationCost;
 		public IBlockState[] sequence;
 
-		public OrderstoneTransmutationSequence(String in) {
+		public OrderstoneTransmutationSequence (String in) {
 			String[] parse = in.split(",");
 			transmutationCost = Integer.parseInt(parse[0]);
-			sequence = new IBlockState[parse.length-1];
-			for(int i=1; i<parse.length-1; i++) {
+			sequence = new IBlockState[parse.length - 1];
+			for (int i = 1; i < parse.length - 1; i++) {
 				String address = parse[i].trim();
 			}
 		}

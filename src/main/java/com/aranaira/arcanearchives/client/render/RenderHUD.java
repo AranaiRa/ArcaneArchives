@@ -2,8 +2,8 @@ package com.aranaira.arcanearchives.client.render;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.BlockRegistry;
-import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
+import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler;
 import com.aranaira.arcanearchives.util.MathUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.Block;

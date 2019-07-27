@@ -9,8 +9,11 @@ public interface IBrazierRouting {
 	BrazierRoutingType getRoutingType ();
 
 	int countEmptySlots ();
+
 	int totalEmptySlots ();
+
 	int totalSlots ();
+
 	int slotMultiplier ();
 
 	ItemStack acceptStack (ItemStack stack);
@@ -24,16 +27,14 @@ public interface IBrazierRouting {
 	}
 
 	enum BrazierRoutingType {
-		ANY,
-		NO_NEW_STACKS,
-		PRIORITY,
-		TROVE,
-		GCT;
+		ANY, NO_NEW_STACKS, PRIORITY, TROVE, GCT;
 
 		public static BrazierRoutingType fromInt (int index) {
 			int i = 0;
 			for (BrazierRoutingType type : values()) {
-				if (index == i) return type;
+				if (index == i) {
+					return type;
+				}
 				i++;
 			}
 			return null;

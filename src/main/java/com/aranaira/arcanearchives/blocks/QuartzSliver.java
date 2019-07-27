@@ -1,9 +1,6 @@
 package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
-import com.aranaira.arcanearchives.init.BlockRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockTorch;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
@@ -13,7 +10,10 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.Mirror;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
@@ -39,7 +39,9 @@ public class QuartzSliver extends BlockDirectionalTemplate implements IHasModel 
 	}
 
 	@Override
-	public boolean hasOBJModel() { return true; }
+	public boolean hasOBJModel () {
+		return true;
+	}
 
 	@Override
 	public boolean canPlaceTorchOnTop (IBlockState state, IBlockAccess world, BlockPos pos) {

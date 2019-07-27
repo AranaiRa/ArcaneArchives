@@ -1,15 +1,11 @@
 package com.aranaira.arcanearchives.client.gui;
 
-import com.aranaira.arcanearchives.AAGuiHandler;
-import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.gui.controls.InvisibleButton;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerDevouringCharm;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
@@ -25,21 +21,7 @@ public class GUIDevouringCharm extends GuiContainer {
 	private static final ResourceLocation TEXTURE_FABRIAL = new ResourceLocation("arcanearchives:textures/gui/fabrial.png");
 	private static final ResourceLocation TEXTURE_SINGLESLOT_SIMPLE = new ResourceLocation("arcanearchives:textures/gui/simple/single_slot.png");
 
-	private static final int
-			DEVOURINGCHARM_X = 0,
-			DEVOURINGCHARM_Y = 0,
-			DEVOURINGCHARM_W = 130,
-			DEVOURINGCHARM_H = 129,
-			DEVOURINGCHARM_BACK_X = 126,
-			DEVOURINGCHARM_BACK_Y = 127,
-			DEVOURINGCHARM_BACK_W = 130,
-			DEVOURINGCHARM_BACK_H = 129,
-			FLIP_X = 231,
-			FLIP_Y = 0,
-			FLIP_W = 25,
-			FLIP_H = 15,
-			INVENTORY_W = 181,
-			INVENTORY_H = 101;
+	private static final int DEVOURINGCHARM_X = 0, DEVOURINGCHARM_Y = 0, DEVOURINGCHARM_W = 130, DEVOURINGCHARM_H = 129, DEVOURINGCHARM_BACK_X = 126, DEVOURINGCHARM_BACK_Y = 127, DEVOURINGCHARM_BACK_W = 130, DEVOURINGCHARM_BACK_H = 129, FLIP_X = 231, FLIP_Y = 0, FLIP_W = 25, FLIP_H = 15, INVENTORY_W = 181, INVENTORY_H = 101;
 
 	private boolean FLIPPED = false;
 
@@ -47,7 +29,7 @@ public class GUIDevouringCharm extends GuiContainer {
 
 	private ContainerDevouringCharm container;
 
-	public GUIDevouringCharm(@Nonnull ContainerDevouringCharm containerDevouringCharm) {
+	public GUIDevouringCharm (@Nonnull ContainerDevouringCharm containerDevouringCharm) {
 		super(containerDevouringCharm);
 		this.container = containerDevouringCharm;
 		xSize = INVENTORY_W;
@@ -63,7 +45,7 @@ public class GUIDevouringCharm extends GuiContainer {
 
 		buttonList.clear();
 
-		flipButton = new InvisibleButton(0, (int)i, (int)j + 60, FLIP_W, FLIP_H, "");
+		flipButton = new InvisibleButton(0, (int) i, (int) j + 60, FLIP_W, FLIP_H, "");
 		addButton(flipButton);
 	}
 
@@ -75,8 +57,8 @@ public class GUIDevouringCharm extends GuiContainer {
 	}
 
 	@Override
-	protected void actionPerformed(GuiButton button) throws IOException {
-		if(button.id == 0) { //flip button
+	protected void actionPerformed (GuiButton button) throws IOException {
+		if (button.id == 0) { //flip button
 			FLIPPED = !FLIPPED;
 			this.container.FLIPPED = FLIPPED;
 		}
@@ -89,21 +71,24 @@ public class GUIDevouringCharm extends GuiContainer {
 		float i = (this.width - this.xSize) / 2;
 		float j = (this.height - this.ySize) / 2;
 
-		if (ConfigHandler.UsePrettyGUIs)
+		if (ConfigHandler.UsePrettyGUIs) {
 			this.mc.getTextureManager().bindTexture(TEXTURE_DEVOURINGCHARM);
-		else
+		} else {
 			this.mc.getTextureManager().bindTexture(TEXTURE_DEVOURINGCHARM_SIMPLE);
+		}
 		// TODO: This is the place where FLIPPED should be checked for moving the UV
-		if(!FLIPPED)
+		if (!FLIPPED) {
 			this.drawTexturedModalRect(i + 25, j + 58, DEVOURINGCHARM_X, DEVOURINGCHARM_Y, DEVOURINGCHARM_W, DEVOURINGCHARM_H);
-		else
+		} else {
 			this.drawTexturedModalRect(i + 25, j + 58, DEVOURINGCHARM_BACK_X, DEVOURINGCHARM_BACK_Y, DEVOURINGCHARM_BACK_W, DEVOURINGCHARM_BACK_H);
+		}
 		this.drawTexturedModalRect(i, j + 60, FLIP_X, FLIP_Y, FLIP_W, FLIP_H);
 
-		if (ConfigHandler.UsePrettyGUIs)
+		if (ConfigHandler.UsePrettyGUIs) {
 			this.mc.getTextureManager().bindTexture(TEXTURE_PLAYERINV);
-		else
+		} else {
 			this.mc.getTextureManager().bindTexture(TEXTURE_PLAYERINV_SIMPLE);
+		}
 		this.drawTexturedModalRect(i, j + 22 + DEVOURINGCHARM_H, 0, 0, INVENTORY_W, INVENTORY_H);
 	}
 }

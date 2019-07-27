@@ -63,7 +63,9 @@ public class ClientNetwork {
 	}
 
 	public void deserializeManifest (ManifestList data) {
-		if (data == null) return;
+		if (data == null) {
+			return;
+		}
 
 		manifestItems.clear();
 		manifestItems.addAll(data);

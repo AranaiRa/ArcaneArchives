@@ -1,8 +1,8 @@
 package com.aranaira.arcanearchives.tileentities;
 
+import com.aranaira.arcanearchives.blocks.MultiblockSize;
 import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
-import com.aranaira.arcanearchives.blocks.MultiblockSize;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;

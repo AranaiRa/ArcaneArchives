@@ -2,7 +2,9 @@ package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.inventory.handlers.*;
+import com.aranaira.arcanearchives.inventory.handlers.OptionalUpgradesHandler;
+import com.aranaira.arcanearchives.inventory.handlers.SizeUpgradeItemHandler;
+import com.aranaira.arcanearchives.inventory.handlers.TankUpgradeItemHandler;
 import com.aranaira.arcanearchives.tileentities.interfaces.IUpgradeableStorage;
 import com.aranaira.arcanearchives.types.enums.UpgradeType;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,7 +21,6 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class RadiantTankTileEntity extends ImmanenceTileEntity implements IUpgradeableStorage {
 	public static final int BASE_CAPACITY = Fluid.BUCKET_VOLUME * 16;
@@ -158,7 +159,9 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity implements IUpgra
 
 	@Override
 	public boolean handleManipulationInterface (EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (player.world.isRemote) return true;
+		if (player.world.isRemote) {
+			return true;
+		}
 
 		player.openGui(ArcaneArchives.instance, AAGuiHandler.UPGRADES, world, pos.getX(), pos.getY(), pos.getZ());
 		return true;

@@ -10,18 +10,18 @@ import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.inventory.handlers.OptionalUpgradesHandler;
 import com.aranaira.arcanearchives.inventory.handlers.SizeUpgradeItemHandler;
-import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity.VoidingFluidTank;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
+import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity.VoidingFluidTank;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler;
+import com.aranaira.arcanearchives.types.IteRef;
+import com.aranaira.arcanearchives.types.enums.UpgradeType;
+import com.aranaira.arcanearchives.types.lists.TileList;
 import com.aranaira.arcanearchives.util.UploadUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
-import com.aranaira.arcanearchives.types.IteRef;
-import com.aranaira.arcanearchives.types.lists.TileList;
-import com.aranaira.arcanearchives.types.enums.UpgradeType;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -51,7 +51,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.io.IOException;
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid= ArcaneArchives.MODID)
+@Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class DebugOrbItem extends ItemTemplate {
 	public static final String NAME = "debugorb";
 
@@ -294,7 +294,9 @@ public class DebugOrbItem extends ItemTemplate {
 		}
 		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
-		if (!(block instanceof BlockTemplate)) return;
+		if (!(block instanceof BlockTemplate)) {
+			return;
+		}
 
 		if (block instanceof RadiantChest) {
 			event.setUseBlock(Result.DENY);

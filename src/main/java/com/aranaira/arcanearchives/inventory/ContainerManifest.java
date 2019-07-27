@@ -4,15 +4,15 @@ import com.aranaira.arcanearchives.client.gui.framework.CustomCountSlot;
 import com.aranaira.arcanearchives.client.gui.framework.IScrollabe;
 import com.aranaira.arcanearchives.client.gui.framework.IScrollableContainer;
 import com.aranaira.arcanearchives.client.gui.framework.ScrollEventManager;
+import com.aranaira.arcanearchives.client.render.LineHandler;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.DataHelper;
-import com.aranaira.arcanearchives.client.render.LineHandler;
 import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
+import com.aranaira.arcanearchives.types.lists.ManifestList.SortingDirection;
+import com.aranaira.arcanearchives.types.lists.ManifestList.SortingType;
 import com.aranaira.arcanearchives.util.ManifestTrackingUtils;
 import com.aranaira.arcanearchives.util.ManifestUtils.CollatedEntry;
 import com.aranaira.arcanearchives.util.MathUtils;
-import com.aranaira.arcanearchives.types.lists.ManifestList.SortingDirection;
-import com.aranaira.arcanearchives.types.lists.ManifestList.SortingType;
 import invtweaks.api.container.InventoryContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -21,8 +21,6 @@ import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.client.CPacketAnimation;
-import net.minecraft.network.play.client.CPacketCloseWindow;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -67,7 +65,9 @@ public class ContainerManifest extends Container implements IScrollableContainer
 		@Override
 		@SideOnly(Side.CLIENT)
 		public boolean isEnabled () {
-			if (getStack().isEmpty()) return false;
+			if (getStack().isEmpty()) {
+				return false;
+			}
 			return isEnabled;
 		}
 	}

@@ -1,11 +1,11 @@
 package com.aranaira.arcanearchives.blocks.templates;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.blocks.IHasModel;
+import com.aranaira.arcanearchives.blocks.MultiblockSize;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.tileentities.AATileEntity;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
-import com.aranaira.arcanearchives.blocks.IHasModel;
-import com.aranaira.arcanearchives.blocks.MultiblockSize;
 import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

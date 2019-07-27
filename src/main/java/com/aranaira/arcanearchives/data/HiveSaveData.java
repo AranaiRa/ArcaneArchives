@@ -13,7 +13,6 @@ import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.common.util.Constants.NBT;
 
 import javax.annotation.Nullable;
-import java.rmi.server.UID;
 import java.util.*;
 
 public class HiveSaveData extends WorldSavedData {
@@ -71,9 +70,7 @@ public class HiveSaveData extends WorldSavedData {
 		} else if (owner != null && !hive.owner.equals(owner)) {
 			ownerToHive.remove(owner);
 			ownerToHive.put(hive.owner, hive);
-			if (member != null && !hive.members.contains(member)) {
-				return false;
-			}
+			return member == null || hive.members.contains(member);
 		}
 
 		return true;

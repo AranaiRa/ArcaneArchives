@@ -3,7 +3,6 @@ package com.aranaira.arcanearchives.blocks.templates;
 import com.aranaira.arcanearchives.tileentities.AATileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -12,9 +11,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.property.ExtendedBlockState;
-import net.minecraftforge.common.property.IUnlistedProperty;
-import net.minecraftforge.common.property.Properties;
 
 public class BlockDirectionalTemplate extends BlockTemplate {
 	public static final PropertyDirection FACING = PropertyDirection.create("facing");

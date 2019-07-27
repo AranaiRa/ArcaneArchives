@@ -29,7 +29,10 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
-import net.minecraftforge.fluids.*;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidActionResult;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
@@ -133,7 +136,9 @@ public class RadiantAmphoraItem extends ItemTemplate {
 			}
 
 			IFluidHandler cap = util.getCapability();
-			if (cap == null) return ActionResult.newResult(EnumActionResult.FAIL, itemstack);
+			if (cap == null) {
+				return ActionResult.newResult(EnumActionResult.FAIL, itemstack);
+			}
 			boolean canDrain = false;
 			for (IFluidTankProperties prop : cap.getTankProperties()) {
 				if (prop.getCapacity() < 1000) {

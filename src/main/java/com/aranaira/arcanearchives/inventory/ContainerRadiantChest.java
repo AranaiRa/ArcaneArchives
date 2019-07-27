@@ -1,9 +1,8 @@
 package com.aranaira.arcanearchives.inventory;
 
 import com.aranaira.arcanearchives.inventory.slots.SlotExtended;
-import com.aranaira.arcanearchives.network.PacketRadiantChest.MessageSyncExtendedSlotContents;
 import com.aranaira.arcanearchives.network.Networking;
-import com.aranaira.arcanearchives.network.PacketRadiantChest.SetName;
+import com.aranaira.arcanearchives.network.PacketRadiantChest.MessageSyncExtendedSlotContents;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity.TrackingExtendedItemStackHandler;
 import com.google.common.collect.Sets;

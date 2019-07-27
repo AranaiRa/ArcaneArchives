@@ -1,7 +1,6 @@
 package com.aranaira.arcanearchives.inventory.slots;
 
 import com.aranaira.arcanearchives.api.IGCTRecipe;
-import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import net.minecraft.entity.player.EntityPlayer;

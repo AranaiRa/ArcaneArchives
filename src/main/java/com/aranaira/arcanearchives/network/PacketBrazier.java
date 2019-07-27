@@ -1,10 +1,8 @@
 package com.aranaira.arcanearchives.network;
 
-import com.aranaira.arcanearchives.blocks.Brazier;
-import com.aranaira.arcanearchives.network.Messages.EmptyTileMessageServer;
 import com.aranaira.arcanearchives.network.Handlers.TileHandlerServer;
+import com.aranaira.arcanearchives.network.Messages.EmptyTileMessageServer;
 import com.aranaira.arcanearchives.tileentities.BrazierTileEntity;
-import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 

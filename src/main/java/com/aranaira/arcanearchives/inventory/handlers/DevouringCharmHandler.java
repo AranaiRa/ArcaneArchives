@@ -1,19 +1,12 @@
 package com.aranaira.arcanearchives.inventory.handlers;
 
 import com.aranaira.arcanearchives.init.ItemRegistry;
-import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.gems.GemUtil;
 import com.aranaira.arcanearchives.items.gems.pendeloque.ParchtearItem;
 import com.aranaira.arcanearchives.util.ItemUtils;
-import net.minecraft.init.Items;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
@@ -63,10 +56,9 @@ public class DevouringCharmHandler {
 	private ItemStackHandler handler = new ItemStackHandler(7) {
 		@Override
 		public boolean isItemValid (int slot, @Nonnull ItemStack stack) {
-			if(slot == 0) {
+			if (slot == 0) {
 				return stack.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null) || stack.getItem() == ItemRegistry.PARCHTEAR;
-			}
-			else {
+			} else {
 				return true;
 			}
 		}
@@ -84,7 +76,7 @@ public class DevouringCharmHandler {
 			}
 
 			if (slot == 0 && stack.getItem() == ItemRegistry.PARCHTEAR) {
-				if(stack.getItem() instanceof ParchtearItem) {
+				if (stack.getItem() instanceof ParchtearItem) {
 					GemUtil.manuallyRestoreCharge(stack, -1);
 				}
 			}
@@ -93,7 +85,7 @@ public class DevouringCharmHandler {
 		}
 	};
 
-	public DevouringCharmHandler(ItemStack socket) {
+	public DevouringCharmHandler (ItemStack socket) {
 		this.socket = socket;
 		NBTTagCompound tag = ItemUtils.getOrCreateTagCompound(socket);
 		if (tag.hasKey(Tags.AUTOVOID_HANDLER)) {
@@ -118,7 +110,9 @@ public class DevouringCharmHandler {
 		List<ItemStack> items = new ArrayList<>();
 		for (int i = 0; i < 6; i++) {
 			ItemStack item = autovoidHandler.getStackInSlot(i);
-			if (!item.isEmpty()) items.add(item);
+			if (!item.isEmpty()) {
+				items.add(item);
+			}
 		}
 
 		return items;
@@ -126,7 +120,9 @@ public class DevouringCharmHandler {
 
 	public boolean shouldVoidItem (ItemStack stack) {
 		for (ItemStack other : getItemsToVoid()) {
-			if (ItemUtils.areStacksEqualIgnoreSize(stack, other)) return true;
+			if (ItemUtils.areStacksEqualIgnoreSize(stack, other)) {
+				return true;
+			}
 		}
 
 		return false;
@@ -141,6 +137,7 @@ public class DevouringCharmHandler {
 	public static class Tags {
 		public static final String AUTOVOID_HANDLER = "autovoid_handler";
 
-		public Tags (){}
+		public Tags () {
+		}
 	}
 }

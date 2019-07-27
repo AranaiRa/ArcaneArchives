@@ -1,9 +1,7 @@
 package com.aranaira.arcanearchives.items.itemblocks;
 
 import com.aranaira.arcanearchives.inventory.handlers.TankItemFluidHandler;
-import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity.Tags;
-import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -14,14 +12,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
-import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 

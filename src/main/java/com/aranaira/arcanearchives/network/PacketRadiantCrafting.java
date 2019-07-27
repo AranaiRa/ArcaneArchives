@@ -2,23 +2,18 @@ package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.inventory.ContainerRadiantCraftingTable;
 import com.aranaira.arcanearchives.network.Handlers.ClientHandler;
-import com.aranaira.arcanearchives.network.Handlers.ServerHandler;
 import com.aranaira.arcanearchives.network.Handlers.TileHandlerServer;
 import com.aranaira.arcanearchives.network.Messages.TileMessage;
-import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantCraftingTableTileEntity;
 import com.aranaira.arcanearchives.util.ByteUtils;
 import com.aranaira.arcanearchives.util.PlayerUtil;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.Container;
-import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-
-import java.util.UUID;
 
 public class PacketRadiantCrafting {
 	public static class LastRecipe implements IMessage {

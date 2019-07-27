@@ -63,7 +63,7 @@ public class RenderItemExtended {
 				GlStateManager.pushMatrix();
 				float scale = 0.75f;
 				GlStateManager.scale(scale, scale, 1.0F);
-				fr.drawStringWithShadow(s, (float) (xPosition + 19 - 2 - (fr.getStringWidth(s) * scale)) / scale, (float) (yPosition + 6 + 3 + (1 / (scale * scale) - 1)) / scale, 16777215);
+				fr.drawStringWithShadow(s, (xPosition + 19 - 2 - (fr.getStringWidth(s) * scale)) / scale, (yPosition + 6 + 3 + (1 / (scale * scale) - 1)) / scale, 16777215);
 				GlStateManager.popMatrix();
 				GlStateManager.enableLighting();
 				GlStateManager.enableDepth();

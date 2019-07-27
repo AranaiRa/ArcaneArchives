@@ -15,7 +15,9 @@ public class CustomCountSlot extends SlotItemHandler {
 	@Override
 	public ItemStack getStack () {
 		ItemStack stack = super.getStack();
-		if (stack.isEmpty()) return stack;
+		if (stack.isEmpty()) {
+			return stack;
+		}
 		stack = stack.copy();
 		stack.setCount(1);
 		return stack;

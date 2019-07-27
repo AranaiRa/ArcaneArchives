@@ -2,8 +2,8 @@ package com.aranaira.arcanearchives.client.gui;
 
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerUpgrades;
-import com.aranaira.arcanearchives.tileentities.interfaces.IUpgradeableStorage;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
+import com.aranaira.arcanearchives.tileentities.interfaces.IUpgradeableStorage;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -51,19 +51,17 @@ public class GUIUpgrades extends GuiContainer {
 		float i = (this.width - this.xSize) / 2;
 		float j = (this.height - this.ySize) / 2;
 
-		if(ConfigHandler.UsePrettyGUIs) {
+		if (ConfigHandler.UsePrettyGUIs) {
 			this.mc.getTextureManager().bindTexture(TEXTURE_UPGRADES);
-		}
-		else {
+		} else {
 			this.mc.getTextureManager().bindTexture(TEXTURE_UPGRADES_SIMPLE);
 		}
 		this.drawTexturedModalRect(i + 49, j, 0, 0, STORAGEUPGRADES_W, STORAGEUPGRADES_H);
 		this.drawTexturedModalRect(i + 49, j + 36, STORAGEUPGRADES_U, STORAGEUPGRADES_V3, STORAGEUPGRADES_W, STORAGEUPGRADES_H);
 
-		if(ConfigHandler.UsePrettyGUIs) {
+		if (ConfigHandler.UsePrettyGUIs) {
 			this.mc.getTextureManager().bindTexture(TEXTURE_PLAYERINV);
-		}
-		else {
+		} else {
 			this.mc.getTextureManager().bindTexture(TEXTURE_PLAYERINV_SIMPLE);
 		}
 		this.drawTexturedModalRect(i, j + 67, 0, 0, INVENTORY_W, INVENTORY_H);

@@ -1,17 +1,16 @@
 package com.aranaira.arcanearchives.client.gui;
 
 import com.aranaira.arcanearchives.api.IGCTRecipe;
+import com.aranaira.arcanearchives.client.CycleTimer;
 import com.aranaira.arcanearchives.client.gui.controls.InvisibleButton;
-import com.aranaira.arcanearchives.util.ColorUtils;
-import com.aranaira.arcanearchives.util.ColorUtils.Color;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
 import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
-import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
-import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
-import com.aranaira.arcanearchives.client.CycleTimer;
-import com.aranaira.arcanearchives.util.ManifestTrackingUtils;
 import com.aranaira.arcanearchives.recipe.IngredientStack;
+import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
+import com.aranaira.arcanearchives.util.ColorUtils;
+import com.aranaira.arcanearchives.util.ColorUtils.Color;
+import com.aranaira.arcanearchives.util.ManifestTrackingUtils;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
@@ -22,14 +21,16 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import org.lwjgl.opengl.GL11;
 import yalter.mousetweaks.api.MouseTweaksDisableWheelTweak;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -104,10 +105,11 @@ public class GUIGemCuttersTable extends GuiContainer {
 	protected void drawGuiContainerBackgroundLayer (float partialTicks, int mouseX, int mouseY) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.enableColorMaterial();
-		if(ConfigHandler.UsePrettyGUIs)
+		if (ConfigHandler.UsePrettyGUIs) {
 			this.mc.getTextureManager().bindTexture(GUI_TEXTURES);
-		else
+		} else {
 			this.mc.getTextureManager().bindTexture(GUI_TEXTURES_SIMPLE);
+		}
 
 		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, 206, 256, 256, 256);
 	}
@@ -139,10 +141,11 @@ public class GUIGemCuttersTable extends GuiContainer {
 				wasEnabled = true;
 				GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 				GlStateManager.enableColorMaterial();
-				if(ConfigHandler.UsePrettyGUIs)
+				if (ConfigHandler.UsePrettyGUIs) {
 					this.mc.getTextureManager().bindTexture(GUI_TEXTURES);
-				else
+				} else {
 					this.mc.getTextureManager().bindTexture(GUI_TEXTURES_SIMPLE);
+				}
 				this.drawTexturedModalRect(slot.xPos - 2, slot.yPos - 2, 206, 0, 20, 20);
 			}
 
@@ -154,17 +157,19 @@ public class GUIGemCuttersTable extends GuiContainer {
 
 	private void dimSlot (Slot slot, boolean wasEnabled) {
 		if (wasEnabled) {
-			if(ConfigHandler.UsePrettyGUIs)
+			if (ConfigHandler.UsePrettyGUIs) {
 				this.mc.getTextureManager().deleteTexture(GUI_TEXTURES);
-			else
+			} else {
 				this.mc.getTextureManager().deleteTexture(GUI_TEXTURES_SIMPLE);
+			}
 		}
 		GlStateManager.disableDepth();
 
-		if(ConfigHandler.UsePrettyGUIs)
+		if (ConfigHandler.UsePrettyGUIs) {
 			drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, OVERLAY);
-		else
+		} else {
 			drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, OVERLAY_SIMPLE);
+		}
 	}
 
 	@Override

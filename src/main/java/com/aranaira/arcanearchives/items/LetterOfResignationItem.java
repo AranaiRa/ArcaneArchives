@@ -1,8 +1,8 @@
 package com.aranaira.arcanearchives.items;
 
+import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.HiveSaveData;
 import com.aranaira.arcanearchives.data.HiveSaveData.Hive;
-import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.items.templates.LetterTemplate;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;

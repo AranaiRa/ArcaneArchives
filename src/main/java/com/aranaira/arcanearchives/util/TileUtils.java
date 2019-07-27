@@ -1,8 +1,8 @@
 package com.aranaira.arcanearchives.util;
 
-import com.aranaira.arcanearchives.types.lists.ITileList;
 import com.aranaira.arcanearchives.types.IteRef;
 import com.aranaira.arcanearchives.types.iterators.TileListIterable;
+import com.aranaira.arcanearchives.types.lists.ITileList;
 import com.google.common.collect.Iterators;
 
 import java.util.function.Predicate;

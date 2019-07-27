@@ -9,7 +9,6 @@ import com.aranaira.arcanearchives.network.PacketBrazier.DecrementRadius;
 import com.aranaira.arcanearchives.network.PacketBrazier.IncrementRadius;
 import com.aranaira.arcanearchives.network.PacketBrazier.SetRadius;
 import com.aranaira.arcanearchives.network.PacketBrazier.SetSubnetworkMode;
-import com.aranaira.arcanearchives.tileentities.interfaces.IBrazierRouting;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiPageButtonList;
 import net.minecraft.client.gui.GuiTextField;
@@ -28,23 +27,7 @@ public class GUIBrazier extends GuiContainer implements GuiPageButtonList.GuiRes
 
 	private static final ResourceLocation TEXTURE_BRAZIER = new ResourceLocation("arcanearchives:textures/gui/brazier_hoarding.png");
 
-	private static final int BACKGROUND_X = 0, BACKGROUND_Y = 0, BACKGROUND_W = 98, BACKGROUND_H = 41, EYE_OPEN_X = 222, EYE_OPEN_Y = 0, EYE_CLOSED_X = 210, EYE_CLOSED_Y = 0, EYE_W = 12, EYE_H = 10, SLASH_X = 240, SLASH_Y = 0, SLASH_S = 16, CHECK_X = 234, CHECK_Y = 0, CHECK_S = 6,
-	ROUTING_TOOLTIP_X = 67,
-	ROUTING_TOOLTIP_Y = 28,
-	ROUTING_TOOLTIP_W = 31,
-	ROUTING_TOOLTIP_H = 16,
-	VISUALIZER_TOOLTIP_X = 6,
-	VISUALIZER_TOOLTIP_Y = 7,
-	VISUALIZER_TOOLTIP_W = 13,
-	VISUALIZER_TOOLTIP_H = 12,
-	RADIUS_LEFT_TOOLTIP_X = 29,
-	RADIUS_LEFT_TOOLTIP_Y = 6,
-	RADIUS_LEFT_TOOLTIP_W = 8,
-	RADIUS_LEFT_TOOLTIP_H = 16,
-	RADIUS_RIGHT_TOOLTIP_X = 85,
-	RADIUS_RIGHT_TOOLTIP_Y = 6,
-	RADIUS_RIGHT_TOOLTIP_W = 8,
-	RADIUS_RIGHT_TOOLTIP_H = 16;
+	private static final int BACKGROUND_X = 0, BACKGROUND_Y = 0, BACKGROUND_W = 98, BACKGROUND_H = 41, EYE_OPEN_X = 222, EYE_OPEN_Y = 0, EYE_CLOSED_X = 210, EYE_CLOSED_Y = 0, EYE_W = 12, EYE_H = 10, SLASH_X = 240, SLASH_Y = 0, SLASH_S = 16, CHECK_X = 234, CHECK_Y = 0, CHECK_S = 6, ROUTING_TOOLTIP_X = 67, ROUTING_TOOLTIP_Y = 28, ROUTING_TOOLTIP_W = 31, ROUTING_TOOLTIP_H = 16, VISUALIZER_TOOLTIP_X = 6, VISUALIZER_TOOLTIP_Y = 7, VISUALIZER_TOOLTIP_W = 13, VISUALIZER_TOOLTIP_H = 12, RADIUS_LEFT_TOOLTIP_X = 29, RADIUS_LEFT_TOOLTIP_Y = 6, RADIUS_LEFT_TOOLTIP_W = 8, RADIUS_LEFT_TOOLTIP_H = 16, RADIUS_RIGHT_TOOLTIP_X = 85, RADIUS_RIGHT_TOOLTIP_Y = 6, RADIUS_RIGHT_TOOLTIP_W = 8, RADIUS_RIGHT_TOOLTIP_H = 16;
 
 	private GuiButton reduceButton, expandButton, fullNetworkToggleButton, visualizerButton;
 	private GuiTextField radiusField;

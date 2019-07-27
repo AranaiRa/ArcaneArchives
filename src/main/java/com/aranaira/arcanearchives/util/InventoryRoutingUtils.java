@@ -3,9 +3,9 @@ package com.aranaira.arcanearchives.util;
 import com.aranaira.arcanearchives.data.HiveNetwork;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.tileentities.BrazierTileEntity;
+import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.interfaces.IBrazierRouting;
 import com.aranaira.arcanearchives.tileentities.interfaces.IBrazierRouting.BrazierRoutingType;
-import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.types.IteRef;
 import com.google.common.collect.Lists;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
@@ -90,7 +90,9 @@ public class InventoryRoutingUtils {
 			HiveNetwork hive = network.getHiveNetwork();
 			tiles = hive.getValidTiles();
 		}
-		if (tiles == null) return workspace;
+		if (tiles == null) {
+			return workspace;
+		}
 		for (IteRef ite : tiles) {
 			if (IBrazierRouting.class.isAssignableFrom(ite.clazz) && network.distanceSq(bPos, ite.pos) <= radius && ite.dimension == brazier.dimension) {
 				ImmanenceTileEntity tile = ite.getTile();

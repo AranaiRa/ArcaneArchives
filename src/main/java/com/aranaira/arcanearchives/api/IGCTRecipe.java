@@ -12,7 +12,7 @@ import net.minecraftforge.items.IItemHandler;
  * a custom GCT recipe, you will need to implement this. However, that
  * would also require properly implementing item consumption from the
  * various linked inventories provided.
- *
+ * <p>
  * For interfacing with and accessing recipes
  */
 public interface IGCTRecipe extends IArcaneArchivesRecipe {
@@ -39,14 +39,14 @@ public interface IGCTRecipe extends IArcaneArchivesRecipe {
 
 	/**
 	 * This is only called on the server.
-	 *
+	 * <p>
 	 * Its primary purpose is to modify ingredients when used in the Gem Crafter's Table.
 	 * i.e., damaging damageable items or converting items into empty buckets.
 	 *
-	 * @param world The world.
-	 * @param player The player performing the craft.
+	 * @param world         The world.
+	 * @param player        The player performing the craft.
 	 * @param craftingTable The TileEntity of the crafting table.
-	 * @param ingredient The ItemStack of the ingredient being consumed.
+	 * @param ingredient    The ItemStack of the ingredient being consumed.
 	 * @return true if the item stack has been modified and returned to the player; otherwise false.
 	 */
 	boolean handleItemResult (World world, EntityPlayer player, TileEntity craftingTable, ItemStack ingredient);
@@ -56,7 +56,7 @@ public interface IGCTRecipe extends IArcaneArchivesRecipe {
 	 * (Gem Cutter's Table specifically) is able to craft this recipe. Should generally
 	 * be left for default.
 	 *
-	 * @param player The player crafting.
+	 * @param player        The player crafting.
 	 * @param craftingTable The tile entity of the GCT.
 	 * @return boolean true if the recipe is craftable
 	 */
@@ -93,22 +93,22 @@ public interface IGCTRecipe extends IArcaneArchivesRecipe {
 	 * either consuming them or modifying and returning them. Callback
 	 * is fired every time an item is consumed (in case synchronisation
 	 * needs to happen).
-	 *
+	 * <p>
 	 * It is *presumed* that matching has already been checked; if matching
 	 * is not checked before calling this, the result will be available
 	 * but only partial consumption of ingredients will occur.
-	 *
+	 * <p>
 	 * Generally this is called from the container output slot onTake function.
 	 *
-	 * @param recipe The recipe instance being crafted.
+	 * @param recipe    The recipe instance being crafted.
 	 * @param inventory The combined inventory to be search (in the default
 	 *                  implementation this is a CombinedInvWrapper of the main
 	 *                  player inventory and the Gem Cutter's Table inventory)
-	 * @param player The player performing the craft
-	 * @param tile The Gem Cutter's Table tile entity
-	 * @param callback The callback to be fired. By default this is the container's
-	 *                 detectAndSendChanges function.
-	 * @param handler A RecipeIngredientHandler instance. See that file for full documentation.
+	 * @param player    The player performing the craft
+	 * @param tile      The Gem Cutter's Table tile entity
+	 * @param callback  The callback to be fired. By default this is the container's
+	 *                  detectAndSendChanges function.
+	 * @param handler   A RecipeIngredientHandler instance. See that file for full documentation.
 	 */
 	void consumeAndHandleInventory (IGCTRecipe recipe, IItemHandler inventory, EntityPlayer player, TileEntity tile, Runnable callback, RecipeIngredientHandler handler);
 
@@ -116,7 +116,7 @@ public interface IGCTRecipe extends IArcaneArchivesRecipe {
 	 * This is used as a placeholder for a boolean-returning function that is called
 	 * before an item can be considered craftable, even if the recipe matches the
 	 * combined inventory.
-	 *
+	 * <p>
 	 * *Note that the default GCTRecipe implementation does not currently support
 	 * conditions*.
 	 */
@@ -124,7 +124,7 @@ public interface IGCTRecipe extends IArcaneArchivesRecipe {
 	interface GCTCondition {
 		/**
 		 * @param player The player interacting with the GCT.
-		 * @param tile The Gem Cutter's Table tile entity.
+		 * @param tile   The Gem Cutter's Table tile entity.
 		 * @return boolean true if the player can craft this recipe
 		 */
 		boolean test (EntityPlayer player, TileEntity tile);

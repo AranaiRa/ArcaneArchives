@@ -2,7 +2,6 @@ package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.tileentities.FakeAirTileEntity;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;

@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.client.render;
 
-import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;

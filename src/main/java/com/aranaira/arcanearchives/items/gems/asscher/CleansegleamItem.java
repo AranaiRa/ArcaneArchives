@@ -5,9 +5,7 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.gems.GemUtil;
 import com.aranaira.arcanearchives.items.gems.GemUtil.AvailableGemsHandler;
-import com.tmtravlr.potioncore.PotionCore;
 import com.tmtravlr.potioncore.PotionCoreEffects;
-import com.tmtravlr.potioncore.PotionCoreTypes;
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -67,12 +65,12 @@ public class CleansegleamItem extends ArcaneGemItem {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick (World world, EntityPlayer player, EnumHand hand) {
 		if (!world.isRemote) {
-			for(String s : PotionCoreEffects.POTIONS.keySet()) {
-				ArcaneArchives.logger.info("\""+s+"\"");
+			for (String s : PotionCoreEffects.POTIONS.keySet()) {
+				ArcaneArchives.logger.info("\"" + s + "\"");
 			}
 			AvailableGemsHandler handler = GemUtil.getHeldGem(player, hand);
 			if (handler.getHeld() != null) {
-				if(GemUtil.getCharge(handler.getHeld()) == 0) {
+				if (GemUtil.getCharge(handler.getHeld()) == 0) {
 					IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
 					for (int i = 0; i < playerInventory.getSlots(); i++) {
 						ItemStack bucket = ItemStack.EMPTY;
@@ -83,7 +81,7 @@ public class CleansegleamItem extends ArcaneGemItem {
 							if (bucket.isEmpty()) {
 								bucket = new ItemStack(Items.BUCKET);
 							} else {
-								bucket.setCount(bucket.getCount()+1);
+								bucket.setCount(bucket.getCount() + 1);
 							}
 						}
 						ItemStack result = ItemHandlerHelper.insertItemStacked(playerInventory, bucket, false);
@@ -93,8 +91,7 @@ public class CleansegleamItem extends ArcaneGemItem {
 					}
 					//consumeFluidForChargeRecovery(player, handler, FluidRegistry.getFluid("milk"), 1, GemUtil.getMaxCharge(handler.getHeld()));
 					//TODO: Check for amphora linked to milk
-				}
-				else {
+				} else {
 					int chargeCost = removeEffects(player, false);
 					if (player.isSneaking()) {
 						double boxRadius = 3.5;
@@ -139,22 +136,30 @@ public class CleansegleamItem extends ArcaneGemItem {
 				}
 			}
 
-			if(effect.getEffectName().equals("effect.antidote")) hasAntidote = true;
-			if(effect.getEffectName().equals("effect.purity")) hasPurity = true;
+			if (effect.getEffectName().equals("effect.antidote")) {
+				hasAntidote = true;
+			}
+			if (effect.getEffectName().equals("effect.purity")) {
+				hasPurity = true;
+			}
 		}
 
-		if(Loader.isModLoaded("potioncore")) {
-			if(!hasAntidote) {
+		if (Loader.isModLoaded("potioncore")) {
+			if (!hasAntidote) {
 				Potion antidote = PotionCoreEffects.POTIONS.get("antidote");
 				target.addPotionEffect(new PotionEffect(antidote, 60 * 20));
-				if (cost == 0) cost = 1;
+				if (cost == 0) {
+					cost = 1;
+				}
 
 				ArcaneArchives.logger.info("should have added antidote");
 			}
-			if(!hasPurity && hasMatterUpgrade) {
+			if (!hasPurity && hasMatterUpgrade) {
 				Potion purity = PotionCoreEffects.POTIONS.get("purity");
 				target.addPotionEffect(new PotionEffect(purity, 60 * 20));
-				if (cost == 0) cost = 1;
+				if (cost == 0) {
+					cost = 1;
+				}
 			}
 		}
 
@@ -172,7 +177,7 @@ public class CleansegleamItem extends ArcaneGemItem {
 	}
 
 	@Optional.Method(modid = "potioncore")
-	private void applyPotionCoreBuffs(){
+	private void applyPotionCoreBuffs () {
 
 	}
 }

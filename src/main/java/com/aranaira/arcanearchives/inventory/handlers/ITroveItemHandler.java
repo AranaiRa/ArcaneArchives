@@ -41,7 +41,9 @@ public interface ITroveItemHandler extends IItemHandler {
 	@Nonnull
 	@Override
 	default ItemStack insertItem (int slot, @Nonnull ItemStack stack, boolean simulate) {
-		if (stack.isEmpty()) return stack;
+		if (stack.isEmpty()) {
+			return stack;
+		}
 
 		ItemStack reference = getReference();
 		int count = getCount();
@@ -92,7 +94,9 @@ public interface ITroveItemHandler extends IItemHandler {
 	@Override
 	default ItemStack getStackInSlot (int slot) {
 		ItemStack reference = getReference();
-		if (reference == null || reference.isEmpty()) return ItemStack.EMPTY;
+		if (reference == null || reference.isEmpty()) {
+			return ItemStack.EMPTY;
+		}
 		if (slot == 0) {
 			ItemStack result = reference.copy();
 			result.setCount(getCount());
@@ -107,7 +111,9 @@ public interface ITroveItemHandler extends IItemHandler {
 	@Override
 	default ItemStack extractItem (int slot, int amount, boolean simulate) {
 		ItemStack reference = getReference();
-		if (reference == null || reference.isEmpty()) return ItemStack.EMPTY;
+		if (reference == null || reference.isEmpty()) {
+			return ItemStack.EMPTY;
+		}
 		int count = getCount();
 		if (amount > reference.getMaxStackSize()) {
 			amount = reference.getMaxStackSize();

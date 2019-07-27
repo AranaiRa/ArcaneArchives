@@ -28,22 +28,30 @@ public class NBTUtils {
 
 	@Nullable
 	public static IRecipe getRecipe (NBTTagCompound tag, String key) {
-		if (!tag.hasKey(key)) return null;
+		if (!tag.hasKey(key)) {
+			return null;
+		}
 
 		return CraftingManager.REGISTRY.getObjectById(tag.getInteger(key));
 	}
 
 	public static int defaultInt (ItemStack stack, String key, int defaultInt) {
-		if (!stack.hasTagCompound()) return defaultInt;
+		if (!stack.hasTagCompound()) {
+			return defaultInt;
+		}
 
 		NBTTagCompound tag = stack.getTagCompound();
-		if (!tag.hasKey(key)) return defaultInt;
+		if (!tag.hasKey(key)) {
+			return defaultInt;
+		}
 
 		return defaultInt(tag, key, defaultInt);
 	}
 
 	public static int defaultInt (NBTTagCompound tag, String key, int defaultInt) {
-		if (!tag.hasKey(key)) return defaultInt;
+		if (!tag.hasKey(key)) {
+			return defaultInt;
+		}
 
 		return tag.getInteger(key);
 	}

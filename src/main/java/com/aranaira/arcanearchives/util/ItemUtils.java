@@ -1,10 +1,9 @@
 package com.aranaira.arcanearchives.util;
 
-import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
-import net.minecraft.item.ItemBlock;
+import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.NBTTagCompound;
@@ -72,14 +71,20 @@ public class ItemUtils {
 	}
 
 	public static boolean ingredientsMatch (Ingredient ingredient1, Ingredient ingredient2) {
-		if (ingredient1.isSimple() != ingredient2.isSimple()) return false;
+		if (ingredient1.isSimple() != ingredient2.isSimple()) {
+			return false;
+		}
 
 		for (ItemStack stack : ingredient2.getMatchingStacks()) {
-			if (!ingredient1.apply(stack)) return false;
+			if (!ingredient1.apply(stack)) {
+				return false;
+			}
 		}
 
 		for (ItemStack stack : ingredient1.getMatchingStacks()) {
-			if (!ingredient2.apply(stack)) return false;
+			if (!ingredient2.apply(stack)) {
+				return false;
+			}
 		}
 
 		return true;

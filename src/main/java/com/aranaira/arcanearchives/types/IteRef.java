@@ -79,10 +79,7 @@ public class IteRef {
 		if (tile.get().isInvalid()) {
 			return false;
 		}
-		if (!tile.get().getWorld().isBlockLoaded(pos)) {
-			return false;
-		}
-		return true;
+		return tile.get().getWorld().isBlockLoaded(pos);
 	}
 
 	public boolean isActive () {

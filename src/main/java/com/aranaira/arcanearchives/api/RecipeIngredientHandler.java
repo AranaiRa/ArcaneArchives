@@ -14,10 +14,10 @@ public interface RecipeIngredientHandler {
 	/**
 	 * The default instance/implementation is IGCTRecipe::handleItemResult.
 	 *
-	 * @param world The world (this is generally only fired on the remote side)
-	 * @param player The player performing the craft.
+	 * @param world        The world (this is generally only fired on the remote side)
+	 * @param player       The player performing the craft.
 	 * @param craftingTile The tile entity of the Gem Cutter's Table.
-	 * @param ingredient The item stack that is to be consumed.
+	 * @param ingredient   The item stack that is to be consumed.
 	 * @return boolean true if the stack should not be consumed but returned to the inventory or
 	 * to the player's inventory; false if the stack should be consumed.
 	 */

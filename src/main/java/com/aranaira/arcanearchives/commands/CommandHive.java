@@ -1,8 +1,8 @@
 package com.aranaira.arcanearchives.commands;
 
+import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.HiveSaveData;
 import com.aranaira.arcanearchives.data.HiveSaveData.Hive;
-import com.aranaira.arcanearchives.data.DataHelper;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;

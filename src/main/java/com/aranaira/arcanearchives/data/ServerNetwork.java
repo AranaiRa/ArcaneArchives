@@ -3,18 +3,19 @@ package com.aranaira.arcanearchives.data;
 import com.aranaira.arcanearchives.data.DataHelper.HiveMembershipInfo;
 import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketNetworks;
-import com.aranaira.arcanearchives.tileentities.interfaces.IManifestTileEntity;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
+import com.aranaira.arcanearchives.tileentities.interfaces.IManifestTileEntity;
 import com.aranaira.arcanearchives.tileentities.unused.MatrixCoreTileEntity;
+import com.aranaira.arcanearchives.types.ISerializeByteBuf;
+import com.aranaira.arcanearchives.types.IteRef;
+import com.aranaira.arcanearchives.types.iterators.TileListIterable;
+import com.aranaira.arcanearchives.types.lists.ManifestList;
+import com.aranaira.arcanearchives.types.lists.TileList;
 import com.aranaira.arcanearchives.util.ManifestUtils;
 import com.aranaira.arcanearchives.util.ManifestUtils.CollatedEntry;
 import com.aranaira.arcanearchives.util.ManifestUtils.ItemEntry;
 import com.aranaira.arcanearchives.util.TileUtils;
-import com.aranaira.arcanearchives.types.*;
-import com.aranaira.arcanearchives.types.iterators.TileListIterable;
-import com.aranaira.arcanearchives.types.lists.ManifestList;
-import com.aranaira.arcanearchives.types.lists.TileList;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -83,7 +84,9 @@ public class ServerNetwork implements IServerNetwork {
 
 	public void tileEntityMoved (UUID tileId, BlockPos newPosition) {
 		IteRef ref = getTiles().getReference(tileId);
-		if (ref == null) return;
+		if (ref == null) {
+			return;
+		}
 
 		ref.pos = newPosition;
 	}

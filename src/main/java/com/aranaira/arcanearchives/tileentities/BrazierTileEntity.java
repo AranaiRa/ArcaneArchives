@@ -18,7 +18,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketSetSlot;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -58,13 +57,13 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 	public BrazierTileEntity (boolean fake) {
 		super("brazier", fake);
 	}
-    
-    @Override
-    public boolean hasFastRenderer() {
-        return true;
-    }
-    
-    @SideOnly(Side.CLIENT)
+
+	@Override
+	public boolean hasFastRenderer () {
+		return true;
+	}
+
+	@SideOnly(Side.CLIENT)
 	public void addUpdateHook (Runnable hook) {
 		clientHooks.add(hook);
 	}
@@ -128,8 +127,12 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 
 	// Handle entities that hit
 	public void beginInsert (EntityItem item) {
-		if (item.world.isRemote) return;
-		if (item.getEntityData().hasKey("rejected")) return;
+		if (item.world.isRemote) {
+			return;
+		}
+		if (item.getEntityData().hasKey("rejected")) {
+			return;
+		}
 
 		List<ItemStack> stack = InventoryRoutingUtils.tryInsertItems(this, item.getItem());
 		if (!stack.isEmpty()) {

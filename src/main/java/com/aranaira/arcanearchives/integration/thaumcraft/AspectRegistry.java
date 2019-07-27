@@ -16,7 +16,7 @@ import thaumcraft.api.aspects.AspectRegistryEvent;
 
 @Mod.EventBusSubscriber
 public class AspectRegistry {
-	@Method(modid="thaumcraft")
+	@Method(modid = "thaumcraft")
 	@SubscribeEvent
 	public static void registerAspects (AspectRegistryEvent event) {
 		try {

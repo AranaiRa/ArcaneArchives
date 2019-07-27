@@ -9,8 +9,8 @@ import com.aranaira.arcanearchives.inventory.slots.SlotExtended;
 import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketRadiantChest.SetName;
 import com.aranaira.arcanearchives.network.PacketRadiantChest.ToggleBrazier;
-import com.aranaira.arcanearchives.tileentities.interfaces.IBrazierRouting;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
+import com.aranaira.arcanearchives.tileentities.interfaces.IBrazierRouting;
 import com.aranaira.arcanearchives.util.ColorUtils;
 import com.aranaira.arcanearchives.util.ColorUtils.Color;
 import com.aranaira.arcanearchives.util.ManifestTrackingUtils;
@@ -243,7 +243,7 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 			int i3 = this.returningStackDestSlot.yPos - this.touchUpY;
 			int l1 = this.touchUpX + (int) ((float) l2 * f);
 			int i2 = this.touchUpY + (int) ((float) i3 * f);
-			this.drawItemStack(this.returningStack, l1, i2, (String) null);
+			this.drawItemStack(this.returningStack, l1, i2, null);
 		}
 
 		GlStateManager.popMatrix();
@@ -459,7 +459,7 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 			}
 
 			if (this.mc.gameSettings.touchscreen && flag1 && this.mc.player.inventory.getItemStack().isEmpty()) {
-				this.mc.displayGuiScreen((GuiScreen) null);
+				this.mc.displayGuiScreen(null);
 				return;
 			}
 
@@ -635,13 +635,13 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 					this.clickedSlot = null;
 				}
 			} else if (this.dragSplitting && !this.dragSplittingSlots.isEmpty()) {
-				this.handleMouseClick((Slot) null, -999, Container.getQuickcraftMask(0, this.dragSplittingLimit), ClickType.QUICK_CRAFT);
+				this.handleMouseClick(null, -999, Container.getQuickcraftMask(0, this.dragSplittingLimit), ClickType.QUICK_CRAFT);
 
 				for (Slot slot1 : this.dragSplittingSlots) {
 					this.handleMouseClick(slot1, slot1.slotNumber, Container.getQuickcraftMask(1, this.dragSplittingLimit), ClickType.QUICK_CRAFT);
 				}
 
-				this.handleMouseClick((Slot) null, -999, Container.getQuickcraftMask(2, this.dragSplittingLimit), ClickType.QUICK_CRAFT);
+				this.handleMouseClick(null, -999, Container.getQuickcraftMask(2, this.dragSplittingLimit), ClickType.QUICK_CRAFT);
 			} else if (!this.mc.player.inventory.getItemStack().isEmpty()) {
 				if (this.mc.gameSettings.keyBindPickBlock.isActiveAndMatches(state - 100)) {
 					this.handleMouseClick(slot, k, state, ClickType.CLONE);

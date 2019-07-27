@@ -274,7 +274,9 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 			super.setStackInSlot(slot, stack);
 			addition(stack, ItemStack.EMPTY);
 			world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);
-			if (stack.isEmpty()) incrementEmptyCount();
+			if (stack.isEmpty()) {
+				incrementEmptyCount();
+			}
 			markDirty();
 		}
 
@@ -305,7 +307,9 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 			ItemStack result = super.extractItem(slot, amount, simulate);
 			if (!simulate) {
 				ItemStack inSlot = getStackInSlot(slot);
-				if (inSlot.isEmpty()) incrementEmptyCount();
+				if (inSlot.isEmpty()) {
+					incrementEmptyCount();
+				}
 			}
 			world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);
 			markDirty();

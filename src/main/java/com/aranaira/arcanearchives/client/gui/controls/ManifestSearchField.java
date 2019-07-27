@@ -1,7 +1,6 @@
 package com.aranaira.arcanearchives.client.gui.controls;
 
 import com.aranaira.arcanearchives.client.gui.GUIManifest;
-import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.integration.jei.JEIPlugin;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraftforge.fml.common.Loader;

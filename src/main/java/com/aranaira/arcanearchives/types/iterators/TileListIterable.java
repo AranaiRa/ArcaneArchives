@@ -21,7 +21,7 @@ public class TileListIterable implements Iterable<IteRef> {
 		return this.iter;
 	}
 
-	public void setIterator(Iterator<IteRef> iterator) {
+	public void setIterator (Iterator<IteRef> iterator) {
 		this.iter = iterator;
 	}
 }

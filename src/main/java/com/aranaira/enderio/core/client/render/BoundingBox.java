@@ -1,11 +1,11 @@
 package com.aranaira.enderio.core.client.render;
 
-import com.aranaira.enderio.core.common.vecmath.Vector2f;
-import com.aranaira.enderio.core.common.vecmath.Vertex;
 import com.aranaira.enderio.core.api.client.render.VertexTransform;
 import com.aranaira.enderio.core.common.util.NNList;
+import com.aranaira.enderio.core.common.vecmath.Vector2f;
 import com.aranaira.enderio.core.common.vecmath.Vector3d;
 import com.aranaira.enderio.core.common.vecmath.Vector3f;
+import com.aranaira.enderio.core.common.vecmath.Vertex;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
