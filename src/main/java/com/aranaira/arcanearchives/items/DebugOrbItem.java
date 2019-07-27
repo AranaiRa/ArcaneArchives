@@ -7,6 +7,7 @@ import com.aranaira.arcanearchives.blocks.RadiantTrove;
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
+import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.inventory.handlers.OptionalUpgradesHandler;
 import com.aranaira.arcanearchives.inventory.handlers.SizeUpgradeItemHandler;
 import com.aranaira.arcanearchives.inventory.handlers.VoidingFluidTank;
@@ -289,13 +290,15 @@ public class DebugOrbItem extends ItemTemplate {
 	public static void onLeftClickBlock (LeftClickBlock event) {
 		World world = event.getWorld();
 		BlockPos pos = event.getPos();
+		EntityPlayer player = event.getEntityPlayer();
+		if (player.getHeldItemMainhand().getItem() != ItemRegistry.DEBUG_ORB) {
+			return;
+		}
 		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
 		if (!(block instanceof BlockTemplate)) return;
 
 		if (block instanceof RadiantChest) {
-			long diff = System.currentTimeMillis() - lastHit;
-			lastHit = System.currentTimeMillis();
 			event.setUseBlock(Result.DENY);
 			event.setUseItem(Result.DENY);
 			RadiantChestTileEntity te = WorldUtil.getTileEntity(RadiantChestTileEntity.class, world, pos);
