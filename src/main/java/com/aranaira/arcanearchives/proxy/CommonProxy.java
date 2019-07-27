@@ -10,6 +10,7 @@ import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.entity.EntityWeight;
 import com.aranaira.arcanearchives.events.ClientTickHandler;
 import com.aranaira.arcanearchives.init.BlockRegistry;
+import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.init.RecipeLibrary;
 import com.aranaira.arcanearchives.network.Networking;
 import net.minecraft.block.Block;
@@ -27,6 +28,9 @@ public class CommonProxy {
 	public void preInit (FMLPreInitializationEvent event) {
 		ArcaneArchives.logger = event.getModLog();
 		NetworkRegistry.INSTANCE.registerGuiHandler(ArcaneArchives.instance, new AAGuiHandler());
+
+		BlockRegistry.init();
+		ItemRegistry.init();
 
 		Networking.registerPackets();
 		EntityRegistry.registerModEntity(new ResourceLocation(ArcaneArchives.MODID, "weight"), EntityWeight.class, "weight", 0, ArcaneArchives.instance, 64, 10, false);

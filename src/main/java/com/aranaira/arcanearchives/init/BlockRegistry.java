@@ -67,6 +67,9 @@ public class BlockRegistry {
 	//public static final MatrixRepositoryTileEntity MATRIX_REPOSITORY_TILE_ENTITY = new MatrixRepositoryTileEntity();
 	//public static final MatrixStorageTileEntity MATRIX_STORAGE_TILE_ENTITY = new MatrixStorageTileEntity();
 
+	public static void init () {
+	}
+
 	@SubscribeEvent
 	public static void onBlockRegister (RegistryEvent.Register<Block> event) {
 		IForgeRegistry<Block> registry = event.getRegistry();

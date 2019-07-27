@@ -93,6 +93,9 @@ public class ItemRegistry {
 	//BAUBLES
 	public static final GemSocket BAUBLE_GEMSOCKET = new GemSocket();
 
+	public static void init () {
+	}
+
 	//SPIRIT SPHERES
 	//public static final SpiritOrbItem SPIRIT_ORB = new SpiritOrbItem();
 
