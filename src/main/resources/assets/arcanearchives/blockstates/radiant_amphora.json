@@ -2,7 +2,7 @@
   "forge_marker": 1,
   "variants": {
     "inventory": {
-      "model": "arcanearchives:baked_amphora",
+      "model": "arcanearchives:radiant_amphora",
       "textures": {
         "base": "arcanearchives:items/item_radiantamphora",
         "fluid": "arcanearchives:items/item_radiantamphora_fluidmask_fill",

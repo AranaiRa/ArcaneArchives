@@ -213,7 +213,9 @@ public class ModelAmphora implements IModel {
 		public boolean accepts (ResourceLocation modelLocation) {
 			if (!modelLocation.getNamespace().equals("arcanearchives")) return false;
 
-			return modelLocation.getPath().equals("baked_amphora");
+			if (!modelLocation.getPath().equals("radiant_amphora")) return false;
+
+			return true;
 		}
 
 		@Override
