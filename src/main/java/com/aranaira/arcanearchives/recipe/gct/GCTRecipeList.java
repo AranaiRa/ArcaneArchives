@@ -93,6 +93,7 @@ public class GCTRecipeList implements IGCTRecipeList {
 	}
 
 	@Override
+	@Nullable
 	public IGCTRecipe getRecipeByIndex (int index) {
 		if (index < 0 || index >= RECIPE_LIST.size()) {
 			return null;

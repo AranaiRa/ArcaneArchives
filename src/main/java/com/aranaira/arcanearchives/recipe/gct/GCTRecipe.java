@@ -2,12 +2,11 @@ package com.aranaira.arcanearchives.recipe.gct;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.api.IGCTRecipe;
+import com.aranaira.arcanearchives.api.RecipeIngredientHandler;
 import com.aranaira.arcanearchives.recipe.IngredientStack;
 import com.aranaira.arcanearchives.recipe.IngredientsMatcher;
-import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
 import it.unimi.dsi.fastutil.ints.Int2IntMap.Entry;
-import jdk.nashorn.internal.objects.annotations.Function;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
