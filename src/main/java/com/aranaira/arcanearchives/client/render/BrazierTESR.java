@@ -25,16 +25,26 @@ public class BrazierTESR extends FastTESR<BrazierTileEntity> {
         lightEnd(color(buff.pos(x + 0.50, y + 1.25, z + 0.75)).tex(sprite.getMaxU(), sprite.getMinV()));
         lightEnd(color(buff.pos(x + 0.75, y + 0.75, z + 0.75)).tex(sprite.getMaxU(), sprite.getMaxV()));
         lightEnd(color(buff.pos(x + 0.75, y + 0.75, z + 0.25)).tex(sprite.getMinU(), sprite.getMaxV()));
-        
-        lightEnd(color(buff.pos(x + 0.25, y + 1.25, z + 0.50)).tex(sprite.getMinU(), sprite.getMinV()));
-        lightEnd(color(buff.pos(x + 0.75, y + 1.25, z + 0.50)).tex(sprite.getMaxU(), sprite.getMinV()));
-        lightEnd(color(buff.pos(x + 0.75, y + 0.75, z + 0.25)).tex(sprite.getMaxU(), sprite.getMaxV()));
-        lightEnd(color(buff.pos(x + 0.25, y + 0.75, z + 0.25)).tex(sprite.getMinU(), sprite.getMaxV()));
-        
-        lightEnd(color(buff.pos(x + 0.25, y + 1.25, z + 0.50)).tex(sprite.getMinU(), sprite.getMinV()));
-        lightEnd(color(buff.pos(x + 0.75, y + 1.25, z + 0.50)).tex(sprite.getMaxU(), sprite.getMinV()));
-        lightEnd(color(buff.pos(x + 0.75, y + 0.75, z + 0.75)).tex(sprite.getMaxU(), sprite.getMaxV()));
-        lightEnd(color(buff.pos(x + 0.25, y + 0.75, z + 0.75)).tex(sprite.getMinU(), sprite.getMaxV()));
+
+        lightEnd(color(buff.pos(x + 0.7165, y + 1.25, z + 0.3750)).tex(sprite.getMinU(), sprite.getMinV()));
+        lightEnd(color(buff.pos(x + 0.2835, y + 1.25, z + 0.6250)).tex(sprite.getMaxU(), sprite.getMinV()));
+        lightEnd(color(buff.pos(x + 0.1585, y + 0.75, z + 0.4085)).tex(sprite.getMaxU(), sprite.getMaxV()));
+        lightEnd(color(buff.pos(x + 0.5915, y + 0.75, z + 0.1585)).tex(sprite.getMinU(), sprite.getMaxV()));
+
+        lightEnd(color(buff.pos(x + 0.7165, y + 1.25, z + 0.3750)).tex(sprite.getMinU(), sprite.getMinV()));
+        lightEnd(color(buff.pos(x + 0.2835, y + 1.25, z + 0.6250)).tex(sprite.getMaxU(), sprite.getMinV()));
+        lightEnd(color(buff.pos(x + 0.4085, y + 0.75, z + 0.8415)).tex(sprite.getMaxU(), sprite.getMaxV()));
+        lightEnd(color(buff.pos(x + 0.8418, y + 0.75, z + 0.5915)).tex(sprite.getMinU(), sprite.getMaxV()));
+
+        lightEnd(color(buff.pos(x + 0.2835, y + 1.25, z + 0.3750)).tex(sprite.getMinU(), sprite.getMinV()));
+        lightEnd(color(buff.pos(x + 0.7165, y + 1.25, z + 0.6250)).tex(sprite.getMaxU(), sprite.getMinV()));
+        lightEnd(color(buff.pos(x + 0.5915, y + 0.75, z + 0.8415)).tex(sprite.getMaxU(), sprite.getMaxV()));
+        lightEnd(color(buff.pos(x + 0.1585, y + 0.75, z + 0.5915)).tex(sprite.getMinU(), sprite.getMaxV()));
+
+        lightEnd(color(buff.pos(x + 0.2835, y + 1.25, z + 0.3750)).tex(sprite.getMinU(), sprite.getMinV()));
+        lightEnd(color(buff.pos(x + 0.7165, y + 1.25, z + 0.6250)).tex(sprite.getMaxU(), sprite.getMinV()));
+        lightEnd(color(buff.pos(x + 0.8415, y + 0.75, z + 0.4085)).tex(sprite.getMaxU(), sprite.getMaxV()));
+        lightEnd(color(buff.pos(x + 0.4085, y + 0.75, z + 0.1585)).tex(sprite.getMinU(), sprite.getMaxV()));
     
     
     }
