@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives;
 
 import com.aranaira.arcanearchives.integration.crafttweaker.GCTTweaker;
-import epicsquid.roots.util.zen.ZenDocExporter;
+import com.aranaira.arcanearchives.util.zen.ZenDocExporter;
 
 import java.io.IOException;
 import java.nio.file.Files;
