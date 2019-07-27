@@ -302,7 +302,6 @@ public class DebugOrbItem extends ItemTemplate {
 			event.setUseBlock(Result.DENY);
 			event.setUseItem(Result.DENY);
 			RadiantChestTileEntity te = WorldUtil.getTileEntity(RadiantChestTileEntity.class, world, pos);
-			EntityPlayer player = event.getEntityPlayer();
 			player.sendMessage(new TextComponentString(world.isRemote ? "Client-side data:" : "Server-side data:"));
 			if (te == null) {
 				player.sendMessage(new TextComponentString("There's no Radiant Chest tile entity! WTF?"));
