@@ -1,8 +1,7 @@
 package com.aranaira.arcanearchives.recipe.fastcrafting;
 
 import com.aranaira.arcanearchives.api.IArcaneArchivesRecipe;
-import com.aranaira.arcanearchives.api.IGCTRecipe;
-import com.aranaira.arcanearchives.api.IGCTRecipe.RecipeIngredientHandler;
+import com.aranaira.arcanearchives.api.RecipeIngredientHandler;
 import com.aranaira.arcanearchives.recipe.IngredientStack;
 import com.aranaira.arcanearchives.recipe.IngredientsMatcher;
 import com.aranaira.arcanearchives.util.ItemUtils;
@@ -70,11 +69,6 @@ public class FastCraftingRecipe implements IArcaneArchivesRecipe {
 	@Override
 	public List<IngredientStack> getIngredients () {
 		return ingredients;
-	}
-
-	@Override
-	public void consumeAndHandleInventory (IArcaneArchivesRecipe recipe, IItemHandler inventory, EntityPlayer player, @Nullable TileEntity tile, @Nullable Runnable callback, @Nullable RecipeIngredientHandler handler) {
-		consumeAndHandleInventory(recipe, inventory, player, tile, callback, handler, null);
 	}
 
 	public void consumeAndHandleInventory (IArcaneArchivesRecipe recipe, IItemHandler inventory, EntityPlayer player, @Nullable TileEntity tile, @Nullable Runnable callback, @Nullable RecipeIngredientHandler handler, @Nullable Runnable finalCallback) {

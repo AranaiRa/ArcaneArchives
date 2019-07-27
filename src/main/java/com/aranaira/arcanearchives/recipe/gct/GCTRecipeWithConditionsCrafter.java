@@ -17,6 +17,7 @@ public class GCTRecipeWithConditionsCrafter extends GCTRecipeWithCrafter {
 		super(name, result, recipe);
 	}
 
+	@Override
 	public IGCTRecipe addCondition (GCTCondition predicate) {
 		this.conditions.add(predicate);
 		return this;
@@ -31,10 +32,5 @@ public class GCTRecipeWithConditionsCrafter extends GCTRecipeWithCrafter {
 		}
 
 		return true;
-	}
-
-	@FunctionalInterface
-	public interface GCTCondition {
-		boolean test (EntityPlayer player, TileEntity tile);
 	}
 }
