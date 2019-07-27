@@ -7,6 +7,7 @@ import com.aranaira.arcanearchives.commands.CommandCopy;
 import com.aranaira.arcanearchives.commands.CommandHive;
 import com.aranaira.arcanearchives.commands.CommandTiles;
 import com.aranaira.arcanearchives.data.DataHelper;
+import com.aranaira.arcanearchives.entity.EntityWeight;
 import com.aranaira.arcanearchives.events.ClientTickHandler;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.RecipeLibrary;
@@ -14,9 +15,11 @@ import com.aranaira.arcanearchives.network.Networking;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -26,6 +29,7 @@ public class CommonProxy {
 		NetworkRegistry.INSTANCE.registerGuiHandler(ArcaneArchives.instance, new AAGuiHandler());
 
 		Networking.registerPackets();
+		EntityRegistry.registerModEntity(new ResourceLocation(ArcaneArchives.MODID, "weight"), EntityWeight.class, "weight", 0, ArcaneArchives.instance, 64, 10, false);
 	}
 
 	public void init (FMLInitializationEvent event) {

@@ -3,7 +3,9 @@ package com.aranaira.arcanearchives.proxy;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.Keybinds;
 import com.aranaira.arcanearchives.client.render.*;
+import com.aranaira.arcanearchives.client.render.entity.RenderWeight;
 import com.aranaira.arcanearchives.data.DataHelper;
+import com.aranaira.arcanearchives.entity.EntityWeight;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.integration.guidebook.GBookInit;
 import com.aranaira.arcanearchives.items.itemblocks.RadiantTankItem;
@@ -19,6 +21,7 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -79,6 +82,7 @@ public class ClientProxy extends CommonProxy {
 		IconUtil.instance.init();
 
 		Keybinds.initKeybinds();
+		RenderingRegistry.registerEntityRenderingHandler(EntityWeight.class, RenderWeight::new);
 	}
 
 	@Override
