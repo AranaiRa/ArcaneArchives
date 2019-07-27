@@ -33,6 +33,7 @@ import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import com.aranaira.arcanearchives.types.iterators.SlotIterable;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
+import epicsquid.mysticallib.util.Util;
 import gigaherz.lirelent.guidebook.client.BookRegistryEvent;
 import it.unimi.dsi.fastutil.objects.Object2LongOpenHashMap;
 import net.minecraft.block.Block;
@@ -682,7 +683,7 @@ public class EventHandler {
 
 			long lastPlayed = shouldPlaySound.getOrDefault(player, -1L);
 			boolean playSound = true;
-			if ((System.currentTimeMillis() - lastPlayed) < 2000 && lastPlayed != -1) {
+			if ((System.currentTimeMillis() - lastPlayed) < 500 && lastPlayed != -1) {
 				playSound = false;
 			}
 			EntityItem item = event.getItem();
@@ -697,7 +698,7 @@ public class EventHandler {
 					World world = event.getEntityPlayer().world;
 
 					if (!world.isRemote && playSound) {
-						world.playSound(null, item.posX, item.posY, item.posZ, SoundEvents.ENTITY_GENERIC_EAT, SoundCategory.PLAYERS, 0.6f, 1f);
+						world.playSound(null, item.posX, item.posY, item.posZ, SoundEvents.ENTITY_GENERIC_EAT, SoundCategory.PLAYERS, 0.4f, 0.7f + Util.rand.nextFloat() * 0.6f);
 						shouldPlaySound.put(player, System.currentTimeMillis());
 					}
 					break;
