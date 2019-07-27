@@ -20,3 +20,7 @@ Ender Core code for range particles used with permission (from two contributors)
 
 - [EnderCore](https://github.com/SleepyTrousers/EnderCore)
 - [EnderIO](https://github.com/SleepyTrousers/EnderIO/)
+
+# CodeTaylor's ZenScript Documentation
+
+Used with compatible Apache License and permission from CodeTaylor. 
