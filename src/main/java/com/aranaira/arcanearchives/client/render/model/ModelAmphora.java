@@ -55,8 +55,8 @@ public class ModelAmphora implements IModel {
 	@Nullable
 	private final Fluid fluid;
 
-	private boolean rotated;
-	private boolean unlinked;
+	private boolean rotated = false;
+	private boolean unlinked = true;
 
 	public ModelAmphora () {
 		this(null, null, null, null, null, null, false, false);
@@ -211,9 +211,11 @@ public class ModelAmphora implements IModel {
 
 		@Override
 		public boolean accepts (ResourceLocation modelLocation) {
-			if (!modelLocation.getNamespace().equals("arcanearchives")) return false;
+			if (!modelLocation.getNamespace().equals(ArcaneArchives.MODID)) return false;
 
-			if (!modelLocation.getPath().equals("radiant_amphora")) return false;
+			if (!modelLocation.getPath().equals("radiant_amphora") && !modelLocation.getPath().equals("baked_amphora")) {
+				return false;
+			}
 
 			return true;
 		}
