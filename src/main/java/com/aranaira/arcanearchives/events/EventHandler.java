@@ -30,9 +30,15 @@ import com.aranaira.arcanearchives.network.PacketConfig.RequestMaxDistance;
 import com.aranaira.arcanearchives.network.PacketRadiantAmphora.Toggle;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
+import com.aranaira.arcanearchives.types.iterators.SlotIterable;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import gigaherz.lirelent.guidebook.client.BookRegistryEvent;
+import it.unimi.dsi.fastutil.longs.Long2BooleanOpenHashMap;
+import it.unimi.dsi.fastutil.longs.Long2IntOpenHashMap;
+import it.unimi.dsi.fastutil.longs.Long2LongOpenHashMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
+import it.unimi.dsi.fastutil.objects.Object2LongOpenHashMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBookshelf;
 import net.minecraft.client.Minecraft;
@@ -56,6 +62,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -664,23 +671,40 @@ public class EventHandler {
 		}
 	}
 
+	public static Object2LongOpenHashMap<EntityPlayer> shouldPlaySound = new Object2LongOpenHashMap<>();
+
 	@SubscribeEvent
 	public static void onItemPickup (EntityItemPickupEvent event) {
 		if (event.getEntityPlayer() != null) {
 			ArrayList<ItemStack> devouringCharms = new ArrayList<>();
-			for (ItemStack stack : event.getEntityPlayer().inventory.mainInventory) {
+			EntityPlayer player = event.getEntityPlayer();
+			IItemHandler cap = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+			for (ItemStack stack : new SlotIterable(cap)) {
 				if (stack.getItem() == ItemRegistry.DEVOURING_CHARM) {
 					devouringCharms.add(stack);
 				}
 			}
 
+			long lastPlayed = shouldPlaySound.getOrDefault(player, -1L);
+			boolean playSound = true;
+			if ((System.currentTimeMillis() - lastPlayed) < 2000 && lastPlayed != -1) {
+				playSound = false;
+			}
+			EntityItem item = event.getItem();
+			ItemStack stack = item.getItem();
+
 			for (ItemStack dCharm : devouringCharms) {
 				DevouringCharmHandler handler = DevouringCharmHandler.getHandler(dCharm);
-				if (!handler.shouldVoidItem(event.getItem().getItem())) {
-					continue;
-				} else {
-					event.getItem().getItem().shrink(event.getItem().getItem().getCount());
+				if (handler.shouldVoidItem(stack)) {
+					stack.shrink(stack.getCount());
+					item.setDead();
 					event.setResult(Event.Result.DENY);
+					World world = event.getEntityPlayer().world;
+
+					if (!world.isRemote && playSound) {
+						world.playSound(null, item.posX, item.posY, item.posZ, SoundEvents.ENTITY_GENERIC_EAT, SoundCategory.PLAYERS, 0.6f, 1f);
+						shouldPlaySound.put(player, System.currentTimeMillis());
+					}
 					break;
 				}
 			}
