@@ -214,6 +214,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 		stack = inventory.extractItem(0, count, false);
 
 		EntityItem item = new EntityItem(world, player.posX, player.posY, player.posZ, stack);
+		item.setPickupDelay(0);
 		world.spawnEntity(item);
 	}
 
