@@ -1,13 +1,11 @@
 package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.inventory.ContainerRadiantCraftingTable;
-import com.aranaira.arcanearchives.inventory.handlers.InventoryCraftingPersistent;
 import com.aranaira.arcanearchives.recipe.fastcrafting.FastCraftingRecipe;
 import com.aranaira.arcanearchives.tileentities.interfaces.IManifestTileEntity;
 import com.aranaira.arcanearchives.util.NBTUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.Block;
-import net.minecraft.client.gui.recipebook.RecipeList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
@@ -107,6 +105,22 @@ public class RadiantCraftingTableTileEntity extends ImmanenceTileEntity implemen
 		if (!world.isRemote) {
 			WorldUtil.spawnInventoryInWorld(world, getPos(), persistentMatrix);
 		}
+	}
+
+	public boolean canCraftRecipe (EntityPlayer player, int index) {
+		IRecipe recipe = recipeList.get(index);
+		if (recipe == null) {
+			return false;
+		}
+
+		if (!(player.openContainer instanceof ContainerRadiantCraftingTable)) {
+			return false;
+		}
+
+		FastCraftingRecipe fast = new FastCraftingRecipe(recipe);
+		IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+		CombinedInvWrapper inv = new CombinedInvWrapper((IItemHandlerModifiable) playerInventory, new InvWrapper(((ContainerRadiantCraftingTable) player.openContainer).getCraftMatrix()));
+		return fast.matches(inv);
 	}
 
 	public void tryCraftingRecipe (EntityPlayer player, int index) {

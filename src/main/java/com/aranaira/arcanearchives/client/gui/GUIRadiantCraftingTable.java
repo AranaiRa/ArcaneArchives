@@ -101,7 +101,7 @@ public class GUIRadiantCraftingTable extends GuiContainer {
 	@Override
 	public void drawSlot (Slot slot) {
 		ItemStack stack = slot.getStack();
-		if (!stack.isEmpty()) {
+		if (!stack.isEmpty() && !(slot instanceof SlotIRecipe)) {
 			if (tracked != null && !tracked.isEmpty() && ManifestTrackingUtils.matches(stack, tracked)) {
 				GlStateManager.disableDepth();
 				long worldTime = this.mc.player.world.getWorldTime();
@@ -128,6 +128,13 @@ public class GUIRadiantCraftingTable extends GuiContainer {
 			} else {
 				if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
 					return;
+				} else {
+					if (!container.tile.canCraftRecipe(this.mc.player, ((SlotIRecipe) slot).getRecipe())) {
+						GlStateManager.disableDepth();
+						Color c = new ColorUtils.Color(189 / 255f, 28 / 255f, 28 / 255f, 1f);
+						GuiContainer.drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, c.toInteger());
+						GlStateManager.enableDepth();
+					}
 				}
 			}
 		}
