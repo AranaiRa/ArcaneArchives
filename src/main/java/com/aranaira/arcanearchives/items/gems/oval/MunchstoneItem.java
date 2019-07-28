@@ -78,8 +78,7 @@ public class MunchstoneItem extends ArcaneGemItem {
 					//TODO: Play a particle effect
 					Vec3d pos = player.getPositionVector().add(0, 1, 0);
 					GemParticle packet = new GemParticle(cut, color, pos, pos);
-					NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, pos.x, pos.y, pos.z, 160);
-					Networking.CHANNEL.sendToAllAround(packet, tp);
+					Networking.sendToAllTracking(packet, player);
 					return true;
 				}
 			}
@@ -132,8 +131,7 @@ public class MunchstoneItem extends ArcaneGemItem {
 							world.setBlockState(pos, Blocks.AIR.getDefaultState());
 
 							GemParticle packet = new GemParticle(cut, color, blockPosToVector(pos, true), blockPosToVector(pos, true));
-							NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, pos.getX(), pos.getY(), pos.getZ(), 40);
-							Networking.CHANNEL.sendToAllAround(packet, tp);
+							Networking.sendToAllTracking(packet, player);
 						}
 						return EnumActionResult.SUCCESS;
 					}

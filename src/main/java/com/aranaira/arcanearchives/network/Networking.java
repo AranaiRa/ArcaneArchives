@@ -3,7 +3,10 @@ package com.aranaira.arcanearchives.network;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.network.Handlers.BaseHandler;
 import com.aranaira.arcanearchives.network.Messages.EmptyMessage;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
@@ -54,5 +57,13 @@ public class Networking {
 	private static <T extends EmptyMessage<T> & BaseHandler<T>> void registerPacks (Class<T> handlerAndMessage, Side side) {
 		CHANNEL.registerMessage(handlerAndMessage, handlerAndMessage, packetID, side);
 		packetID++;
+	}
+
+	public static void sendToAllTracking(IMessage message, int dimension, BlockPos position) {
+
+	}
+
+    public static void sendToAllTracking(IMessage message, Entity entity)	 {
+		CHANNEL.sendToAllTracking(message, entity);
 	}
 }
