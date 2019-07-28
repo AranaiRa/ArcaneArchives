@@ -96,7 +96,8 @@ public class RadiantAmphoraItem extends ItemTemplate {
 			BlockPos bp = util.getHomePos();
 			int dimID = util.getHomeDim();
 			String fluidType = util.getFluidType();
-			tooltip.add("Linked to " + bp.getX() + "/" + bp.getY() + "/" + bp.getZ() + " containing " + fluidType + " in \"" + DimensionType.getById(dimID).getName() + "\"");
+			tooltip.add("");
+			tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.amphora.linked", bp.getX(), bp.getY(), bp.getZ(), DimensionType.getById(dimID).getName(), fluidType));
 		}
 	}
 

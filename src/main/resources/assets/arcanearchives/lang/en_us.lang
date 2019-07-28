@@ -278,6 +278,8 @@ arcanearchives.tooltip.gem.recharge.parchtear=Slot into a Devouring Charm's buck
 arcanearchives.tooltip.gem.recharge.phoenixway=Consumes gunpowder in your inventory to recharge.
 arcanearchives.tooltip.gem.recharge.stormway=Hold or throw in a storm to recharge.
 
+arcanearchives.tooltip.amphora.linked=Linked to tank at [%d,%d,%d] (in %s) which contains fluid: %s
+
 arcanearchives.tooltip.bauble.gemsocket=Can be slotted with an Arcane Gem. Slotted Arcane Gem counts as being held at all times.
 arcanearchives.tooltip.bauble.gemsocket.contains=Contains a
 
