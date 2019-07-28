@@ -53,6 +53,21 @@ public interface IGCTRecipeList {
 	IGCTRecipe makeAndAddRecipe (String name, @Nonnull ItemStack result, Object... recipe);
 
 	/**
+	 * As above, but instead of adding a new recipe will attempt to replace the recipe
+	 * using the current name. This ensures that the continuity of the recipe list remains
+	 * the same when modifying pre-existing recipes.
+	 *
+	 * Will throw an IndexOutOfBoundsException if the name is not contained within the recipe
+	 * map.
+	 *
+	 * @param name The name to replace.
+	 * @param result As per makeAndAddRecipe.
+	 * @param recipe As per makeAndAddRecipe.
+	 * @return As per makeAndAddRecipe.
+	 */
+	IGCTRecipe makeAndReplaceRecipe (String name, @Nonnull ItemStack result, Object... recipe) throws IndexOutOfBoundsException;
+
+	/**
 	 * Identical to makeAndAddRecipe except that the default implementation
 	 * allows for both the supply of the creator of the item to the item when
 	 * it is crafted, and supports and enforces conditions added via IGCTRecipe::addCondition.
@@ -64,6 +79,16 @@ public interface IGCTRecipeList {
 	 * by default GCTRecipeWithConditionsCrafter.
 	 */
 	IGCTRecipe makeAndAddRecipeWithCreatorAndCondition (String name, @Nonnull ItemStack result, Object... recipe);
+
+	/**
+	 * As per makeAndReplaceRecipe only returning a Creators + Conditions IGCTRecipe instance.
+	 *
+	 * @param name See makeAndReplaceRecipe.
+	 * @param result  See makeAndReplaceRecipe.
+	 * @param recipe See makeAndReplaceRecipe.
+	 * @return See makeAndReplaceRecipe.
+	 */
+	IGCTRecipe makeAndReplaceRecipeWithCreatorAndCondition (String name, @Nonnull ItemStack result, Object... recipe) throws IndexOutOfBoundsException;
 
 	/**
 	 * Allows the addition of a straight instance of an IGCTRecipe.

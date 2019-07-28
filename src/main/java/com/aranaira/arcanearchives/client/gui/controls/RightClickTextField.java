@@ -13,7 +13,8 @@ public class RightClickTextField extends GuiTextField {
 
 	@Override
 	public boolean mouseClicked (int mouseX, int mouseY, int mouseButton) {
-		if (mouseButton == 1) {
+		boolean flag = mouseX >= this.x && mouseX < this.x + this.width && mouseY >= this.y && mouseY < this.y + this.height;
+		if (mouseButton == 1 && flag) {
 			// right click
 			this.setText("");
 			this.setResponderEntryValue(this.id, "");

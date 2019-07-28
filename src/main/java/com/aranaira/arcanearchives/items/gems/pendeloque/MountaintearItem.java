@@ -93,8 +93,7 @@ public class MountaintearItem extends ArcaneGemItem {
 					}
 
 					GemParticle packet = new GemParticle(cut, color, start, end);
-					NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, start.x, start.y, start.z, 160);
-					Networking.CHANNEL.sendToAllAround(packet, tp);
+					Networking.sendToAllTracking(packet, player);
 				}
 			} else {
 				recharge(world, player, handler.getHeld());

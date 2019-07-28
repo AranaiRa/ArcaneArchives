@@ -18,13 +18,9 @@ public class ManifestSearchField extends RightClickTextField {
 
 	@Override
 	public boolean mouseClicked (int mouseX, int mouseY, int mouseButton) {
-		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
+		boolean flag = mouseX >= this.x && mouseX < this.x + this.width && mouseY >= this.y && mouseY < this.y + this.height;
+		if (flag && (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))) {
 			syncFromJEI();
-		} else if (mouseButton == 1) {
-			// right click
-			this.setText("");
-			this.setResponderEntryValue(this.id, "");
-			syncToJEI();
 		}
 
 		return super.mouseClicked(mouseX, mouseY, mouseButton);

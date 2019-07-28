@@ -70,8 +70,7 @@ public class Elixirspindle extends ArcaneGemItem {
 					//TODO: Play a particle effect
 					Vec3d pos = player.getPositionVector().add(0, 1, 0);
 					GemParticle packet = new GemParticle(cut, color, pos, pos);
-					NetworkRegistry.TargetPoint tp = new NetworkRegistry.TargetPoint(player.dimension, pos.x, pos.y, pos.z, 160);
-					Networking.CHANNEL.sendToAllAround(packet, tp);
+					Networking.sendToAllTracking(packet, player);
 					return true;
 				}
 			}

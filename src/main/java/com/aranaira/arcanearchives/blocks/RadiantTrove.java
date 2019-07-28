@@ -43,7 +43,7 @@ public class RadiantTrove extends BlockDirectionalTemplate {
 	public static final String NAME = "radiant_trove";
 
 	public RadiantTrove () {
-		super(NAME, Material.WOOD);
+		super(NAME, Material.IRON);
 		setSize(1, 1, 1);
 		setLightLevel(16 / 16f);
 		setHardness(3f);

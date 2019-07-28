@@ -96,7 +96,8 @@ public class RadiantAmphoraItem extends ItemTemplate {
 			BlockPos bp = util.getHomePos();
 			int dimID = util.getHomeDim();
 			String fluidType = util.getFluidType();
-			tooltip.add("Linked to " + bp.getX() + "/" + bp.getY() + "/" + bp.getZ() + " containing " + fluidType + " in \"" + DimensionType.getById(dimID).getName() + "\"");
+			tooltip.add("");
+			tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.amphora.linked", bp.getX(), bp.getY(), bp.getZ(), DimensionType.getById(dimID).getName(), fluidType));
 		}
 	}
 
@@ -294,8 +295,9 @@ public class RadiantAmphoraItem extends ItemTemplate {
 			IFluidHandler handler = getCapability();
 			if (handler != null) {
 				FluidStack stack = getFluidStack(handler);
+				Fluid fluid = getFluid(handler);
 
-				if (stack == null) {
+				if (stack == null && fluid == null) {
 					return "Unknown fluid";
 				}
 
@@ -303,6 +305,9 @@ public class RadiantAmphoraItem extends ItemTemplate {
 					return net.minecraft.util.text.translation.I18n.translateToLocal(stack.getFluid().getName());
 				}
 
+				if (stack == null) {
+					return "Unknown fluid";
+				}
 				return net.minecraft.util.text.translation.I18n.translateToLocalFormatted(stack.getLocalizedName());
 			}
 
@@ -463,6 +468,9 @@ public class RadiantAmphoraItem extends ItemTemplate {
 			validate();
 
 			if (tank == null || util.getMode() == TankMode.FILL) {
+				if (!doDrain && maxDrain == Integer.MAX_VALUE && tank != null) {
+					return tank.drain(maxDrain, false);
+				}
 				return null;
 			}
 

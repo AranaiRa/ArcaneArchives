@@ -4,26 +4,20 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.Keybinds;
 import com.aranaira.arcanearchives.client.render.*;
 import com.aranaira.arcanearchives.client.render.entity.RenderWeight;
-import com.aranaira.arcanearchives.client.render.model.ModelAmphora;
-import com.aranaira.arcanearchives.client.render.model.ModelAmphora.LoaderAmphora;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.entity.EntityWeight;
 import com.aranaira.arcanearchives.init.BlockRegistry;
-import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.integration.guidebook.GBookInit;
 import com.aranaira.arcanearchives.items.itemblocks.RadiantTankItem;
 import com.aranaira.arcanearchives.tileentities.BrazierTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
 import com.aranaira.enderio.core.client.render.IconUtil;
-import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.client.model.ModelDynBucket;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -78,9 +72,6 @@ public class ClientProxy extends CommonProxy {
 		//
 		brazierTESR = new BrazierTESR();
 		ClientRegistry.bindTileEntitySpecialRenderer(BrazierTileEntity.class, brazierTESR);
-		//ModelLoader.setCustomModelResourceLocation(ItemRegistry.RADIANT_AMPHORA, 0, ModelAmphora.RESOURCE);
-		ModelLoader.setCustomMeshDefinition(ItemRegistry.RADIANT_AMPHORA, stack -> ModelAmphora.RESOURCE);
-		ModelBakery.registerItemVariants(ItemRegistry.RADIANT_AMPHORA, ModelAmphora.RESOURCE);
 	}
 
 	@Override
@@ -88,7 +79,6 @@ public class ClientProxy extends CommonProxy {
 		super.preInit(event);
 		OBJLoader.INSTANCE.addDomain(ArcaneArchives.MODID);
 		IconUtil.instance.init();
-		ModelLoaderRegistry.registerLoader(LoaderAmphora.INSTANCE);
 
 		Keybinds.initKeybinds();
 		RenderingRegistry.registerEntityRenderingHandler(EntityWeight.class, RenderWeight::new);

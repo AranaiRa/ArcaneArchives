@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.recipe.gct;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.api.IGCTRecipe;
 import com.aranaira.arcanearchives.api.IGCTRecipeList;
 import com.aranaira.arcanearchives.util.ItemUtils;
@@ -53,7 +54,29 @@ public class GCTRecipeList implements IGCTRecipeList {
 	}
 
 	@Override
+	public IGCTRecipe makeAndReplaceRecipe (String name, @Nonnull ItemStack result, Object... recipe) throws IndexOutOfBoundsException {
+		ResourceLocation nameResolved = new ResourceLocation(ArcaneArchives.MODID, name);
+		if (!RECIPE_LIST.containsKey(nameResolved)) {
+			throw new IndexOutOfBoundsException("Key '" + name + "' is not contained in the recipe list; use `makeAndAddRecipe` instead or check your spelling.");
+		}
+		GCTRecipe newRecipe = new GCTRecipe(name, result, recipe);
+		addRecipe(newRecipe);
+		return newRecipe;
+	}
+
+	@Override
 	public IGCTRecipe makeAndAddRecipeWithCreatorAndCondition (String name, @Nonnull ItemStack result, Object... recipe) {
+		GCTRecipeWithConditionsCrafter newRecipe = new GCTRecipeWithConditionsCrafter(name, result, recipe);
+		addRecipe(newRecipe);
+		return newRecipe;
+	}
+
+	@Override
+	public IGCTRecipe makeAndReplaceRecipeWithCreatorAndCondition (String name, @Nonnull ItemStack result, Object... recipe) throws IndexOutOfBoundsException {
+		ResourceLocation nameResolved = new ResourceLocation(ArcaneArchives.MODID, name);
+		if (!RECIPE_LIST.containsKey(nameResolved)) {
+			throw new IndexOutOfBoundsException("Key '" + name + "' is not contained in the recipe list; use `makeAndAddRecipe` instead or check your spelling.");
+		}
 		GCTRecipeWithConditionsCrafter newRecipe = new GCTRecipeWithConditionsCrafter(name, result, recipe);
 		addRecipe(newRecipe);
 		return newRecipe;

@@ -113,7 +113,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 		this.markDirty();
 
 		if (inventory.isEmpty()) {
-			inventory.setItem(mainhand);
+			inventory.setReference(mainhand);
 		}
 
 		ItemStack reference = inventory.getItem();
@@ -466,7 +466,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 		}
 
 		@Override
-		public void setItem (ItemStack reference) {
+		public void setReference (ItemStack reference) {
 			this.reference = reference.copy();
 			this.reference.setCount(1);
 			markDirty();

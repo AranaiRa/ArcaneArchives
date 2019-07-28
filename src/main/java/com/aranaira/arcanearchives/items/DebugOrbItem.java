@@ -84,12 +84,12 @@ public class DebugOrbItem extends ItemTemplate {
 			RadiantTroveTileEntity rte = (RadiantTroveTileEntity) ite;
 			TroveItemHandler handler = rte.getInventory();
 			if (handler.getItem().isEmpty()) {
-				handler.setItem(new ItemStack(Items.SNOWBALL));
+				handler.setReference(new ItemStack(Items.SNOWBALL));
 				handler.setCount(handler.getMaxCount());
 				player.sendStatusMessage(new TextComponentString("Filled your empty trove!").setStyle(new Style().setColor(TextFormatting.GOLD).setBold(true)), true);
 				return EnumActionResult.SUCCESS;
 			} else {
-				handler.setItem(ItemStack.EMPTY);
+				handler.setReference(ItemStack.EMPTY);
 				handler.setCount(0);
 				player.sendStatusMessage(new TextComponentString("Hope you didn't need what was in there!").setStyle(new Style().setColor(TextFormatting.DARK_RED).setBold(true)), true);
 				return EnumActionResult.SUCCESS;
