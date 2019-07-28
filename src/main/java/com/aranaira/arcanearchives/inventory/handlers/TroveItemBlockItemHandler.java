@@ -20,7 +20,7 @@ public class TroveItemBlockItemHandler implements ITroveItemHandler, ICapability
 	private ItemStack container;
 
 	private static int BASE_COUNT = RadiantTroveTileEntity.BASE_COUNT;
-	private int count;
+	private int count = 0;
 	private ItemStack reference = ItemStack.EMPTY;
 
 	public TroveItemBlockItemHandler (ItemStack container) {

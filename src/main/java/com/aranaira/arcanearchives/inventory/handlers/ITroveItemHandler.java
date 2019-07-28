@@ -52,11 +52,7 @@ public interface ITroveItemHandler extends IItemHandler {
 		}
 
 		int count = getCount();
-		if (ItemUtils.areStacksEqualIgnoreSize(reference, stack) || reference.isEmpty()) {
-			if (reference.isEmpty()) {
-				reference = stack.copy();
-				reference.setCount(1);
-			}
+		if (ItemUtils.areStacksEqualIgnoreSize(reference, stack)) {
 			int thisCount = stack.getCount();
 			int diff = 0;
 

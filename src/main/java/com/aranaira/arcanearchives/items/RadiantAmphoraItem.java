@@ -468,7 +468,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 			validate();
 
 			if (tank == null || util.getMode() == TankMode.FILL) {
-				if (!doDrain && maxDrain == Integer.MAX_VALUE) {
+				if (!doDrain && maxDrain == Integer.MAX_VALUE && tank != null) {
 					return tank.drain(maxDrain, false);
 				}
 				return null;
