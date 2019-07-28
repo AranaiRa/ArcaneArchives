@@ -28,19 +28,12 @@ public class RenderHUD {
 	private RenderHUD () {
 	}
 
-	// TODO: DEBUGGING
-	private static int lastDrew = 0;
-
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public static void onDrawScreenPost (RenderGameOverlayEvent.Post event) {
 		Minecraft mc = Minecraft.getMinecraft();
 
 		if (event.getType() == RenderGameOverlayEvent.ElementType.ALL) {
-			if (mc.player.ticksExisted - lastDrew < 0) {
-				lastDrew = Math.max(0, mc.player.ticksExisted - 60);
-			}
-
 			RayTraceResult pos = mc.objectMouseOver;
 
 			if (pos != null && pos.typeOfHit == RayTraceResult.Type.BLOCK) {
@@ -79,14 +72,6 @@ public class RenderHUD {
 								s = I18n.format("arcanearchives.data.gui.radiant_trove.upgrades", handler.getUpgrades());
 							}
 							mc.fontRenderer.drawStringWithShadow(TextFormatting.GOLD + s, (float) (x - 19 - mc.fontRenderer.getStringWidth(s) / 2), (float) (y), 16777215);
-						} else {
-							if (mc.player.ticksExisted - lastDrew >= 40) {
-								lastDrew = mc.player.ticksExisted;
-							}
-						}
-					} else {
-						if (mc.player.ticksExisted - lastDrew >= 40) {
-							lastDrew = mc.player.ticksExisted;
 						}
 					}
 				}

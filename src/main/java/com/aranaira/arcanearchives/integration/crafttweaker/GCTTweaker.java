@@ -34,13 +34,19 @@ public class GCTTweaker {
 	@ZenDocMethod(order = 1, args = {@ZenDocArg(arg = "name", info = "the recipe name"), @ZenDocArg(arg = "output", info = "the output as an itemstack"), @ZenDocArg(arg = "inputs", info = "the inputs as an array of ingredients")})
 	@ZenMethod
 	public static void addRecipe (String name, IItemStack output, IIngredient[] inputs) {
-		CraftTweaker.LATE_ACTIONS.add(new Add(name, InputHelper.toStack(output), inputs));
+		CraftTweaker.LATE_ACTIONS.add(new Add(name, InputHelper.toStack(output), inputs, false));
 	}
 
 	@ZenDocMethod(order = 2, args = {@ZenDocArg(arg = "output", info = "the output itemstack to be removed (quantity must match)")})
 	@ZenMethod
 	public static void removeRecipe (IItemStack output) {
 		CraftTweaker.LATE_ACTIONS.add(new Remove(InputHelper.toStack(output)));
+	}
+
+	@ZenDocMethod(order = 3, args = {@ZenDocArg(arg = "name", info = "the recipe name (must already exist)"), @ZenDocArg(arg = "output", info = "the output as an itemstack"), @ZenDocArg(arg = "inputs", info = "the inputs as an array of ingredients")})
+	@ZenMethod
+	public static void replaceRecipe (String name, IItemStack output, IIngredient[] inputs) {
+		CraftTweaker.LATE_ACTIONS.add(new Add(name, InputHelper.toStack(output), inputs, true));
 	}
 
 	private static class Remove extends BaseAction {
@@ -71,16 +77,24 @@ public class GCTTweaker {
 		private final ResourceLocation name;
 		private final ItemStack output;
 		private final IIngredient[] ingredients;
+		private final boolean replace;
 
-		private Add (String name, ItemStack output, IIngredient[] ingredients) {
+		private Add (String name, ItemStack output, IIngredient[] ingredients, boolean replace) {
 			super("GCT Recipe addition");
-			this.name = new ResourceLocation(ArcaneArchives.MODID, name + ".ct");
+			this.name = new ResourceLocation(ArcaneArchives.MODID, name);
 			this.output = output;
 			this.ingredients = ingredients;
+			this.replace = replace;
 		}
 
 		@Override
 		public void apply () {
+			if (this.replace) {
+				if (GCTRecipeList.instance.getRecipe(name) == null) {
+					CraftTweakerAPI.logError("Attempting to replace recipe " + name.toString() + " when it doesn't exist. Use addRecipe instead.");
+					return;
+				}
+			}
 			List<IngredientStack> stacks = new ArrayList<>();
 			for (IIngredient ingredient : ingredients) {
 				stacks.add(new IngredientStack(CraftTweakerMC.getIngredient(ingredient), ingredient.getAmount()));
