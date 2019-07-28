@@ -15,34 +15,28 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class TroveItemBlockItemHandler implements ITroveItemHandler, ICapabilityProvider {
-	private TroveUpgradeItemHandler upgrades = new TroveUpgradeItemHandler();
-	private OptionalUpgradesHandler optionals = new OptionalUpgradesHandler();
+	private TroveUpgradeItemHandler upgrades = null;
+	private OptionalUpgradesHandler optionals = null;
 	private ItemStack container;
 
 	private static int BASE_COUNT = RadiantTroveTileEntity.BASE_COUNT;
-	private int count = 0;
-	private ItemStack reference = ItemStack.EMPTY;
+	private int count = -1;
+	private ItemStack reference = null;
 
 	public TroveItemBlockItemHandler (ItemStack container) {
 		this.container = container;
-
-		NBTTagCompound tag = ItemUtils.getOrCreateTagCompound(container);
-		if (tag.hasKey(RadiantTroveTileEntity.Tags.HANDLER_ITEM)) {
-			NBTTagCompound incoming = tag.getCompoundTag(RadiantTroveTileEntity.Tags.HANDLER_ITEM);
-			this.count = incoming.getInteger(Tags.COUNT);
-			this.reference = new ItemStack(incoming.getCompoundTag(Tags.REFERENCE));
-		}
-
-		if (tag.hasKey(RadiantTroveTileEntity.Tags.OPTIONAL_UPGRADES)) {
-			this.optionals.deserializeNBT(tag.getCompoundTag(RadiantTroveTileEntity.Tags.OPTIONAL_UPGRADES));
-		}
-
-		if (tag.hasKey(RadiantTroveTileEntity.Tags.SIZE_UPGRADES)) {
-			this.upgrades.deserializeNBT(tag.getCompoundTag(RadiantTroveTileEntity.Tags.SIZE_UPGRADES));
-		}
 	}
 
 	public int getUpgrades () {
+		if (this.upgrades == null) {
+			NBTTagCompound tag = container.getTagCompound();
+			if (tag == null || !tag.hasKey(RadiantTroveTileEntity.Tags.SIZE_UPGRADES)) {
+				return 0;
+			}
+
+			this.upgrades = new TroveUpgradeItemHandler();
+			this.upgrades.deserializeNBT(tag.getCompoundTag(RadiantTroveTileEntity.Tags.SIZE_UPGRADES));
+		}
 		return upgrades.getUpgradesCount();
 	}
 
@@ -73,11 +67,29 @@ public class TroveItemBlockItemHandler implements ITroveItemHandler, ICapability
 
 	@Override
 	public ItemStack getReference () {
+		if (reference == null) {
+			NBTTagCompound tag = container.getTagCompound();
+			if (tag == null || !tag.hasKey(RadiantTroveTileEntity.Tags.HANDLER_ITEM)) {
+				return ItemStack.EMPTY;
+			}
+
+			NBTTagCompound incoming = tag.getCompoundTag(RadiantTroveTileEntity.Tags.HANDLER_ITEM);
+			this.reference = new ItemStack(incoming.getCompoundTag(Tags.REFERENCE));
+		}
 		return this.reference;
 	}
 
 	@Override
 	public int getCount () {
+		if (count == -1) {
+			NBTTagCompound tag = container.getTagCompound();
+			if (tag == null || !tag.hasKey(RadiantTroveTileEntity.Tags.HANDLER_ITEM)) {
+				return 0;
+			}
+
+			NBTTagCompound incoming = tag.getCompoundTag(RadiantTroveTileEntity.Tags.HANDLER_ITEM);
+			this.count = incoming.getInteger(Tags.COUNT);
+		}
 		return count;
 	}
 
@@ -89,10 +101,19 @@ public class TroveItemBlockItemHandler implements ITroveItemHandler, ICapability
 	@Override
 	public void setCount (int count) {
 		this.count = count;
+		saveToStack();
 	}
 
 	@Override
 	public boolean isVoiding () {
+		if (optionals == null) {
+			NBTTagCompound tag = container.getTagCompound();
+			if (tag == null || !tag.hasKey(RadiantTroveTileEntity.Tags.OPTIONAL_UPGRADES)) {
+				return false;
+			}
+			this.optionals = new OptionalUpgradesHandler();
+			this.optionals.deserializeNBT(tag.getCompoundTag(RadiantTroveTileEntity.Tags.OPTIONAL_UPGRADES));
+		}
 		return this.optionals.hasUpgrade(UpgradeType.VOID);
 	}
 
@@ -103,7 +124,7 @@ public class TroveItemBlockItemHandler implements ITroveItemHandler, ICapability
 
 	@Override
 	public ItemStack getItem () {
-		return reference;
+		return getReference();
 	}
 
 	@Override
@@ -112,25 +133,36 @@ public class TroveItemBlockItemHandler implements ITroveItemHandler, ICapability
 			return ItemStack.EMPTY;
 		}
 
-		return reference;
+		return getReference();
 	}
 
 	@Override
 	public void setReference (ItemStack reference) {
 		this.reference = reference;
+		saveToStack();
 	}
 
 	@Override
 	public boolean isEmpty () {
+		if (getCount() == 0 && getReference().isEmpty()) {
+			return true;
+		}
+
 		return false;
 	}
 
 	public void saveToStack () {
 		NBTTagCompound tag = ItemUtils.getOrCreateTagCompound(container);
 		NBTTagCompound result = new NBTTagCompound();
-		result.setInteger(Tags.COUNT, this.count);
-		result.setTag(Tags.REFERENCE, this.reference.serializeNBT());
-		result.setInteger(Tags.UPGRADES, getUpgrades());
+		if (this.count != -1) {
+			result.setInteger(Tags.COUNT, this.count);
+		}
+		if (this.reference != null) {
+			result.setTag(Tags.REFERENCE, this.reference.serializeNBT());
+		}
+		if (this.upgrades != null) {
+			result.setInteger(Tags.UPGRADES, getUpgrades());
+		}
 		tag.setTag(RadiantTroveTileEntity.Tags.HANDLER_ITEM, result);
 	}
 }
