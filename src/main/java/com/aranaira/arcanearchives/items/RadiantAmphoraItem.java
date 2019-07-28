@@ -294,8 +294,9 @@ public class RadiantAmphoraItem extends ItemTemplate {
 			IFluidHandler handler = getCapability();
 			if (handler != null) {
 				FluidStack stack = getFluidStack(handler);
+				Fluid fluid = getFluid(handler);
 
-				if (stack == null) {
+				if (stack == null && fluid == null) {
 					return "Unknown fluid";
 				}
 
@@ -303,6 +304,9 @@ public class RadiantAmphoraItem extends ItemTemplate {
 					return net.minecraft.util.text.translation.I18n.translateToLocal(stack.getFluid().getName());
 				}
 
+				if (stack == null) {
+					return "Unknown fluid";
+				}
 				return net.minecraft.util.text.translation.I18n.translateToLocalFormatted(stack.getLocalizedName());
 			}
 
@@ -463,6 +467,9 @@ public class RadiantAmphoraItem extends ItemTemplate {
 			validate();
 
 			if (tank == null || util.getMode() == TankMode.FILL) {
+				if (!doDrain && maxDrain == Integer.MAX_VALUE) {
+					return tank.drain(maxDrain, false);
+				}
 				return null;
 			}
 
