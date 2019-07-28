@@ -1879,7 +1879,7 @@
                 <stack item="arcanearchives:rivertear"/> <link ref="Rivertear">Rivertears</link> generates water at about 2 buckets per tick. It is effectively infinite, but due to technical limits there is a ridiculously small chance of shattering.
             </p>
             <p indent="10">
-                <stack item="arcanearchives:mountaintear"/> <link ref="Mountaintear">Mountaintears</link> generates water at about 2 buckets per tick. It is effectively infinite, but due to technical limits there is a ridiculously small chance of shattering.
+                <stack item="arcanearchives:mountaintear"/> <link ref="Mountaintear">Mountaintears</link> generates lava at a moderate rate. It is effectively infinite, but due to technical limits there is a ridiculously small chance of shattering.
             </p>
         </section>
         <section id="Botania">
