@@ -116,7 +116,7 @@ public class TroveItemBlockItemHandler implements ITroveItemHandler, ICapability
 	}
 
 	@Override
-	public void setItem (ItemStack reference) {
+	public void setReference (ItemStack reference) {
 		this.reference = reference;
 	}
 

@@ -24,7 +24,7 @@ public interface ITroveItemHandler extends IItemHandler {
 
 	ItemStack getItemCurrent ();
 
-	void setItem (ItemStack reference);
+	void setReference (ItemStack reference);
 
 	boolean isEmpty ();
 
@@ -46,6 +46,11 @@ public interface ITroveItemHandler extends IItemHandler {
 		}
 
 		ItemStack reference = getReference();
+
+		if (reference.isEmpty()) {
+			setReference(stack);
+		}
+
 		int count = getCount();
 		if (ItemUtils.areStacksEqualIgnoreSize(reference, stack) || reference.isEmpty()) {
 			if (reference.isEmpty()) {
