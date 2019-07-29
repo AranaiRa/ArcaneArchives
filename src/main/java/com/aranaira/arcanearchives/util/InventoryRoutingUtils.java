@@ -37,13 +37,13 @@ public class InventoryRoutingUtils {
 			if (total == 0) {
 				return -1;
 			} else if (type == BrazierRoutingType.NO_NEW_STACKS) {
-				return 200;
+				return 500;
 			} else if (type == BrazierRoutingType.GCT) {
-				return 400;
+				return 800;
 			}
-		} else if (type == BrazierRoutingType.PRIORITY && total > 0) {
-			return 250;
-		}
+		} /*else if (type == BrazierRoutingType.PRIORITY && total > 0) {
+			return 600;
+		}*/
 		// Otherwise weight is calculated as a value between 0 and 200
 		// Factors considered positively that increase weight: quantity
 		// of similar items already stored.
@@ -71,7 +71,7 @@ public class InventoryRoutingUtils {
 			return slotCount - empty;
 		}
 
-		int percentageUsed = (int) Math.floor(((double) usedSlots / (double) slotCount) * 100) * 2;
+		int percentageUsed = (int) Math.floor(((double) usedSlots / (double) slotCount) * 100) + 100;
 		int percentageEmpty = (int) Math.floor(((double) empty / (double) slotCount) * 100);
 
 		return percentageEmpty + percentageUsed;
