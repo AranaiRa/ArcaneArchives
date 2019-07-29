@@ -69,8 +69,8 @@ public class CommandBrazier extends CommandBase {
 				i++;
 				BlockPos pos = ite.getPos();
 				World world = ite.getWorld();
-				Vec3d bound = new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
-				world.getEntitiesWithinAABB(EntityWeight.class, new AxisAlignedBB(bound, bound).shrink(0.2)).forEach(Entity::setDead);
+				AxisAlignedBB bb = new AxisAlignedBB(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
+				world.getEntitiesWithinAABB(EntityWeight.class, bb.shrink(0.2)).forEach(Entity::setDead);
 				EntityWeight weight = new EntityWeight(world, pos.getX() + 0.5, pos.getY() - 0.5, pos.getZ() + 0.5);
 				weight.setWeight(entry.weight);
 				world.spawnEntity(weight);
