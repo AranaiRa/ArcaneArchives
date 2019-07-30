@@ -61,6 +61,11 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 	}
 
 	@Override
+	public boolean isTileInvalid () {
+		return this.isInvalid();
+	}
+
+	@Override
 	public int totalEmptySlots () {
 		return inventory.getEmptyCount();
 	}

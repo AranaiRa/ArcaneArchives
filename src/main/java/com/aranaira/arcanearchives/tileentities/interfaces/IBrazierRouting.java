@@ -12,6 +12,8 @@ public interface IBrazierRouting {
 
 	UUID getUuid();
 
+	boolean isTileInvalid ();
+
 	int countEmptySlots ();
 
 	int totalEmptySlots ();

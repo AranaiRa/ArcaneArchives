@@ -341,6 +341,11 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 	}
 
 	@Override
+	public boolean isTileInvalid () {
+		return this.isInvalid();
+	}
+
+	@Override
 	public int countEmptySlots () {
 		return totalEmptySlots();
 	}

@@ -205,6 +205,11 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 	}
 
 	@Override
+	public boolean isTileInvalid () {
+		return this.isInvalid();
+	}
+
+	@Override
 	public int countEmptySlots () {
 		int empty = 0;
 		for (int i = 0; i < inventory.getSlots(); i++) {

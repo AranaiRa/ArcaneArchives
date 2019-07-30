@@ -429,7 +429,12 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 		@Nullable
 		public IBrazierRouting getRoute () {
 			if (weakReference != null) {
-				return weakReference.get();
+				IBrazierRouting result = weakReference.get();
+				if (result != null && !result.isTileInvalid()) {
+					return result;
+				}
+
+				return null;
 			}
 
 			return null;
