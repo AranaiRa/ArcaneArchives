@@ -252,6 +252,7 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 	public class TrackingGCTHandler extends ItemStackHandler implements ITrackingHandler {
 		private Int2IntOpenHashMap itemReference = new Int2IntOpenHashMap();
 		private int emptySlots = 0;
+		private boolean invalid = false;
 
 		public TrackingGCTHandler (int size) {
 			super(size);
@@ -267,6 +268,10 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 		}
 
 		public Int2IntOpenHashMap getItemReference () {
+			if (invalid) {
+				invalid = false;
+				manualRecount();
+			}
 			return itemReference;
 		}
 
@@ -296,46 +301,29 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 		}
 
 		@Override
+		public void invalidate () {
+			this.invalid = true;
+		}
+
+		@Override
 		public void setStackInSlot (int slot, @Nonnull ItemStack stack) {
-			ItemStack inSlot = getStackInSlot(slot);
-			if (inSlot.isEmpty()) {
-				decrementEmptyCount();
-			}
-			subtraction(inSlot, -1);
 			super.setStackInSlot(slot, stack);
-			addition(stack, ItemStack.EMPTY);
-			if (stack.isEmpty()) {
-				incrementEmptyCount();
-			}
+			invalidate();
 		}
 
 		@Nonnull
 		@Override
 		public ItemStack insertItem (int slot, @Nonnull ItemStack stack, boolean simulate) {
-			if (!simulate) {
-				ItemStack inSlot = getStackInSlot(slot);
-				if (inSlot.isEmpty()) {
-					decrementEmptyCount();
-				}
-				ItemStack test = super.insertItem(slot, stack, true);
-				addition(stack, test);
-			}
+			if (!simulate) invalidate();
 			return super.insertItem(slot, stack, simulate);
 		}
 
 		@Nonnull
 		@Override
 		public ItemStack extractItem (int slot, int amount, boolean simulate) {
-			if (!simulate) {
-				ItemStack test = getStackInSlot(slot);
-				subtraction(test, amount);
-			}
 			ItemStack result = super.extractItem(slot, amount, simulate);
 			if (!simulate) {
-				ItemStack inSlot = getStackInSlot(slot);
-				if (inSlot.isEmpty()) {
-					incrementEmptyCount();
-				}
+				invalidate();
 			}
 			return result;
 		}

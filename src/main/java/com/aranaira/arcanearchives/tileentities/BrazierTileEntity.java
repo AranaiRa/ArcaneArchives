@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.init.ItemRegistry;
+import com.aranaira.arcanearchives.tileentities.interfaces.IBrazierRouting;
 import com.aranaira.arcanearchives.util.InventoryRoutingUtils;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import com.aranaira.arcanearchives.util.PlayerUtil;
@@ -11,7 +12,9 @@ import com.aranaira.enderio.base.render.ranged.IRanged;
 import com.aranaira.enderio.base.render.ranged.RangeParticle;
 import com.aranaira.enderio.core.client.render.BoundingBox;
 import epicsquid.mysticallib.util.Util;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -31,6 +34,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -48,15 +52,19 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 	private FakeHandler fakeHandler = new FakeHandler();
 	private boolean showingRange;
 
+	private Int2ObjectOpenHashMap<ItemCache> itemCache = new Int2ObjectOpenHashMap<>();
+
 	private List<Runnable> clientHooks = new ArrayList<>();
 
 	public BrazierTileEntity () {
-		super("brazier");
+		this(false);
 	}
 
 	public BrazierTileEntity (boolean fake) {
 		super("brazier", fake);
+		itemCache.defaultReturnValue(null);
 	}
+
 	@SideOnly(Side.CLIENT)
 	public void addUpdateHook (Runnable hook) {
 		clientHooks.add(hook);
@@ -327,6 +335,26 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 		return new BoundingBox(getPos()).expand(radius);
 	}
 
+	@Nullable
+	public ItemCache getCachedEntry (ItemStack stack) {
+		return getCachedEntry(RecipeItemHelper.pack(stack));
+	}
+
+	@Nullable
+	public ItemCache getCachedEntry (int packed) {
+		return itemCache.get(packed);
+	}
+
+	public void cacheInsertion (ItemStack stack, IBrazierRouting route, UUID tileId) {
+		int packed = RecipeItemHelper.pack(stack);
+		ItemCache existing = itemCache.get(packed);
+		if (existing == null || !existing.valid()) {
+			itemCache.put(RecipeItemHelper.pack(stack), new ItemCache(route, tileId));
+		} else {
+			existing.refresh();
+		}
+	}
+
 	public static class Tags {
 		public static final String RANGE = "range";
 		public static final String SUBNETWORK = "subnetwork";
@@ -381,6 +409,42 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 		@Override
 		public int getSlotLimit (int slot) {
 			return 999;
+		}
+	}
+
+	public static class ItemCache {
+		public static long LIMIT = 1 * 1000; // The time it takes for a cache to be invalidated
+		private long insertedAt;
+		private UUID tileId;
+		private WeakReference<IBrazierRouting> weakReference = null;
+
+		public ItemCache (@Nullable IBrazierRouting route, UUID tileId) {
+			if (route != null) {
+				weakReference = new WeakReference<>(route);
+			}
+			this.tileId = tileId;
+			this.insertedAt = System.currentTimeMillis();
+		}
+
+		@Nullable
+		public IBrazierRouting getRoute () {
+			if (weakReference != null) {
+				return weakReference.get();
+			}
+
+			return null;
+		}
+
+		public UUID getTileId () {
+			return tileId;
+		}
+
+		public boolean valid () {
+			return (System.currentTimeMillis() - insertedAt) < LIMIT;
+		}
+
+		public void refresh () {
+			this.insertedAt = System.currentTimeMillis();
 		}
 	}
 }

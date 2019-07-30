@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.util;
 import com.aranaira.arcanearchives.data.HiveNetwork;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.tileentities.BrazierTileEntity;
+import com.aranaira.arcanearchives.tileentities.BrazierTileEntity.ItemCache;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.interfaces.IBrazierRouting;
 import com.aranaira.arcanearchives.tileentities.interfaces.IBrazierRouting.BrazierRoutingType;
@@ -37,44 +38,30 @@ public class InventoryRoutingUtils {
 			if (total == 0) {
 				return -1;
 			} else if (type == BrazierRoutingType.NO_NEW_STACKS) {
-				return 500;
+				return 4999;
 			} else if (type == BrazierRoutingType.GCT) {
-				return 800;
+				return 5000;
 			}
-		} /*else if (type == BrazierRoutingType.PRIORITY && total > 0) {
-			return 600;
-		}*/
-		// Otherwise weight is calculated as a value between 0 and 200
-		// Factors considered positively that increase weight: quantity
-		// of similar items already stored.
-		// Quantity of empty slots.
+		}
+
 		int empty = inventory.countEmptySlots();
 		int slotCount = inventory.totalSlots();
+		// Completely empty chest
 		if (empty == slotCount) {
 			return 0;
 		}
 
-		int stackSize = stack.getMaxStackSize();
-		if (inventory.slotMultiplier() > 1) {
-			stackSize = (stackSize == 1) ? 1 : stackSize * inventory.slotMultiplier();
-		}
-
-		int usedSlots;
-
-		if (total < stackSize && total > 0) {
-			usedSlots = 1;
-		} else {
-			usedSlots = (int) Math.floor((double) total / (double) stackSize);
-		}
-
-		if (usedSlots == 0) {
+		// Doesn't have any of the items
+		if (total == 0) {
 			return slotCount - empty;
 		}
 
-		int percentageUsed = (int) Math.floor(((double) usedSlots / (double) slotCount) * 100) + 100;
-		int percentageEmpty = (int) Math.floor(((double) empty / (double) slotCount) * 100);
+		int stackSize = stack.getMaxStackSize() == 1 ? 1 : stack.getMaxStackSize() * inventory.slotMultiplier();
 
-		return percentageEmpty + percentageUsed;
+		double potentialSlots = stackSize * slotCount;
+		double result = Math.ceil((((double) total / potentialSlots) * 1000) + 500);
+		return (int) result;
+
 	}
 
 	public static List<WeightedEntry<IBrazierRouting>> buildNetworkWeights (BrazierTileEntity brazier, ItemStack stack) {
@@ -115,7 +102,34 @@ public class InventoryRoutingUtils {
 	 * @return
 	 */
 	public static List<ItemStack> tryInsertItems (BrazierTileEntity brazier, ItemStack reference, List<ItemStack> inputs) {
+		// Considered the cached value in the brazier
+		ItemCache cached = brazier.getCachedEntry(reference);
+		if (cached != null && cached.valid()) {
+			List<IBrazierRouting> cacheList = new ArrayList<>();
+			IBrazierRouting routing = cached.getRoute();
+			if (routing == null) {
+				// Normally this is a bad sign
+				ServerNetwork network = brazier.getServerNetwork();
+				ImmanenceTileEntity ite = network.getImmanenceTile(cached.getTileId());
+				if (ite instanceof IBrazierRouting) {
+					cacheList.add((IBrazierRouting) ite);
+				}
+			} else {
+				cacheList.add(routing);
+			}
+			if (!cacheList.isEmpty()) {
+				inputs = tryInsertItems(cacheList, brazier, reference, inputs);
+				if (inputs.isEmpty()) {
+					return inputs;
+				}
+			}
+		}
+
 		List<IBrazierRouting> routing = buildNetwork(brazier, reference);
+		return tryInsertItems(routing, brazier, reference, inputs);
+	}
+
+	public static List<ItemStack> tryInsertItems (List<IBrazierRouting> routing, BrazierTileEntity brazier, ItemStack reference, List<ItemStack> inputs) {
 		routes:
 		for (IBrazierRouting route : routing) {
 			ListIterator<ItemStack> iterator = inputs.listIterator();
@@ -127,6 +141,8 @@ public class InventoryRoutingUtils {
 				if (!result.isEmpty()) {
 					iterator.add(result);
 					continue routes;
+				} else {
+					brazier.cacheInsertion(reference, route, route.getUuid());
 				}
 			}
 		}

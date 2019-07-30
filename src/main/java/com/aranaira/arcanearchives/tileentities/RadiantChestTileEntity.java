@@ -220,6 +220,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 
 	public class TrackingExtendedItemStackHandler extends ExtendedItemStackHandler implements ITrackingHandler {
 		private Int2IntOpenHashMap itemReference = new Int2IntOpenHashMap();
+		private boolean invalid = false;
 		private int emptySlots = 0;
 
 		public TrackingExtendedItemStackHandler (int size) {
@@ -236,6 +237,10 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 		}
 
 		public Int2IntOpenHashMap getItemReference () {
+			if (invalid) {
+				invalid = false;
+				manualRecount();
+			}
 			return itemReference;
 		}
 
@@ -265,32 +270,22 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 		}
 
 		@Override
+		public void invalidate () {
+			invalid = true;
+		}
+
+		@Override
 		public void setStackInSlot (int slot, @Nonnull ItemStack stack) {
-			ItemStack inSlot = getStackInSlot(slot);
-			if (inSlot.isEmpty()) {
-				decrementEmptyCount();
-			}
-			subtraction(inSlot, -1);
+			invalidate();
 			super.setStackInSlot(slot, stack);
-			addition(stack, ItemStack.EMPTY);
 			world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);
-			if (stack.isEmpty()) {
-				incrementEmptyCount();
-			}
 			markDirty();
 		}
 
 		@Nonnull
 		@Override
 		public ItemStack insertItem (int slot, @Nonnull ItemStack stack, boolean simulate) {
-			if (!simulate) {
-				ItemStack inSlot = getStackInSlot(slot);
-				if (inSlot.isEmpty()) {
-					decrementEmptyCount();
-				}
-				ItemStack test = super.insertItem(slot, stack, true);
-				addition(stack, test);
-			}
+			if (!simulate) invalidate();
 			ItemStack result = super.insertItem(slot, stack, simulate);
 			world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);
 			markDirty();
@@ -300,17 +295,8 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 		@Nonnull
 		@Override
 		public ItemStack extractItem (int slot, int amount, boolean simulate) {
-			if (!simulate) {
-				ItemStack test = getStackInSlot(slot);
-				subtraction(test, amount);
-			}
+			invalidate();
 			ItemStack result = super.extractItem(slot, amount, simulate);
-			if (!simulate) {
-				ItemStack inSlot = getStackInSlot(slot);
-				if (inSlot.isEmpty()) {
-					incrementEmptyCount();
-				}
-			}
 			world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);
 			markDirty();
 			return result;

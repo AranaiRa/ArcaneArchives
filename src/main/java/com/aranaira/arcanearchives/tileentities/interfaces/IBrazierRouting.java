@@ -3,10 +3,14 @@ package com.aranaira.arcanearchives.tileentities.interfaces;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.item.ItemStack;
 
+import java.util.UUID;
+
 public interface IBrazierRouting {
 	Int2IntOpenHashMap getOrCalculateReference ();
 
 	BrazierRoutingType getRoutingType ();
+
+	UUID getUuid();
 
 	int countEmptySlots ();
 
