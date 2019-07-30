@@ -87,10 +87,13 @@ public class RadiantChest extends BlockTemplate {
 		if (!displayStack.isEmpty() || clearDisplayed) {
 			RadiantChestTileEntity te = WorldUtil.getTileEntity(RadiantChestTileEntity.class, worldIn, pos);
 			if (te != null) {
+				String side = "[" + ((worldIn.isRemote) ? "CLIENT" : "SERVER") + "] ";
 				if (!displayStack.isEmpty()) {
 					te.setDisplay(displayStack, facing);
+					ArcaneArchives.logger.debug(side + "Set display stack at " + pos.toString() + " to " + displayStack.toString());
 				} else {
 					te.setDisplay(ItemStack.EMPTY, EnumFacing.NORTH);
+					ArcaneArchives.logger.debug(side + "Set display stack at " + pos.toString() + " to empty");
 				}
 			}
 		} else {
