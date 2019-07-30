@@ -163,7 +163,7 @@ public class ConfigHandler {
 		@Config.Comment("Enable the Arcane Arsenal module. When disabled, items will still be registered but not craftable or visible in JEI.")
 		@Config.Name("Enable Arsenal")
 		@RequiresMcRestart
-		public boolean EnableArsenal = true;
+		public boolean EnableArsenal = false;
 
 		@Config.Comment("Enable colour-blind mode for Arsenal. This replaces gem icons specifically with variants more clearly defined for types of colour-blindness")
 		@Config.Name("Colourblind Mode")

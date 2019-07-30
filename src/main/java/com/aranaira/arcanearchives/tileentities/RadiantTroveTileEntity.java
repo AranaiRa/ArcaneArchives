@@ -379,14 +379,14 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 		}
 
 		if (!optionalUpgrades.hasUpgrade(UpgradeType.VOID)) {
-			return 350;
+			return 4500;
 		}
 
 		if (inventory.getCount() < inventory.getMaxCount()) {
-			return 500;
+			return 4700;
 		}
 
-		return 400;
+		return 4000;
 	}
 
 	public static class Tags {
