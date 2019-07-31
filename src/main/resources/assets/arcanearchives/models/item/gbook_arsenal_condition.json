@@ -1,0 +1,6 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "arcanearchives:items/tome_of_arcana"
+    }
+}
