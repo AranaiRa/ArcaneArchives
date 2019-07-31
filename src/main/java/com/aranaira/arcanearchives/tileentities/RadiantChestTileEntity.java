@@ -31,6 +31,49 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 		super("radiantchest");
 	}
 
+	private String describe () {
+		return pos.toString() + " in " + dimension;
+	}
+
+	public ItemStack getDisplayStack () {
+		return displayStack;
+	}
+
+	public void unsetDisplayStack () {
+		ArcaneArchives.logger.debug("Unset displayStack on " + describe());
+		this.displayStack = ItemStack.EMPTY;
+	}
+
+	public void setDisplayStack (ItemStack newStack) {
+		if (newStack.isEmpty()) {
+			ArcaneArchives.logger.error("Called setDisplayStack with an empty stack!", new IllegalArgumentException(describe()));
+		} else {
+			ArcaneArchives.logger.debug("Set displayStack to " + newStack.toString() + " on " + describe());
+		}
+		this.displayStack = newStack;
+	}
+
+	@Override
+	public String getChestName () {
+		return chestName;
+	}
+
+	public void unsetChestName () {
+		ArcaneArchives.logger.debug("Unset chest name on " + describe());
+		this.chestName = "";
+	}
+
+	public void setChestName (String newName) {
+		if (newName.isEmpty()) {
+			ArcaneArchives.logger.error("Called setChestName with an empty string!", new IllegalArgumentException(describe()));
+		} else {
+			ArcaneArchives.logger.debug("Set chest name to '" + newName + "' on " + describe());
+		}
+
+		this.chestName = newName;
+	}
+
+
 	@Override
 	public void firstJoinedNetwork (ServerNetwork network) {
 		super.firstJoinedNetwork(network);
@@ -97,15 +140,9 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 		markDirty();
 	}
 
-	public ItemStack getDisplayStack () {
-		return displayStack;
-	}
-
 	public void setDisplay (ItemStack displayStack, EnumFacing facing) {
-		this.displayStack = displayStack;
+		setDisplayStack(displayStack);
 		this.displayFacing = facing;
-		this.markDirty();
-		defaultServerSideUpdate();
 	}
 
 	public EnumFacing getDisplayFacing () {
@@ -119,15 +156,6 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 		} else {
 			return "Chest: " + getChestName();
 		}
-	}
-
-	@Override
-	public String getChestName () {
-		return chestName;
-	}
-
-	public void setChestName (String newName) {
-		this.chestName = newName;
 	}
 
 	@Override
@@ -174,11 +202,11 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 		inventory.deserializeNBT(compound.getCompoundTag(AATileEntity.Tags.INVENTORY));
 
 		if (compound.hasKey(Tags.CHEST_NAME)) {
-			chestName = compound.getString(Tags.CHEST_NAME);
+			setChestName(compound.getString(Tags.CHEST_NAME));
 		}
 		displayFacing = EnumFacing.byIndex(compound.getInteger(Tags.DISPLAY_FACING));
 		if (compound.hasKey(Tags.DISPLAY_STACK)) {
-			displayStack = new ItemStack(compound.getCompoundTag(Tags.DISPLAY_STACK));
+			setDisplayStack(new ItemStack(compound.getCompoundTag(Tags.DISPLAY_STACK)));
 		}
 		routingType = BrazierRoutingType.fromInt(compound.getInteger(Tags.ROUTING_TYPE));
 	}

@@ -92,9 +92,11 @@ public class RadiantChest extends BlockTemplate {
 					te.setDisplay(displayStack, facing);
 					ArcaneArchives.logger.debug(side + "Set display stack at " + pos.toString() + " to " + displayStack.toString());
 				} else {
-					te.setDisplay(ItemStack.EMPTY, EnumFacing.NORTH);
+					te.unsetDisplayStack();
 					ArcaneArchives.logger.debug(side + "Set display stack at " + pos.toString() + " to empty");
 				}
+				te.markDirty();
+				te.defaultServerSideUpdate();
 			}
 		} else {
 			playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.RADIANT_CHEST, worldIn, pos.getX(), pos.getY(), pos.getZ());
