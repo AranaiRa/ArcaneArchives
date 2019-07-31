@@ -1,12 +1,15 @@
 package com.aranaira.arcanearchives.items;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.BlockRegistry;
+import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
@@ -14,6 +17,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -37,6 +41,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -61,10 +66,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 	@Nullable
 	@Override
 	public ICapabilityProvider initCapabilities (ItemStack stack, @Nullable NBTTagCompound nbt) {
-		if (!stack.isEmpty()) {
-			return new AmphoraCapabilityProvider(new AmphoraUtil(stack));
-		}
-		return super.initCapabilities(stack, nbt);
+		return new AmphoraCapabilityProvider(new AmphoraUtil(stack));
 	}
 
 	@Override
@@ -224,10 +226,50 @@ public class RadiantAmphoraItem extends ItemTemplate {
 		private ItemStack stack;
 		private NBTTagCompound nbt;
 		private WeakReference<RadiantTankTileEntity> te;
+		private WeakReference<World> world;
 
 		public AmphoraUtil (ItemStack incoming) {
+			if (incoming.isEmpty()) {
+				incoming = new ItemStack(ItemRegistry.RADIANT_AMPHORA);
+			}
 			stack = incoming;
 			nbt = ItemUtils.getOrCreateTagCompound(stack);
+		}
+
+		@Nullable
+		public World getWorld () {
+			if (this.world == null || this.world.get() == null) {
+				World world = getServerWorld();
+				if (world == null) {
+					try {
+						world = getClientWorld();
+					} catch (NoClassDefFoundError e) {
+						ArcaneArchives.logger.info("[Amphora] Wasn't able to find a server-side world but client-side method results in Minecraft 'class not found' error.");
+					}
+				}
+				if (world != null) {
+					this.world = new WeakReference<>(world);
+				}
+			}
+			if (this.world == null) {
+				return null;
+			}
+
+			return this.world.get();
+		}
+
+		@SideOnly(Side.CLIENT)
+		private World getClientWorld () {
+			return Minecraft.getMinecraft().world;
+		}
+
+		private World getServerWorld () {
+			MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+			if (server == null) {
+				return null;
+			}
+
+			return server.getEntityWorld();
 		}
 
 		public ItemStack getStack () {
@@ -362,7 +404,10 @@ public class RadiantAmphoraItem extends ItemTemplate {
 				if (nbt.hasKey("homeTank") && nbt.hasKey("homeTankDim")) {
 					BlockPos home = BlockPos.fromLong(nbt.getLong("homeTank"));
 					int dim = nbt.getInteger("homeTankDim");
-					te = new WeakReference<>(WorldUtil.getTileEntity(RadiantTankTileEntity.class, dim, home));
+					World world = getWorld();
+					if (world != null && world.provider.getDimension() == dim) {
+						te = new WeakReference<>(WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, home));
+					}
 				} else {
 					return null;
 				}
