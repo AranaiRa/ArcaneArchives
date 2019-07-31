@@ -20,7 +20,7 @@ public class ManifestSearchField extends RightClickTextField {
 	public boolean mouseClicked (int mouseX, int mouseY, int mouseButton) {
 		boolean flag = mouseX >= this.x && mouseX < this.x + this.width && mouseY >= this.y && mouseY < this.y + this.height;
 		if (flag && (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))) {
-			syncFromJEI();
+			syncFromJEI(true);
 		}
 
 		return super.mouseClicked(mouseX, mouseY, mouseButton);
@@ -45,8 +45,8 @@ public class ManifestSearchField extends RightClickTextField {
 		JEIPlugin.runtime.getIngredientFilter().setFilterText(current);
 	}
 
-	public void syncFromJEI () {
-		if (!this.gui.getJEISync()) {
+	public void syncFromJEI (boolean force) {
+		if (!this.gui.getJEISync() && !force) {
 			return;
 		}
 
