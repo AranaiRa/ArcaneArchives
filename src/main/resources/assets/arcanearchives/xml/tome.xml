@@ -22,60 +22,60 @@
     </conditions>
 
     <stack-links>
-        <stack item="arcanearchives:brazier_of_hoarding">BrazierHoarding</stack>
-        <stack item="arcanearchives:lectern_manifest">LecternManifest</stack>
-        <stack item="arcanearchives:gemcutters_table">GemCuttersTable</stack>
-        <stack item="arcanearchives:monitoring_crystal">MonitoringCrystal</stack>
-        <stack item="arcanearchives:quartz_sliver">SliverOfLight</stack>
-        <stack item="arcanearchives:radiant_chest">RadiantChest</stack>
-        <stack item="arcanearchives:radiant_crafting_table">RadiantCraftingTable</stack>
-        <stack item="arcanearchives:radiant_lantern">RadiantLantern</stack>
-        <stack item="arcanearchives:radiant_resonator">RadiantResonator</stack>
-        <stack item="arcanearchives:radiant_tank">RadiantTank</stack>
-        <stack item="arcanearchives:radiant_trove">RadiantTrove</stack>
-        <stack item="arcanearchives:raw_quartz">RawQuartzCluster</stack>
-        <stack item="arcanearchives:storage_raw_quartz">RawQuartz</stack>
-        <stack item="arcanearchives:storage_shaped_quartz">ShapedQuartz</stack>
+        <stack item="arcanearchives:brazier_of_hoarding">Blocks:BrazierHoarding</stack>
+        <stack item="arcanearchives:lectern_manifest">Blocks:LecternManifest</stack>
+        <stack item="arcanearchives:gemcutters_table">Blocks:GemCuttersTable</stack>
+        <stack item="arcanearchives:monitoring_crystal">Blocks:MonitoringCrystal</stack>
+        <stack item="arcanearchives:quartz_sliver">Blocks:SliverOfLight</stack>
+        <stack item="arcanearchives:radiant_chest">Blocks:RadiantChest</stack>
+        <stack item="arcanearchives:radiant_crafting_table">Blocks:RadiantCraftingTable</stack>
+        <stack item="arcanearchives:radiant_lantern">Blocks:RadiantLantern</stack>
+        <stack item="arcanearchives:radiant_resonator">Blocks:RadiantResonator</stack>
+        <stack item="arcanearchives:radiant_tank">Blocks:RadiantTank</stack>
+        <stack item="arcanearchives:radiant_trove">Blocks:RadiantTrove</stack>
+        <stack item="arcanearchives:raw_quartz">Blocks:RawQuartzCluster</stack>
+        <stack item="arcanearchives:storage_raw_quartz">Blocks:RawQuartz</stack>
+        <stack item="arcanearchives:storage_shaped_quartz">Blocks:ShapedQuartz</stack>
 
-        <stack item="arcanearchives:containment_field">ContainmentField</stack>
-        <stack item="arcanearchives:devouring_charm">DevouringCharm</stack>
-        <stack item="arcanearchives:letter_invitation">LetterInvitation</stack>
-        <stack item="arcanearchives:letter_resignation">LetterResignation</stack>
-        <stack item="arcanearchives:manifest">Manifest</stack>
-        <stack item="arcanearchives:material_interface">MaterialInterface</stack>
-        <stack item="arcanearchives:matrix_brace">MatrixBrace</stack>
-        <stack item="arcanearchives:radiant_amphora">RadiantAmphora</stack>
-        <stack item="arcanearchives:radiant_dust">RadiantDust</stack>
-        <stack item="arcanearchives:shaped_quartz">ShapedQuartz</stack>
-        <stack item="arcanearchives:scepter_manipulation">ScepterManipulation</stack>
-        <stack item="arcanearchives:scepter_revelation">ScepterRevelation</stack>
-        <stack item="arcanearchives:scintillating_inlay">ScintillatingInlay</stack>
-        <stack item="arcanearchives:writ_expulsion">WritExpulsion</stack>
+        <stack item="arcanearchives:containment_field">Items:ContainmentField</stack>
+        <stack item="arcanearchives:devouring_charm">Items:DevouringCharm</stack>
+        <stack item="arcanearchives:letter_invitation">Items:LetterInvitation</stack>
+        <stack item="arcanearchives:letter_resignation">Items:LetterResignation</stack>
+        <stack item="arcanearchives:manifest">Items:Manifest</stack>
+        <stack item="arcanearchives:material_interface">Items:MaterialInterface</stack>
+        <stack item="arcanearchives:matrix_brace">Items:MatrixBrace</stack>
+        <stack item="arcanearchives:radiant_amphora">Items:RadiantAmphora</stack>
+        <stack item="arcanearchives:radiant_dust">Items:RadiantDust</stack>
+        <stack item="arcanearchives:shaped_quartz">Items:ShapedQuartz</stack>
+        <stack item="arcanearchives:scepter_manipulation">Items:ScepterManipulation</stack>
+        <stack item="arcanearchives:scepter_revelation">Items:ScepterRevelation</stack>
+        <stack item="arcanearchives:scintillating_inlay">Items:ScintillatingInlay</stack>
+        <stack item="arcanearchives:writ_expulsion">Items:WritExpulsion</stack>
 
-        <stack item="arcanearchives:chromatic_powder">ArcaneGems:RechargingGems</stack>
-        <stack item="arcanearchives:full_spectrum_chromatic_powder">ArcaneGems:RechargingGems</stack>
+        <stack item="arcanearchives:chromatic_powder">Gems:RechargingGems</stack>
+        <stack item="arcanearchives:full_spectrum_chromatic_powder">Gems:RechargingGems</stack>
 
-        <stack item="arcanearchives:slaughtergleam">Slaughtergleam</stack>
-        <stack item="arcanearchives:murdergleam">Murdergleam</stack>
-        <stack item="arcanearchives:agegleam">Agegleam</stack>
-        <stack item="arcanearchives:cleansegleam">Cleansegleam</stack>
-        <stack item="arcanearchives:switchgleam">Switchgleam</stack>
-        <stack item="arcanearchives:salvegleam">Salvegleam</stack>
+        <stack item="arcanearchives:slaughtergleam">Gems:Slaughtergleam</stack>
+        <stack item="arcanearchives:murdergleam">Gems:Murdergleam</stack>
+        <stack item="arcanearchives:agegleam">Gems:Agegleam</stack>
+        <stack item="arcanearchives:cleansegleam">Gems:Cleansegleam</stack>
+        <stack item="arcanearchives:switchgleam">Gems:Switchgleam</stack>
+        <stack item="arcanearchives:salvegleam">Gems:Salvegleam</stack>
 
-        <stack item="arcanearchives:munchgleam">Munchstone</stack>
-        <stack item="arcanearchives:ordergleam">Orderstone</stack>
+        <stack item="arcanearchives:munchgleam">Gems:Munchstone</stack>
+        <stack item="arcanearchives:ordergleam">Gems:Orderstone</stack>
 
-        <stack item="arcanearchives:mindspindle">Mindspindle</stack>
-        <stack item="arcanearchives:elixirspindle">Elixirspindle</stack>
+        <stack item="arcanearchives:mindspindle">Gems:Mindspindle</stack>
+        <stack item="arcanearchives:elixirspindle">Gems:Elixirspindle</stack>
 
-        <stack item="arcanearchives:mountaintear">Mountaintear</stack>
-        <stack item="arcanearchives:rivertear">Rivertear</stack>
-        <stack item="arcanearchives:parchtear">Parchtear</stack>
+        <stack item="arcanearchives:mountaintear">Gems:Mountaintear</stack>
+        <stack item="arcanearchives:rivertear">Gems:Rivertear</stack>
+        <stack item="arcanearchives:parchtear">Gems:Parchtear</stack>
 
-        <stack item="arcanearchives:phoenixway">Phoenixway</stack>
-        <stack item="arcanearchives:stormway">Stormway</stack>
+        <stack item="arcanearchives:phoenixway">Gems:Phoenixway</stack>
+        <stack item="arcanearchives:stormway">Gems:Stormway</stack>
 
-        <stack item="arcanearchives:gemsocket">GemSocket</stack>
+        <stack item="arcanearchives:gemsocket">Items:GemSocket</stack>
     </stack-links>
 
     <chapter id="Home">
@@ -97,98 +97,100 @@
             <page_title_shorter>
                 <title>Blocks</title>
             </page_title_shorter>
-            <p><stack item="arcanearchives:brazier_of_hoarding"/> <link ref="BrazierHoarding">Brazier of Hoarding</link></p>
-            <p><stack item="arcanearchives:gemcutters_table"/> <link ref="GemCuttersTable">Gem Cutter's Table</link></p>
-            <p><stack item="arcanearchives:lectern_manifest"/> <link ref="LecternManifest">Manifest Lectern</link></p>
-            <p><stack item="arcanearchives:monitoring_crystal"/> <link ref="MonitoringCrystal">Monitoring Crystal</link></p>
-            <p><stack item="arcanearchives:radiant_chest"/> <link ref="RadiantChest">Radiant Chest</link></p>
-            <p><stack item="arcanearchives:radiant_crafting_table"/> <link ref="RadiantCraftingTable">Radiant Crafting Table</link></p>
-            <p><stack item="arcanearchives:radiant_lantern"/> <link ref="RadiantLantern">Radiant Lantern</link></p>
-            <p><stack item="arcanearchives:radiant_resonator"/> <link ref="RadiantResonator">Radiant Resonator</link></p>
-            <p><stack item="arcanearchives:radiant_tank"/> <link ref="RadiantTank">Radiant Tank</link></p>
-            <p><stack item="arcanearchives:radiant_trove"/> <link ref="RadiantTrove">Radiant Trove</link></p>
-            <p><stack item="arcanearchives:raw_quartz_cluster"/> <link ref="RawQuartzCluster">Raw Quartz Cluster</link></p>
+            <p><stack item="arcanearchives:brazier_of_hoarding"/> <link ref="Blocks:BrazierHoarding">Brazier of Hoarding</link></p>
+            <p><stack item="arcanearchives:gemcutters_table"/> <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link></p>
+            <p><stack item="arcanearchives:lectern_manifest"/> <link ref="Blocks:LecternManifest">Manifest Lectern</link></p>
+            <p><stack item="arcanearchives:monitoring_crystal"/> <link ref="Blocks:MonitoringCrystal">Monitoring Crystal</link></p>
+            <p><stack item="arcanearchives:radiant_chest"/> <link ref="Blocks:RadiantChest">Radiant Chest</link></p>
+            <p><stack item="arcanearchives:radiant_crafting_table"/> <link ref="Blocks:RadiantCraftingTable">Radiant Crafting Table</link></p>
+            <p><stack item="arcanearchives:radiant_lantern"/> <link ref="Blocks:RadiantLantern">Radiant Lantern</link></p>
+            <p><stack item="arcanearchives:radiant_resonator"/> <link ref="Blocks:RadiantResonator">Radiant Resonator</link></p>
+            <p><stack item="arcanearchives:radiant_tank"/> <link ref="Blocks:RadiantTank">Radiant Tank</link></p>
+            <p><stack item="arcanearchives:radiant_trove"/> <link ref="Blocks:RadiantTrove">Radiant Trove</link></p>
+            <p><stack item="arcanearchives:raw_quartz_cluster"/> <link ref="Blocks:RawQuartzCluster">Raw Quartz Cluster</link></p>
         </section>
         <section id="Items">
             <page_title_shorter>
                 <title>Items</title>
             </page_title_shorter>
-            <p><stack item="arcanearchives:containment_field"/> <link ref="ContainmentField">Containment Field</link></p>
-            <p><stack item="arcanearchives:devouring_charm"/> <link ref="DevouringCharm">Devouring Charm</link></p>
-            <p condition="arsenal_enabled"><stack item="arcanearchives:gemsocket"/> <link ref="GemSocket">Gem Socket</link></p>
-            <p><stack item="arcanearchives:letter_invitation"/> <link ref="LetterInvitation">Letter of Invitation</link></p>
-            <p><stack item="arcanearchives:letter_resignation"/> <link ref="LetterResignation">Letter of Resignation</link></p>
-            <p><stack item="arcanearchives:manifest"/> <link ref="Manifest">Manifest</link></p>
-            <p><stack item="arcanearchives:material_interface"/> <link ref="MaterialInterface">Material Interface</link></p>
-            <p><stack item="arcanearchives:matrix_brace"/> <link ref="MatrixBrace">Matrix Brace</link></p>
-            <p><stack item="arcanearchives:radiant_amphora"/> <link ref="radiant_amphora">Radiant Amphora</link></p>
-            <p><stack item="arcanearchives:radiant_dust"/> <link ref="RadiantDust">Radiant Dust</link></p>
-            <p><stack item="arcanearchives:raw_quartz"/> <link ref="RawQuartz">Radiant Quartz (Raw)</link></p>
-            <p><stack item="arcanearchives:shaped_quartz"/> <link ref="ShapedQuartz">Radiant Quartz (Shaped)</link></p>
-            <p><stack item="arcanearchives:scepter_manipulation"/> <link ref="ScepterManipulation">Scepter of Manipulation</link></p>
-            <p><stack item="arcanearchives:scepter_revelation"/> <link ref="ScepterRevelation">Scepter of Revelation</link></p>
-            <p><stack item="arcanearchives:scintillating_inlay"/> <link ref="ScintillatingInlay">Scintillating Inlay</link></p>
-            <p><stack item="arcanearchives:quartz_sliver"/> <link ref="SliverOfLight">Sliver of Light</link></p>
-            <p><stack item="arcanearchives:writ_expulsion"/> <link ref="WritExpulsion">Writ of Expulsion</link></p>
+            <p><stack item="arcanearchives:containment_field"/> <link ref="Items:ContainmentField">Containment Field</link></p>
+            <p><stack item="arcanearchives:devouring_charm"/> <link ref="Items:DevouringCharm">Devouring Charm</link></p>
+            <p condition="arsenal_enabled"><stack item="arcanearchives:gemsocket"/> <link ref="Items:GemSocket">Gem Socket</link></p>
+            <p><stack item="arcanearchives:letter_invitation"/> <link ref="Items:LetterInvitation">Letter of Invitation</link></p>
+            <p><stack item="arcanearchives:letter_resignation"/> <link ref="Items:LetterResignation">Letter of Resignation</link></p>
+            <p><stack item="arcanearchives:manifest"/> <link ref="Items:Manifest">Manifest</link></p>
+            <p><stack item="arcanearchives:material_interface"/> <link ref="Items:MaterialInterface">Material Interface</link></p>
+            <p><stack item="arcanearchives:matrix_brace"/> <link ref="Items:MatrixBrace">Matrix Brace</link></p>
+            <p><stack item="arcanearchives:radiant_amphora"/> <link ref="Items:RadiantAmphora">Radiant Amphora</link></p>
+            <p><stack item="arcanearchives:radiant_dust"/> <link ref="Items:RadiantDust">Radiant Dust</link></p>
+            <p><stack item="arcanearchives:raw_quartz"/> <link ref="Items:RawQuartz">Radiant Quartz (Raw)</link></p>
+            <p><stack item="arcanearchives:shaped_quartz"/> <link ref="Items:ShapedQuartz">Radiant Quartz (Shaped)</link></p>
+            <p><stack item="arcanearchives:scepter_manipulation"/> <link ref="Items:ScepterManipulation">Scepter of Manipulation</link></p>
+            <p><stack item="arcanearchives:scepter_revelation"/> <link ref="Items:ScepterRevelation">Scepter of Revelation</link></p>
+            <p><stack item="arcanearchives:scintillating_inlay"/> <link ref="Items:ScintillatingInlay">Scintillating Inlay</link></p>
+            <p><stack item="arcanearchives:quartz_sliver"/> <link ref="Items:SliverOfLight">Sliver of Light</link></p>
+            <p><stack item="arcanearchives:writ_expulsion"/> <link ref="Items:WritExpulsion">Writ of Expulsion</link></p>
         </section>
         <section id="ArcaneGems" condition="arsenal_enabled">
             <page_title_shorter>
                 <title>Arcane Gems</title>
             </page_title_shorter>
-            <p><image src="arcanearchives:gui/guidebook/gems" tw="16" th="16"/> <link ref="ArcaneGems">Arcane Gems</link></p>
+            <p><image src="arcanearchives:gui/guidebook/gems" tw="16" th="16"/> <link ref="Gems:ArcaneGems">Arcane Gems</link></p>
+            <p><stack item="arcanearchives:chromatic_powder"/> <link ref="Gems:RechargingGems">Recharging Gems</link></p>
             <space height="8"/>
-            <p><stack item="arcanearchives:slaughtergleam"/> <link ref="Slaughtergleam">Slaughtergleam</link></p>
-            <p><stack item="arcanearchives:murdergleam"/> <link ref="Murdergleam">Murdergleam</link></p>
-            <p><stack item="arcanearchives:agegleam"/> <link ref="Agegleam">Agegleam</link></p>
-            <p><stack item="arcanearchives:cleansegleam"/> <link ref="Cleansegleam">Cleansegleam</link></p>
-            <p><stack item="arcanearchives:switchgleam"/> <link ref="Switchgleam">Switchgleam</link></p>
-            <p><stack item="arcanearchives:salvegleam"/> <link ref="Salvegleam">Salvegleam</link></p>
+            <p><stack item="arcanearchives:slaughtergleam"/> <link ref="Gems:Slaughtergleam">Slaughtergleam</link></p>
+            <p><stack item="arcanearchives:murdergleam"/> <link ref="Gems:Murdergleam">Murdergleam</link></p>
+            <p><stack item="arcanearchives:agegleam"/> <link ref="Gems:Agegleam">Agegleam</link></p>
+            <p><stack item="arcanearchives:cleansegleam"/> <link ref="Gems:Cleansegleam">Cleansegleam</link></p>
+            <p><stack item="arcanearchives:switchgleam"/> <link ref="Gems:Switchgleam">Switchgleam</link></p>
+            <p><stack item="arcanearchives:salvegleam"/> <link ref="Gems:Salvegleam">Salvegleam</link></p>
             <space height="8"/>
-            <p><stack item="arcanearchives:munchstone"/> <link ref="Munchstone">Munchstone</link></p>
-            <p><stack item="arcanearchives:orderstone"/> <link ref="Orderstone">Orderstone</link></p>
+            <p><stack item="arcanearchives:munchstone"/> <link ref="Gems:Munchstone">Munchstone</link></p>
+            <p><stack item="arcanearchives:orderstone"/> <link ref="Gems:Orderstone">Orderstone</link></p>
             <space height="8"/>
-            <p><stack item="arcanearchives:mindspindle"/> <link ref="Mindspindle">Mindspindle</link></p>
-            <p><stack item="arcanearchives:elixirspindle"/> <link ref="Elixirspindle">Elixirspindle</link></p>
+            <p><stack item="arcanearchives:mindspindle"/> <link ref="Gems:Mindspindle">Mindspindle</link></p>
+            <p><stack item="arcanearchives:elixirspindle"/> <link ref="Gems:Elixirspindle">Elixirspindle</link></p>
             <space height="8"/>
-            <p><stack item="arcanearchives:mountaintear"/> <link ref="Mountaintear">Mountaintear</link></p>
-            <p><stack item="arcanearchives:rivertear"/> <link ref="Rivertear">Rivertear</link></p>
-            <p><stack item="arcanearchives:parchtear"/> <link ref="Parchtear">Parchtear</link></p>
+            <p><stack item="arcanearchives:mountaintear"/> <link ref="Gems:Mountaintear">Mountaintear</link></p>
+            <p><stack item="arcanearchives:rivertear"/> <link ref="Gems:Rivertear">Rivertear</link></p>
+            <p><stack item="arcanearchives:parchtear"/> <link ref="Gems:Parchtear">Parchtear</link></p>
             <space height="8"/>
-            <p><stack item="arcanearchives:phoenixway"/> <link ref="Phoenixway">Phoenixway</link></p>
-            <p><stack item="arcanearchives:stormway"/> <link ref="Stormway">Stormway</link></p>
+            <p><stack item="arcanearchives:phoenixway"/> <link ref="Gems:Phoenixway">Phoenixway</link></p>
+            <p><stack item="arcanearchives:stormway"/> <link ref="Gems:Stormway">Stormway</link></p>
         </section>
         <section id="Concepts">
             <page_title_shorter>
                 <title>Concepts</title>
             </page_title_shorter>
-            <p><image src="arcanearchives:gui/guidebook/networks" tw="16" th="16" /> <link ref="Networks">Networks</link></p>
+            <p><image src="arcanearchives:gui/guidebook/networks" tw="16" th="16" /> <link ref="Concepts:Networks">Networks</link></p>
             <space height="8"/>
-            <p condition="ml_astralsorcery"><stack item="astralsorcery:itemjournal"/> <link ref="Compat:AstralSorcery">Astral Sorcery Compatibility</link></p>
-            <p condition="ml_botania"><stack item="botania:lexicon"/> <link ref="Compat:Botania">Botania Compatibility</link></p>
-            <p condition="ml_potioncore"><stack item="minecraft:brewing_stand"/> <link ref="Compat:PotionCore">Potion Core Compatibility</link></p>
-            <p condition="ml_quark"><stack item="quark:ancient_tome"/> <link ref="Compat:Quark">Quark Compatibility</link></p>
-            <p condition="ml_thaumcraft"><stack item="thaumcraft:thaumonomicon"/> <link ref="Compat:Thaumcraft">Thaumcraft Compatibility</link></p>
+            <p condition="ml_astralsorcery"><stack item="astralsorcery:itemjournal"/> <link ref="Concepts:AstralSorcery">Astral Sorcery Compatibility</link></p>
+            <p condition="ml_botania"><stack item="botania:lexicon"/> <link ref="Concepts:Botania">Botania Compatibility</link></p>
+            <p condition="ml_potioncore"><stack item="minecraft:brewing_stand"/> <link ref="Concepts:PotionCore">Potion Core Compatibility</link></p>
+            <p condition="ml_quark"><stack item="quark:ancient_tome"/> <link ref="Concepts:Quark">Quark Compatibility</link></p>
+            <p condition="ml_thaumcraft"><stack item="thaumcraft:thaumonomicon"/> <link ref="Concepts:Thaumcraft">Thaumcraft Compatibility</link></p>
         </section>
     </chapter>
 
-    <chapter id="BrazierHoarding">
-        <section>
+
+    <chapter id="Blocks">
+        <section id="BrazierHoarding">
             <page_title_shorter>
                 <title>Brazier of Hoarding</title>
             </page_title_shorter>
             <p align="center"><stack item="arcanearchives:brazier_of_hoarding" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                A Brazier of Hoarding is an organization device that can act as a drop-off point to store items in your <link ref="Networks">Network</link>. Braziers of Hoarding are also a light source.
+                A Brazier of Hoarding is an organization device that can act as a drop-off point to store items in your <link ref="Concepts:Networks">Network</link>. Braziers of Hoarding are also a light source.
             </p>
             <p>
-                <stack item="arcanearchives:radiant_trove"/> Any items used on, or dropped on top of, a Brazier of Hoarding will be transported to appropriate storage, starting with <link ref="RadiantTrove">Radiant Troves</link>. If no appropriate Radiant Troves exist in your network, items will be placed in <link ref="RadiantChest">Radiant Chests</link>, starting with chests that already contain an instance of the item.
+                <stack item="arcanearchives:radiant_trove"/> Any items used on, or dropped on top of, a Brazier of Hoarding will be transported to appropriate storage, starting with <link ref="Blocks:RadiantTrove">Radiant Troves</link>. If no appropriate Radiant Troves exist in your network, items will be placed in <link ref="Blocks:RadiantChest">Radiant Chests</link>, starting with chests that already contain an instance of the item.
             </p>
             <p>
                 If no storage can be found, items are ejected from the Brazier of Hoarding.
             </p>
             <p>
-                <stack item="arcanearchives:scepter_manipulation"/> If you right click a brazier with a <link ref="ScepterManipulation">Scepter of Manipulation</link>, you can set the maximum radius in which it will search for Radiant storage to insert items into, as well as whether the Brazier will fill any located device in your network, or only devices that you placed personally. You can also enable an option to visualize the size of the insertion area.
+                <stack item="arcanearchives:scepter_manipulation"/> If you right click a brazier with a <link ref="Items:ScepterManipulation">Scepter of Manipulation</link>, you can set the maximum radius in which it will search for Radiant storage to insert items into, as well as whether the Brazier will fill any located device in your network, or only devices that you placed personally. You can also enable an option to visualize the size of the insertion area.
             </p>
             <p>
                 <stack item="minecraft:purple_shulker_box"/> If you right click an item that itself is an inventory (such as a shulker box, backpack, or satchel) onto a Brazier of Hoarding, its contents will be deposited into the Brazier instead.
@@ -199,9 +201,10 @@
             <p condition="ml_thaumcraft">
                 <stack item="thaumcraft:infusion_matrix"/> Braziers of Hoarding can be used as an infusion stabilizer.
             </p><space height="4"/>
-            <horizontal_rule/>
+        </section>
+        <section>
             <p>
-                <stack item="arcanearchives:gemcutters_table"/> Braziers of Hoarding can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table"/> Braziers of Hoarding can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -209,10 +212,10 @@
                 </recipe.result>
             </recipe>
         </section>
-    </chapter>
 
-    <chapter id="GemCuttersTable">
-        <section>
+
+
+        <section id="GemCuttersTable">
             <page_title_shorter>
                 <title>Gem Cutter's Table</title>
             </page_title_shorter>
@@ -225,7 +228,7 @@
                 Unlike conventional crafting, there are no shape requirements for a Gem Cutter's Table recipe. After selecting the desired item you can simply remove it from the output slot if enough ingredients are present.
             </p>
             <p>
-                <stack item="arcanearchives:brazier_of_hoarding"/> The internal inventory of a Gem Cutter's Table can be filled by a <link ref="BrazierHoarding">Brazier of Hoarding</link>. Slots with existing items will be filled, but new items will never be added to empty slots.
+                <stack item="arcanearchives:brazier_of_hoarding"/> The internal inventory of a Gem Cutter's Table can be filled by a <link ref="Blocks:BrazierHoarding">Brazier of Hoarding</link>. Slots with existing items will be filled, but new items will never be added to empty slots.
             </p>
             <horizontal_rule/>
             <p>
@@ -237,17 +240,17 @@
                 </recipe.result>
             </recipe>
         </section>
-    </chapter>
 
-    <chapter id="LecternManifest">
-        <section>
+
+
+        <section id="LecternManifest">
             <page_title_shorter>
                 <title>Manifest Lectern</title>
             </page_title_shorter>
             <p align="center"><stack item="arcanearchives:lectern_manifest" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                A Manifest Lectern acts as a <link ref="Manifest">Manifest</link> does, save that it is placed in the world rather than an item you carry with you.
+                A Manifest Lectern acts as a <link ref="Items:Manifest">Manifest</link> does, save that it is placed in the world rather than an item you carry with you.
             </p><space height="4"/>
             <p>
                 When using the item tracking feature, a Manifest Lectern will draw lines from you to the target inventories, rather than from itself to the target inventories.
@@ -291,10 +294,10 @@
                 ...1663, Summer's End
             </p>
         </section>
-    </chapter>
 
-    <chapter id="MonitoringCrystal">
-        <section>
+
+
+        <section id="MonitoringCrystal">
             <page_title_shorter>
                 <title>Monitoring Crystal</title>
             </page_title_shorter>
@@ -304,14 +307,14 @@
                 A Monitoring Crystal is a light source.
             </p>
             <p>
-                <stack item="arcanearchives:manifest"/> The contents of inventories with an attached Monitoring Crystal can be seen on a <link ref="Manifest">Manifest</link>.
+                <stack item="arcanearchives:manifest"/> The contents of inventories with an attached Monitoring Crystal can be seen on a <link ref="Items:Manifest">Manifest</link>.
             </p>
             <p>
-                <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Monitoring Crystal will return what direction the Monitoring Crystal is pointing towards.
+                <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="Items:ScepterRevelation">Scepter of Revelation</link> on a Monitoring Crystal will return what direction the Monitoring Crystal is pointing towards.
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Monitoring Crystals can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Monitoring Crystals can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -342,10 +345,10 @@
                 <image src="arcanearchives:gui/guidebook/observation_sigil" tw="118" th="94"/>
             </p>
         </section>
-    </chapter>
 
-    <chapter id="RadiantChest">
-        <section>
+
+
+        <section id="RadiantChest">
             <page_title_shorter>
                 <title>Radiant Chest</title>
             </page_title_shorter>
@@ -358,19 +361,19 @@
                 At the bottom of a Radiant Chest’s interface, you can give it a name to help keep your storage organized. Radiant Chests are also a light source.
             </p>
             <p>
-                <stack item="arcanearchives:manifest"/> Items stored in Radiant Chests appear on a <link ref="Manifest">Manifest</link> as long as the Chest's chunk is loaded.
+                <stack item="arcanearchives:manifest"/> Items stored in Radiant Chests appear on a <link ref="Items:Manifest">Manifest</link> as long as the Chest's chunk is loaded.
             </p>
             <p>
-                <stack item="arcanearchives:scepter_manipulation"/> Using a <link ref="ScepterManipulation">Scepter of Manipulation</link> on a Radiant Chest while holding an item in the other hand allows you to label the chest with the held item. The item is not consumed.
+                <stack item="arcanearchives:scepter_manipulation"/> Using a <link ref="Items:ScepterManipulation">Scepter of Manipulation</link> on a Radiant Chest while holding an item in the other hand allows you to label the chest with the held item. The item is not consumed.
             </p>
             <p>
                 To clear the item, sneak and activate the chest while holding the Scepter of Manipulation with your main hand and nothing in your off hand.
             </p>
             <p>
-                <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Radiant Chest will return the chest's name, and how many slots of its inventory are available.
+                <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="Items:ScepterRevelation">Scepter of Revelation</link> on a Radiant Chest will return the chest's name, and how many slots of its inventory are available.
             </p>
             <p>
-                <stack item="arcanearchives:brazier_of_hoarding"/> In the lower right corner of a Radiant Chest's interface, you can choose how <link ref="BrazierHoarding">Braziers of Hoarding</link> route items to the Chest. By default, a Brazier will be capable of routing any item to the chest; if the checkbox is ticked on, only items that already exist within the chest can be routed.
+                <stack item="arcanearchives:brazier_of_hoarding"/> In the lower right corner of a Radiant Chest's interface, you can choose how <link ref="Blocks:BrazierHoarding">Braziers of Hoarding</link> route items to the Chest. By default, a Brazier will be capable of routing any item to the chest; if the checkbox is ticked on, only items that already exist within the chest can be routed.
             </p>
         </section>
         <section>
@@ -382,7 +385,7 @@
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:raw_quartz"/> Radiant Chests can be crafted by using a piece of <link ref="RadiantQuartz">Raw Radiant Quartz</link> on a chest while sneaking. Any items inside the chest will be imported, and if used on a double vanilla chest, both chests' inventories will be imported into the new Radiant Chest.
+                <stack item="arcanearchives:raw_quartz"/> Radiant Chests can be crafted by using a piece of <link ref="Items:RawQuartz">Raw Radiant Quartz</link> on a chest while sneaking. Any items inside the chest will be imported, and if used on a double vanilla chest, both chests' inventories will be imported into the new Radiant Chest.
             </p>
             <p>
                 <stack item="minecraft:crafting_table"/> Radiant Chests can be crafted conventionally.
@@ -416,10 +419,10 @@
                 ...1665, Autumn’s Birth
             </p>
         </section>
-    </chapter>
 
-    <chapter id="RadiantCraftingTable">
-        <section>
+
+
+        <section id="RadiantCraftingTable">
             <page_title_shorter>
                 <title>Radiant Crafting Table</title>
             </page_title_shorter>
@@ -432,10 +435,10 @@
                 After crafting an item, you can click on one of the slots on the right side of the interface to save the recipe. If enough items are present in your inventory, clicking on a slot with a saved recipe crafts the item without requiring you to set items on the crafting grid. Shift clicking clears the recipe in a slot.
             </p>
             <p>
-                <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Radiant Crafting Table will return what items are present in the crafting grid.
+                <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="Items:ScepterRevelation">Scepter of Revelation</link> on a Radiant Crafting Table will return what items are present in the crafting grid.
             </p>
             <p>
-                <stack item="arcanearchives:raw_quartz"/> Radiant Crafting Tables can be crafted by using a piece of <link ref="RadiantQuartz">Raw Radiant Quartz</link> on a vanilla crafting table while sneaking.
+                <stack item="arcanearchives:raw_quartz"/> Radiant Crafting Tables can be crafted by using a piece of <link ref="Items:RawQuartz">Raw Radiant Quartz</link> on a vanilla crafting table while sneaking.
             </p>
             <horizontal_rule/>
             <p>
@@ -447,10 +450,10 @@
                 </recipe.result>
             </recipe>
         </section>
-    </chapter>
 
-    <chapter id="RadiantLantern">
-        <section>
+
+
+        <section id="RadiantLantern">
             <page_title_shorter>
                 <title>Radiant Lantern</title>
             </page_title_shorter>
@@ -461,7 +464,7 @@
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Radiant Lanterns can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Radiant Lanterns can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -469,10 +472,10 @@
                 </recipe.result>
             </recipe>
         </section>
-    </chapter>
 
-    <chapter id="RadiantResonator">
-        <section>
+
+
+        <section id="RadiantResonator">
             <page_title_shorter>
                 <title>Radiant Resonator</title>
             </page_title_shorter>
@@ -488,10 +491,10 @@
                 Radiant Resonators only run while you’re online, even if the chunk is loaded.
             </p>
             <p>
-                <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Radiant Resonator will return its current process, and whether it is running or not.
+                <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="Items:ScepterRevelation">Scepter of Revelation</link> on a Radiant Resonator will return its current process, and whether it is running or not.
             </p>
             <p>
-                <stack item="minecraft:comparator"/> When monitored with a Redstone Comparator, a Radiant Resonator ouptuts a signal based on its progress towards creating a new <link ref="RawQuartzCluster">Radiant Quartz Cluster</link>.
+                <stack item="minecraft:comparator"/> When monitored with a Redstone Comparator, a Radiant Resonator ouptuts a signal based on its progress towards creating a new <link ref="Blocks:RawQuartzCluster">Radiant Quartz Cluster</link>.
             </p>
             <horizontal_rule/>
             <p>
@@ -520,10 +523,10 @@
                 ...1672, Winter's Birth
             </p>
         </section>
-    </chapter>
 
-    <chapter id="RadiantTank">
-        <section>
+
+
+        <section id="RadiantTank">
             <page_title_shorter>
                 <title>Radiant Tank</title>
             </page_title_shorter>
@@ -536,16 +539,16 @@
                 <stack item="arcanearchives:matrix_brace"/> <image src="arcanearchives:gui/guidebook/next" tw="8" th="16"/> <stack item="arcanearchives:containment_field"/> <image src="arcanearchives:gui/guidebook/next" tw="8" th="16"/> <stack item="arcanearchives:storage_shaped_quartz"/> A Radiant Tank's storage capacity can be upgraded by using specific items while sneaking. The first upgrade increases storage to 3x base capacity, the second to 6x base capacity, and the third to 10x base capacity.
             </p>
             <p>
-                <stack item="arcanearchives:devouring_charm"/> When used as an upgrade, a <link ref="DevouringCharm">Devouring Charm</link> causes fluid added to the Tank in excess of its maximum capacity is destroyed.
+                <stack item="arcanearchives:devouring_charm"/> When used as an upgrade, a <link ref="Items:DevouringCharm">Devouring Charm</link> causes fluid added to the Tank in excess of its maximum capacity is destroyed.
             </p>
             <p>
-                <stack item="arcanearchives:radiant_amphora"/> <link ref="RadiantAmphora">Radiant Amphorae</link> can fill and empty a Radiant Tank from anywhere, as long as the tank is in a loaded chunk.
+                <stack item="arcanearchives:radiant_amphora"/> <link ref="Items:RadiantAmphora">Radiant Amphorae</link> can fill and empty a Radiant Tank from anywhere, as long as the tank is in a loaded chunk.
             </p>
             <p>
-                <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Radiant Tank will return what type of fluid is stored, its current and maximum capacity, and how many upgrades have been installed.
+                <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="Items:ScepterRevelation">Scepter of Revelation</link> on a Radiant Tank will return what type of fluid is stored, its current and maximum capacity, and how many upgrades have been installed.
             </p>
             <p>
-                <stack item="arcanearchives:scepter_manipulation"/> Using a <link ref="ScepterManipulation">Scepter of Manipulation</link> on a Radiant Tank opens a GUI that allows you to see and modify what upgrades are installed.
+                <stack item="arcanearchives:scepter_manipulation"/> Using a <link ref="Items:ScepterManipulation">Scepter of Manipulation</link> on a Radiant Tank opens a GUI that allows you to see and modify what upgrades are installed.
             </p>
             <p>
                 <stack item="minecraft:comparator"/> When monitored with a Redstone Comparator, a Radiant Tank ouptuts a signal based on how full it is.
@@ -556,7 +559,7 @@
                 <title>Radiant Tank</title>
             </page_title_shorter>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Radiant Tanks can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Radiant Tanks can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -564,10 +567,10 @@
                 </recipe.result>
             </recipe>
         </section>
-    </chapter>
 
-    <chapter id="RadiantTrove">
-        <section>
+
+
+        <section id="RadiantTrove">
             <page_title_shorter>
                 <title>Radiant Trove</title>
             </page_title_shorter>
@@ -580,20 +583,20 @@
                 <stack item="arcanearchives:matrix_brace"/> <image src="arcanearchives:gui/guidebook/next" tw="8" th="16"/> <stack item="arcanearchives:material_interface"/> <image src="arcanearchives:gui/guidebook/next" tw="8" th="16"/> <stack item="arcanearchives:storage_shaped_quartz"/> A Radiant Trove's storage capacity can be upgraded by using specific items while sneaking. The first upgrade increases storage to 3x base capacity, the second to 6x base capacity, and the third to 10x base capacity.
             </p>
             <p>
-                <stack item="arcanearchives:devouring_charm"/> If used as an upgrade, a <link ref="DevouringCharm">Devouring Charm</link> causes items added to the Trove in excess of its maximum capacity are destroyed.
+                <stack item="arcanearchives:devouring_charm"/> If used as an upgrade, a <link ref="Items:DevouringCharm">Devouring Charm</link> causes items added to the Trove in excess of its maximum capacity are destroyed.
             </p>
             <p>
-                <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="ScepterRevelation">Scepter of Revelation</link> on a Radiant Trove will return what type of item is stored, its current and maximum capacity, and how many upgrades have been installed.
+                <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="Items:ScepterRevelation">Scepter of Revelation</link> on a Radiant Trove will return what type of item is stored, its current and maximum capacity, and how many upgrades have been installed.
             </p>
             <p>
-                <stack item="arcanearchives:scepter_manipulation"/> Using a <link ref="ScepterManipulation">Scepter of Manipulation</link> on a Radiant Trove opens a GUI that allows you to see and modify what upgrades are installed.
+                <stack item="arcanearchives:scepter_manipulation"/> Using a <link ref="Items:ScepterManipulation">Scepter of Manipulation</link> on a Radiant Trove opens a GUI that allows you to see and modify what upgrades are installed.
             </p>
             <p>
                 <stack item="minecraft:comparator"/> When monitored with a Redstone Comparator, a Radiant Trove ouptuts a signal based on how full it is.
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Radiant Troves can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Radiant Troves can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -601,17 +604,17 @@
                 </recipe.result>
             </recipe>
         </section>
-    </chapter>
 
-    <chapter id="RawQuartzCluster">
-        <section>
+
+
+        <section id="RawQuartzCluster">
             <page_title_shorter>
                 <title>Raw Quartz Cluster</title>
             </page_title_shorter>
             <p align="center"><stack item="arcanearchives:raw_quartz_cluster" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                Raw Quartz Clusters are a light source. They can be collected with a pick bearing the Silk Touch enchantment; otherwise breaking a Raw Quartz Cluster will return a piece of <link ref="raw_quartz">Raw Radiant Quartz</link>.
+                Raw Quartz Clusters are a light source. They can be collected with a pick bearing the Silk Touch enchantment; otherwise breaking a Raw Quartz Cluster will return a piece of <link ref="Items:RawQuartz">Raw Radiant Quartz</link>.
             </p>
             <p condition="ml_thaumcraft">
                 <stack item="thaumcraft:infusion_matrix"/> Raw Quartz Clusters can be used as an infusion stabilizer.
@@ -623,8 +626,8 @@
         </section>
     </chapter>
 
-    <chapter id="ContainmentField">
-        <section>
+    <chapter id="Items">
+        <section id="ContainmentField">
             <page_title_shorter>
                 <title>Containment Field</title>
             </page_title_shorter>
@@ -634,11 +637,11 @@
                 A Containment Field is a crafting component. Containment Fields are generally used in devices that need to keep something confined within an area.
             </p>
             <p>
-                <stack item="arcanearchives:radiant_tank"/> Containment Fields can be used to upgrade <link ref="RadiantTank">Radiant Tanks</link>.
+                <stack item="arcanearchives:radiant_tank"/> Containment Fields can be used to upgrade <link ref="Blocks:RadiantTank">Radiant Tanks</link>.
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Containment Fields can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Containment Fields can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -646,10 +649,10 @@
                 </recipe.result>
             </recipe>
         </section>
-    </chapter>
 
-    <chapter id="DevouringCharm">
-        <section>
+
+
+        <section id="DevouringCharm">
             <page_title_shorter>
                 <title>Devouring Charm</title>
             </page_title_shorter>
@@ -659,17 +662,17 @@
                 A Devouring Charm allows you to destroy items or empty fluids out of a bucket. Devouring Charms are also an optional upgrade component.
             </p>
             <p>
-                <stack item="arcanearchives:radiant_tank"/> When used to upgrade a <link ref="RadiantTank">Radiant Tanks</link>, any fluid inserted over the tank's maximum capacity is destroyed.
+                <stack item="arcanearchives:radiant_tank"/> When used to upgrade a <link ref="Blocks:RadiantTank">Radiant Tanks</link>, any fluid inserted over the tank's maximum capacity is destroyed.
             </p>
             <p>
-                <stack item="arcanearchives:radiant_trove"/> When used to upgrade a <link ref="RadiantTrove">Radiant Trove</link>, any items inserted beyond the Trove's maximum capacity are destroyed.
+                <stack item="arcanearchives:radiant_trove"/> When used to upgrade a <link ref="Blocks:RadiantTrove">Radiant Trove</link>, any items inserted beyond the Trove's maximum capacity are destroyed.
             </p>
-            <p>
+            <p condition="arsenal_enabled">
                 <stack item="arcanearchives:parchtear"/> Placing a <link ref="Parchtear">Parchtear</link> into the fluid voiding slot of a Devouring Charm restores its charge.
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Devouring Charms can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Devouring Charms can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -703,10 +706,10 @@
                 ...Form letter given to all Apprentices of the Eternal University
             </p>
         </section>
-    </chapter>
 
-    <chapter id="GemSocket">
-        <section>
+
+
+        <section id="GemSocket" condition="arsenal_enabled">
             <page_title_shorter>
                 <title>Gem Socket</title>
             </page_title_shorter>
@@ -737,7 +740,7 @@
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Gem Sockets can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Gem Sockets can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -745,24 +748,24 @@
                 </recipe.result>
             </recipe>
         </section>
-    </chapter>
 
-    <chapter id="LetterInvitation">
-        <section>
+
+
+        <section id="LetterInvitation">
             <page_title_shorter>
                 <title>Letter of Invitation</title>
             </page_title_shorter>
             <p align="center"><stack item="arcanearchives:letter_invitation" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                If another player uses a Letter of Invitation that you crafted, they are added to your <link ref="Networks">Network</link>.
+                If another player uses a Letter of Invitation that you crafted, they are added to your <link ref="Concepts:Networks">Network</link>.
             </p>
             <p>
-                <stack item="arcanearchives:manifest"/> When viewing a <link ref="Manifest">Manifest</link>, all placed Radiant Storage from any player in your network is visible.
+                <stack item="arcanearchives:manifest"/> When viewing a <link ref="Items:Manifest">Manifest</link>, all placed Radiant Storage from any player in your network is visible.
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Letters of Invitation can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Letters of Invitation can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -799,24 +802,24 @@
                 ...1627, Winter’s End
             </p>
         </section>
-    </chapter>
 
-    <chapter id="LetterResignation">
-        <section>
+
+
+        <section id="LetterResignation">
             <page_title_shorter>
                 <title>Letter of Resignation</title>
             </page_title_shorter>
             <p align="center"><stack item="arcanearchives:letter_resignation" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                A Letter of Resignation can be used to leave a <link ref="Networks">Hybrid Network</link> created with a <link ref="LetterInvitation">Letter of Invitation</link>.
+                A Letter of Resignation can be used to leave a <link ref="Concepts:Networks">Hybrid Network</link> created with a <link ref="Items:LetterInvitation">Letter of Invitation</link>.
             </p>
             <p>
-                <stack item="arcanearchives:manifest"/> When you leave a hybrid network, any Radiant Storage you placed is removed from the network, and will no longer be visible on a <link ref="Manifest">Manifest</link> by members of the network you left.
+                <stack item="arcanearchives:manifest"/> When you leave a hybrid network, any Radiant Storage you placed is removed from the network, and will no longer be visible on a <link ref="Items:Manifest">Manifest</link> by members of the network you left.
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Letters of Resignation can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Letters of Resignation can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -850,10 +853,10 @@
                 ...1634, Spring's Birth
             </p>
         </section>
-    </chapter>
 
-    <chapter id="Manifest">
-        <section>
+
+
+        <section id="Manifest">
             <page_title_shorter>
                 <title>Manifest</title>
             </page_title_shorter>
@@ -867,7 +870,7 @@
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table"/> Manifests can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table"/> Manifests can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -875,10 +878,10 @@
                 </recipe.result>
             </recipe>
         </section>
-    </chapter>
 
-    <chapter id="MaterialInterface">
-        <section>
+
+
+        <section id="MaterialInterface">
             <page_title_shorter>
                 <title>Material Interface</title>
             </page_title_shorter>
@@ -888,11 +891,11 @@
                 A Material Interface is a crafting component. Material Interfaces are generally used in devices that need to read data from a specially prepared Radiant Quartz crystal.
             </p>
             <p>
-                <stack item="arcanearchives:radiant_trove"/> Material Interfaces can be used to upgrade <link ref="RadiantTrove">Radiant Troves</link>.
+                <stack item="arcanearchives:radiant_trove"/> Material Interfaces can be used to upgrade <link ref="Blocks:RadiantTrove">Radiant Troves</link>.
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Material Interfaces can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Material Interfaces can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -923,10 +926,10 @@
                 ...1665, Autumn’s Birth
             </p>
         </section>
-    </chapter>
 
-    <chapter id="MatrixBrace">
-        <section>
+
+
+        <section id="MatrixBrace">
             <page_title_shorter>
                 <title>Matrix Brace</title>
             </page_title_shorter>
@@ -937,7 +940,7 @@
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Matrix Braces can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Matrix Braces can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -945,17 +948,17 @@
                 </recipe.result>
             </recipe>
         </section>
-    </chapter>
 
-    <chapter id="RadiantAmphora">
-        <section>
+
+
+        <section id="RadiantAmphora">
             <page_title_shorter>
                 <title>Radiant Amphora</title>
             </page_title_shorter>
             <p align="center"><stack item="arcanearchives:radiant_amphora" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:radiant_tank"/> A Radiant Amphora acts as a long distance connection to a specific <link ref="RadiantTank">Radiant Tank</link>. You can bind a Radiant Amphora to a Radiant Tank by using the amphora on the desired tank while sneaking. The amphora will become colorized to signify that a connection was made.
+                <stack item="arcanearchives:radiant_tank"/> A Radiant Amphora acts as a long distance connection to a specific <link ref="Blocks:RadiantTank">Radiant Tank</link>. You can bind a Radiant Amphora to a Radiant Tank by using the amphora on the desired tank while sneaking. The amphora will become colorized to signify that a connection was made.
             </p>
             <p>
                 <image src="arcanearchives:items/item_radiantamphora" tw="16" th="16"/> While in <span bold="true">Fill</span> mode, picking up fluid directly places it into the linked Radiant Tank.
@@ -971,7 +974,7 @@
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Radiant Amphorae can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Radiant Amphorae can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -979,21 +982,21 @@
                 </recipe.result>
             </recipe>
         </section>
-    </chapter>
 
-    <chapter id="RadiantDust">
-        <section>
+
+
+        <section id="RadiantDust">
             <page_title_shorter>
                 <title>Radiant Dust</title>
             </page_title_shorter>
             <p align="center"><stack item="arcanearchives:radiant_dust" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                Radiant Dust is a crafting component made from ground up <link ref="raw_quartz">Raw Radiant Quartz</link>. Radiant Dust is generally used in devices where full sized pieces of Radiant Quartz would be too large.
+                Radiant Dust is a crafting component made from ground up <link ref="Items:RawQuartz">Raw Radiant Quartz</link>. Radiant Dust is generally used in devices where full sized pieces of Radiant Quartz would be too large.
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Radiant Dust can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Radiant Dust can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -1001,10 +1004,10 @@
                 </recipe.result>
             </recipe>
         </section>
-    </chapter>
 
-    <chapter id="RawQuartz">
-        <section>
+
+
+        <section id="RawQuartz">
             <page_title_shorter>
                 <title>Raw Radiant Quartz</title>
             </page_title_shorter>
@@ -1014,20 +1017,20 @@
                 Raw Radiant Quartz is an unrefined magical crystal that makes up the basis of all of Arcane Archives. It is primarily a crafting component.
             </p>
             <p>
-                <stack item="minecraft:chest" /> Raw Radiant Quartz can be used to convert a chest to a <link ref="RadiantChest">Radiant Chest</link>.
+                <stack item="minecraft:chest" /> Raw Radiant Quartz can be used to convert a chest to a <link ref="Blocks:RadiantChest">Radiant Chest</link>.
             </p>
             <p>
-                <stack item="minecraft:crafting_table" /> Raw Radiant Quartz can be used to convert a crafting table into a <link ref="RadiantCraftingTable">Radiant Crafting Table</link>.
+                <stack item="minecraft:crafting_table" /> Raw Radiant Quartz can be used to convert a crafting table into a <link ref="Items:RadiantCraftingTable">Radiant Crafting Table</link>.
             </p>
             <p>
-                <stack item="arcanearchives:quartz_sliver" /> Raw Radiant Quartz can be used to create <link ref="SliverOfLight">Slivers of Light</link> by bashing a piece against another block.
+                <stack item="arcanearchives:quartz_sliver" /> Raw Radiant Quartz can be used to create <link ref="Blocks:SliverOfLight">Slivers of Light</link> by bashing a piece against another block.
             </p>
             <p condition="ml_astralsorcery">
                 <stack item="astralsorcery:blockwell"/> When placed in a Lightwell with access to the sky, Raw Radiant Quartz creates Liquid Starlight over time. Compared to Aquamarine, its production rate is significantly lower, but is much more resistant to shattering.
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:radiant_resonator" /> Raw Radiant Quartz is created over time on top of a <link ref="RadiantResonator">Radiant Resonator</link> in the form of a <link ref="RawQuartzCluster">Raw Quartz Cluster</link>.
+                <stack item="arcanearchives:radiant_resonator" /> Raw Radiant Quartz is created over time on top of a <link ref="RadiantResonator">Radiant Resonator</link> in the form of a <link ref="Blocks:RawQuartzCluster">Raw Quartz Cluster</link>.
             </p>
         </section>
         <section>
@@ -1049,10 +1052,10 @@
                 </recipe.result>
             </recipe>
         </section>
-    </chapter>
 
-    <chapter id="ShapedQuartz">
-        <section>
+
+
+        <section id="ShapedQuartz">
             <page_title_shorter>
                 <title>Shaped Radiant Quartz</title>
             </page_title_shorter>
@@ -1062,11 +1065,11 @@
                 Shaped Radiant Quartz is cut and polished Radiant Quartz that is suitable for more advanced uses. It is primarily a crafting component.
             </p>
             <p condition="ml_astralsorcery">
-                <stack item="astralsorcery:blockwell"/> When placed in a Lightwell with access to the sky, Shaped Radiant Quartz creates Liquid Starlight over time. Compared to Aquamarine, its production rate is significantly lower, but is much more resistant to shattering. Shaped Radiant Quartz is a bit more efficient than <link ref="RawQuartz">Raw Radiant Quartz</link>.
+                <stack item="astralsorcery:blockwell"/> When placed in a Lightwell with access to the sky, Shaped Radiant Quartz creates Liquid Starlight over time. Compared to Aquamarine, its production rate is significantly lower, but is much more resistant to shattering. Shaped Radiant Quartz is a bit more efficient than <link ref="Items:RawQuartz">Raw Radiant Quartz</link>.
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Shaped Radiant Quartz can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Shaped Radiant Quartz can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -1084,10 +1087,10 @@
                 Shaped Radiant Quartz can also be compressed into a storage block. Blocks of Shaped Radiant Quartz are a light source.
             </p>
             <p>
-                <stack item="arcanearchives:radiant_tank"/> Blocks of Shaped Radiant Quartz can be used to upgrade <link ref="RadiantTank">Radiant Tanks</link>.
+                <stack item="arcanearchives:radiant_tank"/> Blocks of Shaped Radiant Quartz can be used to upgrade <link ref="Blocks:RadiantTank">Radiant Tanks</link>.
             </p>
             <p>
-                <stack item="arcanearchives:radiant_trove"/> Blocks of Shaped Radiant Quartz can be used to upgrade <link ref="RadiantTrove">Radiant Troves</link>.
+                <stack item="arcanearchives:radiant_trove"/> Blocks of Shaped Radiant Quartz can be used to upgrade <link ref="Blocks:RadiantTrove">Radiant Troves</link>.
             </p>
             <horizontal_rule/>
             <p>
@@ -1099,10 +1102,10 @@
                 </recipe.result>
             </recipe>
         </section>
-    </chapter>
 
-    <chapter id="ScepterManipulation">
-        <section>
+
+
+        <section id="ScepterManipulation">
             <page_title_shorter>
                 <title>Scepter of Manipulation</title>
             </page_title_shorter>
@@ -1118,7 +1121,7 @@
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Scepters of Manipulation can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Scepters of Manipulation can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -1126,10 +1129,10 @@
                 </recipe.result>
             </recipe>
         </section>
-    </chapter>
 
-    <chapter id="ScepterRevelation">
-        <section>
+
+
+        <section id="ScepterRevelation">
             <page_title_shorter>
                 <title>Scepter of Revelation</title>
             </page_title_shorter>
@@ -1200,10 +1203,10 @@
                 ...1665, Summer's Birth
             </p><space height="16"/>
         </section>
-    </chapter>
 
-    <chapter id="ScintillatingInlay">
-        <section>
+
+
+        <section id="ScintillatingInlay">
             <page_title_shorter>
                 <title>Scintillating Inlay</title>
             </page_title_shorter>
@@ -1214,7 +1217,7 @@
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Scintillating Inlay can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Scintillating Inlay can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -1222,10 +1225,10 @@
                 </recipe.result>
             </recipe>
         </section>
-    </chapter>
 
-    <chapter id="SliverOfLight">
-        <section>
+
+
+        <section id="SliverOfLight">
             <page_title_shorter>
                 <title>Sliver of Light</title>
             </page_title_shorter>
@@ -1236,27 +1239,27 @@
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="minecraft:stone"/> Slivers of Light can be crafted by bashing a piece of <link ref="raw_quartz">Raw Radiant Quartz</link> against another block. Each bash has a 40% chance of creating a single sliver, and a 20% chance of creating a handful of slivers but destroying the piece of Raw Radiant Quartz.
+                <stack item="minecraft:stone"/> Slivers of Light can be crafted by bashing a piece of <link ref="Items:RawQuartz">Raw Radiant Quartz</link> against another block. Each bash has a 40% chance of creating a single sliver, and a 20% chance of creating a handful of slivers but destroying the piece of Raw Radiant Quartz.
             </p>
         </section>
-    </chapter>
 
-    <chapter id="WritExpulsion">
-        <section>
+
+
+        <section id="WritExpulsion">
             <page_title_shorter>
                 <title>Writ of Expulsion</title>
             </page_title_shorter>
             <p align="center"><stack item="arcanearchives:writ_expulsion" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                A Writ of Expulsion can be used to forcibly remove a player from a <link ref="Networks">Hybrid Network</link>.
+                A Writ of Expulsion can be used to forcibly remove a player from a <link ref="Concepts:Networks">Hybrid Network</link>.
             </p>
             <p>
                 <stack item="minecraft:anvil"/> Once you've named the Writ of Expulsion on an anvil to the name of the desired player to kick from your network, use it to complete the process.
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Writs of Expulsion can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Writs of Expulsion can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -1295,8 +1298,10 @@
         </section>
     </chapter>
 
-    <chapter id="ArcaneGems" condition="arsenal_enabled">
-        <section>
+
+
+    <chapter id="Gems">
+        <section id="ArcaneGems" condition="arsenal_enabled">
             <page_title_shorter>
                 <title>Arcane Gems</title>
             </page_title_shorter>
@@ -1306,7 +1311,7 @@
                 Arcane Gems are specially cut pieces of Radiant Quartz, modified to only glow with a specific color of light. Each gem has unique magical properties described further on their individual pages.
             </p>
             <p>
-                <span bold="true">Please be aware that all Arcane Gem recipes are temporary.</span> Arcane Gems will not be craftable on the <link ref="GemCuttersTable">Gem Cutter's Table</link> in the future.
+                <span bold="true">Please be aware that all Arcane Gem recipes are temporary.</span> Arcane Gems will not be craftable on the <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link> in the future.
             </p>
             <horizontal_rule/>
             <p>
@@ -1328,15 +1333,10 @@
                 <image src="arcanearchives:items/gems/trillion/dun" tw="16" th="16"/> Gems with a <span bold="true">Trillion</span> cut generally affect energy in some way.
             </p>
         </section>
-        <section id="RechargingGems">
+        <section id="RechargingGems" condition="arsenal_enabled">
             <page_title_shorter>
-                <title>Arcane Gems</title>
+                <title>Recharging Arcane Gems</title>
             </page_title_shorter>
-            <space height="16"/>
-            <p bold="true" italics="true" align="center">
-                Recharging Arcane Gems
-            </p>
-            <space height="8"/>
             <p>
                 Most Arcane Gems have an internal reservoir of light, called <span bold="true">charge</span>. Once a gem's charge runs out, it becomes <span bold="true">dun</span> and cannot be used until recharged. When a gem goes dun, you can attempt to recharge it, usually by activating the dun gem while holding it. Each gem has a unique method of recharging noted on its individual page.
             </p>
@@ -1347,20 +1347,30 @@
                 <stack item="arcanearchives:full_spectrum_chromatic_powder"/> In addition to Chromatic Powder matching a its color, any Arcane Gem can be recharged with <span bold="true">Full-Spectrum Chromatic Powder</span>. An Arcane Gem will always try to consume single-color powder before consuming full-spectrum powder.
             </p>
             <p>
-                <stack item="arcanearchives:gemsocket"/> Gems contained within a <link ref="GemSocket">Gem Socket</link> will attempt to recharge themselves once upon going dun.
+                <stack item="arcanearchives:gemsocket"/> Gems contained within a <link ref="Items:GemSocket">Gem Socket</link> will attempt to recharge themselves once upon going dun.
             </p>
         </section>
-    </chapter>
+        <section condition="arsenal_disabled">
+            <page_title_shorter>
+                <title>Arcane Gems</title>
+            </page_title_shorter>
+            <p align="center"><image src="arcanearchives:gui/guidebook/gems" tw="16" th="16" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                <span bold="true">Arcane Arsenal</span> is disabled in config; these features are not available.
+            </p>
+        </section>
 
-    <chapter id="Slaughtergleam" condition="arsenal_enabled">
-        <section>
+
+
+        <section id="Slaughtergleam" condition="arsenal_enabled">
             <page_title_shorter>
                 <title>Slaughtergleam</title>
             </page_title_shorter>
             <p align="center"><stack item="arcanearchives:slaughtergleam" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                A Slaughtergleam is an Arcane Gem formed from a red-spectrum piece of <link ref="shaped_quartz">Shaped Radiant Quartz</link> in an asscher cut.
+                A Slaughtergleam is an Arcane Gem formed from a red-spectrum piece of <link ref="Items:ShapedQuartz">Shaped Radiant Quartz</link> in an asscher cut.
             </p>
             <p>
                 When held, your attacks are considered to have one level of the Looting enchantment. If you are wielding a weapon with the Looting enchantment, its level is increased by one instead.
@@ -1370,7 +1380,7 @@
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Slaughtergleams can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Slaughtergleams can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -1378,17 +1388,17 @@
                 </recipe.result>
             </recipe>
         </section>
-    </chapter>
 
-    <chapter id="Murdergleam" condition="arsenal_enabled">
-        <section>
+
+
+        <section id="Murdergleam" condition="arsenal_enabled">
             <page_title_shorter>
                 <title>Murdergleam</title>
             </page_title_shorter>
             <p align="center"><stack item="arcanearchives:murdergleam" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                A Murdergleam is an Arcane Gem formed from a yellow-spectrum piece of <link ref="shaped_quartz">Shaped Radiant Quartz</link> in an asscher cut.
+                A Murdergleam is an Arcane Gem formed from a yellow-spectrum piece of <link ref="Items:ShapedQuartz">Shaped Radiant Quartz</link> in an asscher cut.
             </p>
             <p>
                 When toggled on, a Murdergleam guarantees that all of your attacks will be critical hits. Each attack drains a point of charge (even attacks that deal no damage due to attacking too quickly). The gem can be toggled on or off by left clicking.
@@ -1401,7 +1411,7 @@
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Murdergleams can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Murdergleams can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -1409,17 +1419,17 @@
                 </recipe.result>
             </recipe>
         </section>
-    </chapter>
 
-    <chapter id="Agegleam" condition="arsenal_enabled">
-        <section>
+
+
+        <section id="Agegleam" condition="arsenal_enabled">
             <page_title_shorter>
                 <title>Agegleam</title>
             </page_title_shorter>
             <p align="center"><stack item="arcanearchives:agegleam" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                An Agegleam is an Arcane Gem formed from a green-spectrum piece of <link ref="shaped_quartz">Shaped Radiant Quartz</link> in an asscher cut.
+                An Agegleam is an Arcane Gem formed from a green-spectrum piece of <link ref="Items:ShapedQuartz">Shaped Radiant Quartz</link> in an asscher cut.
             </p>
             <p>
                 When activated, the amount of time until nearby animals grow up will be significantly reduced, at the cost of charge for each animal affected.
@@ -1429,7 +1439,7 @@
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Murdergleams can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Murdergleams can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -1437,17 +1447,17 @@
                 </recipe.result>
             </recipe>
         </section>
-    </chapter>
 
-    <chapter id="Cleansegleam" condition="arsenal_enabled">
-        <section>
+
+
+        <section id="Cleansegleam" condition="arsenal_enabled">
             <page_title_shorter>
                 <title>Cleansegleam</title>
             </page_title_shorter>
             <p align="center"><stack item="arcanearchives:cleansegleam" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                A Cleansegleam is an Arcane Gem formed from a blue-spectrum piece of <link ref="shaped_quartz">Shaped Radiant Quartz</link> in an asscher cut.
+                A Cleansegleam is an Arcane Gem formed from a blue-spectrum piece of <link ref="Items:ShapedQuartz">Shaped Radiant Quartz</link> in an asscher cut.
             </p>
             <p>
                 When activated, a Cleansegleam will purge the user of Hunger, Nausea, and Poison at the cost of a point of charge.
@@ -1459,11 +1469,11 @@
                 <image src="potioncore:gui/potion/antidote" tw="16" th="16"/> Any target affected by a Cleansegleam will also be immunized from poison for 60 seconds. This functionality only occurs when Potion Core is installed.
             </p>
             <p>
-                <image src="arcanearchives:items/gems/asscher/dun" tw="16" th="16"/> To recharge a dun Cleansegleam, activate the gem while you have a bucket of milk in your inventory. The milk is conusmed, and the bucket is returned. Alternatively, if you have a <link ref="RadiantAmphora">Radiant Amphora</link> linked to a <link ref="RadiantTank">Radiant Tank</link> containing milk, the milk is deducted from the tank directly.
+                <image src="arcanearchives:items/gems/asscher/dun" tw="16" th="16"/> To recharge a dun Cleansegleam, activate the gem while you have a bucket of milk in your inventory. The milk is conusmed, and the bucket is returned. Alternatively, if you have a <link ref="Items:RadiantAmphora">Radiant Amphora</link> linked to a <link ref="Blocks:RadiantTank">Radiant Tank</link> containing milk, the milk is deducted from the tank directly.
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Cleansegleams can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Cleansegleams can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -1471,17 +1481,17 @@
                 </recipe.result>
             </recipe>
         </section>
-    </chapter>
 
-    <chapter id="Switchgleam" condition="arsenal_enabled">
-        <section>
+
+
+        <section id="Switchgleam" condition="arsenal_enabled">
             <page_title_shorter>
                 <title>Switchgleam</title>
             </page_title_shorter>
             <p align="center"><stack item="arcanearchives:switchgleam" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                A Switchgleam is an Arcane Gem formed from a purple-spectrum piece of <link ref="shaped_quartz">Shaped Radiant Quartz</link> in an asscher cut.
+                A Switchgleam is an Arcane Gem formed from a purple-spectrum piece of <link ref="Items:ShapedQuartz">Shaped Radiant Quartz</link> in an asscher cut.
             </p>
             <p>
                 When activated, a Switchgleam will swap the positions of you and the entity you're looking at, at the cost of one point of charge.
@@ -1494,7 +1504,7 @@
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Salvegleams can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Salvegleams can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -1502,17 +1512,17 @@
                 </recipe.result>
             </recipe>
         </section>
-    </chapter>
 
-    <chapter id="Salvegleam" condition="arsenal_enabled">
-        <section>
+
+
+        <section id="Salvegleam" condition="arsenal_enabled">
             <page_title_shorter>
                 <title>Salvegleam</title>
             </page_title_shorter>
             <p align="center"><stack item="arcanearchives:salvegleam" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                A Salvegleam is an Arcane Gem formed from a pink-spectrum piece of <link ref="shaped_quartz">Shaped Radiant Quartz</link> in an asscher cut.
+                A Salvegleam is an Arcane Gem formed from a pink-spectrum piece of <link ref="Items:ShapedQuartz">Shaped Radiant Quartz</link> in an asscher cut.
             </p>
             <p>
                 When held and toggled on, the gem will heal you for half a heart approximately once every second if you are hurt. Each half heart consumes a point of charge.
@@ -1522,7 +1532,7 @@
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Salvegleams can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Salvegleams can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -1530,17 +1540,17 @@
                 </recipe.result>
             </recipe>
         </section>
-    </chapter>
 
-    <chapter id="Munchstone" condition="arsenal_enabled">
-        <section>
+
+
+        <section id="Munchstone" condition="arsenal_enabled">
             <page_title_shorter>
                 <title>Munchstone</title>
             </page_title_shorter>
             <p align="center"><stack item="arcanearchives:munchstone" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                A Munchstone is an Arcane Gem formed from a black-spectrum piece of <link ref="shaped_quartz">Shaped Radiant Quartz</link> in an oval cut.
+                A Munchstone is an Arcane Gem formed from a black-spectrum piece of <link ref="Items:ShapedQuartz">Shaped Radiant Quartz</link> in an oval cut.
             </p>
             <p>
                 When activated, a Munchstone allows you to consume plant-blased blocks to restore your hunger and saturation. Charge is consumed for each point of hunger and each point of saturation recovered.
@@ -1553,7 +1563,7 @@
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Munchstones can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Munchstones can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -1561,17 +1571,17 @@
                 </recipe.result>
             </recipe>
         </section>
-    </chapter>
 
-    <chapter id="Orderstone" condition="arsenal_enabled">
-        <section>
+
+
+        <section id="Orderstone" condition="arsenal_enabled">
             <page_title_shorter>
                 <title>Orderstone</title>
             </page_title_shorter>
             <p align="center"><stack item="arcanearchives:orderstone" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                An Orderstone is an Arcane Gem formed from a pink-spectrum piece of <link ref="shaped_quartz">Shaped Radiant Quartz</link> in an oval cut.
+                An Orderstone is an Arcane Gem formed from a pink-spectrum piece of <link ref="Items:ShapedQuartz">Shaped Radiant Quartz</link> in an oval cut.
             </p>
             <p>
                 When activated, an Orderstone transforms certain blocks into a more orderly state. The following pages list all valid transformations the Orderstone is capable of.
@@ -1581,7 +1591,7 @@
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Orderstones can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Orderstones can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -1589,7 +1599,7 @@
                 </recipe.result>
             </recipe>
         </section>
-        <section>
+        <section condition="arsenal_enabled">
             <page_title_shorter>
                 <title>Orderstone</title>
             </page_title_shorter>
@@ -1615,17 +1625,17 @@
                 <stack item="minecraft:anvil" meta="2" scale="2.0"/> <image src="arcanearchives:gui/guidebook/next" tw="8" th="16" scale="2.0"/> <stack item="minecraft:anvil" meta="1" scale="2.0"/> <image src="arcanearchives:gui/guidebook/next" tw="8" th="16" scale="2.0"/> <stack item="minecraft:anvil" scale="2.0"/>
             </p>
         </section>
-    </chapter>
 
-    <chapter id="Mindspindle" condition="arsenal_enabled">
-        <section>
+
+
+        <section id="Mindspindle" condition="arsenal_enabled">
             <page_title_shorter>
                 <title>Mindspindle</title>
             </page_title_shorter>
             <p align="center"><stack item="arcanearchives:mindspindle" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                A Mindspindle is an Arcane Gem formed from a green-spectrum piece of <link ref="shaped_quartz">Shaped Radiant Quartz</link> in a pampel cut.
+                A Mindspindle is an Arcane Gem formed from a green-spectrum piece of <link ref="Items:ShapedQuartz">Shaped Radiant Quartz</link> in a pampel cut.
             </p>
             <p>
                 When held, a Mindspindle magnifies the amount of experience contained within experience globes by 50%. It loses one point of charge for each experience point amplified, and can affect an un-amplified total of 800xp before needing to be recharged.
@@ -1638,7 +1648,7 @@
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Mindspindles can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Mindspindles can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -1646,17 +1656,17 @@
                 </recipe.result>
             </recipe>
         </section>
-    </chapter>
 
-    <chapter id="Elixirspindle" condition="arsenal_enabled">
-        <section>
+
+
+        <section id="Elixirspindle" condition="arsenal_enabled">
             <page_title_shorter>
                 <title>Elixirspindle</title>
             </page_title_shorter>
             <p align="center"><stack item="arcanearchives:elixirspindle" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                An Elixirspindle is an Arcane Gem formed from a purple-spectrum piece of <link ref="shaped_quartz">Shaped Radiant Quartz</link> in a pampel cut.
+                An Elixirspindle is an Arcane Gem formed from a purple-spectrum piece of <link ref="Items:ShapedQuartz">Shaped Radiant Quartz</link> in a pampel cut.
             </p>
             <p>
                 When held, you can use potions, splash potions, and lingering potions without consuming them at the cost of one point of charge. Additionally, if you use a potion you do not need to drink it and instead benefit from its effects immediately.
@@ -1666,7 +1676,7 @@
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Elixirspindles can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Elixirspindles can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -1674,17 +1684,17 @@
                 </recipe.result>
             </recipe>
         </section>
-    </chapter>
 
-    <chapter id="Mountaintear" condition="arsenal_enabled">
-        <section>
+
+
+        <section id="Mountaintear" condition="arsenal_enabled">
             <page_title_shorter>
                 <title>Mountaintear</title>
             </page_title_shorter>
             <p align="center"><stack item="arcanearchives:mountaintear" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                A Mountaintear is an Arcane Gem formed from an orange-spectrum piece of <link ref="shaped_quartz">Shaped Radiant Quartz</link> in a pendeloque cut.
+                A Mountaintear is an Arcane Gem formed from an orange-spectrum piece of <link ref="Items:ShapedQuartz">Shaped Radiant Quartz</link> in a pendeloque cut.
             </p>
             <p>
                 When activated, a Mountaintear will conjure a block of lava at a distance of up to 40 blocks at the cost of one point of charge.
@@ -1700,7 +1710,7 @@
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Mountaintears can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Mountaintears can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -1708,17 +1718,17 @@
                 </recipe.result>
             </recipe>
         </section>
-    </chapter>
 
-    <chapter id="Rivertear" condition="arsenal_enabled">
-        <section>
+
+
+        <section id="Rivertear" condition="arsenal_enabled">
             <page_title_shorter>
                 <title>Rivertear</title>
             </page_title_shorter>
             <p align="center"><stack item="arcanearchives:rivertear" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                A Rivertear is an Arcane Gem formed from a blue-spectrum piece of <link ref="shaped_quartz">Shaped Radiant Quartz</link> in a pendeloque cut.
+                A Rivertear is an Arcane Gem formed from a blue-spectrum piece of <link ref="Items:ShapedQuartz">Shaped Radiant Quartz</link> in a pendeloque cut.
             </p>
             <p>
                 When activated, a Rivertear will conjure a block of water at a distance of up to 40 blocks at the cost of one point of charge.
@@ -1727,17 +1737,17 @@
                 <stack item="astralsorcery:blockwell"/> When placed in a Lightwell with access to the sky, a Rivertear generates water at an extremely rapid rate. While it's possible for a Rivertear to shatter, the chances of shattering are <span italics="true">astronomically</span> unlikely. For all intents and purposes, a Rivertear lasts indefinitely unless its Lightwell is broken. Once placed in a Lightwell, a Rivertear cannot be retrieved.
             </p>
             <p condition="ml_botania">
-                <stack item="botania:altar"/> If you have a Rivertear somewhere in your inventory (or slotted in a <link ref="GemSocket">Gem Socket</link>), right clicking on a Petal Apothecary will refill it with water.
+                <stack item="botania:altar"/> If you have a Rivertear somewhere in your inventory (or slotted in a <link ref="Items:GemSocket">Gem Socket</link>), right clicking on a Petal Apothecary will refill it with water.
             </p>
             <p condition="ml_thaumcraft">
-                <stack item="thaumcraft:crucible"/> If you have a Rivertear somewhere in your inventory (or slotted in a <link ref="GemSocket">Gem Socket</link>), right clicking on a Crucible will refill it with water.
+                <stack item="thaumcraft:crucible"/> If you have a Rivertear somewhere in your inventory (or slotted in a <link ref="Items:GemSocket">Gem Socket</link>), right clicking on a Crucible will refill it with water.
             </p>
             <p>
                 <image src="arcanearchives:items/gems/pendeloque/dun" tw="16" th="16"/> To recharge a dun Rivertear, toss it in a block of water.
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Rivertears can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Rivertears can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -1745,17 +1755,17 @@
                 </recipe.result>
             </recipe>
         </section>
-    </chapter>
 
-    <chapter id="Parchtear" condition="arsenal_enabled">
-        <section>
+
+
+        <section id="Parchtear" condition="arsenal_enabled">
             <page_title_shorter>
                 <title>Parchtear</title>
             </page_title_shorter>
             <p align="center"><stack item="arcanearchives:parchtear" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                A Parchtear is an Arcane Gem formed from a black-spectrum piece of <link ref="shaped_quartz">Shaped Radiant Quartz</link> in an pendeloque cut.
+                A Parchtear is an Arcane Gem formed from a black-spectrum piece of <link ref="Items:ShapedQuartz">Shaped Radiant Quartz</link> in an pendeloque cut.
             </p>
             <p>
                 When activated, the Parchtear destroys a radius 1 cuboid area of fluid. If you are sneaking, it instead destroys a single block of fluid. Each fluid block destroyed consumes a point of charge.
@@ -1764,11 +1774,11 @@
                 Once fluid has been destroyed, other fluid is blocked from flowing into the same space for ten seconds.
             </p>
             <p>
-                <image src="arcanearchives:items/gems/pendeloque/dun" tw="16" th="16"/> To recharge a dun Parchtear, place it in the bucket voiding slot of a <link ref="DevouringCharm">Devouring Charm</link>.
+                <image src="arcanearchives:items/gems/pendeloque/dun" tw="16" th="16"/> To recharge a dun Parchtear, place it in the bucket voiding slot of a <link ref="Items:DevouringCharm">Devouring Charm</link>.
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Parchtear can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Parchtear can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -1776,17 +1786,17 @@
                 </recipe.result>
             </recipe>
         </section>
-    </chapter>
 
-    <chapter id="Phoenixway" condition="arsenal_enabled">
-        <section>
+
+
+        <section id="Phoenixway" condition="arsenal_enabled">
             <page_title_shorter>
                 <title>Phoenixway</title>
             </page_title_shorter>
             <p align="center"><stack item="arcanearchives:phoenixway" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                A Phoenixway is an Arcane Gem formed from a orange-spectrum piece of <link ref="shaped_quartz">Shaped Radiant Quartz</link> in a trillion cut.
+                A Phoenixway is an Arcane Gem formed from a orange-spectrum piece of <link ref="Items:ShapedQuartz">Shaped Radiant Quartz</link> in a trillion cut.
             </p>
             <p>
                 When activated, a Phoenixway will light a fire at a distance of up to 40 blocks at the cost of one point of charge.
@@ -1799,7 +1809,7 @@
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Phoenixways can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Phoenixways can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -1807,17 +1817,17 @@
                 </recipe.result>
             </recipe>
         </section>
-    </chapter>
 
-    <chapter id="Stormway" condition="arsenal_enabled">
-        <section>
+
+
+        <section id="Stormway" condition="arsenal_enabled">
             <page_title_shorter>
                 <title>Stormway</title>
             </page_title_shorter>
             <p align="center"><stack item="arcanearchives:stormway" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                A Stormway is an Arcane Gem formed from a yellow-spectrum piece of <link ref="shaped_quartz">Shaped Radiant Quartz</link> in a trillion cut.
+                A Stormway is an Arcane Gem formed from a yellow-spectrum piece of <link ref="Items:ShapedQuartz">Shaped Radiant Quartz</link> in a trillion cut.
             </p>
             <p>
                 When activated, a Stormway will call down a lightning strike at a point within 30 blocks at the cost of one point of charge.
@@ -1833,7 +1843,7 @@
             </p>
             <horizontal_rule/>
             <p>
-                <stack item="arcanearchives:gemcutters_table" /> Stormways can be crafted on a <link ref="GemCuttersTable">Gem Cutter's Table</link>.
+                <stack item="arcanearchives:gemcutters_table" /> Stormways can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
             </p>
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
@@ -1843,8 +1853,8 @@
         </section>
     </chapter>
 
-    <chapter id="Networks" condition="true">
-        <section>
+    <chapter id="Concepts">
+        <section id="Networks" condition="true">
             <page_title_shorter>
                 <title>Networks</title>
             </page_title_shorter>
@@ -1854,78 +1864,93 @@
                 Every Arcane Archives block you place becomes part of a network. Each block in the network can be accessed by certain items and devices, and ultimately ties back to you. The creation of a network is automatic, and you can only ever belong to one network.
             </p>
             <p>
-                <stack item="arcanearchives:letter_invitation"/> By using a <link ref="LetterInvitation">Letter of Invitation</link> given to you by another player, you can form a hybrid network with that player, pooling your resources together. Everything in both players' networks is mutually accessible.
+                <stack item="arcanearchives:letter_invitation"/> By using a <link ref="Items:LetterInvitation">Letter of Invitation</link> given to you by another player, you can form a hybrid network with that player, pooling your resources together. Everything in both players' networks is mutually accessible.
             </p>
             <p>
-                <stack item="arcanearchives:letter_resignation"/> By using a <link ref="LetterResignation">Letter of Resignation</link>, you can break from a hybrid network. All blocks that you placed return to your individual network.
+                <stack item="arcanearchives:letter_resignation"/> By using a <link ref="Items:LetterResignation">Letter of Resignation</link>, you can break from a hybrid network. All blocks that you placed return to your individual network.
             </p>
             <p>
-                <stack item="arcanearchives:manifest"/> <link ref="Manifest">Manifests</link> display the contents of all inventories that are part of the network you belong to.
+                <stack item="arcanearchives:manifest"/> <link ref="Items:Manifest">Manifests</link> display the contents of all inventories that are part of the network you belong to.
             </p>
             <p>
-                <stack item="arcanearchives:writ_expulsion"/> By using a <link ref="WritExpulsion">Writ of Expulsion</link> named on an anvil, you can force a player in a hybrid network to leave the network.
+                <stack item="arcanearchives:writ_expulsion"/> By using a <link ref="Items:WritExpulsion">Writ of Expulsion</link> named on an anvil, you can force a player in a hybrid network to leave the network.
             </p>
         </section>
-    </chapter>
 
-    <chapter id="Compat">
+
+
         <section id="AstralSorcery" condition="ml_astralsorcery">
             <page_title_shorter>
                 <title>Astral Sorcery Compatibility</title>
             </page_title_shorter>
             <p scale="1.5"><stack item="astralsorcery:blockwell" scale="1.5te"/> Lightwell</p>
             <p indent="10">
-                <stack item="arcanearchives:raw_quartz"/> <link ref="RawQuartz">Raw Radiant Quartz</link> generates Liquid Starlight. It is long lasting, but low production.
+                <stack item="arcanearchives:raw_quartz"/> <link ref="Items:RawQuartz">Raw Radiant Quartz</link> generates Liquid Starlight. It is long lasting, but low production.
             </p>
             <p indent="10">
-                <stack item="arcanearchives:shaped_quartz"/> <link ref="ShapedQuartz">Shaped Radiant Quartz</link> also generates Liquid Starlight. It is a bit more efficient than Raw Radiant Quartz.
+                <stack item="arcanearchives:shaped_quartz"/> <link ref="Items:ShapedQuartz">Shaped Radiant Quartz</link> also generates Liquid Starlight. It is a bit more efficient than Raw Radiant Quartz.
             </p>
             <p indent="10" condition="arsenal_enabled">
-                <stack item="arcanearchives:rivertear"/> <link ref="Rivertear">Rivertears</link> generates water at about 2 buckets per tick. It is effectively infinite, but due to technical limits there is a ridiculously small chance of shattering.
+                <stack item="arcanearchives:rivertear"/> <link ref="Gems:Rivertear">Rivertears</link> generates water at about 2 buckets per tick. It is effectively infinite, but due to technical limits there is a ridiculously small chance of shattering.
             </p>
             <p indent="10" condition="arsenal_enabled">
-                <stack item="arcanearchives:mountaintear"/> <link ref="Mountaintear">Mountaintears</link> generates lava at a moderate rate. It is effectively infinite, but due to technical limits there is a ridiculously small chance of shattering.
+                <stack item="arcanearchives:mountaintear"/> <link ref="Gems:Mountaintear">Mountaintears</link> generates lava at a moderate rate. It is effectively infinite, but due to technical limits there is a ridiculously small chance of shattering.
             </p>
-            <p condition="arsenal_disabled">
-                Arcane Arsenal is not enabled. Some features have been disabled.
+            <p indent="10" condition="arsenal_disabled">
+                Arcane Arsenal is not enabled; some features for this section are not present.
             </p>
         </section>
+
+
+
         <section id="Botania">
             <page_title_shorter>
                 <title>Botania Compatibility</title>
             </page_title_shorter>
             <p scale="1.5"><stack item="botania:altar" scale="1.5"/> Petal Apothecary</p>
             <p indent="10" condition="arsenal_enabled">
-                <stack item="arcanearchives:rivertear"/> If you have a <link ref="Rivertear">Rivertear</link> somewhere in your inventory (or slotted in a <link ref="GemSocket">Gem Socket</link>), right clicking a Petal Apothecary will refill it with water.
+                <stack item="arcanearchives:rivertear"/> If you have a <link ref="Gems:Rivertear">Rivertear</link> somewhere in your inventory (or slotted in a <link ref="Items:GemSocket">Gem Socket</link>), right clicking a Petal Apothecary will refill it with water.
+            </p>
+            <p indent="10" condition="arsenal_disabled">
+                Arcane Arsenal is not enabled; some features for this section are not present.
             </p>
         </section>
+
+
+
         <section id="PotionCore" condition="ml_potioncore">
             <page_title_shorter>
                 <title>Potion Core Compatibility</title>
             </page_title_shorter>
             <p scale="1.5"><stack item="minecraft:potion" scale="1.5"/> Effects</p>
             <p indent="10" condition="arsenal_enabled">
-                <stack item="arcanearchives:cleansegleam"/> A <link ref="Cleansegleam">Cleansegleam</link> applies the Antidote effect when used.
+                <stack item="arcanearchives:cleansegleam"/> A <link ref="Gems:Cleansegleam">Cleansegleam</link> applies the Antidote effect when used.
             </p>
-            <p condition="arsenal_disabled">
-                Arcane Arsenal is not enabled. Some features have been disabled.
+            <p indent="10" condition="arsenal_disabled">
+                Arcane Arsenal is not enabled; some features for this section are not present.
             </p>
         </section>
+
+
+
         <section id="Quark" condition="ml_quark">
             <page_title_shorter>
                 <title>Quark Compatibility</title>
             </page_title_shorter>
             <p scale="1.5"><stack item="minecraft:chest" scale="1.5"/> Inventory Management</p>
             <p indent="10">
-                <stack item="arcanearchives:radiant_chest"/> <link ref="RadiantChest">Radiant Chests</link> make use of Quark's inventory search bar, and its Sort, Deposit, Merge, Extract, and Restock buttons.
+                <stack item="arcanearchives:radiant_chest"/> <link ref="Blocks:RadiantChest">Radiant Chests</link> make use of Quark's inventory search bar, and its Sort, Deposit, Merge, Extract, and Restock buttons.
             </p>
             <space height="8"/>
             <horizontal_rule/>
             <p scale="1.5"><image src="arcanearchives:gui/guidebook/quark_lock" tw="16" th="16" scale="1.5"/> Favoriting</p>
             <p indent="10">
-                <stack item="arcanearchives:brazier_of_hoarding"/> Items marked as favorites will not be deposited into a <link ref="BrazierHoarding">Brazier of Hoarding</link> on right click. Favorited items can still be inserted into a Brazier of Hoarding when thrown.
+                <stack item="arcanearchives:brazier_of_hoarding"/> Items marked as favorites will not be deposited into a <link ref="Blocks:BrazierHoarding">Brazier of Hoarding</link> on right click. Favorited items can still be inserted into a Brazier of Hoarding when thrown.
             </p>
         </section>
+
+
+
         <section id="Thaumcraft" condition="ml_thaumcraft">
             <page_title_shorter>
                 <title>Thaumcraft Compatibility</title>
@@ -1938,15 +1963,15 @@
             <horizontal_rule/>
             <p scale="1.5"><stack item="thaumcraft:crucible" scale="1.5"/> Crucible</p>
             <p indent="10" condition="arsenal_enabled">
-                <stack item="arcanearchives:rivertear"/> If you have a <link ref="Rivertear">Rivertear</link> somewhere in your inventory (or slotted in a <link ref="GemSocket">Gem Socket</link>), right clicking a Crucible will refill it with water.
+                <stack item="arcanearchives:rivertear"/> If you have a <link ref="Gems:Rivertear">Rivertear</link> somewhere in your inventory (or slotted in a <link ref="Items:GemSocket">Gem Socket</link>), right clicking a Crucible will refill it with water.
             </p>
-            <p condition="arsenal_disabled">
-                Arcane Arsenal is not enabled. Some features have been disabled.
+            <p indent="10" condition="arsenal_disabled">
+                Arcane Arsenal is not enabled; some features for this section are not present.
             </p>
             <horizontal_rule/>
             <p scale="1.5"><stack item="thaumcraft:infusion_matrix" scale="1.5"/> Infusion</p>
             <p indent="10">
-                <stack item="arcanearchives:raw_quartz_cluster"/> <link ref="RawQuartzCluster">Raw Quartz Clusters</link> can be used as an infusion stabilizer.
+                <stack item="arcanearchives:raw_quartz_cluster"/> <link ref="Blocks:RawQuartzCluster">Raw Quartz Clusters</link> can be used as an infusion stabilizer.
             </p>
         </section>
     </chapter>
