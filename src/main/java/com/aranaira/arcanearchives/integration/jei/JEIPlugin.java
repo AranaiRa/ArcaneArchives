@@ -71,6 +71,8 @@ public class JEIPlugin implements IModPlugin {
 		recipeRegistry = jeiRuntime.getRecipeRegistry();
 		if (!ConfigHandler.ArsenalConfig.EnableArsenal) {
 			itemRegistry.removeIngredientsAtRuntime(VanillaTypes.ITEM, ItemRegistry.ARSENAL_ITEMS.stream().map(ItemStack::new).collect(Collectors.toList()));
+		} else {
+			itemRegistry.removeIngredientsAtRuntime(VanillaTypes.ITEM, Collections.singletonList(new ItemStack(ItemRegistry.GBOOK_ARSENAL_CONDITION)));
 		}
 	}
 }
