@@ -35,8 +35,8 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 	public void firstJoinedNetwork (ServerNetwork network) {
 		super.firstJoinedNetwork(network);
 
-		// TODO: This might cause problems in the future with chests randomly changing behaviour when
-		// loaded or unloaded.
+		// Disregard previous to-do notice as this is only called when they
+		// have no tile ID.
 		if (network.getNoNewDefault()) {
 			this.routingType = BrazierRoutingType.NO_NEW_STACKS;
 			this.markDirty();
