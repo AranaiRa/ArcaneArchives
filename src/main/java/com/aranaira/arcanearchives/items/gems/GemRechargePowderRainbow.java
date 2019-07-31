@@ -16,6 +16,7 @@ public class GemRechargePowderRainbow extends ItemTemplate {
 
 	public GemRechargePowderRainbow () {
 		super(NAME);
+		setCreativeTab(null);
 	}
 
 	@Override
