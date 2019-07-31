@@ -127,6 +127,7 @@ public class PacketRadiantChest {
 					ImmanenceTileEntity tile = network.getImmanenceTile(message.tileId);
 					if (tile instanceof RadiantChestTileEntity) {
 						((RadiantChestTileEntity) tile).toggleRoutingType();
+						tile.markDirty();
 						tile.defaultServerSideUpdate();
 					}
 				}

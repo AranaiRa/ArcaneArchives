@@ -59,6 +59,7 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 
 	public void setRecipe (int index) {
 		manuallySetRecipe(index);
+		markDirty();
 
 		if (world != null && world.isRemote) {
 			clientSideUpdate();

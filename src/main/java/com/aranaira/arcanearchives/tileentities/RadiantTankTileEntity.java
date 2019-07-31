@@ -52,15 +52,6 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity implements IUpgra
 		this.inventory.setOptions(optionalUpgrades);
 	}
 
-	@Override
-	public void update () {
-		if (world.isRemote) {
-			return;
-		}
-
-		defaultServerSideUpdate();
-	}
-
 	public int getCapacity (int capacity) {
 		return BASE_CAPACITY * (capacity + 1);
 	}
@@ -209,6 +200,7 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity implements IUpgra
 			}
 			int result = super.fillInternal(resource, doFill);
 			markDirty();
+			defaultServerSideUpdate();
 			return result;
 		}
 
@@ -224,6 +216,7 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity implements IUpgra
 		public FluidStack drain (FluidStack resource, boolean doDrain) {
 			FluidStack result = super.drain(resource, doDrain);
 			markDirty();
+			defaultServerSideUpdate();
 			return result;
 		}
 
@@ -231,6 +224,7 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity implements IUpgra
 		public FluidStack drain (int maxDrain, boolean doDrain) {
 			FluidStack result = super.drain(maxDrain, doDrain);
 			markDirty();
+			defaultServerSideUpdate();
 			return result;
 		}
 	}

@@ -80,15 +80,6 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 	};
 	private OptionalUpgradesHandler optionalUpgrades = new OptionalUpgradesHandler();
 
-	@Override
-	public void update () {
-		if (world.isRemote) {
-			return;
-		}
-
-		defaultServerSideUpdate();
-	}
-
 	public RadiantTroveTileEntity () {
 		super("radianttrove");
 	}

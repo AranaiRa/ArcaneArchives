@@ -39,6 +39,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 		// loaded or unloaded.
 		if (network.getNoNewDefault()) {
 			this.routingType = BrazierRoutingType.NO_NEW_STACKS;
+			this.markDirty();
 			defaultServerSideUpdate();
 		}
 	}
@@ -103,6 +104,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 	public void setDisplay (ItemStack displayStack, EnumFacing facing) {
 		this.displayStack = displayStack;
 		this.displayFacing = facing;
+		this.markDirty();
 		defaultServerSideUpdate();
 	}
 
