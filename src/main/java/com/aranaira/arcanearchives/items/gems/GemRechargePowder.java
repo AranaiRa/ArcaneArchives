@@ -24,6 +24,7 @@ public class GemRechargePowder extends ItemTemplate {
 
 	public GemRechargePowder () {
 		super(NAME);
+		setCreativeTab(null);
 	}
 
 	@Override

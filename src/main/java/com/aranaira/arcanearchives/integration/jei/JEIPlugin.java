@@ -17,9 +17,12 @@ import mezz.jei.api.ingredients.IIngredientRegistry;
 import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 
 import javax.annotation.Nonnull;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.stream.Collectors;
 
@@ -74,5 +77,12 @@ public class JEIPlugin implements IModPlugin {
 		} else {
 			itemRegistry.removeIngredientsAtRuntime(VanillaTypes.ITEM, Collections.singletonList(new ItemStack(ItemRegistry.GBOOK_ARSENAL_CONDITION)));
 		}
+
+		NonNullList<ItemStack> ignores = NonNullList.create();
+		ItemRegistry.CHROMATIC_POWDER.getSubItems(CreativeTabs.SEARCH, ignores);
+		ignores.add(new ItemStack(ItemRegistry.CHROMATIC_POWDER));
+		ignores.add(new ItemStack(ItemRegistry.RAINBOW_CHROMATIC_POWDER));
+
+		itemRegistry.removeIngredientsAtRuntime(VanillaTypes.ITEM, ignores);
 	}
 }
