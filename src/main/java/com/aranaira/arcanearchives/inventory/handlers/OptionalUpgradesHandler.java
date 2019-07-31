@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.inventory.handlers;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.items.IUpgradeItem;
 import com.aranaira.arcanearchives.types.enums.UpgradeType;
 import net.minecraft.item.ItemStack;
@@ -39,5 +40,28 @@ public class OptionalUpgradesHandler extends ItemStackHandler {
 	@Override
 	public int getSlotLimit (int slot) {
 		return 1;
+	}
+
+	public int getTotalUpgradesQuantity () {
+		int count = 0;
+		if (getIsUpgradePresent(0)) {
+			count ++;
+		}
+		if (getIsUpgradePresent(1)) {
+			count ++;
+		}
+		if (getIsUpgradePresent(2)) {
+			count ++;
+		}
+		return count;
+	}
+
+	/**
+	 * Returns whether an upgrade is present in the slot or not.
+	 * @param slot Which slot ID to check
+	 * @return true if an upgrade is present, false otherwise
+	 */
+	public boolean getIsUpgradePresent(int slot) {
+		return !getStackInSlot(slot).isEmpty();
 	}
 }

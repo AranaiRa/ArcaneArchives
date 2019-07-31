@@ -56,11 +56,20 @@ public class RenderHUD {
 							String s = "x " + MathUtils.format(handler.getCount());
 							mc.fontRenderer.drawStringWithShadow(item.getDisplayName(), (float) (x - 19 - mc.fontRenderer.getStringWidth(item.getDisplayName()) / 2), (float) (y - 11), 16777215);
 							mc.fontRenderer.drawStringWithShadow(s, (float) (x - 20), (float) (y + 3), 16777215);
-							if (handler.getUpgrades() != 0) {
-								if (handler.getUpgrades() == 1) {
-									s = I18n.format("arcanearchives.data.gui.radiant_trove.upgrade", handler.getUpgrades());
+
+							int storage = handler.getTotalUpgradesCount().x;
+							int optional = handler.getTotalUpgradesCount().y;
+							if (storage + optional != 0) {
+								if (storage + optional == 1) {
+									String n = ""+storage;
+									if(optional > 0) n += "+"+optional;
+
+									s = I18n.format("arcanearchives.data.gui.radiant_trove.upgrade", n);
 								} else {
-									s = I18n.format("arcanearchives.data.gui.radiant_trove.upgrades", handler.getUpgrades());
+									String n = ""+storage;
+									if(optional > 0) n += "+"+optional;
+
+									s = I18n.format("arcanearchives.data.gui.radiant_trove.upgrades", n);
 								}
 								mc.fontRenderer.drawStringWithShadow(TextFormatting.GOLD + s, (float) (x - 19 - mc.fontRenderer.getStringWidth(s) / 2), (float) (y + 20), 16777215);
 							}

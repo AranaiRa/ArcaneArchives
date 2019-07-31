@@ -283,8 +283,8 @@ arcanearchives.tooltip.amphora.linked=Linked to tank at [%d,%d,%d] (in %s) which
 arcanearchives.tooltip.bauble.gemsocket=Can be slotted with an Arcane Gem. Slotted Arcane Gem counts as being held at all times.
 arcanearchives.tooltip.bauble.gemsocket.contains=Contains a
 
-arcanearchives.data.gui.radiant_trove.upgrade=%d upgrade
-arcanearchives.data.gui.radiant_trove.upgrades=%d upgrades
+arcanearchives.data.gui.radiant_trove.upgrade=%s upgrade
+arcanearchives.data.gui.radiant_trove.upgrades=%s upgrades
 
 arcanearchives.data.tooltip.chest_name=Name:
 arcanearchives.data.tooltip.resonator_progress=Progress:

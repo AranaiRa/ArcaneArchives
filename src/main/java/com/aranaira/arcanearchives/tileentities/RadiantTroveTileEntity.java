@@ -32,6 +32,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
+import java.awt.*;
 import java.util.UUID;
 
 public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IManifestTileEntity, IUpgradeableStorage, IBrazierRouting {
@@ -421,6 +422,14 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 
 		public int getUpgrades () {
 			return upgrades;
+		}
+
+		/**
+		 * Returns the actual number of upgrades, rather than their upgrade potency values.
+		 * @return X is the number of storage upgrades, Y the number of optional upgrades
+		 */
+		public Point getTotalUpgradesCount () {
+			return new Point(sizeUpgrades.getTotalUpgradesQuantity(), optionalUpgrades.getTotalUpgradesQuantity());
 		}
 
 		@Override
