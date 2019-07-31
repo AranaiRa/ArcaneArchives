@@ -153,7 +153,6 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 		searchBox.setText(searchText);
 		searchBox.setGuiResponder(this);
 		searchBox.setEnableBackgroundDrawing(false);
-		searchBox.syncFromJEI();
 
 		mScrollBar = new ScrollBar(10, guiLeft + mScrollBarLeftOffset, guiTop + mScrollBarTopOffset, guiTop + mScrollBarBottomOffset);
 		scrollEventManager.registerListener(mScrollBar);
@@ -181,9 +180,6 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 
 	@Override
 	protected void drawTopLevelElements (int mouseX, int mouseY) {
-		if (doJEIsync) {
-			searchBox.syncFromJEI();
-		}
 		searchBox.drawTextBox();
 
 		// make sure tool tip is on top of everything else
