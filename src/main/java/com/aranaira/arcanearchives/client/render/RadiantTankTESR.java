@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.client.render;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity.Tags;
@@ -71,6 +72,15 @@ public class RadiantTankTESR extends TileEntitySpecialRenderer<RadiantTankTileEn
 			Minecraft mc = Minecraft.getMinecraft();
 			TextureAtlasSprite top = mc.getTextureMapBlocks().getTextureExtry(fluidStack.getFluid().getStill(fluidStack).toString());
 			TextureAtlasSprite side = mc.getTextureMapBlocks().getTextureExtry(fluidStack.getFluid().getFlowing(fluidStack).toString());
+
+			if (side == null) {
+				if (top != null) {
+					side = top;
+				}
+			} else if (top == null) {
+				GlStateManager.color(1f, 1f, 1f, 1f);
+				return;
+			}
 
 			Tessellator tessellator = Tessellator.getInstance();
 			BufferBuilder buffer = tessellator.getBuffer();
