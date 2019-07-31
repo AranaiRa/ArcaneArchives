@@ -308,7 +308,7 @@ arcanearchives.data.scepter.radiant_crafting.empty=Radiant Crafting table is emp
 arcanearchives.data.scepter.radiant_trove.empty=Radiant Trove has no associated item.
 arcanearchives.data.scepter.radiant_trove.item=Radiant Trove is set to store %s.
 arcanearchives.data.scepter.radiant_trove.count=Contains %d/%d items.
-arcanearchives.data.scepter.radiant_trove.upgrades=Has been upgraded %d time(s).
+arcanearchives.data.scepter.radiant_trove.upgrades=Has %s storage upgrade(s) and %s optional upgrade(s).
 
 arcanearchives.data.scepter.radiant_tank.empty=Radiant Tank is empty.
 arcanearchives.data.scepter.radiant_tank.item=Radiant Tank is storing %s.
