@@ -4,7 +4,9 @@
     <include ref="arcanearchives:xml/arcanearchives_templates.xml" />
 
     <conditions>
-        <false name="disabled"/>
+        <item-exists name="arsenal_enabled" registry-name="arcanearchives:gbook_arsenal_condition"/>
+        <not name="arsenal_disabled"><item-exists name="arsenal_enabled" registry-name="arcanearchives:gbook_arsenal_condition"/></not>
+
         <mod-loaded name="ml_thaumcraft" modid="thaumcraft"/>
         <not name="no_thaumcraft"><mod-loaded modid="thaumcraft"/></not>
         <mod-loaded name="ml_astralsorcery" modid="astralsorcery"/>
@@ -15,6 +17,8 @@
         <not name="no_potioncore"><mod-loaded modid="potioncore"></mod-loaded></not>
         <mod-loaded name="ml_quark" modid="quark"/>
         <not name="no_quark"><mod-loaded modid="quark"></mod-loaded></not>
+
+        <true name="true"/>
     </conditions>
 
     <stack-links>
@@ -83,7 +87,8 @@
             <space height="22"/>
             <p align="center"><link ref="TableOfContents:Blocks"><image src="arcanearchives:gui/guidebook/home_blocks" tw="163" th="48" hoverSrc="arcanearchives:gui/guidebook/home_blocks_hover"/></link>       <link ref="TableOfContents:Items"><image src="arcanearchives:gui/guidebook/home_items" tw="163" th="48" hoverSrc="arcanearchives:gui/guidebook/home_items_hover"/></link></p>
             <space height="6"/>
-            <p align="center"><link ref="TableOfContents:ArcaneGems"><image src="arcanearchives:gui/guidebook/home_arcana" tw="163" th="48" hoverSrc="arcanearchives:gui/guidebook/home_arcana_hover"/></link>       <link ref="TableOfContents:Concepts"><image src="arcanearchives:gui/guidebook/home_concepts" tw="163" th="48" hoverSrc="arcanearchives:gui/guidebook/home_concepts_hover"/></link></p>
+            <p align="center" condition="arsenal_enabled"><link ref="TableOfContents:ArcaneGems"><image src="arcanearchives:gui/guidebook/home_arcana" tw="163" th="48" hoverSrc="arcanearchives:gui/guidebook/home_arcana_hover"/></link>       <link ref="TableOfContents:Concepts"><image src="arcanearchives:gui/guidebook/home_concepts" tw="163" th="48" hoverSrc="arcanearchives:gui/guidebook/home_concepts_hover"/></link></p>
+            <p align="center" condition="arsenal_disabled"><link ref="TableOfContents:ArcaneGems"><image src="arcanearchives:gui/guidebook/home_arcana_faded" tw="163" th="48"/></link>       <link ref="TableOfContents:Concepts"><image src="arcanearchives:gui/guidebook/home_concepts" tw="163" th="48" hoverSrc="arcanearchives:gui/guidebook/home_concepts_hover"/></link></p>
         </section>
     </chapter>
 
@@ -110,7 +115,7 @@
             </page_title_shorter>
             <p><stack item="arcanearchives:containment_field"/> <link ref="ContainmentField">Containment Field</link></p>
             <p><stack item="arcanearchives:devouring_charm"/> <link ref="DevouringCharm">Devouring Charm</link></p>
-            <p><stack item="arcanearchives:gemsocket"/> <link ref="GemSocket">Gem Socket</link></p>
+            <p condition="arsenal_enabled"><stack item="arcanearchives:gemsocket"/> <link ref="GemSocket">Gem Socket</link></p>
             <p><stack item="arcanearchives:letter_invitation"/> <link ref="LetterInvitation">Letter of Invitation</link></p>
             <p><stack item="arcanearchives:letter_resignation"/> <link ref="LetterResignation">Letter of Resignation</link></p>
             <p><stack item="arcanearchives:manifest"/> <link ref="Manifest">Manifest</link></p>
@@ -126,7 +131,7 @@
             <p><stack item="arcanearchives:quartz_sliver"/> <link ref="SliverOfLight">Sliver of Light</link></p>
             <p><stack item="arcanearchives:writ_expulsion"/> <link ref="WritExpulsion">Writ of Expulsion</link></p>
         </section>
-        <section id="ArcaneGems">
+        <section id="ArcaneGems" condition="arsenal_enabled">
             <page_title_shorter>
                 <title>Arcane Gems</title>
             </page_title_shorter>
@@ -1290,7 +1295,7 @@
         </section>
     </chapter>
 
-    <chapter id="ArcaneGems">
+    <chapter id="ArcaneGems" condition="arsenal_enabled">
         <section>
             <page_title_shorter>
                 <title>Arcane Gems</title>
@@ -1347,7 +1352,7 @@
         </section>
     </chapter>
 
-    <chapter id="Slaughtergleam">
+    <chapter id="Slaughtergleam" condition="arsenal_enabled">
         <section>
             <page_title_shorter>
                 <title>Slaughtergleam</title>
@@ -1375,7 +1380,7 @@
         </section>
     </chapter>
 
-    <chapter id="Murdergleam">
+    <chapter id="Murdergleam" condition="arsenal_enabled">
         <section>
             <page_title_shorter>
                 <title>Murdergleam</title>
@@ -1406,7 +1411,7 @@
         </section>
     </chapter>
 
-    <chapter id="Agegleam">
+    <chapter id="Agegleam" condition="arsenal_enabled">
         <section>
             <page_title_shorter>
                 <title>Agegleam</title>
@@ -1434,7 +1439,7 @@
         </section>
     </chapter>
 
-    <chapter id="Cleansegleam">
+    <chapter id="Cleansegleam" condition="arsenal_enabled">
         <section>
             <page_title_shorter>
                 <title>Cleansegleam</title>
@@ -1468,7 +1473,7 @@
         </section>
     </chapter>
 
-    <chapter id="Switchgleam">
+    <chapter id="Switchgleam" condition="arsenal_enabled">
         <section>
             <page_title_shorter>
                 <title>Switchgleam</title>
@@ -1499,7 +1504,7 @@
         </section>
     </chapter>
 
-    <chapter id="Salvegleam">
+    <chapter id="Salvegleam" condition="arsenal_enabled">
         <section>
             <page_title_shorter>
                 <title>Salvegleam</title>
@@ -1527,7 +1532,7 @@
         </section>
     </chapter>
 
-    <chapter id="Munchstone">
+    <chapter id="Munchstone" condition="arsenal_enabled">
         <section>
             <page_title_shorter>
                 <title>Munchstone</title>
@@ -1558,7 +1563,7 @@
         </section>
     </chapter>
 
-    <chapter id="Orderstone">
+    <chapter id="Orderstone" condition="arsenal_enabled">
         <section>
             <page_title_shorter>
                 <title>Orderstone</title>
@@ -1612,7 +1617,7 @@
         </section>
     </chapter>
 
-    <chapter id="Mindspindle">
+    <chapter id="Mindspindle" condition="arsenal_enabled">
         <section>
             <page_title_shorter>
                 <title>Mindspindle</title>
@@ -1643,7 +1648,7 @@
         </section>
     </chapter>
 
-    <chapter id="Elixirspindle">
+    <chapter id="Elixirspindle" condition="arsenal_enabled">
         <section>
             <page_title_shorter>
                 <title>Elixirspindle</title>
@@ -1671,7 +1676,7 @@
         </section>
     </chapter>
 
-    <chapter id="Mountaintear">
+    <chapter id="Mountaintear" condition="arsenal_enabled">
         <section>
             <page_title_shorter>
                 <title>Mountaintear</title>
@@ -1705,7 +1710,7 @@
         </section>
     </chapter>
 
-    <chapter id="Rivertear">
+    <chapter id="Rivertear" condition="arsenal_enabled">
         <section>
             <page_title_shorter>
                 <title>Rivertear</title>
@@ -1742,7 +1747,7 @@
         </section>
     </chapter>
 
-    <chapter id="Parchtear">
+    <chapter id="Parchtear" condition="arsenal_enabled">
         <section>
             <page_title_shorter>
                 <title>Parchtear</title>
@@ -1773,7 +1778,7 @@
         </section>
     </chapter>
 
-    <chapter id="Phoenixway">
+    <chapter id="Phoenixway" condition="arsenal_enabled">
         <section>
             <page_title_shorter>
                 <title>Phoenixway</title>
@@ -1804,7 +1809,7 @@
         </section>
     </chapter>
 
-    <chapter id="Stormway">
+    <chapter id="Stormway" condition="arsenal_enabled">
         <section>
             <page_title_shorter>
                 <title>Stormway</title>
@@ -1838,7 +1843,7 @@
         </section>
     </chapter>
 
-    <chapter id="Networks">
+    <chapter id="Networks" condition="true">
         <section>
             <page_title_shorter>
                 <title>Networks</title>
@@ -1875,11 +1880,14 @@
             <p indent="10">
                 <stack item="arcanearchives:shaped_quartz"/> <link ref="ShapedQuartz">Shaped Radiant Quartz</link> also generates Liquid Starlight. It is a bit more efficient than Raw Radiant Quartz.
             </p>
-            <p indent="10">
+            <p indent="10" condition="arsenal_enabled">
                 <stack item="arcanearchives:rivertear"/> <link ref="Rivertear">Rivertears</link> generates water at about 2 buckets per tick. It is effectively infinite, but due to technical limits there is a ridiculously small chance of shattering.
             </p>
-            <p indent="10">
+            <p indent="10" condition="arsenal_enabled">
                 <stack item="arcanearchives:mountaintear"/> <link ref="Mountaintear">Mountaintears</link> generates lava at a moderate rate. It is effectively infinite, but due to technical limits there is a ridiculously small chance of shattering.
+            </p>
+            <p condition="arsenal_disabled">
+                Arcane Arsenal is not enabled. Some features have been disabled.
             </p>
         </section>
         <section id="Botania">
@@ -1887,7 +1895,7 @@
                 <title>Botania Compatibility</title>
             </page_title_shorter>
             <p scale="1.5"><stack item="botania:altar" scale="1.5"/> Petal Apothecary</p>
-            <p indent="10">
+            <p indent="10" condition="arsenal_enabled">
                 <stack item="arcanearchives:rivertear"/> If you have a <link ref="Rivertear">Rivertear</link> somewhere in your inventory (or slotted in a <link ref="GemSocket">Gem Socket</link>), right clicking a Petal Apothecary will refill it with water.
             </p>
         </section>
@@ -1896,8 +1904,11 @@
                 <title>Potion Core Compatibility</title>
             </page_title_shorter>
             <p scale="1.5"><stack item="minecraft:potion" scale="1.5"/> Effects</p>
-            <p indent="10">
+            <p indent="10" condition="arsenal_enabled">
                 <stack item="arcanearchives:cleansegleam"/> A <link ref="Cleansegleam">Cleansegleam</link> applies the Antidote effect when used.
+            </p>
+            <p condition="arsenal_disabled">
+                Arcane Arsenal is not enabled. Some features have been disabled.
             </p>
         </section>
         <section id="Quark" condition="ml_quark">
@@ -1926,8 +1937,11 @@
             <space height="8"/>
             <horizontal_rule/>
             <p scale="1.5"><stack item="thaumcraft:crucible" scale="1.5"/> Crucible</p>
-            <p indent="10">
+            <p indent="10" condition="arsenal_enabled">
                 <stack item="arcanearchives:rivertear"/> If you have a <link ref="Rivertear">Rivertear</link> somewhere in your inventory (or slotted in a <link ref="GemSocket">Gem Socket</link>), right clicking a Crucible will refill it with water.
+            </p>
+            <p condition="arsenal_disabled">
+                Arcane Arsenal is not enabled. Some features have been disabled.
             </p>
             <horizontal_rule/>
             <p scale="1.5"><stack item="thaumcraft:infusion_matrix" scale="1.5"/> Infusion</p>
