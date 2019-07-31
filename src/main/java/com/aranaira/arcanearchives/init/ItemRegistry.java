@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.init;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
+import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.items.*;
 import com.aranaira.arcanearchives.items.gems.GemRechargePowder;
 import com.aranaira.arcanearchives.items.gems.GemRechargePowderRainbow;
@@ -106,7 +107,12 @@ public class ItemRegistry {
 		IForgeRegistry<Item> registry = event.getRegistry();
 
 		Arrays.asList(RAW_RADIANT_QUARTZ, SHAPED_RADIANT_QUARTZ, DEBUG_ORB, /*GEOMANCY_PENDULUM, GEOMANTIC_MAP,*/ MANIFEST, /*RADIANT_AMPHORA, SCEPTER_ABDUCTION, SCEPTER_TRANSLOCATION, */TOME_OF_ARCANA, LETTER_OF_INVITATION, LETTER_OF_RESIGNATION, WRIT_OF_EXPULSION,/* TOME_OF_REQUISITION,*/ RADIANT_AMPHORA, COMPONENT_CONTAINMENTFIELD, COMPONENT_MATRIXBRACE, COMPONENT_MATERIALINTERFACE, COMPONENT_RADIANTDUST, COMPONENT_SCINTILLATINGINLAY, DEVOURING_CHARM/*, SPIRIT_ORB*/, SCEPTER_REVELATION, SCEPTER_MANIPULATION, /*DEVOURING_CHARM,*/ BAUBLE_GEMSOCKET, /*FABRIAL*/ SLAUGHTERGLEAM, MURDERGLEAM, AGEGLEAM, CLEANSEGLEAM, SWITCHGLEAM, SALVEGLEAM, MUNCHSTONE, /*TRANSFERSTONE,*/ ORDERSTONE, MINDSPINDLE, ELIXIRSPINDLE, MOUNTAINTEAR, RIVERTEAR, PARCHTEAR, PHOENIXWAY, STORMWAY, CHROMATIC_POWDER, RAINBOW_CHROMATIC_POWDER, GBOOK_ARSENAL_CONDITION).forEach(registry::register);
+
 		Stream.of(/*BlockRegistry.MATRIX_CRYSTAL_CORE, BlockRegistry.MATRIX_REPOSITORY, BlockRegistry.MATRIX_RESERVOIR, BlockRegistry.MATRIX_STORAGE, BlockRegistry.MATRIX_DISTILLATE, */BlockRegistry.QUARTZ_SLIVER, BlockRegistry.STORAGE_RAW_QUARTZ, BlockRegistry.STORAGE_SHAPED_QUARTZ, BlockRegistry.RADIANT_CHEST, BlockRegistry.RADIANT_CRAFTING_TABLE, BlockRegistry.RADIANT_LANTERN, BlockRegistry.RADIANT_RESONATOR, BlockRegistry.RAW_QUARTZ/*, BlockRegistry.DOMINION_CRYSTAL*/, BlockRegistry.LECTERN_MANIFEST, BlockRegistry.GEMCUTTERS_TABLE, BlockRegistry.RADIANT_TROVE, BlockRegistry.MONITORING_CRYSTAL, BlockRegistry.RADIANT_TANK, BlockRegistry.BRAZIER_OF_HOARDING).map(BlockTemplate::getItemBlock).forEach(registry::register);
+
+		if (ConfigHandler.ArsenalConfig.EnableArsenal) {
+			registry.register(GBOOK_ARSENAL_CONDITION);
+		}
 
 		// For handling bucket-related events
 		MinecraftForge.EVENT_BUS.register(RADIANT_AMPHORA);
