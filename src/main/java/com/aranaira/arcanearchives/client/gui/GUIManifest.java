@@ -39,6 +39,7 @@ import net.minecraftforge.fml.common.Loader;
 import org.apache.commons.lang3.text.WordUtils;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
 import java.util.List;
@@ -183,7 +184,10 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 
 	@Override
 	protected void drawTopLevelElements (int mouseX, int mouseY) {
+		boolean wasLighting = GL11.glIsEnabled(GL11.GL_LIGHTING);
+		GlStateManager.disableLighting();
 		searchBox.drawTextBox();
+		if (wasLighting) GlStateManager.enableLighting();
 
 		// make sure tool tip is on top of everything else
 		GlStateManager.pushMatrix();
