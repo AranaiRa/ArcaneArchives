@@ -111,7 +111,7 @@ public class RecipeLibrary {
 
 		//////
 
-		SCEPTER_MANIPULATION_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("scepter_manipulation", new ItemStack(ItemRegistry.SCEPTER_MANIPULATION), new ItemStack(ItemRegistry.SCEPTER_REVELATION, 1), new IngredientStack(ItemRegistry.COMPONENT_SCINTILLATINGINLAY, 1));
+		SCEPTER_MANIPULATION_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("scepter_manipulation", new ItemStack(ItemRegistry.SCEPTER_MANIPULATION), new ItemStack(ItemRegistry.SCEPTER_REVELATION, 1), new IngredientStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1));
 
 		RADIANT_LANTERN_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("radiant_lantern", new ItemStack(BlockRegistry.RADIANT_LANTERN, 4), new ItemStack(ItemRegistry.RAW_RADIANT_QUARTZ, 2), new IngredientStack("nuggetGold", 1));
 

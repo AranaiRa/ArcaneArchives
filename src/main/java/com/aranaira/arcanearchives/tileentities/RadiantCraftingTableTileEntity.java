@@ -134,7 +134,7 @@ public class RadiantCraftingTableTileEntity extends ImmanenceTileEntity implemen
 
 			FastCraftingRecipe fast = new FastCraftingRecipe(recipe);
 			IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
-			CombinedInvWrapper inv = new CombinedInvWrapper((IItemHandlerModifiable) playerInventory, new InvWrapper(matrix));
+			CombinedInvWrapper inv = new CombinedInvWrapper(new InvWrapper(matrix), (IItemHandlerModifiable) playerInventory);
 			if (fast.matches(inv)) {
 				fast.consumeAndHandleInventory(fast, inv, player, null, null, null, null);
 				ItemStack result = fast.getRecipeOutput();
