@@ -18,19 +18,19 @@ import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.ItemStackHelper;
+import net.minecraft.item.ItemShulkerBox;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.items.*;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -207,28 +207,55 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 			toInsert.add(playerInventory.extractItem(player.inventory.currentItem, item.getCount(), false));
 		}
 
+		boolean doShulkerThing = false;
+		NonNullList<ItemStack> itemList = NonNullList.withSize(999, ItemStack.EMPTY);
+		List<ItemStack> remainder = new ArrayList<>();
+		NBTTagCompound tag = ItemUtils.getOrCreateTagCompound(item);
+
+		if (item.getItem() instanceof ItemShulkerBox && cap == null && tag.hasKey("BlockEntityTag")) {
+			ItemStackHelper.loadAllItems(tag.getCompoundTag("BlockEntityTag"), itemList);
+			cap = new ShulkerItemHandler(itemList);
+			doShulkerThing = true;
+		}
+
 		if (cap != null) {
 			for (int i = 0; i < cap.getSlots(); i++) {
-				this.fakeHandler.insertItem(0, cap.extractItem(i, cap.getStackInSlot(i).getCount(), false), false);
-			}
-			return true;
-		} else if (!doubleClick) {
-			playerToStackMap.put(player, item.copy());
-		} else {
-			// Collect all the items
-			for (int i = 0; i < playerInventory.getSlots(); i++) {
-				ItemStack inSlot = playerInventory.getStackInSlot(i);
-				if (ItemUtils.areStacksEqualIgnoreSize(inSlot, item)) {
-					toInsert.add(playerInventory.extractItem(i, inSlot.getCount(), false));
+				ItemStack inSlot = cap.getStackInSlot(i);
+				int count = inSlot.getCount();
+				ItemStack result = fakeHandler.insertItem(0, inSlot, false);
+				if (result.isEmpty()) {
+					cap.extractItem(i, count, false);
+				} else {
+					cap.extractItem(i, count - result.getCount(), false);
 				}
 			}
-		}
 
-		if (toInsert.isEmpty()) {
-			throw new NullPointerException("wat");
-		}
+			if (doShulkerThing) {
+				tag.getCompoundTag("BlockEntityTag").removeTag("Items");
+				ItemStackHelper.saveAllItems(tag.getCompoundTag("BlockEntityTag"), ((ShulkerItemHandler) cap).getStacks(), false);
+				item.setTagCompound(tag);
+				remainder.add(item);
+			}
+		} else {
 
-		List<ItemStack> remainder = InventoryRoutingUtils.tryInsertItems(this, item, toInsert);
+			if (!doubleClick) {
+				playerToStackMap.put(player, item.copy());
+			} else {
+				// Collect all the items
+				for (int i = 0; i < playerInventory.getSlots(); i++) {
+					ItemStack inSlot = playerInventory.getStackInSlot(i);
+					if (ItemUtils.areStacksEqualIgnoreSize(inSlot, item)) {
+						toInsert.add(playerInventory.extractItem(i, inSlot.getCount(), false));
+					}
+				}
+			}
+
+			if (toInsert.isEmpty()) {
+				throw new NullPointerException("wat");
+			}
+
+			remainder = InventoryRoutingUtils.tryInsertItems(this, item, toInsert);
+		}
 
 		boolean doUpdate = wasHeld;
 
@@ -450,6 +477,16 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 
 		public void refresh () {
 			this.insertedAt = System.currentTimeMillis();
+		}
+	}
+
+	public static class ShulkerItemHandler extends ItemStackHandler {
+		public ShulkerItemHandler (NonNullList<ItemStack> stacks) {
+			super(stacks);
+		}
+
+		public NonNullList<ItemStack> getStacks () {
+			return this.stacks;
 		}
 	}
 }
