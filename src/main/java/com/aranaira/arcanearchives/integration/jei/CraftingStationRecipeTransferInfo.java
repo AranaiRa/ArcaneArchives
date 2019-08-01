@@ -47,7 +47,7 @@ public class CraftingStationRecipeTransferInfo implements IRecipeTransferInfo<Co
 		List<Slot> slots = new ArrayList<>();
 
 		// skip the actual slots of the crafting table
-		for (int i = 10; i < container.inventorySlots.size(); i++) {
+		for (int i = 10; i < container.inventorySlots.size() - 3; i++) {
 			slots.add(container.getSlot(i));
 		}
 		return slots;
