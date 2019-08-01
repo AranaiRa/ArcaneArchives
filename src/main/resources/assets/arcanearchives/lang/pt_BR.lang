@@ -1,22 +1,27 @@
-itemGroup.arcanearchives=Arquivos Arcanos
+﻿itemGroup.arcanearchives=Arquivos Arcanos
 
 item.item_rawquartz.name=Quartzo Radiante Bruto
 item.item_cutquartz.name=Quartzo Radiante Lapidado
 item.item_geomancypendulum.name=Pêndulo de Geomancia
 item.item_geomanticmap.name=Mapa Geomântico
 item.item_manifest.name=Manifesto
+item.item_mountaintear.name=Lágrima da Montanha
 item.item_radiantbucket.name=Balde Radiante
+item.item_rivertear.name=Lágrima do Rio
 item.item_scepterabduction.name=Cetro da Abdução
 item.item_sceptermanipulation.name=Cetro da Manipulação
 item.item_sceptertranslocation.name=Cetro da Translocação
+item.item_scepterrevelation.name=Cetro da Revelação
 item.item_tomeofarcana.name=Tomo Arcano
 item.item_tomeofrequisition.name=Tomo da Requisição
+item.item_letterofinvitation.name=Carta de Convite
+item.item_letterofresignation.name=Carta de Resignação
 
 item.item_component_containmentfield.name=Campo de Contenção
-item.item_component_materialinterface.name=Interface de Materiais
+item.item_component_materialinterface.name=Interface Material
 item.item_component_matrixbrace.name=Suporte da Matriz
 item.item_component_radiantdust.name=Pó Radiante
-item.item_component_scintillatinginlay.name=Embutimento Cintilante
+item.item_component_scintillatinginlay.name=Detalhe Cintilante
 
 item.item_spiritorb.empty.name=Orbe Planetária Sem Aspecto
 item.item_spiritorb.crown_mote.name=Orbe da Coroa
@@ -42,7 +47,10 @@ tile.raw_quartz.name=Quartzo Radiante Bruto
 tile.radiant_crafting_table.name=Bancada de Trabalho Radiante
 tile.radiant_chest.name=Baú Radiante
 tile.radiant_lantern.name=Lâmpada Radiante
-tile.radiant_resonator.name=Ressoador Radiante
+tile.radiant_resonator.name=Ressonador Radiante
+tile.radiant_trove.name=Caixa de Tesouro Ratiante
+
+tile.monitoring_crystal.name=Cristal de Monitoramento
 
 tile.matrix_crystal_core.name=Núcleo de Matriz Cristalino
 tile.matrix_repository.name=Matriz de Repositório
@@ -53,6 +61,8 @@ tile.matrix_distillate.name=Matriz Destilada
 tile.accessorblock.name=Acessador
 tile.dominion_crystal.name=Cristal de Domínio
 tile.gemcutters_table.name=Mesa do Ourives
+
+tile.radiant_tank.name=Tanque Radiante
 
 entity.spirit_crown_01.name=Mote Real
 entity.spirit_crown_02.name=Juve Real
@@ -75,16 +85,105 @@ arcanearchives.text.matrixcore.importradiant=Importar Armazenamento Radiante
 arcanearchives.text.matrixstorage.immanencelabel=Imanência
 arcanearchives.text.matrixstorage.storagelabel=Armazenamento Total
 arcanearchives.text.matrixrepository.immanencelabel=Imanência
-arcanearchives.text.matrixrepository.storagelabel=Tipo de Armazenamento
+arcanearchives.text.matrixrepository.storagelabel=Armazenamento pot Tipo
+arcanearchives.text.radiantchest.unnamed_chest=Baú sem Nome
 
 arcanearchives.error.toomanyplaced=Você só poder ter %d %s!
-arcanearchives.error.notenoughspace=Não há espaço suficiente para posicionar o(a) %s!
+arcanearchives.error.notenoughspace=Não há espaço suficiente para colocar o(a) %s!
 arcanearchives.error.invaliditemblock=Não é possível colocar um item inválido com um limite de posicionamento mas sem classe de entidade.
+arcanearchives.error.invalidnetwork=Rede inválida. Whoops!
+arcanearchives.error.upgrade_trove_failed=Falha ao melhorar a Caixa de tesouro. Nivel de melhoria atual é: %d/%d.
+arcanearchives.error.upgrade_tank_failed=Falha ao melhorar o tanque. Nivel de melhoria atual é: %d/%d.
+arcanearchives.error.trove_insertion_failed.full=Não cabem mais itens nesta caixa.
+arcanearchives.error.trove_insertion_failed.wrong=Esse item não pode sser colocado nesta caixa.
+arcanearchives.error.monitoring_crystal=Multiplos Cristais de Monitoramento foram encontrados monitorando o mesmo bloco: %d/%d/%d.
+
+arcanearchives.warning.sneak_to_upgrade=Agache para aplicar a Interface Material à Caixa e melhora-la.
+arcanearchives.warning.sneak_to_upgrade_tank=Agache para aplicar um Campo de Contenção ao Tanque e melhora-lo.
+
+arcanearchives.success.upgraded_trove=Caixa melhorada para o nível %d/%d.
+arcanearchives.success.upgraded_tank=Tanque melhorado para o nível %d/%d.
 
 arcanearchives.tooltip.notimplemented1=NÃO IMPLEMENTADO
-arcanearchives.tooltip.notimplemented2=Aviso: usar este item pode causar crashes!
-arcanearchives.tooltip.temprecipe1=A receita para este item é temporária.
+arcanearchives.tooltip.notimplemented2=Aviso: usar este item pode crashar o jogo!
+arcanearchives.tooltip.temprecipe1=A receita deste item é temporária.
 arcanearchives.tooltip.temprecipe2=Ela será modificada em uma versão posterior.
-arcanearchives.tooltip.shouldnothave=Este bloco não deveria ser obtido.
+arcanearchives.tooltip.shouldnothave=Este bloco não deveria ser obtível.
+arcanearchives.tooltip.creativeonly=Atualmente este item só está disponível no modo criativo.
 
 arcanearchives.tooltip.inanotherdim=O baú está localizado em %s.
+arcanearchives.tooltip.manifest.chestsneak=[Aperte shift para localizar baús.]
+arcanearchives.tooltip.manifest.item_entry=%s at (%d,%d,%d) contcontém %d.
+arcanearchives.tooltip.manifest.andmore=%d Baús Radiantes não listados.
+arcanearchives.tooltip.manifest.clicktoshow=Clicke para desenhar uma linha para baús contentdo esse ítem. Abra baús para remover, ou clicke "%s".
+
+arcanearchives.tooltip.tank.fluid=Fluid: %s
+arcanearchives.tooltip.tank.amount=Amount: %s/%smb
+
+arcanearchives.tooltip.component.rawquartz=Um ingrediente. Também pode ser usado para transformar baús e mesas de trabalho para seus equivalentes radiantes.
+arcanearchives.tooltip.component.cutquartz=Um ingrediente.
+arcanearchives.tooltip.component.radiantdust=Um ingrediente.
+arcanearchives.tooltip.component.containmentfield=Um ingrediente. Também pode ser usado para melhorar Tanques Radiantes.
+arcanearchives.tooltip.component.matrixbrace=Um ingrediente.
+arcanearchives.tooltip.component.materialinterface=Um ingrediente. Também pode ser usado para melhorar Caixas do Tesouro Radiantes.
+arcanearchives.tooltip.component.scintillatinginlay=Um ingrediente.
+
+arcanearchives.tooltip.device.radiantchest=Storage. Usado para conter ítens.
+arcanearchives.tooltip.device.radianttank=Storage. Usado para conter flúidos.
+arcanearchives.tooltip.device.radiantresonator=Gera Quartzo Radiante Bruto ao passar do tempo se o bloco acima de sí estiver livre.
+arcanearchives.tooltip.device.radiantlantern=Decoração. Uma fonte de luz.
+arcanearchives.tooltip.device.radianttrove=Storage. Usado para armazenar grandes quantidades de um unico tipo de ítem.
+arcanearchives.tooltip.device.radiantcraftingtable=Estação de trabalho. Itens permanecem em suas posições, tres receitas podem ser salvas para manofatura rápida, e um inventario conectado é visível.
+arcanearchives.tooltip.device.gemcutterstable=Eastação de trabalho. Usada para lapidar o quartzo radiante para formas mais complexas.
+arcanearchives.tooltip.device.monitoringcrystal=Adiciona o inventario conectado ao Deposito Radiante e o prmite ser visualizado com o Manifesto.
+
+arcanearchives.tooltip.item.letterofinvitation=Te permite convidar outro jogador para a sua Rede Arcana.
+arcanearchives.tooltip.item.letterofresignation=Te permite sair de uma Rede Arcana.
+arcanearchives.tooltip.item.manifest=Usado para visualizar ítens no Deposito Radiante.
+arcanearchives.tooltip.item.mountaintear=Lentamente cria lava infinite quanto colocado em um Lightwell.
+arcanearchives.tooltip.item.radiantbucket=Ussado para transferir itens de e para um Tanque Radiante ou Matriz de reservatório.
+arcanearchives.tooltip.item.rivertear=Rapidamente cria água infinita quando colocado em um Lightwell.
+arcanearchives.tooltip.item.scepterofrevelation=Inquere informação sobre dispositivos e conteiners. Use agachado.
+arcanearchives.tooltip.item.scepterofmanipulation=Modifica as propriedades de certos blocos. Use agachado.
+arcanearchives.tooltip.item.tomeofarcana=Fornece documentação do mod.
+
+arcanearchives.data.gui.radiant_trove.upgrade=%d melhoria
+arcanearchives.data.gui.radiant_trove.upgrades=%d melhora
+
+arcanearchives.data.tooltip.chest_name=Nome:
+arcanearchives.data.tooltip.resonator_progress=Progresso:
+arcanearchives.data.tooltip.resonator_status.resonating=Ressonando
+arcanearchives.data.tooltip.resonator_status.offline=Offline
+arcanearchives.data.tooltip.resonator_status.obstruction=Obstruido
+arcanearchives.data.tooltip.resonator_status.harvestable=Coletavel
+
+arcanearchives.data.scepter.missing_te=Error: missing tile entity.
+
+arcanearchives.data.scepter.radiant_chest.unnamed=Baú Radiante sem nome.
+arcanearchives.data.scepter.radiant_chest.name=Baú Radiante nomeado: %s.
+arcanearchives.data.scepter.radiant_chest.slots=Tem %d espaços livres.
+
+arcanearchives.data.scepter.radiant_crafting.contains=Bancada de Trabalho radiante contém: %s.
+arcanearchives.data.scepter.radiant_crafting.empty=Bancada de Trabalho radiante está vazia.
+
+arcanearchives.data.scepter.radiant_trove.empty=Caixa do Tesouro Radiante não tem um item associado.
+arcanearchives.data.scepter.radiant_trove.item=Caixa do Tesouro Radiante Configurada para guardar %s.
+arcanearchives.data.scepter.radiant_trove.count=Contém %d/%d itens.
+arcanearchives.data.scepter.radiant_trove.upgrades=Foi melhorada %d vez(es).
+
+arcanearchives.data.scepter.radiant_resonator.progress=Progresso atual do Ressonador Radiante: %d%%
+arcanearchives.data.scepter.radiant_resonator.status=Status atual: %s.
+
+arcanearchives.data.scepter.monitoring_crystal.facing=Cristal de Monitoramento direcionad a %s.
+
+arcanearchives.data.scepter.accessor.accessor_to=Accessador do %s em %d/%d/%d.
+arcanearchives.data.scepter.accessor.invalid=bloco acessador invalido sem pai.
+
+arcanearchives.gui.keygroup=Arquivos Arcanos
+arcanearchives.gui.keybinds.manifest=Ativar Manifesto
+arcanearchives.gui.missing_manifest=Você não tem um manifesto contigo!
+
+text.copyToClipboard.line1=O livro quer colocar texto em sua prancheta.
+text.copyToClipboard.line2=Tem certeza que qur permitir isso?
+text.copyToClipboard.success=Texto copiado com sucesso.
+cmd.gbook.guide.done=Reacarregamento completo
