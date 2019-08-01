@@ -49,9 +49,6 @@ public class ConfigHandler {
 		}
 	}
 
-	@Config.Ignore
-	public static int MANIFEST_HIGHLIGHT = 0x991922c4;
-
 	@Config.Comment("Limit of resonators per player's network")
 	@Config.Name("Resonator Limit")
 	public static int ResonatorLimit = 3;
@@ -60,8 +57,7 @@ public class ConfigHandler {
 	@Config.Name("Resonator Time")
 	public static int ResonatorTickTime = 6000;
 
-	@Config.Comment("Causes Radiant Chests, Troves, etc, to be unbreakable when not empty")
-	@Config.Name("Unbreakable Radiant Chests & Troves")
+	@Config.Ignore
 	public static boolean UnbreakableContainers = false;
 
 	@Config.Comment("Disable to use default Minecraft-style GUI elements. (Client Only)")
@@ -76,19 +72,6 @@ public class ConfigHandler {
 	@Config.Comment("Set to true to mark all new chests with the no-new-items routing type")
 	@Config.Name("Default to No New Items routing")
 	public static boolean defaultRoutingNoNewItems = false;
-
-	//public static boolean bJarvisModeEnabled = false;
-
-	/*public static int iRadiantResonatorDrain = 20;
-	public static int iRepositoryMatrixDrain = 80;
-	public static int iStorageMatrixDrain = 80;*/
-
-	/*@Config.Comment("The Amount of Bonus Ticks Blocks Get if Their Drain is Met")
-	public static int iRadiantResonatorBonusTicks = 1;*/
-
-	/*@Config.Comment("The Amount of Items Each Repository Can Hold")
-	public static int iRepositoryMatrixItemCap = 256;
-	public static int iStorageMatrixItemCap = 256;*/
 
 	@Config.LangKey("arcanearchives.config.item_tracking")
 	public static ItemTrackingConfig ItemTrackingConfig = new ItemTrackingConfig();

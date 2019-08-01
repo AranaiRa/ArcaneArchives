@@ -8,6 +8,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 
 import javax.annotation.Nonnull;
+import java.awt.*;
 
 public class InvisibleButton extends GuiButton {
 
@@ -30,7 +31,7 @@ public class InvisibleButton extends GuiButton {
 			this.mouseDragged(mc, mouseX, mouseY);
 
 			if (DEBUG_LOCATION) {
-				GuiContainer.drawRect(x, y, x + width, y + height, ConfigHandler.MANIFEST_HIGHLIGHT);
+				GuiContainer.drawRect(x, y, x + width, y + height, Color.BLUE.getRGB());
 			}
 
 			if (!displayString.isEmpty()) {
