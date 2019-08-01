@@ -181,9 +181,13 @@ public class ContainerManifest extends Container implements IScrollableContainer
 		//List<Vec3d> visPositions = entry.getVecPositions();
 		//visPositions.forEach(k -> LineHandler.addLine(k, player.dimension));
 
-		ManifestTrackingUtils.add(entry);
+		if (dragType == 0) {
+			ManifestTrackingUtils.add(entry);
+		} else if (dragType == 1) {
+			ManifestTrackingUtils.remove(entry);
+		}
 
-		if (!GuiScreen.isShiftKeyDown()) {
+		if (!GuiScreen.isShiftKeyDown() && dragType == 0) {
 			Minecraft mc = Minecraft.getMinecraft();
 			mc.player.closeScreen();
 		}
