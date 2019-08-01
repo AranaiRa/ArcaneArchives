@@ -5,6 +5,7 @@ import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.inventory.ContainerRadiantChest;
 import com.aranaira.arcanearchives.network.Handlers.ServerHandler;
+import com.aranaira.arcanearchives.network.Handlers.TileHandlerClient;
 import com.aranaira.arcanearchives.network.Handlers.TileHandlerServer;
 import com.aranaira.arcanearchives.network.Messages.TileMessage;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
@@ -60,7 +61,29 @@ public class PacketRadiantChest {
 		public static class Handler implements TileHandlerServer<SetName, RadiantChestTileEntity> {
 			@Override
 			public void processMessage (SetName message, MessageContext ctx, RadiantChestTileEntity tile) {
+				if (message.name.isEmpty()) {
+					ArcaneArchives.logger.debug("Incoming packet for tile entity in " + tile.dimension + " at " + tile.getPos().toString() + " had an empty name.");
+				}
 				tile.setChestName(message.name);
+				SyncChestName packet = new SyncChestName(tile.getPos(), tile.dimension, tile.getChestName());
+				Networking.sendToAllTracking(packet, tile);
+			}
+		}
+	}
+
+	public static class UnsetName extends TileMessage {
+		@SuppressWarnings("unused")
+		public UnsetName () {
+		}
+
+		public UnsetName (BlockPos pos, int dimensionID) {
+			super(pos, dimensionID);
+		}
+
+		public static class Handler implements TileHandlerServer<UnsetName, RadiantChestTileEntity> {
+			@Override
+			public void processMessage (UnsetName message, MessageContext ctx, RadiantChestTileEntity tile) {
+				tile.unsetChestName();
 				SyncChestName packet = new SyncChestName(tile.getPos(), tile.dimension, tile.getChestName());
 				Networking.sendToAllTracking(packet, tile);
 			}
@@ -151,16 +174,16 @@ public class PacketRadiantChest {
 			ByteBufUtils.writeUTF8String(buf, this.chestName);
 		}
 
-		public static class Handler implements TileHandlerServer<SyncChestName, RadiantChestTileEntity> {
+		public static class Handler implements TileHandlerClient<SyncChestName, RadiantChestTileEntity> {
 			@Override
 			@SideOnly(Side.CLIENT)
 			public void processMessage (SyncChestName message, MessageContext ctx, RadiantChestTileEntity tile) {
 				if (message.chestName.isEmpty()) {
 					ArcaneArchives.logger.debug("Incoming packet for tile entity in " + tile.dimension + " at " + tile.getPos().toString() + " had an empty chest name.");
+					tile.unsetChestName();
+				} else {
+					tile.setChestName(message.chestName);
 				}
-				tile.setChestName(message.chestName);
-				SyncChestName packet = new SyncChestName(tile.getPos(), tile.dimension, tile.getChestName());
-				Networking.sendToAllTracking(packet, tile);
 			}
 		}
 	}
@@ -192,7 +215,7 @@ public class PacketRadiantChest {
 			buf.writeInt(this.facing.ordinal());
 		}
 
-		public static class Handler implements TileHandlerServer<SyncChestDisplay, RadiantChestTileEntity> {
+		public static class Handler implements TileHandlerClient<SyncChestDisplay, RadiantChestTileEntity> {
 			@Override
 			@SideOnly(Side.CLIENT)
 			public void processMessage (SyncChestDisplay message, MessageContext ctx, RadiantChestTileEntity tile) {

@@ -25,6 +25,7 @@ public class Networking {
 
 	public static void registerPackets () {
 		registerPacks(PacketRadiantChest.SetName.Handler.class, PacketRadiantChest.SetName.class, Side.SERVER);
+		registerPacks(PacketRadiantChest.UnsetName.Handler.class, PacketRadiantChest.UnsetName.class, Side.SERVER);
 		registerPacks(PacketRadiantChest.SetItemAndFacing.Handler.class, PacketRadiantChest.SetItemAndFacing.class, Side.SERVER);
 		registerPacks(PacketRadiantChest.SyncChestDisplay.Handler.class, SyncChestDisplay.class, Side.CLIENT);
 		registerPacks(SyncChestName.Handler.class, SyncChestName.class, Side.CLIENT);

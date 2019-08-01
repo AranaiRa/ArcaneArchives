@@ -9,6 +9,7 @@ import com.aranaira.arcanearchives.inventory.slots.SlotExtended;
 import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketRadiantChest.SetName;
 import com.aranaira.arcanearchives.network.PacketRadiantChest.ToggleBrazier;
+import com.aranaira.arcanearchives.network.PacketRadiantChest.UnsetName;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.interfaces.IBrazierRouting;
 import com.aranaira.arcanearchives.util.ColorUtils;
@@ -739,9 +740,17 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 	public void setEntryValue (int id, float value) {
 	}
 
+	private String lastValue = null;
+
 	@Override
 	public void setEntryValue (int id, String value) {
-		SetName packet = new SetName(tile.getPos(), value, tile.dimension);
-		Networking.CHANNEL.sendToServer(packet);
+		if (lastValue != null && !lastValue.isEmpty() && value.isEmpty()) {
+			UnsetName packet = new UnsetName(tile.getPos(), tile.dimension);
+			Networking.CHANNEL.sendToServer(packet);
+		} else if (lastValue == null || !lastValue.equals(value)) {
+			SetName packet = new SetName(tile.getPos(), value, tile.dimension);
+			Networking.CHANNEL.sendToServer(packet);
+		}
+		lastValue = value;
 	}
 }
