@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.integration.jei.quartz;
 
 import com.aranaira.arcanearchives.config.ConfigHandler;
+import com.aranaira.arcanearchives.config.ConfigHandler.ServerSideConfig;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
@@ -25,7 +26,7 @@ public class QuartzWrapper implements IRecipeWrapper {
 
 	@Override
 	public void drawInfo (Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
-		double minutes = (double) ConfigHandler.ResonatorTickTime / 20.0 / 60.0;
+		double minutes = (double) ConfigHandler.serverSideConfig.ResonatorTickTime / 20.0 / 60.0;
 		String info = I18n.format("jei.gui.resonator", minutes);
 		int x = -(minecraft.fontRenderer.getStringWidth(info) / 3);
 

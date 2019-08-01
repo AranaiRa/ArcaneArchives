@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.blocks.RawQuartzCluster;
 import com.aranaira.arcanearchives.config.ConfigHandler;
+import com.aranaira.arcanearchives.config.ConfigHandler.ServerSideConfig;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.init.BlockRegistry;
@@ -55,7 +56,7 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity {
 			canTick = true;
 		}
 
-		int ticksRequired = ConfigHandler.ResonatorTickTime;
+		int ticksRequired = ConfigHandler.serverSideConfig.ResonatorTickTime;
 
 		markDirty();
 
@@ -105,7 +106,7 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity {
 	}
 
 	public int getPercentageComplete () {
-		return (int) Math.floor(growth / (double) ConfigHandler.ResonatorTickTime * 100D);
+		return (int) Math.floor(growth / (double) ConfigHandler.serverSideConfig.ResonatorTickTime * 100D);
 	}
 
 	@Override

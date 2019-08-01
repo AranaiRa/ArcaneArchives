@@ -49,13 +49,24 @@ public class ConfigHandler {
 		}
 	}
 
-	@Config.Comment("Limit of resonators per player's network")
-	@Config.Name("Resonator Limit")
-	public static int ResonatorLimit = 3;
+	@Config.Comment("Settings related to server-side configuration")
+	@Config.Name("Server Settings")
+	public static ServerSideConfig serverSideConfig = new ServerSideConfig();
 
-	@Config.Comment("Number of ticks it takes to create raw quartz")
-	@Config.Name("Resonator Time")
-	public static int ResonatorTickTime = 6000;
+	public static class ServerSideConfig {
+		@Config.Comment("Limit of resonators per player's network")
+		@Config.Name("Resonator Limit")
+		public int ResonatorLimit = 3;
+
+		@Config.Comment("Number of ticks it takes to create raw quartz")
+		@Config.Name("Resonator Time")
+		public int ResonatorTickTime = 6000;
+
+		@Config.Comment("The multiplier applied to Radiant Chest slots")
+		@Config.Name("Radiant Chest Slot Multiplier")
+		@Config.RangeInt(min = 1, max = 8)
+		public int RadiantMultiplier = 4;
+	}
 
 	@Config.Ignore
 	public static boolean UnbreakableContainers = false;
@@ -64,24 +75,15 @@ public class ConfigHandler {
 	@Config.Name("Use Pretty GUIs")
 	public static boolean UsePrettyGUIs = true;
 
-	@Config.Comment("The multiplier applied to Radiant Chest slots")
-	@Config.Name("Radiant Chest Slot Multiplier")
-	@Config.RangeInt(min = 1, max = 8)
-	public static int RadiantMultiplier = 4;
-
 	@Config.Comment("Set to true to mark all new chests with the no-new-items routing type")
-	@Config.Name("Default to No New Items routing")
+	@Config.Name("Default Radiant Chests to 'No New Items' routing")
 	public static boolean defaultRoutingNoNewItems = false;
 
-	@Config.LangKey("arcanearchives.config.item_tracking")
-	public static ItemTrackingConfig ItemTrackingConfig = new ItemTrackingConfig();
+	@Config.Comment("Settings related to item tracking in non-mod containers")
+	@Config.Name("Non-Mod Tracking (Client-Only)")
+	public static NonModTrackingConfig nonModTrackingConfig = new NonModTrackingConfig();
 
-	public static class ItemTrackingConfig {
-		//@Config.Comment("Whether or not radiant chests and troves should glow if being tracked")
-		//@Config.Name("Chests & Troves glow when Tracked")
-		//public boolean chestsGlow = true;
-
-		@Config.Ignore
+	public static class NonModTrackingConfig {
 		@Config.Comment("Container classes to exclude from Mixin-based slot highlighting")
 		@Config.Name("Container class to ignore")
 		public String[] ContainerClasses = new String[]{};
@@ -122,20 +124,20 @@ public class ConfigHandler {
 	public static ManifestConfig ManifestConfig = new ManifestConfig();
 
 	public static class ManifestConfig {
-		@Config.Comment("Whether having a manifest in your inventory is required to open the screen")
+		@Config.Comment("Whether having a manifest in your inventory is required to open the manifest screen using a Hotkey.")
 		@Config.Name("Manifest Presence")
 		public boolean ManifestPresence = true;
 
-		@Config.Comment("Disable overlay of grid on Manifest. (Client Only")
+		@Config.Comment("Disable overlay of grid on Manifest.")
 		@Config.Name("Disable Manifest Grid")
 		public boolean DisableManifestGrid = true;
 
-		@Config.Comment("Maximum distance in blocks to track chests from for the Manifest")
-		@Config.Name("[Hive Network] Max track distance")
+		@Config.Comment("Maximum distance in blocks to track chests from for the Manifest from your current position. Useful when a member of a Hive Network.")
+		@Config.Name("Max distance for items")
 		public int MaxDistance = 100;
 
-		@Config.Comment("Synchronise the currently searched item in JEI to the Manifest when opening for the first time, and then synchronise changes to the text field back into JEI. [Requires JEI installed]")
-		@Config.Name("JEI Synchronise")
+		@Config.Comment("Synchronise the currently searched item into the JEI search box. The previous JEI search term will be restored upon closing. [Requires JEI installed]")
+		@Config.Name("Synchronise JEI with Search Bar")
 		public boolean jeiSynchronise = true;
 
 		@Config.Comment("Whether or not the previous search term persists between 'sessions' (i.e., each time you open the manifest, your previous search term is filled in for you)")
@@ -164,10 +166,5 @@ public class ConfigHandler {
 		@Config.Name("Valid Munchstone Blocks")
 		@Config.RequiresMcRestart
 		public String[] MunchstoneValidEntries = MunchstoneItem.DEFAULT_ENTRIES;
-
-		//@Config.Comment("What blocks an Orderstone can transmute. First value is the transmutation cost for each step of the sequence, all subsequent values are blocks (such as minecraft:log). Please be aware that sequences longer than six blocks will display poorly in the Tome of Arcana.")
-		//@Config.Name("Valid Orderstone Block Sequences")
-		//@Config.RequiresMcRestart
-		//public String[] OrderstoneValidEntries = OrderstoneItem.DEFAULT_ENTRIES;
 	}
 }

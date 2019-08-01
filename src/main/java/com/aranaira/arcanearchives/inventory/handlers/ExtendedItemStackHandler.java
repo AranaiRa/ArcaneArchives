@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.inventory.handlers;
 
 import com.aranaira.arcanearchives.config.ConfigHandler;
+import com.aranaira.arcanearchives.config.ConfigHandler.ServerSideConfig;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -27,12 +28,12 @@ public class ExtendedItemStackHandler extends ItemStackHandler {
 
 	@Override
 	public int getSlotLimit (int slot) {
-		return 64 * ConfigHandler.RadiantMultiplier;
+		return 64 * ConfigHandler.serverSideConfig.RadiantMultiplier;
 	}
 
 	@Override
 	public int getStackLimit (int slot, @Nonnull ItemStack stack) {
-		return Math.min(getSlotLimit(slot), stack.getMaxStackSize() * ConfigHandler.RadiantMultiplier);
+		return Math.min(getSlotLimit(slot), stack.getMaxStackSize() * ConfigHandler.serverSideConfig.RadiantMultiplier);
 	}
 
 	@Override

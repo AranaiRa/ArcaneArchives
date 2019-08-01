@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.config.ConfigHandler;
+import com.aranaira.arcanearchives.config.ConfigHandler.ServerSideConfig;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.inventory.handlers.ExtendedItemStackHandler;
@@ -121,7 +122,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 
 	@Override
 	public int slotMultiplier () {
-		return ConfigHandler.RadiantMultiplier;
+		return ConfigHandler.serverSideConfig.RadiantMultiplier;
 	}
 
 	@Override
