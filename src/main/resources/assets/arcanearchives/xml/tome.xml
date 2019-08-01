@@ -304,10 +304,10 @@
             <p align="center"><stack item="arcanearchives:monitoring_crystal" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
-                A Monitoring Crystal can be used to add the tracking capabilities of a Radiant storage device to a non-Arcane Archives inventory, such as a vanilla chest. It is also a light source.
+                A Monitoring Crystal can be used to add the tracking capabilities of a Radiant storage container to a non-Arcane Archives inventory, such as a vanilla chest. It is also a light source.
             </p>
             <p>
-                <stack item="arcanearchives:manifest"/> The contents of inventories with an attached Monitoring Crystal can be seen on a <link ref="Items:Manifest">Manifest</link> as though they were a Radiant storage container. You cannot attach a Monitoring Crystal to <link ref="Blocks:RadiantChest">Radiant Chests</link>, <link ref="Blocks:RadiantTank">Tanks</link>, or <link ref="Blocks:RadiantTrove">Troves</link>; these devices appear in your Manifest automatically. Attempt to do so will cause the Monitoring Crystal to pop off.
+                <stack item="arcanearchives:manifest"/> The contents of inventories with an attached Monitoring Crystal can be seen and tracked with a <link ref="Items:Manifest">Manifest</link> as though they were a Radiant storage container. You cannot attach a Monitoring Crystal to <link ref="Blocks:RadiantChest">Radiant Chests</link>, <link ref="Blocks:RadiantTank">Tanks</link>, or <link ref="Blocks:RadiantTrove">Troves</link>; these devices appear in your Manifest automatically. Attempting to do so will cause the Monitoring Crystal to pop off.
             </p>
             <p>
                 <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="Items:ScepterRevelation">Scepter of Revelation</link> on a Monitoring Crystal will return what direction the Monitoring Crystal is pointing towards.
