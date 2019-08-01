@@ -372,7 +372,7 @@ arcanearchives.config.arsenal.tooltip=Settings releated to the Arcane Arsenal mo
 arcanearchives.message.book_received.bookshelf=Something precious was hidden inside that block!
 arcanearchives.message.book_received.resonator=You don't remember it being there before, but you find a book on the ground by your crafting table.
 arcanearchives.message.usedtorecharge=%s%s used to recharge %s
-arcanearchives.message.invalidMonitoringCrystalTarget=Monitoring Crystals can't be attached to Arcane Archives storage containers.
+arcanearchives.message.invalid_crystal_target=This device can only be attached to non-Arcane Archives storage.
 
 advancement.arcanearchives.amphora=Ceci n'est pas un seau
 advancement.arcanearchives.amphora.desc=Craft a Radiant Amphora for easy fluid transfer with tanks.

@@ -79,20 +79,4 @@ public class MonitoringCrystalTileEntity extends ImmanenceTileEntity implements 
 
 		return target;
 	}
-
-	@Override
-	public void firstJoinedNetwork(ServerNetwork network) {
-		if(!getWorld().isRemote) {
-			BlockPos target = getTarget();
-			ImmanenceTileEntity ite = WorldUtil.getTileEntity(ImmanenceTileEntity.class, world, target);
-			if(ite == null)
-				super.firstJoinedNetwork(network);
-			else {
-				EntityPlayer player = getServerNetwork().getPlayer();
-				ITextComponent message = new TextComponentTranslation("arcanearchives.message.invalidMonitoringCrystalTarget" ).setStyle(new Style().setColor(TextFormatting.GOLD).setBold(true));
-				player.sendStatusMessage(message, true);
-				breakBlock();
-			}
-		}
-	}
 }
