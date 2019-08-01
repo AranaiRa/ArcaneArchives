@@ -29,6 +29,8 @@ public class FastCraftingRecipe implements IArcaneArchivesRecipe {
 		this.result = input.getRecipeOutput();
 		Map<Ingredient, IngredientStack> ingredientMap = new HashMap<>();
 		for (Ingredient ingredient : input.getIngredients()) {
+			if (ingredient == Ingredient.EMPTY) continue;
+
 			IngredientStack match = null;
 			for (Map.Entry<Ingredient, IngredientStack> entry : ingredientMap.entrySet()) {
 				if (ItemUtils.ingredientsMatch(entry.getKey(), ingredient)) {
