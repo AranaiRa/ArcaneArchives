@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.mixins;
 
+import com.aranaira.arcanearchives.client.gui.GUIManifest;
 import com.aranaira.arcanearchives.client.render.LineHandler;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.util.ColorUtils;
@@ -23,7 +24,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class MixinGuiContainer {
 	@Inject(method = "drawSlot", at = @At(value = "HEAD"))
 	private void onDrawSlot (Slot slot, CallbackInfo callbackInfo) {
-		if (ConfigHandler.ItemTrackingConfig.DisableMixinHighlight || ConfigHandler.ItemTrackingConfig.getContainerClasses().contains(this.getClass())) {
+		if (ConfigHandler.ItemTrackingConfig.DisableMixinHighlight || ConfigHandler.ItemTrackingConfig.getContainerClasses().contains(((GuiContainer) (Object) this).getClass())) {
+			return;
+		}
+
+		if (((GuiContainer) (Object) this).getClass().equals(GUIManifest.class)) {
 			return;
 		}
 

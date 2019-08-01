@@ -178,8 +178,8 @@ public class ContainerManifest extends Container implements IScrollableContainer
 			return ItemStack.EMPTY;
 		}
 
-		List<Vec3d> visPositions = entry.getVecPositions();
-		visPositions.forEach(k -> LineHandler.addLine(k, player.dimension));
+		//List<Vec3d> visPositions = entry.getVecPositions();
+		//visPositions.forEach(k -> LineHandler.addLine(k, player.dimension));
 
 		ManifestTrackingUtils.add(entry);
 

@@ -121,9 +121,8 @@ public class Keybinds {
 								continue;
 							}
 
-							List<Vec3d> visPositions = entry.getVecPositions();
-							visPositions.forEach(l -> LineHandler.addLine(l, mc.player.dimension));
-
+							//List<Vec3d> visPositions = entry.getVecPositions();
+							//isPositions.forEach(l -> LineHandler.addLine(l, mc.player.dimension));
 							ManifestTrackingUtils.add(entry);
 
 							addedValues = true;
