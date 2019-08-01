@@ -138,7 +138,7 @@ public class ConfigHandler {
 
 		@Config.Comment("Synchronise the currently searched item into the JEI search box. The previous JEI search term will be restored upon closing. [Requires JEI installed]")
 		@Config.Name("Synchronise JEI with Search Bar")
-		public boolean jeiSynchronise = true;
+		public boolean jeiSynchronise = false;
 
 		@Config.Comment("Whether or not the previous search term persists between 'sessions' (i.e., each time you open the manifest, your previous search term is filled in for you)")
 		@Config.Name("Search Term Persistence")
