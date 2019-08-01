@@ -3,13 +3,20 @@ package com.aranaira.arcanearchives.network;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.network.Handlers.BaseHandler;
 import com.aranaira.arcanearchives.network.Messages.EmptyMessage;
+import com.aranaira.arcanearchives.network.PacketRadiantChest.SyncChestDisplay;
+import com.aranaira.arcanearchives.network.PacketRadiantChest.SyncChestName;
+import com.aranaira.arcanearchives.network.PacketRadiantChest.UnsetItem;
+import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
+import thaumcraft.common.lib.network.misc.PacketKnowledgeGain;
 
 //Used Precision Crafting as a reference. https://github.com/Daomephsta/Precision-Crafting/blob/master/src/main/java/leviathan143/precisioncrafting/common/packets/PacketHandler.java
 public class Networking {
@@ -18,6 +25,10 @@ public class Networking {
 
 	public static void registerPackets () {
 		registerPacks(PacketRadiantChest.SetName.Handler.class, PacketRadiantChest.SetName.class, Side.SERVER);
+		registerPacks(PacketRadiantChest.SetItemAndFacing.Handler.class, PacketRadiantChest.SetItemAndFacing.class, Side.SERVER);
+		registerPacks(PacketRadiantChest.SyncChestDisplay.Handler.class, SyncChestDisplay.class, Side.CLIENT);
+		registerPacks(SyncChestName.Handler.class, SyncChestName.class, Side.CLIENT);
+		registerPacks(UnsetItem.Handler.class, UnsetItem.class, Side.SERVER);
 		registerPacks(PacketGemCutters.ChangeRecipe.Handler.class, PacketGemCutters.ChangeRecipe.class, Side.SERVER);
 		registerPacks(PacketGemCutters.LastRecipe.Handler.class, PacketGemCutters.LastRecipe.class, Side.CLIENT);
 		registerPacks(PacketNetworks.HiveResponse.Handler.class, PacketNetworks.HiveResponse.class, Side.CLIENT);
@@ -58,11 +69,16 @@ public class Networking {
 		packetID++;
 	}
 
-	public static void sendToAllTracking(IMessage message, int dimension, BlockPos position) {
-
+	public static void sendToAllTracking (IMessage message, BlockPos pos, int dimension) {
+		TargetPoint tp = new TargetPoint(dimension, pos.getX(), pos.getY(), pos.getZ(), 0);
+		CHANNEL.sendToAllTracking(message, tp);
 	}
 
-    public static void sendToAllTracking(IMessage message, Entity entity)	 {
+	public static void sendToAllTracking(IMessage message, ImmanenceTileEntity tile) {
+		sendToAllTracking(message, tile.getPos(), tile.dimension);
+	}
+
+    public static void sendToAllTracking(IMessage message, Entity entity) {
 		CHANNEL.sendToAllTracking(message, entity);
 	}
 }

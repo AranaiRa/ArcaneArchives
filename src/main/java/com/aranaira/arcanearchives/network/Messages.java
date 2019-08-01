@@ -31,8 +31,8 @@ public class Messages {
 
 	public abstract static class TileMessage implements IMessage {
 		private UUID tileId = null;
-		private BlockPos pos;
-		private int dimension;
+		private BlockPos pos = null;
+		private int dimension = -9999;
 
 		public TileMessage () {
 		}

@@ -5,13 +5,20 @@ import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.types.IteRef;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.UUID;
 
 public class Handlers {
@@ -27,6 +34,7 @@ public class Handlers {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public interface TileHandlerServer<T extends Messages.TileMessage, V extends ImmanenceTileEntity> extends ServerHandler<T> {
 		@Override
 		default void processMessage (T message, MessageContext ctx) {
@@ -72,6 +80,46 @@ public class Handlers {
 
 			return null;
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public interface TileHandlerClient<T extends Messages.TileMessage, V extends ImmanenceTileEntity> extends ClientHandler<T> {
+		@Override
+		@SideOnly(Side.CLIENT)
+		default void processMessage (T message, MessageContext ctx) {
+			V tileEntity = getTile(message, ctx);
+			if (tileEntity != null) {
+				processMessage(message, ctx, tileEntity);
+			} else {
+				ArcaneArchives.logger.error("WARNING! Unable to handle client-side Tile packet due to invalid or missing tile entity.", new IllegalArgumentException());
+			}
+		}
+
+		@Nullable
+		@SideOnly(Side.CLIENT)
+		default V getTile (T message, MessageContext ctx) {
+			Minecraft mc = Minecraft.getMinecraft();
+			World world = mc.world;
+
+			BlockPos pos = message.getPos();
+			int dimension = message.getDimension();
+			if (message.getPos() == null || dimension == -9999) return null;
+
+			if (world.provider.getDimension() != dimension) return null;
+
+			TileEntity te = world.getTileEntity(pos);
+			if (te == null) return null;
+
+			try {
+				return (V) te;
+			} catch (ClassCastException exception) {
+				ArcaneArchives.logger.error("Attempted to cast to an invalid tile entity: " + te.getClass(), new IllegalArgumentException());
+				return null;
+			}
+		}
+
+		@SideOnly(Side.CLIENT)
+		void processMessage (T message, MessageContext ctx, @Nullable V tile);
 	}
 
 }

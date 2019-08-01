@@ -42,6 +42,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 	public void unsetDisplayStack () {
 		ArcaneArchives.logger.debug("Unset displayStack on " + describe());
 		this.displayStack = ItemStack.EMPTY;
+		this.markDirty();
 	}
 
 	public void setDisplayStack (ItemStack newStack) {
@@ -51,6 +52,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 			ArcaneArchives.logger.debug("Set displayStack to " + newStack.toString() + " on " + describe());
 		}
 		this.displayStack = newStack;
+		this.markDirty();
 	}
 
 	@Override
@@ -61,6 +63,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 	public void unsetChestName () {
 		ArcaneArchives.logger.debug("Unset chest name on " + describe());
 		this.chestName = "";
+		this.markDirty();
 	}
 
 	public void setChestName (String newName) {
@@ -71,6 +74,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 		}
 
 		this.chestName = newName;
+		this.markDirty();
 	}
 
 

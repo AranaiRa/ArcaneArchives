@@ -1,13 +1,15 @@
 package com.aranaira.arcanearchives.network;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.inventory.ContainerRadiantChest;
 import com.aranaira.arcanearchives.network.Handlers.ServerHandler;
+import com.aranaira.arcanearchives.network.Handlers.TileHandlerServer;
+import com.aranaira.arcanearchives.network.Messages.TileMessage;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.NetworkUtils;
-import com.aranaira.arcanearchives.util.WorldUtil;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,6 +18,7 @@ import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.SPacketConfirmTransaction;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.client.FMLClientHandler;
@@ -30,45 +33,173 @@ import java.io.IOException;
 import java.util.UUID;
 
 public class PacketRadiantChest {
-	public static class SetName implements IMessage {
-
-		private BlockPos pos;
+	public static class SetName extends TileMessage {
 		private String name;
-		private int dimension;
 
 		@SuppressWarnings("unused")
 		public SetName () {
 		}
 
 		public SetName (BlockPos pos, String name, int dimensionID) {
-			this.pos = pos;
+			super(pos, dimensionID);
 			this.name = (name == null) ? "" : name;
-			dimension = dimensionID;
 		}
 
 		@Override
 		public void fromBytes (ByteBuf buf) {
+			super.fromBytes(buf);
 			name = ByteBufUtils.readUTF8String(buf);
-			pos = BlockPos.fromLong(buf.readLong());
-			dimension = buf.readInt();
 		}
 
 		@Override
 		public void toBytes (ByteBuf buf) {
+			super.toBytes(buf);
 			ByteBufUtils.writeUTF8String(buf, name);
-			buf.writeLong(pos.toLong());
-			buf.writeInt(dimension);
 		}
 
-		public static class Handler implements ServerHandler<SetName> {
+		public static class Handler implements TileHandlerServer<SetName, RadiantChestTileEntity> {
 			@Override
-			public void processMessage (SetName message, MessageContext ctx) {
-				RadiantChestTileEntity te = WorldUtil.getTileEntity(RadiantChestTileEntity.class, message.dimension, message.pos);
-				if (te != null) {
-					te.setChestName(message.name);
-					te.markDirty();
-					te.defaultServerSideUpdate();
+			public void processMessage (SetName message, MessageContext ctx, RadiantChestTileEntity tile) {
+				tile.setChestName(message.name);
+				SyncChestName packet = new SyncChestName(tile.getPos(), tile.dimension, tile.getChestName());
+				Networking.sendToAllTracking(packet, tile);
+			}
+		}
+	}
+
+	public static class SetItemAndFacing extends TileMessage {
+		private ItemStack stack;
+		private EnumFacing facing;
+
+		@SuppressWarnings("unused")
+		public SetItemAndFacing () {
+		}
+
+		public SetItemAndFacing (BlockPos pos, int dimension, ItemStack stack, EnumFacing facing) {
+			super(pos, dimension);
+			this.stack = stack;
+			this.facing = facing;
+		}
+
+		@Override
+		public void fromBytes (ByteBuf buf) {
+			super.fromBytes(buf);
+			this.stack = ByteBufUtils.readItemStack(buf);
+			this.facing = EnumFacing.byIndex(buf.readInt());
+		}
+
+		@Override
+		public void toBytes (ByteBuf buf) {
+			super.toBytes(buf);
+			ByteBufUtils.writeItemStack(buf, this.stack);
+			buf.writeInt(this.facing.ordinal());
+		}
+
+		public static class Handler implements TileHandlerServer<SetItemAndFacing, RadiantChestTileEntity> {
+			@Override
+			public void processMessage (SetItemAndFacing message, MessageContext ctx, RadiantChestTileEntity tile) {
+				if (message.stack.isEmpty()) {
+					ArcaneArchives.logger.debug("Incoming packet for tile entity in " + tile.dimension + " at " + tile.getPos().toString() + " had an empty itemstack for display.");
 				}
+				tile.setDisplay(message.stack, message.facing);
+				SyncChestDisplay packet = new SyncChestDisplay(tile.getPos(), tile.dimension, tile.getDisplayStack(), tile.getDisplayFacing());
+				Networking.sendToAllTracking(packet, tile);
+			}
+		}
+	}
+
+	public static class UnsetItem extends TileMessage {
+
+		@SuppressWarnings("unused")
+		public UnsetItem () {
+		}
+
+		public UnsetItem (BlockPos pos, int dimension) {
+			super(pos, dimension);
+		}
+
+		public static class Handler implements TileHandlerServer<UnsetItem, RadiantChestTileEntity> {
+			@Override
+			public void processMessage (UnsetItem message, MessageContext ctx, RadiantChestTileEntity tile) {
+				tile.unsetDisplayStack();
+				SyncChestDisplay packet = new SyncChestDisplay(tile.getPos(), tile.dimension, tile.getDisplayStack(), tile.getDisplayFacing());
+				Networking.sendToAllTracking(packet, tile);
+			}
+		}
+	}
+
+	public static class SyncChestName extends TileMessage {
+		private String chestName;
+
+		public SyncChestName () {
+		}
+
+		public SyncChestName (BlockPos pos, int dimension, String chestName) {
+			super(pos, dimension);
+			this.chestName = chestName;
+		}
+
+		@Override
+		public void fromBytes (ByteBuf buf) {
+			super.fromBytes(buf);
+			this.chestName = ByteBufUtils.readUTF8String(buf);
+		}
+
+		@Override
+		public void toBytes (ByteBuf buf) {
+			super.toBytes(buf);
+			ByteBufUtils.writeUTF8String(buf, this.chestName);
+		}
+
+		public static class Handler implements TileHandlerServer<SyncChestName, RadiantChestTileEntity> {
+			@Override
+			@SideOnly(Side.CLIENT)
+			public void processMessage (SyncChestName message, MessageContext ctx, RadiantChestTileEntity tile) {
+				if (message.chestName.isEmpty()) {
+					ArcaneArchives.logger.debug("Incoming packet for tile entity in " + tile.dimension + " at " + tile.getPos().toString() + " had an empty chest name.");
+				}
+				tile.setChestName(message.chestName);
+				SyncChestName packet = new SyncChestName(tile.getPos(), tile.dimension, tile.getChestName());
+				Networking.sendToAllTracking(packet, tile);
+			}
+		}
+	}
+
+	public static class SyncChestDisplay extends TileMessage {
+		private ItemStack stack;
+		private EnumFacing facing;
+
+		public SyncChestDisplay () {
+		}
+
+		public SyncChestDisplay (BlockPos pos, int dimension, ItemStack stack, EnumFacing facing) {
+			super(pos, dimension);
+			this.stack = stack;
+			this.facing = facing;
+		}
+
+		@Override
+		public void fromBytes (ByteBuf buf) {
+			super.fromBytes(buf);
+			this.stack = ByteBufUtils.readItemStack(buf);
+			this.facing = EnumFacing.byIndex(buf.readInt());
+		}
+
+		@Override
+		public void toBytes (ByteBuf buf) {
+			super.toBytes(buf);
+			ByteBufUtils.writeItemStack(buf, this.stack);
+			buf.writeInt(this.facing.ordinal());
+		}
+
+		public static class Handler implements TileHandlerServer<SyncChestDisplay, RadiantChestTileEntity> {
+			@Override
+			@SideOnly(Side.CLIENT)
+			public void processMessage (SyncChestDisplay message, MessageContext ctx, RadiantChestTileEntity tile) {
+				if (message.stack.isEmpty()) {
+					ArcaneArchives.logger.debug("Incoming packet for tile entity in " + tile.dimension + " at " + tile.getPos().toString() + " had an empty itemstack for display.");
+				}
+				tile.setDisplay(message.stack, message.facing);
 			}
 		}
 	}

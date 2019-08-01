@@ -7,6 +7,9 @@ import com.aranaira.arcanearchives.client.render.LineHandler;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.init.ItemRegistry;
+import com.aranaira.arcanearchives.network.Networking;
+import com.aranaira.arcanearchives.network.PacketRadiantChest.SetItemAndFacing;
+import com.aranaira.arcanearchives.network.PacketRadiantChest.UnsetItem;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.DropUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
@@ -64,10 +67,6 @@ public class RadiantChest extends BlockTemplate {
 	public boolean onBlockActivated (World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		LineHandler.removeLine(pos, playerIn.dimension);
 
-		if (worldIn.isRemote) {
-			return true;
-		}
-
 		ItemStack mainHand = playerIn.getHeldItemMainhand();
 		ItemStack offHand = playerIn.getHeldItemOffhand();
 		ItemStack displayStack = ItemStack.EMPTY;
@@ -84,19 +83,17 @@ public class RadiantChest extends BlockTemplate {
 			clearDisplayed = true;
 		}
 
+		int dimension = worldIn.provider.getDimension();
+
 		if (!displayStack.isEmpty() || clearDisplayed) {
-			RadiantChestTileEntity te = WorldUtil.getTileEntity(RadiantChestTileEntity.class, worldIn, pos);
-			if (te != null) {
-				String side = "[" + ((worldIn.isRemote) ? "CLIENT" : "SERVER") + "] ";
-				if (!displayStack.isEmpty()) {
-					te.setDisplay(displayStack, facing);
-					ArcaneArchives.logger.debug(side + "Set display stack at " + pos.toString() + " to " + displayStack.toString());
-				} else {
-					te.unsetDisplayStack();
-					ArcaneArchives.logger.debug(side + "Set display stack at " + pos.toString() + " to empty");
+			if (worldIn.isRemote) {
+				if (clearDisplayed) {
+					UnsetItem packet = new UnsetItem(pos, dimension);
+					Networking.CHANNEL.sendToServer(packet);
+				} else if (!displayStack.isEmpty()) {
+					SetItemAndFacing packet = new SetItemAndFacing(pos, dimension, displayStack, facing);
+					Networking.CHANNEL.sendToServer(packet);
 				}
-				te.markDirty();
-				te.defaultServerSideUpdate();
 			}
 		} else {
 			playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.RADIANT_CHEST, worldIn, pos.getX(), pos.getY(), pos.getZ());
