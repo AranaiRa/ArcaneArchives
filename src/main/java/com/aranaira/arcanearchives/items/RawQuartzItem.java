@@ -1,8 +1,10 @@
 package com.aranaira.arcanearchives.items;
 
+import com.aranaira.arcanearchives.blocks.RadiantCraftingTable;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
+import com.aranaira.arcanearchives.tileentities.RadiantCraftingTableTileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
@@ -105,6 +107,10 @@ public class RawQuartzItem extends ItemTemplate {
 			IBlockState iblockstate = BlockRegistry.RADIANT_CRAFTING_TABLE.getDefaultState();
 			world.setBlockState(pos, iblockstate);
 			itemstack.shrink(1);
+			RadiantCraftingTableTileEntity te = WorldUtil.getTileEntity(RadiantCraftingTableTileEntity.class, world, pos);
+			if (te != null) {
+				te.setNetworkId(player.getUniqueID());
+			}
 		}
 
 		return EnumActionResult.SUCCESS;
