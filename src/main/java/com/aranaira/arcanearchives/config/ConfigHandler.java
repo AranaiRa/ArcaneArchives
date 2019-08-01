@@ -154,6 +154,10 @@ public class ConfigHandler {
 		@Config.Comment("Synchronise the currently searched item in JEI to the Manifest when opening for the first time, and then synchronise changes to the text field back into JEI. [Requires JEI installed]")
 		@Config.Name("JEI Synchronise")
 		public boolean jeiSynchronise = true;
+
+		@Config.Comment("Whether or not the previous search term persists between 'sessions' (i.e., each time you open the manifest, your previous search term is filled in for you)")
+		@Config.Name("Search Term Persistence")
+		public boolean searchTermPersistence = false;
 	}
 
 	@Config.LangKey("arcanearchives.config.arsenal")

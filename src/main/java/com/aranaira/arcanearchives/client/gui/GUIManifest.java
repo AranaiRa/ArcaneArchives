@@ -144,13 +144,16 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 	public void initGui () {
 		super.initGui();
 
-		String searchText = this.container.getSearchString();
-		if (searchText == null) {
-			searchText = "";
-		}
-
 		searchBox = new ManifestSearchField(this, 1, fontRenderer, guiLeft + mTextLeftOffset, guiTop + mTextTopOffset, mTextWidth, mTextHeight);
-		searchBox.setText(searchText);
+		if (ConfigHandler.ManifestConfig.searchTermPersistence) {
+			String searchText = this.container.getSearchString();
+			if (searchText == null) {
+				searchText = "";
+			}
+			searchBox.setText(searchText);
+		} else {
+			container.setSearchString("");
+		}
 		searchBox.setGuiResponder(this);
 		searchBox.setEnableBackgroundDrawing(false);
 
