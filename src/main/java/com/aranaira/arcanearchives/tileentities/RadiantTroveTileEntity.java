@@ -463,6 +463,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 		public void setCount (int count) {
 			this.count = count;
 			markDirty();
+			defaultServerSideUpdate();
 		}
 
 		@Override
@@ -475,6 +476,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 			this.reference = reference.copy();
 			this.reference.setCount(1);
 			markDirty();
+			defaultServerSideUpdate();
 			update();
 		}
 
