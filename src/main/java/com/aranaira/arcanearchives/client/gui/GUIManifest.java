@@ -14,12 +14,16 @@ import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.integration.jei.JEIPlugin;
 import com.aranaira.arcanearchives.inventory.ContainerManifest;
 import com.aranaira.arcanearchives.types.lists.ManifestList;
+import com.aranaira.arcanearchives.util.ColorUtils;
+import com.aranaira.arcanearchives.util.ColorUtils.Color;
+import com.aranaira.arcanearchives.util.ManifestTrackingUtils;
 import com.aranaira.arcanearchives.util.ManifestUtils.CollatedEntry;
 import com.aranaira.arcanearchives.util.ManifestUtils.EntryDescriptor;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiPageButtonList;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -255,6 +259,17 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 	@Override
 	public void drawSlot (Slot slot) {
 		if (slot.isEnabled()) {
+			ItemStack stack = slot.getStack();
+			if (!stack.isEmpty()) {
+				if (ManifestTrackingUtils.matches(stack)) {
+					GlStateManager.disableDepth();
+					long worldTime = mc.player.world.getWorldTime();
+					Color c = ColorUtils.getColorFromTime(worldTime);
+					GuiContainer.drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, c.toInteger());
+					GlStateManager.enableDepth();
+				}
+			}
+
 			super.drawSlot(slot);
 
 			if (slot instanceof CustomCountSlot) {

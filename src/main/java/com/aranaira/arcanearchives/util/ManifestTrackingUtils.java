@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.util;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.client.render.LineHandler;
 import com.aranaira.arcanearchives.types.iterators.ListConcatIterable;
 import com.aranaira.arcanearchives.util.ManifestUtils.CollatedEntry;
 import com.aranaira.arcanearchives.util.ManifestUtils.EntryDescriptor;

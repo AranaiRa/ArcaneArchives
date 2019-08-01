@@ -7,6 +7,7 @@ import com.aranaira.arcanearchives.client.render.LineHandler;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
+import com.aranaira.arcanearchives.util.ManifestTrackingUtils;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -46,7 +47,7 @@ public class ManifestItem extends ItemTemplate {
 
 	public static void openManifest (World worldIn, EntityPlayer playerIn) {
 		if (playerIn.isSneaking()) {
-			LineHandler.clearChests(playerIn.dimension);
+			ManifestTrackingUtils.clear();
 		} else {
 			ClientNetwork network = DataHelper.getClientNetwork(playerIn.getUniqueID());
 			network.manifestItems.clear();
