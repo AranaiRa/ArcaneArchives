@@ -5,6 +5,7 @@ import com.aranaira.arcanearchives.client.gui.framework.IScrollabe;
 import com.aranaira.arcanearchives.client.gui.framework.IScrollableContainer;
 import com.aranaira.arcanearchives.client.gui.framework.ScrollEventManager;
 import com.aranaira.arcanearchives.client.render.LineHandler;
+import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
@@ -187,7 +188,7 @@ public class ContainerManifest extends Container implements IScrollableContainer
 			ManifestTrackingUtils.remove(entry);
 		}
 
-		if (!GuiScreen.isShiftKeyDown() && dragType == 0) {
+		if ((ConfigHandler.ManifestConfig.holdShift && !GuiScreen.isShiftKeyDown() && dragType == 0) || (!ConfigHandler.ManifestConfig.holdShift && GuiScreen.isShiftKeyDown() && dragType == 0)) {
 			Minecraft mc = Minecraft.getMinecraft();
 			mc.player.closeScreen();
 		}

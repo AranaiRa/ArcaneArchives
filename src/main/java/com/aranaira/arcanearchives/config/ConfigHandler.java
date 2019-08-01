@@ -141,6 +141,10 @@ public class ConfigHandler {
 		@Config.Comment("Whether or not the previous search term persists between 'sessions' (i.e., each time you open the manifest, your previous search term is filled in for you)")
 		@Config.Name("Search Term Persistence")
 		public boolean searchTermPersistence = false;
+
+		@Config.Comment("Set to true to require holding shift to *close* the manifest after clicking on an item. Otherwise, holding shift will keep the manifest open.")
+		@Config.Name("Hold Shift To Keep Manifest Open")
+		public boolean holdShift = true;
 	}
 
 	@Config.LangKey("arcanearchives.config.arsenal")

@@ -65,7 +65,7 @@ public class ManifestTrackingUtils {
 	public static void remove (ItemStack stack, int dimension, BlockPos pos) {
 		List<ItemStack> dim = getDimension(dimension).getOrDefault(pos.toLong(), null);
 		if (dim != null) {
-			dim.remove(stack);
+			dim.removeIf(t -> ItemUtils.areStacksEqualIgnoreSize(t, stack));
 		}
 		allTracked = null;
 		positionsByDimension = null;
@@ -79,7 +79,7 @@ public class ManifestTrackingUtils {
 		if (positionsByDimension == null) {
 			positionsByDimension = new Int2ObjectOpenHashMap<>();
 			for (Entry<Long2ObjectOpenHashMap<List<ItemStack>>> entry : reference.int2ObjectEntrySet()) {
-				Set<Vec3d> positions = entry.getValue().keySet().stream().map(MathUtils::vec3dFromLong).collect(Collectors.toSet());
+				Set<Vec3d> positions = entry.getValue().entrySet().stream().filter(t -> !t.getValue().isEmpty()).map(b -> MathUtils.vec3dFromLong(b.getKey())).collect(Collectors.toSet());
 				positionsByDimension.put(entry.getIntKey(), positions);
 			}
 		}
