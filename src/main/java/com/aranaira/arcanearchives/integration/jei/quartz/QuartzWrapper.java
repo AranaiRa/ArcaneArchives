@@ -1,7 +1,6 @@
 package com.aranaira.arcanearchives.integration.jei.quartz;
 
 import com.aranaira.arcanearchives.config.ConfigHandler;
-import com.aranaira.arcanearchives.config.ConfigHandler.ServerSideConfig;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;

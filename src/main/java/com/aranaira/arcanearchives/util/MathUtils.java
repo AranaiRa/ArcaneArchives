@@ -1,7 +1,5 @@
 package com.aranaira.arcanearchives.util;
 
-import com.aranaira.arcanearchives.client.render.LineHandler;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 

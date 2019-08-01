@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.client.gui.controls;
 
-import com.aranaira.arcanearchives.config.ConfigHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
