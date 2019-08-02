@@ -62,9 +62,9 @@ public class TransferstoneItem extends ArcaneGemItem {
 	public EnumActionResult onItemUse (EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote) {
 			if (player.isSneaking()) {
-				ArcaneArchives.logger.info("sneaking");
+				//ArcaneArchives.logger.info("sneaking");
 				if (world.getBlockState(pos).getBlock() == BlockRegistry.RADIANT_TROVE) {
-					ArcaneArchives.logger.info("trove detected");
+					//ArcaneArchives.logger.info("trove detected");
 					setLinkedTrove(player.getHeldItemMainhand(), pos, player.dimension);
 				}
 			}

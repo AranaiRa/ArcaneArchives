@@ -47,6 +47,7 @@ public class GCTRecipe implements IGCTRecipe {
 	public GCTRecipe (ResourceLocation name, @Nonnull ItemStack result, Object... recipe) {
 		this.result = result.copy();
 		this.name = name;
+		int i = 0;
 		for (Object stack : recipe) {
 			if (stack instanceof ItemStack) {
 				ingredients.add(new IngredientStack((ItemStack) stack));
@@ -61,8 +62,9 @@ public class GCTRecipe implements IGCTRecipe {
 			} else if (stack instanceof Block) {
 				ingredients.add(new IngredientStack((Block) stack));
 			} else {
-				ArcaneArchives.logger.warn(String.format("Unknown ingredient type for recipe, skipped: %s", stack.toString()));
+				ArcaneArchives.logger.warn(String.format("Unknown ingredient type for recipe %s, skipped: ingredient %d, %s", name.toString(), i, stack.toString()));
 			}
+			i++;
 		}
 	}
 

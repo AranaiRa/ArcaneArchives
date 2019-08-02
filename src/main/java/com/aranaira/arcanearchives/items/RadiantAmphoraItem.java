@@ -244,7 +244,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 					try {
 						world = getClientWorld();
 					} catch (NoClassDefFoundError e) {
-						ArcaneArchives.logger.info("[Amphora] Wasn't able to find a server-side world but client-side method results in Minecraft 'class not found' error.");
+						ArcaneArchives.logger.error("[Amphora] Wasn't able to find a server-side world but client-side method results in Minecraft 'class not found' error. How could this happen!", new IllegalArgumentException());
 					}
 				}
 				if (world != null) {

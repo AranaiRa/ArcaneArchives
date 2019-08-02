@@ -65,9 +65,9 @@ public class CleansegleamItem extends ArcaneGemItem {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick (World world, EntityPlayer player, EnumHand hand) {
 		if (!world.isRemote) {
-			for (String s : PotionCoreEffects.POTIONS.keySet()) {
+			/*for (String s : PotionCoreEffects.POTIONS.keySet()) {
 				ArcaneArchives.logger.info("\"" + s + "\"");
-			}
+			}*/
 			AvailableGemsHandler handler = GemUtil.getHeldGem(player, hand);
 			if (handler.getHeld() != null) {
 				if (GemUtil.getCharge(handler.getHeld()) == 0) {
@@ -152,7 +152,7 @@ public class CleansegleamItem extends ArcaneGemItem {
 					cost = 1;
 				}
 
-				ArcaneArchives.logger.info("should have added antidote");
+				//ArcaneArchives.logger.info("should have added antidote");
 			}
 			if (!hasPurity && hasMatterUpgrade) {
 				Potion purity = PotionCoreEffects.POTIONS.get("purity");

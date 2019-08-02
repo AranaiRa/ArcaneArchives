@@ -56,7 +56,7 @@ public class SwitchgleamItem extends ArcaneGemItem {
 					if (ray.entityHit == null) {
 						continue;
 					} else if (ray.entityHit instanceof EntityLivingBase) {
-						ArcaneArchives.logger.info("pitch:" + player.rotationPitch + "    yaw:" + player.rotationYaw);
+						//ArcaneArchives.logger.info("pitch:" + player.rotationPitch + "    yaw:" + player.rotationYaw);
 						EntityLivingBase target = (EntityLivingBase) ray.entityHit;
 						Vec3d tPos = new Vec3d(target.posX, target.posY, target.posZ);
 						Vec3d pPos = new Vec3d(player.posX, player.posY, player.posZ);
