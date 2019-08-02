@@ -98,6 +98,7 @@ tile.matrix_repository.name=Repository Matrix
 tile.matrix_storage.name=Storage Matrix
 tile.matrix_reservoir.name=Reservoir Matrix
 tile.matrix_distillate.name=Distillate Matrix
+tile.celestial_lotus_engine.name=Celestial Lotus Engine
 
 tile.lectern_manifest.name=Manifest Lectern
 tile.dominion_crystal.name=Dominion Crystal
@@ -197,6 +198,7 @@ arcanearchives.tooltip.trove.contains=Contains: %d/%d
 arcanearchives.tooltip.trove.voiding=Voids excess items.
 
 arcanearchives.tooltip.device.brazier=Items tossed in are sent to Radiant Storage. Troves are filled first, then Chests.
+arcanearchives.tooltip.device.celestial_lotus_engine=Generates infinite Immanence. Creative only.
 arcanearchives.tooltip.device.radiant_chest=Storage. Used to contain items.
 arcanearchives.tooltip.device.radiant_tank=Storage. Used to contain fluids.
 arcanearchives.tooltip.device.radiant_resonator=Generates Raw Radiant Quartz over time if the block above itself is open.

@@ -1,7 +1,7 @@
-package com.aranaira.arcanearchives.blocks.unused;
+package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
-import com.aranaira.arcanearchives.tileentities.unused.MatrixCoreTileEntity;
+import com.aranaira.arcanearchives.tileentities.MatrixCoreTileEntity;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

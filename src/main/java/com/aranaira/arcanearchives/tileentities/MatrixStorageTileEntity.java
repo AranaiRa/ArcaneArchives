@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tileentities.unused;
+package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import mcp.MethodsReturnNonnullByDefault;

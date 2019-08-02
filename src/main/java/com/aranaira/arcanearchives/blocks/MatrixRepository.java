@@ -1,7 +1,7 @@
-package com.aranaira.arcanearchives.blocks.unused;
+package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
-import com.aranaira.arcanearchives.tileentities.unused.MatrixStorageTileEntity;
+import com.aranaira.arcanearchives.tileentities.MatrixRepositoryTileEntity;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -17,13 +17,15 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
-public class MatrixStorage extends BlockTemplate {
+@ParametersAreNonnullByDefault
+public class MatrixRepository extends BlockTemplate {
 
-	public static final String name = "matrix_storage";
+	public static final String name = "matrix_repository";
 
-	public MatrixStorage () {
+	public MatrixRepository () {
 		super(name, Material.GLASS);
 		setLightLevel(16 / 16f);
 		setSize(1, 3, 1);
@@ -45,7 +47,7 @@ public class MatrixStorage extends BlockTemplate {
 		return false;
 		/*RadiantChest.RemoveChestLines(pos);
 
-		playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.MATRIX_STORAGE, worldIn, pos.getX(), pos.getY(), pos.getZ());
+		playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.MATRIX_REPOSITORY, worldIn, pos.getX(), pos.getY(), pos.getZ());
 
 		return true;*/
 	}
@@ -64,6 +66,6 @@ public class MatrixStorage extends BlockTemplate {
 
 	@Override
 	public TileEntity createTileEntity (World world, IBlockState state) {
-		return new MatrixStorageTileEntity();
+		return new MatrixRepositoryTileEntity();
 	}
 }

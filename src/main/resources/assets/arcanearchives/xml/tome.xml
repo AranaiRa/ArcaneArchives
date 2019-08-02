@@ -112,6 +112,8 @@
             <p indent="16"><stack item="arcanearchives:radiant_lantern"/> <link ref="Blocks:RadiantLantern">Radiant Lantern</link></p>
             <p indent="16"><stack item="arcanearchives:radiant_tank"/> <link ref="Blocks:RadiantTank">Radiant Tank</link></p>
             <p indent="16"><stack item="arcanearchives:radiant_trove"/> <link ref="Blocks:RadiantTrove">Radiant Trove</link></p>
+            <space height="8"/>
+            <p><stack item="arcanearchives:celestial_lotus_engine"/> <link ref="Blocks:CelestialLotusEngine">Celestial Lotus Engine</link></p>
         </section>
         <section id="Items">
             <page_title_shorter>
@@ -638,6 +640,23 @@
                     <stack item="arcanearchives:radiant_trove"/>
                 </recipe.result>
             </recipe>
+        </section>
+
+
+
+        <section id="CelestialLotusEngine">
+            <page_title_shorter>
+                <title>Celestial Lotus Engine</title>
+            </page_title_shorter>
+            <p align="center"><stack item="arcanearchives:celestial_lotus_engine" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                A Celestial Lotus Engine supplies infinite <link ref="Concepts:Immanence">Immanence</link>. Only one can be part of any individual <link ref="Concepts:Networks">Network</link>.
+            </p>
+            <horizontal_rule/>
+            <p>
+                The Celestial Lotus Engine is not craftable by default, and is only obtainable in creative mode.
+            </p>
         </section>
     </chapter>
 
@@ -2095,6 +2114,15 @@
             <horizontal_rule/>
             <p condition="ml_thaumcraft"><stack item="thaumcraft:thaumonomicon"/> <link ref="Concepts:Thaumcraft">Thaumcraft Compatibility</link></p>
             <p><stack item="arcanearchives:writ_expulsion"/> <link ref="Items:WritExpulsion">Writ of Expulsion</link></p>
+        </section>
+        <section>
+            <p bold="true">
+                ENTRIES TO ADD TO THE INDEX
+            </p>
+            <horizontal_rule/>
+            <p>
+                Celestial Lotus Engine
+            </p>
         </section>
     </chapter>
 </book>

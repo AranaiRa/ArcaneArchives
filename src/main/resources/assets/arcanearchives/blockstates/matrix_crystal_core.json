@@ -15,20 +15,30 @@
         "inventory": [{
             
             "transform": {
-                    "firstperson": {
-                        "translation": [0, 0, 0],
-                        "rotation": [ { "y": 45}, {"x": 0}, {"z": 0} ],
-                        "scale": 0.25
+                    "firstperson_righthand": {
+                      "translation": [0.1, -0.05, 0.23],
+                      "rotation": [ { "y": -75}, {"x": 0}, {"z": 0} ],
+                      "scale": 0.25
                     },
-                    "thirdperson": {
-                        "translation": [0.02, 0.05, -0.05],
-                        "rotation": [ { "y": 0}, {"x": 90}, {"z": 0} ],
-                        "scale": 0.25
+                    "firstperson_lefthand": {
+                      "translation": [0.25, -0.05, 0.11],
+                      "rotation": [ { "y": -70}, {"x": 0}, {"z": 0} ],
+                      "scale": 0.25
+                    },
+                    "thirdperson_righthand": {
+                      "translation": [0.0, 0.15, 0.0],
+                      "rotation": [ { "y": 0}, {"x": 30}, {"z": 0} ],
+                      "scale": 0.25
+                    },
+                    "thirdperson_lefthand": {
+                      "translation": [0.0, 0.15, 0.0],
+                      "rotation": [ { "y": 0}, {"x": 30}, {"z": 0} ],
+                      "scale": 0.25
                     },
                     "gui": {
-                        "translation": [-0.04, -.2, 0],
-                        "rotation": [ { "y": 45}, {"x": 30}, {"z": 0} ],
-                        "scale": 0.22
+                        "translation": [0.0, -0.20, 0],
+                        "rotation": [ { "y": 45}, {"x": 20}, {"z": 20} ],
+                        "scale": 0.21
                     },
                     "ground": {
                         "translation": [0, 0, 0],

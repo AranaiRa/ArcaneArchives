@@ -1,6 +1,6 @@
-package com.aranaira.arcanearchives.blocks.unused;
+package com.aranaira.arcanearchives.blocks;
 
-import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
+import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -13,14 +13,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class MatrixReservoir extends BlockTemplate {
+public class MatrixDistillate extends BlockDirectionalTemplate {
+	public static final String name = "matrix_distillate";
 
-	public static final String name = "matrix_reservoir";
-
-	public MatrixReservoir () {
+	public MatrixDistillate () {
 		super(name, Material.GLASS);
 		setLightLevel(16 / 16f);
-		setSize(1, 3, 1);
+		setSize(3, 3, 1);
 	}
 
 	@Override
