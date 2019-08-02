@@ -41,7 +41,7 @@ public class CommandBrazier extends CommandBase {
 
 	@Override
 	public int getRequiredPermissionLevel () {
-		return 0;
+		return 2;
 	}
 
 	@Override
