@@ -1,22 +1,64 @@
-itemGroup.arcanearchives=Arquivos Arcanos
+﻿itemGroup.arcanearchives=Arquivos Arcanos
 
-item.item_rawquartz.name=Quartzo Radiante Bruto
-item.item_cutquartz.name=Quartzo Radiante Lapidado
-item.item_geomancypendulum.name=Pêndulo de Geomancia
-item.item_geomanticmap.name=Mapa Geomântico
-item.item_manifest.name=Manifesto
-item.item_radiantbucket.name=Balde Radiante
-item.item_scepterabduction.name=Cetro da Abdução
-item.item_sceptermanipulation.name=Cetro da Manipulação
-item.item_sceptertranslocation.name=Cetro da Translocação
-item.item_tomeofarcana.name=Tomo Arcano
-item.item_tomeofrequisition.name=Tomo da Requisição
+item.raw_quartz.name=Quartzo Radiante Bruto
+item.shaped_quartz.name=Quartzo Radiante Lapidado
 
-item.item_component_containmentfield.name=Campo de Contenção
-item.item_component_materialinterface.name=Interface de Materiais
-item.item_component_matrixbrace.name=Suporte da Matriz
-item.item_component_radiantdust.name=Pó Radiante
-item.item_component_scintillatinginlay.name=Embutimento Cintilante
+item.containment_field.name=Campo de Contenção
+	item.devouring_charm.name=Devouring Charm
+	item.gemsocket.name=Gem Socket
+item.geomancy_pendulum.name=Pêndulo de Geomancia
+item.geomantic_map.name=Mapa Geomântico
+item.manifest.name=Manifesto
+item.material_interface.name=Interface de Materiais
+item.matrix_brace.name=Suporte da Matriz
+	item.radiant_amphora.name=Radiant Amphora
+item.radiant_dust.name=Pó Radiante
+item.scepter_abduction.name=Cetro da Abdução
+item.scepter_manipulation.name=Cetro da Manipulação
+item.scepter_translocation.name=Cetro da Translocação
+	item.scepter_revelation.name=Scepter of Revelation
+item.scintillating_inlay.name=Detalhe Cintilante
+item.tome_arcana.name=Tomo Arcano
+item.tome_requisition.name=Tomo da Requisição
+	item.letter_invitation.name=Letter of Invitation
+	item.letter_resignation.name=Letter of Resignation
+	item.writ_expulsion.name=Writ of Expulsion
+
+	item.fabrial.name=Fabrial
+	item.slaughtergleam.name=Slaughtergleam
+	item.murdergleam.name=Murdergleam
+	item.agegleam.name=Agegleam
+	item.cleansegleam.name=Cleansegleam
+	item.switchgleam.name=Switchgleam
+	item.salvegleam.name=Salvegleam
+	item.homingstone.name=Homingstone
+	item.munchstone.name=Munchstone
+	item.transferstone.name=Transferstone
+	item.orderstone.name=Orderstone
+	item.glyphspindle.name=Glyphspindle
+	item.mindspindle.name=Mindspindle
+	item.elixirspindle.name=Elixirspindle
+item.mountaintear.name=Lágrima da Montanha
+item.rivertear.name=Lágrima do Rio
+	item.parchtear.name=Parchtear
+	item.pyreway.name=Pyreway
+	item.phoenixway.name=Phoenixway
+	item.stormway.name=Stormway
+	item.earthway.name=Earthway
+	item.nightway.name=Nightway
+
+	item.chromatic_powder.name=Impossibly Colorless Chromatic Powder
+	item.chromatic_powder.red.name=Red Chromatic Powder
+	item.chromatic_powder.orange.name=Orange Chromatic Powder
+	item.chromatic_powder.yellow.name=Yellow Chromatic Powder
+	item.chromatic_powder.green.name=Green Chromatic Powder
+	item.chromatic_powder.cyan.name=Cyan Chromatic Powder
+	item.chromatic_powder.blue.name=Blue Chromatic Powder
+	item.chromatic_powder.purple.name=Purple Chromatic Powder
+	item.chromatic_powder.pink.name=Pink Chromatic Powder
+	item.chromatic_powder.black.name=Black Chromatic Powder
+	item.chromatic_powder.white.name=White Chromatic Powder
+	item.full_spectrum_chromatic_powder.name=Full-Spectrum Chromatic Powder
 
 item.item_spiritorb.empty.name=Orbe Planetária Sem Aspecto
 item.item_spiritorb.crown_mote.name=Orbe da Coroa
@@ -35,14 +77,21 @@ item.item_spiritorb.time_mote.name=Orbe do Tempo
 item.item_spiritorb.time_juve.name=Orbe do Tempo Ancião
 item.item_spiritorb.time_eld.name=Orbe Saturnina do Tempo
 
+	item.debugorb.name=Dhi Bogh's Sphere of Divination
+
 tile.storage_raw_quartz.name=Bloco de Quartzo Radiante Bruto
-tile.storage_cut_quartz.name=Blodo de Quartzo Radiante Lapidado
-tile.raw_quartz.name=Quartzo Radiante Bruto
+tile.storage_shaped_quartz.name=Bloco de Quartzo Radiante Lapidado
+	tile.quartz_sliver.name=Sliver of Light
+tile.raw_quartz_cluster.name=Quartzo Radiante Bruto
 
 tile.radiant_crafting_table.name=Bancada de Trabalho Radiante
 tile.radiant_chest.name=Baú Radiante
 tile.radiant_lantern.name=Lâmpada Radiante
-tile.radiant_resonator.name=Ressoador Radiante
+tile.radiant_resonator.name=Ressonador Radiante
+tile.radiant_trove.name=Caixa de Tesouro Ratiante
+
+	tile.brazier_of_hoarding.name=Brazier of Hoarding
+tile.monitoring_crystal.name=Cristal de Monitoramento
 
 tile.matrix_crystal_core.name=Núcleo de Matriz Cristalino
 tile.matrix_repository.name=Matriz de Repositório
@@ -50,9 +99,11 @@ tile.matrix_storage.name=Matriz de Armazenamento
 tile.matrix_reservoir.name=Matriz de Reservatório
 tile.matrix_distillate.name=Matriz Destilada
 
-tile.accessorblock.name=Acessador
+	tile.lectern_manifest.name=Manifest Lectern
 tile.dominion_crystal.name=Cristal de Domínio
 tile.gemcutters_table.name=Mesa do Ourives
+
+tile.radiant_tank.name=Tanque Radiante
 
 entity.spirit_crown_01.name=Mote Real
 entity.spirit_crown_02.name=Juve Real
@@ -75,16 +126,299 @@ arcanearchives.text.matrixcore.importradiant=Importar Armazenamento Radiante
 arcanearchives.text.matrixstorage.immanencelabel=Imanência
 arcanearchives.text.matrixstorage.storagelabel=Armazenamento Total
 arcanearchives.text.matrixrepository.immanencelabel=Imanência
-arcanearchives.text.matrixrepository.storagelabel=Tipo de Armazenamento
+arcanearchives.text.matrixrepository.storagelabel=Armazenamento pot Tipo
+arcanearchives.text.radiantchest.unnamed_chest=Baú sem Nome
+	arcanearchives.text.brazier.radius=Radius:
+	arcanearchives.text.brazier.unlimited=Unlimited
+	arcanearchives.text.brazier.visualizer=Visualizer
+	arcanearchives.text.brazier.visualizer.enabled=Enabled
+	arcanearchives.text.brazier.visualizer.disabled=Disabled
 
 arcanearchives.error.toomanyplaced=Você só poder ter %d %s!
-arcanearchives.error.notenoughspace=Não há espaço suficiente para posicionar o(a) %s!
+arcanearchives.error.notenoughspace=Não há espaço suficiente para colocar o(a) %s!
+	arcanearchives.error.aboveworld=Placing the %s would exceed the build height limit!
 arcanearchives.error.invaliditemblock=Não é possível colocar um item inválido com um limite de posicionamento mas sem classe de entidade.
+arcanearchives.error.invalidnetwork=Rede inválida. Whoops!
+arcanearchives.error.upgrade_trove_failed=Falha ao melhorar a Caixa de tesouro. Nivel de melhoria atual é: %d/%d.
+arcanearchives.error.upgrade_tank_failed=Falha ao melhorar o tanque. Nivel de melhoria atual é: %d/%d.
+arcanearchives.error.trove_insertion_failed.full=Não cabem mais itens nesta caixa.
+arcanearchives.error.trove_insertion_failed.wrong=Esse item não pode sser colocado nesta caixa.
+arcanearchives.error.monitoring_crystal=Multiplos Cristais de Monitoramento foram encontrados monitorando o mesmo bloco: %d/%d/%d.
+	arcanearchives.error.tankfull=Destination Radiant Tank cannot accept more fluid.
+	arcanearchives.error.tankmissing=Destination Radiant Tank is missing or not loaded.
+
+arcanearchives.warning.sneak_to_upgrade=Agache para aplicar a Interface Material à Caixa e melhora-la.
+arcanearchives.warning.sneak_to_upgrade_tank=Agache para aplicar um Campo de Contenção ao Tanque e melhora-lo.
+
+arcanearchives.success.upgraded_trove=Caixa melhorada para o nível %d/%d.
+arcanearchives.success.upgraded_tank=Tanque melhorado para o nível %d/%d.
 
 arcanearchives.tooltip.notimplemented1=NÃO IMPLEMENTADO
-arcanearchives.tooltip.notimplemented2=Aviso: usar este item pode causar crashes!
-arcanearchives.tooltip.temprecipe1=A receita para este item é temporária.
+arcanearchives.tooltip.notimplemented2=Aviso: usar este item pode crashar o jogo!
+arcanearchives.tooltip.temprecipe1=A receita deste item é temporária.
 arcanearchives.tooltip.temprecipe2=Ela será modificada em uma versão posterior.
-arcanearchives.tooltip.shouldnothave=Este bloco não deveria ser obtido.
+arcanearchives.tooltip.shouldnothave=Este bloco não deveria ser obtível.
+arcanearchives.tooltip.creativeonly=Atualmente este item só está disponível no modo criativo.
+	arcanearchives.tooltip.gemcharge=Charge
+	arcanearchives.tooltip.gemtoggle.active=On
+	arcanearchives.tooltip.gemtoggle.inactive=Off
+	arcanearchives.tooltip.gemupgrade.matter=MATTER
+	arcanearchives.tooltip.gemupgrade.power=POWER
+	arcanearchives.tooltip.gemupgrade.space=SPACE
+	arcanearchives.tooltip.gemupgrade.time=TIME
 
-arcanearchives.tooltip.inanotherdim=O baú está localizado em %s.
+	arcanearchives.tooltip.brazier.routingmode.all1=Items will be routed to
+	arcanearchives.tooltip.brazier.routingmode.all2=any device in your network.
+	arcanearchives.tooltip.brazier.routingmode.mine1=Items will be routed only
+	arcanearchives.tooltip.brazier.routingmode.mine2=to devices you placed personally.
+	arcanearchives.tooltip.brazier.visualizer.show1=Click to display a visualizer for
+	arcanearchives.tooltip.brazier.visualizer.show2=the range this Brazier is operating in.
+	arcanearchives.tooltip.brazier.visualizer.hide=Click to hide the range visualizer.
+	arcanearchives.tooltip.brazier.radius.decrease=Decrease Brazier range by 10.
+	arcanearchives.tooltip.brazier.radius.increase=Increase Brazier range by 10.
+	arcanearchives.tooltip.devouringcharm.flip=Flip the Devouring Charm over.
+arcanearchives.tooltip.manifest.inanotherdim=O baú está localizado em %s.
+arcanearchives.tooltip.manifest.chestsneak=[Aperte shift para localizar baús.]
+arcanearchives.tooltip.manifest.entry=%s at (%d,%d,%d) contcontém %d.
+arcanearchives.tooltip.manifest.andmore=%d Baús Radiantes não listados.
+arcanearchives.tooltip.manifest.clicktoshow=Clicke para desenhar uma linha para baús contentdo esse ítem. Abra baús para remover, ou clicke "%s".
+	arcanearchives.tooltip.manifest.outofrange=[More than your configured max distance of %s blocks away.]
+	arcanearchives.tooltip.radiantchest.routingmode.any1=Braziers of Hoarding can insert
+	arcanearchives.tooltip.radiantchest.routingmode.any2=any item into this Radiant Chest.
+	arcanearchives.tooltip.radiantchest.routingmode.nonewitems1=Braziers of Hoarding can only insert items
+	arcanearchives.tooltip.radiantchest.routingmode.nonewitems2=that this Radiant Chest already contains.
+
+arcanearchives.tooltip.tank.fluid=Fluid: %s
+arcanearchives.tooltip.tank.amount=Amount: %s/%smb
+	arcanearchives.tooltip.amphora.unknown_fluid=unknown fluid
+
+	arcanearchives.tooltip.trove.items=Item: %s
+	arcanearchives.tooltip.trove.contains=Contains: %d/%d
+	arcanearchives.tooltip.trove.voiding=Voids excess items.
+
+	arcanearchives.tooltip.device.brazier=Items tossed in are sent to Radiant Storage. Troves are filled first, then Chests.
+arcanearchives.tooltip.device.radiant_chest=Storage. Usado para conter ítens.
+arcanearchives.tooltip.device.radiant_tank=Storage. Usado para conter flúidos.
+arcanearchives.tooltip.device.radiant_resonator=arcanearchives.tooltip.device.radiantresonator=Gera Quartzo Radiante Bruto ao passar do tempo se o bloco acima de sí estiver livre.
+arcanearchives.tooltip.device.radiant_lantern=Decoração. Uma fonte de luz.
+arcanearchives.tooltip.device.radiant_trove=Storage. Usado para armazenar grandes quantidades de um unico tipo de ítem.
+arcanearchives.tooltip.device.radiant_crafting_table=Estação de trabalho. Itens permanecem em suas posições, tres receitas podem ser salvas para manofatura rápida, e um inventario conectado é visível.
+arcanearchives.tooltip.device.gemcutters_table=Eastação de trabalho. Usada para lapidar o quartzo radiante para formas mais complexas.
+	arcanearchives.tooltip.device.lectern_manifest=Used to view items stored in Radiant storage. Identical function to a Manifest.
+arcanearchives.tooltip.device.monitoring_crystal=Adiciona o inventario conectado ao Deposito Radiante e o prmite ser visualizado com o Manifesto.
+
+arcanearchives.tooltip.item.raw_quartz=Um ingrediente. Também pode ser usado para transformar baús e mesas de trabalho para seus equivalentes radiantes.
+arcanearchives.tooltip.item.shaped_quartz=Um ingrediente.
+	arcanearchives.tooltip.item.containment_field=A crafting ingredient. Can also be used as a second tier upgrade for Radiant Tanks.
+	arcanearchives.tooltip.item.devouring_charm=Voids items and fluids. Can also be used as an optional upgrade to add voiding to Radiant Tanks and Radiant Troves.
+	arcanearchives.tooltip.item.debugorb=Used to debug network problems. Very technical.
+arcanearchives.tooltip.item.letter_invitation=Te permite convidar outro jogador para a sua Rede Arcana.
+	arcanearchives.tooltip.item.letter_invitation.named=An invitation to join the Arcane Network of %s.
+arcanearchives.tooltip.item.letter_resignation=Te permite sair de uma Rede Arcana.
+	arcanearchives.tooltip.item.material_interface=A crafting ingredient. Can also be used as a second tier upgrade for Radiant Troves.
+	arcanearchives.tooltip.item.matrix_brace=A crafting ingredient. Can also be used as a first tier upgrade for Radiant Tanks and Radiant Troves.
+arcanearchives.tooltip.item.manifest=Usado para visualizar ítens no Deposito Radiante.
+	arcanearchives.tooltip.item.quartz_sliver=An alternative to torches. Acquire by smashing Radiant Quartz against stone.
+	arcanearchives.tooltip.item.radiant_amphora=Used to transfer fluids to and from a Radiant Tank or Reservoir Matrix.
+arcanearchives.tooltip.item.radiant_dust=Um ingrediente.
+	arcanearchives.tooltip.item.raw_quartz=Grows on a Radiant Resonator over time. Break to harvest Raw Radiant Quartz. Can be collected with Silk Touch and placed as a decorative item.
+arcanearchives.tooltip.item.scepter_revelation=Inquere informação sobre dispositivos e conteiners. Use agachado.
+arcanearchives.tooltip.item.scepter_manipulation=Modifica as propriedades de certos blocos. Use agachado.
+arcanearchives.tooltip.item.scintillating_inlay=Um ingrediente.
+	arcanearchives.tooltip.item.storage_raw_quartz=A decorative block.
+	arcanearchives.tooltip.item.storage_shaped_quartz=A decorative block. Can also be used as a third tier upgrade for Radiant Tanks and Radiant Troves.
+arcanearchives.tooltip.item.tome_arcana=Fornece documentação do mod.
+	arcanearchives.tooltip.item.writ_expulsion=Allows you to kick a player from your Arcane Network. Rename on an anvil to set the player to kick.
+	arcanearchives.tooltip.item.writ_expulsion.named=A writ to remove %s from your Arcane Network.
+
+	arcanearchives.tooltip.item.chromatic_powder=There was a problem; this type of powder shouldn't exist!
+	arcanearchives.tooltip.item.chromatic_powder.red=Consumed by Red-Spectrum Arcane Gems to recharge.
+	arcanearchives.tooltip.item.chromatic_powder.orange=Consumed by Orange-Spectrum Arcane Gems to recharge.
+	arcanearchives.tooltip.item.chromatic_powder.yellow=Consumed by Yellow-Spectrum Arcane Gems to recharge.
+	arcanearchives.tooltip.item.chromatic_powder.green=Consumed by Green-Spectrum Arcane Gems to recharge.
+	arcanearchives.tooltip.item.chromatic_powder.cyan=Consumed by Cyan-Spectrum Arcane Gems to recharge.
+	arcanearchives.tooltip.item.chromatic_powder.blue=Consumed by Blue-Spectrum Arcane Gems to recharge.
+	arcanearchives.tooltip.item.chromatic_powder.purple=Consumed by Purple-Spectrum Arcane Gems to recharge.
+	arcanearchives.tooltip.item.chromatic_powder.pink=Consumed by Pink-Spectrum Arcane Gems to recharge.
+	arcanearchives.tooltip.item.chromatic_powder.black=Consumed by Black-Spectrum Arcane Gems to recharge.
+	arcanearchives.tooltip.item.chromatic_powder.white=Consumed by White-Spectrum Arcane Gems to recharge.
+	arcanearchives.tooltip.item.full_spectrum_chromatic_powder=Consumed by Arcane Gems of any color to recharge.
+
+	arcanearchives.tooltip.gem.slaughtergleam=Increases your looting level.
+	arcanearchives.tooltip.gem.murdergleam=Forces all attacks to become critical hits.
+	arcanearchives.tooltip.gem.agegleam=Reduces timer until animals grow up or can breed again.
+	arcanearchives.tooltip.gem.cleansegleam=Removes Hunger, Nausea, and Poison. Sneak to use on others.
+	arcanearchives.tooltip.gem.switchgleam=Swaps positions with the targeted entity. Blocks enderman teleportation when toggled on.
+	arcanearchives.tooltip.gem.salvegleam=Restores health when you're hurt.
+	arcanearchives.tooltip.gem.munchstone=Use to consume plant based blocks and restore hunger.
+	arcanearchives.tooltip.gem.transferstone=Draws a single item from a linked Radiant Trove. Sends excess of the linked item to be stored in the linked Trove.
+	arcanearchives.tooltip.gem.orderstone=Transforms certain blocks into a more orderly state.
+	arcanearchives.tooltip.gem.mindspindle=Increases the amount of experience in picked up experience globes.
+	arcanearchives.tooltip.gem.elixirspindle=Allows you to use potion's effects instantly and without consuming it.
+	arcanearchives.tooltip.gem.mountaintear=Slowly creates infinite lava when placed in a Lightwell.
+	arcanearchives.tooltip.gem.rivertear=Rapidly creates infinite water when placed in a Lightwell.
+	arcanearchives.tooltip.gem.parchtear=Destroys fluid blocks in a small area. Sneak to destroy a single fluid block.
+	arcanearchives.tooltip.gem.phoenixway=Lights fires at target position. Grants fire resistance if you're about to take fire damage.
+	arcanearchives.tooltip.gem.stormway=Calls lightning strikes, grants buffs if struck by lightning, and retaliates against projectile attacks.
+
+	arcanearchives.tooltip.gem.recharge.slaughtergleam=Consumes gold nuggets in your inventory to recharge.
+	arcanearchives.tooltip.gem.recharge.murdergleam=Land normal critical hits to recharge.
+	arcanearchives.tooltip.gem.recharge.agegleam=Recharges slowly while held.
+	arcanearchives.tooltip.gem.recharge.cleansegleam=Consumes milk in your inventory to recharge.
+	arcanearchives.tooltip.gem.recharge.switchgleam=Absorbs and negates nearby Enderman teleports to recharge.
+	arcanearchives.tooltip.gem.recharge.salvegleam=Kill passive animals to recharge.
+	arcanearchives.tooltip.gem.recharge.munchstone=Consumes bonemeal in your inventory to recharge.
+	arcanearchives.tooltip.gem.recharge.transferstone=Has unlimited charge.
+	arcanearchives.tooltip.gem.recharge.orderstone=Gain experience while holding to charge.
+	arcanearchives.tooltip.gem.recharge.mindspindle=Consumes books in your inventory to recharge.
+	arcanearchives.tooltip.gem.recharge.elixirspindle=Consumes nether wart in your inventory to recharge.
+	arcanearchives.tooltip.gem.recharge.mountaintear=Throw into lava to recharge.
+	arcanearchives.tooltip.gem.recharge.rivertear=Throw into water to recharge.
+	arcanearchives.tooltip.gem.recharge.parchtear=Slot into a Devouring Charm's bucket void slot to recharge.
+	arcanearchives.tooltip.gem.recharge.phoenixway=Consumes gunpowder in your inventory to recharge.
+	arcanearchives.tooltip.gem.recharge.stormway=Hold or throw in a storm to recharge.
+
+	arcanearchives.tooltip.amphora.linked=Linked to tank at [%d,%d,%d] (in %s) which contains fluid: %s
+
+	arcanearchives.tooltip.bauble.gemsocket=Can be slotted with an Arcane Gem. Slotted Arcane Gem counts as being held at all times.
+	arcanearchives.tooltip.bauble.gemsocket.contains=Contains a
+
+arcanearchives.data.gui.radiant_trove.upgrade=%d melhoria
+arcanearchives.data.gui.radiant_trove.upgrades=%d melhora
+
+arcanearchives.data.tooltip.chest_name=Nome:
+arcanearchives.data.tooltip.resonator_progress=Progresso:
+arcanearchives.data.tooltip.resonator_status.resonating=Ressonando
+arcanearchives.data.tooltip.resonator_status.offline=Offline
+arcanearchives.data.tooltip.resonator_status.obstruction=Obstruido
+arcanearchives.data.tooltip.resonator_status.harvestable=Coletavel
+	arcanearchives.data.tooltip.trove_count= of:
+	arcanearchives.data.tooltip.trove_count_waila=%d of: %s
+	arcanearchives.data.tooltip.empty=Empty.
+
+	arcanearchives.data.scepter.missing_te=Error: missing tile entity.
+
+arcanearchives.data.scepter.radiant_chest.unnamed=Baú Radiante sem nome.
+arcanearchives.data.scepter.radiant_chest.name=Baú Radiante nomeado: %s.
+arcanearchives.data.scepter.radiant_chest.slots=Tem %d espaços livres.
+
+arcanearchives.data.scepter.radiant_crafting.contains=Bancada de Trabalho radiante contém: %s.
+arcanearchives.data.scepter.radiant_crafting.empty=Bancada de Trabalho radiante está vazia.
+
+	arcanearchives.data.scepter.radiant_trove.empty=Radiant Trove has no associated item.
+	arcanearchives.data.scepter.radiant_trove.item=Radiant Trove is set to store %s.
+	arcanearchives.data.scepter.radiant_trove.count=Contains %d/%d items.
+	arcanearchives.data.scepter.radiant_trove.upgrades=Has %s storage upgrade(s) and %s optional upgrade(s).
+
+	arcanearchives.data.scepter.radiant_tank.empty=Radiant Tank is empty.
+	arcanearchives.data.scepter.radiant_tank.item=Radiant Tank is storing %s.
+	arcanearchives.data.scepter.radiant_tank.count=Fluid capacity is currently %d/%d.
+	arcanearchives.data.scepter.radiant_tank.upgrades=Has been upgraded %d time(s).
+
+arcanearchives.data.scepter.radiant_resonator.progress=Progresso atual do Ressonador Radiante: %d%%
+arcanearchives.data.scepter.radiant_resonator.status=Status atual: %s.
+
+arcanearchives.data.scepter.monitoring_crystal.facing=Cristal de Monitoramento direcionad a %s.
+
+	arcanearchives.data.scepter.tile.invalid=Invalid tile entity for this block!
+	arcanearchives.data.scepter.tile.no_upgrades=No upgrades to remove from this device.
+	arcanearchives.data.scepter.tile.cant_downgrade.trove=Too many stored items, cannot downgrade!
+	arcanearchives.data.scepter.tile.downgrade_success.trove=Successfully removed an upgrade! Now at %d/%d.
+
+arcanearchives.gui.keygroup=Arquivos Arcanos
+arcanearchives.gui.keybinds.manifest=Ativar Manifesto
+arcanearchives.gui.missing_manifest=Você não tem um manifesto contigo!
+arcanearchives.gui.keybinds.socket=Activate Gem Socket
+
+text.copyToClipboard.line1=O livro quer colocar texto em sua prancheta.
+text.copyToClipboard.line2=Tem certeza que qur permitir isso?
+text.copyToClipboard.success=Texto copiado com sucesso.
+cmd.gbook_snapshot.guide.done=Reacarregamento completo
+
+	jei.gui.resonator=Every %.1f minutes.
+
+	# Network stuff from packets
+	arcanearchives.network.hive.successfully_added=You were successfully added to the Arcane Network!
+	arcanearchives.network.hive.successfully_removed_self=You were removed from the Arcane Network.
+	arcanearchives.network.hive.successfully_remove_player=Player was removed from the Arcane Network.
+	arcanearchives.network.hive.failed_add=Failed to add you to the Arcane Network.
+	arcanearchives.network.hive.failed_remove_self=Failed to remove you from the Arcane Network.
+	arcanearchives.network.hive.failed_remove_player=Failed to remove player from the Arcane Network.
+	# Network stuff for items
+	arcanearchives.network.hive.joined=Successfully joined the Arcane Network of %s!
+	arcanearchives.network.hive.left=Successfully left your Arcane Network!
+	arcanearchives.network.hive.failed=Failed to join the Arcane Network!
+	arcanearchives.network.hive.yours=This is already your Arcane Network!
+	arcanearchives.network.hive.left_failed=You aren't in a Arcane Network to leave.
+	arcanearchives.network.hive.leaving_failed=This letter of resignation wasn't meant for you.
+	arcanearchives.network.hive.expel_unnamed=You must name this writ in an anvil in order to identify the person to be removed.
+	arcanearchives.network.hive.expel_failed=Failed to remove %s from your Arcane Network.
+	arcanearchives.network.hive.expelled=Successfully expelled %s from your Arcane Network.
+	arcanearchives.network.hive.were_expelled=You were removed from your Arcane Network.
+	arcanearchives.network.hive.expel_no_permission=You don't have permission to use this item.
+	arcanearchives.network.hive.joined_your_network=%s has joined your Arcane Network!
+	arcanearchives.network.hive.left_your_network=%s has left your Arcane Network!
+	arcanearchives.network.hive.disbanded=%s has left your Arcane Network, leaving it empty. It has been disbanded.
+
+	arcanearchives.config.item_tracking=Item Tracking
+	arcanearchives.config.item_tracking.tooltip=Settings related to item tracking.
+	arcanearchives.config.manifest=Manifest Settings
+	arcanearchives.config.manifest.tooltip=Settings related to the client-side appearance and functionality of the manifest, including tracking distance.
+	arcanearchives.config.general=General Settings
+	arcanearchives.config.general.tooltip=General game settings.
+	arcanearchives.config.arsenal=Arcane Arsenal
+	arcanearchives.config.arsenal.tooltip=Settings releated to the Arcane Arsenal module.
+
+	arcanearchives.message.book_received.bookshelf=Something precious was hidden inside that block!
+	arcanearchives.message.book_received.resonator=You don't remember it being there before, but you find a book on the ground by your crafting table.
+	arcanearchives.message.usedtorecharge=%s%s used to recharge %s
+	arcanearchives.message.invalid_crystal_target=This device can only be attached to non-Arcane Archives storage.
+
+	advancement.arcanearchives.amphora=Ceci n'est pas un seau
+	advancement.arcanearchives.amphora.desc=Craft a Radiant Amphora for easy fluid transfer with tanks.
+	advancement.arcanearchives.brazier=Hoarders
+	advancement.arcanearchives.brazier.desc=Sort your items quickly! With ... fire?
+	advancement.arcanearchives.chest=Iridescent Storage
+	advancement.arcanearchives.chest.desc=Use raw quartz to convert boring chests into something bigger & beautifuler.
+	advancement.arcanearchives.containment_field=Uncontainable
+	advancement.arcanearchives.containment_field.desc=Craft a Containment Field as a Tank's second upgrade.
+	advancement.arcanearchives.devouring_charm=Open Wide, Say Aah
+	advancement.arcanearchives.devouring_charm.desc=Construct a method of easily disposing of your items. The Nether don't mind.
+	advancement.arcanearchives.gem_table=Romancing the Stones
+	advancement.arcanearchives.gem_table.desc=Construct a Gem Cutter's Table to increase your crafting options.
+	advancement.arcanearchives.tome=Tome of Arcana
+	advancement.arcanearchives.tome.desc=Obtain or craft a Tome of Arcana and learn the secrets of the Magistocracy.
+	advancement.arcanearchives.lectern_manifest=Fancy
+	advancement.arcanearchives.lectern_manifest.desc=Craft a Manifest Lectern for centralised indexing.
+	advancement.arcanearchives.manifest=Manifestly So
+	advancement.arcanearchives.manifest.desc=Craft a Menifest to remotely peruse your network in a Gem Cutter's Table.
+	advancement.arcanearchives.material_interface=Materialism
+	advancement.arcanearchives.material_interface.desc=Craft a Material Interface for the Trove's second upgrade.
+	advancement.arcanearchives.matrix_brace=Embracement
+	advancement.arcanearchives.matrix_brace.desc=Craft a Matrix Brace for the Trove & Tank's first upgrade.
+	advancement.arcanearchives.network=One with the Hive
+	advancement.arcanearchives.network.desc=Craft a Letter of Invitation to allow people to join your network.
+	advancement.arcanearchives.raw_quartz=Crystal Feeling
+	advancement.arcanearchives.raw_quartz.desc=Obtain your first raw quartz.
+	advancement.arcanearchives.raw_quartz_cluster=Fanciest
+	advancement.arcanearchives.raw_quartz_cluster.desc=Obtain a beautiful raw quartz crystal cluster with silk touch.
+	advancement.arcanearchives.resonator=Frequency
+	advancement.arcanearchives.resonator.desc=Build a Radiant Resonator -- remember to shoo away the cats.
+	advancement.arcanearchives.root=Arcane Archives
+	advancement.arcanerachives.root.desc=Start your journey with Arcane Archives.
+	advancement.arcanearchives.scepter_manipulation=Machiavelli Wannabe
+	advancement.arcanearchives.scepter_manipulation.desc=Craft a Scepter of Manipulation and begin upgrading your devices.
+	advancement.arcanearchives.revelation=Apocalypse
+	advancement.arcanearchives.revelation.desc=Craft a Scepter of Revelation to learn more about everything.
+	advancement.arcanearchives.storage_shaped_quartz=Fancier
+	advancement.arcanearchives.storage_shaped_quartz.desc=Craft a block of Shaped Quartz as the Tank & Trove's third upgrade.
+	advancement.arcanearchives.sliver=Anger Management
+	advancement.arcanearchives.sliver.desc=Let the hate flow through you! Smash raw quartz to get slivers of light.
+	advancement.arcanearchives.tank=That's No Panzer
+	advancement.arcanearchives.tank.desc=Craft a Radiant Tank in a Gem Cutter's Table. Store all the fluid!
+	advancement.arcanearchives.trove=Treasure Trove
+	advancement.arcanearchives.trove.desc=Craft a Radiant Trove in a Gem Cutter's Table. Store all of a thing!
+	advancement.arcanearchives.crafting_table=Iridescent Crafting
+	advancement.arcanearchives.crafting_table.desc=Use raw quartz to convert a boring workbench into something persistent.
+	advancement.arcanearchives.monitoring_crystal=Big Brother
+	advancement.arcanearchives.monitoring_crystal.desc=Craft a Monitoring Crystal to track items in other inventories.
