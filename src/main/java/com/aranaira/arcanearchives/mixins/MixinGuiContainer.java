@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.mixins;
 
+import com.aranaira.arcanearchives.client.gui.GUIGemCuttersTable;
 import com.aranaira.arcanearchives.client.gui.GUIManifest;
 import com.aranaira.arcanearchives.client.render.LineHandler;
 import com.aranaira.arcanearchives.config.ConfigHandler;
@@ -29,6 +30,10 @@ public abstract class MixinGuiContainer {
 		}
 
 		if (((GuiContainer) (Object) this).getClass().equals(GUIManifest.class)) {
+			return;
+		}
+
+		if (((GuiContainer) (Object) this).getClass().equals(GUIGemCuttersTable.class)) {
 			return;
 		}
 

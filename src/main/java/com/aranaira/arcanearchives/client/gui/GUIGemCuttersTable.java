@@ -8,15 +8,12 @@ import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
 import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
 import com.aranaira.arcanearchives.recipe.IngredientStack;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
-import com.aranaira.arcanearchives.util.ColorUtils;
-import com.aranaira.arcanearchives.util.ColorUtils.Color;
 import com.aranaira.arcanearchives.util.ManifestTrackingUtils;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
@@ -35,7 +32,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @MouseTweaksDisableWheelTweak
-public class GUIGemCuttersTable extends GuiContainer {
+public class GUIGemCuttersTable extends AbstractGuiContainerTracking {
 	private static final ResourceLocation GUI_TEXTURES = new ResourceLocation("arcanearchives:textures/gui/gemcutterstable.png");
 	private static final ResourceLocation GUI_TEXTURES_SIMPLE = new ResourceLocation("arcanearchives:textures/gui/simple/gemcutterstable.png");
 
@@ -116,14 +113,17 @@ public class GUIGemCuttersTable extends GuiContainer {
 
 	@Override
 	public void drawSlot (Slot slot) {
+		IGCTRecipe recipe = null;
+		boolean recipeSlot = false;
+		if (slot instanceof SlotRecipeHandler) {
+			recipe = ((SlotRecipeHandler) slot).getRecipe();
+			recipeSlot = true;
+		}
+
 		ItemStack stack = slot.getStack();
 		if (!stack.isEmpty()) {
-			if (tracked != null && !tracked.isEmpty() && ManifestTrackingUtils.matches(stack, tracked)) {
-				GlStateManager.disableDepth();
-				long worldTime = this.mc.player.world.getWorldTime();
-				Color c = ColorUtils.getColorFromTime(worldTime);
-				GuiContainer.drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, c.toInteger());
-				GlStateManager.enableDepth();
+			if (((tracked != null && !tracked.isEmpty() && ManifestTrackingUtils.matches(stack, tracked)) && !recipeSlot) || (recipeSlot && ManifestTrackingUtils.matches(stack) && (recipeStatus.getBoolean(recipe) && recipe.craftable(player, tile)))) {
+				glowSlot(slot);
 			}
 		}
 
@@ -131,8 +131,7 @@ public class GUIGemCuttersTable extends GuiContainer {
 
 		boolean wasEnabled = false;
 
-		if (slot instanceof SlotRecipeHandler) {
-			IGCTRecipe recipe = ((SlotRecipeHandler) slot).getRecipe();
+		if (recipeSlot) {
 			if (recipe == null) {
 				return;
 			}
