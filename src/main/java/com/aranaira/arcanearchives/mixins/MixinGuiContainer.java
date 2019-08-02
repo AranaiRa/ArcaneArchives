@@ -1,7 +1,6 @@
 package com.aranaira.arcanearchives.mixins;
 
-import com.aranaira.arcanearchives.client.gui.GUIGemCuttersTable;
-import com.aranaira.arcanearchives.client.gui.GUIManifest;
+import com.aranaira.arcanearchives.client.gui.*;
 import com.aranaira.arcanearchives.client.render.LineHandler;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.util.ColorUtils;
@@ -19,21 +18,22 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Mixin(GuiContainer.class)
 @SideOnly(Side.CLIENT)
 @SuppressWarnings("unused")
 public abstract class MixinGuiContainer {
+	private static List<Class<? extends GuiContainer>> CONTAINER_IGNORE_LIST = Arrays.asList(GUIManifest.class, GUIGemCuttersTable.class, GUIUpgrades.class, GUIRadiantChest.class, GUIGemSocket.class);
+
 	@Inject(method = "drawSlot", at = @At(value = "HEAD"))
 	private void onDrawSlot (Slot slot, CallbackInfo callbackInfo) {
 		if (ConfigHandler.nonModTrackingConfig.DisableMixinHighlight || ConfigHandler.nonModTrackingConfig.getContainerClasses().contains(((GuiContainer) (Object) this).getClass())) {
 			return;
 		}
 
-		if (((GuiContainer) (Object) this).getClass().equals(GUIManifest.class)) {
-			return;
-		}
-
-		if (((GuiContainer) (Object) this).getClass().equals(GUIGemCuttersTable.class)) {
+		if (CONTAINER_IGNORE_LIST.contains(((GuiContainer) (Object) this).getClass())) {
 			return;
 		}
 
