@@ -2,6 +2,7 @@ itemGroup.arcanearchives=Arcane Archives
 
 item.raw_quartz.name=Raw Radiant Quartz
 item.shaped_quartz.name=Shaped Radiant Quartz
+item.empowered_quartz.name=Empowered Radiant Quartz
 
 item.containment_field.name=Containment Field
 item.devouring_charm.name=Devouring Charm
@@ -17,6 +18,7 @@ item.scepter_abduction.name=Scepter of Abduction
 item.scepter_manipulation.name=Scepter of Manipulation
 item.scepter_translocation.name=Scepter of Translocation
 item.scepter_revelation.name=Scepter of Revelation
+item.serenity_charm.name=Serenity Charm
 item.scintillating_inlay.name=Scintillating Inlay
 item.tome_arcana.name=Tome of Arcana
 item.tome_requisition.name=Tome of Requisition
@@ -86,12 +88,18 @@ tile.raw_quartz_cluster.name=Raw Quartz Cluster
 
 tile.radiant_crafting_table.name=Radiant Crafting Table
 tile.radiant_chest.name=Radiant Chest
+tile.radiant_furnace.name=Radiant Furnace
 tile.radiant_lantern.name=Radiant Lantern
 tile.radiant_resonator.name=Radiant Resonator
 tile.radiant_trove.name=Radiant Trove
 
 tile.brazier_of_hoarding.name=Brazier of Hoarding
+tile.druidic_censer.name=Druidic Censer
+tile.echoing_conformance_chamber.name=Echoing Conformance Chamber
+tile.echoing_reverberation_chamber.name=Echoing Reverberation Chamber
+tile.immanent_incubator.name=Immanent Incubator
 tile.monitoring_crystal.name=Monitoring Crystal
+tile.spellbook_library.name=Spellbook Library
 
 tile.matrix_crystal_core.name=Crystal Matrix Core
 tile.matrix_repository.name=Repository Matrix
