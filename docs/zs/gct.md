@@ -28,6 +28,18 @@ static void removeRecipe(
 ---
 
 
+```java
+static void replaceRecipe(
+  string name,         // the recipe name (must already exist)
+  IItemStack output,   // the output as an itemstack
+  IIngredient[] inputs // the inputs as an array of ingredients
+);
+```
+
+
+---
+
+
 ### Examples
 
 ```java
@@ -38,4 +50,7 @@ GCT.removeRecipe(<arcanearchives:radiant_dust>*2);
 
 // Adds a new recipe for radiant dust
 GCT.addRecipe("radiant_dust", <arcanearchives:radiant_dust>*2, [<minecraft:flint>, <arcanearchives:raw_quartz>]);
+
+// Replaces the shaped radiant quartz recipe without disordering the GCT screen
+GCT.replaceRecipe("shaped_quartz", <arcanearchives:shaped_quartz>, [<arcanearchives:raw_quartz>*10]);
 ```
