@@ -7,6 +7,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
@@ -38,6 +39,47 @@ public class ExtendedItemStackHandler extends ItemStackHandler {
 	@Override
 	public void onContentsChanged (int slot) {
 
+	}
+
+	@Nonnull
+	@Override
+	// This specifically allows for extraction of more than the max stack size
+	// from a chest.
+	public ItemStack extractItem (int slot, int amount, boolean simulate) {
+		if (amount == 0) {
+			return ItemStack.EMPTY;
+		}
+
+		validateSlotIndex(slot);
+
+		ItemStack existing = this.stacks.get(slot);
+
+		if (existing.isEmpty()) {
+			return ItemStack.EMPTY;
+		}
+
+		int toExtract;
+
+		if (existing.getMaxStackSize() == 1) {
+			toExtract = Math.min(1, amount);
+		} else {
+			toExtract = Math.min(amount, existing.getMaxStackSize() * ConfigHandler.serverSideConfig.RadiantMultiplier);
+		}
+
+		if (existing.getCount() <= toExtract) {
+			if (!simulate) {
+				this.stacks.set(slot, ItemStack.EMPTY);
+				onContentsChanged(slot);
+			}
+			return existing;
+		} else {
+			if (!simulate) {
+				this.stacks.set(slot, ItemHandlerHelper.copyStackWithSize(existing, existing.getCount() - toExtract));
+				onContentsChanged(slot);
+			}
+
+			return ItemHandlerHelper.copyStackWithSize(existing, toExtract);
+		}
 	}
 
 	@Override
