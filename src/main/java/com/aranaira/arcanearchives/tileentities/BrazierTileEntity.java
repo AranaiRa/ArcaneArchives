@@ -359,7 +359,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 	@Nonnull
 	@Override
 	public BoundingBox getBounds () {
-		return new BoundingBox(getPos()).expand(radius);
+		return new BoundingBox(getPos()).expand(radius, 255, radius);
 	}
 
 	@Nullable
