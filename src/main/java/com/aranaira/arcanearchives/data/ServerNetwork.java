@@ -382,6 +382,12 @@ public class ServerNetwork implements IServerNetwork {
 		return Math.abs(d1 * d1 + d2 * d2 + d3 * d3);
 	}
 
+	public int distanceSqNoVertical (BlockPos pos1, BlockPos pos2) {
+		int d1 = pos1.getX() - pos2.getX();
+		int d2 = pos2.getZ() - pos2.getZ();
+		return Math.abs(d1 * d1 + d2 * d2);
+	}
+
 	public boolean inRange (BlockPos pos1, BlockPos pos2) {
 		int maxDistance = getMaxDistance();
 		int distance = distanceSq(pos1, pos2);

@@ -81,7 +81,7 @@ public class InventoryRoutingUtils {
 			return workspace;
 		}
 		for (IteRef ite : tiles) {
-			if (IBrazierRouting.class.isAssignableFrom(ite.clazz) && network.distanceSq(bPos, ite.pos) <= radius && ite.dimension == brazier.dimension) {
+			if (IBrazierRouting.class.isAssignableFrom(ite.clazz) && network.distanceSqNoVertical(bPos, ite.pos) <= radius && ite.dimension == brazier.dimension) {
 				ImmanenceTileEntity tile = ite.getTile();
 				int weight = calculateWeight((IBrazierRouting) tile, stack);
 				workspace.add(new WeightedEntry<>((IBrazierRouting) tile, weight));
