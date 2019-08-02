@@ -139,7 +139,7 @@
             <p indent="16"><stack item="arcanearchives:echoing_conformance_chamber"/> <link ref="Blocks:EchoingConformanceChamber">Echoing Conformance Chamber</link></p>
             <p indent="16"><stack item="arcanearchives:echoing_reverberation_chamber"/> <link ref="Blocks:EchoingReverberationChamber">Echoing Reverberation Chamber</link></p>
             <p indent="16"><stack item="arcanearchives:matrix_repository"/> <link ref="Blocks:RepositoryMatrix">Repository Matrix</link></p>
-            <p indent="16"><stack item="arcanearchives:matrix_reservoir"/> <link ref="Blocks:ReservoirMatrix">Repository Matrix</link></p>
+            <p indent="16"><stack item="arcanearchives:matrix_reservoir"/> <link ref="Blocks:ReservoirMatrix">Reservoir Matrix</link></p>
             <p indent="16"><stack item="arcanearchives:matrix_storage"/> <link ref="Blocks:StorageMatrix">Storage Matrix</link></p>
             <p indent="16"><stack item="arcanearchives:spellbook_library"/> <link ref="Blocks:SpellbookLibrary">Spellbook Library</link></p>
             <space height="8"/>
