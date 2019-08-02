@@ -100,14 +100,14 @@ public class ConfigHandler {
 					try {
 						clz = Class.forName(clazz);
 					} catch (ClassNotFoundException e) {
-						ArcaneArchives.logger.info("Unable to resolve class " + clazz + " so skipping");
+						ArcaneArchives.logger.debug("Unable to resolve class " + clazz + " so skipping.");
 						continue;
 					}
 
 					if (clz.isAssignableFrom(container)) {
 						containerClasses.add(clz);
 					} else {
-						ArcaneArchives.logger.info("Skipping " + clazz + " as it does not derive from GuiContainer.");
+						ArcaneArchives.logger.debug("Skipping " + clazz + " as it does not derive from GuiContainer.");
 					}
 				}
 			}

@@ -116,7 +116,7 @@ public class BlockRegistry {
 	public static void registerTileEntities () {
 		Arrays.asList(RADIANT_RESONATOR_TILE_ENTITY, /*MATRIX_CORE_TILE_ENTITY, MATRIX_REPOSITORY_TILE_ENTITY, */ RADIANT_CHEST_TILE_ENTITY, GEMCUTTERS_TABLE_TILE_ENTITY, RADIANT_CRAFTING_TABLE_TILE_ENTITY/*, MATRIX_STORAGE_TILE_ENTITY*/, RADIANT_TROVE_TILE_ENTITY, MONITORING_CRYSTAL_TILE_ENTITY, RADIANT_TANK_TILE_ENTITY, BRAZIER_OF_HOARDING_TILE_ENTITY, FAKE_AIR_TILE_ENTITY).forEach((tile) -> {
 			GameRegistry.registerTileEntity(tile.getClass(), new ResourceLocation(ArcaneArchives.MODID, tile.getName()));
-			ArcaneArchives.logger.info(String.format("Registered tile entity: %s", tile.getName()));
+			ArcaneArchives.logger.debug(String.format("Registered tile entity: %s", tile.getName()));
 		});
 	}
 }

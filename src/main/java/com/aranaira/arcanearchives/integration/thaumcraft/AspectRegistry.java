@@ -130,7 +130,7 @@ public class AspectRegistry {
 			helper.registerTCObjectTag(ItemRegistry.RAINBOW_CHROMATIC_POWDER, new AspectList().add(Aspect.ENERGY, 180).add(Aspect.SENSES, 90).add(Aspect.AURA, 45));
 
 		} catch (Exception e) {
-			ArcaneArchives.logger.info("&&&&&&& Error registering Thaumcraft aspects: " + e.getLocalizedMessage());
+			ArcaneArchives.logger.error("[Arcane Archives] Error registering Thaumcraft aspects: " + e.getLocalizedMessage());
 			e.printStackTrace();
 		}
 	}

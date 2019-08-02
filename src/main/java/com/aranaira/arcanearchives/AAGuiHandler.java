@@ -67,7 +67,7 @@ public class AAGuiHandler implements IGuiHandler {
 			case BRAZIER:
 				return new ContainerBrazier((BrazierTileEntity) te, player);
 			default: {
-				ArcaneArchives.logger.info(String.format("Invalid Container ID of %d was passed in; null was returned to the server", ID));
+				ArcaneArchives.logger.debug(String.format("Invalid Container ID of %d was passed in; null was returned to the server", ID));
 				return null;
 			}
 		}
@@ -110,7 +110,7 @@ public class AAGuiHandler implements IGuiHandler {
 			case MATRIX_REPOSITORY:
 				return new GUIMatrixRepository(player, new ContainerMatrixRepository((MatrixRepositoryTileEntity) te, player.inventory));*/
 			default:
-				ArcaneArchives.logger.info(String.format("Invalid Container ID of %d was passed in; null was returned to the client.", ID));
+				ArcaneArchives.logger.debug(String.format("Invalid Container ID of %d was passed in; null was returned to the client.", ID));
 				return null;
 		}
 	}

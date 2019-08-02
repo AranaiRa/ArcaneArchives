@@ -47,7 +47,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 
 	public void setDisplayStack (ItemStack newStack) {
 		if (newStack.isEmpty()) {
-			ArcaneArchives.logger.error("Called setDisplayStack with an empty stack!", new IllegalArgumentException(describe()));
+			ArcaneArchives.logger.debug("Called setDisplayStack with an empty stack!", new IllegalArgumentException(describe()));
 		} else {
 			ArcaneArchives.logger.debug("Set displayStack to " + newStack.toString() + " on " + describe());
 		}
@@ -61,16 +61,16 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 	}
 
 	public void unsetChestName () {
-		ArcaneArchives.logger.debug("Unset chest name on " + describe());
+		//ArcaneArchives.logger.debug("Unset chest name on " + describe());
 		this.chestName = "";
 		this.markDirty();
 	}
 
 	public void setChestName (String newName) {
 		if (newName.isEmpty()) {
-			ArcaneArchives.logger.error("Called setChestName with an empty string!", new IllegalArgumentException(describe()));
+			ArcaneArchives.logger.debug("Called setChestName with an empty string!", new IllegalArgumentException(describe()));
 		} else {
-			ArcaneArchives.logger.debug("Set chest name to '" + newName + "' on " + describe());
+			//ArcaneArchives.logger.debug("Set chest name to '" + newName + "' on " + describe());
 		}
 
 		this.chestName = newName;
