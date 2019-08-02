@@ -18,6 +18,11 @@ public class JEIUnderMouse {
 			if (stack instanceof ItemStack) {
 				return (ItemStack) stack;
 			}
+
+			stack = JEIPlugin.runtime.getBookmarkOverlay().getIngredientUnderMouse();
+			if (stack instanceof ItemStack) {
+				return (ItemStack) stack;
+			}
 		}
 
 		return null;
