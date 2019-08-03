@@ -1,8 +1,7 @@
-package com.aranaira.arcanearchives.blocks.unused;
+package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
@@ -13,24 +12,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class DominionCrystal extends BlockTemplate {
+public class RadiantFurnace extends BlockTemplate {
 
-	public static final String name = "dominion_crystal";
+	public static final String name = "radiant_furnace";
 
-	public DominionCrystal () {
-		super(name, Material.GLASS);
+	public RadiantFurnace() {
+		super(name, Material.ROCK);
 		setLightLevel(16 / 16f);
-	}
-
-	@Override
-	public boolean hasOBJModel () {
-		return true;
-	}
-
-	@Override
-	@SuppressWarnings("deprecation")
-	public boolean isOpaqueCube (IBlockState state) {
-		return false;
+		setHardness(1.7f);
+		setHarvestLevel("pickaxe", 0);
 	}
 
 	@Override

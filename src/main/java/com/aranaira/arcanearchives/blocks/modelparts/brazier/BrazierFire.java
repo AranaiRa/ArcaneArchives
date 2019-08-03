@@ -1,5 +1,6 @@
-package com.aranaira.arcanearchives.blocks;
+package com.aranaira.arcanearchives.blocks.modelparts.brazier;
 
+import com.aranaira.arcanearchives.blocks.IHasModel;
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

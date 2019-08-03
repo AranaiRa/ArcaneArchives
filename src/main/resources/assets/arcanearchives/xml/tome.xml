@@ -24,12 +24,22 @@
 
     <stack-links>
         <stack item="arcanearchives:brazier_of_hoarding">Blocks:BrazierHoarding</stack>
+        <stack item="arcanearchives:druidic_censer">Blocks:DruidicCenser</stack>
+        <stack item="arcanearchives:echoing_conformance_chamber">Blocks:EchoingConformanceChamber</stack>
+        <stack item="arcanearchives:echoing_reverberation_chamber">Blocks:EchoingReverberationChamber</stack>
         <stack item="arcanearchives:lectern_manifest">Blocks:LecternManifest</stack>
         <stack item="arcanearchives:gemcutters_table">Blocks:GemCuttersTable</stack>
+        <stack item="arcanearchives:immanent_incubator">Blocks:ImmanentIncubator</stack>
+        <stack item="arcanearchives:matrix_crystal_core">Blocks:CrystalMatrixCore</stack>
+        <stack item="arcanearchives:matrix_distillate">Blocks:DistillateMatrix</stack>
+        <stack item="arcanearchives:matrix_repository">Blocks:RepositoryMatrix</stack>
+        <stack item="arcanearchives:matrix_reservoir">Blocks:ReservoirMatrix</stack>
+        <stack item="arcanearchives:matrix_storage">Blocks:StorageMatrix</stack>
         <stack item="arcanearchives:monitoring_crystal">Blocks:MonitoringCrystal</stack>
         <stack item="arcanearchives:quartz_sliver">Blocks:SliverOfLight</stack>
         <stack item="arcanearchives:radiant_chest">Blocks:RadiantChest</stack>
         <stack item="arcanearchives:radiant_crafting_table">Blocks:RadiantCraftingTable</stack>
+        <stack item="arcanearchives:radiant_furnace">Blocks:RadiantFurnace</stack>
         <stack item="arcanearchives:radiant_lantern">Blocks:RadiantLantern</stack>
         <stack item="arcanearchives:radiant_resonator">Blocks:RadiantResonator</stack>
         <stack item="arcanearchives:radiant_tank">Blocks:RadiantTank</stack>
@@ -37,9 +47,12 @@
         <stack item="arcanearchives:raw_quartz">Blocks:RawQuartzCluster</stack>
         <stack item="arcanearchives:storage_raw_quartz">Blocks:RawQuartz</stack>
         <stack item="arcanearchives:storage_shaped_quartz">Blocks:ShapedQuartz</stack>
+        <stack item="arcanearchives:spellbook_library">Blocks:SpellbookLibrary</stack>
 
         <stack item="arcanearchives:containment_field">Items:ContainmentField</stack>
         <stack item="arcanearchives:devouring_charm">Items:DevouringCharm</stack>
+        <stack item="arcanearchives:echo">Items:Echoes</stack>
+        <stack item="arcanearchives:empowered_quartz">Items:EmpoweredQuartz</stack>
         <stack item="arcanearchives:letter_invitation">Items:LetterInvitation</stack>
         <stack item="arcanearchives:letter_resignation">Items:LetterResignation</stack>
         <stack item="arcanearchives:manifest">Items:Manifest</stack>
@@ -47,6 +60,7 @@
         <stack item="arcanearchives:matrix_brace">Items:MatrixBrace</stack>
         <stack item="arcanearchives:radiant_amphora">Items:RadiantAmphora</stack>
         <stack item="arcanearchives:radiant_dust">Items:RadiantDust</stack>
+        <stack item="arcanearchives:serenity_charm">Items:SerenityCharm</stack>
         <stack item="arcanearchives:shaped_quartz">Items:ShapedQuartz</stack>
         <stack item="arcanearchives:scepter_manipulation">Items:ScepterManipulation</stack>
         <stack item="arcanearchives:scepter_revelation">Items:ScepterRevelation</stack>
@@ -104,6 +118,7 @@
             <p indent="16"><stack item="arcanearchives:raw_quartz_cluster"/> <link ref="Blocks:RawQuartzCluster">Raw Quartz Cluster</link></p>
             <p indent="16"><stack item="arcanearchives:radiant_chest"/> <link ref="Blocks:RadiantChest">Radiant Chest</link></p>
             <p indent="16"><stack item="arcanearchives:radiant_crafting_table"/> <link ref="Blocks:RadiantCraftingTable">Radiant Crafting Table</link></p>
+            <p indent="16"><stack item="arcanearchives:radiant_furnace"/> <link ref="Blocks:RadiantFurnace">Radiant Furnace</link></p>
             <space height="8"/>
             <p><stack item="arcanearchives:gemcutters_table"/> <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link></p>
             <p indent="16"><stack item="arcanearchives:brazier_of_hoarding"/> <link ref="Blocks:BrazierHoarding">Brazier of Hoarding</link></p>
@@ -113,11 +128,29 @@
             <p indent="16"><stack item="arcanearchives:radiant_tank"/> <link ref="Blocks:RadiantTank">Radiant Tank</link></p>
             <p indent="16"><stack item="arcanearchives:radiant_trove"/> <link ref="Blocks:RadiantTrove">Radiant Trove</link></p>
         </section>
+        <section>
+            <page_title_shorter>
+                <title>Blocks</title>
+            </page_title_shorter>
+            <p><stack item="arcanearchives:immanent_incubator"/> <link ref="Blocks:ImmanentIncubator">Immanent Incubator</link></p>
+            <p indent="16"><stack item="arcanearchives:matrix_crystal_core"/> <link ref="Blocks:CrystalMatrixCore">Crystal Matrix Core</link></p>
+            <p indent="16"><stack item="arcanearchives:matrix_distillate"/> <link ref="Blocks:DistillateMatrix">Distillate Matrix</link></p>
+            <p indent="16"><stack item="arcanearchives:druidic_censer"/> <link ref="Blocks:DruidicCenser">Druidic Censer</link></p>
+            <p indent="16"><stack item="arcanearchives:echoing_conformance_chamber"/> <link ref="Blocks:EchoingConformanceChamber">Echoing Conformance Chamber</link></p>
+            <p indent="16"><stack item="arcanearchives:echoing_reverberation_chamber"/> <link ref="Blocks:EchoingReverberationChamber">Echoing Reverberation Chamber</link></p>
+            <p indent="16"><stack item="arcanearchives:matrix_repository"/> <link ref="Blocks:RepositoryMatrix">Repository Matrix</link></p>
+            <p indent="16"><stack item="arcanearchives:matrix_reservoir"/> <link ref="Blocks:ReservoirMatrix">Reservoir Matrix</link></p>
+            <p indent="16"><stack item="arcanearchives:matrix_storage"/> <link ref="Blocks:StorageMatrix">Storage Matrix</link></p>
+            <p indent="16"><stack item="arcanearchives:spellbook_library"/> <link ref="Blocks:SpellbookLibrary">Spellbook Library</link></p>
+            <space height="8"/>
+            <p><stack item="arcanearchives:celestial_lotus_engine"/> <link ref="Blocks:CelestialLotusEngine">Celestial Lotus Engine</link></p>
+        </section>
         <section id="Items">
             <page_title_shorter>
                 <title>Items</title>
             </page_title_shorter>
             <p><stack item="arcanearchives:raw_quartz"/> <link ref="Items:RawQuartz">Radiant Quartz (Raw)</link></p>
+            <p indent="16"><stack item="arcanearchives:echo"/> <link ref="Items:Echoes">Echoes</link></p>
             <p indent="16"><stack item="arcanearchives:scepter_manipulation"/> <link ref="Items:ScepterManipulation">Scepter of Manipulation</link></p>
             <p indent="16"><stack item="arcanearchives:scepter_revelation"/> <link ref="Items:ScepterRevelation">Scepter of Revelation</link></p>
             <p indent="16"><stack item="arcanearchives:quartz_sliver"/> <link ref="Items:SliverOfLight">Sliver of Light</link></p>
@@ -135,7 +168,14 @@
             <p indent="16"><stack item="arcanearchives:material_interface"/> <link ref="Items:MaterialInterface">Material Interface</link></p>
             <p indent="16"><stack item="arcanearchives:matrix_brace"/> <link ref="Items:MatrixBrace">Matrix Brace</link></p>
             <p indent="16"><stack item="arcanearchives:radiant_amphora"/> <link ref="Items:RadiantAmphora">Radiant Amphora</link></p>
+            <p indent="16"><stack item="arcanearchives:serenity_charm"/> <link ref="Items:SerenityCharm">Serenity Charm</link></p>
             <p indent="16"><stack item="arcanearchives:scintillating_inlay"/> <link ref="Items:ScintillatingInlay">Scintillating Inlay</link></p>
+        </section>
+        <section>
+            <page_title_shorter>
+                <title>Items</title>
+            </page_title_shorter>
+            <p><stack item="arcanearchives:empowered_quartz"/> <link ref="Items:EmpoweredQuartz">Radiant Quartz (Empowered)</link></p>
         </section>
         <section id="ArcaneGems" condition="arsenal_enabled">
             <page_title_shorter>
@@ -169,6 +209,7 @@
                 <title>Concepts</title>
             </page_title_shorter>
             <p><image src="arcanearchives:gui/guidebook/networks" tw="16" th="16" /> <link ref="Concepts:Networks">Networks</link></p>
+            <p><image src="arcanearchives:blocks/placeholder" tw="16" th="16" /> <link ref="Concepts:Immanence">Networks</link></p>
             <space height="8"/>
             <p condition="ml_astralsorcery"><stack item="astralsorcery:itemjournal"/> <link ref="Concepts:AstralSorcery">Astral Sorcery Compatibility</link></p>
             <p condition="ml_botania"><stack item="botania:lexicon"/> <link ref="Concepts:Botania">Botania Compatibility</link></p>
@@ -354,6 +395,19 @@
                     <stack item="arcanearchives:radiant_crafting_table"/>
                 </recipe.result>
             </recipe>
+        </section>
+
+
+
+        <section id="RadiantFurnace">
+            <page_title_shorter>
+                <title>Radiant Furnace</title>
+            </page_title_shorter>
+            <p align="center"><stack item="arcanearchives:radiant_furnace" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                PLACEHOLDER
+            </p>
         </section>
 
 
@@ -639,6 +693,136 @@
                 </recipe.result>
             </recipe>
         </section>
+
+
+
+        <section id="ImmanentIncubator">
+            <page_title_shorter>
+                <title>Immanent Incubator</title>
+            </page_title_shorter>
+            <p align="center"><stack item="arcanearchives:immanent_incubator" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                PLACEHOLDER
+            </p>
+        </section>
+
+
+
+        <section id="CrystalMatrixCore">
+            <page_title_shorter>
+                <title>Crystal Matrix Core</title>
+            </page_title_shorter>
+            <p align="center"><stack item="arcanearchives:matrix_crystal_core" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                PLACEHOLDER
+            </p>
+        </section>
+
+
+
+        <section id="DistillateMatrix">
+            <page_title_shorter>
+                <title>Distillate Matrix</title>
+            </page_title_shorter>
+            <p align="center"><stack item="arcanearchives:matrix_distillate" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                PLACEHOLDER
+            </p>
+        </section>
+
+
+
+        <section id="EchoingConformanceChamber">
+            <page_title_shorter>
+                <title>Echoing Conformance Chamber</title>
+            </page_title_shorter>
+            <p align="center"><stack item="arcanearchives:echoing_conformance_chamber" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                PLACEHOLDER
+            </p>
+        </section>
+
+
+
+        <section id="EchoingReverberationChamber">
+            <page_title_shorter>
+                <title>Echoing Reverberation Chamber</title>
+            </page_title_shorter>
+            <p align="center"><stack item="arcanearchives:echoing_reverberation_chamber" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                PLACEHOLDER
+            </p>
+        </section>
+
+
+
+        <section id="RepositoryMatrix">
+            <page_title_shorter>
+                <title>Repository Matrix</title>
+            </page_title_shorter>
+            <p align="center"><stack item="arcanearchives:matrix_repository" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                PLACEHOLDER
+            </p>
+        </section>
+
+
+
+        <section id="ReservoirMatrix">
+            <page_title_shorter>
+                <title>Reservoir Matrix</title>
+            </page_title_shorter>
+            <p align="center"><stack item="arcanearchives:matrix_reservoir" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                PLACEHOLDER
+            </p>
+        </section>
+
+
+
+        <section id="StorageMatrix">
+            <page_title_shorter>
+                <title>Storage Matrix</title>
+            </page_title_shorter>
+            <p align="center"><stack item="arcanearchives:matrix_storage" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                PLACEHOLDER
+            </p>
+        </section>
+
+
+
+        <section id="SpellbookLibrary">
+            <page_title_shorter>
+                <title>Spellbook Library</title>
+            </page_title_shorter>
+            <p align="center"><stack item="arcanearchives:spellbook_library" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                PLACEHOLDER
+            </p>
+        </section>
+
+
+
+        <section id="CelestialLotusEngine">
+            <page_title_shorter>
+                <title>Celestial Lotus Engine</title>
+            </page_title_shorter>
+            <p align="center"><stack item="arcanearchives:celestial_lotus_engine" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                PLACEHOLDER
+            </p>
+        </section>
     </chapter>
 
     <chapter id="Items">
@@ -686,6 +870,19 @@
                     <stack item="arcanearchives:storage_raw_quartz"/>
                 </recipe.result>
             </recipe>
+        </section>
+
+
+
+        <section id="Echoes">
+            <page_title_shorter>
+                <title>Echoes</title>
+            </page_title_shorter>
+            <p align="center"><stack item="arcanearchives:echo" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                PLACEHOLDER
+            </p>
         </section>
 
 
@@ -1316,6 +1513,19 @@
 
 
 
+        <section id="SerenityCharm">
+            <page_title_shorter>
+                <title>Serenity Charm</title>
+            </page_title_shorter>
+            <p align="center"><stack item="arcanearchives:serenity_charm" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                PLACEHOLDER
+            </p>
+        </section>
+
+
+
         <section id="ScintillatingInlay">
             <page_title_shorter>
                 <title>Scintillating Inlay</title>
@@ -1334,6 +1544,19 @@
                     <stack item="arcanearchives:scintillating_inlay"/>
                 </recipe.result>
             </recipe>
+        </section>
+
+
+
+        <section id="EmpoweredQuartz">
+            <page_title_shorter>
+                <title>Radiant Quartz (Empowered)</title>
+            </page_title_shorter>
+            <p align="center"><stack item="arcanearchives:empowered_quartz" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                PLACEHOLDER
+            </p>
         </section>
     </chapter>
 
@@ -2095,6 +2318,29 @@
             <horizontal_rule/>
             <p condition="ml_thaumcraft"><stack item="thaumcraft:thaumonomicon"/> <link ref="Concepts:Thaumcraft">Thaumcraft Compatibility</link></p>
             <p><stack item="arcanearchives:writ_expulsion"/> <link ref="Items:WritExpulsion">Writ of Expulsion</link></p>
+        </section>
+        <section>
+            <p bold="true">
+                ENTRIES TO ADD TO THE INDEX
+            </p>
+            <horizontal_rule/>
+            <p>
+                Celestial Lotus Engine
+                Crystal Matrix Core
+                Distillate Matrix
+                Echoes
+                Echoing Conformance Chamber
+                Echoing Reverberation Chamber
+                Immanence
+                Immanent Incubator
+                Radiant Furnace
+                Radiant Quartz (Empowered)
+                Repository Matrix
+                Reservoir Matrix
+                Serenity Charm
+                Storage Matrix
+                Spellbook Library
+            </p>
         </section>
     </chapter>
 </book>

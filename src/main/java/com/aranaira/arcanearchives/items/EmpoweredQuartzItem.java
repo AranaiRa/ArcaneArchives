@@ -1,8 +1,6 @@
-package com.aranaira.arcanearchives.blocks.unused;
+package com.aranaira.arcanearchives.items;
 
-import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
@@ -13,25 +11,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class MatrixReservoir extends BlockTemplate {
+public class EmpoweredQuartzItem extends ItemTemplate {
+	public static final String NAME = "empowered_quartz";
 
-	public static final String name = "matrix_reservoir";
-
-	public MatrixReservoir () {
-		super(name, Material.GLASS);
-		setLightLevel(16 / 16f);
-		setSize(1, 3, 1);
-	}
-
-	@Override
-	public boolean hasOBJModel () {
-		return true;
-	}
-
-	@Override
-	@SuppressWarnings("deprecation")
-	public boolean isOpaqueCube (IBlockState state) {
-		return false;
+	public EmpoweredQuartzItem() {
+		super(NAME);
 	}
 
 	@Override
