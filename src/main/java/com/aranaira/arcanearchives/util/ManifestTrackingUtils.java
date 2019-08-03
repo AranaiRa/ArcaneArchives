@@ -68,7 +68,7 @@ public class ManifestTrackingUtils {
 	}
 
 	private static Long2ObjectOpenHashMap<List<ItemStack>> getDimension (int dimension) {
-		return reference.computeIfAbsent(dimension, Long2ObjectOpenHashMap::new);
+		return reference.computeIfAbsent(dimension, k -> new Long2ObjectOpenHashMap<>());
 	}
 
 	private static Set<Vec3d> getDimensionPositions (int dimension) {
