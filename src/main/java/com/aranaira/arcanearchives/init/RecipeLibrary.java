@@ -45,6 +45,7 @@ public class RecipeLibrary {
 	public static IGCTRecipe RADIANT_TANK_RECIPE;
 	public static IGCTRecipe MONITORING_CRYSTAL_RECIPE;
 	public static IGCTRecipe SCEPTER_MANIPULATION_RECIPE;
+	public static IGCTRecipe SCEPTER_TRANSLOCATION_RECIPE;
 	public static IGCTRecipe RADIANT_AMPHORA_RECIPE;
 	public static IGCTRecipe LETTER_OF_INVITATION_RECIPE;
 	public static IGCTRecipe LETTER_OF_RESIGNATION_RECIPE;
@@ -112,6 +113,8 @@ public class RecipeLibrary {
 		//////
 
 		SCEPTER_MANIPULATION_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("scepter_manipulation", new ItemStack(ItemRegistry.SCEPTER_MANIPULATION), new ItemStack(ItemRegistry.SCEPTER_REVELATION, 1), new IngredientStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1));
+
+		SCEPTER_MANIPULATION_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("scepter_translocation", new ItemStack(ItemRegistry.SCEPTER_TRANSLOCATION), new ItemStack(ItemRegistry.SCEPTER_REVELATION, 1), new IngredientStack(ItemRegistry.COMPONENT_MATERIALINTERFACE, 1));
 
 		RADIANT_LANTERN_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("radiant_lantern", new ItemStack(BlockRegistry.RADIANT_LANTERN, 4), new ItemStack(ItemRegistry.RAW_RADIANT_QUARTZ, 2), new IngredientStack("nuggetGold", 1));
 
