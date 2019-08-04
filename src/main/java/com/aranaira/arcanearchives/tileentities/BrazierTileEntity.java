@@ -418,9 +418,6 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 
 			List<ItemStack> result = InventoryRoutingUtils.tryInsertItems(BrazierTileEntity.this, stack);
 			if (!result.isEmpty()) {
-				if (result.size() == 1) {
-					return result.get(0);
-				}
 				rejectItemStacks(result);
 			}
 
