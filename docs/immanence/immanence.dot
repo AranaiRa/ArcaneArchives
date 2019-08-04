@@ -1,0 +1,34 @@
+digraph {
+    node [nodesep=3.0, splines=true, style=filled]
+    graph [overlap=false, splines=true, nodesep=3.0]
+    edge [len=10.0]
+    Server_Network [shape=diamond,label="Server Network", fillcolor=violetred]
+    Generator [shape=house,label="Generator", fillcolor=aquamarine4]
+    Consumer [shape=square,label="Consumer", fillcolor=aquamarine4]
+    Subscriber [shape=triangle,label="Subscriber Interface",fillcolor=aquamarine]
+    Bus [shape=circle,label="Immanence Bus",fillcolor=steelblue]
+    Subscriber_List [shape=tripleoctagon,label="Subscriber List", fillcolor=coral]
+    Immanence_Tick [shape=doubleoctagon,label="Immanence Tick", fillcolor=darkorange4]
+
+    Generate_Event [shape=component,label="GenerateEvent", fillcolor=darkorange]
+    Consume_Event [shape=component,label="ConsumeEvent", fillcolor=darkorange]
+
+    Request_Action [shape=cds,label="Action: Request", fillcolor=plum]
+    Return_Action [shape=cds,label="Action: Return", fillcolor=plum]
+
+    Generator -> Subscriber_List [dir=both]
+    Consumer -> Subscriber_List [dir=both]
+    Server_Network -> Bus
+    Immanence_Tick -> Consume_Event
+    Generate_Event -> Immanence_Tick
+    Consume_Event -> Subscriber_List [dir=both]
+    Generate_Event -> Subscriber_List [dir=both]
+    Bus -> Immanence_Tick [dir=both]
+
+    Subscriber -> Consumer
+    Subscriber -> Generator
+
+
+    Consumer -> Request_Action -> Bus
+    Consumer -> Return_Action -> Bus
+}
