@@ -25,7 +25,7 @@ public class IteRef {
 	}
 
 	public boolean shouldCull () {
-		return getTile() != null;
+		return getTile() == null;
 	}
 
 	private World getWorld () {

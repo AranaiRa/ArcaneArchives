@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.tileentities;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.RawQuartzCluster;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.DataHelper;
@@ -12,6 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -76,7 +78,9 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity {
 					ocelot.motionZ += (rand.nextFloat() - 0.5f) * 3F;
 				}
 
-				world.playSound(null, pos, SoundRegistry.RESONATOR_COMPLETE, SoundCategory.BLOCKS, 1f, 1f);
+				if (ConfigHandler.soundConfig.resonatorComplete && ConfigHandler.soundConfig.useSounds) {
+					world.playSound(null, pos, SoundRegistry.RESONATOR_COMPLETE, SoundCategory.BLOCKS, 1f, 1f);
+				}
 			}
 		}
 
@@ -165,6 +169,26 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity {
 				return TickResult.OBSTRUCTION;
 			}
 		}
+	}
+
+	@Override
+	protected boolean shouldPlaySound() {
+		return ConfigHandler.soundConfig.resonatorTicking && super.shouldPlaySound() && canTick() == TickResult.TICKING;
+	}
+
+	@Override
+	protected float getVolume() {
+		return 0.6f;
+	}
+
+	@Override
+	protected boolean hasSound() {
+		return true;
+	}
+
+	@Override
+	protected ResourceLocation getSound() {
+		return new ResourceLocation(ArcaneArchives.MODID, "resonator.loop");
 	}
 
 	public enum TickResult {
