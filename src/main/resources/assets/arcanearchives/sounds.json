@@ -1,0 +1,5 @@
+{
+  "brazier.absorb": { "category": "block", "sounds": ["arcanearchives:brazier_absorb1", "arcanearchives:brazier_absorb2", "arcanearchives:brazier_absorb3"], "name": "brazier_absorb"},
+  "resonator.complete": {"category":  "block", "sounds":  ["arcanearchives:radiant_resonator_make1", "arcanearchives:radiant_resonator_make2", "arcanearchives:radiant_resonator_make3"], "name":  "resonator_complete"},
+  "resonator.loop": {"category":  "block", "sounds":  ["arcanearchives:radiant_resonator_loop_v1"], "name":  "resonator_loop"}
+}
