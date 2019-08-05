@@ -5,12 +5,14 @@ import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.init.BlockRegistry;
+import com.aranaira.arcanearchives.init.SoundRegistry;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
@@ -73,6 +75,8 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity {
 					ocelot.motionX += (rand.nextFloat() - 0.5f) * 3F;
 					ocelot.motionZ += (rand.nextFloat() - 0.5f) * 3F;
 				}
+
+				world.playSound(null, pos, SoundRegistry.RESONATOR_COMPLETE, SoundCategory.BLOCKS, 1f, 1f);
 			}
 		}
 
