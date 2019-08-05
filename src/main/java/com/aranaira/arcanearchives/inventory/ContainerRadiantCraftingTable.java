@@ -378,7 +378,7 @@ public class ContainerRadiantCraftingTable extends Container {
 
 		@Override
 		public boolean canTakeStack (EntityPlayer playerIn) {
-			return true;
+			return false;
 		}
 	}
 }
