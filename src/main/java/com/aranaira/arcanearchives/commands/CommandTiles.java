@@ -98,8 +98,6 @@ public class CommandTiles extends CommandBase {
 				}
 			}
 
-			tiles.refresh(world);
-
 			Int2ObjectOpenHashMap<List<BlockPos>> positions = new Int2ObjectOpenHashMap<>();
 
 			TileListIterable iterable = null;
@@ -125,11 +123,6 @@ public class CommandTiles extends CommandBase {
 					result += " and loaded";
 				} else {
 					result += " but not loaded";
-				}
-				if (ref.tile != null) {
-					result += " has valid reference";
-				} else {
-					result += " has invalid reference";
 				}
 				if (ref != null) {
 					if (ref.getTile() != null) {

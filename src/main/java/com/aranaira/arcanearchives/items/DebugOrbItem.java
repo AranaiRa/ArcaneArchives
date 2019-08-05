@@ -152,12 +152,6 @@ public class DebugOrbItem extends ItemTemplate {
 					IteRef ref = tiles.getReference(te.getUuid());
 					if (ref == null) {
 						debugOutput += "- Tile List reference is null\n";
-					} else if (ref.tile == null) {
-						debugOutput += "- Weak Reference to tile entity is null\n";
-					} else if (ref.tile.get() == null) {
-						debugOutput += "- Failed to resolve Weak Reference to tile entity\n";
-					} else {
-						debugOutput += "- Successfully resolved tile entity via UUID and tile list\n";
 					}
 				}
 			}
@@ -201,12 +195,6 @@ public class DebugOrbItem extends ItemTemplate {
 					IteRef ref = tiles.getReference(te.getUuid());
 					if (ref == null) {
 						debugOutput += "- Tile List reference is null\n";
-					} else if (ref.tile == null) {
-						debugOutput += "- Weak Reference to tile entity is null\n";
-					} else if (ref.tile.get() == null) {
-						debugOutput += "- Failed to resolve Weak Reference to tile entity\n";
-					} else {
-						debugOutput += "- Successfully resolved tile entity via UUID and tile list\n";
 					}
 				}
 			}
@@ -246,12 +234,6 @@ public class DebugOrbItem extends ItemTemplate {
 					IteRef ref = tiles.getReference(te.getUuid());
 					if (ref == null) {
 						debugOutput += "- Tile List reference is null\n";
-					} else if (ref.tile == null) {
-						debugOutput += "- Weak Reference to tile entity is null\n";
-					} else if (ref.tile.get() == null) {
-						debugOutput += "- Failed to resolve Weak Reference to tile entity\n";
-					} else {
-						debugOutput += "- Successfully resolved tile entity via UUID and tile list\n";
 					}
 				}
 			}

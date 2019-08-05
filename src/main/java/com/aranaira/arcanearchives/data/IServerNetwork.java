@@ -50,6 +50,8 @@ public interface IServerNetwork extends IHiveBase {
 
 	boolean containsTile (UUID tileID);
 
+	void updateTile (ImmanenceTileEntity tileEntityInstance);
+
 	/**
 	 * Functions used for interacting with NetworkSaveData.
 	 */

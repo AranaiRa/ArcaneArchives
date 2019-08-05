@@ -2,7 +2,6 @@ package com.aranaira.arcanearchives.types.lists;
 
 import com.aranaira.arcanearchives.types.IteRef;
 import com.aranaira.arcanearchives.types.iterators.TileListIterable;
-import net.minecraft.world.World;
 
 import java.util.ArrayDeque;
 import java.util.Iterator;
@@ -18,22 +17,13 @@ public class CombinedTileList implements ITileList {
 	}
 
 	@Override
-	public void invalidate () {
-		tileLists.forEach(ITileList::invalidate);
+	public void cull() {
+		tileLists.forEach(ITileList::cull);
 	}
 
 	@Override
 	public void removeRef (IteRef ref) {
 		this.tileLists.forEach(r -> r.removeRef(ref));
-	}
-
-	@Override
-	public void refresh (World world) {
-		if (world.isRemote) {
-			return;
-		}
-
-		this.tileLists.forEach(t -> t.refresh(world));
 	}
 
 	@Override

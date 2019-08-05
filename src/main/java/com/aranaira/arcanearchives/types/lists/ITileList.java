@@ -10,7 +10,7 @@ import javax.annotation.Nullable;
 import java.util.UUID;
 
 public interface ITileList extends Iterable<IteRef> {
-	void invalidate ();
+	void cull();
 
 	default boolean containsUUID (UUID uuid) {
 		for (IteRef ref : this) {
@@ -20,6 +20,14 @@ public interface ITileList extends Iterable<IteRef> {
 		}
 
 		return false;
+	}
+
+	default void updateReference (ImmanenceTileEntity tile) {
+		IteRef ref = getReference(tile.getUuid());
+		if (ref != null) {
+			ref.pos = tile.getPos();
+			ref.dimension = tile.dimension;
+		}
 	}
 
 	@Nullable
@@ -48,10 +56,7 @@ public interface ITileList extends Iterable<IteRef> {
 	default ImmanenceTileEntity getByUUID (UUID uuid) {
 		for (IteRef ref : this) {
 			if (ref.uuid.equals(uuid)) {
-				if (ref.tile != null) {
-					return ref.tile.get();
-				}
-				return null;
+				return ref.getTile();
 			}
 		}
 
@@ -83,17 +88,6 @@ public interface ITileList extends Iterable<IteRef> {
 	}
 
 	void removeRef (IteRef ref);
-
-	void refresh (World world);
-
-	default void refresh (ImmanenceTileEntity tile) {
-		if (tile.getWorld().isRemote) {
-			return;
-		}
-
-		IteRef ref = getReference(tile.getUuid());
-		ref.updateTile(tile);
-	}
 
 	default TileListIterable iterable () {
 		return new TileListIterable(iterator());

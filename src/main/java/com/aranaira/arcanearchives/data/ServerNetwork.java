@@ -114,10 +114,6 @@ public class ServerNetwork implements IServerNetwork {
 		return uuid;
 	}
 
-	public void refreshTiles () {
-		tiles.refresh(getWorld());
-	}
-
 	public boolean isSafe (UUID id) {
 		return safeLimitedIDs.contains(id);
 	}
@@ -161,13 +157,13 @@ public class ServerNetwork implements IServerNetwork {
 		tiles.updateUUID(oldId, newId);
 	}
 
+	// TODO: Reconsider this
 	@Override
 	public void addTile (ImmanenceTileEntity tileEntityInstance) {
 		tileEntityInstance.tryGenerateUUID();
 
 		if (tiles.containsUUID(tileEntityInstance.uuid)) {
 			IteRef ref = tiles.getReference(tileEntityInstance.uuid);
-			ref.refreshTile(tileEntityInstance.getWorld(), tileEntityInstance.getWorld().provider.getDimension());
 			return;
 		}
 
@@ -209,6 +205,11 @@ public class ServerNetwork implements IServerNetwork {
 	@Override
 	public boolean containsTile (UUID tileID) {
 		return tiles.containsUUID(tileID);
+	}
+
+	@Override
+	public void updateTile (ImmanenceTileEntity tileEntityInstance) {
+		tiles.updateReference(tileEntityInstance);
 	}
 
 	@Override
@@ -325,8 +326,6 @@ public class ServerNetwork implements IServerNetwork {
 	@Override
 	public void rebuildManifest () {
 		manifestItems.clear();
-
-		refreshTiles();
 
 		Map<Integer, List<ItemEntry>> preManifest = ManifestUtils.buildItemEntryList(this);
 		List<CollatedEntry> manifestList = ManifestUtils.parsePreManifest(preManifest, this);
