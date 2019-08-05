@@ -62,7 +62,6 @@ public class Handlers {
 			if (ref == null) {
 				return null;
 			}
-			ref.refreshTile(player.world, player.dimension);
 			try {
 				return (V) ref.getTile();
 			} catch (ClassCastException exception) {

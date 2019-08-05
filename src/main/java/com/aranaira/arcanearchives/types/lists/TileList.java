@@ -12,23 +12,13 @@ public class TileList extends ReferenceList<IteRef> implements ITileList {
 	}
 
 	@Override
-	public void invalidate () {
-		removeIf(ite -> ite.shouldCull() || (ite.tile != null && ite.getTile() != null && ite.getTile().isInvalid()));
+	public void cull() {
+		removeIf(IteRef::shouldCull);
 	}
 
 	@Override
 	public void removeRef (IteRef ref) {
 		this.remove(ref);
-	}
-
-	@Override
-	public void refresh (World world) {
-		if (world.isRemote) {
-			return;
-		}
-
-		int dim = world.provider.getDimension();
-		this.forEach((ref) -> ref.refreshTile(world, dim));
 	}
 
 	@Override

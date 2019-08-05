@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.util;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.HiveNetwork;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.tileentities.BrazierTileEntity;
@@ -69,12 +70,19 @@ public class InventoryRoutingUtils {
 		int radius = brazier.getRadius() * brazier.getRadius();
 		BlockPos bPos = brazier.getPos();
 		ServerNetwork network = brazier.getServerNetwork();
-		network.refreshTiles();
+		if (network == null) {
+			ArcaneArchives.logger.error("Brazier with tile id " + brazier.getUuid().toString() + " has an invalid server network; cannot build network weights.");
+			return workspace;
+		}
 		Iterable<IteRef> tiles;
 		if (!network.isHiveMember() || brazier.getNetworkMode()) {
 			tiles = network.getValidTiles();
 		} else {
 			HiveNetwork hive = network.getHiveNetwork();
+			if (hive == null) {
+				ArcaneArchives.logger.error("Server Network with id " + network.getUuid().toString() + " is part of a hive but no hive network is available; cannot build network weights.");
+				return workspace;
+			}
 			tiles = hive.getValidTiles();
 		}
 		if (tiles == null) {
@@ -83,6 +91,9 @@ public class InventoryRoutingUtils {
 		for (IteRef ite : tiles) {
 			if (IBrazierRouting.class.isAssignableFrom(ite.clazz) && network.distanceSqNoVertical(bPos, ite.pos) <= radius && ite.dimension == brazier.dimension) {
 				ImmanenceTileEntity tile = ite.getTile();
+				if (tile == null) {
+					continue;
+				}
 				int weight = calculateWeight((IBrazierRouting) tile, stack);
 				workspace.add(new WeightedEntry<>((IBrazierRouting) tile, weight));
 			}

@@ -76,6 +76,8 @@ public class ServerTickHandler {
 
 				if (!network.containsTile(ite)) {
 					network.addTile(ite);
+				} else {
+					network.updateTile(ite);
 				}
 
 				if (ite instanceof RadiantResonatorTileEntity || ite instanceof MatrixCoreTileEntity) {
