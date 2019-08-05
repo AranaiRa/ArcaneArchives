@@ -167,4 +167,26 @@ public class ConfigHandler {
 		@Config.RequiresMcRestart
 		public String[] MunchstoneValidEntries = MunchstoneItem.DEFAULT_ENTRIES;
 	}
+
+	@Config.Comment("Settings related to sounds")
+	@Config.Name("Sound Settings")
+	public static SoundConfig soundConfig = new SoundConfig();
+
+	public static class SoundConfig {
+		@Config.Comment("Set to false to disable the Resonator completion sound")
+		@Config.Name("Resonator Complete Sound")
+		public boolean resonatorComplete = true;
+
+		@Config.Comment("Set to false to disable the Resonator ticking sound")
+		@Config.Name("Resonator Ticking Sound")
+		public boolean resonatorTicking = true;
+
+		@Config.Comment("Set to false to disable the Brazier item pick-up sound")
+		@Config.Name("Brazier Pickup Sound")
+		public boolean brazierPickup = true;
+
+		@Config.Comment("Set to false to disable all sounds")
+		@Config.Name("Use Sounds")
+		public boolean useSounds = true;
+	}
 }

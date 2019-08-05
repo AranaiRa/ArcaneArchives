@@ -2,8 +2,10 @@ package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.init.ItemRegistry;
+import com.aranaira.arcanearchives.init.SoundRegistry;
 import com.aranaira.arcanearchives.tileentities.interfaces.IBrazierRouting;
 import com.aranaira.arcanearchives.util.InventoryRoutingUtils;
 import com.aranaira.arcanearchives.util.ItemUtils;
@@ -27,6 +29,7 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.SoundCategory;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -43,6 +46,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 	public static int STEP = 10;
+	public static long DELAY = 300;
 
 	private UUID lastUUID = null;
 	private long lastClick = -1;
@@ -51,6 +55,8 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 	private boolean subnetworkOnly;
 	private FakeHandler fakeHandler = new FakeHandler();
 	private boolean showingRange;
+
+	private long lastSound = 0;
 
 	private Int2ObjectOpenHashMap<ItemCache> itemCache = new Int2ObjectOpenHashMap<>();
 
@@ -127,6 +133,15 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 		return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ? CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(fakeHandler) : null;
 	}
 
+	private void maybePlaySound () {
+		if (ConfigHandler.soundConfig.brazierPickup && ConfigHandler.soundConfig.useSounds) {
+			if (System.currentTimeMillis() - lastSound >= DELAY) {
+				lastSound = System.currentTimeMillis();
+				world.playSound(null, pos, SoundRegistry.BRAZIER_ABSORB, SoundCategory.BLOCKS, 1f, 1f);
+			}
+		}
+	}
+
 	// Handle entities that hit
 	public void beginInsert (EntityItem item) {
 		if (item.world.isRemote) {
@@ -137,6 +152,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 		}
 
 		List<ItemStack> stack = InventoryRoutingUtils.tryInsertItems(this, item.getItem());
+		maybePlaySound();
 		if (!stack.isEmpty()) {
 			rejectItemStacks(stack);
 		}
@@ -276,6 +292,8 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 			rejectItemStacks(toThrow);
 		}
 
+		maybePlaySound();
+
 		if (doUpdate || doubleClick) {
 			PlayerUtil.Server.syncInventory((EntityPlayerMP) player);
 		}
@@ -396,6 +414,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 		public void setStackInSlot (int slot, @Nonnull ItemStack stack) {
 			List<ItemStack> result = InventoryRoutingUtils.tryInsertItems(BrazierTileEntity.this, stack);
 			rejectItemStacks(result);
+			maybePlaySound();
 		}
 
 		@Override
@@ -420,6 +439,8 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 			if (!result.isEmpty()) {
 				rejectItemStacks(result);
 			}
+
+			maybePlaySound();
 
 			return ItemStack.EMPTY;
 		}
