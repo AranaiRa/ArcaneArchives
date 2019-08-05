@@ -36,6 +36,7 @@ public class RecipeLibrary {
 	public static IGCTRecipe RADIANT_DUST_RECIPE;
 	public static IGCTRecipe SCINTILLATING_INLAY_RECIPE;
 	public static IGCTRecipe DEVOURING_CHARM_RECIPE;
+	public static IGCTRecipe SERENITY_CHARM_RECIPE;
 	/*public static IGCTRecipe MATRIX_CORE_RECIPE;
 	public static IGCTRecipe MATRIX_STORAGE_RECIPE;
 	public static IGCTRecipe MATRIX_REPOSITORY_RECIPE;*/
@@ -137,6 +138,8 @@ public class RecipeLibrary {
 		CONTAINMENT_FIELD_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("containment_field", new ItemStack(ItemRegistry.COMPONENT_CONTAINMENTFIELD, 1), ItemRegistry.COMPONENT_SCINTILLATINGINLAY, new IngredientStack("ingotGold", 2), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 2));
 
 		DEVOURING_CHARM_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("devouring_charm", new ItemStack(ItemRegistry.DEVOURING_CHARM, 4), new IngredientStack("ingotGold", 1), new IngredientStack(Blocks.OBSIDIAN, 2), new IngredientStack(Items.FLINT_AND_STEEL, 1));
+
+		SERENITY_CHARM_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("serenity_charm", new ItemStack(ItemRegistry.SERENITY_CHARM, 4), new IngredientStack("nuggetGold", 3), new IngredientStack("wool", 1), new IngredientStack(ItemRegistry.COMPONENT_RADIANTDUST, 1));
 
 		RADIANT_AMPHORA_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("radiant_amphora", new ItemStack(ItemRegistry.RADIANT_AMPHORA), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 4), new ItemStack(Items.CLAY_BALL, 4), new ItemStack(Items.GOLD_NUGGET, 4));
 
