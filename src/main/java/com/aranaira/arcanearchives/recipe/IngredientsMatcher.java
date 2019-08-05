@@ -57,7 +57,7 @@ public class IngredientsMatcher {
 
 	public Int2IntMap getMatchingSlots (@Nonnull IItemHandler inv) {
 		rebuildCounts();
-		Int2IntMap matchingSlots = new Int2IntOpenHashMap();
+		Int2IntOpenHashMap matchingSlots = new Int2IntOpenHashMap();
 
 		for (int slot = 0; slot < inv.getSlots(); ++slot) {
 			ItemStack itemstack = inv.getStackInSlot(slot);

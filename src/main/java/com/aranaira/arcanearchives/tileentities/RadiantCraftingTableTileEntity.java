@@ -6,6 +6,7 @@ import com.aranaira.arcanearchives.tileentities.interfaces.IManifestTileEntity;
 import com.aranaira.arcanearchives.util.NBTUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.Block;
+import net.minecraft.client.gui.recipebook.RecipeList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
@@ -19,6 +20,7 @@ import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 
 public class RadiantCraftingTableTileEntity extends ImmanenceTileEntity implements IManifestTileEntity {
 	private ItemStackHandler persistentMatrix = new ItemStackHandler(9);
@@ -117,7 +119,7 @@ public class RadiantCraftingTableTileEntity extends ImmanenceTileEntity implemen
 			return false;
 		}
 
-		FastCraftingRecipe fast = new FastCraftingRecipe(recipe);
+		FastCraftingRecipe fast = new FastCraftingRecipe(recipe, world);
 		IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
 		CombinedInvWrapper inv = new CombinedInvWrapper((IItemHandlerModifiable) playerInventory, new InvWrapper(((ContainerRadiantCraftingTable) player.openContainer).getCraftMatrix()));
 		return fast.matches(inv);
@@ -132,15 +134,17 @@ public class RadiantCraftingTableTileEntity extends ImmanenceTileEntity implemen
 		if (player.openContainer instanceof ContainerRadiantCraftingTable) {
 			InventoryCrafting matrix = ((ContainerRadiantCraftingTable) player.openContainer).getCraftMatrix();
 
-			FastCraftingRecipe fast = new FastCraftingRecipe(recipe);
+			FastCraftingRecipe fast = new FastCraftingRecipe(recipe, world);
 			IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
 			CombinedInvWrapper inv = new CombinedInvWrapper(new InvWrapper(matrix), (IItemHandlerModifiable) playerInventory);
 			if (fast.matches(inv)) {
 				fast.consumeAndHandleInventory(fast, inv, player, null, null, null, null);
-				ItemStack result = fast.getRecipeOutput();
-				result = ItemHandlerHelper.insertItemStacked(playerInventory, result, false);
-				if (!result.isEmpty()) {
-					Block.spawnAsEntity(world, getPos(), result);
+				List<ItemStack> returned = fast.getReturned();
+				for (ItemStack result : returned) {
+					result = ItemHandlerHelper.insertItemStacked(playerInventory, result, false);
+					if (!result.isEmpty()) {
+						Block.spawnAsEntity(world, getPos(), result);
+					}
 				}
 			}
 		}
