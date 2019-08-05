@@ -178,7 +178,7 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity {
 
 	@Override
 	protected float getVolume() {
-		return 0.6f;
+		return 0.35f;
 	}
 
 	@Override
