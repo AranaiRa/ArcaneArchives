@@ -1,7 +1,7 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "arcanearchives:items/item_cutquartz",
-        "layer1": "arcanearchives:blocks/placeholder"
+        "layer0": "arcanearchives:items/item_empquartz",
+        "layer1": "arcanearchives:items/item_empquartz_layer1"
     }
 }
