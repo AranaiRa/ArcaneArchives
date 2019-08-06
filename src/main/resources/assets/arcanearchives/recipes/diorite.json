@@ -1,0 +1,28 @@
+{
+    "_comment": [
+        "Craft diorite with raw quartz."
+    ],
+    "type": "forge:ore_shaped",
+    "pattern":
+    [
+        "cd",
+        "dc"
+    ],
+    "key":
+    {
+        "c": {
+            "type": "forge:ore_dict",
+            "ore": "cobblestone"
+        },
+        "d":
+        {
+            "item": "arcanearchives:raw_quartz"
+        }
+    },
+    "result": {
+        "item": "minecraft:stone",
+        "data": 3,
+        "count": 8
+    },
+    "mirror": true
+}
