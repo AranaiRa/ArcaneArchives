@@ -50,7 +50,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.lang.ref.WeakReference;
 import java.util.List;
 
 public class RadiantAmphoraItem extends ItemTemplate {
@@ -66,7 +65,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 	@Nullable
 	@Override
 	public ICapabilityProvider initCapabilities (ItemStack stack, @Nullable NBTTagCompound nbt) {
-		return new AmphoraCapabilityProvider(new AmphoraUtil(stack));
+		return new FluidTankWrapper(new AmphoraUtil(stack));
 	}
 
 	@Override
@@ -224,38 +223,28 @@ public class RadiantAmphoraItem extends ItemTemplate {
 
 	public static class AmphoraUtil {
 		private ItemStack stack;
-		private NBTTagCompound nbt;
-		private WeakReference<RadiantTankTileEntity> te;
-		private WeakReference<World> world;
 
 		public AmphoraUtil (ItemStack incoming) {
 			if (incoming.isEmpty()) {
 				incoming = new ItemStack(ItemRegistry.RADIANT_AMPHORA);
 			}
 			stack = incoming;
-			nbt = ItemUtils.getOrCreateTagCompound(stack);
+			ItemUtils.getOrCreateTagCompound(stack);
 		}
 
 		@Nullable
 		public World getWorld () {
-			if (this.world == null || this.world.get() == null) {
-				World world = getServerWorld();
-				if (world == null) {
-					try {
-						world = getClientWorld();
-					} catch (NoClassDefFoundError e) {
-						ArcaneArchives.logger.error("[Amphora] Wasn't able to find a server-side world but client-side method results in Minecraft 'class not found' error. How could this happen!", new IllegalArgumentException());
-					}
+			Side side = FMLCommonHandler.instance().getEffectiveSide();
+			if (side == Side.CLIENT) {
+				try {
+					return getClientWorld();
+				} catch (NoClassDefFoundError e) {
+					ArcaneArchives.logger.error("[Amphora] Was told we were on the client but client-side method results in Minecraft 'class not found' error. How could this happen!", new IllegalArgumentException());
+					return null;
 				}
-				if (world != null) {
-					this.world = new WeakReference<>(world);
-				}
+			} else {
+				return getServerWorld();
 			}
-			if (this.world == null) {
-				return null;
-			}
-
-			return this.world.get();
 		}
 
 		@SideOnly(Side.CLIENT)
@@ -265,10 +254,6 @@ public class RadiantAmphoraItem extends ItemTemplate {
 
 		private World getServerWorld () {
 			MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-			if (server == null) {
-				return null;
-			}
-
 			return server.getEntityWorld();
 		}
 
@@ -276,59 +261,64 @@ public class RadiantAmphoraItem extends ItemTemplate {
 			return stack;
 		}
 
+		public NBTTagCompound getTag () {
+			return stack.getTagCompound();
+		}
+
 		public boolean isRemote () {
-			if (te == null || te.get() == null) {
+			RadiantTankTileEntity te = getTile();
+			if (te == null) {
 				return true;
 			}
 
-			return te.get().getWorld().isRemote;
+			return te.getWorld().isRemote;
 		}
 
 		public void setHome (BlockPos pos, int dimension) {
-			nbt.setLong("homeTank", pos.toLong());
-			nbt.setInteger("homeTankDim", dimension);
+			getTag().setLong("homeTank", pos.toLong());
+			getTag().setInteger("homeTankDim", dimension);
 		}
 
 		public BlockPos getHomePos () {
-			if (!nbt.hasKey("homeTank")) {
+			if (!getTag().hasKey("homeTank")) {
 				return null;
 			}
 
-			return BlockPos.fromLong(nbt.getLong("homeTank"));
+			return BlockPos.fromLong(getTag().getLong("homeTank"));
 		}
 
 		public int getHomeDim () {
-			return nbt.getInteger("homeTankDim");
+			return getTag().getInteger("homeTankDim");
 		}
 
 		public TankMode getMode () {
-			if (!nbt.hasKey("mode")) {
-				nbt.setInteger("mode", TankMode.FILL.ordinal());
+			if (!getTag().hasKey("mode")) {
+				getTag().setInteger("mode", TankMode.FILL.ordinal());
 			}
-			return TankMode.fromOrdinal(nbt.getInteger("mode"));
+			return TankMode.fromOrdinal(getTag().getInteger("mode"));
 		}
 
 		public void setMode (TankMode mode) {
-			if (nbt != null) {
-				nbt.setInteger("mode", mode.ordinal());
+			if (getTag() != null) {
+				getTag().setInteger("mode", mode.ordinal());
 			}
 		}
 
 		public void toggleMode () {
-			if (!nbt.hasKey("mode")) {
-				nbt.setInteger("mode", TankMode.FILL.ordinal());
+			if (!getTag().hasKey("mode")) {
+				getTag().setInteger("mode", TankMode.FILL.ordinal());
 			} else {
-				TankMode current = TankMode.fromOrdinal(nbt.getInteger("mode"));
+				TankMode current = TankMode.fromOrdinal(getTag().getInteger("mode"));
 				if (current == TankMode.FILL) {
-					nbt.setInteger("mode", TankMode.DRAIN.ordinal());
+					getTag().setInteger("mode", TankMode.DRAIN.ordinal());
 				} else {
-					nbt.setInteger("mode", TankMode.FILL.ordinal());
+					getTag().setInteger("mode", TankMode.FILL.ordinal());
 				}
 			}
 		}
 
 		public boolean isLinked () {
-			return nbt.hasKey("homeTank") && nbt.hasKey("homeTankDim");
+			return getTag().hasKey("homeTank") && getTag().hasKey("homeTankDim");
 		}
 
 		@SideOnly(Side.CLIENT)
@@ -388,36 +378,33 @@ public class RadiantAmphoraItem extends ItemTemplate {
 			return new FluidStack(fluid, 1000);
 		}
 
-		private void validate () {
-			nbt = stack.getTagCompound();
+		@Nullable
+		public RadiantTankTileEntity getTile () {
+			if (getTag().hasKey("homeTank") && getTag().hasKey("homeTankDim")) {
+				World world = getWorld();
+				int dim = getTag().getInteger("homeTankDim");
+				BlockPos home = BlockPos.fromLong(getTag().getLong("homeTank"));
+				if (world != null && world.provider.getDimension() == dim) {
+					return WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, home);
+				}
+			}
+
+			return null;
 		}
 
 		@Nullable
 		public IFluidHandler getCapability () {
-			validate();
-
-			if (nbt == null || nbt.isEmpty()) {
+			if (getTag() == null || getTag().isEmpty()) {
 				return null;
 			}
 
-			if (te == null || te.get() == null) {
-				if (nbt.hasKey("homeTank") && nbt.hasKey("homeTankDim")) {
-					BlockPos home = BlockPos.fromLong(nbt.getLong("homeTank"));
-					int dim = nbt.getInteger("homeTankDim");
-					World world = getWorld();
-					if (world != null && world.provider.getDimension() == dim) {
-						te = new WeakReference<>(WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, home));
-					}
-				} else {
-					return null;
-				}
-			}
+			RadiantTankTileEntity te = getTile();
 
-			if (te == null || te.get() == null) {
+			if (te == null) {
 				return null;
 			}
 
-			IFluidHandler capability = te.get().getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
+			IFluidHandler capability = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
 			if (capability == null) {
 				return null;
 			}
@@ -431,39 +418,17 @@ public class RadiantAmphoraItem extends ItemTemplate {
 	}
 
 
-	private static class FluidTankWrapper implements IFluidHandlerItem {
+	private static class FluidTankWrapper implements IFluidHandlerItem, ICapabilityProvider {
 		private static long VALIDITY_DELAY = 5000;
-		protected IFluidHandler tank;
-		private long lastUpdated;
 		protected AmphoraUtil util;
 
 		public FluidTankWrapper (AmphoraUtil util) {
 			this.util = util;
-			update();
-		}
-
-		public void update () {
-			this.tank = util.getCapability();
-			this.lastUpdated = System.currentTimeMillis();
-		}
-
-		public boolean valid () {
-			if (tank == null) {
-				return false;
-			}
-
-			return System.currentTimeMillis() - this.lastUpdated < VALIDITY_DELAY;
-		}
-
-		public void validate () {
-			if (!valid()) {
-				update();
-			}
 		}
 
 		@Override
 		public IFluidTankProperties[] getTankProperties () {
-			validate();
+			IFluidHandler tank = util.getCapability();
 			if (tank == null) {
 				return new IFluidTankProperties[]{};
 			}
@@ -476,7 +441,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 
 		@Override
 		public int fill (FluidStack resource, boolean doFill) {
-			validate();
+			IFluidHandler tank = util.getCapability();
 
 			if (tank == null || util.getMode() == TankMode.DRAIN) {
 				return 0;
@@ -493,24 +458,19 @@ public class RadiantAmphoraItem extends ItemTemplate {
 		@Override
 		@Nullable
 		public FluidStack drain (FluidStack resource, boolean doDrain) {
-			validate();
+			IFluidHandler tank = util.getCapability();
 
 			if (tank == null || util.getMode() == TankMode.FILL) {
 				return null;
 			}
 
-			//resource.amount = Math.min(resource.amount, 1000);
-			//if (!util.isRemote()) {
 			return tank.drain(resource, doDrain);
-			//} else {
-			//	return tank.drain(resource, false);
-			//}
 		}
 
 		@Override
 		@Nullable
 		public FluidStack drain (int maxDrain, boolean doDrain) {
-			validate();
+			IFluidHandler tank = util.getCapability();
 
 			if (tank == null || util.getMode() == TankMode.FILL) {
 				if (!doDrain && maxDrain == Integer.MAX_VALUE && tank != null) {
@@ -519,25 +479,13 @@ public class RadiantAmphoraItem extends ItemTemplate {
 				return null;
 			}
 
-			//if (!util.isRemote()) {
 			return tank.drain(maxDrain, doDrain);
-			//} else {
-			//	return tank.drain(maxDrain, false);
-			//}
 		}
 
 		@Nonnull
 		@Override
 		public ItemStack getContainer () {
 			return util.getStack();
-		}
-	}
-
-	public static class AmphoraCapabilityProvider implements ICapabilityProvider {
-		private AmphoraUtil util;
-
-		public AmphoraCapabilityProvider (AmphoraUtil util) {
-			this.util = util;
 		}
 
 		@Override
