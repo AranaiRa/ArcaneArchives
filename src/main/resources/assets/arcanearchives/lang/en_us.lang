@@ -6,6 +6,8 @@ item.empowered_quartz.name=Empowered Radiant Quartz
 
 item.containment_field.name=Containment Field
 item.devouring_charm.name=Devouring Charm
+item.echo.name=Echoes of the Unknowable
+item.echo_typed.name=Echoes of %s
 item.gemsocket.name=Gem Socket
 item.geomancy_pendulum.name=Geomancy Pendulum
 item.geomantic_map.name=Geomantic Map
