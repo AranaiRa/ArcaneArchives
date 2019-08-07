@@ -236,7 +236,8 @@ public class ContainerRadiantChest extends Container {
 								slot6.putStack(ItemStack.EMPTY);
 								inventoryplayer.setItemStack(ItemStack.EMPTY);
 							} else {
-								int l2 = dragType == 0 ? slotStack.getCount() : (slotStack.getCount() + 1) / 2;
+								int slotCount = Math.min(slotStack.getMaxStackSize(), slotStack.getCount());
+								int l2 = dragType == 0 ? slotCount : (slotCount + 1) / 2;
 								inventoryplayer.setItemStack(slot6.decrStackSize(l2));
 
 								if (slotStack.isEmpty()) {
