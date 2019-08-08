@@ -75,6 +75,10 @@ public class FastCraftingRecipe implements IArcaneArchivesRecipe {
 
 		int slot = 0;
 		outer: for (Ingredient ingredient : originalRecipe.getIngredients()) {
+			if (ingredient == Ingredient.EMPTY) {
+				slot++;
+				continue;
+			}
 			Iterator<ItemStack> iter = temp.iterator();
 			while (iter.hasNext()) {
 				ItemStack next = iter.next();
