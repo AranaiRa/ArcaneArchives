@@ -98,7 +98,13 @@ public class RadiantAmphoraItem extends ItemTemplate {
 			int dimID = util.getHomeDim();
 			String fluidType = util.getFluidType();
 			tooltip.add("");
-			tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.amphora.linked", bp.getX(), bp.getY(), bp.getZ(), DimensionType.getById(dimID).getName(), fluidType));
+			String dimensionType;
+			try {
+				dimensionType = DimensionType.getById(dimID).getName();
+			} catch (IllegalArgumentException e) {
+				dimensionType = "unknown dimension";
+			}
+			tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.amphora.linked", bp.getX(), bp.getY(), bp.getZ(), dimensionType, fluidType));
 		}
 	}
 
