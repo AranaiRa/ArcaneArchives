@@ -6,6 +6,7 @@ import com.aranaira.arcanearchives.api.RecipeIngredientHandler;
 import com.aranaira.arcanearchives.recipe.IngredientStack;
 import com.aranaira.arcanearchives.recipe.IngredientsMatcher;
 import com.aranaira.arcanearchives.util.ItemUtils;
+import com.sasmaster.glelwjgl.java.matrix;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
 import it.unimi.dsi.fastutil.ints.Int2IntMap.Entry;
 import net.minecraft.entity.player.EntityPlayer;
@@ -56,7 +57,14 @@ public class FastCraftingRecipe implements IArcaneArchivesRecipe {
 		IngredientsMatcher matcher = new IngredientsMatcher(ingredients);
 		Int2IntMap matchingSlots = matcher.getMatchingSlots(inv);
 
-		InventoryCrafting matrix = new InventoryCrafting(fakeContainer, 3, 3);
+		int minSize = 1;
+		for (; minSize <= 3; minSize++) {
+			if (originalRecipe.canFit(minSize, minSize)) {
+				break;
+			}
+		}
+
+		InventoryCrafting matrix = new InventoryCrafting(fakeContainer, minSize, minSize);
 
 		List<ItemStack> temp = new ArrayList<>();
 		for (Entry slot : matchingSlots.int2IntEntrySet()) {
