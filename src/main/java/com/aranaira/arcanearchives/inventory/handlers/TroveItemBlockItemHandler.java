@@ -13,6 +13,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.swing.text.html.Option;
 
 public class TroveItemBlockItemHandler implements ITroveItemHandler, ICapabilityProvider {
 	private TroveUpgradeItemHandler upgrades = null;
@@ -104,17 +105,30 @@ public class TroveItemBlockItemHandler implements ITroveItemHandler, ICapability
 		saveToStack();
 	}
 
-	@Override
-	public boolean isVoiding () {
+	private OptionalUpgradesHandler getOptionals () {
 		if (optionals == null) {
 			NBTTagCompound tag = container.getTagCompound();
 			if (tag == null || !tag.hasKey(RadiantTroveTileEntity.Tags.OPTIONAL_UPGRADES)) {
-				return false;
+				return null;
 			}
 			this.optionals = new OptionalUpgradesHandler();
 			this.optionals.deserializeNBT(tag.getCompoundTag(RadiantTroveTileEntity.Tags.OPTIONAL_UPGRADES));
 		}
-		return this.optionals.hasUpgrade(UpgradeType.VOID);
+		return this.optionals;
+	}
+
+	@Override
+	public boolean isVoiding () {
+		OptionalUpgradesHandler handler = getOptionals();
+		if (handler == null) return false;
+		return handler.hasUpgrade(UpgradeType.VOID);
+	}
+
+	@Override
+	public boolean isLocked () {
+		OptionalUpgradesHandler handler = getOptionals();
+		if (handler == null) return false;
+		return handler.hasUpgrade(UpgradeType.LOCK);
 	}
 
 	@Override

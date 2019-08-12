@@ -13,6 +13,7 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
@@ -49,7 +50,10 @@ public class RenderHUD {
 						TroveItemHandler handler = te.getInventory();
 
 						ItemStack item = handler.getItemCurrent();
-						if (!handler.isEmpty()) {
+						if (handler.isLocked()) {
+							item = handler.getItem();
+						}
+						if (!handler.isEmpty() && item.getItem() != Items.AIR) {
 							RenderHelper.enableGUIStandardItemLighting();
 							mc.getRenderItem().renderItemIntoGUI(item, x - 40, y);
 							RenderHelper.disableStandardItemLighting();

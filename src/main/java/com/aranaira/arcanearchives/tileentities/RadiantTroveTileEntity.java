@@ -19,6 +19,7 @@ import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -54,14 +55,6 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 
 	public UUID getLastUUID () {
 		return lastUUID;
-	}
-
-	public TroveUpgradeItemHandler getSizeUpgrades () {
-		return sizeUpgrades;
-	}
-
-	public OptionalUpgradesHandler getOptionalUpgrades () {
-		return optionalUpgrades;
 	}
 
 	private TroveUpgradeItemHandler sizeUpgrades = new TroveUpgradeItemHandler() {
@@ -416,7 +409,12 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 
 		@Override
 		public boolean isVoiding () {
-			return this.tile.getOptionalUpgrades().hasUpgrade(UpgradeType.VOID);
+			return this.tile.getOptionalUpgradesHandler().hasUpgrade(UpgradeType.VOID);
+		}
+
+		@Override
+		public boolean isLocked () {
+			return this.tile.getOptionalUpgradesHandler().hasUpgrade(UpgradeType.LOCK);
 		}
 
 		@Override
@@ -495,7 +493,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 
 		@Override
 		public boolean isEmpty () {
-			return count == 0;
+			return isLocked() ? count == 0 && getReference().getItem() == Items.AIR : count == 0;
 		}
 
 		@Override

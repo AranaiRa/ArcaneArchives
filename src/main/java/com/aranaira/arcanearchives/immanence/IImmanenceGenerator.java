@@ -1,4 +1,4 @@
 package com.aranaira.arcanearchives.immanence;
 
-public interface IImmanenceGenerator extends IImmanenceBusSubscriber {
+public interface IImmanenceGenerator extends IImmanenceSubscriber {
 }
