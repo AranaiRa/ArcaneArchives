@@ -253,7 +253,7 @@ public class EventHandler {
 	@SubscribeEvent
 	public static void onRightClickBlock (PlayerInteractEvent.RightClickBlock event) {
 		if (!event.getWorld().isRemote) {
-			if (Loader.isModLoaded("Botania")) {
+			if (Loader.isModLoaded("botania")) {
 				tryPetalApothecary(event);
 			}
 

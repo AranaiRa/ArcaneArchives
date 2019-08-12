@@ -21,6 +21,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -88,9 +89,19 @@ public class RivertearItem extends ArcaneGemItem {
 
 				if (ray != null) {
 					BlockPos pos = ray.getBlockPos();
-					IPetalApothecary ipa = WorldUtil.getTileEntity(IPetalApothecary.class, player.dimension, pos);
-					TileCrucible tc = WorldUtil.getTileEntity(TileCrucible.class, player.dimension, pos);
-					if (ipa == null) { //Cancel normal use if the target block is a petal apothecary
+					boolean isPetalApothecary = false;
+					boolean isCrucible = false;
+					if(Loader.isModLoaded("botania")) {
+						IPetalApothecary ipa = WorldUtil.getTileEntity(IPetalApothecary.class, player.dimension, pos);
+						if(ipa != null)
+							isPetalApothecary = true;
+					}
+					if(Loader.isModLoaded("thaumcraft")) {
+						TileCrucible tc = WorldUtil.getTileEntity(TileCrucible.class, player.dimension, pos);
+						if(tc != null)
+							isCrucible = true;
+					}
+					if (!isPetalApothecary && !isCrucible) { //Cancel normal use if the target block is a petal apothecary
 						EnumFacing facing = ray.sideHit;
 
 						Vec3d end = new Vec3d(pos.offset(facing).getX(), pos.offset(facing).getY(), pos.offset(facing).getZ());
