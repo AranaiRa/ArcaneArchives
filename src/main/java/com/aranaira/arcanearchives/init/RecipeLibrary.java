@@ -28,6 +28,7 @@ import net.minecraftforge.oredict.OreIngredient;
 @SuppressWarnings("unused")
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class RecipeLibrary {
+	public static IGCTRecipe RADIANT_KEY_RECIPE;
 	public static IGCTRecipe SHAPED_RADIANT_QUARTZ_RECIPE;
 	public static IGCTRecipe MANIFEST_RECIPE;
 	public static IGCTRecipe CONTAINMENT_FIELD_RECIPE;
@@ -138,6 +139,8 @@ public class RecipeLibrary {
 		CONTAINMENT_FIELD_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("containment_field", new ItemStack(ItemRegistry.COMPONENT_CONTAINMENTFIELD, 1), ItemRegistry.COMPONENT_SCINTILLATINGINLAY, new IngredientStack("ingotGold", 2), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 2));
 
 		DEVOURING_CHARM_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("devouring_charm", new ItemStack(ItemRegistry.DEVOURING_CHARM, 4), new IngredientStack("ingotGold", 1), new IngredientStack(Blocks.OBSIDIAN, 2), new IngredientStack(Items.FLINT_AND_STEEL, 1));
+
+		RADIANT_KEY_RECIPE = GCTRecipeList.instance.makeAndAddRecipeWithCreator("radiant_key", new ItemStack(ItemRegistry.RADIANT_KEY, 4), new IngredientStack("ingotGold", 1), new IngredientStack("nuggetGold", 3), new IngredientStack(ItemRegistry.SHAPED_RADIANT_QUARTZ));
 
 		SERENITY_CHARM_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("serenity_charm", new ItemStack(ItemRegistry.SERENITY_CHARM, 4), new IngredientStack("nuggetGold", 3), new IngredientStack("wool", 1), new IngredientStack(ItemRegistry.COMPONENT_RADIANTDUST, 1));
 

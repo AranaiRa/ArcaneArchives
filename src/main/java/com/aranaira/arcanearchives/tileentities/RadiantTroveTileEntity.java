@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.handlers.ITroveItemHandler;
 import com.aranaira.arcanearchives.inventory.handlers.OptionalUpgradesHandler;
 import com.aranaira.arcanearchives.inventory.handlers.SizeUpgradeItemHandler;
@@ -87,18 +88,15 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 
 	public void onRightClickTrove (EntityPlayer player) {
 		ItemStack mainhand = player.getHeldItemMainhand();
-		if (mainhand.isEmpty()) {
-			mainhand = player.getHeldItemOffhand();
-		}
 
-		boolean fake_hand = false;
+		boolean fakeHand = false;
 
 		if (mainhand.isEmpty()) {
 			if (inventory.isEmpty()) {
 				return;
 			} else {
 				mainhand = inventory.getItem();
-				fake_hand = true;
+				fakeHand = true;
 			}
 		}
 
@@ -110,23 +108,29 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 
 		ItemStack reference = inventory.getItem();
 
-		if (!ItemUtils.areStacksEqualIgnoreSize(reference, mainhand) && !fake_hand) {
-			player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.trove_insertion_failed.wrong"), true);
-			return;
-		}
-
 		UUID playerId = player.getUniqueID();
 		boolean doubleClick = false;
 
-		if (lastUUID == playerId && (System.currentTimeMillis() - lastClick) <= 1500) {
+		if (lastUUID == playerId && (System.currentTimeMillis() - lastClick) <= 800) {
 			doubleClick = true;
 		}
 
 		lastUUID = playerId;
 		lastClick = System.currentTimeMillis();
 
+		if (!ItemUtils.areStacksEqualIgnoreSize(reference, mainhand) && !fakeHand) {
+			if (!doubleClick) {
+				// TODO: Do we include this message?
+				//player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.trove_insertion_failed.wrong"), true);
+				return;
+			} else {
+				fakeHand = true;
+				mainhand = inventory.getItem();
+			}
+		}
+
 		ItemStack result;
-		if (!fake_hand) {
+		if (!fakeHand) {
 			result = inventory.insertItem(0, mainhand, false);
 
 			if (!result.isEmpty()) {
@@ -184,6 +188,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 			return;
 		}
 
+		// TODO: Replace with system time
 		int curTick = world.getMinecraftServer().getTickCounter();
 		if (curTick - lastTick < 3) {
 			return;
@@ -192,15 +197,23 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 
 		this.markDirty();
 
-		int count = 1;
-
-		ItemStack stack = inventory.extractItem(0, count, true);
+		ItemStack stack = inventory.extractItem(0, 1, true);
 		if (stack.isEmpty()) {
 			return;
 		}
 
-		if (player.isSneaking()) {
+		boolean fullStack = ConfigHandler.trovesDispense;
+
+		int count;
+
+		if (fullStack) {
 			count = stack.getMaxStackSize();
+		} else {
+			count = 1;
+		}
+
+		if (player.isSneaking()) {
+			count = (fullStack) ? 1 : stack.getMaxStackSize();
 		}
 
 		stack = inventory.extractItem(0, count, false);
