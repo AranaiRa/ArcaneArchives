@@ -87,18 +87,15 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 
 	public void onRightClickTrove (EntityPlayer player) {
 		ItemStack mainhand = player.getHeldItemMainhand();
-		if (mainhand.isEmpty()) {
-			mainhand = player.getHeldItemOffhand();
-		}
 
-		boolean fake_hand = false;
+		boolean fakeHand = false;
 
 		if (mainhand.isEmpty()) {
 			if (inventory.isEmpty()) {
 				return;
 			} else {
 				mainhand = inventory.getItem();
-				fake_hand = true;
+				fakeHand = true;
 			}
 		}
 
@@ -110,23 +107,29 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 
 		ItemStack reference = inventory.getItem();
 
-		if (!ItemUtils.areStacksEqualIgnoreSize(reference, mainhand) && !fake_hand) {
-			player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.trove_insertion_failed.wrong"), true);
-			return;
-		}
-
 		UUID playerId = player.getUniqueID();
 		boolean doubleClick = false;
 
-		if (lastUUID == playerId && (System.currentTimeMillis() - lastClick) <= 1500) {
+		if (lastUUID == playerId && (System.currentTimeMillis() - lastClick) <= 800) {
 			doubleClick = true;
 		}
 
 		lastUUID = playerId;
 		lastClick = System.currentTimeMillis();
 
+		if (!ItemUtils.areStacksEqualIgnoreSize(reference, mainhand) && !fakeHand) {
+			if (!doubleClick) {
+				// TODO: Do we include this message?
+				//player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.trove_insertion_failed.wrong"), true);
+				return;
+			} else {
+				fakeHand = true;
+				mainhand = inventory.getItem();
+			}
+		}
+
 		ItemStack result;
-		if (!fake_hand) {
+		if (!fakeHand) {
 			result = inventory.insertItem(0, mainhand, false);
 
 			if (!result.isEmpty()) {
