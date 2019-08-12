@@ -1,7 +1,10 @@
 package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
+import com.aranaira.arcanearchives.items.IUpgradeItem;
 import com.aranaira.arcanearchives.tileentities.BrazierTileEntity;
+import com.aranaira.arcanearchives.tileentities.RadiantFurnaceTileEntity;
+import com.aranaira.arcanearchives.types.enums.UpgradeType;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -26,10 +29,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import thaumcraft.api.crafting.IInfusionStabiliserExt;
 
 import javax.annotation.Nonnull;
+import java.util.Arrays;
 import java.util.List;
 
 @Optional.Interface(modid = "thaumcraft", iface = "thaumcraft.api.crafting.IInfusionStabiliserExt")
-public class Brazier extends BlockTemplate implements IInfusionStabiliserExt {
+public class Brazier extends BlockTemplate implements IInfusionStabiliserExt, IUpgradeItem {
 
 	public static final String name = "brazier_of_hoarding";
 
@@ -109,5 +113,27 @@ public class Brazier extends BlockTemplate implements IInfusionStabiliserExt {
 	@Override
 	public float getStabilizationAmount (World world, BlockPos blockPos) {
 		return 0.2f;
+	}
+
+	@Override
+	public UpgradeType getUpgradeType(ItemStack stack) {
+		return UpgradeType.ROUTING;
+	}
+
+	@Override
+	public int getUpgradeSize(ItemStack stack) {
+		return -1;
+	}
+
+	@Override
+	public int getSlotIsUpgradeFor(ItemStack stack) {
+		return -1;
+	}
+
+	public static List<Class<?>> UPGRADE_FOR = Arrays.asList(RadiantFurnaceTileEntity.class);
+
+	@Override
+	public List<Class<?>> upgradeFor() {
+		return UPGRADE_FOR;
 	}
 }
