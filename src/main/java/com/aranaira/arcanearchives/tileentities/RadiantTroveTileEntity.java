@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.handlers.ITroveItemHandler;
 import com.aranaira.arcanearchives.inventory.handlers.OptionalUpgradesHandler;
 import com.aranaira.arcanearchives.inventory.handlers.SizeUpgradeItemHandler;
@@ -187,6 +188,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 			return;
 		}
 
+		// TODO: Replace with system time
 		int curTick = world.getMinecraftServer().getTickCounter();
 		if (curTick - lastTick < 3) {
 			return;
@@ -195,15 +197,23 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 
 		this.markDirty();
 
-		int count = 1;
-
-		ItemStack stack = inventory.extractItem(0, count, true);
+		ItemStack stack = inventory.extractItem(0, 1, true);
 		if (stack.isEmpty()) {
 			return;
 		}
 
-		if (player.isSneaking()) {
+		boolean fullStack = ConfigHandler.trovesDispense;
+
+		int count;
+
+		if (fullStack) {
 			count = stack.getMaxStackSize();
+		} else {
+			count = 1;
+		}
+
+		if (player.isSneaking()) {
+			count = (fullStack) ? 1 : stack.getMaxStackSize();
 		}
 
 		stack = inventory.extractItem(0, count, false);

@@ -49,6 +49,21 @@ public class ConfigHandler {
 		}
 	}
 
+	@Config.Ignore
+	public static boolean UnbreakableContainers = false;
+
+	@Config.Comment("Disable to use default Minecraft-style GUI elements. (Client Only)")
+	@Config.Name("Use Pretty GUIs")
+	public static boolean UsePrettyGUIs = true;
+
+	@Config.Comment("Set to true to mark all new chests with the no-new-items routing type")
+	@Config.Name("Default Radiant Chests to 'No New Items' routing")
+	public static boolean defaultRoutingNoNewItems = false;
+
+	@Config.Comment("Set to true to dispense an entire stack for left click; false to dispense a single item for left click")
+	@Config.Name("Troves Dispense Entire Stack")
+	public static boolean trovesDispense = true;
+
 	@Config.Comment("Settings related to server-side configuration")
 	@Config.Name("Server Settings")
 	public static ServerSideConfig serverSideConfig = new ServerSideConfig();
@@ -67,17 +82,6 @@ public class ConfigHandler {
 		@Config.RangeInt(min = 1, max = 8)
 		public int RadiantMultiplier = 4;
 	}
-
-	@Config.Ignore
-	public static boolean UnbreakableContainers = false;
-
-	@Config.Comment("Disable to use default Minecraft-style GUI elements. (Client Only)")
-	@Config.Name("Use Pretty GUIs")
-	public static boolean UsePrettyGUIs = true;
-
-	@Config.Comment("Set to true to mark all new chests with the no-new-items routing type")
-	@Config.Name("Default Radiant Chests to 'No New Items' routing")
-	public static boolean defaultRoutingNoNewItems = false;
 
 	@Config.Comment("Settings related to item tracking in non-mod containers")
 	@Config.Name("Non-Mod Tracking (Client-Only)")
