@@ -91,6 +91,29 @@ public interface IGCTRecipeList {
 	IGCTRecipe makeAndReplaceRecipeWithCreatorAndCondition (String name, @Nonnull ItemStack result, Object... recipe) throws IndexOutOfBoundsException;
 
 	/**
+	 * Identical to makeAndAddRecipe except that the default implementation
+	 * allows for the supply of the creator of the item to the item when
+	 * it is crafted.
+	 *
+	 * @param name   See makeAndAddRecipe.
+	 * @param result See makeAndAddRecipe.
+	 * @param recipe See makeAndAddRecipe.
+	 * @return An instance of IGCTRecipe which supports Creators, which is
+	 * by default GCTRecipeWithCrafter.
+	 */
+	IGCTRecipe makeAndAddRecipeWithCreator (String name, @Nonnull ItemStack result, Object... recipe);
+
+	/**
+	 * As per makeAndReplaceRecipe only returning a Creators IGCTRecipe instance.
+	 *
+	 * @param name See makeAndReplaceRecipe.
+	 * @param result  See makeAndReplaceRecipe.
+	 * @param recipe See makeAndReplaceRecipe.
+	 * @return See makeAndReplaceRecipe.
+	 */
+	IGCTRecipe makeAndReplaceRecipeWithCreator (String name, @Nonnull ItemStack result, Object... recipe) throws IndexOutOfBoundsException;
+
+	/**
 	 * Allows the addition of a straight instance of an IGCTRecipe.
 	 *
 	 * @param recipe The recipe to be added.

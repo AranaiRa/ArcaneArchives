@@ -83,6 +83,24 @@ public class GCTRecipeList implements IGCTRecipeList {
 	}
 
 	@Override
+	public IGCTRecipe makeAndAddRecipeWithCreator (String name, @Nonnull ItemStack result, Object... recipe) {
+		GCTRecipeWithCrafter newRecipe = new GCTRecipeWithCrafter(name, result, recipe);
+		addRecipe(newRecipe);
+		return newRecipe;
+	}
+
+	@Override
+	public IGCTRecipe makeAndReplaceRecipeWithCreator (String name, @Nonnull ItemStack result, Object... recipe) throws IndexOutOfBoundsException {
+		ResourceLocation nameResolved = new ResourceLocation(ArcaneArchives.MODID, name);
+		if (!RECIPE_LIST.containsKey(nameResolved)) {
+			throw new IndexOutOfBoundsException("Key '" + name + "' is not contained in the recipe list; use `makeAndAddRecipe` instead or check your spelling.");
+		}
+		GCTRecipeWithCrafter newRecipe = new GCTRecipeWithCrafter(name, result, recipe);
+		addRecipe(newRecipe);
+		return newRecipe;
+	}
+
+	@Override
 	public void addRecipe (IGCTRecipe recipe) {
 		IMMUTABLE_COPY = null;
 		RECIPE_LIST.put(recipe.getName(), recipe);
