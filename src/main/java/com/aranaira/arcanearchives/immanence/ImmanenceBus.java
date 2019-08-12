@@ -6,7 +6,7 @@ import it.unimi.dsi.fastutil.ints.IntArrayList;
 import java.util.*;
 
 public class ImmanenceBus implements IImmanenceBus {
-	private List<IImmanenceBusSubscriber> subscribers = new ArrayList<>();
+	private List<IImmanenceSubscriber> subscribers = new ArrayList<>();
 	private List<ImmanenceTicket> ticketList_primary = new ArrayList<>();
 	private Map<UUID, ImmanenceTicket> ticketUUIDReference_generated = new HashMap<>();
 	private Int2ObjectOpenHashMap<ImmanenceTicket> ticketReference_generated = new Int2ObjectOpenHashMap<>();
