@@ -17,12 +17,20 @@ import com.aranaira.arcanearchives.util.ManifestUtils.CollatedEntry;
 import com.aranaira.arcanearchives.util.ManifestUtils.ItemEntry;
 import com.aranaira.arcanearchives.util.TileUtils;
 import io.netty.buffer.ByteBuf;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap.Entry;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraft.world.gen.ChunkProviderServer;
+import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
@@ -80,6 +88,33 @@ public class ServerNetwork implements IServerNetwork {
 
 	public TileList getTiles () {
 		return tiles;
+	}
+
+	public boolean anyLoaded () {
+		Int2ObjectOpenHashMap<Set<ChunkPos>> map = new Int2ObjectOpenHashMap<>();
+		for (DimensionType i : DimensionType.values()) {
+			map.put(i.getId(), new HashSet<>());
+		}
+
+		for (IteRef ref : tiles) {
+			map.get(ref.dimension).add(new ChunkPos(ref.pos));
+		}
+
+		for (Entry<Set<ChunkPos>> entry : map.int2ObjectEntrySet()) {
+			if (entry.getValue().isEmpty()) continue;
+			int dimension = entry.getIntKey();
+			Set<ChunkPos> chunks = entry.getValue();
+
+			WorldServer dimWorld = DimensionManager.getWorld(dimension);
+			ChunkProviderServer provider = dimWorld.getChunkProvider();
+			for (ChunkPos pos : chunks) {
+				if (provider.chunkExists(pos.x, pos.z)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	public void tileEntityMoved (UUID tileId, BlockPos newPosition) {

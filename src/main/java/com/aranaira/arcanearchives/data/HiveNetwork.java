@@ -9,6 +9,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class HiveNetwork implements IHiveBase {
 	private List<ServerNetwork> memberNetworks;
@@ -17,6 +19,24 @@ public class HiveNetwork implements IHiveBase {
 	public HiveNetwork (ServerNetwork ownerNetwork, List<ServerNetwork> memberNetworks) {
 		this.ownerNetwork = ownerNetwork;
 		this.memberNetworks = memberNetworks;
+	}
+
+	private void applyToHive (Consumer<ServerNetwork> consumer) {
+		consumer.accept(ownerNetwork);
+
+		memberNetworks.forEach(consumer);
+	}
+
+	private boolean applyToHive (Predicate<ServerNetwork> predicate) {
+		if (predicate.test(ownerNetwork)) {
+			return true;
+		}
+
+		for (ServerNetwork network : memberNetworks) {
+			if (predicate.test(network)) return true;
+		}
+
+		return false;
 	}
 
 	// TODO: ????
@@ -46,6 +66,11 @@ public class HiveNetwork implements IHiveBase {
 	@Override
 	public boolean isHiveNetwork () {
 		return true;
+	}
+
+	@Override
+	public boolean anyLoaded () {
+		return applyToHive(ServerNetwork::anyLoaded);
 	}
 
 	@Override

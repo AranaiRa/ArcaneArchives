@@ -17,6 +17,8 @@ public interface IHiveBase {
 
 	boolean isHiveNetwork ();
 
+	boolean anyLoaded ();
+
 	ITileList getTiles ();
 
 	Iterable<IteRef> getValidTiles ();
