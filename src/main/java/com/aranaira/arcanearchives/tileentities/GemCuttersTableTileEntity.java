@@ -275,6 +275,7 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 			}
 		}
 
+		@Override
 		public Int2IntOpenHashMap getItemReference () {
 			if (invalid) {
 				invalid = false;

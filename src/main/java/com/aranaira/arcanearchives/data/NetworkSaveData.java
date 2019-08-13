@@ -8,6 +8,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.storage.WorldSavedData;
 
 import javax.annotation.Nullable;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -30,6 +31,10 @@ public class NetworkSaveData extends WorldSavedData {
 	// TODO: Use this?
 	public void clearServerMap () {
 		arcaneArchivesNetworks.clear();
+	}
+
+	public Collection<ServerNetwork> getAllNetworks () {
+		return arcaneArchivesNetworks.values();
 	}
 
 	@Nullable

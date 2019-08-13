@@ -17,6 +17,7 @@ import java.util.UUID;
 
 public class Messages {
 	public interface EmptyMessage<T extends IMessage> extends IMessage, BaseHandler<T> {
+		@Override
 		default void fromBytes (ByteBuf buf) {
 		}
 

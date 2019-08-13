@@ -30,6 +30,7 @@ public class Handlers {
 	}
 
 	public interface ServerHandler<T extends IMessage> extends BaseHandler<T> {
+		@Override
 		default IMessage onMessage (T message, MessageContext ctx) {
 			FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> processMessage(message, ctx));
 
@@ -92,6 +93,7 @@ public class Handlers {
 	}
 
 	public interface ClientHandler<T extends IMessage> extends BaseHandler<T> {
+		@Override
 		default IMessage onMessage (T message, MessageContext ctx) {
 			ArcaneArchives.proxy.scheduleTask(() -> processMessage(message, ctx), Side.CLIENT);
 

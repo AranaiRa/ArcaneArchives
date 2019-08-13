@@ -444,6 +444,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 			return BASE_COUNT * (upgrades + 1);
 		}
 
+		@Override
 		public ItemStack getItemCurrent () {
 			if (count == 0) {
 				return ItemStack.EMPTY;
