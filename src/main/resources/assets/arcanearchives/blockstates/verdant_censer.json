@@ -23,13 +23,13 @@
                     "scale": 0.25
                 },
                 "thirdperson_righthand": {
-                    "translation": [0.0, 0.15, 0.0],
-                    "rotation": [ { "y": 0}, {"x": 30}, {"z": 0} ],
+                    "translation": [0.0, -0.20, -0.55],
+                    "rotation": [ { "y": 0}, {"x": 70}, {"z": 0} ],
                     "scale": 0.25
                 },
                 "thirdperson_lefthand": {
-                    "translation": [0.0, 0.15, 0.0],
-                    "rotation": [ { "y": 0}, {"x": 30}, {"z": 0} ],
+                    "translation": [0.0, -0.20, -0.55],
+                    "rotation": [ { "y": 0}, {"x": 70}, {"z": 0} ],
                     "scale": 0.25
                 },
                 "gui": {
