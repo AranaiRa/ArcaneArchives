@@ -79,6 +79,7 @@ public class EntityWeight extends Entity {
 		return "W: " + getWeight();
 	}
 
+	@Override
 	public boolean getAlwaysRenderNameTag () {
 		return true;
 	}

@@ -7,6 +7,8 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -36,6 +38,20 @@ public class DataHelper {
 			return null;
 		}
 
+		NetworkSaveData saveData = getNetworkData(world);
+
+		return saveData.getNetwork(uuid);
+	}
+
+	public static WorldServer getWorld () {
+		return FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(0);
+	}
+
+	public static NetworkSaveData getNetworkData () {
+		return getNetworkData(getWorld());
+	}
+
+	public static NetworkSaveData getNetworkData (World world) {
 		NetworkSaveData saveData = (NetworkSaveData) world.getMapStorage().getOrLoadData(NetworkSaveData.class, NetworkSaveData.ID);
 
 		if (saveData == null) {
@@ -43,7 +59,7 @@ public class DataHelper {
 			world.getMapStorage().setData(NetworkSaveData.ID, saveData);
 		}
 
-		return saveData.getNetwork(uuid);
+		return saveData;
 	}
 
 	public static PlayerSaveData getPlayerData (World world, EntityPlayer player) {

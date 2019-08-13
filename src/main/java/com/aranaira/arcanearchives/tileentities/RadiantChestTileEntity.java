@@ -237,6 +237,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 		return super.getCapability(capability, facing);
 	}
 
+	@Override
 	public int countEmptySlots () {
 		int empty = 0;
 		for (int i = 0; i < inventory.getSlots(); i++) {
@@ -275,6 +276,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 			}
 		}
 
+		@Override
 		public Int2IntOpenHashMap getItemReference () {
 			if (invalid) {
 				invalid = false;
