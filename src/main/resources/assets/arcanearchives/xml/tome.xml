@@ -172,6 +172,7 @@
             <p indent="16" condition="arsenal_enabled"><stack item="arcanearchives:gemsocket"/> <link ref="Items:GemSocket">Gem Socket</link></p>
             <p indent="16"><stack item="arcanearchives:material_interface"/> <link ref="Items:MaterialInterface">Material Interface</link></p>
             <p indent="16"><stack item="arcanearchives:matrix_brace"/> <link ref="Items:MatrixBrace">Matrix Brace</link></p>
+            <p indent="16"><stack item="arcanearchives:obstruction_charm"/> <link ref="Items:ObstructionCharm">Obstruction Charm</link></p>
             <p indent="16"><stack item="arcanearchives:radiant_amphora"/> <link ref="Items:RadiantAmphora">Radiant Amphora</link></p>
             <p indent="16"><stack item="arcanearchives:radiant_key"/> <link ref="Items:RadiantKey">Radiant Key</link></p>
             <p indent="16"><stack item="arcanearchives:serenity_charm"/> <link ref="Items:SerenityCharm">Serenity Charm</link></p>
@@ -1497,6 +1498,28 @@
 
 
 
+        <section id="ObstructionCharm">
+            <page_title_shorter>
+                <title>Obstruction Charm</title>
+            </page_title_shorter>
+            <p align="center"><stack item="arcanearchives:obstruction_charm" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                TBD
+            </p>
+            <horizontal_rule/>
+            <p>
+                <stack item="arcanearchives:gemcutters_table" /> Obstruction Charms can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
+            </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:obstruction_charm"/>
+                </recipe.result>
+            </recipe>
+        </section>
+
+
+
         <section id="RadiantAmphora">
             <page_title_shorter>
                 <title>Radiant Amphora</title>
@@ -2376,6 +2399,7 @@
                 Echoing Reverberation Chamber
                 Immanence
                 Immanent Incubator
+                Obstruction Charm
                 Radiant Furnace
                 Radiant Key
                 Radiant Quartz (Empowered)

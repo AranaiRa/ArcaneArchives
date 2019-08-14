@@ -14,6 +14,7 @@ item.geomantic_map.name=Geomantic Map
 item.manifest.name=Manifest
 item.material_interface.name=Material Interface
 item.matrix_brace.name=Matrix Brace
+item.obstruction_charm.name=Obstruction Charm
 item.radiant_amphora.name=Radiant Amphora
 item.radiant_dust.name=Radiant Dust
 item.radiant_key.name=Radiant Key
