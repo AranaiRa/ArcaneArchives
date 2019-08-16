@@ -87,7 +87,6 @@ public class HiveNetwork implements IHiveBase {
 		return TileUtils.filterValid(getTiles());
 	}
 
-	@Nullable
 	@Override
 	public List<ServerNetwork> getContainedNetworks () {
 		return memberNetworks;

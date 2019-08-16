@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.data;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.HiveSaveData.Hive;
 import com.aranaira.arcanearchives.types.ISerializeByteBuf;
+import com.google.common.collect.Iterators;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,6 +15,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class DataHelper {
 	public static UUID INVALID = UUID.fromString("00000000-0000-0000-0000-000000000000");
@@ -51,6 +53,49 @@ public class DataHelper {
 		return getNetworkData(getWorld());
 	}
 
+	public static class ServerList implements Iterable<IHiveBase> {
+		public List<ServerNetwork> independents;
+		public List<HiveNetwork> hives;
+
+		public ServerList (List<ServerNetwork> independents, List<HiveNetwork> hives) {
+			this.independents = independents;
+			this.hives = hives;
+		}
+
+		@Override
+		public Iterator<IHiveBase> iterator () {
+			return Iterators.concat(independents.iterator(), hives.iterator());
+		}
+	}
+
+	public static ServerList getNetworks (){
+		NetworkSaveData networkData = getNetworkData();
+		HiveSaveData hiveData = getHiveData();
+
+		List<ServerNetwork> independents = new ArrayList<>();
+		List<HiveNetwork> hives = new ArrayList<>();
+
+		Set<UUID> hiveMembers = new HashSet<>();
+		Set<UUID> ownerUuids = hiveData.getHiveOwners();
+
+		Collection<ServerNetwork> baseNetworks = networkData.getAllNetworks();
+
+		for (ServerNetwork network : baseNetworks) {
+			UUID nid = network.getUuid();
+			if (ownerUuids.contains(nid)) {
+				HiveNetwork hive = network.getHiveNetwork();
+				hives.add(hive);
+				for (ServerNetwork contained: hive.getContainedNetworks()) {
+					hiveMembers.add(contained.getUuid());
+				}
+			} else if (!hiveMembers.contains(nid)) {
+				independents.add(network);
+			}
+		}
+
+		return new ServerList(independents, hives);
+	}
+
 	public static NetworkSaveData getNetworkData (World world) {
 		NetworkSaveData saveData = (NetworkSaveData) world.getMapStorage().getOrLoadData(NetworkSaveData.class, NetworkSaveData.ID);
 
@@ -70,6 +115,11 @@ public class DataHelper {
 		}
 
 		return saveData;
+	}
+
+	public static HiveSaveData getHiveData () {
+		World world = FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(0);
+		return getHiveData(world);
 	}
 
 	public static HiveSaveData getHiveData (World world) {

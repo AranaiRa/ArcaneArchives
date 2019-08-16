@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.data;
 
+import com.google.common.collect.Sets;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -26,6 +27,10 @@ public class HiveSaveData extends WorldSavedData {
 
 	public HiveSaveData () {
 		super(ID);
+	}
+
+	public Set<UUID> getHiveOwners () {
+		return Sets.newHashSet(ownerToHive.keySet());
 	}
 
 	@Override

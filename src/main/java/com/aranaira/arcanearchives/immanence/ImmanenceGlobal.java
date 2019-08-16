@@ -1,17 +1,20 @@
 package com.aranaira.arcanearchives.immanence;
 
 import com.aranaira.arcanearchives.data.DataHelper;
-import com.aranaira.arcanearchives.data.NetworkSaveData;
-import com.aranaira.arcanearchives.data.ServerNetwork;
-
-import java.util.List;
+import com.aranaira.arcanearchives.data.DataHelper.ServerList;
+import com.aranaira.arcanearchives.data.IHiveBase;
 
 public class ImmanenceGlobal {
 	public static ImmanenceGlobal instance = new ImmanenceGlobal();
 
-	private List<ServerNetwork> gatherNetworks () {
-		NetworkSaveData saveData = DataHelper.getNetworkData();
+	public void tickImmanence () {
+		ServerList networks = DataHelper.getNetworks();
 
-		return null;
+		for (IHiveBase base : networks) {
+			IImmanenceBus bus = base.getImmanenceBus();
+
+			bus.generateImmanence();
+			bus.consumeImmanence();
+		}
 	}
 }
