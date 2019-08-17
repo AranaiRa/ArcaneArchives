@@ -1,5 +1,8 @@
 package com.aranaira.arcanearchives.data;
 
+import com.aranaira.arcanearchives.immanence.IImmanenceBus;
+import com.aranaira.arcanearchives.immanence.IImmanenceSubscriber;
+import com.aranaira.arcanearchives.immanence.ImmanenceBus;
 import com.aranaira.arcanearchives.types.IteRef;
 import com.aranaira.arcanearchives.types.lists.CombinedTileList;
 import com.aranaira.arcanearchives.types.lists.ITileList;
@@ -15,10 +18,12 @@ import java.util.function.Predicate;
 public class HiveNetwork implements IHiveBase {
 	private List<ServerNetwork> memberNetworks;
 	private ServerNetwork ownerNetwork;
+	private ImmanenceBus immanenceBus;
 
 	public HiveNetwork (ServerNetwork ownerNetwork, List<ServerNetwork> memberNetworks) {
 		this.ownerNetwork = ownerNetwork;
 		this.memberNetworks = memberNetworks;
+		this.immanenceBus = new ImmanenceBus(this);
 	}
 
 	private void applyToHive (Consumer<ServerNetwork> consumer) {
@@ -33,7 +38,9 @@ public class HiveNetwork implements IHiveBase {
 		}
 
 		for (ServerNetwork network : memberNetworks) {
-			if (predicate.test(network)) return true;
+			if (predicate.test(network)) {
+				return true;
+			}
 		}
 
 		return false;
@@ -88,8 +95,18 @@ public class HiveNetwork implements IHiveBase {
 	}
 
 	@Override
+	public Iterable<IteRef> getImmananceTiles () {
+		return TileUtils.filterAssignableClass(getTiles(), IImmanenceSubscriber.class);
+	}
+
+	@Override
 	public List<ServerNetwork> getContainedNetworks () {
 		return memberNetworks;
+	}
+
+	@Override
+	public IImmanenceBus getImmanenceBus () {
+		return immanenceBus;
 	}
 
 	@Nullable

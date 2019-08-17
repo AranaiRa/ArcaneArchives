@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.immanence;
 
+import com.aranaira.arcanearchives.data.IHiveBase;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.types.IteRef;
@@ -10,12 +11,12 @@ import java.util.List;
 public class ImmanenceBus implements IImmanenceBus {
 	private List<IImmanenceConsumer> consumers = new ArrayList<>();
 	private List<IImmanenceGenerator> generators = new ArrayList<>();
-	private final ServerNetwork owner;
+	private final IHiveBase owner;
 	private int lastTotalImmanence = -1;
 	private int lastLeftoverImmanence = -1;
 	private int lastTick = -1;
 
-	public ImmanenceBus (ServerNetwork owner) {
+	public ImmanenceBus (IHiveBase owner) {
 		this.owner = owner;
 	}
 
