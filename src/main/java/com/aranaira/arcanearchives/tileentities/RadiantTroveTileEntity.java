@@ -160,14 +160,6 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 		PlayerUtil.Server.syncInventory((EntityPlayerMP) player);
 	}
 
-	@Override
-	@Nonnull
-	public SPacketUpdateTileEntity getUpdatePacket () {
-		NBTTagCompound compound = writeToNBT(new NBTTagCompound());
-
-		return new SPacketUpdateTileEntity(pos, 0, compound);
-	}
-
 	public boolean isEmpty () {
 		return inventory.isEmpty();
 	}
@@ -217,15 +209,16 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 	}
 
 	@Override
-	public NBTTagCompound getUpdateTag () {
-		return writeToNBT(new NBTTagCompound());
-	}
-
-	@Override
 	@Nonnull
 	public NBTTagCompound writeToNBT (NBTTagCompound compound) {
 		super.writeToNBT(compound);
 		return this.serializeStack(compound);
+	}
+
+	@Override
+	public void readFromNBT (NBTTagCompound compound) {
+		super.readFromNBT(compound);
+		this.deserializeStack(compound);
 	}
 
 	public NBTTagCompound serializeStack (NBTTagCompound compound) {
@@ -235,22 +228,10 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 		return compound;
 	}
 
-	@Override
-	public void readFromNBT (NBTTagCompound compound) {
-		super.readFromNBT(compound);
-		this.deserializeStack(compound);
-	}
-
 	public void deserializeStack (NBTTagCompound compound) {
 		this.inventory.deserializeNBT(compound.getCompoundTag(Tags.HANDLER_ITEM));
 		this.sizeUpgrades.deserializeNBT(compound.getCompoundTag(Tags.SIZE_UPGRADES));
 		this.optionalUpgrades.deserializeNBT(compound.getCompoundTag(Tags.OPTIONAL_UPGRADES));
-	}
-
-	@Override
-	public void onDataPacket (NetworkManager net, SPacketUpdateTileEntity pkt) {
-		readFromNBT(pkt.getNbtCompound());
-		super.onDataPacket(net, pkt);
 	}
 
 	@Override
