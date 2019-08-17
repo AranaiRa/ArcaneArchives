@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.immanence;
 
+import com.aranaira.arcanearchives.api.immanence.IImmanenceBus;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.DataHelper.ServerList;
 import com.aranaira.arcanearchives.data.IHiveBase;

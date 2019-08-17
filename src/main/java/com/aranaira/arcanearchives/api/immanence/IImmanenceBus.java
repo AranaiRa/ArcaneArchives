@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.immanence;
+package com.aranaira.arcanearchives.api.immanence;
 
 public interface IImmanenceBus {
 	void generateImmanence (int currentTick);

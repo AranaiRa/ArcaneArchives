@@ -1,8 +1,8 @@
 package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.data.DataHelper.HiveMembershipInfo;
-import com.aranaira.arcanearchives.immanence.IImmanenceBus;
-import com.aranaira.arcanearchives.immanence.IImmanenceSubscriber;
+import com.aranaira.arcanearchives.api.immanence.IImmanenceBus;
+import com.aranaira.arcanearchives.api.immanence.IImmanenceSubscriber;
 import com.aranaira.arcanearchives.immanence.ImmanenceBus;
 import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketNetworks;
@@ -31,7 +31,6 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.ChunkProviderServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.FMLCommonHandler;

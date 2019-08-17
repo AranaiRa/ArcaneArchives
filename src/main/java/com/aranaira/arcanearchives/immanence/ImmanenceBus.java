@@ -1,7 +1,9 @@
 package com.aranaira.arcanearchives.immanence;
 
+import com.aranaira.arcanearchives.api.immanence.IImmanenceBus;
+import com.aranaira.arcanearchives.api.immanence.IImmanenceConsumer;
+import com.aranaira.arcanearchives.api.immanence.IImmanenceGenerator;
 import com.aranaira.arcanearchives.data.IHiveBase;
-import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.types.IteRef;
 
