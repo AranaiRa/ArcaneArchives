@@ -24,6 +24,8 @@ public interface IHiveBase {
 
 	Iterable<IteRef> getValidTiles ();
 
+	Iterable<IteRef> getImmananceTiles ();
+
 	@Nullable
 	List<ServerNetwork> getContainedNetworks ();
 

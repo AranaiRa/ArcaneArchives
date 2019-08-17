@@ -30,4 +30,8 @@ public class TileList extends ReferenceList<IteRef> implements ITileList {
 	public int getSize () {
 		return this.size();
 	}
+
+	public void sortPriority () {
+		this.sort((o1, o2) -> Integer.compare(o2.priority(), o1.priority()));
+	}
 }

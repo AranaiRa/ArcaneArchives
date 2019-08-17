@@ -22,6 +22,7 @@ public class IteRef {
 		this.dimension = tile.dimension;
 		this.clazz = tile.getClass();
 		this.uuid = tile.uuid;
+		this.networkPriority = tile.getNetworkPriority();
 	}
 
 	public boolean shouldCull () {

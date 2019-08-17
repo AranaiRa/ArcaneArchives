@@ -3,9 +3,11 @@ package com.aranaira.arcanearchives.events;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
+import com.aranaira.arcanearchives.immanence.ImmanenceGlobal;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
 import com.aranaira.arcanearchives.tileentities.MatrixCoreTileEntity;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
@@ -17,6 +19,8 @@ import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class ServerTickHandler {
+	public static final int IMMANENCE_TICK = 10 * 20; // Immanence tick happens every 10 seconds
+
 	private static final List<ImmanenceTileEntity> incomingITEs = new ArrayList<>();
 	private static final List<ImmanenceTileEntity> outgoingITEs = new ArrayList<>();
 	private static final List<ImmanenceTileEntity> limitedITEs = new ArrayList<>();
@@ -99,6 +103,11 @@ public class ServerTickHandler {
 		}
 
 		outgoingITEs.clear();
+
+		int tick = FMLCommonHandler.instance().getMinecraftServerInstance().getTickCounter();
+		if (tick % IMMANENCE_TICK == 0) {
+			ImmanenceGlobal.instance.tickImmanence(tick / IMMANENCE_TICK);
+		}
 	}
 
 	private static void limitedITE (ImmanenceTileEntity entity) {

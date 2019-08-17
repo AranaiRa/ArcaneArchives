@@ -1,6 +1,9 @@
 package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.data.DataHelper.HiveMembershipInfo;
+import com.aranaira.arcanearchives.immanence.IImmanenceBus;
+import com.aranaira.arcanearchives.immanence.IImmanenceSubscriber;
+import com.aranaira.arcanearchives.immanence.ImmanenceBus;
 import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketNetworks;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
@@ -59,6 +62,8 @@ public class ServerNetwork implements IServerNetwork {
 	private int totalResonators = 0;
 	private int maxDistance = 0;
 	private boolean defaultRoutingNoNewItems = false;
+
+	private ImmanenceBus immanenceBus = new ImmanenceBus(this);
 
 	// Initial set-up
 	public ServerNetwork (UUID id) {
@@ -173,6 +178,12 @@ public class ServerNetwork implements IServerNetwork {
 	@Override
 	public Iterable<IteRef> getValidTiles () {
 		return TileUtils.filterValid(this.tiles);
+	}
+
+	@Override
+	public Iterable<IteRef> getImmananceTiles () {
+		this.tiles.sortPriority();
+		return TileUtils.filterAssignableClass(this.tiles, IImmanenceSubscriber.class);
 	}
 
 	@Override
@@ -338,6 +349,11 @@ public class ServerNetwork implements IServerNetwork {
 	@Nullable
 	public List<ServerNetwork> getContainedNetworks () {
 		return null;
+	}
+
+	@Override
+	public IImmanenceBus getImmanenceBus () {
+		return immanenceBus;
 	}
 
 	@Override

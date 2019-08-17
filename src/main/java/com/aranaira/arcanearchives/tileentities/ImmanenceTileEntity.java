@@ -209,6 +209,10 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable {
     return 1f;
   }
 
+  public int getNetworkPriority () {
+    return -1;
+  }
+
   @SideOnly(Side.CLIENT)
   private void updateSound() {
     if (ConfigHandler.soundConfig.useSounds) {
