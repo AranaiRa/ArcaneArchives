@@ -46,6 +46,7 @@ public class RecipeLibrary {
 	public static IGCTRecipe RADIANT_TROVE_RECIPE;
 	public static IGCTRecipe RADIANT_TANK_RECIPE;
 	public static IGCTRecipe MONITORING_CRYSTAL_RECIPE;
+	public static IGCTRecipe OBSTRUCTION_CHARM_RECIPE;
 	public static IGCTRecipe SCEPTER_MANIPULATION_RECIPE;
 	public static IGCTRecipe SCEPTER_TRANSLOCATION_RECIPE;
 	public static IGCTRecipe RADIANT_AMPHORA_RECIPE;
@@ -139,6 +140,8 @@ public class RecipeLibrary {
 		CONTAINMENT_FIELD_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("containment_field", new ItemStack(ItemRegistry.COMPONENT_CONTAINMENTFIELD, 1), ItemRegistry.COMPONENT_SCINTILLATINGINLAY, new IngredientStack("ingotGold", 2), new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 2));
 
 		DEVOURING_CHARM_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("devouring_charm", new ItemStack(ItemRegistry.DEVOURING_CHARM, 4), new IngredientStack("ingotGold", 1), new IngredientStack(Blocks.OBSIDIAN, 2), new IngredientStack(Items.FLINT_AND_STEEL, 1));
+
+		OBSTRUCTION_CHARM_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("obstruction_charm", new ItemStack(ItemRegistry.OBSTRUCTION_CHARM, 4), new IngredientStack(Blocks.HARDENED_CLAY, 1), new IngredientStack("nuggetGold", 2), new IngredientStack(ItemRegistry.SHAPED_RADIANT_QUARTZ, 1));
 
 		RADIANT_KEY_RECIPE = GCTRecipeList.instance.makeAndAddRecipeWithCreator("radiant_key", new ItemStack(ItemRegistry.RADIANT_KEY, 4), new IngredientStack("ingotGold", 1), new IngredientStack("nuggetGold", 3), new IngredientStack(ItemRegistry.SHAPED_RADIANT_QUARTZ));
 

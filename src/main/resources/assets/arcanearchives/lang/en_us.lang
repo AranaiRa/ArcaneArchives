@@ -14,6 +14,7 @@ item.geomantic_map.name=Geomantic Map
 item.manifest.name=Manifest
 item.material_interface.name=Material Interface
 item.matrix_brace.name=Matrix Brace
+item.obstruction_charm.name=Obstruction Charm
 item.radiant_amphora.name=Radiant Amphora
 item.radiant_dust.name=Radiant Dust
 item.radiant_key.name=Radiant Key
@@ -97,12 +98,12 @@ tile.radiant_resonator.name=Radiant Resonator
 tile.radiant_trove.name=Radiant Trove
 
 tile.brazier_of_hoarding.name=Brazier of Hoarding
-tile.druidic_censer.name=Druidic Censer
 tile.echoing_conformance_chamber.name=Echoing Conformance Chamber
 tile.echoing_reverberation_chamber.name=Echoing Reverberation Chamber
 tile.immanent_incubator.name=Immanent Incubator
 tile.monitoring_crystal.name=Monitoring Crystal
 tile.spellbook_library.name=Spellbook Library
+tile.verdant_censer.name=Verdant Censer
 
 tile.matrix_crystal_core.name=Crystal Matrix Core
 tile.matrix_repository.name=Repository Matrix

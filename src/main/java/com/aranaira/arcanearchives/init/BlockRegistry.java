@@ -10,7 +10,6 @@ import com.aranaira.arcanearchives.items.itemblocks.RadiantTroveItem;
 import com.aranaira.arcanearchives.items.itemblocks.StorageShapedQuartzItem;
 import com.aranaira.arcanearchives.items.templates.ItemBlockTemplate;
 import com.aranaira.arcanearchives.tileentities.*;
-import electroblob.wizardry.spell.Spell;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.ItemBlock;
@@ -38,7 +37,7 @@ public class BlockRegistry {
 	//public static final DominionCrystal DOMINION_CRYSTAL = new DominionCrystal();
 
 	//Immanence Generators
-	public static final DruidicCenser DRUIDIC_CENSER = new DruidicCenser();
+	public static final VerdantCenser DRUIDIC_CENSER = new VerdantCenser();
 	public static final SpellbookLibrary SPELLBOOK_LIBRARY = new SpellbookLibrary();
 
 	//Immanence Converters

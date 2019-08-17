@@ -1,7 +1,6 @@
-package com.aranaira.arcanearchives.blocks;
+package com.aranaira.arcanearchives.items;
 
-import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
-import net.minecraft.block.material.Material;
+import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
@@ -12,15 +11,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class DruidicCenser extends BlockTemplate {
+public class ObstructionCharmItem extends ItemTemplate {
+	public static final String NAME = "obstruction_charm";
 
-	public static final String name = "druidic_censer";
-
-	public DruidicCenser() {
-		super(name, Material.ROCK);
-		setLightLevel(16 / 16f);
-		setHardness(1.7f);
-		setHarvestLevel("pickaxe", 0);
+	public ObstructionCharmItem() {
+		super(NAME);
 	}
 
 	@Override

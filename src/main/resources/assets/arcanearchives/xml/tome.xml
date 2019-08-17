@@ -24,7 +24,6 @@
 
     <stack-links>
         <stack item="arcanearchives:brazier_of_hoarding">Blocks:BrazierHoarding</stack>
-        <stack item="arcanearchives:druidic_censer">Blocks:DruidicCenser</stack>
         <stack item="arcanearchives:echoing_conformance_chamber">Blocks:EchoingConformanceChamber</stack>
         <stack item="arcanearchives:echoing_reverberation_chamber">Blocks:EchoingReverberationChamber</stack>
         <stack item="arcanearchives:lectern_manifest">Blocks:LecternManifest</stack>
@@ -48,6 +47,7 @@
         <stack item="arcanearchives:storage_raw_quartz">Blocks:RawQuartz</stack>
         <stack item="arcanearchives:storage_shaped_quartz">Blocks:ShapedQuartz</stack>
         <stack item="arcanearchives:spellbook_library">Blocks:SpellbookLibrary</stack>
+        <stack item="arcanearchives:verdant_censer">Blocks:VerdantCenser</stack>
 
         <stack item="arcanearchives:containment_field">Items:ContainmentField</stack>
         <stack item="arcanearchives:devouring_charm">Items:DevouringCharm</stack>
@@ -60,6 +60,7 @@
         <stack item="arcanearchives:matrix_brace">Items:MatrixBrace</stack>
         <stack item="arcanearchives:radiant_amphora">Items:RadiantAmphora</stack>
         <stack item="arcanearchives:radiant_dust">Items:RadiantDust</stack>
+        <stack item="arcanearchives:radiant_key">Items:RadiantKey</stack>
         <stack item="arcanearchives:serenity_charm">Items:SerenityCharm</stack>
         <stack item="arcanearchives:shaped_quartz">Items:ShapedQuartz</stack>
         <stack item="arcanearchives:scepter_manipulation">Items:ScepterManipulation</stack>
@@ -135,13 +136,13 @@
             <p><stack item="arcanearchives:immanent_incubator"/> <link ref="Blocks:ImmanentIncubator">Immanent Incubator</link></p>
             <p indent="16"><stack item="arcanearchives:matrix_crystal_core"/> <link ref="Blocks:CrystalMatrixCore">Crystal Matrix Core</link></p>
             <p indent="16"><stack item="arcanearchives:matrix_distillate"/> <link ref="Blocks:DistillateMatrix">Distillate Matrix</link></p>
-            <p indent="16"><stack item="arcanearchives:druidic_censer"/> <link ref="Blocks:DruidicCenser">Druidic Censer</link></p>
             <p indent="16"><stack item="arcanearchives:echoing_conformance_chamber"/> <link ref="Blocks:EchoingConformanceChamber">Echoing Conformance Chamber</link></p>
             <p indent="16"><stack item="arcanearchives:echoing_reverberation_chamber"/> <link ref="Blocks:EchoingReverberationChamber">Echoing Reverberation Chamber</link></p>
             <p indent="16"><stack item="arcanearchives:matrix_repository"/> <link ref="Blocks:RepositoryMatrix">Repository Matrix</link></p>
             <p indent="16"><stack item="arcanearchives:matrix_reservoir"/> <link ref="Blocks:ReservoirMatrix">Reservoir Matrix</link></p>
             <p indent="16"><stack item="arcanearchives:matrix_storage"/> <link ref="Blocks:StorageMatrix">Storage Matrix</link></p>
             <p indent="16"><stack item="arcanearchives:spellbook_library"/> <link ref="Blocks:SpellbookLibrary">Spellbook Library</link></p>
+            <p indent="16"><stack item="arcanearchives:verdant_censer"/> <link ref="Blocks:VerdantCenser">Verdant Censer</link></p>
             <space height="8"/>
             <p><stack item="arcanearchives:celestial_lotus_engine"/> <link ref="Blocks:CelestialLotusEngine">Celestial Lotus Engine</link></p>
         </section>
@@ -160,21 +161,23 @@
             <p indent="16"><stack item="arcanearchives:letter_resignation"/> <link ref="Items:LetterResignation">Letter of Resignation</link></p>
             <p indent="16"><stack item="arcanearchives:manifest"/> <link ref="Items:Manifest">Manifest</link></p>
             <p indent="16"><stack item="arcanearchives:writ_expulsion"/> <link ref="Items:WritExpulsion">Writ of Expulsion</link></p>
-            <space height="8"/>
+        </section>
+        <section>
+            <page_title_shorter>
+                <title>Items</title>
+            </page_title_shorter>
             <p><stack item="arcanearchives:shaped_quartz"/> <link ref="Items:ShapedQuartz">Radiant Quartz (Shaped)</link></p>
             <p indent="16"><stack item="arcanearchives:containment_field"/> <link ref="Items:ContainmentField">Containment Field</link></p>
             <p indent="16"><stack item="arcanearchives:devouring_charm"/> <link ref="Items:DevouringCharm">Devouring Charm</link></p>
             <p indent="16" condition="arsenal_enabled"><stack item="arcanearchives:gemsocket"/> <link ref="Items:GemSocket">Gem Socket</link></p>
             <p indent="16"><stack item="arcanearchives:material_interface"/> <link ref="Items:MaterialInterface">Material Interface</link></p>
             <p indent="16"><stack item="arcanearchives:matrix_brace"/> <link ref="Items:MatrixBrace">Matrix Brace</link></p>
+            <p indent="16"><stack item="arcanearchives:obstruction_charm"/> <link ref="Items:ObstructionCharm">Obstruction Charm</link></p>
             <p indent="16"><stack item="arcanearchives:radiant_amphora"/> <link ref="Items:RadiantAmphora">Radiant Amphora</link></p>
+            <p indent="16"><stack item="arcanearchives:radiant_key"/> <link ref="Items:RadiantKey">Radiant Key</link></p>
             <p indent="16"><stack item="arcanearchives:serenity_charm"/> <link ref="Items:SerenityCharm">Serenity Charm</link></p>
             <p indent="16"><stack item="arcanearchives:scintillating_inlay"/> <link ref="Items:ScintillatingInlay">Scintillating Inlay</link></p>
-        </section>
-        <section>
-            <page_title_shorter>
-                <title>Items</title>
-            </page_title_shorter>
+            <space height="8"/>
             <p><stack item="arcanearchives:empowered_quartz"/> <link ref="Items:EmpoweredQuartz">Radiant Quartz (Empowered)</link></p>
         </section>
         <section id="ArcaneGems" condition="arsenal_enabled">
@@ -675,6 +678,9 @@
                 <stack item="arcanearchives:devouring_charm"/> If used as an upgrade, a <link ref="Items:DevouringCharm">Devouring Charm</link> causes items added to the Trove in excess of its maximum capacity are destroyed.
             </p>
             <p>
+                <stack item="arcanearchives:radiant_key"/> If used as an upgrade, a <link ref="Items:RadiantKey">Radiant Key</link> locks the type of item in the trove. Once the trove reaches 0 stored items, it will still reserve its storage for the type of item it once held.
+            </p>
+            <p>
                 <stack item="arcanearchives:scepter_revelation"/> Using a <link ref="Items:ScepterRevelation">Scepter of Revelation</link> on a Radiant Trove will return what type of item is stored, its current and maximum capacity, and how many upgrades have been installed.
             </p>
             <p>
@@ -805,6 +811,19 @@
                 <title>Spellbook Library</title>
             </page_title_shorter>
             <p align="center"><stack item="arcanearchives:spellbook_library" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                PLACEHOLDER
+            </p>
+        </section>
+
+
+
+        <section id="VerdantCenser">
+            <page_title_shorter>
+                <title>Verdant Censer Charm</title>
+            </page_title_shorter>
+            <p align="center"><stack item="arcanearchives:verdant_censer" scale="3.0"/></p>
             <horizontal_rule/>
             <p>
                 PLACEHOLDER
@@ -1479,6 +1498,28 @@
 
 
 
+        <section id="ObstructionCharm">
+            <page_title_shorter>
+                <title>Obstruction Charm</title>
+            </page_title_shorter>
+            <p align="center"><stack item="arcanearchives:obstruction_charm" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                TBD
+            </p>
+            <horizontal_rule/>
+            <p>
+                <stack item="arcanearchives:gemcutters_table" /> Obstruction Charms can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
+            </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:obstruction_charm"/>
+                </recipe.result>
+            </recipe>
+        </section>
+
+
+
         <section id="RadiantAmphora">
             <page_title_shorter>
                 <title>Radiant Amphora</title>
@@ -1507,6 +1548,31 @@
             <recipe type="arcanearchives:gct_recipe" align="center">
                 <recipe.result>
                     <stack item="arcanearchives:radiant_amphora"/>
+                </recipe.result>
+            </recipe>
+        </section>
+
+
+
+        <section id="RadiantKey">
+            <page_title_shorter>
+                <title>Radiant Key</title>
+            </page_title_shorter>
+            <p align="center"><stack item="arcanearchives:radiant_key" scale="3.0"/></p>
+            <horizontal_rule/>
+            <p>
+                <stack item="minecraft:trapped_chest"/> When held in the main or off hand, you can open a Trapped Chest without the chest firing off a redstone signal.
+            </p>
+            <p>
+                <stack item="arcanearchives:radiant_trove"/> When used to upgrade a <link ref="Blocks:RadiantTrove">Radiant Trove</link>, the item type held by the trove becomes fixed. Even if the Trove's internal storage is reduced to 0 items, it reserves its storage for that type of item only.
+            </p>
+            <horizontal_rule/>
+            <p>
+                <stack item="arcanearchives:gemcutters_table" /> Radiant Keys can be crafted on a <link ref="Blocks:GemCuttersTable">Gem Cutter's Table</link>.
+            </p>
+            <recipe type="arcanearchives:gct_recipe" align="center">
+                <recipe.result>
+                    <stack item="arcanearchives:radiant_key"/>
                 </recipe.result>
             </recipe>
         </section>
@@ -2333,13 +2399,16 @@
                 Echoing Reverberation Chamber
                 Immanence
                 Immanent Incubator
+                Obstruction Charm
                 Radiant Furnace
+                Radiant Key
                 Radiant Quartz (Empowered)
                 Repository Matrix
                 Reservoir Matrix
                 Serenity Charm
                 Storage Matrix
                 Spellbook Library
+                Verdant Censer
             </p>
         </section>
     </chapter>
