@@ -1,22 +1,47 @@
 package com.aranaira.arcanearchives.data;
 
+import com.aranaira.arcanearchives.immanence.ImmanenceBus;
 import com.aranaira.arcanearchives.types.IteRef;
 import com.aranaira.arcanearchives.types.lists.CombinedTileList;
 import com.aranaira.arcanearchives.types.lists.ITileList;
 import com.aranaira.arcanearchives.util.TileUtils;
+import com.google.common.base.Predicate;
 import net.minecraft.entity.player.EntityPlayer;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class HiveNetwork implements IHiveBase {
 	private List<ServerNetwork> memberNetworks;
 	private ServerNetwork ownerNetwork;
+	private ImmanenceBus immanenceBus;
 
 	public HiveNetwork (ServerNetwork ownerNetwork, List<ServerNetwork> memberNetworks) {
 		this.ownerNetwork = ownerNetwork;
 		this.memberNetworks = memberNetworks;
+		this.immanenceBus = new ImmanenceBus(this);
+	}
+
+	private void applyToHive (Consumer<ServerNetwork> consumer) {
+		consumer.accept(ownerNetwork);
+
+		memberNetworks.forEach(consumer);
+	}
+
+	private boolean applyToHive (Predicate<ServerNetwork> predicate) {
+		if (predicate.test(ownerNetwork)) {
+			return true;
+		}
+
+		for (ServerNetwork network : memberNetworks) {
+			if (predicate.test(network)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	// TODO: ????
@@ -62,7 +87,6 @@ public class HiveNetwork implements IHiveBase {
 		return TileUtils.filterValid(getTiles());
 	}
 
-	@Nullable
 	@Override
 	public List<ServerNetwork> getContainedNetworks () {
 		return memberNetworks;
