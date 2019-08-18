@@ -209,6 +209,7 @@ public class ServerNetwork implements IServerNetwork {
 	public void addTile (ImmanenceTileEntity tileEntityInstance) {
 		tileEntityInstance.tryGenerateUUID();
 
+		// TODO: WHAT WAS I THINKING???
 		if (tiles.containsUUID(tileEntityInstance.uuid)) {
 			IteRef ref = tiles.getReference(tileEntityInstance.uuid);
 			return;
