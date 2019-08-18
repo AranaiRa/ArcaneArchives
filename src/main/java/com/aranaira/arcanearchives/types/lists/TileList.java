@@ -5,6 +5,7 @@ import com.aranaira.arcanearchives.types.iterators.TileListIterable;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.Objects;
 
 public class TileList extends ReferenceList<IteRef> implements ITileList {
 	public TileList (List<IteRef> reference) {
@@ -13,6 +14,7 @@ public class TileList extends ReferenceList<IteRef> implements ITileList {
 
 	@Override
 	public void cull() {
+		removeIf(Objects::isNull);
 		removeIf(IteRef::shouldCull);
 	}
 
