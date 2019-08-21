@@ -71,11 +71,6 @@ public class HiveNetwork implements IHiveBase {
 	}
 
 	@Override
-	public boolean isHiveNetwork () {
-		return true;
-	}
-
-	@Override
 	public boolean anyLoaded () {
 		return applyToHive(ServerNetwork::anyLoaded);
 	}
