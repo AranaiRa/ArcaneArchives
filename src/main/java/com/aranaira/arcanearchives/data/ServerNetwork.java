@@ -336,11 +336,6 @@ public class ServerNetwork implements IServerNetwork {
 	}
 
 	@Override
-	public boolean isHiveNetwork () {
-		return false;
-	}
-
-	@Override
 	public boolean isHiveMember () {
 		return DataHelper.isHiveMember(uuid, getWorld());
 	}
