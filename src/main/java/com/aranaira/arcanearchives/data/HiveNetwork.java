@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.data;
 
-import com.aranaira.arcanearchives.immanence.ImmanenceBus;
 import com.aranaira.arcanearchives.types.IteRef;
 import com.aranaira.arcanearchives.types.lists.CombinedTileList;
 import com.aranaira.arcanearchives.types.lists.ITileList;
@@ -16,12 +15,10 @@ import java.util.function.Consumer;
 public class HiveNetwork implements IHiveBase {
 	private List<ServerNetwork> memberNetworks;
 	private ServerNetwork ownerNetwork;
-	private ImmanenceBus immanenceBus;
 
 	public HiveNetwork (ServerNetwork ownerNetwork, List<ServerNetwork> memberNetworks) {
 		this.ownerNetwork = ownerNetwork;
 		this.memberNetworks = memberNetworks;
-		this.immanenceBus = new ImmanenceBus(this);
 	}
 
 	private void applyToHive (Consumer<ServerNetwork> consumer) {
@@ -69,8 +66,8 @@ public class HiveNetwork implements IHiveBase {
 	}
 
 	@Override
-	public boolean isHiveNetwork () {
-		return true;
+	public boolean anyLoaded () {
+		return false;
 	}
 
 	@Override
