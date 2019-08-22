@@ -235,7 +235,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable {
 	}
 
 	@SideOnly(Side.CLIENT)
-	private void updateSound () {
+	protected void updateSound () {
 		if (ConfigHandler.soundConfig.useSounds) {
 			final ResourceLocation soundRL = getSound();
 			if (shouldPlaySound() && soundRL != null) {
