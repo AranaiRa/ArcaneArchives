@@ -31,6 +31,7 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity {
 	private int growth = 0;
 	private int ticks = 0;
 	private boolean canTick = false;
+	private boolean breaking = false;
 
 	public RadiantResonatorTileEntity () {
 		super("radiant_resonator_tile_entity");
@@ -143,8 +144,9 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity {
 	public void breakBlock (@Nullable IBlockState state, boolean harvest) {
 		super.breakBlock(state, harvest);
 
+		this.breaking = true;
 		if (world.isRemote) {
-			return;
+			updateSound();
 		}
 
 		ServerNetwork network = DataHelper.getServerNetwork(networkId, world);
@@ -172,7 +174,7 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity {
 
 	@Override
 	protected boolean shouldPlaySound() {
-		return ConfigHandler.soundConfig.resonatorTicking && super.shouldPlaySound() && canTick() == TickResult.TICKING && world.isAirBlock(pos.up());
+		return ConfigHandler.soundConfig.resonatorTicking && super.shouldPlaySound() && !breaking && canTick() == TickResult.TICKING && world.isAirBlock(pos.up());
 	}
 
 	@Override
