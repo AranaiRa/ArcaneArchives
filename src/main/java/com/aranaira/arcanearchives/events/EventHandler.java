@@ -96,7 +96,7 @@ import thaumcraft.common.tiles.crafting.TileCrucible;
 import vazkii.botania.api.item.IPetalApothecary;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Objects;
 import java.util.Random;
 
 @Mod.EventBusSubscriber
@@ -229,7 +229,7 @@ public class EventHandler {
 	public static void tryPetalApothecary (RightClickBlock event) {
 		IPetalApothecary ipate = WorldUtil.getTileEntity(IPetalApothecary.class, event.getEntity().dimension, event.getPos());
 		if (ipate != null) {
-			boolean hasRivertear = getHasRivertear(event.getEntityPlayer());
+			boolean hasRivertear = GemUtil.getHasRivertear(event.getEntityPlayer());
 
 			if (hasRivertear) {
 				if (!ipate.hasWater()) {
@@ -244,9 +244,13 @@ public class EventHandler {
 	@Optional.Method(modid = "thaumcraft")
 	public static void tryThaumcraftCrucible (RightClickBlock event) {
 		TileCrucible tc = WorldUtil.getTileEntity(TileCrucible.class, event.getEntity().dimension, event.getPos());
-		if (tc != null) {
-			int amount = tc.fill(new FluidStack(FluidRegistry.WATER, 1000), false);
-			tc.fill(new FluidStack(FluidRegistry.WATER, amount), true);
+		if (tc != null && tc.tank.getFluidAmount() == 0) {
+			boolean hasRivertear = GemUtil.getHasRivertear(event.getEntityPlayer());
+
+			if (hasRivertear) {
+				int amount = tc.fill(new FluidStack(FluidRegistry.WATER, 1000), false);
+				tc.fill(new FluidStack(FluidRegistry.WATER, amount), true);
+			}
 		}
 	}
 
@@ -261,28 +265,6 @@ public class EventHandler {
 				tryThaumcraftCrucible(event);
 			}
 		}
-	}
-
-	private static boolean getHasRivertear (EntityPlayer player) {
-		boolean hasRivertear = false;
-		AvailableGemsHandler availableGems = GemUtil.getAvailableGems(player);
-		while (availableGems.iterator().hasNext()) {
-			if (availableGems.iterator().next().getItem() == ItemRegistry.RIVERTEAR) {
-				hasRivertear = true;
-				break;
-			}
-		}
-		//check the inventory if it's not in a provider slot
-		if (!hasRivertear) {
-			for (ItemStack stack : player.inventory.mainInventory) {
-				if (stack.getItem() == ItemRegistry.RIVERTEAR) {
-					hasRivertear = true;
-					break;
-				}
-			}
-		}
-
-		return hasRivertear;
 	}
 
 	@SideOnly(Side.CLIENT)
