@@ -42,7 +42,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 	public static int BASE_COUNT = 64 * 512;
 	private final TroveItemHandler inventory = new TroveItemHandler(this);
 	private long lastClick = 0;
-	private int lastTick = 0;
+	private long lastTick = 0;
 	private UUID lastUUID = null;
 	public boolean wasCreativeDrop = false;
 
@@ -50,7 +50,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 		return lastClick;
 	}
 
-	public int getLastTick () {
+	public long getLastTick () {
 		return lastTick;
 	}
 
@@ -174,12 +174,10 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 			return;
 		}
 
-		// TODO: Replace with system time
-		int curTick = world.getMinecraftServer().getTickCounter();
-		if (curTick - lastTick < 3) {
+		if ((System.currentTimeMillis() - lastTick) < 150) {
 			return;
 		}
-		lastTick = curTick;
+		lastTick = System.currentTimeMillis();
 
 		this.markDirty();
 
@@ -188,19 +186,8 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 			return;
 		}
 
-		boolean fullStack = ConfigHandler.trovesDispense;
-
-		int count;
-
-		if (fullStack) {
-			count = stack.getMaxStackSize();
-		} else {
-			count = 1;
-		}
-
-		if (player.isSneaking()) {
-			count = (fullStack) ? 1 : stack.getMaxStackSize();
-		}
+		// TODO: This is happening on the remote
+		int count = player.isSneaking() ? ConfigHandler.trovesDispense ? stack.getMaxStackSize() : 1 : ConfigHandler.trovesDispense ? 1 : stack.getMaxStackSize();
 
 		stack = inventory.extractItem(0, count, false);
 
