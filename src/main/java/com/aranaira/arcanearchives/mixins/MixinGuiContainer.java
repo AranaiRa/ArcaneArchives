@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.mixins;
 import com.aranaira.arcanearchives.client.gui.*;
 import com.aranaira.arcanearchives.client.render.LineHandler;
 import com.aranaira.arcanearchives.config.ConfigHandler;
+import com.aranaira.arcanearchives.config.NonModTrackingConfig;
 import com.aranaira.arcanearchives.util.ColorUtils;
 import com.aranaira.arcanearchives.util.ColorUtils.Color;
 import com.aranaira.arcanearchives.util.ManifestTrackingUtils;
@@ -29,7 +30,7 @@ public abstract class MixinGuiContainer {
 
 	@Inject(method = "drawSlot", at = @At(value = "HEAD"))
 	private void onDrawSlot (Slot slot, CallbackInfo callbackInfo) {
-		if (ConfigHandler.nonModTrackingConfig.DisableMixinHighlight || ConfigHandler.nonModTrackingConfig.getContainerClasses().contains(((GuiContainer) (Object) this).getClass())) {
+		if (NonModTrackingConfig.DisableMixinHighlight || NonModTrackingConfig.getContainerClasses().contains(((GuiContainer) (Object) this).getClass())) {
 			return;
 		}
 

@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.config.ConfigHandler;
+import com.aranaira.arcanearchives.config.ServerSideConfig;
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity.TickResult;
 import com.aranaira.arcanearchives.util.WorldUtil;
@@ -32,7 +33,7 @@ public class RadiantResonator extends BlockTemplate {
 
 	public RadiantResonator () {
 		super(name, Material.IRON);
-		setPlaceLimit(ConfigHandler.serverSideConfig.ResonatorLimit);
+		setPlaceLimit(ServerSideConfig.ResonatorLimit);
 		setHardness(3f);
 		setHarvestLevel("pickaxe", 0);
 		setEntityClass(RadiantResonatorTileEntity.class);

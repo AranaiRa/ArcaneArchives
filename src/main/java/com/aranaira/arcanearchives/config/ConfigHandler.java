@@ -7,7 +7,6 @@ import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketConfig.DefaultRoutingType;
 import com.aranaira.arcanearchives.network.PacketConfig.MaxDistance;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.Config.RequiresMcRestart;
 import net.minecraftforge.common.config.ConfigManager;
@@ -17,9 +16,6 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Config.LangKey("arcanearchives.config.general")
 @Config(modid = ArcaneArchives.MODID)
@@ -64,94 +60,8 @@ public class ConfigHandler {
 	@Config.Name("Troves Dispense Entire Stack")
 	public static boolean trovesDispense = true;
 
-	@Config.Comment("Settings related to server-side configuration")
-	@Config.Name("Server Settings")
-	public static ServerSideConfig serverSideConfig = new ServerSideConfig();
-
-	public static class ServerSideConfig {
-		@Config.Comment("Limit of resonators per player's network")
-		@Config.Name("Resonator Limit")
-		public int ResonatorLimit = 3;
-
-		@Config.Comment("Number of ticks it takes to create raw quartz")
-		@Config.Name("Resonator Time")
-		public int ResonatorTickTime = 6000;
-
-		@Config.Comment("The multiplier applied to Radiant Chest slots")
-		@Config.Name("Radiant Chest Slot Multiplier")
-		@Config.RangeInt(min = 1, max = 8)
-		public int RadiantMultiplier = 4;
-	}
-
-	@Config.Comment("Settings related to item tracking in non-mod containers")
-	@Config.Name("Non-Mod Tracking (Client-Only)")
-	public static NonModTrackingConfig nonModTrackingConfig = new NonModTrackingConfig();
-
-	public static class NonModTrackingConfig {
-		@Config.Comment("Container classes to exclude from Mixin-based slot highlighting")
-		@Config.Name("Container class to ignore")
-		public String[] ContainerClasses = new String[]{};
-
-		@Config.Ignore
-		private List<Class> containerClasses = null;
-
-		public List<Class> getContainerClasses () {
-			if (containerClasses == null) {
-				Class<?> container = GuiContainer.class;
-				containerClasses = new ArrayList<>();
-				for (String clazz : ContainerClasses) {
-					Class<?> clz;
-					try {
-						clz = Class.forName(clazz);
-					} catch (ClassNotFoundException e) {
-						ArcaneArchives.logger.debug("Unable to resolve class " + clazz + " so skipping.");
-						continue;
-					}
-
-					if (clz.isAssignableFrom(container)) {
-						containerClasses.add(clz);
-					} else {
-						ArcaneArchives.logger.debug("Skipping " + clazz + " as it does not derive from GuiContainer.");
-					}
-				}
-			}
-
-			return containerClasses;
-		}
-
-		@Config.Comment("Set to true to disable non-Arcane Archive container slots from being highlighted when tracking items")
-		@Config.Name("Disable non-mod slot highlighting")
-		public boolean DisableMixinHighlight = false;
-	}
-
 	@Config.LangKey("arcanearchives.config.manifest")
 	public static ManifestConfig ManifestConfig = new ManifestConfig();
-
-	public static class ManifestConfig {
-		@Config.Comment("Whether having a manifest in your inventory is required to open the manifest screen using a Hotkey.")
-		@Config.Name("Manifest Presence")
-		public boolean ManifestPresence = true;
-
-		@Config.Comment("Disable overlay of grid on Manifest.")
-		@Config.Name("Disable Manifest Grid")
-		public boolean DisableManifestGrid = true;
-
-		@Config.Comment("Maximum distance in blocks to track chests from for the Manifest from your current position. Useful when a member of a Hive Network.")
-		@Config.Name("Max distance for items")
-		public int MaxDistance = 100;
-
-		@Config.Comment("Synchronise the currently searched item into the JEI search box. The previous JEI search term will be restored upon closing. [Requires JEI installed]")
-		@Config.Name("Synchronise JEI with Search Bar")
-		public boolean jeiSynchronise = false;
-
-		@Config.Comment("Whether or not the previous search term persists between 'sessions' (i.e., each time you open the manifest, your previous search term is filled in for you)")
-		@Config.Name("Search Term Persistence")
-		public boolean searchTermPersistence = false;
-
-		@Config.Comment("Set to true to require holding shift to *close* the manifest after clicking on an item. Otherwise, holding shift will keep the manifest open.")
-		@Config.Name("Hold Shift To Keep Manifest Open")
-		public boolean holdShift = true;
-	}
 
 	@Config.LangKey("arcanearchives.config.arsenal")
 	public static ArsenalConfig ArsenalConfig = new ArsenalConfig();

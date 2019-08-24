@@ -375,15 +375,6 @@ arcanearchives.network.hive.joined_your_network=%s has joined your Arcane Networ
 arcanearchives.network.hive.left_your_network=%s has left your Arcane Network!
 arcanearchives.network.hive.disbanded=%s has left your Arcane Network, leaving it empty. It has been disbanded.
 
-arcanearchives.config.item_tracking=Item Tracking
-arcanearchives.config.item_tracking.tooltip=Settings related to item tracking.
-arcanearchives.config.manifest=Manifest Settings
-arcanearchives.config.manifest.tooltip=Settings related to the client-side appearance and functionality of the manifest, including tracking distance.
-arcanearchives.config.general=General Settings
-arcanearchives.config.general.tooltip=General game settings.
-arcanearchives.config.arsenal=Arcane Arsenal
-arcanearchives.config.arsenal.tooltip=Settings releated to the Arcane Arsenal module.
-
 arcanearchives.message.book_received.bookshelf=Something precious was hidden inside that block!
 arcanearchives.message.book_received.resonator=You don't remember it being there before, but you find a book on the ground by your crafting table.
 arcanearchives.message.usedtorecharge=%s%s used to recharge %s
@@ -437,3 +428,33 @@ advancement.arcanearchives.crafting_table=Iridescent Crafting
 advancement.arcanearchives.crafting_table.desc=Use raw quartz to convert a boring workbench into something persistent.
 advancement.arcanearchives.monitoring_crystal=Big Brother
 advancement.arcanearchives.monitoring_crystal.desc=Craft a Monitoring Crystal to track items in other inventories.
+
+# Configuration
+arcanearchives.config.server_side_settings=Server-Side Settings
+arcanearchives.config.server_side_settings.tooltip=Settings relating to server-specific functionality such as resonator limits, tick time, etc.
+arcanearchives.config.server_side_settings.limit.tooltip=Limit of resonators per player's network [default 3]
+arcanearchives.config.server_side_settings.limit=Resonator Limit
+arcanearchives.config.server_side_settings.time=Resonator Time
+arcanearchives.config.server_side_settings.time.tooltip=Number of ticks it takes to create raw quartz [default 6000]
+arcanearchives.config.server_side_settings.multiplier=Radiant Chest Slot Multiplier
+arcanearchives.config.server_side_settings.multiplier.tooltip=The multiplier applied to Radiant Chest slots [default 4]
+
+arcanearchives.config.non_mod_tracking=Non-mod container tracking
+arcanearchives.config.non_mod_tracking.tooltip=Settings relating to non-mod (i.e., vanilla or other mod) storage and the display of coloured slot backgrounds for tracked items
+arcanearchives.config.non_mod_tracking.ignore=Container class to ignore
+arcanearchives.config.non_mod_tracking.ignore.tooltip=Container classes to exclude from Mixin-based slot highlighting [list of strings]
+arcanearchives.config.non_mod_tracking.disable=Disable non-mod slot highlighting
+arcanearchives.config.non_mod_tracking.disable.tooltip=Set to true to disable non-Arcane Archive container slots from being highlighted when tracking items [default false]
+
+arcanearchives.config.manifest=Manifest Settings
+arcanearchives.config.manifest.tooltip=Settings related to Manifest visual and display [client-side specific]
+arcanearchives.config.manifest.presence=Manifest Presence
+arcanearchives.config.manifest.presence.tooltip=Whether having a manifest in your inventory is required to open the manifest screen using a Hotkey [default true]
+arcanearchives.config.manifest.grid=Disable Manifest Grid
+arcanearchives.config.manifest.grid.tooltip=Disable overlay of grid on Manifest items list [default true]
+
+arcanearchives.config.manifest.distance=Max distance for items
+arcanearchives.config.manifest.distance.tooltip=Maximum distance in blocks before it is considered out of range when track chests from for the Manifest, relevant to your current position [default 100]
+
+arcanearchives.config.manifest.jei=Synchronise JEI with Search Bar
+arcanearchives.config.manifest.jei.tooltip=Synchronise the currently searched item into the JEI search box. The previous JEI search term will be restored upon closing. [Requires JEI installed, default false]
