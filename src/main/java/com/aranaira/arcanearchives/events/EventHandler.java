@@ -84,6 +84,7 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.Event;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
@@ -289,7 +290,7 @@ public class EventHandler {
 		}
 	}
 
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.HIGH)
 	public static void playerPickupXP (PlayerPickupXpEvent event) {
 		EntityPlayer player = event.getEntityPlayer();
 		if (player == null) {
@@ -363,6 +364,7 @@ public class EventHandler {
 					mountaintear.motionZ = entity.motionZ;
 					event.getWorld().spawnEntity(mountaintear);
 				}
+				// TODO: Move this up?
 				entity.setDead();
 			}
 		}
@@ -444,9 +446,7 @@ public class EventHandler {
 		if (!event.getEntityLiving().world.isRemote && event.getEntityLiving() instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) event.getEntityLiving();
 			for (GemStack gem : GemUtil.getAvailableGems(player)) {
-				/**
-				 * Salvegleam
-				 */
+				// Salvegleam
 				if (gem.getItem() == ItemRegistry.SALVEGLEAM) {
 					if (GemUtil.getCharge(gem) > 0 && GemUtil.isToggledOn(gem)) {
 						if (player.getHealth() < player.getMaxHealth()) {
@@ -460,18 +460,14 @@ public class EventHandler {
 						}
 					}
 				}
-				/**
-				 * Stormway
-				 */
+				// Stormway
 				else if (gem.getItem() == ItemRegistry.STORMWAY) {
 					if (GemUtil.getCharge(gem) < GemUtil.getMaxCharge(gem) && player.world.isRaining()) {
 						GemUtil.restoreCharge(gem, -1);
 						player.playSound(SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, 1.0F, 1.0F);
 					}
 				}
-				/**
-				 * Agegleam
-				 */
+				// Agegleam
 				else if (gem.getItem() == ItemRegistry.AGEGLEAM) {
 					if (GemUtil.getCharge(gem) < GemUtil.getMaxCharge(gem)) {
 						AgegleamItem.processRechargeTime(gem);
@@ -511,7 +507,7 @@ public class EventHandler {
 		ItemStack tome = new ItemStack(ItemRegistry.TOME_OF_ARCANA);
 		NBTTagCompound tag = ItemUtils.getOrCreateTagCompound(tome);
 		tag.setString("Book", TomeOfArcanaItem.TOME_OF_ARCANA.toString());
-		world.getMapStorage().saveAllData();
+		Objects.requireNonNull(world.getMapStorage()).saveAllData();
 		EntityItem tomeEntity = new EntityItem(world, player.posX, player.posY, player.posZ, tome);
 		tomeEntity.setPickupDelay(0);
 		if (bookshelf) {
@@ -542,23 +538,18 @@ public class EventHandler {
 				PlayerSaveData save = DataHelper.getPlayerData(world, player);
 				save.receivedBook = true;
 				save.markDirty();
-				world.getMapStorage().saveAllData();
+				Objects.requireNonNull(world.getMapStorage()).saveAllData();
 			}
 		}
 	}
 
 	@SubscribeEvent
 	public static void onItemUse (LivingEntityUseItemEvent event) {
-		/**
-		 * Serverside
-		 */
 		if (!event.getEntityLiving().world.isRemote && event.getEntityLiving() instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) event.getEntityLiving();
 			ItemStack stack = player.getHeldItemMainhand();
 			for (GemStack gem : GemUtil.getAvailableGems(player)) {
-				/**
-				 * Elixirspindle
-				 */
+				// Elixirspindle
 				if (gem.getItem() instanceof Elixirspindle && GemUtil.getCharge(gem) > 0) {
 					if (stack.getItem() instanceof ItemPotion) {
 						PotionType potion = PotionUtils.getPotionFromItem(player.getHeldItemMainhand());
@@ -579,18 +570,11 @@ public class EventHandler {
 					}
 				}
 			}
-		}
-
-		/**
-		 * Clientside
-		 */
-		if (event.getEntityLiving().world.isRemote && event.getEntityLiving() instanceof EntityPlayer) {
+		} else if (event.getEntityLiving().world.isRemote && event.getEntityLiving() instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) event.getEntityLiving();
 			ItemStack stack = player.getHeldItemMainhand();
 			for (GemStack gem : GemUtil.getAvailableGems(player)) {
-				/**
-				 * Elixirspindle
-				 */
+				// Elixirspindle
 				if (gem.getItem() instanceof Elixirspindle && GemUtil.getCharge(gem) > 0) {
 					event.setCanceled(true);
 				}
@@ -638,8 +622,7 @@ public class EventHandler {
 			AxisAlignedBB aabb = new AxisAlignedBB(target.posX - cubeRadius, target.posY - cubeRadius, target.posZ - cubeRadius, target.posX + cubeRadius, target.posY + cubeRadius, target.posZ + cubeRadius);
 			for (EntityPlayer player : target.world.getEntitiesWithinAABB(EntityPlayer.class, aabb)) {
 				AvailableGemsHandler handler = GemUtil.getAvailableGems(player);
-				for (Iterator<GemStack> it = handler.iterator(); it.hasNext(); ) {
-					GemStack gem = it.next();
+				for (GemStack gem : handler) {
 					if (gem.getItem() == ItemRegistry.SWITCHGLEAM) {
 						GemUtil.restoreCharge(gem, 3);
 						event.setCanceled(true);
