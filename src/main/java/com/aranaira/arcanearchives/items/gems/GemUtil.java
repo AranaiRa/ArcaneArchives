@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.items.gems;
 
+import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.integration.baubles.BaubleGemUtil;
 import com.aranaira.arcanearchives.inventory.ContainerGemSocket;
 import com.aranaira.arcanearchives.inventory.handlers.GemSocketHandler;
@@ -376,6 +377,23 @@ public class GemUtil {
 
 	public static HandedGemsHandler getHeldGem (EntityPlayer player, EnumHand hand) {
 		return new HandedGemsHandler(player, hand);
+	}
+
+	public static boolean getHasRivertear (EntityPlayer player) {
+		boolean hasRivertear = false;
+		AvailableGemsHandler availableGems = getAvailableGems(player);
+		for (GemStack gem : availableGems) {
+			if (gem.getItem() == ItemRegistry.RIVERTEAR) {
+				return true;
+			}
+		}
+		for (ItemStack stack : player.inventory.mainInventory) {
+			if (stack.getItem() == ItemRegistry.RIVERTEAR) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public static class AvailableGemsHandler implements Iterable<GemStack> {
