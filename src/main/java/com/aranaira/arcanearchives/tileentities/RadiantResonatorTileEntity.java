@@ -49,8 +49,12 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity {
 			return;
 		}
 
-		// This will have to be updated to hive networks TODO
-		EntityPlayer player = world.getPlayerEntityByUUID(networkId);
+		ServerNetwork network = getServerNetwork();
+		if (network == null) {
+			return;
+		}
+
+		EntityPlayer player = network.getPlayer();
 
 		// Don't tick if the player isn't online
 		if (player == null) {
