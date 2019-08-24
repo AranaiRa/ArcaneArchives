@@ -15,7 +15,7 @@ public interface IHiveBase {
 
 	boolean isHiveMember ();
 
-	boolean isHiveNetwork ();
+	boolean anyLoaded ();
 
 	ITileList getTiles ();
 

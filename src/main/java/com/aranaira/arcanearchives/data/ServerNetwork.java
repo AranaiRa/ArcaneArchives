@@ -162,6 +162,7 @@ public class ServerNetwork implements IServerNetwork {
 	public void addTile (ImmanenceTileEntity tileEntityInstance) {
 		tileEntityInstance.tryGenerateUUID();
 
+		// TODO: WHAT WAS I THINKING???
 		if (tiles.containsUUID(tileEntityInstance.uuid)) {
 			IteRef ref = tiles.getReference(tileEntityInstance.uuid);
 			return;
@@ -288,13 +289,13 @@ public class ServerNetwork implements IServerNetwork {
 	}
 
 	@Override
-	public boolean isHiveNetwork () {
-		return false;
+	public boolean isHiveMember () {
+		return DataHelper.isHiveMember(uuid, getWorld());
 	}
 
 	@Override
-	public boolean isHiveMember () {
-		return DataHelper.isHiveMember(uuid, getWorld());
+	public boolean anyLoaded () {
+		return false;
 	}
 
 	@Override
