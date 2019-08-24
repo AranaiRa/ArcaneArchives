@@ -352,6 +352,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 			return "Unknown fluid";
 		}
 
+		@Nullable
 		public Fluid getFluid () {
 			IFluidHandler cap = getCapability();
 			if (cap == null) {
@@ -360,7 +361,12 @@ public class RadiantAmphoraItem extends ItemTemplate {
 			return getFluid(cap);
 		}
 
+		@Nullable
 		public Fluid getFluid (IFluidHandler capability) {
+			if (capability == null) {
+				return null;
+			}
+
 			IFluidTankProperties[] props = capability.getTankProperties();
 			if (props.length == 0) {
 				return null;
@@ -374,6 +380,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 			return contents.getFluid();
 		}
 
+		@Nullable
 		public FluidStack getFluidStack (IFluidHandler capability) {
 			Fluid fluid = getFluid(capability);
 			if (fluid == null) {

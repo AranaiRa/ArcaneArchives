@@ -16,6 +16,7 @@ import net.minecraftforge.fluids.FluidActionResult;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.IFluidBlock;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class DispenseAmphora implements IBehaviorDispenseItem {
 	private static final DispenseAmphora INSTANCE = new DispenseAmphora();
@@ -45,7 +46,12 @@ public class DispenseAmphora implements IBehaviorDispenseItem {
 
 		if (targetState.getBlock().isReplaceable(world, target) && !(targetBlock instanceof BlockLiquid) && !(targetBlock instanceof IFluidBlock)) {
 			// Try dispensing
-			FluidStack output = util.getFluidStack(util.getCapability());
+			IFluidHandler cap = util.getCapability();
+			if (cap == null) {
+				return stack;
+			}
+
+			FluidStack output = util.getFluidStack(cap);
 			if (output == null) {
 				return stack;
 			}
