@@ -131,7 +131,6 @@ public class ManifestTrackingUtils {
 		return false;
 	}
 
-	@Nullable
 	public static Set<Vec3d> getPositions (int dimension) {
 		return getDimensionPositions(dimension);
 	}
