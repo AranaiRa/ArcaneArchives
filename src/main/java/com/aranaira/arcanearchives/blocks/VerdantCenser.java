@@ -18,7 +18,7 @@ public class VerdantCenser extends BlockTemplate {
 
 	public static final String name = "verdant_censer";
 
-	public VerdantCenser() {
+	public VerdantCenser () {
 		super(name, Material.ROCK);
 		setLightLevel(16 / 16f);
 		setHardness(1.7f);

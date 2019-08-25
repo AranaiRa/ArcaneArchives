@@ -116,24 +116,24 @@ public class Brazier extends BlockTemplate implements IInfusionStabiliserExt, IU
 	}
 
 	@Override
-	public UpgradeType getUpgradeType(ItemStack stack) {
+	public UpgradeType getUpgradeType (ItemStack stack) {
 		return UpgradeType.ROUTING;
 	}
 
 	@Override
-	public int getUpgradeSize(ItemStack stack) {
+	public int getUpgradeSize (ItemStack stack) {
 		return -1;
 	}
 
 	@Override
-	public int getSlotIsUpgradeFor(ItemStack stack) {
+	public int getSlotIsUpgradeFor (ItemStack stack) {
 		return -1;
 	}
 
 	public static List<Class<?>> UPGRADE_FOR = Arrays.asList(RadiantFurnaceTileEntity.class);
 
 	@Override
-	public List<Class<?>> upgradeFor() {
+	public List<Class<?>> upgradeFor () {
 		return UPGRADE_FOR;
 	}
 }

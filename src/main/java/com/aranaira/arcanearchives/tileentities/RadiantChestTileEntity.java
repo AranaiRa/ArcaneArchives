@@ -1,7 +1,6 @@
 package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.config.ServerSideConfig;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.init.BlockRegistry;
@@ -327,7 +326,9 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 		@Nonnull
 		@Override
 		public ItemStack insertItem (int slot, @Nonnull ItemStack stack, boolean simulate) {
-			if (!simulate) invalidate();
+			if (!simulate) {
+				invalidate();
+			}
 			ItemStack result = super.insertItem(slot, stack, simulate);
 			world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);
 			markDirty();

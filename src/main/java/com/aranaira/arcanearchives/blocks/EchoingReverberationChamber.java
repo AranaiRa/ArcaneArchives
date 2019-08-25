@@ -16,7 +16,7 @@ public class EchoingReverberationChamber extends BlockTemplate {
 
 	public static final String name = "echoing_reverberation_chamber";
 
-	public EchoingReverberationChamber() {
+	public EchoingReverberationChamber () {
 		super(name, Material.ROCK);
 		setLightLevel(16 / 16f);
 		setHardness(1.7f);

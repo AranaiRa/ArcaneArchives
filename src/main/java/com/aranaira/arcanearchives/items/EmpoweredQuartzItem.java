@@ -14,7 +14,7 @@ import java.util.List;
 public class EmpoweredQuartzItem extends ItemTemplate {
 	public static final String NAME = "empowered_quartz";
 
-	public EmpoweredQuartzItem() {
+	public EmpoweredQuartzItem () {
 		super(NAME);
 	}
 

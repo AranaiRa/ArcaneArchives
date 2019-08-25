@@ -2,15 +2,10 @@ package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.items.templates.IItemScepter;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
-import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
-import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
@@ -24,7 +19,7 @@ import java.util.List;
 public class ScepterTranslocation extends ItemTemplate implements IItemScepter {
 	public static final String NAME = "scepter_translocation";
 
-	public ScepterTranslocation() {
+	public ScepterTranslocation () {
 		super(NAME);
 		setMaxStackSize(1);
 	}

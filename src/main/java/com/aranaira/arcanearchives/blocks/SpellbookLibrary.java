@@ -16,7 +16,7 @@ public class SpellbookLibrary extends BlockTemplate {
 
 	public static final String name = "spellbook_library";
 
-	public SpellbookLibrary() {
+	public SpellbookLibrary () {
 		super(name, Material.ROCK);
 		setLightLevel(16 / 16f);
 		setHardness(1.7f);

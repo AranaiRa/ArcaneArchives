@@ -15,7 +15,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class DataHelper {
 	public static UUID INVALID = UUID.fromString("00000000-0000-0000-0000-000000000000");
@@ -68,7 +67,7 @@ public class DataHelper {
 		}
 	}
 
-	public static ServerList getNetworks (){
+	public static ServerList getNetworks () {
 		NetworkSaveData networkData = getNetworkData();
 		HiveSaveData hiveData = getHiveData();
 
@@ -85,7 +84,7 @@ public class DataHelper {
 			if (ownerUuids.contains(nid)) {
 				HiveNetwork hive = network.getHiveNetwork();
 				hives.add(hive);
-				for (ServerNetwork contained: hive.getContainedNetworks()) {
+				for (ServerNetwork contained : hive.getContainedNetworks()) {
 					hiveMembers.add(contained.getUuid());
 				}
 			} else if (!hiveMembers.contains(nid)) {

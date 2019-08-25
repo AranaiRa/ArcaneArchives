@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.config.ConfigHandler;
+import com.aranaira.arcanearchives.config.ManifestConfig;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.network.Handlers.ConfigServerHandler;
 import com.aranaira.arcanearchives.network.Messages.ConfigBooleanPacket;
@@ -31,7 +32,7 @@ public class PacketConfig {
 
 		@Override
 		public void processMessage (RequestMaxDistance message, MessageContext ctx) {
-			MaxDistance packet = new MaxDistance(ConfigHandler.ManifestConfig.MaxDistance);
+			MaxDistance packet = new MaxDistance(ManifestConfig.MaxDistance);
 			Networking.CHANNEL.sendToServer(packet);
 		}
 	}

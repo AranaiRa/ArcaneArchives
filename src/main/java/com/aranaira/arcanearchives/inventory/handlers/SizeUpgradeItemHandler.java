@@ -137,10 +137,11 @@ public abstract class SizeUpgradeItemHandler implements IItemHandler, IItemHandl
 
 	/**
 	 * Returns whether an upgrade is present in the slot or not.
+	 *
 	 * @param slot Which slot ID to check
 	 * @return true if an upgrade is present, false otherwise
 	 */
-	public boolean getIsUpgradePresent(int slot) {
+	public boolean getIsUpgradePresent (int slot) {
 		return !getStackInSlot(slot).isEmpty();
 	}
 
@@ -169,13 +170,13 @@ public abstract class SizeUpgradeItemHandler implements IItemHandler, IItemHandl
 	public int getTotalUpgradesQuantity () {
 		int count = 0;
 		if (getIsUpgradePresent(0)) {
-			count ++;
+			count++;
 		}
 		if (getIsUpgradePresent(1)) {
-			count ++;
+			count++;
 		}
 		if (getIsUpgradePresent(2)) {
-			count ++;
+			count++;
 		}
 		return count;
 	}

@@ -14,7 +14,7 @@ import java.util.List;
 public class ObstructionCharmItem extends ItemTemplate {
 	public static final String NAME = "obstruction_charm";
 
-	public ObstructionCharmItem() {
+	public ObstructionCharmItem () {
 		super(NAME);
 	}
 

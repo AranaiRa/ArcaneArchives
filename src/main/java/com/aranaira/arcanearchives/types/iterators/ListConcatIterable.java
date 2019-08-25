@@ -61,7 +61,9 @@ public class ListConcatIterable<T> implements Iterable<T> {
 				nextIterator();
 			}
 
-			if (iterator == null || !iterator.hasNext()) throw new NoSuchElementException();
+			if (iterator == null || !iterator.hasNext()) {
+				throw new NoSuchElementException();
+			}
 
 			return iterator.next();
 		}

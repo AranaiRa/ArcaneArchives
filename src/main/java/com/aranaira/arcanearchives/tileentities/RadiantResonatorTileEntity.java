@@ -178,22 +178,22 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity {
 	}
 
 	@Override
-	protected boolean shouldPlaySound() {
+	protected boolean shouldPlaySound () {
 		return ConfigHandler.soundConfig.resonatorTicking && super.shouldPlaySound() && !breaking && canTick() == TickResult.TICKING && world.isAirBlock(pos.up());
 	}
 
 	@Override
-	protected float getVolume() {
+	protected float getVolume () {
 		return 0.35f;
 	}
 
 	@Override
-	protected boolean hasSound() {
+	protected boolean hasSound () {
 		return true;
 	}
 
 	@Override
-	protected ResourceLocation getSound() {
+	protected ResourceLocation getSound () {
 		return new ResourceLocation(ArcaneArchives.MODID, "resonator.loop");
 	}
 

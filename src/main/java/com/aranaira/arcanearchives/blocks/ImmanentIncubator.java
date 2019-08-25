@@ -16,7 +16,7 @@ public class ImmanentIncubator extends BlockTemplate {
 
 	public static final String name = "immanent_incubator";
 
-	public ImmanentIncubator() {
+	public ImmanentIncubator () {
 		super(name, Material.ROCK);
 		setLightLevel(16 / 16f);
 		setHardness(1.7f);

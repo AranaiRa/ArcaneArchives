@@ -18,7 +18,7 @@ import java.util.List;
 public class SerenityCharmItem extends ItemTemplate implements IUpgradeItem {
 	public static final String NAME = "serenity_charm";
 
-	public SerenityCharmItem() {
+	public SerenityCharmItem () {
 		super(NAME);
 	}
 
@@ -30,24 +30,24 @@ public class SerenityCharmItem extends ItemTemplate implements IUpgradeItem {
 	}
 
 	@Override
-	public UpgradeType getUpgradeType(ItemStack stack) {
+	public UpgradeType getUpgradeType (ItemStack stack) {
 		return UpgradeType.MUTE;
 	}
 
 	@Override
-	public int getUpgradeSize(ItemStack stack) {
+	public int getUpgradeSize (ItemStack stack) {
 		return -1;
 	}
 
 	@Override
-	public int getSlotIsUpgradeFor(ItemStack stack) {
+	public int getSlotIsUpgradeFor (ItemStack stack) {
 		return -1;
 	}
 
 	public static List<Class<?>> UPGRADE_FOR = Arrays.asList(RadiantResonator.class, Brazier.class);
 
 	@Override
-	public List<Class<?>> upgradeFor() {
+	public List<Class<?>> upgradeFor () {
 		return UPGRADE_FOR;
 	}
 }

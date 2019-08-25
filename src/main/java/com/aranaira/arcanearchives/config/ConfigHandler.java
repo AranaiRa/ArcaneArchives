@@ -33,7 +33,7 @@ public class ConfigHandler {
 	@SideOnly(Side.CLIENT)
 	public static void onClientConfigChanged (ConfigChangedEvent.OnConfigChangedEvent event) {
 		if (event.getModID().equals(ArcaneArchives.MODID)) {
-			MaxDistance packet = new MaxDistance(ManifestConfig.MaxDistance);
+			MaxDistance packet = new MaxDistance(com.aranaira.arcanearchives.config.ManifestConfig.MaxDistance);
 			Networking.CHANNEL.sendToServer(packet);
 
 			DefaultRoutingType packet2 = new DefaultRoutingType(defaultRoutingNoNewItems);

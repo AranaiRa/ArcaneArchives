@@ -323,7 +323,9 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 		@Nonnull
 		@Override
 		public ItemStack insertItem (int slot, @Nonnull ItemStack stack, boolean simulate) {
-			if (!simulate) invalidate();
+			if (!simulate) {
+				invalidate();
+			}
 			return super.insertItem(slot, stack, simulate);
 		}
 

@@ -65,13 +65,17 @@ public class RenderHUD {
 							int optional = handler.getTotalUpgradesCount().y;
 							if (storage + optional != 0) {
 								if (storage + optional == 1) {
-									String n = ""+storage;
-									if(optional > 0) n += "+"+optional;
+									String n = "" + storage;
+									if (optional > 0) {
+										n += "+" + optional;
+									}
 
 									s = I18n.format("arcanearchives.data.gui.radiant_trove.upgrade", n);
 								} else {
-									String n = ""+storage;
-									if(optional > 0) n += "+"+optional;
+									String n = "" + storage;
+									if (optional > 0) {
+										n += "+" + optional;
+									}
 
 									s = I18n.format("arcanearchives.data.gui.radiant_trove.upgrades", n);
 								}

@@ -1,15 +1,15 @@
 package com.aranaira.arcanearchives.data;
 
-import com.aranaira.arcanearchives.data.DataHelper.HiveMembershipInfo;
 import com.aranaira.arcanearchives.api.immanence.IImmanenceBus;
 import com.aranaira.arcanearchives.api.immanence.IImmanenceSubscriber;
+import com.aranaira.arcanearchives.data.DataHelper.HiveMembershipInfo;
 import com.aranaira.arcanearchives.immanence.ImmanenceBus;
 import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketNetworks;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
+import com.aranaira.arcanearchives.tileentities.MatrixCoreTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
 import com.aranaira.arcanearchives.tileentities.interfaces.IManifestTileEntity;
-import com.aranaira.arcanearchives.tileentities.MatrixCoreTileEntity;
 import com.aranaira.arcanearchives.types.ISerializeByteBuf;
 import com.aranaira.arcanearchives.types.IteRef;
 import com.aranaira.arcanearchives.types.iterators.TileListIterable;
@@ -118,7 +118,9 @@ public class ServerNetwork implements IServerNetwork {
 		}
 
 		for (Entry<Set<ChunkPos>> entry : map.int2ObjectEntrySet()) {
-			if (entry.getValue().isEmpty()) continue;
+			if (entry.getValue().isEmpty()) {
+				continue;
+			}
 			int dimension = entry.getIntKey();
 			Set<ChunkPos> chunks = entry.getValue();
 

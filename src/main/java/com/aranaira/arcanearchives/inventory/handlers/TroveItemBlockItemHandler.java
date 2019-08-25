@@ -13,7 +13,6 @@ import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.swing.text.html.Option;
 
 public class TroveItemBlockItemHandler implements ITroveItemHandler, ICapabilityProvider {
 	private TroveUpgradeItemHandler upgrades = null;
@@ -120,14 +119,18 @@ public class TroveItemBlockItemHandler implements ITroveItemHandler, ICapability
 	@Override
 	public boolean isVoiding () {
 		OptionalUpgradesHandler handler = getOptionals();
-		if (handler == null) return false;
+		if (handler == null) {
+			return false;
+		}
 		return handler.hasUpgrade(UpgradeType.VOID);
 	}
 
 	@Override
 	public boolean isLocked () {
 		OptionalUpgradesHandler handler = getOptionals();
-		if (handler == null) return false;
+		if (handler == null) {
+			return false;
+		}
 		return handler.hasUpgrade(UpgradeType.LOCK);
 	}
 
@@ -158,11 +161,8 @@ public class TroveItemBlockItemHandler implements ITroveItemHandler, ICapability
 
 	@Override
 	public boolean isEmpty () {
-		if (getCount() == 0 && getReference().isEmpty()) {
-			return true;
-		}
+		return getCount() == 0 && getReference().isEmpty();
 
-		return false;
 	}
 
 	public void saveToStack () {

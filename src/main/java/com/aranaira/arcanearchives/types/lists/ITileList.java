@@ -4,13 +4,12 @@ import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.types.IteRef;
 import com.aranaira.arcanearchives.types.iterators.TileListIterable;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
 
 public interface ITileList extends Iterable<IteRef> {
-	void cull();
+	void cull ();
 
 	default boolean containsUUID (UUID uuid) {
 		for (IteRef ref : this) {

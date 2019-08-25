@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.items;
 
-import com.aranaira.arcanearchives.blocks.RadiantCraftingTable;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;

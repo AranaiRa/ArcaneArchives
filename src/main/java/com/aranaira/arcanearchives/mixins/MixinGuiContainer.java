@@ -2,7 +2,6 @@ package com.aranaira.arcanearchives.mixins;
 
 import com.aranaira.arcanearchives.client.gui.*;
 import com.aranaira.arcanearchives.client.render.LineHandler;
-import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.config.NonModTrackingConfig;
 import com.aranaira.arcanearchives.util.ColorUtils;
 import com.aranaira.arcanearchives.util.ColorUtils.Color;

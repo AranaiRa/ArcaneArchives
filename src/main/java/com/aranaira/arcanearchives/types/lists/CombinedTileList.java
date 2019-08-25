@@ -17,7 +17,7 @@ public class CombinedTileList implements ITileList {
 	}
 
 	@Override
-	public void cull() {
+	public void cull () {
 		tileLists.forEach(ITileList::cull);
 	}
 

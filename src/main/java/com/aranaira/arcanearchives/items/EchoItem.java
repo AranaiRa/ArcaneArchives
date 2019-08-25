@@ -7,7 +7,6 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTUtil;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -18,7 +17,7 @@ import java.util.List;
 public class EchoItem extends ItemTemplate {
 	public static final String NAME = "echo";
 
-	public EchoItem() {
+	public EchoItem () {
 		super(NAME);
 	}
 

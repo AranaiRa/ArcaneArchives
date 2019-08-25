@@ -18,7 +18,7 @@ public class EchoingConformanceChamber extends BlockTemplate {
 
 	public static final String name = "echoing_conformance_chamber";
 
-	public EchoingConformanceChamber() {
+	public EchoingConformanceChamber () {
 		super(name, Material.ROCK);
 		setLightLevel(16 / 16f);
 		setHardness(1.7f);

@@ -9,6 +9,7 @@ import com.aranaira.arcanearchives.client.gui.framework.LayeredGuiContainer;
 import com.aranaira.arcanearchives.client.gui.framework.ScrollEventManager;
 import com.aranaira.arcanearchives.client.render.LineHandler;
 import com.aranaira.arcanearchives.config.ConfigHandler;
+import com.aranaira.arcanearchives.config.ManifestConfig;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.integration.jei.JEIPlugin;
@@ -132,7 +133,7 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 		this.player = player;
 
 		if (Loader.isModLoaded("jei")) {
-			doJEIsync = ConfigHandler.ManifestConfig.jeiSynchronise;
+			doJEIsync = ManifestConfig.jeiSynchronise;
 			this.storedJEI = JEIPlugin.runtime.getIngredientFilter().getFilterText();
 		}
 	}
@@ -150,7 +151,7 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 		super.initGui();
 
 		searchBox = new ManifestSearchField(this, 1, fontRenderer, guiLeft + mTextLeftOffset, guiTop + mTextTopOffset, mTextWidth, mTextHeight);
-		if (ConfigHandler.ManifestConfig.searchTermPersistence) {
+		if (ManifestConfig.searchTermPersistence) {
 			String searchText = this.container.getSearchString();
 			if (searchText == null) {
 				searchText = "";
@@ -191,7 +192,9 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 		boolean wasLighting = GL11.glIsEnabled(GL11.GL_LIGHTING);
 		GlStateManager.disableLighting();
 		searchBox.drawTextBox();
-		if (wasLighting) GlStateManager.enableLighting();
+		if (wasLighting) {
+			GlStateManager.enableLighting();
+		}
 
 		// make sure tool tip is on top of everything else
 		GlStateManager.pushMatrix();
@@ -288,7 +291,7 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 				} else {
 					this.mc.getTextureManager().bindTexture(GUIBaseTexturesSimple);
 				}
-				if (!ConfigHandler.ManifestConfig.DisableManifestGrid) {
+				if (!ManifestConfig.DisableManifestGrid) {
 					drawModalRectWithCustomSizedTexture(slot.xPos - 1, slot.yPos - 1, mSlotTextureLeftOffset, 0, mSlotTextureSize, mSlotTextureSize, mGUIBaseTexturesSize, mGUIBaseTexturesSize);
 				}
 				GlStateManager.enableLighting();
@@ -490,7 +493,7 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 					tooltip.add("" + TextFormatting.DARK_GRAY + I18n.format("arcanearchives.tooltip.manifest.chestsneak"));
 				}
 				if (entry.outOfRange) {
-					tooltip.add("" + TextFormatting.DARK_GRAY + I18n.format("arcanearchives.tooltip.manifest.outofrange", ConfigHandler.ManifestConfig.MaxDistance));
+					tooltip.add("" + TextFormatting.DARK_GRAY + I18n.format("arcanearchives.tooltip.manifest.outofrange", ManifestConfig.MaxDistance));
 				}
 			}
 		}

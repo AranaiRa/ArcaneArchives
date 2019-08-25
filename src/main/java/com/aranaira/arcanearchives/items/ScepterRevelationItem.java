@@ -154,8 +154,9 @@ public class ScepterRevelationItem extends ItemTemplate implements IItemScepter 
 			}
 
 			player.sendMessage(new TextComponentTranslation("arcanearchives.data.scepter.radiant_trove.count", count, maxCount).setStyle(def));
-			if(storageUpgrades + optionalUpgrades > 0)
-				player.sendMessage(new TextComponentTranslation("arcanearchives.data.scepter.radiant_trove.upgrades", ""+storageUpgrades, ""+optionalUpgrades).setStyle(def));
+			if (storageUpgrades + optionalUpgrades > 0) {
+				player.sendMessage(new TextComponentTranslation("arcanearchives.data.scepter.radiant_trove.upgrades", "" + storageUpgrades, "" + optionalUpgrades).setStyle(def));
+			}
 		} else if (block == BlockRegistry.RADIANT_RESONATOR) {
 			RadiantResonatorTileEntity te = WorldUtil.getTileEntity(RadiantResonatorTileEntity.class, world, pos);
 			if (te == null) {

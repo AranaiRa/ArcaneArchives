@@ -7,7 +7,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 
 import javax.annotation.Nullable;
-import java.lang.ref.WeakReference;
 import java.util.UUID;
 
 public class IteRef {
@@ -36,7 +35,9 @@ public class IteRef {
 	@Nullable
 	public ImmanenceTileEntity getTile () {
 		World world = getWorld();
-		if (!world.isBlockLoaded(pos)) return null;
+		if (!world.isBlockLoaded(pos)) {
+			return null;
+		}
 
 		return WorldUtil.getTileEntity(clazz, world, pos);
 	}
