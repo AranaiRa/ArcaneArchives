@@ -9,6 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -21,12 +22,17 @@ import java.util.Set;
 public class LineHandler {
 	public static boolean mIsDrawingLine;
 
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	@SideOnly(Side.CLIENT)
-	public static void renderOverlay (RenderWorldLastEvent event) {
-		Set<Vec3d> positions = ManifestTrackingUtils.getPositions(Minecraft.getMinecraft().player.dimension);
+	public static void renderOverlay(RenderWorldLastEvent event) {
+	    Set<Vec3d> positions = ManifestTrackingUtils.getPositions(Minecraft.getMinecraft().player.dimension);
+
 		if (!positions.isEmpty()) {
-			RenderUtils.drawRays(Minecraft.getMinecraft().player.world.getTotalWorldTime(), Minecraft.getMinecraft().player.getPositionVector(), ImmutableSet.copyOf(positions));
+			RenderUtils.drawRays(
+			        Minecraft.getMinecraft().player.world.getTotalWorldTime(),
+                    RenderUtils.getPlayerPosAdjusted( Minecraft.getMinecraft().player, event.getPartialTicks() ),
+                    ImmutableSet.copyOf(positions)
+            );
 		}
 	}
 
