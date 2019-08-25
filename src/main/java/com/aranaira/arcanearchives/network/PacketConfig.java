@@ -1,58 +1,26 @@
 package com.aranaira.arcanearchives.network;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.config.ConfigHandler;
-import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.ServerNetwork;
-import com.aranaira.arcanearchives.network.Handlers.ServerHandler;
+import com.aranaira.arcanearchives.network.Handlers.ConfigServerHandler;
+import com.aranaira.arcanearchives.network.Messages.ConfigPacket;
 import com.aranaira.arcanearchives.network.Messages.EmptyMessageClient;
-import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.server.MinecraftServer;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketConfig {
-	public static class MaxDistance implements IMessage {
-		int distance;
-
+	public static class MaxDistance extends ConfigPacket<Integer> {
 		public MaxDistance () {
-			distance = 0;
+			super();
 		}
 
 		public MaxDistance (int distance) {
-			this.distance = distance;
+			super(distance);
 		}
 
-		@Override
-		public void fromBytes (ByteBuf buf) {
-			this.distance = buf.readInt();
-		}
-
-		@Override
-		public void toBytes (ByteBuf buf) {
-			buf.writeInt(this.distance);
-		}
-
-		public static class Handler implements ServerHandler<MaxDistance> {
+		public static class Handler extends ConfigServerHandler<MaxDistance> {
 			@Override
-			public void processMessage (MaxDistance message, MessageContext context) {
-				MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-				if (server == null) {
-					ArcaneArchives.logger.error("Server was null when processing sync packet");
-					return;
-				}
-
-				EntityPlayerMP player = context.getServerHandler().player;
-
-				ServerNetwork network = DataHelper.getServerNetwork(player.getUniqueID(), server.getWorld(0));
-				if (network == null) {
-					ArcaneArchives.logger.error(() -> "Network was null when processing sync packet for " + player.getUniqueID());
-					return;
-				}
-
-				network.setMaxDistance(message.distance);
+			public void configValueChanged (ServerNetwork network, MaxDistance message, MessageContext ctx) {
+				network.setMaxDistance(message.getValue());
 			}
 		}
 	}
@@ -68,6 +36,23 @@ public class PacketConfig {
 		}
 	}
 
+	public static class DefaultRoutingType extends ConfigPacket<Boolean> {
+		public DefaultRoutingType () {
+			super();
+		}
+
+		public DefaultRoutingType (boolean value) {
+			super(value);
+		}
+
+		public static class Handler extends ConfigServerHandler<DefaultRoutingType> {
+			@Override
+			public void configValueChanged (ServerNetwork network, DefaultRoutingType message, MessageContext ctx) {
+				network.setNoNewDefault(message.getValue());
+			}
+		}
+	}
+
 	public static class RequestDefaultRoutingType implements EmptyMessageClient<RequestDefaultRoutingType> {
 		public RequestDefaultRoutingType () {
 		}
@@ -79,45 +64,31 @@ public class PacketConfig {
 		}
 	}
 
-	public static class DefaultRoutingType implements IMessage {
-		private boolean value;
-
-		public DefaultRoutingType () {
+	public static class TrovesDispense extends ConfigPacket<Boolean> {
+		public TrovesDispense () {
+			super();
 		}
 
-		public DefaultRoutingType (boolean value) {
-			this.value = value;
+		public TrovesDispense (Boolean value) {
+			super(value);
 		}
 
-		@Override
-		public void fromBytes (ByteBuf buf) {
-			this.value = buf.readBoolean();
-		}
-
-		@Override
-		public void toBytes (ByteBuf buf) {
-			buf.writeBoolean(this.value);
-		}
-
-		public static class Handler implements ServerHandler<DefaultRoutingType> {
+		public static class Handler extends ConfigServerHandler<TrovesDispense> {
 			@Override
-			public void processMessage (DefaultRoutingType message, MessageContext context) {
-				MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-				if (server == null) {
-					ArcaneArchives.logger.error("Server was null when processing sync packet");
-					return;
-				}
-
-				EntityPlayerMP player = context.getServerHandler().player;
-
-				ServerNetwork network = DataHelper.getServerNetwork(player.getUniqueID(), server.getWorld(0));
-				if (network == null) {
-					ArcaneArchives.logger.error(() -> "Network was null when processing sync packet for " + player.getUniqueID());
-					return;
-				}
-
-				network.setNoNewDefault(message.value);
+			public void configValueChanged (ServerNetwork network, TrovesDispense message, MessageContext ctx) {
+				network.setTrovesDispense(message.getValue());
 			}
+		}
+	}
+
+	public static class RequestTrovesDispense implements EmptyMessageClient<RequestTrovesDispense> {
+		public RequestTrovesDispense () {
+		}
+
+		@Override
+		public void processMessage (RequestTrovesDispense message, MessageContext ctx) {
+			TrovesDispense packet = new TrovesDispense(ConfigHandler.trovesDispense);
+			Networking.CHANNEL.sendToServer(packet);
 		}
 	}
 }

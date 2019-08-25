@@ -6,6 +6,7 @@ import com.aranaira.arcanearchives.items.gems.oval.MunchstoneItem;
 import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketConfig.DefaultRoutingType;
 import com.aranaira.arcanearchives.network.PacketConfig.MaxDistance;
+import com.aranaira.arcanearchives.network.PacketConfig.TrovesDispense;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraftforge.common.config.Config;
@@ -41,6 +42,9 @@ public class ConfigHandler {
 
 			DefaultRoutingType packet2 = new DefaultRoutingType(defaultRoutingNoNewItems);
 			Networking.CHANNEL.sendToServer(packet2);
+
+			TrovesDispense packet3 = new TrovesDispense(trovesDispense);
+			Networking.CHANNEL.sendToServer(packet3);
 
 			Minecraft minecraft = Minecraft.getMinecraft();
 			if (minecraft.currentScreen instanceof GUIManifest) {

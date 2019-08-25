@@ -8,6 +8,7 @@ import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.util.ByteUtils;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 import java.util.UUID;
@@ -88,6 +89,48 @@ public class Messages {
 
 		public EmptyTileMessageServer (UUID tileId) {
 			super(tileId);
+		}
+	}
+
+	public static abstract class ConfigPacket<T> implements IMessage {
+		protected T value;
+
+		public ConfigPacket () {
+		}
+
+		public ConfigPacket (T value) {
+			this.value = value;
+		}
+
+		public T getValue () {
+			return value;
+		}
+
+		public void setValue (T value) {
+			this.value = value;
+		}
+
+		@Override
+		@SuppressWarnings("unchecked")
+		public void fromBytes (ByteBuf buf) {
+			if (value.getClass() == Integer.class) {
+				setValue((T) (Integer) buf.readInt());
+			} else if (value.getClass() == Boolean.class) {
+				setValue((T) (Boolean) buf.readBoolean());
+			} else if (value.getClass() == String.class) {
+				setValue((T) ByteBufUtils.readUTF8String(buf));
+			}
+		}
+
+		@Override
+		public void toBytes (ByteBuf buf) {
+			if (value.getClass() == Integer.class) {
+				buf.writeInt((Integer) getValue());
+			} else if (value.getClass() == Boolean.class) {
+				buf.writeBoolean((Boolean) getValue());
+			} else if (value.getClass() == String.class) {
+				ByteBufUtils.writeUTF8String(buf, (String) getValue());
+			}
 		}
 	}
 }
