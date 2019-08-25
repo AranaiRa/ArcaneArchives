@@ -22,7 +22,7 @@ import java.util.Set;
 public class LineHandler {
 	public static boolean mIsDrawingLine;
 
-	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public static void renderOverlay (RenderWorldLastEvent event) {
 		Set<Vec3d> positions = ManifestTrackingUtils.getPositions(Minecraft.getMinecraft().player.dimension);
