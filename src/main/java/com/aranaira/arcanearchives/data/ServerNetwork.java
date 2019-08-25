@@ -59,8 +59,11 @@ public class ServerNetwork implements IServerNetwork {
 	// Per-player values
 	private int totalCores = 0;
 	private int totalResonators = 0;
+
+	// Configuration values
 	private int maxDistance = 0;
 	private boolean defaultRoutingNoNewItems = false;
+	private boolean trovesDispense = true;
 
 	private ImmanenceBus immanenceBus = new ImmanenceBus(this);
 
@@ -83,6 +86,14 @@ public class ServerNetwork implements IServerNetwork {
 
 	public void setMaxDistance (int maxDistance) {
 		this.maxDistance = maxDistance;
+	}
+
+	public boolean getTrovesDispense () {
+		return trovesDispense;
+	}
+
+	public void setTrovesDispense (boolean trovesDispense) {
+		this.trovesDispense = trovesDispense;
 	}
 
 	@Nullable

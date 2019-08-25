@@ -5,12 +5,14 @@ import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.HiveNetwork;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.network.Handlers.BaseHandler;
+import com.aranaira.arcanearchives.network.Messages.ConfigPacket;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.types.IteRef;
 import com.aranaira.arcanearchives.types.lists.ITileList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -137,6 +139,30 @@ public class Handlers {
 
 		@SideOnly(Side.CLIENT)
 		void processMessage (T message, MessageContext ctx, @Nullable V tile);
+	}
+
+	public static abstract class ConfigServerHandler<T extends ConfigPacket<?>> implements ServerHandler<T> {
+
+		@Override
+		public void processMessage (T message, MessageContext ctx) {
+			MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+			if (server == null) {
+				ArcaneArchives.logger.error("Server was null when processing sync packet");
+				return;
+			}
+
+			EntityPlayerMP player = ctx.getServerHandler().player;
+
+			ServerNetwork network = DataHelper.getServerNetwork(player.getUniqueID(), server.getWorld(0));
+			if (network == null) {
+				ArcaneArchives.logger.error("Network was null when processing sync packet for " + player.getUniqueID());
+				return;
+			}
+
+			configValueChanged(network, message, ctx);
+		}
+
+		public abstract void configValueChanged (ServerNetwork network, T message, MessageContext ctx);
 	}
 
 }

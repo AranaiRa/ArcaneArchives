@@ -27,6 +27,7 @@ import com.aranaira.arcanearchives.items.gems.trillion.StormwayItem;
 import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketConfig.RequestDefaultRoutingType;
 import com.aranaira.arcanearchives.network.PacketConfig.RequestMaxDistance;
+import com.aranaira.arcanearchives.network.PacketConfig.RequestTrovesDispense;
 import com.aranaira.arcanearchives.network.PacketRadiantAmphora.Toggle;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
@@ -109,6 +110,8 @@ public class EventHandler {
 			Networking.CHANNEL.sendTo(packet, (EntityPlayerMP) player);
 			RequestDefaultRoutingType packet2 = new RequestDefaultRoutingType();
 			Networking.CHANNEL.sendTo(packet2, (EntityPlayerMP) player);
+			RequestTrovesDispense packet3 = new RequestTrovesDispense();
+			Networking.CHANNEL.sendTo(packet3, (EntityPlayerMP) player);
 		}
 	}
 

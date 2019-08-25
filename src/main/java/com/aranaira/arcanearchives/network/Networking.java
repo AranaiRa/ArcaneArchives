@@ -8,7 +8,6 @@ import com.aranaira.arcanearchives.network.PacketRadiantChest.SyncChestName;
 import com.aranaira.arcanearchives.network.PacketRadiantChest.UnsetItem;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import net.minecraft.entity.Entity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
@@ -16,7 +15,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
-import thaumcraft.common.lib.network.misc.PacketKnowledgeGain;
 
 //Used Precision Crafting as a reference. https://github.com/Daomephsta/Precision-Crafting/blob/master/src/main/java/leviathan143/precisioncrafting/common/packets/PacketHandler.java
 public class Networking {
@@ -50,6 +48,8 @@ public class Networking {
 		registerPacks(PacketClipboard.CopyToClipboard.Handler.class, PacketClipboard.CopyToClipboard.class, Side.CLIENT);
 		registerPacks(PacketConfig.RequestDefaultRoutingType.class, Side.CLIENT);
 		registerPacks(PacketConfig.DefaultRoutingType.Handler.class, PacketConfig.DefaultRoutingType.class, Side.SERVER);
+		registerPacks(PacketConfig.TrovesDispense.Handler.class, PacketConfig.TrovesDispense.class, Side.SERVER);
+		registerPacks(PacketConfig.RequestTrovesDispense.class, Side.CLIENT);
 		registerPacks(PacketBrazier.SetRadius.Handler.class, PacketBrazier.SetRadius.class, Side.SERVER);
 		registerPacks(PacketBrazier.SetSubnetworkMode.Handler.class, PacketBrazier.SetSubnetworkMode.class, Side.SERVER);
 		registerPacks(PacketBrazier.IncrementRadius.class, Side.SERVER);
@@ -75,11 +75,11 @@ public class Networking {
 		CHANNEL.sendToAllTracking(message, tp);
 	}
 
-	public static void sendToAllTracking(IMessage message, ImmanenceTileEntity tile) {
+	public static void sendToAllTracking (IMessage message, ImmanenceTileEntity tile) {
 		sendToAllTracking(message, tile.getPos(), tile.dimension);
 	}
 
-    public static void sendToAllTracking(IMessage message, Entity entity) {
+	public static void sendToAllTracking (IMessage message, Entity entity) {
 		CHANNEL.sendToAllTracking(message, entity);
 	}
 }

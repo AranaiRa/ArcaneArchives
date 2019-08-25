@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.tileentities;
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.config.ConfigHandler;
+import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.inventory.handlers.ITroveItemHandler;
 import com.aranaira.arcanearchives.inventory.handlers.OptionalUpgradesHandler;
 import com.aranaira.arcanearchives.inventory.handlers.SizeUpgradeItemHandler;
@@ -187,7 +188,9 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 		}
 
 		// TODO: This is happening on the remote
-		int count = player.isSneaking() ? ConfigHandler.trovesDispense ? stack.getMaxStackSize() : 1 : ConfigHandler.trovesDispense ? 1 : stack.getMaxStackSize();
+		ServerNetwork network = getServerNetwork();
+		boolean trovesDispense = network != null && network.getTrovesDispense();
+		int count = player.isSneaking() ? trovesDispense ? stack.getMaxStackSize() : 1 : trovesDispense ? 1 : stack.getMaxStackSize();
 
 		stack = inventory.extractItem(0, count, false);
 
