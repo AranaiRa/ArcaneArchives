@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.util.ColorUtils;
 import com.aranaira.arcanearchives.util.ColorUtils.Color;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -23,12 +24,15 @@ import java.util.ArrayList;
 import java.util.Set;
 
 public class RenderUtils {
+    public static final Vec3d ONE = new Vec3d(1,1,1 );
+
 	@SideOnly(Side.CLIENT)
-	public static void drawRays (long worldTime, Vec3d player_pos, Set<Vec3d> target_pos) {
+	public static void drawRays(long worldTime, Vec3d player_pos, Set<Vec3d> target_pos) {
 		GlStateManager.pushMatrix();
 		GlStateManager.disableCull();
 		GlStateManager.disableLighting();
 		GlStateManager.disableTexture2D();
+		GlStateManager.disableDepth();
 
 		GlStateManager.enableBlend();
 		GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
@@ -37,19 +41,25 @@ public class RenderUtils {
 		Color c = ColorUtils.getColorFromTime(worldTime);//new Color(0.601f, 0.164f, 0.734f, 1f);
 		GlStateManager.color(c.red, c.green, c.blue, c.alpha);
 		GlStateManager.depthMask(false);
+
+		Vec3d scale = ONE.scale( 0.5 );
+
 		for (Vec3d vec : target_pos) {
 			Tessellator tessellator = Tessellator.getInstance();
 			BufferBuilder bufferBuilder = tessellator.getBuffer();
 			bufferBuilder.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_COLOR);
 			GlStateManager.glLineWidth((1.0f - getLineWidthFromDistance(player_pos, vec, 10, 70)) * 10.0F);
-			bufferBuilder.pos(player_pos.x, player_pos.y + 1, player_pos.z).color(c.red, c.green, c.blue, c.alpha).endVertex();
-			bufferBuilder.pos(vec.x + 0.5, vec.y + 0.5, vec.z + 0.5).color(c.red, c.green, c.blue, c.alpha).endVertex();
+			vec = vec.add( scale );
+
+			bufferBuilder.pos( vec.x, vec.y, vec.z ).color(c.red, c.green, c.blue, c.alpha).endVertex();
+			bufferBuilder.pos( player_pos.x, player_pos.y + 1, player_pos.z ).color(c.red, c.green, c.blue, c.alpha).endVertex();
 			tessellator.draw();
 		}
 
 		GlStateManager.depthMask(true);
 		GlStateManager.popMatrix();
 		GlStateManager.disableBlend();
+        GlStateManager.enableDepth();
 		//GlStateManager.enableLighting();
 		GlStateManager.enableCull();
 		GlStateManager.enableTexture2D();
@@ -131,4 +141,19 @@ public class RenderUtils {
 		Tessellator.getInstance().draw();
 	}
 
+	public static BufferBuilder posVec3d( BufferBuilder bufferBuilder, Vec3d vec3d ) {
+	    return bufferBuilder.pos( vec3d.x, vec3d.y, vec3d.z );
+    }
+
+    public static void createColoredVertex( BufferBuilder bufferBuilder, Vec3d pos, Color color ){
+        bufferBuilder.pos( pos.x, pos.y, pos.z ).color(color.red, color.green, color.blue, color.alpha).endVertex();
+    }
+
+    public static Vec3d getPlayerPosAdjusted(EntityPlayerSP e, float partialTicks ) {
+        double iPX = e.prevPosX + (e.posX - e.prevPosX) * partialTicks;
+        double iPY = e.prevPosY + (e.posY - e.prevPosY) * partialTicks;
+        double iPZ = e.prevPosZ + (e.posZ - e.prevPosZ) * partialTicks;
+
+        return new Vec3d( iPX, iPY, iPZ );
+    }
 }
