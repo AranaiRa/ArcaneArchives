@@ -56,11 +56,11 @@ public interface IGCTRecipeList {
 	 * As above, but instead of adding a new recipe will attempt to replace the recipe
 	 * using the current name. This ensures that the continuity of the recipe list remains
 	 * the same when modifying pre-existing recipes.
-	 *
+	 * <p>
 	 * Will throw an IndexOutOfBoundsException if the name is not contained within the recipe
 	 * map.
 	 *
-	 * @param name The name to replace.
+	 * @param name   The name to replace.
 	 * @param result As per makeAndAddRecipe.
 	 * @param recipe As per makeAndAddRecipe.
 	 * @return As per makeAndAddRecipe.
@@ -83,8 +83,8 @@ public interface IGCTRecipeList {
 	/**
 	 * As per makeAndReplaceRecipe only returning a Creators + Conditions IGCTRecipe instance.
 	 *
-	 * @param name See makeAndReplaceRecipe.
-	 * @param result  See makeAndReplaceRecipe.
+	 * @param name   See makeAndReplaceRecipe.
+	 * @param result See makeAndReplaceRecipe.
 	 * @param recipe See makeAndReplaceRecipe.
 	 * @return See makeAndReplaceRecipe.
 	 */
@@ -106,8 +106,8 @@ public interface IGCTRecipeList {
 	/**
 	 * As per makeAndReplaceRecipe only returning a Creators IGCTRecipe instance.
 	 *
-	 * @param name See makeAndReplaceRecipe.
-	 * @param result  See makeAndReplaceRecipe.
+	 * @param name   See makeAndReplaceRecipe.
+	 * @param result See makeAndReplaceRecipe.
 	 * @param recipe See makeAndReplaceRecipe.
 	 * @return See makeAndReplaceRecipe.
 	 */

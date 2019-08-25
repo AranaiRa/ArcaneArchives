@@ -11,16 +11,16 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.List;
 
 public class GBookArsenalConditionItem extends ItemTemplate {
-    public static final String NAME = "gbook_arsenal_condition";
+	public static final String NAME = "gbook_arsenal_condition";
 
-    public GBookArsenalConditionItem () {
-        super(NAME);
-        setCreativeTab(null);
-    }
+	public GBookArsenalConditionItem () {
+		super(NAME);
+		setCreativeTab(null);
+	}
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        tooltip.add("Used to determine if Arcane Arsenal is loaded. " + TextFormatting.RED + TextFormatting.BOLD + "YOU SHOULD NEVER BE ABLE TO SEE THIS ITEM.");
-    }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		tooltip.add("Used to determine if Arcane Arsenal is loaded. " + TextFormatting.RED + TextFormatting.BOLD + "YOU SHOULD NEVER BE ABLE TO SEE THIS ITEM.");
+	}
 }

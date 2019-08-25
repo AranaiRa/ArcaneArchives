@@ -32,6 +32,5 @@ public class QuartzWrapper implements IRecipeWrapper {
 		minecraft.fontRenderer.drawString(info, x, 75, Color.black.getRGB());
 	}
 
-	public static class FakeQuartzRecipe {
-	}
+	public static class FakeQuartzRecipe {}
 }

@@ -91,15 +91,17 @@ public class RivertearItem extends ArcaneGemItem {
 					BlockPos pos = ray.getBlockPos();
 					boolean isPetalApothecary = false;
 					boolean isCrucible = false;
-					if(Loader.isModLoaded("botania")) {
+					if (Loader.isModLoaded("botania")) {
 						IPetalApothecary ipa = WorldUtil.getTileEntity(IPetalApothecary.class, player.dimension, pos);
-						if(ipa != null)
+						if (ipa != null) {
 							isPetalApothecary = true;
+						}
 					}
-					if(Loader.isModLoaded("thaumcraft")) {
+					if (Loader.isModLoaded("thaumcraft")) {
 						TileCrucible tc = WorldUtil.getTileEntity(TileCrucible.class, player.dimension, pos);
-						if(tc != null)
+						if (tc != null) {
 							isCrucible = true;
+						}
 					}
 					if (!isPetalApothecary && !isCrucible) { //Cancel normal use if the target block is a petal apothecary
 						EnumFacing facing = ray.sideHit;

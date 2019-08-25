@@ -10,7 +10,7 @@ public interface IBrazierRouting {
 
 	BrazierRoutingType getRoutingType ();
 
-	UUID getUuid();
+	UUID getUuid ();
 
 	boolean isTileInvalid ();
 

@@ -40,8 +40,7 @@ public class GCTRecipeProvider extends RecipeProvider {
 		}
 
 		ArrayList<ElementStack> stacks = new ArrayList<>();
-		VisualElement additionalRenderer = new VisualElement(new Size(), 0, 0, 0) {
-		};
+		VisualElement additionalRenderer = new VisualElement(new Size(), 0, 0, 0) {};
 
 		for (int i = 0; i < recipe.getIngredients().size(); i++) {
 			IngredientStack stack = recipe.getIngredients().get(i);

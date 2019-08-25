@@ -191,7 +191,9 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 		boolean wasLighting = GL11.glIsEnabled(GL11.GL_LIGHTING);
 		GlStateManager.disableLighting();
 		searchBox.drawTextBox();
-		if (wasLighting) GlStateManager.enableLighting();
+		if (wasLighting) {
+			GlStateManager.enableLighting();
+		}
 
 		// make sure tool tip is on top of everything else
 		GlStateManager.pushMatrix();

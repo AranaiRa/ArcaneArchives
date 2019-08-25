@@ -32,7 +32,9 @@ public class IngredientsMatcher {
 			ItemStack itemstack = inv.getStackInSlot(i);
 			if (!itemstack.isEmpty()) {
 				for (IngredientStack ingredient : ingredients) {
-					if (ingredient.getIngredient() == Ingredient.EMPTY) continue;
+					if (ingredient.getIngredient() == Ingredient.EMPTY) {
+						continue;
+					}
 
 					if (ingredient.apply(itemstack)) {
 						account(ingredient.getIngredient(), itemstack);

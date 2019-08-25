@@ -17,6 +17,7 @@ public interface ITroveItemHandler extends IItemHandler {
 	void setCount (int count);
 
 	boolean isVoiding ();
+
 	boolean isLocked ();
 
 	void update ();

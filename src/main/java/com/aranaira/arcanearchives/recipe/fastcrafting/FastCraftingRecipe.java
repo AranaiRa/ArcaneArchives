@@ -6,7 +6,6 @@ import com.aranaira.arcanearchives.api.RecipeIngredientHandler;
 import com.aranaira.arcanearchives.recipe.IngredientStack;
 import com.aranaira.arcanearchives.recipe.IngredientsMatcher;
 import com.aranaira.arcanearchives.util.ItemUtils;
-import com.sasmaster.glelwjgl.java.matrix;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
 import it.unimi.dsi.fastutil.ints.Int2IntMap.Entry;
 import net.minecraft.entity.player.EntityPlayer;
@@ -35,7 +34,9 @@ public class FastCraftingRecipe implements IArcaneArchivesRecipe {
 		this.world = world;
 		Map<Ingredient, IngredientStack> ingredientMap = new HashMap<>();
 		for (Ingredient ingredient : input.getIngredients()) {
-			if (ingredient == Ingredient.EMPTY) continue;
+			if (ingredient == Ingredient.EMPTY) {
+				continue;
+			}
 
 			IngredientStack match = null;
 			for (Map.Entry<Ingredient, IngredientStack> entry : ingredientMap.entrySet()) {
@@ -74,7 +75,8 @@ public class FastCraftingRecipe implements IArcaneArchivesRecipe {
 		}
 
 		int slot = 0;
-		outer: for (Ingredient ingredient : originalRecipe.getIngredients()) {
+		outer:
+		for (Ingredient ingredient : originalRecipe.getIngredients()) {
 			if (ingredient == Ingredient.EMPTY) {
 				slot++;
 				continue;
@@ -101,7 +103,9 @@ public class FastCraftingRecipe implements IArcaneArchivesRecipe {
 	@Override
 	public boolean matches (@Nonnull IItemHandler inv) {
 		IngredientsMatcher matcher = new IngredientsMatcher(ingredients);
-		if (!matcher.matches(inv)) return false;
+		if (!matcher.matches(inv)) {
+			return false;
+		}
 
 		InventoryCrafting matrix = createMatrix(inv, true);
 
@@ -168,11 +172,11 @@ public class FastCraftingRecipe implements IArcaneArchivesRecipe {
 	public static class FakeContainer extends Container {
 
 		@Override
-		public void onCraftMatrixChanged(IInventory inventoryIn) {
+		public void onCraftMatrixChanged (IInventory inventoryIn) {
 		}
 
 		@Override
-		public boolean canInteractWith(EntityPlayer playerIn) {
+		public boolean canInteractWith (EntityPlayer playerIn) {
 			return false;
 		}
 	}

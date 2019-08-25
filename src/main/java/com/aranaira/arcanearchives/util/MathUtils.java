@@ -44,10 +44,10 @@ public class MathUtils {
 	}
 
 	public static Vec3d vec3dFromLong (long serialized) {
-        int i = (int)(serialized << 64 - X_SHIFT - NUM_X_BITS >> 64 - NUM_X_BITS);
-        int j = (int)(serialized << 64 - Y_SHIFT - NUM_Y_BITS >> 64 - NUM_Y_BITS);
-        int k = (int)(serialized << 64 - NUM_Z_BITS >> 64 - NUM_Z_BITS);
-        return new Vec3d(i, j, k);
+		int i = (int) (serialized << 64 - X_SHIFT - NUM_X_BITS >> 64 - NUM_X_BITS);
+		int j = (int) (serialized << 64 - Y_SHIFT - NUM_Y_BITS >> 64 - NUM_Y_BITS);
+		int k = (int) (serialized << 64 - NUM_Z_BITS >> 64 - NUM_Z_BITS);
+		return new Vec3d(i, j, k);
 	}
 
 	public static long vec3dToLong (Vec3d pos) {

@@ -4,13 +4,11 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.HiveNetwork;
 import com.aranaira.arcanearchives.data.ServerNetwork;
-import com.aranaira.arcanearchives.network.Handlers.BaseHandler;
 import com.aranaira.arcanearchives.network.Messages.ConfigPacket;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.types.IteRef;
 import com.aranaira.arcanearchives.types.lists.ITileList;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
@@ -56,7 +54,9 @@ public class Handlers {
 
 			ServerNetwork network = DataHelper.getServerNetwork(networkId, player.world);
 
-			if (network == null) return null;
+			if (network == null) {
+				return null;
+			}
 
 			IteRef ref;
 			ITileList tiles;
@@ -120,12 +120,18 @@ public class Handlers {
 
 			BlockPos pos = message.getPos();
 			int dimension = message.getDimension();
-			if (message.getPos() == null || dimension == -9999) return null;
+			if (message.getPos() == null || dimension == -9999) {
+				return null;
+			}
 
-			if (world.provider.getDimension() != dimension) return null;
+			if (world.provider.getDimension() != dimension) {
+				return null;
+			}
 
 			TileEntity te = world.getTileEntity(pos);
-			if (te == null) return null;
+			if (te == null) {
+				return null;
+			}
 
 			try {
 				return (V) te;
