@@ -38,10 +38,7 @@ import net.minecraftforge.items.*;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
@@ -220,7 +217,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 		IItemHandler cap = item.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 
 		if (wasHeld && cap == null) {
-			toInsert.add(playerInventory.extractItem(player.inventory.currentItem, item.getCount(), false));
+			toInsert.add(Objects.requireNonNull(playerInventory).extractItem(player.inventory.currentItem, item.getCount(), false));
 		}
 
 		boolean doShulkerThing = false;
@@ -266,11 +263,9 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 				}
 			}
 
-			if (toInsert.isEmpty()) {
-				throw new NullPointerException("wat");
+			if (!toInsert.isEmpty()) {
+				remainder = InventoryRoutingUtils.tryInsertItems(this, item, toInsert);
 			}
-
-			remainder = InventoryRoutingUtils.tryInsertItems(this, item, toInsert);
 		}
 
 		boolean doUpdate = wasHeld;
