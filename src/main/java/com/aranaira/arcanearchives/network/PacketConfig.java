@@ -3,14 +3,14 @@ package com.aranaira.arcanearchives.network;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.network.Handlers.ConfigServerHandler;
-import com.aranaira.arcanearchives.network.Messages.ConfigPacket;
+import com.aranaira.arcanearchives.network.Messages.ConfigBooleanPacket;
+import com.aranaira.arcanearchives.network.Messages.ConfigIntegerPacket;
 import com.aranaira.arcanearchives.network.Messages.EmptyMessageClient;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketConfig {
-	public static class MaxDistance extends ConfigPacket<Integer> {
+	public static class MaxDistance extends ConfigIntegerPacket {
 		public MaxDistance () {
-			super();
 		}
 
 		public MaxDistance (int distance) {
@@ -36,9 +36,8 @@ public class PacketConfig {
 		}
 	}
 
-	public static class DefaultRoutingType extends ConfigPacket<Boolean> {
+	public static class DefaultRoutingType extends ConfigBooleanPacket {
 		public DefaultRoutingType () {
-			super();
 		}
 
 		public DefaultRoutingType (boolean value) {
@@ -64,9 +63,8 @@ public class PacketConfig {
 		}
 	}
 
-	public static class TrovesDispense extends ConfigPacket<Boolean> {
+	public static class TrovesDispense extends ConfigBooleanPacket {
 		public TrovesDispense () {
-			super();
 		}
 
 		public TrovesDispense (Boolean value) {
