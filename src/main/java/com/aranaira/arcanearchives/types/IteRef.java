@@ -34,7 +34,7 @@ public class IteRef {
 	@Nullable
 	public ImmanenceTileEntity getTile () {
 		World world = getWorld();
-		if (!world.isBlockLoaded(pos)) {
+		if (world == null || !world.isBlockLoaded(pos)) {
 			return null;
 		}
 
