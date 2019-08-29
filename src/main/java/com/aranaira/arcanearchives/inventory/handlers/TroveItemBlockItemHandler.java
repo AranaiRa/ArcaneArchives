@@ -42,7 +42,7 @@ public class TroveItemBlockItemHandler implements ITroveItemHandler, ICapability
 
 	@Override
 	public int getSlots () {
-		return 1;
+		return 2;
 	}
 
 	@Override

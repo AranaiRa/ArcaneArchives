@@ -6,11 +6,9 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.Rotation;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
@@ -29,14 +27,13 @@ import java.util.List;
 @Optional.Interface(modid = "thaumcraft", iface = "thaumcraft.api.crafting.IInfusionStabiliserExt")
 public class RawQuartzCluster extends BlockDirectionalTemplate implements IInfusionStabiliserExt {
 
-	//public static final PropertyDirection DIRECTION = PropertyDirection.create("facing");
 	public static final String name = "raw_quartz_cluster";
 
 	public RawQuartzCluster () {
 		super(name, Material.ROCK);
 		setLightLevel(16 / 16f);
 		setHardness(1.4f);
-		//setDefaultState(this.blockState.getBaseState().withProperty(DIRECTION,  EnumFacing.NORTH));
+		setDefaultState(this.blockState.getBaseState().withProperty(FACING,  EnumFacing.UP));
 		setHarvestLevel("pickaxe", 0);
 	}
 
@@ -112,5 +109,10 @@ public class RawQuartzCluster extends BlockDirectionalTemplate implements IInfus
 	@Override
 	public boolean canStabaliseInfusion (World world, BlockPos blockPos) {
 		return true;
+	}
+
+	@Override
+	public IBlockState getStateForPlacement (World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
+		return getDefaultState().withProperty(FACING, facing);
 	}
 }
