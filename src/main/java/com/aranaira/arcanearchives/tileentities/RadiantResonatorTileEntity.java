@@ -73,7 +73,7 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity {
 				growth++;
 			} else {
 				growth = 0;
-				world.setBlockState(pos.up(), BlockRegistry.RAW_QUARTZ.getStateFromMeta(2));
+				world.setBlockState(pos.up(), BlockRegistry.RAW_QUARTZ.getDefaultState());
 
 				BlockPos up = pos.up();
 				List<EntityOcelot> entities = world.getEntitiesWithinAABB(EntityOcelot.class, new AxisAlignedBB(up.getX() - 0.9, up.getY() - 0.9, up.getZ() - 0.9, up.getX() + 0.9, up.getY() + 0.9, up.getZ() + 0.9));
