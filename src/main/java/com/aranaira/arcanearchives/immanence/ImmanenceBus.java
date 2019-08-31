@@ -1,8 +1,6 @@
 package com.aranaira.arcanearchives.immanence;
 
-import com.aranaira.arcanearchives.api.immanence.IImmanenceBus;
-import com.aranaira.arcanearchives.api.immanence.IImmanenceConsumer;
-import com.aranaira.arcanearchives.api.immanence.IImmanenceGenerator;
+import com.aranaira.arcanearchives.api.immanence.*;
 import com.aranaira.arcanearchives.data.IHiveBase;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.types.IteRef;
@@ -14,8 +12,8 @@ public class ImmanenceBus implements IImmanenceBus {
 	private List<IImmanenceConsumer> consumers = new ArrayList<>();
 	private List<IImmanenceGenerator> generators = new ArrayList<>();
 	private final IHiveBase owner;
-	private int lastTotalImmanence = -1;
-	private int lastLeftoverImmanence = -1;
+	private float multiplier = -1;
+	private int base, leftover, total = -1;
 	private int lastTick = -1;
 
 	public ImmanenceBus (IHiveBase owner) {
@@ -42,57 +40,69 @@ public class ImmanenceBus implements IImmanenceBus {
 	@Override
 	public void generateImmanence (int currentTick) {
 		buildTemporaryList(currentTick);
-		lastTotalImmanence = -1;
-		int incoming = 0;
+		List<IImmanenceSource> sources = new ArrayList<>();
+		base = 0;
+		total = 0;
+		multiplier = 1f;
 
 		for (IImmanenceGenerator generator : generators) {
-			if (!generator.canGenerateImmanence()) {
-				continue;
+			IImmanenceSource source = generator.generateImmanence();
+			if (source != null) {
+				sources.add(source);
 			}
-
-			incoming += generator.generateImmanence();
 		}
 
-		if (incoming > 0) {
-			lastTotalImmanence = incoming;
+		for (IImmanenceSource source : sources) {
+			if (source.getType() == ImmanenceBonusType.ADDITIVE) {
+				base += source.getAmount();
+			} else if (source.getType() == ImmanenceBonusType.MULTIPLICATIVE) {
+				multiplier *= (1.0f + source.getAmount());
+			}
 		}
+
+		total = Math.round(base * multiplier);
 	}
 
 	@Override
 	public void consumeImmanence (int currentTick) {
-		if (lastTotalImmanence == -1) {
+		if (total == -1) {
 			generateImmanence(currentTick);
 		}
 
-		if (lastTotalImmanence == -1) {
-			return;
-		}
-
-		int currentImmanence = lastTotalImmanence;
-		lastLeftoverImmanence = -1;
+		int curTotal = total;
 
 		for (IImmanenceConsumer consumer : consumers) {
 			int wanted = consumer.requiredImmanence();
-			if (wanted > currentImmanence) {
+			if (wanted > curTotal) {
 				consumer.acceptImmanence(0);
 			} else {
-				currentImmanence -= wanted;
+				curTotal -= wanted;
 				consumer.acceptImmanence(wanted);
 			}
 		}
 
-		if (currentImmanence > 0) {
-			lastLeftoverImmanence = currentImmanence;
+		if (curTotal > 0) {
+			leftover = curTotal;
 		}
 	}
 
 	@Override
-	public int totalNetworkImmanence () {
-		return lastTotalImmanence;
+	public int getTotalImmanence () {
+		return total;
 	}
 
 	@Override
-	public int leftoverImmanence () {
-		return lastLeftoverImmanence;
+	public int getLeftoverImmanence () {
+		return leftover;
+	}
+
+	@Override
+	public int getBaseImmanence () {
+		return base;
+	}
+
+	@Override
+	public float getMultiplier () {
+		return multiplier;
 	}
 }

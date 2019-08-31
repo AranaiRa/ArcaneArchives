@@ -1,7 +1,8 @@
 package com.aranaira.arcanearchives.api.immanence;
 
-public interface IImmanenceGenerator extends IImmanenceSubscriber {
-	boolean canGenerateImmanence ();
+import javax.annotation.Nullable;
 
-	int generateImmanence ();
+public interface IImmanenceGenerator extends IImmanenceSubscriber {
+	@Nullable
+	IImmanenceSource generateImmanence ();
 }

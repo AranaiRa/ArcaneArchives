@@ -5,7 +5,8 @@ public interface IImmanenceBus {
 
 	void consumeImmanence (int currentTick);
 
-	int totalNetworkImmanence ();
-
-	int leftoverImmanence ();
+	int getTotalImmanence ();
+	int getLeftoverImmanence ();
+	int getBaseImmanence ();
+	float getMultiplier ();
 }
