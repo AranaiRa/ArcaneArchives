@@ -54,7 +54,6 @@ public class HiveNetwork implements IHiveBase {
 	}
 
 	@Nullable
-	@Override
 	public ServerNetwork getOwnerNetwork () {
 		return ownerNetwork;
 	}

@@ -8,7 +8,6 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public interface IHiveBase {
-	@Nullable
 	ServerNetwork getOwnerNetwork ();
 
 	@Nullable
@@ -24,7 +23,6 @@ public interface IHiveBase {
 
 	Iterable<IteRef> getImmananceTiles ();
 
-	@Nullable
 	List<ServerNetwork> getContainedNetworks ();
 
 	IImmanenceBus getImmanenceBus ();

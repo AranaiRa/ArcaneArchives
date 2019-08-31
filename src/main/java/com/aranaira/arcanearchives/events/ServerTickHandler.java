@@ -44,7 +44,7 @@ public class ServerTickHandler {
 					continue;
 				}
 
-				ServerNetwork network = DataHelper.getServerNetwork(networkId, ite.getWorld());
+				ServerNetwork network = DataHelper.getServerNetwork(networkId);
 				if (network == null) {
 					continue;
 				}
@@ -71,7 +71,7 @@ public class ServerTickHandler {
 					continue;
 				}
 
-				ServerNetwork network = DataHelper.getServerNetwork(networkId, ite.getWorld());
+				ServerNetwork network = DataHelper.getServerNetwork(networkId);
 				if (network == null) {
 					continue;
 				}
@@ -120,7 +120,7 @@ public class ServerTickHandler {
 
 	@SubscribeEvent
 	public static void onPlayerLoggedIn (PlayerEvent.PlayerLoggedInEvent event) {
-		ServerNetwork network = DataHelper.getServerNetwork(event.player.getUniqueID(), event.player.world);
+		ServerNetwork network = DataHelper.getServerNetwork(event.player.getUniqueID());
 		if (network != null) {
 			network.rebuildTotals();
 		}

@@ -96,7 +96,7 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable {
 	@Nullable
 	public ServerNetwork getServerNetwork () {
 		if (network == null && networkId != null) {
-			network = DataHelper.getServerNetwork(networkId, this.world);
+			network = DataHelper.getServerNetwork(networkId);
 		}
 
 		return network;

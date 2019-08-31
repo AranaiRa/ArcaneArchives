@@ -3,9 +3,9 @@ package com.aranaira.arcanearchives.network;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.ClientNetwork;
 import com.aranaira.arcanearchives.data.DataHelper;
-import com.aranaira.arcanearchives.data.DataHelper.HiveMembershipInfo;
+import com.aranaira.arcanearchives.data.HiveMembershipInfo;
 import com.aranaira.arcanearchives.data.ServerNetwork;
-import com.aranaira.arcanearchives.data.ServerNetwork.SynchroniseInfo;
+import com.aranaira.arcanearchives.data.SynchroniseInfo;
 import com.aranaira.arcanearchives.network.Handlers.ClientHandler;
 import com.aranaira.arcanearchives.network.Handlers.ServerHandler;
 import com.aranaira.arcanearchives.types.lists.ManifestList;
@@ -77,7 +77,7 @@ public class PacketNetworks {
 
 				EntityPlayerMP player = context.getServerHandler().player;
 
-				ServerNetwork network = DataHelper.getServerNetwork(player.getUniqueID(), server.getWorld(0));
+				ServerNetwork network = DataHelper.getServerNetwork(player.getUniqueID());
 				if (network == null) {
 					ArcaneArchives.logger.error("Network was null when processing sync packet for " + player.getUniqueID());
 					return;

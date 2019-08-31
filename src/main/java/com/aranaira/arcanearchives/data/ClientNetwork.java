@@ -1,7 +1,5 @@
 package com.aranaira.arcanearchives.data;
 
-import com.aranaira.arcanearchives.data.DataHelper.HiveMembershipInfo;
-import com.aranaira.arcanearchives.data.ServerNetwork.SynchroniseInfo;
 import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
 import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketNetworks;

@@ -2,7 +2,6 @@ package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.api.immanence.IImmanenceBus;
 import com.aranaira.arcanearchives.api.immanence.IImmanenceSubscriber;
-import com.aranaira.arcanearchives.data.DataHelper.HiveMembershipInfo;
 import com.aranaira.arcanearchives.immanence.ImmanenceBus;
 import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketNetworks;
@@ -10,7 +9,6 @@ import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.MatrixCoreTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
 import com.aranaira.arcanearchives.tileentities.interfaces.IManifestTileEntity;
-import com.aranaira.arcanearchives.types.ISerializeByteBuf;
 import com.aranaira.arcanearchives.types.IteRef;
 import com.aranaira.arcanearchives.types.iterators.TileListIterable;
 import com.aranaira.arcanearchives.types.lists.ManifestList;
@@ -19,7 +17,6 @@ import com.aranaira.arcanearchives.util.ManifestUtils;
 import com.aranaira.arcanearchives.util.ManifestUtils.CollatedEntry;
 import com.aranaira.arcanearchives.util.ManifestUtils.ItemEntry;
 import com.aranaira.arcanearchives.util.TileUtils;
-import io.netty.buffer.ByteBuf;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap.Entry;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.entity.player.EntityPlayer;
@@ -41,6 +38,8 @@ import java.lang.ref.WeakReference;
 import java.util.*;
 
 public class ServerNetwork implements IServerNetwork {
+	private static ArrayList<ServerNetwork> FAKE_MEMBERS = new ArrayList<>();
+
 	// Actual owner of this network
 	private UUID uuid;
 	private WeakReference<World> world;
@@ -225,7 +224,14 @@ public class ServerNetwork implements IServerNetwork {
 		// TODO: WHAT WAS I THINKING???
 		if (tiles.containsUUID(tileEntityInstance.uuid)) {
 			IteRef ref = tiles.getReference(tileEntityInstance.uuid);
-			return;
+			if (ref != null) {
+				ref.networkPriority = tileEntityInstance.getNetworkPriority();
+				ref.pos = tileEntityInstance.getPos();
+				ref.clazz = tileEntityInstance.getClass();
+				ref.dimension = tileEntityInstance.dimension;
+				ref.uuid = tileEntityInstance.getUuid();
+				return;
+			}
 		}
 
 		tiles.add(new IteRef(tileEntityInstance));
@@ -345,18 +351,17 @@ public class ServerNetwork implements IServerNetwork {
 
 	@Override
 	public HiveMembershipInfo buildHiveMembershipData () {
-		return DataHelper.getHiveMembershipInfo(uuid, getWorld());
+		return DataHelper.getHiveMembershipInfo(uuid);
 	}
 
 	@Override
 	public boolean isHiveMember () {
-		return DataHelper.isHiveMember(uuid, getWorld());
+		return DataHelper.isHiveMember(uuid);
 	}
 
 	@Override
-	@Nullable
 	public List<ServerNetwork> getContainedNetworks () {
-		return null;
+		return FAKE_MEMBERS;
 	}
 
 	@Override
@@ -365,17 +370,16 @@ public class ServerNetwork implements IServerNetwork {
 	}
 
 	@Override
-	@Nullable
 	public ServerNetwork getOwnerNetwork () {
-		return null;
+		return this;
 	}
 
 	@Override
 	@Nullable
 	public HiveNetwork getHiveNetwork () {
 		World world = getWorld();
-		if (DataHelper.isHiveMember(uuid, world)) {
-			return DataHelper.getHiveNetwork(uuid, world);
+		if (DataHelper.isHiveMember(uuid)) {
+			return DataHelper.getHiveNetwork(uuid);
 		} else {
 			return null;
 		}
@@ -396,34 +400,10 @@ public class ServerNetwork implements IServerNetwork {
 
 	/**
 	 * Fetches only manifest tile entites: radiant chests & troves.
-	 * TODO: Get rid of additional classes and use the predicate instead.
 	 */
 	@Override
 	public TileListIterable getManifestTileEntities () {
 		return TileUtils.filterAssignableClass(this.tiles, IManifestTileEntity.class);
-	}
-
-	public static class SynchroniseInfo implements ISerializeByteBuf<SynchroniseInfo> {
-		public int totalResonators = 0;
-		public int totalCores = 0;
-
-		@Override
-		public SynchroniseInfo fromBytes (ByteBuf buf) {
-			this.totalResonators = buf.readInt();
-			this.totalCores = buf.readInt();
-			return this;
-		}
-
-		@Override
-		public void toBytes (ByteBuf buf) {
-			buf.writeInt(totalResonators);
-			buf.writeInt(totalCores);
-		}
-
-		public static SynchroniseInfo deserialize (ByteBuf buf) {
-			SynchroniseInfo info = new SynchroniseInfo();
-			return info.fromBytes(buf);
-		}
 	}
 
 	@Override

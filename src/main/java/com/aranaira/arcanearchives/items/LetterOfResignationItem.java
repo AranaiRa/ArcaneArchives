@@ -42,7 +42,7 @@ public class LetterOfResignationItem extends LetterTemplate {
 			return stack;
 		}
 
-		HiveSaveData saveData = DataHelper.getHiveData(world);
+		HiveSaveData saveData = DataHelper.getHiveData();
 		Hive hive = saveData.getHiveByMember(player.getUniqueID());
 		if (hive != null && saveData.removeMember(hive, player.getUniqueID())) {
 			saveData.alertMembers(world, hive, player.getUniqueID(), false);

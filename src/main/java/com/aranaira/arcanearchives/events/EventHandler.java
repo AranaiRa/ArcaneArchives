@@ -501,7 +501,7 @@ public class EventHandler {
 	}
 
 	private static void givePlayerBookMaybe (EntityPlayer player, World world, boolean bookshelf) {
-		PlayerSaveData save = DataHelper.getPlayerData(world, player);
+		PlayerSaveData save = DataHelper.getPlayerData(player);
 		if (save.receivedBook) {
 			return;
 		}
@@ -538,7 +538,7 @@ public class EventHandler {
 			} else if (item == ItemRegistry.TOME_OF_ARCANA) {
 				World world = event.player.world;
 				EntityPlayer player = event.player;
-				PlayerSaveData save = DataHelper.getPlayerData(world, player);
+				PlayerSaveData save = DataHelper.getPlayerData(player);
 				save.receivedBook = true;
 				save.markDirty();
 				Objects.requireNonNull(world.getMapStorage()).saveAllData();

@@ -82,7 +82,7 @@ public class RecipeLibrary {
 
 		LETTER_OF_INVITATION_RECIPE = GCTRecipeList.instance.makeAndAddRecipeWithCreatorAndCondition("letter_invitation", new ItemStack(ItemRegistry.LETTER_OF_INVITATION, 1), new IngredientStack("paper", 3), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 1), new IngredientStack("dyeLightBlue", 1)).addCondition((EntityPlayer player, TileEntity tile) -> {
 			if (!player.world.isRemote) {
-				HiveSaveData saveData = DataHelper.getHiveData(player.world);
+				HiveSaveData saveData = DataHelper.getHiveData();
 				Hive hive = saveData.getHiveByMember(player.getUniqueID());
 				return (hive == null || hive.owner.equals(player.getUniqueID()));
 			} else {
@@ -93,7 +93,7 @@ public class RecipeLibrary {
 
 		LETTER_OF_RESIGNATION_RECIPE = GCTRecipeList.instance.makeAndAddRecipeWithCreatorAndCondition("letter_resignation", new ItemStack(ItemRegistry.LETTER_OF_RESIGNATION, 1), new IngredientStack("paper", 3), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 1), new IngredientStack("dyePink", 1)).addCondition((EntityPlayer player, TileEntity tile) -> {
 			if (!player.world.isRemote) {
-				HiveSaveData saveData = DataHelper.getHiveData(player.world);
+				HiveSaveData saveData = DataHelper.getHiveData();
 				Hive hive = saveData.getHiveByMember(player.getUniqueID());
 				return hive != null;
 			} else {
@@ -104,7 +104,7 @@ public class RecipeLibrary {
 
 		WRIT_OF_EXPULSION_RECIPE = GCTRecipeList.instance.makeAndAddRecipeWithCreatorAndCondition("writ_expulsion", new ItemStack(ItemRegistry.WRIT_OF_EXPULSION, 1), new IngredientStack("paper", 3), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 1), new IngredientStack("dyeRed", 1)).addCondition((EntityPlayer player, TileEntity tile) -> {
 			if (!player.world.isRemote) {
-				HiveSaveData saveData = DataHelper.getHiveData(player.world);
+				HiveSaveData saveData = DataHelper.getHiveData();
 				Hive hive = saveData.getHiveByMember(player.getUniqueID());
 				return hive != null && hive.owner.equals(player.getUniqueID());
 			} else {

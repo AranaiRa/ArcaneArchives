@@ -2,9 +2,7 @@ package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.HiveSaveData.Hive;
-import com.aranaira.arcanearchives.types.ISerializeByteBuf;
 import com.google.common.collect.Iterators;
-import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
@@ -13,6 +11,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 
@@ -30,26 +29,22 @@ public class DataHelper {
 	 * Returns null if either argument is null or the requested network is invalid.
 	 *
 	 * @param uuid  The player/network UUID
-	 * @param world The world object
 	 * @return An ServerNetwork instance for the given id, or null if it was not found.
 	 */
 	@Nullable
-	public static ServerNetwork getServerNetwork (UUID uuid, World world) {
-		if (!checkUUIDAndWorld(uuid, world)) {
+	public static ServerNetwork getServerNetwork (UUID uuid) {
+		WorldServer world = getWorld();
+		if (!checkUUID(uuid) || !checkWorld(world)) {
 			return null;
 		}
 
-		NetworkSaveData saveData = getNetworkData(world);
+		NetworkSaveData saveData = getNetworkData();
 
 		return saveData.getNetwork(uuid);
 	}
 
 	public static WorldServer getWorld () {
 		return FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(0);
-	}
-
-	public static NetworkSaveData getNetworkData () {
-		return getNetworkData(getWorld());
 	}
 
 	public static class ServerList implements Iterable<IHiveBase> {
@@ -62,6 +57,7 @@ public class DataHelper {
 		}
 
 		@Override
+		@Nonnull
 		public Iterator<IHiveBase> iterator () {
 			return Iterators.concat(independents.iterator(), hives.iterator());
 		}
@@ -95,8 +91,9 @@ public class DataHelper {
 		return new ServerList(independents, hives);
 	}
 
-	public static NetworkSaveData getNetworkData (World world) {
-		NetworkSaveData saveData = (NetworkSaveData) world.getMapStorage().getOrLoadData(NetworkSaveData.class, NetworkSaveData.ID);
+	public static NetworkSaveData getNetworkData () {
+		WorldServer world = getWorld();
+		NetworkSaveData saveData = (NetworkSaveData) Objects.requireNonNull(world.getMapStorage()).getOrLoadData(NetworkSaveData.class, NetworkSaveData.ID);
 
 		if (saveData == null) {
 			saveData = new NetworkSaveData();
@@ -106,8 +103,9 @@ public class DataHelper {
 		return saveData;
 	}
 
-	public static PlayerSaveData getPlayerData (World world, EntityPlayer player) {
-		PlayerSaveData saveData = (PlayerSaveData) world.getMapStorage().getOrLoadData(PlayerSaveData.class, PlayerSaveData.ID(player));
+	public static PlayerSaveData getPlayerData (EntityPlayer player) {
+		WorldServer world = getWorld();
+		PlayerSaveData saveData = (PlayerSaveData) Objects.requireNonNull(world.getMapStorage()).getOrLoadData(PlayerSaveData.class, PlayerSaveData.ID(player));
 		if (saveData == null) {
 			saveData = new PlayerSaveData(player);
 			world.getMapStorage().setData(saveData.getId(), saveData);
@@ -117,12 +115,8 @@ public class DataHelper {
 	}
 
 	public static HiveSaveData getHiveData () {
-		World world = FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(0);
-		return getHiveData(world);
-	}
-
-	public static HiveSaveData getHiveData (World world) {
-		HiveSaveData saveData = (HiveSaveData) world.getMapStorage().getOrLoadData(HiveSaveData.class, HiveSaveData.ID);
+		World world = getWorld();
+		HiveSaveData saveData = (HiveSaveData) Objects.requireNonNull(world.getMapStorage()).getOrLoadData(HiveSaveData.class, HiveSaveData.ID);
 		if (saveData == null) {
 			saveData = new HiveSaveData();
 			world.getMapStorage().setData(HiveSaveData.ID, saveData);
@@ -131,31 +125,11 @@ public class DataHelper {
 		return saveData;
 	}
 
-	public static class HiveMembershipInfo implements ISerializeByteBuf<HiveMembershipInfo> {
-		public boolean isOwner = false;
-		public boolean inHive = false;
+	@Nullable
+	public static HiveMembershipInfo getHiveMembershipInfo (UUID uuid) {
+		if (!checkUUID(uuid)) return null;
 
-		@Override
-		public HiveMembershipInfo fromBytes (ByteBuf buf) {
-			isOwner = buf.readBoolean();
-			inHive = buf.readBoolean();
-			return this;
-		}
-
-		@Override
-		public void toBytes (ByteBuf buf) {
-			buf.writeBoolean(isOwner);
-			buf.writeBoolean(inHive);
-		}
-
-		public static HiveMembershipInfo deserialize (ByteBuf buf) {
-			HiveMembershipInfo info = new HiveMembershipInfo();
-			return info.fromBytes(buf);
-		}
-	}
-
-	public static HiveMembershipInfo getHiveMembershipInfo (UUID uuid, World world) {
-		HiveSaveData saveData = getHiveData(world);
+		HiveSaveData saveData = getHiveData();
 		Hive hive = saveData.getHiveByMember(uuid);
 
 		HiveMembershipInfo info = new HiveMembershipInfo();
@@ -176,44 +150,62 @@ public class DataHelper {
 		return info;
 	}
 
-	public static boolean isHiveMember (UUID uuid, World world) {
-		HiveSaveData saveData = getHiveData(world);
+	public static boolean isHiveMember (UUID uuid) {
+		if (!checkUUID(uuid)) return false;
+
+		HiveSaveData saveData = getHiveData();
 		return saveData.getHiveByMember(uuid) != null;
 	}
 
 	@Nullable
-	public static HiveNetwork getHiveNetwork (UUID uuid, World world) {
-		HiveSaveData saveData = getHiveData(world);
-		return getHiveNetwork(saveData.getHiveByMember(uuid), world);
+	public static HiveNetwork getHiveNetwork (UUID uuid) {
+		if (!checkUUID(uuid)) return null;
+		HiveSaveData saveData = getHiveData();
+		Hive hive = saveData.getHiveByMember(uuid);
+		if (hive == null) {
+			return null;
+		} else {
+			return getHiveNetwork(hive);
+		}
 	}
 
-	@Nullable
-	public static HiveNetwork getHiveNetwork (Hive hive, World world) {
-		ServerNetwork owner = getServerNetwork(hive.owner, world);
+	public static HiveNetwork getHiveNetwork (Hive hive) {
+		ServerNetwork owner = getServerNetwork(hive.owner);
 		List<ServerNetwork> members = new ArrayList<>();
 		for (UUID member : hive.members) {
-			ServerNetwork m = getServerNetwork(member, world);
-			assert m != null;
+			ServerNetwork m = getServerNetwork(member);
+			if (m == null) {
+				ArcaneArchives.logger.error("Attempted to insert a null network for member " + member.toString() + " into Hive for " + hive.owner.toString(), new InvalidNetworkException("Null Hive Member"));
+				continue;
+			}
 			members.add(m);
 		}
 
 		return new HiveNetwork(owner, members);
 	}
 
-	public static boolean checkUUIDAndWorld (UUID uuid, World world) {
-		if (uuid == null || uuid.equals(INVALID)) {
-			ArcaneArchives.logger.warn(() -> "Attempted to fetch an invalid archive: " + uuid);
-			ArcaneArchives.logger.warn("Trace:", new InvalidNetworkException("UUID must be valid"));
-			// In an ideal situation, we won't need these checks, but it's useful for notifying about bugs with a
-			// reduction in the chance of crashing the server/client
+	public static boolean checkUUID (UUID uuid) {
+		if (uuid == null) {
+			ArcaneArchives.logger.warn("Attempted to fetch a network with a null UUID", new InvalidNetworkException("Null Network UUID"));
 			return false;
-		}
-		if (world == null || world.getMapStorage() == null) {
-			ArcaneArchives.logger.error(String.format("Attempted to load a network for %s, but the world or its storage is null!", uuid.toString()));
-			ArcaneArchives.logger.warn("Trace:", new InvalidNetworkException("World is null!"));
+		} else if (uuid.equals(INVALID)) {
+			ArcaneArchives.logger.warn("Attempted to fetch a network with a blank (invalid) UUID", new InvalidNetworkException("Invalid UUID"));
 			return false;
+		} else {
+			return true;
 		}
-		return true;
+	}
+
+	public static boolean checkWorld (WorldServer world) {
+		if (world == null) {
+			ArcaneArchives.logger.error("Attempted to load a network, but the world is null!", new InvalidNetworkException("World is null"));
+			return false;
+		} else if (world.getMapStorage() == null) {
+			ArcaneArchives.logger.error("Attempted to load a network, but the world's map storage is null!", new InvalidNetworkException("Map Storage is null"));
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 	public static ClientNetwork getClientNetwork (UUID uuid) {
