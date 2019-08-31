@@ -3,9 +3,6 @@ package com.aranaira.arcanearchives.data;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.HiveSaveData.Hive;
 import com.google.common.collect.Iterators;
-import com.aranaira.arcanearchives.types.ISerializeByteBuf;
-import com.google.common.collect.Iterators;
-import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
@@ -17,7 +14,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class DataHelper {
 	public static UUID INVALID = UUID.fromString("00000000-0000-0000-0000-000000000000");
@@ -32,7 +28,7 @@ public class DataHelper {
 	 * Fetches an Arcane Archives server-side network fetched from the World object passed in.
 	 * Returns null if either argument is null or the requested network is invalid.
 	 *
-	 * @param uuid  The player/network UUID
+	 * @param uuid The player/network UUID
 	 * @return An ServerNetwork instance for the given id, or null if it was not found.
 	 */
 	@Nullable
@@ -130,7 +126,9 @@ public class DataHelper {
 
 	@Nullable
 	public static HiveMembershipInfo getHiveMembershipInfo (UUID uuid) {
-		if (!checkUUID(uuid)) return null;
+		if (!checkUUID(uuid)) {
+			return null;
+		}
 
 		HiveSaveData saveData = getHiveData();
 		Hive hive = saveData.getHiveByMember(uuid);
@@ -154,7 +152,9 @@ public class DataHelper {
 	}
 
 	public static boolean isHiveMember (UUID uuid) {
-		if (!checkUUID(uuid)) return false;
+		if (!checkUUID(uuid)) {
+			return false;
+		}
 
 		HiveSaveData saveData = getHiveData();
 		return saveData.getHiveByMember(uuid) != null;
@@ -162,7 +162,9 @@ public class DataHelper {
 
 	@Nullable
 	public static HiveNetwork getHiveNetwork (UUID uuid) {
-		if (!checkUUID(uuid)) return null;
+		if (!checkUUID(uuid)) {
+			return null;
+		}
 		HiveSaveData saveData = getHiveData();
 		Hive hive = saveData.getHiveByMember(uuid);
 		if (hive == null) {

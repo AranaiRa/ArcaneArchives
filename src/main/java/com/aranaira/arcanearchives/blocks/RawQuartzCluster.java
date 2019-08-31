@@ -33,7 +33,7 @@ public class RawQuartzCluster extends BlockDirectionalTemplate implements IInfus
 		super(name, Material.ROCK);
 		setLightLevel(16 / 16f);
 		setHardness(1.4f);
-		setDefaultState(this.blockState.getBaseState().withProperty(FACING,  EnumFacing.UP));
+		setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.UP));
 		setHarvestLevel("pickaxe", 0);
 	}
 

@@ -112,7 +112,9 @@ public class ServerNetwork implements IServerNetwork {
 		}
 
 		for (Entry<Set<ChunkPos>> entry : map.int2ObjectEntrySet()) {
-			if (entry.getValue().isEmpty()) continue;
+			if (entry.getValue().isEmpty()) {
+				continue;
+			}
 			int dimension = entry.getIntKey();
 			Set<ChunkPos> chunks = entry.getValue();
 
