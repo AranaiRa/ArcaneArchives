@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.data;
 
+import com.aranaira.arcanearchives.immanence.IImmanenceBus;
 import com.aranaira.arcanearchives.types.IteRef;
 import com.aranaira.arcanearchives.types.lists.ITileList;
 
@@ -21,4 +22,6 @@ public interface IHiveBase {
 	Iterable<IteRef> getValidTiles ();
 
 	List<ServerNetwork> getContainedNetworks ();
+
+	IImmanenceBus getImmanenceBus ();
 }

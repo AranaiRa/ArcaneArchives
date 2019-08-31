@@ -3,6 +3,9 @@ package com.aranaira.arcanearchives.data;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.HiveSaveData.Hive;
 import com.google.common.collect.Iterators;
+import com.aranaira.arcanearchives.types.ISerializeByteBuf;
+import com.google.common.collect.Iterators;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
@@ -14,6 +17,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class DataHelper {
 	public static UUID INVALID = UUID.fromString("00000000-0000-0000-0000-000000000000");
@@ -94,7 +98,6 @@ public class DataHelper {
 	public static NetworkSaveData getNetworkData () {
 		WorldServer world = getWorld();
 		NetworkSaveData saveData = (NetworkSaveData) Objects.requireNonNull(world.getMapStorage()).getOrLoadData(NetworkSaveData.class, NetworkSaveData.ID);
-
 		if (saveData == null) {
 			saveData = new NetworkSaveData();
 			world.getMapStorage().setData(NetworkSaveData.ID, saveData);
