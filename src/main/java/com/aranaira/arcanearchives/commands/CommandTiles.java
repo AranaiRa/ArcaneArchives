@@ -56,7 +56,7 @@ public class CommandTiles extends CommandBase {
 		if (sender instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) sender;
 			World world = player.world;
-			ServerNetwork network = DataHelper.getServerNetwork(player.getUniqueID(), world);
+			ServerNetwork network = DataHelper.getServerNetwork(player.getUniqueID());
 			if (network == null) {
 				player.sendMessage(new TextComponentString("Sorry, can't find a network for you?"));
 				return;

@@ -100,7 +100,7 @@ public class DebugOrbItem extends ItemTemplate {
 
 		ServerNetwork sNetwork = null;
 		if (!world.isRemote) {
-			sNetwork = DataHelper.getServerNetwork(ite.getNetworkId(), world);
+			sNetwork = DataHelper.getServerNetwork(ite.getNetworkId());
 		}
 
 		if (world.isRemote) {

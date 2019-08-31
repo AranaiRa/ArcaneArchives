@@ -44,7 +44,7 @@ public class LetterOfInvitationItem extends LetterTemplate {
 			return stack;
 		}
 
-		HiveSaveData saveData = DataHelper.getHiveData(world);
+		HiveSaveData saveData = DataHelper.getHiveData();
 		Hive hive = saveData.getHiveByOwner(network);
 		if (saveData.addMember(hive, playerId)) {
 			player.sendStatusMessage(new TextComponentTranslation("arcanearchives.network.hive.joined", tag.getString("creator_name")), true);

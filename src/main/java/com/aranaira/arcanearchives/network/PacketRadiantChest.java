@@ -275,7 +275,7 @@ public class PacketRadiantChest {
 					return;
 				}
 
-				ServerNetwork network = DataHelper.getServerNetwork(message.networkId, ctx.getServerHandler().player.world);
+				ServerNetwork network = DataHelper.getServerNetwork(message.networkId);
 				if (network != null) {
 					ImmanenceTileEntity tile = network.getImmanenceTile(message.tileId);
 					if (tile instanceof RadiantChestTileEntity) {

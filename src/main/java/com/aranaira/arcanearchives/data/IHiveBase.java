@@ -7,7 +7,6 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public interface IHiveBase {
-	@Nullable
 	ServerNetwork getOwnerNetwork ();
 
 	@Nullable
@@ -21,6 +20,5 @@ public interface IHiveBase {
 
 	Iterable<IteRef> getValidTiles ();
 
-	@Nullable
 	List<ServerNetwork> getContainedNetworks ();
 }

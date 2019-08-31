@@ -51,7 +51,7 @@ public class WritOfExpulsionItem extends LetterTemplate {
 			return stack;
 		}
 
-		HiveSaveData saveData = DataHelper.getHiveData(world);
+		HiveSaveData saveData = DataHelper.getHiveData();
 		Hive hive = saveData.getHiveByMember(expelId);
 		if (!hive.owner.equals(playerId)) {
 			player.sendStatusMessage(new TextComponentTranslation("arcanearchives.network.hive.expel_no_permission"), true);

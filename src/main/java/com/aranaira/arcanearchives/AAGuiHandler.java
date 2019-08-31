@@ -52,7 +52,7 @@ public class AAGuiHandler implements IGuiHandler {
 			case RADIANT_CHEST:
 				return new ContainerRadiantChest((RadiantChestTileEntity) te, player);
 			case GEMCUTTERS_TABLE:
-				ServerNetwork network = DataHelper.getServerNetwork(player.getUniqueID(), world);
+				ServerNetwork network = DataHelper.getServerNetwork(player.getUniqueID());
 				network.synchroniseHiveInfo();
 				GemCuttersTableTileEntity gct = (GemCuttersTableTileEntity) te;
 				return new ContainerGemCuttersTable(gct.getInventory(), gct, player);

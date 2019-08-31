@@ -45,7 +45,7 @@ public class CommandHive extends CommandBase {
 		if (sender instanceof EntityPlayer) {
 			PlayerProfileCache cache = server.getPlayerProfileCache();
 			EntityPlayer player = (EntityPlayer) sender;
-			HiveSaveData saveData = DataHelper.getHiveData(player.world);
+			HiveSaveData saveData = DataHelper.getHiveData();
 			Hive hive = saveData.getHiveByMember(player.getUniqueID());
 			if (hive == null) {
 				player.sendMessage(new TextComponentString("You are not in a hive."));

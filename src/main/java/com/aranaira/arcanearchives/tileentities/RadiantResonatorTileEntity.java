@@ -153,7 +153,7 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity {
 			updateSound();
 		}
 
-		ServerNetwork network = DataHelper.getServerNetwork(networkId, world);
+		ServerNetwork network = DataHelper.getServerNetwork(networkId);
 		if (network != null) {
 			network.removeTile(this);
 		}

@@ -1,7 +1,5 @@
 package com.aranaira.arcanearchives.data;
 
-import com.aranaira.arcanearchives.data.DataHelper.HiveMembershipInfo;
-import com.aranaira.arcanearchives.data.ServerNetwork.SynchroniseInfo;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.types.ISerializeByteBuf;
 import com.aranaira.arcanearchives.types.iterators.TileListIterable;

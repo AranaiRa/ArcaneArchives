@@ -52,7 +52,7 @@ public class Handlers {
 
 			UUID networkId = player.getUniqueID();
 
-			ServerNetwork network = DataHelper.getServerNetwork(networkId, player.world);
+			ServerNetwork network = DataHelper.getServerNetwork(networkId);
 
 			if (network == null) {
 				return null;
@@ -157,7 +157,7 @@ public class Handlers {
 
 			EntityPlayerMP player = ctx.getServerHandler().player;
 
-			ServerNetwork network = DataHelper.getServerNetwork(player.getUniqueID(), server.getWorld(0));
+			ServerNetwork network = DataHelper.getServerNetwork(player.getUniqueID());
 			if (network == null) {
 				ArcaneArchives.logger.error("Network was null when processing sync packet for " + player.getUniqueID());
 				return;

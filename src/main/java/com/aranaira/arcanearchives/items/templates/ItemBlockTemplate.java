@@ -45,7 +45,7 @@ public class ItemBlockTemplate extends ItemBlock {
 				totalResonators = network.getTotalResonators();
 				totalCores = network.getTotalCores();
 			} else {
-				ServerNetwork network = DataHelper.getServerNetwork(player.getUniqueID(), world);
+				ServerNetwork network = DataHelper.getServerNetwork(player.getUniqueID());
 				if (network == null) {
 					player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.invalidnetwork"), true);
 					return EnumActionResult.FAIL;
