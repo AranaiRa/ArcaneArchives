@@ -15,6 +15,7 @@ public class ImmanenceBus implements IImmanenceBus {
 	private float multiplier = -1;
 	private int base, leftover, total = -1;
 	private int lastTick = -1;
+	private long lastTickTime = -1;
 
 	public ImmanenceBus (IHiveBase owner) {
 		this.owner = owner;
@@ -22,6 +23,7 @@ public class ImmanenceBus implements IImmanenceBus {
 
 	private void buildTemporaryList (int currentTick) {
 		if (lastTick != currentTick) {
+			lastTickTime = System.currentTimeMillis();
 			lastTick = currentTick;
 
 			generators.clear();
@@ -104,5 +106,10 @@ public class ImmanenceBus implements IImmanenceBus {
 	@Override
 	public float getMultiplier () {
 		return multiplier;
+	}
+
+	@Override
+	public long getLastTickTime () {
+		return lastTickTime;
 	}
 }

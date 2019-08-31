@@ -9,4 +9,5 @@ public interface IImmanenceBus {
 	int getLeftoverImmanence ();
 	int getBaseImmanence ();
 	float getMultiplier ();
+	long getLastTickTime ();
 }
