@@ -28,7 +28,7 @@ public class DataHelper {
 	 * Fetches an Arcane Archives server-side network fetched from the World object passed in.
 	 * Returns null if either argument is null or the requested network is invalid.
 	 *
-	 * @param uuid  The player/network UUID
+	 * @param uuid The player/network UUID
 	 * @return An ServerNetwork instance for the given id, or null if it was not found.
 	 */
 	@Nullable
@@ -127,7 +127,9 @@ public class DataHelper {
 
 	@Nullable
 	public static HiveMembershipInfo getHiveMembershipInfo (UUID uuid) {
-		if (!checkUUID(uuid)) return null;
+		if (!checkUUID(uuid)) {
+			return null;
+		}
 
 		HiveSaveData saveData = getHiveData();
 		Hive hive = saveData.getHiveByMember(uuid);
@@ -151,7 +153,9 @@ public class DataHelper {
 	}
 
 	public static boolean isHiveMember (UUID uuid) {
-		if (!checkUUID(uuid)) return false;
+		if (!checkUUID(uuid)) {
+			return false;
+		}
 
 		HiveSaveData saveData = getHiveData();
 		return saveData.getHiveByMember(uuid) != null;
@@ -159,7 +163,9 @@ public class DataHelper {
 
 	@Nullable
 	public static HiveNetwork getHiveNetwork (UUID uuid) {
-		if (!checkUUID(uuid)) return null;
+		if (!checkUUID(uuid)) {
+			return null;
+		}
 		HiveSaveData saveData = getHiveData();
 		Hive hive = saveData.getHiveByMember(uuid);
 		if (hive == null) {

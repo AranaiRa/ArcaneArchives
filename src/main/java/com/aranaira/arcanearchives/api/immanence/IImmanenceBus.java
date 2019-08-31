@@ -6,8 +6,12 @@ public interface IImmanenceBus {
 	void consumeImmanence (int currentTick);
 
 	int getTotalImmanence ();
+
 	int getLeftoverImmanence ();
+
 	int getBaseImmanence ();
+
 	float getMultiplier ();
+
 	long getLastTickTime ();
 }
