@@ -10,7 +10,6 @@
     "variants": {
         "normal": [{}],
         "inventory": [{
-
             "transform": {
                 "firstperson_righthand": {
                     "translation": [0.1, 0.025, -0.1],
@@ -44,14 +43,20 @@
                 }
             }
         }],
-        "accessor": {
-            "true": {
+        "accessortype": {
+            "top": {
                 "model": "cube_all",
                 "textures": {
                     "all": "arcanearchives:transparent"
                 }
             },
-            "false": {}
+            "bottom": {
+                "model": "cube_all",
+                "textures": {
+                    "all": "arcanearchives:transparent"
+                }
+            },
+            "base": {}
         },
         "facing": {
             "down": {},

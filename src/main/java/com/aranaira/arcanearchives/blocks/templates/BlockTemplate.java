@@ -12,6 +12,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -129,11 +130,15 @@ public class BlockTemplate extends Block implements IHasModel {
 				}
 			}
 
-			// The item block has already taken care of to make sure that the points can be replaced.
-			if (this.hasAccessors() || this == BlockRegistry.LECTERN_MANIFEST) {
-				for (BlockPos point : calculateAccessors(world, pos)) {
-					world.setBlockState(point, this.getDefaultState().withProperty(ACCESSOR, true).withProperty(BlockDirectionalTemplate.FACING, EnumFacing.fromAngle(placer.rotationYaw - 90)));
-				}
+			handleAccessors(world, pos, placer);
+		}
+	}
+
+	public void handleAccessors (World world, BlockPos pos, EntityLivingBase placer) {
+		// The item block has already taken care of to make sure that the points can be replaced.
+		if (this.hasAccessors() || this == BlockRegistry.LECTERN_MANIFEST) {
+			for (BlockPos point : calculateAccessors(world, pos)) {
+				world.setBlockState(point, this.getDefaultState().withProperty(ACCESSOR, true).withProperty(BlockDirectionalTemplate.FACING, EnumFacing.fromAngle(placer.rotationYaw - 90)));
 			}
 		}
 	}
