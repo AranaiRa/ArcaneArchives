@@ -91,6 +91,7 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void loadComplete (FMLLoadCompleteEvent event) {
+		super.loadComplete(event);
 		if (Loader.isModLoaded("gbook_snapshot")) {
 			GBookInit.init();
 		}

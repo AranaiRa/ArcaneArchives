@@ -8,6 +8,8 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
 import org.apache.logging.log4j.Logger;
 
+import java.io.File;
+
 @Mod(modid = ArcaneArchives.MODID, name = ArcaneArchives.NAME, version = ArcaneArchives.VERSION, dependencies = "required-after:gbook_snapshot;after:baubles;required-before:mysticallib;after:thaumcraft")
 public class ArcaneArchives {
 	public static final String MODID = "arcanearchives";
@@ -21,9 +23,12 @@ public class ArcaneArchives {
 	@SidedProxy(clientSide = "com.aranaira.arcanearchives.proxy.ClientProxy", serverSide = "com.aranaira.arcanearchives.proxy.CommonProxy")
 	public static CommonProxy proxy;
 
+	public static File configDirectory;
+
 	@EventHandler
 	public static void preInit (FMLPreInitializationEvent event) {
 		proxy.preInit(event);
+		configDirectory = event.getModConfigurationDirectory();
 	}
 
 	@EventHandler

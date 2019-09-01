@@ -13,6 +13,7 @@ import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.init.RecipeLibrary;
 import com.aranaira.arcanearchives.network.Networking;
+import com.aranaira.arcanearchives.util.DuplicationUtils;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -66,6 +67,8 @@ public class CommonProxy {
 	public void loadComplete (FMLLoadCompleteEvent event) {
 		// Ensure Bookshelf has an ore dictionary entry
 		OreDictionary.registerOre("bookshelf", Blocks.BOOKSHELF);
+		// And set up the duplication tables
+		DuplicationUtils.init();
 	}
 
 	public void scheduleTask (Runnable runnable, Side side) {
