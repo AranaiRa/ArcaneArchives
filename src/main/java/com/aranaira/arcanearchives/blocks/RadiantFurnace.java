@@ -101,18 +101,18 @@ public class RadiantFurnace extends BlockDirectionalTemplate {
 	@SuppressWarnings("deprecation")
 	public void neighborChanged (IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
 		if (state.getValue(ACCESSOR_TYPE) == AccessorType.BOTTOM) {
-			if (world.isAirBlock(getConnectedPos(pos, state))) {
+			if (world.isAirBlock(getConnectedPos(pos, state)) || world.isAirBlock(pos.up())) {
 				world.setBlockToAir(pos);
 				world.setBlockToAir(pos.up());
 			}
 		} else if (state.getValue(ACCESSOR_TYPE) == AccessorType.TOP) {
-			if (world.isAirBlock(getConnectedPos(pos, state).down())) {
+			if (world.isAirBlock(pos) || world.isAirBlock(getConnectedPos(pos, state).down())) {
 				world.setBlockToAir(pos);
 				world.setBlockToAir(pos.down());
 			}
 		} else {
 			BlockPos thingy = pos.offset(EnumFacing.fromAngle(state.getValue(FACING).getHorizontalAngle() - 180));
-			if (world.isAirBlock(thingy)) {
+			if (world.isAirBlock(thingy) || world.isAirBlock(thingy.up())) {
 				// TODO: PARTICLES
 				this.breakBlock(world, pos, state);
 				world.setBlockToAir(pos);
