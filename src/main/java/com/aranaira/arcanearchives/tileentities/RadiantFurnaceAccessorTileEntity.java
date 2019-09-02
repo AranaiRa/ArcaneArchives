@@ -13,12 +13,14 @@ public class RadiantFurnaceAccessorTileEntity extends ImmanenceTileEntity {
 	private EnumFacing offset;
 	private EnumFacing front;
 
-	public RadiantFurnaceAccessorTileEntity (String name, EnumFacing offset, boolean bottom) {
-		super(name);
+	public RadiantFurnaceAccessorTileEntity (EnumFacing offset, boolean bottom) {
+		super("radiant_furnace_accessor");
 		this.bottom = bottom;
 		// This might need to be opposite
 		this.offset = offset;
-		this.front = EnumFacing.fromAngle(offset.getHorizontalAngle() - 90);
+		if (offset != null) {
+			this.front = EnumFacing.fromAngle(offset.getHorizontalAngle() - 90);
+		}
 	}
 
 	@Nullable
@@ -46,7 +48,7 @@ public class RadiantFurnaceAccessorTileEntity extends ImmanenceTileEntity {
 
 		if (bottom && facing == front) {
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(parent.fuel);
-		} else if (!bottom && facing == EnumFacing.UP) {
+		} else if (!bottom) {
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(parent.combined);
 		} else {
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(parent.output);

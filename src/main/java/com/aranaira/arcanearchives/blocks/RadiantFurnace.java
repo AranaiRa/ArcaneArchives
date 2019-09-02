@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
 import com.aranaira.arcanearchives.client.render.LineHandler;
+import com.aranaira.arcanearchives.tileentities.RadiantFurnaceAccessorTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantFurnaceTileEntity;
 import com.aranaira.arcanearchives.util.DropUtils;
 import net.minecraft.block.Block;
@@ -29,6 +30,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class RadiantFurnace extends BlockDirectionalTemplate {
@@ -101,18 +103,18 @@ public class RadiantFurnace extends BlockDirectionalTemplate {
 	@SuppressWarnings("deprecation")
 	public void neighborChanged (IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
 		if (state.getValue(ACCESSOR_TYPE) == AccessorType.BOTTOM) {
-			if (world.isAirBlock(getConnectedPos(pos, state))) {
+			if (world.isAirBlock(getConnectedPos(pos, state)) || world.isAirBlock(pos.up())) {
 				world.setBlockToAir(pos);
 				world.setBlockToAir(pos.up());
 			}
 		} else if (state.getValue(ACCESSOR_TYPE) == AccessorType.TOP) {
-			if (world.isAirBlock(getConnectedPos(pos, state).down())) {
+			if (world.isAirBlock(pos) || world.isAirBlock(getConnectedPos(pos, state).down())) {
 				world.setBlockToAir(pos);
 				world.setBlockToAir(pos.down());
 			}
 		} else {
 			BlockPos thingy = pos.offset(EnumFacing.fromAngle(state.getValue(FACING).getHorizontalAngle() - 180));
-			if (world.isAirBlock(thingy)) {
+			if (world.isAirBlock(thingy) || world.isAirBlock(thingy.up())) {
 				// TODO: PARTICLES
 				this.breakBlock(world, pos, state);
 				world.setBlockToAir(pos);
@@ -171,6 +173,23 @@ public class RadiantFurnace extends BlockDirectionalTemplate {
 	@Override
 	protected BlockStateContainer createBlockState () {
 		return new BlockStateContainer(this, FACING, ACCESSOR_TYPE);
+	}
+
+	@Override
+	public boolean hasTileEntity (IBlockState state) {
+		return true;
+	}
+
+	@Nullable
+	@Override
+	public TileEntity createTileEntity (World world, IBlockState state) {
+		if (state.getValue(ACCESSOR_TYPE) == AccessorType.BASE) {
+			return new RadiantFurnaceTileEntity();
+		} else if (state.getValue(ACCESSOR_TYPE) == AccessorType.TOP) {
+			return new RadiantFurnaceAccessorTileEntity(EnumFacing.fromAngle(state.getValue(FACING).getHorizontalAngle() - 180), false);
+		} else {
+			return new RadiantFurnaceAccessorTileEntity(EnumFacing.fromAngle(state.getValue(FACING).getHorizontalAngle() - 180), true);
+		}
 	}
 
 	@Override
