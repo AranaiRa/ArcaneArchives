@@ -48,7 +48,7 @@ public class RadiantFurnaceAccessorTileEntity extends ImmanenceTileEntity {
 
 		if (bottom && facing == front) {
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(parent.fuel);
-		} else if (!bottom && facing == EnumFacing.UP) {
+		} else if (!bottom) {
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(parent.combined);
 		} else {
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(parent.output);
