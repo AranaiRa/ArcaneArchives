@@ -22,8 +22,8 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 	public ItemStackWrapper combined = new ItemStackWrapper(0, 1, inventory);
 	public ItemStackWrapper output = new ItemStackWrapper(2, 3, inventory);
 
-	public RadiantFurnaceTileEntity (String name) {
-		super(name);
+	public RadiantFurnaceTileEntity () {
+		super("radiant_furnace");
 	}
 
 	@Override

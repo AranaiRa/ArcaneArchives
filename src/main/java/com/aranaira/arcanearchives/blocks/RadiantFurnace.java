@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
 import com.aranaira.arcanearchives.client.render.LineHandler;
+import com.aranaira.arcanearchives.tileentities.RadiantFurnaceAccessorTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantFurnaceTileEntity;
 import com.aranaira.arcanearchives.util.DropUtils;
 import net.minecraft.block.Block;
@@ -29,6 +30,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class RadiantFurnace extends BlockDirectionalTemplate {
@@ -171,6 +173,23 @@ public class RadiantFurnace extends BlockDirectionalTemplate {
 	@Override
 	protected BlockStateContainer createBlockState () {
 		return new BlockStateContainer(this, FACING, ACCESSOR_TYPE);
+	}
+
+	@Override
+	public boolean hasTileEntity (IBlockState state) {
+		return true;
+	}
+
+	@Nullable
+	@Override
+	public TileEntity createTileEntity (World world, IBlockState state) {
+		if (state.getValue(ACCESSOR_TYPE) == AccessorType.BASE) {
+			return new RadiantFurnaceTileEntity();
+		} else if (state.getValue(ACCESSOR_TYPE) == AccessorType.TOP) {
+			return new RadiantFurnaceAccessorTileEntity(EnumFacing.fromAngle(state.getValue(FACING).getHorizontalAngle() - 180), false);
+		} else {
+			return new RadiantFurnaceAccessorTileEntity(EnumFacing.fromAngle(state.getValue(FACING).getHorizontalAngle() - 180), true);
+		}
 	}
 
 	@Override

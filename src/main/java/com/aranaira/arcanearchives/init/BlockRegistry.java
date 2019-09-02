@@ -23,6 +23,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 @SuppressWarnings("WeakerAccess")
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
@@ -68,6 +69,7 @@ public class BlockRegistry {
 	//Model Parts
 	public static final BrazierFire BRAZIER_FIRE = new BrazierFire();
 
+	// TODO: REDO
 	// Tiles
 	public static final RadiantResonatorTileEntity RADIANT_RESONATOR_TILE_ENTITY = new RadiantResonatorTileEntity();
 	public static final RadiantChestTileEntity RADIANT_CHEST_TILE_ENTITY = new RadiantChestTileEntity();
@@ -81,6 +83,8 @@ public class BlockRegistry {
 	public static final MatrixCoreTileEntity MATRIX_CORE_TILE_ENTITY = new MatrixCoreTileEntity();
 	public static final MatrixRepositoryTileEntity MATRIX_REPOSITORY_TILE_ENTITY = new MatrixRepositoryTileEntity();
 	public static final MatrixStorageTileEntity MATRIX_STORAGE_TILE_ENTITY = new MatrixStorageTileEntity();
+	public static final RadiantFurnaceTileEntity RADIANT_FURNACE_TILE_ENTITY = new RadiantFurnaceTileEntity();
+	public static final RadiantFurnaceAccessorTileEntity RADIANT_FURNACE_ACCESSOR_TILE_ENTITY = new RadiantFurnaceAccessorTileEntity(null, false);
 
 	public static void init () {
 	}
@@ -130,15 +134,15 @@ public class BlockRegistry {
 		Arrays.asList(QUARTZ_SLIVER, STORAGE_RAW_QUARTZ, STORAGE_SHAPED_QUARTZ).forEach((block) -> {
 			ItemBlock itemBlock = block.getItemBlock();
 			if (itemBlock != null) {
-				ModelLoader.setCustomModelResourceLocation(itemBlock, 0, new ModelResourceLocation(block.getRegistryName(), "inventory"));
+				ModelLoader.setCustomModelResourceLocation(itemBlock, 0, new ModelResourceLocation(Objects.requireNonNull(block.getRegistryName()), "inventory"));
 			}
 		});
 	}
 
 	public static void registerTileEntities () {
-		Arrays.asList(RADIANT_RESONATOR_TILE_ENTITY, MATRIX_CORE_TILE_ENTITY, MATRIX_REPOSITORY_TILE_ENTITY, RADIANT_CHEST_TILE_ENTITY, GEMCUTTERS_TABLE_TILE_ENTITY, RADIANT_CRAFTING_TABLE_TILE_ENTITY/*, MATRIX_STORAGE_TILE_ENTITY*/, RADIANT_TROVE_TILE_ENTITY, MONITORING_CRYSTAL_TILE_ENTITY, RADIANT_TANK_TILE_ENTITY, BRAZIER_OF_HOARDING_TILE_ENTITY, FAKE_AIR_TILE_ENTITY).forEach((tile) -> {
+		Arrays.asList(RADIANT_RESONATOR_TILE_ENTITY, MATRIX_CORE_TILE_ENTITY, MATRIX_REPOSITORY_TILE_ENTITY, RADIANT_CHEST_TILE_ENTITY, GEMCUTTERS_TABLE_TILE_ENTITY, RADIANT_CRAFTING_TABLE_TILE_ENTITY/*, MATRIX_STORAGE_TILE_ENTITY*/, RADIANT_TROVE_TILE_ENTITY, MONITORING_CRYSTAL_TILE_ENTITY, RADIANT_TANK_TILE_ENTITY, BRAZIER_OF_HOARDING_TILE_ENTITY, FAKE_AIR_TILE_ENTITY, RADIANT_FURNACE_ACCESSOR_TILE_ENTITY, RADIANT_FURNACE_TILE_ENTITY).forEach((tile) -> {
 			GameRegistry.registerTileEntity(tile.getClass(), new ResourceLocation(ArcaneArchives.MODID, tile.getName()));
-			ArcaneArchives.logger.debug(String.format("Registered tile entity: %s", tile.getName()));
+			ArcaneArchives.logger.debug("Registered tile entity: " + tile.getName());
 		});
 	}
 }
