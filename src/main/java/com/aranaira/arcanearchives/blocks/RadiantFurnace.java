@@ -65,12 +65,12 @@ public class RadiantFurnace extends BlockDirectionalTemplate {
 	@Override
 	@SuppressWarnings("deprecation")
 	public IBlockState getStateFromMeta (int meta) {
-		return getDefaultState().withProperty(FACING, EnumFacing.byIndex(meta >> 1)).withProperty(ACCESSOR_TYPE, AccessorType.fromOrdinal(meta & 1));
+		return getDefaultState().withProperty(FACING, EnumFacing.byIndex((meta >> 2) + 2)).withProperty(ACCESSOR_TYPE, AccessorType.fromOrdinal(meta & 2));
 	}
 
 	@Override
 	public int getMetaFromState (IBlockState state) {
-		return state.getValue(FACING).getIndex() << 1 ^ (state.getValue(ACCESSOR_TYPE).ordinal());
+		return (Math.max(0, (state.getValue(FACING).getIndex() - 2) << 2)) ^ (state.getValue(ACCESSOR_TYPE).ordinal());
 	}
 
 	@Override
