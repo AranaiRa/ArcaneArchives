@@ -103,6 +103,8 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 				if (outSlot.getCount() < outSlot.getMaxStackSize()) {
 					canCook = true;
 				}
+			} else if (outSlot.isEmpty()) {
+				canCook = true;
 			}
 
 			if (canCook) {

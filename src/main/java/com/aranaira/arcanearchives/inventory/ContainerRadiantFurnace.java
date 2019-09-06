@@ -25,13 +25,14 @@ public class ContainerRadiantFurnace extends Container {
 
 	private void addFurnaceSlots (RadiantFurnaceTileEntity te) {
 		// Input
-		this.addSlotToContainer(new SlotItemHandler(te.input, 0, 81, 27));
-		// Fuel
-		this.addSlotToContainer(new SlotItemHandler(te.fuel, 0, 52, 27) {
-			@Override
+		this.addSlotToContainer(new SlotItemHandler(te.input, 0, 81, 27) {
+			/*@Override
 			public boolean isItemValid (@Nonnull ItemStack stack) {
 				return stack.getItem().getItemBurnTime(stack) != -1;
-			}
+			}*/
+		});
+		// Fuel
+		this.addSlotToContainer(new SlotItemHandler(te.fuel, 0, 52, 27) {
 		});
 		// Output
 		this.addSlotToContainer(new SlotItemHandler(te.output, 0, 110, 14) {
