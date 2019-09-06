@@ -2,21 +2,22 @@ package com.aranaira.arcanearchives.inventory.handlers;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
 
 import javax.annotation.Nonnull;
 
-public class ItemStackWrapper implements IItemHandler {
+public class ItemStackWrapper implements IItemHandlerModifiable {
 	private int indexStart;
 	private int indexStop;
-	private IItemHandler handler;
+	private IItemHandlerModifiable handler;
 
-	public ItemStackWrapper (int indexStart, int indexStop, IItemHandler handler) {
+	public ItemStackWrapper (int indexStart, int indexStop, IItemHandlerModifiable handler) {
 		this.indexStart = indexStart;
 		this.indexStop = indexStop;
 		this.handler = handler;
 	}
 
-	public ItemStackWrapper (int index, IItemHandler handler) {
+	public ItemStackWrapper (int index, IItemHandlerModifiable handler) {
 		this.indexStart = index;
 		this.indexStop = index;
 		this.handler = handler;
@@ -66,6 +67,16 @@ public class ItemStackWrapper implements IItemHandler {
 			return cur.getMaxStackSize();
 		}
 		return 64;
+	}
+
+	@Override
+	public void setStackInSlot (int slot, @Nonnull ItemStack stack) {
+		slot = indexStart + slot;
+		if (slot > indexStop) {
+			return;
+		}
+
+		this.handler.setStackInSlot(slot, stack);
 	}
 }
 

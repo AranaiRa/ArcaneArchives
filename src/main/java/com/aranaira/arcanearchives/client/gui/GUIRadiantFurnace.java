@@ -66,10 +66,11 @@ public class GUIRadiantFurnace extends GuiContainer {
 	@Override
 	public void drawScreen (int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
-		int i = this.guiLeft;
+		/*int i = this.guiLeft;
 		int j = this.guiTop;
-		this.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
+		this.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);*/
 
+		super.drawScreen(mouseX, mouseY, partialTicks);
 		this.renderHoveredToolTip(mouseX, mouseY);
 	}
 
