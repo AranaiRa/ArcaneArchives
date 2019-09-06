@@ -1,59 +1,29 @@
 package com.aranaira.arcanearchives.client.gui;
 
-import com.aranaira.arcanearchives.client.gui.controls.InvisibleButton;
-import com.aranaira.arcanearchives.client.gui.controls.RightClickTextField;
-import com.aranaira.arcanearchives.client.render.RenderItemExtended;
 import com.aranaira.arcanearchives.config.ConfigHandler;
-import com.aranaira.arcanearchives.inventory.ContainerRadiantChest;
 import com.aranaira.arcanearchives.inventory.ContainerRadiantFurnace;
-import com.aranaira.arcanearchives.inventory.slots.SlotExtended;
-import com.aranaira.arcanearchives.network.Networking;
-import com.aranaira.arcanearchives.network.PacketRadiantChest.SetName;
-import com.aranaira.arcanearchives.network.PacketRadiantChest.ToggleBrazier;
-import com.aranaira.arcanearchives.network.PacketRadiantChest.UnsetName;
-import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantFurnaceTileEntity;
-import com.aranaira.arcanearchives.tileentities.interfaces.IBrazierRouting;
-import com.aranaira.arcanearchives.util.ColorUtils;
-import com.aranaira.arcanearchives.util.ColorUtils.Color;
-import com.aranaira.arcanearchives.util.ManifestTrackingUtils;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiPageButtonList;
-import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ClickType;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.common.Optional;
-import org.lwjgl.input.Keyboard;
-import vazkii.quark.api.IChestButtonCallback;
-import vazkii.quark.api.IItemSearchBar;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class GUIRadiantFurnace extends GuiContainer {
-	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/radiant_furnace.png");
-	private static final ResourceLocation GUITexturesSimple = new ResourceLocation("arcanearchives:textures/gui/simple/radiant_furnace.png");
+	private static final ResourceLocation TEXTURE_RADIANTFURNACE = new ResourceLocation("arcanearchives:textures/gui/radiant_furnace.png");
+	private static final ResourceLocation TEXTURE_RADIANTFURNACE_SIMPLE = new ResourceLocation("arcanearchives:textures/gui/simple/radiant_furnace.png");
+	private static final ResourceLocation TEXTURE_PLAYERINV = new ResourceLocation("arcanearchives:textures/gui/player_inv.png");
+	private static final ResourceLocation TEXTURE_PLAYERINV_SIMPLE = new ResourceLocation("arcanearchives:textures/gui/simple/player_inv.png");
 
 	private static final int
 		BG_X = 0,
 		BG_Y = 0,
 		BG_W = 102,
-		BG_H = 70;
+		BG_H = 70,
+		BG_SHIFT = 38,
+		INVENTORY_X = 0,
+		INVENTORY_Y = 0,
+		INVENTORY_W = 181,
+		INVENTORY_H = 101,
+		PADDING = 4;
 	private static final int ImageScale = 256;
 
 	private ContainerRadiantFurnace container;
@@ -67,8 +37,8 @@ public class GUIRadiantFurnace extends GuiContainer {
 
 		this.playerinventory = playerinventory;
 		this.tile = container.getTile();
-		xSize = BG_W;
-		ySize = BG_H;
+		xSize = INVENTORY_W;
+		ySize = BG_H + INVENTORY_H + PADDING;
 	}
 
 	@Override
@@ -79,11 +49,18 @@ public class GUIRadiantFurnace extends GuiContainer {
 	@Override
 	protected void drawGuiContainerBackgroundLayer (float partialTicks, int mouseX, int mouseY) {
 		if (ConfigHandler.UsePrettyGUIs) {
-			mc.getTextureManager().bindTexture(GUITextures);
+			mc.getTextureManager().bindTexture(TEXTURE_RADIANTFURNACE);
 		} else {
-			mc.getTextureManager().bindTexture(GUITexturesSimple);
+			mc.getTextureManager().bindTexture(TEXTURE_RADIANTFURNACE_SIMPLE);
 		}
-		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, BG_X, BG_Y, BG_W, BG_H, ImageScale, ImageScale);
+		drawModalRectWithCustomSizedTexture(guiLeft + BG_SHIFT, guiTop, BG_X, BG_Y, BG_W, BG_H, ImageScale, ImageScale);
+
+		if (ConfigHandler.UsePrettyGUIs) {
+			mc.getTextureManager().bindTexture(TEXTURE_PLAYERINV);
+		} else {
+			mc.getTextureManager().bindTexture(TEXTURE_PLAYERINV_SIMPLE);
+		}
+		drawModalRectWithCustomSizedTexture(guiLeft, guiTop + BG_H + PADDING, INVENTORY_X, INVENTORY_Y, INVENTORY_W, INVENTORY_H, ImageScale, ImageScale);
 	}
 
 	@Override
