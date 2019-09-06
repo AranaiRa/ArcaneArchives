@@ -25,6 +25,7 @@ public class AAGuiHandler implements IGuiHandler {
 	public static final int DEVOURING_CHARM_BACKSIDE = 9;
 	public static final int UPGRADES = 10;
 	public static final int BRAZIER = 11;
+	public static final int RADIANT_FURNACE = 12;
 
 	@Override
 	public Object getServerGuiElement (int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -66,6 +67,8 @@ public class AAGuiHandler implements IGuiHandler {
 				return new ContainerUpgrades(player, (ImmanenceTileEntity) te);
 			case BRAZIER:
 				return new ContainerBrazier((BrazierTileEntity) te, player);
+			case RADIANT_FURNACE:
+				return new ContainerRadiantFurnace((RadiantFurnaceTileEntity) te, player);
 			default: {
 				ArcaneArchives.logger.debug(String.format("Invalid Container ID of %d was passed in; null was returned to the server", ID));
 				return null;
@@ -109,6 +112,8 @@ public class AAGuiHandler implements IGuiHandler {
 				return new GUIMatrixStorage(player, new ContainerMatrixStorage((MatrixStorageTileEntity) te, player.inventory));
 			case MATRIX_REPOSITORY:
 				return new GUIMatrixRepository(player, new ContainerMatrixRepository((MatrixRepositoryTileEntity) te, player.inventory));*/
+			case RADIANT_FURNACE:
+				return new GUIRadiantFurnace(new ContainerRadiantFurnace((RadiantFurnaceTileEntity) te, player), player.inventory);
 			default:
 				ArcaneArchives.logger.debug(String.format("Invalid Container ID of %d was passed in; null was returned to the client.", ID));
 				return null;

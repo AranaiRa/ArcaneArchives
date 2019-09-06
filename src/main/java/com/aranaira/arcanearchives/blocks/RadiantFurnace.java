@@ -1,5 +1,7 @@
 package com.aranaira.arcanearchives.blocks;
 
+import com.aranaira.arcanearchives.AAGuiHandler;
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
 import com.aranaira.arcanearchives.client.render.LineHandler;
 import com.aranaira.arcanearchives.tileentities.RadiantFurnaceAccessorTileEntity;
@@ -143,7 +145,7 @@ public class RadiantFurnace extends BlockDirectionalTemplate {
 			return true;
 		}
 
-		//playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.GEMCUTTERS_TABLE, worldIn, pos.getX(), pos.getY(), pos.getZ());
+		playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.RADIANT_FURNACE, worldIn, pos.getX(), pos.getY(), pos.getZ());
 
 		return true;
 	}
