@@ -185,7 +185,7 @@ public class RadiantTrove extends BlockDirectionalTemplate {
 
 		if (state.getBlock() == BlockRegistry.RADIANT_TROVE) {
 			if (!world.isRemote) {
-				EnumFacing facing = EnumFacing.fromAngle(state.getValue(FACING).getHorizontalAngle() - 90.0);
+				EnumFacing facing = EnumFacing.fromAngle(state.getValue(getFacingProperty()).getHorizontalAngle() - 90.0);
 				RayTraceResult rayResult = net.minecraftforge.common.ForgeHooks.rayTraceEyes(player, ((EntityPlayerMP) player).interactionManager.getBlockReachDistance() + 1);
 				if (rayResult == null) {
 					return;

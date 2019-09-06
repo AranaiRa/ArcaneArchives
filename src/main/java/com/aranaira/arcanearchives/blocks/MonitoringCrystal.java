@@ -48,13 +48,13 @@ public class MonitoringCrystal extends BlockDirectionalTemplate {
 	@Override
 	@SuppressWarnings("deprecation")
 	public IBlockState withRotation (IBlockState state, Rotation rot) {
-		return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
+		return state.withProperty(getFacingProperty(), rot.rotate(state.getValue(getFacingProperty())));
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
 	public IBlockState withMirror (IBlockState state, Mirror mirrorIn) {
-		return state.withProperty(FACING, mirrorIn.mirror(state.getValue(FACING)));
+		return state.withProperty(getFacingProperty(), mirrorIn.mirror(state.getValue(getFacingProperty())));
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public class MonitoringCrystal extends BlockDirectionalTemplate {
 	@Nonnull
 	@SuppressWarnings("deprecation")
 	public AxisAlignedBB getBoundingBox (IBlockState state, IBlockAccess source, BlockPos pos) {
-		EnumFacing facing = state.getValue(FACING);
+		EnumFacing facing = state.getValue(getFacingProperty());
 		if (facing == EnumFacing.UP) {
 			return new AxisAlignedBB(0.37, -0.1, 0.35, 0.61, 0.04, 0.64);
 		} else if (facing == EnumFacing.DOWN) {
@@ -104,7 +104,7 @@ public class MonitoringCrystal extends BlockDirectionalTemplate {
 
 	@Override
 	public boolean onBlockActivated (World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		//ArcaneArchives.logger.info(state.getValue(BlockDirectionalTemplate.FACING).getName().toLowerCase());
+		//ArcaneArchives.logger.info(state.getValue(BlockDirectionalTemplate.getFacingProperty()).getName().toLowerCase());
 
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
 	}
@@ -122,23 +122,23 @@ public class MonitoringCrystal extends BlockDirectionalTemplate {
 	@Override
 	public IBlockState getStateFromMeta (int meta) {
 		IBlockState iblockstate = this.getDefaultState();
-		iblockstate = iblockstate.withProperty(FACING, EnumFacing.byIndex(meta));
+		iblockstate = iblockstate.withProperty(getFacingProperty(), EnumFacing.byIndex(meta));
 		return iblockstate;
 	}
 
 	@Override
 	public int getMetaFromState (IBlockState state) {
-		return state.getValue(FACING).getIndex();
+		return state.getValue(getFacingProperty()).getIndex();
 	}
 
 	@Override
 	public IBlockState getStateForPlacement (World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-		return this.getDefaultState().withProperty(FACING, facing);
+		return this.getDefaultState().withProperty(getFacingProperty(), facing);
 	}
 
 	@Override
 	protected BlockStateContainer createBlockState () {
-		return new BlockStateContainer(this, FACING);
+		return new BlockStateContainer(this, getFacingProperty());
 	}
 
 	@Override

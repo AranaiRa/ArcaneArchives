@@ -1,20 +1,29 @@
 package com.aranaira.arcanearchives.tileentities;
 
+import com.aranaira.arcanearchives.tileentities.interfaces.IDirectionalTileEntity;
+import com.aranaira.arcanearchives.tileentities.interfaces.INamedTileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class RadiantFurnaceAccessorTileEntity extends ImmanenceTileEntity {
+public class RadiantFurnaceAccessorTileEntity extends TileEntity implements INamedTileEntity, IDirectionalTileEntity {
+	private final String name = "radiant_furnace_accessor";
 	private boolean bottom;
 	private EnumFacing offset;
 	private EnumFacing front;
 
+	public RadiantFurnaceAccessorTileEntity () {
+		this(EnumFacing.DOWN, true);
+	}
+
 	public RadiantFurnaceAccessorTileEntity (EnumFacing offset, boolean bottom) {
-		super("radiant_furnace_accessor");
 		this.bottom = bottom;
 		// This might need to be opposite
 		this.offset = offset;
@@ -54,4 +63,37 @@ public class RadiantFurnaceAccessorTileEntity extends ImmanenceTileEntity {
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(parent.output);
 		}
 	}
+
+	@Override
+	@Nonnull
+	public NBTTagCompound writeToNBT (NBTTagCompound compound) {
+		super.writeToNBT(compound);
+		compound.setInteger(Tags.OFFSET, offset.ordinal());
+		compound.setBoolean(Tags.BOTTOM, bottom);
+		return compound;
+	}
+
+	@Override
+	public void readFromNBT (NBTTagCompound compound) {
+		super.readFromNBT(compound);
+		offset = EnumFacing.byIndex(compound.getInteger(Tags.OFFSET));
+		bottom = compound.getBoolean(Tags.BOTTOM);
+	}
+
+	@Override
+	public String getName () {
+		return this.name;
+	}
+
+	@Override
+	public void setName (String name) {
+	}
+
+	public static class Tags {
+		public static final String OFFSET = "facing";
+		public static final String BOTTOM = "bottom";
+
+		public Tags () {}
+	}
+
 }

@@ -33,7 +33,7 @@ public class RawQuartzCluster extends BlockDirectionalTemplate implements IInfus
 		super(name, Material.ROCK);
 		setLightLevel(16 / 16f);
 		setHardness(1.4f);
-		setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.UP));
+		setDefaultState(this.blockState.getBaseState().withProperty(getFacingProperty(), EnumFacing.UP));
 		setHarvestLevel("pickaxe", 0);
 	}
 
@@ -45,25 +45,25 @@ public class RawQuartzCluster extends BlockDirectionalTemplate implements IInfus
 	@Override
 	@SuppressWarnings("deprecation")
 	public IBlockState withRotation (IBlockState state, Rotation rot) {
-		return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
+		return state.withProperty(getFacingProperty(), rot.rotate(state.getValue(getFacingProperty())));
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
 	public IBlockState withMirror (IBlockState state, Mirror mirrorIn) {
-		return state.withProperty(FACING, mirrorIn.mirror(state.getValue(FACING)));
+		return state.withProperty(getFacingProperty(), mirrorIn.mirror(state.getValue(getFacingProperty())));
 	}
 
 	@Override
 	public IBlockState getStateFromMeta (int meta) {
 		IBlockState iblockstate = this.getDefaultState();
-		iblockstate = iblockstate.withProperty(FACING, EnumFacing.byIndex(meta));
+		iblockstate = iblockstate.withProperty(getFacingProperty(), EnumFacing.byIndex(meta));
 		return iblockstate;
 	}
 
 	@Override
 	public int getMetaFromState (IBlockState state) {
-		return state.getValue(FACING).getIndex();
+		return state.getValue(getFacingProperty()).getIndex();
 	}
 
 	@Override
@@ -113,6 +113,6 @@ public class RawQuartzCluster extends BlockDirectionalTemplate implements IInfus
 
 	@Override
 	public IBlockState getStateForPlacement (World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-		return getDefaultState().withProperty(FACING, facing);
+		return getDefaultState().withProperty(getFacingProperty(), facing);
 	}
 }

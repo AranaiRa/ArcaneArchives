@@ -30,6 +30,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class RadiantFurnace extends BlockDirectionalTemplate {
 	public static final AxisAlignedBB BB_MAIN = new AxisAlignedBB(0, 0, 0, 1, 1, 1);
 	public static final AxisAlignedBB BB_ACCESSOR = new AxisAlignedBB(0, 0, 0, 1, 0.5, 1);
 	public static final PropertyEnum<AccessorType> ACCESSOR_TYPE = PropertyEnum.create("accessortype", AccessorType.class);
+	public static final PropertyEnum<EnumFacing> FURNACE_FACING = PropertyEnum.create("furnace_facing", EnumFacing.class, EnumFacing.HORIZONTALS);
 
 	public static final String name = "radiant_furnace";
 
@@ -65,12 +67,12 @@ public class RadiantFurnace extends BlockDirectionalTemplate {
 	@Override
 	@SuppressWarnings("deprecation")
 	public IBlockState getStateFromMeta (int meta) {
-		return getDefaultState().withProperty(FACING, EnumFacing.byIndex((meta >> 2) + 2)).withProperty(ACCESSOR_TYPE, AccessorType.fromOrdinal(meta & 2));
+		return getDefaultState().withProperty(FURNACE_FACING, EnumFacing.byHorizontalIndex(meta >> 2)).withProperty(ACCESSOR_TYPE, AccessorType.fromOrdinal(meta & 3));
 	}
 
 	@Override
 	public int getMetaFromState (IBlockState state) {
-		return (Math.max(0, (state.getValue(FACING).getIndex() - 2) << 2)) ^ (state.getValue(ACCESSOR_TYPE).ordinal());
+		return (state.getValue(FURNACE_FACING).getHorizontalIndex() << 2) ^ state.getValue(ACCESSOR_TYPE).ordinal();
 	}
 
 	@Override
@@ -96,7 +98,7 @@ public class RadiantFurnace extends BlockDirectionalTemplate {
 	}
 
 	public BlockPos getConnectedPos (BlockPos pos, IBlockState state) {
-		return pos.offset(state.getValue(FACING));
+		return pos.offset(state.getValue(FURNACE_FACING));
 	}
 
 	@Override
@@ -113,7 +115,7 @@ public class RadiantFurnace extends BlockDirectionalTemplate {
 				world.setBlockToAir(pos.down());
 			}
 		} else {
-			BlockPos thingy = pos.offset(EnumFacing.fromAngle(state.getValue(FACING).getHorizontalAngle() - 180));
+			BlockPos thingy = pos.offset(EnumFacing.fromAngle(state.getValue(FURNACE_FACING).getHorizontalAngle() - 180));
 			if (world.isAirBlock(thingy) || world.isAirBlock(thingy.up())) {
 				// TODO: PARTICLES
 				this.breakBlock(world, pos, state);
@@ -172,7 +174,7 @@ public class RadiantFurnace extends BlockDirectionalTemplate {
 
 	@Override
 	protected BlockStateContainer createBlockState () {
-		return new BlockStateContainer(this, FACING, ACCESSOR_TYPE);
+		return new BlockStateContainer(this, FURNACE_FACING, ACCESSOR_TYPE);
 	}
 
 	@Override
@@ -186,9 +188,9 @@ public class RadiantFurnace extends BlockDirectionalTemplate {
 		if (state.getValue(ACCESSOR_TYPE) == AccessorType.BASE) {
 			return new RadiantFurnaceTileEntity();
 		} else if (state.getValue(ACCESSOR_TYPE) == AccessorType.TOP) {
-			return new RadiantFurnaceAccessorTileEntity(EnumFacing.fromAngle(state.getValue(FACING).getHorizontalAngle() - 180), false);
+			return new RadiantFurnaceAccessorTileEntity(EnumFacing.fromAngle(state.getValue(FURNACE_FACING).getHorizontalAngle() - 180), false);
 		} else {
-			return new RadiantFurnaceAccessorTileEntity(EnumFacing.fromAngle(state.getValue(FACING).getHorizontalAngle() - 180), true);
+			return new RadiantFurnaceAccessorTileEntity(EnumFacing.fromAngle(state.getValue(FURNACE_FACING).getHorizontalAngle() - 180), true);
 		}
 	}
 
@@ -200,8 +202,13 @@ public class RadiantFurnace extends BlockDirectionalTemplate {
 		BlockPos bottom = pos.offset(curOffset);
 		BlockPos top = bottom.up();
 
-		world.setBlockState(bottom, this.getDefaultState().withProperty(ACCESSOR_TYPE, AccessorType.BOTTOM).withProperty(FACING, facing));
-		world.setBlockState(top, this.getDefaultState().withProperty(ACCESSOR_TYPE, AccessorType.TOP).withProperty(FACING, facing));
+		world.setBlockState(bottom, this.getDefaultState().withProperty(ACCESSOR_TYPE, AccessorType.BOTTOM).withProperty(FURNACE_FACING, facing));
+		world.setBlockState(top, this.getDefaultState().withProperty(ACCESSOR_TYPE, AccessorType.TOP).withProperty(FURNACE_FACING, facing));
+	}
+
+	@Override
+	public PropertyEnum<EnumFacing> getFacingProperty () {
+		return FURNACE_FACING;
 	}
 
 	public enum AccessorType implements IStringSerializable {

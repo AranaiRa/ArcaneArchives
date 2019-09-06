@@ -35,7 +35,7 @@ public class QuartzSliver extends BlockDirectionalTemplate implements IHasModel 
 		setLightLevel(16 / 16f);
 		setHardness(0.0f);
 		setTickRandomly(true);
-		setDefaultState(this.getDefaultState().withProperty(FACING, EnumFacing.DOWN));
+		setDefaultState(this.getDefaultState().withProperty(getFacingProperty(), EnumFacing.DOWN));
 	}
 
 	@Override
@@ -62,13 +62,13 @@ public class QuartzSliver extends BlockDirectionalTemplate implements IHasModel 
 	@Override
 	@SuppressWarnings("deprecation")
 	public IBlockState withRotation (IBlockState state, Rotation rot) {
-		return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
+		return state.withProperty(getFacingProperty(), rot.rotate(state.getValue(getFacingProperty())));
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
 	public IBlockState withMirror (IBlockState state, Mirror mirrorIn) {
-		return state.withProperty(FACING, mirrorIn.mirror(state.getValue(FACING)));
+		return state.withProperty(getFacingProperty(), mirrorIn.mirror(state.getValue(getFacingProperty())));
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class QuartzSliver extends BlockDirectionalTemplate implements IHasModel 
 	/*@Override
 	public void onNeighborChange (IBlockAccess world, BlockPos pos, BlockPos neighbor) {
 		IBlockState state = world.getBlockState(pos);
-		EnumFacing facing = state.getValue(FACING).getOpposite();
+		EnumFacing facing = state.getValue(getFacingProperty()).getOpposite();
 		if (pos.offset(facing).equals(neighbor) && (world.isAirBlock(neighbor))) {
 			((World) world).setBlockToAir(pos);
 			this.dropBlockAsItem((World) world, pos, state, 0);
@@ -91,7 +91,7 @@ public class QuartzSliver extends BlockDirectionalTemplate implements IHasModel 
 	@Nonnull
 	@SuppressWarnings("deprecation")
 	public AxisAlignedBB getBoundingBox (IBlockState state, IBlockAccess source, BlockPos pos) {
-		EnumFacing facing = state.getValue(FACING);
+		EnumFacing facing = state.getValue(getFacingProperty());
 		if (facing == EnumFacing.UP) {
 			return new AxisAlignedBB(0.4, 0.0, 0.4, 0.6, 0.5, 0.6);
 		} else if (facing == EnumFacing.DOWN) {
@@ -128,21 +128,21 @@ public class QuartzSliver extends BlockDirectionalTemplate implements IHasModel 
 
 	@Override
 	public IBlockState getStateForPlacement (World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-		return this.getDefaultState().withProperty(FACING, facing);
+		return this.getDefaultState().withProperty(getFacingProperty(), facing);
 	}
 
 	@Override
 	public int getMetaFromState (IBlockState state) {
-		return state.getValue(FACING).getIndex();
+		return state.getValue(getFacingProperty()).getIndex();
 	}
 
 	@Override
 	public IBlockState getStateFromMeta (int meta) {
-		return getDefaultState().withProperty(FACING, EnumFacing.byIndex(meta));
+		return getDefaultState().withProperty(getFacingProperty(), EnumFacing.byIndex(meta));
 	}
 
 	@Override
 	protected BlockStateContainer createBlockState () {
-		return new BlockStateContainer(this, FACING);
+		return new BlockStateContainer(this, getFacingProperty());
 	}
 }

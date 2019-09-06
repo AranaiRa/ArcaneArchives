@@ -58,7 +58,7 @@
             },
             "base": {}
         },
-        "facing": {
+        "furnace_facing": {
             "down": {},
             "up": {},
             "north": {

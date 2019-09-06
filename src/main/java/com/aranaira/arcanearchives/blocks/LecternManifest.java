@@ -74,12 +74,12 @@ public class LecternManifest extends BlockDirectionalTemplate {
 	@Override
 	@SuppressWarnings("deprecation")
 	public IBlockState getStateFromMeta (int meta) {
-		return getDefaultState().withProperty(FACING, EnumFacing.byIndex(meta >> 1)).withProperty(ACCESSOR, (meta & 1) != 0);
+		return getDefaultState().withProperty(getFacingProperty(), EnumFacing.byIndex(meta >> 1)).withProperty(ACCESSOR, (meta & 1) != 0);
 	}
 
 	@Override
 	public int getMetaFromState (IBlockState state) {
-		return state.getValue(FACING).getIndex() << 1 ^ (state.getValue(ACCESSOR) ? 1 : 0);
+		return state.getValue(getFacingProperty()).getIndex() << 1 ^ (state.getValue(ACCESSOR) ? 1 : 0);
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public class LecternManifest extends BlockDirectionalTemplate {
 
 	@Override
 	protected BlockStateContainer createBlockState () {
-		return new BlockStateContainer(this, FACING, ACCESSOR);
+		return new BlockStateContainer(this, getFacingProperty(), ACCESSOR);
 	}
 
 }

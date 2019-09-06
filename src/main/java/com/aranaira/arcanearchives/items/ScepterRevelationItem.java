@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.blocks.MonitoringCrystal;
+import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.items.templates.IItemScepter;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
@@ -174,7 +175,7 @@ public class ScepterRevelationItem extends ItemTemplate implements IItemScepter 
 				return EnumActionResult.SUCCESS;
 			}
 
-			EnumFacing te_facing = state.getValue(MonitoringCrystal.FACING).getOpposite();
+			EnumFacing te_facing = state.getValue(((BlockDirectionalTemplate) state.getBlock()).getFacingProperty()).getOpposite();
 			player.sendMessage(new TextComponentTranslation("arcanearchives.data.scepter.monitoring_crystal.facing", te_facing.getName()).setStyle(def));
 		}
 

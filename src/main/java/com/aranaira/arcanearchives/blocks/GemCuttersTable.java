@@ -44,12 +44,12 @@ public class GemCuttersTable extends BlockDirectionalTemplate {
 	@Override
 	@SuppressWarnings("deprecation")
 	public IBlockState getStateFromMeta (int meta) {
-		return getDefaultState().withProperty(FACING, EnumFacing.byIndex(meta >> 1)).withProperty(ACCESSOR, (meta & 1) != 0);
+		return getDefaultState().withProperty(getFacingProperty(), EnumFacing.byIndex(meta >> 1)).withProperty(ACCESSOR, (meta & 1) != 0);
 	}
 
 	@Override
 	public int getMetaFromState (IBlockState state) {
-		return state.getValue(FACING).getIndex() << 1 ^ (state.getValue(ACCESSOR) ? 1 : 0);
+		return state.getValue(getFacingProperty()).getIndex() << 1 ^ (state.getValue(ACCESSOR) ? 1 : 0);
 	}
 
 	@Override
@@ -81,7 +81,7 @@ public class GemCuttersTable extends BlockDirectionalTemplate {
 	}
 
 	public BlockPos getConnectedPos (BlockPos pos, IBlockState state) {
-		return pos.offset(state.getValue(FACING));
+		return pos.offset(state.getValue(getFacingProperty()));
 	}
 
 	@Override
@@ -92,7 +92,7 @@ public class GemCuttersTable extends BlockDirectionalTemplate {
 				world.setBlockToAir(pos);
 			}
 		} else {
-			BlockPos thingy = pos.offset(EnumFacing.fromAngle(state.getValue(FACING).getHorizontalAngle() - 180));
+			BlockPos thingy = pos.offset(EnumFacing.fromAngle(state.getValue(getFacingProperty()).getHorizontalAngle() - 180));
 			if (world.isAirBlock(thingy)) {
 				// TODO: PARTICLES
 				this.breakBlock(world, pos, state);
@@ -159,6 +159,6 @@ public class GemCuttersTable extends BlockDirectionalTemplate {
 
 	@Override
 	protected BlockStateContainer createBlockState () {
-		return new BlockStateContainer(this, FACING, ACCESSOR);
+		return new BlockStateContainer(this, getFacingProperty(), ACCESSOR);
 	}
 }

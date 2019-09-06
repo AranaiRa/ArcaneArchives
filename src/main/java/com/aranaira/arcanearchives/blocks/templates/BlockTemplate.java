@@ -138,7 +138,7 @@ public class BlockTemplate extends Block implements IHasModel {
 		// The item block has already taken care of to make sure that the points can be replaced.
 		if (this.hasAccessors() || this == BlockRegistry.LECTERN_MANIFEST) {
 			for (BlockPos point : calculateAccessors(world, pos)) {
-				world.setBlockState(point, this.getDefaultState().withProperty(ACCESSOR, true).withProperty(BlockDirectionalTemplate.FACING, EnumFacing.fromAngle(placer.rotationYaw - 90)));
+				world.setBlockState(point, this.getDefaultState().withProperty(ACCESSOR, true).withProperty(((BlockDirectionalTemplate) this).getFacingProperty(), EnumFacing.fromAngle(placer.rotationYaw - 90)));
 			}
 		}
 	}
@@ -208,7 +208,7 @@ public class BlockTemplate extends Block implements IHasModel {
 	public EnumFacing getFacing (World world, BlockPos pos) {
 		IBlockState state = world.getBlockState(pos);
 		if (state.getBlock() instanceof BlockDirectionalTemplate) {
-			return state.getValue(BlockDirectionalTemplate.FACING);
+			return state.getValue(((BlockDirectionalTemplate) state.getBlock()).getFacingProperty());
 		} else {
 			return EnumFacing.WEST;
 		}

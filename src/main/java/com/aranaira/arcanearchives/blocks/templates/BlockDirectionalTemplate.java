@@ -2,8 +2,10 @@ package com.aranaira.arcanearchives.blocks.templates;
 
 import com.aranaira.arcanearchives.tileentities.AATileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
+import javafx.beans.property.Property;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -22,34 +24,33 @@ public class BlockDirectionalTemplate extends BlockTemplate {
 	 * @param name       The name of the block, used for translation key and registry name
 	 * @param materialIn The material of the block
 	 */
-	protected BlockDirectionalTemplate (String name, Material materialIn) {
+	public BlockDirectionalTemplate (String name, Material materialIn) {
 		super(name, materialIn);
+	}
+
+	public PropertyEnum<EnumFacing> getFacingProperty () {
+		return FACING;
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
 	public IBlockState getStateFromMeta (int meta) {
-		return getDefaultState().withProperty(FACING, EnumFacing.byIndex(meta & 7));
+		return getDefaultState().withProperty(getFacingProperty(), EnumFacing.byIndex(meta & 7));
 	}
 
 	@Override
 	public int getMetaFromState (IBlockState state) {
-		return state.getValue(FACING).getIndex();
+		return state.getValue(getFacingProperty()).getIndex();
 	}
 
 	@Override
 	public IBlockState getStateForPlacement (World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-		return getDefaultState().withProperty(FACING, EnumFacing.fromAngle(placer.rotationYaw - 90));
+		return getDefaultState().withProperty(getFacingProperty(), EnumFacing.fromAngle(placer.rotationYaw - 90));
 	}
 
 	@Override
 	protected BlockStateContainer createBlockState () {
-		/*if (hasTileEntity(getDefaultState())) {
-			return new ExtendedBlockState(this, new IProperty[]{FACING}, new IUnlistedProperty[]{Properties.AnimationProperty});
-		}*/
-
-		return new BlockStateContainer(this, FACING);
-		//ExtendedBlockState(this, new IProperty[]{FACING}, new IUnlistedProperty[]{});
+		return new BlockStateContainer(this, getFacingProperty());
 	}
 
 	@Override

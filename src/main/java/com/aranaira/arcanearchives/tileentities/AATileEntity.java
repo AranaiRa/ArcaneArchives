@@ -3,6 +3,10 @@ package com.aranaira.arcanearchives.tileentities;
 import com.aranaira.arcanearchives.blocks.MultiblockSize;
 import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
+import com.aranaira.arcanearchives.tileentities.interfaces.IAccessorTileEntity;
+import com.aranaira.arcanearchives.tileentities.interfaces.IDirectionalTileEntity;
+import com.aranaira.arcanearchives.tileentities.interfaces.INamedTileEntity;
+import com.aranaira.arcanearchives.tileentities.interfaces.ISizedTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -19,7 +23,7 @@ import javax.annotation.Nullable;
  * The only direct descendents of this that are not ITEs are the Gem Cutter's Table (as it
  * does not use immanence), and the Accessor Block.
  */
-public class AATileEntity extends TileEntity {
+public abstract class AATileEntity extends TileEntity implements INamedTileEntity, IAccessorTileEntity, ISizedTileEntity, IDirectionalTileEntity {
 	public String name;
 	public MultiblockSize size;
 
@@ -33,6 +37,7 @@ public class AATileEntity extends TileEntity {
 	/**
 	 * @return The current size associated with this tile entity. See `setSize`.
 	 */
+	@Override
 	public MultiblockSize getSize () {
 		return this.size;
 	}
@@ -47,6 +52,7 @@ public class AATileEntity extends TileEntity {
 	 *                to calculate accessor block positions, and to determine if the block
 	 *                can actually be placed.
 	 */
+	@Override
 	public void setSize (MultiblockSize newSize) {
 		this.size = newSize;
 	}
@@ -56,6 +62,7 @@ public class AATileEntity extends TileEntity {
 	 * name that it was registered with. Note that this simply returns that part and does
 	 * not include the modid.
 	 */
+	@Override
 	public String getName () {
 		return name;
 	}
@@ -64,32 +71,16 @@ public class AATileEntity extends TileEntity {
 	 * @param name The name to be used as the registry name path and also to refer
 	 *             to the specific type of tile entity.
 	 */
+	@Override
 	public void setName (String name) {
 		this.name = name;
 	}
 
 	/**
-	 * @return The current facing of the block associated with this TileEntity.
-	 * Theoretically there are issues with the presumption that all BlockTemplates
-	 * are also BlockDirectionalTemplates; few are.
-	 * <p>
-	 * The default value for this function is EnumFacing.WEST; this may change in
-	 * the future.
-	 */
-	public EnumFacing getFacing () {
-		IBlockState state = world.getBlockState(getPos());
-		if (state.getBlock() instanceof BlockTemplate) {
-			return ((BlockTemplate) state.getBlock()).getFacing(world, pos);
-		}
-
-		return EnumFacing.WEST;
-	}
-
-
-	/**
 	 * This function is called when individual accessor blocks are broken by the
 	 * AccessorTileEntity.
 	 */
+	@Override
 	public void breakBlock () {
 		breakBlock(null, true);
 	}
@@ -109,6 +100,7 @@ public class AATileEntity extends TileEntity {
 	 *                not being destroyed (if this was trigger from the break of
 	 *                one of the accessors).
 	 */
+	@Override
 	public void breakBlock (@Nullable IBlockState state, boolean harvest) {
 		if (breaking) {
 			return;
@@ -120,7 +112,7 @@ public class AATileEntity extends TileEntity {
 		EnumFacing facing = null;
 
 		if (block instanceof BlockDirectionalTemplate && state != null) {
-			facing = state.getValue(BlockDirectionalTemplate.FACING);
+			facing = state.getValue(((BlockDirectionalTemplate) state.getBlock()).getFacingProperty());
 		}
 		if (block instanceof BlockTemplate) {
 			for (BlockPos point : ((BlockTemplate) block).calculateAccessors(world, getPos(), facing)) {
