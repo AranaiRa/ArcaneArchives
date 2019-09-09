@@ -262,6 +262,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 		}
 
 		if (!toInsert.isEmpty()) {
+			maybePlaySound();
 			remainder = InventoryRoutingUtils.tryInsertItems(this, item, toInsert);
 		}
 		//}
@@ -285,11 +286,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 			rejectItemStacks(toThrow);
 		}
 
-		maybePlaySound();
-
-		if (doUpdate || doubleClick) {
-			PlayerUtil.Server.syncInventory((EntityPlayerMP) player);
-		}
+		PlayerUtil.Server.syncInventory((EntityPlayerMP) player);
 
 		return true;
 	}
