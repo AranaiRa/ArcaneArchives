@@ -15,14 +15,12 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.stats.StatList;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
@@ -121,6 +119,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 		return super.onItemUseFirst(player, world, pos, side, hitX, hitY, hitZ, hand);
 	}
 
+	@SuppressWarnings("ConstantConditions")
 	@Override
 	@Nonnull
 	public ActionResult<ItemStack> onItemRightClick (@Nonnull World world, @Nonnull EntityPlayer player, @Nonnull EnumHand hand) {
@@ -134,6 +133,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 			if (result == null) {
 				return ActionResult.newResult(EnumActionResult.FAIL, itemstack);
 			} else {
+				player.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
 				return result;
 			}
 		} else {
@@ -175,7 +175,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 						if (result.isSuccess()) {
 							// success!
 							player.addStat(StatList.getObjectUseStats(this));
-
+							world.playSound(null, player.getPosition(), SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
 							return ActionResult.newResult(EnumActionResult.SUCCESS, itemstack);
 						}
 					} else {
