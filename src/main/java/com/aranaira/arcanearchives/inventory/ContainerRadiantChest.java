@@ -356,7 +356,18 @@ public class ContainerRadiantChest extends Container {
 			if (slot2 != null && slot2.getHasStack() && slot2.canTakeStack(player)) {
 				ItemStack itemstack4 = slot2.decrStackSize(dragType == 0 ? 1 : slot2.getStack().getCount());
 				slot2.onTake(player, itemstack4);
-				player.dropItem(itemstack4, true);
+				if (itemstack4.getCount() > 64) {
+					int count = itemstack4.getCount();
+					int increment = itemstack4.getMaxStackSize();
+					while (count > 0) {
+						ItemStack copy = itemstack4.copy();
+						copy.setCount(Math.min(count, increment));
+						count -= increment;
+						player.dropItem(copy, true);
+					}
+				} else {
+					player.dropItem(itemstack4, true);
+				}
 			}
 		} else if (clickTypeIn == ClickType.PICKUP_ALL && slotId >= 0) {
 			Slot slot = this.inventorySlots.get(slotId);
