@@ -106,7 +106,6 @@ public class ManifestUtils {
 				/*if (outOfRange.finalStack.getCount() > 1) {
 					outOfRange.finalStack.shrink(1);
 				}*/
-				outOfRange.finalStack.shrink(1);
 				phase2.add(outOfRange);
 			}
 		}
