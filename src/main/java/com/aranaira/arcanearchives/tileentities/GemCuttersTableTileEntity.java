@@ -239,11 +239,11 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 	}
 
 	@Override
-	public ItemStack acceptStack (ItemStack stack) {
+	public ItemStack acceptStack (ItemStack stack, boolean simulate) {
 		for (int i = 0; i < inventory.getSlots(); i++) {
 			ItemStack inSlot = inventory.getStackInSlot(i);
 			if (ItemUtils.areStacksEqualIgnoreSize(stack, inSlot)) {
-				stack = inventory.insertItem(i, stack, false);
+				stack = inventory.insertItem(i, stack, simulate);
 				if (stack.isEmpty()) {
 					return stack;
 				}
