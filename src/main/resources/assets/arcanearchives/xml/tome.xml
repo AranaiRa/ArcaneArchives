@@ -626,7 +626,7 @@
                 A Radiant Tank is a storage container that can contain up to 16 buckets of a single type of fluid. Using a Radiant Tank on a fluid inventory will transfer the target's fluid inventory into the held Radiant Tank.
             </p>
             <p>
-                <stack item="arcanearchives:matrix_brace"/> <image src="arcanearchives:gui/guidebook/next" tw="8" th="16"/> <stack item="arcanearchives:containment_field"/> <image src="arcanearchives:gui/guidebook/next" tw="8" th="16"/> <stack item="arcanearchives:storage_shaped_quartz"/> A Radiant Tank's storage capacity can be upgraded by using specific items while sneaking. The first upgrade increases storage to 3x base capacity, the second to 6x base capacity, and the third to 10x base capacity.
+                <stack item="arcanearchives:matrix_brace"/> <image src="arcanearchives:gui/guidebook/next" tw="8" th="16"/> <stack item="arcanearchives:containment_field"/> <image src="arcanearchives:gui/guidebook/next" tw="8" th="16"/> <stack item="arcanearchives:storage_shaped_quartz"/> A Radiant Tank's storage capacity can be upgraded three times, using a <link ref="Items:ScepterManipulation">Scepter of Manipulation</link>. The first upgrade increases storage to 3x base capacity, the second to 6x base capacity, and the third to 10x base capacity.
             </p>
             <p>
                 <stack item="arcanearchives:devouring_charm"/> When used as an upgrade, a <link ref="Items:DevouringCharm">Devouring Charm</link> causes fluid added to the Tank in excess of its maximum capacity is destroyed.
@@ -672,7 +672,7 @@
                 A Radiant Trove is a storage container that can contain up to 1024 stacks of a single type of item.
             </p>
             <p>
-                <stack item="arcanearchives:matrix_brace"/> <image src="arcanearchives:gui/guidebook/next" tw="8" th="16"/> <stack item="arcanearchives:material_interface"/> <image src="arcanearchives:gui/guidebook/next" tw="8" th="16"/> <stack item="arcanearchives:storage_shaped_quartz"/> A Radiant Trove's storage capacity can be upgraded by using specific items while sneaking. The first upgrade increases storage to 3x base capacity, the second to 6x base capacity, and the third to 10x base capacity.
+                <stack item="arcanearchives:matrix_brace"/> <image src="arcanearchives:gui/guidebook/next" tw="8" th="16"/> <stack item="arcanearchives:material_interface"/> <image src="arcanearchives:gui/guidebook/next" tw="8" th="16"/> <stack item="arcanearchives:storage_shaped_quartz"/> A Radiant Trove's storage capacity can be upgraded can be upgraded three times, using a <link ref="Items:ScepterManipulation">Scepter of Manipulation</link>. The first upgrade increases storage to 3x base capacity, the second to 6x base capacity, and the third to 10x base capacity.
             </p>
             <p>
                 <stack item="arcanearchives:devouring_charm"/> If used as an upgrade, a <link ref="Items:DevouringCharm">Devouring Charm</link> causes items added to the Trove in excess of its maximum capacity are destroyed.
