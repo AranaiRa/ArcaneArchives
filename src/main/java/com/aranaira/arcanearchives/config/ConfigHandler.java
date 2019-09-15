@@ -99,6 +99,10 @@ public class ConfigHandler {
 		@Config.Name("Resonator Ticking Sound")
 		public boolean resonatorTicking = true;
 
+		@Config.Comment("Set to the volume you wish the resonator to tick at")
+		@Config.Name("Resonator Tick Volume")
+		public float resonatorVolume = 0.15f;
+
 		@Config.Comment("Set to false to disable the Brazier item pick-up sound")
 		@Config.Name("Brazier Pickup Sound")
 		public boolean brazierPickup = true;
