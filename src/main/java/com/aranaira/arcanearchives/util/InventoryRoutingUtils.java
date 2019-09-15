@@ -40,7 +40,7 @@ public class InventoryRoutingUtils {
 				return -1;
 			} else if (type == BrazierRoutingType.NO_NEW_STACKS) {
 				return 4999;
-			} else if (type == BrazierRoutingType.GCT) {
+			} else {
 				return 5000;
 			}
 		}
@@ -65,7 +65,7 @@ public class InventoryRoutingUtils {
 
 	}
 
-	public static List<WeightedEntry<IBrazierRouting>> buildNetworkWeights (BrazierTileEntity brazier, ItemStack stack) {
+	public static List<WeightedEntry<IBrazierRouting>> buildNetworkWeights (BrazierTileEntity brazier, ItemStack stack, boolean simulate) {
 		List<WeightedEntry<IBrazierRouting>> workspace = new ArrayList<>();
 		int radius = brazier.getRadius() * brazier.getRadius();
 		BlockPos bPos = brazier.getPos();
@@ -103,8 +103,8 @@ public class InventoryRoutingUtils {
 		return workspace;
 	}
 
-	public static List<IBrazierRouting> buildNetwork (BrazierTileEntity brazier, ItemStack stack) {
-		return buildNetworkWeights(brazier, stack).stream().filter(r -> r.weight >= 0).map(r -> r.entry).collect(Collectors.toList());
+	public static List<IBrazierRouting> buildNetwork (BrazierTileEntity brazier, ItemStack stack, boolean simulate) {
+		return buildNetworkWeights(brazier, stack, simulate).stream().filter(r -> r.weight >= 0).map(r -> r.entry).collect(Collectors.toList());
 	}
 
 	/**
@@ -112,7 +112,7 @@ public class InventoryRoutingUtils {
 	 * @param inputs
 	 * @return
 	 */
-	public static List<ItemStack> tryInsertItems (BrazierTileEntity brazier, ItemStack reference, List<ItemStack> inputs) {
+	public static List<ItemStack> tryInsertItems (BrazierTileEntity brazier, ItemStack reference, List<ItemStack> inputs, boolean simulate) {
 		// Considered the cached value in the brazier
 		ItemCache cached = brazier.getCachedEntry(reference);
 		if (cached != null && cached.valid()) {
@@ -121,26 +121,28 @@ public class InventoryRoutingUtils {
 			if (routing == null) {
 				// Normally this is a bad sign
 				ServerNetwork network = brazier.getServerNetwork();
-				ImmanenceTileEntity ite = network.getImmanenceTile(cached.getTileId());
-				if (ite instanceof IBrazierRouting) {
-					cacheList.add((IBrazierRouting) ite);
+				if (network != null) {
+					ImmanenceTileEntity ite = network.getImmanenceTile(cached.getTileId());
+					if (ite instanceof IBrazierRouting) {
+						cacheList.add((IBrazierRouting) ite);
+					}
 				}
 			} else {
 				cacheList.add(routing);
 			}
 			if (!cacheList.isEmpty()) {
-				inputs = tryInsertItems(cacheList, brazier, reference, inputs);
+				inputs = tryInsertItems(cacheList, brazier, reference, inputs, simulate);
 				if (inputs.isEmpty()) {
 					return inputs;
 				}
 			}
 		}
 
-		List<IBrazierRouting> routing = buildNetwork(brazier, reference);
-		return tryInsertItems(routing, brazier, reference, inputs);
+		List<IBrazierRouting> routing = buildNetwork(brazier, reference, simulate);
+		return tryInsertItems(routing, brazier, reference, inputs, simulate);
 	}
 
-	public static List<ItemStack> tryInsertItems (List<IBrazierRouting> routing, BrazierTileEntity brazier, ItemStack reference, List<ItemStack> inputs) {
+	public static List<ItemStack> tryInsertItems (List<IBrazierRouting> routing, BrazierTileEntity brazier, ItemStack reference, List<ItemStack> inputs, boolean simulate) {
 		routes:
 		for (IBrazierRouting route : routing) {
 			ListIterator<ItemStack> iterator = inputs.listIterator();
@@ -148,7 +150,7 @@ public class InventoryRoutingUtils {
 				ItemStack potential = iterator.next();
 				iterator.remove();
 
-				ItemStack result = route.acceptStack(potential);
+				ItemStack result = route.acceptStack(potential, simulate);
 				if (!result.isEmpty()) {
 					iterator.add(result);
 					continue routes;
@@ -160,8 +162,8 @@ public class InventoryRoutingUtils {
 		return inputs;
 	}
 
-	public static List<ItemStack> tryInsertItems (BrazierTileEntity brazier, ItemStack reference) {
-		return tryInsertItems(brazier, reference, Lists.newArrayList(reference));
+	public static List<ItemStack> tryInsertItems (BrazierTileEntity brazier, ItemStack reference, boolean simulate) {
+		return tryInsertItems(brazier, reference, Lists.newArrayList(reference), simulate);
 	}
 
 	public static class WeightedEntry<T> {

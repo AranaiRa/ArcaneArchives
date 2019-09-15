@@ -22,7 +22,7 @@ public interface IBrazierRouting {
 
 	int slotMultiplier ();
 
-	ItemStack acceptStack (ItemStack stack);
+	ItemStack acceptStack (ItemStack stack, boolean simulate);
 
 	default boolean willAvoidStack (ItemStack stack) {
 		return false;

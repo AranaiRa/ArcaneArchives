@@ -146,22 +146,22 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 			return;
 		}
 
-		List<ItemStack> stack = InventoryRoutingUtils.tryInsertItems(this, item.getItem());
+		List<ItemStack> stack = InventoryRoutingUtils.tryInsertItems(this, item.getItem(), false);
 		maybePlaySound();
 		if (!stack.isEmpty()) {
-			rejectItemStacks(stack);
+			rejectItemStacks(stack, false);
 		}
 		item.setDead();
 	}
 
-	public void rejectItemStacks (List<ItemStack> stacks) {
+	public void rejectItemStacks (List<ItemStack> stacks, boolean simulate) {
 		for (ItemStack stack : stacks) {
-			rejectItemStack(stack);
+			rejectItemStack(stack, simulate);
 		}
 	}
 
-	public void rejectItemStack (ItemStack stack) {
-		if (world.isRemote) {
+	public void rejectItemStack (ItemStack stack, boolean simulate) {
+		if (world.isRemote || simulate) {
 			return;
 		}
 
@@ -173,7 +173,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 		world.spawnEntity(item);
 	}
 
-	public boolean beginInsert (EntityPlayer player, EnumHand hand, EnumFacing facing) {
+	public boolean beginInsert (EntityPlayer player, EnumHand hand, EnumFacing facing, boolean simulate) {
 		// Test for double-click
 		boolean doubleClick = false;
 		long diff = System.currentTimeMillis() - lastClick;
@@ -256,14 +256,14 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 			for (int i = 0; i < playerInventory.getSlots(); i++) {
 				ItemStack inSlot = playerInventory.getStackInSlot(i);
 				if (ItemUtils.areStacksEqualIgnoreSize(inSlot, item)) {
-					toInsert.add(playerInventory.extractItem(i, inSlot.getCount(), false));
+					toInsert.add(playerInventory.extractItem(i, inSlot.getCount(), simulate));
 				}
 			}
 		}
 
 		if (!toInsert.isEmpty()) {
 			maybePlaySound();
-			remainder = InventoryRoutingUtils.tryInsertItems(this, item, toInsert);
+			remainder = InventoryRoutingUtils.tryInsertItems(this, item, toInsert, simulate);
 		}
 		//}
 
@@ -274,16 +274,16 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 			for (ItemStack stack : remainder) {
 				ItemStack result;
 				if (wasHeld) {
-					result = playerInventory.insertItem(player.inventory.currentItem, stack, false);
+					result = playerInventory.insertItem(player.inventory.currentItem, stack, simulate);
 					wasHeld = false;
 				} else {
-					result = ItemHandlerHelper.insertItemStacked(playerInventory, stack, false);
+					result = ItemHandlerHelper.insertItemStacked(playerInventory, stack, simulate);
 				}
 				if (!result.isEmpty()) {
 					toThrow.add(result);
 				}
 			}
-			rejectItemStacks(toThrow);
+			rejectItemStacks(toThrow, simulate);
 		}
 
 		PlayerUtil.Server.syncInventory((EntityPlayerMP) player);
@@ -402,8 +402,8 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 
 		@Override
 		public void setStackInSlot (int slot, @Nonnull ItemStack stack) {
-			List<ItemStack> result = InventoryRoutingUtils.tryInsertItems(BrazierTileEntity.this, stack);
-			rejectItemStacks(result);
+			List<ItemStack> result = InventoryRoutingUtils.tryInsertItems(BrazierTileEntity.this, stack, false);
+			rejectItemStacks(result, false);
 			maybePlaySound();
 		}
 
@@ -421,16 +421,14 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 		@Nonnull
 		@Override
 		public ItemStack insertItem (int slot, @Nonnull ItemStack stack, boolean simulate) {
-			if (simulate) {
-				return ItemStack.EMPTY;
-			}
-
-			List<ItemStack> result = InventoryRoutingUtils.tryInsertItems(BrazierTileEntity.this, stack);
+			List<ItemStack> result = InventoryRoutingUtils.tryInsertItems(BrazierTileEntity.this, stack, simulate);
 			if (!result.isEmpty()) {
-				rejectItemStacks(result);
+				return result.get(0);
 			}
 
-			maybePlaySound();
+			if (!simulate) {
+				maybePlaySound();
+			}
 
 			return ItemStack.EMPTY;
 		}
