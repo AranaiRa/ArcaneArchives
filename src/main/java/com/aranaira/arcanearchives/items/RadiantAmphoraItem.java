@@ -124,6 +124,9 @@ public class RadiantAmphoraItem extends ItemTemplate {
 	@Nonnull
 	public ActionResult<ItemStack> onItemRightClick (@Nonnull World world, @Nonnull EntityPlayer player, @Nonnull EnumHand hand) {
 		ItemStack itemstack = player.getHeldItem(hand);
+		if (world.isRemote) {
+			return ActionResult.newResult(EnumActionResult.PASS, itemstack);
+		}
 		AmphoraUtil util = new AmphoraUtil(itemstack);
 
 		if (util.getMode() == TankMode.FILL) {
@@ -179,7 +182,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 							return ActionResult.newResult(EnumActionResult.SUCCESS, itemstack);
 						}
 					} else {
-						return ActionResult.newResult(EnumActionResult.SUCCESS, itemstack);
+						return ActionResult.newResult(EnumActionResult.PASS, itemstack);
 					}
 				}
 			}
@@ -240,6 +243,11 @@ public class RadiantAmphoraItem extends ItemTemplate {
 
 		@Nullable
 		public World getWorld () {
+			return getWorld(0);
+		}
+
+		@Nullable
+		public World getWorld (int dimension) {
 			Side side = FMLCommonHandler.instance().getEffectiveSide();
 			if (side == Side.CLIENT) {
 				try {
@@ -249,7 +257,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 					return null;
 				}
 			} else {
-				return getServerWorld();
+				return getServerWorld(dimension);
 			}
 		}
 
@@ -258,9 +266,9 @@ public class RadiantAmphoraItem extends ItemTemplate {
 			return Minecraft.getMinecraft().world;
 		}
 
-		private World getServerWorld () {
+		private World getServerWorld (int dimension) {
 			MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-			return server.getEntityWorld();
+			return server.getWorld(dimension);
 		}
 
 		public ItemStack getStack () {
@@ -394,8 +402,8 @@ public class RadiantAmphoraItem extends ItemTemplate {
 		@Nullable
 		public RadiantTankTileEntity getTile () {
 			if (getTag().hasKey("homeTank") && getTag().hasKey("homeTankDim")) {
-				World world = getWorld();
 				int dim = getTag().getInteger("homeTankDim");
+				World world = getWorld(dim);
 				BlockPos home = BlockPos.fromLong(getTag().getLong("homeTank"));
 				if (world != null && world.provider.getDimension() == dim) {
 					return WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, home);
