@@ -3,11 +3,13 @@ package com.aranaira.arcanearchives.blocks;
 import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
 import com.aranaira.arcanearchives.client.render.LineHandler;
 import com.aranaira.arcanearchives.init.BlockRegistry;
+import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.items.templates.IItemScepter;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
+import mcjty.theoneprobe.items.ModItems;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -80,6 +82,16 @@ public class RadiantTrove extends BlockDirectionalTemplate {
 	@Override
 	public Item getItemDropped (IBlockState state, Random rand, int fortune) {
 		return Items.AIR;
+	}
+
+	@Override
+	public boolean removedByPlayer (IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
+		if (player.capabilities.isCreativeMode && !(player.getHeldItemMainhand().getItem() instanceof IItemScepter)) {
+			onBlockClicked(world, pos, player);
+			return false;
+		}
+
+		return super.removedByPlayer(state, world, pos, player, willHarvest);
 	}
 
 	@Override
