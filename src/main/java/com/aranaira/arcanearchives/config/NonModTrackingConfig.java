@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Config.LangKey("arcanearchives.config.non_mod_tracking")
-@Config(modid = ArcaneArchives.MODID, name = "arcanearchives/mixins")
+@Config(modid = ArcaneArchives.MODID, name = "arcanearchives/mixins", category = "mixins")
 public class NonModTrackingConfig {
 	@Config.LangKey("arcanearchives.config.non_mod_tracking.ignore")
 	public static String[] ContainerClasses = new String[]{};

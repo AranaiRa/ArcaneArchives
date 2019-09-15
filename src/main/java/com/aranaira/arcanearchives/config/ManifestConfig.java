@@ -4,7 +4,7 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import net.minecraftforge.common.config.Config;
 
 @Config.LangKey("arcanearchives.config.manifest")
-@Config(modid = ArcaneArchives.MODID, name = "arcanearchives/manifest")
+@Config(modid = ArcaneArchives.MODID, name = "arcanearchives/manifest", category = "manifest")
 public class ManifestConfig {
 	@Config.LangKey("arcanearchives.config.manifest.presence")
 	public static boolean ManifestPresence = true;

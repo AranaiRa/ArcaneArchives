@@ -4,7 +4,7 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import net.minecraftforge.common.config.Config;
 
 @Config.LangKey("arcanearchives.config.server_side_settings")
-@Config(modid = ArcaneArchives.MODID, name = "arcanearchives/server")
+@Config(modid = ArcaneArchives.MODID, name = "arcanearchives/server", category = "server")
 public class ServerSideConfig {
 	@Config.LangKey("arcanearchives.config.server_side_settings.limit")
 	public static int ResonatorLimit = 3;
