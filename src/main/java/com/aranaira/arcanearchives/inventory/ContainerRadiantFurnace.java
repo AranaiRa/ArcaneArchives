@@ -1,11 +1,19 @@
 package com.aranaira.arcanearchives.inventory;
 
+import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.tileentities.RadiantFurnaceTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraft.util.EnumFacing;
+import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
@@ -25,14 +33,14 @@ public class ContainerRadiantFurnace extends Container {
 
 	private void addFurnaceSlots (RadiantFurnaceTileEntity te) {
 		// Input
-		this.addSlotToContainer(new SlotItemHandler(te.input, 0, 81, 27) {
-			/*@Override
-			public boolean isItemValid (@Nonnull ItemStack stack) {
-				return stack.getItem().getItemBurnTime(stack) != -1;
-			}*/
-		});
+		this.addSlotToContainer(new SlotItemHandler(te.input, 0, 81, 27));
 		// Fuel
 		this.addSlotToContainer(new SlotItemHandler(te.fuel, 0, 52, 27) {
+			@Override
+			public boolean isItemValid (@Nonnull ItemStack stack) {
+				int burnTime = TileEntityFurnace.getItemBurnTime(stack);
+				return burnTime > 0;
+			}
 		});
 		// Output
 		this.addSlotToContainer(new SlotItemHandler(te.output, 0, 110, 14) {
@@ -66,6 +74,45 @@ public class ContainerRadiantFurnace extends Container {
 
 	public RadiantFurnaceTileEntity getTile () {
 		return this.tile;
+	}
+
+	@Override
+	@Nonnull
+	public ItemStack transferStackInSlot (EntityPlayer player, int index) {
+		ItemStack slotStack = ItemStack.EMPTY;
+		Slot slot = inventorySlots.get(index);
+
+		if (slot != null && slot.getHasStack()) {
+			ItemStack stack = slot.getStack();
+			slotStack = stack.copy();
+			if (index < 36) { //Player Inventory -> Socket
+				int burnTime = TileEntityFurnace.getItemBurnTime(stack);
+				if (burnTime > 0) {
+					if (!mergeItemStack(stack, 37, 38, false)) {
+						if (!mergeItemStack(stack, 36, 37, false)) {
+							return ItemStack.EMPTY;
+						}
+					}
+				} else {
+					if (!mergeItemStack(stack, 36, 37, false)) {
+						return ItemStack.EMPTY;
+					}
+				}
+			} else {
+				// transfer from slots to inventory
+				if (!mergeItemStack(stack, 0, 36, false)) {
+					return ItemStack.EMPTY;
+				}
+			}
+
+			if (stack.isEmpty()) {
+				slot.putStack(ItemStack.EMPTY);
+			}
+
+			slot.onSlotChanged();
+		}
+
+		return slotStack;
 	}
 
 	@Override
