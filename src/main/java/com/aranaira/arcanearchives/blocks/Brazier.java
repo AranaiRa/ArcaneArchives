@@ -74,7 +74,7 @@ public class Brazier extends BlockTemplate implements IInfusionStabiliserExt {
 		if (hand == EnumHand.MAIN_HAND && !worldIn.isRemote) {
 			BrazierTileEntity te = WorldUtil.getTileEntity(BrazierTileEntity.class, playerIn.dimension, pos);
 			if (te != null) {
-				te.beginInsert(playerIn, hand, facing);
+				te.beginInsert(playerIn, hand, facing, false);
 			}
 		}
 
