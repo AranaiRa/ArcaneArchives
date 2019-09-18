@@ -2,10 +2,7 @@ package com.aranaira.arcanearchives.proxy;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.commands.CommandBrazier;
-import com.aranaira.arcanearchives.commands.CommandCopy;
-import com.aranaira.arcanearchives.commands.CommandHive;
-import com.aranaira.arcanearchives.commands.CommandTiles;
+import com.aranaira.arcanearchives.commands.*;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.entity.EntityWeight;
 import com.aranaira.arcanearchives.events.ClientTickHandler;
@@ -58,6 +55,7 @@ public class CommonProxy {
 		event.registerServerCommand(new CommandBrazier());
 		event.registerServerCommand(new CommandCopy());
 		event.registerServerCommand(new CommandTiles());
+		event.registerServerCommand(new CommandImmanence());
 	}
 
 	public void serverStarted (FMLServerStartedEvent event) {
