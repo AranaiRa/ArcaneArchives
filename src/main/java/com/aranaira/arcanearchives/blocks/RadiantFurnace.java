@@ -31,10 +31,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import org.spongepowered.asm.mixin.gen.AccessorInfo.AccessorType;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Objects;
 
 public class RadiantFurnace extends BlockDirectionalTemplate {
 	public static final AxisAlignedBB BB_MAIN = new AxisAlignedBB(0, 0, 0, 1, 1, 1);
@@ -91,9 +93,16 @@ public class RadiantFurnace extends BlockDirectionalTemplate {
 		LineHandler.removeLine(pos, world.provider.getDimension());
 
 		TileEntity te = world.getTileEntity(pos);
-		if (te instanceof RadiantFurnaceTileEntity) {
-			IItemHandler inv = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-			DropUtils.dropInventoryItems(world, pos, inv);
+		if (te != null) {
+			IItemHandler inv = null;
+			if (te instanceof RadiantFurnaceTileEntity) {
+				inv = ((RadiantFurnaceTileEntity) te).getInventory();
+			} else if (te instanceof RadiantFurnaceAccessorTileEntity) {
+				inv = Objects.requireNonNull(((RadiantFurnaceAccessorTileEntity) te).getParent()).getInventory();
+			}
+			if (inv != null) {
+				DropUtils.dropInventoryItems(world, pos, inv);
+			}
 		}
 
 		super.breakBlock(world, pos, state);

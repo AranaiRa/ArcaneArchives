@@ -17,6 +17,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
@@ -201,6 +203,10 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 	@Override
 	public int getModifiedCapacity () {
 		return 0;
+	}
+
+	public ItemStackHandler getInventory () {
+		return inventory;
 	}
 
 	@Override
