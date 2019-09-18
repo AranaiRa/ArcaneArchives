@@ -7,14 +7,21 @@ import com.aranaira.arcanearchives.client.render.entity.RenderWeight;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.entity.EntityWeight;
 import com.aranaira.arcanearchives.init.BlockRegistry;
+import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.integration.guidebook.GBookInit;
+import com.aranaira.arcanearchives.items.EchoItem;
 import com.aranaira.arcanearchives.items.itemblocks.RadiantTankItem;
 import com.aranaira.arcanearchives.tileentities.BrazierTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
+import com.aranaira.arcanearchives.util.TintUtils;
 import com.aranaira.enderio.core.client.render.IconUtil;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.color.IItemColor;
+import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
@@ -87,6 +94,28 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void init (FMLInitializationEvent event) {
 		super.init(event);
+
+		ItemColors colours = Minecraft.getMinecraft().getItemColors();
+
+		colours.registerItemColorHandler((stack, tintIndex) -> {
+			if (tintIndex != 1) {
+				return -1;
+			}
+
+			ItemStack contained = EchoItem.itemFromEcho(stack);
+			if (contained.isEmpty()) {
+				return -1;
+			}
+
+			for (int i = 0; i < 3; i++) {
+				int tint = colours.colorMultiplier(contained, i);
+				if (tint != -1) {
+					return tint;
+				}
+			}
+
+			return TintUtils.getColor(contained);
+		}, ItemRegistry.ECHO);
 	}
 
 	@Override
@@ -95,6 +124,7 @@ public class ClientProxy extends CommonProxy {
 		if (Loader.isModLoaded("gbook_snapshot")) {
 			GBookInit.init();
 		}
+		TintUtils.init();
 	}
 
 	@Override

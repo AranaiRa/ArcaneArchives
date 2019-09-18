@@ -24,7 +24,6 @@ import java.util.Objects;
 @SuppressWarnings("UnstableApiUsage")
 public class DuplicationUtils {
 	public static Path FILE_PATH;
-	private static Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 
 	private static List<ItemStack> oresToDuplicate = new ArrayList<>();
 	private static List<Ingredient> ingredientsToDuplicate = new ArrayList<>();

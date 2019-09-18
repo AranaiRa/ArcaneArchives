@@ -108,6 +108,13 @@ public class ColorUtils {
 			this.alpha = alphaIn;
 		}
 
+		public Color (int redIn, int greenIn, int blueIn, int alphaIn) {
+			this.red = redIn / 255f;
+			this.green = greenIn / 255f;
+			this.blue = blueIn / 255f;
+			this.alpha = alphaIn / 255f;
+		}
+
 		public static Color Lerp (Color one, Color two, float prog) {
 			Color lerped = new Color();
 
