@@ -74,7 +74,7 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 	}
 
 	public int getBurnTime () {
-		return BURN_TIME;
+		return BURN_TIME + 1;
 	}
 
 	@Override
@@ -88,6 +88,11 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 		if (isBurning()) {
 			// Burn is reduced no matter what
 			this.burnTime--;
+			if (this.burnTime % 20 == 0) {
+				ArcaneArchives.logger.info("Burn time: " + this.burnTime);
+				ArcaneArchives.logger.info("Cook time: " + this.cookTime);
+				ArcaneArchives.logger.info("Cook time total: " + this.cookTimeTotal);
+			}
 		}
 
 		boolean shouldConsumeFuel = false;
@@ -97,7 +102,7 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 		// Inputs
 		ItemStack inSlot = input.getStackInSlot(0);
 		ItemStack outSlot = output.getStackInSlot(0);
-		if (isBurning() && isCooking() && ItemUtils.areStacksEqualIgnoreSize(inSlot, itemCooking) && !inSlot.isEmpty()) {
+		if (isCooking() && isBurning() && !inSlot.isEmpty() && ItemUtils.areStacksEqualIgnoreSize(inSlot, itemCooking)) {
 			if (!outSlot.isEmpty() && ItemUtils.areStacksEqualIgnoreSize(lastResult, outSlot)) {
 				// TODO: Go off the slot size
 				if (outSlot.getCount() < outSlot.getMaxStackSize()) {
@@ -118,7 +123,7 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 			}
 		}
 
-		if (itemCooking.isEmpty() && !inSlot.isEmpty()) {
+		if (!inSlot.isEmpty() && cookTime == 0) {
 			// Try to start cooking the item in the slot
 			if (lastRecipe != Ingredient.EMPTY && lastRecipe.apply(inSlot)) {
 				cookTimeTotal = getBurnTime(); // Handle recipes with variable speeds/cook durations
@@ -151,6 +156,7 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 		}
 
 		if (canCook && shouldProduce) {
+			cookTime--;
 			input.extractItem(0, 1, false);
 			if (lastRecipe == Ingredient.EMPTY || lastRecipe.apply(itemCooking)) {
 				lastResult = FurnaceRecipes.instance().getSmeltingResult(inSlot);
