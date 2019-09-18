@@ -121,7 +121,7 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 			}
 		}
 
-		if (inSlot.isEmpty()) {
+		if (inSlot.isEmpty() || !ItemUtils.areStacksEqualIgnoreSize(inSlot, itemCooking)) {
 			cookTime = 0;
 			cookTimeTotal = 0;
 		}
