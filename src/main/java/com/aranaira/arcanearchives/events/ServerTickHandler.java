@@ -19,7 +19,7 @@ import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class ServerTickHandler {
-	public static final int IMMANENCE_TICK = 10 * 20; // Immanence tick happens every 10 seconds
+	public static final int IMMANENCE_TICK = 2 * 20; // Immanence tick happens every 2 seconds
 
 	private static final List<ImmanenceTileEntity> incomingITEs = new ArrayList<>();
 	private static final List<ImmanenceTileEntity> outgoingITEs = new ArrayList<>();
