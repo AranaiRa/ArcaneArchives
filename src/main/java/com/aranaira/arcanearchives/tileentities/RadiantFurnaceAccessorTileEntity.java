@@ -55,7 +55,9 @@ public class RadiantFurnaceAccessorTileEntity extends TileEntity implements INam
 			return null;
 		}
 
-		if (bottom && facing == front) {
+		if (facing == null) {
+			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(parent.combined);
+		} else if (bottom && facing == front) {
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(parent.fuel);
 		} else if (!bottom) {
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(parent.combined);

@@ -66,7 +66,7 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 			return null;
 		}
 
-		if (facing == EnumFacing.UP) {
+		if (facing == EnumFacing.UP || facing == null) {
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(combined);
 		} else {
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(output);
