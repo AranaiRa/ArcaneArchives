@@ -507,7 +507,7 @@ public class ContainerRadiantChest extends Container {
 
 	public static boolean canAddItemToSlot (@Nullable Slot slotIn, ItemStack stack, boolean stackSizeMatters) {
 		boolean flag = slotIn == null || !slotIn.getHasStack();
-		ItemStack slotStack = slotIn.getStack();
+		ItemStack slotStack = slotIn == null ? ItemStack.EMPTY : slotIn.getStack();
 
 		if (!flag && stack.isItemEqual(slotStack) && ItemStack.areItemStackTagsEqual(slotStack, stack)) {
 			return slotStack.getCount() + (stackSizeMatters ? 0 : stack.getCount()) <= slotIn.getItemStackLimit(slotStack);
