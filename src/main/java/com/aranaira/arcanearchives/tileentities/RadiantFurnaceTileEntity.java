@@ -15,10 +15,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
@@ -29,7 +26,6 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 
 	public static final int BURN_TIME = 200;
 
-	private int progress;
 	private int burnTime;
 	private int cookTime;
 	private int cookTimeTotal;
@@ -75,7 +71,7 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 		}
 	}
 
-	public int getBurnTime () {
+	public int getMaxBurnTime () {
 		return BURN_TIME + 1;
 	}
 
@@ -90,11 +86,11 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 		if (isBurning()) {
 			// Burn is reduced no matter what
 			this.burnTime--;
-			if (this.burnTime % 20 == 0) {
+			/*if (this.burnTime % 20 == 0) {
 				ArcaneArchives.logger.info("Burn time: " + this.burnTime);
 				ArcaneArchives.logger.info("Cook time: " + this.cookTime);
 				ArcaneArchives.logger.info("Cook time total: " + this.cookTimeTotal);
-			}
+			}*/
 		}
 
 		boolean shouldConsumeFuel = false;
@@ -128,16 +124,16 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 		if (!inSlot.isEmpty() && cookTime == 0) {
 			// Try to start cooking the item in the slot
 			if (lastRecipe != Ingredient.EMPTY && lastRecipe.apply(inSlot)) {
-				cookTimeTotal = getBurnTime(); // Handle recipes with variable speeds/cook durations
-				cookTime = getBurnTime();
+				cookTimeTotal = getMaxBurnTime(); // Handle recipes with variable speeds/cook durations
+				cookTime = getMaxBurnTime();
 				itemCooking = inSlot.copy();
 				shouldConsumeFuel = true;
 			} else {
 				ItemStack resultPotential = FurnaceRecipes.instance().getSmeltingResult(inSlot);
 				if (!resultPotential.isEmpty()) {
 					lastResult = resultPotential.copy();
-					cookTimeTotal = getBurnTime();
-					cookTime = getBurnTime();
+					cookTimeTotal = getMaxBurnTime();
+					cookTime = getMaxBurnTime();
 					itemCooking = inSlot.copy();
 					lastXP = FurnaceRecipes.instance().getSmeltingExperience(inSlot);
 					shouldConsumeFuel = true;
@@ -207,6 +203,18 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 
 	public ItemStackHandler getInventory () {
 		return inventory;
+	}
+
+	public int getBurnTime () {
+		return burnTime;
+	}
+
+	public int getCookTime () {
+		return cookTime;
+	}
+
+	public int getCookTimeTotal () {
+		return cookTimeTotal;
 	}
 
 	@Override
