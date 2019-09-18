@@ -214,6 +214,7 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 	public NBTTagCompound writeToNBT (NBTTagCompound compound) {
 		super.writeToNBT(compound);
 		compound.setTag(Tags.OPTIONAL_UPGRADES, optionalUpgrades.serializeNBT());
+		compound.setTag(Tags.INVENTORY, inventory.serializeNBT());
 		return compound;
 	}
 
@@ -221,10 +222,12 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 	public void readFromNBT (NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		optionalUpgrades.deserializeNBT(compound.getCompoundTag(Tags.OPTIONAL_UPGRADES));
+		inventory.deserializeNBT(compound.getCompoundTag(Tags.INVENTORY));
 	}
 
 	public static class Tags {
 		public static final String OPTIONAL_UPGRADES = "optional_upgrades";
+		public static final String INVENTORY = "inventory";
 
 		public Tags () {}
 	}
