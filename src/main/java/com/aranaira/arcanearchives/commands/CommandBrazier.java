@@ -57,7 +57,7 @@ public class CommandBrazier extends CommandBase {
 			fake.setWorld(player.world);
 			fake.setNetworkId(player.getUniqueID());
 			fake.setPos(player.getPosition());
-			List<WeightedEntry<IBrazierRouting>> weights = InventoryRoutingUtils.buildNetworkWeights(fake, item);
+			List<WeightedEntry<IBrazierRouting>> weights = InventoryRoutingUtils.buildNetworkWeights(fake, item, true);
 			player.sendMessage(new TextComponentString("Target is \"" + item.getTranslationKey() + "x" + item.getCount() + "\""));
 			player.sendMessage(new TextComponentString("Total number of potential targets: " + weights.size()));
 			int i = 1;
