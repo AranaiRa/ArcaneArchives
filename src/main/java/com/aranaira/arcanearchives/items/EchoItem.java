@@ -24,8 +24,12 @@ public class EchoItem extends ItemTemplate {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.RED + "" + TextFormatting.BOLD + I18n.format("arcanearchives.tooltip.notimplemented1"));
-		tooltip.add(TextFormatting.RED + "" + TextFormatting.ITALIC + I18n.format("arcanearchives.tooltip.notimplemented2"));
+		ItemStack contained = itemFromEcho(stack);
+		if (contained.isEmpty()) {
+			tooltip.add(TextFormatting.RED + I18n.format("arcanearchives.tooltip.invalid_echo"));
+		} else {
+			tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.echo_contained", contained.getDisplayName()));
+		}
 	}
 
 	// Does not destroy or modify the source item
@@ -50,5 +54,13 @@ public class EchoItem extends ItemTemplate {
 		return new ItemStack(tag.getCompoundTag("source"));
 	}
 
+	@Override
+	public String getItemStackDisplayName (ItemStack item) {
+		ItemStack contained = itemFromEcho(item);
+		if (contained.isEmpty()) {
+			return super.getItemStackDisplayName(item);
+		}
 
+		return I18n.format("item.echo_typed.name", contained.getDisplayName());
+	}
 }

@@ -7,7 +7,7 @@ item.empowered_quartz.name=Empowered Radiant Quartz
 item.containment_field.name=Containment Field
 item.devouring_charm.name=Devouring Charm
 item.echo.name=Echoes of the Unknowable
-item.echo_typed.name=Echoes of %s
+item.echo_typed.name=Echo of %s
 item.gemsocket.name=Gem Socket
 item.geomancy_pendulum.name=Geomancy Pendulum
 item.geomantic_map.name=Geomantic Map
@@ -165,6 +165,8 @@ arcanearchives.success.upgraded_tank=Upgraded tank to level %d/%d.
 
 arcanearchives.tooltip.notimplemented1=UNIMPLEMENTED
 arcanearchives.tooltip.notimplemented2=Using this item may crash your game!
+arcanearchives.tooltip.invalid_echo=Contains the echoing potential of ... nothing?
+arcanearchives.tooltip.echo_contained=Contains an the echoing potential of %s.
 arcanearchives.tooltip.temprecipe1=The recipe for this item is temporary.
 arcanearchives.tooltip.temprecipe2=It will be changed in a later version.
 arcanearchives.tooltip.shouldnothave=This block should not be acquirable.
