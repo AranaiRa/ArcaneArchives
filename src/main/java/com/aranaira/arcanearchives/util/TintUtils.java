@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.util.ColorUtils.Color;
 import it.unimi.dsi.fastutil.ints.Int2IntMap.Entry;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -27,7 +28,6 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)
@@ -123,26 +123,25 @@ public class TintUtils {
 
 			WritableRaster raster = image.getRaster();
 
-			int[] reds = new int[16];
-			int[] greens = new int[16];
-			int[] blues = new int[16];
+			IntArrayList reds = new IntArrayList();
+			IntArrayList greens = new IntArrayList();
+			IntArrayList blues = new IntArrayList();
 
 			int[] temp;
 
-			int i = 0;
+			// TODO: Determine polling pixels based on image size
 			for (int x = 6; x <= 9; x++) {
 				for (int y = 6; y <= 9; y++) {
 					temp = raster.getPixel(x, y, (int[]) null);
-					reds[i] = temp[0];
-					greens[i] = temp[1];
-					blues[i] = temp[2];
-					i++;
+					reds.add(temp[0]);
+					greens.add(temp[1]);
+					blues.add(temp[2]);
 				}
 			}
 
-			int red = Arrays.stream(reds).sum() / 16;
-			int green = Arrays.stream(greens).sum() / 16;
-			int blue = Arrays.stream(blues).sum() / 16;
+			int red = reds.stream().mapToInt(o -> o).sum() / reds.size();
+			int green = greens.stream().mapToInt(o -> o).sum() / greens.size();
+			int blue = blues.stream().mapToInt(o -> o).sum() / blues.size();
 
 			Color c = new Color(red, green, blue, 255);
 			CACHE.put(packed, c.toInteger());
