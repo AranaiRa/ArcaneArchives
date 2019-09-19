@@ -138,6 +138,10 @@ public class TintUtils {
 						ArcaneArchives.logger.error("Unable to parse " + rl.toString() + " as index " + x + "," + y + " is out of bounds.");
 						continue outer;
 					}
+					if (temp.length != 3) {
+						ArcaneArchives.logger.error("Unable to parse " + rl.toString() + " as index " + x + "," + y + " contains no colour information.");
+						continue outer;
+					}
 					reds.add(temp[0]);
 					greens.add(temp[1]);
 					blues.add(temp[2]);
