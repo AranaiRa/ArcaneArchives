@@ -140,6 +140,9 @@ public class TintUtils {
 					}
 					if (temp.length != 3) {
 						ArcaneArchives.logger.error("Unable to parse " + rl.toString() + " as index " + x + "," + y + " contains no colour information.");
+						if (temp.length >= 1) {
+							ArcaneArchives.logger.error("Only available pixel information for " + x + "," + y + " is " + temp[0]);
+						}
 						continue outer;
 					}
 					reds.add(temp[0]);
