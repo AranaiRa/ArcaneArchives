@@ -88,7 +88,7 @@ public class TintUtils {
 		RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
 		IResourceManager manager = Minecraft.getMinecraft().getResourceManager();
 
-		outer: for (ItemStack toDuplicate : DuplicationUtils.getOresToDuplicate()) {
+		for (ItemStack toDuplicate : DuplicationUtils.getOresToDuplicate()) {
 			ItemStack result = FurnaceRecipes.instance().getSmeltingResult(toDuplicate);
 			int packed = RecipeItemHelper.pack(result);
 			IBakedModel model = renderItem.getItemModelWithOverrides(result, null, null);
@@ -130,7 +130,7 @@ public class TintUtils {
 			int[] temp;
 
 			// TODO: Determine polling pixels based on image size
-			for (int x = 6; x <= 9; x++) {
+			outer: for (int x = 6; x <= 9; x++) {
 				for (int y = 6; y <= 9; y++) {
 					try {
 						temp = raster.getPixel(x, y, (int[]) null);
@@ -146,6 +146,10 @@ public class TintUtils {
 					greens.add(temp[1]);
 					blues.add(temp[2]);
 				}
+			}
+
+			if (reds.size() == 0 || greens.size() == 0 || blues.size() == 0) {
+				continue;
 			}
 
 			int red = reds.stream().mapToInt(o -> o).sum() / reds.size();
