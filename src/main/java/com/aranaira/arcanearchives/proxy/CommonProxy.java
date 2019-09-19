@@ -9,6 +9,7 @@ import com.aranaira.arcanearchives.events.ClientTickHandler;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.init.RecipeLibrary;
+import com.aranaira.arcanearchives.integration.craftingtweaks.CraftingTweaks;
 import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.util.DuplicationUtils;
 import net.minecraft.block.Block;
@@ -37,6 +38,7 @@ public class CommonProxy {
 	public void init (FMLInitializationEvent event) {
 		RecipeLibrary.buildRecipes();
 		BlockRegistry.registerTileEntities();
+		CraftingTweaks.init();
 
 		FMLInterModComms.sendFunctionMessage("theoneprobe", "getTheOneProbe", "com.aranaira.arcanearchives.integration.top.TOPPlugin");
 	}
