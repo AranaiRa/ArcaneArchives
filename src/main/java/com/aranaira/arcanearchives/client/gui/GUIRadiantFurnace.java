@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.client.gui;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerRadiantFurnace;
 import com.aranaira.arcanearchives.tileentities.RadiantFurnaceTileEntity;
@@ -23,7 +24,16 @@ public class GUIRadiantFurnace extends GuiContainer {
 		INVENTORY_Y = 0,
 		INVENTORY_W = 181,
 		INVENTORY_H = 101,
-		PADDING = 4;
+		PADDING = 4,
+		BAR_BURN_X = 240,
+		BAR_BURN_Y = 0,
+		BAR_BURN_W = 16,
+		BAR_BURN_H = 2,
+		BAR_PROG_X = 235,
+		BAR_PROG_Y1 = 4,
+		BAR_PROG_Y2 = 11,
+		BAR_PROG_W = 21,
+		BAR_PROG_H = 9;
 	private static final int ImageScale = 256;
 
 	private ContainerRadiantFurnace container;
@@ -61,6 +71,25 @@ public class GUIRadiantFurnace extends GuiContainer {
 			mc.getTextureManager().bindTexture(TEXTURE_PLAYERINV_SIMPLE);
 		}
 		drawModalRectWithCustomSizedTexture(guiLeft, guiTop + BG_H + PADDING, INVENTORY_X, INVENTORY_Y, INVENTORY_W, INVENTORY_H, ImageScale, ImageScale);
+
+		float progCook = (float)tile.getCookTime() / (float)tile.getCookTimeTotal();
+		progCook = 1.0f - progCook;
+		progCook *= 1.05f;
+		if(progCook > 1.0f) progCook = 1.0f;
+		float progBurn = (float)tile.getBurnTime() / (float)tile.getBurnTimeTotal();
+
+		if (ConfigHandler.UsePrettyGUIs) {
+			mc.getTextureManager().bindTexture(TEXTURE_RADIANTFURNACE);
+
+			int cookW = (int)(progCook * (float)BAR_PROG_W);
+			drawModalRectWithCustomSizedTexture(guiLeft + 87, guiTop + 16, BAR_PROG_X, BAR_PROG_Y1, cookW, BAR_PROG_H, ImageScale, ImageScale);
+			drawModalRectWithCustomSizedTexture(guiLeft + 87, guiTop + 45, BAR_PROG_X, BAR_PROG_Y2, cookW, BAR_PROG_H, ImageScale, ImageScale);
+
+			int burnW = (int)(progBurn * (float)BAR_BURN_W);
+			drawModalRectWithCustomSizedTexture(guiLeft + 52 , guiTop + 50, BAR_BURN_X, BAR_BURN_Y, burnW, BAR_BURN_H, ImageScale, ImageScale);
+		} else {
+			mc.getTextureManager().bindTexture(TEXTURE_RADIANTFURNACE_SIMPLE);
+		}
 	}
 
 	@Override
