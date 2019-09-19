@@ -88,7 +88,7 @@ public class TintUtils {
 		RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
 		IResourceManager manager = Minecraft.getMinecraft().getResourceManager();
 
-		for (ItemStack toDuplicate : DuplicationUtils.getOresToDuplicate()) {
+		outer: for (ItemStack toDuplicate : DuplicationUtils.getOresToDuplicate()) {
 			ItemStack result = FurnaceRecipes.instance().getSmeltingResult(toDuplicate);
 			int packed = RecipeItemHelper.pack(result);
 			IBakedModel model = renderItem.getItemModelWithOverrides(result, null, null);
@@ -132,7 +132,12 @@ public class TintUtils {
 			// TODO: Determine polling pixels based on image size
 			for (int x = 6; x <= 9; x++) {
 				for (int y = 6; y <= 9; y++) {
-					temp = raster.getPixel(x, y, (int[]) null);
+					try {
+						temp = raster.getPixel(x, y, (int[]) null);
+					} catch (ArrayIndexOutOfBoundsException ignored) {
+						ArcaneArchives.logger.error("Unable to parse " + rl.toString() + " as index " + x + "," + y + " is out of bounds.");
+						continue outer;
+					}
 					reds.add(temp[0]);
 					greens.add(temp[1]);
 					blues.add(temp[2]);
