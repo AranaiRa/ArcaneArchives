@@ -4,9 +4,12 @@ import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
 import com.aranaira.arcanearchives.client.render.LineHandler;
+import com.aranaira.arcanearchives.data.AccessorSaveData;
+import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.tileentities.RadiantFurnaceAccessorTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantFurnaceTileEntity;
 import com.aranaira.arcanearchives.util.DropUtils;
+import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
@@ -213,8 +216,13 @@ public class RadiantFurnace extends BlockDirectionalTemplate {
 		BlockPos bottom = pos.offset(curOffset);
 		BlockPos top = bottom.up();
 
-		world.setBlockState(bottom, this.getDefaultState().withProperty(ACCESSOR_TYPE, AccessorType.BOTTOM).withProperty(FURNACE_FACING, facing));
-		world.setBlockState(top, this.getDefaultState().withProperty(ACCESSOR_TYPE, AccessorType.TOP).withProperty(FURNACE_FACING, facing));
+		if (!world.isRemote) {
+			AccessorSaveData data = DataHelper.getAcccessorData();
+			data.setAccessors(world.provider.getDimension(), pos, Lists.newArrayList(bottom, top));
+
+			world.setBlockState(bottom, this.getDefaultState().withProperty(ACCESSOR_TYPE, AccessorType.BOTTOM).withProperty(FURNACE_FACING, facing));
+			world.setBlockState(top, this.getDefaultState().withProperty(ACCESSOR_TYPE, AccessorType.TOP).withProperty(FURNACE_FACING, facing));
+		}
 	}
 
 	@Override

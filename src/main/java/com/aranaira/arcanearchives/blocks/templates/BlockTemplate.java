@@ -3,6 +3,8 @@ package com.aranaira.arcanearchives.blocks.templates;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.IHasModel;
 import com.aranaira.arcanearchives.blocks.MultiblockSize;
+import com.aranaira.arcanearchives.data.AccessorSaveData;
+import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.tileentities.AATileEntity;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
@@ -30,6 +32,7 @@ import net.minecraftforge.common.util.FakePlayer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -136,10 +139,15 @@ public class BlockTemplate extends Block implements IHasModel {
 
 	public void handleAccessors (World world, BlockPos pos, EntityLivingBase placer) {
 		// The item block has already taken care of to make sure that the points can be replaced.
+		List<BlockPos> accessors = calculateAccessors(world, pos);
 		if (this.hasAccessors() || this == BlockRegistry.LECTERN_MANIFEST) {
-			for (BlockPos point : calculateAccessors(world, pos)) {
+			for (BlockPos point : accessors) {
 				world.setBlockState(point, this.getDefaultState().withProperty(ACCESSOR, true).withProperty(((BlockDirectionalTemplate) this).getFacingProperty(), EnumFacing.fromAngle(placer.rotationYaw - 90)));
 			}
+		}
+		if (!world.isRemote) {
+			AccessorSaveData accessorData = DataHelper.getAcccessorData();
+			accessorData.setAccessors(world.provider.getDimension(), pos, accessors);
 		}
 	}
 

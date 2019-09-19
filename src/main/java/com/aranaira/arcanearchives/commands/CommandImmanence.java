@@ -1,8 +1,10 @@
 package com.aranaira.arcanearchives.commands;
 
 import com.aranaira.arcanearchives.api.immanence.IImmanenceBus;
+import com.aranaira.arcanearchives.data.AccessorSaveData;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.types.ServerNetwork;
+import it.unimi.dsi.fastutil.longs.Long2LongOpenHashMap;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
@@ -40,6 +42,11 @@ public class CommandImmanence extends CommandBase {
 	public void execute (MinecraftServer server, ICommandSender sender, String[] args) {
 		if (sender instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) sender;
+
+			AccessorSaveData data = DataHelper.getAcccessorData();
+			Long2LongOpenHashMap mapData = data.accessorToParent.get(player.dimension);
+			player.sendMessage(new TextComponentString("mapData contains " + mapData.size() + " entries for this dimension."));
+
 			ServerNetwork network = DataHelper.getServerNetwork(player.getUniqueID());
 			if (network == null) {
 				player.sendMessage(new TextComponentString("For some reason your network is null!"));
