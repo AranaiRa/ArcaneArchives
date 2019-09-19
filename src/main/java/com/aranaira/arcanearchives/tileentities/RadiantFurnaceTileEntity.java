@@ -27,6 +27,7 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 	public static final int BURN_TIME = 200;
 
 	private int burnTime;
+	private int burnTimeTotal;
 	private int cookTime;
 	private int cookTimeTotal;
 	private ItemStack itemCooking = ItemStack.EMPTY;
@@ -71,7 +72,7 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 		}
 	}
 
-	public int getMaxBurnTime () {
+	public int getMaxCookTime () {
 		return BURN_TIME + 1;
 	}
 
@@ -129,16 +130,16 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 		if (!inSlot.isEmpty() && cookTime == 0) {
 			// Try to start cooking the item in the slot
 			if (lastRecipe != Ingredient.EMPTY && lastRecipe.apply(inSlot)) {
-				cookTimeTotal = getMaxBurnTime(); // Handle recipes with variable speeds/cook durations
-				cookTime = getMaxBurnTime();
+				cookTimeTotal = getMaxCookTime(); // Handle recipes with variable speeds/cook durations
+				cookTime = getMaxCookTime();
 				itemCooking = inSlot.copy();
 				shouldConsumeFuel = true;
 			} else {
 				ItemStack resultPotential = FurnaceRecipes.instance().getSmeltingResult(inSlot);
 				if (!resultPotential.isEmpty()) {
 					lastResult = resultPotential.copy();
-					cookTimeTotal = getMaxBurnTime();
-					cookTime = getMaxBurnTime();
+					cookTimeTotal = getMaxCookTime();
+					cookTime = getMaxCookTime();
 					itemCooking = inSlot.copy();
 					lastXP = FurnaceRecipes.instance().getSmeltingExperience(inSlot);
 					shouldConsumeFuel = true;
@@ -153,6 +154,7 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 				int burnTime = TileEntityFurnace.getItemBurnTime(fuel);
 				if (burnTime > 0) {
 					this.burnTime = burnTime;
+					this.burnTimeTotal = burnTime;
 				}
 			}
 			this.fuel.extractItem(0, 1, false);
@@ -220,6 +222,10 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 		return cookTime;
 	}
 
+	public int getBurnTimeTotal () {
+		return burnTimeTotal;
+	}
+
 	public int getCookTimeTotal () {
 		return cookTimeTotal;
 	}
@@ -233,6 +239,7 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 		compound.setInteger(Tags.BURN_TIME, burnTime);
 		compound.setInteger(Tags.COOK_TIME, cookTime);
 		compound.setInteger(Tags.COOK_TIME_TOTAL, cookTimeTotal);
+		compound.setInteger(Tags.BURN_TIME_TOTAL, burnTimeTotal);
 		return compound;
 	}
 
@@ -242,6 +249,7 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 		optionalUpgrades.deserializeNBT(compound.getCompoundTag(Tags.OPTIONAL_UPGRADES));
 		inventory.deserializeNBT(compound.getCompoundTag(Tags.INVENTORY));
 		burnTime = compound.getInteger(Tags.BURN_TIME);
+		burnTimeTotal = compound.getInteger(Tags.BURN_TIME_TOTAL);
 		cookTime = compound.getInteger(Tags.COOK_TIME);
 		cookTimeTotal = compound.getInteger(Tags.COOK_TIME_TOTAL);
 	}
@@ -253,6 +261,7 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 		public static final String COOK_TIME = "cook_time";
 		public static final String COOK_TIME_TOTAL = "cook_time_total";
 		public static final String BURN_TIME = "burn_time";
+		public static final String BURN_TIME_TOTAL = "burn_time_total";
 
 		public Tags () {}
 	}
