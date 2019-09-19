@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.HiveSaveData.Hive;
-import com.google.common.collect.Iterators;
+import com.aranaira.arcanearchives.data.types.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
@@ -11,7 +11,6 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 
@@ -45,22 +44,6 @@ public class DataHelper {
 
 	public static WorldServer getWorld () {
 		return FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(0);
-	}
-
-	public static class ServerList implements Iterable<IHiveBase> {
-		public List<ServerNetwork> independents;
-		public List<HiveNetwork> hives;
-
-		public ServerList (List<ServerNetwork> independents, List<HiveNetwork> hives) {
-			this.independents = independents;
-			this.hives = hives;
-		}
-
-		@Override
-		@Nonnull
-		public Iterator<IHiveBase> iterator () {
-			return Iterators.concat(independents.iterator(), hives.iterator());
-		}
 	}
 
 	public static ServerList getNetworks () {
@@ -235,9 +218,14 @@ public class DataHelper {
 		return getClientNetwork(id);
 	}
 
-	public static class InvalidNetworkException extends NullPointerException {
-		InvalidNetworkException (String s) {
-			super(s);
+	public static AccessorSaveData getAcccessorData () {
+		World world = getWorld();
+		AccessorSaveData saveData = (AccessorSaveData) Objects.requireNonNull(world.getMapStorage()).getOrLoadData(AccessorSaveData.class, AccessorSaveData.ID);
+		if (saveData == null) {
+			saveData = new AccessorSaveData();
+			world.getMapStorage().setData(AccessorSaveData.ID, saveData);
 		}
+
+		return saveData;
 	}
 }

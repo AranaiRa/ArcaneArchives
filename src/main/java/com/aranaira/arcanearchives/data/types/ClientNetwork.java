@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.data;
+package com.aranaira.arcanearchives.data.types;
 
 import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
 import com.aranaira.arcanearchives.network.Networking;
@@ -27,7 +27,7 @@ public class ClientNetwork {
 	private boolean inHive = false;
 	private boolean ownsHive = false;
 
-	ClientNetwork (UUID id) {
+	public ClientNetwork (UUID id) {
 		this.manifestItemHandler = new ManifestItemHandler(manifestItems);
 	}
 

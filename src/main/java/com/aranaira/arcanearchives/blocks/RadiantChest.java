@@ -5,7 +5,7 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.client.render.LineHandler;
 import com.aranaira.arcanearchives.data.DataHelper;
-import com.aranaira.arcanearchives.data.ServerNetwork;
+import com.aranaira.arcanearchives.data.types.ServerNetwork;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketRadiantChest.SetItemAndFacing;

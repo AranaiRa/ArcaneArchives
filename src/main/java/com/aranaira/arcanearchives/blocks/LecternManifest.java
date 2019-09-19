@@ -3,7 +3,7 @@ package com.aranaira.arcanearchives.blocks;
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
-import com.aranaira.arcanearchives.data.ClientNetwork;
+import com.aranaira.arcanearchives.data.types.ClientNetwork;
 import com.aranaira.arcanearchives.data.DataHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

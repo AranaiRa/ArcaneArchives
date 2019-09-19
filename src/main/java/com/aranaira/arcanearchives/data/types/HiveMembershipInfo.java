@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.data;
+package com.aranaira.arcanearchives.data.types;
 
 import com.aranaira.arcanearchives.types.ISerializeByteBuf;
 import io.netty.buffer.ByteBuf;

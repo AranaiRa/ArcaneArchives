@@ -2,8 +2,8 @@ package com.aranaira.arcanearchives.immanence;
 
 import com.aranaira.arcanearchives.api.immanence.IImmanenceBus;
 import com.aranaira.arcanearchives.data.DataHelper;
-import com.aranaira.arcanearchives.data.DataHelper.ServerList;
-import com.aranaira.arcanearchives.data.IHiveBase;
+import com.aranaira.arcanearchives.data.types.ServerList;
+import com.aranaira.arcanearchives.data.types.IHiveBase;
 
 public class ImmanenceGlobal {
 	public static ImmanenceGlobal instance = new ImmanenceGlobal();

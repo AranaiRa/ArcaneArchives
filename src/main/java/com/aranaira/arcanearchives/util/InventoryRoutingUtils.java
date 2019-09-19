@@ -1,8 +1,8 @@
 package com.aranaira.arcanearchives.util;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.data.HiveNetwork;
-import com.aranaira.arcanearchives.data.ServerNetwork;
+import com.aranaira.arcanearchives.data.types.HiveNetwork;
+import com.aranaira.arcanearchives.data.types.ServerNetwork;
 import com.aranaira.arcanearchives.tileentities.BrazierTileEntity;
 import com.aranaira.arcanearchives.tileentities.BrazierTileEntity.ItemCache;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;

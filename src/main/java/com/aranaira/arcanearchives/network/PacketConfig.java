@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.config.ManifestConfig;
-import com.aranaira.arcanearchives.data.ServerNetwork;
+import com.aranaira.arcanearchives.data.types.ServerNetwork;
 import com.aranaira.arcanearchives.network.Handlers.ConfigServerHandler;
 import com.aranaira.arcanearchives.network.Messages.ConfigBooleanPacket;
 import com.aranaira.arcanearchives.network.Messages.ConfigIntegerPacket;

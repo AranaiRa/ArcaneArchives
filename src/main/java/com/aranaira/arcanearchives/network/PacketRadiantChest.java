@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.DataHelper;
-import com.aranaira.arcanearchives.data.ServerNetwork;
+import com.aranaira.arcanearchives.data.types.ServerNetwork;
 import com.aranaira.arcanearchives.inventory.ContainerRadiantChest;
 import com.aranaira.arcanearchives.network.Handlers.ServerHandler;
 import com.aranaira.arcanearchives.network.Handlers.TileHandlerClient;

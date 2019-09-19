@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.config.ServerSideConfig;
-import com.aranaira.arcanearchives.data.ServerNetwork;
+import com.aranaira.arcanearchives.data.types.ServerNetwork;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.inventory.handlers.ExtendedItemStackHandler;
 import com.aranaira.arcanearchives.inventory.handlers.ITrackingHandler;

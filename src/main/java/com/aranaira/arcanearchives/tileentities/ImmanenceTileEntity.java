@@ -4,7 +4,7 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.MultiblockSize;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.DataHelper;
-import com.aranaira.arcanearchives.data.ServerNetwork;
+import com.aranaira.arcanearchives.data.types.ServerNetwork;
 import com.aranaira.arcanearchives.events.ServerTickHandler;
 import com.aranaira.arcanearchives.types.MachineSound;
 import com.aranaira.arcanearchives.util.ManifestTrackingUtils;

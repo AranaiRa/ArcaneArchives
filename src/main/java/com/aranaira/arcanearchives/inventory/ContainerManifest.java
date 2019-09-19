@@ -5,7 +5,7 @@ import com.aranaira.arcanearchives.client.gui.framework.IScrollabe;
 import com.aranaira.arcanearchives.client.gui.framework.IScrollableContainer;
 import com.aranaira.arcanearchives.client.gui.framework.ScrollEventManager;
 import com.aranaira.arcanearchives.config.ManifestConfig;
-import com.aranaira.arcanearchives.data.ClientNetwork;
+import com.aranaira.arcanearchives.data.types.ClientNetwork;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
 import com.aranaira.arcanearchives.types.lists.ManifestList.SortingDirection;

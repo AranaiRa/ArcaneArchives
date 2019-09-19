@@ -3,6 +3,7 @@
 
 package com.aranaira.arcanearchives.data;
 
+import com.aranaira.arcanearchives.data.types.ServerNetwork;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.storage.WorldSavedData;

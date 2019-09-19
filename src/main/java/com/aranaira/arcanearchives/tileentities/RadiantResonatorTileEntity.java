@@ -5,7 +5,7 @@ import com.aranaira.arcanearchives.blocks.RawQuartzCluster;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.config.ServerSideConfig;
 import com.aranaira.arcanearchives.data.DataHelper;
-import com.aranaira.arcanearchives.data.ServerNetwork;
+import com.aranaira.arcanearchives.data.types.ServerNetwork;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.SoundRegistry;
 import net.minecraft.block.state.IBlockState;

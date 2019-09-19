@@ -4,7 +4,7 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.api.GCTRecipeEvent;
 import com.aranaira.arcanearchives.api.IGCTRecipe;
 import com.aranaira.arcanearchives.config.ConfigHandler;
-import com.aranaira.arcanearchives.data.ClientNetwork;
+import com.aranaira.arcanearchives.data.types.ClientNetwork;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.HiveSaveData;
 import com.aranaira.arcanearchives.data.HiveSaveData.Hive;

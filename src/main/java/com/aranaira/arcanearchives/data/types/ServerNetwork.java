@@ -1,7 +1,8 @@
-package com.aranaira.arcanearchives.data;
+package com.aranaira.arcanearchives.data.types;
 
 import com.aranaira.arcanearchives.api.immanence.IImmanenceBus;
 import com.aranaira.arcanearchives.api.immanence.IImmanenceSubscriber;
+import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.immanence.ImmanenceBus;
 import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketNetworks;

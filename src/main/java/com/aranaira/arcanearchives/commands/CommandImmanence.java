@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.commands;
 
 import com.aranaira.arcanearchives.api.immanence.IImmanenceBus;
 import com.aranaira.arcanearchives.data.DataHelper;
-import com.aranaira.arcanearchives.data.ServerNetwork;
+import com.aranaira.arcanearchives.data.types.ServerNetwork;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;

@@ -6,7 +6,7 @@ import com.aranaira.arcanearchives.blocks.RadiantTank;
 import com.aranaira.arcanearchives.blocks.RadiantTrove;
 import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
 import com.aranaira.arcanearchives.data.DataHelper;
-import com.aranaira.arcanearchives.data.ServerNetwork;
+import com.aranaira.arcanearchives.data.types.ServerNetwork;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.inventory.handlers.OptionalUpgradesHandler;
 import com.aranaira.arcanearchives.inventory.handlers.SizeUpgradeItemHandler;

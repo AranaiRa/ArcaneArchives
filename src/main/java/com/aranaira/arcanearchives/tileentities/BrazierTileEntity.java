@@ -3,7 +3,7 @@ package com.aranaira.arcanearchives.tileentities;
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.config.ConfigHandler;
-import com.aranaira.arcanearchives.data.ServerNetwork;
+import com.aranaira.arcanearchives.data.types.ServerNetwork;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.init.SoundRegistry;
 import com.aranaira.arcanearchives.tileentities.interfaces.IBrazierRouting;

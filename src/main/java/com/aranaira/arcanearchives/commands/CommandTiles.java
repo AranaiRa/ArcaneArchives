@@ -1,8 +1,8 @@
 package com.aranaira.arcanearchives.commands;
 
 import com.aranaira.arcanearchives.data.DataHelper;
-import com.aranaira.arcanearchives.data.HiveNetwork;
-import com.aranaira.arcanearchives.data.ServerNetwork;
+import com.aranaira.arcanearchives.data.types.HiveNetwork;
+import com.aranaira.arcanearchives.data.types.ServerNetwork;
 import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketDebug.TrackPositions;
 import com.aranaira.arcanearchives.tileentities.interfaces.IManifestTileEntity;

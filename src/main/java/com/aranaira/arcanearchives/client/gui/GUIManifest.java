@@ -10,7 +10,7 @@ import com.aranaira.arcanearchives.client.gui.framework.ScrollEventManager;
 import com.aranaira.arcanearchives.client.render.LineHandler;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.config.ManifestConfig;
-import com.aranaira.arcanearchives.data.ClientNetwork;
+import com.aranaira.arcanearchives.data.types.ClientNetwork;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.integration.jei.JEIPlugin;
 import com.aranaira.arcanearchives.inventory.ContainerManifest;

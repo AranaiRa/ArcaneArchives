@@ -3,7 +3,7 @@ package com.aranaira.arcanearchives.items;
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.Keybinds;
-import com.aranaira.arcanearchives.data.ClientNetwork;
+import com.aranaira.arcanearchives.data.types.ClientNetwork;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.util.ManifestTrackingUtils;

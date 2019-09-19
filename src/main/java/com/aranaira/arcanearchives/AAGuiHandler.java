@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives;
 
 import com.aranaira.arcanearchives.client.gui.*;
 import com.aranaira.arcanearchives.data.DataHelper;
-import com.aranaira.arcanearchives.data.ServerNetwork;
+import com.aranaira.arcanearchives.data.types.ServerNetwork;
 import com.aranaira.arcanearchives.inventory.*;
 import com.aranaira.arcanearchives.tileentities.*;
 import net.minecraft.entity.player.EntityPlayer;
