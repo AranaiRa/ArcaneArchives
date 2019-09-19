@@ -170,7 +170,11 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 		if (getPage() > 0) {
 			setPage(page - 1);
 		} else {
-			setPage(GCTRecipeList.instance.getSize() / RECIPE_PAGE_LIMIT);
+			int page = GCTRecipeList.instance.getSize() / RECIPE_PAGE_LIMIT;
+			if (GCTRecipeList.instance.getSize() % RECIPE_PAGE_LIMIT == 0) {
+				page = page - 1;
+			}
+			setPage(page);
 		}
 	}
 
