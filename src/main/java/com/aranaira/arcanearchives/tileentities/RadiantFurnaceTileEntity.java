@@ -189,6 +189,8 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 				}
 			}
 		}
+
+		this.defaultServerSideUpdate();
 	}
 
 	@Override
@@ -228,6 +230,9 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 		super.writeToNBT(compound);
 		compound.setTag(Tags.OPTIONAL_UPGRADES, optionalUpgrades.serializeNBT());
 		compound.setTag(Tags.INVENTORY, inventory.serializeNBT());
+		compound.setInteger(Tags.BURN_TIME, burnTime);
+		compound.setInteger(Tags.COOK_TIME, cookTime);
+		compound.setInteger(Tags.COOK_TIME_TOTAL, cookTimeTotal);
 		return compound;
 	}
 
@@ -236,11 +241,18 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 		super.readFromNBT(compound);
 		optionalUpgrades.deserializeNBT(compound.getCompoundTag(Tags.OPTIONAL_UPGRADES));
 		inventory.deserializeNBT(compound.getCompoundTag(Tags.INVENTORY));
+		burnTime = compound.getInteger(Tags.BURN_TIME);
+		cookTime = compound.getInteger(Tags.COOK_TIME);
+		cookTimeTotal = compound.getInteger(Tags.COOK_TIME_TOTAL);
 	}
 
 	public static class Tags {
 		public static final String OPTIONAL_UPGRADES = "optional_upgrades";
 		public static final String INVENTORY = "inventory";
+
+		public static final String COOK_TIME = "cook_time";
+		public static final String COOK_TIME_TOTAL = "cook_time_total";
+		public static final String BURN_TIME = "burn_time";
 
 		public Tags () {}
 	}
