@@ -7,6 +7,8 @@ import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
 import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
 import com.aranaira.arcanearchives.recipe.IngredientStack;
+import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
+import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import com.aranaira.arcanearchives.util.ManifestTrackingUtils;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
@@ -20,6 +22,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import yalter.mousetweaks.api.MouseTweaksDisableWheelTweak;
 
@@ -232,6 +235,90 @@ public class GUIGemCuttersTable extends AbstractGuiContainerTracking {
 			tile.nextPage();
 		}
 		super.actionPerformed(button);
+	}
+
+	public static final int DOWN = -120;
+	public static final int UP = 120;
+
+	@Override
+	public void handleMouseInput () throws IOException {
+		super.handleMouseInput();
+
+		int wheel = Mouse.getEventDWheel();
+		int button = Mouse.getEventButton();
+
+		if (wheel != 0 && button == -1) {
+			IGCTRecipe currentRecipe = tile.getCurrentRecipe();
+			int originalIndex = currentRecipe == null ? 0 : currentRecipe.getIndex();
+			int index = originalIndex;
+
+			IGCTRecipe temp;
+			IGCTRecipe newRecipe = null;
+
+			if (recipeStatus.values().stream().anyMatch(o -> o)) {
+				switch (wheel) {
+					case DOWN:
+						while (index < GCTRecipeList.instance.size()) {
+							temp = GCTRecipeList.instance.getRecipeByIndex(index);
+							if (index != originalIndex && temp != null && recipeStatus.get(temp)) {
+								newRecipe = temp;
+								break;
+							}
+
+							index++;
+						}
+
+						if (newRecipe == null) {
+							index = 0;
+							while (index < originalIndex) {
+								temp = GCTRecipeList.instance.getRecipeByIndex(index);
+								if (index != originalIndex && temp != null && recipeStatus.get(temp)) {
+									newRecipe = temp;
+									break;
+								}
+
+								index++;
+							}
+						}
+						break;
+					case UP:
+						index--;
+						while (index >= 0) {
+							temp = GCTRecipeList.instance.getRecipeByIndex(index);
+							if (index != originalIndex && temp != null && recipeStatus.get(temp)) {
+								newRecipe = temp;
+								break;
+							}
+
+							index--;
+						}
+
+						if (newRecipe == null) {
+							index = GCTRecipeList.instance.size();
+							while (index > originalIndex) {
+								temp = GCTRecipeList.instance.getRecipeByIndex(index);
+								if (index != originalIndex && temp != null && recipeStatus.get(temp)) {
+									newRecipe = temp;
+									break;
+								}
+
+								index--;
+							}
+						}
+						break;
+					default:
+						return;
+				}
+
+				if (newRecipe != null) {
+					int newPage = index / 7;
+					tile.setPage(newPage);
+					tile.setRecipe(index);
+					container.updateRecipe();
+					// Handle switching pages
+				}
+			}
+		}
 	}
 }
 

@@ -153,7 +153,7 @@ public class GCTRecipeList implements IGCTRecipeList {
 	}
 
 	@Override
-	public int getSize () {
+	public int size () {
 		return RECIPE_LIST.size();
 	}
 }

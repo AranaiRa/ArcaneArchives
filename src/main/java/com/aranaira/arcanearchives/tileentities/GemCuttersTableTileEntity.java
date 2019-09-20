@@ -55,6 +55,7 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 
 	public void setRecipe (ResourceLocation name) {
 		currentRecipe = GCTRecipeList.instance.getRecipe(name);
+		defaultServerSideUpdate();
 	}
 
 	public void setRecipe (int index) {
@@ -170,8 +171,8 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 		if (getPage() > 0) {
 			setPage(page - 1);
 		} else {
-			int page = GCTRecipeList.instance.getSize() / RECIPE_PAGE_LIMIT;
-			if (GCTRecipeList.instance.getSize() % RECIPE_PAGE_LIMIT == 0) {
+			int page = GCTRecipeList.instance.size() / RECIPE_PAGE_LIMIT;
+			if (GCTRecipeList.instance.size() % RECIPE_PAGE_LIMIT == 0) {
 				page = page - 1;
 			}
 			setPage(page);
@@ -187,7 +188,7 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 	}
 
 	public void nextPage () {
-		if (GCTRecipeList.instance.getSize() > (page + 1) * RECIPE_PAGE_LIMIT) {
+		if (GCTRecipeList.instance.size() > (page + 1) * RECIPE_PAGE_LIMIT) {
 			setPage(page + 1);
 		} else {
 			setPage(0);

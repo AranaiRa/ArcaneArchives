@@ -48,7 +48,7 @@ public class SlotRecipeHandler extends Slot {
 	@Override
 	public ItemStack getStack () {
 		int slot = getRelativeIndex();
-		if (slot < GCTRecipeList.instance.getSize()) {
+		if (slot < GCTRecipeList.instance.size()) {
 			return GCTRecipeList.instance.getOutputByIndex(slot).copy();
 		}
 
