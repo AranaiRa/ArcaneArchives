@@ -173,5 +173,5 @@ public interface IGCTRecipeList {
 	/**
 	 * @return The number of registered recipes.
 	 */
-	int getSize ();
+	int size ();
 }

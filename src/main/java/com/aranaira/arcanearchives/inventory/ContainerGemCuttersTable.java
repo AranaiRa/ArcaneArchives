@@ -121,7 +121,7 @@ public class ContainerGemCuttersTable extends Container {
 		updateRecipe();
 	}
 
-	private void updateRecipe () {
+	public void updateRecipe () {
 		if (updateRecipeGUI != null) {
 			updateRecipeGUI.run();
 		}
