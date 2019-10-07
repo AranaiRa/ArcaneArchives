@@ -26,7 +26,7 @@ public class AAMixinPlugin implements IMixinConfigPlugin {
 
 	@Override
 	public boolean shouldApplyMixin (String targetClassName, String mixinClassName) {
-		return !targetClassName.startsWith("net.minecraft.client") || MixinEnvironment.getCurrentEnvironment().getSide() == MixinEnvironment.Side.CLIENT;
+		return targetClassName.equals("GuiContainer") && MixinEnvironment.getCurrentEnvironment().getSide() == MixinEnvironment.Side.CLIENT;
 	}
 
 	@Override
