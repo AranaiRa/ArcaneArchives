@@ -27,6 +27,7 @@ import javax.annotation.Nullable;
 
 public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IManifestTileEntity, IBrazierRouting {
 	private final TrackingGCTHandler inventory = new TrackingGCTHandler(18);
+	private final IItemHandlerModifiable outputInventory = new ItemStackHandler(1);
 	public static final int RECIPE_PAGE_LIMIT = 7;
 	private IGCTRecipe currentRecipe;
 	private IGCTRecipe lastRecipe;
@@ -51,6 +52,10 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 	@Override
 	public IItemHandlerModifiable getInventory () {
 		return inventory;
+	}
+
+	public IItemHandlerModifiable getOutputInventory () {
+		return outputInventory;
 	}
 
 	public void setRecipe (ResourceLocation name) {
