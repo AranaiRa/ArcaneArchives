@@ -30,7 +30,7 @@ public class ContainerGemCuttersTable extends Container {
 	private final SlotItemHandler slotOutput;
 	private final IInventory playerInventory;
 	private final IItemHandlerModifiable tileInventory;
-	private final IItemHandlerModifiable outputInv = new ItemStackHandler(1);
+	private final IItemHandlerModifiable outputInv;
 	private final IItemHandler combinedInventory;
 	private final GemCuttersTableTileEntity tile;
 	private final EntityPlayer player;
@@ -40,6 +40,7 @@ public class ContainerGemCuttersTable extends Container {
 	public ContainerGemCuttersTable (IItemHandlerModifiable tileInventory, GemCuttersTableTileEntity tile, EntityPlayer player) {
 		this.tileInventory = tileInventory;
 		this.tile = tile;
+		this.outputInv = tile.getOutputInventory();
 		this.playerInventory = player.inventory;
 		this.player = player;
 		this.world = player.world;

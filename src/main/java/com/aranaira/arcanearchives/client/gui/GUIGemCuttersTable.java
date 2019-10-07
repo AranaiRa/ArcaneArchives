@@ -6,6 +6,9 @@ import com.aranaira.arcanearchives.client.gui.controls.InvisibleButton;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
 import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
+import com.aranaira.arcanearchives.network.Networking;
+import com.aranaira.arcanearchives.network.PacketGemCutters;
+import com.aranaira.arcanearchives.network.PacketGemCutters.SetRecipeIndex;
 import com.aranaira.arcanearchives.recipe.IngredientStack;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
@@ -313,6 +316,9 @@ public class GUIGemCuttersTable extends AbstractGuiContainerTracking {
 				if (newRecipe != null) {
 					int newPage = index / 7;
 					tile.setPage(newPage);
+					// TODO: Turn this into a packet
+					PacketGemCutters.SetRecipeIndex message = new SetRecipeIndex(tile.getUuid(), index);
+					Networking.CHANNEL.sendToServer(message);
 					tile.setRecipe(index);
 					container.updateRecipe();
 					// Handle switching pages

@@ -4,6 +4,8 @@ import com.aranaira.arcanearchives.api.IGCTRecipe;
 import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
 import com.aranaira.arcanearchives.network.Handlers.ClientHandler;
 import com.aranaira.arcanearchives.network.Handlers.ServerHandler;
+import com.aranaira.arcanearchives.network.Handlers.TileHandlerServer;
+import com.aranaira.arcanearchives.network.Messages.TileMessage;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
@@ -16,8 +18,51 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
+import java.util.UUID;
+
 @SuppressWarnings("WeakerAccess")
 public class PacketGemCutters {
+	public static class SetRecipeIndex extends TileMessage {
+		private int recipeIndex = -1;
+
+		public SetRecipeIndex () {
+		}
+
+		public SetRecipeIndex (UUID tileId, int recipeIndex) {
+			super(tileId);
+			this.recipeIndex = recipeIndex;
+		}
+
+		public SetRecipeIndex (BlockPos pos, int dimension, int recipeIndex) {
+			super(pos, dimension);
+			this.recipeIndex = recipeIndex;
+		}
+
+		@Override
+		public void fromBytes (ByteBuf buf) {
+			super.fromBytes(buf);
+			this.recipeIndex = buf.readInt();
+		}
+
+		@Override
+		public void toBytes (ByteBuf buf) {
+			super.toBytes(buf);
+			buf.writeInt(this.recipeIndex);
+		}
+
+		public static class Handler implements TileHandlerServer<SetRecipeIndex, GemCuttersTableTileEntity> {
+			@Override
+			public void processMessage (SetRecipeIndex message, MessageContext ctx, GemCuttersTableTileEntity tile) {
+				tile.setRecipe(message.recipeIndex);
+
+				Container container = ctx.getServerHandler().player.openContainer;
+				if (container instanceof ContainerGemCuttersTable) {
+					((ContainerGemCuttersTable) container).updateRecipe();
+				}
+			}
+		}
+	}
+
 	public static class ChangeRecipe implements IMessage {
 		private ResourceLocation recipe;
 		private BlockPos pos;
