@@ -65,12 +65,6 @@ public class RadiantChest extends BlockTemplate {
 
 	@Override
 	public boolean onBlockActivated (World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		ItemStack stack = playerIn.getHeldItem(hand);
-
-		if (!playerIn.canPlayerEdit(pos, facing, stack)) {
-			return false;
-		}
-
 		LineHandler.removeLine(pos, playerIn.dimension);
 
 		ItemStack mainHand = playerIn.getHeldItemMainhand();
@@ -102,7 +96,9 @@ public class RadiantChest extends BlockTemplate {
 				}
 			}
 		} else {
-			playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.RADIANT_CHEST, worldIn, pos.getX(), pos.getY(), pos.getZ());
+			if (!worldIn.isRemote) {
+				playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.RADIANT_CHEST, worldIn, pos.getX(), pos.getY(), pos.getZ());
+			}
 		}
 
 		return true;
