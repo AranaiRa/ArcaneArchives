@@ -2,15 +2,76 @@
     "forge_marker": 1,
     "defaults": {
         "textures": {
-            "all": "arcanearchives:blocks/placeholder"
-        }
+
+        },
+        "model": "arcanearchives:echoing_reverberation_chamber.obj",
+        "custom": { "flip-v": true }
     },
     "variants": {
-        "normal": {
-            "model": "cube_all"
+        "normal": [{}],
+        "inventory": [{
+
+            "transform": {
+                "firstperson_righthand": {
+                    "translation": [0.1, 0.025, -0.1],
+                    "rotation": [ { "y": -75}, {"x": 0}, {"z": 0} ],
+                    "scale": 0.375
+                },
+                "firstperson_lefthand": {
+                    "translation": [0.25, 0.025, 0.22],
+                    "rotation": [ { "y": -70}, {"x": 0}, {"z": 0} ],
+                    "scale": 0.375
+                },
+                "thirdperson_righthand": {
+                    "translation": [-0.175, 0.15, 0.0],
+                    "rotation": [ { "y": 0}, {"x": 30}, {"z": 0} ],
+                    "scale": 0.375
+                },
+                "thirdperson_lefthand": {
+                    "translation": [0.175, 0.15, 0.0],
+                    "rotation": [ { "y": 0}, {"x": 30}, {"z": 0} ],
+                    "scale": 0.375
+                },
+                "gui": {
+                    "translation": [-0.0, -0.27, 0],
+                    "rotation": [ { "y": 45}, {"x": 20}, {"z": 20} ],
+                    "scale": 0.32
+                },
+                "ground": {
+                    "translation": [-0.125, 0, 0.125],
+                    "rotation": [ { "y": 0}, {"x": 0}, {"z": 0} ],
+                    "scale": 0.25
+                }
+            }
+        }],
+        "accessor": {
+            "true": {
+                "model": "cube_all",
+                "textures": {
+                    "all": "arcanearchives:transparent"
+                }
+            },
+            "false": {}
         },
-        "inventory": {
-            "model": "cube_all"
+        "facing": {
+            "down": {},
+            "up": {},
+            "north": {
+                "transform": {
+                    "rotation": {"y": -90}
+                }
+            },
+            "south":  {
+                "transform": {
+                    "rotation": {"y": 90}
+                }
+            },
+            "west": {},
+            "east":  {
+                "transform": {
+                    "rotation": {"y": 180}
+                }
+            }
         }
     }
 }
