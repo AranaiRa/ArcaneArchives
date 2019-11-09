@@ -1,7 +1,7 @@
 {
-    "parent": "arcanearchives:item/gems/arcane_gem",
-    "textures": {
-        "layer0": "arcanearchives:items/gems/trillion/yellow",
-        "layer1": "arcanearchives:items/gems/accessibility/yellow"
-    }
+  "parent": "arcanearchives:item/gems/arcane_gem",
+  "textures": {
+    "layer0": "arcanearchives:items/gems/trillion/yellow",
+    "layer1": "arcanearchives:items/gems/accessibility/yellow"
+  }
 }

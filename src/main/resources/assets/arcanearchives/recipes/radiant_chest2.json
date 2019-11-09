@@ -1,13 +1,18 @@
 {
-    "_comment": [
-        "Craft Radiant Chest from Chest"
-    ],
-    "type": "forge:ore_shapeless",
-    "ingredients": [
-        {   "item": "arcanearchives:raw_quartz" },
-        {   "type": "forge:ore_dict", "ore": "chestWood" }
-    ],
-    "result": {
-        "item": "arcanearchives:radiant_chest"
+  "_comment": [
+    "Craft Radiant Chest from Chest"
+  ],
+  "type": "forge:ore_shapeless",
+  "ingredients": [
+    {
+      "item": "arcanearchives:raw_quartz"
+    },
+    {
+      "type": "forge:ore_dict",
+      "ore": "chestWood"
     }
+  ],
+  "result": {
+    "item": "arcanearchives:radiant_chest"
+  }
 }

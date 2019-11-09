@@ -11,43 +11,43 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PacketDebug {
-	public static class TrackPositions implements IMessage {
-		private List<BlockPos> positions = new ArrayList<>();
-		private int dimension;
+  public static class TrackPositions implements IMessage {
+    private List<BlockPos> positions = new ArrayList<>();
+    private int dimension;
 
-		public TrackPositions () {
-		}
+    public TrackPositions() {
+    }
 
-		public TrackPositions (List<BlockPos> positions, int dimension) {
-			this.positions = positions;
-			this.dimension = dimension;
-		}
+    public TrackPositions(List<BlockPos> positions, int dimension) {
+      this.positions = positions;
+      this.dimension = dimension;
+    }
 
-		@Override
-		public void fromBytes (ByteBuf buf) {
-			dimension = buf.readInt();
-			int count = buf.readInt();
-			positions.clear();
-			for (int i = 0; i < count; i++) {
-				positions.add(BlockPos.fromLong(buf.readLong()));
-			}
-		}
+    @Override
+    public void fromBytes(ByteBuf buf) {
+      dimension = buf.readInt();
+      int count = buf.readInt();
+      positions.clear();
+      for (int i = 0; i < count; i++) {
+        positions.add(BlockPos.fromLong(buf.readLong()));
+      }
+    }
 
-		@Override
-		public void toBytes (ByteBuf buf) {
-			buf.writeInt(dimension);
-			buf.writeInt(positions.size());
-			for (BlockPos pos : positions) {
-				buf.writeLong(pos.toLong());
-			}
-		}
+    @Override
+    public void toBytes(ByteBuf buf) {
+      buf.writeInt(dimension);
+      buf.writeInt(positions.size());
+      for (BlockPos pos : positions) {
+        buf.writeLong(pos.toLong());
+      }
+    }
 
-		public static class Handler implements ClientHandler<TrackPositions> {
+    public static class Handler implements ClientHandler<TrackPositions> {
 
-			@Override
-			public void processMessage (TrackPositions message, MessageContext ctx) {
-				LineHandler.addLines(message.positions, message.dimension);
-			}
-		}
-	}
+      @Override
+      public void processMessage(TrackPositions message, MessageContext ctx) {
+        LineHandler.addLines(message.positions, message.dimension);
+      }
+    }
+  }
 }

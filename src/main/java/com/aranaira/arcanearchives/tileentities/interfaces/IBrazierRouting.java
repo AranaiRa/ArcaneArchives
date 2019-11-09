@@ -6,44 +6,44 @@ import net.minecraft.item.ItemStack;
 import java.util.UUID;
 
 public interface IBrazierRouting {
-	Int2IntOpenHashMap getOrCalculateReference ();
+  Int2IntOpenHashMap getOrCalculateReference();
 
-	BrazierRoutingType getRoutingType ();
+  BrazierRoutingType getRoutingType();
 
-	UUID getUuid ();
+  UUID getUuid();
 
-	boolean isTileInvalid ();
+  boolean isTileInvalid();
 
-	int countEmptySlots ();
+  int countEmptySlots();
 
-	int totalEmptySlots ();
+  int totalEmptySlots();
 
-	int totalSlots ();
+  int totalSlots();
 
-	int slotMultiplier ();
+  int slotMultiplier();
 
-	ItemStack acceptStack (ItemStack stack, boolean simulate);
+  ItemStack acceptStack(ItemStack stack, boolean simulate);
 
-	default boolean willAvoidStack (ItemStack stack) {
-		return false;
-	}
+  default boolean willAvoidStack(ItemStack stack) {
+    return false;
+  }
 
-	default int troveScore (ItemStack stack) {
-		return -1;
-	}
+  default int troveScore(ItemStack stack) {
+    return -1;
+  }
 
-	enum BrazierRoutingType {
-		ANY, NO_NEW_STACKS, PRIORITY, TROVE, GCT;
+  enum BrazierRoutingType {
+    ANY, NO_NEW_STACKS, PRIORITY, TROVE, GCT;
 
-		public static BrazierRoutingType fromInt (int index) {
-			int i = 0;
-			for (BrazierRoutingType type : values()) {
-				if (index == i) {
-					return type;
-				}
-				i++;
-			}
-			return null;
-		}
-	}
+    public static BrazierRoutingType fromInt(int index) {
+      int i = 0;
+      for (BrazierRoutingType type : values()) {
+        if (index == i) {
+          return type;
+        }
+        i++;
+      }
+      return null;
+    }
+  }
 }

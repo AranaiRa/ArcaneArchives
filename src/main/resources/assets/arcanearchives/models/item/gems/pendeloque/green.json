@@ -1,14 +1,14 @@
 {
-    "parent": "arcanearchives:item/gems/arcane_gem",
-    "textures": {
-        "layer0": "arcanearchives:items/gems/pendeloque/green"
-    },
-    "overrides": [
-        {
-            "predicate": {
-                "arcanearchives:colourblind": 1.0
-            },
-            "model": "arcanearchives:item/gems/accessibility/pendeloque/green"
-        }
-    ]
+  "parent": "arcanearchives:item/gems/arcane_gem",
+  "textures": {
+    "layer0": "arcanearchives:items/gems/pendeloque/green"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "arcanearchives:colourblind": 1.0
+      },
+      "model": "arcanearchives:item/gems/accessibility/pendeloque/green"
+    }
+  ]
 }

@@ -6,6 +6,9 @@ import com.aranaira.arcanearchives.data.ServerNetwork;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
 import com.aranaira.arcanearchives.tileentities.unused.MatrixCoreTileEntity;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
@@ -17,103 +20,103 @@ import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class ServerTickHandler {
-	private static final List<ImmanenceTileEntity> incomingITEs = new ArrayList<>();
-	private static final List<ImmanenceTileEntity> outgoingITEs = new ArrayList<>();
-	private static final List<ImmanenceTileEntity> limitedITEs = new ArrayList<>();
+  private static final List<ImmanenceTileEntity> incomingITEs = new ArrayList<>();
+  private static final List<ImmanenceTileEntity> outgoingITEs = new ArrayList<>();
+  private static final List<ImmanenceTileEntity> limitedITEs = new ArrayList<>();
 
-	public static void incomingITE (ImmanenceTileEntity entity) {
-		incomingITEs.add(entity);
-	}
+  public static void incomingITE(ImmanenceTileEntity entity) {
+    incomingITEs.add(entity);
+  }
 
-	@SubscribeEvent
-	public static void onServerTick (TickEvent.ServerTickEvent event) {
-		if (event.phase != TickEvent.Phase.END) {
-			return;
-		}
+  @SubscribeEvent
+  public static void onServerTick(TickEvent.ServerTickEvent event) {
+    if (event.phase != TickEvent.Phase.END) {
+      return;
+    }
 
-		List<ImmanenceTileEntity> consumed = new ArrayList<>();
+    List<ImmanenceTileEntity> consumed = new ArrayList<>();
 
-		if (!limitedITEs.isEmpty()) {
-			for (ImmanenceTileEntity ite : limitedITEs) {
-				UUID networkId = ite.networkId;
-				if (networkId == null || networkId.equals(DataHelper.INVALID)) {
-					continue;
-				}
+    if (!limitedITEs.isEmpty()) {
+      for (ImmanenceTileEntity ite : limitedITEs) {
+        UUID networkId = ite.networkId;
+        if (networkId == null || networkId.equals(DataHelper.INVALID)) {
+          continue;
+        }
 
-				ServerNetwork network = DataHelper.getServerNetwork(networkId);
-				if (network == null) {
-					continue;
-				}
+        ServerNetwork network = DataHelper.getServerNetwork(networkId);
+        if (network == null) {
+          continue;
+        }
 
-				if (ite.uuid != null && !network.isSafe(ite.uuid)) {
-					outgoingITE(ite);
-				}
+        if (ite.uuid != null && !network.isSafe(ite.uuid)) {
+          outgoingITE(ite);
+        }
 
-				consumed.add(ite);
-			}
-		}
+        consumed.add(ite);
+      }
+    }
 
-		limitedITEs.removeAll(consumed);
-		consumed.clear();
+    limitedITEs.removeAll(consumed);
+    consumed.clear();
 
-		for (ImmanenceTileEntity ite : incomingITEs) {
-			if (ite.ticks() > 30) {
-				outgoingITE(ite);
-				ArcaneArchives.logger.debug(String.format("Tile entity with the class %s spent 30 ticks in the queue and is being discarded.", ite.getClass().getName()));
-			} else {
-				UUID networkId = ite.networkId;
-				if (networkId == null || networkId.equals(DataHelper.INVALID)) {
-					ite.tick();
-					continue;
-				}
+    for (ImmanenceTileEntity ite : incomingITEs) {
+      if (ite.ticks() > 30) {
+        outgoingITE(ite);
+        ArcaneArchives.logger.debug(String.format("Tile entity with the class %s spent 30 ticks in the queue and is being discarded.", ite.getClass().getName()));
+      } else {
+        UUID networkId = ite.networkId;
+        if (networkId == null || networkId.equals(DataHelper.INVALID)) {
+          ite.tick();
+          continue;
+        }
 
-				ServerNetwork network = DataHelper.getServerNetwork(networkId);
-				if (network == null) {
-					continue;
-				}
+        ServerNetwork network = DataHelper.getServerNetwork(networkId);
+        if (network == null) {
+          continue;
+        }
 
-				ite.tryGenerateUUID();
+        ite.tryGenerateUUID();
 
-				if (!network.containsTile(ite)) {
-					network.addTile(ite);
-				} else {
-					network.updateTile(ite);
-				}
+        if (!network.containsTile(ite)) {
+          network.addTile(ite);
+        } else {
+          network.updateTile(ite);
+        }
 
-				if (ite instanceof RadiantResonatorTileEntity || ite instanceof MatrixCoreTileEntity) {
-					limitedITE(ite);
-				}
-			}
+        if (ite instanceof RadiantResonatorTileEntity || ite instanceof MatrixCoreTileEntity) {
+          limitedITE(ite);
+        }
+      }
 
-			consumed.add(ite);
-		}
+      consumed.add(ite);
+    }
 
-		incomingITEs.removeAll(consumed);
+    incomingITEs.removeAll(consumed);
 
-		for (ImmanenceTileEntity ite : outgoingITEs) {
-			if (ite.isInvalid()) {
-				continue;
-			}
+    for (ImmanenceTileEntity ite : outgoingITEs) {
+      if (ite.isInvalid()) {
+        continue;
+      }
 
-			ite.breakBlock();
-		}
+      ite.breakBlock();
+    }
 
-		outgoingITEs.clear();
-	}
+    outgoingITEs.clear();
+  }
 
-	private static void limitedITE (ImmanenceTileEntity entity) {
-		limitedITEs.add(entity);
-	}
+  private static void limitedITE(ImmanenceTileEntity entity) {
+    limitedITEs.add(entity);
+  }
 
-	private static void outgoingITE (ImmanenceTileEntity entity) {
-		outgoingITEs.add(entity);
-	}
+  private static void outgoingITE(ImmanenceTileEntity entity) {
+    outgoingITEs.add(entity);
+  }
 
-	@SubscribeEvent
-	public static void onPlayerLoggedIn (PlayerEvent.PlayerLoggedInEvent event) {
-		ServerNetwork network = DataHelper.getServerNetwork(event.player.getUniqueID());
-		if (network != null) {
-			network.rebuildTotals();
-		}
-	}
+  @SubscribeEvent
+  public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+    ServerNetwork network = DataHelper.getServerNetwork(event.getPlayer().getUniqueID());
+    if (network != null) {
+      network.rebuildTotals();
+    }
+  }
 }

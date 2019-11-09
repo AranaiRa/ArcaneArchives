@@ -13,14 +13,14 @@ import mcp.mobius.waila.api.WailaPlugin;
 @WailaPlugin
 @SuppressWarnings("unused")
 public class WAILAPlugin implements IWailaPlugin {
-	@SuppressWarnings("unused")
-	public WAILAPlugin () {
-	}
+  @SuppressWarnings("unused")
+  public WAILAPlugin() {
+  }
 
-	@Override
-	public void register (IWailaRegistrar registrar) {
-		registrar.registerBodyProvider(new ProviderResonator(), RadiantResonatorTileEntity.class);
-		registrar.registerBodyProvider(new ProviderRadiantChest(), RadiantChestTileEntity.class);
-		registrar.registerBodyProvider(new ProviderRadiantTrove(), RadiantTroveTileEntity.class);
-	}
+  @Override
+  public void register(IWailaRegistrar registrar) {
+    registrar.registerBodyProvider(new ProviderResonator(), RadiantResonatorTileEntity.class);
+    registrar.registerBodyProvider(new ProviderRadiantChest(), RadiantChestTileEntity.class);
+    registrar.registerBodyProvider(new ProviderRadiantTrove(), RadiantTroveTileEntity.class);
+  }
 }

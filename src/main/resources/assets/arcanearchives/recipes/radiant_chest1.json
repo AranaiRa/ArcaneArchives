@@ -1,27 +1,23 @@
 {
-    "_comment": [
-        "Craft Radiant Chest from planks"
-    ],
-    "type": "forge:ore_shaped",
-    "pattern":
-    [
-        "www",
-        "wqw",
-        "www"
-    ],
-    "key":
-    {
-        "w":
-        {
-            "type": "forge:ore_dict",
-            "ore": "plankWood"
-        },
-        "q":
-        {
-            "item": "arcanearchives:raw_quartz"
-        }
+  "_comment": [
+    "Craft Radiant Chest from planks"
+  ],
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "www",
+    "wqw",
+    "www"
+  ],
+  "key": {
+    "w": {
+      "type": "forge:ore_dict",
+      "ore": "plankWood"
     },
-    "result": {
-        "item": "arcanearchives:radiant_chest"
+    "q": {
+      "item": "arcanearchives:raw_quartz"
     }
+  },
+  "result": {
+    "item": "arcanearchives:radiant_chest"
+  }
 }

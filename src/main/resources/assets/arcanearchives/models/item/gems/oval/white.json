@@ -1,14 +1,14 @@
 {
-    "parent": "arcanearchives:item/gems/arcane_gem",
-    "textures": {
-        "layer0": "arcanearchives:items/gems/oval/white"
-    },
-    "overrides": [
-        {
-            "predicate": {
-                "arcanearchives:colourblind": 1.0
-            },
-            "model": "arcanearchives:item/gems/accessibility/oval/white"
-        }
-    ]
+  "parent": "arcanearchives:item/gems/arcane_gem",
+  "textures": {
+    "layer0": "arcanearchives:items/gems/oval/white"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "arcanearchives:colourblind": 1.0
+      },
+      "model": "arcanearchives:item/gems/accessibility/oval/white"
+    }
+  ]
 }

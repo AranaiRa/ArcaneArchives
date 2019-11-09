@@ -16,31 +16,31 @@ import java.nio.charset.StandardCharsets;
  */
 
 public class UploadUtils {
-	public static String baseUrl = "https://paste.dimdev.org";
+  public static String baseUrl = "https://paste.dimdev.org";
 
-	public static String uploadToHaste (String extension, String str) throws IOException {
-		byte[] bytes = str.getBytes(StandardCharsets.UTF_8);
+  public static String uploadToHaste(String extension, String str) throws IOException {
+    byte[] bytes = str.getBytes(StandardCharsets.UTF_8);
 
-		URL uploadURL = new URL(baseUrl + "/documents");
-		HttpURLConnection connection = (HttpURLConnection) uploadURL.openConnection();
-		connection.setRequestMethod("POST");
-		connection.setRequestProperty("Content-Type", "text/plain; charset=UTF-8");
-		connection.setFixedLengthStreamingMode(bytes.length);
-		connection.setDoInput(true);
-		connection.setDoOutput(true);
-		connection.connect();
+    URL uploadURL = new URL(baseUrl + "/documents");
+    HttpURLConnection connection = (HttpURLConnection) uploadURL.openConnection();
+    connection.setRequestMethod("POST");
+    connection.setRequestProperty("Content-Type", "text/plain; charset=UTF-8");
+    connection.setFixedLengthStreamingMode(bytes.length);
+    connection.setDoInput(true);
+    connection.setDoOutput(true);
+    connection.connect();
 
-		try {
-			try (OutputStream os = connection.getOutputStream()) {
-				os.write(bytes);
-			}
+    try {
+      try (OutputStream os = connection.getOutputStream()) {
+        os.write(bytes);
+      }
 
-			try (InputStream is = connection.getInputStream()) {
-				JsonObject json = new Gson().fromJson(new InputStreamReader(is), JsonObject.class);
-				return baseUrl + "/" + json.get("key").getAsString() + (extension == null || extension.isEmpty() ? "" : "." + extension);
-			}
-		} finally {
-			connection.disconnect();
-		}
-	}
+      try (InputStream is = connection.getInputStream()) {
+        JsonObject json = new Gson().fromJson(new InputStreamReader(is), JsonObject.class);
+        return baseUrl + "/" + json.get("key").getAsString() + (extension == null || extension.isEmpty() ? "" : "." + extension);
+      }
+    } finally {
+      connection.disconnect();
+    }
+  }
 }

@@ -1,13 +1,18 @@
 {
-    "_comment": [
-        "Craft Radiant Crafting Table from a Crafting Table"
-    ],
-    "type": "forge:ore_shapeless",
-    "ingredients": [
-        {   "item": "arcanearchives:raw_quartz" },
-        {   "type": "forge:ore_dict", "ore": "workbench" }
-    ],
-    "result": {
-        "item": "arcanearchives:radiant_crafting_table"
+  "_comment": [
+    "Craft Radiant Crafting Table from a Crafting Table"
+  ],
+  "type": "forge:ore_shapeless",
+  "ingredients": [
+    {
+      "item": "arcanearchives:raw_quartz"
+    },
+    {
+      "type": "forge:ore_dict",
+      "ore": "workbench"
     }
+  ],
+  "result": {
+    "item": "arcanearchives:radiant_crafting_table"
+  }
 }

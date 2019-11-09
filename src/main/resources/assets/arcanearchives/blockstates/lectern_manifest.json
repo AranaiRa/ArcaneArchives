@@ -1,67 +1,133 @@
 {
-    "forge_marker": 1,
-    "defaults": {
-        "textures": {
-            
-        },
-        "model": "arcanearchives:lectern_manifest.obj",
-        "custom": { "flip-v": true }
-     },
-    "variants": {
-        "normal": [{}],
-        "inventory": [{
-            
-            "transform": {
-                    "firstperson": {
-                        "translation": [0, 0.025, 0],
-                        "rotation": [ { "y": -45}, {"x": 0}, {"z": 0} ],
-                        "scale": 0.375
-                    },
-                    "thirdperson": {
-                        "translation": [0.0, 0.125, 0.125],
-                        "rotation": [ { "y": 0}, {"x": 30}, {"z": 0} ],
-                        "scale": 0.375
-                    },
-                    "gui": {
-                        "translation": [0.02, -0.15, 0],
-                        "rotation": [ { "y": 45}, {"x": 20}, {"z": 20} ],
-                        "scale": 0.5
-                    },
-                    "ground": {
-                        "translation": [0, 0, 0],
-                        "rotation": [ { "y": 0}, {"x": 0}, {"z": 0} ],
-                        "scale": 0.25
-                    }
-                }
-        }],
-        "accessor": {
-            "true": {
-                "model": "cube_all",
-                "textures": {
-                    "all": "arcanearchives:transparent"
-                }
-            },
-            "false": {}
-        },
-        "facing": {
-            "down": {},
-            "up": {},
-            "north": {
-                "transform": {
-                    "rotation": {"y": -90}
-                }
-            },
-            "south":  {
-                "transform": {
-                    "rotation": {"y": 90}
-                }
-            },
-            "west": {},
-            "east":  {
-                "transform": {
-                    "rotation": {"y": 180}
-                }
-            }
-        }
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+    },
+    "model": "arcanearchives:lectern_manifest.obj",
+    "custom": {
+      "flip-v": true
     }
+  },
+  "variants": {
+    "normal": [
+      {}
+    ],
+    "inventory": [
+      {
+        "transform": {
+          "firstperson": {
+            "translation": [
+              0,
+              0.025,
+              0
+            ],
+            "rotation": [
+              {
+                "y": -45
+              },
+              {
+                "x": 0
+              },
+              {
+                "z": 0
+              }
+            ],
+            "scale": 0.375
+          },
+          "thirdperson": {
+            "translation": [
+              0.0,
+              0.125,
+              0.125
+            ],
+            "rotation": [
+              {
+                "y": 0
+              },
+              {
+                "x": 30
+              },
+              {
+                "z": 0
+              }
+            ],
+            "scale": 0.375
+          },
+          "gui": {
+            "translation": [
+              0.02,
+              -0.15,
+              0
+            ],
+            "rotation": [
+              {
+                "y": 45
+              },
+              {
+                "x": 20
+              },
+              {
+                "z": 20
+              }
+            ],
+            "scale": 0.5
+          },
+          "ground": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              {
+                "y": 0
+              },
+              {
+                "x": 0
+              },
+              {
+                "z": 0
+              }
+            ],
+            "scale": 0.25
+          }
+        }
+      }
+    ],
+    "accessor": {
+      "true": {
+        "model": "cube_all",
+        "textures": {
+          "all": "arcanearchives:transparent"
+        }
+      },
+      "false": {}
+    },
+    "facing": {
+      "down": {},
+      "up": {},
+      "north": {
+        "transform": {
+          "rotation": {
+            "y": -90
+          }
+        }
+      },
+      "south": {
+        "transform": {
+          "rotation": {
+            "y": 90
+          }
+        }
+      },
+      "west": {},
+      "east": {
+        "transform": {
+          "rotation": {
+            "y": 180
+          }
+        }
+      }
+    }
+  }
 }

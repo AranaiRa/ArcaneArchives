@@ -5,7 +5,7 @@ import com.aranaira.arcanearchives.types.lists.CombinedTileList;
 import com.aranaira.arcanearchives.types.lists.ITileList;
 import com.aranaira.arcanearchives.util.TileUtils;
 import com.google.common.base.Predicate;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -13,89 +13,89 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class HiveNetwork implements IHiveBase {
-	private List<ServerNetwork> memberNetworks;
-	private ServerNetwork ownerNetwork;
+  private List<ServerNetwork> memberNetworks;
+  private ServerNetwork ownerNetwork;
 
-	public HiveNetwork (ServerNetwork ownerNetwork, List<ServerNetwork> memberNetworks) {
-		this.ownerNetwork = ownerNetwork;
-		this.memberNetworks = memberNetworks;
-	}
+  public HiveNetwork(ServerNetwork ownerNetwork, List<ServerNetwork> memberNetworks) {
+    this.ownerNetwork = ownerNetwork;
+    this.memberNetworks = memberNetworks;
+  }
 
-	private void applyToHive (Consumer<ServerNetwork> consumer) {
-		consumer.accept(ownerNetwork);
+  private void applyToHive(Consumer<ServerNetwork> consumer) {
+    consumer.accept(ownerNetwork);
 
-		memberNetworks.forEach(consumer);
-	}
+    memberNetworks.forEach(consumer);
+  }
 
-	private boolean applyToHive (Predicate<ServerNetwork> predicate) {
-		if (predicate.test(ownerNetwork)) {
-			return true;
-		}
+  private boolean applyToHive(Predicate<ServerNetwork> predicate) {
+    if (predicate.test(ownerNetwork)) {
+      return true;
+    }
 
-		for (ServerNetwork network : memberNetworks) {
-			if (predicate.test(network)) {
-				return true;
-			}
-		}
+    for (ServerNetwork network : memberNetworks) {
+      if (predicate.test(network)) {
+        return true;
+      }
+    }
 
-		return false;
-	}
+    return false;
+  }
 
-	// TODO: ????
-	private List<ServerNetwork> getCombinedNetworks () {
-		List<ServerNetwork> combined = new ArrayList<>(getContainedNetworks());
-		combined.add(ownerNetwork);
-		return combined;
-	}
+  // TODO: ????
+  private List<ServerNetwork> getCombinedNetworks() {
+    List<ServerNetwork> combined = new ArrayList<>(getContainedNetworks());
+    combined.add(ownerNetwork);
+    return combined;
+  }
 
-	@Nullable
-	public ServerNetwork getOwnerNetwork () {
-		return ownerNetwork;
-	}
+  @Nullable
+  public ServerNetwork getOwnerNetwork() {
+    return ownerNetwork;
+  }
 
-	@Nullable
-	@Override
-	public HiveNetwork getHiveNetwork () {
-		return this;
-	}
+  @Nullable
+  @Override
+  public HiveNetwork getHiveNetwork() {
+    return this;
+  }
 
-	@Override
-	public boolean isHiveMember () {
-		return true;
-	}
+  @Override
+  public boolean isHiveMember() {
+    return true;
+  }
 
-	@Override
-	public boolean anyLoaded () {
-		return false;
-	}
+  @Override
+  public boolean anyLoaded() {
+    return false;
+  }
 
-	@Override
-	public ITileList getTiles () {
-		List<ITileList> tiles = new ArrayList<>();
-		for (ServerNetwork network : getCombinedNetworks()) {
-			tiles.add(network.getTiles());
-		}
-		return new CombinedTileList(tiles);
-	}
+  @Override
+  public ITileList getTiles() {
+    List<ITileList> tiles = new ArrayList<>();
+    for (ServerNetwork network : getCombinedNetworks()) {
+      tiles.add(network.getTiles());
+    }
+    return new CombinedTileList(tiles);
+  }
 
-	@Override
-	public Iterable<IteRef> getValidTiles () {
-		return TileUtils.filterValid(getTiles());
-	}
+  @Override
+  public Iterable<IteRef> getValidTiles() {
+    return TileUtils.filterValid(getTiles());
+  }
 
-	@Override
-	public List<ServerNetwork> getContainedNetworks () {
-		return memberNetworks;
-	}
+  @Override
+  public List<ServerNetwork> getContainedNetworks() {
+    return memberNetworks;
+  }
 
-	@Nullable
-	public ServerNetwork getContainedNetwork (EntityPlayer player) {
-		for (ServerNetwork network : getCombinedNetworks()) {
-			if (network.getUuid().equals(player.getUniqueID())) {
-				return network;
-			}
-		}
+  @Nullable
+  public ServerNetwork getContainedNetwork(PlayerEntity player) {
+    for (ServerNetwork network : getCombinedNetworks()) {
+      if (network.getUuid().equals(player.getUniqueID())) {
+        return network;
+      }
+    }
 
-		return null;
-	}
+    return null;
+  }
 }

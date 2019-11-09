@@ -1,7 +1,7 @@
 {
-    "parent": "arcanearchives:item/gems/arcane_gem",
-    "textures": {
-        "layer0": "arcanearchives:items/gems/oval/black",
-        "layer1": "arcanearchives:items/gems/accessibility/black"
-    }
+  "parent": "arcanearchives:item/gems/arcane_gem",
+  "textures": {
+    "layer0": "arcanearchives:items/gems/oval/black",
+    "layer1": "arcanearchives:items/gems/accessibility/black"
+  }
 }

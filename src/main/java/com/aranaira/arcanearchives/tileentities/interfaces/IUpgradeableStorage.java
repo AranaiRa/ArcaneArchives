@@ -4,9 +4,9 @@ import com.aranaira.arcanearchives.inventory.handlers.OptionalUpgradesHandler;
 import com.aranaira.arcanearchives.inventory.handlers.SizeUpgradeItemHandler;
 
 public interface IUpgradeableStorage {
-	SizeUpgradeItemHandler getSizeUpgradesHandler ();
+  SizeUpgradeItemHandler getSizeUpgradesHandler();
 
-	OptionalUpgradesHandler getOptionalUpgradesHandler ();
+  OptionalUpgradesHandler getOptionalUpgradesHandler();
 
-	int getModifiedCapacity ();
+  int getModifiedCapacity();
 }

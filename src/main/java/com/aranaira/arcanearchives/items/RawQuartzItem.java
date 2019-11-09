@@ -7,22 +7,20 @@ import com.aranaira.arcanearchives.tileentities.RadiantCraftingTableTileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockChest;
-import net.minecraft.block.BlockWorkbench;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.ChestBlock;
+import net.minecraft.block.CraftingTableBlock;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -35,83 +33,83 @@ import java.util.List;
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public class RawQuartzItem extends ItemTemplate {
-	public static final String NAME = "raw_quartz";
+  public static final String NAME = "raw_quartz";
 
-	public RawQuartzItem () {
-		super(NAME);
-	}
+  public RawQuartzItem() {
+    super(NAME);
+  }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.raw_quartz"));
-	}
+  @Override
+  @OnlyIn(Dist.CLIENT)
+  public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+    tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.raw_quartz"));
+  }
 
-	@Override
-	public EnumActionResult onItemUseFirst (EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
-		if (!player.isSneaking()) {
-			return EnumActionResult.PASS;
-		}
+  @Override
+  public ActionResultType onItemUseFirst(PlayerEntity player, World world, BlockPos pos, Direction side, float hitX, float hitY, float hitZ, Hand hand) {
+    if (!player.isSneaking()) {
+      return ActionResultType.PASS;
+    }
 
-		ItemStack itemstack = player.getHeldItem(hand);
-		IBlockState mainState = world.getBlockState(pos);
+    ItemStack itemstack = player.getHeldItem(hand);
+    BlockState mainState = world.getBlockState(pos);
 
-		if (mainState.getBlock() instanceof BlockChest) {
-			if (world.isRemote) {
-				return EnumActionResult.SUCCESS;
-			}
-			List<ItemStack> stacks = new ArrayList<>();
-			TileEntity te = world.getTileEntity(pos);
-			IItemHandler handler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-			for (int i = 0; i < handler.getSlots(); i++) {
-				ItemStack slot = handler.extractItem(i, 64, false);
-				if (!slot.isEmpty()) {
-					stacks.add(slot);
-				}
-			}
+    if (mainState.getBlock() instanceof ChestBlock) {
+      if (world.isRemote) {
+        return ActionResultType.SUCCESS;
+      }
+      List<ItemStack> stacks = new ArrayList<>();
+      TileEntity te = world.getTileEntity(pos);
+      IItemHandler handler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+      for (int i = 0; i < handler.getSlots(); i++) {
+        ItemStack slot = handler.extractItem(i, 64, false);
+        if (!slot.isEmpty()) {
+          stacks.add(slot);
+        }
+      }
 
-			world.setBlockState(pos, BlockRegistry.RADIANT_CHEST.getDefaultState());
+      world.setBlockState(pos, BlockRegistry.RADIANT_CHEST.getDefaultState());
 
-			RadiantChestTileEntity ite = WorldUtil.getTileEntity(RadiantChestTileEntity.class, world, pos);
-			List<ItemStack> leftover = new ArrayList<>();
+      RadiantChestTileEntity ite = WorldUtil.getTileEntity(RadiantChestTileEntity.class, world, pos);
+      List<ItemStack> leftover = new ArrayList<>();
 
-			if (ite != null) {
-				ite.setNetworkId(player.getUniqueID());
-				handler = ite.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-				for (ItemStack stack : stacks) {
-					ItemStack result = ItemHandlerHelper.insertItemStacked(handler, stack, false);
-					if (!result.isEmpty()) {
-						leftover.add(result);
-					}
-				}
-			} else {
-				for (ItemStack stack : stacks) {
-					Block.spawnAsEntity(world, pos.up(), stack);
-				}
-				return EnumActionResult.SUCCESS;
-			}
+      if (ite != null) {
+        ite.setNetworkId(player.getUniqueID());
+        handler = ite.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+        for (ItemStack stack : stacks) {
+          ItemStack result = ItemHandlerHelper.insertItemStacked(handler, stack, false);
+          if (!result.isEmpty()) {
+            leftover.add(result);
+          }
+        }
+      } else {
+        for (ItemStack stack : stacks) {
+          Block.spawnAsEntity(world, pos.up(), stack);
+        }
+        return ActionResultType.SUCCESS;
+      }
 
-			if (!leftover.isEmpty()) {
-				for (ItemStack stack : stacks) {
-					Block.spawnAsEntity(world, pos.up(), stack);
-				}
-			}
+      if (!leftover.isEmpty()) {
+        for (ItemStack stack : stacks) {
+          Block.spawnAsEntity(world, pos.up(), stack);
+        }
+      }
 
-			if (!player.capabilities.isCreativeMode) {
-				itemstack.shrink(1);
-			}
+      if (!player.capabilities.isCreativeMode) {
+        itemstack.shrink(1);
+      }
 
-			return EnumActionResult.SUCCESS;
-		} else if (mainState.getBlock() instanceof BlockWorkbench) {
-			IBlockState iblockstate = BlockRegistry.RADIANT_CRAFTING_TABLE.getDefaultState();
-			world.setBlockState(pos, iblockstate);
-			itemstack.shrink(1);
-			RadiantCraftingTableTileEntity te = WorldUtil.getTileEntity(RadiantCraftingTableTileEntity.class, world, pos);
-			if (te != null) {
-				te.setNetworkId(player.getUniqueID());
-			}
-		}
+      return ActionResultType.SUCCESS;
+    } else if (mainState.getBlock() instanceof CraftingTableBlock) {
+      BlockState iblockstate = BlockRegistry.RADIANT_CRAFTING_TABLE.getDefaultState();
+      world.setBlockState(pos, iblockstate);
+      itemstack.shrink(1);
+      RadiantCraftingTableTileEntity te = WorldUtil.getTileEntity(RadiantCraftingTableTileEntity.class, world, pos);
+      if (te != null) {
+        te.setNetworkId(player.getUniqueID());
+      }
+    }
 
-		return EnumActionResult.SUCCESS;
-	}
+    return ActionResultType.SUCCESS;
+  }
 }

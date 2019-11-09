@@ -7,18 +7,18 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public interface IHiveBase {
-	ServerNetwork getOwnerNetwork ();
+  ServerNetwork getOwnerNetwork();
 
-	@Nullable
-	HiveNetwork getHiveNetwork ();
+  @Nullable
+  HiveNetwork getHiveNetwork();
 
-	boolean isHiveMember ();
+  boolean isHiveMember();
 
-	boolean anyLoaded ();
+  boolean anyLoaded();
 
-	ITileList getTiles ();
+  ITileList getTiles();
 
-	Iterable<IteRef> getValidTiles ();
+  Iterable<IteRef> getValidTiles();
 
-	List<ServerNetwork> getContainedNetworks ();
+  List<ServerNetwork> getContainedNetworks();
 }

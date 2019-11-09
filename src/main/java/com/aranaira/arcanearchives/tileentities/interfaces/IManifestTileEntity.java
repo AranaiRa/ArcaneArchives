@@ -4,17 +4,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 
 public interface IManifestTileEntity {
-	default boolean isSingleStackInventory () {
-		return false;
-	}
+  default boolean isSingleStackInventory() {
+    return false;
+  }
 
-	default ItemStack getSingleStack () {
-		return ItemStack.EMPTY;
-	}
+  default ItemStack getSingleStack() {
+    return ItemStack.EMPTY;
+  }
 
-	String getDescriptor ();
+  String getDescriptor();
 
-	String getChestName ();
+  String getChestName();
 
-	IItemHandler getInventory ();
+  IItemHandler getInventory();
 }

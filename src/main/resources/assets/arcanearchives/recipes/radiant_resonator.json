@@ -1,31 +1,31 @@
 {
-    "_comment": [
-        "Craft a Radiant Resonator"
-    ],
-    "type": "forge:ore_shaped",
-    "pattern": [
-        "GIG",
-        "WBW",
-        "W W"
-    ],
-    "key": {
-        "G": {
-            "type": "forge:ore_dict",
-            "ore":  "ingotGold"
-        },
-        "I": {
-            "item": "minecraft:iron_bars"
-        },
-        "B": {
-            "item": "minecraft:water_bucket"
-        },
-        "W": {
-            "type": "forge:ore_dict",
-            "ore": "logWood"
-        }
+  "_comment": [
+    "Craft a Radiant Resonator"
+  ],
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "GIG",
+    "WBW",
+    "W W"
+  ],
+  "key": {
+    "G": {
+      "type": "forge:ore_dict",
+      "ore": "ingotGold"
     },
-    "result": {
-        "item": "arcanearchives:radiant_resonator"
-        }
+    "I": {
+      "item": "minecraft:iron_bars"
+    },
+    "B": {
+      "item": "minecraft:water_bucket"
+    },
+    "W": {
+      "type": "forge:ore_dict",
+      "ore": "logWood"
     }
+  },
+  "result": {
+    "item": "arcanearchives:radiant_resonator"
+  }
+}
 }
