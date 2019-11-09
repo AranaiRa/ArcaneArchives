@@ -1,260 +1,218 @@
 buildscript {
     repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
         jcenter()
-        maven { url = "http://files.minecraftforge.net/maven" }
-        maven {
-            name = 'sponge'
-            url = 'https://repo.spongepowered.org/maven'
-        }
-        maven {
-          url "https://plugins.gradle.org/m2/"
-        }
+        mavenCentral()
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
-        classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
-        classpath "com.wynprice.cursemaven:CurseMaven:1.1.0"
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
     }
 }
-apply plugin: 'net.minecraftforge.gradle.forge'
-apply plugin: 'org.spongepowered.mixin'
-apply plugin: 'com.wynprice.cursemaven'
-//Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
+apply plugin: 'net.minecraftforge.gradle'
+// Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
 
-version = "0.2.0.11"
-group = "com.aranairra.arcanearchives"
-archivesBaseName = "arcanearchives"
+version = "${minecraft_version}-${mod_version}"
+//if (System.getenv('BUILD_NUMBER') != null) {
+//    version = "${minecraft_version}-${mod_version}-" + System.getenv('BUILD_NUMBER')
+//}
+group = 'com.aranaira.arcanearchives' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = 'arcanearchives'
 
-sourceCompatibility = targetCompatibility = '1.8'
-compileJava {
-    sourceCompatibility = targetCompatibility = '1.8'
-    options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
-}
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+
 
 minecraft {
-    version = "${minecraft_version}-${forge_version}"
-    mappings = "${forge_mappings}"
-    if (file('../run').exists()) {
-        runDir = "../run"
-    } else {
-        runDir = "run"
+    // The mappings can be changed at any time, and must be in the following format.
+    // snapshot_YYYYMMDD   Snapshot are built nightly.
+    // stable_#            Stables are built at the discretion of the MCP team.
+    // Use non-default mappings at your own risk. they may not always work.
+    // Simply re-run your setup task after changing the mappings to update your workspace.
+    mappings channel: 'snapshot', version: "${mcp_mappings}"
+    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+
+//    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+
+            // Recommended logging data for a userdev environment
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                ArcaneArchives {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+
+            // Recommended logging data for a userdev environment
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                ArcaneArchives {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory project.file('run')
+
+            // Recommended logging data for a userdev environment
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+
+            args '--mod', 'arcanearchives', '--all', '--output', file('src/generated/resources/')
+
+            mods {
+                ArcaneArchives {
+                    source sourceSets.main
+                }
+            }
+        }
     }
-
-    useDepAts = true
-    coreMod = "com.aranaira.arcanearchives.core.AALoadingPlugin"
-
-    replace "GRADLE:VERSION", project.version
-}
-
-configurations {
-    shade
-    compile.extendsFrom shade
-}
-
-configurations {
-    embed
-    embed.transitive = false
 }
 
 repositories {
     maven {
-        name = "JEI"
-        url = "http://dvs1.progwml6.com/files/maven"
+        url 'https://maven.mcmoddev.com'
     }
     maven {
-        name = "HWYLA"
-        url = "http://tehnut.info/maven"
-    }
-    maven { // The One Probe
-        name 'tterrag maven'
-        url "https://maven.tterrag.com/"
-    }
-    maven { // Quark and autorreglib
-        name = "BlameJared"
+        name = "Jared"
         url = "https://maven.blamejared.com"
     }
     maven {
-        name = "CurseForge"
-        url = "https://minecraft.curseforge.com/api/maven/"
-    }
-    maven {  // guidebook common dep
-        name = "guidebook"
-        url = "http://dogforce-games.com/maven"
-    }
-    maven { // guidebook transitive deps and baubles
-        name = "mcmoddev"
-        url = "https://maven.mcmoddev.com"
-    }
-    flatDir {
-        name = "local jars"
-        dirs 'embed'
-    }
-    flatDir {
-        name = "thaumcraft jars"
-        dirs 'thaumcraft'
+        url "http://maven.tterrag.com"
     }
     maven {
-        name = "HellfirePVP"
-        url = "https://maven.hellfiredev.net"
-    }
-    maven {
-        name = "sponge"
-        url = "http://repo.spongepowered.org/maven/"
-    }
-    maven {
-        url = "http://maven.tterrag.com"
+        // location of the maven that hosts JEI files
+        name = "Progwml6 maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
     }
 }
 
 dependencies {
-    deobfProvided "mezz.jei:jei_${minecraft_version}:${jei_version}:api"
-    // at runtime, use the full JEI jar
-    runtime "mezz.jei:jei_${minecraft_version}:${jei_version}"
-    compileOnly "mcp.mobius.waila:Hwyla:${project.hwyla_version}"
-    compileOnly "mcjty.theoneprobe:TheOneProbe-${top_version}"
-    compileOnly "vazkii.quark:Quark:${quark_version}:api"
-    deobfCompile "com.azanor:Baubles:${version_baubles}"
-    compileOnly "hellfirepvp.astralsorcery:astralsorcery:1.12.2-1.10.17-v124"
-    compileOnly 'mouse-tweaks:MouseTweaks:2.10:mc1.12.2'
-    compileOnly 'inventory-tweaks:InventoryTweaks:1.64+dev.146'
+    // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
+    // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
+    // The userdev artifact is a special name and will get all sorts of transformations applied to it.
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    // guidebook dependencies
-    deobfCompile "gigaherz.commons:gigaherz.commons-1.12.1:0.6.4"
-    shade ("gigaherz.commons:gigaherz.commons-1.12.1:0.6.4") {
-        transitive = false
+    if (project(':MysticalLib') != null) {
+        compile project(':MysticalLib')
+    } else {
+        compile fg.deobf(project.dependencies.create("com.github.epicsquid:mysticallib:${mysticallib_version}") {
+            transitive = false
+        })
     }
 
-    deobfCompile("CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-${ct_version}") {
-        exclude group: 'mezz.jei'
-    }
-    deobfCompile("com.blamejared:MTLib:${mt_lib_version}") {
-        exclude group: 'mezz.jei'
-    }
-    //deobfCompile "epicsquid.mysticallib:mysticallib:1.12.2-1.3.1-11"
-
-    // modified guidebook, note "lirelent" package
-    deobfCompile "gigaherz.lirelent.guidebook:Guidebook-1.12.2:2.9.1.s5"
-    embed "gigaherz.lirelent.guidebook:Guidebook-1.12.2:2.9.1.s5"
-
-    compileOnly 'thaumcraft:Thaumcraft:1.12.2:6.1.BETA26'
-    compileOnly curse.resolve("electroblobs-wizardry", "2656626")
-    compileOnly curse.resolve("potion-core", "2736248")
-
-    shade("org.spongepowered:mixin:0.7.11-SNAPSHOT") {
-        transitive = false
-    }
+//    deobfCompile "info.tehnut.harvest:Harvest:1.12-1.2.7-20"
 }
 
-processResources {
-    // this will ensure that this task is redone when the versions change.
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
-
-    // replace stuff in mcmod.info, nothing else
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-
-        // replace version and mcversion
-        expand 'version': project.version, 'mcversion': project.minecraft.version
-    }
-
-    // copy everything else except the mcmod.info
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
-    }
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
 }
 
+
+// Example for how to get properties into the manifest for reading by the runtime..
 jar {
-    into('/META-INF/libraries') {
-        from configurations.embed
-    }
-
     manifest {
         attributes([
-                "FMLCorePluginContainsFMLMod": "true",
-                "FMLCorePlugin"              : "com.aranaira.arcanearchives.core.AALoadingPlugin",
-
-                "MixinConfigs"               : "mixins.arcanearchives.json",
-                "TweakClass"                 : "org.spongepowered.asm.launch.MixinTweaker",
-                "ForceLoadAsMod"             : "true",
-
-                "FMLAT"                      : "aa_at.cfg",
-
-                "ContainedDeps"              : configurations.embed.collect { it.getName() }.join(' ')
+                "Specification-Title"     : "arcanearchives",
+                "Specification-Vendor"    : "aranoobra",
+                "Specification-Version"   : "1", // We are version 1 of ourselves
+                "Implementation-Title"    : project.name,
+                "Implementation-Version"  : "${version}",
+                "Implementation-Vendor"   : "aranoobra",
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
+}
 
-    configurations.shade.each { dep ->
-        from(project.zipTree(dep)) {
-            rename 'LICENSE.txt', 'org/spongepowered/LICENSE.txt'
+//processResources {
+//    // this will ensure that this task is redone when the versions change.
+//    inputs.property "version", project.version
+//    inputs.property "mcversion", project.minecraft_version
+//
+//    // replace stuff in mcmod.info, nothing else
+//    from(sourceSets.main.resources.srcDirs) {
+//        include 'mcmod.info'
+//
+//        // replace version and mcversion
+//        expand 'version': project.version, 'mcversion': project.minecraft_version
+//    }
+//
+//    // copy everything else except the mcmod.info
+//    from(sourceSets.main.resources.srcDirs) {
+//        exclude 'mcmod.info'
+//    }
+//}
 
-            exclude 'META-INF/*.SF'
-            exclude 'META-INF/*.RSA'
-            exclude 'META-INF/*.MF'
-
-            exclude '**/*.html'
+// Example configuration to allow publishing using the maven-publish task
+// we define a custom artifact that is sourced from the reobfJar output task
+// and then declare that to be published
+// Note you'll need to add a repository here
+def reobfFile = file("$buildDir/reobfJar/output.jar")
+def reobfArtifact = artifacts.add('default', reobfFile) {
+    type 'jar'
+    builtBy 'reobfJar'
+}
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact reobfArtifact
         }
     }
-
-    rename '(.+_at.cfg)', 'META-INF/$1'
+    repositories {
+        maven {
+            url "file:///${project.projectDir}/mcmodsrepo"
+        }
+    }
 }
 
-task deobfJar(type: Jar) {
-    from(sourceSets.main.output)
-    archiveName = "${baseName}-${version}-deobf.${extension}"
-}
+// publishing {
 
-task apiJar(type: Jar) {
-    from (sourceSets.main.allJava)
-    from (sourceSets.main.output)
-    include 'com/aranaira/arcanearchives/api/**'
+//     publications {
 
-    classifier = 'api'
+//         mavenJava(MavenPublication) {
 
-    archiveName = "${baseName}-${version}-api.${extension}"
-}
+//             groupId project.group
+//             artifactId project.archivesBaseName
+//             version project.version
+//             from components.java
 
-task srcJar(type: Jar) {
-    from (sourceSets.main.output)
+//             artifact deobfJar {
 
-    classifier = 'sources'
+//                 classifier 'deobf'
+//             }
+//         }
+//     }
 
-    archiveName = "${baseName}-${version}-sources.${extension}"
-}
+//     repositories {
 
-artifacts {
-    archives srcJar, apiJar, deobfJar
-}
+//         maven {
 
-mixin {
-    add sourceSets.main, "mixins.arcanearchives.refmap.json"
-}
+//             url "file://" + System.getenv("local_maven")
+//         }
+//     }
+// }
 
-String getCN() {
-    def firsts = ['Donald', 'Lex', 'Mike', 'Arthur', 'Bridget', 'Dorian', 'Ford', 'Guy', 'James', 'Jessica', 'John', 'Michael', 'Robinson', 'Zaphod', 'Bell', 'Penelope']
-    def lasts = ['Duck', 'Luthor', 'Meyers', 'Dent', 'Jones', 'Gray', 'Prefect', 'Montag', 'Moriarty', 'Rabbit', 'Watson', 'Smith', 'Corleone', 'Crusoe', 'Beeblebrox', 'Cranel', 'Akk']
-    def rand = new Random()
-    return firsts[rand.nextInt(firsts.size())] + ' ' + lasts[rand.nextInt(lasts.size())]
-}
+// task deobfJar(type: Jar) {
+//     from sourceSets.main.output
+//     classifier = 'deobf'
+// }
 
-task mkKeyStore(type:Exec) {
-   workingDir projectDir
-   commandLine 'keytool', '-genkey', '-alias', 'signFiles', '-keystore', 'kstore.jks', '-storepass', '123456', '-noprompt', '-dname', 'CN='+getCN(), '-keypass', '123456'
-}
-
-task signJar(type: SignJar, dependsOn: reobfJar) {
-    inputFile = jar.archivePath
-    outputFile = jar.archivePath
-    keyStore = 'kstore.jks'
-    alias = 'signFiles'
-    storePass = '123456'
-    keyPass = '123456'
-}
-
-task rmKeyStore(type: Delete) {
-  delete 'kstore.jks'
-}
-
-build.dependsOn rmKeyStore
-rmKeyStore.dependsOn signJar
-signJar.dependsOn mkKeyStore
+// tasks.build.dependsOn deobfJar
