@@ -1,57 +1,54 @@
 package com.aranaira.arcanearchives;
 
-import com.aranaira.arcanearchives.proxy.CommonProxy;
-import net.minecraft.util.ResourceLocation;
+import com.aranaira.arcanearchives.config.ConfigManager;
+import com.aranaira.arcanearchives.init.ModBlocks;
+import com.aranaira.arcanearchives.init.ModEntities;
+import com.aranaira.arcanearchives.init.ModItems;
+import com.aranaira.arcanearchives.setup.ClientSetup;
+import com.aranaira.arcanearchives.setup.ModSetup;
+import epicsquid.mysticallib.registry.ModRegistry;
+import net.minecraft.entity.EntityType;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLPaths;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = ArcaneArchives.MODID, name = ArcaneArchives.NAME, version = ArcaneArchives.VERSION, dependencies = "required-after:gbook_snapshot;after:baubles;required-before:mysticallib;after:thaumcraft")
+@Mod("arcanearchives")
 public class ArcaneArchives {
+  public static final Logger LOG = LogManager.getLogger();
   public static final String MODID = "arcanearchives";
-  public static final String NAME = "Arcane Archives";
-  public static final String VERSION = "GRADLE:VERSION";
-  public static final CreativeTabAA TAB = new CreativeTabAA();
 
-  public static Logger logger;
-  @Mod.Instance(MODID)
-  public static ArcaneArchives instance;
-  @SidedProxy(clientSide = "com.aranaira.arcanearchives.proxy.ClientProxy", serverSide = "com.aranaira.arcanearchives.proxy.CommonProxy")
-  public static CommonProxy proxy;
+  public static final ItemGroup ITEM_GROUP = new ItemGroup("glimmering") {
+    @Override
+    public ItemStack createIcon() {
+      return new ItemStack(Items.QUARTZ);
+    }
+  };
 
-  @EventHandler
-  public static void preInit(FMLPreInitializationEvent event) {
-    proxy.preInit(event);
-  }
+  public static final ModRegistry REGISTRY = new ModRegistry(MODID);
 
-  @EventHandler
-  public static void init(FMLInitializationEvent event) {
-    proxy.init(event);
-  }
+  public static ModSetup setup = new ModSetup();
 
-  @EventHandler
-  public static void postInit(FMLPostInitializationEvent event) {
-    proxy.postInit(event);
-  }
+  public ArcaneArchives() {
+    IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-  @EventHandler
-  public static void serverStarting(FMLServerStartingEvent event) {
-    proxy.serverStarting(event);
-  }
+    modBus.addListener(setup::init);
+    DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> modBus.addListener(ClientSetup::init));
 
-  @EventHandler
-  public static void serverStarted(FMLServerStartedEvent event) {
-    proxy.serverStarted(event);
-  }
+    ModItems.load();
+    ModBlocks.load();
+    ModEntities.load();
 
-  @EventHandler
-  public static void loadComplete(FMLLoadCompleteEvent event) {
-    proxy.loadComplete(event);
-  }
+    modBus.addGenericListener(EntityType.class, ModEntities::registerEntities);
 
-  public static ResourceLocation location(String string) {
-    return new ResourceLocation(MODID, string);
+    ConfigManager.loadConfig(ConfigManager.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve(MODID + "-common.toml"));
+    REGISTRY.registerEventBus(modBus);
   }
 }
