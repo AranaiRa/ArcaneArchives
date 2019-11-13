@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GIG",
+    "WBW",
+    "W W"
+  ],
+  "key": {
+    "G": {
+      "tag": "forge:ingots/gold"
+    },
+    "I": {
+      "item": "minecraft:iron_bars"
+    },
+    "W": {
+      "tag": "minecraft:logs"
+    },
+    "B": {
+      "item": "minecraft:water_bucket"
+    }
+  },
+  "result": {
+    "item": "arcanearchives:radiant_resonator"
+  }
+}
