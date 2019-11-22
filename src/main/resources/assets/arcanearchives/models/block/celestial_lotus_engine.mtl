@@ -2,13 +2,13 @@
 # Material Count: 4
 
 newmtl Master
-map_Kd arcanearchives:blocks/block_arcanearchives_master
+map_Kd arcanearchives:block/block_arcanearchives_master
 
 newmtl CircleSimple
-map_Kd arcanearchives:blocks/lotuscircle_simple
+map_Kd arcanearchives:block/lotuscircle_simple
 
 newmtl CircleComplex
-map_Kd arcanearchives:blocks/lotuscircle
+map_Kd arcanearchives:block/lotuscircle
 
 newmtl Petal
-map_Kd arcanearchives:blocks/lotuspetal
+map_Kd arcanearchives:block/lotuspetal

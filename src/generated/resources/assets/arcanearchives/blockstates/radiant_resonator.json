@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "arcanearchives:block/radiant_resonator.obj"
+      "model": "arcanearchives:block/radiant_resonator"
     }
   }
 }

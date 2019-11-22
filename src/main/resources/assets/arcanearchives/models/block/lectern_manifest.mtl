@@ -2,10 +2,10 @@
 # Material Count: 4
 
 newmtl Mat_Master
-map_Kd arcanearchives:blocks/block_arcanearchives_master
+map_Kd arcanearchives:block/block_arcanearchives_master
 
 newmtl Mat_ManifestItem
 map_Kd arcanearchives:items/item_manifest
 
 newmtl Mat_LecternGrate
-map_Kd arcanearchives:blocks/block_lecterngrate
+map_Kd arcanearchives:block/block_lecterngrate

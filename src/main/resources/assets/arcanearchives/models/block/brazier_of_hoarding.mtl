@@ -2,13 +2,13 @@
 # Material Count: 4
 
 newmtl FireVariantA
-map_Kd minecraft:blocks/fire_layer_0
+map_Kd minecraft:block/fire_layer_0
 
 newmtl FireVariantB
-map_Kd minecraft:blocks/fire_layer_1
+map_Kd minecraft:block/fire_layer_1
 
 newmtl Master
-map_Kd arcanearchives:blocks/block_arcanearchives_master
+map_Kd arcanearchives:block/block_arcanearchives_master
 
 newmtl Charcoal
-map_Kd arcanearchives:blocks/brazier_charcoal
+map_Kd arcanearchives:block/brazier_charcoal

@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.setup;
 
-import com.aranaira.arcanearchives.client.data.AABlockModelProvider;
 import com.aranaira.arcanearchives.client.data.AABlockStateProvider;
 import com.aranaira.arcanearchives.client.data.AAItemModelProvider;
 import com.aranaira.arcanearchives.client.data.AALangProvider;
@@ -17,10 +16,9 @@ public class ModSetup {
   public void init(FMLCommonSetupEvent event) {
   }
 
-  public void gatherData (GatherDataEvent event) {
+  public void gatherData(GatherDataEvent event) {
     DataGenerator gen = event.getGenerator();
     if (event.includeClient()) {
-      gen.addProvider(new AABlockModelProvider(gen, event.getExistingFileHelper()));
       gen.addProvider(new AABlockStateProvider(gen, event.getExistingFileHelper()));
       gen.addProvider(new AAItemModelProvider(gen, event.getExistingFileHelper()));
       gen.addProvider(new AALangProvider(gen));

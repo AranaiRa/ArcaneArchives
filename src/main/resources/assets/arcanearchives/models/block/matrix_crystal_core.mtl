@@ -2,10 +2,10 @@
 # File Created: 29.09.2018 05:26:02
 
 newmtl mat_arcanearchives_master
-map_Kd arcanearchives:blocks/block_arcanearchives_master
+map_Kd arcanearchives:block/block_arcanearchives_master
 
 newmtl mat_arcanearchives_matrixcore_crystal
-map_Kd arcanearchives:blocks/block_matrixcore
+map_Kd arcanearchives:block/block_matrixcore
 
 newmtl mat_arcanearchives_matrixcore_pedestalbooks
-map_Kd arcanearchives:blocks/block_matrixcore_pedestalbooks
+map_Kd arcanearchives:block/block_matrixcore_pedestalbooks

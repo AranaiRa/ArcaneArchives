@@ -12,6 +12,7 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
@@ -41,7 +42,10 @@ public class ArcaneArchives {
 
     modBus.addListener(setup::init);
     modBus.addListener(setup::gatherData);
-    DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> modBus.addListener(ClientSetup::init));
+    DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
+      modBus.addListener(ClientSetup::init);
+      OBJLoader.INSTANCE.addDomain(ArcaneArchives.MODID);
+    });
 
     ModItems.load();
     ModBlocks.load();

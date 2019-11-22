@@ -2,4 +2,4 @@
 # Material Count: 1
 
 newmtl mat_rawQuartz
-map_Kd arcanearchives:blocks/block_storage_rawquartz
+map_Kd arcanearchives:block/block_storage_rawquartz

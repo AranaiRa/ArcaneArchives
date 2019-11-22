@@ -2,19 +2,19 @@
 # File Created: 10.10.2018 20:41:05
 
 newmtl mat_arcanearchives_master
-map_Kd arcanearchives:blocks/block_arcanearchives_master
+map_Kd arcanearchives:block/block_arcanearchives_master
 
 newmtl mat_gemcutterstable
-map_Kd arcanearchives:blocks/block_gemcutterstable
+map_Kd arcanearchives:block/block_gemcutterstable
 
 newmtl mat_lensglass
-map_Kd arcanearchives:blocks/block_lensglass
+map_Kd arcanearchives:block/block_lensglass
 
 newmtl mat_gemcutterstable_tools
-map_Kd arcanearchives:blocks/block_gemcutterstable_tools
+map_Kd arcanearchives:block/block_gemcutterstable_tools
 
 newmtl mat_gemcutterstable_scroll
-map_Kd arcanearchives:blocks/block_gemcutterstable_scroll
+map_Kd arcanearchives:block/block_gemcutterstable_scroll
 
 newmtl mat_minecraft_diorite
-map_Kd minecraft:blocks/stone_diorite
+map_Kd minecraft:block/stone_diorite

@@ -2,7 +2,7 @@
 # File Created: 16.10.2018 16:51:44
 
 newmtl mat_arcanearchives_master
-map_Kd arcanearchives:blocks/block_arcanearchives_master
+map_Kd arcanearchives:block/block_arcanearchives_master
 
 newmtl mat_quartz
-map_Kd arcanearchives:blocks/block_radiantchest_quartz
+map_Kd arcanearchives:block/block_radiantchest_quartz
