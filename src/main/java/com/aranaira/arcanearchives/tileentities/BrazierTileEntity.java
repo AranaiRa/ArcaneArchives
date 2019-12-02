@@ -145,6 +145,9 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 		if (item.getEntityData().hasKey("rejected")) {
 			return;
 		}
+		if (item.isDead) {
+			return;
+		}
 
 		List<ItemStack> stack = InventoryRoutingUtils.tryInsertItems(this, item.getItem(), false);
 		maybePlaySound();
