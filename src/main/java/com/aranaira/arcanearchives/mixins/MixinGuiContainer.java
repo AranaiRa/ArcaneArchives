@@ -24,9 +24,11 @@ import java.util.List;
 @Mixin(GuiContainer.class)
 @SuppressWarnings("unused")
 public abstract class MixinGuiContainer {
+	@SideOnly(Side.CLIENT)
 	private static List<Class<? extends GuiContainer>> CONTAINER_IGNORE_LIST = Arrays.asList(GUIManifest.class, GUIGemCuttersTable.class, GUIUpgrades.class, GUIRadiantChest.class, GUIGemSocket.class);
 
 	@Inject(method = "drawSlot", at = @At(value = "HEAD"))
+	@SideOnly(Side.CLIENT)
 	private void onDrawSlot (Slot slot, CallbackInfo callbackInfo) {
 		if (ConfigHandler.nonModTrackingConfig.DisableMixinHighlight || ConfigHandler.nonModTrackingConfig.getContainerClasses().contains(((GuiContainer) (Object) this).getClass())) {
 			return;
@@ -49,6 +51,7 @@ public abstract class MixinGuiContainer {
 	}
 
 	@Inject(method = "onGuiClosed", at = @At(value = "RETURN"))
+	@SideOnly(Side.CLIENT)
 	private void onGuiClosed (CallbackInfo callbackInfo) {
 		Minecraft _mc = ((GuiContainer) (Object) this).mc;
 		if (_mc != null && _mc.player != null) {
