@@ -110,4 +110,9 @@ public class Brazier extends BlockTemplate implements IInfusionStabiliserExt {
 	public float getStabilizationAmount (World world, BlockPos blockPos) {
 		return 0.2f;
 	}
+
+	@Override
+	public boolean causesSuffocation (IBlockState state) {
+		return false;
+	}
 }
