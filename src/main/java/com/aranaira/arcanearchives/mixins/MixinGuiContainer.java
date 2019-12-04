@@ -22,7 +22,6 @@ import java.util.Arrays;
 import java.util.List;
 
 @Mixin(GuiContainer.class)
-@SideOnly(Side.CLIENT)
 @SuppressWarnings("unused")
 public abstract class MixinGuiContainer {
 	private static List<Class<? extends GuiContainer>> CONTAINER_IGNORE_LIST = Arrays.asList(GUIManifest.class, GUIGemCuttersTable.class, GUIUpgrades.class, GUIRadiantChest.class, GUIGemSocket.class);
