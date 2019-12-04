@@ -9,8 +9,6 @@ import com.aranaira.arcanearchives.util.zen.ZenDocAppend;
 import com.aranaira.arcanearchives.util.zen.ZenDocArg;
 import com.aranaira.arcanearchives.util.zen.ZenDocClass;
 import com.aranaira.arcanearchives.util.zen.ZenDocMethod;
-import com.blamejared.mtlib.helpers.InputHelper;
-import com.blamejared.mtlib.utils.BaseAction;
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IIngredient;
@@ -34,19 +32,19 @@ public class GCTTweaker {
 	@ZenDocMethod(order = 1, args = {@ZenDocArg(arg = "name", info = "the recipe name"), @ZenDocArg(arg = "output", info = "the output as an itemstack"), @ZenDocArg(arg = "inputs", info = "the inputs as an array of ingredients")})
 	@ZenMethod
 	public static void addRecipe (String name, IItemStack output, IIngredient[] inputs) {
-		CraftTweaker.LATE_ACTIONS.add(new Add(name, InputHelper.toStack(output), inputs, false));
+		CraftTweaker.LATE_ACTIONS.add(new Add(name, CraftTweakerMC.getItemStack(output), inputs, false));
 	}
 
 	@ZenDocMethod(order = 2, args = {@ZenDocArg(arg = "output", info = "the output itemstack to be removed (quantity must match)")})
 	@ZenMethod
 	public static void removeRecipe (IItemStack output) {
-		CraftTweaker.LATE_ACTIONS.add(new Remove(InputHelper.toStack(output)));
+		CraftTweaker.LATE_ACTIONS.add(new Remove(CraftTweakerMC.getItemStack(output)));
 	}
 
 	@ZenDocMethod(order = 3, args = {@ZenDocArg(arg = "name", info = "the recipe name (must already exist)"), @ZenDocArg(arg = "output", info = "the output as an itemstack"), @ZenDocArg(arg = "inputs", info = "the inputs as an array of ingredients")})
 	@ZenMethod
 	public static void replaceRecipe (String name, IItemStack output, IIngredient[] inputs) {
-		CraftTweaker.LATE_ACTIONS.add(new Add(name, InputHelper.toStack(output), inputs, true));
+		CraftTweaker.LATE_ACTIONS.add(new Add(name, CraftTweakerMC.getItemStack(output), inputs, true));
 	}
 
 	private static class Remove extends Action {
