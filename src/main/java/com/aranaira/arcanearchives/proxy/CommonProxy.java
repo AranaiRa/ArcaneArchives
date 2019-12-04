@@ -58,6 +58,7 @@ public class CommonProxy {
 		event.registerServerCommand(new CommandCopy());
 		event.registerServerCommand(new CommandTiles());
 		event.registerServerCommand(new CommandImmanence());
+		event.registerServerCommand(new CommandRebuild());
 	}
 
 	public void serverStarted (FMLServerStartedEvent event) {

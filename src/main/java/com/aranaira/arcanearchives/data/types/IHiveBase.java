@@ -26,4 +26,6 @@ public interface IHiveBase {
 	List<ServerNetwork> getContainedNetworks ();
 
 	IImmanenceBus getImmanenceBus ();
+
+	void clearTiles ();
 }

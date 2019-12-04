@@ -103,6 +103,11 @@ public class HiveNetwork implements IHiveBase {
 		return immanenceBus;
 	}
 
+	@Override
+	public void clearTiles () {
+		getContainedNetworks().forEach(ServerNetwork::clearTiles);
+	}
+
 	@Nullable
 	public ServerNetwork getContainedNetwork (EntityPlayer player) {
 		for (ServerNetwork network : getCombinedNetworks()) {

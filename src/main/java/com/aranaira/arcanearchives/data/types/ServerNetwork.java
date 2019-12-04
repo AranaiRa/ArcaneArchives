@@ -371,6 +371,11 @@ public class ServerNetwork implements IServerNetwork {
 	}
 
 	@Override
+	public void clearTiles () {
+		this.tiles.clear();
+	}
+
+	@Override
 	public ServerNetwork getOwnerNetwork () {
 		return this;
 	}
