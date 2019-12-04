@@ -21,4 +21,6 @@ public interface IHiveBase {
 	Iterable<IteRef> getValidTiles ();
 
 	List<ServerNetwork> getContainedNetworks ();
+
+	void clearTiles ();
 }
