@@ -85,6 +85,14 @@ public class ConfigHandler {
 		@Config.Name("Radiant Chest Slot Multiplier")
 		@Config.RangeInt(min = 1, max = 8)
 		public int RadiantMultiplier = 4;
+
+		@Config.Comment("Whether or not players should be granted the book from breaking bookshelves")
+		@Config.Name("Book from Breaking Bookshelf")
+		public boolean BookFromBookshelf = true;
+
+		@Config.Comment("Whether or not players should be granted the book for crafting their first Resonator")
+		@Config.Name("Book from Radiant Resonator")
+		public boolean BookFromResonator = true;
 	}
 
 	@Config.Comment("Settings related to item tracking in non-mod containers")

@@ -524,14 +524,14 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public static void onPlayerBreakBlock (BreakEvent event) {
-		if (!event.getWorld().isRemote && event.getState().getBlock() instanceof BlockBookshelf) {
+		if (ConfigHandler.serverSideConfig.BookFromBookshelf && !event.getWorld().isRemote && event.getState().getBlock() instanceof BlockBookshelf) {
 			givePlayerBookMaybe(event.getPlayer(), event.getWorld(), true);
 		}
 	}
 
 	@SubscribeEvent
 	public static void onPlayerCrafted (ItemCraftedEvent event) {
-		if (!event.player.world.isRemote) {
+		if (!event.player.world.isRemote && ConfigHandler.serverSideConfig.BookFromResonator) {
 			Item item = event.crafting.getItem();
 			if (item instanceof ItemBlock && ((ItemBlock) item).getBlock() == BlockRegistry.RADIANT_RESONATOR) {
 				givePlayerBookMaybe(event.player, event.player.world, false);
