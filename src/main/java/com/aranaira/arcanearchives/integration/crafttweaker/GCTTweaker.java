@@ -49,7 +49,7 @@ public class GCTTweaker {
 		CraftTweaker.LATE_ACTIONS.add(new Add(name, InputHelper.toStack(output), inputs, true));
 	}
 
-	private static class Remove extends BaseAction {
+	private static class Remove extends Action {
 		private ItemStack output;
 
 		private Remove (ItemStack stack) {
@@ -73,7 +73,7 @@ public class GCTTweaker {
 		}
 	}
 
-	private static class Add extends BaseAction {
+	private static class Add extends Action {
 		private final ResourceLocation name;
 		private final ItemStack output;
 		private final IIngredient[] ingredients;

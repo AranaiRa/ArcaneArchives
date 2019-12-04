@@ -127,9 +127,6 @@ dependencies {
     deobfCompile("CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-${ct_version}") {
         exclude group: 'mezz.jei'
     }
-    deobfCompile("com.blamejared:MTLib:${mt_lib_version}") {
-        exclude group: 'mezz.jei'
-    }
     //deobfCompile "epicsquid.mysticallib:mysticallib:1.12.2-1.3.1-11"
 
     // modified guidebook, note "lirelent" package
