@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.items.itemblocks;
 
+import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.inventory.handlers.TankItemFluidHandler;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity.Tags;
 import net.minecraft.block.Block;
@@ -23,6 +24,7 @@ import java.util.List;
 public class RadiantTankItem extends ItemBlock {
 	public RadiantTankItem (Block block) {
 		super(block);
+		setContainerItem(this);
 	}
 
 	@Nullable
