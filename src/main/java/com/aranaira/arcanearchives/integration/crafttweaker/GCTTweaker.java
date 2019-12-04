@@ -10,7 +10,6 @@ import com.aranaira.arcanearchives.util.zen.ZenDocArg;
 import com.aranaira.arcanearchives.util.zen.ZenDocClass;
 import com.aranaira.arcanearchives.util.zen.ZenDocMethod;
 import com.blamejared.mtlib.helpers.InputHelper;
-import com.blamejared.mtlib.utils.BaseAction;
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IIngredient;

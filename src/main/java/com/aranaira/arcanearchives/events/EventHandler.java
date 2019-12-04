@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.client.render.LineHandler;
 import com.aranaira.arcanearchives.client.render.RenderGemcasting;
 import com.aranaira.arcanearchives.client.render.RenderGemcasting.EnumGemGuiMode;
 import com.aranaira.arcanearchives.config.ConfigHandler;
+import com.aranaira.arcanearchives.config.ServerSideConfig;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.PlayerSaveData;
 import com.aranaira.arcanearchives.entity.EntityItemMountaintear;
@@ -524,14 +525,14 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public static void onPlayerBreakBlock (BreakEvent event) {
-		if (!event.getWorld().isRemote && event.getState().getBlock() instanceof BlockBookshelf) {
+		if (ServerSideConfig.BookFromBookshelf && !event.getWorld().isRemote && event.getState().getBlock() instanceof BlockBookshelf) {
 			givePlayerBookMaybe(event.getPlayer(), event.getWorld(), true);
 		}
 	}
 
 	@SubscribeEvent
 	public static void onPlayerCrafted (ItemCraftedEvent event) {
-		if (!event.player.world.isRemote) {
+		if (!event.player.world.isRemote && ServerSideConfig.BookFromResonator) {
 			Item item = event.crafting.getItem();
 			if (item instanceof ItemBlock && ((ItemBlock) item).getBlock() == BlockRegistry.RADIANT_RESONATOR) {
 				givePlayerBookMaybe(event.player, event.player.world, false);
