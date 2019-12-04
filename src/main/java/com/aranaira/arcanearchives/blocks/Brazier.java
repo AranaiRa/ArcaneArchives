@@ -136,4 +136,9 @@ public class Brazier extends BlockTemplate implements IInfusionStabiliserExt, IU
 	public List<Class<?>> upgradeFor () {
 		return UPGRADE_FOR;
 	}
+
+	@Override
+	public boolean causesSuffocation (IBlockState state) {
+		return false;
+	}
 }
