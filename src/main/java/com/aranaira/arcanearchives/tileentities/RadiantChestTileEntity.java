@@ -330,18 +330,24 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 				invalidate();
 			}
 			ItemStack result = super.insertItem(slot, stack, simulate);
-			world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);
-			markDirty();
+			if (!simulate && (result.isEmpty() || result.getCount() != stack.getCount())) {
+				world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);
+				markDirty();
+			}
 			return result;
 		}
 
 		@Nonnull
 		@Override
 		public ItemStack extractItem (int slot, int amount, boolean simulate) {
-			invalidate();
+			if (!simulate) {
+				invalidate();
+			}
 			ItemStack result = super.extractItem(slot, amount, simulate);
-			world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);
-			markDirty();
+			if (!simulate && !result.isEmpty()) {
+				world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);
+				markDirty();
+			}
 			return result;
 		}
 	}
