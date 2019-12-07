@@ -16,6 +16,5 @@ public class AABlockStateProvider extends DeferredBlockStateProvider {
 
   @Override
   protected void registerStatesAndModels() {
-    getVariantBuilder(ModBlocks.RESONATOR.get()).partialState().addModels(new ConfiguredModel(new ModelFile.ExistingModelFile(new ResourceLocation(ArcaneArchives.MODID, "block/radiant_resonator"), existingFileHelper)));
   }
 }

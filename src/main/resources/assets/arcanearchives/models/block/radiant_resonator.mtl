@@ -8,4 +8,4 @@ newmtl mat_minecraft_bars
 map_Kd minecraft:block/iron_bars
 
 newmtl mat_minecraft_water
-map_Kd minecraft:block/water_still
+map_Kd arcanearchives:block/water_still

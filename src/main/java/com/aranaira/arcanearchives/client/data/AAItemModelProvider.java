@@ -13,6 +13,5 @@ public class AAItemModelProvider extends DeferredItemModelProvider {
 
   @Override
   protected void registerModels() {
-    withExistingParent(name(ModBlocks.RESONATOR), modLoc("block/radiant_resonator.obj"));
   }
 }

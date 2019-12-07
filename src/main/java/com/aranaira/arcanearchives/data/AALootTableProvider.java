@@ -45,6 +45,7 @@ public class AALootTableProvider extends LootTableProvider {
     @Override
     protected void addTables() {
       self(ModBlocks.RESONATOR);
+      self(ModBlocks.QUARTZ_CLUSTER);
     }
 
     @Override

@@ -1,0 +1,17 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "arcanearchives:block/quartz_cluster.obj",
+        "custom": { "flip-v": true }
+     },
+    "variants": {
+        "facing": {
+          "up": {  },
+          "down": {  "x": 180 },
+          "east": { "y": 90, "x": 90 },
+          "north": { "y": 180, "x": 90 },
+          "west": {"y": 270, "x": 90 },
+          "south": {"y": 0, "x": 90 }
+        }
+    }
+}

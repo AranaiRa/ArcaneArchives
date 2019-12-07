@@ -13,6 +13,7 @@ public class AALangProvider extends DeferredLanguageProvider {
   @Override
   protected void addTranslations() {
     addBlock(ModBlocks.RESONATOR);
+    addBlock(ModBlocks.QUARTZ_CLUSTER);
 
     addItemGroup(ArcaneArchives.ITEM_GROUP, "Arcane Archives");
   }

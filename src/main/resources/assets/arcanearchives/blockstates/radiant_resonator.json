@@ -1,0 +1,10 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "arcanearchives:block/radiant_resonator.obj",
+    "custom": { "flip-v": true }
+  },
+  "variants": {
+    "": [{}]
+  }
+}

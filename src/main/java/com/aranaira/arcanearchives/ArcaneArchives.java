@@ -44,7 +44,7 @@ public class ArcaneArchives {
     modBus.addListener(setup::gatherData);
     DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
       modBus.addListener(ClientSetup::init);
-      OBJLoader.INSTANCE.addDomain(ArcaneArchives.MODID);
+      modBus.addListener(ClientSetup::modelBake);
     });
 
     ModItems.load();
