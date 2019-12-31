@@ -27,6 +27,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
+import static net.minecraft.block.BlockFurnace.FACING;
+
 public class OrderstoneItem extends ArcaneGemItem {
 	public static final String NAME = "orderstone";
 
@@ -121,6 +123,16 @@ public class OrderstoneItem extends ArcaneGemItem {
 						chargeCost = 25;
 						world.setBlockState(pos, state.withProperty(BlockAnvil.DAMAGE, damage), 0);
 					}
+				}
+				/**
+				 * Furnace -> Lit Furnace
+				 */
+				else if (block == Blocks.FURNACE) {
+					IBlockState oldState = world.getBlockState(pos);
+					IBlockState newState = Blocks.LIT_FURNACE.getDefaultState();
+					newState = newState.withProperty(FACING, oldState.getValue(FACING));
+					world.setBlockState(pos, newState, 0);
+					chargeCost = 1;
 				}
 				GemUtil.consumeCharge(handler.getHeld(), chargeCost);
 				return EnumActionResult.SUCCESS;
