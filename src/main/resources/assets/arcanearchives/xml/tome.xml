@@ -1957,6 +1957,9 @@
             <p align="center">
                 <stack item="minecraft:anvil" meta="2" scale="2.0"/> <image src="arcanearchives:gui/guidebook/next" tw="8" th="16" scale="2.0"/> <stack item="minecraft:anvil" meta="1" scale="2.0"/> <image src="arcanearchives:gui/guidebook/next" tw="8" th="16" scale="2.0"/> <stack item="minecraft:anvil" scale="2.0"/>
             </p>
+            <p align="center">
+                <stack item="minecraft:furnace" scale="2.0"/> <image src="arcanearchives:gui/guidebook/next" tw="8" th="16" scale="2.0"/> <image src="minecraft:blocks/furnace_front_on" tw="16" th="16" scale="2.0"/>
+            </p>
         </section>
 
 
