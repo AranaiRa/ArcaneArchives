@@ -1,0 +1,8 @@
+# Blender MTL File: 'shittyresonator.blend'
+# Material Count: 2
+
+newmtl Main
+map_Kd arcanearchives:blocks/radiant_resonator
+
+newmtl mat_minecraft_water
+map_Kd minecraft:blocks/water_still
