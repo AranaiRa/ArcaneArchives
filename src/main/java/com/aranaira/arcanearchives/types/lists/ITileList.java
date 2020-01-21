@@ -9,8 +9,6 @@ import javax.annotation.Nullable;
 import java.util.UUID;
 
 public interface ITileList extends Iterable<IteRef> {
-	void cull ();
-
 	default boolean containsUUID (UUID uuid) {
 		for (IteRef ref : this) {
 			if (ref.uuid.equals(uuid)) {

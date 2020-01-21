@@ -23,10 +23,6 @@ public class IteRef {
 		this.uuid = tile.uuid;
 	}
 
-	public boolean shouldCull () {
-		return getTile() == null;
-	}
-
 	private World getWorld () {
 		return DimensionManager.getWorld(dimension);
 	}

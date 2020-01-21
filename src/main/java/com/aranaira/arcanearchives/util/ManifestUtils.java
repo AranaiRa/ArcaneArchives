@@ -128,6 +128,10 @@ public class ManifestUtils {
 		Set<BlockPosDimension> done = new HashSet<>();
 
 		for (IteRef ref : TileUtils.filterAssignableClass(tiles, IManifestTileEntity.class)) {
+			if (ref == null) {
+				continue;
+			}
+
 			ImmanenceTileEntity ite = ref.getTile();
 
 			if (ite == null) {

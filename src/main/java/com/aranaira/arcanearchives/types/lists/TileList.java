@@ -12,12 +12,6 @@ public class TileList extends ReferenceList<IteRef> implements ITileList {
 	}
 
 	@Override
-	public void cull () {
-		removeIf(Objects::isNull);
-		removeIf(IteRef::shouldCull);
-	}
-
-	@Override
 	public void removeRef (IteRef ref) {
 		this.remove(ref);
 	}
