@@ -17,11 +17,6 @@ public class CombinedTileList implements ITileList {
 	}
 
 	@Override
-	public void cull () {
-		tileLists.forEach(ITileList::cull);
-	}
-
-	@Override
 	public void removeRef (IteRef ref) {
 		this.tileLists.forEach(r -> r.removeRef(ref));
 	}

@@ -310,6 +310,9 @@ public class ServerNetwork implements IServerNetwork {
 
 		// Note this only includes valid tiles.
 		for (IteRef ite : getValidTiles()) {
+			if (ite == null) {
+				continue;
+			}
 			if (ite.clazz.equals(RadiantResonatorTileEntity.class)) {
 				totalResonators++;
 			} else if (ite.clazz.equals(MatrixCoreTileEntity.class)) {

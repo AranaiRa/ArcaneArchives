@@ -89,6 +89,9 @@ public class InventoryRoutingUtils {
 			return workspace;
 		}
 		for (IteRef ite : tiles) {
+			if (ite == null) {
+				continue;
+			}
 			if (IBrazierRouting.class.isAssignableFrom(ite.clazz) && network.distanceSqNoVertical(bPos, ite.pos) <= radius && ite.dimension == brazier.dimension) {
 				ImmanenceTileEntity tile = ite.getTile();
 				if (tile == null) {

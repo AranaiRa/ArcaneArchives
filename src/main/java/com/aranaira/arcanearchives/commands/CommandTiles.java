@@ -116,15 +116,18 @@ public class CommandTiles extends CommandBase {
 			int i = 0;
 			for (IteRef ref : iterable) {
 				i++;
-				String result = "Tile #" + i + " has UUID " + ref.uuid.toString() + " of " + ref.clazz.toString().replace("com.aranaira.arcanearchives.tileentities.", "") + " in dim: " + ref.dimension + "@" + String.format("%d,%d,%d", ref.pos.getX(), ref.pos.getY(), ref.pos.getZ());
-				positions.computeIfAbsent(ref.dimension, k -> new ArrayList<>()).add(ref.pos);
-				World w = DimensionManager.getWorld(ref.dimension);
-				if (w.isBlockLoaded(ref.pos)) {
-					result += " and loaded";
+				String result;
+				if (ref == null) {
+					result = "Tile #" + i + " is null!";
 				} else {
-					result += " but not loaded";
-				}
-				if (ref != null) {
+					result = "Tile #" + i + " has UUID " + ref.uuid.toString() + " of " + ref.clazz.toString().replace("com.aranaira.arcanearchives.tileentities.", "") + " in dim: " + ref.dimension + "@" + String.format("%d,%d,%d", ref.pos.getX(), ref.pos.getY(), ref.pos.getZ());
+					positions.computeIfAbsent(ref.dimension, k -> new ArrayList<>()).add(ref.pos);
+					World w = DimensionManager.getWorld(ref.dimension);
+					if (w.isBlockLoaded(ref.pos)) {
+						result += " and loaded";
+					} else {
+						result += " but not loaded";
+					}
 					if (ref.getTile() != null) {
 						result += " which resolves properly";
 						if (ref.getTile().isInvalid()) {

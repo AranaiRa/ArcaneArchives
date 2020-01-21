@@ -24,10 +24,6 @@ public class IteRef {
 		this.networkPriority = tile.getNetworkPriority();
 	}
 
-	public boolean shouldCull () {
-		return getTile() == null;
-	}
-
 	private World getWorld () {
 		return DimensionManager.getWorld(dimension);
 	}
