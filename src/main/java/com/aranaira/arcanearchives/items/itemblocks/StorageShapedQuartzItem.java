@@ -1,8 +1,7 @@
 package com.aranaira.arcanearchives.items.itemblocks;
 
-import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
+import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import com.aranaira.arcanearchives.items.IUpgradeItem;
-import com.aranaira.arcanearchives.items.templates.ItemBlockTemplate;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import com.aranaira.arcanearchives.types.enums.UpgradeType;
@@ -18,7 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class StorageShapedQuartzItem extends ItemBlockTemplate implements IUpgradeItem {
-	public StorageShapedQuartzItem (@Nonnull BlockTemplate block) {
+	public StorageShapedQuartzItem (@Nonnull TemplateBlock block) {
 		super(block);
 	}
 

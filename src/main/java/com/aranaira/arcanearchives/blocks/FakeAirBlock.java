@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.blocks;
 
-import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
+import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import com.aranaira.arcanearchives.tileentities.FakeAirTileEntity;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -22,11 +22,11 @@ import java.util.List;
 import java.util.Random;
 
 @SuppressWarnings("deprecation")
-public class FakeAir extends BlockTemplate {
+public class FakeAirBlock extends TemplateBlock {
 	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0, 0, 0, 0, 0, 0);
 
-	public FakeAir () {
-		super("fake_air", Material.CLOTH);
+	public FakeAirBlock () {
+		super(Material.CLOTH);
 	}
 
 

@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.items;
 
-import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
+import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.types.enums.UpgradeType;
 import net.minecraft.item.ItemStack;
@@ -27,7 +27,7 @@ public interface IUpgradeItem {
 		return upgradeFor().contains(clazz);
 	}
 
-	default boolean isUpgradeFor (BlockTemplate block) {
+	default boolean isUpgradeFor (TemplateBlock block) {
 		return upgradeFor().contains(block.getEntityClass());
 	}
 }

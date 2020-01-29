@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.blocks;
 
-import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
+import com.aranaira.arcanearchives.blocks.templates.DirectionalBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
@@ -25,7 +25,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class RadiantLantern extends BlockDirectionalTemplate {
+public class RadiantLantern extends DirectionalBlock {
 
 	public static final String NAME = "radiant_lantern";
 

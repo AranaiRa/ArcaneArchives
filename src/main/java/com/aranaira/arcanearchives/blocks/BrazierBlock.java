@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.blocks;
 
-import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
+import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import com.aranaira.arcanearchives.items.IUpgradeItem;
 import com.aranaira.arcanearchives.tileentities.BrazierTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantFurnaceTileEntity;
@@ -33,27 +33,21 @@ import java.util.Arrays;
 import java.util.List;
 
 @Optional.Interface(modid = "thaumcraft", iface = "thaumcraft.api.crafting.IInfusionStabiliserExt")
-public class Brazier extends BlockTemplate implements IInfusionStabiliserExt, IUpgradeItem {
+public class BrazierBlock extends TemplateBlock implements IInfusionStabiliserExt, IUpgradeItem {
+	public static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.15, 0.0, 0.15, 0.85, 0.75, 0.85);
 
-	public static final String name = "brazier_of_hoarding";
-
-	public Brazier () {
-		super(name, Material.IRON);
+	public BrazierBlock () {
+		super(Material.IRON);
 		setLightLevel(16 / 16f);
 		setHardness(3f);
 		setHarvestLevel("pickaxe", 0);
 	}
 
 	@Override
-	public boolean hasOBJModel () {
-		return true;
-	}
-
-	@Override
 	@Nonnull
 	@SuppressWarnings("deprecation")
 	public AxisAlignedBB getBoundingBox (IBlockState state, IBlockAccess source, BlockPos pos) {
-		return new AxisAlignedBB(0.15, 0.0, 0.15, 0.85, 0.75, 0.85);
+		return BOUNDING_BOX;
 	}
 
 	@Override
@@ -138,6 +132,7 @@ public class Brazier extends BlockTemplate implements IInfusionStabiliserExt, IU
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
 	public boolean causesSuffocation (IBlockState state) {
 		return false;
 	}

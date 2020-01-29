@@ -2,9 +2,8 @@ package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
+import com.aranaira.arcanearchives.blocks.templates.DirectionalBlock;
 import com.aranaira.arcanearchives.client.render.LineHandler;
-import com.aranaira.arcanearchives.data.AccessorSaveData;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.tileentities.RadiantFurnaceAccessorTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantFurnaceTileEntity;
@@ -32,16 +31,13 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import org.spongepowered.asm.mixin.gen.AccessorInfo.AccessorType;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
 
-public class RadiantFurnace extends BlockDirectionalTemplate {
+public class RadiantFurnace extends DirectionalBlock {
 	public static final AxisAlignedBB BB_MAIN = new AxisAlignedBB(0, 0, 0, 1, 1, 1);
 	public static final AxisAlignedBB BB_ACCESSOR = new AxisAlignedBB(0, 0, 0, 1, 0.5, 1);
 	public static final PropertyEnum<AccessorType> ACCESSOR_TYPE = PropertyEnum.create("accessortype", AccessorType.class);

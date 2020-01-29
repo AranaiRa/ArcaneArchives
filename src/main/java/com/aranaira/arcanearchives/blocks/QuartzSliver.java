@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.blocks;
 
-import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
+import com.aranaira.arcanearchives.blocks.templates.DirectionalBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
@@ -27,7 +27,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
-public class QuartzSliver extends BlockDirectionalTemplate implements IHasModel {
+public class QuartzSliver extends DirectionalBlock implements IHasModel {
 	public static final String name = "quartz_sliver";
 
 	public QuartzSliver () {

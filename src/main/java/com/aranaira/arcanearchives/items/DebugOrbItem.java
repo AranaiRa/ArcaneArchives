@@ -1,10 +1,10 @@
 package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.blocks.RadiantChest;
-import com.aranaira.arcanearchives.blocks.RadiantTank;
+import com.aranaira.arcanearchives.blocks.RadiantChestBlock;
+import com.aranaira.arcanearchives.blocks.RadiantTankBlock;
 import com.aranaira.arcanearchives.blocks.RadiantTrove;
-import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
+import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.types.ServerNetwork;
 import com.aranaira.arcanearchives.init.ItemRegistry;
@@ -71,7 +71,7 @@ public class DebugOrbItem extends ItemTemplate {
 	public EnumActionResult onItemUseFirst (EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
 		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
-		if (block.isAir(state, world, pos) || !(block instanceof BlockTemplate) || !block.hasTileEntity(state)) {
+		if (block.isAir(state, world, pos) || !(block instanceof TemplateBlock) || !block.hasTileEntity(state)) {
 			return EnumActionResult.PASS;
 		}
 
@@ -117,7 +117,7 @@ public class DebugOrbItem extends ItemTemplate {
 
 		debugOutput += "Block located at: " + pos.getX() + "," + pos.getY() + "," + pos.getZ() + "\n";
 
-		if (block instanceof RadiantChest) {
+		if (block instanceof RadiantChestBlock) {
 			debugOutput += "- is a Radiant Chest\n";
 			RadiantChestTileEntity te = WorldUtil.getTileEntity(RadiantChestTileEntity.class, world, pos);
 			if (te == null) {
@@ -198,7 +198,7 @@ public class DebugOrbItem extends ItemTemplate {
 					}
 				}
 			}
-		} else if (block instanceof RadiantTank) {
+		} else if (block instanceof RadiantTankBlock) {
 			debugOutput += "- is a Radiant Tank\n";
 			RadiantTankTileEntity te = WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, pos);
 			if (te == null) {
@@ -276,11 +276,11 @@ public class DebugOrbItem extends ItemTemplate {
 		}
 		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
-		if (!(block instanceof BlockTemplate)) {
+		if (!(block instanceof TemplateBlock)) {
 			return;
 		}
 
-		if (block instanceof RadiantChest) {
+		if (block instanceof RadiantChestBlock) {
 			event.setUseBlock(Result.DENY);
 			event.setUseItem(Result.DENY);
 			RadiantChestTileEntity te = WorldUtil.getTileEntity(RadiantChestTileEntity.class, world, pos);

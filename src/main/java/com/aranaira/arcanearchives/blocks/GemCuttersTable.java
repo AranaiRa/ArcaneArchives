@@ -2,7 +2,8 @@ package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
+import com.aranaira.arcanearchives.blocks.templates.DirectionAccessorBlock;
+import com.aranaira.arcanearchives.blocks.templates.DirectionalBlock;
 import com.aranaira.arcanearchives.client.render.LineHandler;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import com.aranaira.arcanearchives.util.DropUtils;
@@ -29,13 +30,10 @@ import net.minecraftforge.items.IItemHandler;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class GemCuttersTable extends BlockDirectionalTemplate {
-	public static final String name = "gemcutters_table";
-
+public class GemCuttersTable extends DirectionAccessorBlock {
 	public GemCuttersTable () {
-		super(name, Material.IRON);
+		super(Material.IRON);
 		this.setHardness(3f);
-		setSize(2, 1, 1);
 		setLightLevel(16f / 16f);
 		setHarvestLevel("axe", 0);
 		this.setDefaultState(this.getDefaultState().withProperty(ACCESSOR, false));

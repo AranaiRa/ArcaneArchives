@@ -1,8 +1,7 @@
 package com.aranaira.arcanearchives.tileentities;
 
-import com.aranaira.arcanearchives.blocks.MultiblockSize;
-import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
-import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
+import com.aranaira.arcanearchives.blocks.templates.DirectionalBlock;
+import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import com.aranaira.arcanearchives.tileentities.interfaces.IAccessorTileEntity;
 import com.aranaira.arcanearchives.tileentities.interfaces.IDirectionalTileEntity;
 import com.aranaira.arcanearchives.tileentities.interfaces.INamedTileEntity;
@@ -111,11 +110,11 @@ public abstract class AATileEntity extends TileEntity implements INamedTileEntit
 		Block block = (state == null) ? world.getBlockState(getPos()).getBlock() : state.getBlock();
 		EnumFacing facing = null;
 
-		if (block instanceof BlockDirectionalTemplate && state != null) {
-			facing = state.getValue(((BlockDirectionalTemplate) state.getBlock()).getFacingProperty());
+		if (block instanceof DirectionalBlock && state != null) {
+			facing = state.getValue(((DirectionalBlock) state.getBlock()).getFacingProperty());
 		}
-		if (block instanceof BlockTemplate) {
-			for (BlockPos point : ((BlockTemplate) block).calculateAccessors(world, getPos(), facing)) {
+		if (block instanceof TemplateBlock) {
+			for (BlockPos point : ((TemplateBlock) block).calculateAccessors(world, getPos(), facing)) {
 				world.removeTileEntity(point);
 				world.setBlockState(point, Blocks.AIR.getDefaultState());
 			}

@@ -49,9 +49,6 @@ public class ConfigHandler {
 		}
 	}
 
-	@Config.Ignore
-	public static boolean UnbreakableContainers = false;
-
 	@Config.Comment("Disable to use default Minecraft-style GUI elements. (Client Only)")
 	@Config.Name("Use Pretty GUIs")
 	public static boolean UsePrettyGUIs = true;
@@ -63,6 +60,10 @@ public class ConfigHandler {
 	@Config.Comment("Set to true to dispense an entire stack for left click; false to dispense a single item for left click")
 	@Config.Name("Troves Dispense Entire Stack")
 	public static boolean trovesDispense = true;
+
+	@Config.Comment("Prevents the gem HUD from being rendered")
+	@Config.Name("Disable Gem HUD")
+	public static boolean disableGemHud = false;
 
 	@Config.LangKey("arcanearchives.config.manifest")
 	public static ManifestConfig ManifestConfig = new ManifestConfig();

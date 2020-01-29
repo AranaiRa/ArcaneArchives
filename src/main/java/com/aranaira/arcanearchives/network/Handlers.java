@@ -2,7 +2,6 @@ package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.DataHelper;
-import com.aranaira.arcanearchives.data.types.HiveNetwork;
 import com.aranaira.arcanearchives.data.types.ServerNetwork;
 import com.aranaira.arcanearchives.network.Messages.ConfigPacket;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;

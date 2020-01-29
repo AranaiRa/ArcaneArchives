@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
+import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import com.aranaira.arcanearchives.client.render.LineHandler;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.types.ServerNetwork;
@@ -34,10 +34,10 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 @SuppressWarnings("deprecation")
-public class RadiantChest extends BlockTemplate {
+public class RadiantChestBlock extends TemplateBlock {
 	public static final String NAME = "radiant_chest";
 
-	public RadiantChest () {
+	public RadiantChestBlock () {
 		super(NAME, Material.GLASS);
 		setLightLevel(16 / 16f);
 		setHardness(3f);

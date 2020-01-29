@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.blocks;
 
-import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
+import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import com.aranaira.arcanearchives.tileentities.MatrixRepositoryTileEntity;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -21,11 +21,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
 @ParametersAreNonnullByDefault
-public class MatrixRepository extends BlockTemplate {
+public class MatrixRepositoryBlock extends TemplateBlock {
 
 	public static final String name = "matrix_repository";
 
-	public MatrixRepository () {
+	public MatrixRepositoryBlock () {
 		super(name, Material.GLASS);
 		setLightLevel(16 / 16f);
 		setSize(1, 3, 1);

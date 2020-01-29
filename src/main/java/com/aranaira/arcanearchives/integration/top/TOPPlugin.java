@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.integration.top;
 
-import com.aranaira.arcanearchives.blocks.RadiantChest;
-import com.aranaira.arcanearchives.blocks.RadiantResonator;
+import com.aranaira.arcanearchives.blocks.RadiantChestBlock;
+import com.aranaira.arcanearchives.blocks.RadiantResonatorBlock;
 import com.aranaira.arcanearchives.blocks.RadiantTrove;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
@@ -26,7 +26,7 @@ public class TOPPlugin implements Function<ITheOneProbe, Void>, IProbeInfoProvid
 	@Override
 	public void addProbeInfo (ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
 		Block block = blockState.getBlock();
-		if (block instanceof RadiantChest) {
+		if (block instanceof RadiantChestBlock) {
 			RadiantChestTileEntity chest = WorldUtil.getTileEntity(RadiantChestTileEntity.class, world, data.getPos());
 			if (chest != null) {
 				String chestName = chest.getChestName();
@@ -34,7 +34,7 @@ public class TOPPlugin implements Function<ITheOneProbe, Void>, IProbeInfoProvid
 					probeInfo.text(TextFormatting.GOLD + "{*arcanearchives.data.tooltip.chest_name*} " + chestName);
 				}
 			}
-		} else if (block instanceof RadiantResonator) {
+		} else if (block instanceof RadiantResonatorBlock) {
 			RadiantResonatorTileEntity resonator = WorldUtil.getTileEntity(RadiantResonatorTileEntity.class, world, data.getPos());
 			if (resonator != null) {
 				probeInfo.text(TextFormatting.GOLD + "{*arcanearchives.data.tooltip.resonator_progress*} " + String.format("%d%%", resonator.getPercentageComplete()));

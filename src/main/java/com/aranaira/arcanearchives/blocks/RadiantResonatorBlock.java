@@ -1,10 +1,9 @@
 package com.aranaira.arcanearchives.blocks;
 
-import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
-import com.aranaira.arcanearchives.config.ConfigHandler;
+import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
+import com.aranaira.arcanearchives.config.ServerSideConfig;
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity.TickResult;
-import com.aranaira.arcanearchives.tileentities.WonkyResonatorTileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.material.Material;
@@ -27,20 +26,21 @@ import java.util.Random;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class WonkyResonator extends BlockTemplate {
-	public static final String name = "wonky_resonator";
+public class RadiantResonatorBlock extends TemplateBlock {
+	public static final String name = "radiant_resonator";
 
-	public WonkyResonator () {
+	public RadiantResonatorBlock () {
 		super(name, Material.IRON);
+		setPlaceLimit(ServerSideConfig.ResonatorLimit);
 		setHardness(3f);
 		setHarvestLevel("pickaxe", 0);
-		setEntityClass(WonkyResonatorTileEntity.class);
+		setEntityClass(RadiantResonatorTileEntity.class);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.device.wonky_resonator"));
+		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.device.radiant_resonator"));
 	}
 
 	@Override
@@ -67,8 +67,40 @@ public class WonkyResonator extends BlockTemplate {
 	}
 
 	@Override
+	public void updateTick (World worldIn, BlockPos pos, IBlockState state, Random rand) {
+		super.updateTick(worldIn, pos, state, rand);
+	}
+
+	@Override
 	public BlockRenderLayer getRenderLayer () {
 		return BlockRenderLayer.CUTOUT;
+	}
+
+	@Override
+	@SuppressWarnings("deprecation")
+	public boolean hasComparatorInputOverride (IBlockState state) {
+		return true;
+	}
+
+	@Override
+	@SuppressWarnings("deprecation")
+	public int getComparatorInputOverride (IBlockState blockState, World worldIn, BlockPos pos) {
+		RadiantResonatorTileEntity te = WorldUtil.getTileEntity(RadiantResonatorTileEntity.class, worldIn, pos);
+		if (te == null) {
+			return 0;
+		}
+
+		TickResult tr = te.canTick();
+
+		if (tr == TickResult.OFFLINE || tr == TickResult.OBSTRUCTION) {
+			return 0;
+		}
+
+		if (te.canTick() == RadiantResonatorTileEntity.TickResult.HARVEST_WAITING) {
+			return 15;
+		}
+
+		return Math.max(1, Math.min((int) Math.floor(te.getPercentageComplete() / 7.14) + 1, 14));
 	}
 
 	@Override
@@ -78,6 +110,16 @@ public class WonkyResonator extends BlockTemplate {
 
 	@Override
 	public TileEntity createTileEntity (World world, IBlockState state) {
-		return new WonkyResonatorTileEntity();
+		return new RadiantResonatorTileEntity();
+	}
+
+	@Override
+	public void breakBlock (World world, BlockPos pos, IBlockState state) {
+		TileEntity te = world.getTileEntity(pos);
+		if (te instanceof RadiantResonatorTileEntity) {
+			((RadiantResonatorTileEntity) te).breakBlock(state, true);
+		}
+
+		super.breakBlock(world, pos, state);
 	}
 }

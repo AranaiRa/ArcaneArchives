@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.blocks;
 
-import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
+import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -14,11 +14,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class EchoingReverberationChamber extends BlockTemplate {
+public class ReverberationChamberBlock extends TemplateBlock {
 
 	public static final String name = "echoing_reverberation_chamber";
 
-	public EchoingReverberationChamber () {
+	public ReverberationChamberBlock () {
 		super(name, Material.ROCK);
 		setLightLevel(16 / 16f);
 		setHardness(1.7f);

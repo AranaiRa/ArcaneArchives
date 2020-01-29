@@ -3,12 +3,11 @@ package com.aranaira.arcanearchives.init;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.*;
 import com.aranaira.arcanearchives.blocks.modelparts.brazier.BrazierFire;
-import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
+import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import com.aranaira.arcanearchives.items.itemblocks.MonitoringCrystalItem;
 import com.aranaira.arcanearchives.items.itemblocks.RadiantTankItem;
 import com.aranaira.arcanearchives.items.itemblocks.RadiantTroveItem;
 import com.aranaira.arcanearchives.items.itemblocks.StorageShapedQuartzItem;
-import com.aranaira.arcanearchives.items.templates.ItemBlockTemplate;
 import com.aranaira.arcanearchives.tileentities.*;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -31,44 +30,44 @@ public class BlockRegistry {
 
 	//Matrices
 	public static final MatrixCrystalCore MATRIX_CRYSTAL_CORE = new MatrixCrystalCore();
-	public static final MatrixRepository MATRIX_REPOSITORY = new MatrixRepository();
-	public static final MatrixReservoir MATRIX_RESERVOIR = new MatrixReservoir();
-	public static final MatrixStorage MATRIX_STORAGE = new MatrixStorage();
+	public static final MatrixRepositoryBlock MATRIX_REPOSITORY = new MatrixRepositoryBlock();
+	public static final MatrixReservoirBlock MATRIX_RESERVOIR = new MatrixReservoirBlock();
+	public static final MatrixStorageBlock MATRIX_STORAGE = new MatrixStorageBlock();
 	public static final MatrixDistillate MATRIX_DISTILLATE = new MatrixDistillate(); //TODO: Check if Thaumcraft is loaded
 	//public static final DominionCrystal DOMINION_CRYSTAL = new DominionCrystal();
 
 	//Immanence Generators
-	public static final VerdantCenser DRUIDIC_CENSER = new VerdantCenser();
-	public static final SpellbookLibrary SPELLBOOK_LIBRARY = new SpellbookLibrary();
+	public static final VerdantCenserBlock DRUIDIC_CENSER = new VerdantCenserBlock();
+	public static final SpellbookLibraryBlock SPELLBOOK_LIBRARY = new SpellbookLibraryBlock();
 
 	//Immanence Converters
 	//None right now. o3o
 
 	//Blocks
-	public static final StorageRawQuartz STORAGE_RAW_QUARTZ = new StorageRawQuartz();
-	public static final StorageShapedQuartz STORAGE_SHAPED_QUARTZ = new StorageShapedQuartz();
-	public static final RadiantChest RADIANT_CHEST = new RadiantChest();
+	public static final RawQuartzBlock STORAGE_RAW_QUARTZ = new RawQuartzBlock();
+	public static final ShapedQuartzBlock STORAGE_SHAPED_QUARTZ = new ShapedQuartzBlock();
+	public static final RadiantChestBlock RADIANT_CHEST = new RadiantChestBlock();
 	public static final RadiantTrove RADIANT_TROVE = new RadiantTrove();
-	public static final RadiantCraftingTable RADIANT_CRAFTING_TABLE = new RadiantCraftingTable();
+	public static final RadiantCraftingTableBlock RADIANT_CRAFTING_TABLE = new RadiantCraftingTableBlock();
 	public static final RadiantFurnace RADIANT_FURNACE = new RadiantFurnace();
 	public static final RadiantLantern RADIANT_LANTERN = new RadiantLantern();
-	public static final RadiantResonator RADIANT_RESONATOR = new RadiantResonator();
-	public static final RawQuartzCluster RAW_QUARTZ = new RawQuartzCluster();
+	public static final RadiantResonatorBlock RADIANT_RESONATOR = new RadiantResonatorBlock();
+	public static final QuartzCluster RAW_QUARTZ = new QuartzCluster();
 	public static final QuartzSliver QUARTZ_SLIVER = new QuartzSliver();
 	public static final GemCuttersTable GEMCUTTERS_TABLE = new GemCuttersTable();
 	public static final MonitoringCrystal MONITORING_CRYSTAL = new MonitoringCrystal();
-	public static final RadiantTank RADIANT_TANK = new RadiantTank();
-	public static final Brazier BRAZIER_OF_HOARDING = new Brazier();
+	public static final RadiantTankBlock RADIANT_TANK = new RadiantTankBlock();
+	public static final BrazierBlock BRAZIER_OF_HOARDING = new BrazierBlock();
 	public static final LecternManifest LECTERN_MANIFEST = new LecternManifest();
-	public static final FakeAir FAKE_AIR = new FakeAir();
-	public static final CelestialLotusEngine CELESTIAL_LOTUS_ENGINE = new CelestialLotusEngine();
-	public static final ImmanentIncubator IMMANENT_INCUBATOR = new ImmanentIncubator();
-	public static final EchoingConformanceChamber ECHOING_CONFORMANCE_CHAMBER = new EchoingConformanceChamber();
-	public static final EchoingReverberationChamber ECHOING_REVERBERATION_CHAMBER = new EchoingReverberationChamber();
+	public static final FakeAirBlock FAKE_AIR = new FakeAirBlock();
+	public static final CelestialLotusEngineBlock CELESTIAL_LOTUS_ENGINE = new CelestialLotusEngineBlock();
+	public static final ImmanentIncubatorBlock IMMANENT_INCUBATOR = new ImmanentIncubatorBlock();
+	public static final ConformanceChamberBlock ECHOING_CONFORMANCE_CHAMBER = new ConformanceChamberBlock();
+	public static final ReverberationChamberBlock ECHOING_REVERBERATION_CHAMBER = new ReverberationChamberBlock();
 
 	//Model Parts
 	public static final BrazierFire BRAZIER_FIRE = new BrazierFire();
-	public static final WonkyResonator WONKY_RESONATOR = new WonkyResonator();
+	public static final MakeshiftResonatorBlock WONKY_RESONATOR = new MakeshiftResonatorBlock();
 
 	// TODO: REDO
 	// Tiles
@@ -135,7 +134,7 @@ public class BlockRegistry {
 	public static void registerModels (ModelRegistryEvent event) {
 		// ACCESSOR doesn't get registered.
 
-		Arrays.asList(MATRIX_CRYSTAL_CORE, MATRIX_REPOSITORY, MATRIX_RESERVOIR, MATRIX_STORAGE, MATRIX_DISTILLATE, QUARTZ_SLIVER, STORAGE_RAW_QUARTZ, STORAGE_SHAPED_QUARTZ, RADIANT_CHEST, RADIANT_CRAFTING_TABLE, RADIANT_FURNACE, RADIANT_LANTERN, RADIANT_RESONATOR, RAW_QUARTZ/*DOMINION_CRYSTAL*/, LECTERN_MANIFEST, GEMCUTTERS_TABLE, RADIANT_TROVE, MONITORING_CRYSTAL, RADIANT_TANK, BRAZIER_OF_HOARDING, BRAZIER_FIRE, IMMANENT_INCUBATOR, ECHOING_CONFORMANCE_CHAMBER, ECHOING_REVERBERATION_CHAMBER, DRUIDIC_CENSER, SPELLBOOK_LIBRARY, CELESTIAL_LOTUS_ENGINE, WONKY_RESONATOR).forEach(BlockTemplate::registerModels);
+		Arrays.asList(MATRIX_CRYSTAL_CORE, MATRIX_REPOSITORY, MATRIX_RESERVOIR, MATRIX_STORAGE, MATRIX_DISTILLATE, QUARTZ_SLIVER, STORAGE_RAW_QUARTZ, STORAGE_SHAPED_QUARTZ, RADIANT_CHEST, RADIANT_CRAFTING_TABLE, RADIANT_FURNACE, RADIANT_LANTERN, RADIANT_RESONATOR, RAW_QUARTZ/*DOMINION_CRYSTAL*/, LECTERN_MANIFEST, GEMCUTTERS_TABLE, RADIANT_TROVE, MONITORING_CRYSTAL, RADIANT_TANK, BRAZIER_OF_HOARDING, BRAZIER_FIRE, IMMANENT_INCUBATOR, ECHOING_CONFORMANCE_CHAMBER, ECHOING_REVERBERATION_CHAMBER, DRUIDIC_CENSER, SPELLBOOK_LIBRARY, CELESTIAL_LOTUS_ENGINE, WONKY_RESONATOR).forEach(TemplateBlock::registerModels);
 
 		Arrays.asList(QUARTZ_SLIVER, STORAGE_RAW_QUARTZ, STORAGE_SHAPED_QUARTZ).forEach((block) -> {
 			ItemBlock itemBlock = block.getItemBlock();

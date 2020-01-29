@@ -1,7 +1,6 @@
 package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.blocks.MultiblockSize;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.types.ServerNetwork;

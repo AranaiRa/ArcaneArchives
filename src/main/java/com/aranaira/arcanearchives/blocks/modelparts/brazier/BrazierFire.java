@@ -1,12 +1,11 @@
 package com.aranaira.arcanearchives.blocks.modelparts.brazier;
 
-import com.aranaira.arcanearchives.blocks.IHasModel;
-import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
+import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockRenderLayer;
 
-public class BrazierFire extends BlockTemplate implements IHasModel {
+public class BrazierFire extends TemplateBlock implements IHasModel {
 
 	public BrazierFire () {
 		super("brazier_of_hoarding_fire", Material.FIRE);

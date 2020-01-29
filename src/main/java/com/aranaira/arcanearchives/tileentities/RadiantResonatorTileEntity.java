@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.blocks.RawQuartzCluster;
+import com.aranaira.arcanearchives.blocks.QuartzCluster;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.config.ServerSideConfig;
 import com.aranaira.arcanearchives.data.DataHelper;
@@ -169,7 +169,7 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity {
 			}
 		} else {
 			IBlockState up = world.getBlockState(pos.up());
-			if (up.getBlock() instanceof RawQuartzCluster) {
+			if (up.getBlock() instanceof QuartzCluster) {
 				return TickResult.HARVEST_WAITING;
 			} else {
 				return TickResult.OBSTRUCTION;

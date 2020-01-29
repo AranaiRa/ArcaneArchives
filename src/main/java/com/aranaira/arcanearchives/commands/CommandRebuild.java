@@ -1,7 +1,6 @@
 package com.aranaira.arcanearchives.commands;
 
 import com.aranaira.arcanearchives.data.DataHelper;
-import com.aranaira.arcanearchives.data.types.HiveNetwork;
 import com.aranaira.arcanearchives.data.types.ServerNetwork;
 import com.aranaira.arcanearchives.events.ServerTickHandler;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;

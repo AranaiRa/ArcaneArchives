@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.items;
 
-import com.aranaira.arcanearchives.blocks.Brazier;
-import com.aranaira.arcanearchives.blocks.RadiantResonator;
+import com.aranaira.arcanearchives.blocks.BrazierBlock;
+import com.aranaira.arcanearchives.blocks.RadiantResonatorBlock;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.types.enums.UpgradeType;
 import net.minecraft.client.resources.I18n;
@@ -44,7 +44,7 @@ public class SerenityCharmItem extends ItemTemplate implements IUpgradeItem {
 		return -1;
 	}
 
-	public static List<Class<?>> UPGRADE_FOR = Arrays.asList(RadiantResonator.class, Brazier.class);
+	public static List<Class<?>> UPGRADE_FOR = Arrays.asList(RadiantResonatorBlock.class, BrazierBlock.class);
 
 	@Override
 	public List<Class<?>> upgradeFor () {

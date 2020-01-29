@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.blocks;
 
-import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
+import com.aranaira.arcanearchives.blocks.templates.DirectionalBlock;
 import com.aranaira.arcanearchives.tileentities.MonitoringCrystalTileEntity;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
@@ -28,7 +28,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class MonitoringCrystal extends BlockDirectionalTemplate {
+public class MonitoringCrystal extends DirectionalBlock {
 
 	public static final String NAME = "monitoring_crystal";
 

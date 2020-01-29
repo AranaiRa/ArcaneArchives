@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.blocks;
 
-import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
+import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -14,12 +14,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class VerdantCenser extends BlockTemplate {
-
-	public static final String name = "verdant_censer";
-
-	public VerdantCenser () {
-		super(name, Material.ROCK);
+public class ConformanceChamberBlock extends TemplateBlock {
+	public ConformanceChamberBlock () {
+		super(Material.ROCK);
 		setLightLevel(16 / 16f);
 		setHardness(1.7f);
 		setHarvestLevel("pickaxe", 0);

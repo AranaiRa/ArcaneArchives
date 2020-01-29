@@ -3,7 +3,6 @@ package com.aranaira.arcanearchives.network;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.*;
 import com.aranaira.arcanearchives.data.types.ClientNetwork;
-import com.aranaira.arcanearchives.data.types.HiveMembershipInfo;
 import com.aranaira.arcanearchives.data.types.ServerNetwork;
 import com.aranaira.arcanearchives.data.types.SynchroniseInfo;
 import com.aranaira.arcanearchives.network.Handlers.ClientHandler;

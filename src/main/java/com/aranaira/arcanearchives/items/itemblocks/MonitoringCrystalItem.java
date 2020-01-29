@@ -1,7 +1,6 @@
 package com.aranaira.arcanearchives.items.itemblocks;
 
-import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
-import com.aranaira.arcanearchives.items.templates.ItemBlockTemplate;
+import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.client.util.ITooltipFlag;
@@ -22,7 +21,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class MonitoringCrystalItem extends ItemBlockTemplate {
-	public MonitoringCrystalItem (@Nonnull BlockTemplate block) {
+	public MonitoringCrystalItem (@Nonnull TemplateBlock block) {
 		super(block);
 	}
 

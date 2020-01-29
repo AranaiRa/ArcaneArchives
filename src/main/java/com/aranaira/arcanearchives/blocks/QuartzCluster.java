@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.blocks;
 
-import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
+import com.aranaira.arcanearchives.blocks.templates.DirectionalBlock;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -25,11 +25,11 @@ import java.util.List;
 
 @SuppressWarnings("deprecation")
 @Optional.Interface(modid = "thaumcraft", iface = "thaumcraft.api.crafting.IInfusionStabiliserExt")
-public class RawQuartzCluster extends BlockDirectionalTemplate implements IInfusionStabiliserExt {
+public class QuartzCluster extends DirectionalBlock implements IInfusionStabiliserExt {
 
 	public static final String name = "raw_quartz_cluster";
 
-	public RawQuartzCluster () {
+	public QuartzCluster () {
 		super(name, Material.ROCK);
 		setLightLevel(16 / 16f);
 		setHardness(1.4f);

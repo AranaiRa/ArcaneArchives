@@ -117,61 +117,6 @@ public class EventHandler {
 	}
 
 	@SubscribeEvent
-	public static void onBlockBreakEvent (BreakEvent event) {
-		if (!ConfigHandler.UnbreakableContainers) {
-			return;
-		}
-
-		World w = event.getWorld();
-		Block block = event.getState().getBlock();
-
-		if (!w.isRemote && block == BlockRegistry.RADIANT_CHEST) {
-			RadiantChestTileEntity te = WorldUtil.getTileEntity(RadiantChestTileEntity.class, w, event.getPos());
-			if (te == null) {
-				return;
-			}
-
-			// null everything
-			IItemHandler handler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-
-			if (handler == null) {
-				return;
-			}
-
-			boolean allSlotsEmpty = true;
-
-			// null everything
-			for (int i = 0; i < handler.getSlots(); i++) {
-				if (!handler.getStackInSlot(i).isEmpty()) {
-					allSlotsEmpty = false;
-					break;
-				}
-			}
-
-			if (!allSlotsEmpty) {
-				event.setCanceled(true);
-			}
-		} else if (!w.isRemote && block == BlockRegistry.RADIANT_TROVE) {
-			RadiantTroveTileEntity te = WorldUtil.getTileEntity(RadiantTroveTileEntity.class, w, event.getPos());
-			if (te != null && !te.isEmpty()) {
-				event.setCanceled(true);
-			}
-		}
-	}
-
-	@SubscribeEvent
-	public static void onLivingDestroyBlockEvent (LivingDestroyBlockEvent event) {
-		if (!ConfigHandler.UnbreakableContainers) {
-			return;
-		}
-
-		Block block = event.getState().getBlock();
-		if (block == BlockRegistry.RADIANT_CHEST || block == BlockRegistry.RADIANT_TROVE) {
-			event.setCanceled(true);
-		}
-	}
-
-	@SubscribeEvent
 	public static void onBlockActivated (PlayerInteractEvent.RightClickBlock event) {
 		LineHandler.removeLine(event.getPos(), event.getEntity().dimension);
 	}
@@ -274,6 +219,10 @@ public class EventHandler {
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public static void renderGemHUD (RenderGameOverlayEvent.Post event) {
+		if (ConfigHandler.disableGemHud) {
+			return;
+		}
+
 		Minecraft minecraft = Minecraft.getMinecraft();
 		EntityPlayer player = minecraft.player;
 		if (player == null) {

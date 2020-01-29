@@ -1,15 +1,13 @@
 package com.aranaira.arcanearchives.blocks;
 
-import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
+import com.aranaira.arcanearchives.blocks.templates.DirectionalBlock;
 import com.aranaira.arcanearchives.client.render.LineHandler;
 import com.aranaira.arcanearchives.init.BlockRegistry;
-import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.items.templates.IItemScepter;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
-import mcjty.theoneprobe.items.ModItems;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -43,7 +41,7 @@ import java.util.List;
 import java.util.Random;
 
 @SuppressWarnings("deprecation")
-public class RadiantTrove extends BlockDirectionalTemplate {
+public class RadiantTrove extends DirectionalBlock {
 	public static final String NAME = "radiant_trove";
 
 	public RadiantTrove () {

@@ -2,7 +2,6 @@ package com.aranaira.arcanearchives.blocks.templates;
 
 import com.aranaira.arcanearchives.tileentities.AATileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
-import javafx.beans.property.Property;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyEnum;
@@ -14,18 +13,12 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockDirectionalTemplate extends BlockTemplate {
+// TODO: Horizontal versus omnidirectional
+public abstract class DirectionalBlock extends TemplateBlock {
 	public static final PropertyDirection FACING = PropertyDirection.create("facing");
 
-	/**
-	 * Creates a new directional block and adds it to the BlockRegistry, and if createItemBlock is true,
-	 * a matching ItemBlock to the ItemRegistry. Functionally just calls {@link BlockTemplate#BlockTemplate(String, Material)}
-	 *
-	 * @param name       The name of the block, used for translation key and registry name
-	 * @param materialIn The material of the block
-	 */
-	public BlockDirectionalTemplate (String name, Material materialIn) {
-		super(name, materialIn);
+	public DirectionalBlock (Material materialIn) {
+		super(materialIn);
 	}
 
 	public PropertyEnum<EnumFacing> getFacingProperty () {

@@ -1,7 +1,5 @@
 package com.aranaira.arcanearchives.tileentities.interfaces;
 
-import com.aranaira.arcanearchives.blocks.MultiblockSize;
-
 public interface ISizedTileEntity {
 	/**
 	 * @return The current size associated with this tile entity. See `setSize`.

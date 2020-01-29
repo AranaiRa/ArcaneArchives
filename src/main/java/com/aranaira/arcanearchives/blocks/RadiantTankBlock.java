@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.blocks;
 
-import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
+import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import com.aranaira.arcanearchives.client.render.LineHandler;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
@@ -41,11 +41,11 @@ import java.util.List;
 import java.util.Random;
 
 @SuppressWarnings("deprecation")
-public class RadiantTank extends BlockTemplate {
+public class RadiantTankBlock extends TemplateBlock {
 	public static final String NAME = "radiant_tank";
 	public static AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.1, 0.0, 0.1, 0.9, 0.98, 0.9);
 
-	public RadiantTank () {
+	public RadiantTankBlock () {
 		super(NAME, Material.GLASS);
 		setSize(1, 1, 1);
 		setLightLevel(16 / 16f);

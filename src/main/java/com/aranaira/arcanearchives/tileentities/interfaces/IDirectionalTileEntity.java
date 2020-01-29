@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.tileentities.interfaces;
 
-import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
+import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -17,8 +17,8 @@ public interface IDirectionalTileEntity {
 	 */
 	default EnumFacing getFacing () {
 		IBlockState state = getWorld().getBlockState(getPos());
-		if (state.getBlock() instanceof BlockTemplate) {
-			return ((BlockTemplate) state.getBlock()).getFacing(getWorld(), getPos());
+		if (state.getBlock() instanceof TemplateBlock) {
+			return ((TemplateBlock) state.getBlock()).getFacing(getWorld(), getPos());
 		}
 
 		return EnumFacing.WEST;

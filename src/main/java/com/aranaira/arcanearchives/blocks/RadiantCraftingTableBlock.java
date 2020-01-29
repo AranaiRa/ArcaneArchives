@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.blocks.templates.BlockTemplate;
+import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import com.aranaira.arcanearchives.tileentities.RadiantCraftingTableTileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.material.Material;
@@ -23,11 +23,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class RadiantCraftingTable extends BlockTemplate {
+public class RadiantCraftingTableBlock extends TemplateBlock {
 
 	public static final String NAME = "radiant_crafting_table";
 
-	public RadiantCraftingTable () {
+	public RadiantCraftingTableBlock () {
 		super(NAME, Material.GLASS);
 		setLightLevel(16 / 16f);
 		setHardness(3f);
