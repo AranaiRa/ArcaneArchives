@@ -117,6 +117,7 @@ dependencies {
     compileOnly "hellfirepvp.astralsorcery:astralsorcery:1.12.2-1.10.17-v124"
     compileOnly 'mouse-tweaks:MouseTweaks:2.10:mc1.12.2'
     compileOnly 'inventory-tweaks:InventoryTweaks:1.64+dev.146'
+    compileOnly "vazkii.patchouli:Patchouli:${patchouli_version}"
 
     // guidebook dependencies
     deobfCompile "gigaherz.commons:gigaherz.commons-1.12.1:0.6.4"

@@ -1,0 +1,19 @@
+{
+	"name": "Arcane Tome Thingy",
+	"advancement_namespaces": [
+		"arcanearchives"
+	],
+	"creative_tab": "arcanearchives",
+	"advancements_tab": "arcanearchives",
+	"landing_text": "BUZZ",
+	"book_texture": "arcanearchives:textures/gui/patchouli/book.png",
+	"filler_texture": "arcanearchives:textures/gui/patchouli/book_filler.png",
+	"model": "minecraft:book",
+	"version": 1,
+	"show_progress": false,
+	"macros": {
+		"$(info)": "$(thing)$(bold)$(t:Important Detail)[!]$()",
+		"$(warning)": "$(#f00)$(bold)$(t:Warning)[!]$()",
+		"$(standing_stones)": "$(#aa0)$(bold)$(t:Standing Stones Required!)[!]$()"
+	}
+}

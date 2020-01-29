@@ -1,0 +1,29 @@
+
+{
+  "processor": "com.aranaira.arcanearchives.integration.patchouli.TestProcessor",
+  "components": [
+    {
+      "type": "item",
+      "item": "#item1",
+      "framed": false,
+      "x": 46,
+      "y": 18
+    },
+    {
+      "type": "image",
+      "image": "arcanearchives:textures/gui/patchouli/elements2.png",
+      "x": 16,
+      "y": 14,
+      "u": 0,
+      "v": 0,
+      "width": 76,
+      "height": 108
+    },
+    {
+      "type": "header",
+      "text": "Test",
+      "x": -1,
+      "y": 0
+    }
+  ]
+}
