@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items.gems;
+/*package com.aranaira.arcanearchives.items.gems;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.config.ConfigHandler;
@@ -100,46 +100,46 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 		return str;
 	}
 
-	/**
+	*//**
 	 * Used by the HUD element to determine whether to use the bar or the bar with toggle indicator
 	 *
 	 * @return true if toggle indicator should be present
-	 */
+	 *//*
 	public boolean hasToggleMode () {
 		return false;
 	}
 
-	/**
+	*//**
 	 * Retrieves the resource location for the gem's dun texture
 	 *
 	 * @param cut The gem's cut
 	 * @return
-	 */
+	 *//*
 	protected ModelResourceLocation getDunGemResourceLocation (GemCut cut) {
 		String loc = "arcanearchives:gems/";
 		loc += cut.toString().toLowerCase() + "/dun";
 		return new ModelResourceLocation(loc, "inventory");
 	}
 
-	/**
+	*//**
 	 * Retrieves the resource location for the gem's conflicted static texture
 	 *
 	 * @param cut The gem's cut
 	 * @return
-	 */
+	 *//*
 	protected ModelResourceLocation getConflictGemResourceLocation (GemCut cut) {
 		String loc = "arcanearchives:gems/";
 		loc += cut.toString().toLowerCase() + "/static";
 		return new ModelResourceLocation(loc, "inventory");
 	}
 
-	/**
+	*//**
 	 * Retrieves the resource location for the gem's textures
 	 *
 	 * @param cut   The gem's cut
 	 * @param color The gem's color spectrum
 	 * @return
-	 */
+	 *//*
 	protected ModelResourceLocation getChargedGemResourceLocation (GemCut cut, GemColor color) {
 		String loc = "arcanearchives:gems/";
 		loc += cut.toString().toLowerCase() + "/";
@@ -147,9 +147,9 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 		return new ModelResourceLocation(loc, "inventory");
 	}
 
-	/**
+	*//**
 	 * Sets up the models for both charged and dun states
-	 */
+	 *//*
 	@Override
 	public void registerModels () {
 		ModelResourceLocation charged = getChargedGemResourceLocation(cut, color);
@@ -169,13 +169,13 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 		});
 	}
 
-	/**
+	*//**
 	 * Convenience method to convert BlockPos into a Vec3d
 	 *
 	 * @param pos           The BlockPos to convert
 	 * @param shiftToCenter Whether to leave the BlockPos as is or shift it to the center of the block
 	 * @return
-	 */
+	 *//*
 	public static Vec3d blockPosToVector (BlockPos pos, boolean shiftToCenter) {
 		if (shiftToCenter) {
 			return new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
@@ -188,7 +188,7 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 		return tryRechargingWithPowder(world, player, gem);
 	}
 
-	/**
+	*//**
 	 * Tries to use matching colored Chromatic Powder to recharge, or failing that Full-Spectrum Chromatic Powder.
 	 * Separate method from recharge() because this needs to happen after specific methods, not before.
 	 *
@@ -196,7 +196,7 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 	 * @param player
 	 * @param gem
 	 * @return
-	 */
+	 *//*
 	protected boolean tryRechargingWithPowder (World world, EntityPlayer player, GemStack gem) {
 		IItemHandler cap = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
 		int fscp = -1;
@@ -227,14 +227,14 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 		return recharged;
 	}
 
-	/**
+	*//**
 	 * Convenience method to print what was consumed to a screen message.
 	 *
 	 * @param player   The player to inform
 	 * @param gem      Which gem was recharged
 	 * @param item     Which item was consumed
 	 * @param quantity How many items were consumed
-	 */
+	 *//*
 	protected void informPlayerOfItemConsumption (EntityPlayer player, ArcaneGemItem gem, ItemStack item, int quantity) {
 		String quantityString = "";
 		if (quantity > 1) {
@@ -244,14 +244,14 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 		player.sendStatusMessage(message, true);
 	}
 
-	/**
+	*//**
 	 * Convenience method to print what was consumed to a screen message.
 	 *
 	 * @param player   The player to inform
 	 * @param gem      Which gem was recharged
 	 * @param item     Which item was consumed
 	 * @param quantity How many items were consumed
-	 */
+	 *//*
 	protected void informPlayerOfItemConsumption (EntityPlayer player, GemStack gem, ItemStack item, int quantity) {
 		informPlayerOfItemConsumption(player, gem.getArcaneGemItem(), item, quantity);
 	}
@@ -294,11 +294,11 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 	public enum GemCut {
 		NOCUT, ASSCHER, OVAL, PAMPEL, PENDELOQUE, TRILLION;
 
-		/**
+		*//**
 		 * Converts a gem cut to a specific value. Used in packets.
 		 *
 		 * @param cut The gem's cut
-		 */
+		 *//*
 		public static byte ToByte (GemCut cut) {
 			if (cut == ASSCHER) {
 				return 1;
@@ -318,12 +318,12 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 			return 0;
 		}
 
-		/**
+		*//**
 		 * Converts a byte value into a specific gem cut value. Used in packets.
 		 *
 		 * @param query The byte value to check
 		 * @return The gem's cut
-		 */
+		 *//*
 		public static GemCut fromByte (byte query) {
 			if (query == 1) {
 				return ASSCHER;
@@ -357,11 +357,11 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 	public enum GemColor {
 		NOCOLOR, RED, ORANGE, YELLOW, GREEN, CYAN, BLUE, PURPLE, PINK, BLACK, WHITE;
 
-		/**
+		*//**
 		 * Converts a gem cut to a specific value. Used in packets.
 		 *
 		 * @param color The gem's color
-		 */
+		 *//*
 		public static byte ToByte (GemColor color) {
 			if (color == RED) {
 				return 1;
@@ -387,12 +387,12 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 			return 0;
 		}
 
-		/**
+		*//**
 		 * Converts a byte value into a specific color. Used in packets.
 		 *
 		 * @param query The byte value to check
 		 * @return The color value
-		 */
+		 *//*
 		public static GemColor fromByte (byte query) {
 			if (query == 1) {
 				return RED;
@@ -456,4 +456,4 @@ public abstract class ArcaneGemItem extends ItemTemplate {
 	public enum GemUpgrades {
 		MATTER, POWER, SPACE, TIME
 	}
-}
+}*/

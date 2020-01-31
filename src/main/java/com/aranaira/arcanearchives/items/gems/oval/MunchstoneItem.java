@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items.gems.oval;
+/*package com.aranaira.arcanearchives.items.gems.oval;
 
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
@@ -92,12 +92,12 @@ public class MunchstoneItem extends ArcaneGemItem {
 
 			//ArcaneArchives.logger.info("munchstone trigger");
 			AvailableGemsHandler handler = GemUtil.getHeldGem(player, hand);
-			/*if (player.isSneaking())
+			*//*if (player.isSneaking())
 			{
 				for(EdibleBlock eb : getConfig()) {
 					ArcaneArchives.logger.info(eb.block.getLocalizedName());
 				}
-			}*/
+			}*//*
 
 			if (handler.getHeld() != null && GemUtil.getCharge(handler.getHeld()) > 0) {
 				Block block = world.getBlockState(pos).getBlock();
@@ -189,4 +189,4 @@ public class MunchstoneItem extends ArcaneGemItem {
 		}
 		return entries;
 	}
-}
+}*/

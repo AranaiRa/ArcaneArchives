@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items.itemblocks;
+/*package com.aranaira.arcanearchives.items.itemblocks;
 
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.inventory.handlers.TankItemFluidHandler;
@@ -63,4 +63,4 @@ public class RadiantTankItem extends ItemBlock {
 
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
-}
+}*/

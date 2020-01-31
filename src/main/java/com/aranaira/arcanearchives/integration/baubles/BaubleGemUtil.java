@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.integration.baubles;
+/*package com.aranaira.arcanearchives.integration.baubles;
 
 import baubles.api.BaubleType;
 import baubles.api.BaublesApi;
@@ -45,4 +45,4 @@ public class BaubleGemUtil {
 
 		return null;
 	}
-}
+}*/

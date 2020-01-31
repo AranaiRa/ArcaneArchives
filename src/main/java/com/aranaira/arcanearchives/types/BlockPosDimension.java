@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.types;
 
-import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.Objects;
@@ -48,7 +47,7 @@ public class BlockPosDimension {
 		return Objects.hash(pos, dimension);
 	}
 
-	public static BlockPosDimension fromITE (ImmanenceTileEntity ite) {
+/*	public static BlockPosDimension fromITE (ImmanenceTileEntity ite) {
 		return new BlockPosDimension(ite.getPos(), ite.dimension);
-	}
+	}*/
 }

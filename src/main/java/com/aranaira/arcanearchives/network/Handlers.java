@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.network;
+/*package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.DataHelper;
@@ -170,4 +170,4 @@ public class Handlers {
 		public abstract void configValueChanged (ServerNetwork network, T message, MessageContext ctx);
 	}
 
-}
+}*/

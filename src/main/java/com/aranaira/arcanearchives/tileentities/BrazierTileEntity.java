@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tileentities;
+/*package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
@@ -221,18 +221,18 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 			toInsert.add(Objects.requireNonNull(playerInventory).extractItem(player.inventory.currentItem, item.getCount(), false));
 		}
 
-		/*boolean doShulkerThing = false;
-		NonNullList<ItemStack> itemList = NonNullList.withSize(999, ItemStack.EMPTY);*/
+		*//*boolean doShulkerThing = false;
+		NonNullList<ItemStack> itemList = NonNullList.withSize(999, ItemStack.EMPTY);*//*
 		List<ItemStack> remainder = new ArrayList<>();
 		NBTTagCompound tag = ItemUtils.getOrCreateTagCompound(item);
 
-		/*if (item.getItem() instanceof ItemShulkerBox && cap == null && tag.hasKey("BlockEntityTag")) {
+		*//*if (item.getItem() instanceof ItemShulkerBox && cap == null && tag.hasKey("BlockEntityTag")) {
 			ItemStackHelper.loadAllItems(tag.getCompoundTag("BlockEntityTag"), itemList);
 			cap = new ShulkerItemHandler(itemList);
 			doShulkerThing = true;
-		}*/
+		}*//*
 
-		/*if (cap != null) {
+		*//*if (cap != null) {
 			for (int i = 0; i < cap.getSlots(); i++) {
 				ItemStack inSlot = cap.getStackInSlot(i);
 				int count = inSlot.getCount();
@@ -249,8 +249,8 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 				ItemStackHelper.saveAllItems(tag.getCompoundTag("BlockEntityTag"), ((ShulkerItemHandler) cap).getStacks(), false);
 				item.setTagCompound(tag);
 				remainder.add(item);
-			}*/
-		/*} else {*/
+			}*//*
+		*//*} else {*//*
 
 		if (!doubleClick) {
 			playerToStackMap.put(player, item.copy());
@@ -498,4 +498,4 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 			return this.stacks;
 		}
 	}
-}
+}*/

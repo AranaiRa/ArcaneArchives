@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.inventory.handlers;
+/*package com.aranaira.arcanearchives.inventory.handlers;
 
 import com.aranaira.arcanearchives.items.IUpgradeItem;
 import net.minecraft.item.Item;
@@ -135,12 +135,12 @@ public abstract class SizeUpgradeItemHandler implements IItemHandler, IItemHandl
 		return count;
 	}
 
-	/**
+	*//**
 	 * Returns whether an upgrade is present in the slot or not.
 	 *
 	 * @param slot Which slot ID to check
 	 * @return true if an upgrade is present, false otherwise
-	 */
+	 *//*
 	public boolean getIsUpgradePresent (int slot) {
 		return !getStackInSlot(slot).isEmpty();
 	}
@@ -201,4 +201,4 @@ public abstract class SizeUpgradeItemHandler implements IItemHandler, IItemHandl
 
 	public void onContentsChanged () {
 	}
-}
+}*/

@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.data.types;
+/*package com.aranaira.arcanearchives.data.types;
 
 import com.aranaira.arcanearchives.types.ISerializeByteBuf;
 import io.netty.buffer.ByteBuf;
@@ -24,4 +24,4 @@ public class SynchroniseInfo implements ISerializeByteBuf<SynchroniseInfo> {
 		SynchroniseInfo info = new SynchroniseInfo();
 		return info.fromBytes(buf);
 	}
-}
+}*/

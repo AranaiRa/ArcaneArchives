@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.types.lists;
+/*package com.aranaira.arcanearchives.types.lists;
 
 import com.aranaira.arcanearchives.types.IteRef;
 import com.aranaira.arcanearchives.types.iterators.TileListIterable;
@@ -29,4 +29,4 @@ public class TileList extends ReferenceList<IteRef> implements ITileList {
 	public void sortPriority () {
 		this.sort((o1, o2) -> Integer.compare(o2.priority(), o1.priority()));
 	}
-}
+}*/

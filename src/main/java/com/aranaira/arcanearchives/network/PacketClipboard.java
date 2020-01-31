@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.network;
+/*package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.network.Handlers.ClientHandler;
 import io.netty.buffer.ByteBuf;
@@ -42,4 +42,4 @@ public class PacketClipboard {
 			}
 		}
 	}
-}
+}*/

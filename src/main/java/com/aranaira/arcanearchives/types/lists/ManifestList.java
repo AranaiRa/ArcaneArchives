@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.types.lists;
+/*package com.aranaira.arcanearchives.types.lists;
 
 import com.aranaira.arcanearchives.inventory.ContainerManifest;
 import com.aranaira.arcanearchives.types.ISerializeByteBuf;
@@ -157,22 +157,22 @@ public class ManifestList extends ReferenceList<CollatedEntry> implements ISeria
 		super(new ArrayList<>());
 	}
 
-	/**
+	*//**
 	 * Register provided {@link ContainerManifest} as a listener to {@link #deserializationFinished()} events
 	 *
 	 * @param containerManifest a {@link ContainerManifest}
-	 */
+	 *//*
 	public void setListener (ContainerManifest containerManifest) {
 		this.listener = containerManifest;
 	}
 
-	/**
+	*//**
 	 * Call this after this ManifestList has finished being populated from an external source.
 	 * For now this means from a packet from the server
 	 * <p>
 	 * If a {@link ContainerManifest} listener has been registered to this manifest then
 	 * notify it that this {@link ManifestList} has been populated
-	 */
+	 *//*
 	public void deserializationFinished () {
 		if (this.listener != null) {
 			this.listener.ensureCapacity(size());
@@ -322,4 +322,4 @@ public class ManifestList extends ReferenceList<CollatedEntry> implements ISeria
 	public enum SortingType {
 		NAME, QUANTITY
 	}
-}
+}*/

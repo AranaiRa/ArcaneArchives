@@ -1,44 +1,28 @@
 package com.aranaira.arcanearchives.items;
 
-import com.aranaira.arcanearchives.blocks.templates.DirectionalBlock;
-import com.aranaira.arcanearchives.init.BlockRegistry;
-import com.aranaira.arcanearchives.items.templates.IItemScepter;
-import com.aranaira.arcanearchives.items.templates.ItemTemplate;
-import com.aranaira.arcanearchives.tileentities.*;
-import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler;
-import com.aranaira.arcanearchives.util.WorldUtil;
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.List;
 
-public class ScepterRevelationItem extends ItemTemplate implements IItemScepter {
+public class ScepterRevelationItem extends Item {
 	public static final String NAME = "scepter_revelation";
 
 	public ScepterRevelationItem () {
-		super(NAME);
+		super();
 		setMaxStackSize(1);
 	}
 
@@ -49,6 +33,7 @@ public class ScepterRevelationItem extends ItemTemplate implements IItemScepter 
 
 	@Override
 	public EnumActionResult onItemUseFirst (EntityPlayer player, World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, EnumHand hand) {
+/*
 
 		if (hand != EnumHand.MAIN_HAND) {
 			return EnumActionResult.SUCCESS;
@@ -174,9 +159,10 @@ public class ScepterRevelationItem extends ItemTemplate implements IItemScepter 
 				return EnumActionResult.SUCCESS;
 			}
 
-			EnumFacing te_facing = state.getValue(((DirectionalBlock) state.getBlock()).getFacingProperty()).getOpposite();
+			EnumFacing te_facing = state.getValue(((HorizontalTemplateBlock) state.getBlock()).getFacingProperty()).getOpposite();
 			player.sendMessage(new TextComponentTranslation("arcanearchives.data.scepter.monitoring_crystal.facing", te_facing.getName()).setStyle(def));
 		}
+*/
 
 		return EnumActionResult.SUCCESS;
 	}

@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.entity.ai;
+/*package com.aranaira.arcanearchives.entity.ai;
 
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import net.minecraft.block.Block;
@@ -24,4 +24,4 @@ public class AIResonatorSit extends EntityAIOcelotSit {
 			return block == BlockRegistry.RADIANT_RESONATOR;
 		}
 	}
-}
+}*/

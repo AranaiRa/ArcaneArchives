@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
-import com.aranaira.arcanearchives.tileentities.WonkyResonatorTileEntity;
+import com.aranaira.arcanearchives.tileentities.MakeshiftResonatorTileEntity;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -22,24 +22,16 @@ import java.util.List;
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public class MakeshiftResonatorBlock extends TemplateBlock {
-	public static final String name = "wonky_resonator";
-
 	public MakeshiftResonatorBlock () {
-		super(name, Material.IRON);
+		super(Material.IRON);
 		setHardness(3f);
 		setHarvestLevel("pickaxe", 0);
-		setEntityClass(WonkyResonatorTileEntity.class);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.device.wonky_resonator"));
-	}
-
-	@Override
-	public boolean hasOBJModel () {
-		return true;
 	}
 
 	@Override
@@ -72,6 +64,6 @@ public class MakeshiftResonatorBlock extends TemplateBlock {
 
 	@Override
 	public TileEntity createTileEntity (World world, IBlockState state) {
-		return new WonkyResonatorTileEntity();
+		return new MakeshiftResonatorTileEntity();
 	}
 }

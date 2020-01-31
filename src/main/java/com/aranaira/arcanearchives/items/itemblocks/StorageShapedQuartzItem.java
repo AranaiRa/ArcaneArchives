@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items.itemblocks;
+/*package com.aranaira.arcanearchives.items.itemblocks;
 
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import com.aranaira.arcanearchives.items.IUpgradeItem;
@@ -48,4 +48,4 @@ public class StorageShapedQuartzItem extends ItemBlockTemplate implements IUpgra
 	public List<Class<?>> upgradeFor () {
 		return UPGRADE_FOR;
 	}
-}
+}*/

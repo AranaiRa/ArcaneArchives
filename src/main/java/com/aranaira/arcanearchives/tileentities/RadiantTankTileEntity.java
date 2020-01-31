@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tileentities;
+/*package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
@@ -228,4 +228,4 @@ public class RadiantTankTileEntity extends ImmanenceTileEntity implements IUpgra
 			return result;
 		}
 	}
-}
+}*/

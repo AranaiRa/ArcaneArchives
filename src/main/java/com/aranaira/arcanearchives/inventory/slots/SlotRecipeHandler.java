@@ -1,7 +1,6 @@
 package com.aranaira.arcanearchives.inventory.slots;
 
 import com.aranaira.arcanearchives.api.IGCTRecipe;
-import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -23,7 +22,8 @@ public class SlotRecipeHandler extends Slot {
 	}
 
 	public IGCTRecipe getRecipe () {
-		return GCTRecipeList.instance.getRecipeByIndex(getRelativeIndex());
+		return null;
+		/*		return GCTRecipeList.instance.getRecipeByIndex(getRelativeIndex());*/
 	}
 
 	public int getRelativeIndex () {
@@ -48,9 +48,9 @@ public class SlotRecipeHandler extends Slot {
 	@Override
 	public ItemStack getStack () {
 		int slot = getRelativeIndex();
-		if (slot < GCTRecipeList.instance.size()) {
+/*		if (slot < GCTRecipeList.instance.size()) {
 			return GCTRecipeList.instance.getOutputByIndex(slot).copy();
-		}
+		}*/
 
 		return ItemStack.EMPTY;
 	}

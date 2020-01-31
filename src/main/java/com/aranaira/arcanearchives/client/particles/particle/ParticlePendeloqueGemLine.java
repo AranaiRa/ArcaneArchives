@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.client.particles.particle;
+/*package com.aranaira.arcanearchives.client.particles.particle;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
@@ -64,4 +64,4 @@ public class ParticlePendeloqueGemLine extends Particle {
 	public int getFXLayer () {
 		return 1;
 	}
-}
+}*/

@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.inventory.handlers;
+/*package com.aranaira.arcanearchives.inventory.handlers;
 
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.items.gems.GemUtil;
@@ -140,4 +140,4 @@ public class DevouringCharmHandler {
 		public Tags () {
 		}
 	}
-}
+}*/

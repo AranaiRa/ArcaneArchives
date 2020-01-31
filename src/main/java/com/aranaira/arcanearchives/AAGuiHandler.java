@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives;
+/*package com.aranaira.arcanearchives;
 
 import com.aranaira.arcanearchives.client.gui.*;
 import com.aranaira.arcanearchives.data.DataHelper;
@@ -61,10 +61,10 @@ public class AAGuiHandler implements IGuiHandler {
 				return new ContainerGemCuttersTable(gct.getInventory(), gct, player);
 			case RADIANT_CRAFTING_TABLE:
 				return new ContainerRadiantCraftingTable((RadiantCraftingTableTileEntity) te, player, player.inventory);
-			/*case MATRIX_STORAGE:
+			*//*case MATRIX_STORAGE:
 				return new ContainerMatrixStorage((MatrixStorageTileEntity) te, player.inventory);
 			case MATRIX_REPOSITORY:
-				return new ContainerMatrixRepository((MatrixRepositoryTileEntity) te, player.inventory);*/
+				return new ContainerMatrixRepository((MatrixRepositoryTileEntity) te, player.inventory);*//*
 			case UPGRADES:
 				return new ContainerUpgrades(player, (ImmanenceTileEntity) te);
 			case BRAZIER:
@@ -110,10 +110,10 @@ public class AAGuiHandler implements IGuiHandler {
 				return new GUIUpgrades(new ContainerUpgrades(player, (ImmanenceTileEntity) te), player, (ImmanenceTileEntity) te);
 			case BRAZIER:
 				return new GUIBrazier(new ContainerBrazier((BrazierTileEntity) te, player));
-			/*case MATRIX_STORAGE:
+			*//*case MATRIX_STORAGE:
 				return new GUIMatrixStorage(player, new ContainerMatrixStorage((MatrixStorageTileEntity) te, player.inventory));
 			case MATRIX_REPOSITORY:
-				return new GUIMatrixRepository(player, new ContainerMatrixRepository((MatrixRepositoryTileEntity) te, player.inventory));*/
+				return new GUIMatrixRepository(player, new ContainerMatrixRepository((MatrixRepositoryTileEntity) te, player.inventory));*//*
 			case RADIANT_FURNACE:
 				return new GUIRadiantFurnace(new ContainerRadiantFurnace((RadiantFurnaceTileEntity) te, player), player.inventory);
 			default:
@@ -121,4 +121,4 @@ public class AAGuiHandler implements IGuiHandler {
 				return null;
 		}
 	}
-}
+}*/

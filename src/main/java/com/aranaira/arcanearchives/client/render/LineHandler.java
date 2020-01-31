@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.client.render;
+/*package com.aranaira.arcanearchives.client.render;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.util.ManifestTrackingUtils;
@@ -73,4 +73,4 @@ public class LineHandler {
 		positions.clear();
 	}
 
-}
+}*/

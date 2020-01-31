@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.init;
+/*package com.aranaira.arcanearchives.init;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.api.GCTRecipeEvent;
@@ -132,7 +132,7 @@ public class RecipeLibrary {
 
 		BRAZIER_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("brazier_of_hoarding", new ItemStack(BlockRegistry.BRAZIER_OF_HOARDING, 1), new ItemStack(ItemRegistry.COMPONENT_RADIANTDUST, 4), new IngredientStack(Items.COAL, 8), new IngredientStack("ingotGold", 2), new IngredientStack("logWood", 3));
 
-		/*MATRIX_REPOSITORY_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("matrix_repository", new ItemStack(BlockRegistry.MATRIX_REPOSITORY, 1), BlockRegistry.MATRIX_STORAGE, ItemRegistry.COMPONENT_MATERIALINTERFACE, ItemRegistry.COMPONENT_MATERIALINTERFACE);*/
+		*//*MATRIX_REPOSITORY_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("matrix_repository", new ItemStack(BlockRegistry.MATRIX_REPOSITORY, 1), BlockRegistry.MATRIX_STORAGE, ItemRegistry.COMPONENT_MATERIALINTERFACE, ItemRegistry.COMPONENT_MATERIALINTERFACE);*//*
 
 		MATRIX_BRACE_RECIPE = GCTRecipeList.instance.makeAndAddRecipe("matrix_brace", new ItemStack(ItemRegistry.COMPONENT_MATRIXBRACE, 1), ItemRegistry.COMPONENT_SCINTILLATINGINLAY, new IngredientStack("ingotGold", 2));
 
@@ -202,4 +202,4 @@ public class RecipeLibrary {
 			Liquefaction.init();
 		}
 	}
-}
+}*/

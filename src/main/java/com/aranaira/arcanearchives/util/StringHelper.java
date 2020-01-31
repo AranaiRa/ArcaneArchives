@@ -1,4 +1,4 @@
-package epicsquid.roots.util;
+package com.aranaira.arcanearchives.util;
 
 // Copied with permission from Athenaeum by CodeTaylor, Apache License
 // https://github.com/codetaylor/athenaeum/blob/master/src/main/java/com/codetaylor/mc/athenaeum/util/StringHelper.java

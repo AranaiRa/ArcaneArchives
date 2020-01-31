@@ -1,7 +1,6 @@
 package com.aranaira.arcanearchives.blocks;
 
-import com.aranaira.arcanearchives.blocks.templates.DirectionalBlock;
-import com.aranaira.arcanearchives.init.ItemRegistry;
+import com.aranaira.arcanearchives.blocks.templates.HorizontalTemplateBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -17,20 +16,19 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import thaumcraft.api.crafting.IInfusionStabiliserExt;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
 @SuppressWarnings("deprecation")
-@Optional.Interface(modid = "thaumcraft", iface = "thaumcraft.api.crafting.IInfusionStabiliserExt")
-public class QuartzCluster extends DirectionalBlock implements IInfusionStabiliserExt {
+//@Optional.Interface(modid = "thaumcraft", iface = "thaumcraft.api.crafting.IInfusionStabiliserExt")
+public class QuartzCluster extends HorizontalTemplateBlock /*implements IInfusionStabiliserExt*/ {
 
 	public static final String name = "raw_quartz_cluster";
 
 	public QuartzCluster () {
-		super(name, Material.ROCK);
+		super(Material.ROCK);
 		setLightLevel(16 / 16f);
 		setHardness(1.4f);
 		setDefaultState(this.blockState.getBaseState().withProperty(getFacingProperty(), EnumFacing.UP));
@@ -93,15 +91,11 @@ public class QuartzCluster extends DirectionalBlock implements IInfusionStabilis
 
 	@Override
 	public void getDrops (@Nonnull NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, @Nonnull IBlockState state, int fortune) {
-		drops.add(new ItemStack(ItemRegistry.RAW_RADIANT_QUARTZ, 1));
+		// TODO: Embed network ID
+		//drops.add(new ItemStack(ItemRegistry.RAW_RADIANT_QUARTZ, 1));
 	}
 
-	@Override
-	public boolean hasOBJModel () {
-		return true;
-	}
-
-	@Override
+/*	@Override
 	public float getStabilizationAmount (World world, BlockPos blockPos) {
 		return 0.15f;
 	}
@@ -109,7 +103,7 @@ public class QuartzCluster extends DirectionalBlock implements IInfusionStabilis
 	@Override
 	public boolean canStabaliseInfusion (World world, BlockPos blockPos) {
 		return true;
-	}
+	}*/
 
 	@Override
 	public IBlockState getStateForPlacement (World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {

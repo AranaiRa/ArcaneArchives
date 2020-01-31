@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items.templates;
+/*package com.aranaira.arcanearchives.items.templates;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -40,4 +40,4 @@ public abstract class LetterTemplate extends ItemTemplate {
 	}
 
 	public abstract ItemStack letterTriggered (ItemStack stack, World world, EntityLivingBase entity);
-}
+}*/

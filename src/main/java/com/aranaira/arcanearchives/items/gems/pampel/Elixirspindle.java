@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items.gems.pampel;
+/*package com.aranaira.arcanearchives.items.gems.pampel;
 
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
@@ -77,4 +77,4 @@ public class Elixirspindle extends ArcaneGemItem {
 
 		return tryRechargingWithPowder(world, player, gem);
 	}
-}
+}*/

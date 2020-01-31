@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items.gems.trillion;
+/*package com.aranaira.arcanearchives.items.gems.trillion;
 
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.gems.GemUtil;
@@ -103,4 +103,4 @@ public class PhoenixwayItem extends ArcaneGemItem {
 
 		return false;
 	}
-}
+}*/

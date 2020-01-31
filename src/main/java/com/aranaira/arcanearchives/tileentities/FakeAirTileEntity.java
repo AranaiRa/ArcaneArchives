@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tileentities;
+/*package com.aranaira.arcanearchives.tileentities;
 
 import net.minecraft.util.ITickable;
 
@@ -22,4 +22,4 @@ public class FakeAirTileEntity extends AATileEntity implements ITickable {
 			world.setBlockToAir(getPos());
 		}
 	}
-}
+}*/

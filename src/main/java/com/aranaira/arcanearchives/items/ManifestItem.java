@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items;
+/*package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
@@ -72,4 +72,4 @@ public class ManifestItem extends ItemTemplate {
 		if (Keybinds.manifestKey.getKeyCode() == 0) {
 		}
 	}
-}
+}*/

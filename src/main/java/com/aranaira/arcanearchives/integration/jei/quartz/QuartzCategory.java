@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.integration.jei.quartz;
+/*package com.aranaira.arcanearchives.integration.jei.quartz;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.integration.jei.JEIPlugin;
@@ -40,4 +40,4 @@ public class QuartzCategory implements IRecipeCategory<QuartzWrapper> {
 	@Override
 	public void setRecipe (IRecipeLayout recipeLayout, QuartzWrapper recipeWrapper, IIngredients ingredients) {
 	}
-}
+}*/

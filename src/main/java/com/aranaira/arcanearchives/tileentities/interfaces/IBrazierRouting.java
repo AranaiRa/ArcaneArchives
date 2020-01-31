@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tileentities.interfaces;
+/*package com.aranaira.arcanearchives.tileentities.interfaces;
 
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.item.ItemStack;
@@ -46,4 +46,4 @@ public interface IBrazierRouting {
 			return null;
 		}
 	}
-}
+}*/

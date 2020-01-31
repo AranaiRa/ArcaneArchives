@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items;
+/*package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
@@ -56,4 +56,4 @@ public class MaterialInterfaceItem extends ItemTemplate implements IUpgradeItem 
 	public List<Class<?>> upgradeFor () {
 		return UPGRADE_FOR;
 	}
-}
+}*/

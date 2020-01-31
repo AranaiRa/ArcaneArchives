@@ -1,15 +1,12 @@
 package com.aranaira.arcanearchives.util;
 
-import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
-import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
-import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
-import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler;
+import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
@@ -22,7 +19,7 @@ public class ItemUtils {
 		return ItemStack.areItemsEqual(stackA, stackB) && ItemStack.areItemStackTagsEqual(stackA, stackB);
 	}
 
-	public static int calculateRedstoneFromTileEntity (@Nullable TileEntity te) {
+/*	public static int calculateRedstoneFromTileEntity (@Nullable TileEntity te) {
 		if (te instanceof RadiantChestTileEntity) {
 			return calculateRedstoneFromItemHandler(te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null));
 		} else if (te instanceof RadiantTroveTileEntity) {
@@ -37,7 +34,7 @@ public class ItemUtils {
 			return MathHelper.floor(f * 14.0F) + (amount > 0 ? 1 : 0);
 		}
 		return 0;
-	}
+	}*/
 
 	public static int calculateRedstoneFromItemHandler (@Nullable IItemHandler handler) {
 		if (handler == null) {
@@ -88,5 +85,22 @@ public class ItemUtils {
 		}
 
 		return true;
+	}
+
+	public static void dropInventoryItems (World world, BlockPos pos, @Nullable IItemHandler inventory) {
+		if (inventory == null) {
+			return;
+		}
+
+		for (int i = 0; i < inventory.getSlots(); i++) {
+			while (true) {
+				ItemStack toDrop = inventory.extractItem(i, 64, false);
+				if (!toDrop.isEmpty()) {
+					Block.spawnAsEntity(world, pos, toDrop);
+				} else {
+					break;
+				}
+			}
+		}
 	}
 }

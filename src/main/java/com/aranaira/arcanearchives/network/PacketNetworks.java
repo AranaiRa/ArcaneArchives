@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.network;
+/*package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.*;
@@ -209,4 +209,4 @@ public class PacketNetworks {
 
 		public abstract void processMessage (T message, MessageContext ctx, EntityPlayer player, ClientNetwork network);
 	}
-}
+}*/

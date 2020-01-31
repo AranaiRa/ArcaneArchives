@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items.gems.asscher;
+/*package com.aranaira.arcanearchives.items.gems.asscher;
 
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.gems.GemUtil.GemStack;
@@ -74,4 +74,4 @@ public class SalvegleamItem extends ArcaneGemItem {
 
 		return thresholdPassed;
 	}
-}
+}*/

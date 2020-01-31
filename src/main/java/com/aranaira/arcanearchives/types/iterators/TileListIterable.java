@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.types.iterators;
+/*package com.aranaira.arcanearchives.types.iterators;
 
 import com.aranaira.arcanearchives.types.IteRef;
 
@@ -24,4 +24,4 @@ public class TileListIterable implements Iterable<IteRef> {
 	public void setIterator (Iterator<IteRef> iterator) {
 		this.iter = iterator;
 	}
-}
+}*/

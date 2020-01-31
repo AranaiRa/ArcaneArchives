@@ -1,7 +1,5 @@
 package com.aranaira.arcanearchives.blocks.templates;
 
-import com.aranaira.arcanearchives.tileentities.AATileEntity;
-import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyEnum;
@@ -14,10 +12,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 // TODO: Horizontal versus omnidirectional
-public abstract class DirectionalBlock extends TemplateBlock {
+public abstract class HorizontalTemplateBlock extends TemplateBlock {
 	public static final PropertyDirection FACING = PropertyDirection.create("facing");
 
-	public DirectionalBlock (Material materialIn) {
+	public HorizontalTemplateBlock (Material materialIn) {
 		super(materialIn);
 	}
 
@@ -46,7 +44,7 @@ public abstract class DirectionalBlock extends TemplateBlock {
 		return new BlockStateContainer(this, getFacingProperty());
 	}
 
-	@Override
+	/*@Override
 	public boolean rotateBlock (World world, BlockPos pos, EnumFacing axis) {
 		AATileEntity tile = WorldUtil.getTileEntity(AATileEntity.class, world, pos);
 		boolean result = super.rotateBlock(world, pos, axis);
@@ -55,7 +53,7 @@ public abstract class DirectionalBlock extends TemplateBlock {
 			world.setTileEntity(pos, tile);
 		}
 		return result;
-	}
+	}*/
 
 
 }

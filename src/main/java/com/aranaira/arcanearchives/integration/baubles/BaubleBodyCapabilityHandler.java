@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.integration.baubles;
+/*package com.aranaira.arcanearchives.integration.baubles;
 
 import baubles.api.BaubleType;
 import baubles.api.IBauble;
@@ -33,4 +33,4 @@ public class BaubleBodyCapabilityHandler implements ICapabilityProvider {
 
 		return null;
 	}
-}
+}*/

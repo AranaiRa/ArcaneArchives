@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.blocks;
+/*package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.DirectionalBlock;
 import com.aranaira.arcanearchives.tileentities.MatrixCoreTileEntity;
@@ -73,13 +73,13 @@ public class MatrixCrystalCore extends DirectionalBlock {
 	public boolean onBlockActivated (World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
 		return false;
 
-		/*TileEntity te = world.getTileEntity(pos);
+		*//*TileEntity te = world.getTileEntity(pos);
 		if(te instanceof ImmanenceTileEntity)
 {
 			if(!((ImmanenceTileEntity) te).networkId.equals(player.getUniqueID())) return false;
 			player.openGui(ArcaneArchives.instance, AAGuiHandler.TOME_OF_REQUISITION, world, pos.getX(), pos.getY(), pos.getZ());
 }
-		return true;*/
+		return true;*//*
 	}
 
 	@Override
@@ -98,4 +98,4 @@ public class MatrixCrystalCore extends DirectionalBlock {
 	public TileEntity createTileEntity (World world, IBlockState state) {
 		return new MatrixCoreTileEntity();
 	}
-}
+}*/

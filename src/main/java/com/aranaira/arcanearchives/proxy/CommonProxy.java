@@ -1,16 +1,8 @@
 package com.aranaira.arcanearchives.proxy;
 
-import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.commands.*;
-import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.entity.EntityWeight;
 import com.aranaira.arcanearchives.events.ClientTickHandler;
-import com.aranaira.arcanearchives.init.BlockRegistry;
-import com.aranaira.arcanearchives.init.ItemRegistry;
-import com.aranaira.arcanearchives.init.RecipeLibrary;
-import com.aranaira.arcanearchives.integration.craftingtweaks.CraftingTweaks;
-import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.util.DuplicationUtils;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -18,7 +10,6 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.event.*;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.oredict.OreDictionary;
@@ -26,21 +17,21 @@ import net.minecraftforge.oredict.OreDictionary;
 public class CommonProxy {
 	public void preInit (FMLPreInitializationEvent event) {
 		ArcaneArchives.logger = event.getModLog();
-		NetworkRegistry.INSTANCE.registerGuiHandler(ArcaneArchives.instance, new AAGuiHandler());
+		/*		NetworkRegistry.INSTANCE.registerGuiHandler(ArcaneArchives.instance, new AAGuiHandler());*/
 
-		BlockRegistry.init();
+/*		BlockRegistry.init();
 		ItemRegistry.init();
 
-		Networking.registerPackets();
+		Networking.registerPackets();*/
 		EntityRegistry.registerModEntity(new ResourceLocation(ArcaneArchives.MODID, "weight"), EntityWeight.class, "weight", 0, ArcaneArchives.instance, 64, 10, false);
 	}
 
 	public void init (FMLInitializationEvent event) {
-		RecipeLibrary.buildRecipes();
+/*		RecipeLibrary.buildRecipes();
 		BlockRegistry.registerTileEntities();
 		CraftingTweaks.init();
 
-		FMLInterModComms.sendFunctionMessage("theoneprobe", "getTheOneProbe", "com.aranaira.arcanearchives.integration.top.TOPPlugin");
+		FMLInterModComms.sendFunctionMessage("theoneprobe", "getTheOneProbe", "com.aranaira.arcanearchives.integration.top.TOPPlugin");*/
 	}
 
 	public void postInit (FMLPostInitializationEvent event) {
@@ -53,16 +44,16 @@ public class CommonProxy {
 	}
 
 	public void serverStarting (FMLServerStartingEvent event) {
-		event.registerServerCommand(new CommandHive());
+/*		event.registerServerCommand(new CommandHive());
 		event.registerServerCommand(new CommandBrazier());
 		event.registerServerCommand(new CommandCopy());
 		event.registerServerCommand(new CommandTiles());
 		event.registerServerCommand(new CommandImmanence());
-		event.registerServerCommand(new CommandRebuild());
+		event.registerServerCommand(new CommandRebuild());*/
 	}
 
 	public void serverStarted (FMLServerStartedEvent event) {
-		DataHelper.clearClientCache(); // has no effect on the server
+		/*		DataHelper.clearClientCache(); // has no effect on the server*/
 	}
 
 	public void loadComplete (FMLLoadCompleteEvent event) {

@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.inventory;
+/*package com.aranaira.arcanearchives.inventory;
 
 import com.aranaira.arcanearchives.client.gui.framework.CustomCountSlot;
 import com.aranaira.arcanearchives.client.gui.framework.IScrollabe;
@@ -86,14 +86,14 @@ public class ContainerManifest extends Container implements IScrollableContainer
 		this.scrollEventManager = null;
 		this.manifestItemSlots = new ArrayList<>();
 
-		/*if (ServerSide) {
+		*//*if (ServerSide) {
 			serverNetwork = NetworkHelper.getServerNetwork(playerIn.getUniqueID(), playerIn.world);
 			if (serverNetwork == null) {
 				handler = new ManifestItemHandler(new ManifestList());
 			} else {
 				handler = serverNetwork.getManifestHandler();
 			}
-		} else {*/
+		} else {*//*
 		clientNetwork = DataHelper.getClientNetwork(this.player.getUniqueID());
 		handler = clientNetwork.getManifestHandler();
 	}
@@ -133,11 +133,11 @@ public class ContainerManifest extends Container implements IScrollableContainer
 		return super.addSlotToContainer(slotIn);
 	}
 
-	/**
+	*//**
 	 * Ensure this container has at least this many {@link net.minecraft.inventory.Slot}s
 	 *
 	 * @param capacity capacity to ensure
-	 */
+	 *//*
 	public void ensureCapacity (int capacity) {
 		if (capacity > this.inventorySlots.size()) {
 			// ceiling on number of rows we need - the NUM_CELLS displayed rows times the grid spacing
@@ -247,4 +247,4 @@ public class ContainerManifest extends Container implements IScrollableContainer
 			return null;
 		}
 	}
-}
+}*/

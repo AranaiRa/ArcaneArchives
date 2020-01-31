@@ -1,12 +1,8 @@
 package com.aranaira.arcanearchives.blocks;
 
-import com.aranaira.arcanearchives.AAGuiHandler;
-import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.blocks.templates.DirectionAccessorBlock;
-import com.aranaira.arcanearchives.blocks.templates.DirectionalBlock;
-import com.aranaira.arcanearchives.client.render.LineHandler;
+import com.aranaira.arcanearchives.blocks.templates.HorizontalAccessorTemplateBlock;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
-import com.aranaira.arcanearchives.util.DropUtils;
+import com.aranaira.arcanearchives.util.ItemUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
@@ -30,8 +26,8 @@ import net.minecraftforge.items.IItemHandler;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class GemCuttersTable extends DirectionAccessorBlock {
-	public GemCuttersTable () {
+public class GemCuttersTableBlock extends HorizontalAccessorTemplateBlock {
+	public GemCuttersTableBlock () {
 		super(Material.IRON);
 		this.setHardness(3f);
 		setLightLevel(16f / 16f);
@@ -57,22 +53,17 @@ public class GemCuttersTable extends DirectionAccessorBlock {
 	}
 
 	@Override
-	public boolean hasOBJModel () {
-		return true;
-	}
-
-	@Override
 	public void breakBlock (World world, BlockPos pos, IBlockState state) {
 		if (state.getValue(ACCESSOR)) {
 			return;
 		}
 
-		LineHandler.removeLine(pos, world.provider.getDimension());
+		/*		LineHandler.removeLine(pos, world.provider.getDimension());*/
 
 		TileEntity te = world.getTileEntity(pos);
 		if (te instanceof GemCuttersTableTileEntity) {
 			IItemHandler inv = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-			DropUtils.dropInventoryItems(world, pos, inv);
+			ItemUtils.dropInventoryItems(world, pos, inv);
 		}
 
 		super.breakBlock(world, pos, state);
@@ -130,13 +121,13 @@ public class GemCuttersTable extends DirectionAccessorBlock {
 			pos = getConnectedPos(pos, state);
 		}
 
-		LineHandler.removeLine(pos, playerIn.dimension);
+		/*		LineHandler.removeLine(pos, playerIn.dimension);*/
 
 		if (worldIn.isRemote) {
 			return true;
 		}
 
-		playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.GEMCUTTERS_TABLE, worldIn, pos.getX(), pos.getY(), pos.getZ());
+		/*		playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.GEMCUTTERS_TABLE, worldIn, pos.getX(), pos.getY(), pos.getZ());*/
 
 		return true;
 	}

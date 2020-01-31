@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items;
+/*package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import gigaherz.lirelent.guidebook.guidebook.ItemGuidebook;
@@ -46,4 +46,4 @@ public class TomeOfArcanaItem extends ItemGuidebook implements IHasModel {
 	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.tome_arcana"));
 	}
-}
+}*/

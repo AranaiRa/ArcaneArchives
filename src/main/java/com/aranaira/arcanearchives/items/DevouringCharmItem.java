@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items;
+/*package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
@@ -73,4 +73,4 @@ public class DevouringCharmItem extends ItemTemplate implements IUpgradeItem {
 	public List<Class<?>> upgradeFor () {
 		return UPGRADE_FOR;
 	}
-}
+}*/

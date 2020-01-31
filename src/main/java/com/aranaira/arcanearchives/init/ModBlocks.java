@@ -1,19 +1,33 @@
 package com.aranaira.arcanearchives.init;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.blocks.*;
+import com.aranaira.arcanearchives.blocks.GemCuttersTableBlock;
+import com.aranaira.arcanearchives.blocks.MakeshiftResonatorBlock;
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent.Register;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
 
+@Mod.EventBusSubscriber(modid=ArcaneArchives.MODID)
 public class ModBlocks {
-	public static BrazierBlock Brazier = register("brazier", BrazierBlock::new);
-	public static CelestialLotusEngineBlock CelestialLotusEngine = register("lotus_engine", CelestialLotusEngineBlock::new);
-	public static ConformanceChamberBlock ConformanceChamber = register("conformance_chamber", ConformanceChamberBlock::new);
-	public static FakeAirBlock FakeAir = register("fake_air", FakeAirBlock::new);
-	public static com.aranaira.arcanearchives.blocks.GemCuttersTable GemCuttersTable = register("gem_table", GemCuttersTable::new);
+	public static final List<Block> REGISTRY = new ArrayList<>();
+
+	@SubscribeEvent
+	public static void onRegister (Register<Block> event) {
+		REGISTRY.forEach(event.getRegistry()::register);
+	}
+
+	public static GemCuttersTableBlock GemCuttersTable = register("gem_table", GemCuttersTableBlock::new);
+	public static MakeshiftResonatorBlock MakeshiftResonator = register("makeshift_resonator", MakeshiftResonatorBlock::new);
 
 	public static <T extends TemplateBlock> T register (String registryName, Supplier<T> supplier) {
 		return register(registryName, supplier, null);
@@ -32,6 +46,12 @@ public class ModBlocks {
 		}
 		item.setRegistryName(new ResourceLocation(ArcaneArchives.MODID, registryName));
 		block.setItemBlock(item);
+		REGISTRY.add(block);
+		ModItems.REGISTRY.add(item);
 		return block;
+	}
+
+	public static void load () {
+
 	}
 }

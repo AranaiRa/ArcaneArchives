@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items;
+/*package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
@@ -30,4 +30,4 @@ public interface IUpgradeItem {
 	default boolean isUpgradeFor (TemplateBlock block) {
 		return upgradeFor().contains(block.getEntityClass());
 	}
-}
+}*/

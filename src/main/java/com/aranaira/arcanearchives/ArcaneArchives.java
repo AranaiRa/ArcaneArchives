@@ -1,5 +1,7 @@
 package com.aranaira.arcanearchives;
 
+import com.aranaira.arcanearchives.init.ModBlocks;
+import com.aranaira.arcanearchives.init.ModItems;
 import com.aranaira.arcanearchives.proxy.CommonProxy;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
@@ -10,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 
-@Mod(modid = ArcaneArchives.MODID, name = ArcaneArchives.NAME, version = ArcaneArchives.VERSION, dependencies = "required-after:gbook_snapshot;after:baubles;required-before:mysticallib;after:thaumcraft")
+@Mod(modid = ArcaneArchives.MODID, name = ArcaneArchives.NAME, version = ArcaneArchives.VERSION, dependencies = "after:baubles;required-before:mysticallib;after:thaumcraft")
 public class ArcaneArchives {
 	public static final String MODID = "arcanearchives";
 	public static final String NAME = "Arcane Archives";
@@ -24,6 +26,11 @@ public class ArcaneArchives {
 	public static CommonProxy proxy;
 
 	public static File configDirectory;
+
+	public ArcaneArchives () {
+		ModBlocks.load();
+		ModItems.load();
+	}
 
 	@EventHandler
 	public static void preInit (FMLPreInitializationEvent event) {

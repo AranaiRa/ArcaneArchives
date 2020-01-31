@@ -6,14 +6,8 @@ import com.aranaira.arcanearchives.client.gui.controls.InvisibleButton;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
 import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
-import com.aranaira.arcanearchives.network.Networking;
-import com.aranaira.arcanearchives.network.PacketGemCutters;
-import com.aranaira.arcanearchives.network.PacketGemCutters.SetRecipeIndex;
 import com.aranaira.arcanearchives.recipe.IngredientStack;
-import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
-import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
-import com.aranaira.arcanearchives.util.ManifestTrackingUtils;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
@@ -27,17 +21,14 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
-import yalter.mousetweaks.api.MouseTweaksDisableWheelTweak;
+//import yalter.mousetweaks.api.MouseTweaksDisableWheelTweak;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@MouseTweaksDisableWheelTweak
+//@MouseTweaksDisableWheelTweak
 public class GUIGemCuttersTable extends AbstractGuiContainerTracking {
 	private static final ResourceLocation GUI_TEXTURES = new ResourceLocation("arcanearchives:textures/gui/gemcutterstable.png");
 	private static final ResourceLocation GUI_TEXTURES_SIMPLE = new ResourceLocation("arcanearchives:textures/gui/simple/gemcutterstable.png");
@@ -67,7 +58,7 @@ public class GUIGemCuttersTable extends AbstractGuiContainerTracking {
 		updateRecipeStatus();
 		this.timesChanged = this.player.inventory.getTimesChanged();
 		this.cycleTimer = new CycleTimer(-1);
-		tracked = ManifestTrackingUtils.get(player.dimension, tile.getPos());
+		tracked = Collections.emptyList(); // ManifestTrackingUtils.get(player.dimension, tile.getPos());
 	}
 
 	public void updateRecipeStatus () {
@@ -128,9 +119,9 @@ public class GUIGemCuttersTable extends AbstractGuiContainerTracking {
 
 		ItemStack stack = slot.getStack();
 		if (!stack.isEmpty()) {
-			if (((tracked != null && !tracked.isEmpty() && ManifestTrackingUtils.matches(stack, tracked)) && !recipeSlot) || (recipeSlot && ManifestTrackingUtils.matches(stack) && (recipeStatus.getBoolean(recipe) && recipe.craftable(player, tile)))) {
+/*			if (((tracked != null && !tracked.isEmpty() && ManifestTrackingUtils.matches(stack, tracked)) && !recipeSlot) || (recipeSlot && ManifestTrackingUtils.matches(stack) && (recipeStatus.getBoolean(recipe) && recipe.craftable(player, tile)))) {
 				glowSlot(slot);
-			}
+			}*/
 		}
 
 		super.drawSlot(slot);
@@ -258,7 +249,7 @@ public class GUIGemCuttersTable extends AbstractGuiContainerTracking {
 			IGCTRecipe temp;
 			IGCTRecipe newRecipe = null;
 
-			if (recipeStatus.values().stream().anyMatch(o -> o)) {
+/*			if (recipeStatus.values().stream().anyMatch(o -> o)) {
 				switch (wheel) {
 					case DOWN:
 						while (index < GCTRecipeList.instance.size()) {
@@ -323,7 +314,7 @@ public class GUIGemCuttersTable extends AbstractGuiContainerTracking {
 					container.updateRecipe();
 					// Handle switching pages
 				}
-			}
+			}*/
 		}
 	}
 }

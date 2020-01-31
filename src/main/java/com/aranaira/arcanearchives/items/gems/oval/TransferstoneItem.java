@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items.gems.oval;
+/*package com.aranaira.arcanearchives.items.gems.oval;
 
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
@@ -141,4 +141,4 @@ public class TransferstoneItem extends ArcaneGemItem {
 
 		return output;
 	}
-}
+}*/

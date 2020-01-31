@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items;
+/*package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.blocks.BrazierBlock;
 import com.aranaira.arcanearchives.blocks.RadiantResonatorBlock;
@@ -50,4 +50,4 @@ public class SerenityCharmItem extends ItemTemplate implements IUpgradeItem {
 	public List<Class<?>> upgradeFor () {
 		return UPGRADE_FOR;
 	}
-}
+}*/

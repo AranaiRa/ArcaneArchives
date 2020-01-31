@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items;
+/*package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
@@ -55,4 +55,4 @@ public class GemSocket extends ItemTemplate {
 		player.openGui(ArcaneArchives.instance, AAGuiHandler.BAUBLE_GEMSOCKET, world, (int) player.posX, (int) player.posY, (int) player.posZ);
 		return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
 	}
-}
+}*/

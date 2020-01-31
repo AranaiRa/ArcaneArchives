@@ -1,3 +1,4 @@
+/*
 package com.aranaira.arcanearchives.data.types;
 
 import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
@@ -15,7 +16,9 @@ import java.util.function.Consumer;
 
 public class ClientNetwork {
 	public ManifestList manifestItems = new ManifestList(new ArrayList<>());
-	/* Updated data via packet */
+	*/
+/* Updated data via packet *//*
+
 
 	private int totalResonators = 0;
 	private int totalCores = 0;
@@ -99,4 +102,5 @@ public class ClientNetwork {
 		return ownsHive;
 	}
 }
+*/
 

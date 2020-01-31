@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.recipe.gct;
+/*package com.aranaira.arcanearchives.recipe.gct;
 
 import com.aranaira.arcanearchives.util.ItemUtils;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,4 +21,4 @@ public class GCTRecipeWithCrafter extends GCTRecipe {
 		tag.setString("creator_name", player.getDisplayNameString());
 		return output;
 	}
-}
+}*/

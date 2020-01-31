@@ -1,16 +1,7 @@
 package com.aranaira.arcanearchives.mixins;
 
-import com.aranaira.arcanearchives.client.gui.*;
-import com.aranaira.arcanearchives.client.render.LineHandler;
-import com.aranaira.arcanearchives.config.NonModTrackingConfig;
-import com.aranaira.arcanearchives.util.ColorUtils;
-import com.aranaira.arcanearchives.util.ColorUtils.Color;
-import com.aranaira.arcanearchives.util.ManifestTrackingUtils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,19 +9,16 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Arrays;
-import java.util.List;
-
 @Mixin(GuiContainer.class)
 @SuppressWarnings("unused")
 public abstract class MixinGuiContainer {
-	@SideOnly(Side.CLIENT)
-	private static List<Class<? extends GuiContainer>> CONTAINER_IGNORE_LIST = Arrays.asList(GUIManifest.class, GUIGemCuttersTable.class, GUIUpgrades.class, GUIRadiantChest.class, GUIGemSocket.class);
+/*	@SideOnly(Side.CLIENT)
+	private static List<Class<? extends GuiContainer>> CONTAINER_IGNORE_LIST = Arrays.asList(GUIManifest.class, GUIGemCuttersTable.class, GUIUpgrades.class, GUIRadiantChest.class, GUIGemSocket.class);*/
 
 	@Inject(method = "drawSlot", at = @At(value = "HEAD"))
 	@SideOnly(Side.CLIENT)
 	private void onDrawSlot (Slot slot, CallbackInfo callbackInfo) {
-		if (NonModTrackingConfig.DisableMixinHighlight || NonModTrackingConfig.getContainerClasses().contains(((GuiContainer) (Object) this).getClass())) {
+/*		if (NonModTrackingConfig.DisableMixinHighlight || NonModTrackingConfig.getContainerClasses().contains(((GuiContainer) (Object) this).getClass())) {
 			return;
 		}
 
@@ -47,15 +35,15 @@ public abstract class MixinGuiContainer {
 				GuiContainer.drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, c.toInteger());
 				GlStateManager.enableDepth();
 			}
-		}
+		}*/
 	}
 
 	@Inject(method = "onGuiClosed", at = @At(value = "RETURN"))
 	@SideOnly(Side.CLIENT)
 	private void onGuiClosed (CallbackInfo callbackInfo) {
-		Minecraft _mc = ((GuiContainer) (Object) this).mc;
+/*		Minecraft _mc = ((GuiContainer) (Object) this).mc;
 		if (_mc != null && _mc.player != null) {
 			LineHandler.checkClear(_mc.player.dimension);
-		}
+		}*/
 	}
 }

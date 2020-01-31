@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.network;
+/*package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.config.ManifestConfig;
@@ -90,4 +90,4 @@ public class PacketConfig {
 			Networking.CHANNEL.sendToServer(packet);
 		}
 	}
-}
+}*/

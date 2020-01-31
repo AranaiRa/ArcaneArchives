@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.recipe.gct;
+/*package com.aranaira.arcanearchives.recipe.gct;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.api.IGCTRecipe;
@@ -156,4 +156,4 @@ public class GCTRecipeList implements IGCTRecipeList {
 	public int size () {
 		return RECIPE_LIST.size();
 	}
-}
+}*/

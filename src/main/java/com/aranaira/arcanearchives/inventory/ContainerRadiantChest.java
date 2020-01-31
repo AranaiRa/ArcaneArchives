@@ -1,12 +1,10 @@
 package com.aranaira.arcanearchives.inventory;
 
 import com.aranaira.arcanearchives.inventory.slots.SlotExtended;
-import com.aranaira.arcanearchives.network.Networking;
-import com.aranaira.arcanearchives.network.PacketRadiantChest.MessageSyncExtendedSlotContents;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity.TrackingExtendedItemStackHandler;
 import com.google.common.collect.Sets;
-import invtweaks.api.container.ChestContainer;
+//import invtweaks.api.container.ChestContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -17,7 +15,7 @@ import net.minecraft.network.play.server.SPacketSetSlot;
 import javax.annotation.Nullable;
 import java.util.Set;
 
-@ChestContainer(isLargeChest = true)
+//@ChestContainer(isLargeChest = true)
 public class ContainerRadiantChest extends Container {
 
 	protected RadiantChestTileEntity tile;
@@ -560,7 +558,7 @@ public class ContainerRadiantChest extends Container {
 			if (this.inventorySlots.get(i) instanceof SlotExtended) {
 				ItemStack stack = (this.inventorySlots.get(i)).getStack();
 
-				Networking.CHANNEL.sendTo(new MessageSyncExtendedSlotContents(this.windowId, i, stack), player);
+				/*				Networking.CHANNEL.sendTo(new MessageSyncExtendedSlotContents(this.windowId, i, stack), player);*/
 			}
 		}
 
@@ -569,7 +567,7 @@ public class ContainerRadiantChest extends Container {
 
 	public void syncSlot (EntityPlayerMP player, int slot, ItemStack stack) {
 		if (getSlot(slot) instanceof SlotExtended) {
-			Networking.CHANNEL.sendTo(new MessageSyncExtendedSlotContents(this.windowId, slot, stack), player);
+			/*			Networking.CHANNEL.sendTo(new MessageSyncExtendedSlotContents(this.windowId, slot, stack), player);*/
 		}
 	}
 }

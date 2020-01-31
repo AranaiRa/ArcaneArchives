@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.blocks;
+/*package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.DirectionalBlock;
 import com.aranaira.arcanearchives.client.render.LineHandler;
@@ -277,4 +277,4 @@ public class RadiantTrove extends DirectionalBlock {
 		}
 		return super.getPlayerRelativeBlockHardness(state, player, worldIn, pos);
 	}
-}
+}*/

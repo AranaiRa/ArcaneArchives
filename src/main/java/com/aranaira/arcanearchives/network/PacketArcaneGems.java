@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.network;
+/*package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
@@ -133,4 +133,4 @@ public class PacketArcaneGems {
 			GemUtil.rechargeGems(player);
 		}
 	}
-}
+}*/

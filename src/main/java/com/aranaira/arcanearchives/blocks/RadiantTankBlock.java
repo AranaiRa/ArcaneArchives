@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.blocks;
+/*package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import com.aranaira.arcanearchives.client.render.LineHandler;
@@ -203,4 +203,4 @@ public class RadiantTankBlock extends TemplateBlock {
 	public int getComparatorInputOverride (IBlockState blockState, World worldIn, BlockPos pos) {
 		return ItemUtils.calculateRedstoneFromTileEntity(worldIn.getTileEntity(pos));
 	}
-}
+}*/

@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items;
+/*package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.types.enums.UpgradeType;
@@ -44,4 +44,4 @@ public class RadiantKeyItem extends ItemTemplate implements IUpgradeItem {
 	public List<Class<?>> upgradeFor () {
 		return null;
 	}
-}
+}*/

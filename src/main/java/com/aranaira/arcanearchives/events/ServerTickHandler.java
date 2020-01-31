@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.events;
+/*package com.aranaira.arcanearchives.events;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.DataHelper;
@@ -125,4 +125,4 @@ public class ServerTickHandler {
 			network.rebuildTotals();
 		}
 	}
-}
+}*/

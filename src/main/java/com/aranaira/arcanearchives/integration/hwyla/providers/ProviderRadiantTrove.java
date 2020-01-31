@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.integration.hwyla.providers;
+/*package com.aranaira.arcanearchives.integration.hwyla.providers;
 
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler;
@@ -26,4 +26,4 @@ public class ProviderRadiantTrove implements IWailaDataProvider {
 
 		return tooltip;
 	}
-}
+}*/

@@ -30,6 +30,8 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: Replace with JEI colour utility WHICH ACTUALLY WORKS
+
 @SideOnly(Side.CLIENT)
 public class TintUtils {
 	public static Path FILE_PATH;

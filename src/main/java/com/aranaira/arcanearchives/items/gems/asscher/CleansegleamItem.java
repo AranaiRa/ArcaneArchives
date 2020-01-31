@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items.gems.asscher;
+/*package com.aranaira.arcanearchives.items.gems.asscher;
 
 
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
@@ -64,9 +64,9 @@ public class CleansegleamItem extends ArcaneGemItem {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick (World world, EntityPlayer player, EnumHand hand) {
 		if (!world.isRemote) {
-			/*for (String s : PotionCoreEffects.POTIONS.keySet()) {
+			*//*for (String s : PotionCoreEffects.POTIONS.keySet()) {
 				ArcaneArchives.logger.info("\"" + s + "\"");
-			}*/
+			}*//*
 			AvailableGemsHandler handler = GemUtil.getHeldGem(player, hand);
 			if (handler.getHeld() != null) {
 				if (GemUtil.getCharge(handler.getHeld()) == 0) {
@@ -109,13 +109,13 @@ public class CleansegleamItem extends ArcaneGemItem {
 		return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
 	}
 
-	/**
+	*//**
 	 * Removes effects from the target entity.
 	 *
 	 * @param target           What entity to affect
 	 * @param hasMatterUpgrade Whether the gem has a matter upgrade (and therefore removes all negative effects)
 	 * @return Charge cost of the operation
-	 */
+	 *//*
 	private int removeEffects (EntityLivingBase target, boolean hasMatterUpgrade) {
 		ArrayList<Potion> toRemove = new ArrayList<>();
 		int cost = 0;
@@ -179,4 +179,4 @@ public class CleansegleamItem extends ArcaneGemItem {
 	private void applyPotionCoreBuffs () {
 
 	}
-}
+}*/

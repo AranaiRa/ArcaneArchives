@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items.gems;
+/*package com.aranaira.arcanearchives.items.gems;
 
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem.GemColor;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
@@ -132,4 +132,4 @@ public class GemRechargePowder extends ItemTemplate {
 			}
 		}
 	}
-}
+}*/

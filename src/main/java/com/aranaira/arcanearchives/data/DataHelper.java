@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.data;
+/*package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.HiveSaveData.Hive;
@@ -23,13 +23,13 @@ public class DataHelper {
 		CLIENT_MAP.clear();
 	}
 
-	/**
+	*//**
 	 * Fetches an Arcane Archives server-side network fetched from the World object passed in.
 	 * Returns null if either argument is null or the requested network is invalid.
 	 *
 	 * @param uuid The player/network UUID
 	 * @return An ServerNetwork instance for the given id, or null if it was not found.
-	 */
+	 *//*
 	@Nullable
 	public static ServerNetwork getServerNetwork (UUID uuid) {
 		WorldServer world = getWorld();
@@ -228,4 +228,4 @@ public class DataHelper {
 
 		return saveData;
 	}
-}
+}*/

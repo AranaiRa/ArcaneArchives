@@ -54,6 +54,7 @@ import java.util.List;
 import static net.minecraft.util.EnumFacing.*;
 import static org.lwjgl.opengl.GL11.*;
 
+@SuppressWarnings("deprecation")
 public class RenderUtil {
 
 	public static final @Nonnull

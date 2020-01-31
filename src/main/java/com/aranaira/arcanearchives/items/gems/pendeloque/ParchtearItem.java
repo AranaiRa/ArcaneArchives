@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items.gems.pendeloque;
+/*package com.aranaira.arcanearchives.items.gems.pendeloque;
 
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
@@ -100,4 +100,4 @@ public class ParchtearItem extends ArcaneGemItem {
 
 		return positions;
 	}
-}
+}*/

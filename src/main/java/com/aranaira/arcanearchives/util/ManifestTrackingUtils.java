@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.util;
+/*package com.aranaira.arcanearchives.util;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.util.ManifestUtils.CollatedEntry;
@@ -134,4 +134,4 @@ public class ManifestTrackingUtils {
 	public static Set<Vec3d> getPositions (int dimension) {
 		return getDimensionPositions(dimension);
 	}
-}
+}*/

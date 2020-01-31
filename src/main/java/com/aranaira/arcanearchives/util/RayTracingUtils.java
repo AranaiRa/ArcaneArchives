@@ -12,6 +12,7 @@ import java.util.List;
 
 public class RayTracingUtils {
 	//Written by Daomephsta; Used with permission
+	// TODO: Find original source file & license to link back to
 	public static RayTraceResult raytraceClosestObject (World world, @Nullable Entity exclude, Vec3d startVec, Vec3d endVec) {
 		RayTraceResult result = world.rayTraceBlocks(startVec, endVec);
 		double blockHitDistance = 0.0D; // The distance to the block that was

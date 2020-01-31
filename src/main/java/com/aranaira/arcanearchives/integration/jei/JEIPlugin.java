@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.integration.jei;
+/*package com.aranaira.arcanearchives.integration.jei;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.config.ConfigHandler;
@@ -84,4 +84,4 @@ public class JEIPlugin implements IModPlugin {
 
 		itemRegistry.removeIngredientsAtRuntime(VanillaTypes.ITEM, ignores);
 	}
-}
+}*/

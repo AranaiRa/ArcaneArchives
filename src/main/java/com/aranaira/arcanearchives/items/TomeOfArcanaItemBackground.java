@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items;
+/*package com.aranaira.arcanearchives.items;
 
 import gigaherz.lirelent.guidebook.guidebook.client.GuiGuidebook;
 import gigaherz.lirelent.guidebook.guidebook.client.background.IBookBackground;
@@ -142,4 +142,4 @@ public class TomeOfArcanaItemBackground implements IBookBackground {
 
 		return new TomeOfArcanaItemBackground(gui, elementImage);
 	};
-}
+}*/

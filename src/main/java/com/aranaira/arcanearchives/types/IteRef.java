@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.types;
+/*package com.aranaira.arcanearchives.types;
 
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
@@ -41,4 +41,4 @@ public class IteRef {
 	public int priority () {
 		return networkPriority;
 	}
-}
+}*/

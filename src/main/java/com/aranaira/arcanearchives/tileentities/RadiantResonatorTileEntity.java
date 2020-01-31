@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tileentities;
+/*package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.QuartzCluster;
@@ -221,4 +221,4 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity {
 		public static final String CURRENT_TICK = "current_tick";
 		public static final String CAN_TICK = "can_tick";
 	}
-}
+}*/

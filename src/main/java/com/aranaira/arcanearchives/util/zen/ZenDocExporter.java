@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.util.zen;
 
+import com.aranaira.arcanearchives.util.StringHelper;
 import org.apache.commons.lang3.StringUtils;
 import stanhebben.zenscript.annotations.Optional;
 
@@ -248,11 +249,11 @@ public class ZenDocExporter {
 
 		List<MethodAnnotationPair> methodList = new ArrayList<>();
 
-		for (int j = 0; j < methods.length; j++) {
-			ZenDocMethod annotation = methods[j].getDeclaredAnnotation(ZenDocMethod.class);
+		for (Method method : methods) {
+			ZenDocMethod annotation = method.getDeclaredAnnotation(ZenDocMethod.class);
 
 			if (annotation != null) {
-				methodList.add(new MethodAnnotationPair(methods[j], annotation));
+				methodList.add(new MethodAnnotationPair(method, annotation));
 			}
 		}
 
@@ -268,7 +269,7 @@ public class ZenDocExporter {
 			result = result.substring(3);
 
 		} else if (result.startsWith("String")) {
-			result = epicsquid.roots.util.StringHelper.lowercaseFirstLetter(result);
+			result = StringHelper.lowercaseFirstLetter(result);
 		}
 		return result;
 	}

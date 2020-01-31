@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.client.render;
+/*package com.aranaira.arcanearchives.client.render;
 
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.gems.GemUtil;
@@ -144,4 +144,4 @@ public class RenderGemcasting {
 	public enum EnumGemGuiMode {
 		RIGHT, LEFT, SOCKET, FABRIAL_MAIN, FABRIAL_1, FABRIAL_2, FABRIAL_3, FABRIAL_4
 	}
-}
+}*/

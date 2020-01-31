@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.data.types;
+/*package com.aranaira.arcanearchives.data.types;
 
 import com.aranaira.arcanearchives.api.immanence.IImmanenceBus;
 import com.aranaira.arcanearchives.api.immanence.IImmanenceSubscriber;
@@ -145,9 +145,9 @@ public class ServerNetwork implements IServerNetwork {
 		ref.pos = newPosition;
 	}
 
-	/***
+	*//***
 	 * Static entrypoint used by NetworkSaveData
-	 */
+	 *//*
 	public static ServerNetwork fromNBT (NBTTagCompound data) {
 		ServerNetwork network = new ServerNetwork(null);
 		network.readFromSave(data);
@@ -172,10 +172,10 @@ public class ServerNetwork implements IServerNetwork {
 		return safeLimitedIDs.contains(id);
 	}
 
-	/**
+	*//**
 	 * Attempts to fetch the player associated with this network.
 	 * Returns null if they do not exist or are offline.
-	 */
+	 *//*
 	@Override
 	@Nullable
 	public EntityPlayer getPlayer () {
@@ -246,9 +246,9 @@ public class ServerNetwork implements IServerNetwork {
 		tileEntityInstance.joinedNetwork(this);
 	}
 
-	/**
+	*//**
 	 * Functions for removing tile entities from the network.
-	 */
+	 *//*
 	@Override
 	public void removeTile (ImmanenceTileEntity te) {
 		tiles.removeByUUID(te.getUuid());
@@ -329,12 +329,12 @@ public class ServerNetwork implements IServerNetwork {
 		return manifestItems;
 	}
 
-	/**
+	*//**
 	 * Attempts to synchronsie the rebuilt core total back to the client,
 	 * where the information is used to prevent additional placement of
 	 * resonators client-side in addition to server-side to prevent
 	 * ghosting.
-	 */
+	 *//*
 	@Override
 	public void synchroniseData () {
 		EntityPlayer player = getPlayer();
@@ -394,9 +394,9 @@ public class ServerNetwork implements IServerNetwork {
 		}
 	}
 
-	/**
+	*//**
 	 * Rebuilds the manifestItems list.
-	 */
+	 *//*
 	@Override
 	public void rebuildManifest () {
 		manifestItems.clear();
@@ -407,9 +407,9 @@ public class ServerNetwork implements IServerNetwork {
 		manifestItems.addAll(manifestList);
 	}
 
-	/**
+	*//**
 	 * Fetches only manifest tile entites: radiant chests & troves.
-	 */
+	 *//*
 	@Override
 	public TileListIterable getManifestTileEntities () {
 		return TileUtils.filterAssignableClass(this.tiles, IManifestTileEntity.class);
@@ -442,4 +442,4 @@ public class ServerNetwork implements IServerNetwork {
 		int distance = distanceSq(pos1, pos2);
 		return distance < maxDistance;
 	}
-}
+}*/

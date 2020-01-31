@@ -1,13 +1,6 @@
 package com.aranaira.arcanearchives.config;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.client.gui.GUIManifest;
-import com.aranaira.arcanearchives.items.gems.oval.MunchstoneItem;
-import com.aranaira.arcanearchives.network.Networking;
-import com.aranaira.arcanearchives.network.PacketConfig.DefaultRoutingType;
-import com.aranaira.arcanearchives.network.PacketConfig.MaxDistance;
-import com.aranaira.arcanearchives.network.PacketConfig.TrovesDispense;
-import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.Config.RequiresMcRestart;
 import net.minecraftforge.common.config.ConfigManager;
@@ -32,7 +25,7 @@ public class ConfigHandler {
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	@SideOnly(Side.CLIENT)
 	public static void onClientConfigChanged (ConfigChangedEvent.OnConfigChangedEvent event) {
-		if (event.getModID().equals(ArcaneArchives.MODID)) {
+/*		if (event.getModID().equals(ArcaneArchives.MODID)) {
 			MaxDistance packet = new MaxDistance(com.aranaira.arcanearchives.config.ManifestConfig.MaxDistance);
 			Networking.CHANNEL.sendToServer(packet);
 
@@ -46,7 +39,7 @@ public class ConfigHandler {
 			if (minecraft.currentScreen instanceof GUIManifest) {
 				((GUIManifest) minecraft.currentScreen).doRefresh();
 			}
-		}
+		}*/
 	}
 
 	@Config.Comment("Disable to use default Minecraft-style GUI elements. (Client Only)")
@@ -81,10 +74,10 @@ public class ConfigHandler {
 		@Config.Name("Colourblind Mode")
 		public boolean ColourblindMode = false;
 
-		@Config.Comment("What blocks a Munchstone can eat. First value is a block (such as minecraft:log), second value is the amount of hunger restored. Saturation always equals the hunger restoration.")
+/*		@Config.Comment("What blocks a Munchstone can eat. First value is a block (such as minecraft:log), second value is the amount of hunger restored. Saturation always equals the hunger restoration.")
 		@Config.Name("Valid Munchstone Blocks")
 		@Config.RequiresMcRestart
-		public String[] MunchstoneValidEntries = MunchstoneItem.DEFAULT_ENTRIES;
+		public String[] MunchstoneValidEntries = MunchstoneItem.DEFAULT_ENTRIES;*/
 	}
 
 	@Config.Comment("Settings related to sounds")

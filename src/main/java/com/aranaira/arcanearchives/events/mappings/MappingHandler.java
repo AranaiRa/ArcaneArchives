@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.events.mappings;
+/*package com.aranaira.arcanearchives.events.mappings;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.BlockRegistry;
@@ -95,4 +95,4 @@ public class MappingHandler {
 				return null;
 		}
 	}
-}
+}*/

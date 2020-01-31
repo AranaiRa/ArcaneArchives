@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items.gems.pendeloque;
+/*package com.aranaira.arcanearchives.items.gems.pendeloque;
 
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.gems.GemUtil;
@@ -50,7 +50,7 @@ public class RivertearItem extends ArcaneGemItem {
 		return true;
 	}
 
-    /*@Override
+    *//*@Override
     public EnumActionResult onItemUse (EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         if (!world.isRemote) {
             if(GemUtil.getCharge(player.getHeldItem(hand)) > 0) {
@@ -60,7 +60,7 @@ public class RivertearItem extends ArcaneGemItem {
             }
         }
         return EnumActionResult.PASS;
-    }*/
+    }*//*
 
 	@Override
 	public boolean onEntityItemUpdate (EntityItem entityItem) {
@@ -125,4 +125,4 @@ public class RivertearItem extends ArcaneGemItem {
 		}
 		return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
 	}
-}
+}*/

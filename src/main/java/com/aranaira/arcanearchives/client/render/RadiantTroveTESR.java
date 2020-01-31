@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.client.render;
+/*package com.aranaira.arcanearchives.client.render;
 
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import net.minecraft.client.renderer.GlStateManager;
@@ -9,7 +9,7 @@ public class RadiantTroveTESR extends TileEntitySpecialRenderer<RadiantTroveTile
 	@Override
 	public void render (RadiantTroveTileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		super.render(te, x, y, z, partialTicks, destroyStage, alpha);
-		if (false/*te.isBeingTracked() && ConfigHandler.nonModTrackingConfig.chestsGlow*/) { //TODO: uncomment this when overlays are added
+		if (false*//*te.isBeingTracked() && ConfigHandler.nonModTrackingConfig.chestsGlow*//*) { //TODO: uncomment this when overlays are added
 			GlStateManager.pushMatrix();
 			GL11.glTranslated(x, y, z);
 			boolean wasLighting = GL11.glIsEnabled(GL11.GL_LIGHTING);
@@ -26,4 +26,4 @@ public class RadiantTroveTESR extends TileEntitySpecialRenderer<RadiantTroveTile
 			GlStateManager.popMatrix();
 		}
 	}
-}
+}*/

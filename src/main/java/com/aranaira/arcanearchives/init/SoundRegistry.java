@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.init;
+/*package com.aranaira.arcanearchives.init;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import net.minecraft.util.ResourceLocation;
@@ -29,4 +29,4 @@ public class SoundRegistry {
 		event.getRegistry().register(RESONATOR_LOOP);
 		event.getRegistry().register(BRAZIER_ABSORB);
 	}
-}
+}*/

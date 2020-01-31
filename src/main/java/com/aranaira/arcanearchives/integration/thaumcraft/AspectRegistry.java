@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.integration.thaumcraft;
+/*package com.aranaira.arcanearchives.integration.thaumcraft;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.BlockRegistry;
@@ -186,4 +186,4 @@ public class AspectRegistry {
 			event.register.registerObjectTag(stack, list);
 		}
 	}
-}
+}*/

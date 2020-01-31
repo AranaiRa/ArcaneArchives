@@ -1,35 +1,6 @@
 package com.aranaira.arcanearchives.recipe.gct;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.api.IGCTRecipe;
-import com.aranaira.arcanearchives.api.RecipeIngredientHandler;
-import com.aranaira.arcanearchives.recipe.IngredientStack;
-import com.aranaira.arcanearchives.recipe.IngredientsMatcher;
-import it.unimi.dsi.fastutil.ints.Int2IntMap;
-import it.unimi.dsi.fastutil.ints.Int2IntMap.Entry;
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemFlintAndSteel;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandlerItem;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemHandlerHelper;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-
-public class GCTRecipe implements IGCTRecipe {
+/*public class GCTRecipe implements IGCTRecipe {
 	private final List<IngredientStack> ingredients = new ArrayList<>();
 	private final ItemStack result;
 	private final ResourceLocation name;
@@ -158,4 +129,4 @@ public class GCTRecipe implements IGCTRecipe {
 			}
 		}
 	}
-}
+}*/

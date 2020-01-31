@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.network;
+/*package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.api.IGCTRecipe;
 import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
@@ -135,4 +135,4 @@ public class PacketGemCutters {
 			}
 		}
 	}
-}
+}*/

@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items;
+/*package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import net.minecraft.client.util.ITooltipFlag;
@@ -23,4 +23,4 @@ public class GBookArsenalConditionItem extends ItemTemplate {
 	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add("Used to determine if Arcane Arsenal is loaded. " + TextFormatting.RED + TextFormatting.BOLD + "YOU SHOULD NEVER BE ABLE TO SEE THIS ITEM.");
 	}
-}
+}*/

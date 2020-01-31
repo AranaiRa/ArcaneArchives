@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.client.render;
+/*package com.aranaira.arcanearchives.client.render;
 
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.tileentities.BrazierTileEntity;
@@ -34,4 +34,4 @@ public class BrazierTESR extends TileEntitySpecialRenderer<BrazierTileEntity> {
 
 		GlStateManager.popMatrix();
 	}
-}
+}*/

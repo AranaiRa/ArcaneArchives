@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.recipe;
+/*package com.aranaira.arcanearchives.recipe;
 
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
@@ -93,4 +93,4 @@ public class IngredientsMatcher {
 		}
 		return res;
 	}
-}
+}*/

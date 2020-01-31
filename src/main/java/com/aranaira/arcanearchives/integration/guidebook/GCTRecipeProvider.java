@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.integration.guidebook;
+/*package com.aranaira.arcanearchives.integration.guidebook;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.api.IGCTRecipe;
@@ -73,4 +73,4 @@ public class GCTRecipeProvider extends RecipeProvider {
 
 		return new ProvidedComponents(72, stacks.toArray(new ElementStack[]{}), background, additionalRenderer);
 	}
-}
+}*/

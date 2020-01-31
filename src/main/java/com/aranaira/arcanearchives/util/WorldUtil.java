@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.util;
+/*package com.aranaira.arcanearchives.util;
 
 import net.minecraft.block.Block;
 import net.minecraft.server.MinecraftServer;
@@ -11,6 +11,8 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
+
+TODO: REWRITE AS STATIC METHOD OF TILE ENTITY TO AVOID GENERICISM
 
 public class WorldUtil {
 	@Nullable
@@ -82,4 +84,4 @@ public class WorldUtil {
 			}
 		}
 	}
-}
+}*/

@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.inventory;
+/*package com.aranaira.arcanearchives.inventory;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -13,4 +13,4 @@ public class ContainerFakeManifest extends Container {
 	public boolean canInteractWith (@Nonnull EntityPlayer playerIn) {
 		return true;
 	}
-}
+}*/

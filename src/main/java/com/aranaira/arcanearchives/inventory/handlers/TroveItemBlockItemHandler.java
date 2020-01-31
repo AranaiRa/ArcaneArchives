@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.inventory.handlers;
+/*package com.aranaira.arcanearchives.inventory.handlers;
 
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler.Tags;
@@ -179,4 +179,4 @@ public class TroveItemBlockItemHandler implements ITroveItemHandler, ICapability
 		}
 		tag.setTag(RadiantTroveTileEntity.Tags.HANDLER_ITEM, result);
 	}
-}
+}*/

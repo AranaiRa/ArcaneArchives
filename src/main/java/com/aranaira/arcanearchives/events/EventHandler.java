@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.events;
+/*package com.aranaira.arcanearchives.events;
 
 import com.aranaira.arcanearchives.client.render.LineHandler;
 import com.aranaira.arcanearchives.client.render.RenderGemcasting;
@@ -632,4 +632,4 @@ public class EventHandler {
 			event.addCapability(BaubleBodyCapabilityHandler.NAME, BaubleBodyCapabilityHandler.instance);
 		}
 	}
-}
+}*/

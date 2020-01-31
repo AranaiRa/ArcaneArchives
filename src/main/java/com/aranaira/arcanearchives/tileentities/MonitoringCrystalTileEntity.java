@@ -1,6 +1,6 @@
-package com.aranaira.arcanearchives.tileentities;
+/*package com.aranaira.arcanearchives.tileentities;
 
-import com.aranaira.arcanearchives.blocks.templates.DirectionalBlock;
+import com.aranaira.arcanearchives.blocks.templates.HorizontalTemplateBlock;
 import com.aranaira.arcanearchives.tileentities.interfaces.IManifestTileEntity;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.inventory.IInventory;
@@ -65,10 +65,10 @@ public class MonitoringCrystalTileEntity extends ImmanenceTileEntity implements 
 	public BlockPos getTarget () {
 		if (target == null) {
 			IBlockState me = world.getBlockState(getPos());
-			EnumFacing facing = me.getValue(((DirectionalBlock) me.getBlock()).getFacingProperty()).getOpposite();
+			EnumFacing facing = me.getValue(((HorizontalTemplateBlock) me.getBlock()).getFacingProperty()).getOpposite();
 			target = getPos().offset(facing);
 		}
 
 		return target;
 	}
-}
+}*/

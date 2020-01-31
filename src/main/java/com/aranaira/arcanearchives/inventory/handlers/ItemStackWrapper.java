@@ -1,3 +1,4 @@
+/*
 package com.aranaira.arcanearchives.inventory.handlers;
 
 import net.minecraft.item.ItemStack;
@@ -79,4 +80,5 @@ public class ItemStackWrapper implements IItemHandlerModifiable {
 		this.handler.setStackInSlot(slot, stack);
 	}
 }
+*/
 

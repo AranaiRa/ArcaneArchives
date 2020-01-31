@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.client.gui;
+/*package com.aranaira.arcanearchives.client.gui;
 
 import com.aranaira.arcanearchives.client.gui.controls.InvisibleButton;
 import com.aranaira.arcanearchives.config.ConfigHandler;
@@ -95,4 +95,4 @@ public class GUIGemSocket extends GuiContainer {
 		}
 
 	}
-}
+}*/

@@ -1,3 +1,4 @@
+/*
 package com.aranaira.arcanearchives.inventory;
 
 import com.aranaira.arcanearchives.init.ItemRegistry;
@@ -250,4 +251,4 @@ public class ContainerDevouringCharm extends Container {
 			return 1;
 		}
 	}
-}
+}*/

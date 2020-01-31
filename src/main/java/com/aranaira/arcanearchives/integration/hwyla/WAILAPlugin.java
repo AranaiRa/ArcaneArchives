@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.integration.hwyla;
+/*package com.aranaira.arcanearchives.integration.hwyla;
 
 import com.aranaira.arcanearchives.integration.hwyla.providers.ProviderRadiantChest;
 import com.aranaira.arcanearchives.integration.hwyla.providers.ProviderRadiantTrove;
@@ -23,4 +23,4 @@ public class WAILAPlugin implements IWailaPlugin {
 		registrar.registerBodyProvider(new ProviderRadiantChest(), RadiantChestTileEntity.class);
 		registrar.registerBodyProvider(new ProviderRadiantTrove(), RadiantTroveTileEntity.class);
 	}
-}
+}*/

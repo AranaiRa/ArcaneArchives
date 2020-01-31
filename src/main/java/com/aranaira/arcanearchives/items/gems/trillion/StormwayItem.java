@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items.gems.trillion;
+/*package com.aranaira.arcanearchives.items.gems.trillion;
 
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.gems.GemUtil;
@@ -110,4 +110,4 @@ public class StormwayItem extends ArcaneGemItem {
 			return true;
 		}
 	}
-}
+}*/

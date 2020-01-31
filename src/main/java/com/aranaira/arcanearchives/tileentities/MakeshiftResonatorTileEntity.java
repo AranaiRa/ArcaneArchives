@@ -1,12 +1,11 @@
 package com.aranaira.arcanearchives.tileentities;
 
-import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.config.ServerSideConfig;
-import com.aranaira.arcanearchives.init.BlockRegistry;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -14,7 +13,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nonnull;
 import java.util.Random;
 
-public class WonkyResonatorTileEntity extends AATileEntity implements ITickable {
+public class MakeshiftResonatorTileEntity extends TileEntity implements ITickable {
 	public static Random rand = new Random();
 
 	private int growth = 0;
@@ -22,8 +21,8 @@ public class WonkyResonatorTileEntity extends AATileEntity implements ITickable 
 	private boolean canTick = false;
 	private boolean breaking = false;
 
-	public WonkyResonatorTileEntity () {
-		setName("wonky_resonator_tile_entity");
+	public MakeshiftResonatorTileEntity () {
+		//setName("wonky_resonator_tile_entity");
 	}
 
 	@Override

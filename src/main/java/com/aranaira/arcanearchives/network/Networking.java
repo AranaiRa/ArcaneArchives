@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.network;
+/*package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.network.Handlers.BaseHandler;
@@ -83,4 +83,4 @@ public class Networking {
 	public static void sendToAllTracking (IMessage message, Entity entity) {
 		CHANNEL.sendToAllTracking(message, entity);
 	}
-}
+}*/

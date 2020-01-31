@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.types.lists;
+/*package com.aranaira.arcanearchives.types.lists;
 
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.types.IteRef;
@@ -92,4 +92,4 @@ public interface ITileList extends Iterable<IteRef> {
 
 	int getSize ();
 
-}
+}*/

@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.inventory;
+/*package com.aranaira.arcanearchives.inventory;
 
 import com.aranaira.arcanearchives.inventory.handlers.GemSocketHandler;
 import com.aranaira.arcanearchives.items.GemSocket;
@@ -126,4 +126,4 @@ public class ContainerGemSocket extends Container {
 
 		return super.slotClick(slotID, dragType, clickType, player);
 	}
-}
+}*/

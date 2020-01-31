@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tileentities;
+/*package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
@@ -405,11 +405,11 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 			return upgrades;
 		}
 
-		/**
+		*//**
 		 * Returns the actual number of upgrades, rather than their upgrade potency values.
 		 *
 		 * @return X is the number of storage upgrades, Y the number of optional upgrades
-		 */
+		 *//*
 		public Point getTotalUpgradesCount () {
 			return new Point(sizeUpgrades.getTotalUpgradesQuantity(), optionalUpgrades.getTotalUpgradesQuantity());
 		}
@@ -493,4 +493,4 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 			}
 		}
 	}
-}
+}*/

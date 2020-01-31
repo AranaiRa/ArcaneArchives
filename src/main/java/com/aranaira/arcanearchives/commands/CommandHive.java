@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.commands;
+/*package com.aranaira.arcanearchives.commands;
 
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.HiveSaveData;
@@ -70,4 +70,4 @@ public class CommandHive extends CommandBase {
 			}
 		}
 	}
-}
+}*/

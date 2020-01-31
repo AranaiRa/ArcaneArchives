@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.events;
+/*package com.aranaira.arcanearchives.events;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.DataHelper;
@@ -12,4 +12,4 @@ public class NetworksHandler {
 	public static void playerLoggedIn (PlayerEvent.PlayerLoggedInEvent event) {
 		DataHelper.clearClientCache();
 	}
-}
+}*/

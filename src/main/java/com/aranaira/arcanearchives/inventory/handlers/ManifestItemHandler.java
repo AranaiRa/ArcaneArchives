@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.inventory.handlers;
+/*package com.aranaira.arcanearchives.inventory.handlers;
 
 import com.aranaira.arcanearchives.types.lists.ManifestList;
 import com.aranaira.arcanearchives.types.lists.ManifestList.SortingDirection;
@@ -120,4 +120,4 @@ public class ManifestItemHandler implements IItemHandlerModifiable {
 		manifestBase.setSortingType(sortingType);
 		manifestActive = manifestBase.sorted().filtered();
 	}
-}
+}*/

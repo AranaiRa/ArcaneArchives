@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items;
+/*package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.items.RadiantAmphoraItem.AmphoraUtil;
 import com.aranaira.arcanearchives.items.RadiantAmphoraItem.TankMode;
@@ -78,16 +78,16 @@ public class DispenseAmphora implements IBehaviorDispenseItem {
 		}
 	}
 
-	/**
+	*//**
 	 * Play the dispense sound from the specified block.
-	 */
+	 *//*
 	protected void playDispenseSound (IBlockSource source) {
 		source.getWorld().playEvent(1000, source.getBlockPos(), 0);
 	}
 
-	/**
+	*//**
 	 * Order clients to display dispense particles from the specified block and facing.
-	 */
+	 *//*
 	protected void spawnDispenseParticles (IBlockSource source, EnumFacing facingIn) {
 		source.getWorld().playEvent(2000, source.getBlockPos(), this.getWorldEventDataFrom(facingIn));
 	}
@@ -95,4 +95,4 @@ public class DispenseAmphora implements IBehaviorDispenseItem {
 	private int getWorldEventDataFrom (EnumFacing facingIn) {
 		return facingIn.getXOffset() + 1 + (facingIn.getZOffset() + 1) * 3;
 	}
-}
+}*/

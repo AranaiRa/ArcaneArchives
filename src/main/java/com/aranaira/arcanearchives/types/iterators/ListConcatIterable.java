@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.types.iterators;
+/*package com.aranaira.arcanearchives.types.iterators;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -68,4 +68,4 @@ public class ListConcatIterable<T> implements Iterable<T> {
 			return iterator.next();
 		}
 	}
-}
+}*/

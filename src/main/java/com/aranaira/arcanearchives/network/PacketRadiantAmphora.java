@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.network;
+/*package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.items.RadiantAmphoraItem.AmphoraUtil;
@@ -22,4 +22,4 @@ public class PacketRadiantAmphora {
 			}
 		}
 	}
-}
+}*/

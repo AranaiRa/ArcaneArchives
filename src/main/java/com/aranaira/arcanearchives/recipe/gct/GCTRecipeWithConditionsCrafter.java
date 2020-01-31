@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.recipe.gct;
+/*package com.aranaira.arcanearchives.recipe.gct;
 
 import com.aranaira.arcanearchives.api.IGCTRecipe;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,4 +32,4 @@ public class GCTRecipeWithConditionsCrafter extends GCTRecipeWithCrafter {
 
 		return true;
 	}
-}
+}*/

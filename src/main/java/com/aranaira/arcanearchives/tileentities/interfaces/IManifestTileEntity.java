@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tileentities.interfaces;
+/*package com.aranaira.arcanearchives.tileentities.interfaces;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
@@ -17,4 +17,4 @@ public interface IManifestTileEntity {
 	String getChestName ();
 
 	IItemHandler getInventory ();
-}
+}*/

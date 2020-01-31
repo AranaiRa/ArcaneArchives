@@ -1,4 +1,4 @@
-//Some credit goes to the developers of Blood Magic as I am using their codebase as an example of how to do certain things.
+/*//Some credit goes to the developers of Blood Magic as I am using their codebase as an example of how to do certain things.
 //Their WorldSavedData https://github.com/WayofTime/BloodMagic/blob/c8e42e32885e40ac17d05c7af35d4299d9e74dbe/src/main/java/WayofTime/bloodmagic/core/data/BMWorldSavedData.java
 
 package com.aranaira.arcanearchives.data;
@@ -74,4 +74,4 @@ public class NetworkSaveData extends WorldSavedData {
 
 		return tagCompound;
 	}
-}
+}*/

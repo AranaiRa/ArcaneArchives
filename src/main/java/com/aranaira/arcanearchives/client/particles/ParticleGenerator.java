@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.client.particles;
+/*package com.aranaira.arcanearchives.client.particles;
 
 import com.aranaira.arcanearchives.client.render.RenderUtils;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
@@ -107,4 +107,4 @@ public class ParticleGenerator {
 
 		return new Vec3d(x, y, z);
 	}
-}
+}*/

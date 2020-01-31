@@ -1,3 +1,4 @@
+/*
 package com.aranaira.arcanearchives.inventory.slots;
 
 import com.aranaira.arcanearchives.inventory.ContainerRadiantCraftingTable;
@@ -9,12 +10,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
+*/
 /**
  * SlotCraftingSucks from FastWorkbench adapted for the Crafting Station container (no change in functionality)
  * See: https://github.com/Shadows-of-Fire/FastWorkbench/blob/master/src/main/java/shadows/fastbench/gui/SlotCraftingSucks.java
  * <p>
  * Basically it ju
- */
+ *//*
+
 public class SlotCraftingFastWorkbench extends SlotCrafting {
 	private final EntityPlayer player;
 	private final ContainerRadiantCraftingTable containerCraftingStation;
@@ -83,4 +86,5 @@ public class SlotCraftingFastWorkbench extends SlotCrafting {
 		return stack;
 	}
 }
+*/
 

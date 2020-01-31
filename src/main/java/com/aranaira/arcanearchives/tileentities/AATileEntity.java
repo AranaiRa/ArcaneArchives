@@ -1,6 +1,6 @@
-package com.aranaira.arcanearchives.tileentities;
+/*package com.aranaira.arcanearchives.tileentities;
 
-import com.aranaira.arcanearchives.blocks.templates.DirectionalBlock;
+import com.aranaira.arcanearchives.blocks.templates.HorizontalTemplateBlock;
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import com.aranaira.arcanearchives.tileentities.interfaces.IAccessorTileEntity;
 import com.aranaira.arcanearchives.tileentities.interfaces.IDirectionalTileEntity;
@@ -15,33 +15,33 @@ import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nullable;
 
-/**
+*//**
  * The base Arcane Archives TileEntity.
  * <p>
  * The majority of functionality for actual machines is implemented in `ImmanenceTileEntity`.
  * The only direct descendents of this that are not ITEs are the Gem Cutter's Table (as it
  * does not use immanence), and the Accessor Block.
- */
+ *//*
 public abstract class AATileEntity extends TileEntity implements INamedTileEntity, IAccessorTileEntity, ISizedTileEntity, IDirectionalTileEntity {
 	public String name;
 	public MultiblockSize size;
 
-	/**
+	*//**
 	 * This boolean value is used to ensure that cascading break events do not
 	 * result in an infinite loop. Once the process has started, all future function
 	 * calls to breakBlock are discarded.
-	 */
+	 *//*
 	private boolean breaking = false;
 
-	/**
+	*//**
 	 * @return The current size associated with this tile entity. See `setSize`.
-	 */
+	 *//*
 	@Override
 	public MultiblockSize getSize () {
 		return this.size;
 	}
 
-	/**
+	*//**
 	 * At this point in time, size objects, while stored in the TileEntity, are more impactful
 	 * on the actual instances of BlockTemplate than on the TileEntity. They are stored here for
 	 * posterity's sake, but the duplication could probably be discarded.
@@ -50,41 +50,41 @@ public abstract class AATileEntity extends TileEntity implements INamedTileEntit
 	 *                block structure associated with this block. This size is used in order
 	 *                to calculate accessor block positions, and to determine if the block
 	 *                can actually be placed.
-	 */
+	 *//*
 	@Override
 	public void setSize (MultiblockSize newSize) {
 		this.size = newSize;
 	}
 
-	/**
+	*//**
 	 * @return The name associated with this TileEntity, which is the path part of the
 	 * name that it was registered with. Note that this simply returns that part and does
 	 * not include the modid.
-	 */
+	 *//*
 	@Override
 	public String getName () {
 		return name;
 	}
 
-	/**
+	*//**
 	 * @param name The name to be used as the registry name path and also to refer
 	 *             to the specific type of tile entity.
-	 */
+	 *//*
 	@Override
 	public void setName (String name) {
 		this.name = name;
 	}
 
-	/**
+	*//**
 	 * This function is called when individual accessor blocks are broken by the
 	 * AccessorTileEntity.
-	 */
+	 *//*
 	@Override
 	public void breakBlock () {
 		breakBlock(null, true);
 	}
 
-	/**
+	*//**
 	 * This is a direct link to Block::breakBlock and is called by both the
 	 * core block of a pseudo-multiblock-structure and by each of its individual
 	 * accessor blocks.
@@ -98,7 +98,7 @@ public abstract class AATileEntity extends TileEntity implements INamedTileEntit
 	 * @param harvest Setting this to false will result in the center block
 	 *                not being destroyed (if this was trigger from the break of
 	 *                one of the accessors).
-	 */
+	 *//*
 	@Override
 	public void breakBlock (@Nullable IBlockState state, boolean harvest) {
 		if (breaking) {
@@ -110,8 +110,8 @@ public abstract class AATileEntity extends TileEntity implements INamedTileEntit
 		Block block = (state == null) ? world.getBlockState(getPos()).getBlock() : state.getBlock();
 		EnumFacing facing = null;
 
-		if (block instanceof DirectionalBlock && state != null) {
-			facing = state.getValue(((DirectionalBlock) state.getBlock()).getFacingProperty());
+		if (block instanceof HorizontalTemplateBlock && state != null) {
+			facing = state.getValue(((HorizontalTemplateBlock) state.getBlock()).getFacingProperty());
 		}
 		if (block instanceof TemplateBlock) {
 			for (BlockPos point : ((TemplateBlock) block).calculateAccessors(world, getPos(), facing)) {
@@ -124,13 +124,13 @@ public abstract class AATileEntity extends TileEntity implements INamedTileEntit
 		}
 	}
 
-	/**
+	*//**
 	 * Future tile entities are going to require a "start up" time. This exists as a way
 	 * of determining if those tile entities are ready or not. At the minute, it always
 	 * returns true.
 	 *
 	 * @return Returns true by default.
-	 */
+	 *//*
 	public boolean isActive () {
 		return true;
 	}
@@ -147,4 +147,4 @@ public abstract class AATileEntity extends TileEntity implements INamedTileEntit
 	public static class Tags {
 		public static final String INVENTORY = "inventory";
 	}
-}
+}*/

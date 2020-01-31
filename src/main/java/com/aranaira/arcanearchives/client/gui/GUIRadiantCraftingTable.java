@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.client.gui;
+/*package com.aranaira.arcanearchives.client.gui;
 
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerRadiantCraftingTable;
@@ -141,4 +141,4 @@ public class GUIRadiantCraftingTable extends GuiContainer {
 
 		super.drawSlot(slot);
 	}
-}
+}*/

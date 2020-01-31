@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items.gems.asscher;
+/*package com.aranaira.arcanearchives.items.gems.asscher;
 
 
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
@@ -87,4 +87,4 @@ public class AgegleamItem extends ArcaneGemItem {
 
 		return thresholdPassed;
 	}
-}
+}*/

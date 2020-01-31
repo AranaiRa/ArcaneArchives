@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.immanence;
+/*package com.aranaira.arcanearchives.immanence;
 
 import com.aranaira.arcanearchives.api.immanence.IImmanenceBus;
 import com.aranaira.arcanearchives.data.DataHelper;
@@ -16,4 +16,4 @@ public class ImmanenceGlobal {
 			bus.consumeImmanence(tick);
 		}
 	}
-}
+}*/

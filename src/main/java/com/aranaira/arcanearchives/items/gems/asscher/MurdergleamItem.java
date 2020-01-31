@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items.gems.asscher;
+/*package com.aranaira.arcanearchives.items.gems.asscher;
 
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import net.minecraft.client.resources.I18n;
@@ -44,4 +44,4 @@ public class MurdergleamItem extends ArcaneGemItem {
 	//
 	//    return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
 	//}
-}
+}*/

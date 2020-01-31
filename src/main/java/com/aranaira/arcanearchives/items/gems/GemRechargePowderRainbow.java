@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items.gems;
+/*package com.aranaira.arcanearchives.items.gems;
 
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import net.minecraft.client.resources.I18n;
@@ -25,4 +25,4 @@ public class GemRechargePowderRainbow extends ItemTemplate {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.full_spectrum_chromatic_powder"));
 		tooltip.add(TextFormatting.RED + I18n.format("arcanearchives.tooltip.creativeonly"));
 	}
-}
+}*/

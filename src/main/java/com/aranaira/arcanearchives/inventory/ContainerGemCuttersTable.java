@@ -2,15 +2,11 @@ package com.aranaira.arcanearchives.inventory;
 
 import com.aranaira.arcanearchives.api.IGCTRecipe;
 import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
-import com.aranaira.arcanearchives.network.Networking;
-import com.aranaira.arcanearchives.network.PacketGemCutters;
-import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
-import invtweaks.api.container.ContainerSection;
+/*import invtweaks.api.container.ContainerSection;
 import invtweaks.api.container.ContainerSectionCallback;
-import invtweaks.api.container.InventoryContainer;
+import invtweaks.api.container.InventoryContainer;*/
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
@@ -18,13 +14,16 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import net.minecraftforge.items.*;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
 import javax.annotation.Nonnull;
 import java.util.*;
 
-@InventoryContainer
+//@InventoryContainer
 public class ContainerGemCuttersTable extends Container {
 	private static final int SLOT_OUTPUT = 0;
 	private final SlotItemHandler slotOutput;
@@ -149,7 +148,7 @@ public class ContainerGemCuttersTable extends Container {
 			playerInventory.setInventorySlotContents(0, itemstack);
 		}
 		if (tile.getLastRecipe() != null && !world.isRemote) {
-			Networking.CHANNEL.sendTo(new PacketGemCutters.LastRecipe(tile.getLastRecipe()), (EntityPlayerMP) player);
+			/*			Networking.CHANNEL.sendTo(new PacketGemCutters.LastRecipe(tile.getLastRecipe()), (EntityPlayerMP) player);*/
 		}
 
 		tile.updatePenultimateRecipe();
@@ -243,9 +242,9 @@ public class ContainerGemCuttersTable extends Container {
 	public Map<IGCTRecipe, Boolean> updateRecipeStatus () {
 		Map<IGCTRecipe, Boolean> map = new HashMap<>();
 
-		for (IGCTRecipe recipe : GCTRecipeList.instance.getRecipeList()) {
+/*		for (IGCTRecipe recipe : GCTRecipeList.instance.getRecipeList()) {
 			map.put(recipe, recipe.matches(combinedInventory));
-		}
+		}*/
 
 		return map;
 	}
@@ -270,7 +269,7 @@ public class ContainerGemCuttersTable extends Container {
 		return output;
 	}
 
-	public Map<ContainerSection, List<Slot>> map = null;
+/*	public Map<ContainerSection, List<Slot>> map = null;
 
 	@ContainerSectionCallback
 	public Map<ContainerSection, List<Slot>> containerSectionListMap () {
@@ -282,5 +281,5 @@ public class ContainerGemCuttersTable extends Container {
 		}
 
 		return map;
-	}
+	}*/
 }

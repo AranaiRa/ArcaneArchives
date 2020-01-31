@@ -2,19 +2,14 @@ package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.api.IGCTRecipe;
-import com.aranaira.arcanearchives.init.RecipeLibrary;
 import com.aranaira.arcanearchives.inventory.handlers.ITrackingHandler;
-import com.aranaira.arcanearchives.network.Networking;
-import com.aranaira.arcanearchives.network.PacketGemCutters;
-import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
-import com.aranaira.arcanearchives.tileentities.interfaces.IBrazierRouting;
-import com.aranaira.arcanearchives.tileentities.interfaces.IManifestTileEntity;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
@@ -25,7 +20,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IManifestTileEntity, IBrazierRouting {
+public class GemCuttersTableTileEntity extends TileEntity { //ImmanenceTileEntity implements IManifestTileEntity, IBrazierRouting {
 	private final TrackingGCTHandler inventory = new TrackingGCTHandler(18);
 	private final IItemHandlerModifiable outputInventory = new ItemStackHandler(1);
 	public static final int RECIPE_PAGE_LIMIT = 7;
@@ -35,21 +30,18 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 	private int page;
 
 	public GemCuttersTableTileEntity () {
-		super("gemcutterstable");
-		currentRecipe = RecipeLibrary.RADIANT_DUST_RECIPE;
+		/*		super("gemcutterstable");*/
+		/*		currentRecipe = RecipeLibrary.RADIANT_DUST_RECIPE;*/
 	}
 
-	@Override
 	public String getDescriptor () {
 		return "Gem Cutter's Table";
 	}
 
-	@Override
 	public String getChestName () {
 		return "";
 	}
 
-	@Override
 	public IItemHandlerModifiable getInventory () {
 		return inventory;
 	}
@@ -59,23 +51,23 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 	}
 
 	public void setRecipe (ResourceLocation name) {
-		currentRecipe = GCTRecipeList.instance.getRecipe(name);
-		defaultServerSideUpdate();
+/*		currentRecipe = GCTRecipeList.instance.getRecipe(name);
+		defaultServerSideUpdate();*/
 	}
 
 	public void setRecipe (int index) {
-		manuallySetRecipe(index);
+/*		manuallySetRecipe(index);
 		markDirty();
 
 		if (world != null && world.isRemote) {
 			clientSideUpdate();
 		} else if (world != null) {
 			defaultServerSideUpdate();
-		}
+		}*/
 	}
 
 	public void manuallySetRecipe (int index) {
-		currentRecipe = GCTRecipeList.instance.getRecipeByIndex(index);
+		/*		currentRecipe = GCTRecipeList.instance.getRecipeByIndex(index);*/
 	}
 
 	public static final ResourceLocation INVALID = new ResourceLocation(ArcaneArchives.MODID, "invalid_gct_recipe");
@@ -91,8 +83,8 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 			loc = currentRecipe.getName();
 		}
 
-		PacketGemCutters.ChangeRecipe packet = new PacketGemCutters.ChangeRecipe(loc, getPos(), world.provider.getDimension());
-		Networking.CHANNEL.sendToServer(packet);
+/*		PacketGemCutters.ChangeRecipe packet = new PacketGemCutters.ChangeRecipe(loc, getPos(), world.provider.getDimension());
+		Networking.CHANNEL.sendToServer(packet);*/
 	}
 
 	@Override
@@ -122,7 +114,7 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 	@Override
 	public void readFromNBT (NBTTagCompound compound) {
 		super.readFromNBT(compound);
-		inventory.deserializeNBT(compound.getCompoundTag(AATileEntity.Tags.INVENTORY));
+		inventory.deserializeNBT(compound.getCompoundTag("Inventory"));
 		manuallySetRecipe(compound.getInteger(Tags.RECIPE)); // is this server-side or client-side?
 	}
 
@@ -133,7 +125,7 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 	@Override
 	public NBTTagCompound writeToNBT (NBTTagCompound compound) {
 		super.writeToNBT(compound);
-		compound.setTag(AATileEntity.Tags.INVENTORY, inventory.serializeNBT());
+		compound.setTag("Inventory", inventory.serializeNBT());
 		if (currentRecipe != null) {
 			compound.setInteger(Tags.RECIPE, currentRecipe.getIndex());
 		}
@@ -173,7 +165,7 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 	}
 
 	public void previousPage () {
-		if (getPage() > 0) {
+/*		if (getPage() > 0) {
 			setPage(page - 1);
 		} else {
 			int page = GCTRecipeList.instance.size() / RECIPE_PAGE_LIMIT;
@@ -181,7 +173,7 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 				page = page - 1;
 			}
 			setPage(page);
-		}
+		}*/
 	}
 
 	public int getPage () {
@@ -193,11 +185,11 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 	}
 
 	public void nextPage () {
-		if (GCTRecipeList.instance.size() > (page + 1) * RECIPE_PAGE_LIMIT) {
+/*		if (GCTRecipeList.instance.size() > (page + 1) * RECIPE_PAGE_LIMIT) {
 			setPage(page + 1);
 		} else {
 			setPage(0);
-		}
+		}*/
 	}
 
 	public Int2IntOpenHashMap getOrCalculateReference (boolean force) {
@@ -207,22 +199,19 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 		return inventory.getItemReference();
 	}
 
-	@Override
 	public Int2IntOpenHashMap getOrCalculateReference () {
 		return getOrCalculateReference(false);
 	}
 
-	@Override
+/*	@Override
 	public BrazierRoutingType getRoutingType () {
 		return BrazierRoutingType.GCT;
-	}
+	}*/
 
-	@Override
 	public boolean isTileInvalid () {
 		return this.isInvalid();
 	}
 
-	@Override
 	public int countEmptySlots () {
 		int empty = 0;
 		for (int i = 0; i < inventory.getSlots(); i++) {
@@ -233,22 +222,18 @@ public class GemCuttersTableTileEntity extends ImmanenceTileEntity implements IM
 		return empty;
 	}
 
-	@Override
 	public int totalEmptySlots () {
 		return inventory.getEmptyCount();
 	}
 
-	@Override
 	public int totalSlots () {
 		return inventory.getSlots();
 	}
 
-	@Override
 	public int slotMultiplier () {
 		return 1;
 	}
 
-	@Override
 	public ItemStack acceptStack (ItemStack stack, boolean simulate) {
 		for (int i = 0; i < inventory.getSlots(); i++) {
 			ItemStack inSlot = inventory.getStackInSlot(i);

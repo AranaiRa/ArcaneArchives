@@ -1,27 +1,10 @@
 package com.aranaira.arcanearchives.client;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.client.render.LineHandler;
 import com.aranaira.arcanearchives.config.ConfigHandler;
-import com.aranaira.arcanearchives.config.ManifestConfig;
-import com.aranaira.arcanearchives.data.types.ClientNetwork;
-import com.aranaira.arcanearchives.data.DataHelper;
-import com.aranaira.arcanearchives.init.ItemRegistry;
-import com.aranaira.arcanearchives.integration.jei.JEIUnderMouse;
-import com.aranaira.arcanearchives.items.ManifestItem;
-import com.aranaira.arcanearchives.network.Networking;
-import com.aranaira.arcanearchives.network.PacketArcaneGems.OpenSocket;
-import com.aranaira.arcanearchives.util.ManifestTrackingUtils;
-import com.aranaira.arcanearchives.util.ManifestUtils.CollatedEntry;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -29,7 +12,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.input.Keyboard;
 
 import javax.annotation.Nullable;
 
@@ -55,7 +37,7 @@ public class Keybinds {
 	@SideOnly(Side.CLIENT)
 	@Nullable
 	private static ItemStack underMouse (Minecraft mc) {
-		ItemStack jei = JEIUnderMouse.underMouse();
+/*		ItemStack jei = JEIUnderMouse.underMouse();
 		if (jei != null) {
 			return jei;
 		}
@@ -68,13 +50,14 @@ public class Keybinds {
 			}
 		}
 
+		return null;*/
 		return null;
 	}
 
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public static void onKeyInputManifest (InputEvent.KeyInputEvent event) {
-		Minecraft mc = Minecraft.getMinecraft();
+/*		Minecraft mc = Minecraft.getMinecraft();
 		if (manifestKey.isKeyDown() && mc.inGameHasFocus) {
 			boolean foundManifest = false;
 			if (ManifestConfig.ManifestPresence) {
@@ -99,13 +82,13 @@ public class Keybinds {
 		} else if (socketKey != null && socketKey.isKeyDown() && mc.inGameHasFocus) {
 			OpenSocket packet = new OpenSocket();
 			Networking.CHANNEL.sendToServer(packet);
-		}
+		}*/
 	}
 
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public static void onKeypress (GuiScreenEvent.KeyboardInputEvent.Pre event) {
-		if (Keyboard.getEventKeyState() && manifestKey.isActiveAndMatches(Keyboard.getEventKey())) {
+/*		if (Keyboard.getEventKeyState() && manifestKey.isActiveAndMatches(Keyboard.getEventKey())) {
 			Minecraft mc = Minecraft.getMinecraft();
 			if (mc.currentScreen != null) {
 				ItemStack stack = underMouse(mc);
@@ -132,6 +115,6 @@ public class Keybinds {
 					});
 				}
 			}
-		}
+		}*/
 	}
 }

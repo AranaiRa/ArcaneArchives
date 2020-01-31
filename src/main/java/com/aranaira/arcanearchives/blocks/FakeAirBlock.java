@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.blocks;
+/*package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import com.aranaira.arcanearchives.tileentities.FakeAirTileEntity;
@@ -96,4 +96,4 @@ public class FakeAirBlock extends TemplateBlock {
 	public TileEntity createTileEntity (World world, IBlockState state) {
 		return new FakeAirTileEntity();
 	}
-}
+}*/

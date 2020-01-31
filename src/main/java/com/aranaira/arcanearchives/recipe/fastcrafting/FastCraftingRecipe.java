@@ -1,27 +1,6 @@
 package com.aranaira.arcanearchives.recipe.fastcrafting;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.api.IArcaneArchivesRecipe;
-import com.aranaira.arcanearchives.api.RecipeIngredientHandler;
-import com.aranaira.arcanearchives.recipe.IngredientStack;
-import com.aranaira.arcanearchives.recipe.IngredientsMatcher;
-import com.aranaira.arcanearchives.util.ItemUtils;
-import it.unimi.dsi.fastutil.ints.Int2IntMap;
-import it.unimi.dsi.fastutil.ints.Int2IntMap.Entry;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.*;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import net.minecraftforge.items.IItemHandler;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.*;
-
-public class FastCraftingRecipe implements IArcaneArchivesRecipe {
+/*public class FastCraftingRecipe implements IArcaneArchivesRecipe {
 	private final List<IngredientStack> ingredients = new ArrayList<>();
 	private ItemStack result;
 	private final IRecipe originalRecipe;
@@ -180,4 +159,4 @@ public class FastCraftingRecipe implements IArcaneArchivesRecipe {
 			return false;
 		}
 	}
-}
+}*/

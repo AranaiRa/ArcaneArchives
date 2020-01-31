@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.entity;
+/*package com.aranaira.arcanearchives.entity;
 
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
@@ -35,4 +35,4 @@ public class EntityItemMountaintear extends EntityItem {
 	public boolean isEntityInvulnerable (DamageSource source) {
 		return source.isFireDamage() || super.isEntityInvulnerable(source);
 	}
-}
+}*/

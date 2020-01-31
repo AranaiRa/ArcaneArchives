@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items.templates;
+/*package com.aranaira.arcanearchives.items.templates;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
@@ -60,4 +60,4 @@ public class ItemMultistateTemplate extends ItemTemplate {
 			ModelLoader.setCustomModelResourceLocation(this, entry.getKey(), new ModelResourceLocation(getRegistryName(), "type=" + entry.getValue()));
 		}
 	}
-}
+}*/

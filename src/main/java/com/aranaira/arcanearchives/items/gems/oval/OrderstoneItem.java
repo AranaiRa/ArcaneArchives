@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items.gems.oval;
+/*package com.aranaira.arcanearchives.items.gems.oval;
 
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.gems.GemUtil;
@@ -60,9 +60,9 @@ public class OrderstoneItem extends ArcaneGemItem {
 			AvailableGemsHandler handler = GemUtil.getHeldGem(player, hand);
 			if (handler.getHeld() != null && GemUtil.getCharge(handler.getHeld()) > 0) {
 				int chargeCost = 0;
-				/**
+				*//**
 				 * Gravel -> Cobblestone -> Stone
-				 */
+				 *//*
 				if (block == Blocks.GRAVEL) {
 					world.setBlockState(pos, Blocks.COBBLESTONE.getDefaultState(), 0);
 					chargeCost = 1;
@@ -73,9 +73,9 @@ public class OrderstoneItem extends ArcaneGemItem {
 					world.setBlockState(pos, Blocks.COBBLESTONE.getDefaultState(), 0);
 					chargeCost = 1;
 				}
-				/**
+				*//**
 				 * Sand -> Coarse Dirt -> Dirt -> Mycelium -> Podzol -> Grass
-				 */
+				 *//*
 				else if (block == Blocks.SAND) {
 					world.setBlockState(pos, Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.COARSE_DIRT), 0);
 					chargeCost = 1;
@@ -98,9 +98,9 @@ public class OrderstoneItem extends ArcaneGemItem {
 					world.setBlockState(pos, Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.PODZOL), 0);
 					chargeCost = 1;
 				}
-				/**
+				*//**
 				 * Cracked/Mossy Bricks -> Stone bricks
-				 */
+				 *//*
 				else if (block == Blocks.STONEBRICK) {
 					IBlockState state = world.getBlockState(pos);
 					BlockStoneBrick.EnumType variant = state.getValue(BlockStoneBrick.VARIANT);
@@ -112,9 +112,9 @@ public class OrderstoneItem extends ArcaneGemItem {
 						world.setBlockState(pos, state.withProperty(BlockStoneBrick.VARIANT, BlockStoneBrick.EnumType.CHISELED), 0);
 					}
 				}
-				/**
+				*//**
 				 * Anvils
-				 */
+				 *//*
 				else if (block == Blocks.ANVIL) {
 					IBlockState state = world.getBlockState(pos);
 					int damage = state.getValue(BlockAnvil.DAMAGE);
@@ -124,9 +124,9 @@ public class OrderstoneItem extends ArcaneGemItem {
 						world.setBlockState(pos, state.withProperty(BlockAnvil.DAMAGE, damage), 0);
 					}
 				}
-				/**
+				*//**
 				 * Furnace -> Lit Furnace
-				 */
+				 *//*
 				else if (block == Blocks.FURNACE) {
 					IBlockState oldState = world.getBlockState(pos);
 					IBlockState newState = Blocks.LIT_FURNACE.getDefaultState();
@@ -154,4 +154,4 @@ public class OrderstoneItem extends ArcaneGemItem {
 			}
 		}
 	}
-}
+}*/

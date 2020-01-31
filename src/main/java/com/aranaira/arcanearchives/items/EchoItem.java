@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items;
+/*package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
@@ -63,4 +63,4 @@ public class EchoItem extends ItemTemplate {
 
 		return I18n.format("item.echo_typed.name", contained.getDisplayName());
 	}
-}
+}*/

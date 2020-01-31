@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items.gems.pampel;
+/*package com.aranaira.arcanearchives.items.gems.pampel;
 
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
 import com.aranaira.arcanearchives.items.gems.GemUtil;
@@ -75,4 +75,4 @@ public class MindspindleItem extends ArcaneGemItem {
 
 		return tryRechargingWithPowder(world, player, gem);
 	}
-}
+}*/

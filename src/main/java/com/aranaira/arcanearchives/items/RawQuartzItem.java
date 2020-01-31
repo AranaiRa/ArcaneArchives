@@ -1,20 +1,11 @@
 package com.aranaira.arcanearchives.items;
 
-import com.aranaira.arcanearchives.init.BlockRegistry;
-import com.aranaira.arcanearchives.items.templates.ItemTemplate;
-import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
-import com.aranaira.arcanearchives.tileentities.RadiantCraftingTableTileEntity;
-import com.aranaira.arcanearchives.util.WorldUtil;
 import mcp.MethodsReturnNonnullByDefault;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockChest;
-import net.minecraft.block.BlockWorkbench;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -23,22 +14,17 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.ArrayList;
 import java.util.List;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class RawQuartzItem extends ItemTemplate {
+public class RawQuartzItem extends Item {
 	public static final String NAME = "raw_quartz";
 
 	public RawQuartzItem () {
-		super(NAME);
 	}
 
 	@Override
@@ -49,7 +35,7 @@ public class RawQuartzItem extends ItemTemplate {
 
 	@Override
 	public EnumActionResult onItemUseFirst (EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
-		if (!player.isSneaking()) {
+/*		if (!player.isSneaking()) {
 			return EnumActionResult.PASS;
 		}
 
@@ -110,7 +96,7 @@ public class RawQuartzItem extends ItemTemplate {
 			if (te != null) {
 				te.setNetworkId(player.getUniqueID());
 			}
-		}
+		}*/
 
 		return EnumActionResult.SUCCESS;
 	}

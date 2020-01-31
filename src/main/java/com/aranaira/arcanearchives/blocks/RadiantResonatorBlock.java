@@ -1,17 +1,12 @@
 package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
-import com.aranaira.arcanearchives.config.ServerSideConfig;
-import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity;
-import com.aranaira.arcanearchives.tileentities.RadiantResonatorTileEntity.TickResult;
-import com.aranaira.arcanearchives.util.WorldUtil;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
@@ -30,22 +25,17 @@ public class RadiantResonatorBlock extends TemplateBlock {
 	public static final String name = "radiant_resonator";
 
 	public RadiantResonatorBlock () {
-		super(name, Material.IRON);
-		setPlaceLimit(ServerSideConfig.ResonatorLimit);
+		super(Material.IRON);
+/*		setPlaceLimit(ServerSideConfig.ResonatorLimit);
 		setHardness(3f);
 		setHarvestLevel("pickaxe", 0);
-		setEntityClass(RadiantResonatorTileEntity.class);
+		setEntityClass(RadiantResonatorTileEntity.class);*/
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.device.radiant_resonator"));
-	}
-
-	@Override
-	public boolean hasOBJModel () {
-		return true;
 	}
 
 	@Override
@@ -76,7 +66,7 @@ public class RadiantResonatorBlock extends TemplateBlock {
 		return BlockRenderLayer.CUTOUT;
 	}
 
-	@Override
+/*	@Override
 	@SuppressWarnings("deprecation")
 	public boolean hasComparatorInputOverride (IBlockState state) {
 		return true;
@@ -101,9 +91,9 @@ public class RadiantResonatorBlock extends TemplateBlock {
 		}
 
 		return Math.max(1, Math.min((int) Math.floor(te.getPercentageComplete() / 7.14) + 1, 14));
-	}
+	}*/
 
-	@Override
+/*	@Override
 	public boolean hasTileEntity (IBlockState state) {
 		return true;
 	}
@@ -111,15 +101,15 @@ public class RadiantResonatorBlock extends TemplateBlock {
 	@Override
 	public TileEntity createTileEntity (World world, IBlockState state) {
 		return new RadiantResonatorTileEntity();
-	}
+	}*/
 
 	@Override
 	public void breakBlock (World world, BlockPos pos, IBlockState state) {
-		TileEntity te = world.getTileEntity(pos);
+/*		TileEntity te = world.getTileEntity(pos);
 		if (te instanceof RadiantResonatorTileEntity) {
 			((RadiantResonatorTileEntity) te).breakBlock(state, true);
 		}
 
-		super.breakBlock(world, pos, state);
+		super.breakBlock(world, pos, state);*/
 	}
 }

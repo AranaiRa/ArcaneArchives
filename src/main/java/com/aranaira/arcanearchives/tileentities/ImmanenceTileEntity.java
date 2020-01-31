@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tileentities;
+/*package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.config.ConfigHandler;
@@ -253,4 +253,4 @@ public class ImmanenceTileEntity extends AATileEntity implements ITickable {
 		public static final String DIM = "dim";
 		public static final String TILE_ID = "tileId";
 	}
-}
+}*/

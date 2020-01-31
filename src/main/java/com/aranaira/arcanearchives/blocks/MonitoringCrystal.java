@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.blocks;
+/*package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.DirectionalBlock;
 import com.aranaira.arcanearchives.tileentities.MonitoringCrystalTileEntity;
@@ -145,4 +145,4 @@ public class MonitoringCrystal extends DirectionalBlock {
 	public boolean hasOBJModel () {
 		return true;
 	}
-}
+}*/

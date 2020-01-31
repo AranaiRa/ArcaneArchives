@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.inventory.handlers;
+/*package com.aranaira.arcanearchives.inventory.handlers;
 
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.integration.baubles.BaubleGemUtil;
@@ -105,4 +105,4 @@ public class GemSocketHandler implements INBTSerializable<NBTTagCompound> {
 
 		nbt.setTag("gem", serializeNBT());
 	}
-}
+}*/

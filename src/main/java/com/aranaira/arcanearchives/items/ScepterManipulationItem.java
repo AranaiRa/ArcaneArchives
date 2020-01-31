@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items;
+/*package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.items.templates.IItemScepter;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
@@ -54,4 +54,4 @@ public class ScepterManipulationItem extends ItemTemplate implements IItemScepte
 		}
 		return EnumActionResult.PASS;
 	}
-}
+}*/

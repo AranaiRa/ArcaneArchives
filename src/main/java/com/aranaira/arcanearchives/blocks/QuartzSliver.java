@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.blocks;
 
-import com.aranaira.arcanearchives.blocks.templates.DirectionalBlock;
+import com.aranaira.arcanearchives.blocks.templates.HorizontalTemplateBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
@@ -27,20 +27,15 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
-public class QuartzSliver extends DirectionalBlock implements IHasModel {
+public class QuartzSliver extends HorizontalTemplateBlock {
 	public static final String name = "quartz_sliver";
 
 	public QuartzSliver () {
-		super(name, Material.GLASS);
+		super(Material.GLASS);
 		setLightLevel(16 / 16f);
 		setHardness(0.0f);
 		setTickRandomly(true);
 		setDefaultState(this.getDefaultState().withProperty(getFacingProperty(), EnumFacing.DOWN));
-	}
-
-	@Override
-	public boolean hasOBJModel () {
-		return true;
 	}
 
 	@Override

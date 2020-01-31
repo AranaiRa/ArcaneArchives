@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items.gems.pendeloque;
+/*package com.aranaira.arcanearchives.items.gems.pendeloque;
 
 import com.aranaira.arcanearchives.entity.EntityItemMountaintear;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
@@ -105,4 +105,4 @@ public class MountaintearItem extends ArcaneGemItem {
 	public boolean recharge (World world, EntityPlayer player, GemUtil.GemStack gem) {
 		return tryRechargingWithPowder(world, player, gem);
 	}
-}
+}*/

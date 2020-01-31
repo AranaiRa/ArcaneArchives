@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives;
 
-import com.aranaira.arcanearchives.init.ItemRegistry;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
@@ -13,6 +12,6 @@ public class CreativeTabAA extends CreativeTabs {
 
 	@Override
 	public ItemStack createIcon () {
-		return new ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ);
+		return ItemStack.EMPTY; // ItemStack(ItemRegistry.SHAPED_RADIANT_QUARTZ);
 	}
 }

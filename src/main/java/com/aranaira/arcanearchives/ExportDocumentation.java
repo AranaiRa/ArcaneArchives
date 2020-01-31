@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives;
 
-import com.aranaira.arcanearchives.integration.crafttweaker.GCTTweaker;
 import com.aranaira.arcanearchives.util.zen.ZenDocExporter;
 
 import java.io.IOException;
@@ -13,7 +12,7 @@ public class ExportDocumentation {
 	public static void main (String[] args) {
 
 		String targetPath = "docs/zs/";
-		Class[] classes = {GCTTweaker.class};
+		Class[] classes = {/*GCTTweaker.class*/};
 
 		ZenDocExporter export = new ZenDocExporter();
 		Path path = Paths.get(targetPath);

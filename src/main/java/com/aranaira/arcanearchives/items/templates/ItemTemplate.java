@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items.templates;
+/*package com.aranaira.arcanearchives.items.templates;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -6,7 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 
-public class ItemTemplate extends Item implements IHasModel {
+public class ItemTemplate extends Item {
 	private final String name;
 
 	public ItemTemplate (String name) {
@@ -20,4 +20,4 @@ public class ItemTemplate extends Item implements IHasModel {
 	public void registerModels () {
 		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
 	}
-}
+}*/

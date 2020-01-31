@@ -2,17 +2,14 @@ package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.config.ServerSideConfig;
-import com.aranaira.arcanearchives.data.types.ServerNetwork;
-import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.inventory.handlers.ExtendedItemStackHandler;
 import com.aranaira.arcanearchives.inventory.handlers.ITrackingHandler;
-import com.aranaira.arcanearchives.tileentities.interfaces.IBrazierRouting;
-import com.aranaira.arcanearchives.tileentities.interfaces.IManifestTileEntity;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -20,19 +17,13 @@ import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
 
-public class RadiantChestTileEntity extends ImmanenceTileEntity implements IManifestTileEntity, IBrazierRouting {
+public class RadiantChestTileEntity extends TileEntity {
 	private final TrackingExtendedItemStackHandler inventory = new TrackingExtendedItemStackHandler(54);
 	private ItemStack displayStack = ItemStack.EMPTY;
 	private EnumFacing displayFacing = EnumFacing.NORTH;
-	private BrazierRoutingType routingType = BrazierRoutingType.ANY;
 	public String chestName = "";
 
 	public RadiantChestTileEntity () {
-		super("radiantchest");
-	}
-
-	private String describe () {
-		return pos.toString() + " in " + dimension;
 	}
 
 	public ItemStack getDisplayStack () {
@@ -40,22 +31,15 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 	}
 
 	public void unsetDisplayStack () {
-		ArcaneArchives.logger.debug("Unset displayStack on " + describe());
 		this.displayStack = ItemStack.EMPTY;
 		this.markDirty();
 	}
 
 	public void setDisplayStack (ItemStack newStack) {
-		if (newStack.isEmpty()) {
-			ArcaneArchives.logger.debug("Called setDisplayStack with an empty stack!", new IllegalArgumentException(describe()));
-		} else {
-			ArcaneArchives.logger.debug("Set displayStack to " + newStack.toString() + " on " + describe());
-		}
 		this.displayStack = newStack;
 		this.markDirty();
 	}
 
-	@Override
 	public String getChestName () {
 		return chestName;
 	}
@@ -67,19 +51,12 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 	}
 
 	public void setChestName (String newName) {
-		if (newName.isEmpty()) {
-			ArcaneArchives.logger.debug("Called setChestName with an empty string!", new IllegalArgumentException(describe()));
-		} else {
-			//ArcaneArchives.logger.debug("Set chest name to '" + newName + "' on " + describe());
-		}
-
 		this.chestName = newName;
 		this.markDirty();
 	}
 
 
-	@Override
-	public void firstJoinedNetwork (ServerNetwork network) {
+/*	public void firstJoinedNetwork (ServerNetwork network) {
 		super.firstJoinedNetwork(network);
 
 		// Disregard previous to-do notice as this is only called when they
@@ -89,7 +66,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 			this.markDirty();
 			defaultServerSideUpdate();
 		}
-	}
+	}*/
 
 	public Int2IntOpenHashMap getOrCalculateReference (boolean force) {
 		if (force) {
@@ -98,37 +75,31 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 		return inventory.getItemReference();
 	}
 
-	@Override
 	public Int2IntOpenHashMap getOrCalculateReference () {
 		return getOrCalculateReference(false);
 	}
 
-	@Override
+/*	@Override
 	public BrazierRoutingType getRoutingType () {
 		return routingType;
-	}
+	}*/
 
-	@Override
 	public boolean isTileInvalid () {
 		return this.isInvalid();
 	}
 
-	@Override
 	public int totalEmptySlots () {
 		return inventory.getEmptyCount();
 	}
 
-	@Override
 	public int totalSlots () {
 		return inventory.getSlots();
 	}
 
-	@Override
 	public int slotMultiplier () {
 		return ServerSideConfig.RadiantMultiplier;
 	}
 
-	@Override
 	public ItemStack acceptStack (ItemStack stack, boolean simulate) {
 		ItemStack result = ItemHandlerHelper.insertItemStacked(this.inventory, stack, simulate);
 		this.markDirty();
@@ -136,12 +107,12 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 	}
 
 	public void toggleRoutingType () {
-		if (routingType == BrazierRoutingType.ANY) {
+/*		if (routingType == BrazierRoutingType.ANY) {
 			this.routingType = BrazierRoutingType.NO_NEW_STACKS;
 		} else {
 			this.routingType = BrazierRoutingType.ANY;
 		}
-		markDirty();
+		markDirty();*/
 	}
 
 	public void setDisplay (ItemStack displayStack, EnumFacing facing) {
@@ -153,7 +124,6 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 		return displayFacing;
 	}
 
-	@Override
 	public String getDescriptor () {
 		if (getChestName().isEmpty()) {
 			return "Chest";
@@ -162,7 +132,6 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 		}
 	}
 
-	@Override
 	public TrackingExtendedItemStackHandler getInventory () {
 		return inventory;
 	}
@@ -184,7 +153,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 	@Nonnull
 	public NBTTagCompound writeToNBT (NBTTagCompound compound) {
 		super.writeToNBT(compound);
-		compound.setTag(AATileEntity.Tags.INVENTORY, inventory.serializeNBT());
+		compound.setTag("Inventory", inventory.serializeNBT());
 		if (chestName != null && !chestName.isEmpty()) {
 			compound.setString(Tags.CHEST_NAME, chestName);
 		}
@@ -192,7 +161,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 		if (!displayStack.isEmpty()) {
 			compound.setTag(Tags.DISPLAY_STACK, displayStack.serializeNBT());
 		}
-		compound.setInteger(Tags.ROUTING_TYPE, routingType.ordinal());
+		/*		compound.setInteger(Tags.ROUTING_TYPE, routingType.ordinal());*/
 
 		return compound;
 	}
@@ -200,10 +169,10 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 	@Override
 	public void readFromNBT (NBTTagCompound compound) {
 		super.readFromNBT(compound);
-		if (!compound.hasKey(AATileEntity.Tags.INVENTORY)) {
+		if (!compound.hasKey("Inventory")) {
 			ArcaneArchives.logger.info(String.format("Radiant Chest tile entity at %d/%d/%d is missing its inventory.", pos.getX(), pos.getY(), pos.getZ()));
 		}
-		inventory.deserializeNBT(compound.getCompoundTag(AATileEntity.Tags.INVENTORY));
+		inventory.deserializeNBT(compound.getCompoundTag("Inventory"));
 
 		if (compound.hasKey(Tags.CHEST_NAME)) {
 			setChestName(compound.getString(Tags.CHEST_NAME));
@@ -212,7 +181,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 		if (compound.hasKey(Tags.DISPLAY_STACK)) {
 			setDisplayStack(new ItemStack(compound.getCompoundTag(Tags.DISPLAY_STACK)));
 		}
-		routingType = BrazierRoutingType.fromInt(compound.getInteger(Tags.ROUTING_TYPE));
+		/*		routingType = BrazierRoutingType.fromInt(compound.getInteger(Tags.ROUTING_TYPE));*/
 	}
 
 	@Override
@@ -237,7 +206,6 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 		return super.getCapability(capability, facing);
 	}
 
-	@Override
 	public int countEmptySlots () {
 		int empty = 0;
 		for (int i = 0; i < inventory.getSlots(); i++) {
@@ -319,7 +287,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 		public void setStackInSlot (int slot, @Nonnull ItemStack stack) {
 			invalidate();
 			super.setStackInSlot(slot, stack);
-			world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);
+			/*			world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);*/
 			markDirty();
 		}
 
@@ -331,7 +299,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 			}
 			ItemStack result = super.insertItem(slot, stack, simulate);
 			if (!simulate && (result.isEmpty() || result.getCount() != stack.getCount())) {
-				world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);
+				/*				world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);*/
 				markDirty();
 			}
 			return result;
@@ -345,7 +313,7 @@ public class RadiantChestTileEntity extends ImmanenceTileEntity implements IMani
 			}
 			ItemStack result = super.extractItem(slot, amount, simulate);
 			if (!simulate && !result.isEmpty()) {
-				world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);
+				/*				world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);*/
 				markDirty();
 			}
 			return result;

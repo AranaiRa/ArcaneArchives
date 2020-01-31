@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.blocks.modelparts.brazier;
+/*package com.aranaira.arcanearchives.blocks.modelparts.brazier;
 
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import net.minecraft.block.material.Material;
@@ -28,4 +28,4 @@ public class BrazierFire extends TemplateBlock implements IHasModel {
 	public BlockRenderLayer getRenderLayer () {
 		return BlockRenderLayer.CUTOUT;
 	}
-}
+}*/

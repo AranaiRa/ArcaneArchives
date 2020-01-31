@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.inventory.handlers;
+/*package com.aranaira.arcanearchives.inventory.handlers;
 
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.init.ItemRegistry;
@@ -18,4 +18,4 @@ public class TankUpgradeItemHandler extends SizeUpgradeItemHandler {
 		}
 		return Items.AIR;
 	}
-}
+}*/

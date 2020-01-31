@@ -1,3 +1,4 @@
+/*
 package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
@@ -456,15 +457,19 @@ public class RadiantAmphoraItem extends ItemTemplate {
 
 			return tank.getTankProperties();
 
-			/*IFluidTankProperties[] props = tank.getTankProperties();
-			return new IFluidTankProperties[]{new FluidTankPropWrapper(props[0].getContents(), props[0].getCapacity(), util)};*/
+			*/
+/*IFluidTankProperties[] props = tank.getTankProperties();
+			return new IFluidTankProperties[]{new FluidTankPropWrapper(props[0].getContents(), props[0].getCapacity(), util)};*//*
+
 		}
 
 		@Override
 		public int fill (FluidStack resource, boolean doFill) {
 			IFluidHandler tank = util.getCapability();
 
-			if (tank == null/* || util.getMode() == TankMode.DRAIN*/) {
+			if (tank == null*/
+/* || util.getMode() == TankMode.DRAIN*//*
+) {
 				return 0;
 			}
 
@@ -481,7 +486,9 @@ public class RadiantAmphoraItem extends ItemTemplate {
 		public FluidStack drain (FluidStack resource, boolean doDrain) {
 			IFluidHandler tank = util.getCapability();
 
-			if (tank == null/* || util.getMode() == TankMode.FILL*/) {
+			if (tank == null*/
+/* || util.getMode() == TankMode.FILL*//*
+) {
 				return null;
 			}
 
@@ -493,10 +500,14 @@ public class RadiantAmphoraItem extends ItemTemplate {
 		public FluidStack drain (int maxDrain, boolean doDrain) {
 			IFluidHandler tank = util.getCapability();
 
-			if (tank == null/* || util.getMode() == TankMode.FILL*/) {
-				/*if (!doDrain && maxDrain == Integer.MAX_VALUE) {
+			if (tank == null*/
+/* || util.getMode() == TankMode.FILL*//*
+) {
+				*/
+/*if (!doDrain && maxDrain == Integer.MAX_VALUE) {
 					return tank.drain(maxDrain, false);
-				}*/
+				}*//*
+
 				return null;
 			}
 
@@ -538,4 +549,4 @@ public class RadiantAmphoraItem extends ItemTemplate {
 		}
 	}
 
-}
+}*/

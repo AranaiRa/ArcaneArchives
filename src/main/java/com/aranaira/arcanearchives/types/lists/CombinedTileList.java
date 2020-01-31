@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.types.lists;
+/*package com.aranaira.arcanearchives.types.lists;
 
 import com.aranaira.arcanearchives.types.IteRef;
 import com.aranaira.arcanearchives.types.iterators.TileListIterable;
@@ -66,4 +66,4 @@ public class CombinedTileList implements ITileList {
 			return this.currentIterator.next();
 		}
 	}
-}
+}*/

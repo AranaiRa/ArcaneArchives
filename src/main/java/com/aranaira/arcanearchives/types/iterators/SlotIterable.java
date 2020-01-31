@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.types.iterators;
+/*package com.aranaira.arcanearchives.types.iterators;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
@@ -47,4 +47,4 @@ public class SlotIterable implements Iterable<ItemStack> {
 			return inventory.getStackInSlot(lastRet = i);
 		}
 	}
-}
+}*/
