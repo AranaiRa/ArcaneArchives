@@ -30,9 +30,7 @@ public class ModItems {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public static void onModelRegister (ModelRegistryEvent event) {
-		REGISTRY.forEach(o -> {
-			ModelLoader.setCustomModelResourceLocation(o, 0, new ModelResourceLocation(Objects.requireNonNull(o.getRegistryName()), "inventory"));
-		});
+		REGISTRY.forEach(o -> ModelLoader.setCustomModelResourceLocation(o, 0, new ModelResourceLocation(Objects.requireNonNull(o.getRegistryName()), "inventory")));
 	}
 
 	public static <T extends Item> T register (String registryName, Supplier<T> supplier) {
