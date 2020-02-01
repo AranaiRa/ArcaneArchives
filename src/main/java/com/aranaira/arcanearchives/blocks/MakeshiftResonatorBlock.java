@@ -9,6 +9,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
@@ -41,27 +42,35 @@ public class MakeshiftResonatorBlock extends TemplateBlock {
 	public boolean onBlockActivated (World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!state.getValue(FILLED)) {
 			ItemStack stack = playerIn.getHeldItem(hand);
-			IFluidHandlerItem cap = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
-			if (cap != null) {
-				if (cap.getTankProperties().length > 0) {
-					FluidStack contents = cap.getTankProperties()[0].getContents();
-					if (contents != null) {
-						if (contents.getFluid() == FluidRegistry.WATER) {
-							if (contents.amount == 1000) {
-								if (worldIn.isRemote) {
+			if (stack.getItem() == Items.WATER_BUCKET) {
+				if (worldIn.isRemote) {
+					return true;
+				}
+				playerIn.setHeldItem(hand, new ItemStack(Items.BUCKET));
+				worldIn.setBlockState(pos, state.withProperty(FILLED, true));
+			} else {
+				IFluidHandlerItem cap = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
+				if (cap != null) {
+					if (cap.getTankProperties().length > 0) {
+						FluidStack contents = cap.getTankProperties()[0].getContents();
+						if (contents != null) {
+							if (contents.getFluid() == FluidRegistry.WATER) {
+								if (contents.amount == 1000) {
+									if (worldIn.isRemote) {
+										return true;
+									}
+									cap.drain(1000, true);
+									playerIn.setHeldItem(hand, cap.getContainer().getItem().getContainerItem(cap.getContainer()));
+									worldIn.setBlockState(pos, state.withProperty(FILLED, true));
+									return true;
+								} else if (contents.amount > 1000) {
+									if (!worldIn.isRemote) {
+										cap.drain(1000, true);
+										worldIn.setBlockState(pos, state.withProperty(FILLED, true));
+									}
+
 									return true;
 								}
-								cap.drain(1000, true);
-								playerIn.setHeldItem(hand, cap.getContainer().getItem().getContainerItem(cap.getContainer()));
-								worldIn.setBlockState(pos, state.withProperty(FILLED, true));
-								return true;
-							} else if (contents.amount > 1000) {
-								if (!worldIn.isRemote) {
-									cap.drain(1000, true);
-									worldIn.setBlockState(pos, state.withProperty(FILLED, true));
-								}
-
-								return true;
 							}
 						}
 					}
