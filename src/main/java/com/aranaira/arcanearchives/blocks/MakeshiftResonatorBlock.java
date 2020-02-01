@@ -52,7 +52,7 @@ public class MakeshiftResonatorBlock extends TemplateBlock {
 									return true;
 								}
 								cap.drain(1000, true);
-								playerIn.setHeldItem(hand, cap.getContainer().getItem().getContainerItem(cap.getContainer()));
+								playerIn.setHeldItem(hand, stack.getItem().getContainerItem(stack));
 								worldIn.setBlockState(pos, state.withProperty(FILLED, true));
 								return true;
 							} else if (contents.amount > 1000) {
