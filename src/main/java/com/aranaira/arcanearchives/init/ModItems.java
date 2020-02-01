@@ -22,7 +22,6 @@ import java.util.function.Supplier;
 public class ModItems {
 	public static final List<Item> REGISTRY = new ArrayList<>();
 
-	IRecipe
 	@SubscribeEvent
 	public static void onRegister (Register<Item> event) {
 		REGISTRY.forEach(event.getRegistry()::register);
