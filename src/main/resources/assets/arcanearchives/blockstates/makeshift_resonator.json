@@ -4,14 +4,14 @@
         "textures": {
 
         },
-        "model": "arcanearchives:makeshift_resonator.obj",
+        "model": "arcanearchives:makeshift_resonator_dry.obj",
         "custom": { "flip-v": true }
      },
     "variants": {
         "normal": [{}],
         "filled": {
           "true": {
-            "model": "arcanearchives:brazier_of_hoarding.obj"
+            "model": "arcanearchives:makeshift_resonator.obj"
           },
           "false": {
           }
