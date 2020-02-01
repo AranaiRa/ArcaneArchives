@@ -1,8 +1,8 @@
 package com.aranaira.arcanearchives.inventory;
 
 import com.aranaira.arcanearchives.inventory.slots.SlotExtended;
-import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
-import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity.TrackingExtendedItemStackHandler;
+import com.aranaira.arcanearchives.tiles.RadiantChestTileEntity;
+import com.aranaira.arcanearchives.tiles.RadiantChestTileEntity.TrackingExtendedItemStackHandler;
 import com.google.common.collect.Sets;
 //import invtweaks.api.container.ChestContainer;
 import net.minecraft.entity.player.EntityPlayer;

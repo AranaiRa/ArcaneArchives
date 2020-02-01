@@ -226,7 +226,7 @@ public class RadiantTrove extends DirectionalBlock {
 	}
 
 	@Override
-	@ParametersAreNonnullByDefault
+
 	public void breakBlock (World world, BlockPos pos, IBlockState state) {
 		LineHandler.removeLine(pos, world.provider.getDimension());
 

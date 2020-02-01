@@ -23,8 +23,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
+
+
 public class ManifestItem extends ItemTemplate {
 	public static final String NAME = "manifest";
 

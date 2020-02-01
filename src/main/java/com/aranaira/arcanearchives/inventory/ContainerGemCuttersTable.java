@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.inventory;
 
 import com.aranaira.arcanearchives.api.IGCTRecipe;
 import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
-import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
+import com.aranaira.arcanearchives.tiles.CrystalWorkbenchTile;
 /*import invtweaks.api.container.ContainerSection;
 import invtweaks.api.container.ContainerSectionCallback;
 import invtweaks.api.container.InventoryContainer;*/
@@ -31,12 +31,12 @@ public class ContainerGemCuttersTable extends Container {
 	private final IItemHandlerModifiable tileInventory;
 	private final IItemHandlerModifiable outputInv;
 	private final IItemHandler combinedInventory;
-	private final GemCuttersTableTileEntity tile;
+	private final CrystalWorkbenchTile tile;
 	private final EntityPlayer player;
 	private final World world;
 	private Runnable updateRecipeGUI;
 
-	public ContainerGemCuttersTable (IItemHandlerModifiable tileInventory, GemCuttersTableTileEntity tile, EntityPlayer player) {
+	public ContainerGemCuttersTable (IItemHandlerModifiable tileInventory, CrystalWorkbenchTile tile, EntityPlayer player) {
 		this.tileInventory = tileInventory;
 		this.tile = tile;
 		this.outputInv = tile.getOutputInventory();
@@ -256,7 +256,7 @@ public class ContainerGemCuttersTable extends Container {
 		}
 	}
 
-	public GemCuttersTableTileEntity getTile () {
+	public CrystalWorkbenchTile getTile () {
 		return tile;
 	}
 

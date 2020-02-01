@@ -1,14 +1,12 @@
 package com.aranaira.arcanearchives.init;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.blocks.GemCuttersTableBlock;
+import com.aranaira.arcanearchives.blocks.CrystalWorkbenchBlock;
 import com.aranaira.arcanearchives.blocks.MakeshiftResonatorBlock;
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -26,7 +24,7 @@ public class ModBlocks {
 		REGISTRY.forEach(event.getRegistry()::register);
 	}
 
-	public static GemCuttersTableBlock GemCuttersTable = register("gem_table", GemCuttersTableBlock::new);
+	public static CrystalWorkbenchBlock CrystalWorkbench = register("crystal_workbench", CrystalWorkbenchBlock::new);
 	public static MakeshiftResonatorBlock MakeshiftResonator = register("makeshift_resonator", MakeshiftResonatorBlock::new);
 
 	public static <T extends TemplateBlock> T register (String registryName, Supplier<T> supplier) {
@@ -47,7 +45,7 @@ public class ModBlocks {
 		item.setRegistryName(new ResourceLocation(ArcaneArchives.MODID, registryName));
 		block.setItemBlock(item);
 		REGISTRY.add(block);
-		ModItems.REGISTRY.add(item);
+		ModItems.add(item);
 		return block;
 	}
 

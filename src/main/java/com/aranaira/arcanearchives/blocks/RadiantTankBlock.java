@@ -172,7 +172,7 @@ public class RadiantTankBlock extends TemplateBlock {
 	}
 
 	@Override
-	@ParametersAreNonnullByDefault
+
 	public void breakBlock (World world, BlockPos pos, IBlockState state) {
 		LineHandler.removeLine(pos, world.provider.getDimension());
 

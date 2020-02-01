@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.inventory.slots;
 
 import com.aranaira.arcanearchives.api.IGCTRecipe;
-import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
+import com.aranaira.arcanearchives.tiles.CrystalWorkbenchTile;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryBasic;
@@ -13,9 +13,9 @@ import javax.annotation.Nullable;
 public class SlotRecipeHandler extends Slot {
 	private static IInventory emptyInventory = new InventoryBasic("[Null]", true, 0);
 	private final int index;
-	private final GemCuttersTableTileEntity tile;
+	private final CrystalWorkbenchTile tile;
 
-	public SlotRecipeHandler (int index, int xPosition, int yPosition, GemCuttersTableTileEntity tile) {
+	public SlotRecipeHandler (int index, int xPosition, int yPosition, CrystalWorkbenchTile tile) {
 		super(emptyInventory, index, xPosition, yPosition);
 		this.index = index;
 		this.tile = tile;

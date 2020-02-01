@@ -20,7 +20,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
-@ParametersAreNonnullByDefault
+
 public class MatrixRepositoryBlock extends TemplateBlock {
 
 	public static final String name = "matrix_repository";

@@ -19,8 +19,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.Random;
 
-@MethodsReturnNonnullByDefault
-@ParametersAreNonnullByDefault
+
+
 public class RadiantResonatorBlock extends TemplateBlock {
 	public static final String name = "radiant_resonator";
 

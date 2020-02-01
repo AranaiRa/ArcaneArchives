@@ -23,8 +23,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.Random;
 
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
+
+
 public class MatrixCrystalCore extends DirectionalBlock {
 	public static final String name = "matrix_crystal_core";
 

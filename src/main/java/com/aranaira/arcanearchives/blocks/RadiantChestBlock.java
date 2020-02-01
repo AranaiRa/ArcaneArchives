@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
-import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
+import com.aranaira.arcanearchives.tiles.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
