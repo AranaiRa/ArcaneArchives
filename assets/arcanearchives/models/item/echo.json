@@ -1,0 +1,8 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "arcanearchives:items/echoes_layer0",
+        "layer1": "arcanearchives:items/echoes_layer1",
+        "layer2": "arcanearchives:items/echoes_layer2"
+    }
+}
