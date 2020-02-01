@@ -7,7 +7,7 @@ import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
 import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
 import com.aranaira.arcanearchives.recipe.IngredientStack;
-import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
+import com.aranaira.arcanearchives.tiles.CrystalWorkbenchTile;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
@@ -39,7 +39,7 @@ public class GUIGemCuttersTable extends AbstractGuiContainerTracking {
 	private final ContainerGemCuttersTable container;
 	private final EntityPlayer player;
 	private final Object2BooleanMap<IGCTRecipe> recipeStatus = new Object2BooleanOpenHashMap<>();
-	private final GemCuttersTableTileEntity tile;
+	private final CrystalWorkbenchTile tile;
 	private InvisibleButton prevPageButton;
 	private InvisibleButton nextPageButton;
 	private int timesChanged;

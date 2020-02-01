@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tileentities;
+package com.aranaira.arcanearchives.tiles;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.api.IGCTRecipe;

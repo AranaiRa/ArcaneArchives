@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives;
 
 import com.aranaira.arcanearchives.init.ModBlocks;
 import com.aranaira.arcanearchives.init.ModItems;
+import com.aranaira.arcanearchives.init.ModTiles;
 import com.aranaira.arcanearchives.proxy.CommonProxy;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
@@ -30,6 +31,7 @@ public class ArcaneArchives {
 	public ArcaneArchives () {
 		ModBlocks.load();
 		ModItems.load();
+		ModTiles.load();
 	}
 
 	@EventHandler

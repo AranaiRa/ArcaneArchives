@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tileentities;
+package com.aranaira.arcanearchives.tiles;
 
 import com.aranaira.arcanearchives.config.ServerSideConfig;
 import net.minecraft.block.state.IBlockState;
@@ -18,34 +18,23 @@ public class MakeshiftResonatorTile extends TileEntity implements ITickable {
 
 	private int growth = 0;
 	private int ticks = 0;
-	private boolean canTick = false;
-	private boolean breaking = false;
 
 	public MakeshiftResonatorTile () {
-		//setName("wonky_resonator_tile_entity");
 	}
 
 	@Override
 	public void update () {
-		ticks++;
-
-		if (world.isRemote) {
-			return;
-		}
-
 		int ticksRequired = ServerSideConfig.ResonatorTickTime;
 
-		markDirty();
-
-		if (world.isAirBlock(pos.up())) {
-			if (growth < ticksRequired) {
+		if (growth < ticksRequired) {
+			if (!world.isRemote) {
 				growth++;
-			} else {
-				growth = 0;
-
-
-				// TODO: EXPLODE
 			}
+		} else {
+			growth = 0;
+
+
+			// TODO: EXPLODE
 		}
 	}
 
@@ -68,9 +57,9 @@ public class MakeshiftResonatorTile extends TileEntity implements ITickable {
 		}
 	}
 
-	public int getPercentageComplete () {
+/*	public int getPercentageComplete () {
 		return (int) Math.floor(growth / (double) ServerSideConfig.ResonatorTickTime * 100D);
-	}
+	}*/
 
 	@Override
 	@Nonnull

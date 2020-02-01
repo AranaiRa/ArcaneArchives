@@ -19,8 +19,8 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
-@MethodsReturnNonnullByDefault
-@ParametersAreNonnullByDefault
+
+
 public class RawQuartzItem extends Item {
 	public static final String NAME = "raw_quartz";
 

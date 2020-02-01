@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.HorizontalAccessorTemplateBlock;
-import com.aranaira.arcanearchives.tileentities.GemCuttersTableTileEntity;
+import com.aranaira.arcanearchives.tiles.CrystalWorkbenchTile;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -26,8 +26,8 @@ import net.minecraftforge.items.IItemHandler;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class GemCuttersTableBlock extends HorizontalAccessorTemplateBlock {
-	public GemCuttersTableBlock () {
+public class CrystalWorkbenchBlock extends HorizontalAccessorTemplateBlock {
+	public CrystalWorkbenchBlock () {
 		super(Material.IRON);
 		this.setHardness(3f);
 		setLightLevel(16f / 16f);
@@ -61,7 +61,7 @@ public class GemCuttersTableBlock extends HorizontalAccessorTemplateBlock {
 		/*		LineHandler.removeLine(pos, world.provider.getDimension());*/
 
 		TileEntity te = world.getTileEntity(pos);
-		if (te instanceof GemCuttersTableTileEntity) {
+		if (te instanceof CrystalWorkbenchTile) {
 			IItemHandler inv = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 			ItemUtils.dropInventoryItems(world, pos, inv);
 		}
@@ -143,7 +143,7 @@ public class GemCuttersTableBlock extends HorizontalAccessorTemplateBlock {
 			return null;
 		}
 
-		return new GemCuttersTableTileEntity();
+		return new CrystalWorkbenchTile();
 	}
 
 	@Override

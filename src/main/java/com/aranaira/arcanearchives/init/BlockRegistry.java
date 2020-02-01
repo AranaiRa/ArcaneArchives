@@ -54,7 +54,7 @@ public class BlockRegistry {
 	public static final RadiantResonatorBlock RADIANT_RESONATOR = new RadiantResonatorBlock();
 	public static final QuartzCluster RAW_QUARTZ = new QuartzCluster();
 	public static final QuartzSliver QUARTZ_SLIVER = new QuartzSliver();
-	public static final GemCuttersTable GEMCUTTERS_TABLE = new GemCuttersTable();
+	public static final CrystalWorkbench GEMCUTTERS_TABLE = new CrystalWorkbench();
 	public static final MonitoringCrystal MONITORING_CRYSTAL = new MonitoringCrystal();
 	public static final RadiantTankBlock RADIANT_TANK = new RadiantTankBlock();
 	public static final BrazierBlock BRAZIER_OF_HOARDING = new BrazierBlock();

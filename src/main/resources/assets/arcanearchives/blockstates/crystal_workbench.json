@@ -4,13 +4,12 @@
         "textures": {
             
         },
-        "model": "arcanearchives:gem_table.obj",
+        "model": "arcanearchives:crystal_workbench.obj",
         "custom": { "flip-v": true }
      },
     "variants": {
         "normal": [{}],
         "inventory": [{
-            
             "transform": {
                     "firstperson_righthand": {
                         "translation": [0.1, 0.025, -0.1],

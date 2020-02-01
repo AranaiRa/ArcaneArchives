@@ -11,8 +11,8 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
-@MethodsReturnNonnullByDefault
-@ParametersAreNonnullByDefault
+
+
 public class ManifestItemHandler implements IItemHandlerModifiable {
 	private ManifestList manifestBase;
 	private ManifestList manifestActive = null;
