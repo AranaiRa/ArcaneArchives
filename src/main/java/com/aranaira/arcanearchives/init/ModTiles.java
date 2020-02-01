@@ -1,55 +1,43 @@
 package com.aranaira.arcanearchives.init;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.blocks.CrystalWorkbenchBlock;
-import com.aranaira.arcanearchives.blocks.MakeshiftResonatorBlock;
-import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
+import com.aranaira.arcanearchives.tiles.CrystalWorkbenchTile;
+import com.aranaira.arcanearchives.tiles.MakeshiftResonatorTile;
 import net.minecraft.block.Block;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(modid=ArcaneArchives.MODID)
-public class ModBlocks {
-	public static final List<Block> REGISTRY = new ArrayList<>();
+public class ModTiles {
+	public static final Map<ResourceLocation, Class<? extends TileEntity>> REGISTRY = new HashMap<>();
 
 	@SubscribeEvent
 	public static void onRegister (Register<Block> event) {
-		REGISTRY.forEach(event.getRegistry()::register);
+		REGISTRY.forEach((key, value) -> GameRegistry.registerTileEntity(value, key));
 	}
 
-	public static CrystalWorkbenchBlock CrystalWorkbench = register("crystal_workbench", CrystalWorkbenchBlock::new);
-	public static MakeshiftResonatorBlock MakeshiftResonator = register("makeshift_resonator", MakeshiftResonatorBlock::new);
-
-	public static <T extends TemplateBlock> T register (String registryName, Supplier<T> supplier) {
-		return register(registryName, supplier, null);
+	static {
+		register("crystal_workbench", () -> CrystalWorkbenchTile.class);
+		register("makeshift_resonator", () -> MakeshiftResonatorTile.class);
 	}
 
-	public static <T extends TemplateBlock> T register (String registryName, Supplier<T> supplier, Supplier<? extends ItemBlock> itemBlock) {
-		T block = supplier.get();
-		block.setTranslationKey(registryName);
-		block.setRegistryName(new ResourceLocation(ArcaneArchives.MODID, registryName));
-		block.setCreativeTab(ArcaneArchives.TAB);
-		ItemBlock item;
-		if (itemBlock != null) {
-			item = itemBlock.get();
-		} else {
-			item = new ItemBlock(block);
+	public static <T extends TileEntity> void register (String registryName, Supplier<Class<? extends T>> supplier) {
+		Class<? extends T> tile = supplier.get();
+		ResourceLocation rl = new ResourceLocation(ArcaneArchives.MODID, registryName);
+		if (REGISTRY.containsKey(rl)) {
+			throw new IllegalStateException("Key " + rl.toString() + " already contained in TileEntity registration queue.");
 		}
-		item.setRegistryName(new ResourceLocation(ArcaneArchives.MODID, registryName));
-		block.setItemBlock(item);
-		REGISTRY.add(block);
-		ModItems.add(item);
-		return block;
+		REGISTRY.put(rl, tile);
 	}
 
 	public static void load () {
-
 	}
 }
