@@ -1,0 +1,18 @@
+{
+    "name": "Radiant Chest",
+    "icon": "arcanearchives:radiant_chest",
+    "category": "tier1",
+    "pages": [
+      {
+        "type": "spotlight",
+        "item": "arcanearchives:radiant_chest",
+        "text": "TBD"
+      },
+      {
+        "type": "relations",
+        "entries": [
+          "tier1/raw_quartz"
+        ]
+      }
+    ]
+  }

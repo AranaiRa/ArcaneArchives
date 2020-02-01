@@ -1,0 +1,19 @@
+{
+    "name": "Elixirspindle",
+    "icon": "arcanearchives:elixirspindle",
+    "category": "arsenal",
+    "sortnum": 26,
+    "pages": [
+      {
+        "type": "spotlight",
+        "item": "arcanearchives:elixirspindle",
+        "text": "TBD"
+      },
+      {
+        "type": "relations",
+        "entries": [
+          "tier0/gem_cutters_table"
+        ]
+      }
+    ]
+  }

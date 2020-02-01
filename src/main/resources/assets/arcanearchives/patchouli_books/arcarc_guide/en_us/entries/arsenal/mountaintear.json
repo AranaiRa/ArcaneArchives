@@ -1,0 +1,19 @@
+{
+    "name": "Mountaintear",
+    "icon": "arcanearchives:mountaintear",
+    "category": "arsenal",
+    "sortnum": 31,
+    "pages": [
+      {
+        "type": "spotlight",
+        "item": "arcanearchives:mountaintear",
+        "text": "TBD"
+      },
+      {
+        "type": "relations",
+        "entries": [
+          "tier0/gem_cutters_table"
+        ]
+      }
+    ]
+  }

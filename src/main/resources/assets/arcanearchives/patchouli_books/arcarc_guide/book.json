@@ -8,7 +8,7 @@
 	"landing_text": "BUZZ",
 	"book_texture": "arcanearchives:textures/gui/patchouli/book.png",
 	"filler_texture": "arcanearchives:textures/gui/patchouli/book_filler.png",
-	"model": "minecraft:book",
+	"model": "arcanearchives:tome_arcana",
 	"version": 1,
 	"show_progress": false,
 	"macros": {

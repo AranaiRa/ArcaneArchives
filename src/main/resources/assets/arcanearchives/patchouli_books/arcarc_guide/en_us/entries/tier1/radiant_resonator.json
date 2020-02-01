@@ -1,0 +1,18 @@
+{
+    "name": "Radiant Resonator",
+    "icon": "arcanearchives:radiant_resonator",
+    "category": "tier1",
+    "pages": [
+      {
+        "type": "spotlight",
+        "item": "arcanearchives:radiant_resonator",
+        "text": "A stabilized form of the $(l:tier0/makeshift_resonator)$(9)Makeshift Resonator$(). At a regular interval, the Radiant Resonator produces a $(l:tier1/raw_quartz#cluster)$(9)Raw Quartz Cluster$() in the space above itself.$(br2)By default, a Resonator takes five minutes to produce a cluster."
+      },
+      {
+        "type": "relations",
+        "entries": [
+          "tier1/raw_quartz"
+        ]
+      }
+    ]
+  }

@@ -1,0 +1,28 @@
+{
+    "name": "Slaughtergleam",
+    "icon": "arcanearchives:slaughtergleam",
+    "category": "arsenal",
+    "sortnum": 0,
+    "pages": [
+      {
+        "type": "spotlight",
+        "item": "arcanearchives:slaughtergleam",
+        "text": "A Slaugtergleam is an arcane gem associated with death and treasure.$(br2)The gem is an $(l:arsenal/arcane_gems#cuts)$(9)asscher cut$() and displays the red spectrum."
+      },
+      {
+        "type": "text",
+        "text": "When a Slaughtergleam is held and toggled on, your attacks are considered to have a $(9)Looting I$() enchantment.$(br2)If the weapon you hold is already enchanted with $(9)Looting$(), its level is treated as one higher instead.$(br2)To recharge a dun Slaughtergleam, right click it while you have $(9)gold nuggets$() in your inventory. Five nuggets are required for a full recharge."
+      },
+      {
+        "type": "spotlight",
+        "item": "arcanearchives:slaughtergleam",
+        "text": "A Slaugtergleam is an arcane gem associated with death and treasure.$(br2)The gem is an $(l:arsenal/arcane_gems#cuts)$(9)asscher cut$() and displays the red spectrum."
+      },
+      {
+        "type": "relations",
+        "entries": [
+          "tier0/gem_cutters_table"
+        ]
+      }
+    ]
+  }

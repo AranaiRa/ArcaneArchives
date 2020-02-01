@@ -1,0 +1,19 @@
+{
+    "name": "Murdergleam",
+    "icon": "arcanearchives:murdergleam",
+    "category": "arsenal",
+    "sortnum": 2,
+    "pages": [
+      {
+        "type": "spotlight",
+        "item": "arcanearchives:murdergleam",
+        "text": "TBD"
+      },
+      {
+        "type": "relations",
+        "entries": [
+          "tier0/gem_cutters_table"
+        ]
+      }
+    ]
+  }

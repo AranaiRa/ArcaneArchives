@@ -1,0 +1,19 @@
+{
+    "name": "Orderstone",
+    "icon": "arcanearchives:orderstone",
+    "category": "arsenal",
+    "sortnum": 17,
+    "pages": [
+      {
+        "type": "spotlight",
+        "item": "arcanearchives:orderstone",
+        "text": "TBD"
+      },
+      {
+        "type": "relations",
+        "entries": [
+          "tier0/gem_cutters_table"
+        ]
+      }
+    ]
+  }

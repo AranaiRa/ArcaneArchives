@@ -1,0 +1,19 @@
+{
+    "name": "Switchgleam",
+    "icon": "arcanearchives:switchgleam",
+    "category": "arsenal",
+    "sortnum": 6,
+    "pages": [
+      {
+        "type": "spotlight",
+        "item": "arcanearchives:switchgleam",
+        "text": "TBD"
+      },
+      {
+        "type": "relations",
+        "entries": [
+          "tier0/gem_cutters_table"
+        ]
+      }
+    ]
+  }

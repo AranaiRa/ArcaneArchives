@@ -1,0 +1,50 @@
+{
+    "name": "Raw Radiant Quartz",
+    "icon": "arcanearchives:raw_quartz",
+    "category": "tier1",
+    "priority": true,
+    "pages": [
+      {
+        "type": "spotlight",
+        "item": "arcanearchives:raw_quartz",
+        "text": "Raw Radiant Quartz is an unrefined magical crystal that makes up the basis of all of Arcane Archives. It is primarily a crafting component.$(br2)When you activate certain blocks with a piece of Raw Radiant Quartz while sneaking, it is converted in place into another block."
+      },
+      {
+        "type": "text",
+        "text": "Chests convert into $(l:tier1/radiant_chest)$(9)Radiant Chests$(). If used on a double chest, only the side you activate will convert—all items from both sides will be pulled in.$(br2)Crafting Tables convert into $(l:tier1/radiant_crafting_table)$(9)Radiant Crafting Tables$().$(br2)Furnaces convert into $(l:tier1/radiant_crafting_table)$(9)Radiant Furnaces$()."
+      },
+      {
+        "type": "spotlight",
+        "item": "arcanearchives:raw_quartz_cluster",
+        "anchor": "cluster",
+        "text": "When Raw Radiant Quartz is generated over top of a Radiant Resonator, it forms a large $(9)cluster$(). This cluster is a light source.$(br2)The cluster itself can be collected with a Silk Touch tool. Otherwise, breaking it drops a piece of Raw Radiant Quartz."
+      },
+      {
+        "type": "empty",
+        "entries": [
+          "tier1/radiant_chest"
+        ]
+      },
+      {
+        "type": "spotlight",
+        "title": "Astral Sorcery",
+        "item": "astralsorcery:itemjournal",
+        "text": "Raw Radiant Quartz can be used in a $(9)Lightwell$() to generate Liquid Starlight.$(br2)Its generation rate is very slow, but it operates for a significantly longer time than Aquamarine before shattering."
+      },
+      {
+        "type": "spotlight",
+        "title": "Thaumcraft",
+        "item": "thaumcraft:thaumonomicon",
+        "text": "Raw Radiant Quartz Clusters can be used as an infusion stabilizer."
+      },
+      {
+        "type": "relations",
+        "entries": [
+          "tier1/radiant_resonator",
+          "tier1/radiant_chest",
+          "tier1/radiant_crafting_table",
+          "tier1/radiant_furnace"
+        ]
+      }
+    ]
+  }

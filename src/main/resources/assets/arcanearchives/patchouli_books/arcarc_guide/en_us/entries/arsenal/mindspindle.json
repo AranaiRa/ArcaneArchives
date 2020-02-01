@@ -1,0 +1,19 @@
+{
+    "name": "Mindspindle",
+    "icon": "arcanearchives:mindspindle",
+    "category": "arsenal",
+    "sortnum": 23,
+    "pages": [
+      {
+        "type": "spotlight",
+        "item": "arcanearchives:mindspindle",
+        "text": "TBD"
+      },
+      {
+        "type": "relations",
+        "entries": [
+          "tier0/gem_cutters_table"
+        ]
+      }
+    ]
+  }

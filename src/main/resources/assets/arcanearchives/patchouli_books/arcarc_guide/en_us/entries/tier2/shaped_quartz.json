@@ -1,0 +1,23 @@
+{
+    "name": "Shaped Quartz",
+    "icon": "arcanearchives:shaped_quartz",
+    "category": "tier2",
+    "priority": true,
+    "pages": [
+      {
+        "type": "spotlight",
+        "item": "arcanearchives:shaped_quartz",
+        "text": "Raw Radiant Quartz is an unrefined magical crystal that makes up the basis of all of Arcane Archives. It is primarily a crafting component.$(br)$(br)"
+      },
+      {
+        "type": "test_crafting_template",
+        "recipe": "minecraft:coal"
+      },
+      {
+        "type": "relations",
+        "entries": [
+          "test/test"
+        ]
+      }
+    ]
+  }

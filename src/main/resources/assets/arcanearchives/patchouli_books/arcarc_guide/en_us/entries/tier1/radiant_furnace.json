@@ -1,0 +1,18 @@
+{
+    "name": "Radiant Furnace",
+    "icon": "arcanearchives:radiant_furnace",
+    "category": "tier1",
+    "pages": [
+      {
+        "type": "spotlight",
+        "item": "arcanearchives:radiant_furnace",
+        "text": "TBD"
+      },
+      {
+        "type": "relations",
+        "entries": [
+          "tier1/raw_quartz"
+        ]
+      }
+    ]
+  }

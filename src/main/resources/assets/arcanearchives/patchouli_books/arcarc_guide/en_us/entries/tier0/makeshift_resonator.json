@@ -1,0 +1,20 @@
+{
+    "name": "Makeshift Resonator",
+    "icon": "arcanearchives:wonky_resonator",
+    "category": "tier0",
+    "sortnum": "0",
+    "pages": [
+      {
+        "type": "spotlight",
+        "item": "arcanearchives:wonky_resonator",
+        "text": "TBD"
+      },
+      {
+        "type": "relations",
+        "entries": [
+          "tier0/sliver_of_light",
+          "tier1/radiant_resonator"
+        ]
+      }
+    ]
+  }
