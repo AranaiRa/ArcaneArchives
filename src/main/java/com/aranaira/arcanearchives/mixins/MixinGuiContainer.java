@@ -23,18 +23,16 @@ import java.util.List;
 
 @Mixin(GuiContainer.class)
 @SuppressWarnings("unused")
-public abstract class MixinGuiContainer {
+public class MixinGuiContainer {
 	@SideOnly(Side.CLIENT)
 	private static List<Class<? extends GuiContainer>> CONTAINER_IGNORE_LIST = Arrays.asList(GUIManifest.class, GUIGemCuttersTable.class, GUIUpgrades.class, GUIRadiantChest.class, GUIGemSocket.class);
 
-	@Inject(method = "drawSlot", at = @At(value = "HEAD"))
-	@SideOnly(Side.CLIENT)
-	private void onDrawSlot (Slot slot, CallbackInfo callbackInfo) {
-		if (ConfigHandler.nonModTrackingConfig.DisableMixinHighlight || ConfigHandler.nonModTrackingConfig.getContainerClasses().contains(((GuiContainer) (Object) this).getClass())) {
+	private static void drawSlot (GuiContainer container, Slot slot) {
+		if (ConfigHandler.nonModTrackingConfig.DisableMixinHighlight || ConfigHandler.nonModTrackingConfig.getContainerClasses().contains(container.getClass())) {
 			return;
 		}
 
-		if (CONTAINER_IGNORE_LIST.contains(((GuiContainer) (Object) this).getClass())) {
+		if (CONTAINER_IGNORE_LIST.contains(container.getClass())) {
 			return;
 		}
 
@@ -42,12 +40,18 @@ public abstract class MixinGuiContainer {
 		if (!stack.isEmpty()) {
 			if (ManifestTrackingUtils.matches(stack)) {
 				GlStateManager.disableDepth();
-				long worldTime = ((GuiContainer) (Object) this).mc.player.world.getWorldTime();
+				long worldTime = container.mc.player.world.getWorldTime();
 				Color c = ColorUtils.getColorFromTime(worldTime);
 				GuiContainer.drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, c.toInteger());
 				GlStateManager.enableDepth();
 			}
 		}
+	}
+
+	@Inject(method = "drawSlot", at = @At(value = "HEAD"))
+	@SideOnly(Side.CLIENT)
+	private void onDrawSlot (Slot slot, CallbackInfo callbackInfo) {
+		drawSlot((GuiContainer) (Object) this, slot);
 	}
 
 	@Inject(method = "onGuiClosed", at = @At(value = "RETURN"))
