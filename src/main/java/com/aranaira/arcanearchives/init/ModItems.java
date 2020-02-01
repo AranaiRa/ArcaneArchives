@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.init;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.items.RadiantDustItem;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipe;
@@ -21,6 +22,8 @@ import java.util.function.Supplier;
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class ModItems {
 	public static final List<Item> REGISTRY = new ArrayList<>();
+
+	public static final RadiantDustItem RadiantDust = register("radiant_dust", RadiantDustItem::new);
 
 	@SubscribeEvent
 	public static void onRegister (Register<Item> event) {

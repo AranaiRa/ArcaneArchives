@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import com.aranaira.arcanearchives.tiles.MakeshiftResonatorTile;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -16,6 +17,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -40,32 +42,37 @@ public class MakeshiftResonatorBlock extends TemplateBlock {
 	@Override
 	public boolean onBlockActivated (World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!state.getValue(FILLED)) {
-			ItemStack stack = playerIn.getHeldItem(hand);
-			IFluidHandlerItem cap = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
-			if (cap != null) {
-				if (cap.getTankProperties().length > 0) {
-					FluidStack contents = cap.getTankProperties()[0].getContents();
-					if (contents != null) {
-						if (contents.getFluid() == FluidRegistry.WATER) {
-							if (contents.amount == 1000) {
-								if (worldIn.isRemote) {
+			if (!playerIn.capabilities.isCreativeMode) {
+				ItemStack stack = playerIn.getHeldItem(hand);
+				IFluidHandlerItem cap = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
+				if (cap != null) {
+					if (cap.getTankProperties().length > 0) {
+						FluidStack contents = cap.getTankProperties()[0].getContents();
+						if (contents != null) {
+							if (contents.getFluid() == FluidRegistry.WATER) {
+								if (contents.amount == 1000) {
+									if (worldIn.isRemote) {
+										return true;
+									}
+									cap.drain(1000, true);
+									playerIn.setHeldItem(hand, stack.getItem().getContainerItem(stack));
+									worldIn.setBlockState(pos, state.withProperty(FILLED, true));
+									return true;
+								} else if (contents.amount > 1000) {
+									if (!worldIn.isRemote) {
+										cap.drain(1000, true);
+										worldIn.setBlockState(pos, state.withProperty(FILLED, true));
+									}
+
 									return true;
 								}
-								cap.drain(1000, true);
-								playerIn.setHeldItem(hand, stack.getItem().getContainerItem(stack));
-								worldIn.setBlockState(pos, state.withProperty(FILLED, true));
-								return true;
-							} else if (contents.amount > 1000) {
-								if (!worldIn.isRemote) {
-									cap.drain(1000, true);
-									worldIn.setBlockState(pos, state.withProperty(FILLED, true));
-								}
-
-								return true;
 							}
 						}
 					}
 				}
+			} else {
+				worldIn.setBlockState(pos, state.withProperty(FILLED, true));
+				return true;
 			}
 		}
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
@@ -129,5 +136,23 @@ public class MakeshiftResonatorBlock extends TemplateBlock {
 	@Override
 	protected BlockStateContainer createBlockState () {
 		return new BlockStateContainer(this, FILLED);
+	}
+
+	@Override
+	public void fillWithRain (World worldIn, BlockPos pos) {
+		IBlockState state = worldIn.getBlockState(pos);
+		if (state.getBlock() != this || state.getValue(FILLED)) {
+			return;
+		}
+		worldIn.setBlockState(pos, state.withProperty(FILLED, true));
+	}
+
+	@Override
+	public BlockFaceShape getBlockFaceShape (IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+		if (face == EnumFacing.UP) {
+			return BlockFaceShape.BOWL;
+		} else {
+			return face == EnumFacing.DOWN ? BlockFaceShape.UNDEFINED : BlockFaceShape.SOLID;
+		}
 	}
 }
