@@ -6,25 +6,14 @@ buildscript {
             name = 'sponge'
             url = 'https://repo.spongepowered.org/maven'
         }
-        maven {
-          url "https://plugins.gradle.org/m2/"
-        }
-        maven {
-            name = 'mojang'
-            url = 'https://libraries.minecraft.net/'
-        }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
         classpath 'org.spongepowered:mixingradle:0.6-SNAPSHOT'
-        classpath "com.wynprice.cursemaven:CurseMaven:1.1.0"
-        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.2'
     }
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'org.spongepowered.mixin'
-apply plugin: 'com.wynprice.cursemaven'
-apply plugin: 'com.github.johnrengelman.shadow'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 version = "0.2.1-preview1"
@@ -161,21 +150,6 @@ jar {
 
     rename '(.+_at.cfg)', 'META-INF/$1'
 }
-
-shadowJar {
-    classifier = 'shadow'
-    archiveName = tasks.jar.archiveName
-    configurations = [project.configurations.shade]
-    relocate 'org.spongepowered', 'com.aranaira.repack.org.spongepowered'
-}
-
-jar.dependsOn shadowJar
-jar.enabled = false
-
-reobfJar {
-    setJar(tasks.shadowJar.archivePath)
-}
-reobfJar.dependsOn shadowJar
 
 task deobfJar(type: Jar) {
     from(sourceSets.main.output)
