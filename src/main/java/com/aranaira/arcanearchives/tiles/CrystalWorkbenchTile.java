@@ -20,7 +20,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class CrystalWorkbenchTile extends TileEntity { //ImmanenceTileEntity implements IManifestTileEntity, IBrazierRouting {
+public class CrystalWorkbenchTile extends TileEntity {
 	private final TrackingGCTHandler inventory = new TrackingGCTHandler(18);
 	private final IItemHandlerModifiable outputInventory = new ItemStackHandler(1);
 	public static final int RECIPE_PAGE_LIMIT = 7;

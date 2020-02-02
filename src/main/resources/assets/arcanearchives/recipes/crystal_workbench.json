@@ -1,0 +1,62 @@
+{
+    "_comment": [
+        "Craft a Crystal Workbench"
+    ],
+    "type": "forge:ore_shaped",
+    "pattern": [
+        "TRD",
+        "WCW",
+        "WGW"
+    ],
+    "key": {
+        "D": [
+            {
+            "item": "minecraft:stone",
+            "data": 3
+        },
+        {
+            "type":  "forge:ore_dict",
+            "ore":  "blockMarble"
+        },
+        {
+            "type":  "forge:ore_dict",
+            "ore":  "stoneDiorite"
+        },
+        {
+            "type":  "forge:ore_dict",
+            "ore":  "stoneDioritePolished"
+        },
+        {
+            "type":  "forge:ore_dict",
+            "ore":  "stoneMarble"
+        },
+        {
+            "type":  "forge:ore_dict",
+            "ore":  "stoneMarblePolished"
+        }
+       ],
+        "T": {
+            "type": "forge:ore_dict",
+            "ore":  "paneGlass"
+        },
+        "C": {
+            "type": "forge:ore_dict",
+            "ore": "workbench"
+        },
+        "R": {
+            "item": "arcanearchives:radiant_dust"
+        },
+        "W": {
+            "type": "forge:ore_dict",
+            "ore": "logWood"
+        },
+        "G": {
+            "type": "forge:ore_dict",
+            "ore": "ingotGold"
+        }
+    },
+    "result": {
+        "item": "arcanearchives:crystal_workbench"
+    },
+    "mirror": true
+}
