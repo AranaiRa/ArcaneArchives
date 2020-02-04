@@ -10,7 +10,7 @@
       },
       {
         "type": "crystal_workbench_template",
-        "recipe": "minecraft:coal"
+        "recipe": "arcanearchives:salvegleam"
       },
       {
         "type": "relations",

@@ -22,57 +22,50 @@
       "type": "item",
       "item": "#result",
       "framed": false,
-      "x": 46,
-      "y": 18
+      "x": 49,
+      "y": 54
     },
     {
       "type": "item",
       "item": "#item1",
       "framed": false,
-      "x": 0,
-      "y": 0
+      "x": 49,
+      "y": 22
     },
     {
       "type": "item",
       "item": "#item2",
       "framed": false,
-      "x": 0,
-      "y": 0
-    },
-    {
-      "type": "item",
-      "item": "#item1",
-      "framed": false,
-      "x": 0,
-      "y": 0
+      "x": 77,
+      "y": 38
     },
     {
       "type": "item",
       "item": "#item3",
       "framed": false,
-      "x": 0,
-      "y": 0
+      "x": 77,
+      "y": 70
     },
     {
       "type": "item",
       "item": "#item4",
       "framed": false,
-      "x": 0,
-      "y": 0
+      "x": 49,
+      "y": 85
     },
     {
       "type": "item",
       "item": "#item5",
       "framed": false,
-      "x": 0,
-      "y": 0
+      "x": 21,
+      "y": 70
     },
     {
       "type": "item",
       "item": "#item6",
       "framed": false,
-      "x": 0,
-      "y": 0
+      "x": 21,
+      "y": 38
     }
   ]
 }
