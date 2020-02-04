@@ -1,0 +1,78 @@
+
+{
+  "processor": "com.aranaira.arcanearchives.integration.patchouli.TestProcessor",
+  "components": [
+    {
+      "type": "header",
+      "text": "Crystal Workbench",
+      "x": -1,
+      "y": 0
+    },
+    {
+      "type": "image",
+      "image": "arcanearchives:textures/gui/patchouli/elements2.png",
+      "x": 7,
+      "y": 14,
+      "u": 0,
+      "v": 0,
+      "width": 100,
+      "height": 126
+    },
+    {
+      "type": "item",
+      "item": "#result",
+      "framed": false,
+      "x": 46,
+      "y": 18
+    },
+    {
+      "type": "item",
+      "item": "#item1",
+      "framed": false,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "type": "item",
+      "item": "#item2",
+      "framed": false,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "type": "item",
+      "item": "#item1",
+      "framed": false,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "type": "item",
+      "item": "#item3",
+      "framed": false,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "type": "item",
+      "item": "#item4",
+      "framed": false,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "type": "item",
+      "item": "#item5",
+      "framed": false,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "type": "item",
+      "item": "#item6",
+      "framed": false,
+      "x": 0,
+      "y": 0
+    }
+  ]
+}

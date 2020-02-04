@@ -1,0 +1,20 @@
+{
+  "name": "Radiant Dust",
+  "icon": "arcanearchives:radiant_dust",
+  "category": "tier0",
+  "priority": true,
+  "sortnum": "1",
+  "pages": [
+    {
+      "type": "spotlight",
+      "item": "arcanearchives:radiant_dust",
+      "text": "TBD"
+    },
+    {
+      "type": "relations",
+      "entries": [
+        "test/test"
+      ]
+    }
+  ]
+}

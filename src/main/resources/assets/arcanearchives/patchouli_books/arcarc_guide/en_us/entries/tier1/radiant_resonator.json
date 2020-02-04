@@ -9,6 +9,10 @@
         "text": "A stabilized form of the $(l:tier0/makeshift_resonator)$(9)Makeshift Resonator$(). At a regular interval, the Radiant Resonator produces a $(l:tier1/raw_quartz#cluster)$(9)Raw Quartz Cluster$() in the space above itself.$(br2)By default, a Resonator takes five minutes to produce a cluster."
       },
       {
+        "type": "crystal_workbench_template",
+        "recipe": "minecraft:coal"
+      },
+      {
         "type": "relations",
         "entries": [
           "tier1/raw_quartz"
