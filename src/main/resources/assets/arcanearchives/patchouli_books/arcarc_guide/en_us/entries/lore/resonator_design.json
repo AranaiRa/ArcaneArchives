@@ -1,0 +1,16 @@
+{
+  "name": "Resonator Design Notes",
+  "icon": "arcanearchives:textures/gui/patchouli/lore.png",
+  "category": "lore",
+  "pages": [
+    {
+      "title": "Resonator Design Notes",
+      "type": "image",
+      "images": ["arcanearchives:textures/gui/patchouli/lore/resonator_design.png"]
+    },
+    {
+      "type": "text",
+      "text": "$(br2)Found in the notes of Sharaveda, Deceased$(br2)...Annotation made by Traylin, former Apprentice of the deceased$(br2)...1672, Winter's Birth"
+    }
+  ]
+}

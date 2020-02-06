@@ -1,0 +1,25 @@
+{
+  "name": "The Creed of Branding",
+  "icon": "arcanearchives:textures/gui/patchouli/lore.png",
+  "category": "lore",
+  "pages": [
+    {
+      "title": "The Creed of Branding",
+      "type": "image",
+      "images": ["arcanearchives:textures/gui/patchouli/lore/observation_sigil.png"]
+    },
+    {
+      "type": "text",
+      "text": "The promise and distinction you have displayed have earned you the right to call yourself a Master of the Eternal University. As of this moment, you are born anew, free of the shackles of Apprenticeship.$(br2)Your forehead shall bear the Brand of Monitoring, and with it we shall watch you. Observation breeds honesty, and honesty breeds Temperance."
+    },
+    {
+      "title": "The Creed of Branding",
+      "type": "image",
+      "images": ["arcanearchives:textures/gui/patchouli/lore/observation_sigil.png"]
+    },
+    {
+      "type": "text",
+      "text": "Enlightenment is the right of the strong, and no strength can be found in intemperate acts. Trust in the judgment of the Quadrate, and the Magistocracy will trust in your works.$(br2)Bask in the light of your Enlightenment, Master, and walk ever on the path of Wisdom."
+    }
+  ]
+}
