@@ -21,7 +21,7 @@
     },
     {
       "type": "text",
-      "text": "$(br2)Personal musings of Sharaveda$(br2)...1663, Summer's End"
+      "text": "$(br2)$(l)Personal musings of Sharaveda$()$(br2)$(o)1663, Summer's End$()"
     }
   ]
 }

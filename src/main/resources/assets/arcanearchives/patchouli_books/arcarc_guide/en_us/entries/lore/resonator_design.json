@@ -10,7 +10,7 @@
     },
     {
       "type": "text",
-      "text": "$(br2)Found in the notes of Sharaveda, Deceased$(br2)...Annotation made by Traylin, former Apprentice of the deceased$(br2)...1672, Winter's Birth"
+      "text": "$(l)Found in the notes of Sharaveda, Deceased$()$(br2)$(o)Annotation made by Traylin, former Apprentice of the deceased$(br2)1672, Winter's Birth$()"
     }
   ]
 }
