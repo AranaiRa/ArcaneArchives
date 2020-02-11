@@ -1,0 +1,19 @@
+{
+  "name": "A Letter of Resignation",
+  "icon": "arcanearchives:textures/gui/patchouli/lore_university.png",
+  "category": "lore_university",
+  "pages": [
+    {
+      "type": "text",
+      "text": "To my esteemed colleagues of the Eternal University,$(br2)All of my Enlighted existence I have labored tirelessly to bring Enlightenment to all whom the Magistocracy have deemed worthy to share in its light. I have strived to be a beacon of Enlightenment to all, but no longer can I turn a blind eye to the delusions that this University has allowed to"
+    },
+    {
+      "type": "text",
+      "text": "fester.$(br2)The Enlightenment that the Grand Architects shared was not meant for the vulgar peasantry. Enlightenment is for the pure; we cannot continue to dilute our ranks with crude Novices who will never become anything more than Journeymen.$(br2)Due to the increase of this practice, despite my many protests, I no longer feel that Enlightenment is truly the highest goal of the Council"
+    },
+    {
+      "type": "text",
+      "text": "of Masters.$(br2)I have therefore decided to resign from this once great fellowship effective immediately.$(br2)Official Resignation of Master Rashelon$(br2)...1634, Spring's Birth"
+    }
+  ]
+}

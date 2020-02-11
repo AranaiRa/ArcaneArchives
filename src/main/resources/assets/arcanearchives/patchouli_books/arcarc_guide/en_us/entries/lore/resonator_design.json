@@ -1,6 +1,6 @@
 {
-  "name": "Resonator Design Notes",
-  "icon": "arcanearchives:textures/gui/patchouli/lore.png",
+  "name": "Notes: Resonator Design",
+  "icon": "arcanearchives:textures/gui/patchouli/lore_sharaveda.png",
   "category": "lore",
   "pages": [
     {

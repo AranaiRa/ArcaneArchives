@@ -1,0 +1,6 @@
+{
+  "name": "The Eternal University",
+  "description": "Remnants of a forgotten era",
+  "icon": "arcanearchives:textures/gui/patchouli/lore_university.png",
+  "parent": "lore"
+}

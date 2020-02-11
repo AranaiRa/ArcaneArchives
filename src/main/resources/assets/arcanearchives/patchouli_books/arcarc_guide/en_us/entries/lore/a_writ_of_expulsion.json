@@ -1,0 +1,23 @@
+{
+  "name": "A Writ of Expulsion",
+  "icon": "arcanearchives:textures/gui/patchouli/lore_university.png",
+  "category": "lore_university",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Master Sharaveda, it has become painfully clear that you no longer possess the objectivity necessary to act as a Master of the Eternal University.$(br2)You have become utterly obsessed with this material that you $(o)claim$() exists. Yet you have $(o)repeatedly$() failed to produce a shred of actual evidence for its existence,"
+    },
+    {
+      "type": "text",
+      "text": "save for multicolored, glowing powder. A feat, I might add, that is achievable with a simple cantrip.$(br2)It is the opinion of this counsel that your mind has been addled by your thaumaturgical studies. You see things that cannot be because of the Warp that has twisted your mind; you are too taken with your obsessions to understand that existence is based on $(o)squares$(). These five and six sided shapes you"
+    },
+    {
+      "type": "text",
+      "text": "speak of are nonsense; the delusions of a sick mind that can no longer cope with reality.$(br2)A judgment has been reached by a majority of the Quadrate. You have strayed from the path of Wisdom, and your right to Enlightenment is forfeit. You are banished from the Eternal University, and no longer bear the title of Master. You may no longer practice your craft or step foot into the University on pain of execution."
+    },
+    {
+      "type": "text",
+      "text": "$(l)Final statement at Sharaveda’s disciplinary inquest$()$(br2)$(o)Kurst of the Green Flame, Tetrarch of Research$(br2)1670, Spring’s Height$()"
+    }
+  ]
+}

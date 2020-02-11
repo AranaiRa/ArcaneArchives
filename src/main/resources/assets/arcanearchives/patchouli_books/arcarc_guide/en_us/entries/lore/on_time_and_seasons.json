@@ -1,0 +1,31 @@
+{
+  "name": "On Time and Seasons",
+  "icon": "arcanearchives:textures/gui/patchouli/lore_university.png",
+  "category": "lore_university",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Now that you are Apprentices of the Eternal University, you are expected to follow the University's regulations. Perhaps the most important of which is your seasonal research. You will be required to officially submit your research project to your Master at the end of each season. Your results will determine whether the Eternal University deems you worthy of"
+    },
+    {
+      "type": "text",
+      "text": "becoming a Journeyman or remaining an Apprentice for the next season.$(br2)You may have wondered in your primitive days why the length of the seasons changes, and as an Apprentice of the Eternal University you are now privvy to that knowledge. Simply put, the spells that the Quadrate has woven on the world keeps the current season constant until all seasonal research has been submitted."
+    },
+    {
+      "type": "text",
+      "text": "Traditionally, a Height month will last around 220 days, excepting Winter's Height, which is rarely sustained for longer than 130 days. Depending on the research needs of the Masters of this University, these times may be extended or shortened, so plan accordingly. If you do not submit research by the conclusion of the season's End month, you will be subject to an audit and will likely face disciplinary action."
+    },
+    {
+      "type": "text",
+      "text": "Once all research has been collected, the season's Height will conclude and its End will begin. You will have twenty four days until the Birth month of the new season. It is recommended to take these days as personal time. You will then have twenty four days to draft a proposal for the coming season's research process, to be submitted on the first of the new season's Height month."
+    },
+    {
+      "type": "text",
+      "text": "The Eternal University recognizes the following thirteen months.$(br2)$(li)Spring's Birth$(li)Spring's Height$(li)Spring's End$(li)Summer's Birth$(li)Summer's Height$(li)Summer's End$(li)Autumn's Birth$(li)Autumn's Height$(br)$(li)Autumn's End$(li)Winter's Birth$(br)$(li)Winter's Height$(li)Winter's End$(li)$(o)Recalibration$()"
+    },
+    {
+      "type": "text",
+      "text": "At the conclusion of Winter's End each year, the spells controlling the seasons are allowed to lapse temporarily. We call this 17 day period $(o)Recalibration$().$(br2)Recalibration is generally taken as personal time, and the Eternal University offers feasting for its members, but also heavily recommends that no one leave the premises."
+    }
+  ]
+}

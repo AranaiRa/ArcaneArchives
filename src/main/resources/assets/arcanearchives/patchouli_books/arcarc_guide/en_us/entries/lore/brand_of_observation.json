@@ -1,7 +1,7 @@
 {
   "name": "The Creed of Branding",
-  "icon": "arcanearchives:textures/gui/patchouli/lore.png",
-  "category": "lore",
+  "icon": "arcanearchives:textures/gui/patchouli/lore_university.png",
+  "category": "lore_university",
   "pages": [
     {
       "title": "The Creed of Branding",
