@@ -1,8 +1,8 @@
 package com.aranaira.arcanearchives.recipe.cw;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.api.CrystalWorkbenchRecipe;
-import com.aranaira.arcanearchives.api.IngredientStack;
+import com.aranaira.arcanearchives.api.cwb.CrystalWorkbenchRecipe;
+import com.aranaira.arcanearchives.api.crafting.IngredientStack;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

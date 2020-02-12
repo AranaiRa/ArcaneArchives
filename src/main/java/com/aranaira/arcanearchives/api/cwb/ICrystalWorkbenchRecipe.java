@@ -1,5 +1,6 @@
-package com.aranaira.arcanearchives.api;
+package com.aranaira.arcanearchives.api.cwb;
 
+import com.aranaira.arcanearchives.api.crafting.IngredientStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
@@ -10,6 +11,9 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ICrystalWorkbenchRecipe {
+  int getIndex ();
+  void setIndex (int index);
+
   MatchResult matches(WorkbenchCrafting inventory, World world);
 
   ItemStack getActualResult(WorkbenchCrafting inventory, UUID workbenchId, @Nullable World world);

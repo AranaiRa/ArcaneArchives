@@ -1,5 +1,6 @@
-package com.aranaira.arcanearchives.api;
+package com.aranaira.arcanearchives.api.cwb;
 
+import com.aranaira.arcanearchives.api.crafting.IngredientStack;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -15,6 +16,7 @@ public abstract class CrystalWorkbenchRecipe extends IForgeRegistryEntry.Impl<Cr
   protected List<IngredientStack> inputs;
   protected List<IngredientTransformer> transformers = new ArrayList<>();
   protected ItemStack output;
+  protected int index;
 
   public CrystalWorkbenchRecipe(List<IngredientStack> inputs, ItemStack output) {
     this(inputs, output, true);
@@ -59,5 +61,15 @@ public abstract class CrystalWorkbenchRecipe extends IForgeRegistryEntry.Impl<Cr
   @Override
   public List<IngredientStack> getIngredients() {
     return inputs;
+  }
+
+  @Override
+  public int getIndex() {
+    return index;
+  }
+
+  @Override
+  public void setIndex(int index) {
+    this.index = index;
   }
 }

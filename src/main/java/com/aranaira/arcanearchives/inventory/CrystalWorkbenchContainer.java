@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.inventory;
 
-import com.aranaira.arcanearchives.api.gct.IGCTRecipe;
+import com.aranaira.arcanearchives.api.cwb.CrystalWorkbenchRecipe;
+import com.aranaira.arcanearchives.api.cwb.WorkbenchCrafting;
 import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
 import com.aranaira.arcanearchives.tiles.CrystalWorkbenchTile;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,19 +29,19 @@ import invtweaks.api.container.ContainerSectionCallback;
 import invtweaks.api.container.InventoryContainer;*/
 
 //@InventoryContainer
-public class ContainerGemCuttersTable extends Container {
+public class CrystalWorkbenchContainer extends Container {
   private static final int SLOT_OUTPUT = 0;
   private final SlotItemHandler slotOutput;
   private final IInventory playerInventory;
   private final IItemHandlerModifiable tileInventory;
   private final IItemHandlerModifiable outputInv;
-  private final IItemHandler combinedInventory;
+  private final IItemHandlerModifiable combinedInventory;
   private final CrystalWorkbenchTile tile;
   private final EntityPlayer player;
   private final World world;
   private Runnable updateRecipeGUI;
 
-  public ContainerGemCuttersTable(IItemHandlerModifiable tileInventory, CrystalWorkbenchTile tile, EntityPlayer player) {
+  public CrystalWorkbenchContainer(IItemHandlerModifiable tileInventory, CrystalWorkbenchTile tile, EntityPlayer player) {
     this.tileInventory = tileInventory;
     this.tile = tile;
     this.outputInv = tile.getOutputInventory();
@@ -58,11 +59,11 @@ public class ContainerGemCuttersTable extends Container {
     this.slotOutput = new SlotItemHandler(outputInv, SLOT_OUTPUT, 95, 18) {
       @Override
       public ItemStack onTake(EntityPlayer thePlayer, ItemStack stack) {
-        IGCTRecipe recipe = tile.getCurrentRecipe();
-        recipe.consumeAndHandleInventory(recipe, combinedInventory, player, tile, ContainerGemCuttersTable.this::detectAndSendChanges, recipe::handleItemResult);
+        CrystalWorkbenchRecipe recipe = tile.getCurrentRecipe();
+/*        recipe.consumeAndHandleInventory(recipe, combinedInventory, player, tile, ContainerGemCuttersTable.this::detectAndSendChanges, recipe::handleItemResult);
         if (!player.world.isRemote) {
           stack = recipe.onCrafted(player, stack);
-        }
+        }*/
         updateRecipe();
         return super.onTake(player, stack);
       }
@@ -74,7 +75,8 @@ public class ContainerGemCuttersTable extends Container {
 
       @Override
       public boolean canTakeStack(EntityPlayer player) {
-        return tile.getCurrentRecipe().matches(combinedInventory) && tile.getCurrentRecipe().craftable(player, tile);
+        /*        return tile.getCurrentRecipe().matches(combinedInventory) && tile.getCurrentRecipe().craftable(player, tile);*/
+        return false;
       }
     };
 
@@ -132,8 +134,8 @@ public class ContainerGemCuttersTable extends Container {
 
     ItemStack itemstack;
 
-    IGCTRecipe curRecipe = tile.getCurrentRecipe();
-    if (curRecipe != null) {
+    CrystalWorkbenchRecipe curRecipe = tile.getCurrentRecipe();
+/*    if (curRecipe != null) {
       itemstack = curRecipe.getRecipeOutput().copy();
       if (curRecipe.matches(combinedInventory)) {
         outputInv.setStackInSlot(SLOT_OUTPUT, itemstack);
@@ -152,8 +154,8 @@ public class ContainerGemCuttersTable extends Container {
       playerInventory.setInventorySlotContents(0, itemstack);
     }
     if (tile.getLastRecipe() != null && !world.isRemote) {
-      /*			Networking.CHANNEL.sendTo(new PacketGemCutters.LastRecipe(tile.getLastRecipe()), (EntityPlayerMP) player);*/
-    }
+      *//*			Networking.CHANNEL.sendTo(new PacketGemCutters.LastRecipe(tile.getLastRecipe()), (EntityPlayerMP) player);*//*
+    }*/
 
     tile.updatePenultimateRecipe();
   }
@@ -243,20 +245,20 @@ public class ContainerGemCuttersTable extends Container {
     return true;
   }
 
-  public Map<IGCTRecipe, Boolean> updateRecipeStatus() {
-    Map<IGCTRecipe, Boolean> map = new HashMap<>();
+  public Map<CrystalWorkbenchRecipe, Boolean> updateRecipeStatus() {
+    Map<CrystalWorkbenchRecipe, Boolean> map = new HashMap<>();
 
-/*		for (IGCTRecipe recipe : GCTRecipeList.instance.getRecipeList()) {
+/*		for (CrystalWorkbenchRecipe recipe : GCTRecipeList.instance.getRecipeList()) {
 			map.put(recipe, recipe.matches(combinedInventory));
 		}*/
 
     return map;
   }
 
-  public void updateLastRecipeFromServer(IGCTRecipe recipe) {
+  public void updateLastRecipeFromServer(CrystalWorkbenchRecipe recipe) {
     tile.setLastRecipe(recipe);
     if (recipe != null) {
-      tileInventory.setStackInSlot(0, recipe.getRecipeOutput());
+      //tileInventory.setStackInSlot(0, recipe.getRecipeOutput());
     }
   }
 
@@ -271,6 +273,10 @@ public class ContainerGemCuttersTable extends Container {
       output.add(getSlot(i));
     }
     return output;
+  }
+
+  public WorkbenchCrafting getWorkbenchCrafting () {
+    return new WorkbenchCrafting(this, this.getTile(), combinedInventory);
   }
 
 /*	public Map<ContainerSection, List<Slot>> map = null;

@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.recipe.gct;
 
-/*public class GCTRecipe implements IGCTRecipe {
+/*public class GCTRecipe implements CrystalWorkbenchRecipe {
 	private final List<IngredientStack> ingredients = new ArrayList<>();
 	private final ItemStack result;
 	private final ResourceLocation name;
@@ -117,7 +117,7 @@ package com.aranaira.arcanearchives.recipe.gct;
 	}
 
 	@Override
-	public void consumeAndHandleInventory (IGCTRecipe recipe, IItemHandler inventory, EntityPlayer player, @Nullable TileEntity tile, @Nullable Runnable callback, @Nullable RecipeIngredientHandler handler) {
+	public void consumeAndHandleInventory (CrystalWorkbenchRecipe recipe, IItemHandler inventory, EntityPlayer player, @Nullable TileEntity tile, @Nullable Runnable callback, @Nullable RecipeIngredientHandler handler) {
 		for (Entry entry : recipe.getMatchingSlots(inventory).int2IntEntrySet()) {
 			ItemStack result = inventory.extractItem(entry.getIntKey(), entry.getIntValue(), false);
 			if (!player.world.isRemote) {

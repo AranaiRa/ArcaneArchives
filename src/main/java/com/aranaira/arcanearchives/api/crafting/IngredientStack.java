@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.api;
+package com.aranaira.arcanearchives.api.crafting;
 
 import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.block.Block;

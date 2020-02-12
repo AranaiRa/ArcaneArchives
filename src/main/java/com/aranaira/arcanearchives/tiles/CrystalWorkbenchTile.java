@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.tiles;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.api.gct.IGCTRecipe;
+import com.aranaira.arcanearchives.api.cwb.CrystalWorkbenchRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -19,13 +19,13 @@ public class CrystalWorkbenchTile extends BaseTile {
   private final ItemStackHandler inventory = new ItemStackHandler(18);
   private final ItemStackHandler outputInventory = new ItemStackHandler(1);
   public static final int RECIPE_PAGE_LIMIT = 7;
-  private IGCTRecipe currentRecipe;
-  private IGCTRecipe lastRecipe;
-  private IGCTRecipe penultimateRecipe;
+  private CrystalWorkbenchRecipe currentRecipe;
+  private CrystalWorkbenchRecipe lastRecipe;
+  private CrystalWorkbenchRecipe penultimateRecipe;
   private int page;
 
   public CrystalWorkbenchTile() {
-/*    currentRecipe = RecipeLibrary.RADIANT_DUST_RECIPE;*/
+    /*    currentRecipe = RecipeLibrary.RADIANT_DUST_RECIPE;*/
   }
 
   public IItemHandlerModifiable getInventory() {
@@ -37,7 +37,7 @@ public class CrystalWorkbenchTile extends BaseTile {
   }
 
   public void setRecipe(ResourceLocation name) {
-/*    currentRecipe = GCTRecipeList.instance.getRecipe(name);*/
+    /*    currentRecipe = GCTRecipeList.instance.getRecipe(name);*/
     stateUpdate();
   }
 
@@ -53,7 +53,7 @@ public class CrystalWorkbenchTile extends BaseTile {
   }
 
   public void manuallySetRecipe(int index) {
-/*    currentRecipe = GCTRecipeList.instance.getRecipeByIndex(index);*/
+    /*    currentRecipe = GCTRecipeList.instance.getRecipeByIndex(index);*/
   }
 
   public static final ResourceLocation INVALID = new ResourceLocation(ArcaneArchives.MODID, "invalid_gct_recipe");
@@ -66,7 +66,7 @@ public class CrystalWorkbenchTile extends BaseTile {
     ResourceLocation loc = INVALID;
 
     if (currentRecipe != null) {
-      loc = currentRecipe.getName();
+      loc = currentRecipe.getRegistryName();
     }
 
 /*    PacketGemCutters.ChangeRecipe packet = new PacketGemCutters.ChangeRecipe(loc, getPos(), world.provider.getDimension());
@@ -82,7 +82,7 @@ public class CrystalWorkbenchTile extends BaseTile {
   }
 
   @Nullable
-  public IGCTRecipe getCurrentRecipe() {
+  public CrystalWorkbenchRecipe getCurrentRecipe() {
     return currentRecipe;
   }
 
@@ -104,7 +104,7 @@ public class CrystalWorkbenchTile extends BaseTile {
     manuallySetRecipe(compound.getInteger(Tags.RECIPE)); // is this server-side or client-side?
   }
 
-  public IGCTRecipe getLastRecipe() {
+  public CrystalWorkbenchRecipe getLastRecipe() {
     return lastRecipe;
   }
 
@@ -119,7 +119,7 @@ public class CrystalWorkbenchTile extends BaseTile {
     return compound;
   }
 
-  public void setLastRecipe(IGCTRecipe lastRecipe) {
+  public void setLastRecipe(CrystalWorkbenchRecipe lastRecipe) {
     this.lastRecipe = lastRecipe;
   }
 
@@ -128,7 +128,7 @@ public class CrystalWorkbenchTile extends BaseTile {
     return writeToNBT(new NBTTagCompound());
   }
 
-  public IGCTRecipe getPenultimateRecipe() {
+  public CrystalWorkbenchRecipe getPenultimateRecipe() {
     return penultimateRecipe;
   }
 

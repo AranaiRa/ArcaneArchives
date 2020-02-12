@@ -1,8 +1,8 @@
 /*package com.aranaira.arcanearchives.integration.crafttweaker;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.api.gct.IGCTRecipe;
-import com.aranaira.arcanearchives.api.IngredientStack;
+import com.aranaira.arcanearchives.api.gct.CrystalWorkbenchRecipe;
+import com.aranaira.arcanearchives.api.crafting.IngredientStack;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import com.aranaira.arcanearchives.util.zen.ZenDocAppend;
@@ -62,7 +62,7 @@ public class GCTTweaker {
 
 		@Override
 		public void apply () {
-			IGCTRecipe recipe = GCTRecipeList.instance.getRecipeByOutput(output);
+			CrystalWorkbenchRecipe recipe = GCTRecipeList.instance.getRecipeByOutput(output);
 			if (recipe == null) {
 				CraftTweakerAPI.logError("Invalid recipe for " + output.getItem().getRegistryName().toString());
 			} else {

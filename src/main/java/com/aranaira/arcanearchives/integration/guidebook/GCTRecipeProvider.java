@@ -1,8 +1,8 @@
 /*package com.aranaira.arcanearchives.integration.guidebook;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.api.gct.IGCTRecipe;
-import com.aranaira.arcanearchives.api.IngredientStack;
+import com.aranaira.arcanearchives.api.gct.CrystalWorkbenchRecipe;
+import com.aranaira.arcanearchives.api.crafting.IngredientStack;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import gigaherz.lirelent.guidebook.guidebook.drawing.VisualElement;
 import gigaherz.lirelent.guidebook.guidebook.elements.ElementImage;
@@ -23,7 +23,7 @@ public class GCTRecipeProvider extends RecipeProvider {
 	@Nullable
 	@Override
 	public ProvidedComponents provideRecipeComponents (@Nonnull ItemStack targetOutput, int recipeIndex) {
-		for (IGCTRecipe recipe : GCTRecipeList.instance.getRecipeList()) {
+		for (CrystalWorkbenchRecipe recipe : GCTRecipeList.instance.getRecipeList()) {
 			if (ItemStack.areItemsEqual(targetOutput, recipe.getRecipeOutput())) {
 				return provideRecipeComponents(recipe.getName());
 			}
@@ -34,7 +34,7 @@ public class GCTRecipeProvider extends RecipeProvider {
 	@Nullable
 	@Override
 	public ProvidedComponents provideRecipeComponents (@Nonnull ResourceLocation recipeKey) {
-		IGCTRecipe recipe = GCTRecipeList.instance.getRecipe(recipeKey);
+		CrystalWorkbenchRecipe recipe = GCTRecipeList.instance.getRecipe(recipeKey);
 		if (recipe == null) {
 			return null;
 		}

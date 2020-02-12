@@ -1,8 +1,8 @@
 /*package com.aranaira.arcanearchives.recipe.gct;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.api.gct.IGCTRecipe;
-import com.aranaira.arcanearchives.api.gct.IGCTRecipeList;
+import com.aranaira.arcanearchives.api.gct.CrystalWorkbenchRecipe;
+import com.aranaira.arcanearchives.api.gct.CrystalWorkbenchRecipeList;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.item.ItemStack;
@@ -14,21 +14,21 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GCTRecipeList implements IGCTRecipeList {
+public class GCTRecipeList implements CrystalWorkbenchRecipeList {
 	public static final GCTRecipeList instance = new GCTRecipeList();
 
-	private final LinkedHashMap<ResourceLocation, IGCTRecipe> RECIPE_LIST = new LinkedHashMap<>();
-	private ImmutableList<IGCTRecipe> IMMUTABLE_COPY = null;
+	private final LinkedHashMap<ResourceLocation, CrystalWorkbenchRecipe> RECIPE_LIST = new LinkedHashMap<>();
+	private ImmutableList<CrystalWorkbenchRecipe> IMMUTABLE_COPY = null;
 
 	@Override
-	public Map<ResourceLocation, IGCTRecipe> getRecipes () {
+	public Map<ResourceLocation, CrystalWorkbenchRecipe> getRecipes () {
 		return RECIPE_LIST;
 	}
 
 	@Override
 	@Nullable
-	public IGCTRecipe getRecipeByOutput (ItemStack output) {
-		for (IGCTRecipe recipe : RECIPE_LIST.values()) {
+	public CrystalWorkbenchRecipe getRecipeByOutput (ItemStack output) {
+		for (CrystalWorkbenchRecipe recipe : RECIPE_LIST.values()) {
 			if (ItemUtils.areStacksEqualIgnoreSize(output, recipe.getRecipeOutput())) {
 				return recipe;
 			}
@@ -38,7 +38,7 @@ public class GCTRecipeList implements IGCTRecipeList {
 	}
 
 	@Override
-	public List<IGCTRecipe> getRecipeList () {
+	public List<CrystalWorkbenchRecipe> getRecipeList () {
 		if (IMMUTABLE_COPY == null) {
 			IMMUTABLE_COPY = ImmutableList.copyOf(RECIPE_LIST.values());
 		}
@@ -47,14 +47,14 @@ public class GCTRecipeList implements IGCTRecipeList {
 	}
 
 	@Override
-	public IGCTRecipe makeAndAddRecipe (String name, @Nonnull ItemStack result, Object... recipe) {
+	public CrystalWorkbenchRecipe makeAndAddRecipe (String name, @Nonnull ItemStack result, Object... recipe) {
 		GCTRecipe newRecipe = new GCTRecipe(name, result, recipe);
 		addRecipe(newRecipe);
 		return newRecipe;
 	}
 
 	@Override
-	public IGCTRecipe makeAndReplaceRecipe (String name, @Nonnull ItemStack result, Object... recipe) throws IndexOutOfBoundsException {
+	public CrystalWorkbenchRecipe makeAndReplaceRecipe (String name, @Nonnull ItemStack result, Object... recipe) throws IndexOutOfBoundsException {
 		ResourceLocation nameResolved = new ResourceLocation(ArcaneArchives.MODID, name);
 		if (!RECIPE_LIST.containsKey(nameResolved)) {
 			throw new IndexOutOfBoundsException("Key '" + name + "' is not contained in the recipe list; use `makeAndAddRecipe` instead or check your spelling.");
@@ -65,14 +65,14 @@ public class GCTRecipeList implements IGCTRecipeList {
 	}
 
 	@Override
-	public IGCTRecipe makeAndAddRecipeWithCreatorAndCondition (String name, @Nonnull ItemStack result, Object... recipe) {
+	public CrystalWorkbenchRecipe makeAndAddRecipeWithCreatorAndCondition (String name, @Nonnull ItemStack result, Object... recipe) {
 		GCTRecipeWithConditionsCrafter newRecipe = new GCTRecipeWithConditionsCrafter(name, result, recipe);
 		addRecipe(newRecipe);
 		return newRecipe;
 	}
 
 	@Override
-	public IGCTRecipe makeAndReplaceRecipeWithCreatorAndCondition (String name, @Nonnull ItemStack result, Object... recipe) throws IndexOutOfBoundsException {
+	public CrystalWorkbenchRecipe makeAndReplaceRecipeWithCreatorAndCondition (String name, @Nonnull ItemStack result, Object... recipe) throws IndexOutOfBoundsException {
 		ResourceLocation nameResolved = new ResourceLocation(ArcaneArchives.MODID, name);
 		if (!RECIPE_LIST.containsKey(nameResolved)) {
 			throw new IndexOutOfBoundsException("Key '" + name + "' is not contained in the recipe list; use `makeAndAddRecipe` instead or check your spelling.");
@@ -83,14 +83,14 @@ public class GCTRecipeList implements IGCTRecipeList {
 	}
 
 	@Override
-	public IGCTRecipe makeAndAddRecipeWithCreator (String name, @Nonnull ItemStack result, Object... recipe) {
+	public CrystalWorkbenchRecipe makeAndAddRecipeWithCreator (String name, @Nonnull ItemStack result, Object... recipe) {
 		GCTRecipeWithCrafter newRecipe = new GCTRecipeWithCrafter(name, result, recipe);
 		addRecipe(newRecipe);
 		return newRecipe;
 	}
 
 	@Override
-	public IGCTRecipe makeAndReplaceRecipeWithCreator (String name, @Nonnull ItemStack result, Object... recipe) throws IndexOutOfBoundsException {
+	public CrystalWorkbenchRecipe makeAndReplaceRecipeWithCreator (String name, @Nonnull ItemStack result, Object... recipe) throws IndexOutOfBoundsException {
 		ResourceLocation nameResolved = new ResourceLocation(ArcaneArchives.MODID, name);
 		if (!RECIPE_LIST.containsKey(nameResolved)) {
 			throw new IndexOutOfBoundsException("Key '" + name + "' is not contained in the recipe list; use `makeAndAddRecipe` instead or check your spelling.");
@@ -101,19 +101,19 @@ public class GCTRecipeList implements IGCTRecipeList {
 	}
 
 	@Override
-	public void addRecipe (IGCTRecipe recipe) {
+	public void addRecipe (CrystalWorkbenchRecipe recipe) {
 		IMMUTABLE_COPY = null;
 		RECIPE_LIST.put(recipe.getName(), recipe);
 	}
 
 	@Override
 	@Nullable
-	public IGCTRecipe getRecipe (ResourceLocation name) {
+	public CrystalWorkbenchRecipe getRecipe (ResourceLocation name) {
 		return RECIPE_LIST.get(name);
 	}
 
 	@Override
-	public void removeRecipe (IGCTRecipe recipe) {
+	public void removeRecipe (CrystalWorkbenchRecipe recipe) {
 		IMMUTABLE_COPY = null;
 		RECIPE_LIST.remove(recipe.getName());
 	}
@@ -135,7 +135,7 @@ public class GCTRecipeList implements IGCTRecipeList {
 
 	@Override
 	@Nullable
-	public IGCTRecipe getRecipeByIndex (int index) {
+	public CrystalWorkbenchRecipe getRecipeByIndex (int index) {
 		if (index < 0 || index >= RECIPE_LIST.size()) {
 			return null;
 		}
@@ -144,7 +144,7 @@ public class GCTRecipeList implements IGCTRecipeList {
 	}
 
 	@Override
-	public int indexOf (IGCTRecipe recipe) {
+	public int indexOf (CrystalWorkbenchRecipe recipe) {
 		if (recipe == null || !RECIPE_LIST.containsKey(recipe.getName())) {
 			return -1;
 		}

@@ -1,9 +1,9 @@
-package com.aranaira.arcanearchives.api;
+package com.aranaira.arcanearchives.api.cwb;
 
+import com.aranaira.arcanearchives.api.crafting.IngredientStack;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
 import java.util.List;

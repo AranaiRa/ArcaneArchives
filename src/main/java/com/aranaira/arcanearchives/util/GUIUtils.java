@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.client.gui;
+package com.aranaira.arcanearchives.util;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.lwjgl.BufferUtils;

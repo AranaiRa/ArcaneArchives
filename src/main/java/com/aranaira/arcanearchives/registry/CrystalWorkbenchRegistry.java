@@ -1,9 +1,9 @@
 package com.aranaira.arcanearchives.registry;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.api.CrystalWorkbenchRecipe;
-import com.aranaira.arcanearchives.api.CrystalWorkbenchRegisterEvent;
-import com.aranaira.arcanearchives.api.ICrystalWorkbenchRegistry;
+import com.aranaira.arcanearchives.api.cwb.CrystalWorkbenchRecipe;
+import com.aranaira.arcanearchives.api.cwb.CrystalWorkbenchRegisterEvent;
+import com.aranaira.arcanearchives.api.cwb.ICrystalWorkbenchRegistry;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;

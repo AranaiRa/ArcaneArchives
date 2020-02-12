@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.api;
+package com.aranaira.arcanearchives.api.cwb;
 
 import net.minecraftforge.fml.common.eventhandler.Event;
 

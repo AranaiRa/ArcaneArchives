@@ -1,6 +1,6 @@
 /*package com.aranaira.arcanearchives.recipe.gct;
 
-import com.aranaira.arcanearchives.api.gct.IGCTRecipe;
+import com.aranaira.arcanearchives.api.gct.CrystalWorkbenchRecipe;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -17,7 +17,7 @@ public class GCTRecipeWithConditionsCrafter extends GCTRecipeWithCrafter {
 	}
 
 	@Override
-	public IGCTRecipe addCondition (GCTCondition predicate) {
+	public CrystalWorkbenchRecipe addCondition (GCTCondition predicate) {
 		this.conditions.add(predicate);
 		return this;
 	}

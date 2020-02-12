@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.api;
+package com.aranaira.arcanearchives.api.cwb;
 
 import net.minecraft.inventory.Container;
 import net.minecraft.tileentity.TileEntity;

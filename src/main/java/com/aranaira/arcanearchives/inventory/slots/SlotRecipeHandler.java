@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.inventory.slots;
 
-import com.aranaira.arcanearchives.api.gct.IGCTRecipe;
+import com.aranaira.arcanearchives.api.cwb.CrystalWorkbenchRecipe;
 import com.aranaira.arcanearchives.tiles.CrystalWorkbenchTile;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -21,7 +21,7 @@ public class SlotRecipeHandler extends Slot {
     this.tile = tile;
   }
 
-  public IGCTRecipe getRecipe() {
+  public CrystalWorkbenchRecipe getRecipe() {
     return null;
     /*		return GCTRecipeList.instance.getRecipeByIndex(getRelativeIndex());*/
   }

@@ -1,12 +1,12 @@
 package com.aranaira.arcanearchives.client.gui;
 
-import com.aranaira.arcanearchives.api.gct.IGCTRecipe;
+import com.aranaira.arcanearchives.api.cwb.CrystalWorkbenchRecipe;
+import com.aranaira.arcanearchives.api.crafting.IngredientStack;
 import com.aranaira.arcanearchives.client.CycleTimer;
 import com.aranaira.arcanearchives.client.gui.controls.InvisibleButton;
 import com.aranaira.arcanearchives.config.ConfigHandler;
-import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
+import com.aranaira.arcanearchives.inventory.CrystalWorkbenchContainer;
 import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
-import com.aranaira.arcanearchives.api.IngredientStack;
 import com.aranaira.arcanearchives.tiles.CrystalWorkbenchTile;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
@@ -30,16 +30,16 @@ import java.util.stream.Stream;
 //import yalter.mousetweaks.api.MouseTweaksDisableWheelTweak;
 
 //@MouseTweaksDisableWheelTweak
-public class GUIGemCuttersTable extends AbstractGuiContainerTracking {
+public class CrystalWorkbenchGUI extends AbstractGuiContainerTracking {
   private static final ResourceLocation GUI_TEXTURES = new ResourceLocation("arcanearchives:textures/gui/gemcutterstable.png");
   private static final ResourceLocation GUI_TEXTURES_SIMPLE = new ResourceLocation("arcanearchives:textures/gui/simple/gemcutterstable.png");
 
   private static final int OVERLAY = 0xaa1e3340;
   private static final int OVERLAY_SIMPLE = 0x80808080;
 
-  private final ContainerGemCuttersTable container;
+  private final CrystalWorkbenchContainer container;
   private final EntityPlayer player;
-  private final Object2BooleanMap<IGCTRecipe> recipeStatus = new Object2BooleanOpenHashMap<>();
+  private final Object2BooleanMap<CrystalWorkbenchRecipe> recipeStatus = new Object2BooleanOpenHashMap<>();
   private final CrystalWorkbenchTile tile;
   private InvisibleButton prevPageButton;
   private InvisibleButton nextPageButton;
@@ -48,7 +48,7 @@ public class GUIGemCuttersTable extends AbstractGuiContainerTracking {
 
   private CycleTimer cycleTimer;
 
-  public GUIGemCuttersTable(EntityPlayer player, ContainerGemCuttersTable container) {
+  public CrystalWorkbenchGUI(EntityPlayer player, CrystalWorkbenchContainer container) {
     super(container);
     this.container = container;
     container.setUpdateRecipeGUI(this::updateRecipeStatus);
@@ -111,7 +111,7 @@ public class GUIGemCuttersTable extends AbstractGuiContainerTracking {
 
   @Override
   public void drawSlot(Slot slot) {
-    IGCTRecipe recipe = null;
+    CrystalWorkbenchRecipe recipe = null;
     boolean recipeSlot = false;
     if (slot instanceof SlotRecipeHandler) {
       recipe = ((SlotRecipeHandler) slot).getRecipe();
@@ -146,7 +146,7 @@ public class GUIGemCuttersTable extends AbstractGuiContainerTracking {
         this.drawTexturedModalRect(slot.xPos - 2, slot.yPos - 2, 206, 0, 20, 20);
       }
 
-      if (!recipeStatus.getBoolean(recipe) || !recipe.craftable(mc.player, tile)) {
+      if (!recipeStatus.getBoolean(recipe)) { // || !recipe.craftable(mc.player, tile)) {
         dimSlot(slot, wasEnabled);
       }
     }
@@ -175,8 +175,8 @@ public class GUIGemCuttersTable extends AbstractGuiContainerTracking {
   }
 
   // TODO: Abstract this into MatchResult
-  private Map<IGCTRecipe, List<List<ItemStack>>> recipeIngredients = new HashMap<>();
-  private Map<IGCTRecipe, IntArrayList> recipeCounts = new HashMap<>();
+  private Map<CrystalWorkbenchRecipe, List<List<ItemStack>>> recipeIngredients = new HashMap<>();
+  private Map<CrystalWorkbenchRecipe, IntArrayList> recipeCounts = new HashMap<>();
 
   @Override
   protected void renderToolTip(ItemStack stack, int x, int y) {
@@ -185,7 +185,7 @@ public class GUIGemCuttersTable extends AbstractGuiContainerTracking {
     if (slot instanceof SlotRecipeHandler) {
       FontRenderer font = stack.getItem().getFontRenderer(stack);
       List<String> tooltip = new ArrayList<>();
-      IGCTRecipe recipe = ((SlotRecipeHandler) slot).getRecipe();
+      CrystalWorkbenchRecipe recipe = ((SlotRecipeHandler) slot).getRecipe();
       if (recipe != null) {
         if (recipeStatus.getBoolean(recipe)) {// Valid
           tooltip.add(TextFormatting.GREEN + stack.getDisplayName());
@@ -244,12 +244,12 @@ public class GUIGemCuttersTable extends AbstractGuiContainerTracking {
     int button = Mouse.getEventButton();
 
     if (wheel != 0 && button == -1) {
-      IGCTRecipe currentRecipe = tile.getCurrentRecipe();
+      CrystalWorkbenchRecipe currentRecipe = tile.getCurrentRecipe();
       int originalIndex = currentRecipe == null ? 0 : currentRecipe.getIndex();
       int index = originalIndex;
 
-      IGCTRecipe temp;
-      IGCTRecipe newRecipe = null;
+      CrystalWorkbenchRecipe temp;
+      CrystalWorkbenchRecipe newRecipe = null;
 
 /*			if (recipeStatus.values().stream().anyMatch(o -> o)) {
 				switch (wheel) {
