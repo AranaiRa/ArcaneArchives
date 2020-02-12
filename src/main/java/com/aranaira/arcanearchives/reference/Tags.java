@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tiles;
+package com.aranaira.arcanearchives.reference;
 
 public interface Tags {
   String RECIPE = "Recipe";
@@ -10,5 +10,9 @@ public interface Tags {
 
   interface MakeshiftResonator {
     String CURRENT_TICK = "Current Tick";
+  }
+
+  interface PlayerSaveData {
+    String RECEIVED_BOOK = "received_book";
   }
 }

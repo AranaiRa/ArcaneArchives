@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.reference.Tags;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.storage.WorldSavedData;
@@ -37,16 +38,12 @@ public class PlayerSaveData extends WorldSavedData {
 
   @Override
   public void readFromNBT(NBTTagCompound nbt) {
-    this.receivedBook = nbt.getBoolean(Tags.RECEIVED_BOOK);
+    this.receivedBook = nbt.getBoolean(Tags.PlayerSaveData.RECEIVED_BOOK);
   }
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-    compound.setBoolean(Tags.RECEIVED_BOOK, receivedBook);
+    compound.setBoolean(Tags.PlayerSaveData.RECEIVED_BOOK, receivedBook);
     return compound;
-  }
-
-  public static class Tags {
-    public static final String RECEIVED_BOOK = "received_book";
   }
 }
