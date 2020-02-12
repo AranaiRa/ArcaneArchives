@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.types.iterators;
+package com.aranaira.arcanearchives.types.iterators;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
@@ -6,45 +6,57 @@ import net.minecraftforge.items.IItemHandler;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class SlotIterable implements Iterable<ItemStack> {
-	private IItemHandler inventory;
-	private SlotIterator iter;
+public class SlotIterable implements Iterable<SlotIterable.SlotIterator.SlotStack> {
+  private IItemHandler inventory;
+  private SlotIterator iter;
 
-	public SlotIterable (IItemHandler inventory) {
-		this.inventory = inventory;
-	}
+  public SlotIterable(IItemHandler inventory) {
+    this.inventory = inventory;
+  }
 
-	@Override
-	public Iterator<ItemStack> iterator () {
-		this.iter = new SlotIterator();
-		return iter;
-	}
+  @Override
+  public Iterator<SlotIterator.SlotStack> iterator() {
+    return new SlotIterator();
+  }
 
-	public int getSlot () {
-		return this.iter.cursor;
-	}
+  public class SlotIterator implements Iterator<SlotIterator.SlotStack> {
+    int cursor;
+    int size = inventory.getSlots();
 
-	public class SlotIterator implements Iterator<ItemStack> {
-		int cursor;
-		int lastRet = -1;
-		int size = inventory.getSlots();
+    SlotIterator() {
+    }
 
-		SlotIterator () {
-		}
+    @Override
+    public boolean hasNext() {
+      return cursor != size;
+    }
 
-		@Override
-		public boolean hasNext () {
-			return cursor != size;
-		}
+    @Override
+    public SlotStack next() {
+      int i = cursor;
+      if (i >= inventory.getSlots()) {
+        throw new NoSuchElementException();
+      }
+      cursor = i + 1;
+      return new SlotStack(inventory.getStackInSlot(cursor), cursor);
+    }
 
-		@Override
-		public ItemStack next () {
-			int i = cursor;
-			if (i >= inventory.getSlots()) {
-				throw new NoSuchElementException();
-			}
-			cursor = i + 1;
-			return inventory.getStackInSlot(lastRet = i);
-		}
-	}
-}*/
+    public class SlotStack {
+      private ItemStack stack;
+      private int slotIndex;
+
+      public SlotStack(ItemStack stack, int slotIndex) {
+        this.stack = stack;
+        this.slotIndex = slotIndex;
+      }
+
+      public ItemStack getStack() {
+        return stack;
+      }
+
+      public int getSlot() {
+        return slotIndex;
+      }
+    }
+  }
+}
