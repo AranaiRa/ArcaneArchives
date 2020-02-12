@@ -4,7 +4,6 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.items.RadiantDustItem;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
@@ -21,34 +20,34 @@ import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class ModItems {
-	public static final List<Item> REGISTRY = new ArrayList<>();
+  public static final List<Item> REGISTRY = new ArrayList<>();
 
-	public static final RadiantDustItem RadiantDust = register("radiant_dust", RadiantDustItem::new);
+  public static final RadiantDustItem RadiantDust = register("radiant_dust", RadiantDustItem::new);
 
-	@SubscribeEvent
-	public static void onRegister (Register<Item> event) {
-		REGISTRY.forEach(event.getRegistry()::register);
-	}
+  @SubscribeEvent
+  public static void onRegister(Register<Item> event) {
+    REGISTRY.forEach(event.getRegistry()::register);
+  }
 
-	@SubscribeEvent
-	@SideOnly(Side.CLIENT)
-	public static void onModelRegister (ModelRegistryEvent event) {
-		REGISTRY.forEach(o -> ModelLoader.setCustomModelResourceLocation(o, 0, new ModelResourceLocation(Objects.requireNonNull(o.getRegistryName()), "inventory")));
-	}
+  @SubscribeEvent
+  @SideOnly(Side.CLIENT)
+  public static void onModelRegister(ModelRegistryEvent event) {
+    REGISTRY.forEach(o -> ModelLoader.setCustomModelResourceLocation(o, 0, new ModelResourceLocation(Objects.requireNonNull(o.getRegistryName()), "inventory")));
+  }
 
-	public static <T extends Item> T register (String registryName, Supplier<T> supplier) {
-		T item = supplier.get();
-		item.setTranslationKey(registryName);
-		item.setRegistryName(new ResourceLocation(ArcaneArchives.MODID, registryName));
-		item.setCreativeTab(ArcaneArchives.TAB);
-		REGISTRY.add(item);
-		return item;
-	}
+  public static <T extends Item> T register(String registryName, Supplier<T> supplier) {
+    T item = supplier.get();
+    item.setTranslationKey(registryName);
+    item.setRegistryName(new ResourceLocation(ArcaneArchives.MODID, registryName));
+    item.setCreativeTab(ArcaneArchives.TAB);
+    REGISTRY.add(item);
+    return item;
+  }
 
-	public static <T extends Item> void add (T item) {
-		REGISTRY.add(item);
-	}
+  public static <T extends Item> void add(T item) {
+    REGISTRY.add(item);
+  }
 
-	public static void load () {
-	}
+  public static void load() {
+  }
 }

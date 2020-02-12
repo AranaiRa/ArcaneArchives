@@ -145,9 +145,23 @@ public class ServerNetwork implements IServerNetwork {
 		ref.pos = newPosition;
 	}
 
-	*//***
-	 * Static entrypoint used by NetworkSaveData
-	 *//*
+	*//**
+ * Static entrypoint used by NetworkSaveData
+ * <p>
+ * Attempts to fetch the player associated with this network.
+ * Returns null if they do not exist or are offline.
+ * <p>
+ * Functions for removing tile entities from the network.
+ * <p>
+ * Attempts to synchronsie the rebuilt core total back to the client,
+ * where the information is used to prevent additional placement of
+ * resonators client-side in addition to server-side to prevent
+ * ghosting.
+ * <p>
+ * Rebuilds the manifestItems list.
+ * <p>
+ * Fetches only manifest tile entites: radiant chests & troves.
+ *//*
 	public static ServerNetwork fromNBT (NBTTagCompound data) {
 		ServerNetwork network = new ServerNetwork(null);
 		network.readFromSave(data);
@@ -173,9 +187,9 @@ public class ServerNetwork implements IServerNetwork {
 	}
 
 	*//**
-	 * Attempts to fetch the player associated with this network.
-	 * Returns null if they do not exist or are offline.
-	 *//*
+ * Attempts to fetch the player associated with this network.
+ * Returns null if they do not exist or are offline.
+ *//*
 	@Override
 	@Nullable
 	public EntityPlayer getPlayer () {
@@ -247,8 +261,8 @@ public class ServerNetwork implements IServerNetwork {
 	}
 
 	*//**
-	 * Functions for removing tile entities from the network.
-	 *//*
+ * Functions for removing tile entities from the network.
+ *//*
 	@Override
 	public void removeTile (ImmanenceTileEntity te) {
 		tiles.removeByUUID(te.getUuid());
@@ -330,11 +344,11 @@ public class ServerNetwork implements IServerNetwork {
 	}
 
 	*//**
-	 * Attempts to synchronsie the rebuilt core total back to the client,
-	 * where the information is used to prevent additional placement of
-	 * resonators client-side in addition to server-side to prevent
-	 * ghosting.
-	 *//*
+ * Attempts to synchronsie the rebuilt core total back to the client,
+ * where the information is used to prevent additional placement of
+ * resonators client-side in addition to server-side to prevent
+ * ghosting.
+ *//*
 	@Override
 	public void synchroniseData () {
 		EntityPlayer player = getPlayer();
@@ -395,8 +409,8 @@ public class ServerNetwork implements IServerNetwork {
 	}
 
 	*//**
-	 * Rebuilds the manifestItems list.
-	 *//*
+ * Rebuilds the manifestItems list.
+ *//*
 	@Override
 	public void rebuildManifest () {
 		manifestItems.clear();
@@ -408,8 +422,8 @@ public class ServerNetwork implements IServerNetwork {
 	}
 
 	*//**
-	 * Fetches only manifest tile entites: radiant chests & troves.
-	 *//*
+ * Fetches only manifest tile entites: radiant chests & troves.
+ *//*
 	@Override
 	public TileListIterable getManifestTileEntities () {
 		return TileUtils.filterAssignableClass(this.tiles, IManifestTileEntity.class);

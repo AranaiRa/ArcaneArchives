@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.blocks;
 
-import com.aranaira.arcanearchives.blocks.templates.HorizontalAccessorTemplateBlock;
+import com.aranaira.arcanearchives.blocks.templates.HorizontalSingleAccessorTemplateBlock;
 import com.aranaira.arcanearchives.tiles.CrystalWorkbenchTile;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import net.minecraft.block.Block;
@@ -26,128 +26,96 @@ import net.minecraftforge.items.IItemHandler;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class CrystalWorkbenchBlock extends HorizontalAccessorTemplateBlock {
-	public CrystalWorkbenchBlock () {
-		super(Material.IRON);
-		this.setHardness(3f);
-		setLightLevel(16f / 16f);
-		setHarvestLevel("axe", 0);
-		this.setDefaultState(this.getDefaultState().withProperty(ACCESSOR, false));
-	}
+public class CrystalWorkbenchBlock extends HorizontalSingleAccessorTemplateBlock {
+  public CrystalWorkbenchBlock() {
+    super(Material.IRON);
+    this.setHardness(3f);
+    setLightLevel(16f / 16f);
+    setHarvestLevel("axe", 0);
+  }
 
-	@Override
-	@SuppressWarnings("deprecation")
-	public IBlockState getStateFromMeta (int meta) {
-		return getDefaultState().withProperty(getFacingProperty(), EnumFacing.byIndex(meta >> 1)).withProperty(ACCESSOR, (meta & 1) != 0);
-	}
+  @Override
+  @SideOnly(Side.CLIENT)
+  public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+    tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.device.gemcutters_table"));
+  }
 
-	@Override
-	public int getMetaFromState (IBlockState state) {
-		return state.getValue(getFacingProperty()).getIndex() << 1 ^ (state.getValue(ACCESSOR) ? 1 : 0);
-	}
+  @Override
+  public void breakBlock(World world, BlockPos pos, IBlockState state) {
+    if (state.getValue(ACCESSOR)) {
+      return;
+    }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.device.gemcutters_table"));
-	}
+    /*		LineHandler.removeLine(pos, world.provider.getDimension());*/
 
-	@Override
-	public void breakBlock (World world, BlockPos pos, IBlockState state) {
-		if (state.getValue(ACCESSOR)) {
-			return;
-		}
+    TileEntity te = world.getTileEntity(pos);
+    if (te instanceof CrystalWorkbenchTile) {
+      IItemHandler inv = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+      ItemUtils.dropInventoryItems(world, pos, inv);
+    }
 
-		/*		LineHandler.removeLine(pos, world.provider.getDimension());*/
+    super.breakBlock(world, pos, state);
+  }
 
-		TileEntity te = world.getTileEntity(pos);
-		if (te instanceof CrystalWorkbenchTile) {
-			IItemHandler inv = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-			ItemUtils.dropInventoryItems(world, pos, inv);
-		}
+  @Override
+  @SuppressWarnings("deprecation")
+  public boolean causesSuffocation(IBlockState state) {
+    return false;
+  }
 
-		super.breakBlock(world, pos, state);
-	}
+  @Override
+  @SuppressWarnings("deprecation")
+  public boolean isFullCube(IBlockState state) {
+    return false;
+  }
 
-	public BlockPos getConnectedPos (BlockPos pos, IBlockState state) {
-		return pos.offset(state.getValue(getFacingProperty()));
-	}
+  @Override
+  @SuppressWarnings("deprecation")
+  public boolean isOpaqueCube(IBlockState state) {
+    return false;
+  }
 
-	@Override
-	@SuppressWarnings("deprecation")
-	public void neighborChanged (IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
-		if (state.getValue(ACCESSOR)) {
-			if (world.isAirBlock(getConnectedPos(pos, state))) {
-				world.setBlockToAir(pos);
-			}
-		} else {
-			BlockPos thingy = pos.offset(EnumFacing.fromAngle(state.getValue(getFacingProperty()).getHorizontalAngle() - 180));
-			if (world.isAirBlock(thingy)) {
-				// TODO: PARTICLES
-				this.breakBlock(world, pos, state);
-				world.setBlockToAir(pos);
-			}
-		}
+  @Override
+  public BlockRenderLayer getRenderLayer() {
+    return BlockRenderLayer.CUTOUT;
+  }
 
-		super.neighborChanged(state, world, pos, blockIn, fromPos);
-	}
+  @Override
+  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    if (state.getValue(ACCESSOR)) {
+      BlockPos origin = findBody(state, world, new BlockPos(hitX, hitY, hitZ));
+      IBlockState originState = world.getBlockState(origin);
+      return onBlockActivated(world, origin, originState, playerIn, hand, facing, origin.getX() + 0.5f, origin.getY() + 0.5f, origin.getZ() + 0.5f);
+    }
 
-	@Override
-	@SuppressWarnings("deprecation")
-	public boolean causesSuffocation (IBlockState state) {
-		return false;
-	}
+    /*		LineHandler.removeLine(pos, playerIn.dimension);*/
 
-	@Override
-	@SuppressWarnings("deprecation")
-	public boolean isFullCube (IBlockState state) {
-		return false;
-	}
+    if (world.isRemote) {
+      return true;
+    }
 
-	@Override
-	@SuppressWarnings("deprecation")
-	public boolean isOpaqueCube (IBlockState state) {
-		return false;
-	}
+    /*		playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.GEMCUTTERS_TABLE, worldIn, pos.getX(), pos.getY(), pos.getZ());*/
 
-	@Override
-	public BlockRenderLayer getRenderLayer () {
-		return BlockRenderLayer.CUTOUT;
-	}
+    return true;
+  }
 
-	@Override
-	public boolean onBlockActivated (World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (state.getValue(ACCESSOR)) {
-			pos = getConnectedPos(pos, state);
-		}
+  @Override
+  public boolean hasTileEntity(IBlockState state) {
+    return !state.getValue(ACCESSOR);
+  }
 
-		/*		LineHandler.removeLine(pos, playerIn.dimension);*/
+  @Override
+  @Nullable
+  public TileEntity createTileEntity(World world, IBlockState state) {
+    if (state.getValue(ACCESSOR)) {
+      return null;
+    }
 
-		if (worldIn.isRemote) {
-			return true;
-		}
+    return new CrystalWorkbenchTile();
+  }
 
-		/*		playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.GEMCUTTERS_TABLE, worldIn, pos.getX(), pos.getY(), pos.getZ());*/
-
-		return true;
-	}
-
-	@Override
-	public boolean hasTileEntity (IBlockState state) {
-		return !state.getValue(ACCESSOR);
-	}
-
-	@Override
-	public TileEntity createTileEntity (World world, IBlockState state) {
-		if (state.getValue(ACCESSOR)) {
-			return null;
-		}
-
-		return new CrystalWorkbenchTile();
-	}
-
-	@Override
-	protected BlockStateContainer createBlockState () {
-		return new BlockStateContainer(this, getFacingProperty(), ACCESSOR);
-	}
+  @Override
+  public int getAccessorAngle() {
+    return 90;
+  }
 }

@@ -56,11 +56,11 @@ public class OptionalUpgradesHandler extends ItemStackHandler {
 	}
 
 	*//**
-	 * Returns whether an upgrade is present in the slot or not.
-	 *
-	 * @param slot Which slot ID to check
-	 * @return true if an upgrade is present, false otherwise
-	 *//*
+ * Returns whether an upgrade is present in the slot or not.
+ *
+ * @param slot Which slot ID to check
+ * @return true if an upgrade is present, false otherwise
+ *//*
 	public boolean getIsUpgradePresent (int slot) {
 		return !getStackInSlot(slot).isEmpty();
 	}

@@ -1,17 +1,17 @@
 package com.aranaira.arcanearchives.api.immanence;
 
 public interface IImmanenceBus {
-	void generateImmanence (int currentTick);
+  void generateImmanence(int currentTick);
 
-	void consumeImmanence (int currentTick);
+  void consumeImmanence(int currentTick);
 
-	int getTotalImmanence ();
+  int getTotalImmanence();
 
-	int getLeftoverImmanence ();
+  int getLeftoverImmanence();
 
-	int getBaseImmanence ();
+  int getBaseImmanence();
 
-	float getMultiplier ();
+  float getMultiplier();
 
-	long getLastTickTime ();
+  long getLastTickTime();
 }

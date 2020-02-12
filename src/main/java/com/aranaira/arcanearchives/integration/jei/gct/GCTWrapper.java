@@ -1,6 +1,6 @@
 /*package com.aranaira.arcanearchives.integration.jei.gct;
 
-import com.aranaira.arcanearchives.recipe.IngredientStack;
+import com.aranaira.arcanearchives.api.IngredientStack;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;

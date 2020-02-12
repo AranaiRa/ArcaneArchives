@@ -21,30 +21,87 @@ import java.util.List;
 
 *//**
  * Helper class that handles all of the NBT lookups
+ * <p>
+ * Sets the upgrades on a gem by applying a bitmask.
+ * Matter=1, Power=2, Space=4, Time=8
+ *
+ * @param stack    The ItemStack to upgrade
+ * @param upgrades The new upgrade bitmask to apply
+ * <p>
+ * A human readable way to set upgrades on a gem.
+ * @param stack         The ItemStack to upgrade
+ * @param matterUpgrade Whether to apply a Matter upgrade
+ * @param powerUpgrade  Whether to apply a Power upgrade
+ * @param spaceUpgrade  Whether to apply a Space upgrade
+ * @param timeUpgrade   Whether to apply a Time upgrade
+ * <p>
+ * Get a byte representing the upgrades on this gem as a bit mask
+ * @param stack The ItemStack to check
+ * @return Check whether a particular gem has a specific upgrade type
+ * @param stack The ItemStack to check
+ * @param query The upgrade type to check for
+ * @return Get the maximum charge for this gem type, taking into account Power upgrades
+ * @param stack The ItemStack to check
+ * @return The gem's maximum charge
+ * <p>
+ * Gets the current charge amount of a gem.
+ * @param stack The ItemStack to check.
+ * @return The amount of charge.
+ * <p>
+ * Gets the current charge amount of a gem as a value between 0..1
+ * @param stack The ItemStack to check
+ * @return The amount of charge.
+ * <p>
+ * Restore the charge on the gem by a set amount.
+ * @param amount How much to increase charge by. -1 to fill the gem outright.
+ * @return true if the gem is full
+ * <p>
+ * Reduce the charge on the gem by a set amount.
+ * @param amount How much to reduce charge by. -1 to empty the gem outright.
+ * @return true if charge remains, false if gem is now empty
+ * <p>
+ * Checks whether this gem has unlimited use.
+ * @param stack The ItemStack to check
+ * @return Convenience method to check whether a gem is out of charge
+ * @param stack The gem to check
+ * @return Checks whether the gem is toggled on
+ * @param stack The gem to check
+ * @return The gem's toggle status. If the gem has no toggle state, always returns false.
+ * <p>
+ * Switches whether the gem is toggled on or off.
+ * @param stack The gem to swap the toggle mode of.
+ * <p>
+ * Sets the gem's toggle state. Has no effect if the gem has no toggle functionality.
+ * @param stack The gem to modify
+ * @param state The desired toggle state
+ * <p>
+ * Get gems that are capable of operating passively. Checks for held, gems slotted in a Fabrial's active or passive slots, and a gem in the Gem Socket.
+ * @param player
+ * @return List of appropriate gems
  *//*
 public class GemUtil {
 
 	*//**
-	 * Sets the upgrades on a gem by applying a bitmask.
-	 * Matter=1, Power=2, Space=4, Time=8
-	 *
-	 * @param stack    The ItemStack to upgrade
-	 * @param upgrades The new upgrade bitmask to apply
-	 *//*
+ * Sets the upgrades on a gem by applying a bitmask.
+ * Matter=1, Power=2, Space=4, Time=8
+ *
+ * @param stack    The ItemStack to upgrade
+ * @param upgrades The new upgrade bitmask to apply
+ *//*
 	public static void setUpgrades (ItemStack stack, byte upgrades) {
 		NBTTagCompound nbt = ItemUtils.getOrCreateTagCompound(stack);
 		nbt.setByte("upgrades", upgrades);
 	}
 
 	*//**
-	 * A human readable way to set upgrades on a gem.
-	 *
-	 * @param stack         The ItemStack to upgrade
-	 * @param matterUpgrade Whether to apply a Matter upgrade
-	 * @param powerUpgrade  Whether to apply a Power upgrade
-	 * @param spaceUpgrade  Whether to apply a Space upgrade
-	 * @param timeUpgrade   Whether to apply a Time upgrade
-	 *//*
+ * A human readable way to set upgrades on a gem.
+ *
+ * @param stack         The ItemStack to upgrade
+ * @param matterUpgrade Whether to apply a Matter upgrade
+ * @param powerUpgrade  Whether to apply a Power upgrade
+ * @param spaceUpgrade  Whether to apply a Space upgrade
+ * @param timeUpgrade   Whether to apply a Time upgrade
+ *//*
 	public static void setUpgrades (ItemStack stack, boolean matterUpgrade, boolean powerUpgrade, boolean spaceUpgrade, boolean timeUpgrade) {
 		NBTTagCompound nbt = ItemUtils.getOrCreateTagCompound(stack);
 		byte upgrades = 0;
@@ -64,11 +121,11 @@ public class GemUtil {
 	}
 
 	*//**
-	 * Get a byte representing the upgrades on this gem as a bit mask
-	 *
-	 * @param stack The ItemStack to check
-	 * @return
-	 *//*
+ * Get a byte representing the upgrades on this gem as a bit mask
+ *
+ * @param stack The ItemStack to check
+ * @return
+ *//*
 	public static byte getUpgrades (ItemStack stack) {
 		NBTTagCompound nbt = ItemUtils.getOrCreateTagCompound(stack);
 		if (nbt.hasKey("upgrades")) {
@@ -78,12 +135,12 @@ public class GemUtil {
 	}
 
 	*//**
-	 * Check whether a particular gem has a specific upgrade type
-	 *
-	 * @param stack The ItemStack to check
-	 * @param query The upgrade type to check for
-	 * @return
-	 *//*
+ * Check whether a particular gem has a specific upgrade type
+ *
+ * @param stack The ItemStack to check
+ * @param query The upgrade type to check for
+ * @return
+ *//*
 	public static boolean hasUpgrade (ItemStack stack, ArcaneGemItem.GemUpgrades query) {
 		byte upgrades = getUpgrades(stack);
 		switch (query) {
@@ -101,11 +158,11 @@ public class GemUtil {
 	}
 
 	*//**
-	 * Get the maximum charge for this gem type, taking into account Power upgrades
-	 *
-	 * @param stack The ItemStack to check
-	 * @return The gem's maximum charge
-	 *//*
+ * Get the maximum charge for this gem type, taking into account Power upgrades
+ *
+ * @param stack The ItemStack to check
+ * @return The gem's maximum charge
+ *//*
 	public static int getMaxCharge (EntityItem stack) {
 		return getMaxCharge(stack.getItem());
 	}
@@ -131,11 +188,11 @@ public class GemUtil {
 	}
 
 	*//**
-	 * Gets the current charge amount of a gem.
-	 *
-	 * @param stack The ItemStack to check.
-	 * @return The amount of charge.
-	 *//*
+ * Gets the current charge amount of a gem.
+ *
+ * @param stack The ItemStack to check.
+ * @return The amount of charge.
+ *//*
 	public static int getCharge (EntityItem stack) {
 		return getCharge(stack.getItem());
 	}
@@ -167,11 +224,11 @@ public class GemUtil {
 	}
 
 	*//**
-	 * Gets the current charge amount of a gem as a value between 0..1
-	 *
-	 * @param stack The ItemStack to check
-	 * @return The amount of charge.
-	 *//*
+ * Gets the current charge amount of a gem as a value between 0..1
+ *
+ * @param stack The ItemStack to check
+ * @return The amount of charge.
+ *//*
 	public static float getChargePercent (ItemStack stack) {
 		int current = getCharge(stack);
 		int maximum = getMaxCharge(stack);
@@ -180,11 +237,11 @@ public class GemUtil {
 	}
 
 	*//**
-	 * Restore the charge on the gem by a set amount.
-	 *
-	 * @param amount How much to increase charge by. -1 to fill the gem outright.
-	 * @return true if the gem is full
-	 *//*
+ * Restore the charge on the gem by a set amount.
+ *
+ * @param amount How much to increase charge by. -1 to fill the gem outright.
+ * @return true if the gem is full
+ *//*
 	public static boolean manuallyRestoreCharge (ItemStack gem, int amount) {
 		// This should be used minimally and only where it's certain that the item
 		// isn't in a gem socket.
@@ -226,11 +283,11 @@ public class GemUtil {
 	}
 
 	*//**
-	 * Reduce the charge on the gem by a set amount.
-	 *
-	 * @param amount How much to reduce charge by. -1 to empty the gem outright.
-	 * @return true if charge remains, false if gem is now empty
-	 *//*
+ * Reduce the charge on the gem by a set amount.
+ *
+ * @param amount How much to reduce charge by. -1 to empty the gem outright.
+ * @return true if charge remains, false if gem is now empty
+ *//*
 
 	public static boolean consumeCharge (GemStack gem, int amount) {
 		boolean result = consumeCharge(gem.getStack(), amount);
@@ -266,11 +323,11 @@ public class GemUtil {
 	}
 
 	*//**
-	 * Checks whether this gem has unlimited use.
-	 *
-	 * @param stack The ItemStack to check
-	 * @return
-	 *//*
+ * Checks whether this gem has unlimited use.
+ *
+ * @param stack The ItemStack to check
+ * @return
+ *//*
 	public static boolean hasUnlimitedCharge (ItemStack stack) {
 		if (getMaxCharge(stack) == 0) {
 			return true;
@@ -286,11 +343,11 @@ public class GemUtil {
 	}
 
 	*//**
-	 * Convenience method to check whether a gem is out of charge
-	 *
-	 * @param stack The gem to check
-	 * @return
-	 *//*
+ * Convenience method to check whether a gem is out of charge
+ *
+ * @param stack The gem to check
+ * @return
+ *//*
 	public static boolean isChargeEmpty (ItemStack stack) {
 		NBTTagCompound nbt = ItemUtils.getOrCreateTagCompound(stack);
 		if (!hasUnlimitedCharge(stack)) {
@@ -301,11 +358,11 @@ public class GemUtil {
 	}
 
 	*//**
-	 * Checks whether the gem is toggled on
-	 *
-	 * @param stack The gem to check
-	 * @return The gem's toggle status. If the gem has no toggle state, always returns false.
-	 *//*
+ * Checks whether the gem is toggled on
+ *
+ * @param stack The gem to check
+ * @return The gem's toggle status. If the gem has no toggle state, always returns false.
+ *//*
 	public static boolean isToggledOn (GemStack stack) {
 		return isToggledOn(stack.getStack());
 	}
@@ -323,10 +380,10 @@ public class GemUtil {
 	}
 
 	*//**
-	 * Switches whether the gem is toggled on or off.
-	 *
-	 * @param stack The gem to swap the toggle mode of.
-	 *//*
+ * Switches whether the gem is toggled on or off.
+ *
+ * @param stack The gem to swap the toggle mode of.
+ *//*
 	public static void swapToggle (GemStack stack) {
 		swapToggle(stack.getStack());
 		stack.markDirty();
@@ -346,11 +403,11 @@ public class GemUtil {
 	}
 
 	*//**
-	 * Sets the gem's toggle state. Has no effect if the gem has no toggle functionality.
-	 *
-	 * @param stack The gem to modify
-	 * @param state The desired toggle state
-	 *//*
+ * Sets the gem's toggle state. Has no effect if the gem has no toggle functionality.
+ *
+ * @param stack The gem to modify
+ * @param state The desired toggle state
+ *//*
 	public static void setToggle (GemStack stack, boolean state) {
 		setToggle(stack.getStack(), state);
 		stack.markDirty();
@@ -366,11 +423,11 @@ public class GemUtil {
 	}
 
 	*//**
-	 * Get gems that are capable of operating passively. Checks for held, gems slotted in a Fabrial's active or passive slots, and a gem in the Gem Socket.
-	 *
-	 * @param player
-	 * @return List of appropriate gems
-	 *//*
+ * Get gems that are capable of operating passively. Checks for held, gems slotted in a Fabrial's active or passive slots, and a gem in the Gem Socket.
+ *
+ * @param player
+ * @return List of appropriate gems
+ *//*
 	public static AvailableGemsHandler getAvailableGems (EntityPlayer player) {
 		return new AvailableGemsHandler(player);
 	}

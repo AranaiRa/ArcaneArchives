@@ -17,7 +17,6 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
@@ -25,108 +24,103 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class MakeshiftResonatorTile extends TileEntity implements ITickable {
-	public static Random rand = new Random();
+public class MakeshiftResonatorTile extends BaseTile implements ITickable {
+  public static Random rand = new Random();
 
-	private int growth = 0;
-	private int ticks = 0;
+  private int growth = 0;
 
-	public MakeshiftResonatorTile () {
-	}
+  public MakeshiftResonatorTile() {
+  }
 
-	@Override
-	public void update () {
-		if (world == null) {
-			return;
-		}
-		IBlockState state = world.getBlockState(pos);
-		if (!state.getValue(MakeshiftResonatorBlock.FILLED)) {
-			return;
-		}
-		int ticksRequired = 100; // ServerSideConfig.ResonatorTickTime;
+  @Override
+  public void update() {
+    if (world == null) {
+      return;
+    }
+    IBlockState state = world.getBlockState(pos);
+    if (!state.getValue(MakeshiftResonatorBlock.FILLED)) {
+      return;
+    }
+    int ticksRequired = 100; // ServerSideConfig.ResonatorTickTime;
 
-		if (growth < ticksRequired) {
-			growth++;
-			ArcaneArchives.logger.info("Growth: " + growth);
-		} else {
-			List<ItemStack> toSpawn = new ArrayList<>();
-			toSpawn.add(new ItemStack(Items.STICK, 2 + rand.nextInt(3)));
-			toSpawn.add(new ItemStack(ModItems.RadiantDust, 1 + rand.nextInt(3)));
-			if (rand.nextInt(4) == 0) {
-				toSpawn.add(new ItemStack(Items.GOLD_NUGGET, 1));
-			}
-			if (rand.nextBoolean()) {
-				toSpawn.add(new ItemStack(Blocks.STONE_SLAB, 1, 3));
-			}
-			if (rand.nextBoolean()) {
-				toSpawn.add(new ItemStack(Blocks.STONE_SLAB, 1, 3));
-			}
-			if (!world.isRemote) {
-				world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1.0F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F) * 0.7F);
-			}
-			world.spawnParticle(EnumParticleTypes.EXPLOSION_HUGE, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 1.0D, 0.0D, 0.0D);
-			for (ItemStack stack : toSpawn) {
-				int x = pos.getX() + rand.nextInt(1) - 1;
-				int z = pos.getZ() + rand.nextInt(1) - 1;
-				BlockPos randomised = new BlockPos(x, pos.getY(), z);
-				if (!world.isRemote) {
-					Block.spawnAsEntity(world, randomised, stack);
-				}
-			}
-			if (!world.isRemote) {
-				world.setBlockToAir(pos);
-			}
-		}
-	}
+    if (growth < ticksRequired) {
+      growth++;
+      ArcaneArchives.logger.info("Growth: " + growth);
+    } else {
+      List<ItemStack> toSpawn = new ArrayList<>();
+      toSpawn.add(new ItemStack(Items.STICK, 2 + rand.nextInt(3)));
+      toSpawn.add(new ItemStack(ModItems.RadiantDust, 1 + rand.nextInt(3)));
+      if (rand.nextInt(4) == 0) {
+        toSpawn.add(new ItemStack(Items.GOLD_NUGGET, 1));
+      }
+      if (rand.nextBoolean()) {
+        toSpawn.add(new ItemStack(Blocks.STONE_SLAB, 1, 3));
+      }
+      if (rand.nextBoolean()) {
+        toSpawn.add(new ItemStack(Blocks.STONE_SLAB, 1, 3));
+      }
+      if (!world.isRemote) {
+        world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1.0F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F) * 0.7F);
+      }
+      world.spawnParticle(EnumParticleTypes.EXPLOSION_HUGE, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 1.0D, 0.0D, 0.0D);
+      for (ItemStack stack : toSpawn) {
+        int x = pos.getX() + rand.nextInt(1) - 1;
+        int z = pos.getZ() + rand.nextInt(1) - 1;
+        BlockPos randomised = new BlockPos(x, pos.getY(), z);
+        if (!world.isRemote) {
+          Block.spawnAsEntity(world, randomised, stack);
+        }
+      }
+      if (!world.isRemote) {
+        world.setBlockToAir(pos);
+      }
+    }
+  }
 
-	@Nonnull
-	@Override
-	public NBTTagCompound writeToNBT (NBTTagCompound compound) {
-		super.writeToNBT(compound);
+  @Nonnull
+  @Override
+  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+    super.writeToNBT(compound);
 
-		compound.setInteger(Tags.CURRENT_TICK, growth);
+    compound.setInteger(Tags.MakeshiftResonator.CURRENT_TICK, growth);
 
-		return compound;
-	}
+    return compound;
+  }
 
-	@Override
-	public void readFromNBT (NBTTagCompound compound) {
-		super.readFromNBT(compound);
+  @Override
+  public void readFromNBT(NBTTagCompound compound) {
+    super.readFromNBT(compound);
 
-		if (compound.hasKey(Tags.CURRENT_TICK)) {
-			growth = compound.getInteger(Tags.CURRENT_TICK);
-		}
-	}
+    if (compound.hasKey(Tags.MakeshiftResonator.CURRENT_TICK)) {
+      growth = compound.getInteger(Tags.MakeshiftResonator.CURRENT_TICK);
+    }
+  }
 
 /*	public int getPercentageComplete () {
 		return (int) Math.floor(growth / (double) ServerSideConfig.ResonatorTickTime * 100D);
 	}*/
 
-	@Override
-	@Nonnull
-	public SPacketUpdateTileEntity getUpdatePacket () {
-		NBTTagCompound compound = writeToNBT(new NBTTagCompound());
+  @Override
+  @Nonnull
+  public SPacketUpdateTileEntity getUpdatePacket() {
+    NBTTagCompound compound = writeToNBT(new NBTTagCompound());
 
-		return new SPacketUpdateTileEntity(pos, 0, compound);
-	}
+    return new SPacketUpdateTileEntity(pos, 0, compound);
+  }
 
-	@Override
-	public NBTTagCompound getUpdateTag () {
-		return writeToNBT(new NBTTagCompound());
-	}
+  @Override
+  public NBTTagCompound getUpdateTag() {
+    return writeToNBT(new NBTTagCompound());
+  }
 
-	@Override
-	public void onDataPacket (NetworkManager net, SPacketUpdateTileEntity pkt) {
-		readFromNBT(pkt.getNbtCompound());
-		super.onDataPacket(net, pkt);
-	}
+  @Override
+  public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+    readFromNBT(pkt.getNbtCompound());
+    super.onDataPacket(net, pkt);
+  }
 
-	@Override
-	public boolean shouldRefresh (World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
-		return (oldState.getBlock() != newSate.getBlock());
-	}
-
-	public static class Tags {
-		public static final String CURRENT_TICK = "current_tick";
-	}
+  @Override
+  public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
+    return (oldState.getBlock() != newSate.getBlock());
+  }
 }

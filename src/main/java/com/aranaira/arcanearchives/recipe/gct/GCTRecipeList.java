@@ -1,8 +1,8 @@
 /*package com.aranaira.arcanearchives.recipe.gct;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.api.IGCTRecipe;
-import com.aranaira.arcanearchives.api.IGCTRecipeList;
+import com.aranaira.arcanearchives.api.gct.IGCTRecipe;
+import com.aranaira.arcanearchives.api.gct.IGCTRecipeList;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.item.ItemStack;

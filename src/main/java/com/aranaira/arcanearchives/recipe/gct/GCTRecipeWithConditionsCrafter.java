@@ -1,6 +1,6 @@
 /*package com.aranaira.arcanearchives.recipe.gct;
 
-import com.aranaira.arcanearchives.api.IGCTRecipe;
+import com.aranaira.arcanearchives.api.gct.IGCTRecipe;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -25,7 +25,7 @@ public class GCTRecipeWithConditionsCrafter extends GCTRecipeWithCrafter {
 	@Override
 	public boolean craftable (EntityPlayer player, TileEntity tile) {
 		for (GCTCondition condition : conditions) {
-			if (!condition.test(player, tile)) {
+			if (!condition.apply(player, tile)) {
 				return false;
 			}
 		}

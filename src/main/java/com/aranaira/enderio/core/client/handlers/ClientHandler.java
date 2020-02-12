@@ -11,20 +11,20 @@ import javax.annotation.Nonnull;
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class ClientHandler {
 
-	private static int ticksElapsed;
+  private static int ticksElapsed;
 
-	public static int getTicksElapsed () {
-		return ticksElapsed;
-	}
+  public static int getTicksElapsed() {
+    return ticksElapsed;
+  }
 
-	@SubscribeEvent
-	public static void onClientTick (@Nonnull ClientTickEvent event) {
-		if (event.phase == Phase.END) {
-			ticksElapsed++;
-		}
-	}
+  @SubscribeEvent
+  public static void onClientTick(@Nonnull ClientTickEvent event) {
+    if (event.phase == Phase.END) {
+      ticksElapsed++;
+    }
+  }
 
-	private ClientHandler () {
-	}
+  private ClientHandler() {
+  }
 
 }

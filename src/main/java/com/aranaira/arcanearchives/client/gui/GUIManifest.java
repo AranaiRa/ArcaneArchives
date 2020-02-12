@@ -103,8 +103,8 @@ public class GUIManifest extends LayeredGuiContainer implements GuiPageButtonLis
 	public static boolean doJEIsync = false;
 
 	*//**
-	 * Color to overlay items in another minecraft dimension than the one that the player is currently in
-	 *//*
+ * Color to overlay items in another minecraft dimension than the one that the player is currently in
+ *//*
 	private static int OTHER_DIMENSION = 0x77000000;
 
 	private ManifestSearchField searchBox;

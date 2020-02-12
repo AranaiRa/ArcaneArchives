@@ -1,9 +1,9 @@
 package com.aranaira.arcanearchives.api.immanence;
 
 public interface IImmanenceSource {
-	float getAmount ();
+  float getAmount();
 
-	ImmanenceBonusType getType ();
+  ImmanenceBonusType getType();
 
-	String getCategory ();
+  String getCategory();
 }

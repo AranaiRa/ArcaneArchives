@@ -121,7 +121,7 @@ package com.aranaira.arcanearchives.recipe.gct;
 		for (Entry entry : recipe.getMatchingSlots(inventory).int2IntEntrySet()) {
 			ItemStack result = inventory.extractItem(entry.getIntKey(), entry.getIntValue(), false);
 			if (!player.world.isRemote) {
-				if (handler != null && handler.test(player.world, player, tile, result)) {
+				if (handler != null && handler.apply(player.world, player, tile, result)) {
 					if (callback != null) {
 						callback.run();
 					}

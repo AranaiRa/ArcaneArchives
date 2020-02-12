@@ -9,20 +9,20 @@ import java.nio.file.Paths;
 
 public class ExportDocumentation {
 
-	public static void main (String[] args) {
+  public static void main(String[] args) {
 
-		String targetPath = "docs/zs/";
-		Class[] classes = {/*GCTTweaker.class*/};
+    String targetPath = "docs/zs/";
+    Class[] classes = {/*GCTTweaker.class*/};
 
-		ZenDocExporter export = new ZenDocExporter();
-		Path path = Paths.get(targetPath);
+    ZenDocExporter export = new ZenDocExporter();
+    Path path = Paths.get(targetPath);
 
-		try {
-			Files.createDirectories(path);
-			export.export(path, classes);
+    try {
+      Files.createDirectories(path);
+      export.export(path, classes);
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 }

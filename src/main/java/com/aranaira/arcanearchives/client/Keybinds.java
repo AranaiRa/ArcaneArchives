@@ -17,26 +17,26 @@ import javax.annotation.Nullable;
 
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class Keybinds {
-	public static final String ARCARC_GROUP = "arcanearchives.gui.keygroup";
-	public static final String ARCARC_BINDS = "arcanearchives.gui.keybinds";
-	public static KeyBinding manifestKey = null;
-	public static KeyBinding socketKey = null;
+  public static final String ARCARC_GROUP = "arcanearchives.gui.keygroup";
+  public static final String ARCARC_BINDS = "arcanearchives.gui.keybinds";
+  public static KeyBinding manifestKey = null;
+  public static KeyBinding socketKey = null;
 
 
-	public static void initKeybinds () {
-		KeyBinding kb = new KeyBinding(ARCARC_BINDS + ".manifest", 0, ARCARC_GROUP);
-		ClientRegistry.registerKeyBinding(kb);
-		manifestKey = kb;
-		if (ConfigHandler.ArsenalConfig.EnableArsenal) {
-			kb = new KeyBinding(ARCARC_BINDS + ".socket", 0, ARCARC_GROUP);
-			ClientRegistry.registerKeyBinding(kb);
-			socketKey = kb;
-		}
-	}
+  public static void initKeybinds() {
+    KeyBinding kb = new KeyBinding(ARCARC_BINDS + ".manifest", 0, ARCARC_GROUP);
+    ClientRegistry.registerKeyBinding(kb);
+    manifestKey = kb;
+    if (ConfigHandler.ArsenalConfig.EnableArsenal) {
+      kb = new KeyBinding(ARCARC_BINDS + ".socket", 0, ARCARC_GROUP);
+      ClientRegistry.registerKeyBinding(kb);
+      socketKey = kb;
+    }
+  }
 
-	@SideOnly(Side.CLIENT)
-	@Nullable
-	private static ItemStack underMouse (Minecraft mc) {
+  @SideOnly(Side.CLIENT)
+  @Nullable
+  private static ItemStack underMouse(Minecraft mc) {
 /*		ItemStack jei = JEIUnderMouse.underMouse();
 		if (jei != null) {
 			return jei;
@@ -51,12 +51,12 @@ public class Keybinds {
 		}
 
 		return null;*/
-		return null;
-	}
+    return null;
+  }
 
-	@SubscribeEvent
-	@SideOnly(Side.CLIENT)
-	public static void onKeyInputManifest (InputEvent.KeyInputEvent event) {
+  @SubscribeEvent
+  @SideOnly(Side.CLIENT)
+  public static void onKeyInputManifest(InputEvent.KeyInputEvent event) {
 /*		Minecraft mc = Minecraft.getMinecraft();
 		if (manifestKey.isKeyDown() && mc.inGameHasFocus) {
 			boolean foundManifest = false;
@@ -83,11 +83,11 @@ public class Keybinds {
 			OpenSocket packet = new OpenSocket();
 			Networking.CHANNEL.sendToServer(packet);
 		}*/
-	}
+  }
 
-	@SubscribeEvent
-	@SideOnly(Side.CLIENT)
-	public static void onKeypress (GuiScreenEvent.KeyboardInputEvent.Pre event) {
+  @SubscribeEvent
+  @SideOnly(Side.CLIENT)
+  public static void onKeypress(GuiScreenEvent.KeyboardInputEvent.Pre event) {
 /*		if (Keyboard.getEventKeyState() && manifestKey.isActiveAndMatches(Keyboard.getEventKey())) {
 			Minecraft mc = Minecraft.getMinecraft();
 			if (mc.currentScreen != null) {
@@ -116,5 +116,5 @@ public class Keybinds {
 				}
 			}
 		}*/
-	}
+  }
 }

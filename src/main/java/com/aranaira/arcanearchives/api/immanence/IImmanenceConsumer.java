@@ -1,9 +1,9 @@
 package com.aranaira.arcanearchives.api.immanence;
 
 public interface IImmanenceConsumer extends IImmanenceSubscriber {
-	void acceptImmanence (int immanenceCount);
+  void acceptImmanence(int immanenceCount);
 
-	int requiredImmanence ();
+  int requiredImmanence();
 
-	boolean immanenceMet ();
+  boolean immanenceMet();
 }

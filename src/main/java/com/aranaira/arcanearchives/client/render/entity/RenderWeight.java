@@ -8,13 +8,13 @@ import net.minecraft.util.ResourceLocation;
 import javax.annotation.Nullable;
 
 public class RenderWeight extends Render<EntityWeight> {
-	public RenderWeight (RenderManager renderManager) {
-		super(renderManager);
-	}
+  public RenderWeight(RenderManager renderManager) {
+    super(renderManager);
+  }
 
-	@Nullable
-	@Override
-	protected ResourceLocation getEntityTexture (EntityWeight entity) {
-		return null;
-	}
+  @Nullable
+  @Override
+  protected ResourceLocation getEntityTexture(EntityWeight entity) {
+    return null;
+  }
 }

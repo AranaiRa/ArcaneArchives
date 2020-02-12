@@ -30,129 +30,129 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class MakeshiftResonatorBlock extends TemplateBlock {
-	public static PropertyBool FILLED = PropertyBool.create("filled");
+  public static PropertyBool FILLED = PropertyBool.create("filled");
 
-	public MakeshiftResonatorBlock () {
-		super(Material.IRON);
-		setHardness(3f);
-		setHarvestLevel("pickaxe", 0);
-		setDefaultState(getDefaultState().withProperty(FILLED, false));
-	}
+  public MakeshiftResonatorBlock() {
+    super(Material.IRON);
+    setHardness(3f);
+    setHarvestLevel("pickaxe", 0);
+    setDefaultState(getDefaultState().withProperty(FILLED, false));
+  }
 
-	@Override
-	public boolean onBlockActivated (World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (!state.getValue(FILLED)) {
-			if (!playerIn.capabilities.isCreativeMode) {
-				ItemStack stack = playerIn.getHeldItem(hand);
-				IFluidHandlerItem cap = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
-				if (cap != null) {
-					if (cap.getTankProperties().length > 0) {
-						FluidStack contents = cap.getTankProperties()[0].getContents();
-						if (contents != null) {
-							if (contents.getFluid() == FluidRegistry.WATER) {
-								if (contents.amount == 1000) {
-									if (worldIn.isRemote) {
-										return true;
-									}
-									cap.drain(1000, true);
-									playerIn.setHeldItem(hand, stack.getItem().getContainerItem(stack));
-									worldIn.setBlockState(pos, state.withProperty(FILLED, true));
-									return true;
-								} else if (contents.amount > 1000) {
-									if (!worldIn.isRemote) {
-										cap.drain(1000, true);
-										worldIn.setBlockState(pos, state.withProperty(FILLED, true));
-									}
+  @Override
+  public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    if (!state.getValue(FILLED)) {
+      if (!playerIn.capabilities.isCreativeMode) {
+        ItemStack stack = playerIn.getHeldItem(hand);
+        IFluidHandlerItem cap = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
+        if (cap != null) {
+          if (cap.getTankProperties().length > 0) {
+            FluidStack contents = cap.getTankProperties()[0].getContents();
+            if (contents != null) {
+              if (contents.getFluid() == FluidRegistry.WATER) {
+                if (contents.amount == 1000) {
+                  if (worldIn.isRemote) {
+                    return true;
+                  }
+                  cap.drain(1000, true);
+                  playerIn.setHeldItem(hand, stack.getItem().getContainerItem(stack));
+                  worldIn.setBlockState(pos, state.withProperty(FILLED, true));
+                  return true;
+                } else if (contents.amount > 1000) {
+                  if (!worldIn.isRemote) {
+                    cap.drain(1000, true);
+                    worldIn.setBlockState(pos, state.withProperty(FILLED, true));
+                  }
 
-									return true;
-								}
-							}
-						}
-					}
-				}
-			} else {
-				worldIn.setBlockState(pos, state.withProperty(FILLED, true));
-				return true;
-			}
-		}
-		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
-	}
+                  return true;
+                }
+              }
+            }
+          }
+        }
+      } else {
+        worldIn.setBlockState(pos, state.withProperty(FILLED, true));
+        return true;
+      }
+    }
+    return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+  }
 
-	@Override
-	public int damageDropped (IBlockState state) {
-		return 0;
-	}
+  @Override
+  public int damageDropped(IBlockState state) {
+    return 0;
+  }
 
-	@Override
-	public int getMetaFromState (IBlockState state) {
-		return state.getValue(FILLED) ? 1 : 0;
-	}
+  @Override
+  public int getMetaFromState(IBlockState state) {
+    return state.getValue(FILLED) ? 1 : 0;
+  }
 
-	@SuppressWarnings("deprecation")
-	@Override
-	public IBlockState getStateFromMeta (int meta) {
-		return meta == 1 ? getDefaultState().withProperty(FILLED, true) : getDefaultState();
-	}
+  @SuppressWarnings("deprecation")
+  @Override
+  public IBlockState getStateFromMeta(int meta) {
+    return meta == 1 ? getDefaultState().withProperty(FILLED, true) : getDefaultState();
+  }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.device.wonky_resonator"));
-	}
+  @Override
+  @SideOnly(Side.CLIENT)
+  public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+    tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.device.wonky_resonator"));
+  }
 
-	@Override
-	@SuppressWarnings("deprecation")
-	public boolean causesSuffocation (IBlockState state) {
-		return false;
-	}
+  @Override
+  @SuppressWarnings("deprecation")
+  public boolean causesSuffocation(IBlockState state) {
+    return false;
+  }
 
-	@Override
-	@SuppressWarnings("deprecation")
-	public boolean isFullCube (IBlockState state) {
-		return false;
-	}
+  @Override
+  @SuppressWarnings("deprecation")
+  public boolean isFullCube(IBlockState state) {
+    return false;
+  }
 
-	@Override
-	@SuppressWarnings("deprecation")
-	public boolean isOpaqueCube (IBlockState state) {
-		return false;
-	}
+  @Override
+  @SuppressWarnings("deprecation")
+  public boolean isOpaqueCube(IBlockState state) {
+    return false;
+  }
 
-	@Override
-	public BlockRenderLayer getRenderLayer () {
-		return BlockRenderLayer.CUTOUT;
-	}
+  @Override
+  public BlockRenderLayer getRenderLayer() {
+    return BlockRenderLayer.CUTOUT;
+  }
 
-	@Override
-	public boolean hasTileEntity (IBlockState state) {
-		return true;
-	}
+  @Override
+  public boolean hasTileEntity(IBlockState state) {
+    return true;
+  }
 
-	@Override
-	public TileEntity createTileEntity (World world, IBlockState state) {
-		return new MakeshiftResonatorTile();
-	}
+  @Override
+  public TileEntity createTileEntity(World world, IBlockState state) {
+    return new MakeshiftResonatorTile();
+  }
 
-	@Override
-	protected BlockStateContainer createBlockState () {
-		return new BlockStateContainer(this, FILLED);
-	}
+  @Override
+  protected BlockStateContainer createBlockState() {
+    return new BlockStateContainer(this, FILLED);
+  }
 
-	@Override
-	public void fillWithRain (World worldIn, BlockPos pos) {
-		IBlockState state = worldIn.getBlockState(pos);
-		if (state.getBlock() != this || state.getValue(FILLED)) {
-			return;
-		}
-		worldIn.setBlockState(pos, state.withProperty(FILLED, true));
-	}
+  @Override
+  public void fillWithRain(World worldIn, BlockPos pos) {
+    IBlockState state = worldIn.getBlockState(pos);
+    if (state.getBlock() != this || state.getValue(FILLED)) {
+      return;
+    }
+    worldIn.setBlockState(pos, state.withProperty(FILLED, true));
+  }
 
-	@Override
-	public BlockFaceShape getBlockFaceShape (IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
-		if (face == EnumFacing.UP) {
-			return BlockFaceShape.BOWL;
-		} else {
-			return face == EnumFacing.DOWN ? BlockFaceShape.UNDEFINED : BlockFaceShape.SOLID;
-		}
-	}
+  @Override
+  public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+    if (face == EnumFacing.UP) {
+      return BlockFaceShape.BOWL;
+    } else {
+      return face == EnumFacing.DOWN ? BlockFaceShape.UNDEFINED : BlockFaceShape.SOLID;
+    }
+  }
 }

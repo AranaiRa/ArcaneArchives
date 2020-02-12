@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ZenDocClass {
 
-	String value ();
+  String value();
 
-	String[] description () default {};
+  String[] description() default {};
 }

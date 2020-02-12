@@ -406,10 +406,10 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 		}
 
 		*//**
-		 * Returns the actual number of upgrades, rather than their upgrade potency values.
-		 *
-		 * @return X is the number of storage upgrades, Y the number of optional upgrades
-		 *//*
+ * Returns the actual number of upgrades, rather than their upgrade potency values.
+ *
+ * @return X is the number of storage upgrades, Y the number of optional upgrades
+ *//*
 		public Point getTotalUpgradesCount () {
 			return new Point(sizeUpgrades.getTotalUpgradesQuantity(), optionalUpgrades.getTotalUpgradesQuantity());
 		}

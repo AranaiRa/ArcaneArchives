@@ -315,8 +315,8 @@ public class ContainerRadiantCraftingTable extends Container {
 
 	*/
 /**
-	 * @return the starting slot for the player inventory. Present for usage in the JEI crafting station support
-	 *//*
+ * @return the starting slot for the player inventory. Present for usage in the JEI crafting station support
+ *//*
 
 	public InventoryCrafting getCraftMatrix () {
 		return craftMatrix;
@@ -336,9 +336,9 @@ public class ContainerRadiantCraftingTable extends Container {
 		}
 	}
 
-	public NonNullList<ItemStack> getRemainingItems () {
+	public NonNullList<ItemStack> getRemainingIngredients () {
 		if (lastRecipe != null && lastRecipe.matches(craftMatrix, world)) {
-			return lastRecipe.getRemainingItems(craftMatrix);
+			return lastRecipe.getRemainingIngredients(craftMatrix);
 		}
 		return craftMatrix.stackList;
 	}

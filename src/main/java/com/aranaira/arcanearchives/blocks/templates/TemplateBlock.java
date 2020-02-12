@@ -7,23 +7,19 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 
 public abstract class TemplateBlock extends Block {
-	private ItemBlock itemBlock = null;
+  private ItemBlock itemBlock = null;
 
-	public TemplateBlock (Material materialIn) {
-		super(materialIn);
-	}
+  public TemplateBlock(Material materialIn) {
+    super(materialIn);
+  }
 
-	public ItemBlock getItemBlock () {
-		return itemBlock;
-	}
+  public ItemBlock getItemBlock() {
+    return itemBlock;
+  }
 
-	public void setItemBlock (ItemBlock itemBlock) {
-		this.itemBlock = itemBlock;
-	}
-
-	public ITextComponent getNameComponent () {
-		return new TextComponentTranslation(String.format("%s.name", getTranslationKey()));
-	}
+  public void setItemBlock(ItemBlock itemBlock) {
+    this.itemBlock = itemBlock;
+  }
 }
 
 

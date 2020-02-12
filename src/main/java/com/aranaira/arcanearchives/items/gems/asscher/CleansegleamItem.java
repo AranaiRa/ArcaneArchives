@@ -110,12 +110,12 @@ public class CleansegleamItem extends ArcaneGemItem {
 	}
 
 	*//**
-	 * Removes effects from the target entity.
-	 *
-	 * @param target           What entity to affect
-	 * @param hasMatterUpgrade Whether the gem has a matter upgrade (and therefore removes all negative effects)
-	 * @return Charge cost of the operation
-	 *//*
+ * Removes effects from the target entity.
+ *
+ * @param target           What entity to affect
+ * @param hasMatterUpgrade Whether the gem has a matter upgrade (and therefore removes all negative effects)
+ * @return Charge cost of the operation
+ *//*
 	private int removeEffects (EntityLivingBase target, boolean hasMatterUpgrade) {
 		ArrayList<Potion> toRemove = new ArrayList<>();
 		int cost = 0;

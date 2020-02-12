@@ -15,9 +15,9 @@ public abstract class MixinGuiContainer {
 /*	@SideOnly(Side.CLIENT)
 	private static List<Class<? extends GuiContainer>> CONTAINER_IGNORE_LIST = Arrays.asList(GUIManifest.class, GUIGemCuttersTable.class, GUIUpgrades.class, GUIRadiantChest.class, GUIGemSocket.class);*/
 
-	@Inject(method = "drawSlot", at = @At(value = "HEAD"))
-	@SideOnly(Side.CLIENT)
-	private void onDrawSlot (Slot slot, CallbackInfo callbackInfo) {
+  @Inject(method = "drawSlot", at = @At(value = "HEAD"))
+  @SideOnly(Side.CLIENT)
+  private void onDrawSlot(Slot slot, CallbackInfo callbackInfo) {
 /*		if (NonModTrackingConfig.DisableMixinHighlight || NonModTrackingConfig.getContainerClasses().contains(((GuiContainer) (Object) this).getClass())) {
 			return;
 		}
@@ -36,14 +36,14 @@ public abstract class MixinGuiContainer {
 				GlStateManager.enableDepth();
 			}
 		}*/
-	}
+  }
 
-	@Inject(method = "onGuiClosed", at = @At(value = "RETURN"))
-	@SideOnly(Side.CLIENT)
-	private void onGuiClosed (CallbackInfo callbackInfo) {
+  @Inject(method = "onGuiClosed", at = @At(value = "RETURN"))
+  @SideOnly(Side.CLIENT)
+  private void onGuiClosed(CallbackInfo callbackInfo) {
 /*		Minecraft _mc = ((GuiContainer) (Object) this).mc;
 		if (_mc != null && _mc.player != null) {
 			LineHandler.checkClear(_mc.player.dimension);
 		}*/
-	}
+  }
 }

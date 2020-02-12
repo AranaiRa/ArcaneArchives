@@ -1,8 +1,8 @@
 /*package com.aranaira.arcanearchives.integration.crafttweaker;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.api.IGCTRecipe;
-import com.aranaira.arcanearchives.recipe.IngredientStack;
+import com.aranaira.arcanearchives.api.gct.IGCTRecipe;
+import com.aranaira.arcanearchives.api.IngredientStack;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import com.aranaira.arcanearchives.util.zen.ZenDocAppend;

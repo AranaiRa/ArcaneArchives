@@ -21,84 +21,124 @@ import javax.annotation.Nullable;
  * The majority of functionality for actual machines is implemented in `ImmanenceTileEntity`.
  * The only direct descendents of this that are not ITEs are the Gem Cutter's Table (as it
  * does not use immanence), and the Accessor Block.
+ * <p>
+ * This boolean value is used to ensure that cascading break events do not
+ * result in an infinite loop. Once the process has started, all future function
+ * calls to breakBlock are discarded.
+ *
+ * @return The current size associated with this tile entity. See `setSize`.
+ * <p>
+ * At this point in time, size objects, while stored in the TileEntity, are more impactful
+ * on the actual instances of BlockTemplate than on the TileEntity. They are stored here for
+ * posterity's sake, but the duplication could probably be discarded.
+ * @param newSize A Size object containing the width, height and length of the multi-
+ * block structure associated with this block. This size is used in order
+ * to calculate accessor block positions, and to determine if the block
+ * can actually be placed.
+ * @return The name associated with this TileEntity, which is the path part of the
+ * name that it was registered with. Note that this simply returns that part and does
+ * not include the modid.
+ * @param name The name to be used as the registry name path and also to refer
+ * to the specific type of tile entity.
+ * <p>
+ * This function is called when individual accessor blocks are broken by the
+ * AccessorTileEntity.
+ * <p>
+ * This is a direct link to Block::breakBlock and is called by both the
+ * core block of a pseudo-multiblock-structure and by each of its individual
+ * accessor blocks.
+ * <p>
+ * It specifically does the work of removing tile entities and blocks based
+ * on the position of the TileEntity and the facing of the block associated
+ * with it (if it has one).
+ * @param state   The current state of the block being destroyed. If null, it
+ * will find the current state of the block at this location.
+ * @param harvest Setting this to false will result in the center block
+ * not being destroyed (if this was trigger from the break of
+ * one of the accessors).
+ * <p>
+ * Future tile entities are going to require a "start up" time. This exists as a way
+ * of determining if those tile entities are ready or not. At the minute, it always
+ * returns true.
+ * @return Returns true by default.
  *//*
 public abstract class AATileEntity extends TileEntity implements INamedTileEntity, IAccessorTileEntity, ISizedTileEntity, IDirectionalTileEntity {
 	public String name;
 	public MultiblockSize size;
 
 	*//**
-	 * This boolean value is used to ensure that cascading break events do not
-	 * result in an infinite loop. Once the process has started, all future function
-	 * calls to breakBlock are discarded.
-	 *//*
+ * This boolean value is used to ensure that cascading break events do not
+ * result in an infinite loop. Once the process has started, all future function
+ * calls to breakBlock are discarded.
+ *//*
 	private boolean breaking = false;
 
 	*//**
-	 * @return The current size associated with this tile entity. See `setSize`.
-	 *//*
+ * @return The current size associated with this tile entity. See `setSize`.
+ *//*
 	@Override
 	public MultiblockSize getSize () {
 		return this.size;
 	}
 
 	*//**
-	 * At this point in time, size objects, while stored in the TileEntity, are more impactful
-	 * on the actual instances of BlockTemplate than on the TileEntity. They are stored here for
-	 * posterity's sake, but the duplication could probably be discarded.
-	 *
-	 * @param newSize A Size object containing the width, height and length of the multi-
-	 *                block structure associated with this block. This size is used in order
-	 *                to calculate accessor block positions, and to determine if the block
-	 *                can actually be placed.
-	 *//*
+ * At this point in time, size objects, while stored in the TileEntity, are more impactful
+ * on the actual instances of BlockTemplate than on the TileEntity. They are stored here for
+ * posterity's sake, but the duplication could probably be discarded.
+ *
+ * @param newSize A Size object containing the width, height and length of the multi-
+ *                block structure associated with this block. This size is used in order
+ *                to calculate accessor block positions, and to determine if the block
+ *                can actually be placed.
+ *//*
 	@Override
 	public void setSize (MultiblockSize newSize) {
 		this.size = newSize;
 	}
 
 	*//**
-	 * @return The name associated with this TileEntity, which is the path part of the
-	 * name that it was registered with. Note that this simply returns that part and does
-	 * not include the modid.
-	 *//*
+ * @return The name associated with this TileEntity, which is the path part of the
+ * name that it was registered with. Note that this simply returns that part and does
+ * not include the modid.
+ *//*
 	@Override
 	public String getName () {
 		return name;
 	}
 
 	*//**
-	 * @param name The name to be used as the registry name path and also to refer
-	 *             to the specific type of tile entity.
-	 *//*
+ * @param name The name to be used as the registry name path and also to refer
+ *             to the specific type of tile entity.
+ *//*
 	@Override
 	public void setName (String name) {
 		this.name = name;
 	}
 
 	*//**
-	 * This function is called when individual accessor blocks are broken by the
-	 * AccessorTileEntity.
-	 *//*
+ * This function is called when individual accessor blocks are broken by the
+ * AccessorTileEntity.
+ *//*
 	@Override
 	public void breakBlock () {
 		breakBlock(null, true);
 	}
 
 	*//**
-	 * This is a direct link to Block::breakBlock and is called by both the
-	 * core block of a pseudo-multiblock-structure and by each of its individual
-	 * accessor blocks.
-	 * <p>
-	 * It specifically does the work of removing tile entities and blocks based
-	 * on the position of the TileEntity and the facing of the block associated
-	 * with it (if it has one).
-	 *
-	 * @param state   The current state of the block being destroyed. If null, it
-	 *                will find the current state of the block at this location.
-	 * @param harvest Setting this to false will result in the center block
-	 *                not being destroyed (if this was trigger from the break of
-	 *                one of the accessors).
-	 *//*
+ * This is a direct link to Block::breakBlock and is called by both the
+ * core block of a pseudo-multiblock-structure and by each of its individual
+ * accessor blocks.
+ * <p>
+ * It specifically does the work of removing tile entities and blocks based
+ * on the position of the TileEntity and the facing of the block associated
+ * with it (if it has one).
+ *
+ * @param state   The current state of the block being destroyed. If null, it
+ *                will find the current state of the block at this location.
+ * @param harvest Setting this to false will result in the center block
+ *                not being destroyed (if this was trigger from the break of
+ *                one of the accessors).
+ *//*
 	@Override
 	public void breakBlock (@Nullable IBlockState state, boolean harvest) {
 		if (breaking) {
@@ -125,12 +165,12 @@ public abstract class AATileEntity extends TileEntity implements INamedTileEntit
 	}
 
 	*//**
-	 * Future tile entities are going to require a "start up" time. This exists as a way
-	 * of determining if those tile entities are ready or not. At the minute, it always
-	 * returns true.
-	 *
-	 * @return Returns true by default.
-	 *//*
+ * Future tile entities are going to require a "start up" time. This exists as a way
+ * of determining if those tile entities are ready or not. At the minute, it always
+ * returns true.
+ *
+ * @return Returns true by default.
+ *//*
 	public boolean isActive () {
 		return true;
 	}

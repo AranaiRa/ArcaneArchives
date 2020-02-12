@@ -34,135 +34,136 @@ import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class TintUtils {
-	public static Path FILE_PATH;
-	public static Int2IntOpenHashMap CACHE = null;
+  public static Path FILE_PATH;
+  public static Int2IntOpenHashMap CACHE = null;
 
-	public static void init () {
-		FILE_PATH = new File(new File(ArcaneArchives.configDirectory, ArcaneArchives.MODID), "echo_colors.txt").toPath();
-		CACHE = new Int2IntOpenHashMap();
-		CACHE.defaultReturnValue(-1);
-		if (!readData() || CACHE.isEmpty()) {
-			generate();
-			writeData();
-		}
-	}
+  public static void init() {
+    FILE_PATH = new File(new File(ArcaneArchives.configDirectory, ArcaneArchives.MODID), "echo_colors.txt").toPath();
+    CACHE = new Int2IntOpenHashMap();
+    CACHE.defaultReturnValue(-1);
+    if (!readData() || CACHE.isEmpty()) {
+      generate();
+      writeData();
+    }
+  }
 
-	public static int getColor (ItemStack stack) {
-		return CACHE.get(RecipeItemHelper.pack(stack));
-	}
+  public static int getColor(ItemStack stack) {
+    return CACHE.get(RecipeItemHelper.pack(stack));
+  }
 
-	public static boolean readData () {
-		CACHE.clear();
-		List<String> lines;
-		try {
-			lines = Files.readAllLines(FILE_PATH);
-		} catch (IOException e) {
-			return false;
-		}
+  public static boolean readData() {
+    CACHE.clear();
+    List<String> lines;
+    try {
+      lines = Files.readAllLines(FILE_PATH);
+    } catch (IOException e) {
+      return false;
+    }
 
-		for (String line : lines) {
-			String[] split = line.split(",");
-			if (split.length != 2) {
-				continue;
-			}
+    for (String line : lines) {
+      String[] split = line.split(",");
+      if (split.length != 2) {
+        continue;
+      }
 
-			int item = Integer.parseInt(split[0]);
-			int color = Integer.parseInt(split[1]);
-			CACHE.put(item, color);
-		}
+      int item = Integer.parseInt(split[0]);
+      int color = Integer.parseInt(split[1]);
+      CACHE.put(item, color);
+    }
 
-		return true;
-	}
+    return true;
+  }
 
-	public static void writeData () {
-		List<String> output = new ArrayList<>();
-		for (Entry x : CACHE.int2IntEntrySet()) {
-			output.add(x.getIntKey() + "," + x.getIntValue());
-		}
-		try {
-			Files.write(FILE_PATH, output);
-		} catch (IOException e) {
-			ArcaneArchives.logger.info("Unable to write colour values on the client. Whoops!");
-		}
-	}
+  public static void writeData() {
+    List<String> output = new ArrayList<>();
+    for (Entry x : CACHE.int2IntEntrySet()) {
+      output.add(x.getIntKey() + "," + x.getIntValue());
+    }
+    try {
+      Files.write(FILE_PATH, output);
+    } catch (IOException e) {
+      ArcaneArchives.logger.info("Unable to write colour values on the client. Whoops!");
+    }
+  }
 
-	public static void generate () {
-		RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
-		IResourceManager manager = Minecraft.getMinecraft().getResourceManager();
+  public static void generate() {
+    RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
+    IResourceManager manager = Minecraft.getMinecraft().getResourceManager();
 
-		for (ItemStack toDuplicate : DuplicationUtils.getOresToDuplicate()) {
-			ItemStack result = FurnaceRecipes.instance().getSmeltingResult(toDuplicate);
-			int packed = RecipeItemHelper.pack(result);
-			IBakedModel model = renderItem.getItemModelWithOverrides(result, null, null);
-			BakedQuad quad = null;
-			for (BakedQuad q : model.getQuads(null, null, 0)) {
-				if (q.getFace() == EnumFacing.SOUTH) {
-					quad = q;
-					break;
-				}
-			}
-			if (quad == null) {
-				continue;
-			}
-			TextureAtlasSprite sprite = quad.getSprite();
-			String[] split = sprite.getIconName().split(":");
-			String resource = "textures/" + split[1] + ".png";
-			ResourceLocation rl = new ResourceLocation(split[0], resource);
+    for (ItemStack toDuplicate : DuplicationUtils.getOresToDuplicate()) {
+      ItemStack result = FurnaceRecipes.instance().getSmeltingResult(toDuplicate);
+      int packed = RecipeItemHelper.pack(result);
+      IBakedModel model = renderItem.getItemModelWithOverrides(result, null, null);
+      BakedQuad quad = null;
+      for (BakedQuad q : model.getQuads(null, null, 0)) {
+        if (q.getFace() == EnumFacing.SOUTH) {
+          quad = q;
+          break;
+        }
+      }
+      if (quad == null) {
+        continue;
+      }
+      TextureAtlasSprite sprite = quad.getSprite();
+      String[] split = sprite.getIconName().split(":");
+      String resource = "textures/" + split[1] + ".png";
+      ResourceLocation rl = new ResourceLocation(split[0], resource);
 
-			BufferedImage image;
-			InputStream stream;
-			try {
-				stream = manager.getResource(rl).getInputStream();
-			} catch (IOException ignored) {
-				continue;
-			}
+      BufferedImage image;
+      InputStream stream;
+      try {
+        stream = manager.getResource(rl).getInputStream();
+      } catch (IOException ignored) {
+        continue;
+      }
 
-			try {
-				image = ImageIO.read(stream);
-			} catch (IOException e) {
-				continue;
-			}
+      try {
+        image = ImageIO.read(stream);
+      } catch (IOException e) {
+        continue;
+      }
 
-			WritableRaster raster = image.getRaster();
+      WritableRaster raster = image.getRaster();
 
-			IntArrayList reds = new IntArrayList();
-			IntArrayList greens = new IntArrayList();
-			IntArrayList blues = new IntArrayList();
+      IntArrayList reds = new IntArrayList();
+      IntArrayList greens = new IntArrayList();
+      IntArrayList blues = new IntArrayList();
 
-			int[] temp;
+      int[] temp;
 
-			// TODO: Determine polling pixels based on image size
-			outer: for (int x = 6; x <= 9; x++) {
-				for (int y = 6; y <= 9; y++) {
-					try {
-						temp = raster.getPixel(x, y, (int[]) null);
-					} catch (ArrayIndexOutOfBoundsException ignored) {
-						ArcaneArchives.logger.error("Unable to parse " + rl.toString() + " as index " + x + "," + y + " is out of bounds.");
-						continue outer;
-					}
-					if (temp.length != 3) {
-						ArcaneArchives.logger.error("Unable to parse " + rl.toString() + " as index " + x + "," + y + " contains no colour information.");
-						if (temp.length >= 1) {
-							ArcaneArchives.logger.error("Only available pixel information for " + x + "," + y + " is " + temp[0]);
-						}
-						continue outer;
-					}
-					reds.add(temp[0]);
-					greens.add(temp[1]);
-					blues.add(temp[2]);
-				}
-			}
+      // TODO: Determine polling pixels based on image size
+      outer:
+      for (int x = 6; x <= 9; x++) {
+        for (int y = 6; y <= 9; y++) {
+          try {
+            temp = raster.getPixel(x, y, (int[]) null);
+          } catch (ArrayIndexOutOfBoundsException ignored) {
+            ArcaneArchives.logger.error("Unable to parse " + rl.toString() + " as index " + x + "," + y + " is out of bounds.");
+            continue outer;
+          }
+          if (temp.length != 3) {
+            ArcaneArchives.logger.error("Unable to parse " + rl.toString() + " as index " + x + "," + y + " contains no colour information.");
+            if (temp.length >= 1) {
+              ArcaneArchives.logger.error("Only available pixel information for " + x + "," + y + " is " + temp[0]);
+            }
+            continue outer;
+          }
+          reds.add(temp[0]);
+          greens.add(temp[1]);
+          blues.add(temp[2]);
+        }
+      }
 
-			if (reds.size() == 0 || greens.size() == 0 || blues.size() == 0) {
-				continue;
-			}
+      if (reds.size() == 0 || greens.size() == 0 || blues.size() == 0) {
+        continue;
+      }
 
-			int red = reds.stream().mapToInt(o -> o).sum() / reds.size();
-			int green = greens.stream().mapToInt(o -> o).sum() / greens.size();
-			int blue = blues.stream().mapToInt(o -> o).sum() / blues.size();
+      int red = reds.stream().mapToInt(o -> o).sum() / reds.size();
+      int green = greens.stream().mapToInt(o -> o).sum() / greens.size();
+      int blue = blues.stream().mapToInt(o -> o).sum() / blues.size();
 
-			Color c = new Color(red, green, blue, 255);
-			CACHE.put(packed, c.toInteger());
-		}
-	}
+      Color c = new Color(red, green, blue, 255);
+      CACHE.put(packed, c.toInteger());
+    }
+  }
 }

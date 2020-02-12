@@ -1,6 +1,6 @@
 /*package com.aranaira.arcanearchives.network;
 
-import com.aranaira.arcanearchives.api.IGCTRecipe;
+import com.aranaira.arcanearchives.api.gct.IGCTRecipe;
 import com.aranaira.arcanearchives.inventory.ContainerGemCuttersTable;
 import com.aranaira.arcanearchives.network.Handlers.ClientHandler;
 import com.aranaira.arcanearchives.network.Handlers.ServerHandler;

@@ -21,9 +21,9 @@ import java.util.stream.Collectors;
 
 public class InventoryRoutingUtils {
 	*//*
-	 * Returns whether or not this inventory can *probably* contain an item. NBT checking
-	 * is not performed at this stage.
-	 *//*
+ * Returns whether or not this inventory can *probably* contain an item. NBT checking
+ * is not performed at this stage.
+ *//*
 	public static int calculateWeight (IBrazierRouting inventory, ItemStack stack) {
 		Int2IntOpenHashMap packedMap = inventory.getOrCalculateReference();
 		BrazierRoutingType type = inventory.getRoutingType();
@@ -110,10 +110,10 @@ public class InventoryRoutingUtils {
 	}
 
 	*//**
-	 * @param brazier The TileEntity of the brazier currently requesting information.
-	 * @param inputs
-	 * @return
-	 *//*
+ * @param brazier The TileEntity of the brazier currently requesting information.
+ * @param inputs
+ * @return
+ *//*
 	public static List<ItemStack> tryInsertItems (BrazierTileEntity brazier, ItemStack reference, List<ItemStack> inputs, boolean simulate) {
 		// Considered the cached value in the brazier
 		ItemCache cached = brazier.getCachedEntry(reference);

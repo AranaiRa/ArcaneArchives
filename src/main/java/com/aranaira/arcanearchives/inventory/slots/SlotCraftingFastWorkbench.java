@@ -54,7 +54,7 @@ public class SlotCraftingFastWorkbench extends SlotCrafting {
 	public ItemStack onTake (EntityPlayer thePlayer, ItemStack stack) {
 		this.onCrafting(stack);
 		net.minecraftforge.common.ForgeHooks.setCraftingPlayer(thePlayer);
-		NonNullList<ItemStack> nonnulllist = containerCraftingStation.getRemainingItems();
+		NonNullList<ItemStack> nonnulllist = containerCraftingStation.getRemainingIngredients();
 		net.minecraftforge.common.ForgeHooks.setCraftingPlayer(null);
 
 		craftMatrixPersistent.setDoNotCallUpdates(true);

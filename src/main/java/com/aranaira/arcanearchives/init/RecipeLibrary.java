@@ -1,15 +1,15 @@
 /*package com.aranaira.arcanearchives.init;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.api.GCTRecipeEvent;
-import com.aranaira.arcanearchives.api.IGCTRecipe;
+import com.aranaira.arcanearchives.api.gct.GCTRecipeEvent;
+import com.aranaira.arcanearchives.api.gct.IGCTRecipe;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.data.types.ClientNetwork;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.HiveSaveData;
 import com.aranaira.arcanearchives.data.HiveSaveData.Hive;
 import com.aranaira.arcanearchives.integration.astralsorcery.Liquefaction;
-import com.aranaira.arcanearchives.recipe.IngredientStack;
+import com.aranaira.arcanearchives.api.IngredientStack;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;

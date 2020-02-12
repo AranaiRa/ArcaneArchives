@@ -28,49 +28,49 @@ import java.util.List;
 import java.util.Random;
 
 public class QuartzSliver extends HorizontalTemplateBlock {
-	public static final String name = "quartz_sliver";
+  public static final String name = "quartz_sliver";
 
-	public QuartzSliver () {
-		super(Material.GLASS);
-		setLightLevel(16 / 16f);
-		setHardness(0.0f);
-		setTickRandomly(true);
-		setDefaultState(this.getDefaultState().withProperty(getFacingProperty(), EnumFacing.DOWN));
-	}
+  public QuartzSliver() {
+    super(Material.GLASS);
+    setLightLevel(16 / 16f);
+    setHardness(0.0f);
+    setTickRandomly(true);
+    setDefaultState(this.getDefaultState().withProperty(getFacingProperty(), EnumFacing.DOWN));
+  }
 
-	@Override
-	public boolean canPlaceTorchOnTop (IBlockState state, IBlockAccess world, BlockPos pos) {
-		return false;
-	}
+  @Override
+  public boolean canPlaceTorchOnTop(IBlockState state, IBlockAccess world, BlockPos pos) {
+    return false;
+  }
 
-	@Override
-	public Item getItemDropped (IBlockState state, Random rand, int fortune) {
-		return getItemBlock();
-	}
+  @Override
+  public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+    return getItemBlock();
+  }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.quartz_sliver"));
-	}
+  @Override
+  @SideOnly(Side.CLIENT)
+  public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+    tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.quartz_sliver"));
+  }
 
-	@Override
-	@SuppressWarnings("deprecation")
-	public IBlockState withRotation (IBlockState state, Rotation rot) {
-		return state.withProperty(getFacingProperty(), rot.rotate(state.getValue(getFacingProperty())));
-	}
+  @Override
+  @SuppressWarnings("deprecation")
+  public IBlockState withRotation(IBlockState state, Rotation rot) {
+    return state.withProperty(getFacingProperty(), rot.rotate(state.getValue(getFacingProperty())));
+  }
 
-	@Override
-	@SuppressWarnings("deprecation")
-	public IBlockState withMirror (IBlockState state, Mirror mirrorIn) {
-		return state.withProperty(getFacingProperty(), mirrorIn.mirror(state.getValue(getFacingProperty())));
-	}
+  @Override
+  @SuppressWarnings("deprecation")
+  public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
+    return state.withProperty(getFacingProperty(), mirrorIn.mirror(state.getValue(getFacingProperty())));
+  }
 
-	@Override
-	@SuppressWarnings("deprecation")
-	public boolean isFullCube (IBlockState state) {
-		return false;
-	}
+  @Override
+  @SuppressWarnings("deprecation")
+  public boolean isFullCube(IBlockState state) {
+    return false;
+  }
 
 	/*@Override
 	public void onNeighborChange (IBlockAccess world, BlockPos pos, BlockPos neighbor) {
@@ -82,62 +82,62 @@ public class QuartzSliver extends HorizontalTemplateBlock {
 		}
 	}*/
 
-	@Override
-	@Nonnull
-	@SuppressWarnings("deprecation")
-	public AxisAlignedBB getBoundingBox (IBlockState state, IBlockAccess source, BlockPos pos) {
-		EnumFacing facing = state.getValue(getFacingProperty());
-		if (facing == EnumFacing.UP) {
-			return new AxisAlignedBB(0.4, 0.0, 0.4, 0.6, 0.5, 0.6);
-		} else if (facing == EnumFacing.DOWN) {
-			return new AxisAlignedBB(0.4, 0.5, 0.4, 0.6, 1.0, 0.6);
-		} else if (facing == EnumFacing.SOUTH) {
-			return new AxisAlignedBB(0.4, 0.4, 0.0, 0.6, 0.6, 0.5);
-		} else if (facing == EnumFacing.NORTH) {
-			return new AxisAlignedBB(0.4, 0.4, 0.5, 0.6, 0.6, 1.0);
-		} else if (facing == EnumFacing.EAST) {
-			return new AxisAlignedBB(0.0, 0.4, 0.4, 0.5, 0.6, 0.6);
-		} else {
-			return new AxisAlignedBB(0.5, 0.4, 0.4, 1.0, 0.6, 0.6);
-		}
-	}
+  @Override
+  @Nonnull
+  @SuppressWarnings("deprecation")
+  public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+    EnumFacing facing = state.getValue(getFacingProperty());
+    if (facing == EnumFacing.UP) {
+      return new AxisAlignedBB(0.4, 0.0, 0.4, 0.6, 0.5, 0.6);
+    } else if (facing == EnumFacing.DOWN) {
+      return new AxisAlignedBB(0.4, 0.5, 0.4, 0.6, 1.0, 0.6);
+    } else if (facing == EnumFacing.SOUTH) {
+      return new AxisAlignedBB(0.4, 0.4, 0.0, 0.6, 0.6, 0.5);
+    } else if (facing == EnumFacing.NORTH) {
+      return new AxisAlignedBB(0.4, 0.4, 0.5, 0.6, 0.6, 1.0);
+    } else if (facing == EnumFacing.EAST) {
+      return new AxisAlignedBB(0.0, 0.4, 0.4, 0.5, 0.6, 0.6);
+    } else {
+      return new AxisAlignedBB(0.5, 0.4, 0.4, 1.0, 0.6, 0.6);
+    }
+  }
 
-	@Override
-	@SuppressWarnings("deprecation")
-	public BlockFaceShape getBlockFaceShape (IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
-		return BlockFaceShape.UNDEFINED;
-	}
+  @Override
+  @SuppressWarnings("deprecation")
+  public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+    return BlockFaceShape.UNDEFINED;
+  }
 
-	@Nullable
-	@Override
-	@SuppressWarnings("deprecation")
-	public AxisAlignedBB getCollisionBoundingBox (IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
-		return NULL_AABB;
-	}
+  @Nullable
+  @Override
+  @SuppressWarnings("deprecation")
+  public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
+    return NULL_AABB;
+  }
 
-	@Override
-	@SuppressWarnings("deprecation")
-	public boolean isOpaqueCube (IBlockState state) {
-		return false;
-	}
+  @Override
+  @SuppressWarnings("deprecation")
+  public boolean isOpaqueCube(IBlockState state) {
+    return false;
+  }
 
-	@Override
-	public IBlockState getStateForPlacement (World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-		return this.getDefaultState().withProperty(getFacingProperty(), facing);
-	}
+  @Override
+  public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
+    return this.getDefaultState().withProperty(getFacingProperty(), facing);
+  }
 
-	@Override
-	public int getMetaFromState (IBlockState state) {
-		return state.getValue(getFacingProperty()).getIndex();
-	}
+  @Override
+  public int getMetaFromState(IBlockState state) {
+    return state.getValue(getFacingProperty()).getIndex();
+  }
 
-	@Override
-	public IBlockState getStateFromMeta (int meta) {
-		return getDefaultState().withProperty(getFacingProperty(), EnumFacing.byIndex(meta));
-	}
+  @Override
+  public IBlockState getStateFromMeta(int meta) {
+    return getDefaultState().withProperty(getFacingProperty(), EnumFacing.byIndex(meta));
+  }
 
-	@Override
-	protected BlockStateContainer createBlockState () {
-		return new BlockStateContainer(this, getFacingProperty());
-	}
+  @Override
+  protected BlockStateContainer createBlockState() {
+    return new BlockStateContainer(this, getFacingProperty());
+  }
 }

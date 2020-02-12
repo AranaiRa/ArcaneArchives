@@ -19,20 +19,20 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class ScepterRevelationItem extends Item {
-	public static final String NAME = "scepter_revelation";
+  public static final String NAME = "scepter_revelation";
 
-	public ScepterRevelationItem () {
-		super();
-		setMaxStackSize(1);
-	}
+  public ScepterRevelationItem() {
+    super();
+    setMaxStackSize(1);
+  }
 
-	@Override
-	public boolean doesSneakBypassUse (ItemStack stack, IBlockAccess world, BlockPos pos, EntityPlayer player) {
-		return true;
-	}
+  @Override
+  public boolean doesSneakBypassUse(ItemStack stack, IBlockAccess world, BlockPos pos, EntityPlayer player) {
+    return true;
+  }
 
-	@Override
-	public EnumActionResult onItemUseFirst (EntityPlayer player, World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, EnumHand hand) {
+  @Override
+  public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, EnumHand hand) {
 /*
 
 		if (hand != EnumHand.MAIN_HAND) {
@@ -164,12 +164,12 @@ public class ScepterRevelationItem extends Item {
 		}
 */
 
-		return EnumActionResult.SUCCESS;
-	}
+    return EnumActionResult.SUCCESS;
+  }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.scepter_revelation"));
-	}
+  @Override
+  @SideOnly(Side.CLIENT)
+  public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+    tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.scepter_revelation"));
+  }
 }

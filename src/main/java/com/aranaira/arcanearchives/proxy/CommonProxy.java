@@ -15,66 +15,66 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class CommonProxy {
-	public void preInit (FMLPreInitializationEvent event) {
-		ArcaneArchives.logger = event.getModLog();
-		/*		NetworkRegistry.INSTANCE.registerGuiHandler(ArcaneArchives.instance, new AAGuiHandler());*/
+  public void preInit(FMLPreInitializationEvent event) {
+    ArcaneArchives.logger = event.getModLog();
+    /*		NetworkRegistry.INSTANCE.registerGuiHandler(ArcaneArchives.instance, new AAGuiHandler());*/
 
 /*		BlockRegistry.init();
 		ItemRegistry.init();
 
 		Networking.registerPackets();*/
-		EntityRegistry.registerModEntity(new ResourceLocation(ArcaneArchives.MODID, "weight"), EntityWeight.class, "weight", 0, ArcaneArchives.instance, 64, 10, false);
-	}
+    EntityRegistry.registerModEntity(new ResourceLocation(ArcaneArchives.MODID, "weight"), EntityWeight.class, "weight", 0, ArcaneArchives.instance, 64, 10, false);
+  }
 
-	public void init (FMLInitializationEvent event) {
+  public void init(FMLInitializationEvent event) {
 /*		RecipeLibrary.buildRecipes();
 		BlockRegistry.registerTileEntities();
 		CraftingTweaks.init();
 
 		FMLInterModComms.sendFunctionMessage("theoneprobe", "getTheOneProbe", "com.aranaira.arcanearchives.integration.top.TOPPlugin");*/
-	}
+  }
 
-	public void postInit (FMLPostInitializationEvent event) {
-	}
+  public void postInit(FMLPostInitializationEvent event) {
+  }
 
-	public void registerItemRenderer (Item item, int meta, String id) {
-	}
+  public void registerItemRenderer(Item item, int meta, String id) {
+  }
 
-	public void registerBlockRenderer (Block block, int meta, String id) {
-	}
+  public void registerBlockRenderer(Block block, int meta, String id) {
+  }
 
-	public void serverStarting (FMLServerStartingEvent event) {
+  public void serverStarting(FMLServerStartingEvent event) {
 /*		event.registerServerCommand(new CommandHive());
 		event.registerServerCommand(new CommandBrazier());
 		event.registerServerCommand(new CommandCopy());
 		event.registerServerCommand(new CommandTiles());
 		event.registerServerCommand(new CommandImmanence());
 		event.registerServerCommand(new CommandRebuild());*/
-	}
+  }
 
-	public void serverStarted (FMLServerStartedEvent event) {
-		/*		DataHelper.clearClientCache(); // has no effect on the server*/
-	}
+  public void serverStarted(FMLServerStartedEvent event) {
+    /*		DataHelper.clearClientCache(); // has no effect on the server*/
+  }
 
-	public void loadComplete (FMLLoadCompleteEvent event) {
-		// Ensure Bookshelf has an ore dictionary entry
-		OreDictionary.registerOre("bookshelf", Blocks.BOOKSHELF);
-		// And set up the duplication tables
-		DuplicationUtils.init();
-	}
+  public void loadComplete(FMLLoadCompleteEvent event) {
+    // Ensure Bookshelf has an ore dictionary entry
+    OreDictionary.registerOre("bookshelf", Blocks.BOOKSHELF);
+    // And set up the duplication tables
+    DuplicationUtils.init();
+  }
 
-	public void scheduleTask (Runnable runnable, Side side) {
-		scheduleTask(runnable, 0, side);
-	}
+  public void scheduleTask(Runnable runnable, Side side) {
+    scheduleTask(runnable, 0, side);
+  }
 
-	public void scheduleTask (Runnable runnable, int delay, Side side) {
-		switch (side) {
-			case CLIENT:
-				ClientTickHandler.addRunnable(runnable, delay);
-				break;
-			case SERVER:
-				FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(runnable);
-				break;
-		}
-	}
+  public void scheduleTask(Runnable runnable, int delay, Side side) {
+    switch (side) {
+      case CLIENT:
+        ClientTickHandler.addRunnable(runnable, delay);
+        break;
+      case SERVER:
+        FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(runnable);
+        break;
+    }
+  }
 }

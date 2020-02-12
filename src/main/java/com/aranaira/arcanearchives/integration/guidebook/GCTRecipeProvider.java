@@ -1,8 +1,8 @@
 /*package com.aranaira.arcanearchives.integration.guidebook;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.api.IGCTRecipe;
-import com.aranaira.arcanearchives.recipe.IngredientStack;
+import com.aranaira.arcanearchives.api.gct.IGCTRecipe;
+import com.aranaira.arcanearchives.api.IngredientStack;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipeList;
 import gigaherz.lirelent.guidebook.guidebook.drawing.VisualElement;
 import gigaherz.lirelent.guidebook.guidebook.elements.ElementImage;

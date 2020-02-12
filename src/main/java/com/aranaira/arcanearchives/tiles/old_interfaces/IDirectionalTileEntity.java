@@ -8,13 +8,13 @@ import net.minecraft.world.World;
 
 public interface IDirectionalTileEntity {
 	*//**
-	 * @return The current facing of the block associated with this TileEntity.
-	 * Theoretically there are issues with the presumption that all BlockTemplates
-	 * are also BlockDirectionalTemplates; few are.
-	 * <p>
-	 * The default value for this function is EnumFacing.WEST; this may change in
-	 * the future.
-	 *//*
+ * @return The current facing of the block associated with this TileEntity.
+ * Theoretically there are issues with the presumption that all BlockTemplates
+ * are also BlockDirectionalTemplates; few are.
+ * <p>
+ * The default value for this function is EnumFacing.WEST; this may change in
+ * the future.
+ *//*
 	default EnumFacing getFacing () {
 		IBlockState state = getWorld().getBlockState(getPos());
 		if (state.getBlock() instanceof TemplateBlock) {

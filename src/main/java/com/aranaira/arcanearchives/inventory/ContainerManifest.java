@@ -134,10 +134,10 @@ public class ContainerManifest extends Container implements IScrollableContainer
 	}
 
 	*//**
-	 * Ensure this container has at least this many {@link net.minecraft.inventory.Slot}s
-	 *
-	 * @param capacity capacity to ensure
-	 *//*
+ * Ensure this container has at least this many {@link net.minecraft.inventory.Slot}s
+ *
+ * @param capacity capacity to ensure
+ *//*
 	public void ensureCapacity (int capacity) {
 		if (capacity > this.inventorySlots.size()) {
 			// ceiling on number of rows we need - the NUM_CELLS displayed rows times the grid spacing

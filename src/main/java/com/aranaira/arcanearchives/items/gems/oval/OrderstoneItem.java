@@ -61,8 +61,16 @@ public class OrderstoneItem extends ArcaneGemItem {
 			if (handler.getHeld() != null && GemUtil.getCharge(handler.getHeld()) > 0) {
 				int chargeCost = 0;
 				*//**
-				 * Gravel -> Cobblestone -> Stone
-				 *//*
+ * Gravel -> Cobblestone -> Stone
+ * <p>
+ * Sand -> Coarse Dirt -> Dirt -> Mycelium -> Podzol -> Grass
+ * <p>
+ * Cracked/Mossy Bricks -> Stone bricks
+ * <p>
+ * Anvils
+ * <p>
+ * Furnace -> Lit Furnace
+ *//*
 				if (block == Blocks.GRAVEL) {
 					world.setBlockState(pos, Blocks.COBBLESTONE.getDefaultState(), 0);
 					chargeCost = 1;
@@ -74,8 +82,8 @@ public class OrderstoneItem extends ArcaneGemItem {
 					chargeCost = 1;
 				}
 				*//**
-				 * Sand -> Coarse Dirt -> Dirt -> Mycelium -> Podzol -> Grass
-				 *//*
+ * Sand -> Coarse Dirt -> Dirt -> Mycelium -> Podzol -> Grass
+ *//*
 				else if (block == Blocks.SAND) {
 					world.setBlockState(pos, Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.COARSE_DIRT), 0);
 					chargeCost = 1;
@@ -99,8 +107,8 @@ public class OrderstoneItem extends ArcaneGemItem {
 					chargeCost = 1;
 				}
 				*//**
-				 * Cracked/Mossy Bricks -> Stone bricks
-				 *//*
+ * Cracked/Mossy Bricks -> Stone bricks
+ *//*
 				else if (block == Blocks.STONEBRICK) {
 					IBlockState state = world.getBlockState(pos);
 					BlockStoneBrick.EnumType variant = state.getValue(BlockStoneBrick.VARIANT);
@@ -113,8 +121,8 @@ public class OrderstoneItem extends ArcaneGemItem {
 					}
 				}
 				*//**
-				 * Anvils
-				 *//*
+ * Anvils
+ *//*
 				else if (block == Blocks.ANVIL) {
 					IBlockState state = world.getBlockState(pos);
 					int damage = state.getValue(BlockAnvil.DAMAGE);
@@ -125,8 +133,8 @@ public class OrderstoneItem extends ArcaneGemItem {
 					}
 				}
 				*//**
-				 * Furnace -> Lit Furnace
-				 *//*
+ * Furnace -> Lit Furnace
+ *//*
 				else if (block == Blocks.FURNACE) {
 					IBlockState oldState = world.getBlockState(pos);
 					IBlockState newState = Blocks.LIT_FURNACE.getDefaultState();

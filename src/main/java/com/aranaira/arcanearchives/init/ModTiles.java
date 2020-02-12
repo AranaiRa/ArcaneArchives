@@ -15,29 +15,29 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-@Mod.EventBusSubscriber(modid=ArcaneArchives.MODID)
+@Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class ModTiles {
-	public static final Map<ResourceLocation, Class<? extends TileEntity>> REGISTRY = new HashMap<>();
+  public static final Map<ResourceLocation, Class<? extends TileEntity>> REGISTRY = new HashMap<>();
 
-	@SubscribeEvent
-	public static void onRegister (Register<Block> event) {
-		REGISTRY.forEach((key, value) -> GameRegistry.registerTileEntity(value, key));
-	}
+  @SubscribeEvent
+  public static void onRegister(Register<Block> event) {
+    REGISTRY.forEach((key, value) -> GameRegistry.registerTileEntity(value, key));
+  }
 
-	static {
-		register("crystal_workbench", () -> CrystalWorkbenchTile.class);
-		register("makeshift_resonator", () -> MakeshiftResonatorTile.class);
-	}
+  static {
+    register("crystal_workbench", () -> CrystalWorkbenchTile.class);
+    register("makeshift_resonator", () -> MakeshiftResonatorTile.class);
+  }
 
-	public static <T extends TileEntity> void register (String registryName, Supplier<Class<? extends T>> supplier) {
-		Class<? extends T> tile = supplier.get();
-		ResourceLocation rl = new ResourceLocation(ArcaneArchives.MODID, registryName);
-		if (REGISTRY.containsKey(rl)) {
-			throw new IllegalStateException("Key " + rl.toString() + " already contained in TileEntity registration queue.");
-		}
-		REGISTRY.put(rl, tile);
-	}
+  public static <T extends TileEntity> void register(String registryName, Supplier<Class<? extends T>> supplier) {
+    Class<? extends T> tile = supplier.get();
+    ResourceLocation rl = new ResourceLocation(ArcaneArchives.MODID, registryName);
+    if (REGISTRY.containsKey(rl)) {
+      throw new IllegalStateException("Key " + rl.toString() + " already contained in TileEntity registration queue.");
+    }
+    REGISTRY.put(rl, tile);
+  }
 
-	public static void load () {
-	}
+  public static void load() {
+  }
 }

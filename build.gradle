@@ -98,6 +98,8 @@ dependencies {
         exclude group: 'mezz.jei'
     }
 
+    compileOnly "vazkii.patchouli:Patchouli:${patchouli_version}"
+
     shade("org.spongepowered:mixin:0.7.11-SNAPSHOT") {
         transitive = false
     }

@@ -34,14 +34,14 @@ public class ClientProxy extends CommonProxy {
 	@SideOnly(Side.CLIENT)
 	public static BrazierTESR brazierTESR;*/
 
-	@SubscribeEvent
-	public static void playerLoggedIn (PlayerEvent.PlayerLoggedInEvent event) {
-		/*		DataHelper.clearClientCache();*/
-	}
+  @SubscribeEvent
+  public static void playerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+    /*		DataHelper.clearClientCache();*/
+  }
 
-	@SubscribeEvent
-	@SideOnly(Side.CLIENT)
-	public static void modelRegister (ModelRegistryEvent event) {
+  @SubscribeEvent
+  @SideOnly(Side.CLIENT)
+  public static void modelRegister(ModelRegistryEvent event) {
 /*		tankTESR = new RadiantTankTESR();
 		ClientRegistry.bindTileEntitySpecialRenderer(RadiantTankTileEntity.class, tankTESR);
 		//
@@ -59,21 +59,21 @@ public class ClientProxy extends CommonProxy {
 		//
 		brazierTESR = new BrazierTESR();
 		ClientRegistry.bindTileEntitySpecialRenderer(BrazierTileEntity.class, brazierTESR);*/
-	}
+  }
 
-	@Override
-	public void preInit (FMLPreInitializationEvent event) {
-		super.preInit(event);
-		OBJLoader.INSTANCE.addDomain(ArcaneArchives.MODID);
-		IconUtil.instance.init();
+  @Override
+  public void preInit(FMLPreInitializationEvent event) {
+    super.preInit(event);
+    OBJLoader.INSTANCE.addDomain(ArcaneArchives.MODID);
+    IconUtil.instance.init();
 
-		Keybinds.initKeybinds();
-		RenderingRegistry.registerEntityRenderingHandler(EntityWeight.class, RenderWeight::new);
-	}
+    Keybinds.initKeybinds();
+    RenderingRegistry.registerEntityRenderingHandler(EntityWeight.class, RenderWeight::new);
+  }
 
-	@Override
-	public void init (FMLInitializationEvent event) {
-		super.init(event);
+  @Override
+  public void init(FMLInitializationEvent event) {
+    super.init(event);
 
 /*		ItemColors colours = Minecraft.getMinecraft().getItemColors();
 
@@ -96,15 +96,15 @@ public class ClientProxy extends CommonProxy {
 
 			return TintUtils.getColor(contained);
 		}, ItemRegistry.ECHO);*/
-	}
+  }
 
-	@Override
-	public void loadComplete (FMLLoadCompleteEvent event) {
-		super.loadComplete(event);
-		//TintUtils.init();
-	}
+  @Override
+  public void loadComplete(FMLLoadCompleteEvent event) {
+    super.loadComplete(event);
+    //TintUtils.init();
+  }
 
-	@Override
-	public void registerItemRenderer (@Nonnull Item item, int meta, String id) {
-	}
+  @Override
+  public void registerItemRenderer(@Nonnull Item item, int meta, String id) {
+  }
 }

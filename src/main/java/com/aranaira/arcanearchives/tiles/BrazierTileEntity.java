@@ -232,7 +232,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 			doShulkerThing = true;
 		}*//*
 
-		*//*if (cap != null) {
+ *//*if (cap != null) {
 			for (int i = 0; i < cap.getSlots(); i++) {
 				ItemStack inSlot = cap.getStackInSlot(i);
 				int count = inSlot.getCount();
@@ -250,7 +250,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 				item.setTagCompound(tag);
 				remainder.add(item);
 			}*//*
-		*//*} else {*//*
+ *//*} else {*//*
 
 		if (!doubleClick) {
 			playerToStackMap.put(player, item.copy());

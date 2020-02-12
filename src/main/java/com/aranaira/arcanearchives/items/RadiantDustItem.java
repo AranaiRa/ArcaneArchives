@@ -12,12 +12,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.List;
 
 public class RadiantDustItem extends Item {
-	public RadiantDustItem () {
-	}
+  public RadiantDustItem() {
+  }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.radiant_dust"));
-	}
+  @Override
+  @SideOnly(Side.CLIENT)
+  public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+    tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.radiant_dust"));
+  }
 }

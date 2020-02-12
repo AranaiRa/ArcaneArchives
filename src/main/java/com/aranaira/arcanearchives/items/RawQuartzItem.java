@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.items;
 
-import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,25 +15,23 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
 
-
 public class RawQuartzItem extends Item {
-	public static final String NAME = "raw_quartz";
+  public static final String NAME = "raw_quartz";
 
-	public RawQuartzItem () {
-	}
+  public RawQuartzItem() {
+  }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.raw_quartz"));
-	}
+  @Override
+  @SideOnly(Side.CLIENT)
+  public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+    tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.raw_quartz"));
+  }
 
-	@Override
-	public EnumActionResult onItemUseFirst (EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
+  @Override
+  public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
 /*		if (!player.isSneaking()) {
 			return EnumActionResult.PASS;
 		}
@@ -98,6 +95,6 @@ public class RawQuartzItem extends Item {
 			}
 		}*/
 
-		return EnumActionResult.SUCCESS;
-	}
+    return EnumActionResult.SUCCESS;
+  }
 }
