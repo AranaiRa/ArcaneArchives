@@ -1,0 +1,66 @@
+{
+    "name": "Crystal Workbench",
+    "icon": "arcanearchives:gemcutters_table",
+    "category": "tier0",
+    "sortnum": "2",
+    "pages": [
+      {
+        "type": "spotlight",
+        "item": "arcanearchives:gemcutters_table",
+        "text": "TBD"
+      },
+      {
+        "type": "empty"
+      },
+      {
+        "title": "Reading the Interface",
+        "type": "image",
+        "border": true,
+        "images": ["arcanearchives:textures/gui/patchouli/guiex/crystalWorkbench_01.png"]
+      },
+      {
+        "type": "text",
+        "title": "Output",
+        "text": "This slot indicates the currently selected recipe's output.$(br2)Clicking crafts one object using items in either the drawer or the player's inventory.$(br2)Shift clicking will craft up to 64 of the selected item, depending on the number of ingredients available."
+      },
+      {
+        "title": "Reading the Interface",
+        "type": "image",
+        "images": ["arcanearchives:textures/gui/patchouli/guiex/crystalWorkbench_02.png"],
+        "border": true
+      },
+      {
+        "type": "text",
+        "title": "Recipe Selector",
+        "text": "These slots list all possible Crystal Workbench recipes. Use the gold arrows to change pages.$(br2)If you hover over a recipe, you'll see a tooltip that lists all of the necessary ingredients."
+      },
+      {
+        "title": "Reading the Interface",
+        "type": "image",
+        "images": ["arcanearchives:textures/gui/patchouli/guiex/crystalWorkbench_03.png"],
+        "border": true
+      },
+      {
+        "type": "text",
+        "title": "Ingredient Drawer",
+        "text": "These slots are extra storage for recipe components. When you craft an item on the Crystal Workbench, ingredients stored in the drawer are consumed first.$(br2)Braziers of Hoarding will refill slots in the drawer, but only up to one stack."
+      },
+      {
+        "title": "Reading the Interface",
+        "type": "image",
+        "images": ["arcanearchives:textures/gui/patchouli/guiex/crystalWorkbench_04.png"],
+        "border": true
+      },
+      {
+        "type": "text",
+        "title": "Player Inventory",
+        "text": "These slots are your inventory."
+      },
+      {
+        "type": "relations",
+        "entries": [
+          "tier1/raw_quartz"
+        ]
+      }
+    ]
+  }
