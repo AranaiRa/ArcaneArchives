@@ -5,30 +5,43 @@ import net.minecraft.util.ResourceLocation;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public interface ICrystalWorkbenchRegistry<V extends ICrystalWorkbenchRecipe> {
-  void register(V value);
+public interface ICrystalWorkbenchRegistry {
+  void register(CrystalWorkbenchRecipe value);
 
-  void registerAll(@SuppressWarnings("unchecked") V... values);
+  void registerAll(@SuppressWarnings("unchecked") CrystalWorkbenchRecipe... values);
+
+  void registerAll(List<CrystalWorkbenchRecipe> values);
 
   boolean containsKey(ResourceLocation key);
 
-  boolean containsValue(V value);
+  boolean containsValue(CrystalWorkbenchRecipe value);
 
   @Nullable
-  V getValue(ResourceLocation key);
+  CrystalWorkbenchRecipe getValue(ResourceLocation key);
 
   @Nullable
-  ResourceLocation getKey(V value);
+  ResourceLocation getKey(CrystalWorkbenchRecipe value);
+
+  int getIndex (CrystalWorkbenchRecipe value);
+
+  int getIndex (ResourceLocation key);
+
+  @Nullable
+  CrystalWorkbenchRecipe getValueByIndex (int index);
+
+  @Nullable
+  CrystalWorkbenchRecipe find (WorkbenchCrafting crafting);
 
   @Nonnull
   Set<ResourceLocation> getKeys();
 
   @Nonnull
-  Collection<V> getValues();
+  Collection<CrystalWorkbenchRecipe> getValues();
 
   @Nonnull
-  Set<Map.Entry<ResourceLocation, V>> getEntries();
+  Set<Map.Entry<ResourceLocation, CrystalWorkbenchRecipe>> getEntries();
 }

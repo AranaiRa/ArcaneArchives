@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.inventory.handlers;
+package com.aranaira.arcanearchives.inventories;
 
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;

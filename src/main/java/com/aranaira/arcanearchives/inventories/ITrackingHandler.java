@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.inventory.handlers;
+package com.aranaira.arcanearchives.inventories;
 
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.client.util.RecipeItemHelper;

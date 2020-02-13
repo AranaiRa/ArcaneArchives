@@ -1,71 +1,76 @@
 /*package com.aranaira.arcanearchives.types.iterators;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 // This remains as a testament to my inability to function properly
 // Yes, addAll is a thing.
 public class ListConcatIterable<T> implements Iterable<T> {
-	private List<List<T>> lists;
-	private Iterator<List<T>> listIterator;
-	private List<T> entry = null;
-	private Iterator<T> iterator = null;
+  private List<Iterator<T>> iterators;
 
-	public ListConcatIterable (Collection<List<T>> lists) {
-		this.lists = lists.stream().filter(t -> !t.isEmpty()).collect(Collectors.toList());
-		this.listIterator = this.lists.iterator();
-		if (this.listIterator.hasNext()) {
-			this.entry = this.listIterator.next();
-			this.iterator = this.entry.iterator();
-		}
-	}
+  public ListConcatIterable(Collection<List<T>> lists) {
+    this.iterators = lists.stream().map(List::iterator).collect(Collectors.toList());
+  }
 
-	@Override
-	public Iterator<T> iterator () {
-		return new ListConcatIterator();
-	}
+  @SuppressWarnings("unchecked")
+  @Override
+  public Iterator<T> iterator() {
+    if (iterators.isEmpty()) {
+      return (Iterator<T>) Collections.emptyList().iterator();
+    }
 
-	private void nextIterator () {
-		if (this.listIterator.hasNext()) {
-			this.entry = this.listIterator.next();
-			this.iterator = this.entry.iterator();
-		} else {
-			this.entry = null;
-			this.iterator = null;
-		}
-	}
+    return new ListConcatIterator();
+  }
 
-	public class ListConcatIterator implements Iterator<T> {
+  public class ListConcatIterator implements Iterator<T> {
+    private int index = 0;
 
-		@Override
-		public boolean hasNext () {
-			if (entry == null) {
-				return false;
-			} else {
-				if (iterator != null && !iterator.hasNext()) {
-					return listIterator.hasNext();
-				} else if (iterator != null) {
-					return iterator.hasNext();
-				} else {
-					return false;
-				}
-			}
-		}
+    private Iterator<T> getCurrentIterator () {
+      if (index < iterators.size()) {
+       return iterators.get(index);
+      }
 
-		@Override
-		public T next () {
-			if (iterator == null || !iterator.hasNext()) {
-				nextIterator();
-			}
 
-			if (iterator == null || !iterator.hasNext()) {
-				throw new NoSuchElementException();
-			}
 
-			return iterator.next();
-		}
-	}
+      return null;
+    }
+
+    private Iterator<T> nextIterator () {
+      index++;
+      return getCurrentIterator();
+    }
+
+    private boolean hasNextIterator () {
+      return (index + 1 < iterators.size());
+    }
+
+    @Override
+    public boolean hasNext() {
+      Iterator<T> iter = getCurrentIterator();
+      if (iter == null) {
+        return false;
+      }
+      return iter.hasNext();
+    }
+
+    @Override
+    public T next() {
+      Iterator<T> iter = getCurrentIterator();
+      if (iter == null) {
+
+      }
+      if (!getCurrentIterator().hasNext()) {
+
+      }
+      if (iterator == null || !iterator.hasNext()) {
+        nextIterator();
+      }
+
+      if (iterator == null || !iterator.hasNext()) {
+        throw new NoSuchElementException();
+      }
+
+      return iterator.next();
+    }
+  }
 }*/

@@ -5,7 +5,8 @@ public interface Tags {
   String INVENTORY = "Inventory";
 
   interface CrystalWorkbench {
-
+    String INPUT_INVENTORY = "Input Inventory";
+    String OUTPUT_INVENTORY = "Output Inventory";
   }
 
   interface MakeshiftResonator {

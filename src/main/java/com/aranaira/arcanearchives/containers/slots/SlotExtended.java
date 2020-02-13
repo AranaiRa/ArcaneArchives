@@ -1,6 +1,6 @@
-package com.aranaira.arcanearchives.inventory.slots;
+package com.aranaira.arcanearchives.containers.slots;
 
-import com.aranaira.arcanearchives.inventory.handlers.ExtendedItemStackHandler;
+import com.aranaira.arcanearchives.inventories.ExtendedItemStackHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryBasic;

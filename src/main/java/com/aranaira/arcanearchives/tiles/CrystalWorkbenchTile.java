@@ -1,8 +1,9 @@
 package com.aranaira.arcanearchives.tiles;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.api.cwb.CrystalWorkbenchRecipe;
+import com.aranaira.arcanearchives.init.ModRecipes;
 import com.aranaira.arcanearchives.reference.Tags;
+import com.aranaira.arcanearchives.registry.CrystalWorkbenchRegistry;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -17,16 +18,17 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class CrystalWorkbenchTile extends BaseTile {
+  // TODO: Store this value somewhere else?
+  public static final int RECIPE_PAGE_LIMIT = 7;
+
   private final ItemStackHandler inventory = new ItemStackHandler(18);
   private final ItemStackHandler outputInventory = new ItemStackHandler(1);
-  public static final int RECIPE_PAGE_LIMIT = 7;
   private CrystalWorkbenchRecipe currentRecipe;
   private CrystalWorkbenchRecipe lastRecipe;
-  private CrystalWorkbenchRecipe penultimateRecipe;
   private int page;
 
   public CrystalWorkbenchTile() {
-    /*    currentRecipe = RecipeLibrary.RADIANT_DUST_RECIPE;*/
+    currentRecipe = ModRecipes.RADIANT_DUST.get();
   }
 
   public IItemHandlerModifiable getInventory() {
@@ -38,10 +40,12 @@ public class CrystalWorkbenchTile extends BaseTile {
   }
 
   public void setRecipe(ResourceLocation name) {
-    /*    currentRecipe = GCTRecipeList.instance.getRecipe(name);*/
+    currentRecipe = CrystalWorkbenchRegistry.getRegistry().get(name);
+    // TODO ??
     stateUpdate();
   }
 
+  // TODO ??
   public void setRecipe(int index) {
     manuallySetRecipe(index);
     markDirty();
@@ -54,21 +58,22 @@ public class CrystalWorkbenchTile extends BaseTile {
   }
 
   public void manuallySetRecipe(int index) {
-    /*    currentRecipe = GCTRecipeList.instance.getRecipeByIndex(index);*/
+    currentRecipe = CrystalWorkbenchRegistry.getRegistry().getValueByIndex(index);
+    // TODO: Assert nonnull
   }
-
-  public static final ResourceLocation INVALID = new ResourceLocation(ArcaneArchives.MODID, "invalid_gct_recipe");
 
   public void clientSideUpdate() {
     if (world == null || !world.isRemote) {
       return;
     }
 
-    ResourceLocation loc = INVALID;
+    int index = -1;
 
     if (currentRecipe != null) {
-      loc = currentRecipe.getRegistryName();
+      index = currentRecipe.getIndex();
     }
+
+    // TODO: Sent packet
 
 /*    PacketGemCutters.ChangeRecipe packet = new PacketGemCutters.ChangeRecipe(loc, getPos(), world.provider.getDimension());
     Networking.CHANNEL.sendToServer(packet);*/
@@ -101,7 +106,8 @@ public class CrystalWorkbenchTile extends BaseTile {
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
-    inventory.deserializeNBT(compound.getCompoundTag("Inventory"));
+    inventory.deserializeNBT(compound.getCompoundTag(Tags.CrystalWorkbench.INPUT_INVENTORY));
+    outputInventory.deserializeNBT(compound.getCompoundTag(Tags.CrystalWorkbench.OUTPUT_INVENTORY));
     manuallySetRecipe(compound.getInteger(Tags.RECIPE)); // is this server-side or client-side?
   }
 
@@ -112,10 +118,9 @@ public class CrystalWorkbenchTile extends BaseTile {
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     super.writeToNBT(compound);
-    compound.setTag("Inventory", inventory.serializeNBT());
-    if (currentRecipe != null) {
-      compound.setInteger(Tags.RECIPE, currentRecipe.getIndex());
-    }
+    compound.setTag(Tags.CrystalWorkbench.INPUT_INVENTORY, inventory.serializeNBT());
+    compound.setTag(Tags.CrystalWorkbench.OUTPUT_INVENTORY, outputInventory.serializeNBT());
+    compound.setInteger(Tags.RECIPE, currentRecipe == null ? -1 : currentRecipe.getIndex());
 
     return compound;
   }
@@ -129,19 +134,12 @@ public class CrystalWorkbenchTile extends BaseTile {
     return writeToNBT(new NBTTagCompound());
   }
 
-  public CrystalWorkbenchRecipe getPenultimateRecipe() {
-    return penultimateRecipe;
-  }
-
   @Override
   public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
     readFromNBT(pkt.getNbtCompound());
     super.onDataPacket(net, pkt);
   }
 
-  public void updatePenultimateRecipe() {
-    this.penultimateRecipe = this.lastRecipe;
-  }
 
   @Override
   @Nonnull
@@ -151,17 +149,18 @@ public class CrystalWorkbenchTile extends BaseTile {
     return new SPacketUpdateTileEntity(pos, 0, compound);
   }
 
-/*  public void previousPage() {
+  public void previousPage() {
     if (getPage() > 0) {
       setPage(page - 1);
     } else {
-      int page = GCTRecipeList.instance.size() / RECIPE_PAGE_LIMIT;
-      if (GCTRecipeList.instance.size() % RECIPE_PAGE_LIMIT == 0) {
+      int size = CrystalWorkbenchRegistry.getRegistry().size();
+      int page = size / RECIPE_PAGE_LIMIT;
+      if (size % RECIPE_PAGE_LIMIT == 0) {
         page = page - 1;
       }
       setPage(page);
     }
-  }*/
+  }
 
   public int getPage() {
     return page;
@@ -171,12 +170,12 @@ public class CrystalWorkbenchTile extends BaseTile {
     this.page = page;
   }
 
-/*  public void nextPage() {
-    if (GCTRecipeList.instance.size() > (page + 1) * RECIPE_PAGE_LIMIT) {
+  public void nextPage() {
+    int size = CrystalWorkbenchRegistry.getRegistry().size();
+    if (size > (page + 1) * RECIPE_PAGE_LIMIT) {
       setPage(page + 1);
     } else {
       setPage(0);
     }
-  }*/
-
+  }
 }

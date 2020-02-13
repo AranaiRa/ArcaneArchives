@@ -1,6 +1,6 @@
-package com.aranaira.arcanearchives.inventory;
+package com.aranaira.arcanearchives.containers;
 
-import com.aranaira.arcanearchives.inventory.slots.SlotExtended;
+import com.aranaira.arcanearchives.containers.slots.SlotExtended;
 import com.aranaira.arcanearchives.tiles.RadiantChestTileEntity;
 import com.aranaira.arcanearchives.tiles.RadiantChestTileEntity.TrackingExtendedItemStackHandler;
 import com.google.common.collect.Sets;

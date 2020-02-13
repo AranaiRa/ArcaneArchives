@@ -14,7 +14,7 @@ public interface ICrystalWorkbenchRecipe {
   int getIndex ();
   void setIndex (int index);
 
-  MatchResult matches(WorkbenchCrafting inventory, World world);
+  MatchResult matches(WorkbenchCrafting inventory);
 
   ItemStack getActualResult(WorkbenchCrafting inventory, UUID workbenchId, @Nullable World world);
 

@@ -1,8 +1,8 @@
-package com.aranaira.arcanearchives.inventory;
+package com.aranaira.arcanearchives.containers;
 
 import com.aranaira.arcanearchives.api.cwb.CrystalWorkbenchRecipe;
 import com.aranaira.arcanearchives.api.cwb.WorkbenchCrafting;
-import com.aranaira.arcanearchives.inventory.slots.SlotRecipeHandler;
+import com.aranaira.arcanearchives.containers.slots.SlotRecipeHandler;
 import com.aranaira.arcanearchives.tiles.CrystalWorkbenchTile;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;

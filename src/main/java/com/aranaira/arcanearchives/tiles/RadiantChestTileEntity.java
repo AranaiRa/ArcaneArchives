@@ -2,8 +2,8 @@ package com.aranaira.arcanearchives.tiles;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.config.ServerSideConfig;
-import com.aranaira.arcanearchives.inventory.handlers.ExtendedItemStackHandler;
-import com.aranaira.arcanearchives.inventory.handlers.ITrackingHandler;
+import com.aranaira.arcanearchives.inventories.ExtendedItemStackHandler;
+import com.aranaira.arcanearchives.inventories.ITrackingHandler;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

@@ -16,11 +16,11 @@ public class CrystalRecipeImpl extends CrystalWorkbenchRecipe {
     super(inputs, output);
   }
 
-  public CrystalRecipeImpl(ItemStack output, Object... inputs) {
+  public CrystalRecipeImpl(ItemStack output, List<Object> inputs) {
     super(calculateInputs(inputs), output);
   }
 
-  private static List<IngredientStack> calculateInputs(Object[] inputs) {
+  private static List<IngredientStack> calculateInputs(List<Object> inputs) {
     List<IngredientStack> result = new ArrayList<>();
     int i = 0;
     for (Object stack : inputs) {

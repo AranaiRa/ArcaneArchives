@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.inventory.slots;
+package com.aranaira.arcanearchives.containers.slots;
 
 import com.aranaira.arcanearchives.api.cwb.CrystalWorkbenchRecipe;
 import com.aranaira.arcanearchives.tiles.CrystalWorkbenchTile;

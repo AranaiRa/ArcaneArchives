@@ -41,7 +41,7 @@ public abstract class CrystalWorkbenchRecipe extends IForgeRegistryEntry.Impl<Cr
   }
 
   @Override
-  public MatchResult matches(WorkbenchCrafting inventory, World world) {
+  public MatchResult matches(WorkbenchCrafting inventory) {
     return new MatchResult(this, inventory);
   }
 

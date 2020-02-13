@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.inventory.handlers;
+package com.aranaira.arcanearchives.inventories;
 
 import com.aranaira.arcanearchives.config.ServerSideConfig;
 import net.minecraft.item.ItemStack;

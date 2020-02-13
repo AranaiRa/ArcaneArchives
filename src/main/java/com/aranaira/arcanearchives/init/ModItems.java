@@ -23,6 +23,7 @@ public class ModItems {
   public static final List<Item> REGISTRY = new ArrayList<>();
 
   public static final RadiantDustItem RadiantDust = register("radiant_dust", RadiantDustItem::new);
+  public static final Item RadiantQuartz = register("radiant_quartz", Item::new);
 
   @SubscribeEvent
   public static void onRegister(Register<Item> event) {
