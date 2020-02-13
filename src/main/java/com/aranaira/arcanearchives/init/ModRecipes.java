@@ -8,6 +8,7 @@ import com.aranaira.arcanearchives.api.cwb.ICrystalWorkbenchRegistry;
 import com.aranaira.arcanearchives.recipe.cw.CrystalRecipeImpl;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
 
+@Mod.EventBusSubscriber(modid=ArcaneArchives.MODID)
 public class ModRecipes {
   public static final List<Builder> REGISTRY = new ArrayList<>();
 

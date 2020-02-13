@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.client.gui;
 
-import com.aranaira.arcanearchives.api.cwb.CrystalWorkbenchRecipe;
 import com.aranaira.arcanearchives.api.crafting.IngredientStack;
+import com.aranaira.arcanearchives.api.cwb.CrystalWorkbenchRecipe;
 import com.aranaira.arcanearchives.client.CycleTimer;
 import com.aranaira.arcanearchives.client.gui.controls.InvisibleButton;
 import com.aranaira.arcanearchives.config.ConfigHandler;
@@ -224,100 +224,13 @@ public class CrystalWorkbenchGUI extends AbstractGuiContainerTracking {
 
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
-/*    if (button.id == 0) {
+    if (button.id == 0) {
       tile.previousPage();
     }
     if (button.id == 1) {
       tile.nextPage();
-    }*/
-    super.actionPerformed(button);
-  }
-
-  public static final int DOWN = -120;
-  public static final int UP = 120;
-
-  @Override
-  public void handleMouseInput() throws IOException {
-    super.handleMouseInput();
-
-    int wheel = Mouse.getEventDWheel();
-    int button = Mouse.getEventButton();
-
-    if (wheel != 0 && button == -1) {
-      CrystalWorkbenchRecipe currentRecipe = tile.getCurrentRecipe();
-      int originalIndex = currentRecipe == null ? 0 : currentRecipe.getIndex();
-      int index = originalIndex;
-
-      CrystalWorkbenchRecipe temp;
-      CrystalWorkbenchRecipe newRecipe = null;
-
-/*			if (recipeStatus.values().stream().anyMatch(o -> o)) {
-				switch (wheel) {
-					case DOWN:
-						while (index < GCTRecipeList.instance.size()) {
-							temp = GCTRecipeList.instance.getRecipeByIndex(index);
-							if (index != originalIndex && temp != null && recipeStatus.get(temp)) {
-								newRecipe = temp;
-								break;
-							}
-
-							index++;
-						}
-
-						if (newRecipe == null) {
-							index = 0;
-							while (index < originalIndex) {
-								temp = GCTRecipeList.instance.getRecipeByIndex(index);
-								if (index != originalIndex && temp != null && recipeStatus.get(temp)) {
-									newRecipe = temp;
-									break;
-								}
-
-								index++;
-							}
-						}
-						break;
-					case UP:
-						index--;
-						while (index >= 0) {
-							temp = GCTRecipeList.instance.getRecipeByIndex(index);
-							if (index != originalIndex && temp != null && recipeStatus.get(temp)) {
-								newRecipe = temp;
-								break;
-							}
-
-							index--;
-						}
-
-						if (newRecipe == null) {
-							index = GCTRecipeList.instance.size();
-							while (index > originalIndex) {
-								temp = GCTRecipeList.instance.getRecipeByIndex(index);
-								if (index != originalIndex && temp != null && recipeStatus.get(temp)) {
-									newRecipe = temp;
-									break;
-								}
-
-								index--;
-							}
-						}
-						break;
-					default:
-						return;
-				}
-
-				if (newRecipe != null) {
-					int newPage = index / 7;
-					tile.setPage(newPage);
-					// TODO: Turn this into a packet
-					PacketGemCutters.SetRecipeIndex message = new SetRecipeIndex(tile.getUuid(), index);
-					Networking.CHANNEL.sendToServer(message);
-					tile.setRecipe(index);
-					container.updateRecipe();
-					// Handle switching pages
-				}
-			}*/
     }
+    super.actionPerformed(button);
   }
 }
 

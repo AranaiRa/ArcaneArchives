@@ -1,9 +1,12 @@
 package com.aranaira.arcanearchives.containers;
 
 import com.aranaira.arcanearchives.api.cwb.CrystalWorkbenchRecipe;
+import com.aranaira.arcanearchives.api.cwb.MatchResult;
 import com.aranaira.arcanearchives.api.cwb.WorkbenchCrafting;
 import com.aranaira.arcanearchives.containers.slots.SlotRecipeHandler;
+import com.aranaira.arcanearchives.registry.CrystalWorkbenchRegistry;
 import com.aranaira.arcanearchives.tiles.CrystalWorkbenchTile;
+import it.unimi.dsi.fastutil.ints.Int2IntMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
@@ -19,9 +22,7 @@ import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /*import invtweaks.api.container.ContainerSection;
@@ -60,10 +61,21 @@ public class CrystalWorkbenchContainer extends Container {
       @Override
       public ItemStack onTake(EntityPlayer thePlayer, ItemStack stack) {
         CrystalWorkbenchRecipe recipe = tile.getCurrentRecipe();
-/*        recipe.consumeAndHandleInventory(recipe, combinedInventory, player, tile, ContainerGemCuttersTable.this::detectAndSendChanges, recipe::handleItemResult);
+        if (recipe == null) {
+          return ItemStack.EMPTY;
+        }
+
+        // TODO: Handle transformations of ingredients
+        MatchResult result = recipe.matches(getWorkbenchCrafting());
+        for (Int2IntMap.Entry entry : result.getSlotMap().int2IntEntrySet()) {
+          combinedInventory.extractItem(entry.getIntKey(), entry.getIntValue(), false);
+        }
+
+        // TODO: Handle post-craft transformation
         if (!player.world.isRemote) {
-          stack = recipe.onCrafted(player, stack);
-        }*/
+          /*          stack = recipe.onCrafted(player, stack);*/
+        }
+
         updateRecipe();
         return super.onTake(player, stack);
       }
@@ -75,8 +87,13 @@ public class CrystalWorkbenchContainer extends Container {
 
       @Override
       public boolean canTakeStack(EntityPlayer player) {
-        /*        return tile.getCurrentRecipe().matches(combinedInventory) && tile.getCurrentRecipe().craftable(player, tile);*/
-        return false;
+        CrystalWorkbenchRecipe recipe = tile.getCurrentRecipe();
+        if (recipe == null) {
+          return false;
+        }
+
+        // TODO: Clarify matches -> getMatchResult
+        return recipe.matches(getWorkbenchCrafting()).matches();
       }
     };
 
@@ -135,29 +152,33 @@ public class CrystalWorkbenchContainer extends Container {
     ItemStack itemstack;
 
     CrystalWorkbenchRecipe curRecipe = tile.getCurrentRecipe();
-/*    if (curRecipe != null) {
-      itemstack = curRecipe.getRecipeOutput().copy();
-      if (curRecipe.matches(combinedInventory)) {
-        outputInv.setStackInSlot(SLOT_OUTPUT, itemstack);
-      } else {
-        outputInv.setStackInSlot(SLOT_OUTPUT, ItemStack.EMPTY);
-        return;
-      }
-    } else {
+    if (curRecipe == null) {
       outputInv.setStackInSlot(SLOT_OUTPUT, ItemStack.EMPTY);
       return;
     }
 
-    if (tile.getPenultimateRecipe() != tile.getLastRecipe()) {
-      playerInventory.setInventorySlotContents(0, itemstack);
-    } else if (tile.getPenultimateRecipe() != null && tile.getPenultimateRecipe() == tile.getLastRecipe() && !ItemStack.areItemStacksEqual(tile.getPenultimateRecipe().getRecipeOutput(), tile.getLastRecipe().getRecipeOutput())) {
-      playerInventory.setInventorySlotContents(0, itemstack);
+    WorkbenchCrafting crafting = getWorkbenchCrafting();
+    MatchResult match = curRecipe.matches(crafting);
+    if (!match.matches()) {
+      outputInv.setStackInSlot(SLOT_OUTPUT, ItemStack.EMPTY);
     }
-    if (tile.getLastRecipe() != null && !world.isRemote) {
-      *//*			Networking.CHANNEL.sendTo(new PacketGemCutters.LastRecipe(tile.getLastRecipe()), (EntityPlayerMP) player);*//*
-    }*/
 
-    tile.updatePenultimateRecipe();
+    itemstack = curRecipe.getActualResult(crafting, null);
+    outputInv.setStackInSlot(SLOT_OUTPUT, itemstack);
+
+    // TODO ???
+    if (ItemStack.areItemStacksEqual(curRecipe.getResult(), tile.getLastRecipe().getResult())) {
+      playerInventory.setInventorySlotContents(0, itemstack);
+    /* else if (tile.getPenultimateRecipe() != null && tile.getPenultimateRecipe() == tile.getLastRecipe() && !ItemStack.areItemStacksEqual(tile.getPenultimateRecipe().getRecipeOutput(), tile.getLastRecipe().getRecipeOutput())) {
+      playerInventory.setInventorySlotContents(0, itemstack);*/
+    }
+
+    // TODO ???
+    if (tile.getLastRecipe() != null && !world.isRemote) {
+      /*      Networking.CHANNEL.sendTo(new PacketGemCutters.LastRecipe(tile.getLastRecipe()), (EntityPlayerMP) player);*/
+    }
+
+    /*    tile.updatePenultimateRecipe();*/
   }
 
   public void setUpdateRecipeGUI(Runnable updateRecipeGUI) {
@@ -231,26 +252,17 @@ public class CrystalWorkbenchContainer extends Container {
   }
 
   @Override
-  public boolean canMergeSlot(ItemStack p_94530_1_, Slot p_94530_2_) {
-    return super.canMergeSlot(p_94530_1_, p_94530_2_);
-  }
-
-  @Override
-  public void onContainerClosed(EntityPlayer playerIn) {
-    super.onContainerClosed(playerIn);
-  }
-
-  @Override
   public boolean canInteractWith(@Nonnull EntityPlayer playerIn) {
     return true;
   }
 
   public Map<CrystalWorkbenchRecipe, Boolean> updateRecipeStatus() {
     Map<CrystalWorkbenchRecipe, Boolean> map = new HashMap<>();
+    WorkbenchCrafting crafting = getWorkbenchCrafting();
 
-/*		for (CrystalWorkbenchRecipe recipe : GCTRecipeList.instance.getRecipeList()) {
-			map.put(recipe, recipe.matches(combinedInventory));
-		}*/
+    for (CrystalWorkbenchRecipe recipe : CrystalWorkbenchRegistry.getRegistry().getValues()) {
+      map.put(recipe, recipe.matches(crafting).matches());
+    }
 
     return map;
   }
@@ -258,7 +270,7 @@ public class CrystalWorkbenchContainer extends Container {
   public void updateLastRecipeFromServer(CrystalWorkbenchRecipe recipe) {
     tile.setLastRecipe(recipe);
     if (recipe != null) {
-      //tileInventory.setStackInSlot(0, recipe.getRecipeOutput());
+      tileInventory.setStackInSlot(0, recipe.getResult());
     }
   }
 
@@ -266,18 +278,18 @@ public class CrystalWorkbenchContainer extends Container {
     return tile;
   }
 
+  public WorkbenchCrafting getWorkbenchCrafting() {
+    return new WorkbenchCrafting(this, this.getTile(), combinedInventory);
+  }
+
   // Slot range INCLUDES startSlot EXCLUDES stopSlot
-  public List<Slot> getSlotRange(int startSlot, int stopSlot) {
+/*  public List<Slot> getSlotRange(int startSlot, int stopSlot) {
     List<Slot> output = new ArrayList<>();
     for (int i = startSlot; i < stopSlot; i++) {
       output.add(getSlot(i));
     }
     return output;
-  }
-
-  public WorkbenchCrafting getWorkbenchCrafting () {
-    return new WorkbenchCrafting(this, this.getTile(), combinedInventory);
-  }
+  }*/
 
 /*	public Map<ContainerSection, List<Slot>> map = null;
 

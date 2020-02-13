@@ -1,5 +1,7 @@
 package com.aranaira.arcanearchives.blocks;
 
+import com.aranaira.arcanearchives.AAGuiHandler;
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.templates.HorizontalSingleAccessorTemplateBlock;
 import com.aranaira.arcanearchives.tiles.CrystalWorkbenchTile;
 import com.aranaira.arcanearchives.util.ItemUtils;
@@ -82,10 +84,14 @@ public class CrystalWorkbenchBlock extends HorizontalSingleAccessorTemplateBlock
 
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-    if (state.getValue(ACCESSOR)) {
+    if (state.getBlock() == this && state.getValue(ACCESSOR)) {
       BlockPos origin = findBody(state, world, new BlockPos(hitX, hitY, hitZ));
-      IBlockState originState = world.getBlockState(origin);
-      return onBlockActivated(world, origin, originState, playerIn, hand, facing, origin.getX() + 0.5f, origin.getY() + 0.5f, origin.getZ() + 0.5f);
+      if (!origin.equals(pos)) {
+        IBlockState originState = world.getBlockState(origin);
+        return onBlockActivated(world, origin, originState, playerIn, hand, facing, origin.getX() + 0.5f, origin.getY() + 0.5f, origin.getZ() + 0.5f);
+      } else {
+        return false;
+      }
     }
 
     /*		LineHandler.removeLine(pos, playerIn.dimension);*/
@@ -94,7 +100,7 @@ public class CrystalWorkbenchBlock extends HorizontalSingleAccessorTemplateBlock
       return true;
     }
 
-    /*		playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.GEMCUTTERS_TABLE, worldIn, pos.getX(), pos.getY(), pos.getZ());*/
+    playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.GuiType.CrystalWorkbench.ordinal(), world, pos.getX(), pos.getY(), pos.getZ());
 
     return true;
   }
@@ -118,4 +124,6 @@ public class CrystalWorkbenchBlock extends HorizontalSingleAccessorTemplateBlock
   public int getAccessorAngle() {
     return 90;
   }
+
+  // TODO: Handle tile network ID transfer to itemblock upon destruction/breaking
 }

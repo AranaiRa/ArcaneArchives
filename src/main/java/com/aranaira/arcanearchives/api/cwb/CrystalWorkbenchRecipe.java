@@ -46,10 +46,10 @@ public abstract class CrystalWorkbenchRecipe extends IForgeRegistryEntry.Impl<Cr
   }
 
   @Override
-  public ItemStack getActualResult(WorkbenchCrafting inventory, UUID workbenchId, @Nullable World world) {
+  public ItemStack getActualResult(WorkbenchCrafting inventory, UUID workbenchId) {
     ItemStack result = getResult().copy();
     NBTTagCompound tag = ItemUtils.getOrCreateTagCompound(result);
-    tag.setUniqueId("network", workbenchId);
+/*    tag.setUniqueId("network", workbenchId);*/
     return result;
   }
 
