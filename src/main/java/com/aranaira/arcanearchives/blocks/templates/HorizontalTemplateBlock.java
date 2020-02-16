@@ -33,7 +33,7 @@ public abstract class HorizontalTemplateBlock extends TemplateBlock implements I
 
   @Override
   public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-    return getDefaultState().withProperty(getFacingProperty(), EnumFacing.fromAngle(placer.rotationYaw - 90));
+    return getDefaultState().withProperty(getFacingProperty(), EnumFacing.fromAngle(placer.rotationYaw).getOpposite());
   }
 
   @Override

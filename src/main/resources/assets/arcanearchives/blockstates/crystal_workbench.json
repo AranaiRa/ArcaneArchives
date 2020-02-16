@@ -2,7 +2,7 @@
     "forge_marker": 1,
     "defaults": {
         "textures": {
-            
+
         },
         "model": "arcanearchives:crystal_workbench.obj",
         "custom": { "flip-v": true }
@@ -57,18 +57,30 @@
             "up": {},
             "north": {
                 "transform": {
-                    "rotation": {"y": -90}
+                    "rotation": {
+                        "y": 180
+                    }
                 }
             },
             "south":  {
                 "transform": {
-                    "rotation": {"y": 90}
+                    "rotation": {
+                        "y": 0
+                    }
                 }
             },
-            "west": {},
+            "west": {
+                "transform": {
+                    "rotation": {
+                        "y": -90
+                    }
+                }
+            },
             "east":  {
                 "transform": {
-                    "rotation": {"y": 180}
+                    "rotation": {
+                        "y": 90
+                    }
                 }
             }
         }

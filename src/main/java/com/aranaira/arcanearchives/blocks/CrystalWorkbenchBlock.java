@@ -17,6 +17,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -45,6 +46,7 @@ public class CrystalWorkbenchBlock extends HorizontalSingleAccessorTemplateBlock
   @Override
   public void breakBlock(World world, BlockPos pos, IBlockState state) {
     if (state.getValue(ACCESSOR)) {
+      super.breakBlock(world, pos, state);
       return;
     }
 
@@ -121,9 +123,13 @@ public class CrystalWorkbenchBlock extends HorizontalSingleAccessorTemplateBlock
   }
 
   @Override
-  public int getAccessorAngle() {
-    return 90;
+  public Rotation getAccessorRotation() {
+    return Rotation.COUNTERCLOCKWISE_90;
   }
 
+  @Override
+  public Rotation getBodyRotation() {
+    return Rotation.CLOCKWISE_90;
+  }
   // TODO: Handle tile network ID transfer to itemblock upon destruction/breaking
 }
