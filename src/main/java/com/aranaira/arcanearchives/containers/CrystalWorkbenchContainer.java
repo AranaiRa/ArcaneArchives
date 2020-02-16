@@ -167,7 +167,7 @@ public class CrystalWorkbenchContainer extends Container {
     outputInv.setStackInSlot(SLOT_OUTPUT, itemstack);
 
     // TODO ???
-    if (ItemStack.areItemStacksEqual(curRecipe.getResult(), tile.getLastRecipe().getResult())) {
+    if (tile.getLastRecipe() != null && ItemStack.areItemStacksEqual(curRecipe.getResult(), tile.getLastRecipe().getResult())) {
       playerInventory.setInventorySlotContents(0, itemstack);
     /* else if (tile.getPenultimateRecipe() != null && tile.getPenultimateRecipe() == tile.getLastRecipe() && !ItemStack.areItemStacksEqual(tile.getPenultimateRecipe().getRecipeOutput(), tile.getLastRecipe().getRecipeOutput())) {
       playerInventory.setInventorySlotContents(0, itemstack);*/

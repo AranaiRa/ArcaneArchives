@@ -25,8 +25,8 @@ public class MatchResult {
     }
   }
 
-  public IngredientCounts getCounts () {
-    return (IngredientCounts) ingredientCounts.clone();
+  public Object2IntOpenHashMap<IngredientStack> getCounts () {
+    return ingredientCounts.clone();
   }
 
   public CrystalWorkbenchRecipe getRecipe() {
@@ -43,8 +43,8 @@ public class MatchResult {
   }
 
   private void checkMatches () {
-    IngredientCounts counts = getCounts();
-    IngredientCounts discounts = getCounts();
+    Object2IntOpenHashMap<IngredientStack> counts = getCounts();
+    Object2IntOpenHashMap<IngredientStack> discounts = getCounts();
 
     slotMap.clear();
 
@@ -75,7 +75,7 @@ public class MatchResult {
     matched = true;
   }
 
-  private void accountMatch (IngredientCounts counts, IngredientStack ingredient, ItemStack stack) {
+  private void accountMatch (Object2IntOpenHashMap<IngredientStack> counts, IngredientStack ingredient, ItemStack stack) {
     if (counts.containsKey(ingredient)) {
       int current = counts.getInt(ingredient);
       int incoming = stack.getCount();
@@ -87,7 +87,7 @@ public class MatchResult {
     }
   }
 
-  private int discountMatch (IngredientCounts counts, IngredientStack ingredient, ItemStack stack) {
+  private int discountMatch (Object2IntOpenHashMap<IngredientStack> counts, IngredientStack ingredient, ItemStack stack) {
     int result = -1;
 
     if (counts.containsKey(ingredient)) {
@@ -119,10 +119,5 @@ public class MatchResult {
 
   public Int2IntOpenHashMap getSlotMap () {
     return slotMap;
-  }
-
-  private class IngredientCounts extends Object2IntOpenHashMap<IngredientStack> {
-    public IngredientCounts() {
-    }
   }
 }
