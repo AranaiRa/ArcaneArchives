@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.containers.slots;
 
 import com.aranaira.arcanearchives.api.cwb.CrystalWorkbenchRecipe;
+import com.aranaira.arcanearchives.registry.CrystalWorkbenchRegistry;
 import com.aranaira.arcanearchives.tiles.CrystalWorkbenchTile;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -22,8 +23,7 @@ public class SlotRecipeHandler extends Slot {
   }
 
   public CrystalWorkbenchRecipe getRecipe() {
-    return null;
-    /*		return GCTRecipeList.instance.getRecipeByIndex(getRelativeIndex());*/
+    return CrystalWorkbenchRegistry.getRegistry().getValueByIndex(getRelativeIndex());
   }
 
   public int getRelativeIndex() {
@@ -47,12 +47,12 @@ public class SlotRecipeHandler extends Slot {
 
   @Override
   public ItemStack getStack() {
-    int slot = getRelativeIndex();
-/*		if (slot < GCTRecipeList.instance.size()) {
-			return GCTRecipeList.instance.getOutputByIndex(slot).copy();
-		}*/
-
-    return ItemStack.EMPTY;
+    CrystalWorkbenchRecipe recipe = getRecipe();
+    if (recipe == null) {
+      return ItemStack.EMPTY;
+    } else {
+      return recipe.getResult();
+    }
   }
 
   @Override
@@ -78,7 +78,7 @@ public class SlotRecipeHandler extends Slot {
     return 1;
   }
 
-  // Handle this TODO
+  // Handle this TODO ???
   @Nullable
   @Override
   public String getSlotTexture() {
