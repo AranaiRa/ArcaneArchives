@@ -9,7 +9,7 @@
         "description": {
             "translate": "advancement.arcanearchives.root.desc"
         },
-        "background": "arcanearchives:textures/blocks/block_storage_rawquartz.png",
+        "background": "arcanearchives:textures/gui/advancement_bg.png",
         "show_toast": false,
         "announce_to_chat" : false
     },
