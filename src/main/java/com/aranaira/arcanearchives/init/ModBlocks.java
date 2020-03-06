@@ -1,8 +1,7 @@
 package com.aranaira.arcanearchives.init;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.blocks.CrystalWorkbenchBlock;
-import com.aranaira.arcanearchives.blocks.MakeshiftResonatorBlock;
+import com.aranaira.arcanearchives.blocks.*;
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
@@ -26,6 +25,9 @@ public class ModBlocks {
 
   public static CrystalWorkbenchBlock CrystalWorkbench = register("crystal_workbench", CrystalWorkbenchBlock::new);
   public static MakeshiftResonatorBlock MakeshiftResonator = register("makeshift_resonator", MakeshiftResonatorBlock::new);
+  public static MandalicKeystoneBlock MandalicKeystone = register("mandalic_keystone", MandalicKeystoneBlock::new);
+  public static StalwartStoneBlock StalwartStone = register("stalwart_stone", StalwartStoneBlock::new);
+  public static StalwartWoodBlock StalwartWood = register("stalwart_wood", StalwartWoodBlock::new);
 
   public static <T extends TemplateBlock> T register(String registryName, Supplier<T> supplier) {
     return register(registryName, supplier, null);
