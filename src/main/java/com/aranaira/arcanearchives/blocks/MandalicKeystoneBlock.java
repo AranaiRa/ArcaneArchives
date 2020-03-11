@@ -19,7 +19,6 @@ import java.util.List;
 public class MandalicKeystoneBlock extends TemplateBlock {
 
 	public static final String name = "mandalic_keystone";
-	protected static final AxisAlignedBB COLLISION_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.995D, 1.0D);
 
 	public MandalicKeystoneBlock() {
 		super(Material.ROCK);
