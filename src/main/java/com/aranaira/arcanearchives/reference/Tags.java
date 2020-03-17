@@ -1,19 +1,20 @@
 package com.aranaira.arcanearchives.reference;
 
 public interface Tags {
-  String RECIPE = "Recipe";
-  String INVENTORY = "Inventory";
+  String recipe = "Rec";
+  String inventory = "Inv";
+  String tileId = "TileId";
 
   interface CrystalWorkbench {
-    String INPUT_INVENTORY = "Input Inventory";
-    String OUTPUT_INVENTORY = "Output Inventory";
+    String inputInventory = "InvIn";
+    String outputInventory = "InvOut";
   }
 
   interface MakeshiftResonator {
-    String CURRENT_TICK = "Current Tick";
+    String currentTick = "CurTick";
   }
 
   interface PlayerSaveData {
-    String RECEIVED_BOOK = "received_book";
+    String receivedBook = "RecBook";
   }
 }

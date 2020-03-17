@@ -84,7 +84,7 @@ public class ReverberationChamberTileEntity extends ImmanenceTileEntity implemen
 	@Nonnull
 	public NBTTagCompound writeToNBT (NBTTagCompound compound) {
 		super.writeToNBT(compound);
-		compound.setTag(Tags.INVENTORY, inventory.serializeNBT());
+		compound.setTag(Tags.inventory, inventory.serializeNBT());
 		compound.setInteger(Tags.BURN_TIME, burnTime);
 		compound.setInteger(Tags.BURN_TIME_TOTAL, burnTimeTotal);
 		return compound;
@@ -93,7 +93,7 @@ public class ReverberationChamberTileEntity extends ImmanenceTileEntity implemen
 	@Override
 	public void readFromNBT (NBTTagCompound compound) {
 		super.readFromNBT(compound);
-		inventory.deserializeNBT(compound.getCompoundTag(Tags.INVENTORY));
+		inventory.deserializeNBT(compound.getCompoundTag(Tags.inventory));
 		burnTime = compound.getInteger(Tags.BURN_TIME);
 		burnTimeTotal = compound.getInteger(Tags.BURN_TIME_TOTAL);
 	}
@@ -109,7 +109,7 @@ public class ReverberationChamberTileEntity extends ImmanenceTileEntity implemen
 	}
 
 	public static class Tags {
-		public static final String INVENTORY = "inventory";
+		public static final String inventory = "inventory";
 		public static final String BURN_TIME = "burn_time";
 		public static final String BURN_TIME_TOTAL = "burn_time_total";
 

@@ -1,29 +1,19 @@
 package com.aranaira.arcanearchives.tiles;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.blocks.MakeshiftResonatorBlock;
 import com.aranaira.arcanearchives.init.ModBlocks;
-import com.aranaira.arcanearchives.init.ModItems;
 import com.aranaira.arcanearchives.reference.Tags;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.OreIngredient;
 
 import javax.annotation.Nonnull;
@@ -89,7 +79,7 @@ public class MandalicKeystoneTile extends BaseTile implements ITickable {
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     super.writeToNBT(compound);
 
-    compound.setInteger(Tags.MakeshiftResonator.CURRENT_TICK, progress);
+    compound.setInteger(Tags.MakeshiftResonator.currentTick, progress);
 
     return compound;
   }
@@ -98,8 +88,8 @@ public class MandalicKeystoneTile extends BaseTile implements ITickable {
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
 
-    if (compound.hasKey(Tags.MakeshiftResonator.CURRENT_TICK)) {
-      progress = compound.getInteger(Tags.MakeshiftResonator.CURRENT_TICK);
+    if (compound.hasKey(Tags.MakeshiftResonator.currentTick)) {
+      progress = compound.getInteger(Tags.MakeshiftResonator.currentTick);
     }
   }
 

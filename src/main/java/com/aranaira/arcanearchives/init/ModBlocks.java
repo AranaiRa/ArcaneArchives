@@ -28,12 +28,13 @@ public class ModBlocks {
   public static MandalicKeystoneBlock MandalicKeystone = register("mandalic_keystone", MandalicKeystoneBlock::new);
   public static StalwartStoneBlock StalwartStone = register("stalwart_stone", StalwartStoneBlock::new);
   public static StalwartWoodBlock StalwartWood = register("stalwart_wood", StalwartWoodBlock::new);
+  public static TestBlock Test = register("test", TestBlock::new);
 
-  public static <T extends TemplateBlock> T register(String registryName, Supplier<T> supplier) {
+  public static <T extends Block> T register(String registryName, Supplier<T> supplier) {
     return register(registryName, supplier, null);
   }
 
-  public static <T extends TemplateBlock> T register(String registryName, Supplier<T> supplier, Supplier<? extends ItemBlock> itemBlock) {
+  public static <T extends Block> T register(String registryName, Supplier<T> supplier, Supplier<? extends ItemBlock> itemBlock) {
     T block = supplier.get();
     block.setTranslationKey(registryName);
     block.setRegistryName(new ResourceLocation(ArcaneArchives.MODID, registryName));
@@ -45,7 +46,9 @@ public class ModBlocks {
       item = new ItemBlock(block);
     }
     item.setRegistryName(new ResourceLocation(ArcaneArchives.MODID, registryName));
-    block.setItemBlock(item);
+    if (block instanceof TemplateBlock) {
+      ((TemplateBlock) block).setItemBlock(item);
+    }
     REGISTRY.add(block);
     ModItems.add(item);
     return block;

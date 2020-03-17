@@ -38,12 +38,12 @@ public class PlayerSaveData extends WorldSavedData {
 
   @Override
   public void readFromNBT(NBTTagCompound nbt) {
-    this.receivedBook = nbt.getBoolean(Tags.PlayerSaveData.RECEIVED_BOOK);
+    this.receivedBook = nbt.getBoolean(Tags.PlayerSaveData.receivedBook);
   }
 
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-    compound.setBoolean(Tags.PlayerSaveData.RECEIVED_BOOK, receivedBook);
+    compound.setBoolean(Tags.PlayerSaveData.receivedBook, receivedBook);
     return compound;
   }
 }

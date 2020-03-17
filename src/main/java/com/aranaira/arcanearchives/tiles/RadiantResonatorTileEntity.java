@@ -99,7 +99,7 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity {
 	public NBTTagCompound writeToNBT (NBTTagCompound compound) {
 		super.writeToNBT(compound);
 
-		compound.setInteger(Tags.CURRENT_TICK, growth);
+		compound.setInteger(Tags.currentTick, growth);
 		compound.setBoolean(Tags.CAN_TICK, canTick);
 
 		return compound;
@@ -109,8 +109,8 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity {
 	public void readFromNBT (NBTTagCompound compound) {
 		super.readFromNBT(compound);
 
-		if (compound.hasKey(Tags.CURRENT_TICK)) {
-			growth = compound.getInteger(Tags.CURRENT_TICK);
+		if (compound.hasKey(Tags.currentTick)) {
+			growth = compound.getInteger(Tags.currentTick);
 		}
 		if (compound.hasKey(Tags.CAN_TICK)) {
 			canTick = compound.getBoolean(Tags.CAN_TICK);
@@ -218,7 +218,7 @@ public class RadiantResonatorTileEntity extends ImmanenceTileEntity {
 	}
 
 	public static class Tags {
-		public static final String CURRENT_TICK = "current_tick";
+		public static final String currentTick = "current_tick";
 		public static final String CAN_TICK = "can_tick";
 	}
 }*/

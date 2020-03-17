@@ -185,6 +185,6 @@ public abstract class AATileEntity extends TileEntity implements INamedTileEntit
 	}
 
 	public static class Tags {
-		public static final String INVENTORY = "inventory";
+		public static final String inventory = "inventory";
 	}
 }*/

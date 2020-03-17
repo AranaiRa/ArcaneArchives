@@ -9,7 +9,6 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -17,8 +16,9 @@ import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.UUID;
 
-public class CrystalWorkbenchTile extends BaseTile {
+public class CrystalWorkbenchTile extends BaseTile implements INetworked {
   // TODO: Store this value somewhere else?
   public static final int RECIPE_PAGE_LIMIT = 7;
 
@@ -27,6 +27,7 @@ public class CrystalWorkbenchTile extends BaseTile {
   private CrystalWorkbenchRecipe currentRecipe;
   private CrystalWorkbenchRecipe lastRecipe;
   private int page;
+  private UUID networkId = null;
 
   public CrystalWorkbenchTile() {
     currentRecipe = ModRecipes.RADIANT_DUST.get();
@@ -107,9 +108,9 @@ public class CrystalWorkbenchTile extends BaseTile {
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
-    inventory.deserializeNBT(compound.getCompoundTag(Tags.CrystalWorkbench.INPUT_INVENTORY));
-    outputInventory.deserializeNBT(compound.getCompoundTag(Tags.CrystalWorkbench.OUTPUT_INVENTORY));
-    manuallySetRecipe(compound.getInteger(Tags.RECIPE)); // is this server-side or client-side?
+    inventory.deserializeNBT(compound.getCompoundTag(Tags.CrystalWorkbench.inputInventory));
+    outputInventory.deserializeNBT(compound.getCompoundTag(Tags.CrystalWorkbench.outputInventory));
+    manuallySetRecipe(compound.getInteger(Tags.recipe)); // is this server-side or client-side?
   }
 
   public CrystalWorkbenchRecipe getLastRecipe() {
@@ -119,9 +120,9 @@ public class CrystalWorkbenchTile extends BaseTile {
   @Override
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     super.writeToNBT(compound);
-    compound.setTag(Tags.CrystalWorkbench.INPUT_INVENTORY, inventory.serializeNBT());
-    compound.setTag(Tags.CrystalWorkbench.OUTPUT_INVENTORY, outputInventory.serializeNBT());
-    compound.setInteger(Tags.RECIPE, currentRecipe == null ? -1 : currentRecipe.getIndex());
+    compound.setTag(Tags.CrystalWorkbench.inputInventory, inventory.serializeNBT());
+    compound.setTag(Tags.CrystalWorkbench.outputInventory, outputInventory.serializeNBT());
+    compound.setInteger(Tags.recipe, currentRecipe == null ? -1 : currentRecipe.getIndex());
 
     return compound;
   }
@@ -178,5 +179,10 @@ public class CrystalWorkbenchTile extends BaseTile {
     } else {
       setPage(0);
     }
+  }
+
+  @Override
+  public UUID getNetworkId() {
+    return null;
   }
 }

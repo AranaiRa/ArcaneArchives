@@ -235,7 +235,7 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 	public NBTTagCompound writeToNBT (NBTTagCompound compound) {
 		super.writeToNBT(compound);
 		compound.setTag(Tags.OPTIONAL_UPGRADES, optionalUpgrades.serializeNBT());
-		compound.setTag(Tags.INVENTORY, inventory.serializeNBT());
+		compound.setTag(Tags.inventory, inventory.serializeNBT());
 		compound.setInteger(Tags.BURN_TIME, burnTime);
 		compound.setInteger(Tags.COOK_TIME, cookTime);
 		compound.setInteger(Tags.COOK_TIME_TOTAL, cookTimeTotal);
@@ -247,7 +247,7 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 	public void readFromNBT (NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		optionalUpgrades.deserializeNBT(compound.getCompoundTag(Tags.OPTIONAL_UPGRADES));
-		inventory.deserializeNBT(compound.getCompoundTag(Tags.INVENTORY));
+		inventory.deserializeNBT(compound.getCompoundTag(Tags.inventory));
 		burnTime = compound.getInteger(Tags.BURN_TIME);
 		burnTimeTotal = compound.getInteger(Tags.BURN_TIME_TOTAL);
 		cookTime = compound.getInteger(Tags.COOK_TIME);
@@ -256,7 +256,7 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 
 	public static class Tags {
 		public static final String OPTIONAL_UPGRADES = "optional_upgrades";
-		public static final String INVENTORY = "inventory";
+		public static final String inventory = "inventory";
 
 		public static final String COOK_TIME = "cook_time";
 		public static final String COOK_TIME_TOTAL = "cook_time_total";

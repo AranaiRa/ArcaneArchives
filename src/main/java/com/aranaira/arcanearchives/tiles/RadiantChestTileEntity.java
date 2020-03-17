@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tiles;
+/*package com.aranaira.arcanearchives.tiles;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.config.ServerSideConfig;
@@ -56,7 +56,7 @@ public class RadiantChestTileEntity extends TileEntity {
   }
 
 
-/*	public void firstJoinedNetwork (ServerNetwork network) {
+*//*	public void firstJoinedNetwork (ServerNetwork network) {
 		super.firstJoinedNetwork(network);
 
 		// Disregard previous to-do notice as this is only called when they
@@ -66,7 +66,7 @@ public class RadiantChestTileEntity extends TileEntity {
 			this.markDirty();
 			defaultServerSideUpdate();
 		}
-	}*/
+	}*//*
 
   public Int2IntOpenHashMap getOrCalculateReference(boolean force) {
     if (force) {
@@ -79,10 +79,10 @@ public class RadiantChestTileEntity extends TileEntity {
     return getOrCalculateReference(false);
   }
 
-/*	@Override
+*//*	@Override
 	public BrazierRoutingType getRoutingType () {
 		return routingType;
-	}*/
+	}*//*
 
   public boolean isTileInvalid() {
     return this.isInvalid();
@@ -107,12 +107,12 @@ public class RadiantChestTileEntity extends TileEntity {
   }
 
   public void toggleRoutingType() {
-/*		if (routingType == BrazierRoutingType.ANY) {
+*//*		if (routingType == BrazierRoutingType.ANY) {
 			this.routingType = BrazierRoutingType.NO_NEW_STACKS;
 		} else {
 			this.routingType = BrazierRoutingType.ANY;
 		}
-		markDirty();*/
+		markDirty();*//*
   }
 
   public void setDisplay(ItemStack displayStack, EnumFacing facing) {
@@ -161,7 +161,7 @@ public class RadiantChestTileEntity extends TileEntity {
     if (!displayStack.isEmpty()) {
       compound.setTag(Tags.DISPLAY_STACK, displayStack.serializeNBT());
     }
-    /*		compound.setInteger(Tags.ROUTING_TYPE, routingType.ordinal());*/
+    *//*		compound.setInteger(Tags.ROUTING_TYPE, routingType.ordinal());*//*
 
     return compound;
   }
@@ -181,7 +181,7 @@ public class RadiantChestTileEntity extends TileEntity {
     if (compound.hasKey(Tags.DISPLAY_STACK)) {
       setDisplayStack(new ItemStack(compound.getCompoundTag(Tags.DISPLAY_STACK)));
     }
-    /*		routingType = BrazierRoutingType.fromInt(compound.getInteger(Tags.ROUTING_TYPE));*/
+    *//*		routingType = BrazierRoutingType.fromInt(compound.getInteger(Tags.ROUTING_TYPE));*//*
   }
 
   @Override
@@ -287,7 +287,7 @@ public class RadiantChestTileEntity extends TileEntity {
     public void setStackInSlot(int slot, @Nonnull ItemStack stack) {
       invalidate();
       super.setStackInSlot(slot, stack);
-      /*			world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);*/
+      *//*			world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);*//*
       markDirty();
     }
 
@@ -299,7 +299,7 @@ public class RadiantChestTileEntity extends TileEntity {
       }
       ItemStack result = super.insertItem(slot, stack, simulate);
       if (!simulate && (result.isEmpty() || result.getCount() != stack.getCount())) {
-        /*				world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);*/
+        *//*				world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);*//*
         markDirty();
       }
       return result;
@@ -313,10 +313,10 @@ public class RadiantChestTileEntity extends TileEntity {
       }
       ItemStack result = super.extractItem(slot, amount, simulate);
       if (!simulate && !result.isEmpty()) {
-        /*				world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);*/
+        *//*				world.updateComparatorOutputLevel(pos, BlockRegistry.RADIANT_CHEST);*//*
         markDirty();
       }
       return result;
     }
   }
-}
+}*/

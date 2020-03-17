@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.tiles.CrystalWorkbenchTile;
 import com.aranaira.arcanearchives.tiles.MakeshiftResonatorTile;
 import com.aranaira.arcanearchives.tiles.MandalicKeystoneTile;
+import com.aranaira.arcanearchives.tiles.TestTile;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
@@ -29,6 +30,7 @@ public class ModTiles {
     register("crystal_workbench", () -> CrystalWorkbenchTile.class);
     register("makeshift_resonator", () -> MakeshiftResonatorTile.class);
     register("spell_stone", () -> MandalicKeystoneTile.class);
+    register("test", () -> TestTile.class);
   }
 
   public static <T extends TileEntity> void register(String registryName, Supplier<Class<? extends T>> supplier) {

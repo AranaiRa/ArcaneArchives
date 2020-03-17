@@ -82,7 +82,7 @@ public class MakeshiftResonatorTile extends BaseTile implements ITickable {
   public NBTTagCompound writeToNBT(NBTTagCompound compound) {
     super.writeToNBT(compound);
 
-    compound.setInteger(Tags.MakeshiftResonator.CURRENT_TICK, growth);
+    compound.setInteger(Tags.MakeshiftResonator.currentTick, growth);
 
     return compound;
   }
@@ -91,8 +91,8 @@ public class MakeshiftResonatorTile extends BaseTile implements ITickable {
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
 
-    if (compound.hasKey(Tags.MakeshiftResonator.CURRENT_TICK)) {
-      growth = compound.getInteger(Tags.MakeshiftResonator.CURRENT_TICK);
+    if (compound.hasKey(Tags.MakeshiftResonator.currentTick)) {
+      growth = compound.getInteger(Tags.MakeshiftResonator.currentTick);
     }
   }
 

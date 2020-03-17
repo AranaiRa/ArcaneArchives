@@ -1,0 +1,53 @@
+package com.aranaira.arcanearchives.tilenetwork;
+
+import com.google.common.collect.ForwardingMap;
+
+import javax.annotation.Nullable;
+import java.util.*;
+
+public class Network extends ForwardingMap<UUID, NetworkEntry> {
+  private Map<UUID, NetworkEntry> entries = new HashMap<>();
+  private UUID networkId;
+
+  public Network(UUID networkId) {
+    this.networkId = networkId;
+  }
+
+  @Nullable
+  public NetworkEntry getEntryByTileId (UUID tileId) {
+    return entries.get(tileId);
+  }
+
+  public List<NetworkEntry> getEntriesByClass (Class<?> clazz) {
+    List<NetworkEntry> result = new ArrayList<>();
+    for (NetworkEntry entry : entries.values()) {
+      if (entry.clazz == clazz) {
+        result.add(entry);
+      }
+    }
+    return result;
+  }
+
+  public List<NetworkEntry> getEntriesByInstance (Class<?> parent) {
+    List<NetworkEntry> result = new ArrayList<>();
+    for (NetworkEntry entry : entries.values()) {
+      if (entry.clazz.isAssignableFrom(parent)) {
+        result.add(entry);
+      }
+    }
+    return result;
+  }
+
+  public boolean containsTile(UUID tileId) {
+    return entries.containsKey(tileId);
+  }
+
+  public UUID getNetworkId() {
+    return networkId;
+  }
+
+  @Override
+  protected Map<UUID, NetworkEntry> delegate() {
+    return entries;
+  }
+}

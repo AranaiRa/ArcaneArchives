@@ -57,8 +57,8 @@ public class RadiantCraftingTableTileEntity extends ImmanenceTileEntity implemen
 	public void readFromNBT (NBTTagCompound compound) {
 		super.readFromNBT(compound);
 
-		if (compound.hasKey(AATileEntity.Tags.INVENTORY)) {
-			persistentMatrix.deserializeNBT(compound.getCompoundTag(AATileEntity.Tags.INVENTORY));
+		if (compound.hasKey(AATileEntity.Tags.inventory)) {
+			persistentMatrix.deserializeNBT(compound.getCompoundTag(AATileEntity.Tags.inventory));
 		}
 
 		for (int i = 0; i < 3; i++) {
@@ -74,7 +74,7 @@ public class RadiantCraftingTableTileEntity extends ImmanenceTileEntity implemen
 	public NBTTagCompound writeToNBT (NBTTagCompound compound) {
 		compound = super.writeToNBT(compound);
 
-		compound.setTag(AATileEntity.Tags.INVENTORY, persistentMatrix.serializeNBT());
+		compound.setTag(AATileEntity.Tags.inventory, persistentMatrix.serializeNBT());
 
 		NBTUtils.setRecipe(compound, Tags.RECIPE1, recipeList.get(0));
 		NBTUtils.setRecipe(compound, Tags.RECIPE2, recipeList.get(1));

@@ -297,7 +297,7 @@ public class CrystalWorkbenchContainer extends Container {
 	public Map<ContainerSection, List<Slot>> containerSectionListMap () {
 		if (map == null) {
 			map = new HashMap<>();
-			map.put(ContainerSection.INVENTORY, getSlotRange(1, 37));
+			map.put(ContainerSection.inventory, getSlotRange(1, 37));
 			map.put(ContainerSection.CHEST, getSlotRange(37, 55));
 			map.put(ContainerSection.CRAFTING_OUT, Collections.singletonList(slotOutput));
 		}
