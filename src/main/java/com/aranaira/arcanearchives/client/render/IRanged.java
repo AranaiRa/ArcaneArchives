@@ -1,6 +1,6 @@
-package com.aranaira.enderio.base.render.ranged;
+package com.aranaira.arcanearchives.client.render;
 
-import com.aranaira.enderio.core.client.render.BoundingBox;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -18,6 +18,6 @@ public interface IRanged {
   void setShowingRange(boolean showingRange);
 
   @Nonnull
-  BoundingBox getBounds();
+  AxisAlignedBB getBounds();
 
 }
