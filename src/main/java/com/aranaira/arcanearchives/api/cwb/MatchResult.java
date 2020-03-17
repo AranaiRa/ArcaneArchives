@@ -14,10 +14,10 @@ public class MatchResult {
   private Object2IntOpenHashMap<IngredientStack> ingredientCounts = new Object2IntOpenHashMap<>();
   private Object2IntOpenHashMap<IngredientStack> matchMap;
   private Int2IntOpenHashMap slotMap = new Int2IntOpenHashMap();
-  private CrystalWorkbenchRecipe recipe;
+  private IArcaneArchivesRecipe recipe;
   private WorkbenchCrafting inventory;
 
-  public MatchResult(CrystalWorkbenchRecipe recipe, WorkbenchCrafting inv) {
+  public MatchResult(IArcaneArchivesRecipe recipe, WorkbenchCrafting inv) {
     this.recipe = recipe;
     this.inventory = inv;
     for (IngredientStack ingredient : getIngredients()) {
@@ -29,7 +29,7 @@ public class MatchResult {
     return ingredientCounts.clone();
   }
 
-  public CrystalWorkbenchRecipe getRecipe() {
+  public IArcaneArchivesRecipe getRecipe() {
     return recipe;
   }
 

@@ -1,12 +1,9 @@
-/*package com.aranaira.arcanearchives.network;
+package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.network.Handlers.BaseHandler;
 import com.aranaira.arcanearchives.network.Messages.EmptyMessage;
-import com.aranaira.arcanearchives.network.PacketRadiantChest.SyncChestDisplay;
-import com.aranaira.arcanearchives.network.PacketRadiantChest.SyncChestName;
-import com.aranaira.arcanearchives.network.PacketRadiantChest.UnsetItem;
-import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
+import com.aranaira.arcanearchives.tiles.BaseTile;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -22,7 +19,7 @@ public class Networking {
 	private static int packetID = 0;
 
 	public static void registerPackets () {
-		registerPacks(PacketRadiantChest.SetName.Handler.class, PacketRadiantChest.SetName.class, Side.SERVER);
+/*		registerPacks(PacketRadiantChest.SetName.Handler.class, PacketRadiantChest.SetName.class, Side.SERVER);
 		registerPacks(PacketRadiantChest.UnsetName.Handler.class, PacketRadiantChest.UnsetName.class, Side.SERVER);
 		registerPacks(PacketRadiantChest.SetItemAndFacing.Handler.class, PacketRadiantChest.SetItemAndFacing.class, Side.SERVER);
 		registerPacks(PacketRadiantChest.SyncChestDisplay.Handler.class, SyncChestDisplay.class, Side.CLIENT);
@@ -58,7 +55,7 @@ public class Networking {
 		registerPacks(PacketRadiantCrafting.SetRecipe.Handler.class, PacketRadiantCrafting.SetRecipe.class, Side.SERVER);
 		registerPacks(PacketRadiantCrafting.UnsetRecipe.Handler.class, PacketRadiantCrafting.UnsetRecipe.class, Side.SERVER);
 		registerPacks(PacketRadiantCrafting.TryCraftRecipe.Handler.class, PacketRadiantCrafting.TryCraftRecipe.class, Side.SERVER);
-		registerPacks(PacketGemCutters.SetRecipeIndex.Handler.class, PacketGemCutters.SetRecipeIndex.class, Side.SERVER);
+		registerPacks(PacketGemCutters.SetRecipeIndex.Handler.class, PacketGemCutters.SetRecipeIndex.class, Side.SERVER);*/
 	}
 
 	private static <REQ extends IMessage, REPLY extends IMessage> void registerPacks (Class<? extends IMessageHandler<REQ, REPLY>> messageHandler, Class<REQ> requestMessageType, Side side) {
@@ -76,11 +73,11 @@ public class Networking {
 		CHANNEL.sendToAllTracking(message, tp);
 	}
 
-	public static void sendToAllTracking (IMessage message, ImmanenceTileEntity tile) {
-		sendToAllTracking(message, tile.getPos(), tile.dimension);
+	public static void sendToAllTracking (IMessage message, BaseTile tile) {
+		sendToAllTracking(message, tile.getPos(), tile.getWorld().provider.getDimension());
 	}
 
 	public static void sendToAllTracking (IMessage message, Entity entity) {
 		CHANNEL.sendToAllTracking(message, entity);
 	}
-}*/
+}

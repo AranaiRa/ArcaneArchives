@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.tilenetwork;
 
 import com.aranaira.arcanearchives.tiles.NetworkedBaseTile;
+import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.UUID;
@@ -24,5 +25,10 @@ public class NetworkEntry {
     this.uuid = tile.getTileId();
     this.position = tile.getPos();
     this.dimension = tile.getWorld().provider.getDimension();
+  }
+
+  @SuppressWarnings("unchecked")
+  public <T extends NetworkedBaseTile> T getTile () {
+    return (T) WorldUtil.getTileEntity(this.clazz, this.dimension, this.position);
   }
 }

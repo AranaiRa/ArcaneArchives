@@ -1,30 +1,18 @@
 package com.aranaira.arcanearchives.api.cwb;
 
-import com.aranaira.arcanearchives.api.crafting.IngredientStack;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
-import java.util.List;
-import java.util.UUID;
 
-public interface ICrystalWorkbenchRecipe {
-  int getIndex ();
-  void setIndex (int index);
+public interface ICrystalWorkbenchRecipe extends IArcaneArchivesRecipe {
+  int getIndex();
 
-  MatchResult matches(WorkbenchCrafting inventory);
-
-  ItemStack getActualResult(WorkbenchCrafting inventory, UUID workbenchId);
-
-  ItemStack getResult();
-
-  void addIngredientTransformer (IngredientTransformer transformer);
-
-  List<IngredientTransformer> getIngredientTransformers ();
+  void setIndex(int index);
 
   // TODO
+  @Override
   default NonNullList<ItemStack> getRemainingIngredients(WorkbenchCrafting inventory, @Nullable EntityPlayer player) {
     NonNullList<ItemStack> ret = NonNullList.withSize(inventory.getInventory().getSlots(), ItemStack.EMPTY);
     for (int i = 0; i < ret.size(); i++) {
@@ -42,5 +30,4 @@ public interface ICrystalWorkbenchRecipe {
     return ret;
   }
 
-  List<IngredientStack> getIngredients();
 }

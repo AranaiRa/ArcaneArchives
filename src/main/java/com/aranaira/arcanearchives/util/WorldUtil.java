@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.util;
+package com.aranaira.arcanearchives.util;
 
 import net.minecraft.block.Block;
 import net.minecraft.server.MinecraftServer;
@@ -12,76 +12,74 @@ import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
 
-TODO: REWRITE AS STATIC METHOD OF TILE ENTITY TO AVOID GENERICISM
-
 public class WorldUtil {
-	@Nullable
-	public static <T> T getTileEntity (Class<T> clazz, int dimension, BlockPos pos) {
-		return getTileEntity(clazz, dimension, pos, false);
-	}
+  @Nullable
+  public static <T> T getTileEntity(Class<T> clazz, int dimension, BlockPos pos) {
+    return getTileEntity(clazz, dimension, pos, false);
+  }
 
-	@Nullable
-	public static <T> T getTileEntity (Class<T> clazz, int dimension, BlockPos pos, boolean forceChunkLoad) {
-		MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-		if (server == null) {
-			return null;
-		}
+  @Nullable
+  public static <T> T getTileEntity(Class<T> clazz, int dimension, BlockPos pos, boolean forceChunkLoad) {
+    MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+    if (server == null) {
+      return null;
+    }
 
-		World world = DimensionManager.getWorld(dimension);
+    World world = DimensionManager.getWorld(dimension);
 
-		if (world == null) {
-			return null;
-		}
+    if (world == null) {
+      return null;
+    }
 
-		return getTileEntity(clazz, world, pos, forceChunkLoad);
-	}
+    return getTileEntity(clazz, world, pos, forceChunkLoad);
+  }
 
-	@Nullable
-	@SuppressWarnings("unchecked")
-	public static <T> T getTileEntity (Class<T> clazz, IBlockAccess world, BlockPos pos, boolean forceChunkLoad) {
-		if (world == null || pos == null) {
-			return null;
-		}
+  @Nullable
+  @SuppressWarnings("unchecked")
+  public static <T> T getTileEntity(Class<T> clazz, IBlockAccess world, BlockPos pos, boolean forceChunkLoad) {
+    if (world == null || pos == null) {
+      return null;
+    }
 
-		if (world instanceof World) {
-			if (!((World) world).isBlockLoaded(pos) && !forceChunkLoad) {
-				return null;
-			}
-		}
+    if (world instanceof World) {
+      if (!((World) world).isBlockLoaded(pos) && !forceChunkLoad) {
+        return null;
+      }
+    }
 
-		TileEntity te = world.getTileEntity(pos);
+    TileEntity te = world.getTileEntity(pos);
 
-		if (te == null) {
-			return null;
-		}
+    if (te == null) {
+      return null;
+    }
 
-		if (clazz.isInstance(te)) {
-			return (T) te;
-		}
+    if (clazz.isInstance(te)) {
+      return (T) te;
+    }
 
-		return null;
-	}
+    return null;
+  }
 
-	@Nullable
-	public static <T> T getTileEntity (Class<T> clazz, IBlockAccess world, BlockPos pos) {
-		return getTileEntity(clazz, world, pos, false);
-	}
+  @Nullable
+  public static <T> T getTileEntity(Class<T> clazz, IBlockAccess world, BlockPos pos) {
+    return getTileEntity(clazz, world, pos, false);
+  }
 
-	public static boolean isChunkLoaded (World world, BlockPos pos) {
-		return world.isBlockLoaded(pos);
-	}
+  public static boolean isChunkLoaded(World world, BlockPos pos) {
+    return world.isBlockLoaded(pos);
+  }
 
-	public static void spawnInventoryInWorld (World world, double x, double y, double z, IItemHandler inventory) {
-		spawnInventoryInWorld(world, new BlockPos(x, y, z), inventory);
-	}
+  public static void spawnInventoryInWorld(World world, double x, double y, double z, IItemHandler inventory) {
+    spawnInventoryInWorld(world, new BlockPos(x, y, z), inventory);
+  }
 
-	public static void spawnInventoryInWorld (World world, BlockPos pos, IItemHandler inventory) {
-		if (inventory != null && !world.isRemote) {
-			for (int i = 0; i < inventory.getSlots(); i++) {
-				if (!inventory.getStackInSlot(i).isEmpty()) {
-					Block.spawnAsEntity(world, pos, inventory.getStackInSlot(i));
-				}
-			}
-		}
-	}
-}*/
+  public static void spawnInventoryInWorld(World world, BlockPos pos, IItemHandler inventory) {
+    if (inventory != null && !world.isRemote) {
+      for (int i = 0; i < inventory.getSlots(); i++) {
+        if (!inventory.getStackInSlot(i).isEmpty()) {
+          Block.spawnAsEntity(world, pos, inventory.getStackInSlot(i));
+        }
+      }
+    }
+  }
+}
