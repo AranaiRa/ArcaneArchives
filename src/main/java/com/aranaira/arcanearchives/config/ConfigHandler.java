@@ -73,11 +73,6 @@ public class ConfigHandler {
     @Config.Comment("Enable colour-blind mode for Arsenal. This replaces gem icons specifically with variants more clearly defined for types of colour-blindness")
     @Config.Name("Colourblind Mode")
     public boolean ColourblindMode = false;
-
-/*		@Config.Comment("What blocks a Munchstone can eat. First value is a block (such as minecraft:log), second value is the amount of hunger restored. Saturation always equals the hunger restoration.")
-		@Config.Name("Valid Munchstone Blocks")
-		@Config.RequiresMcRestart
-		public String[] MunchstoneValidEntries = MunchstoneItem.DEFAULT_ENTRIES;*/
   }
 
   @Config.Comment("Settings related to sounds")
