@@ -9,17 +9,6 @@ import javax.annotation.Nullable;
 import java.util.UUID;
 
 public class NBTUtils {
-  public static void setUUID(NBTTagCompound tag, String key, UUID uuid) {
-    tag.setLong(key + "_most", uuid.getMostSignificantBits());
-    tag.setLong(key + "_least", uuid.getLeastSignificantBits());
-  }
-
-  public static UUID getUUID(NBTTagCompound tag, String key) {
-    long most = tag.getLong(key + "_most");
-    long least = tag.getLong(key + "_least");
-    return new UUID(most, least);
-  }
-
   public static void setRecipe(NBTTagCompound tag, String key, IRecipe recipe) {
     if (recipe != null) {
       tag.setInteger(key, CraftingManager.REGISTRY.getIDForObject(recipe));

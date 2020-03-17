@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.entity.EntityWeight;
 import com.aranaira.arcanearchives.events.ClientTickHandler;
+import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.registry.MandalicKeystoneRegistry;
 import com.aranaira.arcanearchives.util.DuplicationUtils;
 import net.minecraft.block.Block;
@@ -22,19 +23,14 @@ public class CommonProxy {
     ArcaneArchives.logger = event.getModLog();
     NetworkRegistry.INSTANCE.registerGuiHandler(ArcaneArchives.instance, new AAGuiHandler());
 
-/*		BlockRegistry.init();
-		ItemRegistry.init();
-
-		Networking.registerPackets();*/
+    Networking.registerPackets();
     EntityRegistry.registerModEntity(new ResourceLocation(ArcaneArchives.MODID, "weight"), EntityWeight.class, "weight", 0, ArcaneArchives.instance, 64, 10, false);
   }
 
   public void init(FMLInitializationEvent event) {
     MandalicKeystoneRegistry.initializeRecipes();
 
-/*		RecipeLibrary.buildRecipes();
-		BlockRegistry.registerTileEntities();
-		CraftingTweaks.init();
+		/*CraftingTweaks.init();
 
 		FMLInterModComms.sendFunctionMessage("theoneprobe", "getTheOneProbe", "com.aranaira.arcanearchives.integration.top.TOPPlugin");*/
   }
@@ -58,7 +54,6 @@ public class CommonProxy {
   }
 
   public void serverStarted(FMLServerStartedEvent event) {
-    /*		DataHelper.clearClientCache(); // has no effect on the server*/
   }
 
   public void loadComplete(FMLLoadCompleteEvent event) {

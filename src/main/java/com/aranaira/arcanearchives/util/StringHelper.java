@@ -29,9 +29,4 @@ public class StringHelper {
       return String.format("%02d:%02d", minutes, seconds);
     }
   }
-
-  private StringHelper() {
-    //
-  }
-
 }
