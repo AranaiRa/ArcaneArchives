@@ -4,6 +4,7 @@ public interface Tags {
   String recipe = "Rec";
   String inventory = "Inv";
   String tileId = "TileId";
+  String networkId = "NetId";
 
   interface CrystalWorkbench {
     String inputInventory = "InvIn";

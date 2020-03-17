@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.tilenetwork;
 
+import com.aranaira.arcanearchives.tiles.NetworkedBaseTile;
 import com.google.common.collect.ForwardingMap;
 
 import javax.annotation.Nullable;
@@ -11,6 +12,15 @@ public class Network extends ForwardingMap<UUID, NetworkEntry> {
 
   public Network(UUID networkId) {
     this.networkId = networkId;
+  }
+
+  public NetworkEntry add (NetworkedBaseTile tile) {
+    NetworkEntry entry = new NetworkEntry(tile);
+    return put(entry.uuid, entry);
+  }
+
+  public NetworkEntry remove (NetworkedBaseTile tile) {
+    return remove(tile.getTileId());
   }
 
   @Nullable

@@ -18,7 +18,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public class CrystalWorkbenchTile extends BaseTile implements INetworked {
+public class CrystalWorkbenchTile extends NetworkedBaseTile {
   // TODO: Store this value somewhere else?
   public static final int RECIPE_PAGE_LIMIT = 7;
 
