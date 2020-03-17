@@ -1,0 +1,11 @@
+- Fix the Imbuer recipe to use ore dictionary components.
+- The Wildwood Bow now has increased durability, enchantability, and auto-repairs at a significantly slower rate than other living tools.
+- Fix #129: Grove Stones no longer destroy farmland or fertile soil. Instead, they just plant pretty flowers and let grass grow how it will.
+- Fix #131: Fix the unlock requirements for Sense Danger (Spell), Windwall (Ritual).
+- Fix #127: The ritual of Purity no longer causes a concurrent modification error when removing potion effects.
+- Partially address #125: Rustic crops are specifically excluded from the Harvest spell.
+- Fix #128: Elemental soil converted into Magmatic soil in flowing lava is no longer immediately destroyed.
+- Fix #126: Upgrading the Component Pouch to the Apothecary Pouch once again retains the items, herbs & metadata of the original Component Pouch.
+- Note that, for the Wild Growth ritual, fully grown Wildroot crop is required.
+- Fix #124: Living arrows will now be picked up as living arrows, instead of "downgrading" them into normal arrows. This applies for those you shoot and those anyone else shoots. In addition, the break chance while picking up living arrows with the quiver is reduced to 0.
+- Fix #130: Properly set the new name of the Pyre Crafting Ritual so that serialisation functions correctly.

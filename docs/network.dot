@@ -1,0 +1,129 @@
+digraph Server {
+    node [nodesep=3.0, splines=true,style=filled]
+    graph [overlap=false, splines=true, nodesep=3.0]
+    
+    uuid [shape=square,fillcolor=orchid1]
+    manifestItems [shape=square,fillcolor=orchid1]
+    tiles [shape=square,fillcolor=orchid1]
+    tileIdSet [shape=square,fillcolor=orchid1]
+    totalCores [shape=square,fillcolor=orchid1]
+    totalResonators [shape=square,fillcolor=orchid1]
+    
+    getUuid [fillcolor=lightblue]
+    
+    getPlayer [fillcolor=orangered]
+    
+    fromNBT [fillcolor=lightblue,shape=diamond]
+    
+    getValidTiles [fillcolor=lightblue]
+    getManifestTileEntities [fillcolor=lightblue]
+    
+    generateTileUuid [fillcolor=lightblue]
+    
+    handleTileIdChange [fillcolor=lightblue]
+    addTile [fillcolor=lightblue]
+    removeTile_ITE [fillcolor=orangered]
+    removeTile_UUID [fillcolor=orangered]
+    
+    containsTile_ITE [fillcolor=lightblue]
+    containsTile_UUID [fillcolor=lightblue]
+    
+    writeToSave [fillcolor=lightblue]
+    readFromSave [fillcolor=lightblue]
+    
+    getTotalCores [fillcolor=lightblue]
+    getTotalCores -> totalCores
+    
+    getTotalResonators [fillcolor=lightblue]
+    getTotalResonators -> totalResonators
+    
+    rebuildTotals [fillcolor=lightblue]
+    rebuildTotals -> totalCores
+    rebuildTotals -> totalResonators
+
+    synchroniseData [fillcolor=orangered]
+    
+    buildSynchroniseManifest [fillcolor=lightblue]
+    buildSynchroniseData [fillcolor=lightblue]
+    
+    rebuildManifest [fillcolor=orangered]
+    rebuildManifest -> manifestItems
+    buildSynchroniseManifest -> manifestItems
+    
+    BlockPosDimension [shape=octagon,fillcolor=palegreen]
+    
+    node [shape=hexagon]
+    
+    "AAWorldSavedData::readFromNBT" -> getUuid
+    "RadiantChestListener::sendManifestUpdate" -> getUuid
+    
+    synchroniseData -> getPlayer
+    rebuildManifest -> getPlayer
+    
+    "AAWorldSavedData::readFromNBT" -> fromNBT
+    
+    rebuildTotals -> getValidTiles
+    
+    "ImmanenceTileEntity::tryGenerateUUID" -> generateTileUuid
+    "ImmanenceTileEntity::readFromNBT" -> handleTileIdChange
+    
+    "ServerTickHandler" []
+    "onServerTick" []
+    "ServerTickHandler" -> "onServerTick"
+    "onServerTick" -> addTile
+    "onServerTick" -> containsTile_ITE
+    containsTile_ITE -> containsTile_UUID
+    
+    handleTileIdChange -> removeTile_UUID
+    
+    "AAWorldSavedData::writeToNBT" -> writeToSave
+    fromNBT -> readFromSave
+    
+    "onTick" []    
+    "ServerTickHandler" -> "onTick"
+    "onTick" -> getTotalCores
+    "onTick" -> getTotalResonators    
+    "ItemBlockTemplate::onItemUseFirst" -> getTotalCores
+    "ItemBlockTemplate::onItemUseFirst" -> getTotalResonators
+    
+    addTile -> rebuildTotals
+    removeTile_ITE -> rebuildTotals
+    buildSynchroniseData -> rebuildTotals
+    "onPlayerLoggedIn" []
+    "ServerTickHandler" -> "onPlayerLoggedIn"
+    "onPlayerLoggedIn" -> rebuildTotals
+    
+    rebuildTotals -> synchroniseData
+    
+    "RadiantChestListener::sendManifestUpdate" -> buildSynchroniseManifest
+    "PacketNetworks.Request.Handler::processMessage" -> buildSynchroniseManifest
+    
+    buildSynchroniseManifest -> rebuildManifest
+    rebuildManifest -> getManifestTileEntities
+    
+    synchroniseData -> buildSynchroniseData
+    "PacketNetworks.Request.Handler::processMessage" -> buildSynchroniseData
+    
+    rebuildManifest -> BlockPosDimension
+    
+    getUuid -> uuid
+    getValidTiles -> tiles    
+    addTile -> tiles
+    removeTile_ITE -> tiles
+    containsTile_ITE -> tiles
+    containsTile_UUID -> tiles
+    getManifestTileEntities -> tiles
+
+    generateTileUuid -> tileIdSet
+    handleTileIdChange -> tileIdSet 
+
+    "External Points" [shape=doublecircle,fillcolor=gold]
+    "External Points" -> "AAWorldSavedData::readFromNBT"
+    "External Points" -> "ImmanenceTileEntity::tryGenerateUUID"
+    "External Points" -> "PacketNetworks.Request.Handler::processMessage"
+    "External Points" -> "ServerTickHandler"
+    "External Points" -> "ItemBlockTemplate::onItemUseFirst"
+    "External Points" -> "AAWorldSavedData::writeToNBT"
+    "External Points" -> "RadiantChestListener::sendManifestUpdate"
+    "External Points" -> "ImmanenceTileEntity::readFromNBT"
+}

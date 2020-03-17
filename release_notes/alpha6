@@ -1,0 +1,41 @@
+@Technologians A new alpha build is available! With all sorts of new things! 
+:item_cutquartz: Arcane Archives v0.2.0-preview6 :item_cutquartz:
+
+***Known issues***
+:task_bullet: Items with "not implemented" tooltips still probably don't work.
+:task_bullet: No WAILA/TOP/etc compat for Accessor Blocks or Radiant Chest names (although chest contents will display).
+:task_bullet: You may encounter "InvalidNetworkErrors" in the server log that results in blocks dismantling themselves and dropping their inventories ***when loading from a save from a previous version***. If this happens in a new world or a world updated that it did not previously happen in, ***please report***.
+:task_incomplete: The three empty "slots" that cannot be interacted with on the right side of the Radiant Crafting GUI are deliberately this way.
+:task_incomplete: There's currently no way to scroll through the manifest if you have a large number of items.
+:task_incomplete: It's possible that a desynchronisation between the client and the server can result in "ghost" Matrix Cores or Radiant Resonators being "placed" on the client side before disappearing. ***Please report any instances of this***, more instructions under testing objectives.
+:task_incomplete: Some tile-entity movers do not function properly: the *Moving Wand* from *Not Enough Wands* and the *Box* from *Cardboard Boxes* will properly move a Radiant Chest (tested). *Carry On*'s keybind and *Chest Transpoters* will do absolutely nothing to a Radiant Chest. Other tile entities, especially those with accessor blocks (including the Gem Cutter's Table) will result in misplaced accessor blocks.
+:task_incomplete: It's currently possible to bypass limits on Radiant Resonators and Matrix Crystal Cores by using the *Moving Wand* from *Not Enough Wands* and the *Box* from *Cardboard Boxes* and place more than is allowed. 
+
+***Solved Issues***
+:task_bullet: You must now be online for your radiant resonator to tick.
+:task_complete: You no longer get a "ghost" image when clicking on the output slot of Gem Cutter's Table when you are unable to craft the recipe.
+:task_complete: A Null Point error & crash should no longer randomly occur when you attempt to edit the name of a Radiant Chest.
+:task_complete: Total resonators placed and total matrix cores placed will now synchronise from the server, meaning that client-side "too many resonators!" functionality should no longer result in a visible delay when placing tile entities (even those that don't have place limits). See note above re: potential for "ghosting".
+:task_complete: The "refresh" button on the Manifest is now functional! It will need to be tested in multiplayer by others manipulating your inventories while you refresh.
+:task_complete: Manifest searching is now properly functional again! It searches both display name and registry name, which will either be AWESOME or really, really annoying.
+:task_complete: Radiant Lanterns now have proper facing and can be placed in the same fashion as an ender rod!
+:task_complete: The Radiant Crafting table is now implemented apart from the "favourite recipes" slots on the far right. MIT-licensed code from Tinker's Construct and Mantle (see CREDITS.md for full details) was used to ensure that the implementation functioned exactly how a crafting table should. It should also mimic the features of the mod *Fast Workbench*.
+:task_complete: Recipe lists for Gem Cutter's Table items is now displayed in tooltip on mouseover, instead of details of the item. If you wish to view the item tooltip, you can select it as a recipe and hover over the output slot.
+:task_complete: Recipes for which you do not have the ingredients for in the Gem Cutter's Table will render as dimmed in both the recipe list and the output slot.
+:task_complete: Other players interacting with a Gem Cutter's Table should properly update the recipe status if they remove or add items to the table's inventory, likewise if they throw items to you and it lands in your inventory. The recipe status is now only queried on inventory updates, instead of every time the screen is drawn.
+:task_complete: Double-clicking on Manifest GUI slots (from the second row onwards) no longer attempts to take items from your own inventory.
+:task_complete: Lines will now be properly drawn if you immediately open the Manifest and click on the same chest shortly after having opened it, instead of being deleted.
+:task_complete: Invalid tile entities (i.e., those placed by Botania's Rannucarpus) will be broken and refunded (and potentially replaced) after a short delay rather than being destroyed.
+:task_complete: Changes to tile entity placement noted above no longer cause the process of converting chests into radiant chests to instantly destroy the chest shortly thereafter. Crafting tables into radiant crafting tables with raw quartz was unaffected and should function as expected.
+:task_complete: The recipe to convert a chest into a radiant chest through shapeless crafting now accepts anything that matches `chestWood` instead of just the vanilla chest.
+:task_complete: GUI backgrounds are properly darkened to match the Vanilla standard when entering any of the Arcane Archives GUIs.
+
+***Testing Objectives***
+:task_bullet: Ensure that previously fixed issues continue to work (no regressions! NO REGRESSIONS!)
+:task_bullet: Multiplayer testing as much as possible with regards multiple people using the same Radiant Crafting Table, Gem Cutter's Table, Radiant Chest, etc.
+:task_bullet: Ensure manifest linese aren't being deleted prematurely or failing to show up when in close proximity to the relevant chest. Ensure that you can search for the craziest of things and still find them!
+:task_bullet: Test the Gem Cutter's Table crafting (ignoring the duplication bug mentioned above) to ensure that recipes light up and disappear when craftable or not. Likewise ensure the tooltips correctly change colours when crafted.
+:task_bullet: Test block placers or any description to ensure that the changes to tile entities properly break after a short period when they have no a ccurate network information.
+:task_bullet: When placing a series of Radiant Chests in survival mode, the GUI of the last chest should no longer be opened when you place the final chest. **Please report this if it happens to you**. (Lag may be a factor.)
+:task_bullet: Test ***more*** ways to break the chest naming system. Currently it requires clicking in the area and then typing. Hopefully the null pointer issue has been resolved, but there could always be a regression.
+:task_bullet: Test ways to **break** place limits again. Theoretically this should only occur on the client-side and should only result in a "ghost" image of the object being placed down appear. ***If you do get this in single-player, please provide a copy of your log file as it contains client and server debug information.***

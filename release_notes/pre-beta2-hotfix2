@@ -1,0 +1,10 @@
+***Known issues***
+
+:task_incomplete: The brazier fire animation ceases to function properly when you have Vanilla Fix installed and the "Texture Optimisations" feature enabled. There's unfortunately nothing we can do about this, although the Vanilla Fix crew know about it & are working on it.
+
+***Changes***
+
+:task_complete: The Brazier fire is once more glorious!
+:task_complete: Brazier routing should now function properly: instead of attempting to keep track of every item, we now invalidate the tracking map associated with the inventory, which is only manually re-generated when it's queried. In combination with a caching system (with a limit of 1 second), this should allow for efficiency and accuracy.
+:task_complete: Per the above, weights have now been completely adjusted and are still visible via `/brazier`. Invalid tiles are now discarded, and weights are anywhere from 0-100 (for inventories that don't contain the item), 300-1500 (for inventories that do contain the items), 4000-4700 for troves, and up to 5000 to compensate for GCT weights.
+:task_complete: Arcane Arsenal is now disabled by default.

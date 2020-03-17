@@ -1,0 +1,37 @@
+digraph G {
+    splines=true
+    subgraph cluster_N {
+        label="Matrix Instance"
+        color=blue;
+        repo [shape=circle,label="Repository Matrix"];
+        storage [shape=circle,label="Storage Matrix"];
+        handler [label="MatrixItemHandler"];
+        cache [shape=tab,label="MatrixDataCache"];        
+        interface [shape=tab,label="MatrixDataInterface"];
+        repo -> handler [dir=both,label="typed"];
+        storage -> handler [dir=both,label="dynamic"];
+        handler -> cache [dir=both,label="packed reference"];
+        handler -> interface [dir=both,label="itemstack reference"]
+        
+        interface -> cache [dir=both,label="internal lookup"]
+    }    
+    
+    subgraph cluster_M {
+        label="Central Matrix Core";
+        style=filled;
+        color=lightblue;        
+        core [shape=square,label="Matrix Core"];
+        bus [shape=record,label="Network Storage Bus"];
+        core -> bus [label="brazier input"];
+        bus -> core [label="manifest ouput"];        
+    }
+    
+    subgraph cluster_insertion {
+        item [shape=square];
+    }
+    
+    cache -> bus [label="manifest output"]
+    bus -> interface [label="brazier input"]
+    interface -> bus [label="network storage output"]
+    
+}

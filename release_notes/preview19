@@ -1,0 +1,22 @@
+***Known issues***
+
+:task_incomplete: Recharge-over-time gems still make you wave your hand frantically.
+:task_incomplete: The Brazier's fire is still suck-y.
+:task_incomplete: The Radiant Tank TEISR is still funky.
+:task_incomplete: The current fluid is not currently rendered onto the icon for the Radiant Amphora regardless of mode.
+:task_incomplete: Despite my best efforts, chest names and display stacks on Radiant Chests may still disappear.
+:task_incomplete: Crafting odd recipes like mushroom step with multiple ingredients in the crafting grid may result in the output not being updated on the client side. If you keep clicking you will get the result though.
+:task_incomplete: Tooltips for tanks are completely wrong when it comes to maximum capacity.
+:task_incomplete: Slivers of light do weird things when stuffed into a Lantnern of Paranoia from Reliquary; likewise there are weird placement issues and weird dropping-off-when-neighbour-changed.
+:task_incomplete: GUI scale can be an issue for larger resolutions with the Tome of Arcana.
+
+***Changes***
+
+:task_complete: Brazier routing has been completely rewritten. Voiding troves are prioritised above all else, with voiding troves that aren't full prioritised over those that are; Gem Cutter's Tables with stacks of the relevant item will have that stack filled; otherwise troves with the item will be prioritised over chests, and the weight of a chest is determine by the percentage of slots containing the item (multiplied by 2) plus the number of empty slots. 
+:task_complete: If you have any issues with brazier routing or any confusion, please use the `/brazier` command to get a debug output.
+:task_complete: It's now possible to throw the Mountaintear.
+:task_complete: The maximum slot size for a single item in a Radiant Chest is now 4, instead of 8. ***This may cause you to lose items if you had more than 4 in a chest***.
+:task_complete: Chromatic powders now have aspects.
+:task_complete: The Brazier interface (accessed via the scepter of manipulation) now allows you to limit the brazier to your subnetwork (instead of depositing to all attached chests in your hive), and now allows you to specify a range.
+:task_complete: Brazier ranges are limited to a maximum of 300 blocks (radius), within the same dimension. You can press the eye button to toggle a visual of the range (thanks to EnderCore & EnderIO).
+:task_complete: Rewrote Manifest code to use ByteBufs properly instead of just trying to serialise a complete NBT Tag Compound. It now properly separates out items that are further than your maximum distance, even if you have the same item in your network.

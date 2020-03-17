@@ -1,0 +1,35 @@
+***Continued known issues***
+
+:task_incomplete: Despite best efforts, display stacks still sometimes go completely missing even after synchronising into NBT and being transmitted to the client. Likewise chest names. There are a number of debug statements in the debug log which will hopefully shed more light as to why this happens.
+:task_incomplete: When no items are visible on the Manifest, the "End Tracking" text disappears. This has been surprisingly difficult to track down.
+:task_incomplete: VanillaFix's "Texture Optimisations" option currently disables animation in our Brazier texture. This is a known issue with VanillaFix and being worked on.
+
+***Changes from pre-beta-hotfix2***
+
+:task_complete: The Brazier of Hoarding now uses the original animated fire texture and model. If this does not animate for you, and you have VanillaFix installed, please disable VanillaFix's "Texture Optimisations".
+:task_complete: Routing weights have been readjusted for a better outcome based on the amount of items in the chest, the amount of *this* item in the chest, and generally ignoring empty spaces.
+:task_complete: The Arcane Arsenal module (and its gems) is disabled by default. You can enable it in configuration (requires restart). The documentation is also disabled unless the module is installed.
+:task_complete: Invalid tile entities are now properly culled from the list, although perhaps not often enough.
+:task_complete: There are now a number of debug statements printed to the debug log in order to trace chest name and display stack disappearance.
+:task_complete: Fluids which have no flowing texture will now default to the still texture. Fluids with neither will not be rendered in Radiant Tanks.
+:task_complete: A number of instances where markDirty and server-side synchronisations were not being triggered have been disabled.
+:task_complete: Trove upgrades are now displayed in a more sane manner when targetting with the reticle.
+:task_complete: The Monitoring Crystal can no longer be applied to radiant storage.
+:task_complete: You can shift-click on the Manifest Search Bar to synchronise *from* JEI to it. In addition, with JEI synchronisation enabled, anything you type in the Manifest Search Box will be copied into the JEI search bar; additionally, once you close the manifest, your former JEI search term (if present) will be restored. 
+:task_complete: It is now optional (and default false) for your search term persisting between opening and closing the manifest.
+:task_complete: You can change the configuration of shift-clicking on Manifest entries, between tracking & closing and tracking & not closing.
+:task_complete: You can now right click an item being tracked in the manifest to clear just that item.
+:task_complete: The text in Manifest search boxes and Radiant Chest name boxes should now render with the correct colour regardless of what's being displayed.
+:task_complete: The Brazier now supports Shulker Boxes: you can right-click a shulker box onto a brazier and the contents (rather than the box itself) will be stored. This functionality also applies to ***any item that implements an Inventory Handler capability***. This does ***not*** include (unfortunately) many popular backback mods, and unfortunately such support would have to be custom-written for each one.
+:task_complete: JEI no longer considers the quick-crafting slots to be inventory slots in the Radiant Crafting Table, and will no longer try to copy ingredient items from them when using the "+" transfer-to-table button.
+:task_complete: Newly created Radiant Crafting Tables now properly have a network assigned and aren't popped off.
+:task_complete: Null/empty ingredients are disregarded for both the Gem Cutter's Table recipes and the FastCrafting recipes used for the Radiant Crafting Table. This means shaped recipes should now function properly.
+:task_complete: Ingredients in the matrix (the inventory) of the crafting table are prioritised over the inventory when quick-crafting.
+:task_complete: The recipe for Dhi-Bug's Orb of Debugging Bugs is now disabled by default.
+:task_complete: Updated pt_BR.lang (thanks aycfes)
+:task_complete: Pressing the previous page arrow in the GCT now loops around to the last page when pressed from the first page.
+:task_complete: Integrated Crafting should now function properly with chests whose max stack size is greater than 64, bypassing a Forge-implemented limitation on the max stack size.
+:task_complete: You can now use the Manifest Keybind while hovering over ingredients in the JEI Bookmarks tab to search.
+:task_complete: Debug commands and functionality of the Dhi-Bug orb now require Creative Mode in addition to command permission level 2.
+:task_complete: Some debug statements have been removed/commented out or limited to the debug log.
+:task_complete: The brazier now properly ignores & also displays the vertical limits.

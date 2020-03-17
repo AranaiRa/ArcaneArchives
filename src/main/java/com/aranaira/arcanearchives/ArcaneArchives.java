@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 
-@Mod(modid = ArcaneArchives.MODID, name = ArcaneArchives.NAME, version = ArcaneArchives.VERSION, dependencies = "after:baubles;required-before:mysticallib;after:thaumcraft")
+@Mod(modid = ArcaneArchives.MODID, name = ArcaneArchives.NAME, version = ArcaneArchives.VERSION, dependencies = "after:baubles;")
 public class ArcaneArchives {
   public static final String MODID = "arcanearchives";
   public static final String NAME = "Arcane Archives";

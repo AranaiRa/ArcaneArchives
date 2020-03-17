@@ -1,0 +1,16 @@
+***Known issues***
+:task_complete: Arcane Archives now depends on Mystical Lib in addition to Baubles. They are included in the zip file.
+:task_incomplete: Your Gem Cutter's Table will self-destruct, leaving itself on the ground and ejecting its inventory contents. You will need to place it down again and restore the contents for it to function properly.
+:task_incomplete: Due to the new upgrade system for Troves and Tanks, it is likely and entirely possible that you will lose all upgrades that you have supplied. You will need to replace them with the new upgrades to regain your storage. In combination with the increased storage, this should result in no change as the maximum storage previous is now less than the un-upgraded storage. 
+
+***Changes***
+:task_complete: Ore dictionary entries are no longer being modified and thus resulting in quantities appearing on simple vanilla crafting recipes in JEI, etc.
+:task_complete: Gem Cutter's Table no longer crashes in combination with Inventory Tweaks.
+:task_complete: Acccessor block models no longer cull faces.
+:task_complete: Lore TBDs have been removed from Tome entries, while decorative blocks have been removed from that section and merged into the main sections.
+:task_complete: Munchstone edibles are now configurable.
+:task_complete: Elixirspindle now properly cancels the drinking animation.
+:task_complete: Typing with the manifest or radiant chest open will no longer begin typing in the search/name text boxes unless these have already been focussed.
+
+***Testing targets***
+:task_bullet: Please find things that are broken.

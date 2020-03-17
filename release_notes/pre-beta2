@@ -1,0 +1,43 @@
+***Known issues***
+
+:task_incomplete: There is still a small chance for chest names & items to disappear. Please hit a chest that has lost its name with a debug orb for server & client tile information about name/stack/facing and submit a screenshot along with any other information you can provide!
+
+***Changes***
+:task_complete: Size adjustment for the brazier range is now documented.
+:task_complete: Right-clicking a petal apothecary with a rivertear anywhere in your inventory will attempt to refill the petal apothecary; likewise the Crucible from Thaumcraft.
+:task_complete: Crashes involving putting stacks into non-existent slots (causing an IndexOutOfBoundsException) should no longer happen with the Manifest. If it does I might cry.
+:task_complete: The Brazier flame is now once again *animated* in addition to being fullbright. (Thanks to jaredlll08 with additional Vector Math by Aranai.)
+:task_complete: Invalid/non-existent tiles are now properly culled from the tile list. This means that broken tiles may still draw tracking lines if you use the `/tiles` debug command, but opening and then closing the manifest before repeating the command should eliminate them.
+:task_complete: JEI synchronisation enabled by the button should persist between opening and closing the manifest (but not between logging in and out).
+:task_complete: The JEI search term that was in place when the manifest is opened is only restored to the JEI search bar if JEI synchronisation is currently enabled.
+:task_complete: When using a keybind over an ingredient to search, only in-bounds, in-dimension and in-range items will be tracked. This means that if you are part of a hive and someone 10,000 blocks away has that item, tracking lines will no longer be drawn to it.
+:task_complete: The chest name is now properly rendered in the GUI, meaning actual testing can commence to ensure that the new solution for chest names & items is robust. Again, you can left-click a chest with a debug orb (not in creative mode) to get information on it.
+:task_complete: Tank capacity as an item now properly reflects the number of upgrades that it has. Rejoice!
+:task_complete: Troves as an item no longer return a `null` ItemStack meaning things that scan the player's inventory will no longer cause a crash. (Specifically Building Gadgets).
+:task_complete: Right-clicking any item into a trove (or double-right-clicking) will now result in an inventory refresh, meaning there should no longer be any ghost "in hand" copies of the item you just deposited. (***NOTE!!!*** This may still occur with some mods that perform "stack refresh" such as Inventory Tweaks and Quark; those are unfortunately not something I can fix).
+:task_complete: Brazier weighting will no longer mistakenly consider chests with weights 0 and below "ignore" chests. Only chests with a weight of -1 specifically will be ignored. You can debug brazier-specific routing (in text & visual) with the `/brazier` command (listed in the Debugging section below).
+:task_complete: Items and blocks are now properly registered within the context of the mod loading rather than when first accessed, meaning that your logs will no longer be spammed with "incorrect modid, got arcanearchives, expected XYZ instead" messages.
+:task_complete: The Devouring Charm now properly and audibly munches items on the ground that you specify!
+:task_complete: Automatic documentation for CraftTweaker support for the Gem Cutter's Table is now generated thanks to CodeTaylor's code (used with permission & compatible license). This documentation will be available on the CraftTweaker docs page after release.
+:task_complete: The API is now "fully" documented in a way that I hope is explanatory rather than simply verbose. It is also "fully" tested although I am sure there are ways to break it that I did not expect or foresee; at this point in time, it only provides methods for adding, removing and replacing recipes in the Gem Cutter's Table.
+:task_complete: The pick-up delay on items spawned by clicking on troves is now zero, meaning that you can pick them up instantly rather than having to wait around for them.
+:task_complete: Troves are no longer made of wood and as such can no longer be used as furnace fuel.
+:task_complete: Troves-as-items now function properly as inventories... hopefully!
+:task_complete: Right-clicking anywhere no longer clears the Manifest search bar or the Radiant Chest name. Whoops!
+:task_complete: Localised the amphora tooltip and updated it to longer look like a date.
+:task_complete: Radiant amphora now show visually in the icon what fluid they're currently linked to.
+
+***Debugging***
+
+:task_bullet: There are a number of debug options available at the minute. In order to track your tiles and get a summary of them (validity, etc) and have a client-side tracking line drawn, you can use the `tiles` command. This command takes no options or: `manifest` for manifest tiles only, `valid` for only valid tiles, `mine` for only your tiles (if part of a hive network), and `hive` which is basically identical to `/tiles`.
+:task_bullet: In addition, there is the `/hive` command which will give you hive information about yourself & anyone else in your hive network.
+:task_bullet: In addition, there is the `/brazier` command which will take the currently held item and treat it as though you threw it into a brazier, printing out every tile that it traverses through (in order), with their weight. Weights of -1 means a complete rejection. ***Weights will be rendered above the relevant chest/trove/etc as an entity nametag with the format W: <number>***. These will decay after 20 seconds or are replaced if you run the command again.
+:task_bullet: In addition, there is the Debug Orb (with beautiful texture by Aranai for later re-use). You can right click a tile entity with this to get client and server information copied to you. Clicking on any of the links provided will copy that link onto your clipboard.
+:task_bullet: You can also sneak-right-click an empty trove to fill it with snowballs if you wish to test voiding or anything similar.
+:task_bullet: ***WARNING!!!*** You can also sneak-right-click a trove to ***completely void its contents***. Be very careful when using the orb!
+:task_bullet: You can craft the debug orb shapelessly by converting a single piece of glass.
+
+***Testing Targets***
+
+:task_bullet: Chest names & chest display stacks. Please find ways to break this! Debug with the debug orb (left clicking on the chest this time) to see both the client and server-side information about the chest.
+:task_bullet: Troves as items! I believe they're fully functional but it's possible that there are desynchronisations or issues that may just cause straight out errors. I understand that there are a limited number of uses for straight up inventories, so cross-mod interaction is probably going to be the weak point!

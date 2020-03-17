@@ -1,0 +1,29 @@
+***Known issues***
+:task_incomplete: Recharge-over-time gems still make you wave your hand frantically.
+:task_incomplete: The Brazier's maximum range and range interface are not yet implemented.
+:task_incomplete: The Brazier's fire is still suck-y.
+:task_incomplete: Manifest packet sizes for large Hive networks are potentially too large and will cause the server to crash.
+:task_incomplete: Translocators might now work with Troves but this seems unlikely.
+:task_incomplete: The Radiant Tank TEISR is still funky.
+:task_incomplete: The current fluid is not currently rendered onto the icon for the Radiant Amphora regardless of mode.
+:task_incomplete: Despite my best efforts, chest names and display stacks on Radiant Chests may still disappear.
+:task_incomplete: Crafting odd recipes like mushroom step with multiple ingredients in the crafting grid may result in the output not being updated on the client side. If you keep clicking you will get the result though.
+:task_incomplete: ***Tooltips for tanks are completely wrong*** when it comes to maximum capacity.
+:task_incomplete: Slivers of light do weird things when stuffed into a Lantnern of Paranoia from Reliquary; likewise there are weird placement issues and weird dropping-off-when-neighbour-changed.
+:task_incomplete: GUI scale can be an issue for larger resolutions with the Tome of Arcana.
+
+***Fixes***
+:task_complete: The Debug Orb (default crafting recipe is shapeless, 1 glass -> debug orb) will allow you to gather information from the clietn & server side about troves, tanks and chests.
+:task_complete: Tooltip searching for the Manifest was removed as a flawed and failed process that violated Client/Server sanctity.
+:task_complete: Client/Server cross-over crash from recharging gems was fixed.
+:task_complete: The Brazier-toggle for Radiant Chests is less susceptible to null pointer errors.
+:task_complete: Gem recharge messages now use the proper translation key.
+:task_complete: The Debug Orb can be used to fill a Radiant Trove with snowballs by sneak-right-clicking.
+:task_complete: Tiles re-entering the network will have their tile list entry refreshed, updating any potentially invalid weak references.
+:task_complete: Requesting a manifest update will result in the entire network having its references validated and remade if the tile entities are within loaded areas. These two changes should mean that troves and chests will no longer disappear off networks.
+:task_complete: Double-clicking an item into a brazier should no longer deposit every copy in your inventory for every time it appears in your inventory, i.e., no more random duplication.
+:task_complete: The Radiant Amphora should no longer cause a null-pointer error if its capability returns null.
+:task_complete: Immanence Tile Entities now transmit their new tile ID to the client when they gain one, instead of being without one on the client side until a restart or a reload.
+:task_complete: There is a new config option that allows you to set newly placed chests with the "No New Stacks" option set by default.
+:task_complete: Scepters of Revelation and Manipulation, as well as the Debug Orb, are no longer accepted by the brazier.
+:task_complete: The Copy command used for the debug orb's testing and transmitting URL functionality now requires a permission level of 0, i.e., anyone can uses it.

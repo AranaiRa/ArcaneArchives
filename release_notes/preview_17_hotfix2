@@ -1,0 +1,12 @@
+Known issues
+:task_complete: Arcane Archives now depends on Mystical Lib. Baubles is now an option dependency.
+:task_incomplete: Your Gem Cutter's Table will self-destruct, leaving itself on the ground and ejecting its inventory contents. You will need to place it down again and restore the contents for it to function properly.
+:task_incomplete: Due to the new upgrade system for Troves and Tanks, it is likely and entirely possible that you will lose all upgrades that you have supplied. You will need to replace them with the new upgrades to insert more items into your trove.
+Changes
+:task_complete: Baubles is now a soft dependency.
+:task_complete: The Gem Cutter's Table will no longer cause crashes with Inventory Tweaks.
+:task_complete: JEI now properly shows Gem Cutter's Table recipes once more.
+:task_complete: The Gem Cutter's Table now immediately refills the recipe output after crafting. This allows you to click multiple times to get multiple outputs, and shift-clicking.
+
+Testing targets
+:task_bullet: Please find things that are broken.
