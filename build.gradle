@@ -93,7 +93,6 @@ dependencies {
     // at runtime, use the full JEI jar
     runtime "mezz.jei:jei_${minecraft_version}:${jei_version}"
 
-    deobfCompile "com.azanor:Baubles:${version_baubles}"
     deobfCompile("CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-${ct_version}") {
         exclude group: 'mezz.jei'
     }
@@ -183,34 +182,3 @@ artifacts {
 mixin {
     add sourceSets.main, "mixins.arcanearchives.refmap.json"
 }
-
-
-// FROM ENDER CORE <3
-String getCN() {
-    def firsts = ['Donald', 'Lex', 'Mike', 'Arthur', 'Bridget', 'Dorian', 'Ford', 'Guy', 'James', 'Jessica', 'John', 'Michael', 'Robinson', 'Zaphod', 'Bell', 'Penelope']
-    def lasts = ['Duck', 'Luthor', 'Meyers', 'Dent', 'Jones', 'Gray', 'Prefect', 'Montag', 'Moriarty', 'Rabbit', 'Watson', 'Smith', 'Corleone', 'Crusoe', 'Beeblebrox', 'Cranel', 'Akk']
-    def rand = new Random()
-    return firsts[rand.nextInt(firsts.size())] + ' ' + lasts[rand.nextInt(lasts.size())]
-}
-
-task mkKeyStore(type:Exec) {
-   workingDir projectDir
-   commandLine 'keytool', '-genkey', '-alias', 'signFiles', '-keystore', 'kstore.jks', '-storepass', '123456', '-noprompt', '-dname', 'CN='+getCN(), '-keypass', '123456'
-}
-
-task signJar(type: SignJar, dependsOn: reobfJar) {
-    inputFile = jar.archivePath
-    outputFile = jar.archivePath
-    keyStore = 'kstore.jks'
-    alias = 'signFiles'
-    storePass = '123456'
-    keyPass = '123456'
-}
-
-task rmKeyStore(type: Delete) {
-  delete 'kstore.jks'
-}
-
-build.dependsOn rmKeyStore
-rmKeyStore.dependsOn signJar
-signJar.dependsOn mkKeyStore
