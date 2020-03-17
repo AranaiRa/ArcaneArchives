@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.containers;
+/*package com.aranaira.arcanearchives.containers;
 
 import com.aranaira.arcanearchives.containers.slots.SlotExtended;
 import com.aranaira.arcanearchives.tiles.RadiantChestTileEntity;
@@ -21,17 +21,17 @@ public class ContainerRadiantChest extends Container {
 
   protected RadiantChestTileEntity tile;
 
-  /**
+  *//**
    * The current drag mode (0 : evenly split, 1 : one item by slot, 2 : not used ?)
-   */
+   *//*
   protected int dragMode = -1;
-  /**
+  *//**
    * The current drag event (0 : start, 1 : add slot : 2 : end)
-   */
+   *//*
   protected int dragEvent;
-  /**
+  *//**
    * The list of slots where the itemstack holds will be distributed
-   */
+   *//*
   protected final Set<Slot> dragSlots = Sets.newHashSet();
 
   public ContainerRadiantChest(RadiantChestTileEntity te, EntityPlayer player) {
@@ -559,7 +559,7 @@ public class ContainerRadiantChest extends Container {
       if (this.inventorySlots.get(i) instanceof SlotExtended) {
         ItemStack stack = (this.inventorySlots.get(i)).getStack();
 
-        /*				Networking.CHANNEL.sendTo(new MessageSyncExtendedSlotContents(this.windowId, i, stack), player);*/
+        *//*				Networking.CHANNEL.sendTo(new MessageSyncExtendedSlotContents(this.windowId, i, stack), player);*//*
       }
     }
 
@@ -568,7 +568,7 @@ public class ContainerRadiantChest extends Container {
 
   public void syncSlot(EntityPlayerMP player, int slot, ItemStack stack) {
     if (getSlot(slot) instanceof SlotExtended) {
-      /*			Networking.CHANNEL.sendTo(new MessageSyncExtendedSlotContents(this.windowId, slot, stack), player);*/
+      *//*			Networking.CHANNEL.sendTo(new MessageSyncExtendedSlotContents(this.windowId, slot, stack), player);*//*
     }
   }
-}
+}*/

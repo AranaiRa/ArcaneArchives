@@ -40,7 +40,9 @@ public abstract class BaseTile extends TileEntity {
     }
   }
 
-  protected abstract UUID generateId ();
+  protected UUID generateId () {
+    return UUID.randomUUID();
+  }
 
   public void forceTileId(UUID tileId) {
     if (world.isRemote) {

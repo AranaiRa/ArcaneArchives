@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.client.render;
+/*package com.aranaira.arcanearchives.client.render;
 
 import com.aranaira.arcanearchives.tiles.RadiantChestTileEntity;
 import net.minecraft.client.Minecraft;
@@ -38,7 +38,7 @@ public class RadiantChestTESR extends TileEntitySpecialRenderer<RadiantChestTile
       GlStateManager.popMatrix();
     }
 
-    if (false/*te.isBeingTracked() && ConfigHandler.nonModTrackingConfig.chestsGlow*/) { //TODO: uncomment this when overlays are added
+    if (false*//*te.isBeingTracked() && ConfigHandler.nonModTrackingConfig.chestsGlow*//*) { //TODO: uncomment this when overlays are added
       GlStateManager.pushMatrix();
       GL11.glTranslated(x, y, z);
       boolean wasLighting = GL11.glIsEnabled(GL11.GL_LIGHTING);
@@ -85,4 +85,4 @@ public class RadiantChestTESR extends TileEntitySpecialRenderer<RadiantChestTile
         return 0;
     }
   }
-}
+}*/

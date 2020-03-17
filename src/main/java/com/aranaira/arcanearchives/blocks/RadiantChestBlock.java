@@ -1,3 +1,4 @@
+/*
 package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
@@ -55,39 +56,49 @@ public class RadiantChestBlock extends TemplateBlock {
 
   @Override
   public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-    /*		LineHandler.removeLine(pos, playerIn.dimension);*/
+    */
+/*		LineHandler.removeLine(pos, playerIn.dimension);*//*
+
 
     ItemStack mainHand = playerIn.getHeldItemMainhand();
     ItemStack offHand = playerIn.getHeldItemOffhand();
     ItemStack displayStack = ItemStack.EMPTY;
 
+*/
 /*		if (mainHand.getItem() == ItemRegistry.SCEPTER_MANIPULATION && !offHand.isEmpty()) {
 			displayStack = offHand;
 		} else if (offHand.getItem() == ItemRegistry.SCEPTER_MANIPULATION && !mainHand.isEmpty()) {
 			displayStack = mainHand;
-		}*/
+		}*//*
+
 
     boolean clearDisplayed = false;
 
+*/
 /*		if ((mainHand.getItem() == ItemRegistry.SCEPTER_MANIPULATION && offHand.isEmpty() || offHand.getItem() == ItemRegistry.SCEPTER_MANIPULATION && mainHand.isEmpty()) && playerIn.isSneaking()) {
 			clearDisplayed = true;
-		}*/
+		}*//*
+
 
     int dimension = worldIn.provider.getDimension();
 
     if (!displayStack.isEmpty() || clearDisplayed) {
       if (worldIn.isRemote) {
+*/
 /*				if (clearDisplayed) {
 					UnsetItem packet = new UnsetItem(pos, dimension);
 					Networking.CHANNEL.sendToServer(packet);
 				} else if (!displayStack.isEmpty()) {
 					SetItemAndFacing packet = new SetItemAndFacing(pos, dimension, displayStack, facing);
 					Networking.CHANNEL.sendToServer(packet);
-				}*/
+				}*//*
+
       }
     } else {
       if (!worldIn.isRemote) {
-        /*				playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.RADIANT_CHEST, worldIn, pos.getX(), pos.getY(), pos.getZ());*/
+        */
+/*				playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.RADIANT_CHEST, worldIn, pos.getX(), pos.getY(), pos.getZ());*//*
+
       }
     }
 
@@ -106,12 +117,16 @@ public class RadiantChestBlock extends TemplateBlock {
 
   @Override
   public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-    /*		LineHandler.removeLine(pos, worldIn.provider.getDimension());*/
+    */
+/*		LineHandler.removeLine(pos, worldIn.provider.getDimension());*//*
+
 
     if (!worldIn.isRemote) {
       TileEntity te = worldIn.getTileEntity(pos);
       if (te instanceof RadiantChestTileEntity) {
-        /*				ServerNetwork network = DataHelper.getServerNetwork(((RadiantChestTileEntity) te).networkId);*/
+        */
+/*				ServerNetwork network = DataHelper.getServerNetwork(((RadiantChestTileEntity) te).networkId);*//*
+
 
         // This is never an IInventory
         IItemHandler inv = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
@@ -123,11 +138,14 @@ public class RadiantChestBlock extends TemplateBlock {
     super.breakBlock(worldIn, pos, state);
   }
 
+*/
 /*	@Override
 	public boolean hasComparatorInputOverride (IBlockState state) {
 		return true;
-	}*/
+	}*//*
 
+
+*/
 /*	@Override
 	public int getComparatorInputOverride (IBlockState blockState, World worldIn, BlockPos pos) {
 		RadiantChestTileEntity te = WorldUtil.getTileEntity(RadiantChestTileEntity.class, worldIn, pos);
@@ -135,5 +153,6 @@ public class RadiantChestBlock extends TemplateBlock {
 			return te.getInventory().calcRedstone();
 		}
 		return 0;
-	}*/
-}
+	}*//*
+
+}*/

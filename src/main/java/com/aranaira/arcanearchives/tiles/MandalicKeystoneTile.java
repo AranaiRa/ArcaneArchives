@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class MandalicKeystoneTile extends BaseTile implements ITickable {
+public class MandalicKeystoneTile extends NetworkedBaseTile implements ITickable {
   public static Random rand = new Random();
 
   public static Ingredient WOOD = null;
