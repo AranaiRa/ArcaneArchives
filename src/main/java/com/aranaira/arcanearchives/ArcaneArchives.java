@@ -5,6 +5,8 @@ import com.aranaira.arcanearchives.init.ModItems;
 import com.aranaira.arcanearchives.init.ModRecipes;
 import com.aranaira.arcanearchives.init.ModTiles;
 import com.aranaira.arcanearchives.proxy.CommonProxy;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -19,7 +21,12 @@ public class ArcaneArchives {
   public static final String MODID = "arcanearchives";
   public static final String NAME = "Arcane Archives";
   public static final String VERSION = "GRADLE:VERSION";
-  public static final CreativeTabAA TAB = new CreativeTabAA();
+  public static final CreativeTabs TAB = new CreativeTabs(MODID) {
+    @Override
+    public ItemStack createIcon() {
+      return ItemStack.EMPTY;
+    }
+  };
 
   public static Logger logger;
   @Mod.Instance(MODID)
