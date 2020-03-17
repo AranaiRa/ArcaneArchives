@@ -4,7 +4,6 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.Keybinds;
 import com.aranaira.arcanearchives.client.render.entity.RenderWeight;
 import com.aranaira.arcanearchives.entity.EntityWeight;
-import com.aranaira.enderio.core.client.render.IconUtil;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.obj.OBJLoader;
@@ -65,7 +64,6 @@ public class ClientProxy extends CommonProxy {
   public void preInit(FMLPreInitializationEvent event) {
     super.preInit(event);
     OBJLoader.INSTANCE.addDomain(ArcaneArchives.MODID);
-    IconUtil.instance.init();
 
     Keybinds.initKeybinds();
     RenderingRegistry.registerEntityRenderingHandler(EntityWeight.class, RenderWeight::new);

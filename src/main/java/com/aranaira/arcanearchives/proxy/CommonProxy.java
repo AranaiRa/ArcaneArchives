@@ -4,7 +4,7 @@ import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.entity.EntityWeight;
 import com.aranaira.arcanearchives.events.ClientTickHandler;
-import com.aranaira.arcanearchives.recipe.mk.MandalicKeystoneRecipeRegistry;
+import com.aranaira.arcanearchives.registry.MandalicKeystoneRegistry;
 import com.aranaira.arcanearchives.util.DuplicationUtils;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -30,7 +30,7 @@ public class CommonProxy {
   }
 
   public void init(FMLInitializationEvent event) {
-    MandalicKeystoneRecipeRegistry.initializeRecipes();
+    MandalicKeystoneRegistry.initializeRecipes();
 
 /*		RecipeLibrary.buildRecipes();
 		BlockRegistry.registerTileEntities();

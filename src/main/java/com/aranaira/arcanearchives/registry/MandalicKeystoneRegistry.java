@@ -1,8 +1,9 @@
-package com.aranaira.arcanearchives.recipe.mk;
+package com.aranaira.arcanearchives.registry;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.api.crafting.IngredientStack;
 import com.aranaira.arcanearchives.init.ModBlocks;
+import com.aranaira.arcanearchives.recipe.mk.MandalicKeystoneRecipe;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -12,7 +13,7 @@ import net.minecraftforge.oredict.OreIngredient;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MandalicKeystoneRecipeRegistry {
+public class MandalicKeystoneRegistry {
     private static Map<ResourceLocation, MandalicKeystoneRecipe> TRANSFORMATION_RECIPES = new HashMap();
 
     public static void initializeRecipes(){
