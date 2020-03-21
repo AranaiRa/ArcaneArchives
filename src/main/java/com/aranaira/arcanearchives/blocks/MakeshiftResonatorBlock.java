@@ -32,10 +32,8 @@ import java.util.List;
 public class MakeshiftResonatorBlock extends TemplateBlock {
   public static PropertyBool FILLED = PropertyBool.create("filled");
 
-  public MakeshiftResonatorBlock() {
-    super(Material.IRON);
-    setHardness(3f);
-    setHarvestLevel("pickaxe", 0);
+  public MakeshiftResonatorBlock(Material material) {
+    super(material);
     setDefaultState(getDefaultState().withProperty(FILLED, false));
   }
 
@@ -97,7 +95,7 @@ public class MakeshiftResonatorBlock extends TemplateBlock {
   @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-    tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.device.wonky_resonator"));
+    tooltip.add(TextFormatting.GOLD + I18n.format(""));
   }
 
   @Override

@@ -30,17 +30,8 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class CrystalWorkbenchBlock extends HorizontalSingleAccessorTemplateBlock {
-  public CrystalWorkbenchBlock() {
-    super(Material.IRON);
-    this.setHardness(3f);
-    setLightLevel(16f / 16f);
-    setHarvestLevel("axe", 0);
-  }
-
-  @Override
-  @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-    tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.device.gemcutters_table"));
+  public CrystalWorkbenchBlock(Material material) {
+    super(material);
   }
 
   @Override

@@ -20,16 +20,8 @@ public class MandalicKeystoneBlock extends TemplateBlock {
 
 	public static final String name = "mandalic_keystone";
 
-	public MandalicKeystoneBlock() {
-		super(Material.ROCK);
-		setHardness(1.7f);
-		setHarvestLevel("pickaxe", 0);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.mandalic_keystone"));
+	public MandalicKeystoneBlock(Material material) {
+		super(material);
 	}
 
 	@Override
