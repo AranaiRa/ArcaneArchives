@@ -12,15 +12,25 @@
         "inventory": [{
 
             "transform": {
-                    "firstperson": {
-                        "translation": [-0.2, 0.0, 0.35],
-                        "rotation": [ { "y": -30}, {"x": 0}, {"z": -22.5} ],
-                        "scale": 1.0
+                    "firstperson_righthand": {
+                      "translation": [-0.2, 0.0, 0.35],
+                      "rotation": [ { "y": -30}, {"x": 0}, {"z": -22.5} ],
+                      "scale": 1.0
                     },
-                    "thirdperson": {
-                        "translation": [-0.375, 0.125, 0.0],
-                        "rotation": [ { "y": -90}, {"x": 0}, {"z": 90} ],
-                        "scale": 0.75
+                    "firstperson_lefthand": {
+                      "translation": [-0.2, 0.0, 0.35],
+                      "rotation": [ { "y": -30}, {"x": 0}, {"z": -22.5} ],
+                      "scale": 1.0
+                    },
+                    "thirdperson_righthand": {
+                      "translation": [-0.375, 0.125, 0.0],
+                      "rotation": [ { "y": -90}, {"x": 0}, {"z": 90} ],
+                      "scale": 0.75
+                    },
+                    "thirdperson_lefthand": {
+                      "translation": [-0.375, 0.125, 0.0],
+                      "rotation": [ { "y": -90}, {"x": 0}, {"z": 90} ],
+                      "scale": 0.75
                     },
                     "gui": {
                         "translation": [0.02, -0.02, 0],

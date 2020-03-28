@@ -12,13 +12,23 @@
         "inventory": [{
             
             "transform": {
-                    "firstperson": {
+                    "firstperson_righthand": {
                         "translation": [0.1, 0.025, -0.1],
                         "rotation": [ { "y": -75}, {"x": 0}, {"z": 0} ],
                         "scale": 0.375
                     },
-                    "thirdperson": {
+                    "firstperson_lefthand": {
+                        "translation": [0.25, 0.025, 0.22],
+                        "rotation": [ { "y": -70}, {"x": 0}, {"z": 0} ],
+                        "scale": 0.375
+                    },
+                    "thirdperson_righthand": {
                         "translation": [-0.175, 0.15, 0.0],
+                        "rotation": [ { "y": 0}, {"x": 30}, {"z": 0} ],
+                        "scale": 0.375
+                    },
+                    "thirdperson_lefthand": {
+                        "translation": [0.175, 0.15, 0.0],
                         "rotation": [ { "y": 0}, {"x": 30}, {"z": 0} ],
                         "scale": 0.375
                     },
