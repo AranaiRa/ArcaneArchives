@@ -93,6 +93,22 @@ public class ConfigHandler {
 		@Config.Comment("Whether or not players should be granted the book for crafting their first Resonator")
 		@Config.Name("Book from Radiant Resonator")
 		public boolean BookFromResonator = true;
+
+		@Config.Comment("The chance out of 100 that bashing a piece of Raw Radiant Quartz generates a single Sliver of Light")
+		@Config.Name("Chance for Single Sliver of Light")
+		public int ChanceForSliverSingle = 40;
+
+		@Config.Comment("The chance out of 100 that bashing a piece of Raw Radiant Quartz generates a cluster of Slivers of Lights and is destroyed")
+		@Config.Name("Chance for Cluster of Slivers of Light")
+		public int ChanceForSliverCluster = 20;
+
+		@Config.Comment("The minimum number of Slivers of Light generated when a piece of Raw Radiant Quartz is bashed and shattered")
+		@Config.Name("Minimum Slivers in Cluster")
+		public int AmountGeneratedOnSliverClusterMinimum = 8;
+
+		@Config.Comment("The maximum number of Slivers of Light generated when a piece of Raw Radiant Quartz is bashed and shattered")
+		@Config.Name("Maximum Slivers in Cluster")
+		public int AmountGeneratedOnSliverClusterMaximum = 24;
 	}
 
 	@Config.Comment("Settings related to item tracking in non-mod containers")

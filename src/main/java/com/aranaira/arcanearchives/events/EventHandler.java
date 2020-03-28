@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.events;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.render.LineHandler;
 import com.aranaira.arcanearchives.client.render.RenderGemcasting;
 import com.aranaira.arcanearchives.client.render.RenderGemcasting.EnumGemGuiMode;
@@ -204,10 +205,15 @@ public class EventHandler {
 			} else if (item == ItemRegistry.RAW_RADIANT_QUARTZ) {
 				ItemStack stack = event.getEntityPlayer().getHeldItemMainhand();
 				Random rng = new Random();
-				int num = rng.nextInt(5);
-				if (num == 0) {
+				int num = rng.nextInt(100);
+				if (num <= ConfigHandler.serverSideConfig.ChanceForSliverCluster) {
 					stack.shrink(1);
-					num = rng.nextInt(16) + 8;
+					int max = ConfigHandler.serverSideConfig.AmountGeneratedOnSliverClusterMaximum;
+					int min = ConfigHandler.serverSideConfig.AmountGeneratedOnSliverClusterMinimum;
+					if(max - min == 0)
+						num = min;
+					else
+						num = rng.nextInt(max - min) + min;
 					ItemStack shards = new ItemStack(BlockRegistry.QUARTZ_SLIVER, num);
 					Vec3d pos = event.getHitVec();
 					EntityItem ei = new EntityItem(event.getWorld(), pos.x, pos.y, pos.z, shards);
@@ -215,7 +221,7 @@ public class EventHandler {
 					ei.motionZ = rng.nextFloat() * 0.4f - 0.2f;
 					ei.motionY = rng.nextFloat() * 0.2f + 0.2f;
 					event.getWorld().spawnEntity(ei);
-				} else if (num == 1 || num == 2) {
+				} else if (num <= (ConfigHandler.serverSideConfig.ChanceForSliverCluster + ConfigHandler.serverSideConfig.ChanceForSliverSingle)) {
 					ItemStack shards = new ItemStack(BlockRegistry.QUARTZ_SLIVER, 1);
 					Vec3d pos = event.getHitVec();
 					EntityItem ei = new EntityItem(event.getWorld(), pos.x, pos.y, pos.z, shards);
