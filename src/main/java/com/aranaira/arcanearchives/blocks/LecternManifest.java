@@ -104,4 +104,9 @@ public class LecternManifest extends BlockDirectionalTemplate {
 		return new BlockStateContainer(this, FACING, ACCESSOR);
 	}
 
+	@Override
+	@SuppressWarnings("deprecation")
+	public boolean isFullCube (IBlockState state) {
+		return false;
+	}
 }
