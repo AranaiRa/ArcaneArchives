@@ -12,10 +12,14 @@
         "D": [{
             "item": "minecraft:stone",
             "data": 3
-        },
+              },
             {
             "type":  "forge:ore_dict",
             "ore":  "blockMarble"
+            },
+            {
+                "type": "forge:ore_dict",
+                "ore": "stoneMarble"
             }
         ],
         "G": {
