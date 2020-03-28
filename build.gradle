@@ -21,14 +21,14 @@ apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'com.wynprice.cursemaven'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
-version = "0.2.0.16"
+version = "0.2.0.17"
 group = "com.aranairra.arcanearchives"
 archivesBaseName = "arcanearchives"
 
 sourceCompatibility = targetCompatibility = '1.8'
 compileJava {
     sourceCompatibility = targetCompatibility = '1.8'
-    options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+    //options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
 }
 
 minecraft {
@@ -112,7 +112,7 @@ dependencies {
     runtime "mezz.jei:jei_${minecraft_version}:${jei_version}"
     compileOnly "mcp.mobius.waila:Hwyla:${project.hwyla_version}"
     compileOnly "mcjty.theoneprobe:TheOneProbe-${top_version}"
-    deobfCompile "vazkii.quark:Quark:${quark_version}"
+    compileOnly "vazkii.quark:Quark:${quark_version}:api"
     deobfCompile "com.azanor:Baubles:${version_baubles}"
     compileOnly "hellfirepvp.astralsorcery:astralsorcery:1.12.2-1.10.17-v124"
     compileOnly 'mouse-tweaks:MouseTweaks:2.10:mc1.12.2'
@@ -137,7 +137,7 @@ dependencies {
     compileOnly curse.resolve("electroblobs-wizardry", "2656626")
     compileOnly curse.resolve("potion-core", "2736248")
 
-    shade("org.spongepowered:mixin:0.7.11-SNAPSHOT") {
+    shade("org.spongepowered:mixin:0.8.1-SNAPSHOT") {
         transitive = false
     }
 }
