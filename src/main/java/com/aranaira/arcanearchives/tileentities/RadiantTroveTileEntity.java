@@ -363,7 +363,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 
 	@Override
 	public int troveScore (ItemStack stack) {
-		if (!ItemUtils.areStacksEqualIgnoreSize(stack, inventory.getItem())) {
+		if (!ItemUtils.areStacksEqualIgnoreSizeMaybeEmpty(stack, inventory.getReference(), inventory.isLocked())) {
 			return -1;
 		}
 
