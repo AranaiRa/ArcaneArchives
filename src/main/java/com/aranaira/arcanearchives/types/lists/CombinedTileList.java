@@ -14,6 +14,18 @@ public class CombinedTileList implements ITileList {
 
 	public CombinedTileList (List<ITileList> references) {
 		this.tileLists = references;
+		this.tileLists.removeIf(ITileList::isEmpty);
+	}
+
+	@Override
+	public boolean isEmpty() {
+		for (ITileList list : tileLists) {
+			if (!list.isEmpty()) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	@Override

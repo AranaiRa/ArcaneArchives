@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.data;
 import com.aranaira.arcanearchives.types.IteRef;
 import com.aranaira.arcanearchives.types.lists.CombinedTileList;
 import com.aranaira.arcanearchives.types.lists.ITileList;
+import com.aranaira.arcanearchives.types.lists.TileList;
 import com.aranaira.arcanearchives.util.TileUtils;
 import com.google.common.base.Predicate;
 import net.minecraft.entity.player.EntityPlayer;
@@ -73,6 +74,10 @@ public class HiveNetwork implements IHiveBase {
 	public ITileList getTiles () {
 		List<ITileList> tiles = new ArrayList<>();
 		for (ServerNetwork network : getCombinedNetworks()) {
+/*			TileList contained = network.getTiles();
+			if (!contained.isEmpty()) {
+				tiles.add(contained);
+			}*/
 			tiles.add(network.getTiles());
 		}
 		return new CombinedTileList(tiles);

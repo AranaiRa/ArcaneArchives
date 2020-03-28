@@ -84,6 +84,8 @@ public interface ITileList extends Iterable<IteRef> {
 		}
 	}
 
+	boolean isEmpty ();
+
 	void removeRef (IteRef ref);
 
 	default TileListIterable iterable () {
