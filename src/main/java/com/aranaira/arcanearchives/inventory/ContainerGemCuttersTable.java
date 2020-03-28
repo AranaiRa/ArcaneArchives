@@ -202,6 +202,9 @@ public class ContainerGemCuttersTable extends Container {
 	@Override
 	@Nonnull
 	public ItemStack slotClick (int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player) {
+		if (slotId == SLOT_OUTPUT) {
+			dragType = 0;
+		}
 		if (slotId >= 54 && slotId <= 68) {
 			Slot baseSlot = getSlot(slotId);
 			if (!(baseSlot instanceof SlotRecipeHandler)) {

@@ -112,7 +112,7 @@ dependencies {
     runtime "mezz.jei:jei_${minecraft_version}:${jei_version}"
     compileOnly "mcp.mobius.waila:Hwyla:${project.hwyla_version}"
     compileOnly "mcjty.theoneprobe:TheOneProbe-${top_version}"
-    compileOnly "vazkii.quark:Quark:${quark_version}:api"
+    deobfCompile "vazkii.quark:Quark:${quark_version}"
     deobfCompile "com.azanor:Baubles:${version_baubles}"
     compileOnly "hellfirepvp.astralsorcery:astralsorcery:1.12.2-1.10.17-v124"
     compileOnly 'mouse-tweaks:MouseTweaks:2.10:mc1.12.2'
