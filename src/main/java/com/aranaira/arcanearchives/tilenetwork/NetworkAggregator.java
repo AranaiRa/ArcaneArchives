@@ -8,29 +8,29 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.*;
 
-@Mod.EventBusSubscriber(modid= ArcaneArchives.MODID)
+@Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class NetworkAggregator {
   public static int QUEUE_LIMIT = 50;
 
   public static Map<UUID, Network> storage = new HashMap<>();
 
-  public static Network byId (UUID networkId) {
+  public static Network byId(UUID networkId) {
     return storage.computeIfAbsent(networkId, (key) -> new Network(networkId));
   }
 
   private static Set<Wrapper> incomingTiles = new HashSet<>();
   private static Set<NetworkedBaseTile> outgoingTiles = new HashSet<>();
 
-  public static void tileJoin (NetworkedBaseTile tile) {
+  public static void tileJoin(NetworkedBaseTile tile) {
     incomingTiles.add(new Wrapper(tile));
   }
 
-  public static void tileLeave (NetworkedBaseTile tile) {
+  public static void tileLeave(NetworkedBaseTile tile) {
     outgoingTiles.add(tile);
   }
 
   @SuppressWarnings("ConstantConditions")
-  public static void onServerTick (TickEvent.ServerTickEvent event) {
+  public static void onServerTick(TickEvent.ServerTickEvent event) {
     if (event.phase != TickEvent.Phase.END) {
       return;
     }
@@ -48,6 +48,7 @@ public class NetworkAggregator {
           } else {
             network.add(wrapper.tile);
             removed.add(wrapper);
+            wrapper.tile.onNetworkJoined(network);
           }
         }
       }
@@ -80,11 +81,11 @@ public class NetworkAggregator {
       this.tile = tile;
     }
 
-    public void tick () {
+    public void tick() {
       ticker++;
     }
 
-    public boolean expired () {
+    public boolean expired() {
       return ticker > QUEUE_LIMIT;
     }
   }

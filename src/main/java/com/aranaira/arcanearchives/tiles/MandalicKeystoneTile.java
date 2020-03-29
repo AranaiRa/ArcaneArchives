@@ -24,50 +24,50 @@ import java.util.Random;
 public class MandalicKeystoneTile extends NetworkedBaseTile implements ITickable {
   public static Random rand = new Random();
 
-  public static Ingredient WOOD = null;
-  public static Ingredient STONE = null;
-  public static Ingredient GRAVEL = null;
+  private static Ingredient WOOD = null;
+  private static Ingredient STONE = null;
+  private static Ingredient GRAVEL = null;
 
   private int progress = 0;
 
   public MandalicKeystoneTile() {
-    if(WOOD == null) {
+    if (WOOD == null) {
       WOOD = new OreIngredient("logWood");
     }
-    if(STONE == null) {
+    if (STONE == null) {
       STONE = new OreIngredient("stone");
     }
-    if(GRAVEL == null) {
+    if (GRAVEL == null) {
       GRAVEL = new OreIngredient("gravel");
     }
   }
 
   @Override
   public void update() {
-    if(!world.isRemote && world.getTotalWorldTime() % 40 == 0) {
+    if (!world.isRemote && world.getTotalWorldTime() % 40 == 0) {
       List<EntityItem> items = getItems();
       if (!items.isEmpty()) {
         ItemStack testItem = items.get(0).getItem();
 
         //Gravel --> Flint
-        if(GRAVEL.test(testItem)) {
+        if (GRAVEL.test(testItem)) {
           Random rng = new Random();
           int num = 0;
-          for(int i=0; i<testItem.getCount(); i++) {
+          for (int i = 0; i < testItem.getCount(); i++) {
             int r = rng.nextInt(4);
-            if(r == 3) num += 2;
+            if (r == 3) num += 2;
             else num += 1;
           }
           items.get(0).setItem(new ItemStack(Items.FLINT, num));
         }
 
         //Stone --> Stalwart Stone
-        if(STONE.test(testItem)) {
+        if (STONE.test(testItem)) {
           items.get(0).setItem(new ItemStack(ModBlocks.StalwartStone, testItem.getCount()));
         }
 
         //Wood --> Stalwart Wood
-        if(WOOD.test(testItem)) {
+        if (WOOD.test(testItem)) {
           items.get(0).setItem(new ItemStack(ModBlocks.StalwartWood, testItem.getCount()));
         }
       }
@@ -95,9 +95,9 @@ public class MandalicKeystoneTile extends NetworkedBaseTile implements ITickable
 
   private List<EntityItem> getItems() {
     List<EntityItem> result = new ArrayList<>();
-    for(EntityItem item : world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(pos.up()))){
+    for (EntityItem item : world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(pos.up()))) {
       ItemStack inSlot = item.getItem();
-      if(WOOD.test(inSlot) || STONE.test(inSlot) || GRAVEL.test(inSlot)) {
+      if (WOOD.test(inSlot) || STONE.test(inSlot) || GRAVEL.test(inSlot)) {
         result.add(item);
       }
     }

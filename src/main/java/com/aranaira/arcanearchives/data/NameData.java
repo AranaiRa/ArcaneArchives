@@ -3,9 +3,7 @@ package com.aranaira.arcanearchives.data;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.world.storage.WorldSavedData;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -24,7 +22,7 @@ public class NameData extends WorldSavedData {
     super(name);
   }
 
-  public NetworkName getOrGenerateName (UUID id) {
+  public NetworkName getOrGenerateName(UUID id) {
 
     NetworkName name = map.get(id);
     if (name != null) {
@@ -102,7 +100,7 @@ public class NameData extends WorldSavedData {
     }
 
     @SideOnly(Side.CLIENT)
-    public String getName () {
+    public String getName() {
       if (firstFields == null || secondFields == null || separator == null) {
         separator = I18n.format("arcanearchives.network.name.separator");
         firstFields = Arrays.asList(I18n.format("arcanearchives.network.name.first").split(","));

@@ -5,6 +5,9 @@ import com.aranaira.arcanearchives.reference.Tags;
 import com.aranaira.arcanearchives.tilenetwork.Network;
 import com.aranaira.arcanearchives.tilenetwork.NetworkAggregator;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
@@ -17,7 +20,7 @@ public abstract class NetworkedBaseTile extends BaseTile {
     return networkId;
   }
 
-  public String getCachedNetwork () {
+  public String getCachedNetwork() {
     if (cachedNetworkId == null) {
       if (networkId == null) {
         return "";
@@ -36,7 +39,7 @@ public abstract class NetworkedBaseTile extends BaseTile {
   }
 
   @Nullable
-  public Network getNetwork () {
+  public Network getNetwork() {
     if (networkId == null) {
       return null;
     }
@@ -91,4 +94,23 @@ public abstract class NetworkedBaseTile extends BaseTile {
     NetworkAggregator.tileLeave(this);
     super.onChunkUnload();
   }
+
+  @Nullable
+  @Override
+  public SPacketUpdateTileEntity getUpdatePacket() {
+    return new SPacketUpdateTileEntity(pos, 0, getUpdateTag());
+  }
+
+  @Override
+  public NBTTagCompound getUpdateTag() {
+    return writeToNBT(new NBTTagCompound());
+  }
+
+  @Override
+  public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+    readFromNBT(pkt.getNbtCompound());
+    super.onDataPacket(net, pkt);
+  }
+
+  public abstract void onNetworkJoined (Network network);
 }

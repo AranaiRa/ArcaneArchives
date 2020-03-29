@@ -82,6 +82,8 @@ public class DispenseAmphora implements IBehaviorDispenseItem {
  * Play the dispense sound from the specified block.
  * <p>
  * Order clients to display dispense particles from the specified block and facing.
+ * <p>
+ * Order clients to display dispense particles from the specified block and facing.
  *//*
 	protected void playDispenseSound (IBlockSource source) {
 		source.getWorld().playEvent(1000, source.getBlockPos(), 0);

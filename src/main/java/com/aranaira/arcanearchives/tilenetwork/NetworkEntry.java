@@ -28,7 +28,7 @@ public class NetworkEntry {
   }
 
   @SuppressWarnings("unchecked")
-  public <T extends NetworkedBaseTile> T getTile () {
+  public <T extends NetworkedBaseTile> T getTile() {
     return (T) WorldUtil.getTileEntity(this.clazz, this.dimension, this.position);
   }
 }

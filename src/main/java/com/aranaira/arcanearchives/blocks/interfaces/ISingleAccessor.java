@@ -8,7 +8,8 @@ import net.minecraft.world.World;
 
 public interface ISingleAccessor extends IAccessor {
   Rotation getAccessorRotation();
-  Rotation getBodyRotation ();
+
+  Rotation getBodyRotation();
 
   default EnumFacing findFacing(IBlockState state, World world, BlockPos origin) {
     if (state.getPropertyKeys().contains(IFacing.FACING)) {

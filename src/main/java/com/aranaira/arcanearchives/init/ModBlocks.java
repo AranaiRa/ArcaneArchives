@@ -1,7 +1,9 @@
 package com.aranaira.arcanearchives.init;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.blocks.*;
+import com.aranaira.arcanearchives.blocks.CrystalWorkbenchBlock;
+import com.aranaira.arcanearchives.blocks.MakeshiftResonatorBlock;
+import com.aranaira.arcanearchives.blocks.MandalicKeystoneBlock;
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -29,9 +31,9 @@ public class ModBlocks {
     REGISTRY.forEach(event.getRegistry()::register);
   }
 
-  public static CrystalWorkbenchBlock CrystalWorkbench = register("crystal_workbench", CrystalWorkbenchBlock::new, Material.IRON, (o) -> o.setHardness(3f).setLightLevel(16f/16f).setHarvestTool("axe", 0).setTooltip("arcanearchives.tooltip.device.gemcutters_table", TextFormatting.GOLD));
+  public static CrystalWorkbenchBlock CrystalWorkbench = register("crystal_workbench", CrystalWorkbenchBlock::new, Material.IRON, (o) -> o.setHardness(3f).setLightLevel(16f / 16f).setHarvestTool("axe", 0).setTooltip("arcanearchives.tooltip.device.gemcutters_table", TextFormatting.GOLD));
 
-  public static MakeshiftResonatorBlock MakeshiftResonator = register("makeshift_resonator", MakeshiftResonatorBlock::new, Material.IRON, (o) -> o.setHardness(3f).setLightLevel(6f/16f).setHarvestTool("pickaxe", 0).setTooltip("arcanearchives.tooltip.device.wonky_resonator", TextFormatting.GOLD).setDefault(o.getDefaultState().withProperty(MakeshiftResonatorBlock.FILLED, false)));
+  public static MakeshiftResonatorBlock MakeshiftResonator = register("makeshift_resonator", MakeshiftResonatorBlock::new, Material.IRON, (o) -> o.setHardness(3f).setLightLevel(6f / 16f).setHarvestTool("pickaxe", 0).setTooltip("arcanearchives.tooltip.device.wonky_resonator", TextFormatting.GOLD).setDefault(o.getDefaultState().withProperty(MakeshiftResonatorBlock.FILLED, false)));
 
   public static MandalicKeystoneBlock MandalicKeystone = register("mandalic_keystone", MandalicKeystoneBlock::new, (o) -> o.setHardness(1.7f).setHarvestTool("pickaxe", 0).setTooltip("arcanearchives.tooltip.item.mandalic_keystone", TextFormatting.GOLD));
 
@@ -43,7 +45,7 @@ public class ModBlocks {
     return register(registryName, o -> supplier.get(), Material.ROCK, null, null);
   }
 
-  public static <T extends Block> T register (String registryName, Supplier<T> supplier, Consumer<T> consumer) {
+  public static <T extends Block> T register(String registryName, Supplier<T> supplier, Consumer<T> consumer) {
     return register(registryName, o -> supplier.get(), Material.ROCK, consumer, null);
   }
 
@@ -55,7 +57,7 @@ public class ModBlocks {
     return register(registryName, supplier, mat, null, null);
   }
 
-  public static <T extends Block> T register (String registryName, Function<Material, T> supplier, Material mat, Consumer<T> consumer) {
+  public static <T extends Block> T register(String registryName, Function<Material, T> supplier, Material mat, Consumer<T> consumer) {
     return register(registryName, supplier, mat, consumer, null);
   }
 
@@ -67,7 +69,7 @@ public class ModBlocks {
     return register(registryName, supplier, Material.ROCK, null, null);
   }
 
-  public static <T extends Block> T register (String registryName, Function<Material, T> supplier, Consumer<T> consumer) {
+  public static <T extends Block> T register(String registryName, Function<Material, T> supplier, Consumer<T> consumer) {
     return register(registryName, supplier, Material.ROCK, consumer, null);
   }
 
@@ -75,7 +77,7 @@ public class ModBlocks {
     return register(registryName, supplier, Material.ROCK, null, itemBlock);
   }
 
-  public static <T extends Block> T register (String registryName, Function<Material, T> supplier, Material material, @Nullable Consumer<T> consumer, @Nullable Supplier<? extends ItemBlock> itemBlock) {
+  public static <T extends Block> T register(String registryName, Function<Material, T> supplier, Material material, @Nullable Consumer<T> consumer, @Nullable Supplier<? extends ItemBlock> itemBlock) {
     T block = supplier.apply(material);
     block.setTranslationKey(registryName);
     block.setRegistryName(new ResourceLocation(ArcaneArchives.MODID, registryName));

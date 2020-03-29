@@ -42,24 +42,30 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 
   private Slot hoveredSlot;
   *//**
-   * Used when touchscreen is enabled.
-   *//*
+ * Used when touchscreen is enabled.
+ * <p>
+ * Used when touchscreen is enabled.
+ * <p>
+ * Used when touchscreen is enabled
+ * <p>
+ * Used when touchscreen is enabled
+ *//*
   private Slot clickedSlot;
   *//**
-   * Used when touchscreen is enabled.
-   *//*
+ * Used when touchscreen is enabled.
+ *//*
   private boolean isRightMouseClick;
   *//**
-   * Used when touchscreen is enabled
-   *//*
+ * Used when touchscreen is enabled
+ *//*
   private ItemStack draggedStack = ItemStack.EMPTY;
   private int touchUpX;
   private int touchUpY;
   private Slot returningStackDestSlot;
   private long returningStackTime;
   *//**
-   * Used when touchscreen is enabled
-   *//*
+ * Used when touchscreen is enabled
+ *//*
   private ItemStack returningStack = ItemStack.EMPTY;
   private Slot currentDragTargetSlot;
   private long dragItemDropDelay;

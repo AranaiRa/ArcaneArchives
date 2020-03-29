@@ -4,10 +4,8 @@ import com.aranaira.arcanearchives.api.crafting.IngredientStack;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -49,7 +47,7 @@ public abstract class CrystalWorkbenchRecipe extends IForgeRegistryEntry.Impl<Cr
   public ItemStack getActualResult(WorkbenchCrafting inventory, UUID workbenchId) {
     ItemStack result = getResult().copy();
     NBTTagCompound tag = ItemUtils.getOrCreateTagCompound(result);
-/*    tag.setUniqueId("network", workbenchId);*/
+    /*    tag.setUniqueId("network", workbenchId);*/
     return result;
   }
 

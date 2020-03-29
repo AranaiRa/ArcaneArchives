@@ -14,46 +14,46 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MandalicKeystoneRegistry {
-    private static Map<ResourceLocation, MandalicKeystoneRecipe> TRANSFORMATION_RECIPES = new HashMap();
+  private static Map<ResourceLocation, MandalicKeystoneRecipe> TRANSFORMATION_RECIPES = new HashMap();
 
-    public static void initializeRecipes(){
-        addRecipe(new ResourceLocation(ArcaneArchives.MODID, "stalwart_stone"), new MandalicKeystoneRecipe(new IngredientStack(new OreIngredient("stone"), 1), new IngredientStack(ModBlocks.StalwartStone, 1)));
-        addRecipe(new ResourceLocation(ArcaneArchives.MODID, "stalwart_wood"), new MandalicKeystoneRecipe(new IngredientStack(new OreIngredient("logWood"), 1), new IngredientStack(ModBlocks.StalwartWood, 1)));
-        addRecipe(new ResourceLocation(ArcaneArchives.MODID, "gravel2flint"), new MandalicKeystoneRecipe(new IngredientStack(new OreIngredient("gravel"), 1), new IngredientStack(Items.FLINT, 1)));
-        addRecipe(new ResourceLocation(ArcaneArchives.MODID, "cobweb2string"), new MandalicKeystoneRecipe(new IngredientStack(Blocks.WEB, 1), new IngredientStack(Items.STRING, 1)));
-        addRecipe(new ResourceLocation(ArcaneArchives.MODID, "vines2string"), new MandalicKeystoneRecipe(new IngredientStack(Blocks.VINE, 6), new IngredientStack(Items.STRING, 1)));
+  public static void initializeRecipes() {
+    addRecipe(new ResourceLocation(ArcaneArchives.MODID, "stalwart_stone"), new MandalicKeystoneRecipe(new IngredientStack(new OreIngredient("stone"), 1), new IngredientStack(ModBlocks.StalwartStone, 1)));
+    addRecipe(new ResourceLocation(ArcaneArchives.MODID, "stalwart_wood"), new MandalicKeystoneRecipe(new IngredientStack(new OreIngredient("logWood"), 1), new IngredientStack(ModBlocks.StalwartWood, 1)));
+    addRecipe(new ResourceLocation(ArcaneArchives.MODID, "gravel2flint"), new MandalicKeystoneRecipe(new IngredientStack(new OreIngredient("gravel"), 1), new IngredientStack(Items.FLINT, 1)));
+    addRecipe(new ResourceLocation(ArcaneArchives.MODID, "cobweb2string"), new MandalicKeystoneRecipe(new IngredientStack(Blocks.WEB, 1), new IngredientStack(Items.STRING, 1)));
+    addRecipe(new ResourceLocation(ArcaneArchives.MODID, "vines2string"), new MandalicKeystoneRecipe(new IngredientStack(Blocks.VINE, 6), new IngredientStack(Items.STRING, 1)));
+  }
+
+  public static boolean addRecipe(ResourceLocation loc, MandalicKeystoneRecipe rec) {
+    if (TRANSFORMATION_RECIPES.containsKey(loc))
+      return false;
+
+    TRANSFORMATION_RECIPES.put(loc, rec);
+    return true;
+  }
+
+  public static boolean removeRecipe(ResourceLocation loc, MandalicKeystoneRecipe rec) {
+    if (!TRANSFORMATION_RECIPES.containsKey(loc))
+      return false;
+
+    TRANSFORMATION_RECIPES.remove(loc);
+    return true;
+  }
+
+  public static MandalicKeystoneRecipe findRecipe(ItemStack stack) {
+    MandalicKeystoneRecipe out = null;
+
+    for (MandalicKeystoneRecipe mkr : TRANSFORMATION_RECIPES.values()) {
+      if (mkr.getRecipeOutput().getIngredient().test(stack)) {
+        out = mkr;
+        break;
+      }
     }
 
-    public static boolean addRecipe(ResourceLocation loc, MandalicKeystoneRecipe rec) {
-        if(TRANSFORMATION_RECIPES.containsKey(loc))
-            return false;
+    return out;
+  }
 
-        TRANSFORMATION_RECIPES.put(loc, rec);
-        return true;
-    }
-
-    public static boolean removeRecipe(ResourceLocation loc, MandalicKeystoneRecipe rec) {
-        if(!TRANSFORMATION_RECIPES.containsKey(loc))
-            return false;
-
-        TRANSFORMATION_RECIPES.remove(loc);
-        return true;
-    }
-
-    public static MandalicKeystoneRecipe findRecipe(ItemStack stack) {
-        MandalicKeystoneRecipe out = null;
-
-        for(MandalicKeystoneRecipe mkr : TRANSFORMATION_RECIPES.values()) {
-            if (mkr.getRecipeOutput().getIngredient().test(stack)) {
-                out = mkr;
-                break;
-            }
-        }
-
-        return out;
-    }
-
-    public static MandalicKeystoneRecipe getRecipe(ResourceLocation loc) {
-        return TRANSFORMATION_RECIPES.get(loc);
-    }
+  public static MandalicKeystoneRecipe getRecipe(ResourceLocation loc) {
+    return TRANSFORMATION_RECIPES.get(loc);
+  }
 }

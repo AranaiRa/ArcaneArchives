@@ -20,7 +20,6 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class CommonProxy {
   public void preInit(FMLPreInitializationEvent event) {
-    ArcaneArchives.logger = event.getModLog();
     NetworkRegistry.INSTANCE.registerGuiHandler(ArcaneArchives.instance, new AAGuiHandler());
 
     Networking.registerPackets();

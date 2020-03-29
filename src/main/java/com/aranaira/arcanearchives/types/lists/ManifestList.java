@@ -167,6 +167,12 @@ public class ManifestList extends ReferenceList<CollatedEntry> implements ISeria
  * <p>
  * If a {@link ContainerManifest} listener has been registered to this manifest then
  * notify it that this {@link ManifestList} has been populated
+ * <p>
+ * Call this after this ManifestList has finished being populated from an external source.
+ * For now this means from a packet from the server
+ * <p>
+ * If a {@link ContainerManifest} listener has been registered to this manifest then
+ * notify it that this {@link ManifestList} has been populated
  *//*
 	public void setListener (ContainerManifest containerManifest) {
 		this.listener = containerManifest;

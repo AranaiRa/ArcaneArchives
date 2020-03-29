@@ -9,8 +9,6 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
@@ -37,11 +35,11 @@ public class TemplateBlock extends Block {
     return this;
   }
 
-  public TemplateBlock setTooltip (String text) {
+  public TemplateBlock setTooltip(String text) {
     return setTooltip(text, "");
   }
 
-  public TemplateBlock setTooltip (String text, TextFormatting formatting) {
+  public TemplateBlock setTooltip(String text, TextFormatting formatting) {
     return setTooltip(text, "" + formatting);
   }
 
@@ -106,7 +104,7 @@ public class TemplateBlock extends Block {
     return (TemplateBlock) super.setCreativeTab(tab);
   }
 
-  public TemplateBlock setDefault (IBlockState state) {
+  public TemplateBlock setDefault(IBlockState state) {
     setDefaultState(state);
     return this;
   }
@@ -125,13 +123,13 @@ public class TemplateBlock extends Block {
   }
 
   @SuppressWarnings("deprecation")
-  public TemplateBlock setHarvestTool (String toolClass, int level) {
+  public TemplateBlock setHarvestTool(String toolClass, int level) {
     setHarvestLevel(toolClass, level);
     return this;
   }
 
   @SuppressWarnings("deprecation")
-  public TemplateBlock setHarvestTool (String toolClass, int level, IBlockState state) {
+  public TemplateBlock setHarvestTool(String toolClass, int level, IBlockState state) {
     setHarvestLevel(toolClass, level, state);
     return this;
   }

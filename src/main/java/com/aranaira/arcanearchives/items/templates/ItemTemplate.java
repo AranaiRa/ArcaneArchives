@@ -82,7 +82,7 @@ public class ItemTemplate extends Item implements IUpgrade {
     return (ItemTemplate) super.setNoRepair();
   }
 
-  public ItemTemplate setUpgradeInfo (UpgradeInfo info) {
+  public ItemTemplate setUpgradeInfo(UpgradeInfo info) {
     this.upgradeInfo = info;
     return this;
   }

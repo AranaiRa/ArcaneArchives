@@ -12,6 +12,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
@@ -28,7 +29,7 @@ public class ArcaneArchives {
     }
   };
 
-  public static Logger logger;
+  public static Logger logger = LogManager.getLogger(MODID);
   @Mod.Instance(MODID)
   public static ArcaneArchives instance;
   @SidedProxy(clientSide = "com.aranaira.arcanearchives.proxy.ClientProxy", serverSide = "com.aranaira.arcanearchives.proxy.CommonProxy")

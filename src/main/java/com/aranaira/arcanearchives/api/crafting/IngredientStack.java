@@ -126,7 +126,7 @@ public class IngredientStack {
     return ingredient;
   }
 
-  public boolean isEmpty () {
+  public boolean isEmpty() {
     return this.ingredient == Ingredient.EMPTY;
   }
 

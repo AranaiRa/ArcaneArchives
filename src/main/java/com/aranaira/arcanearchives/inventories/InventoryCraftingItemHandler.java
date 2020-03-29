@@ -8,6 +8,7 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 
 import javax.annotation.Nonnull;
 
+// TODO: What this do
 public abstract class InventoryCraftingItemHandler<T extends TileEntity, V extends IItemHandlerModifiable> extends InventoryCrafting {
   private final int length;
   private final Container eventHandler;

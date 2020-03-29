@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
 
-@Mod.EventBusSubscriber(modid=ArcaneArchives.MODID)
+@Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class ModRecipes {
   public static final List<Builder> REGISTRY = new ArrayList<>();
 

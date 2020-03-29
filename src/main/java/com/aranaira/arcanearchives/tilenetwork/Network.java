@@ -14,21 +14,21 @@ public class Network extends ForwardingMap<UUID, NetworkEntry> {
     this.networkId = networkId;
   }
 
-  public NetworkEntry add (NetworkedBaseTile tile) {
+  public NetworkEntry add(NetworkedBaseTile tile) {
     NetworkEntry entry = new NetworkEntry(tile);
     return put(entry.uuid, entry);
   }
 
-  public NetworkEntry remove (NetworkedBaseTile tile) {
+  public NetworkEntry remove(NetworkedBaseTile tile) {
     return remove(tile.getTileId());
   }
 
   @Nullable
-  public NetworkEntry getEntryByTileId (UUID tileId) {
+  public NetworkEntry getEntryByTileId(UUID tileId) {
     return entries.get(tileId);
   }
 
-  public List<NetworkEntry> getEntriesByClass (Class<?> clazz) {
+  public List<NetworkEntry> getEntriesByClass(Class<?> clazz) {
     List<NetworkEntry> result = new ArrayList<>();
     for (NetworkEntry entry : entries.values()) {
       if (entry.clazz == clazz) {
@@ -38,7 +38,7 @@ public class Network extends ForwardingMap<UUID, NetworkEntry> {
     return result;
   }
 
-  public List<NetworkEntry> getEntriesByInstance (Class<?> parent) {
+  public List<NetworkEntry> getEntriesByInstance(Class<?> parent) {
     List<NetworkEntry> result = new ArrayList<>();
     for (NetworkEntry entry : entries.values()) {
       if (entry.clazz.isAssignableFrom(parent)) {

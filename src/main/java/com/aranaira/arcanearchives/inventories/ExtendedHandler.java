@@ -12,17 +12,17 @@ import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 
-public class ExtendedItemStackHandler extends ItemStackHandler {
+public class ExtendedHandler extends ItemStackHandler {
 
-  public ExtendedItemStackHandler() {
+  public ExtendedHandler() {
     this(1);
   }
 
-  public ExtendedItemStackHandler(int size) {
+  public ExtendedHandler(int size) {
     super(size);
   }
 
-  public ExtendedItemStackHandler(NonNullList<ItemStack> stacks) {
+  public ExtendedHandler(NonNullList<ItemStack> stacks) {
     super(stacks);
   }
 

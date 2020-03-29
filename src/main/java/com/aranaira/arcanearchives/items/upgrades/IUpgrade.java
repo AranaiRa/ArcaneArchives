@@ -6,34 +6,34 @@ import net.minecraft.tileentity.TileEntity;
 import java.util.List;
 
 public interface IUpgrade {
-  default int getUpgradeSlot () {
+  default int getUpgradeSlot() {
     return getUpgradeSlot(ItemStack.EMPTY);
   }
 
-  int getUpgradeSlot (ItemStack stack);
+  int getUpgradeSlot(ItemStack stack);
 
-  default int getUpgradeSzie () {
+  default int getUpgradeSzie() {
     return getUpgradeSize(ItemStack.EMPTY);
   }
 
-  int getUpgradeSize (ItemStack stack);
+  int getUpgradeSize(ItemStack stack);
 
-  List<Class<? extends TileEntity>> getUpgradeClasses (ItemStack stack);
+  List<Class<? extends TileEntity>> getUpgradeClasses(ItemStack stack);
 
-  default List<Class<? extends TileEntity>> getUpgradeClasses () {
+  default List<Class<? extends TileEntity>> getUpgradeClasses() {
     return getUpgradeClasses(ItemStack.EMPTY);
   }
 
-  default boolean upgradeFor (TileEntity te, ItemStack stack) {
+  default boolean upgradeFor(TileEntity te, ItemStack stack) {
     List<Class<? extends TileEntity>> classes = getUpgradeClasses(stack);
     return classes.contains(te.getClass());
   }
 
-  default boolean upgradeFor (TileEntity te) {
+  default boolean upgradeFor(TileEntity te) {
     return upgradeFor(te, ItemStack.EMPTY);
   }
 
-  default boolean isUpgrade () {
+  default boolean isUpgrade() {
     return true;
   }
 }

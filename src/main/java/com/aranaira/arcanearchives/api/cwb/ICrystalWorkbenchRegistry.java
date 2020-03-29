@@ -26,15 +26,15 @@ public interface ICrystalWorkbenchRegistry {
   @Nullable
   ResourceLocation getKey(CrystalWorkbenchRecipe value);
 
-  int getIndex (CrystalWorkbenchRecipe value);
+  int getIndex(CrystalWorkbenchRecipe value);
 
-  int getIndex (ResourceLocation key);
-
-  @Nullable
-  CrystalWorkbenchRecipe getValueByIndex (int index);
+  int getIndex(ResourceLocation key);
 
   @Nullable
-  CrystalWorkbenchRecipe find (WorkbenchCrafting crafting);
+  CrystalWorkbenchRecipe getValueByIndex(int index);
+
+  @Nullable
+  CrystalWorkbenchRecipe find(WorkbenchCrafting crafting);
 
   @Nonnull
   Set<ResourceLocation> getKeys();

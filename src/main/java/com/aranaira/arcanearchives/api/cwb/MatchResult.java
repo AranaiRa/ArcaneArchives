@@ -25,7 +25,7 @@ public class MatchResult {
     }
   }
 
-  public Object2IntOpenHashMap<IngredientStack> getCounts () {
+  public Object2IntOpenHashMap<IngredientStack> getCounts() {
     return ingredientCounts.clone();
   }
 
@@ -33,7 +33,7 @@ public class MatchResult {
     return recipe;
   }
 
-  public boolean matches () {
+  public boolean matches() {
     if (matched) {
       return matches;
     }
@@ -42,7 +42,7 @@ public class MatchResult {
     return matches;
   }
 
-  private void checkMatches () {
+  private void checkMatches() {
     Object2IntOpenHashMap<IngredientStack> counts = getCounts();
     Object2IntOpenHashMap<IngredientStack> discounts = getCounts();
 
@@ -75,7 +75,7 @@ public class MatchResult {
     matched = true;
   }
 
-  private void accountMatch (Object2IntOpenHashMap<IngredientStack> counts, IngredientStack ingredient, ItemStack stack) {
+  private void accountMatch(Object2IntOpenHashMap<IngredientStack> counts, IngredientStack ingredient, ItemStack stack) {
     if (counts.containsKey(ingredient)) {
       int current = counts.getInt(ingredient);
       int incoming = stack.getCount();
@@ -87,7 +87,7 @@ public class MatchResult {
     }
   }
 
-  private int discountMatch (Object2IntOpenHashMap<IngredientStack> counts, IngredientStack ingredient, ItemStack stack) {
+  private int discountMatch(Object2IntOpenHashMap<IngredientStack> counts, IngredientStack ingredient, ItemStack stack) {
     int result = -1;
 
     if (counts.containsKey(ingredient)) {
@@ -105,11 +105,11 @@ public class MatchResult {
     return result;
   }
 
-  protected WorkbenchCrafting getInventory () {
+  protected WorkbenchCrafting getInventory() {
     return inventory;
   }
 
-  protected List<IngredientStack> getIngredients () {
+  protected List<IngredientStack> getIngredients() {
     return recipe.getIngredients();
   }
 
@@ -117,7 +117,7 @@ public class MatchResult {
     return matchMap;
   }
 
-  public Int2IntOpenHashMap getSlotMap () {
+  public Int2IntOpenHashMap getSlotMap() {
     return slotMap;
   }
 }

@@ -19,7 +19,7 @@ public abstract class BaseTile extends TileEntity {
     return tileId;
   }
 
-  public String getCachedUUID () {
+  public String getCachedUUID() {
     if (tileId == null) {
       return "";
     }
@@ -40,7 +40,7 @@ public abstract class BaseTile extends TileEntity {
     }
   }
 
-  protected UUID generateId () {
+  protected UUID generateId() {
     return UUID.randomUUID();
   }
 

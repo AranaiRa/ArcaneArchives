@@ -86,17 +86,17 @@ public class UpgradeInfo implements IUpgrade {
       return this;
     }
 
-    public Builder classes (Class<? extends TileEntity> ... classes) {
+    public Builder classes(Class<? extends TileEntity>... classes) {
       this.classes = Arrays.asList(classes);
       return this;
     }
 
-    public Builder classes (List<Class<? extends TileEntity>> classes) {
+    public Builder classes(List<Class<? extends TileEntity>> classes) {
       this.classes = classes;
       return this;
     }
 
-    public Builder classes(ItemStack stack, Class<? extends TileEntity> ... classes) {
+    public Builder classes(ItemStack stack, Class<? extends TileEntity>... classes) {
       this.classes = Arrays.asList(classes);
       this.classMatcher = Ingredient.fromStacks(stack);
       return this;
@@ -108,7 +108,7 @@ public class UpgradeInfo implements IUpgrade {
       return this;
     }
 
-    public Builder classes(Predicate<ItemStack> stack, Class<? extends TileEntity> ... classes) {
+    public Builder classes(Predicate<ItemStack> stack, Class<? extends TileEntity>... classes) {
       this.classes = Arrays.asList(classes);
       this.classMatcher = stack;
       return this;
@@ -120,7 +120,7 @@ public class UpgradeInfo implements IUpgrade {
       return this;
     }
 
-    public UpgradeInfo build () {
+    public UpgradeInfo build() {
       Function<ItemStack, Integer> slotFunction = (itemstack) -> {
         if (slotMatcher.test(itemstack)) {
           return slot;

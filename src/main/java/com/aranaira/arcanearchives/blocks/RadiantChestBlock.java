@@ -145,7 +145,7 @@ public class RadiantChestBlock extends TemplateBlock {
 	}*//*
 
 
-*/
+ */
 /*	@Override
 	public int getComparatorInputOverride (IBlockState blockState, World worldIn, BlockPos pos) {
 		RadiantChestTileEntity te = WorldUtil.getTileEntity(RadiantChestTileEntity.class, worldIn, pos);

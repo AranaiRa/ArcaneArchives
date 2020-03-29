@@ -6,7 +6,6 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 
 import javax.annotation.Nullable;
-import java.util.UUID;
 
 public class NBTUtils {
   public static void setRecipe(NBTTagCompound tag, String key, IRecipe recipe) {

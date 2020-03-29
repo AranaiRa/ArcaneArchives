@@ -7,6 +7,8 @@ public interface INamedTileEntity {
  * not include the modid.
  * @param name The name to be used as the registry name path and also to refer
  * to the specific type of tile entity.
+ * @param name The name to be used as the registry name path and also to refer
+ * to the specific type of tile entity.
  *//*
 	String getName ();
 
