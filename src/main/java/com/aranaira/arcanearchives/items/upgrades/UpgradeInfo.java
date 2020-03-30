@@ -39,6 +39,11 @@ public class UpgradeInfo implements IUpgrade {
     return upgradeFor.apply(stack);
   }
 
+  @Override
+  public UpgradeType getType(ItemStack stack) {
+    return upgradeType;
+  }
+
   public static class Builder {
     private UpgradeType type;
     private Predicate<ItemStack> sizeMatcher = ANY;
@@ -48,7 +53,11 @@ public class UpgradeInfo implements IUpgrade {
     private int slot = 0;
     private List<Class<? extends TileEntity>> classes = Collections.emptyList();
 
-    public Builder(UpgradeType type) {
+    public static Builder create (UpgradeType type) {
+      return new Builder(type);
+    }
+
+    private Builder(UpgradeType type) {
       this.type = type;
     }
 
