@@ -10,11 +10,13 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.*;
 
+@SuppressWarnings("unused")
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class NetworkAggregator {
-  public static int QUEUE_LIMIT = 50;
+  private static int QUEUE_LIMIT = 50;
 
   public static Map<UUID, Network> storage = new HashMap<>();
+  // TODO: Store network IDs
 
   public static Network byId(UUID networkId) {
     return storage.computeIfAbsent(networkId, (key) -> new Network(networkId));
@@ -22,6 +24,15 @@ public class NetworkAggregator {
 
   public static Collection<Network> getNetworks() {
     return storage.values();
+  }
+
+  public static UUID generateId () {
+    UUID uuid = UUID.randomUUID();
+    Set<UUID> existing = storage.keySet();
+    while (existing.contains(uuid)) {
+      uuid = UUID.randomUUID();
+    }
+    return uuid;
   }
 
   private static Set<Wrapper> incomingTiles = new HashSet<>();
@@ -48,6 +59,9 @@ public class NetworkAggregator {
           outgoingTiles.add(wrapper.tile);
           removed.add(wrapper);
         } else {
+          if (wrapper.tile.generatesNetworkId()) {
+            wrapper.tile.generatesNetworkId();
+          }
           Network network = wrapper.tile.getNetwork();
           if (network == null || wrapper.tile.getWorld() == null) {
             wrapper.tick();

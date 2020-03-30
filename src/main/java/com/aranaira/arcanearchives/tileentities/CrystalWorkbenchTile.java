@@ -5,6 +5,7 @@ import com.aranaira.arcanearchives.init.ModRecipes;
 import com.aranaira.arcanearchives.reference.Tags;
 import com.aranaira.arcanearchives.registry.CrystalWorkbenchRegistry;
 import com.aranaira.arcanearchives.tilenetwork.Network;
+import com.aranaira.arcanearchives.tilenetwork.NetworkAggregator;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -144,9 +145,9 @@ public class CrystalWorkbenchTile extends NetworkedBaseTile {
   }
 
   @Override
-  public void onNetworkJoined(Network network) {
+  public boolean generatesNetworkId() {
+    return true;
   }
-
 
   @Override
   @Nonnull
@@ -187,7 +188,9 @@ public class CrystalWorkbenchTile extends NetworkedBaseTile {
   }
 
   @Override
-  public UUID getNetworkId() {
-    return null;
+  public void generateNetworkId() {
+    if (networkId == null) {
+      networkId = NetworkAggregator.generateId();
+    }
   }
 }

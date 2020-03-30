@@ -111,5 +111,14 @@ public abstract class NetworkedBaseTile extends BaseTile {
     super.onDataPacket(net, pkt);
   }
 
-  public abstract void onNetworkJoined (Network network);
+  public void onNetworkJoined (Network network) {
+  }
+
+  public boolean generatesNetworkId () {
+    return false;
+  }
+
+  public void generateNetworkId () {
+    throw new IllegalStateException("This tile uses the default implementation of NetworkedBaseTile::generateNetworkId and should never have been called. " + this);
+  }
 }
