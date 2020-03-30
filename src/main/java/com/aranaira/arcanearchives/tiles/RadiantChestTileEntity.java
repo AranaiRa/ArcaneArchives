@@ -78,60 +78,6 @@ public class RadiantChestTileEntity extends TileEntity {
   }
 
   @Override
-  @Nonnull
-  public SPacketUpdateTileEntity getUpdatePacket() {
-    NBTTagCompound compound = writeToNBT(new NBTTagCompound());
-
-    return new SPacketUpdateTileEntity(pos, 0, compound);
-  }
-
-  @Override
-  public NBTTagCompound getUpdateTag() {
-    return writeToNBT(new NBTTagCompound());
-  }
-
-  @Override
-  @Nonnull
-  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-    super.writeToNBT(compound);
-    compound.setTag("Inventory", inventory.serializeNBT());
-    if (chestName != null && !chestName.isEmpty()) {
-      compound.setString(Tags.CHEST_NAME, chestName);
-    }
-    compound.setInteger(Tags.DISPLAY_FACING, displayFacing.getIndex());
-    if (!displayStack.isEmpty()) {
-      compound.setTag(Tags.DISPLAY_STACK, displayStack.serializeNBT());
-    }
-    *//*		compound.setInteger(Tags.ROUTING_TYPE, routingType.ordinal());*//*
-
-    return compound;
-  }
-
-  @Override
-  public void readFromNBT(NBTTagCompound compound) {
-    super.readFromNBT(compound);
-    if (!compound.hasKey("Inventory")) {
-      ArcaneArchives.logger.info(String.format("Radiant Chest tile entity at %d/%d/%d is missing its inventory.", pos.getX(), pos.getY(), pos.getZ()));
-    }
-    inventory.deserializeNBT(compound.getCompoundTag("Inventory"));
-
-    if (compound.hasKey(Tags.CHEST_NAME)) {
-      setChestName(compound.getString(Tags.CHEST_NAME));
-    }
-    displayFacing = EnumFacing.byIndex(compound.getInteger(Tags.DISPLAY_FACING));
-    if (compound.hasKey(Tags.DISPLAY_STACK)) {
-      setDisplayStack(new ItemStack(compound.getCompoundTag(Tags.DISPLAY_STACK)));
-    }
-    *//*		routingType = BrazierRoutingType.fromInt(compound.getInteger(Tags.ROUTING_TYPE));*//*
-  }
-
-  @Override
-  public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-    readFromNBT(pkt.getNbtCompound());
-    super.onDataPacket(net, pkt);
-  }
-
-  @Override
   public boolean hasCapability(@Nonnull Capability<?> capability, EnumFacing facing) {
     if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return true;

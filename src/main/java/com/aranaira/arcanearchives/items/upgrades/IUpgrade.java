@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.items.upgrades;
 
+import com.aranaira.arcanearchives.types.enums.UpgradeType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
@@ -33,7 +34,13 @@ public interface IUpgrade {
     return upgradeFor(te, ItemStack.EMPTY);
   }
 
-  default boolean isUpgrade() {
+  default boolean isUpgrade(ItemStack stack) {
     return true;
   }
+
+  default boolean isUpgrade () {
+    return isUpgrade(ItemStack.EMPTY);
+  }
+
+  UpgradeType getType(ItemStack stack);
 }

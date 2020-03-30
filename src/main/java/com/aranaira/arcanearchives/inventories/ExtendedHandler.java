@@ -13,17 +13,8 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 
 public class ExtendedHandler extends ItemStackHandler {
-
-  public ExtendedHandler() {
-    this(1);
-  }
-
   public ExtendedHandler(int size) {
     super(size);
-  }
-
-  public ExtendedHandler(NonNullList<ItemStack> stacks) {
-    super(stacks);
   }
 
   @Override
@@ -38,7 +29,6 @@ public class ExtendedHandler extends ItemStackHandler {
 
   @Override
   public void onContentsChanged(int slot) {
-
   }
 
   @Nonnull

@@ -18,4 +18,10 @@ public interface Tags {
   interface PlayerSaveData {
     String receivedBook = "RecBook";
   }
+
+  interface RadiantChest {
+    String customName = "CusName";
+    String displayItem = "DisItem";
+    String displayFacing = "DisFacing";
+  }
 }
