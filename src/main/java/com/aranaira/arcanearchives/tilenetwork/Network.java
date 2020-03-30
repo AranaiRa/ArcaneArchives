@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.tilenetwork;
 import com.aranaira.arcanearchives.api.immanence.IImmanenceSubscriber;
 import com.aranaira.arcanearchives.immanence.ImmanenceBus;
 import com.aranaira.arcanearchives.tiles.NetworkedBaseTile;
+import com.aranaira.arcanearchives.tiles.TrackingNetworkedBaseTile;
 import com.google.common.collect.ForwardingMap;
 
 import javax.annotation.Nullable;
@@ -54,6 +55,10 @@ public class Network extends ForwardingMap<UUID, NetworkEntry> {
 
   public List<NetworkEntry> getImmanenceSubscribers () {
     return getEntriesByInstance(IImmanenceSubscriber.class);
+  }
+
+  public List<NetworkEntry> getTrackedInventories () {
+    return getEntriesByInstance(TrackingNetworkedBaseTile.class);
   }
 
   public boolean containsTile(UUID tileId) {
