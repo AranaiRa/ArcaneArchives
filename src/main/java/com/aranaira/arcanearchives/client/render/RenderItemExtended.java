@@ -19,6 +19,7 @@ import javax.annotation.Nullable;
 public class RenderItemExtended {
   private static RenderItem itemRender = Minecraft.getMinecraft().getRenderItem();
 
+  // TODO: Are these really needed any more?
   public static void setZLevel(float z) {
     itemRender.zLevel = z;
   }
@@ -33,7 +34,6 @@ public class RenderItemExtended {
 
   public static void renderItemOverlayIntoGUI(FontRenderer fr, ItemStack stack, int xPosition, int yPosition, @Nullable String text) {
     if (!stack.isEmpty()) {
-
       if (stack.getItem().showDurabilityBar(stack)) {
         GlStateManager.disableLighting();
         GlStateManager.disableDepth();
