@@ -77,22 +77,6 @@ public class RadiantChestTileEntity extends TileEntity {
     return inventory;
   }
 
-  @Override
-  public boolean hasCapability(@Nonnull Capability<?> capability, EnumFacing facing) {
-    if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      return true;
-    }
-    return super.hasCapability(capability, facing);
-  }
-
-  @Override
-  public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing facing) {
-    if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(inventory);
-    }
-    return super.getCapability(capability, facing);
-  }
-
   public int countEmptySlots() {
     int empty = 0;
     for (int i = 0; i < inventory.getSlots(); i++) {

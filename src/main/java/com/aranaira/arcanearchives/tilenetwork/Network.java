@@ -1,5 +1,7 @@
 package com.aranaira.arcanearchives.tilenetwork;
 
+import com.aranaira.arcanearchives.api.immanence.IImmanenceSubscriber;
+import com.aranaira.arcanearchives.immanence.ImmanenceBus;
 import com.aranaira.arcanearchives.tiles.NetworkedBaseTile;
 import com.google.common.collect.ForwardingMap;
 
@@ -7,11 +9,13 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 public class Network extends ForwardingMap<UUID, NetworkEntry> {
-  private Map<UUID, NetworkEntry> entries = new HashMap<>();
-  private UUID networkId;
+  private final Map<UUID, NetworkEntry> entries = new HashMap<>();
+  private final UUID networkId;
+  private final ImmanenceBus bus;
 
   public Network(UUID networkId) {
     this.networkId = networkId;
+    this.bus = new ImmanenceBus(this);
   }
 
   public NetworkEntry add(NetworkedBaseTile tile) {
@@ -48,12 +52,20 @@ public class Network extends ForwardingMap<UUID, NetworkEntry> {
     return result;
   }
 
+  public List<NetworkEntry> getImmanenceSubscribers () {
+    return getEntriesByInstance(IImmanenceSubscriber.class);
+  }
+
   public boolean containsTile(UUID tileId) {
     return entries.containsKey(tileId);
   }
 
   public UUID getNetworkId() {
     return networkId;
+  }
+
+  public ImmanenceBus getImmanenceBus() {
+    return bus;
   }
 
   @Override

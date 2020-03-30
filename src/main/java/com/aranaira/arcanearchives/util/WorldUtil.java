@@ -64,22 +64,4 @@ public class WorldUtil {
   public static <T> T getTileEntity(Class<T> clazz, IBlockAccess world, BlockPos pos) {
     return getTileEntity(clazz, world, pos, false);
   }
-
-  public static boolean isChunkLoaded(World world, BlockPos pos) {
-    return world.isBlockLoaded(pos);
-  }
-
-  public static void spawnInventoryInWorld(World world, double x, double y, double z, IItemHandler inventory) {
-    spawnInventoryInWorld(world, new BlockPos(x, y, z), inventory);
-  }
-
-  public static void spawnInventoryInWorld(World world, BlockPos pos, IItemHandler inventory) {
-    if (inventory != null && !world.isRemote) {
-      for (int i = 0; i < inventory.getSlots(); i++) {
-        if (!inventory.getStackInSlot(i).isEmpty()) {
-          Block.spawnAsEntity(world, pos, inventory.getStackInSlot(i));
-        }
-      }
-    }
-  }
 }

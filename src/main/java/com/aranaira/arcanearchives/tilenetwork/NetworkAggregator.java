@@ -18,6 +18,10 @@ public class NetworkAggregator {
     return storage.computeIfAbsent(networkId, (key) -> new Network(networkId));
   }
 
+  public static Collection<Network> getNetworks () {
+    return storage.values();
+  }
+
   private static Set<Wrapper> incomingTiles = new HashSet<>();
   private static Set<NetworkedBaseTile> outgoingTiles = new HashSet<>();
 

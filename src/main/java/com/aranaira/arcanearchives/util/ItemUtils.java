@@ -36,6 +36,7 @@ public class ItemUtils {
 		return 0;
 	}*/
 
+  // TODO: This exists in ItemHandlerHelper btw
   public static int calculateRedstoneFromItemHandler(@Nullable IItemHandler handler) {
     if (handler == null) {
       return 0;
@@ -87,6 +88,9 @@ public class ItemUtils {
     return true;
   }
 
+
+  // TODO: Decide which of these to use
+  @Deprecated
   public static void dropInventoryItems(World world, BlockPos pos, @Nullable IItemHandler inventory) {
     if (inventory == null) {
       return;
@@ -99,6 +103,22 @@ public class ItemUtils {
           Block.spawnAsEntity(world, pos, toDrop);
         } else {
           break;
+        }
+      }
+    }
+  }
+
+  @Deprecated
+  public static void spawnInventoryInWorld(World world, double x, double y, double z, IItemHandler inventory) {
+    spawnInventoryInWorld(world, new BlockPos(x, y, z), inventory);
+  }
+
+  @Deprecated
+  public static void spawnInventoryInWorld(World world, BlockPos pos, IItemHandler inventory) {
+    if (inventory != null && !world.isRemote) {
+      for (int i = 0; i < inventory.getSlots(); i++) {
+        if (!inventory.getStackInSlot(i).isEmpty()) {
+          Block.spawnAsEntity(world, pos, inventory.getStackInSlot(i));
         }
       }
     }
