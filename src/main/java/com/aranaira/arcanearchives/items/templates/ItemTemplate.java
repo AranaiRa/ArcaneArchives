@@ -122,6 +122,6 @@ public class ItemTemplate extends Item implements IUpgrade {
 
   @Override
   public UpgradeType getType(ItemStack stack) {
-    return upgradeInfo.getType();
+    return upgradeInfo.getType(stack);
   }
 }
