@@ -6,7 +6,7 @@ import com.aranaira.arcanearchives.client.Keybinds;
 import com.aranaira.arcanearchives.data.types.ClientNetwork;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
-import com.aranaira.arcanearchives.util.ManifestTrackingUtils;
+import com.aranaira.arcanearchives.client.tracking.ManifestTrackingUtils;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;

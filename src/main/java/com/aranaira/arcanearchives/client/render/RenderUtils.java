@@ -1,68 +1,38 @@
 package com.aranaira.arcanearchives.client.render;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.util.ColorUtils;
 import com.aranaira.arcanearchives.util.ColorUtils.Color;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 import net.minecraftforge.client.ForgeHooksClient;
+import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
-import java.util.Set;
+import java.util.List;
 
+@Mod.EventBusSubscriber(modid = ArcaneArchives.MODID, value = Side.CLIENT)
+@SideOnly(Side.CLIENT)
 public class RenderUtils {
   public static final Vec3d ONE = new Vec3d(1, 1, 1);
-
-  @SideOnly(Side.CLIENT)
-  public static void drawRays(long worldTime, Vec3d adjustedPlayerPos, Set<Vec3d> target_pos) {
-    GlStateManager.pushMatrix();
-    GlStateManager.disableCull();
-    GlStateManager.disableLighting();
-    GlStateManager.disableTexture2D();
-    GlStateManager.disableDepth();
-
-    GlStateManager.enableBlend();
-    GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-    GlStateManager.translate(-adjustedPlayerPos.x, -adjustedPlayerPos.y, -adjustedPlayerPos.z);
-
-    Color c = ColorUtils.getColorFromTime(worldTime);//new Color(0.601f, 0.164f, 0.734f, 1f);
-    GlStateManager.color(c.red, c.green, c.blue, c.alpha);
-    GlStateManager.depthMask(false);
-
-    Vec3d scale = ONE.scale(0.5);
-
-    for (Vec3d vec : target_pos) {
-      Tessellator tessellator = Tessellator.getInstance();
-      BufferBuilder bufferBuilder = tessellator.getBuffer();
-      bufferBuilder.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_COLOR);
-      GlStateManager.glLineWidth((1.0f - getLineWidthFromDistance(adjustedPlayerPos, vec, 10, 70)) * 10.0F);
-      vec = vec.add(scale);
-
-      bufferBuilder.pos(vec.x, vec.y, vec.z).color(c.red, c.green, c.blue, c.alpha).endVertex();
-      bufferBuilder.pos(adjustedPlayerPos.x, adjustedPlayerPos.y + 1, adjustedPlayerPos.z).color(c.red, c.green, c.blue, c.alpha).endVertex();
-      tessellator.draw();
-    }
-
-    GlStateManager.depthMask(true);
-    GlStateManager.popMatrix();
-    GlStateManager.disableBlend();
-    GlStateManager.enableDepth();
-    //GlStateManager.enableLighting();
-    GlStateManager.enableCull();
-    GlStateManager.enableTexture2D();
-  }
+  private static TextureAtlasSprite whiteTexture;
 
   @SideOnly(Side.CLIENT)
   public static void drawSegmentedLine(long worldTime, java.awt.Color color, float width, Vec3d player_pos, ArrayList<Vec3d> verts) {
@@ -96,7 +66,7 @@ public class RenderUtils {
     GlStateManager.popMatrix();
   }
 
-  private static float getLineWidthFromDistance(Vec3d first, Vec3d second, float minDistanceClamp, float maxDistanceClamp) {
+  public static float getLineWidthFromDistance(Vec3d first, Vec3d second, float minDistanceClamp, float maxDistanceClamp) {
     float dist = (float) first.distanceTo(second);
     float normalized = MathHelper.clamp((dist - minDistanceClamp) / (maxDistanceClamp - minDistanceClamp), 0.0f, 1.0f);
     return normalized * 0.7f + 0.3f;
@@ -152,5 +122,117 @@ public class RenderUtils {
     double iPZ = e.prevPosZ + (e.posZ - e.prevPosZ) * partialTicks;
 
     return new Vec3d(iPX, iPY, iPZ);
+  }
+
+  public static void renderBoundingBox(@Nonnull AxisAlignedBB bb, @Nonnull Vec4f color) {
+    final float minU = whiteTexture.getMinU();
+    final float maxU = whiteTexture.getMaxU();
+    final float minV = whiteTexture.getMinV();
+    final float maxV = whiteTexture.getMaxV();
+    final BufferBuilder tes = Tessellator.getInstance().getBuffer();
+    tes.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
+    for (EnumFacing e : EnumFacing.values()) {
+      for (Vertex v : getCornersWithUvForFace(bb, e, minU, maxU, minV, maxV)) {
+        tes.pos(v.x(), v.y(), v.z()).tex(v.u(), v.v()).color(color.x, color.y, color.z, color.w).endVertex();
+      }
+    }
+    Tessellator.getInstance().draw();
+  }
+
+  private static List<Vertex> getCornersWithUvForFace(@Nonnull AxisAlignedBB bb, @Nonnull EnumFacing face, float minU, float maxU, float minV, float maxV) {
+    List<Vertex> result = new ArrayList<>();
+    switch (face) {
+      case NORTH:
+        result.add(new Vertex(new Vec3d(bb.maxX, bb.minY, bb.minZ), new Vec2f(minU, minV)));
+        result.add(new Vertex(new Vec3d(bb.minX, bb.minY, bb.minZ), new Vec2f(maxU, minV)));
+        result.add(new Vertex(new Vec3d(bb.minX, bb.maxY, bb.minZ), new Vec2f(maxU, maxV)));
+        result.add(new Vertex(new Vec3d(bb.maxX, bb.maxY, bb.minZ), new Vec2f(minU, maxV)));
+        break;
+      case SOUTH:
+        result.add(new Vertex(new Vec3d(bb.minX, bb.minY, bb.maxZ), new Vec2f(maxU, minV)));
+        result.add(new Vertex(new Vec3d(bb.maxX, bb.minY, bb.maxZ), new Vec2f(minU, minV)));
+        result.add(new Vertex(new Vec3d(bb.maxX, bb.maxY, bb.maxZ), new Vec2f(minU, maxV)));
+        result.add(new Vertex(new Vec3d(bb.minX, bb.maxY, bb.maxZ), new Vec2f(maxU, maxV)));
+        break;
+      case EAST:
+        result.add(new Vertex(new Vec3d(bb.maxX, bb.maxY, bb.minZ), new Vec2f(maxU, maxV)));
+        result.add(new Vertex(new Vec3d(bb.maxX, bb.maxY, bb.maxZ), new Vec2f(minU, maxV)));
+        result.add(new Vertex(new Vec3d(bb.maxX, bb.minY, bb.maxZ), new Vec2f(minU, minV)));
+        result.add(new Vertex(new Vec3d(bb.maxX, bb.minY, bb.minZ), new Vec2f(maxU, minV)));
+        break;
+      case WEST:
+        result.add(new Vertex(new Vec3d(bb.minX, bb.minY, bb.minZ), new Vec2f(maxU, minV)));
+        result.add(new Vertex(new Vec3d(bb.minX, bb.minY, bb.maxZ), new Vec2f(minU, minV)));
+        result.add(new Vertex(new Vec3d(bb.minX, bb.maxY, bb.maxZ), new Vec2f(minU, maxV)));
+        result.add(new Vertex(new Vec3d(bb.minX, bb.maxY, bb.minZ), new Vec2f(maxU, maxV)));
+        break;
+      case UP:
+        result.add(new Vertex(new Vec3d(bb.maxX, bb.maxY, bb.maxZ), new Vec2f(minU, minV)));
+        result.add(new Vertex(new Vec3d(bb.maxX, bb.maxY, bb.minZ), new Vec2f(minU, maxV)));
+        result.add(new Vertex(new Vec3d(bb.minX, bb.maxY, bb.minZ), new Vec2f(maxU, maxV)));
+        result.add(new Vertex(new Vec3d(bb.minX, bb.maxY, bb.maxZ), new Vec2f(maxU, minV)));
+        break;
+      case DOWN:
+      default:
+        result.add(new Vertex(new Vec3d(bb.minX, bb.minY, bb.minZ), new Vec2f(maxU, maxV)));
+        result.add(new Vertex(new Vec3d(bb.maxX, bb.minY, bb.minZ), new Vec2f(minU, maxV)));
+        result.add(new Vertex(new Vec3d(bb.maxX, bb.minY, bb.maxZ), new Vec2f(minU, minV)));
+        result.add(new Vertex(new Vec3d(bb.minX, bb.minY, bb.maxZ), new Vec2f(maxU, minV)));
+        break;
+    }
+    return result;
+  }
+
+  @SubscribeEvent
+  public static void onIconLoad(TextureStitchEvent.Pre event) {
+    final TextureMap map = event.getMap();
+    if (map != null) {
+      whiteTexture = map.registerSprite(new ResourceLocation(ArcaneArchives.MODID, "white"));
+    }
+  }
+
+  public static class Vec4f {
+    public float x;
+    public float y;
+    public float z;
+    public float w;
+
+    public Vec4f(float x, float y, float z, float w) {
+      this.x = x;
+      this.y = y;
+      this.z = z;
+      this.w = w;
+    }
+  }
+
+  public static class Vertex {
+
+    private Vec3d xyz;
+    private Vec2f uv;
+
+    public Vertex(Vec3d xyz, Vec2f uv) {
+      this.xyz = xyz;
+      this.uv = uv;
+    }
+
+    public double x() {
+      return xyz.x;
+    }
+
+    public double y() {
+      return xyz.y;
+    }
+
+    public double z() {
+      return xyz.z;
+    }
+
+    public float u() {
+      return uv.x;
+    }
+
+    public float v() {
+      return uv.y;
+    }
   }
 }

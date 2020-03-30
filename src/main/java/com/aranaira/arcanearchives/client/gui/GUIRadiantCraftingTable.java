@@ -10,7 +10,7 @@ import com.aranaira.arcanearchives.network.PacketRadiantCrafting.UnsetRecipe;
 import com.aranaira.arcanearchives.util.ColorUtils;
 import com.aranaira.arcanearchives.util.ColorUtils.Color;
 import com.aranaira.arcanearchives.util.KeyboardUtil;
-import com.aranaira.arcanearchives.util.ManifestTrackingUtils;
+import com.aranaira.arcanearchives.client.tracking.ManifestTrackingUtils;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;

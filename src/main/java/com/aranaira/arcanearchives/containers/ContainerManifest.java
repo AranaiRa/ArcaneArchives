@@ -10,7 +10,7 @@ import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler;
 import com.aranaira.arcanearchives.types.lists.ManifestList.SortingDirection;
 import com.aranaira.arcanearchives.types.lists.ManifestList.SortingType;
-import com.aranaira.arcanearchives.util.ManifestTrackingUtils;
+import com.aranaira.arcanearchives.client.tracking.ManifestTrackingUtils;
 import com.aranaira.arcanearchives.util.ManifestUtils.CollatedEntry;
 import com.aranaira.arcanearchives.util.MathUtils;
 import invtweaks.api.container.InventoryContainer;

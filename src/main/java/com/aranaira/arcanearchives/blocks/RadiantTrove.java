@@ -1,7 +1,7 @@
 /*package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.DirectionalBlock;
-import com.aranaira.arcanearchives.client.render.LineHandler;
+import com.aranaira.arcanearchives.client.tracking.LineHandler;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.items.templates.IItemScepter;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;

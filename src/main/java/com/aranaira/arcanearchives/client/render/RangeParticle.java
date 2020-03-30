@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.client.render;
 
+import com.aranaira.arcanearchives.tiles.IRanged;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -22,14 +23,14 @@ public class RangeParticle<T extends TileEntity & IRanged> extends Particle {
   private static final int AGE_LIMIT = 20 * 60; // 60 seconds * 10; // 10 minutes
 
   private final T owner;
-  private final RenderUtil.Vec4f color;
+  private final RenderUtils.Vec4f color;
   private int age = 0;
 
   public RangeParticle(T owner) {
-    this(owner, new RenderUtil.Vec4f(0.78f, 0.54f, 0.19f, 0.4f));
+    this(owner, new RenderUtils.Vec4f(0.78f, 0.54f, 0.19f, 0.4f));
   }
 
-  public RangeParticle(T owner, RenderUtil.Vec4f color) {
+  public RangeParticle(T owner, RenderUtils.Vec4f color) {
     super(owner.getWorld(), owner.getPos().getX(), owner.getPos().getY(), owner.getPos().getZ());
     this.owner = owner;
     this.color = color;
@@ -75,7 +76,7 @@ public class RangeParticle<T extends TileEntity & IRanged> extends Particle {
     double z = entityIn.lastTickPosZ + (entityIn.posZ - entityIn.lastTickPosZ) * partialTicks;
     GlStateManager.translate(-x, -y, -z);
 
-    RenderUtil.renderBoundingBox(scale(owner.getPos(), getBounds(), scale).expand(0.01, 0.01, 0.01), color);
+    RenderUtils.renderBoundingBox(scale(owner.getPos(), getBounds(), scale).expand(0.01, 0.01, 0.01), color);
 
     GlStateManager.depthMask(true);
     GlStateManager.disableBlend();

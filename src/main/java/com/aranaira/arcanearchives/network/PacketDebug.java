@@ -1,6 +1,6 @@
 /*package com.aranaira.arcanearchives.network;
 
-import com.aranaira.arcanearchives.client.render.LineHandler;
+import com.aranaira.arcanearchives.client.tracking.LineHandler;
 import com.aranaira.arcanearchives.network.Handlers.ClientHandler;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.util.math.BlockPos;

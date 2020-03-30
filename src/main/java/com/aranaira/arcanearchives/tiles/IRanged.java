@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.client.render;
+package com.aranaira.arcanearchives.tiles;
 
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;

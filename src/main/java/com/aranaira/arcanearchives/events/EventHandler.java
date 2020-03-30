@@ -1,6 +1,6 @@
 /*package com.aranaira.arcanearchives.events;
 
-import com.aranaira.arcanearchives.client.render.LineHandler;
+import com.aranaira.arcanearchives.client.tracking.LineHandler;
 import com.aranaira.arcanearchives.client.render.RenderGemcasting;
 import com.aranaira.arcanearchives.client.render.RenderGemcasting.EnumGemGuiMode;
 import com.aranaira.arcanearchives.config.ConfigHandler;

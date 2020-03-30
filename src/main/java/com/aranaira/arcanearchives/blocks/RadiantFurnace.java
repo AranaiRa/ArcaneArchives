@@ -3,7 +3,7 @@
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.templates.DirectionalBlock;
-import com.aranaira.arcanearchives.client.render.LineHandler;
+import com.aranaira.arcanearchives.client.tracking.LineHandler;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.tileentities.RadiantFurnaceAccessorTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantFurnaceTileEntity;
