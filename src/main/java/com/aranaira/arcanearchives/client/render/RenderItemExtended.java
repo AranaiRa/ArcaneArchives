@@ -10,28 +10,28 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
+@SideOnly(Side.CLIENT)
 public class RenderItemExtended {
+  private static RenderItem itemRender = Minecraft.getMinecraft().getRenderItem();
 
-  RenderItem itemRender = Minecraft.getMinecraft().getRenderItem();
-  public static final RenderItemExtended INSTANCE = new RenderItemExtended();
-
-  public void setZLevel(float z) {
+  public static void setZLevel(float z) {
     itemRender.zLevel = z;
   }
 
-  public float getZLevel() {
+  public static float getZLevel() {
     return itemRender.zLevel;
   }
 
-  public void modifyZLevel(float amount) {
+  public static void modifyZLevel(float amount) {
     itemRender.zLevel += amount;
   }
 
-  public void renderItemOverlayIntoGUI(
-      FontRenderer fr, ItemStack stack, int xPosition, int yPosition, @Nullable String text) {
+  public static void renderItemOverlayIntoGUI(FontRenderer fr, ItemStack stack, int xPosition, int yPosition, @Nullable String text) {
     if (!stack.isEmpty()) {
 
       if (stack.getItem().showDurabilityBar(stack)) {
@@ -45,9 +45,8 @@ public class RenderItemExtended {
         double health = stack.getItem().getDurabilityForDisplay(stack);
         int rgbfordisplay = stack.getItem().getRGBDurabilityForDisplay(stack);
         int i = Math.round(13.0F - (float) health * 13.0F);
-        int j = rgbfordisplay;
-        this.draw(vertexbuffer, xPosition + 2, yPosition + 13, 13, 2, 0, 0, 0, 255);
-        this.draw(vertexbuffer, xPosition + 2, yPosition + 13, i, 1, j >> 16 & 255, j >> 8 & 255, j & 255, 255);
+        draw(vertexbuffer, xPosition + 2, yPosition + 13, 13, 2, 0, 0, 0, 255);
+        draw(vertexbuffer, xPosition + 2, yPosition + 13, i, 1, rgbfordisplay >> 16 & 255, rgbfordisplay >> 8 & 255, rgbfordisplay & 255, 255);
         GlStateManager.enableBlend();
         GlStateManager.enableAlpha();
         GlStateManager.enableTexture2D();
@@ -67,9 +66,7 @@ public class RenderItemExtended {
         GlStateManager.popMatrix();
         GlStateManager.enableLighting();
         GlStateManager.enableDepth();
-        // Fixes opaque cooldown overlay a bit lower
         // TODO: check if enabled blending still screws things up down
-        // the line.
         GlStateManager.enableBlend();
       }
 
@@ -82,7 +79,7 @@ public class RenderItemExtended {
         GlStateManager.disableTexture2D();
         Tessellator tessellator1 = Tessellator.getInstance();
         BufferBuilder vertexbuffer1 = tessellator1.getBuffer();
-        this.draw(vertexbuffer1, xPosition, yPosition + MathHelper.floor(16.0F * (1.0F - f3)), 16, MathHelper.ceil(16.0F * f3), 255, 255, 255, 127);
+        draw(vertexbuffer1, xPosition, yPosition + MathHelper.floor(16.0F * (1.0F - f3)), 16, MathHelper.ceil(16.0F * f3), 255, 255, 255, 127);
         GlStateManager.enableTexture2D();
         GlStateManager.enableLighting();
         GlStateManager.enableDepth();
@@ -90,8 +87,7 @@ public class RenderItemExtended {
     }
   }
 
-  private void draw(
-      BufferBuilder renderer, int x, int y, int width, int height, int red, int green, int blue, int alpha) {
+  private static void draw(BufferBuilder renderer, int x, int y, int width, int height, int red, int green, int blue, int alpha) {
     renderer.begin(7, DefaultVertexFormats.POSITION_COLOR);
     renderer.pos((double) (x), (double) (y), 0.0D).color(red, green, blue, alpha).endVertex();
     renderer.pos((double) (x), (double) (y + height), 0.0D).color(red, green, blue, alpha).endVertex();

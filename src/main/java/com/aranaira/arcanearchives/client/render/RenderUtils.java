@@ -72,6 +72,7 @@ public class RenderUtils {
     return normalized * 0.7f + 0.3f;
   }
 
+  // TODO: Not use
   public static void renderFullbrightBlockModel(World world, BlockPos pos, IBlockState state, boolean translateToOrigin) {
     GlStateManager.pushMatrix();
     BufferBuilder buffer = Tessellator.getInstance().getBuffer();
