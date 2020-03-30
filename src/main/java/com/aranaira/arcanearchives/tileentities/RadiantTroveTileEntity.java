@@ -11,7 +11,7 @@ import com.aranaira.arcanearchives.items.templates.IItemScepter;
 import com.aranaira.arcanearchives.tileentities.interfaces.IBrazierRouting;
 import com.aranaira.arcanearchives.tileentities.interfaces.IManifestTileEntity;
 import com.aranaira.arcanearchives.tileentities.interfaces.IUpgradeableStorage;
-import com.aranaira.arcanearchives.types.enums.UpgradeType;
+import com.aranaira.arcanearchives.types.UpgradeType;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import com.aranaira.arcanearchives.util.PlayerUtil;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;

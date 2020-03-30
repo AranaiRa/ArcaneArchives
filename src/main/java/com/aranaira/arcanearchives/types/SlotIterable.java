@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.types.iterators;
+package com.aranaira.arcanearchives.types;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;

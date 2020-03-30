@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.items.upgrades;
 
-import com.aranaira.arcanearchives.types.enums.UpgradeType;
+import com.aranaira.arcanearchives.types.UpgradeType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tileentity.TileEntity;

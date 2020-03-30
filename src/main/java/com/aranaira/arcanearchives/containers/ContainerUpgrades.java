@@ -5,7 +5,7 @@ import com.aranaira.arcanearchives.inventory.handlers.SizeUpgradeItemHandler;
 import com.aranaira.arcanearchives.items.IUpgradeItem;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.interfaces.IUpgradeableStorage;
-import com.aranaira.arcanearchives.types.enums.UpgradeType;
+import com.aranaira.arcanearchives.types.UpgradeType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;

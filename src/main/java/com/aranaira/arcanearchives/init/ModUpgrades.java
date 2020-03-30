@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.init;
 
 import com.aranaira.arcanearchives.items.upgrades.UpgradeInfo;
-import com.aranaira.arcanearchives.types.enums.UpgradeType;
+import com.aranaira.arcanearchives.types.UpgradeType;
 
 public class ModUpgrades {
   public static UpgradeInfo MATRIX_BRACE = UpgradeInfo.Builder.create(UpgradeType.SIZE).slot(0).size(2)/*.classes(RadiantTankTileEntity.class, RadiantTroveTileEntity.class)*/.build();

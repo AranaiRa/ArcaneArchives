@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.inventories;
 
 import com.aranaira.arcanearchives.items.upgrades.IUpgrade;
-import com.aranaira.arcanearchives.types.enums.UpgradeType;
+import com.aranaira.arcanearchives.types.UpgradeType;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
 

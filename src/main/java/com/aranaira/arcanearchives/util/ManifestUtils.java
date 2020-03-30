@@ -10,7 +10,7 @@ import com.aranaira.arcanearchives.tileentities.interfaces.IManifestTileEntity;
 import com.aranaira.arcanearchives.types.BlockPosDimension;
 import com.aranaira.arcanearchives.types.ISerializeByteBuf;
 import com.aranaira.arcanearchives.types.IteRef;
-import com.aranaira.arcanearchives.types.iterators.SlotIterable;
+import com.aranaira.arcanearchives.types.SlotIterable;
 import com.aranaira.arcanearchives.types.lists.ITileList;
 import io.netty.buffer.ByteBuf;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;

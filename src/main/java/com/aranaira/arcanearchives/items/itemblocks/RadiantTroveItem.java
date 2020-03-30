@@ -4,7 +4,7 @@ import com.aranaira.arcanearchives.inventory.handlers.OptionalUpgradesHandler;
 import com.aranaira.arcanearchives.inventory.handlers.TroveItemBlockItemHandler;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler.Tags;
-import com.aranaira.arcanearchives.types.enums.UpgradeType;
+import com.aranaira.arcanearchives.types.UpgradeType;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;

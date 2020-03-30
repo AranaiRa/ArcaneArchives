@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.items.templates;
 
 import com.aranaira.arcanearchives.items.upgrades.IUpgrade;
 import com.aranaira.arcanearchives.items.upgrades.UpgradeInfo;
-import com.aranaira.arcanearchives.types.enums.UpgradeType;
+import com.aranaira.arcanearchives.types.UpgradeType;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;

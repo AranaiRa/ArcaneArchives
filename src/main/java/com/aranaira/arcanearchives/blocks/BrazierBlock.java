@@ -4,7 +4,7 @@ import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import com.aranaira.arcanearchives.items.IUpgradeItem;
 import com.aranaira.arcanearchives.tileentities.BrazierTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantFurnaceTileEntity;
-import com.aranaira.arcanearchives.types.enums.UpgradeType;
+import com.aranaira.arcanearchives.types.UpgradeType;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

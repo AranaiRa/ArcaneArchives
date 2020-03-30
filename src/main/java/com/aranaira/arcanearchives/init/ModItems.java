@@ -2,8 +2,6 @@ package com.aranaira.arcanearchives.init;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
-import com.aranaira.arcanearchives.items.upgrades.UpgradeInfo;
-import com.aranaira.arcanearchives.types.enums.UpgradeType;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;

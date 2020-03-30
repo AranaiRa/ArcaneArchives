@@ -30,7 +30,7 @@ import com.aranaira.arcanearchives.network.PacketConfig.RequestDefaultRoutingTyp
 import com.aranaira.arcanearchives.network.PacketConfig.RequestMaxDistance;
 import com.aranaira.arcanearchives.network.PacketConfig.RequestTrovesDispense;
 import com.aranaira.arcanearchives.network.PacketRadiantAmphora.Toggle;
-import com.aranaira.arcanearchives.types.iterators.SlotIterable;
+import com.aranaira.arcanearchives.types.SlotIterable;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import epicsquid.mysticallib.util.Util;

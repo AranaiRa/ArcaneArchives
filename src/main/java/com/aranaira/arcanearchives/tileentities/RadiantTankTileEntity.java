@@ -6,7 +6,7 @@ import com.aranaira.arcanearchives.inventory.handlers.OptionalUpgradesHandler;
 import com.aranaira.arcanearchives.inventory.handlers.SizeUpgradeItemHandler;
 import com.aranaira.arcanearchives.inventory.handlers.TankUpgradeItemHandler;
 import com.aranaira.arcanearchives.tileentities.interfaces.IUpgradeableStorage;
-import com.aranaira.arcanearchives.types.enums.UpgradeType;
+import com.aranaira.arcanearchives.types.UpgradeType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;

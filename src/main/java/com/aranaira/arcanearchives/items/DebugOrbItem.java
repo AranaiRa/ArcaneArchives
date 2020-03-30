@@ -18,7 +18,7 @@ import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity.VoidingFlu
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler;
 import com.aranaira.arcanearchives.types.IteRef;
-import com.aranaira.arcanearchives.types.enums.UpgradeType;
+import com.aranaira.arcanearchives.types.UpgradeType;
 import com.aranaira.arcanearchives.types.lists.TileList;
 import com.aranaira.arcanearchives.util.UploadUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
