@@ -49,8 +49,8 @@ public class UpgradeInfo implements IUpgrade {
     private Predicate<ItemStack> sizeMatcher = ANY;
     private Predicate<ItemStack> slotMatcher = ANY;
     private Predicate<ItemStack> classMatcher = ANY;
-    private int size = 1;
-    private int slot = 0;
+    private int size = -1;
+    private int slot = -1;
     private List<Class<? extends TileEntity>> classes = Collections.emptyList();
 
     public static Builder create (UpgradeType type) {

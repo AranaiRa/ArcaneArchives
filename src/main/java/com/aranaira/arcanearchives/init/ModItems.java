@@ -34,6 +34,7 @@ public class ModItems {
   public static final ItemTemplate ContainmentField = register("containment_field", ItemTemplate::new, (o) -> o.setTooltip("arcanearchives.tooltip.item.containment_field", TextFormatting.GOLD).setUpgradeInfo(ModUpgrades.CONTAINMENT_FIELD));
   public static final ItemTemplate MaterialInterface = register("material_interface", ItemTemplate::new, (o) -> o.setTooltip("arcanearchives.tooltip.item.material_interface", TextFormatting.GOLD).setUpgradeInfo(ModUpgrades.MATERIAL_INTERFACE));
   public static final ItemTemplate RadiantKey = register("radiant_key", ItemTemplate::new, (o) -> o.setTooltip("arcanearchives.tooltip.item.radiant_key", TextFormatting.GOLD).setUpgradeInfo(ModUpgrades.RADIANT_KEY));
+  public static final ItemTemplate SerenityCharm = register("serenity_charm", ItemTemplate::new, (o) -> o/*.setTooltip("", TextFormatting.GOLD)*/.setUpgradeInfo(ModUpgrades.SERENITY_CHARM));
 
   public static final Item RadiantQuartz = register("radiant_quartz", Item::new);
 

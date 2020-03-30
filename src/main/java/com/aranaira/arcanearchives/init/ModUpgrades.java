@@ -7,5 +7,6 @@ public class ModUpgrades {
   public static UpgradeInfo MATRIX_BRACE = UpgradeInfo.Builder.create(UpgradeType.SIZE).slot(0).size(2)/*.classes(RadiantTankTileEntity.class, RadiantTroveTileEntity.class)*/.build();
   public static UpgradeInfo CONTAINMENT_FIELD = UpgradeInfo.Builder.create(UpgradeType.SIZE).slot(1).size(3)/*.classes(RadiantTankTileEntity.class)*/.build();
   public static UpgradeInfo MATERIAL_INTERFACE = UpgradeInfo.Builder.create(UpgradeType.SIZE).slot(1).size(3)/*.classes(RadiantTroveTileEntity.class)*/.build();
-  public static UpgradeInfo RADIANT_KEY = UpgradeInfo.Builder.create(UpgradeType.LOCK).slot(-1).size(-1)/*.classes(RadiantTroveTileEntity.class)*/.build();
+  public static UpgradeInfo RADIANT_KEY = UpgradeInfo.Builder.create(UpgradeType.LOCK)/*.classes(RadiantTroveTileEntity.class)*/.build();
+  public static UpgradeInfo SERENITY_CHARM = UpgradeInfo.Builder.create(UpgradeType.MUTE)/*.classes(RadiantResonatorBlock.class, BrazierBlock.class)*/.build();
 }
