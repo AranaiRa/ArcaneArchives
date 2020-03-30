@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.api.cwb.CrystalWorkbenchRecipe;
 import com.aranaira.arcanearchives.init.ModRecipes;
 import com.aranaira.arcanearchives.reference.Tags;
 import com.aranaira.arcanearchives.registry.CrystalWorkbenchRegistry;
+import com.aranaira.arcanearchives.tilenetwork.Network;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -140,6 +141,10 @@ public class CrystalWorkbenchTile extends NetworkedBaseTile {
   public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
     readFromNBT(pkt.getNbtCompound());
     super.onDataPacket(net, pkt);
+  }
+
+  @Override
+  public void onNetworkJoined(Network network) {
   }
 
 

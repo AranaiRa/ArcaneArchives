@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.tiles;
 
 import com.aranaira.arcanearchives.init.ModBlocks;
 import com.aranaira.arcanearchives.reference.Tags;
+import com.aranaira.arcanearchives.tilenetwork.Network;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Items;
@@ -122,6 +123,10 @@ public class MandalicKeystoneTile extends NetworkedBaseTile implements ITickable
   public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
     readFromNBT(pkt.getNbtCompound());
     super.onDataPacket(net, pkt);
+  }
+
+  @Override
+  public void onNetworkJoined(Network network) {
   }
 
   @Override
