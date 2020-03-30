@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
-import com.aranaira.arcanearchives.tiles.MandalicKeystoneTile;
+import com.aranaira.arcanearchives.tileentities.MandalicKeystoneTile;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;

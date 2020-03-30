@@ -5,7 +5,7 @@ import com.aranaira.arcanearchives.api.cwb.MatchResult;
 import com.aranaira.arcanearchives.api.cwb.WorkbenchCrafting;
 import com.aranaira.arcanearchives.containers.slots.SlotRecipeHandler;
 import com.aranaira.arcanearchives.registry.CrystalWorkbenchRegistry;
-import com.aranaira.arcanearchives.tiles.CrystalWorkbenchTile;
+import com.aranaira.arcanearchives.tileentities.CrystalWorkbenchTile;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;

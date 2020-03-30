@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
-import com.aranaira.arcanearchives.tiles.MakeshiftResonatorTile;
+import com.aranaira.arcanearchives.tileentities.MakeshiftResonatorTile;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockFaceShape;

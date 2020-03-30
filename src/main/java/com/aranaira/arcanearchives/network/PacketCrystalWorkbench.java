@@ -7,7 +7,7 @@ import com.aranaira.arcanearchives.network.Handlers.ServerHandler;
 import com.aranaira.arcanearchives.network.Handlers.TileHandlerServer;
 import com.aranaira.arcanearchives.network.Messages.TileMessage;
 import com.aranaira.arcanearchives.registry.CrystalWorkbenchRegistry;
-import com.aranaira.arcanearchives.tiles.CrystalWorkbenchTile;
+import com.aranaira.arcanearchives.tileentities.CrystalWorkbenchTile;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;

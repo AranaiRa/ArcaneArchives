@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.containers.slots;
 
 import com.aranaira.arcanearchives.api.cwb.CrystalWorkbenchRecipe;
 import com.aranaira.arcanearchives.registry.CrystalWorkbenchRegistry;
-import com.aranaira.arcanearchives.tiles.CrystalWorkbenchTile;
+import com.aranaira.arcanearchives.tileentities.CrystalWorkbenchTile;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryBasic;

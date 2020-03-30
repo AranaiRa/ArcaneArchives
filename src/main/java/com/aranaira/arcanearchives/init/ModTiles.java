@@ -1,9 +1,9 @@
 package com.aranaira.arcanearchives.init;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.tiles.CrystalWorkbenchTile;
-import com.aranaira.arcanearchives.tiles.MakeshiftResonatorTile;
-import com.aranaira.arcanearchives.tiles.MandalicKeystoneTile;
+import com.aranaira.arcanearchives.tileentities.CrystalWorkbenchTile;
+import com.aranaira.arcanearchives.tileentities.MakeshiftResonatorTile;
+import com.aranaira.arcanearchives.tileentities.MandalicKeystoneTile;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;

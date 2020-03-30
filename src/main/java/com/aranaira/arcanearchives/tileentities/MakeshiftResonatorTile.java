@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tiles;
+package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.MakeshiftResonatorBlock;

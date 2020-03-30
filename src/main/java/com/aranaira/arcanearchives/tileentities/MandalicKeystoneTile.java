@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tiles;
+package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.init.ModBlocks;
 import com.aranaira.arcanearchives.reference.Tags;

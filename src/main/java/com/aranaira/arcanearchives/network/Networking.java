@@ -3,7 +3,7 @@ package com.aranaira.arcanearchives.network;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.network.Handlers.BaseHandler;
 import com.aranaira.arcanearchives.network.Messages.EmptyMessage;
-import com.aranaira.arcanearchives.tiles.BaseTile;
+import com.aranaira.arcanearchives.tileentities.BaseTile;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.NetworkRegistry;

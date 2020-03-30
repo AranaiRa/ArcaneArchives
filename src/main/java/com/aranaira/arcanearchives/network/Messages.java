@@ -4,7 +4,7 @@ import com.aranaira.arcanearchives.network.Handlers.BaseHandler;
 import com.aranaira.arcanearchives.network.Handlers.ClientHandler;
 import com.aranaira.arcanearchives.network.Handlers.ServerHandler;
 import com.aranaira.arcanearchives.network.Handlers.TileHandlerServer;
-import com.aranaira.arcanearchives.tiles.NetworkedBaseTile;
+import com.aranaira.arcanearchives.tileentities.NetworkedBaseTile;
 import com.aranaira.arcanearchives.util.ByteUtils;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.util.math.BlockPos;

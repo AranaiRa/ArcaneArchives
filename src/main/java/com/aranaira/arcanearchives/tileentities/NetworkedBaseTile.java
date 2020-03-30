@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tiles;
+package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.reference.Tags;
@@ -7,7 +7,6 @@ import com.aranaira.arcanearchives.tilenetwork.NetworkAggregator;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
 import java.util.UUID;

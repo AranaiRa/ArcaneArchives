@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tiles;
+package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.inventories.ITrackingHandler;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;

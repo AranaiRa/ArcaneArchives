@@ -1,3 +1,5 @@
+// TODO: Completely handle the rewrite update name changes
+
 /*package com.aranaira.arcanearchives.events.mappings;
 
 import com.aranaira.arcanearchives.ArcaneArchives;

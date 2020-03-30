@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives;
 
 import com.aranaira.arcanearchives.client.gui.CrystalWorkbenchGUI;
 import com.aranaira.arcanearchives.containers.CrystalWorkbenchContainer;
-import com.aranaira.arcanearchives.tiles.CrystalWorkbenchTile;
+import com.aranaira.arcanearchives.tileentities.CrystalWorkbenchTile;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;

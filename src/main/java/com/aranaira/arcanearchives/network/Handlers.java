@@ -4,7 +4,7 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.tilenetwork.Network;
 import com.aranaira.arcanearchives.tilenetwork.NetworkAggregator;
 import com.aranaira.arcanearchives.tilenetwork.NetworkEntry;
-import com.aranaira.arcanearchives.tiles.NetworkedBaseTile;
+import com.aranaira.arcanearchives.tileentities.NetworkedBaseTile;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.tileentity.TileEntity;

@@ -7,7 +7,7 @@ import com.aranaira.arcanearchives.client.gui.controls.InvisibleButton;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.containers.CrystalWorkbenchContainer;
 import com.aranaira.arcanearchives.containers.slots.SlotRecipeHandler;
-import com.aranaira.arcanearchives.tiles.CrystalWorkbenchTile;
+import com.aranaira.arcanearchives.tileentities.CrystalWorkbenchTile;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;

@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.inventories;
 
-import com.aranaira.arcanearchives.tiles.NetworkedBaseTile;
+import com.aranaira.arcanearchives.tileentities.NetworkedBaseTile;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

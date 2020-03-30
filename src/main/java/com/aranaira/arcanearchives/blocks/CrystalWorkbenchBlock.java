@@ -3,7 +3,7 @@ package com.aranaira.arcanearchives.blocks;
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.templates.HorizontalSingleAccessorTemplateBlock;
-import com.aranaira.arcanearchives.tiles.CrystalWorkbenchTile;
+import com.aranaira.arcanearchives.tileentities.CrystalWorkbenchTile;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

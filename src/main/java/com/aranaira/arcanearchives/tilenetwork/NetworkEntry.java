@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.tilenetwork;
 
-import com.aranaira.arcanearchives.tiles.NetworkedBaseTile;
+import com.aranaira.arcanearchives.tileentities.NetworkedBaseTile;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.util.math.BlockPos;
 

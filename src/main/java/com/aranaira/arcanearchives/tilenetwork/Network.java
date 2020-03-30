@@ -2,8 +2,8 @@ package com.aranaira.arcanearchives.tilenetwork;
 
 import com.aranaira.arcanearchives.api.immanence.IImmanenceSubscriber;
 import com.aranaira.arcanearchives.immanence.ImmanenceBus;
-import com.aranaira.arcanearchives.tiles.NetworkedBaseTile;
-import com.aranaira.arcanearchives.tiles.TrackingNetworkedBaseTile;
+import com.aranaira.arcanearchives.tileentities.NetworkedBaseTile;
+import com.aranaira.arcanearchives.tileentities.TrackingNetworkedBaseTile;
 import com.google.common.collect.ForwardingMap;
 
 import javax.annotation.Nullable;

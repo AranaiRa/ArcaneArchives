@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.tilenetwork;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.immanence.ImmanenceGlobal;
-import com.aranaira.arcanearchives.tiles.NetworkedBaseTile;
+import com.aranaira.arcanearchives.tileentities.NetworkedBaseTile;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;

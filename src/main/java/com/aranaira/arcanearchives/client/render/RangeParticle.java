@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.client.render;
 
-import com.aranaira.arcanearchives.tiles.IRanged;
+import com.aranaira.arcanearchives.tileentities.IRanged;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BufferBuilder;

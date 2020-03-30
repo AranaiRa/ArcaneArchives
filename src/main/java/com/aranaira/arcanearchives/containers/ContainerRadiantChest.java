@@ -4,7 +4,7 @@ import com.aranaira.arcanearchives.containers.slots.SlotExtended;
 import com.aranaira.arcanearchives.inventories.TrackingExtendedHandler;
 import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketRadiantChest;
-import com.aranaira.arcanearchives.tiles.RadiantChestTile;
+import com.aranaira.arcanearchives.tileentities.RadiantChestTile;
 import com.google.common.collect.Sets;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
