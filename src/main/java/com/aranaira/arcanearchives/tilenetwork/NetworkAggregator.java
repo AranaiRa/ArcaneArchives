@@ -1,8 +1,10 @@
 package com.aranaira.arcanearchives.tilenetwork;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.immanence.ImmanenceGlobal;
 import com.aranaira.arcanearchives.tiles.NetworkedBaseTile;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
@@ -18,7 +20,7 @@ public class NetworkAggregator {
     return storage.computeIfAbsent(networkId, (key) -> new Network(networkId));
   }
 
-  public static Collection<Network> getNetworks () {
+  public static Collection<Network> getNetworks() {
     return storage.values();
   }
 
@@ -74,6 +76,11 @@ public class NetworkAggregator {
       }
 
       outgoingTiles.removeAll(removed);
+    }
+
+    int tick = FMLCommonHandler.instance().getMinecraftServerInstance().getTickCounter();
+    if (tick % ImmanenceGlobal.immanenceTick == 0) {
+      ImmanenceGlobal.tickImmanence(tick / ImmanenceGlobal.immanenceTick);
     }
   }
 
