@@ -1,17 +1,13 @@
 // TODO: This
 
-/*package com.aranaira.arcanearchives.util;
+package com.aranaira.arcanearchives.util;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.data.types.ServerNetwork;
-import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
-import com.aranaira.arcanearchives.tileentities.MonitoringCrystalTileEntity;
-import com.aranaira.arcanearchives.tileentities.interfaces.IManifestTileEntity;
+import com.aranaira.arcanearchives.tileentities.TrackingNetworkedBaseTile;
+import com.aranaira.arcanearchives.tilenetwork.Network;
+import com.aranaira.arcanearchives.tilenetwork.NetworkEntry;
 import com.aranaira.arcanearchives.types.BlockPosDimension;
-import com.aranaira.arcanearchives.types.ISerializeByteBuf;
-import com.aranaira.arcanearchives.types.IteRef;
 import com.aranaira.arcanearchives.types.SlotIterable;
-import com.aranaira.arcanearchives.types.lists.ITileList;
 import io.netty.buffer.ByteBuf;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.client.util.RecipeItemHelper;
@@ -40,12 +36,11 @@ public class ManifestUtils {
 		}
 	}
 
-	public static List<CollatedEntry> parsePreManifest (Map<Integer, List<ItemEntry>> preManifest, ServerNetwork network) {
+	public static List<CollatedEntry> parsePreManifest (Map<Integer, List<ItemEntry>> preManifest, Network network, EntityPlayer player) {
 		// We need to collate all of these entries into the following:
 		// Unique entries should be collapsed (along with positions & descriptions)
 		// Out of range entries should be collapsed (etc)
 		// NBT-based differences should be adhered to
-		EntityPlayer player = network.getPlayer();
 		Map<ItemStack, List<ItemEntry>> phase1 = new HashMap<>();
 
 		for (int packed : preManifest.keySet()) {
@@ -83,6 +78,7 @@ public class ManifestUtils {
 				if (itemEntry.dimension != dimension) {
 					outOfDimension.descriptions.add(descriptor);
 					outOfDimension.consume(itemEntry.stack);
+					// TODO: Waht does this do?
 				} else if (!network.inRange(playerPos, itemEntry.pos)) {
 					outOfRange.descriptions.add(descriptor);
 					outOfRange.consume(itemEntry.stack);
@@ -92,21 +88,21 @@ public class ManifestUtils {
 				}
 			}
 			if (!inRange.descriptions.isEmpty()) {
-				*//*if (inRange.finalStack.getCount() > 1) {
+				if (inRange.finalStack.getCount() > 1) {
 					inRange.finalStack.shrink(1);
-				}*//*
+				}
 				phase2.add(inRange);
 			}
 			if (!outOfDimension.descriptions.isEmpty()) {
-				*//*if (outOfDimension.finalStack.getCount() > 1) {
+				if (outOfDimension.finalStack.getCount() > 1) {
 					outOfDimension.finalStack.shrink(1);
-				}*//*
+				}
 				phase2.add(outOfDimension);
 			}
 			if (!outOfRange.descriptions.isEmpty()) {
-				*//*if (outOfRange.finalStack.getCount() > 1) {
+				if (outOfRange.finalStack.getCount() > 1) {
 					outOfRange.finalStack.shrink(1);
-				}*//*
+				}
 				phase2.add(outOfRange);
 			}
 		}
@@ -114,40 +110,33 @@ public class ManifestUtils {
 		return phase2;
 	}
 
-	public static Map<Integer, List<ItemEntry>> buildItemEntryList (ServerNetwork network) {
-		ITileList tiles = network.getTiles();
-		if (network.isHiveMember()) {
-			HiveNetwork hive = network.getHiveNetwork();
-			tiles = hive.getTiles();
-		}
-
-		EntityPlayer player = network.getPlayer();
+	public static Map<Integer, List<ItemEntry>> buildItemEntryList (Network network, EntityPlayer player) {
+		List<NetworkEntry> tiles = network.getTrackedInventories();
 
 		Int2ObjectOpenHashMap<List<ItemEntry>> preManifest = new Int2ObjectOpenHashMap<>();
 		preManifest.defaultReturnValue(null);
 
 		Set<BlockPosDimension> done = new HashSet<>();
 
-		for (IteRef ref : TileUtils.filterAssignableClass(tiles, IManifestTileEntity.class)) {
+		for (NetworkEntry ref : tiles) {
 			if (ref == null) {
 				continue;
 			}
 
-			ImmanenceTileEntity ite = ref.getTile();
+			TrackingNetworkedBaseTile<?> ite = ref.getTile();
 
 			if (ite == null) {
 				continue;
 			}
-			IManifestTileEntity mte = (IManifestTileEntity) ite;
 
-			if (done.contains(BlockPosDimension.fromITE(ite))) {
+			if (done.contains(BlockPosDimension.fromTile(ite))) {
 				continue;
 			}
 
 			if (mte.isSingleStackInventory()) {
 				ItemStack stack = mte.getSingleStack();
 
-				List<ItemEntry> entry = getEntryList(preManifest, RecipeItemHelper.pack(stack));
+				List<ItemEntry> entry = getEntryList(preManifest, RecipeItemHelper.pack(stack), player);
 				entry.add(new ItemEntry(stack, ite.getPos(), ite.dimension, mte.getDescriptor()));
 				done.add(BlockPosDimension.fromITE(ite));
 			} else if (mte instanceof MonitoringCrystalTileEntity) {
@@ -329,4 +318,4 @@ public class ManifestUtils {
 			return count;
 		}
 	}
-}*/
+}

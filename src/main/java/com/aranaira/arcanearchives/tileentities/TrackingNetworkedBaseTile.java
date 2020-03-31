@@ -18,4 +18,5 @@ public abstract class TrackingNetworkedBaseTile<T extends IItemHandler & INBTSer
   public void manuallyRecountTracking() {
     inventory.manualRecount();
   }
+
 }

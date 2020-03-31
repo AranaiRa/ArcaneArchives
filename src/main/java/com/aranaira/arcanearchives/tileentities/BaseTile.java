@@ -5,12 +5,14 @@ import com.aranaira.arcanearchives.reference.Tags;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 import java.util.UUID;
 
 public abstract class BaseTile extends TileEntity {
-  private UUID tileId = null;
-  private String cachedUUID = null;
+  protected UUID tileId = null;
+  protected String cachedUUID = null;
 
   public UUID getTileId() {
     if (tileId == null) {
@@ -84,5 +86,10 @@ public abstract class BaseTile extends TileEntity {
       compound.setUniqueId(Tags.tileId, tileId);
     }
     return super.writeToNBT(compound);
+  }
+
+  @Override
+  public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
+    return (oldState.getBlock() != newSate.getBlock());
   }
 }

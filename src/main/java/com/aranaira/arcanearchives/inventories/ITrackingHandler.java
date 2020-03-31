@@ -21,4 +21,8 @@ public interface ITrackingHandler extends IItemHandlerModifiable {
       }
     }
   }
+
+  default boolean isSingleItemInventory () {
+    return false;
+  }
 }

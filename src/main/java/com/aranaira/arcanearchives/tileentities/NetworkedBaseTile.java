@@ -12,8 +12,8 @@ import javax.annotation.Nullable;
 import java.util.UUID;
 
 public abstract class NetworkedBaseTile extends BaseTile {
-  private UUID networkId = null;
-  private String cachedNetworkId = null; // TODO: Transition this into the properly generated ID.
+  protected UUID networkId = null;
+  protected String cachedNetworkId = null; // TODO: Transition this into the properly generated ID.
 
   public UUID getNetworkId() {
     return networkId;

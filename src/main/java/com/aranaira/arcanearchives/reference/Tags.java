@@ -24,4 +24,8 @@ public interface Tags {
     String displayItem = "DisItem";
     String displayFacing = "DisFacing";
   }
+
+  interface Resonator {
+    String growth = "Grow";
+  }
 }
