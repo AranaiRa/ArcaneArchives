@@ -7,6 +7,7 @@ import com.aranaira.arcanearchives.config.ServerSideConfig;
 import com.aranaira.arcanearchives.init.SoundRegistry;
 import com.aranaira.arcanearchives.reference.Tags;
 import com.aranaira.arcanearchives.tilenetwork.Network;
+import com.aranaira.arcanearchives.types.MachineSound;
 import com.aranaira.arcanearchives.util.MathUtils;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.passive.EntityOcelot;
@@ -17,11 +18,14 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 
-public class RadiantResonatorTile extends NetworkedBaseTile implements ITickable {
+public class RadiantResonatorTile extends NetworkedBaseTile implements ITickable, ISoundTile {
   private int growth = 0;
   private int ticks = 0;
 
@@ -90,7 +94,6 @@ public class RadiantResonatorTile extends NetworkedBaseTile implements ITickable
     return (int) Math.floor(growth / (double) ServerSideConfig.ResonatorTickTime * 100D);
   }
 
-
 /*  @Override
   public void breakBlock(@Nullable IBlockState state, boolean harvest) {
     super.breakBlock(state, harvest);
@@ -120,23 +123,44 @@ public class RadiantResonatorTile extends NetworkedBaseTile implements ITickable
   }
 
   @Override
-  protected boolean shouldPlaySound() {
+  public boolean shouldPlaySound() {
     boolean breaking = false;
-    return ConfigHandler.soundConfig.resonatorTicking && super.shouldPlaySound() && !breaking && canTick() == TickResult.TICKING && world.isAirBlock(pos.up());
+    return ConfigHandler.soundConfig.resonatorTicking && ISoundTile.super.shouldPlaySound() && canTick() == TickResult.TICKING && world.isAirBlock(pos.up());
+    // TODO: Breaking?
   }
 
   @Override
-  protected float getVolume() {
+  public boolean isTileValid() {
+    return !isInvalid();
+  }
+
+  @Override
+  public float getVolume() {
     return ConfigHandler.soundConfig.resonatorVolume;
   }
 
+  @SideOnly(Side.CLIENT)
+  private MachineSound sound;
+
+  @Nullable
   @Override
-  protected boolean hasSound() {
+  public MachineSound setMachineSound(MachineSound sound) {
+    return this.sound = sound;
+  }
+
+  @Nullable
+  @Override
+  public MachineSound getMachineSound() {
+    return this.sound;
+  }
+
+  @Override
+  public boolean hasSound() {
     return true;
   }
 
   @Override
-  protected ResourceLocation getSound() {
+  public ResourceLocation getSound() {
     return new ResourceLocation(ArcaneArchives.MODID, "resonator.loop");
   }
 
