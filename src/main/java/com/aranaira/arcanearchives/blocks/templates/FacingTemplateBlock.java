@@ -1,7 +1,6 @@
 package com.aranaira.arcanearchives.blocks.templates;
 
 import com.aranaira.arcanearchives.blocks.interfaces.IFacingBlock;
-import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -12,14 +11,22 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-@SuppressWarnings("deprecation")
+@SuppressWarnings({"deprecation", "NullableProblems", "WeakerAccess", "unused"})
 public abstract class FacingTemplateBlock extends TemplateBlock implements IFacingBlock {
   public FacingTemplateBlock(Material materialIn) {
     super(materialIn);
   }
 
+  public FacingTemplateBlock setDefaultFacing(EnumFacing facing) {
+    if (!getFacingProperty().getAllowedValues().contains(facing)) {
+      throw new IllegalArgumentException("Invalid facing: cannot be contained within property " + getFacingProperty().toString());
+    }
+
+    setDefaultState(getDefaultState().withProperty(getFacingProperty(), facing));
+    return this;
+  }
+
   @Override
-  @SuppressWarnings("deprecation")
   public IBlockState getStateFromMeta(int meta) {
     return getDefaultState().withProperty(getFacingProperty(), EnumFacing.byIndex(meta & 7));
   }

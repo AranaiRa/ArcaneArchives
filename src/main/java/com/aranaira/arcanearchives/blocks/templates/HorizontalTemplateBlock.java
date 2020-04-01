@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 
 // TODO: Horizontal versus omnidirectional
 @SuppressWarnings({"NullableProblems", "WeakerAccess"})
-public class HorizontalTemplateBlock extends TemplateBlock implements IFacingBlock {
+public class HorizontalTemplateBlock extends FacingTemplateBlock implements IFacingBlock {
   public static PropertyDirection FACING = BlockHorizontal.FACING;
 
   public HorizontalTemplateBlock(Material materialIn) {
