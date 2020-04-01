@@ -11,7 +11,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-@SuppressWarnings({"deprecation", "WeakerAccess"})
+@SuppressWarnings({"deprecation", "WeakerAccess", "unused", "NullableProblems"})
 public class OmniTemplateBlock extends FacingTemplateBlock implements IFacingBlock {
   public static PropertyDirection FACING = BlockDirectional.FACING;
 
