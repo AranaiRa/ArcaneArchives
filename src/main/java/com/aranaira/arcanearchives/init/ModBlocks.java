@@ -45,7 +45,8 @@ public class ModBlocks {
 
   public static TemplateBlock QuartzBlock = register("quartz_block", TemplateBlock::new, Material.ROCK, (o) -> o.setHardness(1.7f).setHarvestTool("pickaxe", 0).setLightLevel(1).setTooltip("arcanearchives.tooltip.item.storage_raw_quartz", TextFormatting.GOLD));
 
-  public static OmniTemplateBlock QuartzCluster = register("quartz_cluster", OmniTemplateBlock::new, Material.ROCK, (o) -> o.setDefaultFacing(EnumFacing.UP).setHardness(1.4f).setTooltip("arcanearchives.tooltip.item.raw_quartz", TextFormatting.GOLD).setHarvestTool("pickaxe", 0).setLightLevel(1));
+  // Sorta temporary
+  public static OmniTemplateBlock QuartzCluster = register("quartz_cluster", OmniTemplateBlock::new, Material.ROCK, (o) -> o.setDefaultFacing(EnumFacing.UP).setHardness(1.4f).setTooltip("arcanearchives.tooltip.item.raw_quartz", TextFormatting.GOLD).setHarvestTool("pickaxe", 0).setLightLevel(1).setFullCube(false).setOpaqueCube(false));
 
   public static <T extends Block> T register(String registryName, Supplier<T> supplier) {
     return register(registryName, o -> supplier.get(), Material.ROCK, null, null);
