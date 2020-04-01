@@ -6,14 +6,14 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public interface ISingleAccessor extends IAccessor {
+public interface ISingleAccessor extends IAccessor, IFacingBlock {
   Rotation getAccessorRotation();
 
   Rotation getBodyRotation();
 
   default EnumFacing findFacing(IBlockState state, World world, BlockPos origin) {
-    if (state.getPropertyKeys().contains(IFacing.FACING)) {
-      return state.getValue(IFacing.FACING);
+    if (state.getPropertyKeys().contains(getFacingProperty())) {
+      return state.getValue(getFacingProperty());
     }
 
     return EnumFacing.NORTH;

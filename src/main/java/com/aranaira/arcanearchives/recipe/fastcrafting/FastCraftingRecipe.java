@@ -120,6 +120,7 @@ public class FastCraftingRecipe implements IArcaneArchivesRecipe {
     result = stack;
   }
 
+  @Override
   public ItemStack getResult() {
     return result;
   }

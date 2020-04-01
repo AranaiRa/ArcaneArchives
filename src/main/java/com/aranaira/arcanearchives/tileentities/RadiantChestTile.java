@@ -45,6 +45,7 @@ public class RadiantChestTile extends TrackingNetworkedBaseTile<TrackingExtended
     // TODO: Handle brazier setup according to network settings
   }
 
+  @Override
   public TrackingExtendedHandler getInventory() {
     return inventory;
   }

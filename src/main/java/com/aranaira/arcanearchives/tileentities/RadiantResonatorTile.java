@@ -69,6 +69,10 @@ public class RadiantResonatorTile extends NetworkedBaseTile implements ITickable
     if (ticks % 50 == 0) {
       this.stateUpdate();
     }
+
+    if (world.isRemote) {
+      updateSound(pos);
+    }
   }
 
   @Nonnull

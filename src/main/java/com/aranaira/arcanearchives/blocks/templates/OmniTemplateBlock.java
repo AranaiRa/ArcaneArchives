@@ -1,35 +1,33 @@
 package com.aranaira.arcanearchives.blocks.templates;
 
 import com.aranaira.arcanearchives.blocks.interfaces.IFacingBlock;
-import net.minecraft.block.BlockHorizontal;
+import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-// TODO: Horizontal versus omnidirectional
-@SuppressWarnings({"NullableProblems", "WeakerAccess"})
-public class HorizontalTemplateBlock extends TemplateBlock implements IFacingBlock {
-  public static PropertyDirection FACING = BlockHorizontal.FACING;
+@SuppressWarnings({"deprecation", "WeakerAccess"})
+public class OmniTemplateBlock extends FacingTemplateBlock implements IFacingBlock {
+  public static PropertyDirection FACING = BlockDirectional.FACING;
 
-  public HorizontalTemplateBlock(Material materialIn) {
+  public OmniTemplateBlock(Material materialIn) {
     super(materialIn);
     setDefaultState(this.blockState.getBaseState().withProperty(getFacingProperty(), EnumFacing.NORTH));
   }
 
   @Override
-  public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-    return getDefaultState().withProperty(getFacingProperty(), EnumFacing.fromAngle(placer.rotationYaw).getOpposite());
+  public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+    return this.getDefaultState().withProperty(getFacingProperty(), EnumFacing.getDirectionFromEntityLiving(pos, placer));
   }
 
   @Override
   public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-    worldIn.setBlockState(pos, state.withProperty(getFacingProperty(), EnumFacing.fromAngle(placer.rotationYaw).getOpposite()));
+    worldIn.setBlockState(pos, state.withProperty(getFacingProperty(), EnumFacing.getDirectionFromEntityLiving(pos, placer)), 2);
   }
 
   @Override
