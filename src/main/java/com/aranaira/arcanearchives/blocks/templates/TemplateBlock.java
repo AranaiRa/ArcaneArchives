@@ -9,7 +9,10 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -22,6 +25,7 @@ public class TemplateBlock extends Block {
   protected String formatting = "";
   protected boolean isOpaqueCube = true;
   protected boolean isFullCube = true;
+  protected AxisAlignedBB axis = null;
 
   public TemplateBlock(Material materialIn) {
     super(materialIn);
@@ -30,6 +34,11 @@ public class TemplateBlock extends Block {
   @Nullable
   public ItemBlock getItemBlock() {
     return itemBlock;
+  }
+
+  public TemplateBlock setBoundingBox (AxisAlignedBB bb) {
+    this.axis = bb;
+    return this;
   }
 
   public TemplateBlock setFullCube (boolean cube) {
@@ -163,6 +172,15 @@ public class TemplateBlock extends Block {
   @Deprecated
   public void setHarvestLevel(String toolClass, int level, IBlockState state) {
     super.setHarvestLevel(toolClass, level, state);
+  }
+
+  @Override
+  public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+    if (axis != null) {
+      return axis;
+    }
+
+    return super.getBoundingBox(state, source, pos);
   }
 }
 

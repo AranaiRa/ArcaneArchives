@@ -12,6 +12,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.Mod;
@@ -46,7 +47,7 @@ public class ModBlocks {
   public static TemplateBlock QuartzBlock = register("quartz_block", TemplateBlock::new, Material.ROCK, (o) -> o.setHardness(1.7f).setHarvestTool("pickaxe", 0).setLightLevel(1).setTooltip("arcanearchives.tooltip.item.storage_raw_quartz", TextFormatting.GOLD));
 
   // Sorta temporary
-  public static OmniTemplateBlock QuartzCluster = register("quartz_cluster", OmniTemplateBlock::new, Material.ROCK, (o) -> o.setDefaultFacing(EnumFacing.UP).setHardness(1.4f).setTooltip("arcanearchives.tooltip.item.raw_quartz", TextFormatting.GOLD).setHarvestTool("pickaxe", 0).setLightLevel(1).setFullCube(false).setOpaqueCube(false));
+  public static OmniTemplateBlock QuartzCluster = register("quartz_cluster", OmniTemplateBlock::new, Material.ROCK, (o) -> o.setDefaultFacing(EnumFacing.UP).setHardness(1.4f).setTooltip("arcanearchives.tooltip.item.raw_quartz", TextFormatting.GOLD).setHarvestTool("pickaxe", 0).setLightLevel(1).setFullCube(false).setOpaqueCube(false).setBoundingBox(Boxes.QuartzCluster));
 
   public static <T extends Block> T register(String registryName, Supplier<T> supplier) {
     return register(registryName, o -> supplier.get(), Material.ROCK, null, null);
@@ -114,6 +115,6 @@ public class ModBlocks {
   }
 
   public static class Boxes {
-
+    public static AxisAlignedBB QuartzCluster = new AxisAlignedBB(0.2, 0.0, 0.2, 0.8, 1.0, 0.8);
   }
 }

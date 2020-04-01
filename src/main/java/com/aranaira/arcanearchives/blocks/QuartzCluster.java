@@ -79,7 +79,7 @@ public class QuartzCluster extends HorizontalTemplateBlock *//*implements IInfus
   @Nonnull
   @SuppressWarnings("deprecation")
   public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-    return new AxisAlignedBB(0.2, 0.0, 0.2, 0.8, 1.0, 0.8);
+    return ;
   }
 
   @Override
