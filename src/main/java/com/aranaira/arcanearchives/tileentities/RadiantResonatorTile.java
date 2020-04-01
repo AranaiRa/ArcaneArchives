@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.QuartzCluster;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.config.ServerSideConfig;
+import com.aranaira.arcanearchives.init.ModBlocks;
 import com.aranaira.arcanearchives.init.SoundRegistry;
 import com.aranaira.arcanearchives.reference.Tags;
 import com.aranaira.arcanearchives.tilenetwork.Network;
@@ -50,7 +51,7 @@ public class RadiantResonatorTile extends NetworkedBaseTile implements ITickable
         growth++;
       } else {
         growth = 0;
-        world.setBlockState(pos.up(), BlockRegistry.RAW_QUARTZ.getDefaultState());
+        world.setBlockState(pos.up(), ModBlocks.QuartzCluster.getDefaultState());
 
         BlockPos up = pos.up();
         List<EntityOcelot> entities = world.getEntitiesWithinAABB(EntityOcelot.class, new AxisAlignedBB(up.getX() - 0.9, up.getY() - 0.9, up.getZ() - 0.9, up.getX() + 0.9, up.getY() + 0.9, up.getZ() + 0.9));

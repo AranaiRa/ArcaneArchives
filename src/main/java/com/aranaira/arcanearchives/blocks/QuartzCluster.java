@@ -1,111 +1,61 @@
-/*package com.aranaira.arcanearchives.blocks;
+package com.aranaira.arcanearchives.blocks;
 
-import com.aranaira.arcanearchives.blocks.templates.HorizontalTemplateBlock;
+import com.aranaira.arcanearchives.blocks.templates.OmniTemplateBlock;
+import com.aranaira.arcanearchives.init.ModItems;
+import com.aranaira.arcanearchives.reference.Tags;
+import com.aranaira.arcanearchives.tileentities.StoredIdTile;
+import com.aranaira.arcanearchives.util.ItemUtils;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import java.util.Collections;
 import java.util.List;
 
-@SuppressWarnings("deprecation")
-//@Optional.Interface(modid = "thaumcraft", iface = "thaumcraft.api.crafting.IInfusionStabiliserExt")
-public class QuartzCluster extends HorizontalTemplateBlock *//*implements IInfusionStabiliserExt*//* {
-
-  public static final String name = "raw_quartz_cluster";
-
-  public QuartzCluster() {
-    super(Material.ROCK);
-    setLightLevel(16 / 16f);
-    setHardness(1.4f);
-    setDefaultState(this.blockState.getBaseState().withProperty(getFacingProperty(), EnumFacing.UP));
-    setHarvestLevel("pickaxe", 0);
+@SuppressWarnings({"NullableProblems"})
+public class QuartzCluster extends OmniTemplateBlock {
+  public QuartzCluster(Material materialIn) {
+    super(materialIn);
+    this.storesId = true;
   }
 
   @Override
-  public boolean canSilkHarvest() {
+  public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
     return true;
   }
 
   @Override
-  @SuppressWarnings("deprecation")
-  public IBlockState withRotation(IBlockState state, Rotation rot) {
-    return state.withProperty(getFacingProperty(), rot.rotate(state.getValue(getFacingProperty())));
-  }
-
-  @Override
-  @SuppressWarnings("deprecation")
-  public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
-    return state.withProperty(getFacingProperty(), mirrorIn.mirror(state.getValue(getFacingProperty())));
-  }
-
-  @Override
-  public IBlockState getStateFromMeta(int meta) {
-    IBlockState iblockstate = this.getDefaultState();
-    iblockstate = iblockstate.withProperty(getFacingProperty(), EnumFacing.byIndex(meta));
-    return iblockstate;
-  }
-
-  @Override
-  public int getMetaFromState(IBlockState state) {
-    return state.getValue(getFacingProperty()).getIndex();
-  }
-
-  @Override
   @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-    tooltip.add(TextFormatting.GOLD + I18n.format());
+  public BlockRenderLayer getRenderLayer() {
+    return BlockRenderLayer.CUTOUT;
   }
 
   @Override
-  @SuppressWarnings("deprecation")
-  public boolean isFullCube(IBlockState state) {
-    return false;
+  protected List<ItemStack> generateItemDrops(World world, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te, ItemStack harvestTool) {
+    if (!(te instanceof StoredIdTile)) {
+      throw new IllegalStateException("Invalid tile entity found when breaking Quartz Cluster, got " + te.getClass() + " instead of StoredIdTile.");
+    }
+
+    StoredIdTile tile = (StoredIdTile) te;
+    if (tile.getNetworkId() == null) {
+      throw new IllegalStateException("Invalid tile entity found when breaking Quartz Cluster. Has null network ID.");
+    }
+    ItemStack quartz = new ItemStack(ModItems.RadiantQuartz);
+    NBTTagCompound tag = ItemUtils.getOrCreateTagCompound(quartz);
+    tag.setUniqueId(Tags.networkId, tile.getNetworkId());
+    return Collections.singletonList(quartz);
   }
 
   @Override
-  @Nonnull
-  @SuppressWarnings("deprecation")
-  public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-    return ;
+  protected List<ItemStack> generateSilkTouchDrops(World world, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te, ItemStack harvestTool) {
+    return super.generateSilkTouchDrops(world, player, pos, state, te, harvestTool);
   }
-
-  @Override
-  @SuppressWarnings("deprecation")
-  public boolean isOpaqueCube(IBlockState state) {
-    return false;
-  }
-
-  @Override
-  public void getDrops(@Nonnull NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, @Nonnull IBlockState state, int fortune) {
-    // TODO: Embed network ID
-    //drops.add(new ItemStack(ItemRegistry.RAW_RADIANT_QUARTZ, 1));
-  }
-
-*//*	@Override
-	public float getStabilizationAmount (World world, BlockPos blockPos) {
-		return 0.15f;
-	}
-
-	@Override
-	public boolean canStabaliseInfusion (World world, BlockPos blockPos) {
-		return true;
-	}*//*
-
-  @Override
-  public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-    return getDefaultState().withProperty(getFacingProperty(), facing);
-  }
-}*/
+}
