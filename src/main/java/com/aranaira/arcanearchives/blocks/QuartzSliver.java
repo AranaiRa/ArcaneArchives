@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.blocks;
+/*package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.HorizontalTemplateBlock;
 import net.minecraft.block.material.Material;
@@ -72,7 +72,7 @@ public class QuartzSliver extends HorizontalTemplateBlock {
     return false;
   }
 
-	/*@Override
+	*//*@Override
 	public void onNeighborChange (IBlockAccess world, BlockPos pos, BlockPos neighbor) {
 		IBlockState state = world.getBlockState(pos);
 		EnumFacing facing = state.getValue(getFacingProperty()).getOpposite();
@@ -80,7 +80,7 @@ public class QuartzSliver extends HorizontalTemplateBlock {
 			((World) world).setBlockToAir(pos);
 			this.dropBlockAsItem((World) world, pos, state, 0);
 		}
-	}*/
+	}*//*
 
   @Override
   @Nonnull
@@ -140,4 +140,4 @@ public class QuartzSliver extends HorizontalTemplateBlock {
   protected BlockStateContainer createBlockState() {
     return new BlockStateContainer(this, getFacingProperty());
   }
-}
+}*/

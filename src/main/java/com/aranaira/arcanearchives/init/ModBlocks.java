@@ -4,11 +4,13 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.CrystalWorkbenchBlock;
 import com.aranaira.arcanearchives.blocks.MakeshiftResonatorBlock;
 import com.aranaira.arcanearchives.blocks.MandalicKeystoneBlock;
+import com.aranaira.arcanearchives.blocks.templates.OmniTemplateBlock;
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.RegistryEvent.Register;
@@ -40,6 +42,10 @@ public class ModBlocks {
   public static TemplateBlock StalwartStone = register("stalwart_stone", TemplateBlock::new, (o) -> o.setHardness(1.9f).setHarvestTool("pickaxe", 0).setResistance(24.0f).setTooltip("arcanearchives.tooltip.item.stalwart_stone", TextFormatting.GOLD));
 
   public static TemplateBlock StalwartWood = register("stalwart_wood", TemplateBlock::new, Material.WOOD, (o) -> o.setHardness(1.7f).setResistance(21.0f).setHarvestTool("axe", 0).setTooltip("arcanearchives.tooltip.item.stalwart_wood", TextFormatting.GOLD));
+
+  public static TemplateBlock QuartzBlock = register("quartz_block", TemplateBlock::new, Material.ROCK, (o) -> o.setHardness(1.7f).setHarvestTool("pickaxe", 0).setLightLevel(1).setTooltip("arcanearchives.tooltip.item.storage_raw_quartz", TextFormatting.GOLD));
+
+  public static OmniTemplateBlock QuartzCluster = register("quartz_cluster", OmniTemplateBlock::new, Material.ROCK, (o) -> o.setDefaultFacing(EnumFacing.UP).setHardness(1.4f).setTooltip("arcanearchives.tooltip.item.raw_quartz", TextFormatting.GOLD).setHarvestTool("pickaxe", 0).setLightLevel(1));
 
   public static <T extends Block> T register(String registryName, Supplier<T> supplier) {
     return register(registryName, o -> supplier.get(), Material.ROCK, null, null);
@@ -103,6 +109,10 @@ public class ModBlocks {
   }
 
   public static void load() {
+
+  }
+
+  public static class Boxes {
 
   }
 }

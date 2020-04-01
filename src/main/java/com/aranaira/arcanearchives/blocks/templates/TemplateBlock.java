@@ -15,11 +15,13 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
-@SuppressWarnings({"UnusedReturnValue", "WeakerAccess", "NullableProblems"})
+@SuppressWarnings({"UnusedReturnValue", "WeakerAccess", "NullableProblems", "unchecked", "deprecation", "DeprecatedIsStillUsed"})
 public class TemplateBlock extends Block {
   protected ItemBlock itemBlock = null;
   protected String tooltip = null;
   protected String formatting = "";
+  protected boolean isOpaqueCube = true;
+  protected boolean isFullCube = true;
 
   public TemplateBlock(Material materialIn) {
     super(materialIn);
@@ -28,6 +30,27 @@ public class TemplateBlock extends Block {
   @Nullable
   public ItemBlock getItemBlock() {
     return itemBlock;
+  }
+
+  public TemplateBlock setFullCube (boolean cube) {
+    isFullCube = cube;
+    return this;
+  }
+
+  public TemplateBlock setOpaqueCube (boolean cube) {
+    isOpaqueCube = cube;
+    return this;
+  }
+
+  // TODO: Oh god, I've turned into elulib
+  @Override
+  public boolean isFullCube(IBlockState state) {
+    return isFullCube;
+  }
+
+  @Override
+  public boolean isOpaqueCube(IBlockState state) {
+    return isOpaqueCube;
   }
 
   public TemplateBlock setItemBlock(ItemBlock itemBlock) {
@@ -109,26 +132,22 @@ public class TemplateBlock extends Block {
     return this;
   }
 
-  @SuppressWarnings("deprecation")
   public TemplateBlock setSlipperiness(float s) {
     this.setDefaultSlipperiness(s);
     return this;
   }
 
-  @SuppressWarnings("DeprecatedIsStillUsed")
   @Override
   @Deprecated
   public void setDefaultSlipperiness(float slipperiness) {
     super.setDefaultSlipperiness(slipperiness);
   }
 
-  @SuppressWarnings("deprecation")
   public TemplateBlock setHarvestTool(String toolClass, int level) {
     setHarvestLevel(toolClass, level);
     return this;
   }
 
-  @SuppressWarnings("deprecation")
   public TemplateBlock setHarvestTool(String toolClass, int level, IBlockState state) {
     setHarvestLevel(toolClass, level, state);
     return this;

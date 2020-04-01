@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.blocks;
+/*package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.HorizontalTemplateBlock;
 import net.minecraft.block.material.Material;
@@ -22,7 +22,7 @@ import java.util.List;
 
 @SuppressWarnings("deprecation")
 //@Optional.Interface(modid = "thaumcraft", iface = "thaumcraft.api.crafting.IInfusionStabiliserExt")
-public class QuartzCluster extends HorizontalTemplateBlock /*implements IInfusionStabiliserExt*/ {
+public class QuartzCluster extends HorizontalTemplateBlock *//*implements IInfusionStabiliserExt*//* {
 
   public static final String name = "raw_quartz_cluster";
 
@@ -66,7 +66,7 @@ public class QuartzCluster extends HorizontalTemplateBlock /*implements IInfusio
   @Override
   @SideOnly(Side.CLIENT)
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-    tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.raw_quartz"));
+    tooltip.add(TextFormatting.GOLD + I18n.format());
   }
 
   @Override
@@ -94,7 +94,7 @@ public class QuartzCluster extends HorizontalTemplateBlock /*implements IInfusio
     //drops.add(new ItemStack(ItemRegistry.RAW_RADIANT_QUARTZ, 1));
   }
 
-/*	@Override
+*//*	@Override
 	public float getStabilizationAmount (World world, BlockPos blockPos) {
 		return 0.15f;
 	}
@@ -102,10 +102,10 @@ public class QuartzCluster extends HorizontalTemplateBlock /*implements IInfusio
 	@Override
 	public boolean canStabaliseInfusion (World world, BlockPos blockPos) {
 		return true;
-	}*/
+	}*//*
 
   @Override
   public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
     return getDefaultState().withProperty(getFacingProperty(), facing);
   }
-}
+}*/

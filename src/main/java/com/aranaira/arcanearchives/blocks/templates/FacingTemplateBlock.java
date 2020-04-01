@@ -11,7 +11,7 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-@SuppressWarnings({"deprecation", "NullableProblems", "WeakerAccess", "unused"})
+@SuppressWarnings({"deprecation", "NullableProblems", "WeakerAccess", "unused", "unchecked"})
 public abstract class FacingTemplateBlock extends TemplateBlock implements IFacingBlock {
   public FacingTemplateBlock(Material materialIn) {
     super(materialIn);
