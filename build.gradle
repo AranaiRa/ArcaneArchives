@@ -137,7 +137,7 @@ dependencies {
     compileOnly curse.resolve("electroblobs-wizardry", "2656626")
     compileOnly curse.resolve("potion-core", "2736248")
 
-    shade("org.spongepowered:mixin:0.8.1-SNAPSHOT") {
+    shade("org.spongepowered:mixin:0.8") {
         transitive = false
     }
 }
