@@ -45,7 +45,7 @@ public class Handlers {
 		default void processMessage (T message, MessageContext ctx) {
 			V tile = getTile(message, ctx);
 			if (tile == null) {
-				ArcaneArchives.logger.error("Unable to resolve tile reference for message of type " + message.getClass().getSimpleName() + " targetting " + message.getPos() + " in dimension " + message.getDimension() + ". Halting execution.", new NullPointerException());
+				ArcaneArchives.logger.error("Unable to resolve tile reference for message of type " + message.getClass().getSimpleName() + " targetting " + message.getPos() + " in dimension " + message.getDimension() + ". If block exists, you may need to break and re-place it. Halting execution.", new NullPointerException());
 				return;
 			}
 			processMessage(message, ctx, tile);
@@ -115,7 +115,7 @@ public class Handlers {
 		default void processMessage (T message, MessageContext ctx) {
 			V tileEntity = getTile(message, ctx);
 			if (tileEntity == null) {
-				ArcaneArchives.logger.error("Unable to resolve tile reference for message of type " + message.getClass().getSimpleName() + " targetting " + message.getPos() + " in dimension " + message.getDimension() + ". Halting execution.", new NullPointerException());
+				ArcaneArchives.logger.error("Unable to resolve tile reference for message of type " + message.getClass().getSimpleName() + " targetting " + message.getPos() + " in dimension " + message.getDimension() + ". If block exists, you may need to break and re-place it. Halting execution.", new NullPointerException());
 				return;
 			}
 			processMessage(message, ctx, tileEntity);
