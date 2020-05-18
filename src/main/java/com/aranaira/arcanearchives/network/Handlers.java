@@ -114,11 +114,11 @@ public class Handlers {
 		@SideOnly(Side.CLIENT)
 		default void processMessage (T message, MessageContext ctx) {
 			V tileEntity = getTile(message, ctx);
-			if (tileEntity != null) {
-				processMessage(message, ctx, tileEntity);
-			} else {
-				ArcaneArchives.logger.error("WARNING! Unable to handle client-side Tile packet due to invalid or missing tile entity.", new IllegalArgumentException());
+			if (tileEntity == null) {
+				ArcaneArchives.logger.error("Unable to resolve tile reference for message of type " + message.getClass().getSimpleName() + " targetting " + message.getPos() + " in dimension " + message.getDimension() + ". Halting execution.", new NullPointerException());
+				return;
 			}
+			processMessage(message, ctx, tileEntity);
 		}
 
 		@Nullable
@@ -151,7 +151,7 @@ public class Handlers {
 		}
 
 		@SideOnly(Side.CLIENT)
-		void processMessage (T message, MessageContext ctx, @Nullable V tile);
+		void processMessage (T message, MessageContext ctx, @Nonnull V tile);
 	}
 
 	public static abstract class ConfigServerHandler<T extends ConfigPacket<?>> implements ServerHandler<T> {
