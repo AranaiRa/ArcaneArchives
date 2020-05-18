@@ -21,6 +21,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
@@ -42,9 +43,15 @@ public class Handlers {
 	public interface TileHandlerServer<T extends Messages.TileMessage, V extends ImmanenceTileEntity> extends ServerHandler<T> {
 		@Override
 		default void processMessage (T message, MessageContext ctx) {
-			processMessage(message, ctx, getTile(message, ctx));
+			V tile = getTile(message, ctx);
+			if (tile == null) {
+				ArcaneArchives.logger.error("Unable to resolve tile reference for message of type " + message.getClass().getSimpleName() + " targetting " + message.getPos() + " in dimension " + message.getDimension() + ". Halting execution.", new NullPointerException());
+				return;
+			}
+			processMessage(message, ctx, tile);
 		}
 
+		@Nullable
 		default V getTile (T message, MessageContext ctx) {
 			EntityPlayerMP player = ctx.getServerHandler().player;
 			if (player == null) {
@@ -89,7 +96,7 @@ public class Handlers {
 			}
 		}
 
-		void processMessage (T message, MessageContext ctx, V tile);
+		void processMessage (T message, MessageContext ctx, @Nonnull V tile);
 	}
 
 	public interface ClientHandler<T extends IMessage> extends BaseHandler<T> {
