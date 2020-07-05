@@ -1,7 +1,13 @@
 package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.BlockDirectionalTemplate;
+import com.aranaira.arcanearchives.client.render.LineHandler;
+import com.aranaira.arcanearchives.data.DataHelper;
+import com.aranaira.arcanearchives.data.ServerNetwork;
+import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.MonitoringCrystalTileEntity;
+import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
+import com.aranaira.arcanearchives.util.DropUtils;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
@@ -23,6 +29,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -139,6 +147,24 @@ public class MonitoringCrystal extends BlockDirectionalTemplate {
 	@Override
 	protected BlockStateContainer createBlockState () {
 		return new BlockStateContainer(this, FACING);
+	}
+
+	@Override
+	public void breakBlock (World worldIn, BlockPos pos, IBlockState state) {
+		LineHandler.removeLine(pos, worldIn.provider.getDimension());
+
+		if (!worldIn.isRemote) {
+			TileEntity te = worldIn.getTileEntity(pos);
+			if (te instanceof ImmanenceTileEntity) {
+				ImmanenceTileEntity ite = (ImmanenceTileEntity) te;
+				ServerNetwork network = DataHelper.getServerNetwork(ite.networkId);
+				if (network != null) {
+					network.removeTile(ite);
+				}
+			}
+		}
+
+		super.breakBlock(worldIn, pos, state);
 	}
 
 	@Override

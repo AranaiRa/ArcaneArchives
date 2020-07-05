@@ -15,7 +15,10 @@ import io.netty.buffer.ByteBuf;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -117,7 +120,9 @@ public class ManifestUtils {
 		ITileList tiles = network.getTiles();
 		if (network.isHiveMember()) {
 			HiveNetwork hive = network.getHiveNetwork();
-			tiles = hive.getTiles();
+			if (hive != null) {
+				tiles = hive.getTiles();
+			}
 		}
 
 		EntityPlayer player = network.getPlayer();
@@ -126,6 +131,7 @@ public class ManifestUtils {
 		preManifest.defaultReturnValue(null);
 
 		Set<BlockPosDimension> done = new HashSet<>();
+		Set<TileEntity> collected = new HashSet<>();
 
 		for (IteRef ref : TileUtils.filterAssignableClass(tiles, IManifestTileEntity.class)) {
 			if (ref == null) {
@@ -163,6 +169,7 @@ public class ManifestUtils {
 					} else {
 						ArcaneArchives.logger.error("Multiple Monitoring Crystals were found for network " + network.getUuid().toString() + " targetgeting " + String.format("%d/%d/%d in dimension %d", target.getX(), target.getY(), target.getZ(), target.dimension));
 					}
+					continue;
 				}
 
 				IItemHandler handler = mce.getInventory();

@@ -32,9 +32,7 @@ public class MonitoringCrystalTileEntity extends ImmanenceTileEntity implements 
 		return "";
 	}
 
-	@Override
-	@Nullable
-	public IItemHandler getInventory () {
+	public TileEntity getTargetTile () {
 		BlockPos tar = getTarget();
 		if (tar == null) {
 			return null;
@@ -45,13 +43,25 @@ public class MonitoringCrystalTileEntity extends ImmanenceTileEntity implements 
 			return null;
 		}
 
+		return te;
+	}
+
+	@Override
+	@Nullable
+	public IItemHandler getInventory () {
+		TileEntity te = getTargetTile();
+		if (te == null) {
+			return null;
+		}
+
 		// Monitoring Crystals don't work on ITEs.
 		if (te instanceof ImmanenceTileEntity) {
 			return null;
 		}
 
-		if (te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)) {
-			return te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+		IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+		if (cap != null) {
+			return cap;
 		}
 
 		if (te instanceof IInventory) {
