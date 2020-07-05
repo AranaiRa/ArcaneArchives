@@ -13,6 +13,8 @@ import com.aranaira.arcanearchives.types.iterators.SlotIterable;
 import com.aranaira.arcanearchives.types.lists.ITileList;
 import io.netty.buffer.ByteBuf;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import net.minecraft.block.BlockChest;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -23,7 +25,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.VanillaDoubleChestItemHandler;
 
 import java.util.*;
 import java.util.Map.Entry;
@@ -162,6 +166,42 @@ public class ManifestUtils {
 				}
 
 				BlockPosDimension target = new BlockPosDimension(mce.getTarget(), mce.dimension);
+
+				if (!done.contains(target)) {
+					TileEntity te = mce.getTargetTile();
+					if (te instanceof TileEntityChest) {
+						TileEntityChest chest = (TileEntityChest) te;
+						chest.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+						if (chest.doubleChestHandler != VanillaDoubleChestItemHandler.NO_ADJACENT_CHESTS_INSTANCE) {
+							if (!chest.adjacentChestChecked) {
+								chest.checkForAdjacentChests();
+							}
+							BlockPosDimension tar;
+							int dim = te.getWorld().provider.getDimension();
+							if (chest.adjacentChestXNeg != null) {
+								tar = new BlockPosDimension(chest.adjacentChestXNeg.getPos(), dim);
+								if (done.contains(tar)) {
+									done.add(target);
+								}
+							} else if (chest.adjacentChestXPos != null) {
+								tar = new BlockPosDimension(chest.adjacentChestXPos.getPos(), dim);
+								if (done.contains(tar)) {
+									done.add(target);
+								}
+							} else if(chest.adjacentChestZNeg != null) {
+								tar = new BlockPosDimension(chest.adjacentChestZNeg.getPos(), dim);
+								if (done.contains(tar)) {
+									done.add(target);
+								}
+							} else if (chest.adjacentChestZPos != null) {
+								tar = new BlockPosDimension(chest.adjacentChestZPos.getPos(), dim);
+								if (done.contains(tar)) {
+									done.add(target);
+								}
+							}
+						}
+					}
+				}
 
 				if (done.contains(target)) {
 					if (player != null) {
