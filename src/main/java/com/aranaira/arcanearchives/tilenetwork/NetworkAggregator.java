@@ -15,7 +15,7 @@ import java.util.*;
 public class NetworkAggregator {
   private static int QUEUE_LIMIT = 50;
 
-  public static Map<UUID, Network> storage = new HashMap<>();
+  public static final Map<UUID, Network> storage = new HashMap<>();
   // TODO: Store network IDs
 
   public static Network byId(UUID networkId) {

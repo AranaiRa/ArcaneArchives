@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.util;
 
-import net.minecraft.block.Block;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -8,7 +7,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
 
@@ -63,5 +61,18 @@ public class WorldUtil {
   @Nullable
   public static <T> T getTileEntity(Class<T> clazz, IBlockAccess world, BlockPos pos) {
     return getTileEntity(clazz, world, pos, false);
+  }
+
+  public static int distanceSq(BlockPos pos1, BlockPos pos2) {
+    int d1 = pos1.getX() - pos2.getX();
+    int d2 = pos1.getY() - pos2.getY();
+    int d3 = pos1.getZ() - pos2.getZ();
+    return Math.abs(d1 * d1 + d2 * d2 + d3 * d3);
+  }
+
+  public static int distanceSqNoVertical(BlockPos pos1, BlockPos pos2) {
+    int d1 = pos1.getX() - pos2.getX();
+    int d2 = pos2.getZ() - pos2.getZ();
+    return Math.abs(d1 * d1 + d2 * d2);
   }
 }

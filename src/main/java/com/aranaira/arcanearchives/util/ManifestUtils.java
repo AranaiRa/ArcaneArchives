@@ -6,6 +6,8 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.tileentities.TrackingNetworkedBaseTile;
 import com.aranaira.arcanearchives.tilenetwork.Network;
 import com.aranaira.arcanearchives.tilenetwork.NetworkEntry;
+import com.aranaira.arcanearchives.tilenetwork.PlayerConfigAggregator;
+import com.aranaira.arcanearchives.tilenetwork.PlayerNetworkConfig;
 import com.aranaira.arcanearchives.types.BlockPosDimension;
 import com.aranaira.arcanearchives.types.SlotIterable;
 import io.netty.buffer.ByteBuf;
@@ -42,6 +44,7 @@ public class ManifestUtils {
 		// Out of range entries should be collapsed (etc)
 		// NBT-based differences should be adhered to
 		Map<ItemStack, List<ItemEntry>> phase1 = new HashMap<>();
+		PlayerNetworkConfig config = PlayerConfigAggregator.byPlayer(player);
 
 		for (int packed : preManifest.keySet()) {
 			phase:
@@ -78,8 +81,8 @@ public class ManifestUtils {
 				if (itemEntry.dimension != dimension) {
 					outOfDimension.descriptions.add(descriptor);
 					outOfDimension.consume(itemEntry.stack);
-					// TODO: Waht does this do?
-				} else if (!network.inRange(playerPos, itemEntry.pos)) {
+					// TODO:
+				} else if (!config.inRange(player, itemEntry.pos)) {
 					outOfRange.descriptions.add(descriptor);
 					outOfRange.consume(itemEntry.stack);
 				} else {
