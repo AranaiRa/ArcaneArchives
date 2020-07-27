@@ -1,74 +1,79 @@
-/*package com.aranaira.arcanearchives.tileentities;
+package com.aranaira.arcanearchives.tileentities;
 
-import com.aranaira.arcanearchives.blocks.templates.HorizontalTemplateBlock;
-import com.aranaira.arcanearchives.tileentities.interfaces.IManifestTileEntity;
+import com.aranaira.arcanearchives.blocks.templates.OmniTemplateBlock;
+import com.aranaira.arcanearchives.inventories.MonitoringWrapper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
 import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
 
+public class MonitoringCrystalTileEntity extends TrackingNetworkedBaseTile<MonitoringWrapper> {
+  public static ItemStackHandler EMPTY = new ItemStackHandler(0);
+  private final MonitoringWrapper emptyWrapper;
+  private BlockPos target = null;
 
-public class MonitoringCrystalTileEntity extends ImmanenceTileEntity implements IManifestTileEntity {
-	private BlockPos target = null;
+  public MonitoringCrystalTileEntity() {
+    this.emptyWrapper = new MonitoringWrapper(this, EMPTY);
+  }
 
-	public MonitoringCrystalTileEntity () {
-		super("monitoring_crystal_tile_entity");
-	}
+  @Override
+  public boolean isSingleItemInventory() {
+    return false;
+  }
 
-	@Override
-	public String getDescriptor () {
-		return "Monitoring Crystal";
-	}
+  @Override
+  public String getDescriptor() {
+    return "arcanearchives.tiles.tracking_descriptors.monitoring_crystal";
+  }
 
-	@Override
-	public String getChestName () {
-		return "";
-	}
+  @Override
+  public MonitoringWrapper getInventory() {
+    BlockPos tar = getTarget();
+    if (tar == null) {
+      return emptyWrapper;
+    }
 
-	@Override
-	@Nullable
-	public IItemHandler getInventory () {
-		BlockPos tar = getTarget();
-		if (tar == null) {
-			return null;
-		}
+    TileEntity te = world.getTileEntity(tar);
+    if (te == null) {
+      return emptyWrapper;
+    }
 
-		TileEntity te = world.getTileEntity(tar);
-		if (te == null) {
-			return null;
-		}
+    // Monitoring Crystals don't work on ITEs.
+    if (te instanceof NetworkedBaseTile) {
+      return emptyWrapper;
+    }
 
-		// Monitoring Crystals don't work on ITEs.
-		if (te instanceof ImmanenceTileEntity) {
-			return null;
-		}
+    IItemHandler handler = null;
 
-		if (te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)) {
-			return te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-		}
+    if (te.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null)) {
+      handler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+    }
 
-		if (te instanceof IInventory) {
-			return new InvWrapper((IInventory) te);
-		}
+    if (te instanceof IInventory) {
+      handler = new InvWrapper((IInventory) te);
+    }
 
-		return null;
-	}
+    if (handler == null) {
+      return emptyWrapper;
+    }
 
-	@Nullable
-	public BlockPos getTarget () {
-		if (target == null) {
-			IBlockState me = world.getBlockState(getPos());
-			EnumFacing facing = me.getValue(((HorizontalTemplateBlock) me.getBlock()).getFacingProperty()).getOpposite();
-			target = getPos().offset(facing);
-		}
+    return new MonitoringWrapper(this, handler);
+  }
 
-		return target;
-	}
-}*/
+  @Nullable
+  public BlockPos getTarget() {
+    if (target == null) {
+      IBlockState state = world.getBlockState(getPos());
+      OmniTemplateBlock omni = (OmniTemplateBlock) state.getBlock();
+      target = getPos().offset(state.getValue(omni.getFacingProperty()).getOpposite());
+    }
+
+    return target;
+  }
+}
