@@ -7,13 +7,16 @@ import net.minecraft.tileentity.TileEntity;
 import java.util.List;
 
 public interface IUpgrade {
+  int NO_SIZE = -99;
+  int NO_SLOT = -99;
+
   default int getUpgradeSlot() {
     return getUpgradeSlot(ItemStack.EMPTY);
   }
 
   int getUpgradeSlot(ItemStack stack);
 
-  default int getUpgradeSzie() {
+  default int getUpgradeSize() {
     return getUpgradeSize(ItemStack.EMPTY);
   }
 
