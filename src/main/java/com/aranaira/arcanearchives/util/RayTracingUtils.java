@@ -10,6 +10,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
+@Deprecated
 public class RayTracingUtils {
   //Written by Daomephsta; Used with permission
   // TODO: Find original source file & license to link back to
