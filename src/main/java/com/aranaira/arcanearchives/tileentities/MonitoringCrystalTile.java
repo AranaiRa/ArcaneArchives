@@ -13,12 +13,12 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 
 import javax.annotation.Nullable;
 
-public class MonitoringCrystalTileEntity extends TrackingNetworkedBaseTile<MonitoringWrapper> {
+public class MonitoringCrystalTile extends TrackingNetworkedBaseTile<MonitoringWrapper> {
   public static ItemStackHandler EMPTY = new ItemStackHandler(0);
   private final MonitoringWrapper emptyWrapper;
   private BlockPos target = null;
 
-  public MonitoringCrystalTileEntity() {
+  public MonitoringCrystalTile() {
     this.emptyWrapper = new MonitoringWrapper(this, EMPTY);
   }
 

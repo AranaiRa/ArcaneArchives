@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.OmniTemplateBlock;
-import com.aranaira.arcanearchives.tileentities.MonitoringCrystalTileEntity;
+import com.aranaira.arcanearchives.tileentities.MonitoringCrystalTile;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
@@ -70,7 +70,7 @@ public class MonitoringCrystalBlock extends OmniTemplateBlock {
 
   @Override
   public TileEntity createTileEntity(World world, IBlockState state) {
-    return new MonitoringCrystalTileEntity();
+    return new MonitoringCrystalTile();
   }
 
   @Override

@@ -3,7 +3,7 @@
 package com.aranaira.arcanearchives.util;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.tileentities.MonitoringCrystalTileEntity;
+import com.aranaira.arcanearchives.tileentities.MonitoringCrystalTile;
 import com.aranaira.arcanearchives.tileentities.TrackingNetworkedBaseTile;
 import com.aranaira.arcanearchives.tilenetwork.Network;
 import com.aranaira.arcanearchives.tilenetwork.NetworkEntry;
@@ -143,8 +143,8 @@ public class ManifestUtils {
         List<ItemEntry> entry = getEntryList(preManifest, RecipeItemHelper.pack(stack), player);
         entry.add(new ItemEntry(stack, ite.getPos(), ite.getDimension(), ite.getDescriptor()));
         done.add(BlockPosDimension.fromTile(ite));
-      } else if (ite instanceof MonitoringCrystalTileEntity) {
-        MonitoringCrystalTileEntity mce = (MonitoringCrystalTileEntity) ite;
+      } else if (ite instanceof MonitoringCrystalTile) {
+        MonitoringCrystalTile mce = (MonitoringCrystalTile) ite;
         if (mce.getTarget() == null) {
           continue;
         }
