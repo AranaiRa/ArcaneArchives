@@ -461,3 +461,6 @@ arcanearchives.config.manifest.jei.tooltip=Synchronise the currently searched it
 arcanearchives.network.name.separator=-
 arcanearchives.network.name.first=Willow,Juniper,Lime,Maple,Alder,Ash,Beech,Birch,Blackthorn,Box,Cedar,Cherry,Chestnut,Cypress,Dogwood,Elder,Elm,Larch,Fir,Hawthorn,Hazel,Hemlock,Holly,Hornbeam,Pear,Pine,Plum,Poplar,Rowan,Spindle,Spruce,Sycamore,Walnut,Wayfaring,Whitebeam,Yew
 arcanearchives.network.name.second=Andromeda,Apus,Aquila,Auriga,Bootes,Caelum,Cancer,Canis,Cetus,Corvus,Cygnus,Delphinus,Draco,Fornax,Grus,Horologium,Hydra,Indus,Lacerta,Mensa,Octans,Orion,Pegasus,Perseus,Phoenix,Pictor,Pyxis,Scorpius,Serpens,Sextans,Taurus,Ursa,Vela,Virgo,Volans,Vulpecula
+
+arcanearchives.tiles.tracking_descriptors.chest=Chest
+arcanearchives.tiles.tracking_descriptors.monitoring_crystal=Monitoring Crystal

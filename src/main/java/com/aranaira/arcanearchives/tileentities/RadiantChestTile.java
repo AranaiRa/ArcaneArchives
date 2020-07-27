@@ -76,4 +76,14 @@ public class RadiantChestTile extends TrackingNetworkedBaseTile<TrackingExtended
     update.removeTag(Tags.inventory);
     return update;
   }
+
+  @Override
+  public boolean isSingleItemInventory() {
+    return false;
+  }
+
+  @Override
+  public String getDescriptor() {
+    return "arcanearchives.tiles.tracking_descriptors.chest";
+  }
 }

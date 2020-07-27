@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.inventories.ITrackingHandler;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.items.IItemHandler;
@@ -19,4 +20,11 @@ public abstract class TrackingNetworkedBaseTile<T extends IItemHandler & INBTSer
     inventory.manualRecount();
   }
 
+  public abstract boolean isSingleItemInventory ();
+
+  public ItemStack getSingleItemReference () {
+    throw new IllegalStateException("This class does not define `getSingleItemReference`.");
+  }
+
+  public abstract String getDescriptor ();
 }

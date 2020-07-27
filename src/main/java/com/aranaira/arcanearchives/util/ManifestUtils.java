@@ -136,13 +136,13 @@ public class ManifestUtils {
 				continue;
 			}
 
-			if (mte.isSingleStackInventory()) {
-				ItemStack stack = mte.getSingleStack();
+			if (ite.isSingleItemInventory()) {
+				ItemStack stack = ite.getSingleItemReference();
 
 				List<ItemEntry> entry = getEntryList(preManifest, RecipeItemHelper.pack(stack), player);
-				entry.add(new ItemEntry(stack, ite.getPos(), ite.dimension, mte.getDescriptor()));
-				done.add(BlockPosDimension.fromITE(ite));
-			} else if (mte instanceof MonitoringCrystalTileEntity) {
+				entry.add(new ItemEntry(stack, ite.getPos(), ite.getDimension(), ite.getDescriptor()));
+				done.add(BlockPosDimension.fromTile(ite));
+			} else if (ite instanceof MonitoringCrystalTileEntity) {
 				MonitoringCrystalTileEntity mce = (MonitoringCrystalTileEntity) ite;
 				if (mce.getTarget() == null) {
 					continue;
@@ -183,7 +183,7 @@ public class ManifestUtils {
 		return preManifest;
 	}
 
-	public static List<ItemEntry> getEntryList (Int2ObjectOpenHashMap<List<ItemEntry>> map, int packed) {
+	public static List<ItemEntry> getEntryList (Int2ObjectOpenHashMap<List<ItemEntry>> map, int packed, EntityPlayer player) {
 		List<ItemEntry> list = map.get(packed);
 		if (list == null) {
 			list = new ArrayList<>();

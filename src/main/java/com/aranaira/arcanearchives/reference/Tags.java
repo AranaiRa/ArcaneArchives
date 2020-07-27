@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.reference;
 public interface Tags {
   String recipe = "Rec";
   String inventory = "Inv";
+  String inventoryName = "InvName";
   String tileId = "TileId";
   String networkId = "NetId";
 

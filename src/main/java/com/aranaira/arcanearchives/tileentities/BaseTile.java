@@ -67,6 +67,14 @@ public abstract class BaseTile extends TileEntity {
     world.notifyBlockUpdate(getPos(), state, state, 8);
   }
 
+  public int getDimension () {
+    if (world == null) {
+      return -999;
+    }
+
+    return world.provider.getDimension();
+  }
+
   @Override
   public void readFromNBT(NBTTagCompound compound) {
     if (!compound.hasUniqueId(Tags.tileId)) {
