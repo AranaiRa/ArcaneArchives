@@ -12,6 +12,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.SPacketSetSlot;
+import net.minecraftforge.items.IItemHandlerModifiable;
 
 import javax.annotation.Nullable;
 import java.util.Set;
@@ -20,14 +21,16 @@ import java.util.Set;
 
 //@ChestContainer(isLargeChest = true)
 @SuppressWarnings("NullableProblems")
-public class ContainerRadiantChest extends Container {
+public class RadiantChestContainer extends Container {
   protected RadiantChestTile tile;
+  protected IItemHandlerModifiable inventory;
   private int dragMode = -1;
   private int dragEvent;
   private final Set<Slot> dragSlots = Sets.newHashSet();
 
-  public ContainerRadiantChest(RadiantChestTile te, EntityPlayer player) {
+  public RadiantChestContainer(IItemHandlerModifiable inventory, RadiantChestTile te, EntityPlayer player) {
     this.tile = te;
+    this.inventory = inventory;
     addOwnSlots();
     addPlayerSlots(player.inventory);
   }
@@ -128,7 +131,7 @@ public class ContainerRadiantChest extends Container {
         Slot slot = this.inventorySlots.get(slotId);
         ItemStack mouseStack = inventoryplayer.getItemStack();
 
-        if (slot != null && ContainerRadiantChest.canAddItemToSlot(slot, mouseStack, true) && slot.isItemValid(mouseStack) && (this.dragMode == 2 || mouseStack.getCount() > this.dragSlots.size()) && this.canDragIntoSlot(slot)) {
+        if (slot != null && RadiantChestContainer.canAddItemToSlot(slot, mouseStack, true) && slot.isItemValid(mouseStack) && (this.dragMode == 2 || mouseStack.getCount() > this.dragSlots.size()) && this.canDragIntoSlot(slot)) {
           this.dragSlots.add(slot);
         }
       } else if (this.dragEvent == 2) {
@@ -139,7 +142,7 @@ public class ContainerRadiantChest extends Container {
           for (Slot dragSlot : this.dragSlots) {
             ItemStack mouseStack = inventoryplayer.getItemStack();
 
-            if (dragSlot != null && ContainerRadiantChest.canAddItemToSlot(dragSlot, mouseStack, true) && dragSlot.isItemValid(mouseStack) && (this.dragMode == 2 || mouseStack.getCount() >= this.dragSlots.size()) && this.canDragIntoSlot(dragSlot)) {
+            if (dragSlot != null && RadiantChestContainer.canAddItemToSlot(dragSlot, mouseStack, true) && dragSlot.isItemValid(mouseStack) && (this.dragMode == 2 || mouseStack.getCount() >= this.dragSlots.size()) && this.canDragIntoSlot(dragSlot)) {
               ItemStack mouseStackCopyCopy = mouseStackCopy.copy();
               int j3 = dragSlot.getHasStack() ? dragSlot.getStack().getCount() : 0;
               computeStackSize(this.dragSlots, this.dragMode, mouseStackCopyCopy, j3);
@@ -360,7 +363,7 @@ public class ContainerRadiantChest extends Container {
           for (int l = slotMin; l >= 0 && l < this.inventorySlots.size() && mouseStack.getCount() < mouseStack.getMaxStackSize(); l += step) {
             Slot thisSlot = this.inventorySlots.get(l);
 
-            if (thisSlot.getHasStack() && ContainerRadiantChest.canAddItemToSlot(thisSlot, mouseStack, true) && thisSlot.canTakeStack(player) && this.canMergeSlot(mouseStack, thisSlot)) {
+            if (thisSlot.getHasStack() && RadiantChestContainer.canAddItemToSlot(thisSlot, mouseStack, true) && thisSlot.canTakeStack(player) && this.canMergeSlot(mouseStack, thisSlot)) {
               ItemStack itemstack2 = thisSlot.getStack();
 
               if (k != 0 || itemstack2.getCount() < thisSlot.getItemStackLimit(itemstack2)) {

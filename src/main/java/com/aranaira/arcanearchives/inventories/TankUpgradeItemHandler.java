@@ -1,21 +1,19 @@
-/*package com.aranaira.arcanearchives.inventory.handlers;
+package com.aranaira.arcanearchives.inventories;
 
-import com.aranaira.arcanearchives.init.BlockRegistry;
-import com.aranaira.arcanearchives.init.ItemRegistry;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 
 public class TankUpgradeItemHandler extends SizeUpgradeItemHandler {
-	@Override
-	public Item getUpgradeForSlot (int slot) {
-		switch (slot) {
+  @Override
+  public Item getUpgradeForSlot(int slot) {
+/*		switch (slot) {
 			case 0:
 				return ItemRegistry.COMPONENT_MATRIXBRACE;
 			case 1:
 				return ItemRegistry.COMPONENT_CONTAINMENTFIELD;
 			case 2:
 				return BlockRegistry.STORAGE_SHAPED_QUARTZ.getItemBlock();
-		}
-		return Items.AIR;
-	}
-}*/
+		}*/
+    return Items.AIR;
+  }
+}

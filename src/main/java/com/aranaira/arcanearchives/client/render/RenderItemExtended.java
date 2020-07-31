@@ -20,14 +20,17 @@ public class RenderItemExtended {
   private static RenderItem itemRender = Minecraft.getMinecraft().getRenderItem();
 
   // TODO: Are these really needed any more?
+  @Deprecated
   public static void setZLevel(float z) {
     itemRender.zLevel = z;
   }
 
+  @Deprecated
   public static float getZLevel() {
     return itemRender.zLevel;
   }
 
+  @Deprecated
   public static void modifyZLevel(float amount) {
     itemRender.zLevel += amount;
   }

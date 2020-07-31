@@ -1,6 +1,6 @@
 # Blender v2.79 (sub 0) OBJ File: 'rawquartz.blend'
 # www.blender.org
-mtllib raw_quartz.mtl
+mtllib quartz_cluster.mtl
 o Cylinder.005_Cylinder.009
 v 0.641698 -0.140297 0.777004
 v 0.704925 0.489420 0.971598

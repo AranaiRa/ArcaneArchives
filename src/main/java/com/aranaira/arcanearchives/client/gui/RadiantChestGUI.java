@@ -1,20 +1,23 @@
-/*package com.aranaira.arcanearchives.client.gui;
+package com.aranaira.arcanearchives.client.gui;
 
 import com.aranaira.arcanearchives.client.gui.controls.InvisibleButton;
 import com.aranaira.arcanearchives.client.gui.controls.RightClickTextField;
 import com.aranaira.arcanearchives.client.render.RenderItemExtended;
 import com.aranaira.arcanearchives.config.ConfigHandler;
-import com.aranaira.arcanearchives.containers.ContainerRadiantChest;
+import com.aranaira.arcanearchives.containers.RadiantChestContainer;
 import com.aranaira.arcanearchives.containers.slots.SlotExtended;
-import com.aranaira.arcanearchives.tiles.RadiantChestTileEntity;
+import com.aranaira.arcanearchives.network.Networking;
+import com.aranaira.arcanearchives.tileentities.RadiantChestTile;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiLabel;
 import net.minecraft.client.gui.GuiPageButtonList;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
@@ -24,8 +27,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.common.MinecraftForge;
 import org.lwjgl.input.Keyboard;
 
+import javax.annotation.Nullable;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,37 +41,20 @@ import java.util.List;
 //import vazkii.quark.api.IItemSearchBar;
 
 //@Optional.InterfaceList({@Optional.Interface(modid = "quark", iface = "vazkii.quark.api.IChestButtonCallback", striprefs = true), @Optional.Interface(modid = "quark", iface = "vazkii.quark.api.IItemSearchBar", striprefs = true)})
-public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.GuiResponder *//*, IChestButtonCallback, IItemSearchBar*//* {
+public class RadiantChestGUI extends GuiContainer implements GuiPageButtonList.GuiResponder /*, IChestButtonCallback, IItemSearchBar*/ {
   private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/radiantchest.png");
   private static final ResourceLocation GUITexturesSimple = new ResourceLocation("arcanearchives:textures/gui/simple/radiantchest.png");
   private final int MAIN_W = 192, MAIN_H = 253, CHECK_X = 234, CHECK_Y = 0, CHECK_S = 6, SLASH_X = 240, SLASH_Y = 0, SLASH_S = 16, ROUTING_TOOLTIP_X = 159, ROUTING_TOOLTIP_Y = 234, ROUTING_TOOLTIP_W = 33, ROUTING_TOOLTIP_H = 16, ImageScale = 256;
 
   private Slot hoveredSlot;
-  *//**
- * Used when touchscreen is enabled.
- * <p>
- * Used when touchscreen is enabled.
- * <p>
- * Used when touchscreen is enabled
- * <p>
- * Used when touchscreen is enabled
- *//*
   private Slot clickedSlot;
-  *//**
- * Used when touchscreen is enabled.
- *//*
   private boolean isRightMouseClick;
-  *//**
- * Used when touchscreen is enabled
- *//*
+
   private ItemStack draggedStack = ItemStack.EMPTY;
   private int touchUpX;
   private int touchUpY;
   private Slot returningStackDestSlot;
   private long returningStackTime;
-  *//**
- * Used when touchscreen is enabled
- *//*
   private ItemStack returningStack = ItemStack.EMPTY;
   private Slot currentDragTargetSlot;
   private long dragItemDropDelay;
@@ -78,14 +67,11 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
   private int lastClickButton;
   private boolean doubleClick;
   private ItemStack shiftClickedSlot = ItemStack.EMPTY;
-
-  private RadiantChestTileEntity tile;
+  private RadiantChestTile tile;
   private InventoryPlayer playerinventory;
   private List<ItemStack> tracked;
-  private int dimension;
-  private BlockPos pos;
   private RightClickTextField nameBox;
-  private ContainerRadiantChest container;
+  private RadiantChestContainer container;
 
   private int mNameTextLeftOffset = 53;
   private int mNameTextTopOffset = 238;
@@ -94,20 +80,18 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 
   private GuiButton toggleButton;
 
-  public GUIRadiantChest(ContainerRadiantChest container, InventoryPlayer playerinventory) {
+  public RadiantChestGUI(EntityPlayer player, RadiantChestContainer container) {
     super(container);
 
     this.container = container;
 
-    this.playerinventory = playerinventory;
+    this.playerinventory = player.inventory;
     this.tile = container.getTile();
     xSize = MAIN_W;
     ySize = MAIN_H;
 
     this.ignoreMouseUp = true;
 
-    this.dimension = 0; // tile.dimension;
-    this.pos = tile.getPos();
     tracked = Collections.emptyList(); // ManifestTrackingUtils.get(dimension, pos);
   }
 
@@ -116,7 +100,8 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
     super.initGui();
 
     nameBox = new RightClickTextField(1, fontRenderer, guiLeft + mNameTextLeftOffset, guiTop + mNameTextTopOffset, mNameTextWidth, mNameTextHeight);
-    nameBox.setText(container.getTile().getChestName());
+    // TODO:
+    nameBox.setText("Temp"); //container.getTile().getChestName());
     nameBox.setGuiResponder(this);
     nameBox.setEnableBackgroundDrawing(false);
 
@@ -129,10 +114,11 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
   @Override
   protected void actionPerformed(GuiButton button) throws IOException {
     if (button.id == 0) { //toggle button
-*//*			if (tile.getUuid() != null && mc.player.getUniqueID() != null) {
-				ToggleBrazier packet = new ToggleBrazier(mc.player.getUniqueID(), tile.getUuid());
-				Networking.CHANNEL.sendToServer(packet);
-			}*//*
+      if (tile.getTileId() != null) {
+        // TODO: Handle buttonm toggling
+/*                ToggleBrazier packet = new ToggleBrazier(mc.player.getUniqueID(), tile.getUuid());
+                Networking.CHANNEL.sendToServer(packet);*/
+      }
     }
   }
 
@@ -145,10 +131,11 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
     }
     drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, MAIN_W, MAIN_H, ImageScale, ImageScale);
 
-*//*		if (container.getTile().getRoutingType() == IBrazierRouting.BrazierRoutingType.NO_NEW_STACKS) {
-			this.drawTexturedModalRect(guiLeft + 164, guiTop + 239, CHECK_X, CHECK_Y, CHECK_S, CHECK_S);
-			this.drawTexturedModalRect(guiLeft + 176, guiTop + 234, SLASH_X, SLASH_Y, SLASH_S, SLASH_S);
-		}*//*
+    // TODO: Handle routing
+/*    if (container.getTile().getRoutingType() == IBrazierRouting.BrazierRoutingType.NO_NEW_STACKS) {
+      this.drawTexturedModalRect(guiLeft + 164, guiTop + 239, CHECK_X, CHECK_Y, CHECK_S, CHECK_S);
+      this.drawTexturedModalRect(guiLeft + 176, guiTop + 234, SLASH_X, SLASH_Y, SLASH_S, SLASH_S);
+    }*/
   }
 
   @Override
@@ -162,11 +149,11 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
     GlStateManager.disableLighting();
     GlStateManager.disableDepth();
 
-    for (int k = 0; k < this.buttonList.size(); ++k) {
-      (this.buttonList.get(k)).drawButton(this.mc, mouseX, mouseY, partialTicks);
+    for (GuiButton guiButton : this.buttonList) {
+      guiButton.drawButton(this.mc, mouseX, mouseY, partialTicks);
     }
-    for (int l = 0; l < this.labelList.size(); ++l) {
-      (this.labelList.get(l)).drawLabel(this.mc, mouseX, mouseY);
+    for (GuiLabel guiLabel : this.labelList) {
+      guiLabel.drawLabel(this.mc, mouseX, mouseY);
     }
 
     RenderHelper.enableGUIStandardItemLighting();
@@ -175,8 +162,6 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
     GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
     GlStateManager.enableRescaleNormal();
     this.hoveredSlot = null;
-    int k = 240;
-    int l = 240;
     OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240.0F, 240.0F);
     GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
@@ -258,13 +243,14 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
     if (mouseY >= guiTop + ROUTING_TOOLTIP_Y && mouseY <= guiTop + ROUTING_TOOLTIP_Y + ROUTING_TOOLTIP_H) {
       if (mouseX >= guiLeft + ROUTING_TOOLTIP_X && mouseX <= guiLeft + ROUTING_TOOLTIP_X + ROUTING_TOOLTIP_W) {
         List<String> tooltip = new ArrayList<>();
-*//*				if (container.getTile().getRoutingType() == IBrazierRouting.BrazierRoutingType.NO_NEW_STACKS) {
-					tooltip.add(I18n.format("arcanearchives.tooltip.radiantchest.routingmode.nonewitems1"));
-					tooltip.add(I18n.format("arcanearchives.tooltip.radiantchest.routingmode.nonewitems2"));
-				} else {
-					tooltip.add(I18n.format("arcanearchives.tooltip.radiantchest.routingmode.any1"));
-					tooltip.add(I18n.format("arcanearchives.tooltip.radiantchest.routingmode.any2"));
-				}*//*
+        // TODO: Handle
+/*        if (container.getTile().getRoutingType() == IBrazierRouting.BrazierRoutingType.NO_NEW_STACKS) {
+          tooltip.add(I18n.format("arcanearchives.tooltip.radiantchest.routingmode.nonewitems1"));
+          tooltip.add(I18n.format("arcanearchives.tooltip.radiantchest.routingmode.nonewitems2"));
+        } else {
+          tooltip.add(I18n.format("arcanearchives.tooltip.radiantchest.routingmode.any1"));
+          tooltip.add(I18n.format("arcanearchives.tooltip.radiantchest.routingmode.any2"));
+        }*/
         this.drawHoveringText(tooltip, mouseX, mouseY);
         return;
       }
@@ -279,7 +265,7 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
     GlStateManager.translate(0.0F, 0.0F, 32.0F);
     this.zLevel = 200.0F;
     this.itemRender.zLevel = 200.0F;
-    RenderItemExtended.INSTANCE.setZLevel(this.itemRender.zLevel);
+    //RenderItemExtended.setZLevel(this.itemRender.zLevel);
     net.minecraft.client.gui.FontRenderer font = stack.getItem().getFontRenderer(stack);
     if (font == null) {
       font = fontRenderer;
@@ -288,7 +274,7 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
     this.itemRender.renderItemOverlayIntoGUI(font, stack, x, y - (this.draggedStack.isEmpty() ? 0 : 8), altText);
     this.zLevel = 0.0F;
     this.itemRender.zLevel = 0.0F;
-    RenderItemExtended.INSTANCE.setZLevel(this.itemRender.zLevel);
+    //RenderItemExtended.setZLevel(this.itemRender.zLevel);
   }
 
   @Override
@@ -296,13 +282,13 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
     ItemStack stack = slotIn.getStack();
     if (!stack.isEmpty()) {
       // TODO: USE STANDARD GLOW SLOT METHOD
-*//*			if (tracked != null && !tracked.isEmpty() && ManifestTrackingUtils.matches(stack, tracked)) {
-				GlStateManager.disableDepth();
-				long worldTime = this.mc.player.world.getWorldTime();
-				Color c = ColorUtils.getColorFromTime(worldTime);
-				GuiContainer.drawRect(slotIn.xPos, slotIn.yPos, slotIn.xPos + 16, slotIn.yPos + 16, c.toInteger());
-				GlStateManager.enableDepth();
-			}*//*
+/*      if (tracked != null && !tracked.isEmpty() && ManifestTrackingUtils.matches(stack, tracked)) {
+        GlStateManager.disableDepth();
+        long worldTime = this.mc.player.world.getWorldTime();
+        Color c = ColorUtils.getColorFromTime(worldTime);
+        GuiContainer.drawRect(slotIn.xPos, slotIn.yPos, slotIn.xPos + 16, slotIn.yPos + 16, c.toInteger());
+        GlStateManager.enableDepth();
+      }*/
     }
 
     int i = slotIn.xPos;
@@ -321,7 +307,7 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
         return;
       }
 
-      if (ContainerRadiantChest.canAddItemToSlot(slotIn, itemstack1, true) && this.inventorySlots.canDragIntoSlot(slotIn)) {
+      if (RadiantChestContainer.canAddItemToSlot(slotIn, itemstack1, true) && this.inventorySlots.canDragIntoSlot(slotIn)) {
         itemstack = itemstack1.copy();
         flag = true;
         Container.computeStackSize(this.dragSplittingSlots, this.dragSplittingLimit, itemstack, slotIn.getStack().isEmpty() ? 0 : slotIn.getStack().getCount());
@@ -359,9 +345,9 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 
       GlStateManager.enableDepth();
       this.itemRender.renderItemAndEffectIntoGUI(this.mc.player, itemstack, i, j);
-      RenderItemExtended.INSTANCE.setZLevel(this.itemRender.zLevel);
+      //RenderItemExtended.setZLevel(this.itemRender.zLevel);
       if (slotIn instanceof SlotExtended) {
-        RenderItemExtended.INSTANCE.renderItemOverlayIntoGUI(this.fontRenderer, itemstack, i, j, s);
+        RenderItemExtended.renderItemOverlayIntoGUI(this.fontRenderer, itemstack, i, j, s);
       } else {
         this.itemRender.renderItemOverlayIntoGUI(this.fontRenderer, itemstack, i, j, s);
       }
@@ -369,7 +355,7 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 
     this.itemRender.zLevel = 0.0F;
     this.zLevel = 0.0F;
-    RenderItemExtended.INSTANCE.setZLevel(this.itemRender.zLevel);
+    //RenderItemExtended.setZLevel(this.itemRender.zLevel);
   }
 
   private void updateDragSplitting() {
@@ -418,8 +404,8 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
         GuiButton guibutton = this.buttonList.get(i);
 
         if (guibutton.mousePressed(this.mc, mouseX, mouseY)) {
-          net.minecraftforge.client.event.GuiScreenEvent.ActionPerformedEvent.Pre event = new net.minecraftforge.client.event.GuiScreenEvent.ActionPerformedEvent.Pre(this, guibutton, this.buttonList);
-          if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(event)) {
+          GuiScreenEvent.ActionPerformedEvent.Pre event = new GuiScreenEvent.ActionPerformedEvent.Pre(this, guibutton, this.buttonList);
+          if (MinecraftForge.EVENT_BUS.post(event)) {
             break;
           }
           guibutton = event.getButton();
@@ -427,7 +413,7 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
           guibutton.playPressSound(this.mc.getSoundHandler());
           this.actionPerformed(guibutton);
           if (this.equals(this.mc.currentScreen)) {
-            net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.GuiScreenEvent.ActionPerformedEvent.Post(this, event.getButton(), this.buttonList));
+            MinecraftForge.EVENT_BUS.post(new GuiScreenEvent.ActionPerformedEvent.Post(this, event.getButton(), this.buttonList));
           }
         }
       }
@@ -444,7 +430,7 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
       int k = this.guiTop;
       boolean flag1 = this.hasClickedOutside(mouseX, mouseY, j, k);
       if (slot != null) {
-        flag1 = false; // Forge, prevent dropping of items through slots outside of GUI boundaries
+        flag1 = false;
       }
       int l = -1;
 
@@ -479,7 +465,7 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
               ClickType clicktype = ClickType.PICKUP;
 
               if (flag2) {
-                this.shiftClickedSlot = slot != null && slot.getHasStack() ? slot.getStack().copy() : ItemStack.EMPTY;
+                this.shiftClickedSlot = slot.getHasStack() ? slot.getStack().copy() : ItemStack.EMPTY;
                 clicktype = ClickType.QUICK_MOVE;
               } else if (l == -999) {
                 clicktype = ClickType.THROW;
@@ -524,7 +510,7 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
           if (slot != this.clickedSlot && !this.clickedSlot.getStack().isEmpty()) {
             this.draggedStack = this.clickedSlot.getStack().copy();
           }
-        } else if (this.draggedStack.getCount() > 1 && slot != null && ContainerRadiantChest.canAddItemToSlot(slot, this.draggedStack, false)) {
+        } else if (this.draggedStack.getCount() > 1 && slot != null && RadiantChestContainer.canAddItemToSlot(slot, this.draggedStack, false)) {
           long i = Minecraft.getSystemTime();
 
           if (this.currentDragTargetSlot == slot) {
@@ -541,7 +527,7 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
           }
         }
       }
-    } else if (this.dragSplitting && slot != null && !itemstack.isEmpty() && (itemstack.getCount() > this.dragSplittingSlots.size() || this.dragSplittingLimit == 2) && ContainerRadiantChest.canAddItemToSlot(slot, itemstack, true) && slot.isItemValid(itemstack) && this.inventorySlots.canDragIntoSlot(slot)) {
+    } else if (this.dragSplitting && slot != null && !itemstack.isEmpty() && (itemstack.getCount() > this.dragSplittingSlots.size() || this.dragSplittingLimit == 2) && RadiantChestContainer.canAddItemToSlot(slot, itemstack, true) && slot.isItemValid(itemstack) && this.inventorySlots.canDragIntoSlot(slot)) {
       this.dragSplittingSlots.add(slot);
       this.updateDragSplitting();
     }
@@ -559,7 +545,7 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
     int j = this.guiTop;
     boolean flag = this.hasClickedOutside(mouseX, mouseY, i, j);
     if (slot != null) {
-      flag = false; // Forge, prevent dropping of items through slots outside of GUI boundaries
+      flag = false;
     }
     int k = -1;
 
@@ -575,7 +561,7 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
       if (isShiftKeyDown()) {
         if (!this.shiftClickedSlot.isEmpty()) {
           for (Slot slot2 : this.inventorySlots.inventorySlots) {
-            if (slot2 != null && slot2.canTakeStack(this.mc.player) && slot2.getHasStack() && slot2.isSameInventory(slot) && ContainerRadiantChest.canAddItemToSlot(slot2, this.shiftClickedSlot, true)) {
+            if (slot2 != null && slot2.canTakeStack(this.mc.player) && slot2.getHasStack() && slot2.isSameInventory(slot) && RadiantChestContainer.canAddItemToSlot(slot2, this.shiftClickedSlot, true)) {
               this.handleMouseClick(slot2, slot2.slotNumber, state, ClickType.QUICK_MOVE);
             }
           }
@@ -605,7 +591,7 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
             this.draggedStack = this.clickedSlot.getStack();
           }
 
-          boolean flag2 = ContainerRadiantChest.canAddItemToSlot(slot, this.draggedStack, false);
+          boolean flag2 = RadiantChestContainer.canAddItemToSlot(slot, this.draggedStack, false);
 
           if (k != -1 && !this.draggedStack.isEmpty() && flag2) {
             this.handleMouseClick(this.clickedSlot, this.clickedSlot.slotNumber, state, ClickType.PICKUP);
@@ -667,7 +653,7 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
   }
 
   @Override
-  protected void keyTyped(char typedChar, int keyCode) throws IOException {
+  protected void keyTyped(char typedChar, int keyCode) {
     if (nameBox.isFocused()) {
       nameBox.textboxKeyTyped(typedChar, keyCode);
       return;
@@ -703,7 +689,7 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
   }
 
   @Override
-  @javax.annotation.Nullable
+  @Nullable
   public Slot getSlotUnderMouse() {
     return this.hoveredSlot;
   }
@@ -712,23 +698,23 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
   public void onGuiClosed() {
     super.onGuiClosed();
 
-*//*		if (tracked != null) {
-			ManifestTrackingUtils.remove(dimension, pos);
-		}*//*
+/*    if (tracked != null) {
+      ManifestTrackingUtils.remove(dimension, pos);
+    }*/
   }
 
-*//*	@Optional.Method(modid = "quark")
-	@Override
-	public boolean onAddChestButton (GuiButton button, int buttonType) {
-		return true;
-	}
+/*  @Optional.Method(modid = "quark")
+  @Override
+  public boolean onAddChestButton(GuiButton button, int buttonType) {
+    return true;
+  }
 
-	@Optional.Method(modid = "quark")
-	@Override
-	public void onSearchBarAdded (GuiTextField bar) {
-		bar.y = (height / 2) + 2;
-		bar.x = (width / 2) - bar.width / 2;
-	}*//*
+  @Optional.Method(modid = "quark")
+  @Override
+  public void onSearchBarAdded(GuiTextField bar) {
+    bar.y = (height / 2) + 2;
+    bar.x = (width / 2) - bar.width / 2;
+  }*/
 
   @Override
   public void setEntryValue(int id, boolean value) {
@@ -742,13 +728,14 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 
   @Override
   public void setEntryValue(int id, String value) {
-*//*		if (lastValue != null && !lastValue.isEmpty() && value.isEmpty()) {
-			UnsetName packet = new UnsetName(tile.getPos(), tile.dimension);
-			Networking.CHANNEL.sendToServer(packet);
-		} else if (lastValue == null || !lastValue.equals(value)) {
-			SetName packet = new SetName(tile.getPos(), value, tile.dimension);
-			Networking.CHANNEL.sendToServer(packet);
-		}*//*
-    lastValue = value;
+    // TODO: Support set/unsest name
+/*    if (lastValue != null && !lastValue.isEmpty() && value.isEmpty()) {
+      UnsetName packet = new UnsetName(tile.getPos(), tile.dimension);
+      Networking.CHANNEL.sendToServer(packet);
+    } else if (lastValue == null || !lastValue.equals(value)) {
+      SetName packet = new SetName(tile.getPos(), value, tile.dimension);
+      Networking.CHANNEL.sendToServer(packet);
+    }
+    lastValue = value;*/
   }
-}*/
+}

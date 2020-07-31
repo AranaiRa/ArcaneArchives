@@ -1,10 +1,7 @@
 package com.aranaira.arcanearchives.init;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.blocks.CrystalWorkbenchBlock;
-import com.aranaira.arcanearchives.blocks.MakeshiftResonatorBlock;
-import com.aranaira.arcanearchives.blocks.MandalicKeystoneBlock;
-import com.aranaira.arcanearchives.blocks.MonitoringCrystalBlock;
+import com.aranaira.arcanearchives.blocks.*;
 import com.aranaira.arcanearchives.blocks.templates.OmniTemplateBlock;
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import net.minecraft.block.Block;
@@ -48,6 +45,8 @@ public class ModBlocks {
   public static TemplateBlock QuartzBlock = register("quartz_block", TemplateBlock::new, Material.ROCK, (o) -> o.setHardness(1.7f).setHarvestTool("pickaxe", 0).setLightLevel(1).setTooltip("arcanearchives.tooltip.item.storage_raw_quartz", TextFormatting.GOLD));
 
   public static MonitoringCrystalBlock MonitoringCrystal = register("monitoring_crystal", MonitoringCrystalBlock::new, Material.GLASS, (o) -> o.setHardness(0.8f).setHarvestTool("pickaxe", 0).setLightLevel(1).setTooltip("arcanearchives.tooltip.device.monitoring_crystal", TextFormatting.GOLD));
+
+  public static RadiantChestBlock RadiantChest = register("radiant_chest", RadiantChestBlock::new, Material.GLASS, (o) -> o.setHardness(3f).setResistance(6000).setHarvestTool("pickaxe", 0).setLightLevel(1).setTooltip("arcanearchives.tooltip.device.radiant_chest", TextFormatting.GOLD));
 
   // Sorta temporary
   public static OmniTemplateBlock QuartzCluster = register("quartz_cluster", OmniTemplateBlock::new, Material.ROCK, (o) -> o.setDefaultFacing(EnumFacing.UP).setHardness(1.4f).setTooltip("arcanearchives.tooltip.item.raw_quartz", TextFormatting.GOLD).setHarvestTool("pickaxe", 0).setLightLevel(1).setFullCube(false).setOpaqueCube(false).setBoundingBox(Boxes.QuartzCluster));

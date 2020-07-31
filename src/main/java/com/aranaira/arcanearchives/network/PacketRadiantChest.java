@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.network;
 
-import com.aranaira.arcanearchives.containers.ContainerRadiantChest;
+import com.aranaira.arcanearchives.containers.RadiantChestContainer;
 import com.aranaira.arcanearchives.util.ByteUtils;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -333,8 +333,8 @@ public class PacketRadiantChest {
 
         if (container.windowId == message.windowId && container.getCanCraft(player)) {
           if (player.isSpectator()) {
-            if (container instanceof ContainerRadiantChest) {
-              ((ContainerRadiantChest) container).syncInventory(player);
+            if (container instanceof RadiantChestContainer) {
+              ((RadiantChestContainer) container).syncInventory(player);
             } else {
               NonNullList<ItemStack> nonnulllist = NonNullList.create();
               for (int i = 0; i < container.inventorySlots.size(); ++i) {
@@ -352,8 +352,8 @@ public class PacketRadiantChest {
               player.updateHeldItem();
               player.isChangingQuantityOnly = false;
             } else {
-              if (container instanceof ContainerRadiantChest) {
-                ((ContainerRadiantChest) container).syncInventory(player);
+              if (container instanceof RadiantChestContainer) {
+                ((RadiantChestContainer) container).syncInventory(player);
               } else {
                 NonNullList<ItemStack> nonnulllist1 = NonNullList.create();
                 for (int j = 0; j < container.inventorySlots.size(); ++j) {
@@ -419,7 +419,7 @@ public class PacketRadiantChest {
       }
 
       public void processMessage(final MessageSyncExtendedSlotContents message, EntityPlayer player) {
-        if (player.openContainer instanceof ContainerRadiantChest && message.windowId == player.openContainer.windowId) {
+        if (player.openContainer instanceof RadiantChestContainer && message.windowId == player.openContainer.windowId) {
           player.openContainer.inventorySlots.get(message.slot).putStack(message.stack);
         }
       }

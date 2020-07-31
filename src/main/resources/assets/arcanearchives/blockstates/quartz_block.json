@@ -2,7 +2,7 @@
     "forge_marker": 1,
     "defaults": {
         "textures": {
-            "all": "arcanearchives:blocks/storage_raw_quartz"
+            "all": "arcanearchives:blocks/quartz_cluster"
         }
     },
     "variants": {

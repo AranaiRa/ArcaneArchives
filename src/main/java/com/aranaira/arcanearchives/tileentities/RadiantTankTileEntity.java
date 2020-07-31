@@ -2,10 +2,9 @@
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.inventory.handlers.OptionalUpgradesHandler;
-import com.aranaira.arcanearchives.inventory.handlers.SizeUpgradeItemHandler;
-import com.aranaira.arcanearchives.inventory.handlers.TankUpgradeItemHandler;
-import com.aranaira.arcanearchives.tileentities.interfaces.IUpgradeableStorage;
+import com.aranaira.arcanearchives.inventories.OptionalUpgradesHandler;
+import com.aranaira.arcanearchives.inventories.SizeUpgradeItemHandler;
+import com.aranaira.arcanearchives.inventories.TankUpgradeItemHandler;
 import com.aranaira.arcanearchives.types.UpgradeType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -22,7 +21,7 @@ import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 
 import javax.annotation.Nonnull;
 
-public class RadiantTankTileEntity extends ImmanenceTileEntity implements IUpgradeableStorage {
+public class RadiantTankTileEntity extends NetworkedBaseTile implements IUpgradeableStorage {
 	public static final int BASE_CAPACITY = Fluid.BUCKET_VOLUME * 16;
 	private final VoidingFluidTank inventory = new VoidingFluidTank(BASE_CAPACITY);
 

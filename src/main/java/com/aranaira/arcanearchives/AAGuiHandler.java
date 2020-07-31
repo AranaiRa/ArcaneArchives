@@ -1,8 +1,11 @@
 package com.aranaira.arcanearchives;
 
 import com.aranaira.arcanearchives.client.gui.CrystalWorkbenchGUI;
+import com.aranaira.arcanearchives.client.gui.RadiantChestGUI;
 import com.aranaira.arcanearchives.containers.CrystalWorkbenchContainer;
+import com.aranaira.arcanearchives.containers.RadiantChestContainer;
 import com.aranaira.arcanearchives.tileentities.CrystalWorkbenchTile;
+import com.aranaira.arcanearchives.tileentities.RadiantChestTile;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -13,13 +16,14 @@ import javax.annotation.Nullable;
 
 public class AAGuiHandler implements IGuiHandler {
   public enum GuiType {
-    CrystalWorkbench;
+    CrystalWorkbench,
+    Manifest,
+    RadiantChest;
 
     @Nullable
     public static GuiType byOrdinal(int ordinal) {
-      int i = 0;
       for (GuiType t : values()) {
-        if (i == ordinal) {
+        if (t.ordinal() == ordinal) {
           return t;
         }
       }
@@ -43,8 +47,14 @@ public class AAGuiHandler implements IGuiHandler {
         if (te == null) {
           return null;
         }
-        CrystalWorkbenchTile tile = (CrystalWorkbenchTile) te;
-        return new CrystalWorkbenchContainer(tile.getInventory(), tile, player);
+        CrystalWorkbenchTile cwt = (CrystalWorkbenchTile) te;
+        return new CrystalWorkbenchContainer(cwt.getInventory(), cwt, player);
+      case RadiantChest:
+        if (te == null) {
+          return null;
+        }
+        RadiantChestTile rt = (RadiantChestTile) te;
+        return new RadiantChestContainer(rt.getInventory(), rt, player);
       default: {
         ArcaneArchives.logger.debug(String.format("Invalid Container id of %d was passed in; null was returned to the server", id));
         return null;
@@ -69,6 +79,12 @@ public class AAGuiHandler implements IGuiHandler {
         }
         CrystalWorkbenchTile tile = (CrystalWorkbenchTile) te;
         return new CrystalWorkbenchGUI(player, new CrystalWorkbenchContainer(tile.getInventory(), tile, player));
+      case RadiantChest:
+        if (te == null) {
+          return null;
+        }
+        RadiantChestTile rt = (RadiantChestTile) te;
+        return new RadiantChestGUI(player, new RadiantChestContainer(rt.getInventory(), rt, player));
       default:
         ArcaneArchives.logger.debug(String.format("Invalid Container id of %d was passed in; null was returned to the client.", id));
         return null;
