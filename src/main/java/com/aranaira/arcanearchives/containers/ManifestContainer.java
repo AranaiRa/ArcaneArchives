@@ -5,6 +5,7 @@ import com.aranaira.arcanearchives.client.gui.framework.IScrollabe;
 import com.aranaira.arcanearchives.client.gui.framework.IScrollableContainer;
 import com.aranaira.arcanearchives.client.gui.framework.ScrollEventManager;
 import com.aranaira.arcanearchives.config.ManifestConfig;
+import com.aranaira.arcanearchives.types.ManifestList;
 import com.aranaira.arcanearchives.util.ManifestUtils.CollatedEntry;
 import com.aranaira.arcanearchives.util.MathUtils;
 import net.minecraft.client.Minecraft;
@@ -200,19 +201,19 @@ public class ManifestContainer extends Container implements IScrollableContainer
     return handler.getSearchText();
   }
 
-  public SortingType getSortingType() {
+  public ManifestList.SortingType getSortingType() {
     return handler.getSortingType();
   }
 
-  public SortingDirection getSortingDirection() {
+  public ManifestList.SortingDirection getSortingDirection() {
     return handler.getSortingDirection();
   }
 
-  public void setSortingType(SortingType type) {
+  public void setSortingType(ManifestList.SortingType type) {
     handler.setSortingType(type);
   }
 
-  public void setSortingDirection(SortingDirection direction) {
+  public void setSortingDirection(ManifestList.SortingDirection direction) {
     handler.setSortingDirection(direction);
   }
 
