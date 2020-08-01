@@ -1,9 +1,11 @@
 package com.aranaira.arcanearchives;
 
 import com.aranaira.arcanearchives.client.gui.CrystalWorkbenchGUI;
+import com.aranaira.arcanearchives.client.gui.ManifestGUI;
 import com.aranaira.arcanearchives.client.gui.RadiantChestGUI;
 import com.aranaira.arcanearchives.containers.CrystalWorkbenchContainer;
 import com.aranaira.arcanearchives.containers.FakeManifestContainer;
+import com.aranaira.arcanearchives.containers.ManifestContainer;
 import com.aranaira.arcanearchives.containers.RadiantChestContainer;
 import com.aranaira.arcanearchives.tileentities.CrystalWorkbenchTile;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTile;
@@ -83,6 +85,7 @@ public class AAGuiHandler implements IGuiHandler {
         CrystalWorkbenchTile tile = (CrystalWorkbenchTile) te;
         return new CrystalWorkbenchGUI(player, new CrystalWorkbenchContainer(tile.getInventory(), tile, player));
       case Manifest:
+        return new ManifestGUI(player, new ManifestContainer(player));
       case RadiantChest:
         if (te == null) {
           return null;
