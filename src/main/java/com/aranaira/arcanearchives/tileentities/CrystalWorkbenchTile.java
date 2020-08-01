@@ -29,10 +29,24 @@ public class CrystalWorkbenchTile extends NetworkedBaseTile {
   private CrystalWorkbenchRecipe currentRecipe;
   private CrystalWorkbenchRecipe lastRecipe;
   private int page;
-  private UUID networkId = null;
 
   public CrystalWorkbenchTile() {
     currentRecipe = ModRecipes.RADIANT_DUST.get();
+  }
+
+  @Override
+  public UUID getNetworkId() {
+    if (world == null || world.isRemote) {
+      return networkId;
+    }
+
+    if (this.networkId == null) {
+      this.networkId = UUID.randomUUID();
+      markDirty();
+      stateUpdate();
+    }
+
+    return networkId;
   }
 
   public IItemHandlerModifiable getInventory() {
