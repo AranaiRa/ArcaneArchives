@@ -230,7 +230,14 @@ arcanearchives.tooltip.item.letter_invitation.named=An invitation to join the Ar
 arcanearchives.tooltip.item.letter_resignation=Allows you to leave an Arcane Network.
 arcanearchives.tooltip.item.material_interface=A crafting ingredient. Can also be used as a second tier upgrade for Radiant Troves.
 arcanearchives.tooltip.item.matrix_brace=A crafting ingredient. Can also be used as a first tier upgrade for Radiant Tanks and Radiant Troves.
-arcanearchives.tooltip.item.manifest=Used to view items stored in Radiant storage.
+arcanearchives.tooltip.item.manifest1=Used to view items stored in Radiant storage.
+arcanearchives.tooltip.item.manifest2=%s to open Manifest.
+arcanearchives.tooltip.item.manifest.combiner=%s or %s
+arcanearchives.tooltip.item.manifest2.main_key=Right-Click
+arcanearchives.tooltip.item.manifest3=%s to clear inventory tracking.
+arcanearchives.tooltip.item.manifest3.main_key=Sneak-Right-Click
+arcanearchives.tooltip.item.manifest3.secondary_key=Sneak-
+
 arcanearchives.tooltip.item.quartz_sliver=An alternative to torches. Acquire by smashing Radiant Quartz against stone.
 arcanearchives.tooltip.item.radiant_amphora=Used to transfer fluids to and from a Radiant Tank or Reservoir Matrix.
 arcanearchives.tooltip.item.radiant_dust=A crafting ingredient.
