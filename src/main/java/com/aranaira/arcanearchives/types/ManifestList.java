@@ -132,10 +132,10 @@ public class ManifestList extends ForwardingList<CollatedEntry> implements ISeri
     };
   }
 
-  // TODO: MAY OR MAY NOT WORK
+/*  // TODO: MAY OR MAY NOT WORK
   public ManifestListIterable filtered() {
     return new ManifestListIterable(new ManifestIterator(Iterators.filter(super.iterator(), filter())));
-  }
+  }*/
  /*    }).collect(Collectors.toCollection(ManifestList::new));
     filtered.sortingDirection = sortingDirection;
     filtered.sortingType = sortingType;
@@ -213,7 +213,7 @@ public class ManifestList extends ForwardingList<CollatedEntry> implements ISeri
     setSearchItem(stack);
   }
 
-  public ManifestList sorted() {
+  public ManifestList sortAndFilterMaybe() {
     ManifestList copy = new ManifestList(this.delegate(), filterText);
     copy.setItemDirectionType(searchItem, sortingDirection, sortingType);
     copy.sort((o1, o2) -> {
@@ -231,7 +231,11 @@ public class ManifestList extends ForwardingList<CollatedEntry> implements ISeri
         }
       }
     });
+    if (filterText == null && searchItem == null) {
+      return copy;
+    }
 
+    copy.removeIf(filter().negate());
     return copy;
   }
 

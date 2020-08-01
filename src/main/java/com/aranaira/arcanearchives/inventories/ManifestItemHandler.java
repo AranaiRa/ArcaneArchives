@@ -1,8 +1,6 @@
-package com.aranaira.arcanearchives.inventory.handlers;
+package com.aranaira.arcanearchives.inventories;
 
-import com.aranaira.arcanearchives.types.lists.ManifestList;
-import com.aranaira.arcanearchives.types.lists.ManifestList.SortingDirection;
-import com.aranaira.arcanearchives.types.lists.ManifestList.SortingType;
+import com.aranaira.arcanearchives.types.ManifestList;
 import com.aranaira.arcanearchives.util.ManifestUtils.CollatedEntry;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -22,7 +20,7 @@ public class ManifestItemHandler implements IItemHandlerModifiable {
 
   private void updateManifest() {
     if (manifestActive == null) {
-      manifestActive = manifestBase.sorted().filtered();
+      manifestActive = manifestBase.sortAndFilterMaybe();
     }
   }
 
@@ -76,45 +74,45 @@ public class ManifestItemHandler implements IItemHandlerModifiable {
 
   public void setSearchText(String s) {
     manifestBase.setSearchText(s);
-    manifestActive = manifestBase.sorted().filtered();
+    manifestActive = manifestBase.sortAndFilterMaybe();
   }
 
   public void setSearchItem(ItemStack s) {
     manifestBase.setSearchItem(s);
-    manifestActive = manifestBase.sorted().filtered();
+    manifestActive = manifestBase.sortAndFilterMaybe();
   }
 
   public void clear() {
     manifestBase.setSearchText(null);
     manifestBase.setSearchItem(ItemStack.EMPTY);
-    manifestActive = manifestBase.sorted().filtered();
+    manifestActive = manifestBase.sortAndFilterMaybe();
   }
 
   public void nullify() {
     manifestActive = null;
   }
 
-  public SortingDirection getSortingDirection() {
+  public ManifestList.SortingDirection getSortingDirection() {
     if (manifestActive != null) {
       return manifestActive.getSortingDirection();
     }
     return manifestBase.getSortingDirection();
   }
 
-  public void setSortingDirection(SortingDirection sortingDirection) {
+  public void setSortingDirection(ManifestList.SortingDirection sortingDirection) {
     manifestBase.setSortingDirection(sortingDirection);
-    manifestActive = manifestBase.sorted().filtered();
+    manifestActive = manifestBase.sortAndFilterMaybe();
   }
 
-  public SortingType getSortingType() {
+  public ManifestList.SortingType getSortingType() {
     if (manifestActive != null) {
       return manifestActive.getSortingType();
     }
     return manifestBase.getSortingType();
   }
 
-  public void setSortingType(SortingType sortingType) {
+  public void setSortingType(ManifestList.SortingType sortingType) {
     manifestBase.setSortingType(sortingType);
-    manifestActive = manifestBase.sorted().filtered();
+    manifestActive = manifestBase.sortAndFilterMaybe();
   }
 }
