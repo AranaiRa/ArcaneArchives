@@ -5,6 +5,7 @@ import com.aranaira.arcanearchives.client.gui.framework.IScrollabe;
 import com.aranaira.arcanearchives.client.gui.framework.IScrollableContainer;
 import com.aranaira.arcanearchives.client.gui.framework.ScrollEventManager;
 import com.aranaira.arcanearchives.config.ManifestConfig;
+import com.aranaira.arcanearchives.inventories.ManifestItemHandler;
 import com.aranaira.arcanearchives.types.ManifestList;
 import com.aranaira.arcanearchives.util.ManifestUtils.CollatedEntry;
 import com.aranaira.arcanearchives.util.MathUtils;
@@ -26,12 +27,12 @@ import java.util.List;
 
 public class ManifestContainer extends Container implements IScrollableContainer {
   // this must be a multiple of GRID_SPACING
-  private static int SCROLL_STEP = 6;
-  private static int GRID_SPACING = 18;
+  public static int SCROLL_STEP = 6;
+  public static int GRID_SPACING = 18;
   public static int FIRST_CELL_X = 12;
   public static int FIRST_CELL_Y = 30;
   /// number of cells in x and y, for now this is square
-  private static int NUM_CELLS = 9;
+  public static int NUM_CELLS = 9;
 
   private static class ManifestItemSlot extends CustomCountSlot implements IScrollabe {
     public int originalY;
@@ -64,7 +65,7 @@ public class ManifestContainer extends Container implements IScrollableContainer
     }
   }
 
-  private com.aranaira.arcanearchives.inventory.handlers.ManifestItemHandler handler;
+  private ManifestItemHandler handler;
   private boolean serverSide;
   private EntityPlayer player;
 
