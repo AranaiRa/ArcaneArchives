@@ -4,21 +4,22 @@ import com.aranaira.arcanearchives.containers.ManifestContainer;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import com.aranaira.arcanearchives.util.ManifestUtils.CollatedEntry;
 import com.google.common.collect.ForwardingList;
+import com.google.common.collect.Iterators;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
+@SuppressWarnings("WeakerAccess")
 public class ManifestList extends ForwardingList<CollatedEntry> implements ISerializeByteBuf<ManifestList> {
   private static Map<String, ModContainer> modList = null;
   private ManifestContainer listener = null;
@@ -86,69 +87,41 @@ public class ManifestList extends ForwardingList<CollatedEntry> implements ISeri
     }
   }
 
-  // TODO: Review
-  public ManifestList filtered() {
-    if (filterText == null && searchItem == null) {
-      return this;
-    }
-
-    String filter = "";
-
-    if (filterText != null) {
-      filter = filterText.toLowerCase();
-    }
-
-    boolean mod = false;
-
-    if (filter.startsWith("@")) {
-      mod = true;
-      filter = filter.replaceFirst("@", "");
-    }
-
-    final boolean modFilter = mod;
-
-    String finalFilter = filter;
-    ManifestList filtered = stream().filter((entry) -> {
+  @SuppressWarnings({"ConstantConditions", "Guava"})
+  // TODO: Soft client-only?
+  public com.google.common.base.Predicate<CollatedEntry> filter() {
+    return (entry) -> {
       if (entry == null) {
         return false;
       }
 
-      ItemStack stack = entry.getStack();
+      if (filterText == null && searchItem == null) {
+        return true;
+      }
 
+      ItemStack stack = entry.getStack();
       if (searchItem != null) {
         return ItemUtils.areStacksEqualIgnoreSize(searchItem, stack);
       }
 
-      if (!modFilter) {
-        String display = stack.getDisplayName().toLowerCase();
-        if (display.contains(finalFilter)) {
+      String filter = filterText == null ? "" : filterText.toLowerCase();
+      final boolean mod = filter.startsWith("@");
+      if (mod) {
+        filter = filter.replaceFirst("@", "");
+        return adjustModName(stack).contains(filter) || stack.getItem().getRegistryName().getNamespace().toLowerCase().contains(filter);
+      } else {
+        if (stack.getItem().getRegistryName().getPath().toLowerCase().contains(filter) || stack.getDisplayName().toLowerCase().contains(filter)) {
           return true;
         }
-        String registry = stack.getItem().getRegistryName().getPath().toLowerCase();
-        if (registry.contains(finalFilter)) {
-          return true;
-        }
-      } else if (modFilter) {
-        String modName = adjustModName(stack);
-        if (modName.contains(finalFilter)) {
-          return true;
-        }
-        String resource = stack.getItem().getRegistryName().getNamespace().toLowerCase();
-        if (resource.contains(finalFilter)) {
-          return true;
-        }
-      }
 
-      if (!modFilter) {
-        // Other hooks to be added at a later point
-        if (stack.getItem() == Items.ENCHANTED_BOOK) {
-          Map<Enchantment, Integer> map = EnchantmentHelper.getEnchantments(stack);
-          for (Map.Entry<Enchantment, Integer> ench : map.entrySet()) {
-            if (ench.getKey() == null) {
-              continue; // Yes, it is possible for this value to be null. WHO KNEW.
+        Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(stack);
+        if (!enchants.isEmpty()) {
+          for (Enchantment ench : enchants.keySet()) {
+            if (ench == null) {
+              continue; // Yes, this IS actually possible
             }
-            String enchName = ench.getKey().getTranslatedName(ench.getValue());
-            if (enchName.toLowerCase().contains(finalFilter)) {
+
+            if (ench.getTranslatedName(0).toLowerCase().contains(filter)) {
               return true;
             }
           }
@@ -156,18 +129,30 @@ public class ManifestList extends ForwardingList<CollatedEntry> implements ISeri
       }
 
       return false;
-    }).collect(Collectors.toCollection(ManifestList::new));
+    };
+  }
+
+  // TODO: MAY OR MAY NOT WORK
+  public ManifestListIterable filtered() {
+    return new ManifestListIterable(new ManifestIterator(Iterators.filter(super.iterator(), filter())));
+  }
+ /*    }).collect(Collectors.toCollection(ManifestList::new));
     filtered.sortingDirection = sortingDirection;
     filtered.sortingType = sortingType;
     filtered.searchItem = searchItem;
     filtered.filterText = filterText;
     return filtered;
+  }*/
+
+  @Override
+  @Nonnull
+  public ManifestIterator iterator() {
+    return new ManifestIterator(super.iterator());
   }
 
   public void setListener(ManifestContainer containerManifest) {
     this.listener = containerManifest;
   }
-
 
   public void deserializationFinished() {
     if (this.listener != null) {
@@ -222,28 +207,24 @@ public class ManifestList extends ForwardingList<CollatedEntry> implements ISeri
     this.sortingType = sortingType;
   }
 
-/*  @Override
-  public ManifestListIterable iterable() {
-    return new ManifestListIterable(new ManifestIterator(iterator()));
-  }*/
+  public void setItemDirectionType (ItemStack stack, SortingDirection direction, SortingType type) {
+    setSortingDirection(direction);
+    setSortingType(type);
+    setSearchItem(stack);
+  }
 
   public ManifestList sorted() {
-    ManifestList copy = new ManifestList(new ArrayList<>(), null);
-    copy.filterText = filterText;
-    copy.searchItem = searchItem;
-    copy.sortingDirection = sortingDirection;
-    copy.sortingType = sortingType;
-
-    copy.addAll(this);
+    ManifestList copy = new ManifestList(this.delegate(), filterText);
+    copy.setItemDirectionType(searchItem, sortingDirection, sortingType);
     copy.sort((o1, o2) -> {
-      if (copy.sortingType == SortingType.NAME) {
-        if (copy.sortingDirection == SortingDirection.ASCENDING) {
+      if (sortingType == SortingType.NAME) {
+        if (sortingDirection == SortingDirection.ASCENDING) {
           return o1.finalStack.getDisplayName().compareTo(o2.finalStack.getDisplayName());
         } else {
           return o2.finalStack.getDisplayName().compareTo(o1.finalStack.getDisplayName());
         }
       } else {
-        if (copy.sortingDirection == SortingDirection.ASCENDING) {
+        if (sortingDirection == SortingDirection.ASCENDING) {
           return Integer.compare(o1.finalStack.getCount(), o2.finalStack.getCount());
         } else {
           return Integer.compare(o2.finalStack.getCount(), o1.finalStack.getCount());
@@ -252,11 +233,6 @@ public class ManifestList extends ForwardingList<CollatedEntry> implements ISeri
     });
 
     return copy;
-  }
-
-  @Override
-  public void clear() {
-    super.clear();
   }
 
   @Override
@@ -289,6 +265,7 @@ public class ManifestList extends ForwardingList<CollatedEntry> implements ISeri
     }
 
     @Override
+    @Nonnull
     public Iterator<CollatedEntry> iterator() {
       return iterator;
     }
