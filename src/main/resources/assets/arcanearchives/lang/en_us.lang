@@ -465,6 +465,7 @@ arcanearchives.config.manifest.distance.tooltip=Maximum distance in blocks befor
 arcanearchives.config.manifest.jei=Synchronise JEI with Search Bar
 arcanearchives.config.manifest.jei.tooltip=Synchronise the currently searched item into the JEI search box. The previous JEI search term will be restored upon closing. [Requires JEI installed, default false]
 
+arcanearchives.network.name=A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,1,2,3,4,5,6,7,8,9,0
 arcanearchives.network.name.separator=-
 arcanearchives.network.name.first=Willow,Juniper,Lime,Maple,Alder,Ash,Beech,Birch,Blackthorn,Box,Cedar,Cherry,Chestnut,Cypress,Dogwood,Elder,Elm,Larch,Fir,Hawthorn,Hazel,Hemlock,Holly,Hornbeam,Pear,Pine,Plum,Poplar,Rowan,Spindle,Spruce,Sycamore,Walnut,Wayfaring,Whitebeam,Yew
 arcanearchives.network.name.second=Andromeda,Apus,Aquila,Auriga,Bootes,Caelum,Cancer,Canis,Cetus,Corvus,Cygnus,Delphinus,Draco,Fornax,Grus,Horologium,Hydra,Indus,Lacerta,Mensa,Octans,Orion,Pegasus,Perseus,Phoenix,Pictor,Pyxis,Scorpius,Serpens,Sextans,Taurus,Ursa,Vela,Virgo,Volans,Vulpecula

@@ -1,10 +1,12 @@
 package com.aranaira.arcanearchives.data;
 
+import com.aranaira.arcanearchives.tilenetwork.Network;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class DataHelper {
   public static WorldServer getWorld() {
@@ -20,5 +22,24 @@ public class DataHelper {
     }
 
     return saveData;
+  }
+
+  public static NameData getNameData () {
+    WorldServer world = getWorld();
+    NameData saveData = (NameData) Objects.requireNonNull(world.getMapStorage()).getOrLoadData(NameData.class, NameData.DATA);
+    if (saveData == null) {
+      saveData = new NameData();
+      world.getMapStorage().setData(NameData.DATA, saveData);
+    }
+
+    return saveData;
+  }
+
+  public static NameData.NetworkName getNetworkName (Network network) {
+    return getNetworkName(network.getNetworkId());
+  }
+
+  public static NameData.NetworkName getNetworkName (UUID uuid) {
+    return getNameData().getOrGenerateName(uuid);
   }
 }

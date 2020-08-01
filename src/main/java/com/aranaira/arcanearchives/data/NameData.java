@@ -12,11 +12,15 @@ import java.util.*;
 // TODO: Update this for the new three things
 public class NameData extends WorldSavedData {
   public static final String DATA = "ArcaneArchives-NameData";
-  public static final int TOTAL_SEGMENTS = 36;
   public static final Random random = new Random();
+  public static int TOTAL_SEGMENTS = 36;
 
   private Map<UUID, NetworkName> map = new HashMap<>();
   private Set<int[]> usedNames = new HashSet<>();
+
+  public NameData () {
+    this(DATA);
+  }
 
   public NameData(String name) {
     super(name);
@@ -30,21 +34,21 @@ public class NameData extends WorldSavedData {
     }
 
     for (int tries = 100; tries > 0; tries--) {
-      int[] pair = new int[]{random.nextInt(TOTAL_SEGMENTS), random.nextInt(TOTAL_SEGMENTS)};
-      if (usedNames.contains(pair)) {
+      // TODO
+      int[] triplet = new int[]{random.nextInt(TOTAL_SEGMENTS), random.nextInt(TOTAL_SEGMENTS), random.nextInt(TOTAL_SEGMENTS)};
+      if (usedNames.contains(triplet)) {
         continue;
       }
 
-      map.put(id, new NetworkName(pair));
+      map.put(id, new NetworkName(triplet));
       markDirty();
+      Objects.requireNonNull(DataHelper.getWorld().getMapStorage()).saveAllData();
       return map.get(id);
     }
 
     ArcaneArchives.logger.error("Unable to generate a network name for network ID " + id + " after 100 itertions");
 
     return null;
-
-    // TODO: Generate string
   }
 
   @Override
@@ -53,9 +57,9 @@ public class NameData extends WorldSavedData {
 
     for (String key : nbt.getKeySet()) {
       UUID thisUuid = UUID.fromString(key);
-      int[] pair = nbt.getIntArray(key);
-      usedNames.add(pair);
-      map.put(thisUuid, new NetworkName(pair[0], pair[1]));
+      int[] triplet = nbt.getIntArray(key);
+      usedNames.add(triplet);
+      map.put(thisUuid, new NetworkName(triplet[0], triplet[1], triplet[2]));
     }
   }
 
@@ -68,27 +72,26 @@ public class NameData extends WorldSavedData {
     return compound;
   }
 
+  @SuppressWarnings("WeakerAccess")
   public static class NetworkName {
     @SideOnly(Side.CLIENT)
-    private static List<String> firstFields = null;
+    private static String[] FIELDS = null;
+
     @SideOnly(Side.CLIENT)
-    private static List<String> secondFields = null;
-    @SideOnly(Side.CLIENT)
-    private static String separator = null;
+    private String calculated;
 
     private int field1;
     private int field2;
+    private int field3;
 
-    @SideOnly(Side.CLIENT)
-    private String calculated = null;
-
-    public NetworkName(int[] pair) {
-      this(pair[0], pair[1]);
+    public NetworkName(int[] triplet) {
+      this(triplet[0], triplet[1], triplet[2]);
     }
 
-    public NetworkName(int field1, int field2) {
+    public NetworkName(int field1, int field2, int field3) {
       this.field1 = field1;
       this.field2 = field2;
+      this.field3 = field3;
     }
 
     public int getField1() {
@@ -99,23 +102,25 @@ public class NameData extends WorldSavedData {
       return field2;
     }
 
+    public int getField3() {
+      return field3;
+    }
+
     @SideOnly(Side.CLIENT)
     public String getName() {
-      if (firstFields == null || secondFields == null || separator == null) {
-        separator = I18n.format("arcanearchives.network.name.separator");
-        firstFields = Arrays.asList(I18n.format("arcanearchives.network.name.first").split(","));
-        secondFields = Arrays.asList(I18n.format("arcanearchives.network.name.second").split(","));
+      if (FIELDS == null) {
+        FIELDS = I18n.format("arcanearchives.network.name").split(",");
       }
 
       if (calculated == null) {
-        calculated = firstFields.get(field1) + "-" + secondFields.get(field2);
+        calculated = FIELDS[field1] + FIELDS[field2] + FIELDS[field3];
       }
 
       return calculated;
     }
 
     public int[] asArray() {
-      return new int[]{field1, field2};
+      return new int[]{field1, field2, field3};
     }
   }
 }
