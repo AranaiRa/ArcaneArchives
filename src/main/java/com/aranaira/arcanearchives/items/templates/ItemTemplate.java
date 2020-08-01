@@ -17,7 +17,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class ItemTemplate extends Item implements IUpgrade {
-  protected String tooltip = null;
+  protected List<String> tooltip = null;
   protected String formatting = "";
   protected UpgradeInfo upgradeInfo = null;
 
@@ -28,11 +28,25 @@ public class ItemTemplate extends Item implements IUpgrade {
     return setTooltip(text, "");
   }
 
+  public ItemTemplate setTooltip(List<String> text) {
+    return setTooltip(text, "");
+  }
+
   public ItemTemplate setTooltip(String text, TextFormatting formatting) {
     return setTooltip(text, "" + formatting);
   }
 
+  public ItemTemplate setTooltip(List<String> text, TextFormatting formatting) {
+    return setTooltip(text, "" + formatting);
+  }
+
   public ItemTemplate setTooltip(String text, String formatting) {
+    this.tooltip = Collections.singletonList(text);
+    this.formatting = formatting;
+    return this;
+  }
+
+  public ItemTemplate setTooltip(List<String> text, String formatting) {
     this.tooltip = text;
     this.formatting = formatting;
     return this;
@@ -44,7 +58,9 @@ public class ItemTemplate extends Item implements IUpgrade {
 
     if (tooltip != null) {
       tooltip.add("");
-      tooltip.add(formatting + I18n.format(this.tooltip));
+      for (String line : this.tooltip) {
+        tooltip.add(formatting + I18n.format(line));
+      }
     }
   }
 
