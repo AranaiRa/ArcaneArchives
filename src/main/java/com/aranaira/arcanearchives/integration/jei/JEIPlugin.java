@@ -63,6 +63,6 @@ public class JEIPlugin implements IModPlugin {
     ignores.add(new ItemStack(ItemRegistry.CHROMATIC_POWDER));
     ignores.add(new ItemStack(ItemRegistry.RAINBOW_CHROMATIC_POWDER));*/
 
-    itemRegistry.removeIngredientsAtRuntime(VanillaTypes.ITEM, ignores);
+    //itemRegistry.removeIngredientsAtRuntime(VanillaTypes.ITEM, ignores);
   }
 }
