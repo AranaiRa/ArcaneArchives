@@ -41,7 +41,7 @@ public class ItemTemplate extends Item implements IUpgrade {
   }
 
   public ItemTemplate setTooltip(String text, String formatting) {
-    this.tooltip = Collections.singletonList(text);
+    this.tooltip = Collections.singletonList(text == null ? "" : text);
     this.formatting = formatting;
     return this;
   }
@@ -59,8 +59,8 @@ public class ItemTemplate extends Item implements IUpgrade {
     if (tooltip != null) {
       tooltip.add("");
       for (String line : this.tooltip) {
-        if (line.isEmpty()) {
-          tooltip.add(line);
+        if (line == null || line.isEmpty()) {
+          tooltip.add("");
         } else {
           tooltip.add(formatting + I18n.format(line));
         }
