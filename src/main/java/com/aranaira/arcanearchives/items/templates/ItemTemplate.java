@@ -59,7 +59,11 @@ public class ItemTemplate extends Item implements IUpgrade {
     if (tooltip != null) {
       tooltip.add("");
       for (String line : this.tooltip) {
-        tooltip.add(formatting + I18n.format(line));
+        if (line.isEmpty()) {
+          tooltip.add(line);
+        } else {
+          tooltip.add(formatting + I18n.format(line));
+        }
       }
     }
   }
