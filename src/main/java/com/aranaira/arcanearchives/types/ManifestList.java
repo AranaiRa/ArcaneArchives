@@ -1,9 +1,9 @@
-/*package com.aranaira.arcanearchives.types.lists;
+package com.aranaira.arcanearchives.types;
 
-import com.aranaira.arcanearchives.inventory.ContainerManifest;
-import com.aranaira.arcanearchives.types.ISerializeByteBuf;
+import com.aranaira.arcanearchives.containers.ManifestContainer;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import com.aranaira.arcanearchives.util.ManifestUtils.CollatedEntry;
+import com.google.common.collect.ForwardingList;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -19,319 +19,310 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ManifestList extends ReferenceList<CollatedEntry> implements ISerializeByteBuf<ManifestList> {
-	private static Map<String, ModContainer> modList = null;
-	private ContainerManifest listener = null;
-	private String filterText;
-	private ItemStack searchItem;
-	private SortingDirection sortingDirection = null;
-	private SortingType sortingType = null;
+public class ManifestList extends ForwardingList<CollatedEntry> implements ISerializeByteBuf<ManifestList> {
+  private static Map<String, ModContainer> modList = null;
+  private ManifestContainer listener = null;
+  private String filterText;
+  private ItemStack searchItem;
+  private SortingDirection sortingDirection = null;
+  private SortingType sortingType = null;
+  private List<CollatedEntry> reference;
 
-	public ManifestList (List<CollatedEntry> reference) {
-		super(reference);
-		this.filterText = null;
-	}
+  public ManifestList() {
+    this(new ArrayList<>());
+  }
 
-	public ManifestList (List<CollatedEntry> reference, String filterText) {
-		super(reference);
-		this.filterText = filterText;
-	}
+  @Override
+  protected List<CollatedEntry> delegate() {
+    return this.reference;
+  }
 
-	public static ManifestList deserialize (ByteBuf buf) {
-		ManifestList list = new ManifestList();
-		return list.fromBytes(buf);
-	}
+  public ManifestList(List<CollatedEntry> reference) {
+    this(reference, null);
+  }
 
-	public static Map<String, ModContainer> getModList () {
-		if (modList == null) {
-			modList = Loader.instance().getIndexedModList();
-		}
-		return modList;
-	}
+  public ManifestList(List<CollatedEntry> reference, String filterText) {
+    this.reference = reference;
+    this.filterText = filterText;
+  }
 
-	public static String getModName (ItemStack stack) {
-		if (stack.isEmpty()) {
-			return "";
-		}
+  public static ManifestList deserialize(ByteBuf buf) {
+    ManifestList list = new ManifestList();
+    return list.fromBytes(buf);
+  }
 
-		String modId = stack.getItem().getCreatorModId(stack);
-		if (modId == null) {
-			return "";
-		}
+  private static Map<String, ModContainer> getModList() {
+    if (modList == null) {
+      modList = Loader.instance().getIndexedModList();
+    }
+    return modList;
+  }
 
-		ModContainer mod = getModList().get(modId);
-		if (mod == null) {
-			return "";
-		}
+  @Nullable
+  private static String getModName(ItemStack stack) {
+    if (!stack.isEmpty()) {
+      String modId = stack.getItem().getCreatorModId(stack);
+      if (modId == null) {
+        return null;
+      }
 
-		return mod.getName();
-	}
+      ModContainer mod = getModList().get(modId);
+      if (mod == null) {
+        return null;
+      }
 
-	public static String getAdustedModName (ItemStack stack) {
-		String name = getModName(stack);
-		if (name.isEmpty()) {
-			return "";
-		}
+      return mod.getName();
+    }
 
-		return name.replace(" ", "").toLowerCase();
-	}
+    return null;
+  }
 
-	public ManifestList filtered () {
-		if (filterText == null && searchItem == null) {
-			return this;
-		}
+  private static String adjustModName(ItemStack stack) {
+    String name = getModName(stack);
+    if (name != null) {
+      return name.replace(" ", "").toLowerCase();
+    } else {
+      return "";
+    }
+  }
 
-		String filter = "";
+  // TODO: Review
+  public ManifestList filtered() {
+    if (filterText == null && searchItem == null) {
+      return this;
+    }
 
-		if (filterText != null) {
-			filter = filterText.toLowerCase();
-		}
+    String filter = "";
 
-		boolean mod = false;
+    if (filterText != null) {
+      filter = filterText.toLowerCase();
+    }
 
-		if (filter.startsWith("@")) {
-			mod = true;
-			filter = filter.replaceFirst("@", "");
-		}
+    boolean mod = false;
 
-		final boolean modFilter = mod;
+    if (filter.startsWith("@")) {
+      mod = true;
+      filter = filter.replaceFirst("@", "");
+    }
 
-		String finalFilter = filter;
-		ManifestList filtered = stream().filter((entry) -> {
-			if (entry == null) {
-				return false;
-			}
+    final boolean modFilter = mod;
 
-			ItemStack stack = entry.getStack();
+    String finalFilter = filter;
+    ManifestList filtered = stream().filter((entry) -> {
+      if (entry == null) {
+        return false;
+      }
 
-			if (searchItem != null) {
-				return ItemUtils.areStacksEqualIgnoreSize(searchItem, stack);
-			}
+      ItemStack stack = entry.getStack();
 
-			if (!modFilter) {
-				String display = stack.getDisplayName().toLowerCase();
-				if (display.contains(finalFilter)) {
-					return true;
-				}
-				String registry = stack.getItem().getRegistryName().getPath().toLowerCase();
-				if (registry.contains(finalFilter)) {
-					return true;
-				}
-			} else if (modFilter) {
-				String modName = getAdustedModName(stack);
-				if (modName.contains(finalFilter)) {
-					return true;
-				}
-				String resource = stack.getItem().getRegistryName().getNamespace().toLowerCase();
-				if (resource.contains(finalFilter)) {
-					return true;
-				}
-			}
+      if (searchItem != null) {
+        return ItemUtils.areStacksEqualIgnoreSize(searchItem, stack);
+      }
 
-			if (!modFilter) {
-				// Other hooks to be added at a later point
-				if (stack.getItem() == Items.ENCHANTED_BOOK) {
-					Map<Enchantment, Integer> map = EnchantmentHelper.getEnchantments(stack);
-					for (Map.Entry<Enchantment, Integer> ench : map.entrySet()) {
-						if (ench.getKey() == null) {
-							continue; // Yes, it is possible for this value to be null. WHO KNEW.
-						}
-						String enchName = ench.getKey().getTranslatedName(ench.getValue());
-						if (enchName.toLowerCase().contains(finalFilter)) {
-							return true;
-						}
-					}
-				}
-			}
+      if (!modFilter) {
+        String display = stack.getDisplayName().toLowerCase();
+        if (display.contains(finalFilter)) {
+          return true;
+        }
+        String registry = stack.getItem().getRegistryName().getPath().toLowerCase();
+        if (registry.contains(finalFilter)) {
+          return true;
+        }
+      } else if (modFilter) {
+        String modName = adjustModName(stack);
+        if (modName.contains(finalFilter)) {
+          return true;
+        }
+        String resource = stack.getItem().getRegistryName().getNamespace().toLowerCase();
+        if (resource.contains(finalFilter)) {
+          return true;
+        }
+      }
 
-			return false;
-		}).collect(Collectors.toCollection(ManifestList::new));
-		filtered.sortingDirection = sortingDirection;
-		filtered.sortingType = sortingType;
-		filtered.searchItem = searchItem;
-		filtered.filterText = filterText;
-		return filtered;
-	}
+      if (!modFilter) {
+        // Other hooks to be added at a later point
+        if (stack.getItem() == Items.ENCHANTED_BOOK) {
+          Map<Enchantment, Integer> map = EnchantmentHelper.getEnchantments(stack);
+          for (Map.Entry<Enchantment, Integer> ench : map.entrySet()) {
+            if (ench.getKey() == null) {
+              continue; // Yes, it is possible for this value to be null. WHO KNEW.
+            }
+            String enchName = ench.getKey().getTranslatedName(ench.getValue());
+            if (enchName.toLowerCase().contains(finalFilter)) {
+              return true;
+            }
+          }
+        }
+      }
 
-	public ManifestList () {
-		super(new ArrayList<>());
-	}
+      return false;
+    }).collect(Collectors.toCollection(ManifestList::new));
+    filtered.sortingDirection = sortingDirection;
+    filtered.sortingType = sortingType;
+    filtered.searchItem = searchItem;
+    filtered.filterText = filterText;
+    return filtered;
+  }
 
-	*//**
- * Register provided {@link ContainerManifest} as a listener to {@link #deserializationFinished()} events
- *
- * @param containerManifest a {@link ContainerManifest}
- * <p>
- * Call this after this ManifestList has finished being populated from an external source.
- * For now this means from a packet from the server
- * <p>
- * If a {@link ContainerManifest} listener has been registered to this manifest then
- * notify it that this {@link ManifestList} has been populated
- * <p>
- * Call this after this ManifestList has finished being populated from an external source.
- * For now this means from a packet from the server
- * <p>
- * If a {@link ContainerManifest} listener has been registered to this manifest then
- * notify it that this {@link ManifestList} has been populated
- *//*
-	public void setListener (ContainerManifest containerManifest) {
-		this.listener = containerManifest;
-	}
+  public void setListener(ManifestContainer containerManifest) {
+    this.listener = containerManifest;
+  }
 
-	*//**
- * Call this after this ManifestList has finished being populated from an external source.
- * For now this means from a packet from the server
- * <p>
- * If a {@link ContainerManifest} listener has been registered to this manifest then
- * notify it that this {@link ManifestList} has been populated
- *//*
-	public void deserializationFinished () {
-		if (this.listener != null) {
-			this.listener.ensureCapacity(size());
-		}
-	}
 
-	@Nullable
-	public CollatedEntry getEntryForSlot (int slot) {
-		if (slot < size() && slot >= 0) {
-			return get(slot);
-		}
-		return null;
-	}
+  public void deserializationFinished() {
+    if (this.listener != null) {
+      this.listener.ensureCapacity(size());
+    }
+  }
 
-	public ItemStack getItemStackForSlot (int slot) {
-		if (slot < size() && slot >= 0) {
-			return get(slot).getStack();
-		}
-		return ItemStack.EMPTY;
-	}
+  @Nullable
+  public CollatedEntry getEntryForSlot(int slot) {
+    if (slot < size() && slot >= 0) {
+      return get(slot);
+    }
+    return null;
+  }
 
-	public String getSearchText () {
-		return this.filterText;
-	}
+  public ItemStack getItemStackForSlot(int slot) {
+    if (slot < size() && slot >= 0) {
+      return get(slot).getStack();
+    }
+    return ItemStack.EMPTY;
+  }
 
-	public ItemStack getSearchItem () {
-		return this.searchItem;
-	}
+  public String getSearchText() {
+    return this.filterText;
+  }
 
-	public void setSearchText (String searchTerm) {
-		this.filterText = searchTerm;
-	}
+  public ItemStack getSearchItem() {
+    return this.searchItem;
+  }
 
-	public void setSearchItem (ItemStack stack) {
-		this.searchItem = stack;
-	}
+  public void setSearchText(String searchTerm) {
+    this.filterText = searchTerm;
+  }
 
-	public SortingDirection getSortingDirection () {
-		return sortingDirection;
-	}
+  public void setSearchItem(ItemStack stack) {
+    this.searchItem = stack;
+  }
 
-	public void setSortingDirection (SortingDirection sortingDirection) {
-		this.sortingDirection = sortingDirection;
-	}
+  public SortingDirection getSortingDirection() {
+    return sortingDirection;
+  }
 
-	public SortingType getSortingType () {
-		return sortingType;
-	}
+  public void setSortingDirection(SortingDirection sortingDirection) {
+    this.sortingDirection = sortingDirection;
+  }
 
-	public void setSortingType (SortingType sortingType) {
-		this.sortingType = sortingType;
-	}
+  public SortingType getSortingType() {
+    return sortingType;
+  }
 
-	@Override
-	public ManifestListIterable iterable () {
-		return new ManifestListIterable(new ManifestIterator(iterator()));
-	}
+  public void setSortingType(SortingType sortingType) {
+    this.sortingType = sortingType;
+  }
 
-	public ManifestList sorted () {
-		ManifestList copy = new ManifestList(new ArrayList<>(), null);
-		copy.filterText = filterText;
-		copy.searchItem = searchItem;
-		copy.sortingDirection = sortingDirection;
-		copy.sortingType = sortingType;
+/*  @Override
+  public ManifestListIterable iterable() {
+    return new ManifestListIterable(new ManifestIterator(iterator()));
+  }*/
 
-		copy.addAll(this);
-		copy.sort((o1, o2) -> {
-			if (copy.sortingType == SortingType.NAME) {
-				if (copy.sortingDirection == SortingDirection.ASCENDING) {
-					return o1.finalStack.getDisplayName().compareTo(o2.finalStack.getDisplayName());
-				} else {
-					return o2.finalStack.getDisplayName().compareTo(o1.finalStack.getDisplayName());
-				}
-			} else {
-				if (copy.sortingDirection == SortingDirection.ASCENDING) {
-					return Integer.compare(o1.finalStack.getCount(), o2.finalStack.getCount());
-				} else {
-					return Integer.compare(o2.finalStack.getCount(), o1.finalStack.getCount());
-				}
-			}
-		});
+  public ManifestList sorted() {
+    ManifestList copy = new ManifestList(new ArrayList<>(), null);
+    copy.filterText = filterText;
+    copy.searchItem = searchItem;
+    copy.sortingDirection = sortingDirection;
+    copy.sortingType = sortingType;
 
-		return copy;
-	}
+    copy.addAll(this);
+    copy.sort((o1, o2) -> {
+      if (copy.sortingType == SortingType.NAME) {
+        if (copy.sortingDirection == SortingDirection.ASCENDING) {
+          return o1.finalStack.getDisplayName().compareTo(o2.finalStack.getDisplayName());
+        } else {
+          return o2.finalStack.getDisplayName().compareTo(o1.finalStack.getDisplayName());
+        }
+      } else {
+        if (copy.sortingDirection == SortingDirection.ASCENDING) {
+          return Integer.compare(o1.finalStack.getCount(), o2.finalStack.getCount());
+        } else {
+          return Integer.compare(o2.finalStack.getCount(), o1.finalStack.getCount());
+        }
+      }
+    });
 
-	@Override
-	public void clear () {
-		super.clear();
-	}
+    return copy;
+  }
 
-	@Override
-	public ManifestList fromBytes (ByteBuf buf) {
-		this.clear();
-		int entries = buf.readInt();
-		for (int i = 0; i < entries; i++) {
-			this.add(CollatedEntry.deserialize(buf));
-		}
-		return this;
-	}
+  @Override
+  public void clear() {
+    super.clear();
+  }
 
-	@Override
-	public void toBytes (ByteBuf buf) {
-		buf.writeInt(this.size());
-		for (CollatedEntry entry : this) {
-			entry.toBytes(buf);
-		}
-	}
+  @Override
+  public ManifestList fromBytes(ByteBuf buf) {
+    this.clear();
+    int entries = buf.readInt();
+    for (int i = 0; i < entries; i++) {
+      this.add(CollatedEntry.deserialize(buf));
+    }
+    return this;
+  }
 
-	public class ManifestListIterable extends ReferenceListIterable<CollatedEntry> {
-		public ManifestListIterable (ManifestIterator iter) {
-			super(iter);
-		}
+  @Override
+  public void toBytes(ByteBuf buf) {
+    buf.writeInt(this.size());
+    for (CollatedEntry entry : this) {
+      entry.toBytes(buf);
+    }
+  }
 
-		public int getSlot () {
-			return ((ManifestIterator) iter).getSlot();
-		}
-	}
+  public class ManifestListIterable implements Iterable<CollatedEntry> {
+    private ManifestIterator iterator;
 
-	public class ManifestIterator implements Iterator<CollatedEntry> {
-		private int slot = 0;
-		private Iterator<CollatedEntry> iter;
+    public ManifestListIterable(ManifestIterator iter) {
+      this.iterator = iter;
+    }
 
-		public ManifestIterator (Iterator<CollatedEntry> iter) {
-			this.iter = iter;
-		}
+    public int getSlot() {
+      return iterator.getSlot();
+    }
 
-		public int getSlot () {
-			return slot;
-		}
+    @Override
+    public Iterator<CollatedEntry> iterator() {
+      return iterator;
+    }
+  }
 
-		@Override
-		public boolean hasNext () {
-			return iter.hasNext();
-		}
+  public class ManifestIterator implements Iterator<CollatedEntry> {
+    private int slot = 0;
+    private Iterator<CollatedEntry> iter;
 
-		@Override
-		public CollatedEntry next () {
-			slot++;
-			return iter.next();
-		}
-	}
+    public ManifestIterator(Iterator<CollatedEntry> iter) {
+      this.iter = iter;
+    }
 
-	public enum SortingDirection {
-		ASCENDING, DESCENDING
-	}
+    public int getSlot() {
+      return slot;
+    }
 
-	public enum SortingType {
-		NAME, QUANTITY
-	}
-}*/
+    @Override
+    public boolean hasNext() {
+      return iter.hasNext();
+    }
+
+    @Override
+    public CollatedEntry next() {
+      slot++;
+      return iter.next();
+    }
+  }
+
+  public enum SortingDirection {
+    ASCENDING, DESCENDING
+  }
+
+  public enum SortingType {
+    NAME, QUANTITY
+  }
+}

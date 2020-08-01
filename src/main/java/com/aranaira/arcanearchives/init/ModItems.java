@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.init;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.items.ManifestItem;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
@@ -33,6 +34,8 @@ public class ModItems {
   public static final ItemTemplate MaterialInterface = register("material_interface", ItemTemplate::new, (o) -> o.setTooltip("arcanearchives.tooltip.item.material_interface", TextFormatting.GOLD).setUpgradeInfo(ModUpgrades.MATERIAL_INTERFACE));
   public static final ItemTemplate RadiantKey = register("radiant_key", ItemTemplate::new, (o) -> o.setTooltip("arcanearchives.tooltip.item.radiant_key", TextFormatting.GOLD).setUpgradeInfo(ModUpgrades.RADIANT_KEY));
   //public static final ItemTemplate SerenityCharm = register("serenity_charm", ItemTemplate::new, (o) -> o/*.setTooltip("", TextFormatting.GOLD)*/.setUpgradeInfo(ModUpgrades.SERENITY_CHARM));
+
+  public static final ItemTemplate Manifest = register("manifest", ManifestItem::new);
 
   public static final Item RadiantQuartz = register("radiant_quartz", Item::new);
 

@@ -1,11 +1,6 @@
 package com.aranaira.arcanearchives.items;
 
-import com.aranaira.arcanearchives.AAGuiHandler;
-import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.Keybinds;
-import com.aranaira.arcanearchives.client.tracking.ManifestTrackingUtils;
-import com.aranaira.arcanearchives.data.DataHelper;
-import com.aranaira.arcanearchives.data.types.ClientNetwork;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -23,25 +18,19 @@ import java.util.List;
 
 
 public class ManifestItem extends ItemTemplate {
-  public static final String NAME = "manifest";
-
   public ManifestItem() {
     setMaxStackSize(1);
   }
 
   @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-    if (!worldIn.isRemote) {
-      return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
-    }
-
     openManifest(worldIn, playerIn);
 
     return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
   }
 
   public static void openManifest(World worldIn, EntityPlayer playerIn) {
-    if (playerIn.isSneaking()) {
+/*    if (playerIn.isSneaking()) {
       ManifestTrackingUtils.clear();
     } else {
       ClientNetwork network = DataHelper.getClientNetwork(playerIn.getUniqueID());
@@ -49,7 +38,7 @@ public class ManifestItem extends ItemTemplate {
       network.synchroniseManifest();
 
       playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.MANIFEST, worldIn, (int) playerIn.posX, (int) playerIn.posY, (int) playerIn.posZ);
-    }
+    }*/
   }
 
   @Override
