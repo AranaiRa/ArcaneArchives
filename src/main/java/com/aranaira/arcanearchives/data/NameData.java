@@ -32,7 +32,6 @@ public class NameData extends WorldSavedData implements ISerializePacketBuffer<C
   }
 
   public NetworkName getOrGenerateName(UUID id) {
-
     NetworkName name = map.get(id);
     if (name != null) {
       return name;

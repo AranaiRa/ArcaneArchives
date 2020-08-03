@@ -34,9 +34,14 @@ public class CrystalWorkbenchTile extends NetworkedBaseTile {
     currentRecipe = ModRecipes.RADIANT_DUST.get();
   }
 
+  public static final UUID invalid = UUID.fromString("00000000-0000-0000-0000-000000000000");
+
   @Override
   public UUID getNetworkId() {
     if (world == null || world.isRemote) {
+      if (networkId == null) {
+        return invalid;
+      }
       return networkId;
     }
 
@@ -44,6 +49,7 @@ public class CrystalWorkbenchTile extends NetworkedBaseTile {
       this.networkId = UUID.randomUUID();
       markDirty();
       stateUpdate();
+
     }
 
     return networkId;
