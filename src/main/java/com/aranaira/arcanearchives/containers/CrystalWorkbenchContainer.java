@@ -163,7 +163,7 @@ public class CrystalWorkbenchContainer extends Container {
       outputInv.setStackInSlot(SLOT_OUTPUT, ItemStack.EMPTY);
     }
 
-    itemstack = curRecipe.getActualResult(crafting, null);
+    itemstack = curRecipe.getActualResult(crafting, tile.getNetworkId());
     outputInv.setStackInSlot(SLOT_OUTPUT, itemstack);
 
     // TODO ???
