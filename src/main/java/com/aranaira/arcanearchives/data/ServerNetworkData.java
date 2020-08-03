@@ -72,7 +72,7 @@ public class ServerNetworkData extends WorldSavedData implements ISerializePacke
 
   @Override
   public ClientNetworkData fromPacket(PacketBuffer buf) {
-    return ClientNetworkData.fromServer(this).fromPacket(buf);
+    throw new IllegalStateException("There should never be a ServerNetworkData::fromPacket call.");
   }
 
   @Override

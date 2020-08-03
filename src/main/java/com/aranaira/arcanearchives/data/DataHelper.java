@@ -53,11 +53,11 @@ public class DataHelper {
   }
 
   public static class Names {
-    public static NameData.NetworkName getNetworkName(Network network) {
+    public static NetworkName getNetworkName(Network network) {
       return getNetworkName(network.getNetworkId());
     }
 
-    public static NameData.NetworkName getNetworkName(UUID uuid) {
+    public static NetworkName getNetworkName(UUID uuid) {
       return getNameData().getOrGenerateName(uuid);
     }
   }
