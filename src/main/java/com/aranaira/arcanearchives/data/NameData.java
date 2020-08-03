@@ -13,7 +13,7 @@ import java.util.*;
 
 // TODO: Update this for the new three things
 public class NameData extends WorldSavedData {
-  public static final String DATA = "ArcaneArchives-NameData";
+  public static final String PREFIX = "ArcaneArchives-NameData";
   public static final Random random = new Random();
   public static int TOTAL_SEGMENTS = 36;
 
@@ -21,7 +21,7 @@ public class NameData extends WorldSavedData {
   private Set<int[]> usedNames = new HashSet<>();
 
   public NameData () {
-    this(DATA);
+    this(PREFIX);
   }
 
   public NameData(String name) {

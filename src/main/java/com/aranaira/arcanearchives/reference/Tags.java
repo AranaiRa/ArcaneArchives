@@ -29,4 +29,8 @@ public interface Tags {
   interface Resonator {
     String growth = "Grow";
   }
+
+  interface NetworkReference {
+    String networkIds = "NetIds";
+  }
 }

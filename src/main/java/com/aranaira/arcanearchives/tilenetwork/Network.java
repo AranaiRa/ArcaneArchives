@@ -13,6 +13,7 @@ public class Network extends ForwardingMap<UUID, NetworkEntry> {
   private final Map<UUID, NetworkEntry> entries = new HashMap<>();
   private final UUID networkId;
   private final ImmanenceBus bus;
+  private String cachedUUID = null;
 
   public Network(UUID networkId) {
     this.networkId = networkId;
@@ -67,6 +68,14 @@ public class Network extends ForwardingMap<UUID, NetworkEntry> {
 
   public UUID getNetworkId() {
     return networkId;
+  }
+
+  public String getCachedNetworkId () {
+    if (cachedUUID == null) {
+      cachedUUID = networkId.toString();
+    }
+
+    return cachedUUID;
   }
 
   public ImmanenceBus getImmanenceBus() {
