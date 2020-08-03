@@ -5,6 +5,7 @@ import com.aranaira.arcanearchives.data.NetworkName;
 import com.aranaira.arcanearchives.types.ISerializePacketBuffer;
 import net.minecraft.network.PacketBuffer;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -13,6 +14,11 @@ public class ClientNameData implements ISerializePacketBuffer<ClientNameData> {
   private Map<UUID, NetworkName> map = new HashMap<>();
 
   public ClientNameData() {
+  }
+
+  @Nullable
+  public NetworkName getNameFor (UUID uuid) {
+    return map.get(uuid);
   }
 
   public static ClientNameData fromServer (NameData incoming) {
