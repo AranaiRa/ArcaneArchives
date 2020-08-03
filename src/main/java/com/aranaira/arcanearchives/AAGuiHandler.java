@@ -50,6 +50,7 @@ public class AAGuiHandler implements IGuiHandler {
       return null;
     }
 
+    DataHelper.Names.generate();
     PacketNetwork.NameMessage message = new PacketNetwork.NameMessage(ClientNameData.fromServer(DataHelper.getNameData()));
     Networking.CHANNEL.sendTo(message, (EntityPlayerMP) player);
 

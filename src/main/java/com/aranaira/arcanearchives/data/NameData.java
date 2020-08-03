@@ -31,6 +31,12 @@ public class NameData extends WorldSavedData implements ISerializePacketBuffer<C
     return ImmutableMap.copyOf(map);
   }
 
+  public void generateNames () {
+    for (UUID uuid : DataHelper.NetworkReference.getAllNetworks()) {
+      getOrGenerateName(uuid);
+    }
+  }
+
   public NetworkName getOrGenerateName(UUID id) {
     NetworkName name = map.get(id);
     if (name != null) {

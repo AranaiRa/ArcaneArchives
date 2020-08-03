@@ -1,6 +1,8 @@
 package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.api.cwb.CrystalWorkbenchRecipe;
+import com.aranaira.arcanearchives.data.DataHelper;
+import com.aranaira.arcanearchives.data.NetworkReferenceData;
 import com.aranaira.arcanearchives.init.ModRecipes;
 import com.aranaira.arcanearchives.reference.Tags;
 import com.aranaira.arcanearchives.registry.CrystalWorkbenchRegistry;
@@ -49,7 +51,7 @@ public class CrystalWorkbenchTile extends NetworkedBaseTile {
       this.networkId = UUID.randomUUID();
       markDirty();
       stateUpdate();
-
+      DataHelper.NetworkReference.addNetwork(this.networkId);
     }
 
     return networkId;
