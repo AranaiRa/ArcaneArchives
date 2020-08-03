@@ -7,9 +7,14 @@ import com.aranaira.arcanearchives.containers.CrystalWorkbenchContainer;
 import com.aranaira.arcanearchives.containers.FakeManifestContainer;
 import com.aranaira.arcanearchives.containers.ManifestContainer;
 import com.aranaira.arcanearchives.containers.RadiantChestContainer;
+import com.aranaira.arcanearchives.data.DataHelper;
+import com.aranaira.arcanearchives.data.client.ClientNameData;
+import com.aranaira.arcanearchives.network.Networking;
+import com.aranaira.arcanearchives.network.PacketNetwork;
 import com.aranaira.arcanearchives.tileentities.CrystalWorkbenchTile;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTile;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -44,6 +49,9 @@ public class AAGuiHandler implements IGuiHandler {
     if (type == null) {
       return null;
     }
+
+    PacketNetwork.NameMessage message = new PacketNetwork.NameMessage(ClientNameData.fromServer(DataHelper.getNameData()));
+    Networking.CHANNEL.sendTo(message, (EntityPlayerMP) player);
 
     switch (type) {
       case CrystalWorkbench:

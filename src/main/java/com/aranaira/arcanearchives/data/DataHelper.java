@@ -33,7 +33,7 @@ public class DataHelper {
     return getData(ServerNetworkData.class, ServerNetworkData::new, network, ServerNetworkData::ID);
   }
 
-  private static NameData getNameData() {
+  public static NameData getNameData() {
     return getData(NameData.class, NameData::new, NameData.PREFIX, (o) -> NameData.PREFIX);
   }
 
