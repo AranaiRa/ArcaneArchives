@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.init;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.items.ManifestItem;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
+import com.aranaira.arcanearchives.items.templates.NetworkItemTemplate;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -26,7 +27,7 @@ import java.util.function.Supplier;
 public class ModItems {
   public static final List<Item> REGISTRY = new ArrayList<>();
 
-  public static final ItemTemplate RadiantDust = register("radiant_dust", ItemTemplate::new, (o) -> o.setTooltip("arcanearchives.tooltip.item.radiant_dust", TextFormatting.GOLD));
+  public static final NetworkItemTemplate RadiantDust = register("radiant_dust", NetworkItemTemplate::new, (o) -> o.setTooltip("arcanearchives.tooltip.item.radiant_dust", TextFormatting.GOLD));
   public static final ItemTemplate ShapedQuartz = register("shaped_quartz", ItemTemplate::new, (o) -> o.setTooltip("arcanearchives.tooltip.item.shaped_quartz", TextFormatting.GOLD));
   public static final ItemTemplate ScintillatingInlay = register("scintillating_inlay", ItemTemplate::new, (o) -> o.setTooltip("arcanearchives.tooltip.item.scintillating_inlay", TextFormatting.GOLD));
   public static final ItemTemplate MatrixBrace = register("matrix_brace", ItemTemplate::new, (o) -> o.setTooltip("arcanearchives.tooltip.item.matrix_brace", TextFormatting.GOLD).setUpgradeInfo(ModUpgrades.MATRIX_BRACE));

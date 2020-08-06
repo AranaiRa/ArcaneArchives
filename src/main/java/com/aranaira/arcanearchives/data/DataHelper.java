@@ -55,6 +55,7 @@ public class DataHelper {
   public static class Names {
     public static void generate () {
       getNameData().generateNames();
+      save();
     }
 
     public static NetworkName getNetworkName(Network network) {

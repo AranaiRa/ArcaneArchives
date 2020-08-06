@@ -23,6 +23,9 @@ public class ClientDataStorage {
 
   @Nullable
   public static NetworkName getNameFor (UUID uuid) {
+    if (nameData == null) {
+      return null;
+    }
     return nameData.getNameFor(uuid);
   }
 
