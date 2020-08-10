@@ -36,6 +36,7 @@ import java.awt.*;
 import java.util.UUID;
 
 public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IManifestTileEntity, IUpgradeableStorage, IBrazierRouting {
+	public static int BASE_MODIFIER = 512;
 	public static int BASE_COUNT = 64 * 512;
 	private final TroveItemHandler inventory = new TroveItemHandler(this);
 	private long lastClick = 0;
@@ -420,7 +421,13 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 		}
 
 		public int getMaxCount (int upgrades) {
-			return BASE_COUNT * (upgrades + 1);
+			int base;
+			if (reference.isEmpty()) {
+				base = BASE_COUNT;
+			} else {
+				base = Math.max(reference.getMaxStackSize(), 64) * BASE_MODIFIER;
+			}
+			return base * (upgrades + 1);
 		}
 
 		@Override
