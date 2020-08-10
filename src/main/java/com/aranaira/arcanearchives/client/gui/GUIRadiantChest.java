@@ -178,8 +178,6 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		GlStateManager.enableRescaleNormal();
 		this.hoveredSlot = null;
-		int k = 240;
-		int l = 240;
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240.0F, 240.0F);
 		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
@@ -212,7 +210,6 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 		ItemStack itemstack = this.draggedStack.isEmpty() ? inventoryplayer.getItemStack() : this.draggedStack;
 
 		if (!itemstack.isEmpty()) {
-			int j2 = 8;
 			int k2 = this.draggedStack.isEmpty() ? 8 : 16;
 			String s = null;
 
@@ -288,7 +285,9 @@ public class GUIRadiantChest extends GuiContainer implements GuiPageButtonList.G
 			font = fontRenderer;
 		}
 		this.itemRender.renderItemAndEffectIntoGUI(stack, x, y);
-		this.itemRender.renderItemOverlayIntoGUI(font, stack, x, y - (this.draggedStack.isEmpty() ? 0 : 8), altText);
+		//this.itemRender.renderItemOverlayIntoGUI(font, stack, x, y - (this.draggedStack.isEmpty() ? 0 : 8), altText);
+		// This should handle the scaling.
+		RenderItemExtended.INSTANCE.renderItemOverlayIntoGUI(font, stack, x, y - (this.draggedStack.isEmpty() ? 0 : 8), altText);
 		this.zLevel = 0.0F;
 		this.itemRender.zLevel = 0.0F;
 		RenderItemExtended.INSTANCE.setZLevel(this.itemRender.zLevel);
