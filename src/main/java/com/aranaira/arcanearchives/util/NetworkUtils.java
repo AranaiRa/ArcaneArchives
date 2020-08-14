@@ -49,7 +49,7 @@ public class NetworkUtils {
 			buf.writeShort(-1);
 		} else {
 			buf.writeShort(Item.getIdFromItem(stack.getItem()));
-			buf.writeShort(stack.getCount());
+			buf.writeInt(stack.getCount());
 			buf.writeShort(stack.getMetadata());
 			NBTTagCompound nbttagcompound = null;
 
@@ -66,7 +66,7 @@ public class NetworkUtils {
 			buf.writeShort(-1);
 		} else {
 			buf.writeShort(Item.getIdFromItem(stack.getItem()));
-			buf.writeShort(stack.getCount());
+			buf.writeInt(stack.getCount());
 			buf.writeShort(stack.getMetadata());
 			NBTTagCompound nbttagcompound = null;
 
@@ -83,7 +83,7 @@ public class NetworkUtils {
 			buf.writeShort(-1);
 		} else {
 			buf.writeShort(Item.getIdFromItem(stack.getItem()));
-			buf.writeShort(stack.getCount());
+			buf.writeInt(stack.getCount());
 			buf.writeShort(stack.getMetadata());
 			NBTTagCompound nbttagcompound = null;
 
@@ -100,7 +100,7 @@ public class NetworkUtils {
 			buf.writeShort(-1);
 		} else {
 			buf.writeShort(Item.getIdFromItem(stack.getItem()));
-			buf.writeShort(stack.getCount());
+			buf.writeInt(stack.getCount());
 			buf.writeShort(stack.getMetadata());
 			NBTTagCompound nbttagcompound = null;
 
@@ -118,7 +118,7 @@ public class NetworkUtils {
 		if (i < 0) {
 			return ItemStack.EMPTY;
 		} else {
-			int j = buf.readShort();
+			int j = buf.readInt();
 			int k = buf.readShort();
 			ItemStack itemstack = new ItemStack(Item.getItemById(i), j, k);
 			itemstack.setTagCompound(readNBT(buf));
@@ -132,7 +132,7 @@ public class NetworkUtils {
 		if (i < 0) {
 			return ItemStack.EMPTY;
 		} else {
-			int j = buf.readShort();
+			int j = buf.readInt();
 			int k = buf.readShort();
 			ItemStack itemstack = new ItemStack(Item.getItemById(i), j, k);
 			itemstack.setTagCompound(buf.readCompoundTag());
