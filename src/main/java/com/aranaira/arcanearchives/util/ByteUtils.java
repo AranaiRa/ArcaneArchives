@@ -19,11 +19,13 @@ import java.io.IOException;
 import java.util.UUID;
 
 public class ByteUtils {
+  @Deprecated
   public static void writeUUID(ByteBuf buf, UUID uuid) {
     buf.writeLong(uuid.getMostSignificantBits());
     buf.writeLong(uuid.getLeastSignificantBits());
   }
 
+  @Deprecated
   public static UUID readUUID(ByteBuf buf) {
     long most = buf.readLong();
     long least = buf.readLong();
@@ -49,14 +51,17 @@ public class ByteUtils {
     }
   }
 
+  @Deprecated
   public static void writeIRecipe(ByteBuf buf, IRecipe recipe) {
     buf.writeInt(CraftingManager.REGISTRY.getIDForObject(recipe));
   }
 
+  @Deprecated
   public static IRecipe readIRecipe(ByteBuf buf) {
     return CraftingManager.REGISTRY.getObjectById(buf.readInt());
   }
 
+  @Deprecated
   public static void writeNBT(ByteBuf buf, @Nullable NBTTagCompound nbt) {
     if (nbt == null) {
       buf.writeByte(0);
@@ -69,6 +74,7 @@ public class ByteUtils {
     }
   }
 
+  @Deprecated
   public static NBTTagCompound readNBT(ByteBuf buf) {
     int i = buf.readerIndex();
     byte b0 = buf.readByte();
@@ -90,7 +96,7 @@ public class ByteUtils {
       buf.writeShort(-1);
     } else {
       buf.writeShort(Item.getIdFromItem(stack.getItem()));
-      buf.writeShort(stack.getCount());
+      buf.writeInt(stack.getCount());
       buf.writeShort(stack.getMetadata());
       NBTTagCompound nbttagcompound = null;
 
@@ -107,7 +113,7 @@ public class ByteUtils {
       buf.writeShort(-1);
     } else {
       buf.writeShort(Item.getIdFromItem(stack.getItem()));
-      buf.writeShort(stack.getCount());
+      buf.writeInt(stack.getCount());
       buf.writeShort(stack.getMetadata());
       NBTTagCompound nbttagcompound = null;
 
@@ -124,7 +130,7 @@ public class ByteUtils {
       buf.writeShort(-1);
     } else {
       buf.writeShort(Item.getIdFromItem(stack.getItem()));
-      buf.writeShort(stack.getCount());
+      buf.writeInt(stack.getCount());
       buf.writeShort(stack.getMetadata());
       NBTTagCompound nbttagcompound = null;
 
@@ -141,7 +147,7 @@ public class ByteUtils {
       buf.writeShort(-1);
     } else {
       buf.writeShort(Item.getIdFromItem(stack.getItem()));
-      buf.writeShort(stack.getCount());
+      buf.writeInt(stack.getCount());
       buf.writeShort(stack.getMetadata());
       NBTTagCompound nbttagcompound = null;
 
@@ -153,14 +159,14 @@ public class ByteUtils {
     }
   }
 
-  public static ItemStack readExtendedItemStack(ByteBuf buf) throws IOException {
+  public static ItemStack readExtendedItemStack(ByteBuf buf) {
     int i = buf.readShort();
 
     if (i < 0) {
       return ItemStack.EMPTY;
     } else {
       int j = buf.readShort();
-      int k = buf.readShort();
+      int k = buf.readInt();
       ItemStack itemstack = new ItemStack(Item.getItemById(i), j, k);
       itemstack.setTagCompound(readNBT(buf));
       return itemstack;
@@ -174,7 +180,7 @@ public class ByteUtils {
       return ItemStack.EMPTY;
     } else {
       int j = buf.readShort();
-      int k = buf.readShort();
+      int k = buf.readInt();
       ItemStack itemstack = new ItemStack(Item.getItemById(i), j, k);
       itemstack.setTagCompound(buf.readCompoundTag());
       return itemstack;

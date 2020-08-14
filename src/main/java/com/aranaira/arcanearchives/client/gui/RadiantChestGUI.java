@@ -271,7 +271,8 @@ public class RadiantChestGUI extends GuiContainer implements GuiPageButtonList.G
       font = fontRenderer;
     }
     this.itemRender.renderItemAndEffectIntoGUI(stack, x, y);
-    this.itemRender.renderItemOverlayIntoGUI(font, stack, x, y - (this.draggedStack.isEmpty() ? 0 : 8), altText);
+    RenderItemExtended.renderItemOverlayIntoGUI(font, stack, x, y - (this.draggedStack.isEmpty() ? 0 : 8), altText);
+    //this.itemRender.renderItemOverlayIntoGUI(font, stack, x, y - (this.draggedStack.isEmpty() ? 0 : 8), altText);
     this.zLevel = 0.0F;
     this.itemRender.zLevel = 0.0F;
     //RenderItemExtended.setZLevel(this.itemRender.zLevel);
