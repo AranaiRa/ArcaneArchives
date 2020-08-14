@@ -295,11 +295,7 @@ public class PacketRadiantChest {
       this.mouseButton = buf.readByte();
       this.transactionId = buf.readShort();
       this.mode = ClickType.values()[buf.readInt()];
-      try {
-        this.clickedItem = ByteUtils.readExtendedItemStack(buf);
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
+      this.clickedItem = ByteUtils.readExtendedItemStack(buf);
     }
 
     @Override
@@ -389,11 +385,7 @@ public class PacketRadiantChest {
     public void fromBytes(ByteBuf buf) {
       this.windowId = buf.readByte();
       this.slot = buf.readInt();
-      try {
-        this.stack = ByteUtils.readExtendedItemStack(buf);
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
+      this.stack = ByteUtils.readExtendedItemStack(buf);
     }
 
     @Override

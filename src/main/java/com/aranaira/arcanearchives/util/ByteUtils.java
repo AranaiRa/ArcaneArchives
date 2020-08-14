@@ -134,6 +134,7 @@ public class ByteUtils {
       buf.writeShort(stack.getMetadata());
       NBTTagCompound nbttagcompound = null;
 
+      // TODO: Whoever wrote this didn't understand some vital concepts.
       if (stack.getItem().isDamageable() || stack.getItem().getShareTag()) {
         nbttagcompound = stack.getTagCompound();
       }
