@@ -60,7 +60,7 @@ public class NetworkAggregator {
           removed.add(wrapper);
         } else {
           if (wrapper.tile.generatesNetworkId()) {
-            wrapper.tile.generatesNetworkId();
+            wrapper.tile.generateNetworkId();
           }
           Network network = wrapper.tile.getNetwork();
           if (network == null || wrapper.tile.getWorld() == null) {

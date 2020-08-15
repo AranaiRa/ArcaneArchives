@@ -38,25 +38,6 @@ public class CrystalWorkbenchTile extends NetworkedBaseTile {
 
   public static final UUID invalid = UUID.fromString("00000000-0000-0000-0000-000000000000");
 
-  @Override
-  public UUID getNetworkId() {
-    if (world == null || world.isRemote) {
-      if (networkId == null) {
-        return invalid;
-      }
-      return networkId;
-    }
-
-    if (this.networkId == null) {
-      this.networkId = UUID.randomUUID();
-      markDirty();
-      stateUpdate();
-      DataHelper.NetworkReference.addNetwork(this.networkId);
-    }
-
-    return networkId;
-  }
-
   public IItemHandlerModifiable getInventory() {
     return inventory;
   }
@@ -213,6 +194,9 @@ public class CrystalWorkbenchTile extends NetworkedBaseTile {
   public void generateNetworkId() {
     if (networkId == null) {
       networkId = NetworkAggregator.generateId();
+      markDirty();
+      stateUpdate();
+      DataHelper.NetworkReference.addNetwork(this.networkId);
     }
   }
 }

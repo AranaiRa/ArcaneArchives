@@ -3,7 +3,9 @@ package com.aranaira.arcanearchives.proxy;
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.entity.EntityWeight;
-import com.aranaira.arcanearchives.events.ClientTickHandler;
+import com.aranaira.arcanearchives.events.ticks.ClientTickHandler;
+import com.aranaira.arcanearchives.events.ticks.ServerTickHandler;
+import com.aranaira.arcanearchives.events.ticks.TickHandler;
 import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.registry.MandalicKeystoneRegistry;
 import com.aranaira.arcanearchives.util.DuplicationUtils;
@@ -72,7 +74,8 @@ public class CommonProxy {
         ClientTickHandler.addRunnable(runnable, delay);
         break;
       case SERVER:
-        FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(runnable);
+        //FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(runnable);
+        ServerTickHandler.addRunnable(runnable, delay);
         break;
     }
   }

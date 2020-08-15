@@ -1,24 +1,36 @@
 package com.aranaira.arcanearchives.tilenetwork;
 
+import com.aranaira.arcanearchives.config.ConfigHandler;
+import com.aranaira.arcanearchives.config.ManifestConfig;
+import com.aranaira.arcanearchives.types.ISerializeByteBuf;
+import com.aranaira.arcanearchives.types.ISerializePacketBuffer;
 import com.aranaira.arcanearchives.util.WorldUtil;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.PlayerList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public class PlayerNetworkConfig {
-  public static int defaultMaxDistance = 100;
-  public static boolean defaultDefaultRouting = false;
-  public static boolean defaultTrovesDispense = true;
+public class PlayerNetworkConfig implements ISerializePacketBuffer<PlayerNetworkConfig> {
+  private static int defaultMaxDistance = 100;
+  private static boolean defaultDefaultRouting = false;
+  private static boolean defaultTrovesDispense = true;
 
-  private final UUID playerId;
-  private final int maxDistance;
-  private final boolean defaultRouting;
-  private final boolean trovesDispense;
+  private UUID playerId;
+  private int maxDistance;
+  private boolean defaultRouting;
+  private boolean trovesDispense;
+
+  public PlayerNetworkConfig () {
+  }
 
   public PlayerNetworkConfig(UUID playerId, int maxDistance, boolean defaultRouting, boolean trovesDispense) {
     this.playerId = playerId;
@@ -29,6 +41,22 @@ public class PlayerNetworkConfig {
 
   public static PlayerNetworkConfig defaultConfig (UUID playerId) {
     return new PlayerNetworkConfig(playerId, defaultMaxDistance, defaultDefaultRouting, defaultTrovesDispense);
+  }
+
+  public static PlayerNetworkConfig fromPlayerPacket (ByteBuf buf) {
+    PlayerNetworkConfig conf = new PlayerNetworkConfig();
+    conf = conf.fromBytes(buf);
+    return conf;
+  }
+
+  @SideOnly(Side.CLIENT)
+  @Nullable
+  public static PlayerNetworkConfig fromClient () {
+    EntityPlayer player = Minecraft.getMinecraft().player;
+    if (player == null) {
+      return null;
+    }
+    return new PlayerNetworkConfig(player.getUniqueID(), ManifestConfig.MaxDistance, ConfigHandler.defaultRoutingNoNewItems, ConfigHandler.trovesDispense);
   }
 
   @Nullable
@@ -66,7 +94,24 @@ public class PlayerNetworkConfig {
     return defaultRouting;
   }
 
-  public boolean isTrovesDispense() {
+  public boolean doTrovesDispense() {
     return trovesDispense;
+  }
+
+  @Override
+  public PlayerNetworkConfig fromPacket(PacketBuffer buf) {
+    playerId = buf.readUniqueId();
+    maxDistance = buf.readInt();
+    defaultRouting = buf.readBoolean();
+    trovesDispense = buf.readBoolean();
+    return this;
+  }
+
+  @Override
+  public void toPacket(PacketBuffer buf) {
+    buf.writeUniqueId(playerId);
+    buf.writeInt(maxDistance);
+    buf.writeBoolean(defaultRouting);
+    buf.writeBoolean(trovesDispense);
   }
 }

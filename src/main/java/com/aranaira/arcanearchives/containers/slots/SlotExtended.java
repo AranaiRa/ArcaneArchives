@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.containers.slots;
 
+import com.aranaira.arcanearchives.client.gui.framework.ICustomCountSlot;
 import com.aranaira.arcanearchives.inventories.ExtendedHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -9,7 +10,7 @@ import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
 
-public class SlotExtended extends Slot {
+public class SlotExtended extends Slot implements ICustomCountSlot {
 
   private static IInventory emptyInventory = new InventoryBasic("[Null]", true, 0);
   private final ExtendedHandler itemHandler;
@@ -82,4 +83,18 @@ public class SlotExtended extends Slot {
     return other instanceof SlotExtended && ((SlotExtended) other).getItemHandler() == this.itemHandler;
   }
 
+  @Override
+  public int getX() {
+    return xPos;
+  }
+
+  @Override
+  public int getY() {
+    return yPos;
+  }
+
+  @Override
+  public ItemStack getItemStack() {
+    return getStack();
+  }
 }
