@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.tilenetwork.Network;
+import com.aranaira.arcanearchives.tilenetwork.NetworkName;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.WorldSavedData;

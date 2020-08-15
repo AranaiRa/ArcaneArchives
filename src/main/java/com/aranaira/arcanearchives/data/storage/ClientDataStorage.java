@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.data.storage;
 
-import com.aranaira.arcanearchives.data.NetworkName;
+import com.aranaira.arcanearchives.tilenetwork.NetworkName;
 import com.aranaira.arcanearchives.data.client.ClientNameData;
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.fml.relauncher.Side;

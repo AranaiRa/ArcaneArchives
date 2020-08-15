@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.data.client;
 
 import com.aranaira.arcanearchives.data.NameData;
-import com.aranaira.arcanearchives.data.NetworkName;
+import com.aranaira.arcanearchives.tilenetwork.NetworkName;
 import com.aranaira.arcanearchives.types.ISerializePacketBuffer;
 import net.minecraft.network.PacketBuffer;
 

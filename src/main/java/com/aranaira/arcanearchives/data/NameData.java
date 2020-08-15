@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.client.ClientNameData;
+import com.aranaira.arcanearchives.tilenetwork.NetworkName;
 import com.aranaira.arcanearchives.types.ISerializePacketBuffer;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.nbt.NBTTagCompound;

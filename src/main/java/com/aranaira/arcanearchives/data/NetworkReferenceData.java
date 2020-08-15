@@ -14,6 +14,7 @@ import java.util.Set;
 import java.util.UUID;
 
 // TODO: Update this for the new three things
+// TODO: Work out what the new three things are
 public class NetworkReferenceData extends WorldSavedData {
   public static final String PREFIX = "ArcaneArchives-NetworkReferenceData";
 
