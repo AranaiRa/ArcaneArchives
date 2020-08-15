@@ -33,9 +33,8 @@ public class NameData extends WorldSavedData implements ISerializePacketBuffer<C
   }
 
   public void generateNames () {
-    for (UUID uuid : DataHelper.NetworkReference.getAllNetworks()) {
-      getOrGenerateName(uuid);
-    }
+    DataHelper.NetworkReference.getAllNetworks().forEach(this::getOrGenerateName);
+    markDirty();
   }
 
   public NetworkName getOrGenerateName(UUID id) {

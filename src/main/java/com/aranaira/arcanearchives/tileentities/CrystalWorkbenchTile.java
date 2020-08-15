@@ -192,7 +192,7 @@ public class CrystalWorkbenchTile extends NetworkedBaseTile {
 
   @Override
   public void generateNetworkId() {
-    if (networkId == null) {
+    if (networkId == null && world != null && !world.isRemote) {
       networkId = NetworkAggregator.generateId();
       markDirty();
       stateUpdate();

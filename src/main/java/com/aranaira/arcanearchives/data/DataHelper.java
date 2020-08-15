@@ -1,8 +1,12 @@
 package com.aranaira.arcanearchives.data;
 
+import com.aranaira.arcanearchives.data.client.ClientNameData;
+import com.aranaira.arcanearchives.network.Networking;
+import com.aranaira.arcanearchives.network.PacketNetwork;
 import com.aranaira.arcanearchives.tilenetwork.Network;
 import com.aranaira.arcanearchives.tilenetwork.NetworkName;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -86,9 +90,16 @@ public class DataHelper {
       save();
     }
 
-    public static void addNetwork(UUID uuid) {
+    public static void addNetwork (UUID uuid) {
+      addNetwork(uuid, true);
+    }
+
+    public static void addNetwork(UUID uuid, boolean notify) {
       getNetworkReferenceData().addNetwork(uuid);
       save();
+      if (notify) {
+        PacketNetwork.NameMessage.sendToAll();
+      }
     }
   }
 }

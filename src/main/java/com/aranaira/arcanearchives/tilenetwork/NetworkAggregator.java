@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.tilenetwork;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.immanence.ImmanenceGlobal;
 import com.aranaira.arcanearchives.tileentities.NetworkedBaseTile;
 import net.minecraft.world.World;
@@ -14,12 +15,17 @@ import java.util.*;
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class NetworkAggregator {
   private static int QUEUE_LIMIT = 50;
+  private static boolean loaded = false;
 
   public static final Map<UUID, Network> storage = new HashMap<>();
   // TODO: Store network IDs
 
   public static Network byId(UUID networkId) {
     return storage.computeIfAbsent(networkId, (key) -> new Network(networkId));
+  }
+
+  private static void rebuildBySet (Set<UUID> networkIds) {
+    networkIds.forEach(NetworkAggregator::byId);
   }
 
   public static Collection<Network> getNetworks() {
@@ -50,6 +56,11 @@ public class NetworkAggregator {
   public static void onServerTick(TickEvent.ServerTickEvent event) {
     if (event.phase != TickEvent.Phase.END) {
       return;
+    }
+
+    if (!loaded) {
+      rebuildBySet(DataHelper.NetworkReference.getAllNetworks());
+      loaded = true;
     }
 
     if (!incomingTiles.isEmpty()) {

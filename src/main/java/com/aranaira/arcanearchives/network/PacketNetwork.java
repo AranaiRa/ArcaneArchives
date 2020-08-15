@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.network;
 
+import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.client.ClientNameData;
 import com.aranaira.arcanearchives.data.storage.ClientDataStorage;
 import com.aranaira.arcanearchives.tilenetwork.PlayerConfigAggregator;
@@ -34,6 +35,12 @@ public class PacketNetwork {
       public void processMessage(NameMessage message, MessageContext ctx) {
         ClientDataStorage.setNameData(message.data);
       }
+    }
+
+    public static void sendToAll () {
+        DataHelper.Names.generate();
+        PacketNetwork.NameMessage message = new PacketNetwork.NameMessage(ClientNameData.fromServer(DataHelper.getNameData()));
+        Networking.CHANNEL.sendToAll(message);
     }
   }
 
