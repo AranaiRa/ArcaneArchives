@@ -99,7 +99,7 @@ dependencies {
 
     compileOnly "vazkii.patchouli:Patchouli:${patchouli_version}"
 
-    shade("org.spongepowered:mixin:0.7.11-SNAPSHOT") {
+    shade("org.spongepowered:mixin:0.8") {
         transitive = false
     }
 }

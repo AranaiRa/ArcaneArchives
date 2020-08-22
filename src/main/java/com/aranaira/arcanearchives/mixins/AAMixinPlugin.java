@@ -1,7 +1,6 @@
 package com.aranaira.arcanearchives.mixins;
 
 import net.minecraft.launchwrapper.Launch;
-import org.spongepowered.asm.lib.tree.ClassNode;
 import org.spongepowered.asm.mixin.MixinEnvironment;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -26,7 +25,7 @@ public class AAMixinPlugin implements IMixinConfigPlugin {
 
   @Override
   public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-    return targetClassName.equals("GuiContainer") && MixinEnvironment.getCurrentEnvironment().getSide() == MixinEnvironment.Side.CLIENT;
+    return targetClassName.equals("net.minecraft.client.gui.inventory.GuiContainer") && MixinEnvironment.getCurrentEnvironment().getSide() == MixinEnvironment.Side.CLIENT;
   }
 
   @Override
@@ -40,12 +39,13 @@ public class AAMixinPlugin implements IMixinConfigPlugin {
   }
 
   @Override
-  public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
+  public void preApply(String targetClassName, org.objectweb.asm.tree.ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
 
   }
 
   @Override
-  public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
+  public void postApply(String targetClassName, org.objectweb.asm.tree.ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
 
   }
 }
+
