@@ -21,7 +21,7 @@ apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'com.wynprice.cursemaven'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
-version = "0.2.0.22-mixins8"
+version = "0.2.0.22-mixins7"
 group = "com.aranairra.arcanearchives"
 archivesBaseName = "arcanearchives"
 
@@ -136,7 +136,7 @@ dependencies {
     compileOnly curse.resolve("electroblobs-wizardry", "2656626")
     compileOnly curse.resolve("potion-core", "2736248")
 
-    shade("org.spongepowered:mixin:0.8") {
+    shade("org.spongepowered:mixin:0.7.11-SNAPSHOT") {
         transitive = false
     }
 }

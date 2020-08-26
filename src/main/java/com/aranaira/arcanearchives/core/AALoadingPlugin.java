@@ -50,3 +50,4 @@ public class AALoadingPlugin implements IFMLLoadingPlugin {
 		return null;
 	}
 }
+
