@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.client.render;
 
+import com.aranaira.arcanearchives.util.MathUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
@@ -59,25 +60,13 @@ public class RenderItemExtended {
         if (s == null) {
           int count = stack.getCount();
           if (count > 1) {
-            if (count < 1000) {
-              s = Integer.toString(count);
-            } else if (count < 1024) {
-              s = "1K";
-            } else {
-              int z = (32 - Integer.numberOfLeadingZeros(count)) / 10;
-              double adjustedCount = (double) count / (1L << (z * 10));
-              // limit s to 3 digits, so roll over to next larger unit if s would be 4 digits with unit character on end
-              if (adjustedCount < 100) {
-                s = String.format("%.0f%s", adjustedCount, " KMGTPE".charAt(z));
-              } else {
-                ++z;
-                s = String.format("%.1f%s", (double) count / (1L << (z * 10)), " KMGTPE".charAt(z));
-              }
-            }
+            s = MathUtils.format(count);
+          } else {
+            s = "";
           }
-        } else {
+        } /*else {
           s = String.valueOf(stack.getCount());
-        }
+        }*/
         GlStateManager.disableLighting();
         GlStateManager.disableDepth();
         GlStateManager.disableBlend();
