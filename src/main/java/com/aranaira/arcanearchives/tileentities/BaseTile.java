@@ -58,7 +58,7 @@ public abstract class BaseTile extends TileEntity {
     stateUpdate();
   }
 
-  protected void stateUpdate() {
+  public void stateUpdate() {
     if (world == null || world.isRemote) {
       return;
     }

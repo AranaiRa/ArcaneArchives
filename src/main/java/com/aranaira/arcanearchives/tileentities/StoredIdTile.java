@@ -6,6 +6,7 @@ import net.minecraft.tileentity.TileEntity;
 
 import java.util.UUID;
 
+@Deprecated
 @SuppressWarnings("NullableProblems")
 public class StoredIdTile extends TileEntity {
   private UUID networkId;

@@ -2,25 +2,28 @@ package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.blocks.interfaces.INetworkBlock;
 import com.aranaira.arcanearchives.blocks.templates.HorizontalSingleAccessorTemplateBlock;
 import com.aranaira.arcanearchives.tileentities.CrystalWorkbenchTile;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.Rotation;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Random;
 
-public class CrystalWorkbenchBlock extends HorizontalSingleAccessorTemplateBlock {
+public class CrystalWorkbenchBlock extends HorizontalSingleAccessorTemplateBlock implements INetworkBlock {
   public CrystalWorkbenchBlock(Material material) {
     super(material);
   }

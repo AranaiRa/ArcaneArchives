@@ -1,7 +1,8 @@
 package com.aranaira.arcanearchives.blocks.templates;
 
-import com.aranaira.arcanearchives.reference.Tags;
+import com.aranaira.arcanearchives.tileentities.NetworkedBaseTile;
 import com.aranaira.arcanearchives.tileentities.StoredIdTile;
+import com.aranaira.arcanearchives.util.NetworkItemUtil;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -28,10 +29,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 @SuppressWarnings({"UnusedReturnValue", "WeakerAccess", "NullableProblems", "unchecked", "deprecation", "DeprecatedIsStillUsed"})
 public class TemplateBlock extends Block {
@@ -47,7 +45,6 @@ public class TemplateBlock extends Block {
     super(materialIn);
   }
 
-  @Nullable
   public ItemBlock getItemBlock() {
     return itemBlock;
   }
@@ -94,6 +91,11 @@ public class TemplateBlock extends Block {
   public TemplateBlock setTooltip(String text, String formatting) {
     this.tooltip = text;
     this.formatting = formatting;
+    return this;
+  }
+
+  public TemplateBlock storesId() {
+    this.storesId = true;
     return this;
   }
 
@@ -226,6 +228,7 @@ public class TemplateBlock extends Block {
 
       harvesters.set(player);
       List<ItemStack> items = new java.util.ArrayList<>(generateItemDrops(worldIn, player, pos, state, te, stack));
+      items.add(generateStack(te, worldIn, pos));
       net.minecraftforge.event.ForgeEventFactory.fireBlockHarvesting(items, worldIn, pos, state, 0, 1.0f, true, player);
       for (ItemStack item : items) {
         spawnAsEntity(worldIn, pos, item);
@@ -233,6 +236,22 @@ public class TemplateBlock extends Block {
       harvesters.set(null);
     }
   }
+
+  public ItemStack generateStack(TileEntity te, World world, BlockPos pos) {
+    if (te instanceof NetworkedBaseTile) {
+      return generateStack((NetworkedBaseTile) te, world, pos);
+    }
+
+    throw new IllegalStateException("generateStack was called on an invalid tile entity");
+  }
+
+  public ItemStack generateStack(NetworkedBaseTile te, World world, BlockPos pos) {
+    ItemStack stack = new ItemStack(getItemBlock());
+    NetworkItemUtil.setNetworkId(stack, te.getNetworkId());
+    return stack;
+  }
+
+
 
   @Override
   public void getDrops(@Nonnull NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, @Nonnull IBlockState state, int fortune) {
@@ -273,13 +292,14 @@ public class TemplateBlock extends Block {
   public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
     super.onBlockPlacedBy(world, pos, state, placer, stack);
 
-    if (stack.hasTagCompound()) {
-      NBTTagCompound tag = stack.getTagCompound();
+    if (stack.hasTagCompound() && !world.isRemote) {
+      UUID id = NetworkItemUtil.getNetworkId(stack);
 
-      StoredIdTile te = WorldUtil.getTileEntity(StoredIdTile.class, world, pos);
-      if (te != null && tag != null && tag.hasUniqueId(Tags.networkId)) {
-        te.setNetworkId(tag.getUniqueId(Tags.networkId));
+      NetworkedBaseTile te = WorldUtil.getTileEntity(NetworkedBaseTile.class, world, pos);
+      if (id != null && te != null) {
+        te.setNetworkId(id);
         te.markDirty();
+        te.stateUpdate();
       }
     }
   }
