@@ -3,6 +3,8 @@ package com.aranaira.arcanearchives.util;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
+import java.text.DecimalFormat;
+
 public class MathUtils {
 	private static final int NUM_X_BITS = 1 + MathHelper.log2(MathHelper.smallestEncompassingPowerOfTwo(30000000));
 	private static final int NUM_Z_BITS = NUM_X_BITS;
@@ -36,12 +38,23 @@ public class MathUtils {
 	}
 
 	public static String format (long v) {
+		char[] suffix = {' ', 'k', 'M', 'B', 'T', 'P', 'E'};
+		int value = (int) Math.floor(Math.log10(v));
+		int base = value / 3;
+		if (value >= 3 && base < suffix.length) {
+			return new DecimalFormat("~#0.0").format(v / Math.pow(10, base * 3)) + suffix[base];
+		} else {
+			return new DecimalFormat("#,##0").format(v);
+		}
+	}
+
+/*	public static String format (long v) {
 		if (v < 1024) {
 			return v + "";
 		}
 		int z = (63 - Long.numberOfLeadingZeros(v)) / 10;
 		return String.format("%.1f%s", (double) v / (1L << (z * 10)), " kmgtpe".charAt(z));
-	}
+	}*/
 
 	public static Vec3d vec3dFromLong (long serialized) {
 		int i = (int) (serialized << 64 - X_SHIFT - NUM_X_BITS >> 64 - NUM_X_BITS);
