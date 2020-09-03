@@ -28,6 +28,24 @@ public class MathUtils {
     return (a / b);
   }
 
+	public static String format (long v) {
+		char[] suffix = {' ', 'k', 'M', 'B', 'T', 'P', 'E'};
+		int value = (int) Math.floor(Math.log10(v));
+		int base = value / 3;
+		if (value >= 3 && base < suffix.length) {
+			return new DecimalFormat("~#0.0").format(v / Math.pow(10, base * 3)) + suffix[base];
+		} else {
+			return new DecimalFormat("#,##0").format(v);
+		}
+	}
+
+/*	public static String format (long v) {
+		if (v < 1024) {
+			return v + "";
+		}
+		int z = (63 - Long.numberOfLeadingZeros(v)) / 10;
+		return String.format("%.1f%s", (double) v / (1L << (z * 10)), " kmgtpe".charAt(z));
+	}*/
   /**
    * The ceiling of the result of dividing a by b, but using integer math so it is efficient
    *
