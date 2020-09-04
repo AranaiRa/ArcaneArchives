@@ -292,14 +292,16 @@ public class TemplateBlock extends Block {
   public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
     super.onBlockPlacedBy(world, pos, state, placer, stack);
 
-    if (stack.hasTagCompound() && !world.isRemote) {
+    if (stack.hasTagCompound()) {
       UUID id = NetworkItemUtil.getNetworkId(stack);
 
       NetworkedBaseTile te = WorldUtil.getTileEntity(NetworkedBaseTile.class, world, pos);
       if (id != null && te != null) {
         te.setNetworkId(id);
-        te.markDirty();
-        te.stateUpdate();
+        if (!world.isRemote) {
+          te.markDirty();
+          te.stateUpdate();
+        }
       }
     }
   }

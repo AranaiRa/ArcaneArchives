@@ -49,7 +49,9 @@ public abstract class CrystalWorkbenchRecipe extends IForgeRegistryEntry.Impl<Cr
   @Override
   public ItemStack getActualResult(WorkbenchCrafting inventory, UUID workbenchId) {
     ItemStack result = getResult().copy();
-    NetworkItemUtil.setNetworkId(result, workbenchId);
+    if (workbenchId != null) {
+      NetworkItemUtil.setNetworkId(result, workbenchId);
+    }
     return result;
   }
 

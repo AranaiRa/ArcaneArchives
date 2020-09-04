@@ -8,10 +8,12 @@ public interface ISerializePacketBuffer<T> extends ISerializeByteBuf<T> {
 
   void toPacket(PacketBuffer buf);
 
+  @Override
   default T fromBytes(ByteBuf buf) {
     return fromPacket(new PacketBuffer(buf));
   }
 
+  @Override
   default void toBytes(ByteBuf buf) {
     toPacket(new PacketBuffer(buf));
   }

@@ -28,6 +28,7 @@ public class HorizontalTemplateBlock extends FacingTemplateBlock implements IFac
 
   @Override
   public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+    super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
     worldIn.setBlockState(pos, state.withProperty(getFacingProperty(), EnumFacing.fromAngle(placer.rotationYaw).getOpposite()));
   }
 

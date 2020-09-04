@@ -15,7 +15,7 @@ public abstract class BaseTile extends TileEntity {
   protected String cachedUUID = null;
 
   public UUID getTileId() {
-    if (tileId == null) {
+    if (tileId == null && world != null && !world.isRemote) {
       generateTileId();
     }
     return tileId;
@@ -38,6 +38,7 @@ public abstract class BaseTile extends TileEntity {
     }
     if (tileId == null) {
       tileId = generateId();
+      markDirty();
       stateUpdate();
     }
   }

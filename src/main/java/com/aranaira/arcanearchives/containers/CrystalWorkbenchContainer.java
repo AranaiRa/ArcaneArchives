@@ -4,6 +4,8 @@ import com.aranaira.arcanearchives.api.cwb.CrystalWorkbenchRecipe;
 import com.aranaira.arcanearchives.api.cwb.MatchResult;
 import com.aranaira.arcanearchives.api.cwb.WorkbenchCrafting;
 import com.aranaira.arcanearchives.containers.slots.SlotRecipeHandler;
+import com.aranaira.arcanearchives.containers.slots.SlotWorkbenchCrafting;
+import com.aranaira.arcanearchives.inventories.InventoryWorkbenchCraftResult;
 import com.aranaira.arcanearchives.registry.CrystalWorkbenchRegistry;
 import com.aranaira.arcanearchives.tileentities.CrystalWorkbenchTile;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
@@ -32,11 +34,11 @@ import invtweaks.api.container.InventoryContainer;*/
 //@InventoryContainer
 public class CrystalWorkbenchContainer extends Container {
   private static final int SLOT_OUTPUT = 0;
-  private final SlotItemHandler slotOutput;
+  private final SlotWorkbenchCrafting slotOutput;
   private final IInventory playerInventory;
   private final IItemHandlerModifiable tileInventory;
-  private final IItemHandlerModifiable outputInv;
   private final IItemHandlerModifiable combinedInventory;
+  private final InventoryWorkbenchCraftResult result = new InventoryWorkbenchCraftResult();
   private final CrystalWorkbenchTile tile;
   private final EntityPlayer player;
   private final World world;
@@ -45,7 +47,6 @@ public class CrystalWorkbenchContainer extends Container {
   public CrystalWorkbenchContainer(IItemHandlerModifiable tileInventory, CrystalWorkbenchTile tile, EntityPlayer player) {
     this.tileInventory = tileInventory;
     this.tile = tile;
-    this.outputInv = tile.getOutputInventory();
     this.playerInventory = player.inventory;
     this.player = player;
     this.world = player.world;
@@ -57,7 +58,7 @@ public class CrystalWorkbenchContainer extends Container {
     this.combinedInventory = new CombinedInvWrapper(tileInventory, (IItemHandlerModifiable) mainPlayerInv);
 
     //Output Slot
-    this.slotOutput = new SlotItemHandler(outputInv, SLOT_OUTPUT, 95, 18) {
+    this.slotOutput = new SlotWorkbenchCrafting(player, getWorkbenchCrafting(), result, SLOT_OUTPUT, 95, 18) {
       @Override
       public ItemStack onTake(EntityPlayer thePlayer, ItemStack stack) {
         CrystalWorkbenchRecipe recipe = tile.getCurrentRecipe();
@@ -66,15 +67,17 @@ public class CrystalWorkbenchContainer extends Container {
         }
 
         // TODO: Handle transformations of ingredients
-        MatchResult result = recipe.matches(getWorkbenchCrafting());
-        for (Int2IntMap.Entry entry : result.getSlotMap().int2IntEntrySet()) {
-          combinedInventory.extractItem(entry.getIntKey(), entry.getIntValue(), false);
+        if (!player.world.isRemote) {
+          MatchResult result = recipe.matches(getWorkbenchCrafting());
+          for (Int2IntMap.Entry entry : result.getSlotMap().int2IntEntrySet()) {
+            combinedInventory.extractItem(entry.getIntKey(), entry.getIntValue(), false);
+          }
+          tile.markDirty();
+          tile.stateUpdate();
         }
 
         // TODO: Handle post-craft transformation
-        if (!player.world.isRemote) {
-          /*          stack = recipe.onCrafted(player, stack);*/
-        }
+        stack = recipe.onCrafted(player, stack);
 
         updateRecipe();
         return super.onTake(player, stack);
@@ -99,7 +102,6 @@ public class CrystalWorkbenchContainer extends Container {
 
     this.addSlotToContainer(slotOutput);
 
-    //Player Inventory
     for (int i = 0; i < 3; ++i) {
       for (int j = 0; j < 9; ++j) {
         this.addSlotToContainer(new Slot(playerInventory, j + i * 9 + 9, 23 + j * 18, 166 + i * 18) {
@@ -112,7 +114,6 @@ public class CrystalWorkbenchContainer extends Container {
       }
     }
 
-    //Player Hotbar
     for (int k = 0; k < 9; ++k) {
       this.addSlotToContainer(new Slot(playerInventory, k, 23 + k * 18, 224) {
         @Override
@@ -123,7 +124,6 @@ public class CrystalWorkbenchContainer extends Container {
       });
     }
 
-    //GCT Inventory
     for (int i = 0; i < 2; i++) {
       for (int j = 0; j < 9; j++) {
         this.addSlotToContainer(new SlotItemHandler(tileInventory, i * 9 + j, 23 + j * 18, 105 + i * 18) {
@@ -136,7 +136,6 @@ public class CrystalWorkbenchContainer extends Container {
       }
     }
 
-    //Recipe Selection Slots
     for (int x = 6; x > -1; x--) {
       this.addSlotToContainer(new SlotRecipeHandler(x, x * 18 + 41, 70, tile));
     }
@@ -153,32 +152,18 @@ public class CrystalWorkbenchContainer extends Container {
 
     CrystalWorkbenchRecipe curRecipe = tile.getCurrentRecipe();
     if (curRecipe == null) {
-      outputInv.setStackInSlot(SLOT_OUTPUT, ItemStack.EMPTY);
+      slotOutput.putStack(ItemStack.EMPTY);
       return;
     }
 
     WorkbenchCrafting crafting = getWorkbenchCrafting();
     MatchResult match = curRecipe.matches(crafting);
     if (!match.matches()) {
-      outputInv.setStackInSlot(SLOT_OUTPUT, ItemStack.EMPTY);
+      slotOutput.putStack(ItemStack.EMPTY);
     }
 
     itemstack = curRecipe.getActualResult(crafting, tile.getNetworkId());
-    outputInv.setStackInSlot(SLOT_OUTPUT, itemstack);
-
-    // TODO ???
-    if (tile.getLastRecipe() != null && ItemStack.areItemStacksEqual(curRecipe.getResult(), tile.getLastRecipe().getResult())) {
-      playerInventory.setInventorySlotContents(0, itemstack);
-    /* else if (tile.getPenultimateRecipe() != null && tile.getPenultimateRecipe() == tile.getLastRecipe() && !ItemStack.areItemStacksEqual(tile.getPenultimateRecipe().getRecipeOutput(), tile.getLastRecipe().getRecipeOutput())) {
-      playerInventory.setInventorySlotContents(0, itemstack);*/
-    }
-
-    // TODO ???
-    if (tile.getLastRecipe() != null && !world.isRemote) {
-      /*      Networking.CHANNEL.sendTo(new PacketGemCutters.LastRecipe(tile.getLastRecipe()), (EntityPlayerMP) player);*/
-    }
-
-    /*    tile.updatePenultimateRecipe();*/
+    slotOutput.putStack(itemstack);
   }
 
   public void setUpdateRecipeGUI(Runnable updateRecipeGUI) {
@@ -235,15 +220,8 @@ public class CrystalWorkbenchContainer extends Container {
       }
 
       SlotRecipeHandler slot = (SlotRecipeHandler) baseSlot;
-
-      if (world.isRemote) {
-        tile.setRecipe(slot.getRelativeIndex());
-      }
+      tile.setRecipe(slot.getRelativeIndex());
       updateRecipe();
-      if (player.world.isRemote) {
-
-        updateRecipeGUI.run();
-      }
 
       return ItemStack.EMPTY;
     }

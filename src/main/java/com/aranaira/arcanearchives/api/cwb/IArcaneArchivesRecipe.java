@@ -24,4 +24,8 @@ public interface IArcaneArchivesRecipe {
   NonNullList<ItemStack> getRemainingIngredients(WorkbenchCrafting inventory, @Nullable EntityPlayer player);
 
   List<IngredientStack> getIngredients();
+
+  default ItemStack onCrafted (EntityPlayer player, ItemStack stack) {
+    return stack;
+  }
 }

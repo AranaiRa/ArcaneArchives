@@ -6,6 +6,8 @@ import com.aranaira.arcanearchives.api.cwb.CrystalWorkbenchRecipe;
 import com.aranaira.arcanearchives.api.cwb.CrystalWorkbenchRegisterEvent;
 import com.aranaira.arcanearchives.api.cwb.ICrystalWorkbenchRegistry;
 import com.aranaira.arcanearchives.recipe.cw.CrystalRecipeImpl;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
@@ -21,6 +23,8 @@ public class ModRecipes {
   public static final List<Builder> REGISTRY = new ArrayList<>();
 
   public static final Supplier<CrystalWorkbenchRecipe> RADIANT_DUST = registerGeneric("radiant_dust", () -> ingredients((ModItems.RadiantQuartz)), () -> new ItemStack(ModItems.RadiantDust, 2));
+
+  public static final Supplier<CrystalWorkbenchRecipe> RADIANT_CHEST = registerGeneric("radiant_chest_from_chest", () -> ingredients(Item.getItemFromBlock(Blocks.CHEST), ModItems.RadiantQuartz), () -> new ItemStack(ModBlocks.RadiantChest.getItemBlock()));
 
   @SubscribeEvent
   public static void onRegister(CrystalWorkbenchRegisterEvent event) {

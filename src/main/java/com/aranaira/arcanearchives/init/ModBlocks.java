@@ -33,7 +33,7 @@ public class ModBlocks {
     REGISTRY.forEach(event.getRegistry()::register);
   }
 
-  public static CrystalWorkbenchBlock CrystalWorkbench = register("crystal_workbench", CrystalWorkbenchBlock::new, Material.IRON, (o) -> o.setHardness(3f).setLightLevel(16f / 16f).setHarvestTool("axe", 0).setTooltip("arcanearchives.tooltip.device.gemcutters_table", TextFormatting.GOLD), NetworkItemBlockTemplate::new);
+  public static CrystalWorkbenchBlock CrystalWorkbench = register("crystal_workbench", CrystalWorkbenchBlock::new, Material.IRON, (o) -> o.setHardness(3f).setLightLevel(16f / 16f).setHarvestTool("axe", 0).setTooltip("arcanearchives.tooltip.device.gemcutters_table", TextFormatting.GOLD).storesId(), NetworkItemBlockTemplate::new);
 
   public static MakeshiftResonatorBlock MakeshiftResonator = register("makeshift_resonator", MakeshiftResonatorBlock::new, Material.IRON, (o) -> o.setHardness(3f).setLightLevel(6f / 16f).setHarvestTool("pickaxe", 0).setTooltip("arcanearchives.tooltip.device.wonky_resonator", TextFormatting.GOLD).setDefault(o.getDefaultState().withProperty(MakeshiftResonatorBlock.FILLED, false)));
 
@@ -45,9 +45,9 @@ public class ModBlocks {
 
   public static TemplateBlock QuartzBlock = register("quartz_block", TemplateBlock::new, Material.ROCK, (o) -> o.setHardness(1.7f).setHarvestTool("pickaxe", 0).setLightLevel(1).setTooltip("arcanearchives.tooltip.item.storage_raw_quartz", TextFormatting.GOLD));
 
-  public static MonitoringCrystalBlock MonitoringCrystal = register("monitoring_crystal", MonitoringCrystalBlock::new, Material.GLASS, (o) -> o.setHardness(0.8f).setHarvestTool("pickaxe", 0).setLightLevel(1).setTooltip("arcanearchives.tooltip.device.monitoring_crystal", TextFormatting.GOLD), NetworkItemBlockTemplate::new);
+  public static MonitoringCrystalBlock MonitoringCrystal = register("monitoring_crystal", MonitoringCrystalBlock::new, Material.GLASS, (o) -> o.setHardness(0.8f).setHarvestTool("pickaxe", 0).setLightLevel(1).setTooltip("arcanearchives.tooltip.device.monitoring_crystal", TextFormatting.GOLD).storesId(), NetworkItemBlockTemplate::new);
 
-  public static RadiantChestBlock RadiantChest = register("radiant_chest", RadiantChestBlock::new, Material.GLASS, (o) -> o.setHardness(3f).setResistance(6000).setHarvestTool("pickaxe", 0).setLightLevel(1).setTooltip("arcanearchives.tooltip.device.radiant_chest", TextFormatting.GOLD), NetworkItemBlockTemplate::new);
+  public static RadiantChestBlock RadiantChest = register("radiant_chest", RadiantChestBlock::new, Material.GLASS, (o) -> o.setHardness(3f).setResistance(6000).setHarvestTool("pickaxe", 0).setLightLevel(1).setTooltip("arcanearchives.tooltip.device.radiant_chest", TextFormatting.GOLD).storesId(), NetworkItemBlockTemplate::new);
 
   // Sorta temporary
   public static OmniTemplateBlock QuartzCluster = register("quartz_cluster", OmniTemplateBlock::new, Material.ROCK, (o) -> o.setDefaultFacing(EnumFacing.UP).setHardness(1.4f).setTooltip("arcanearchives.tooltip.item.raw_quartz", TextFormatting.GOLD).setHarvestTool("pickaxe", 0).setLightLevel(1).setFullCube(false).setOpaqueCube(false).setBoundingBox(Boxes.QuartzCluster));

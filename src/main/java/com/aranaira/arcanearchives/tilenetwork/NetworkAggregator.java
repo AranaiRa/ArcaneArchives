@@ -7,6 +7,7 @@ import com.aranaira.arcanearchives.tileentities.NetworkedBaseTile;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.*;
@@ -53,6 +54,7 @@ public class NetworkAggregator {
   }
 
   @SuppressWarnings("ConstantConditions")
+  @SubscribeEvent
   public static void onServerTick(TickEvent.ServerTickEvent event) {
     if (event.phase != TickEvent.Phase.END) {
       return;
