@@ -109,6 +109,10 @@ public class ConfigHandler {
 		@Config.Comment("The maximum number of Slivers of Light generated when a piece of Raw Radiant Quartz is bashed and shattered")
 		@Config.Name("Maximum Slivers in Cluster")
 		public int AmountGeneratedOnSliverClusterMaximum = 24;
+
+		@Config.Comment("Whether or not chests can be converted into their radiant equivalents by sneak-right-clicking with raw quartz")
+		@Config.Name("In-World Chest To Radiant Chest Conversion")
+		public boolean InWorldChestConversion = true;
 	}
 
 	@Config.Comment("Settings related to item tracking in non-mod containers")

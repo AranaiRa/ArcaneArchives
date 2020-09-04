@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.items;
 
+import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
@@ -25,6 +26,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nullable;
@@ -49,6 +51,10 @@ public class RawQuartzItem extends ItemTemplate {
 
 	@Override
 	public EnumActionResult onItemUseFirst (EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
+		if (!ConfigHandler.serverSideConfig.InWorldChestConversion) {
+			return EnumActionResult.PASS;
+		}
+
 		if (!player.isSneaking()) {
 			return EnumActionResult.PASS;
 		}
@@ -62,11 +68,26 @@ public class RawQuartzItem extends ItemTemplate {
 			}
 			List<ItemStack> stacks = new ArrayList<>();
 			TileEntity te = world.getTileEntity(pos);
+			if (te == null) {
+				return EnumActionResult.SUCCESS;
+			}
 			IItemHandler handler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+			if (handler == null) {
+				return EnumActionResult.SUCCESS;
+			}
+			boolean modifiable = handler instanceof IItemHandlerModifiable;
 			for (int i = 0; i < handler.getSlots(); i++) {
-				ItemStack slot = handler.extractItem(i, 64, false);
-				if (!slot.isEmpty()) {
-					stacks.add(slot);
+				ItemStack inSlot = handler.getStackInSlot(i);
+				if (modifiable) {
+					if (!inSlot.isEmpty()) {
+						stacks.add(inSlot);
+					}
+					((IItemHandlerModifiable) handler).setStackInSlot(i, ItemStack.EMPTY);
+				} else {
+					ItemStack slot = handler.extractItem(i, inSlot.getCount(), false);
+					if (!slot.isEmpty()) {
+						stacks.add(slot);
+					}
 				}
 			}
 
