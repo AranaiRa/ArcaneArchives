@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.util;
 
+import hellfirepvp.astralsorcery.common.util.ByteBufUtils;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufInputStream;
 import io.netty.buffer.ByteBufOutputStream;
@@ -15,35 +16,6 @@ import javax.annotation.Nullable;
 import java.io.IOException;
 
 public class NetworkUtils {
-
-	public static void writeNBT (ByteBuf buf, @Nullable NBTTagCompound nbt) {
-		if (nbt == null) {
-			buf.writeByte(0);
-		} else {
-			try {
-				CompressedStreamTools.write(nbt, new ByteBufOutputStream(buf));
-			} catch (IOException ioexception) {
-				throw new EncoderException(ioexception);
-			}
-		}
-	}
-
-	public static NBTTagCompound readNBT (ByteBuf buf) {
-		int i = buf.readerIndex();
-		byte b0 = buf.readByte();
-
-		if (b0 == 0) {
-			return null;
-		} else {
-			buf.readerIndex(i);
-			try {
-				return CompressedStreamTools.read(new ByteBufInputStream(buf), new NBTSizeTracker(2097152L));
-			} catch (IOException ioexception) {
-				throw new EncoderException(ioexception);
-			}
-		}
-	}
-
 	public static void writeExtendedItemStack (PacketBuffer buf, ItemStack stack) {
 		if (stack.isEmpty()) {
 			buf.writeShort(-1);
@@ -74,7 +46,9 @@ public class NetworkUtils {
 				nbttagcompound = stack.getItem().getNBTShareTag(stack);
 			}
 
-			writeNBT(buf, nbttagcompound);
+			if (nbttagcompound != null) {
+				ByteBufUtils.writeNBTTag(buf, nbttagcompound);
+			}
 		}
 	}
 
@@ -91,7 +65,9 @@ public class NetworkUtils {
 				nbttagcompound = stack.getTagCompound();
 			}
 
-			writeNBT(buf, nbttagcompound);
+			if (nbttagcompound != null) {
+				ByteBufUtils.writeNBTTag(buf, nbttagcompound);
+			}
 		}
 	}
 
@@ -121,7 +97,7 @@ public class NetworkUtils {
 			int j = buf.readInt();
 			int k = buf.readShort();
 			ItemStack itemstack = new ItemStack(Item.getItemById(i), j, k);
-			itemstack.setTagCompound(readNBT(buf));
+			itemstack.setTagCompound(ByteBufUtils.readNBTTag(buf));
 			return itemstack;
 		}
 	}
