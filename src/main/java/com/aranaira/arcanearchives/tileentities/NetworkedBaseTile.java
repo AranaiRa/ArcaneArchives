@@ -15,6 +15,7 @@ public abstract class NetworkedBaseTile extends BaseTile {
   protected UUID networkId = null;
   protected String cachedNetworkId = null; // TODO: Transition this into the properly generated ID.
 
+  @Nullable
   public UUID getNetworkId() {
     return networkId;
   }

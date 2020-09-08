@@ -237,26 +237,30 @@ public class TemplateBlock extends Block {
     }
   }
 
-  public ItemStack generateStack(TileEntity te, World world, BlockPos pos) {
+  public ItemStack generateStack(TileEntity te, IBlockAccess world, BlockPos pos) {
     if (te instanceof NetworkedBaseTile) {
       return generateStack((NetworkedBaseTile) te, world, pos);
     }
 
-    throw new IllegalStateException("generateStack was called on an invalid tile entity");
+    return new ItemStack(getItemBlock());
   }
 
-  public ItemStack generateStack(NetworkedBaseTile te, World world, BlockPos pos) {
+  public ItemStack generateStack(NetworkedBaseTile te, IBlockAccess world, BlockPos pos) {
     ItemStack stack = new ItemStack(getItemBlock());
-    NetworkItemUtil.setNetworkId(stack, te.getNetworkId());
+
+    UUID networkId = te.getNetworkId();
+    if (networkId != null) {
+      NetworkItemUtil.setNetworkId(stack, te.getNetworkId());
+    }
     return stack;
   }
-
-
 
   @Override
   public void getDrops(@Nonnull NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, @Nonnull IBlockState state, int fortune) {
     if (!storesId) {
       super.getDrops(drops, world, pos, state, fortune);
+    } else {
+      drops.add(generateStack(world.getTileEntity(pos), world, pos));
     }
   }
 

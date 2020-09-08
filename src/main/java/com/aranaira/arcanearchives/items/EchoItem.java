@@ -32,7 +32,7 @@ public class EchoItem extends ItemTemplate {
 		}
 	}
 
-	// Does not destroy or modify the source item
+	// Does not outgoing or modify the source item
 	public static ItemStack echoFromItem (ItemStack source) {
 		ItemStack copy = source.copy();
 		copy.setCount(1);
@@ -43,7 +43,7 @@ public class EchoItem extends ItemTemplate {
 		return echo;
 	}
 
-	// Does not destroy the echo, that is presumed to be done
+	// Does not outgoing the echo, that is presumed to be done
 	// after this item stack is created.
 	public static ItemStack itemFromEcho (ItemStack echo) {
 		NBTTagCompound tag = ItemUtils.getOrCreateTagCompound(echo);

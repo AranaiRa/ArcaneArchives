@@ -40,6 +40,7 @@ public class QuartzCluster extends OmniTemplateBlock {
 
   @Override
   protected List<ItemStack> generateItemDrops(World world, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te, ItemStack harvestTool) {
+    // TODO: This idea sucks. Change my mind.
     if (!(te instanceof StoredIdTile)) {
       throw new IllegalStateException("Invalid tile entity found when breaking Quartz Cluster, got " + te.getClass() + " instead of StoredIdTile.");
     }
