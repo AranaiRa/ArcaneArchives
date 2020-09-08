@@ -1,14 +1,9 @@
 package com.aranaira.arcanearchives.util;
 
-import hellfirepvp.astralsorcery.common.util.ByteBufUtils;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufInputStream;
-import io.netty.buffer.ByteBufOutputStream;
-import io.netty.handler.codec.EncoderException;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompressedStreamTools;
-import net.minecraft.nbt.NBTSizeTracker;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 
@@ -47,7 +42,7 @@ public class NetworkUtils {
 			}
 
 			if (nbttagcompound != null) {
-				ByteBufUtils.writeNBTTag(buf, nbttagcompound);
+				ByteBufUtils.writeTag(buf, nbttagcompound);
 			}
 		}
 	}
@@ -66,7 +61,7 @@ public class NetworkUtils {
 			}
 
 			if (nbttagcompound != null) {
-				ByteBufUtils.writeNBTTag(buf, nbttagcompound);
+				ByteBufUtils.writeTag(buf, nbttagcompound);
 			}
 		}
 	}
@@ -97,7 +92,10 @@ public class NetworkUtils {
 			int j = buf.readInt();
 			int k = buf.readShort();
 			ItemStack itemstack = new ItemStack(Item.getItemById(i), j, k);
-			itemstack.setTagCompound(ByteBufUtils.readNBTTag(buf));
+			NBTTagCompound tag = ByteBufUtils.readTag(buf);
+			if (tag != null) {
+				itemstack.setTagCompound(tag);
+			}
 			return itemstack;
 		}
 	}
