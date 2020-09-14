@@ -41,9 +41,7 @@ public class NetworkUtils {
 				nbttagcompound = stack.getItem().getNBTShareTag(stack);
 			}
 
-			if (nbttagcompound != null) {
-				ByteBufUtils.writeTag(buf, nbttagcompound);
-			}
+			ByteBufUtils.writeTag(buf, nbttagcompound);
 		}
 	}
 
@@ -60,9 +58,7 @@ public class NetworkUtils {
 				nbttagcompound = stack.getTagCompound();
 			}
 
-			if (nbttagcompound != null) {
-				ByteBufUtils.writeTag(buf, nbttagcompound);
-			}
+			ByteBufUtils.writeTag(buf, nbttagcompound);
 		}
 	}
 
