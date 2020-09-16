@@ -34,8 +34,6 @@ public class Manifest {
         IndexEntry entry = IndexEntry.fromPacket(buf);
         entries.computeIfAbsent(entry.getPacked(), p -> new ArrayList<>()).add(entry);
       }
-
-
     }
   }
 }

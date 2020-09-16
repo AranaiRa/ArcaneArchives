@@ -2,7 +2,6 @@ package com.aranaira.arcanearchives.manifest;
 
 import net.minecraft.item.ItemStack;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ManifestSection {
