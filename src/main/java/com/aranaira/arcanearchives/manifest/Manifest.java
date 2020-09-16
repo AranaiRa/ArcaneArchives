@@ -19,6 +19,8 @@ public class Manifest {
   }
 
   public static class Builder {
+    private boolean built = false;
+
     private int dimension;
     private int max;
     private BlockPos pos;
@@ -33,7 +35,10 @@ public class Manifest {
       this.pos = player.getPosition();
     }
 
-    public Builder addEntry (IndexEntry entry) {
+    private void addEntry (IndexEntry entry) {
+      if (built) {
+        throw new IllegalStateException("tried to add an entry to an already built manifest");
+      }
       entries.computeIfAbsent(entry.getPacked(), p -> new ArrayList<>()).add(entry);
       List<ItemStack> indices = indexes.computeIfAbsent(entry.getPacked(), p -> new ArrayList<>());
       ItemStack index = ItemStack.EMPTY;
@@ -51,7 +56,6 @@ public class Manifest {
       Map<ItemStack, ManifestSection> sectionMap = manifest.packedSections.computeIfAbsent(entry.getPacked(), p -> new HashMap<>());
       ManifestSection section = sectionMap.computeIfAbsent(index, i -> new ManifestSection());
       section.accept(pos, dimension, max, entry);
-      return this;
     }
 
     public Builder populate (PacketBuffer buf) {
@@ -64,7 +68,13 @@ public class Manifest {
       return this;
     }
 
+    public Builder populate (List<IndexEntry> entries) {
+      entries.forEach(this::addEntry);
+      return this;
+    }
+
     public Manifest create () {
+      this.built = true;
       return manifest;
     }
   }

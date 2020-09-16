@@ -11,9 +11,8 @@ import com.aranaira.arcanearchives.client.tracking.LineHandler;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.config.ManifestConfig;
 import com.aranaira.arcanearchives.containers.ManifestContainer;
+import com.aranaira.arcanearchives.manifest.ManifestEntry;
 import com.aranaira.arcanearchives.types.ManifestList;
-import com.aranaira.arcanearchives.util.ManifestUtils.CollatedEntry;
-import com.aranaira.arcanearchives.util.ManifestUtils.EntryDescriptor;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiPageButtonList;
@@ -29,12 +28,9 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.CPacketCloseWindow;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.DimensionType;
 import net.minecraftforge.fml.client.config.GuiConfig;
 import net.minecraftforge.fml.common.Loader;
-import org.apache.commons.lang3.text.WordUtils;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -269,7 +265,7 @@ public class ManifestGUI extends LayeredGuiContainer implements GuiPageButtonLis
         ((CustomCountSlot) slot).renderCount(this.fontRenderer);
       }
 
-      CollatedEntry entry = container.getEntry(slot.getSlotIndex());
+      ManifestEntry entry = container.getEntry(slot.getSlotIndex());
       if (entry == null) {
         return;
       }
@@ -287,7 +283,7 @@ public class ManifestGUI extends LayeredGuiContainer implements GuiPageButtonLis
         GlStateManager.enableLighting();
       }
 
-      if (entry.getDimension() != player.dimension || entry.outOfRange) {
+      if (entry.isWrongDimension() || entry.isOutOfRange()) {
         GlStateManager.disableDepth();
         drawRectWithBlend(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, OTHER_DIMENSION);
         GlStateManager.enableDepth();
@@ -452,20 +448,18 @@ public class ManifestGUI extends LayeredGuiContainer implements GuiPageButtonLis
     Slot slot = this.getSlotUnderMouse();
 
     if (slot != null) {
-      CollatedEntry entry = container.getEntry(slot.slotNumber);
-      if (entry != null && entry.getDimension() != player.dimension) {
-        DimensionType dim = DimensionType.getById(entry.getDimension());
-        String name = WordUtils.capitalize(dim.getName().replace("_", " "));
-        tooltip.add("");
-        tooltip.add("" + TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.manifest.inanotherdim", name));
+      ManifestEntry entry = container.getEntry(slot.slotNumber);
+      if (entry != null && entry.isWrongDimension()) {
+/*        tooltip.add("");
+        tooltip.add("" + TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.manifest.inanotherdim"));*/
       } else if (entry != null) {
         tooltip.add("");
         tooltip.add("" + TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.manifest.clicktoshow", I18n.format("arcanearchives.text.manifest.endtrackingbutton")));
       }
       if (entry != null) {
         if (GuiScreen.isShiftKeyDown()) {
-          tooltip.add("");
-          List<EntryDescriptor> descriptors = entry.descriptions;
+/*          tooltip.add("");
+          Long2ObjectOpenHashMap<IndexDescriptor> descriptors = entry.getDescriptorMap();
           int unnamed_count = 1;
           int limit = Math.min(10, descriptors.size());
           int diff = Math.max(0, descriptors.size() - limit);
@@ -473,20 +467,19 @@ public class ManifestGUI extends LayeredGuiContainer implements GuiPageButtonLis
             EntryDescriptor thisEntry = descriptors.get(i);
             String chestName = thisEntry.string;
             BlockPos pos = thisEntry.pos;
-            if (chestName.isEmpty()) {
+            if (chestName == null || chestName.isEmpty()) {
               chestName = String.format("%s %d", I18n.format("arcanearchives.text.radiantchest.unnamed_chest"), unnamed_count++);
             }
-            tooltip.add(TextFormatting.GRAY + I18n.format("arcanearchives.tooltip.manifest.entry", chestName, pos.getX(), pos.getY(), pos.getZ(), thisEntry.getItemCount()));
-          }
-          if (diff > 0) {
-            tooltip.add(I18n.format("arcanearchives.tooltip.manifest.andmore", diff));
-          }
-        } else {
-          tooltip.add("" + TextFormatting.DARK_GRAY + I18n.format("arcanearchives.tooltip.manifest.chestsneak"));
+            tooltip.add(TextFormatting.GRAY + I18n.format("arcanearchives.tooltip.manifest.entry", chestName, pos.getX(), pos.getY(), pos.getZ(), thisEntry.getItemCount()));*/
         }
-        if (entry.outOfRange) {
-          tooltip.add("" + TextFormatting.DARK_GRAY + I18n.format("arcanearchives.tooltip.manifest.outofrange", ManifestConfig.MaxDistance));
-        }
+/*        if (diff > 0) {
+          tooltip.add(I18n.format("arcanearchives.tooltip.manifest.andmore", diff));
+        }*/
+      } else {
+        tooltip.add("" + TextFormatting.DARK_GRAY + I18n.format("arcanearchives.tooltip.manifest.chestsneak"));
+      }
+      if (entry.isOutOfRange()) {
+        tooltip.add("" + TextFormatting.DARK_GRAY + I18n.format("arcanearchives.tooltip.manifest.outofrange", ManifestConfig.MaxDistance));
       }
     }
 

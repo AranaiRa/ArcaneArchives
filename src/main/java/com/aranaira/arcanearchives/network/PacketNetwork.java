@@ -6,6 +6,7 @@ import com.aranaira.arcanearchives.data.storage.ClientDataStorage;
 import com.aranaira.arcanearchives.tilenetwork.PlayerConfigAggregator;
 import com.aranaira.arcanearchives.tilenetwork.PlayerNetworkConfig;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
@@ -22,7 +23,7 @@ public class PacketNetwork {
 
     @Override
     public void fromBytes(ByteBuf buf) {
-      this.data.fromBytes(buf);
+      this.data = ClientNameData.fromPacket(new PacketBuffer(buf));
     }
 
     @Override
@@ -56,7 +57,7 @@ public class PacketNetwork {
 
     @Override
     public void fromBytes(ByteBuf buf) {
-      this.config.fromBytes(buf);
+      this.config = PlayerNetworkConfig.fromPlayerPacket(buf);
     }
 
     @Override

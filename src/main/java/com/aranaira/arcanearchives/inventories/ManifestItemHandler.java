@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.inventories;
 
+import com.aranaira.arcanearchives.manifest.ManifestEntry;
 import com.aranaira.arcanearchives.types.ManifestList;
-import com.aranaira.arcanearchives.util.ManifestUtils.CollatedEntry;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
@@ -55,7 +55,7 @@ public class ManifestItemHandler implements IItemHandlerModifiable {
   }
 
   @Nullable
-  public CollatedEntry getManifestEntryInSlot(int slot) {
+  public ManifestEntry getManifestEntryInSlot(int slot) {
     updateManifest();
     return manifestActive.getEntryForSlot(slot);
   }

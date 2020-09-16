@@ -6,8 +6,8 @@ import com.aranaira.arcanearchives.client.gui.framework.IScrollableContainer;
 import com.aranaira.arcanearchives.client.gui.framework.ScrollEventManager;
 import com.aranaira.arcanearchives.config.ManifestConfig;
 import com.aranaira.arcanearchives.inventories.ManifestItemHandler;
+import com.aranaira.arcanearchives.manifest.ManifestEntry;
 import com.aranaira.arcanearchives.types.ManifestList;
-import com.aranaira.arcanearchives.util.ManifestUtils.CollatedEntry;
 import com.aranaira.arcanearchives.util.MathUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -145,7 +145,7 @@ public class ManifestContainer extends Container implements IScrollableContainer
   }
 
   @Nullable
-  public CollatedEntry getEntry(int slotId) {
+  public ManifestEntry getEntry(int slotId) {
     return handler.getManifestEntryInSlot(slotId);
   }
 
@@ -156,13 +156,13 @@ public class ManifestContainer extends Container implements IScrollableContainer
       return ItemStack.EMPTY;
     }
 
-    CollatedEntry entry = handler.getManifestEntryInSlot(slotId);
+    ManifestEntry entry = handler.getManifestEntryInSlot(slotId);
 
     if (entry == null) {
       return ItemStack.EMPTY;
     }
 
-    if (entry.descriptions.get(0).dimension != player.dimension) {
+    if (entry.isWrongDimension()) {
       return ItemStack.EMPTY;
     }
 

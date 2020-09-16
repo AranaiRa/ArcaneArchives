@@ -27,15 +27,15 @@ public class ClientNameData implements ISerializePacketBuffer<ClientNameData> {
     return data;
   }
 
-  @Override
-  public ClientNameData fromPacket(PacketBuffer buf) {
+  public static ClientNameData fromPacket(PacketBuffer buf) {
+    ClientNameData data = new ClientNameData();
     int total = buf.readInt();
-    map.clear();
+    data.map.clear();
     for (int i = 0; i < total; i++) {
       UUID uuid = buf.readUniqueId();
-      map.put(uuid, NetworkName.fromByeBuf(buf));
+      data.map.put(uuid, NetworkName.fromBytes(buf));
     }
-    return this;
+    return data;
   }
 
   @Override

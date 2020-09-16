@@ -11,10 +11,10 @@ import net.minecraft.util.math.BlockPos;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IndexBuilder implements ISerializePacketBuffer<IndexBuilder> {
+public class Index implements ISerializePacketBuffer<Index> {
   private final Int2ObjectOpenHashMap<Long2ObjectOpenHashMap<Int2ObjectOpenHashMap<IndexSection>>> storage = new Int2ObjectOpenHashMap<>();
 
-  public IndexBuilder() {
+  public Index() {
   }
 
   private IndexSection resolveSection(int dimension, BlockPos position, int packed, ItemStack reference, IndexDescriptor descriptor) {
@@ -24,10 +24,28 @@ public class IndexBuilder implements ISerializePacketBuffer<IndexBuilder> {
     return posData.computeIfAbsent(packed, p -> new IndexSection(reference, position, dimension, descriptor));
   }
 
-  public void receive(ItemStack stack, BlockPos position, int dimension, IndexDescriptor descriptor) {
-    int packed = RecipeItemHelper.pack(stack);
-    IndexSection section = resolveSection(dimension, position, packed, stack, descriptor);
-    section.receive(stack);
+  public static class Builder {
+    private Index index;
+    boolean built = false;
+
+    public Builder() {
+      this.index = new Index();
+    }
+
+    public Builder populate(ItemStack stack, BlockPos position, int dimension, IndexDescriptor descriptor, int slot) {
+      if (built) {
+        throw new IllegalStateException("tried to populate an already-built builder");
+      }
+      int packed = RecipeItemHelper.pack(stack);
+      IndexSection section = index.resolveSection(dimension, position, packed, stack, descriptor);
+      section.receive(stack, slot);
+      return this;
+    }
+
+    public Index create () {
+      built = true;
+      return index;
+    }
   }
 
   @Override

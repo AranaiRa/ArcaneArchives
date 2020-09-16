@@ -83,11 +83,6 @@ public class NameData extends WorldSavedData implements ISerializePacketBuffer<C
   }
 
   @Override
-  public ClientNameData fromPacket(PacketBuffer buf) {
-    throw new IllegalStateException("There should never be a NameData::fromPacket call.");
-  }
-
-  @Override
   public void toPacket(PacketBuffer buf) {
     ClientNameData.fromServer(this).toPacket(buf);
   }

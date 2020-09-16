@@ -1,10 +1,9 @@
 package com.aranaira.arcanearchives.types;
 
 import com.aranaira.arcanearchives.containers.ManifestContainer;
+import com.aranaira.arcanearchives.manifest.ManifestEntry;
 import com.aranaira.arcanearchives.util.ItemUtils;
-import com.aranaira.arcanearchives.util.ManifestUtils.CollatedEntry;
 import com.google.common.collect.ForwardingList;
-import com.google.common.collect.Iterators;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -20,37 +19,37 @@ import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("WeakerAccess")
-public class ManifestList extends ForwardingList<CollatedEntry> implements ISerializeByteBuf<ManifestList> {
+public class ManifestList extends ForwardingList<ManifestEntry> {
   private static Map<String, ModContainer> modList = null;
   private ManifestContainer listener = null;
   private String filterText;
   private ItemStack searchItem;
   private SortingDirection sortingDirection = null;
   private SortingType sortingType = null;
-  private List<CollatedEntry> reference;
+  private List<ManifestEntry> reference;
 
   public ManifestList() {
     this(new ArrayList<>());
   }
 
   @Override
-  protected List<CollatedEntry> delegate() {
+  protected List<ManifestEntry> delegate() {
     return this.reference;
   }
 
-  public ManifestList(List<CollatedEntry> reference) {
+  public ManifestList(List<ManifestEntry> reference) {
     this(reference, null);
   }
 
-  public ManifestList(List<CollatedEntry> reference, String filterText) {
+  public ManifestList(List<ManifestEntry> reference, String filterText) {
     this.reference = reference;
     this.filterText = filterText;
   }
 
-  public static ManifestList deserialize(ByteBuf buf) {
+/*  public static ManifestList deserialize(ByteBuf buf) {
     ManifestList list = new ManifestList();
     return list.fromBytes(buf);
-  }
+  }*/
 
   private static Map<String, ModContainer> getModList() {
     if (modList == null) {
@@ -89,7 +88,7 @@ public class ManifestList extends ForwardingList<CollatedEntry> implements ISeri
 
   @SuppressWarnings({"ConstantConditions", "Guava"})
   // TODO: Soft client-only?
-  public com.google.common.base.Predicate<CollatedEntry> filter() {
+  public com.google.common.base.Predicate<ManifestEntry> filter() {
     return (entry) -> {
       if (entry == null) {
         return false;
@@ -161,7 +160,7 @@ public class ManifestList extends ForwardingList<CollatedEntry> implements ISeri
   }
 
   @Nullable
-  public CollatedEntry getEntryForSlot(int slot) {
+  public ManifestEntry getEntryForSlot(int slot) {
     if (slot < size() && slot >= 0) {
       return get(slot);
     }
@@ -207,7 +206,7 @@ public class ManifestList extends ForwardingList<CollatedEntry> implements ISeri
     this.sortingType = sortingType;
   }
 
-  public void setItemDirectionType (ItemStack stack, SortingDirection direction, SortingType type) {
+  public void setItemDirectionType(ItemStack stack, SortingDirection direction, SortingType type) {
     setSortingDirection(direction);
     setSortingType(type);
     setSearchItem(stack);
@@ -219,15 +218,15 @@ public class ManifestList extends ForwardingList<CollatedEntry> implements ISeri
     copy.sort((o1, o2) -> {
       if (sortingType == SortingType.NAME) {
         if (sortingDirection == SortingDirection.ASCENDING) {
-          return o1.finalStack.getDisplayName().compareTo(o2.finalStack.getDisplayName());
+          return o1.getStack().getDisplayName().compareTo(o2.getStack().getDisplayName());
         } else {
-          return o2.finalStack.getDisplayName().compareTo(o1.finalStack.getDisplayName());
+          return o2.getStack().getDisplayName().compareTo(o1.getStack().getDisplayName());
         }
       } else {
         if (sortingDirection == SortingDirection.ASCENDING) {
-          return Integer.compare(o1.finalStack.getCount(), o2.finalStack.getCount());
+          return Long.compare(o1.getQuantity(), o2.getQuantity());
         } else {
-          return Integer.compare(o2.finalStack.getCount(), o1.finalStack.getCount());
+          return Long.compare(o2.getQuantity(), o1.getQuantity());
         }
       }
     });
@@ -239,25 +238,7 @@ public class ManifestList extends ForwardingList<CollatedEntry> implements ISeri
     return copy;
   }
 
-  @Override
-  public ManifestList fromBytes(ByteBuf buf) {
-    this.clear();
-    int entries = buf.readInt();
-    for (int i = 0; i < entries; i++) {
-      this.add(CollatedEntry.deserialize(buf));
-    }
-    return this;
-  }
-
-  @Override
-  public void toBytes(ByteBuf buf) {
-    buf.writeInt(this.size());
-    for (CollatedEntry entry : this) {
-      entry.toBytes(buf);
-    }
-  }
-
-  public class ManifestListIterable implements Iterable<CollatedEntry> {
+  public class ManifestListIterable implements Iterable<ManifestEntry> {
     private ManifestIterator iterator;
 
     public ManifestListIterable(ManifestIterator iter) {
@@ -270,16 +251,16 @@ public class ManifestList extends ForwardingList<CollatedEntry> implements ISeri
 
     @Override
     @Nonnull
-    public Iterator<CollatedEntry> iterator() {
+    public Iterator<ManifestEntry> iterator() {
       return iterator;
     }
   }
 
-  public class ManifestIterator implements Iterator<CollatedEntry> {
+  public class ManifestIterator implements Iterator<ManifestEntry> {
     private int slot = 0;
-    private Iterator<CollatedEntry> iter;
+    private Iterator<ManifestEntry> iter;
 
-    public ManifestIterator(Iterator<CollatedEntry> iter) {
+    public ManifestIterator(Iterator<ManifestEntry> iter) {
       this.iter = iter;
     }
 
@@ -293,7 +274,7 @@ public class ManifestList extends ForwardingList<CollatedEntry> implements ISeri
     }
 
     @Override
-    public CollatedEntry next() {
+    public ManifestEntry next() {
       slot++;
       return iter.next();
     }

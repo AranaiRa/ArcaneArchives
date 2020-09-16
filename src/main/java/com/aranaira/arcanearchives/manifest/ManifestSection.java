@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.manifest;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 
 public class ManifestSection {
@@ -7,20 +8,20 @@ public class ManifestSection {
   private final ManifestEntry outOfRange;
   private final ManifestEntry inRange;
 
-  public ManifestSection() {
-    this.outOfDimension = new ManifestEntry();
-    this.outOfRange = new ManifestEntry();
-    this.inRange = new ManifestEntry();
+  public ManifestSection(ItemStack reference) {
+    this.outOfDimension = new ManifestEntry(reference, true, false);
+    this.outOfRange = new ManifestEntry(reference, false, true);
+    this.inRange = new ManifestEntry(reference, false, false);
   }
 
   public void accept(BlockPos pos, int dimension, int maxRange, IndexEntry entry) {
     if (dimension != entry.getDimension()) {
-      outOfDimension.accept(entry);
+      outOfDimension.accept(pos, entry);
     }
     if (entry.getPosition().distanceSq(pos.getX(), pos.getY(), pos.getZ()) > maxRange * maxRange) {
-      outOfRange.accept(entry);
+      outOfRange.accept(pos, entry);
     } else {
-      inRange.accept(entry);
+      inRange.accept(pos, entry);
     }
   }
 }

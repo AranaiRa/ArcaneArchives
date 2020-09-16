@@ -45,7 +45,11 @@ public class PlayerNetworkConfig implements ISerializePacketBuffer<PlayerNetwork
 
   public static PlayerNetworkConfig fromPlayerPacket (ByteBuf buf) {
     PlayerNetworkConfig conf = new PlayerNetworkConfig();
-    conf = conf.fromBytes(buf);
+    PacketBuffer buffer = new PacketBuffer(buf);
+    conf.playerId = buffer.readUniqueId();
+    conf.maxDistance = buffer.readInt();
+    conf.defaultRouting = buffer.readBoolean();
+    conf.trovesDispense = buffer.readBoolean();
     return conf;
   }
 
@@ -96,15 +100,6 @@ public class PlayerNetworkConfig implements ISerializePacketBuffer<PlayerNetwork
 
   public boolean doTrovesDispense() {
     return trovesDispense;
-  }
-
-  @Override
-  public PlayerNetworkConfig fromPacket(PacketBuffer buf) {
-    playerId = buf.readUniqueId();
-    maxDistance = buf.readInt();
-    defaultRouting = buf.readBoolean();
-    trovesDispense = buf.readBoolean();
-    return this;
   }
 
   @Override

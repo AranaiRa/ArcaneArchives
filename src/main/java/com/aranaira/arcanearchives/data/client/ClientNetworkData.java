@@ -26,10 +26,10 @@ public class ClientNetworkData implements ISerializePacketBuffer<ClientNetworkDa
     this.networkId = networkId;
   }
 
-  @Override
-  public ClientNetworkData fromPacket(PacketBuffer buf) {
-    networkId = buf.readUniqueId();
-    return this;
+  public static ClientNetworkData fromPacket(PacketBuffer buf) {
+    ClientNetworkData data = new ClientNetworkData();
+    data.networkId = buf.readUniqueId();
+    return data;
   }
 
   @Override

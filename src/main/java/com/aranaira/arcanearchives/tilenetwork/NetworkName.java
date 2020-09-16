@@ -61,13 +61,13 @@ public class NetworkName implements ISerializeByteBuf<NetworkName> {
     return new int[]{field1, field2, field3};
   }
 
-  @Override
-  public NetworkName fromBytes(ByteBuf buf) {
-    this.field1 = buf.readInt();
-    this.field2 = buf.readInt();
-    this.field3 = buf.readInt();
-    this.calculated = null;
-    return this;
+  public static NetworkName fromBytes(ByteBuf buf) {
+    NetworkName name = new NetworkName();
+    name.field1 = buf.readInt();
+    name.field2 = buf.readInt();
+    name.field3 = buf.readInt();
+    name.calculated = null;
+    return name;
   }
 
   @Override
@@ -75,11 +75,5 @@ public class NetworkName implements ISerializeByteBuf<NetworkName> {
     buf.writeInt(field1);
     buf.writeInt(field2);
     buf.writeInt(field3);
-  }
-
-  public static NetworkName fromByeBuf (ByteBuf buf) {
-    NetworkName name = new NetworkName();
-    name.fromBytes(buf);
-    return name;
   }
 }
