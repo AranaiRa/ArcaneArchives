@@ -23,27 +23,19 @@ public class IndexSection {
     this.dimension = dimension;
   }
 
-  public void accept (IndexEntry entry) {
-    if (entry.getTag() == null) {
-      this.noTag = entry;
-    } else {
-      entries.add(entry);
-    }
-  }
-
-  public void receive(ItemStack stack) {
+  public void receive(ItemStack stack, int slot) {
     if (noTag.test(stack)) {
-      noTag.add(stack);
+      noTag.add(stack, slot);
     } else {
       for (IndexEntry entry : entries) {
         if (entry.test(stack)) {
-          entry.add(stack);
+          entry.add(stack, slot);
           return;
         }
       }
 
       IndexEntry newEntry = new IndexEntry(stack, position, dimension, descriptor);
-      newEntry.add(stack);
+      newEntry.add(stack, slot);
       entries.add(newEntry);
     }
   }
@@ -54,5 +46,17 @@ public class IndexSection {
 
   public List<IndexEntry> getEntries() {
     return entries;
+  }
+
+  public BlockPos getPosition() {
+    return position;
+  }
+
+  public int getDimension() {
+    return dimension;
+  }
+
+  public IndexDescriptor getDescriptor() {
+    return descriptor;
   }
 }

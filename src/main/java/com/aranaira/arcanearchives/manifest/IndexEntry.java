@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.manifest;
 
 import com.aranaira.arcanearchives.types.ISerializePacketBuffer;
+import it.unimi.dsi.fastutil.ints.Int2LongOpenHashMap;
 import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -18,6 +19,7 @@ public class IndexEntry implements Predicate<ItemStack>, ISerializePacketBuffer<
   private final BlockPos position;
   private final int packed;
   private final IndexDescriptor descriptor;
+  private final Int2LongOpenHashMap slots = new Int2LongOpenHashMap();
   private long quantity;
 
   public IndexEntry(ItemStack reference, BlockPos position, int dimension, IndexDescriptor descriptor) {
@@ -67,8 +69,10 @@ public class IndexEntry implements Predicate<ItemStack>, ISerializePacketBuffer<
     return (reference.areCapsCompatible(stack) && (tag == null || tag.equals(other)));
   }
 
-  public void add(ItemStack stack) {
+  public void add(ItemStack stack, int slot) {
     this.quantity += stack.getCount();
+    long amount = slots.get(slot) + stack.getCount();
+    slots.put(slot, amount);
   }
 
   public static IndexEntry fromPacket(PacketBuffer buf) {
