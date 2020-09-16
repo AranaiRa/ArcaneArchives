@@ -27,6 +27,7 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+@Deprecated
 public class ManifestUtils {
   public static void resolveItemEntries(List<ItemEntry> entries, ItemEntry entry) {
     if (entry.stack.getMaxStackSize() == 1) {

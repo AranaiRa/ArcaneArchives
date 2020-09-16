@@ -310,7 +310,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 			if (!getTag().hasKey("mode")) {
 				getTag().setInteger("mode", TankMode.FILL.ordinal());
 			}
-			return TankMode.fromOrdinal(getTag().getInteger("mode"));
+			return TankMode.byOrdinal(getTag().getInteger("mode"));
 		}
 
 		public void setMode (TankMode mode) {
@@ -323,7 +323,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 			if (!getTag().hasKey("mode")) {
 				getTag().setInteger("mode", TankMode.FILL.ordinal());
 			} else {
-				TankMode current = TankMode.fromOrdinal(getTag().getInteger("mode"));
+				TankMode current = TankMode.byOrdinal(getTag().getInteger("mode"));
 				if (current == TankMode.FILL) {
 					getTag().setInteger("mode", TankMode.DRAIN.ordinal());
 				} else {
@@ -541,7 +541,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 	public enum TankMode {
 		DRAIN, FILL;
 
-		public static TankMode fromOrdinal (int ordinal) {
+		public static TankMode byOrdinal (int ordinal) {
 			if (ordinal == 0) {
 				return DRAIN;
 			}

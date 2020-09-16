@@ -70,7 +70,7 @@ public class RadiantFurnace extends DirectionalBlock {
 	@Override
 	@SuppressWarnings("deprecation")
 	public IBlockState getStateFromMeta (int meta) {
-		return getDefaultState().withProperty(FURNACE_FACING, EnumFacing.byHorizontalIndex(meta >> 2)).withProperty(ACCESSOR_TYPE, AccessorType.fromOrdinal(meta & 3));
+		return getDefaultState().withProperty(FURNACE_FACING, EnumFacing.byHorizontalIndex(meta >> 2)).withProperty(ACCESSOR_TYPE, AccessorType.byOrdinal(meta & 3));
 	}
 
 	@Override
@@ -247,7 +247,7 @@ public class RadiantFurnace extends DirectionalBlock {
 			return name;
 		}
 
-		public static AccessorType fromOrdinal (int ordinal) {
+		public static AccessorType byOrdinal (int ordinal) {
 			int i = 0;
 			for (AccessorType type : values()) {
 				if (ordinal == i) {
