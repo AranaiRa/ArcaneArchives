@@ -5,14 +5,14 @@ import com.aranaira.arcanearchives.inventory.handlers.DevouringCharmHandler;
 import com.aranaira.arcanearchives.inventory.slots.SlotImmutable;
 import com.aranaira.arcanearchives.items.gems.GemUtil;
 import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ClickType;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemBucket;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.Slot;
+import net.minecraft.inventory.container.ClickType;
+import net.minecraft.item.BucketItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -30,10 +30,10 @@ public class ContainerDevouringCharm extends Container {
 	public boolean FLIPPED = false;
 
 	private DevouringCharmHandler handler;
-	private EntityPlayer player;
+	private PlayerEntity player;
 	private ItemStack socket;
 
-	public ContainerDevouringCharm (EntityPlayer player) {
+	public ContainerDevouringCharm (PlayerEntity player) {
 		this.player = player;
 		socket = player.getHeldItemMainhand();
 
@@ -46,7 +46,7 @@ public class ContainerDevouringCharm extends Container {
 	}
 
 	@Override
-	public boolean canInteractWith (EntityPlayer playerIn) {
+	public boolean canInteractWith (PlayerEntity playerIn) {
 		return true;
 	}
 
@@ -69,7 +69,7 @@ public class ContainerDevouringCharm extends Container {
 									didDrain = true;
 								}
 							}
-							if (didDrain && (stack.getItem() instanceof ItemBucket || stack.getItem() instanceof UniversalBucket)) {
+							if (didDrain && (stack.getItem() instanceof BucketItem || stack.getItem() instanceof UniversalBucket)) {
 								stack = cap.getContainer();
 							}
 						}
@@ -120,7 +120,7 @@ public class ContainerDevouringCharm extends Container {
 		}
 	}
 
-	private void createPlayerInventory (InventoryPlayer inventoryPlayer) {
+	private void createPlayerInventory (PlayerInventory inventoryPlayer) {
 		int xOffset = 10;
 		int yOffset = 165;
 
@@ -130,7 +130,7 @@ public class ContainerDevouringCharm extends Container {
 				if (inventoryPlayer.getStackInSlot(index).getItem() == ItemRegistry.DEVOURING_CHARM) {
 					addSlotToContainer(new SlotImmutable(inventoryPlayer, index, xOffset + j * 18, yOffset + i * 18));
 				} else {
-					addSlotToContainer(new Slot(inventoryPlayer, index, xOffset + j * 18, yOffset + i * 18));
+					addSlotToContainer(new net.minecraft.inventory.container.Slot(inventoryPlayer, index, xOffset + j * 18, yOffset + i * 18));
 				}
 			}
 		}
@@ -138,14 +138,14 @@ public class ContainerDevouringCharm extends Container {
 			if (inventoryPlayer.getStackInSlot(i).getItem() == ItemRegistry.DEVOURING_CHARM) {
 				addSlotToContainer(new SlotImmutable(inventoryPlayer, i, xOffset + i * 18, yOffset + 58));
 			} else {
-				addSlotToContainer(new Slot(inventoryPlayer, i, xOffset + i * 18, yOffset + 58));
+				addSlotToContainer(new net.minecraft.inventory.container.Slot(inventoryPlayer, i, xOffset + i * 18, yOffset + 58));
 			}
 		}
 	}
 
 	@Override
 	@Nonnull
-	public ItemStack transferStackInSlot (EntityPlayer player, int index) {
+	public ItemStack transferStackInSlot (PlayerEntity player, int index) {
 		ItemStack slotStack = ItemStack.EMPTY;
 		Slot slot = inventorySlots.get(index);
 
@@ -160,8 +160,8 @@ public class ContainerDevouringCharm extends Container {
 				slotStack = stack.copy();
 				if (index < 36) { //Player Inventory -> Socket
 					if (stack.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null)) {
-						Slot fluid = getSlot(36);
-						IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+						net.minecraft.inventory.container.Slot fluid = getSlot(36);
+						IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP);
 						if (ItemHandlerHelper.insertItemStacked(playerInventory, fluid.getStack(), false).isEmpty()) {
 							fluid.putStack(ItemStack.EMPTY);
 						}
@@ -194,11 +194,11 @@ public class ContainerDevouringCharm extends Container {
 	}
 
 	@Override
-	public void onContainerClosed (EntityPlayer player) {
-		Slot fluid = getSlot(36);
+	public void onContainerClosed (PlayerEntity player) {
+		net.minecraft.inventory.container.Slot fluid = getSlot(36);
 		if (fluid.getHasStack()) {
 			ItemStack slotItem = fluid.getStack();
-			IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+			IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP);
 			ItemStack result = ItemHandlerHelper.insertItemStacked(playerInventory, slotItem, false);
 			if (!result.isEmpty() && !player.world.isRemote) {
 				Block.spawnAsEntity(player.world, player.getPosition(), result);
@@ -207,8 +207,8 @@ public class ContainerDevouringCharm extends Container {
 	}
 
 	@Override
-	public ItemStack slotClick (int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player) {
-		Slot slot = slotId < 0 ? null : this.inventorySlots.get(slotId);
+	public ItemStack slotClick (int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
+		net.minecraft.inventory.container.Slot slot = slotId < 0 ? null : this.inventorySlots.get(slotId);
 		if (slot instanceof SlotAutovoidHandler) {
 			if (dragType == 2) {
 				slot.putStack(ItemStack.EMPTY);
@@ -231,7 +231,7 @@ public class ContainerDevouringCharm extends Container {
 		}
 
 		@Override
-		public boolean canTakeStack (EntityPlayer playerIn) {
+		public boolean canTakeStack (PlayerEntity playerIn) {
 			return true;
 		}
 

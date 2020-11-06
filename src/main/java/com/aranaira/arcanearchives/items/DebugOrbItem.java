@@ -23,20 +23,15 @@ import com.aranaira.arcanearchives.types.lists.TileList;
 import com.aranaira.arcanearchives.util.UploadUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.item.Items;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.*;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
@@ -68,16 +63,16 @@ public class DebugOrbItem extends ItemTemplate {
 	}
 
 	@Override
-	public EnumActionResult onItemUseFirst (EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
-		IBlockState state = world.getBlockState(pos);
+	public ActionResultType onItemUseFirst (PlayerEntity player, World world, BlockPos pos, Direction side, float hitX, float hitY, float hitZ, Hand hand) {
+		BlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
 		if (block.isAir(state, world, pos) || !(block instanceof TemplateBlock) || !block.hasTileEntity(state)) {
-			return EnumActionResult.PASS;
+			return ActionResultType.PASS;
 		}
 
 		ImmanenceTileEntity ite = WorldUtil.getTileEntity(ImmanenceTileEntity.class, world, pos);
 		if (ite == null) {
-			return EnumActionResult.PASS;
+			return ActionResultType.PASS;
 		}
 
 		if (player.isSneaking() && block instanceof RadiantTrove && ite instanceof RadiantTroveTileEntity) {
@@ -86,16 +81,16 @@ public class DebugOrbItem extends ItemTemplate {
 			if (handler.getItem().isEmpty()) {
 				handler.setReference(new ItemStack(Items.SNOWBALL));
 				handler.setCount(handler.getMaxCount());
-				player.sendStatusMessage(new TextComponentString("Filled your empty trove!").setStyle(new Style().setColor(TextFormatting.GOLD).setBold(true)), true);
-				return EnumActionResult.SUCCESS;
+				player.sendStatusMessage(new StringTextComponent("Filled your empty trove!").setStyle(new Style().setColor(TextFormatting.GOLD).setBold(true)), true);
+				return ActionResultType.SUCCESS;
 			} else {
 				handler.setReference(ItemStack.EMPTY);
 				handler.setCount(0);
-				player.sendStatusMessage(new TextComponentString("Hope you didn't need what was in there!").setStyle(new Style().setColor(TextFormatting.DARK_RED).setBold(true)), true);
-				return EnumActionResult.SUCCESS;
+				player.sendStatusMessage(new StringTextComponent("Hope you didn't need what was in there!").setStyle(new Style().setColor(TextFormatting.DARK_RED).setBold(true)), true);
+				return ActionResultType.SUCCESS;
 			}
 		} else if (player.isSneaking()) {
-			return EnumActionResult.SUCCESS;
+			return ActionResultType.SUCCESS;
 		}
 
 		ServerNetwork sNetwork = null;
@@ -104,7 +99,7 @@ public class DebugOrbItem extends ItemTemplate {
 		}
 
 		if (world.isRemote) {
-			player.sendMessage(new TextComponentString(" --- BEGINNING DEBUG --- WARNING: MAY CAUSE LAG/SHORT LOCK-UP, DON'T PANIC!").setStyle(new Style().setColor(TextFormatting.GOLD).setBold(true)));
+			player.sendMessage(new StringTextComponent(" --- BEGINNING DEBUG --- WARNING: MAY CAUSE LAG/SHORT LOCK-UP, DON'T PANIC!").setStyle(new Style().setColor(TextFormatting.GOLD).setBold(true)));
 		}
 
 		String debugOutput = "";
@@ -238,7 +233,7 @@ public class DebugOrbItem extends ItemTemplate {
 				}
 			}
 		} else {
-			return EnumActionResult.PASS;
+			return ActionResultType.PASS;
 		}
 
 		String url;
@@ -246,13 +241,13 @@ public class DebugOrbItem extends ItemTemplate {
 		try {
 			url = UploadUtils.uploadToHaste("debug" + identifier, debugOutput);
 		} catch (IOException e) {
-			player.sendMessage(new TextComponentString("Unable to upload " + identifier + " debug information to HasteBin."));
+			player.sendMessage(new StringTextComponent("Unable to upload " + identifier + " debug information to HasteBin."));
 			e.printStackTrace();
-			return EnumActionResult.SUCCESS;
+			return ActionResultType.SUCCESS;
 		}
 
 		player.sendMessage(getCopyMessage("Successfully uploaded " + identifier + " report to HasteBin: " + url, url));
-		return EnumActionResult.SUCCESS;
+		return ActionResultType.SUCCESS;
 	}
 
 	public static ITextComponent getCopyMessage (String message, String copyMessage) {
@@ -260,21 +255,21 @@ public class DebugOrbItem extends ItemTemplate {
 		ClickEvent click = new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/clipboard " + copyMessage);
 		style.setClickEvent(click);
 
-		HoverEvent hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponentString("Click to copy [\u00A76" + copyMessage + "\u00A7r]"));
+		HoverEvent hoverEvent = new HoverEvent(HoverEvent.Action.SHOW_TEXT, new StringTextComponent("Click to copy [\u00A76" + copyMessage + "\u00A7r]"));
 		style.setHoverEvent(hoverEvent);
 
-		return new TextComponentString(message).setStyle(style);
+		return new StringTextComponent(message).setStyle(style);
 	}
 
 	@SubscribeEvent
 	public static void onLeftClickBlock (LeftClickBlock event) {
 		World world = event.getWorld();
 		BlockPos pos = event.getPos();
-		EntityPlayer player = event.getEntityPlayer();
+		PlayerEntity player = event.getEntityPlayer();
 		if (player.getHeldItemMainhand().getItem() != ItemRegistry.DEBUG_ORB) {
 			return;
 		}
-		IBlockState state = world.getBlockState(pos);
+		BlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
 		if (!(block instanceof TemplateBlock)) {
 			return;
@@ -284,18 +279,18 @@ public class DebugOrbItem extends ItemTemplate {
 			event.setUseBlock(Result.DENY);
 			event.setUseItem(Result.DENY);
 			RadiantChestTileEntity te = WorldUtil.getTileEntity(RadiantChestTileEntity.class, world, pos);
-			player.sendMessage(new TextComponentString(world.isRemote ? "Client-side data:" : "Server-side data:"));
+			player.sendMessage(new StringTextComponent(world.isRemote ? "Client-side data:" : "Server-side data:"));
 			if (te == null) {
-				player.sendMessage(new TextComponentString("There's no Radiant Chest tile entity! WTF?"));
+				player.sendMessage(new StringTextComponent("There's no Radiant Chest tile entity! WTF?"));
 			}
 
-			player.sendMessage(new TextComponentString("Radiant chest is named: " + te.getChestName()));
-			EnumFacing facing = te.getDisplayFacing();
+			player.sendMessage(new StringTextComponent("Radiant chest is named: " + te.getChestName()));
+			Direction facing = te.getDisplayFacing();
 			ItemStack display = te.getDisplayStack();
 			if (display.isEmpty()) {
-				player.sendMessage(new TextComponentString("Radiant chest has no item stack on display."));
+				player.sendMessage(new StringTextComponent("Radiant chest has no item stack on display."));
 			} else {
-				player.sendMessage(new TextComponentString("Radiant chest has a display item facing " + facing.toString() + " which is: " + display.toString()));
+				player.sendMessage(new StringTextComponent("Radiant chest has a display item facing " + facing.toString() + " which is: " + display.toString()));
 			}
 		}
 	}

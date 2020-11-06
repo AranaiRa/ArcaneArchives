@@ -7,13 +7,13 @@ import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItem
 import com.aranaira.arcanearchives.util.MathUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.init.Items;
+import net.minecraft.item.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
@@ -38,7 +38,7 @@ public class RenderHUD {
 			RayTraceResult pos = mc.objectMouseOver;
 
 			if (pos != null && pos.typeOfHit == RayTraceResult.Type.BLOCK) {
-				IBlockState state = mc.world.getBlockState(pos.getBlockPos());
+				BlockState state = mc.world.getBlockState(pos.getBlockPos());
 				Block block = state.getBlock();
 				if (block == BlockRegistry.RADIANT_TROVE) {
 					RadiantTroveTileEntity te = WorldUtil.getTileEntity(RadiantTroveTileEntity.class, mc.world, pos.getBlockPos());

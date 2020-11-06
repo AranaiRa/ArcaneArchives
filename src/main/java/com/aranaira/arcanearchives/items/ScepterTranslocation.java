@@ -4,7 +4,7 @@ import com.aranaira.arcanearchives.items.templates.IItemScepter;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
@@ -31,7 +31,7 @@ public class ScepterTranslocation extends ItemTemplate implements IItemScepter {
 	}
 
 	@Override
-	public boolean doesSneakBypassUse (ItemStack stack, IBlockAccess world, BlockPos pos, EntityPlayer player) {
+	public boolean doesSneakBypassUse (ItemStack stack, IBlockAccess world, BlockPos pos, PlayerEntity player) {
 		return true;
 	}
 }

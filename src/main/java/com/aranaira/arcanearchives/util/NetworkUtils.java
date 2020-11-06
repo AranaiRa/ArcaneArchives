@@ -8,7 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTSizeTracker;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 
 import javax.annotation.Nullable;
@@ -16,7 +16,7 @@ import java.io.IOException;
 
 public class NetworkUtils {
 
-  public static void writeNBT(ByteBuf buf, @Nullable NBTTagCompound nbt) {
+  public static void writeNBT(ByteBuf buf, @Nullable CompoundNBT nbt) {
     if (nbt == null) {
       buf.writeByte(0);
     } else {
@@ -28,7 +28,7 @@ public class NetworkUtils {
     }
   }
 
-  public static NBTTagCompound readNBT(ByteBuf buf) {
+  public static CompoundNBT readNBT(ByteBuf buf) {
     int i = buf.readerIndex();
     byte b0 = buf.readByte();
 
@@ -51,7 +51,7 @@ public class NetworkUtils {
       buf.writeShort(Item.getIdFromItem(stack.getItem()));
       buf.writeInt(stack.getCount());
       buf.writeShort(stack.getMetadata());
-      NBTTagCompound nbttagcompound = null;
+      CompoundNBT nbttagcompound = null;
 
       if (stack.getItem().isDamageable() || stack.getItem().getShareTag()) {
         nbttagcompound = stack.getItem().getNBTShareTag(stack);
@@ -68,7 +68,7 @@ public class NetworkUtils {
       buf.writeShort(Item.getIdFromItem(stack.getItem()));
       buf.writeInt(stack.getCount());
       buf.writeShort(stack.getMetadata());
-      NBTTagCompound nbttagcompound = null;
+      CompoundNBT nbttagcompound = null;
 
       if (stack.getItem().isDamageable() || stack.getItem().getShareTag()) {
         nbttagcompound = stack.getItem().getNBTShareTag(stack);
@@ -85,7 +85,7 @@ public class NetworkUtils {
       buf.writeShort(Item.getIdFromItem(stack.getItem()));
       buf.writeInt(stack.getCount());
       buf.writeShort(stack.getMetadata());
-      NBTTagCompound nbttagcompound = null;
+      CompoundNBT nbttagcompound = null;
 
       if (stack.getItem().isDamageable() || stack.getItem().getShareTag()) {
         nbttagcompound = stack.getTagCompound();
@@ -102,7 +102,7 @@ public class NetworkUtils {
       buf.writeShort(Item.getIdFromItem(stack.getItem()));
       buf.writeInt(stack.getCount());
       buf.writeShort(stack.getMetadata());
-      NBTTagCompound nbttagcompound = null;
+      CompoundNBT nbttagcompound = null;
 
       if (stack.getItem().isDamageable() || stack.getItem().getShareTag()) {
         nbttagcompound = stack.getTagCompound();

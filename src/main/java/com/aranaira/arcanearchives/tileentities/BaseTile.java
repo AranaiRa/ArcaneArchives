@@ -2,8 +2,8 @@ package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.reference.Tags;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.block.BlockState;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -64,7 +64,7 @@ public abstract class BaseTile extends TileEntity {
       return;
     }
 
-    IBlockState state = world.getBlockState(getPos());
+    BlockState state = world.getBlockState(getPos());
     world.notifyBlockUpdate(getPos(), state, state, 8);
   }
 
@@ -77,7 +77,7 @@ public abstract class BaseTile extends TileEntity {
   }
 
   @Override
-  public void readFromNBT(NBTTagCompound compound) {
+  public void readFromNBT(CompoundNBT compound) {
     if (!compound.hasUniqueId(Tags.tileId)) {
       if (world != null && !world.isRemote) {
         generateTileId();
@@ -89,7 +89,7 @@ public abstract class BaseTile extends TileEntity {
   }
 
   @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+  public CompoundNBT writeToNBT(CompoundNBT compound) {
     if (tileId == null) {
       generateTileId();
     }
@@ -100,7 +100,7 @@ public abstract class BaseTile extends TileEntity {
   }
 
   @Override
-  public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
+  public boolean shouldRefresh(World world, BlockPos pos, BlockState oldState, BlockState newSate) {
     return (oldState.getBlock() != newSate.getBlock());
   }
 }

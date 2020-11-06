@@ -4,11 +4,11 @@ import com.aranaira.arcanearchives.inventories.TrackingExtendedHandler;
 import com.aranaira.arcanearchives.reference.Tags;
 import com.aranaira.arcanearchives.tilenetwork.Network;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
 
 public class RadiantChestTile extends TrackingNetworkedBaseTile<TrackingExtendedHandler> {
-  private EnumFacing displayFacing = null;
+  private Direction displayFacing = null;
   private ItemStack displayItem = ItemStack.EMPTY;
   private String customName = null;
 
@@ -16,11 +16,11 @@ public class RadiantChestTile extends TrackingNetworkedBaseTile<TrackingExtended
     this.inventory = new TrackingExtendedHandler(this, 54);
   }
 
-  public EnumFacing getDisplayFacing() {
+  public Direction getDisplayFacing() {
     return displayFacing;
   }
 
-  public void setDisplayFacing(EnumFacing displayFacing) {
+  public void setDisplayFacing(Direction displayFacing) {
     this.displayFacing = displayFacing;
   }
 
@@ -51,18 +51,18 @@ public class RadiantChestTile extends TrackingNetworkedBaseTile<TrackingExtended
   }
 
   @Override
-  public void readFromNBT(NBTTagCompound compound) {
+  public void readFromNBT(CompoundNBT compound) {
     super.readFromNBT(compound);
     displayItem.deserializeNBT(compound.getCompoundTag(Tags.RadiantChest.displayItem));
     int index = compound.getInteger(Tags.RadiantChest.displayFacing);
-    displayFacing = index == -1 ? null : EnumFacing.byIndex(index);
+    displayFacing = index == -1 ? null : Direction.byIndex(index);
     final String temp = compound.getString(Tags.RadiantChest.customName);
     customName = temp.isEmpty() ? null : temp;
   }
 
   @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-    NBTTagCompound tag = super.writeToNBT(compound);
+  public CompoundNBT writeToNBT(CompoundNBT compound) {
+    CompoundNBT tag = super.writeToNBT(compound);
     tag.setTag(Tags.RadiantChest.displayItem, displayItem.serializeNBT());
     tag.setInteger(Tags.RadiantChest.displayFacing, displayFacing == null ? -1 : displayFacing.ordinal());
     tag.setString(Tags.RadiantChest.customName, customName == null ? "" : customName);
@@ -70,9 +70,9 @@ public class RadiantChestTile extends TrackingNetworkedBaseTile<TrackingExtended
   }
 
   @Override
-  public NBTTagCompound getUpdateTag() {
+  public CompoundNBT getUpdateTag() {
     // TODO: Should we do this?
-    NBTTagCompound update = super.getUpdateTag();
+    CompoundNBT update = super.getUpdateTag();
     update.removeTag(Tags.inventory);
     return update;
   }

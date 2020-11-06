@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.inventories;
 
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -9,7 +9,7 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 import javax.annotation.Nonnull;
 
 // TODO: What this do
-public abstract class InventoryCraftingItemHandler<T extends TileEntity, V extends IItemHandlerModifiable> extends InventoryCrafting {
+public abstract class InventoryCraftingItemHandler<T extends TileEntity, V extends IItemHandlerModifiable> extends CraftingInventory {
   private final int length;
   private final Container eventHandler;
   private final V parent;

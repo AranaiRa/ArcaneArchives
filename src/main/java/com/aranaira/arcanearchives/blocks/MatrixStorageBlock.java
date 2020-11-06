@@ -5,14 +5,14 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import com.aranaira.arcanearchives.tileentities.MatrixStorageTileEntity;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -38,12 +38,12 @@ public class MatrixStorageBlock extends TemplateBlock {
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean isOpaqueCube (IBlockState state) {
+	public boolean isOpaqueCube (BlockState state) {
 		return false;
 	}
 
 	@Override
-	public boolean onBlockActivated (World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public boolean onBlockActivated (World worldIn, BlockPos pos, BlockState state, PlayerEntity playerIn, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
 		return false;
 		RadiantChest.RemoveChestLines(pos);
 
@@ -60,12 +60,12 @@ public class MatrixStorageBlock extends TemplateBlock {
 	}
 
 	@Override
-	public boolean hasTileEntity (IBlockState state) {
+	public boolean hasTileEntity (BlockState state) {
 		return true;
 	}
 
 	@Override
-	public TileEntity createTileEntity (World world, IBlockState state) {
+	public TileEntity createTileEntity (World world, BlockState state) {
 		return new MatrixStorageTileEntity();
 	}
 }

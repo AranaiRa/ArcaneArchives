@@ -5,7 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.oredict.OreIngredient;
 
 import javax.annotation.Nullable;
@@ -17,7 +17,7 @@ public class IngredientStack {
   private int count;
 
   @Nullable
-  private final NBTTagCompound nbt;
+  private final CompoundNBT nbt;
 
   public IngredientStack(ItemStack stack) {
     this.ingredient = Ingredient.fromStacks(stack);
@@ -29,7 +29,7 @@ public class IngredientStack {
     this(item, count, null);
   }
 
-  public IngredientStack(Item item, int count, NBTTagCompound nbt) {
+  public IngredientStack(Item item, int count, CompoundNBT nbt) {
     this.ingredient = Ingredient.fromItem(item);
     this.count = count;
     this.nbt = nbt;
@@ -43,7 +43,7 @@ public class IngredientStack {
     this(item, count, null);
   }
 
-  public IngredientStack(String item, int count, NBTTagCompound nbt) {
+  public IngredientStack(String item, int count, CompoundNBT nbt) {
     this.ingredient = new OreIngredient(item);
     this.count = count;
     this.nbt = nbt;
@@ -57,7 +57,7 @@ public class IngredientStack {
     this(ingredient, count, null);
   }
 
-  public IngredientStack(Ingredient ingredient, int count, NBTTagCompound nbt) {
+  public IngredientStack(Ingredient ingredient, int count, CompoundNBT nbt) {
     this.ingredient = ingredient;
     this.count = count;
     this.nbt = nbt;
@@ -71,7 +71,7 @@ public class IngredientStack {
     this(item, count, null);
   }
 
-  public IngredientStack(Block block, int count, NBTTagCompound nbt) {
+  public IngredientStack(Block block, int count, CompoundNBT nbt) {
     this.ingredient = Ingredient.fromItem(Item.getItemFromBlock(block));
     this.count = count;
     this.nbt = nbt;
@@ -131,7 +131,7 @@ public class IngredientStack {
   }
 
   @Nullable
-  public NBTTagCompound getNBT() {
+  public CompoundNBT getNBT() {
     return nbt;
   }
 

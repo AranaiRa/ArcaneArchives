@@ -11,11 +11,11 @@ import com.aranaira.arcanearchives.util.ColorUtils;
 import com.aranaira.arcanearchives.util.ColorUtils.Color;
 import com.aranaira.arcanearchives.util.KeyboardUtil;
 import com.aranaira.arcanearchives.client.tracking.ManifestTrackingUtils;
-import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ClickType;
-import net.minecraft.inventory.Slot;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.container.Slot;
+import net.minecraft.inventory.container.ClickType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
@@ -23,7 +23,7 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 
-public class GUIRadiantCraftingTable extends GuiContainer {
+public class GUIRadiantCraftingTable extends ContainerScreen {
 
 	private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/radiantcraftingtable.png");
 	private static final ResourceLocation GUITexturesSimple = new ResourceLocation("arcanearchives:textures/gui/simple/radiantcraftingtable.png");
@@ -34,7 +34,7 @@ public class GUIRadiantCraftingTable extends GuiContainer {
 	private int mouseOverX = 0;
 	private int mouseOverY = 0;
 
-	public GUIRadiantCraftingTable (EntityPlayer player, ContainerRadiantCraftingTable container) {
+	public GUIRadiantCraftingTable (PlayerEntity player, ContainerRadiantCraftingTable container) {
 		super(container);
 		this.xSize = 206;
 		this.ySize = 203;
@@ -106,7 +106,7 @@ public class GUIRadiantCraftingTable extends GuiContainer {
 				GlStateManager.disableDepth();
 				long worldTime = this.mc.player.world.getWorldTime();
 				Color c = ColorUtils.getColorFromTime(worldTime);
-				GuiContainer.drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, c.toInteger());
+				ContainerScreen.drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, c.toInteger());
 				GlStateManager.enableDepth();
 			}
 		}
@@ -132,7 +132,7 @@ public class GUIRadiantCraftingTable extends GuiContainer {
 					if (!container.tile.canCraftRecipe(this.mc.player, ((SlotIRecipe) slot).getRecipe())) {
 						GlStateManager.disableDepth();
 						Color c = new ColorUtils.Color(189 / 255f, 28 / 255f, 28 / 255f, 1f);
-						GuiContainer.drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, c.toInteger());
+						ContainerScreen.drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, c.toInteger());
 						GlStateManager.enableDepth();
 					}
 				}

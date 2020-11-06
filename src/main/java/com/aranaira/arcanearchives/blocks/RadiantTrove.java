@@ -9,21 +9,21 @@ import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItem
 import com.aranaira.arcanearchives.util.ItemUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Items;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.stats.StatList;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.stats.Stats;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -36,7 +36,6 @@ import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.Random;
 
@@ -61,29 +60,29 @@ public class RadiantTrove extends DirectionalBlock {
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean causesSuffocation (IBlockState state) {
+	public boolean causesSuffocation (BlockState state) {
 		return false;
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean isFullCube (IBlockState state) {
+	public boolean isFullCube (BlockState state) {
 		return false;
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean isOpaqueCube (IBlockState state) {
+	public boolean isOpaqueCube (BlockState state) {
 		return false;
 	}
 
 	@Override
-	public Item getItemDropped (IBlockState state, Random rand, int fortune) {
+	public Item getItemDropped (BlockState state, Random rand, int fortune) {
 		return Items.AIR;
 	}
 
 	@Override
-	public boolean removedByPlayer (IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
+	public boolean removedByPlayer (BlockState state, World world, BlockPos pos, PlayerEntity player, boolean willHarvest) {
 		if (player.capabilities.isCreativeMode && !(player.getHeldItemMainhand().getItem() instanceof IItemScepter)) {
 			onBlockClicked(world, pos, player);
 			return false;
@@ -93,8 +92,8 @@ public class RadiantTrove extends DirectionalBlock {
 	}
 
 	@Override
-	public void harvestBlock (World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack) {
-		player.addStat(StatList.getBlockStats(this));
+	public void harvestBlock (World worldIn, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {
+		player.addStat(Stats.getBlockStats(this));
 		player.addExhaustion(0.005F);
 
 		if (worldIn.isRemote) {
@@ -148,7 +147,7 @@ public class RadiantTrove extends DirectionalBlock {
 			return ItemStack.EMPTY;
 		}
 
-		NBTTagCompound tag = new NBTTagCompound();
+		CompoundNBT tag = new CompoundNBT();
 		te.serializeStack(tag);
 
 		ItemStack stack = new ItemStack(BlockRegistry.RADIANT_TROVE.getItemBlock());
@@ -158,7 +157,7 @@ public class RadiantTrove extends DirectionalBlock {
 	}
 
 	@Override
-	public void onBlockHarvested (World worldIn, BlockPos pos, IBlockState state, EntityPlayer player) {
+	public void onBlockHarvested (World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
 		RadiantTroveTileEntity te = WorldUtil.getTileEntity(RadiantTroveTileEntity.class, worldIn, pos);
 		if (te != null) {
 			te.wasCreativeDrop = player.capabilities.isCreativeMode;
@@ -172,10 +171,10 @@ public class RadiantTrove extends DirectionalBlock {
 	}
 
 	@Override
-	public boolean onBlockActivated (World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public boolean onBlockActivated (World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
 		LineHandler.removeLine(pos, player.dimension);
 
-		if (!world.isRemote && hand == EnumHand.MAIN_HAND) {
+		if (!world.isRemote && hand == Hand.MAIN_HAND) {
 			RadiantTroveTileEntity te = WorldUtil.getTileEntity(RadiantTroveTileEntity.class, world, pos);
 			if (te == null) {
 				return false;
@@ -189,21 +188,21 @@ public class RadiantTrove extends DirectionalBlock {
 	}
 
 	@Override
-	public void onBlockClicked (World world, BlockPos pos, EntityPlayer player) {
-		IBlockState state = world.getBlockState(pos);
+	public void onBlockClicked (World world, BlockPos pos, PlayerEntity player) {
+		BlockState state = world.getBlockState(pos);
 		LineHandler.removeLine(pos, player.dimension);
 
 		if (state.getBlock() == BlockRegistry.RADIANT_TROVE) {
 			if (!world.isRemote) {
-				EnumFacing facing = EnumFacing.fromAngle(state.getValue(getFacingProperty()).getHorizontalAngle() - 90.0);
-				RayTraceResult rayResult = net.minecraftforge.common.ForgeHooks.rayTraceEyes(player, ((EntityPlayerMP) player).interactionManager.getBlockReachDistance() + 1);
+				Direction facing = Direction.fromAngle(state.getValue(getFacingProperty()).getHorizontalAngle() - 90.0);
+				RayTraceResult rayResult = net.minecraftforge.common.ForgeHooks.rayTraceEyes(player, ((ServerPlayerEntity) player).interactionManager.getBlockReachDistance() + 1);
 				if (rayResult == null) {
 					return;
 				}
 
-				EnumFacing side = rayResult.sideHit;
+				Direction side = rayResult.sideHit;
 
-				if (side == facing || side == EnumFacing.UP) {
+				if (side == facing || side == Direction.UP) {
 					RadiantTroveTileEntity te = WorldUtil.getTileEntity(RadiantTroveTileEntity.class, world, pos);
 					if (te == null) {
 						return;
@@ -216,18 +215,18 @@ public class RadiantTrove extends DirectionalBlock {
 	}
 
 	@Override
-	public boolean hasTileEntity (IBlockState state) {
+	public boolean hasTileEntity (BlockState state) {
 		return true;
 	}
 
 	@Override
-	public TileEntity createTileEntity (World world, IBlockState state) {
+	public TileEntity createTileEntity (World world, BlockState state) {
 		return new RadiantTroveTileEntity();
 	}
 
 	@Override
 
-	public void breakBlock (World world, BlockPos pos, IBlockState state) {
+	public void breakBlock (World world, BlockPos pos, BlockState state) {
 		LineHandler.removeLine(pos, world.provider.getDimension());
 
 		world.updateComparatorOutputLevel(pos, this);
@@ -238,23 +237,23 @@ public class RadiantTrove extends DirectionalBlock {
 	@Nonnull
 	@SuppressWarnings("deprecation")
 	public AxisAlignedBB getBoundingBox (
-			IBlockState state, IBlockAccess source, BlockPos pos) {
+			BlockState state, IBlockAccess source, BlockPos pos) {
 		return new AxisAlignedBB(0.2, 0.0, 0.2, 0.8, 1.0, 0.8);
 	}
 
 	@Override
-	public boolean hasComparatorInputOverride (IBlockState state) {
+	public boolean hasComparatorInputOverride (BlockState state) {
 		return true;
 	}
 
 	@Override
-	public int getComparatorInputOverride (IBlockState blockState, World worldIn, BlockPos pos) {
+	public int getComparatorInputOverride (BlockState blockState, World worldIn, BlockPos pos) {
 		return ItemUtils.calculateRedstoneFromTileEntity(worldIn.getTileEntity(pos));
 	}
 
 	@Override
 	public void onBlockPlacedBy (
-			@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityLivingBase placer, @Nonnull ItemStack stack) {
+			@Nonnull World world, @Nonnull BlockPos pos, @Nonnull BlockState state, @Nonnull LivingEntity placer, @Nonnull ItemStack stack) {
 		super.onBlockPlacedBy(world, pos, state, placer, stack);
 
 		if (stack.hasTagCompound()) {
@@ -270,7 +269,7 @@ public class RadiantTrove extends DirectionalBlock {
 	@Override
 	@SuppressWarnings("warning")
 	public float getPlayerRelativeBlockHardness (
-			IBlockState state, EntityPlayer player, World worldIn, BlockPos pos) {
+			BlockState state, PlayerEntity player, World worldIn, BlockPos pos) {
 		if (player.inventory.getCurrentItem().getItem() instanceof IItemScepter) {
 			float hardness = state.getBlockHardness(worldIn, pos);
 			return 5f / hardness / 30F;

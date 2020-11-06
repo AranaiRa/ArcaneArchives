@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.tilenetwork;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +19,7 @@ public class PlayerConfigAggregator {
     return result;
   }
 
-  public static PlayerNetworkConfig byPlayer (EntityPlayer player) {
+  public static PlayerNetworkConfig byPlayer (PlayerEntity player) {
     return byId(player.getUniqueID());
   }
 
@@ -27,7 +27,7 @@ public class PlayerConfigAggregator {
     storage.put(player, config);
   }
 
-  public static void updatePlayer (EntityPlayer player, PlayerNetworkConfig config) {
+  public static void updatePlayer (PlayerEntity player, PlayerNetworkConfig config) {
     updatePlayer(player.getUniqueID(), config);
   }
 }

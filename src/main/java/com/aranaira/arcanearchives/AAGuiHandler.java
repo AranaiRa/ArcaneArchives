@@ -13,8 +13,8 @@ import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketNetwork;
 import com.aranaira.arcanearchives.tileentities.CrystalWorkbenchTile;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTile;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -41,7 +41,7 @@ public class AAGuiHandler implements IGuiHandler {
   }
 
   @Override
-  public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
+  public Object getServerGuiElement(int id, PlayerEntity player, World world, int x, int y, int z) {
     BlockPos pos = new BlockPos(x, y, z);
     TileEntity te = world.getTileEntity(pos);
 
@@ -52,7 +52,7 @@ public class AAGuiHandler implements IGuiHandler {
 
     DataHelper.Names.generate();
     PacketNetwork.NameMessage message = new PacketNetwork.NameMessage(ClientNameData.fromServer(DataHelper.getNameData()));
-    Networking.CHANNEL.sendTo(message, (EntityPlayerMP) player);
+    Networking.CHANNEL.sendTo(message, (ServerPlayerEntity) player);
 
     switch (type) {
       case CrystalWorkbench:
@@ -77,7 +77,7 @@ public class AAGuiHandler implements IGuiHandler {
   }
 
   @Override
-  public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
+  public Object getClientGuiElement(int id, PlayerEntity player, World world, int x, int y, int z) {
     BlockPos pos = new BlockPos(x, y, z);
     TileEntity te = world.getTileEntity(pos);
 

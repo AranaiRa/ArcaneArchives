@@ -2,21 +2,21 @@ package com.aranaira.arcanearchives.client.gui.framework;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
-import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.renderer.GlStateManager;
 
 /**
- * Wrapper around {@link GuiButton} that does the appropriate translations to the GL matrix to make the
+ * Wrapper around {@link Button} that does the appropriate translations to the GL matrix to make the
  * {@link LayeredGuiContainer} work correctly
  */
-public class LayeredButton extends GuiButton {
+public class LayeredButton extends Button {
 
   /**
-   * wrapped {@link GuiButton}
+   * wrapped {@link Button}
    */
-  private GuiButton wrapped;
+  private Button wrapped;
 
-  public LayeredButton(GuiButton wrapped) {
+  public LayeredButton(Button wrapped) {
     super(wrapped.id, wrapped.x, wrapped.y, wrapped.width, wrapped.height, wrapped.displayString);
     this.enabled = wrapped.enabled;
     this.visible = wrapped.visible;

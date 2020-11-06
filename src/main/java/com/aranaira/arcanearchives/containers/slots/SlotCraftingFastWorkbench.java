@@ -2,19 +2,19 @@ package com.aranaira.arcanearchives.inventory.slots;
 
 import com.aranaira.arcanearchives.inventory.ContainerRadiantCraftingTable;
 import com.aranaira.arcanearchives.inventory.handlers.InventoryCraftingPersistent;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.SlotCrafting;
+import net.minecraft.inventory.container.CraftingResultSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
-public class SlotCraftingFastWorkbench extends SlotCrafting {
-	private final EntityPlayer player;
+public class SlotCraftingFastWorkbench extends CraftingResultSlot {
+	private final PlayerEntity player;
 	private final ContainerRadiantCraftingTable containerCraftingStation;
 	private final InventoryCraftingPersistent craftMatrixPersistent;
 
-	public SlotCraftingFastWorkbench (ContainerRadiantCraftingTable containerCraftingStation, EntityPlayer player, InventoryCraftingPersistent craftingInventory, IInventory inventoryIn, int slotIndex, int xPosition, int yPosition) {
+	public SlotCraftingFastWorkbench (ContainerRadiantCraftingTable containerCraftingStation, PlayerEntity player, InventoryCraftingPersistent craftingInventory, IInventory inventoryIn, int slotIndex, int xPosition, int yPosition) {
 		super(player, craftingInventory, inventoryIn, slotIndex, xPosition, yPosition);
 		this.containerCraftingStation = containerCraftingStation;
 		this.craftMatrixPersistent = craftingInventory;
@@ -42,7 +42,7 @@ public class SlotCraftingFastWorkbench extends SlotCrafting {
 	}
 
 	@Override
-	public ItemStack onTake (EntityPlayer thePlayer, ItemStack stack) {
+	public ItemStack onTake (PlayerEntity thePlayer, ItemStack stack) {
 		this.onCrafting(stack);
 		net.minecraftforge.common.ForgeHooks.setCraftingPlayer(thePlayer);
 		NonNullList<ItemStack> nonnulllist = containerCraftingStation.getRemainingIngredients();

@@ -2,13 +2,13 @@ package com.aranaira.arcanearchives.inventories;
 
 
 import com.aranaira.arcanearchives.api.cwb.ICrystalWorkbenchRecipe;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 
 import javax.annotation.Nullable;
 
@@ -44,7 +44,7 @@ public class InventoryWorkbenchCraftResult implements IInventory {
 
   @Override
   public ITextComponent getDisplayName() {
-    return new TextComponentTranslation(this.getName());
+    return new TranslationTextComponent(this.getName());
   }
 
   @Override
@@ -72,16 +72,16 @@ public class InventoryWorkbenchCraftResult implements IInventory {
   }
 
   @Override
-  public boolean isUsableByPlayer(EntityPlayer player) {
+  public boolean isUsableByPlayer(PlayerEntity player) {
     return true;
   }
 
   @Override
-  public void openInventory(EntityPlayer player) {
+  public void openInventory(PlayerEntity player) {
   }
 
   @Override
-  public void closeInventory(EntityPlayer player) {
+  public void closeInventory(PlayerEntity player) {
   }
 
   @Override

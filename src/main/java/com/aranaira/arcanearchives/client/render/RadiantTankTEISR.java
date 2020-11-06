@@ -3,13 +3,13 @@ package com.aranaira.arcanearchives.client.render;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
+import net.minecraft.client.renderer.model.IBakedModel;
+import net.minecraft.client.renderer.model.ModelResourceLocation;
+import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-public class RadiantTankTEISR extends TileEntityItemStackRenderer {
+public class RadiantTankTEISR extends ItemStackTileEntityRenderer {
 	private final RadiantTankTESR coreRenderer;
 	private IBakedModel bakedTank = null;
 

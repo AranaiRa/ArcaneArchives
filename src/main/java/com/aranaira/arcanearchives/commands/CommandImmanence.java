@@ -6,9 +6,9 @@ import com.aranaira.arcanearchives.data.types.ServerNetwork;
 import it.unimi.dsi.fastutil.longs.Long2LongOpenHashMap;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 
 import java.util.Collections;
 import java.util.List;
@@ -39,22 +39,22 @@ public class CommandImmanence extends CommandBase {
 
 	@Override
 	public void execute (MinecraftServer server, ICommandSender sender, String[] args) {
-		if (sender instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) sender;
+		if (sender instanceof PlayerEntity) {
+			PlayerEntity player = (PlayerEntity) sender;
 
 			AccessorSaveData data = DataHelper.getAcccessorData();
 			Long2LongOpenHashMap mapData = data.accessorToParent.get(player.dimension);
-			player.sendMessage(new TextComponentString("mapData contains " + mapData.size() + " entries for this dimension."));
+			player.sendMessage(new StringTextComponent("mapData contains " + mapData.size() + " entries for this dimension."));
 
 			ServerNetwork network = DataHelper.getServerNetwork(player.getUniqueID());
 			if (network == null) {
-				player.sendMessage(new TextComponentString("For some reason your network is null!"));
+				player.sendMessage(new StringTextComponent("For some reason your network is null!"));
 				return;
 			}
 
 			IImmanenceBus bus = network.getImmanenceBus();
 			long diff = (System.currentTimeMillis() - bus.getLastTickTime()) / 1000;
-			player.sendMessage(new TextComponentString("Current base immanence is " + bus.getBaseImmanence() + ", multiplier " + bus.getMultiplier() + " for a total of " + bus.getTotalImmanence() + ". The last tick was " + diff + " seconds ago, and " + bus.getLeftoverImmanence() + " of the total remains."));
+			player.sendMessage(new StringTextComponent("Current base immanence is " + bus.getBaseImmanence() + ", multiplier " + bus.getMultiplier() + " for a total of " + bus.getTotalImmanence() + ". The last tick was " + diff + " seconds ago, and " + bus.getLeftoverImmanence() + " of the total remains."));
 		}
 	}
 }

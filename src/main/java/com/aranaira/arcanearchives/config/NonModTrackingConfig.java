@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.config;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraftforge.common.config.Config;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public class NonModTrackingConfig {
 
   public static List<Class> getContainerClasses() {
     if (containerClasses == null) {
-      Class<?> container = GuiContainer.class;
+      Class<?> container = ContainerScreen.class;
       containerClasses = new ArrayList<>();
       for (String clazz : ContainerClasses) {
         Class<?> clz;

@@ -3,7 +3,7 @@ package com.aranaira.arcanearchives.inventories;
 import com.aranaira.arcanearchives.tileentities.NetworkedBaseTile;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 import javax.annotation.Nonnull;
 
@@ -20,7 +20,7 @@ public class TrackingExtendedHandler extends ExtendedHandler implements ITrackin
 
   @SuppressWarnings("ConstantConditions")
   @Override
-  public void deserializeNBT(NBTTagCompound nbt) {
+  public void deserializeNBT(CompoundNBT nbt) {
     super.deserializeNBT(nbt);
     if (parent.getWorld() == null || !parent.getWorld().isRemote) {
       manualRecount();

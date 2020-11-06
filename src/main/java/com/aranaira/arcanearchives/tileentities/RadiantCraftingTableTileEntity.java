@@ -6,14 +6,14 @@ import com.aranaira.arcanearchives.tileentities.interfaces.IManifestTileEntity;
 import com.aranaira.arcanearchives.util.NBTUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.util.Direction;
 import net.minecraftforge.items.*;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import net.minecraftforge.items.wrapper.InvWrapper;
@@ -54,7 +54,7 @@ public class RadiantCraftingTableTileEntity extends ImmanenceTileEntity implemen
 	}
 
 	@Override
-	public void readFromNBT (NBTTagCompound compound) {
+	public void readFromNBT (CompoundNBT compound) {
 		super.readFromNBT(compound);
 
 		if (compound.hasKey(AATileEntity.Tags.inventory)) {
@@ -71,7 +71,7 @@ public class RadiantCraftingTableTileEntity extends ImmanenceTileEntity implemen
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT (NBTTagCompound compound) {
+	public CompoundNBT writeToNBT (CompoundNBT compound) {
 		compound = super.writeToNBT(compound);
 
 		compound.setTag(AATileEntity.Tags.inventory, persistentMatrix.serializeNBT());
@@ -85,19 +85,19 @@ public class RadiantCraftingTableTileEntity extends ImmanenceTileEntity implemen
 
 	@Override
 	@Nonnull
-	public SPacketUpdateTileEntity getUpdatePacket () {
-		NBTTagCompound compound = writeToNBT(new NBTTagCompound());
+	public SUpdateTileEntityPacket getUpdatePacket () {
+		CompoundNBT compound = writeToNBT(new CompoundNBT());
 
-		return new SPacketUpdateTileEntity(pos, 0, compound);
+		return new SUpdateTileEntityPacket(pos, 0, compound);
 	}
 
 	@Override
-	public NBTTagCompound getUpdateTag () {
-		return writeToNBT(new NBTTagCompound());
+	public CompoundNBT getUpdateTag () {
+		return writeToNBT(new CompoundNBT());
 	}
 
 	@Override
-	public void onDataPacket (NetworkManager net, SPacketUpdateTileEntity pkt) {
+	public void onDataPacket (NetworkManager net, SUpdateTileEntityPacket pkt) {
 		readFromNBT(pkt.getNbtCompound());
 		super.onDataPacket(net, pkt);
 	}
@@ -108,7 +108,7 @@ public class RadiantCraftingTableTileEntity extends ImmanenceTileEntity implemen
 		}
 	}
 
-	public boolean canCraftRecipe (EntityPlayer player, int index) {
+	public boolean canCraftRecipe (PlayerEntity player, int index) {
 		IRecipe recipe = recipeList.get(index);
 		if (recipe == null) {
 			return false;
@@ -119,22 +119,22 @@ public class RadiantCraftingTableTileEntity extends ImmanenceTileEntity implemen
 		}
 
 		FastCraftingRecipe fast = new FastCraftingRecipe(recipe, world);
-		IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+		IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP);
 		CombinedInvWrapper inv = new CombinedInvWrapper((IItemHandlerModifiable) playerInventory, new InvWrapper(((ContainerRadiantCraftingTable) player.openContainer).getCraftMatrix()));
 		return fast.matches(inv);
 	}
 
-	public void tryCraftingRecipe (EntityPlayer player, int index) {
+	public void tryCraftingRecipe (PlayerEntity player, int index) {
 		IRecipe recipe = recipeList.get(index);
 		if (recipe == null) {
 			return;
 		}
 
 		if (player.openContainer instanceof ContainerRadiantCraftingTable) {
-			InventoryCrafting matrix = ((ContainerRadiantCraftingTable) player.openContainer).getCraftMatrix();
+			CraftingInventory matrix = ((ContainerRadiantCraftingTable) player.openContainer).getCraftMatrix();
 
 			FastCraftingRecipe fast = new FastCraftingRecipe(recipe, world);
-			IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+			IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP);
 			CombinedInvWrapper inv = new CombinedInvWrapper(new InvWrapper(matrix), (IItemHandlerModifiable) playerInventory);
 			if (fast.matches(inv)) {
 				fast.consumeAndHandleInventory(fast, inv, player, null, null, null, null);

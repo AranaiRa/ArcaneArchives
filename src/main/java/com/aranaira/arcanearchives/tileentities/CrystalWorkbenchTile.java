@@ -2,16 +2,14 @@ package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.api.cwb.CrystalWorkbenchRecipe;
 import com.aranaira.arcanearchives.data.DataHelper;
-import com.aranaira.arcanearchives.data.NetworkReferenceData;
 import com.aranaira.arcanearchives.init.ModRecipes;
 import com.aranaira.arcanearchives.reference.Tags;
 import com.aranaira.arcanearchives.registry.CrystalWorkbenchRegistry;
-import com.aranaira.arcanearchives.tilenetwork.Network;
 import com.aranaira.arcanearchives.tilenetwork.NetworkAggregator;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -87,7 +85,7 @@ public class CrystalWorkbenchTile extends NetworkedBaseTile {
   }
 
   @Override
-  public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+  public <T> T getCapability(Capability<T> capability, @Nullable Direction facing) {
     if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(inventory);
     }
@@ -100,7 +98,7 @@ public class CrystalWorkbenchTile extends NetworkedBaseTile {
   }
 
   @Override
-  public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+  public boolean hasCapability(Capability<?> capability, @Nullable Direction facing) {
     return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
 
   }
@@ -111,7 +109,7 @@ public class CrystalWorkbenchTile extends NetworkedBaseTile {
   }
 
   @Override
-  public void readFromNBT(NBTTagCompound compound) {
+  public void readFromNBT(CompoundNBT compound) {
     super.readFromNBT(compound);
     inventory.deserializeNBT(compound.getCompoundTag(Tags.CrystalWorkbench.inputInventory));
     outputInventory.deserializeNBT(compound.getCompoundTag(Tags.CrystalWorkbench.outputInventory));
@@ -123,7 +121,7 @@ public class CrystalWorkbenchTile extends NetworkedBaseTile {
   }
 
   @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+  public CompoundNBT writeToNBT(CompoundNBT compound) {
     super.writeToNBT(compound);
     compound.setTag(Tags.CrystalWorkbench.inputInventory, inventory.serializeNBT());
     compound.setTag(Tags.CrystalWorkbench.outputInventory, outputInventory.serializeNBT());
@@ -137,12 +135,12 @@ public class CrystalWorkbenchTile extends NetworkedBaseTile {
   }
 
   @Override
-  public NBTTagCompound getUpdateTag() {
-    return writeToNBT(new NBTTagCompound());
+  public CompoundNBT getUpdateTag() {
+    return writeToNBT(new CompoundNBT());
   }
 
   @Override
-  public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+  public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
     readFromNBT(pkt.getNbtCompound());
     super.onDataPacket(net, pkt);
   }
@@ -154,10 +152,10 @@ public class CrystalWorkbenchTile extends NetworkedBaseTile {
 
   @Override
   @Nonnull
-  public SPacketUpdateTileEntity getUpdatePacket() {
-    NBTTagCompound compound = writeToNBT(new NBTTagCompound());
+  public SUpdateTileEntityPacket getUpdatePacket() {
+    CompoundNBT compound = writeToNBT(new CompoundNBT());
 
-    return new SPacketUpdateTileEntity(pos, 0, compound);
+    return new SUpdateTileEntityPacket(pos, 0, compound);
   }
 
   public void previousPage() {

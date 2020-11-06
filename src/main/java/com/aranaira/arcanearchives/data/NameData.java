@@ -5,7 +5,7 @@ import com.aranaira.arcanearchives.data.client.ClientNameData;
 import com.aranaira.arcanearchives.tilenetwork.NetworkName;
 import com.aranaira.arcanearchives.types.ISerializePacketBuffer;
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.world.storage.WorldSavedData;
 
@@ -62,7 +62,7 @@ public class NameData extends WorldSavedData implements ISerializePacketBuffer<C
   }
 
   @Override
-  public void readFromNBT(NBTTagCompound nbt) {
+  public void readFromNBT(CompoundNBT nbt) {
     map.clear();
 
     for (String key : nbt.getKeySet()) {
@@ -74,7 +74,7 @@ public class NameData extends WorldSavedData implements ISerializePacketBuffer<C
   }
 
   @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+  public CompoundNBT writeToNBT(CompoundNBT compound) {
     for (Map.Entry<UUID, NetworkName> entry : map.entrySet()) {
       compound.setIntArray(entry.getKey().toString(), entry.getValue().asArray());
     }

@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
@@ -39,13 +39,13 @@ public class VerdantCenserBlock extends TemplateBlock {
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean isFullCube (IBlockState state) {
+	public boolean isFullCube (BlockState state) {
 		return false;
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean isOpaqueCube (IBlockState state) {
+	public boolean isOpaqueCube (BlockState state) {
 		return false;
 	}
 }

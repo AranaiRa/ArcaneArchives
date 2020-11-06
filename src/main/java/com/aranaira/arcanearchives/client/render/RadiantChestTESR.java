@@ -5,19 +5,19 @@ import com.aranaira.arcanearchives.tiles.RadiantChestTileEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
+import net.minecraft.client.renderer.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.Vec3d;
 import org.lwjgl.opengl.GL11;
 
 public class RadiantChestTESR extends TileEntityRenderer<RadiantChestTileEntity> {
   @Override
   public void render(RadiantChestTileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-    EnumFacing facing = te.getDisplayFacing();
+    Direction facing = te.getDisplayFacing();
     ItemStack stack = te.getDisplayStack();
-    if (!(facing == null || stack == null || stack.isEmpty() || facing == EnumFacing.UP || facing == EnumFacing.DOWN)) {
+    if (!(facing == null || stack == null || stack.isEmpty() || facing == Direction.UP || facing == Direction.DOWN)) {
       Vec3d pos = (new Vec3d(x, y, z)).add(getOffset(facing));
       GlStateManager.pushMatrix();
       GlStateManager.translate(pos.x, pos.y + 0.435, pos.z);
@@ -57,7 +57,7 @@ public class RadiantChestTESR extends TileEntityRenderer<RadiantChestTileEntity>
     }
   }
 
-  private Vec3d getOffset(EnumFacing facing) {
+  private Vec3d getOffset(Direction facing) {
     switch (facing) {
       case NORTH:
         return new Vec3d(0.5, 0.0, 0.03);
@@ -72,7 +72,7 @@ public class RadiantChestTESR extends TileEntityRenderer<RadiantChestTileEntity>
     }
   }
 
-  private int getAngle(EnumFacing facing) {
+  private int getAngle(Direction facing) {
     switch (facing) {
       case NORTH:
         return 0;

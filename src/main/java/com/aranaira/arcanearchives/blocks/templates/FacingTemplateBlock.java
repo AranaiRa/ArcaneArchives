@@ -1,11 +1,11 @@
 package com.aranaira.arcanearchives.blocks.templates;
 
 import com.aranaira.arcanearchives.blocks.interfaces.IFacingBlock;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
@@ -17,7 +17,7 @@ public abstract class FacingTemplateBlock extends TemplateBlock implements IFaci
     super(materialIn);
   }
 
-  public FacingTemplateBlock setDefaultFacing(EnumFacing facing) {
+  public FacingTemplateBlock setDefaultFacing(Direction facing) {
     if (!getFacingProperty().getAllowedValues().contains(facing)) {
       throw new IllegalArgumentException("Invalid facing: cannot be contained within property " + getFacingProperty().toString());
     }
@@ -27,12 +27,12 @@ public abstract class FacingTemplateBlock extends TemplateBlock implements IFaci
   }
 
   @Override
-  public IBlockState getStateFromMeta(int meta) {
-    return getDefaultState().withProperty(getFacingProperty(), EnumFacing.byIndex(meta & 7));
+  public BlockState getStateFromMeta(int meta) {
+    return getDefaultState().withProperty(getFacingProperty(), Direction.byIndex(meta & 7));
   }
 
   @Override
-  public int getMetaFromState(IBlockState state) {
+  public int getMetaFromState(BlockState state) {
     return state.getValue(getFacingProperty()).getIndex();
   }
 
@@ -42,17 +42,17 @@ public abstract class FacingTemplateBlock extends TemplateBlock implements IFaci
   }
 
   @Override
-  public IBlockState withRotation(IBlockState state, Rotation rot) {
+  public BlockState withRotation(BlockState state, Rotation rot) {
     return state.withProperty(getFacingProperty(), rot.rotate(state.getValue(getFacingProperty())));
   }
 
   @Override
-  public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
+  public BlockState withMirror(BlockState state, Mirror mirrorIn) {
     return state.withRotation(mirrorIn.toRotation(state.getValue(getFacingProperty())));
   }
 
   @Override
-  public boolean rotateBlock(World world, BlockPos pos, EnumFacing axis) {
+  public boolean rotateBlock(World world, BlockPos pos, Direction axis) {
     TileEntity tile = world.getTileEntity(pos);
     boolean result = super.rotateBlock(world, pos, axis);
     if (tile != null) {

@@ -4,7 +4,7 @@ import com.aranaira.arcanearchives.client.gui.framework.IScrollabe;
 import com.aranaira.arcanearchives.client.gui.framework.IScrollableContainer;
 import com.aranaira.arcanearchives.client.gui.framework.ScrollEventManager;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.widget.button.Button;
 
 import java.util.Collections;
 import java.util.List;
@@ -13,9 +13,9 @@ public class ScrollBar extends InvisibleButton implements IScrollableContainer {
   private class ScrollBarNub extends TexturedButton implements IScrollabe {
 
     /**
-     * Create a {@link GuiButton} with a texture from {@link TexturedButton#BUTTON_TEXTURES}
+     * Create a {@link Button} with a texture from {@link TexturedButton#BUTTON_TEXTURES}
      *
-     * @param buttonId  id for this {@link GuiButton}
+     * @param buttonId  id for this {@link Button}
      * @param textureId index (zero based) of texture in {@link TexturedButton#BUTTON_TEXTURES}
      * @param x         x position on screen to draw this button
      * @param y         y position on screen to draw this button

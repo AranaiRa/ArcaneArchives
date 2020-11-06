@@ -7,21 +7,16 @@ import com.aranaira.arcanearchives.blocks.templates.HorizontalSingleAccessorTemp
 import com.aranaira.arcanearchives.tileentities.CrystalWorkbenchTile;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Random;
 
 public class CrystalWorkbenchBlock extends HorizontalSingleAccessorTemplateBlock implements INetworkBlock {
   public CrystalWorkbenchBlock(Material material) {
@@ -29,7 +24,7 @@ public class CrystalWorkbenchBlock extends HorizontalSingleAccessorTemplateBlock
   }
 
   @Override
-  public void breakBlock(World world, BlockPos pos, IBlockState state) {
+  public void breakBlock(World world, BlockPos pos, BlockState state) {
     if (state.getValue(ACCESSOR)) {
       super.breakBlock(world, pos, state);
       return;
@@ -48,19 +43,19 @@ public class CrystalWorkbenchBlock extends HorizontalSingleAccessorTemplateBlock
 
   @Override
   @SuppressWarnings("deprecation")
-  public boolean causesSuffocation(IBlockState state) {
+  public boolean causesSuffocation(BlockState state) {
     return false;
   }
 
   @Override
   @SuppressWarnings("deprecation")
-  public boolean isFullCube(IBlockState state) {
+  public boolean isFullCube(BlockState state) {
     return false;
   }
 
   @Override
   @SuppressWarnings("deprecation")
-  public boolean isOpaqueCube(IBlockState state) {
+  public boolean isOpaqueCube(BlockState state) {
     return false;
   }
 
@@ -70,11 +65,11 @@ public class CrystalWorkbenchBlock extends HorizontalSingleAccessorTemplateBlock
   }
 
   @Override
-  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+  public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity playerIn, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
     if (state.getBlock() == this && state.getValue(ACCESSOR)) {
       BlockPos origin = findBody(state, world, new BlockPos(hitX, hitY, hitZ));
       if (!origin.equals(pos)) {
-        IBlockState originState = world.getBlockState(origin);
+        BlockState originState = world.getBlockState(origin);
         return onBlockActivated(world, origin, originState, playerIn, hand, facing, origin.getX() + 0.5f, origin.getY() + 0.5f, origin.getZ() + 0.5f);
       } else {
         return false;
@@ -93,13 +88,13 @@ public class CrystalWorkbenchBlock extends HorizontalSingleAccessorTemplateBlock
   }
 
   @Override
-  public boolean hasTileEntity(IBlockState state) {
+  public boolean hasTileEntity(BlockState state) {
     return !state.getValue(ACCESSOR);
   }
 
   @Override
   @Nullable
-  public TileEntity createTileEntity(World world, IBlockState state) {
+  public TileEntity createTileEntity(World world, BlockState state) {
     if (state.getValue(ACCESSOR)) {
       return null;
     }

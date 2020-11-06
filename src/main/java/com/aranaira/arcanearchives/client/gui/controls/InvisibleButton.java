@@ -2,14 +2,14 @@ package com.aranaira.arcanearchives.client.gui.controls;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.renderer.GlStateManager;
 
 import javax.annotation.Nonnull;
 import java.awt.*;
 
-public class InvisibleButton extends GuiButton {
+public class InvisibleButton extends Button {
 
   /**
    * Draw shaded box where this invisible button is to aid in debugging placement
@@ -22,7 +22,7 @@ public class InvisibleButton extends GuiButton {
 
   /**
    * Draws this button text (if set) to the screen. Mostly a copy paste
-   * of {@link GuiButton#drawButton(Minecraft, int, int, float)}
+   * of {@link Button#drawButton(Minecraft, int, int, float)}
    */
   @Override
   public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
@@ -30,7 +30,7 @@ public class InvisibleButton extends GuiButton {
       this.mouseDragged(mc, mouseX, mouseY);
 
       if (DEBUG_LOCATION) {
-        GuiContainer.drawRect(x, y, x + width, y + height, Color.BLUE.getRGB());
+        ContainerScreen.drawRect(x, y, x + width, y + height, Color.BLUE.getRGB());
       }
 
       if (!displayString.isEmpty()) {

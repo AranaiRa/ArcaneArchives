@@ -12,10 +12,10 @@ import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Slot;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
@@ -37,7 +37,7 @@ public class CrystalWorkbenchGUI extends AbstractGuiContainerTracking {
   private static final int OVERLAY_SIMPLE = 0x80808080;
 
   private final CrystalWorkbenchContainer container;
-  private final EntityPlayer player;
+  private final PlayerEntity player;
   private final Object2BooleanMap<CrystalWorkbenchRecipe> recipeStatus = new Object2BooleanOpenHashMap<>();
   private final CrystalWorkbenchTile tile;
   private InvisibleButton prevPageButton;
@@ -47,7 +47,7 @@ public class CrystalWorkbenchGUI extends AbstractGuiContainerTracking {
 
   private CycleTimer cycleTimer;
 
-  public CrystalWorkbenchGUI(EntityPlayer player, CrystalWorkbenchContainer container) {
+  public CrystalWorkbenchGUI(PlayerEntity player, CrystalWorkbenchContainer container) {
     super(container);
     this.container = container;
     container.setUpdateRecipeGUI(this::updateRecipeStatus);
@@ -222,7 +222,7 @@ public class CrystalWorkbenchGUI extends AbstractGuiContainerTracking {
   }
 
   @Override
-  protected void actionPerformed(GuiButton button) throws IOException {
+  protected void actionPerformed(Button button) throws IOException {
     if (button.id == 0) {
       tile.previousPage();
     }

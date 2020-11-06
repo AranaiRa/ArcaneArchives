@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.blocks.templates.OmniTemplateBlock;
 import com.aranaira.arcanearchives.inventories.MonitoringWrapper;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -69,7 +69,7 @@ public class MonitoringCrystalTile extends TrackingNetworkedBaseTile<MonitoringW
   @Nullable
   public BlockPos getTarget() {
     if (target == null) {
-      IBlockState state = world.getBlockState(getPos());
+      BlockState state = world.getBlockState(getPos());
       OmniTemplateBlock omni = (OmniTemplateBlock) state.getBlock();
       target = getPos().offset(state.getValue(omni.getFacingProperty()).getOpposite());
     }

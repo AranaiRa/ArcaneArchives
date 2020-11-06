@@ -4,8 +4,8 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.api.crafting.IngredientStack;
 import com.aranaira.arcanearchives.init.ModBlocks;
 import com.aranaira.arcanearchives.recipe.mk.MandalicKeystoneRecipe;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
+import net.minecraft.block.Blocks;
+import net.minecraft.item.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.OreIngredient;
@@ -19,8 +19,8 @@ public class MandalicKeystoneRegistry {
   public static void initializeRecipes() {
     addRecipe(new ResourceLocation(ArcaneArchives.MODID, "stalwart_stone"), new MandalicKeystoneRecipe(new IngredientStack(new OreIngredient("stone"), 1), new IngredientStack(ModBlocks.StalwartStone, 1)));
     addRecipe(new ResourceLocation(ArcaneArchives.MODID, "stalwart_wood"), new MandalicKeystoneRecipe(new IngredientStack(new OreIngredient("logWood"), 1), new IngredientStack(ModBlocks.StalwartWood, 1)));
-    addRecipe(new ResourceLocation(ArcaneArchives.MODID, "gravel2flint"), new MandalicKeystoneRecipe(new IngredientStack(new OreIngredient("gravel"), 1), new IngredientStack(Items.FLINT, 1)));
-    addRecipe(new ResourceLocation(ArcaneArchives.MODID, "cobweb2string"), new MandalicKeystoneRecipe(new IngredientStack(Blocks.WEB, 1), new IngredientStack(Items.STRING, 1)));
+    addRecipe(new ResourceLocation(ArcaneArchives.MODID, "gravel2flint"), new MandalicKeystoneRecipe(new IngredientStack(new OreIngredient("gravel"), 1), new IngredientStack(net.minecraft.item.Items.FLINT, 1)));
+    addRecipe(new ResourceLocation(ArcaneArchives.MODID, "cobweb2string"), new MandalicKeystoneRecipe(new IngredientStack(net.minecraft.block.Blocks.WEB, 1), new IngredientStack(Items.STRING, 1)));
     addRecipe(new ResourceLocation(ArcaneArchives.MODID, "vines2string"), new MandalicKeystoneRecipe(new IngredientStack(Blocks.VINE, 6), new IngredientStack(Items.STRING, 1)));
   }
 

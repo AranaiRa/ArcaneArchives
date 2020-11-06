@@ -3,14 +3,13 @@ package com.aranaira.arcanearchives.inventories;
 import com.aranaira.arcanearchives.tileentities.NetworkedBaseTile;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.IItemHandlerModifiable;
 
 import javax.annotation.Nonnull;
 
-public class MonitoringWrapper implements ITrackingHandler, INBTSerializable<NBTTagCompound> {
+public class MonitoringWrapper implements ITrackingHandler, INBTSerializable<CompoundNBT> {
   private final IItemHandler internal;
   private final NetworkedBaseTile parent;
   private final Int2IntOpenHashMap itemReference = new Int2IntOpenHashMap();
@@ -86,11 +85,11 @@ public class MonitoringWrapper implements ITrackingHandler, INBTSerializable<NBT
   }
 
   @Override
-  public NBTTagCompound serializeNBT() {
-    return new NBTTagCompound();
+  public CompoundNBT serializeNBT() {
+    return new CompoundNBT();
   }
 
   @Override
-  public void deserializeNBT(NBTTagCompound nbt) {
+  public void deserializeNBT(CompoundNBT nbt) {
   }
 }

@@ -6,16 +6,15 @@ import com.aranaira.arcanearchives.blocks.templates.DirectionalBlock;
 import com.aranaira.arcanearchives.data.types.ClientNetwork;
 import com.aranaira.arcanearchives.data.DataHelper;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.*;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -44,7 +43,7 @@ public class LecternManifest extends DirectionalBlock {
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean isOpaqueCube (IBlockState state) {
+	public boolean isOpaqueCube (BlockState state) {
 		return false;
 	}
 
@@ -55,7 +54,7 @@ public class LecternManifest extends DirectionalBlock {
 	}
 
 	@Override
-	public boolean onBlockActivated (World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public boolean onBlockActivated (World worldIn, BlockPos pos, BlockState state, PlayerEntity playerIn, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
 		if (worldIn.isRemote) {
 			ClientNetwork network = DataHelper.getClientNetwork(playerIn.getUniqueID());
 			network.manifestItems.clear();
@@ -73,18 +72,18 @@ public class LecternManifest extends DirectionalBlock {
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public IBlockState getStateFromMeta (int meta) {
-		return getDefaultState().withProperty(getFacingProperty(), EnumFacing.byIndex(meta >> 1)).withProperty(ACCESSOR, (meta & 1) != 0);
+	public BlockState getStateFromMeta (int meta) {
+		return getDefaultState().withProperty(getFacingProperty(), Direction.byIndex(meta >> 1)).withProperty(ACCESSOR, (meta & 1) != 0);
 	}
 
 	@Override
-	public int getMetaFromState (IBlockState state) {
+	public int getMetaFromState (BlockState state) {
 		return state.getValue(getFacingProperty()).getIndex() << 1 ^ (state.getValue(ACCESSOR) ? 1 : 0);
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public void neighborChanged (IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
+	public void neighborChanged (BlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
 		if (state.getValue(ACCESSOR)) {
 			if (world.isAirBlock(pos.down())) {
 				world.setBlockToAir(pos);

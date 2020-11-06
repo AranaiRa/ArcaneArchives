@@ -6,7 +6,7 @@ import com.aranaira.arcanearchives.api.cwb.CrystalWorkbenchRecipe;
 import com.aranaira.arcanearchives.api.cwb.CrystalWorkbenchRegisterEvent;
 import com.aranaira.arcanearchives.api.cwb.ICrystalWorkbenchRegistry;
 import com.aranaira.arcanearchives.recipe.cw.CrystalRecipeImpl;
-import net.minecraft.init.Blocks;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;

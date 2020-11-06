@@ -5,10 +5,10 @@ import com.aranaira.arcanearchives.network.PacketClipboard.CopyToClipboard;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 
 public class CommandCopy extends CommandBase {
 	@Override
@@ -36,10 +36,10 @@ public class CommandCopy extends CommandBase {
 			}
 		}
 
-		if (sender.getCommandSenderEntity() instanceof EntityPlayer) {
+		if (sender.getCommandSenderEntity() instanceof PlayerEntity) {
 			CopyToClipboard packet = new CopyToClipboard(message.toString());
-			Networking.CHANNEL.sendTo(packet, (EntityPlayerMP) sender);
-			sender.sendMessage(new TextComponentString("Copied to the clipboard."));
+			Networking.CHANNEL.sendTo(packet, (ServerPlayerEntity) sender);
+			sender.sendMessage(new StringTextComponent("Copied to the clipboard."));
 		}
 	}
 }

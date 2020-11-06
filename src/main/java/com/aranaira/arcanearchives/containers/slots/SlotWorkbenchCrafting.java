@@ -4,17 +4,17 @@ package com.aranaira.arcanearchives.containers.slots;
 import com.aranaira.arcanearchives.api.cwb.ICrystalWorkbenchRecipe;
 import com.aranaira.arcanearchives.api.cwb.WorkbenchCrafting;
 import com.aranaira.arcanearchives.inventories.InventoryWorkbenchCraftResult;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 
 public class SlotWorkbenchCrafting extends Slot {
   public final WorkbenchCrafting craftMatrix;
-  public final EntityPlayer player;
+  public final PlayerEntity player;
   public int amountCrafted;
 
-  public SlotWorkbenchCrafting(EntityPlayer player, WorkbenchCrafting craftingInventory, IInventory inventoryIn, int slotIndex, int xPosition, int yPosition) {
+  public SlotWorkbenchCrafting(PlayerEntity player, WorkbenchCrafting craftingInventory, IInventory inventoryIn, int slotIndex, int xPosition, int yPosition) {
     super(inventoryIn, slotIndex, xPosition, yPosition);
     this.player = player;
     this.craftMatrix = craftingInventory;

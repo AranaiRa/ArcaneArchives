@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.api.cwb;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 
@@ -13,7 +13,7 @@ public interface ICrystalWorkbenchRecipe extends IArcaneArchivesRecipe {
 
   // TODO
   @Override
-  default NonNullList<ItemStack> getRemainingIngredients(WorkbenchCrafting inventory, @Nullable EntityPlayer player) {
+  default NonNullList<ItemStack> getRemainingIngredients(WorkbenchCrafting inventory, @Nullable PlayerEntity player) {
     NonNullList<ItemStack> ret = NonNullList.withSize(inventory.getInventory().getSlots(), ItemStack.EMPTY);
     for (int i = 0; i < ret.size(); i++) {
       ItemStack item = inventory.getInventory().getStackInSlot(i);

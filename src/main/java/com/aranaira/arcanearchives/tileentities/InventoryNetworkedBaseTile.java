@@ -1,8 +1,8 @@
 package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.reference.Tags;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -11,7 +11,7 @@ import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
 
-public abstract class InventoryNetworkedBaseTile<I extends IItemHandler & INBTSerializable<NBTTagCompound>> extends NetworkedBaseTile {
+public abstract class InventoryNetworkedBaseTile<I extends IItemHandler & INBTSerializable<CompoundNBT>> extends NetworkedBaseTile {
   protected I inventory;
   protected String inventoryName;
 
@@ -28,7 +28,7 @@ public abstract class InventoryNetworkedBaseTile<I extends IItemHandler & INBTSe
   }
 
   @Override
-  public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+  public boolean hasCapability(Capability<?> capability, @Nullable Direction facing) {
     if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return true;
     }
@@ -39,7 +39,7 @@ public abstract class InventoryNetworkedBaseTile<I extends IItemHandler & INBTSe
   @SuppressWarnings("unchecked")
   @Nullable
   @Override
-  public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+  public <T> T getCapability(Capability<T> capability, @Nullable Direction facing) {
     if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return capability.cast((T) getInventory());
     }
@@ -48,7 +48,7 @@ public abstract class InventoryNetworkedBaseTile<I extends IItemHandler & INBTSe
   }
 
   @Override
-  public void readFromNBT(NBTTagCompound compound) {
+  public void readFromNBT(CompoundNBT compound) {
     super.readFromNBT(compound);
     inventory.deserializeNBT(compound.getCompoundTag(Tags.inventory));
     if (compound.hasKey(Tags.inventoryName, Constants.NBT.TAG_STRING)) {
@@ -62,8 +62,8 @@ public abstract class InventoryNetworkedBaseTile<I extends IItemHandler & INBTSe
   }
 
   @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-    NBTTagCompound tag = super.writeToNBT(compound);
+  public CompoundNBT writeToNBT(CompoundNBT compound) {
+    CompoundNBT tag = super.writeToNBT(compound);
     tag.setTag(Tags.inventory, inventory.serializeNBT());
     if (inventoryName == null) {
       tag.setString(Tags.inventoryName, "");

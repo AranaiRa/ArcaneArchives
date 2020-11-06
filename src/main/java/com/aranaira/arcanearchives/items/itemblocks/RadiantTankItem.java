@@ -6,9 +6,9 @@ import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity.Tags;
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fluids.FluidStack;
@@ -21,7 +21,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class RadiantTankItem extends ItemBlock {
+public class RadiantTankItem extends BlockItem {
 	public RadiantTankItem (Block block) {
 		super(block);
 		setContainerItem(this);
@@ -29,7 +29,7 @@ public class RadiantTankItem extends ItemBlock {
 
 	@Nullable
 	@Override
-	public ICapabilityProvider initCapabilities (ItemStack stack, @Nullable NBTTagCompound nbt) {
+	public ICapabilityProvider initCapabilities (ItemStack stack, @Nullable CompoundNBT nbt) {
 		return new TankItemFluidHandler(stack);
 	}
 
@@ -39,7 +39,7 @@ public class RadiantTankItem extends ItemBlock {
 		FluidStack fluid;
 
 		if (stack.hasTagCompound()) {
-			NBTTagCompound tag = stack.getTagCompound();
+			CompoundNBT tag = stack.getTagCompound();
 			IFluidHandlerItem handler = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
 			if (handler instanceof FluidHandlerItemStack) {
 				FluidHandlerItemStack tank = (FluidHandlerItemStack) handler;

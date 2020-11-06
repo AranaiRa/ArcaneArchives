@@ -2,12 +2,11 @@ package com.aranaira.arcanearchives.tilenetwork;
 
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.config.ManifestConfig;
-import com.aranaira.arcanearchives.types.ISerializeByteBuf;
 import com.aranaira.arcanearchives.types.ISerializePacketBuffer;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.PlayerList;
@@ -56,7 +55,7 @@ public class PlayerNetworkConfig implements ISerializePacketBuffer<PlayerNetwork
   @SideOnly(Side.CLIENT)
   @Nullable
   public static PlayerNetworkConfig fromClient () {
-    EntityPlayer player = Minecraft.getMinecraft().player;
+    PlayerEntity player = Minecraft.getMinecraft().player;
     if (player == null) {
       return null;
     }
@@ -64,7 +63,7 @@ public class PlayerNetworkConfig implements ISerializePacketBuffer<PlayerNetwork
   }
 
   @Nullable
-  public EntityPlayer getPlayer () {
+  public PlayerEntity getPlayer () {
     MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
     if (server == null) {
       return null;
@@ -73,12 +72,12 @@ public class PlayerNetworkConfig implements ISerializePacketBuffer<PlayerNetwork
     return list.getPlayerByUUID(playerId);
   }
 
-  public boolean inRange (EntityPlayer player, BlockPos pos) {
+  public boolean inRange (PlayerEntity player, BlockPos pos) {
     return WorldUtil.distanceSq(player.getPosition(), pos) <= maxDistance;
   }
 
   public boolean inRange (BlockPos pos) {
-    EntityPlayer player = getPlayer();
+    PlayerEntity player = getPlayer();
     if (player == null) {
       return false;
     }

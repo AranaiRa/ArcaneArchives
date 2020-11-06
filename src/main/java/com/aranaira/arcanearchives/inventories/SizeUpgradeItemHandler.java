@@ -3,14 +3,14 @@ package com.aranaira.arcanearchives.inventories;
 import com.aranaira.arcanearchives.items.upgrades.IUpgrade;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
 import javax.annotation.Nonnull;
 
-public abstract class SizeUpgradeItemHandler implements IItemHandler, IItemHandlerModifiable, INBTSerializable<NBTTagCompound> {
+public abstract class SizeUpgradeItemHandler implements IItemHandler, IItemHandlerModifiable, INBTSerializable<CompoundNBT> {
   protected boolean[] upgrades = new boolean[]{false, false, false};
 
   @Override
@@ -111,8 +111,8 @@ public abstract class SizeUpgradeItemHandler implements IItemHandler, IItemHandl
   }
 
   @Override
-  public NBTTagCompound serializeNBT() {
-    NBTTagCompound tag = new NBTTagCompound();
+  public CompoundNBT serializeNBT() {
+    CompoundNBT tag = new CompoundNBT();
     tag.setBoolean("0", upgrades[0]);
     tag.setBoolean("1", upgrades[1]);
     tag.setBoolean("2", upgrades[2]);
@@ -120,7 +120,7 @@ public abstract class SizeUpgradeItemHandler implements IItemHandler, IItemHandl
   }
 
   @Override
-  public void deserializeNBT(NBTTagCompound tags) {
+  public void deserializeNBT(CompoundNBT tags) {
     upgrades[0] = tags.getBoolean("0");
     upgrades[1] = tags.getBoolean("1");
     upgrades[2] = tags.getBoolean("2");

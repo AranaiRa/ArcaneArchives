@@ -3,7 +3,7 @@ package com.aranaira.arcanearchives.util;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -59,10 +59,10 @@ public class ItemUtils {
     }
   }
 
-  public static NBTTagCompound getOrCreateTagCompound(ItemStack stack) {
-    NBTTagCompound tagCompound = stack.getTagCompound();
+  public static CompoundNBT getOrCreateTagCompound(ItemStack stack) {
+    CompoundNBT tagCompound = stack.getTagCompound();
     if (tagCompound == null) {
-      tagCompound = new NBTTagCompound();
+      tagCompound = new CompoundNBT();
       stack.setTagCompound(tagCompound);
     }
     return tagCompound;

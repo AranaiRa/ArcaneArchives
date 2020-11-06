@@ -3,7 +3,7 @@ package com.aranaira.arcanearchives.integration.jei;
 import com.aranaira.arcanearchives.inventory.ContainerRadiantCraftingTable;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import mezz.jei.api.recipe.transfer.IRecipeTransferInfo;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.container.Slot;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -30,8 +30,8 @@ public class CraftingStationRecipeTransferInfo implements IRecipeTransferInfo<Co
 
 	@Nonnull
 	@Override
-	public List<Slot> getRecipeSlots (ContainerRadiantCraftingTable container) {
-		List<Slot> slots = new ArrayList<>();
+	public List<net.minecraft.inventory.container.Slot> getRecipeSlots (ContainerRadiantCraftingTable container) {
+		List<net.minecraft.inventory.container.Slot> slots = new ArrayList<>();
 		for (int i = 1; i < 10; i++) {
 			slots.add(container.getSlot(i));
 		}
@@ -40,7 +40,7 @@ public class CraftingStationRecipeTransferInfo implements IRecipeTransferInfo<Co
 
 	@Nonnull
 	@Override
-	public List<Slot> getInventorySlots (ContainerRadiantCraftingTable container) {
+	public List<net.minecraft.inventory.container.Slot> getInventorySlots (ContainerRadiantCraftingTable container) {
 		List<Slot> slots = new ArrayList<>();
 
 		// skip the actual slots of the crafting table

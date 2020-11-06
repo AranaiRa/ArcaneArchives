@@ -7,19 +7,18 @@ import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
-import net.minecraft.block.BlockDispenser;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.DispenserBlock;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.model.ModelBakery;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.model.ModelResourceLocation;
+import net.minecraft.client.renderer.model.ModelBakery;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.stats.StatList;
+import net.minecraft.stats.Stats;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -57,18 +56,18 @@ public class RadiantAmphoraItem extends ItemTemplate {
 		super(NAME);
 		setMaxStackSize(1);
 
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(this, DispenseAmphora.getInstance());
+		DispenserBlock.DISPENSE_BEHAVIOR_REGISTRY.putObject(this, DispenseAmphora.getInstance());
 	}
 
 	@Nullable
 	@Override
-	public ICapabilityProvider initCapabilities (ItemStack stack, @Nullable NBTTagCompound nbt) {
+	public ICapabilityProvider initCapabilities (ItemStack stack, @Nullable CompoundNBT nbt) {
 		return new FluidTankWrapper(new AmphoraUtil(stack));
 	}
 
 	@Override
 	public void registerModels () {
-		ModelResourceLocation unlinked = new ModelResourceLocation(getRegistryName() + "_unlinked", "inventory");
+		net.minecraft.client.renderer.model.ModelResourceLocation unlinked = new net.minecraft.client.renderer.model.ModelResourceLocation(getRegistryName() + "_unlinked", "inventory");
 		ModelResourceLocation empty = new ModelResourceLocation(getRegistryName() + "_empty", "inventory");
 		ModelResourceLocation fill = new ModelResourceLocation(getRegistryName() + "_fill", "inventory");
 
@@ -107,13 +106,13 @@ public class RadiantAmphoraItem extends ItemTemplate {
 	}
 
 	@Override
-	public EnumActionResult onItemUseFirst (EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
-		IBlockState state = world.getBlockState(pos);
+	public ActionResultType onItemUseFirst (PlayerEntity player, World world, BlockPos pos, Direction side, float hitX, float hitY, float hitZ, Hand hand) {
+		BlockState state = world.getBlockState(pos);
 		ItemStack stack = player.getHeldItem(hand);
 		if (state.getBlock() == BlockRegistry.RADIANT_TANK && stack.getItem() == this && player.isSneaking()) {
 			AmphoraUtil util = new AmphoraUtil(stack);
 			util.setHome(pos, world.provider.getDimension());
-			return EnumActionResult.SUCCESS;
+			return ActionResultType.SUCCESS;
 		}
 
 		return super.onItemUseFirst(player, world, pos, side, hitX, hitY, hitZ, hand);
@@ -122,10 +121,10 @@ public class RadiantAmphoraItem extends ItemTemplate {
 	@SuppressWarnings("ConstantConditions")
 	@Override
 	@Nonnull
-	public ActionResult<ItemStack> onItemRightClick (@Nonnull World world, @Nonnull EntityPlayer player, @Nonnull EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick (@Nonnull World world, @Nonnull PlayerEntity player, @Nonnull Hand hand) {
 		ItemStack itemstack = player.getHeldItem(hand);
 		if (world.isRemote) {
-			return ActionResult.newResult(EnumActionResult.PASS, itemstack);
+			return ActionResult.newResult(ActionResultType.PASS, itemstack);
 		}
 		AmphoraUtil util = new AmphoraUtil(itemstack);
 
@@ -134,21 +133,21 @@ public class RadiantAmphoraItem extends ItemTemplate {
 
 			ActionResult<ItemStack> result = ForgeEventFactory.onBucketUse(player, world, itemstack, mop);
 			if (result == null) {
-				return ActionResult.newResult(EnumActionResult.FAIL, itemstack);
+				return ActionResult.newResult(ActionResultType.FAIL, itemstack);
 			} else {
-				player.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
+				player.playSound(net.minecraft.util.SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
 				return result;
 			}
 		} else {
 			RayTraceResult mop = this.rayTrace(world, player, false);
 
 			if (mop == null || mop.typeOfHit != RayTraceResult.Type.BLOCK) {
-				return ActionResult.newResult(EnumActionResult.PASS, itemstack);
+				return ActionResult.newResult(ActionResultType.PASS, itemstack);
 			}
 
 			IFluidHandler cap = util.getCapability();
 			if (cap == null) {
-				return ActionResult.newResult(EnumActionResult.FAIL, itemstack);
+				return ActionResult.newResult(ActionResultType.FAIL, itemstack);
 			}
 			boolean canDrain = false;
 			for (IFluidTankProperties prop : cap.getTankProperties()) {
@@ -159,7 +158,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 				break;
 			}
 			if (!canDrain) {
-				return ActionResult.newResult(EnumActionResult.FAIL, itemstack);
+				return ActionResult.newResult(ActionResultType.FAIL, itemstack);
 			}
 
 			FluidStack fluidStack = util.getFluidStack(cap); // This is a fake fluid stack
@@ -177,18 +176,18 @@ public class RadiantAmphoraItem extends ItemTemplate {
 						FluidActionResult result = FluidUtil.tryPlaceFluid(player, world, targetPos, itemstack, fluidStack);
 						if (result.isSuccess()) {
 							// success!
-							player.addStat(StatList.getObjectUseStats(this));
+							player.addStat(Stats.getObjectUseStats(this));
 							world.playSound(null, player.getPosition(), SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
-							return ActionResult.newResult(EnumActionResult.SUCCESS, itemstack);
+							return ActionResult.newResult(ActionResultType.SUCCESS, itemstack);
 						}
 					} else {
-						return ActionResult.newResult(EnumActionResult.PASS, itemstack);
+						return ActionResult.newResult(ActionResultType.PASS, itemstack);
 					}
 				}
 			}
 
 			// couldn't place liquid there2
-			return ActionResult.newResult(EnumActionResult.FAIL, itemstack);
+			return ActionResult.newResult(ActionResultType.FAIL, itemstack);
 		}
 	}
 
@@ -275,7 +274,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 			return stack;
 		}
 
-		public NBTTagCompound getTag () {
+		public CompoundNBT getTag () {
 			return stack.getTagCompound();
 		}
 
@@ -518,7 +517,7 @@ if (!doDrain && maxDrain == Integer.MAX_VALUE) {
 		}
 
 		@Override
-		public boolean hasCapability (@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
+		public boolean hasCapability (@Nonnull Capability<?> capability, @Nullable Direction facing) {
 			return capability == CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY;
 
 		}
@@ -526,7 +525,7 @@ if (!doDrain && maxDrain == Integer.MAX_VALUE) {
 		@Nullable
 		@Override
 		@SuppressWarnings("unchecked")
-		public <T> T getCapability (@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
+		public <T> T getCapability (@Nonnull Capability<T> capability, @Nullable Direction facing) {
 			if (capability == CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY) {
 				return (T) new FluidTankWrapper(util);
 			}

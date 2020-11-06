@@ -1,7 +1,6 @@
 package com.aranaira.arcanearchives.inventories;
 
-import com.aranaira.arcanearchives.inventories.SizeUpgradeItemHandler;
-import net.minecraft.init.Items;
+import net.minecraft.item.Items;
 import net.minecraft.item.Item;
 
 public class TroveUpgradeItemHandler extends SizeUpgradeItemHandler {

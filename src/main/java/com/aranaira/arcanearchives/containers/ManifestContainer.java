@@ -10,11 +10,11 @@ import com.aranaira.arcanearchives.manifest.ManifestEntry;
 import com.aranaira.arcanearchives.types.ManifestList;
 import com.aranaira.arcanearchives.util.MathUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ClickType;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.Slot;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.container.ClickType;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -67,13 +67,13 @@ public class ManifestContainer extends Container implements IScrollableContainer
 
   private ManifestItemHandler handler;
   private boolean serverSide;
-  private EntityPlayer player;
+  private PlayerEntity player;
 
   private ScrollEventManager scrollEventManager;
   final private List<ManifestItemSlot> manifestItemSlots;
   private int mMaxYOffset;
 
-  public ManifestContainer(EntityPlayer playerIn) {
+  public ManifestContainer(PlayerEntity playerIn) {
     this.serverSide = false; //ServerSide;
     this.player = playerIn;
     this.scrollEventManager = null;
@@ -120,7 +120,7 @@ public class ManifestContainer extends Container implements IScrollableContainer
   }
 
   @Override
-  protected Slot addSlotToContainer(Slot slotIn) {
+  protected net.minecraft.inventory.container.Slot addSlotToContainer(Slot slotIn) {
     if (slotIn instanceof ManifestItemSlot) {
       manifestItemSlots.add((ManifestItemSlot) slotIn);
     }
@@ -151,7 +151,7 @@ public class ManifestContainer extends Container implements IScrollableContainer
 
   @Override
   @Nonnull
-  public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player) {
+  public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
     if (this.serverSide) {
       return ItemStack.EMPTY;
     }
@@ -176,7 +176,7 @@ public class ManifestContainer extends Container implements IScrollableContainer
       ManifestTrackingUtils.remove(entry);
     }*/
 
-    if ((ManifestConfig.holdShift && !GuiScreen.isShiftKeyDown() && dragType == 0) || (!ManifestConfig.holdShift && GuiScreen.isShiftKeyDown() && dragType == 0)) {
+    if ((ManifestConfig.holdShift && !Screen.isShiftKeyDown() && dragType == 0) || (!ManifestConfig.holdShift && Screen.isShiftKeyDown() && dragType == 0)) {
       Minecraft mc = Minecraft.getMinecraft();
       mc.player.closeScreen();
     }
@@ -185,7 +185,7 @@ public class ManifestContainer extends Container implements IScrollableContainer
   }
 
   @Override
-  public boolean canInteractWith(@Nonnull EntityPlayer playerIn) {
+  public boolean canInteractWith(@Nonnull PlayerEntity playerIn) {
     return true;
   }
 
@@ -222,7 +222,7 @@ public class ManifestContainer extends Container implements IScrollableContainer
   // when those slots don't actually exist yet.
   @Override
   public void putStackInSlot(int slotID, ItemStack stack) {
-    Slot slot = getSlot(slotID);
+    net.minecraft.inventory.container.Slot slot = getSlot(slotID);
     if (slot != null) {
       super.putStackInSlot(slotID, stack);
     }
@@ -230,7 +230,7 @@ public class ManifestContainer extends Container implements IScrollableContainer
 
   @Override
   @Nullable
-  public Slot getSlot(int slotId) {
+  public net.minecraft.inventory.container.Slot getSlot(int slotId) {
     try {
       return super.getSlot(slotId);
     } catch (IndexOutOfBoundsException e) {

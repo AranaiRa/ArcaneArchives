@@ -1,13 +1,9 @@
 package com.aranaira.arcanearchives.tileentities;
 
-import mcp.MethodsReturnNonnullByDefault;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.block.BlockState;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-
 
 
 public class MatrixStorageTileEntity extends ImmanenceTileEntity {
@@ -19,19 +15,19 @@ public class MatrixStorageTileEntity extends ImmanenceTileEntity {
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT (NBTTagCompound compound) {
+	public CompoundNBT writeToNBT (CompoundNBT compound) {
 
 		return super.writeToNBT(compound);
 	}
 
 	@Override
-	public void readFromNBT (NBTTagCompound compound) {
+	public void readFromNBT (CompoundNBT compound) {
 
 		super.readFromNBT(compound);
 	}
 
 	@Override
-	public boolean shouldRefresh (World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
+	public boolean shouldRefresh (World world, BlockPos pos, BlockState oldState, BlockState newSate) {
 		return (oldState.getBlock() != newSate.getBlock());
 	}
 }

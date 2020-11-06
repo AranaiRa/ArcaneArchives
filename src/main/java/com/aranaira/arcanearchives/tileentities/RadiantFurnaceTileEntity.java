@@ -11,9 +11,9 @@ import com.aranaira.arcanearchives.util.ItemUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntityFurnace;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.FurnaceTileEntity;
+import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -54,18 +54,18 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 	}
 
 	@Override
-	public boolean hasCapability (Capability<?> capability, @Nullable EnumFacing facing) {
+	public boolean hasCapability (Capability<?> capability, @Nullable Direction facing) {
 		return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
 	}
 
 	@Nullable
 	@Override
-	public <T> T getCapability (Capability<T> capability, @Nullable EnumFacing facing) {
+	public <T> T getCapability (Capability<T> capability, @Nullable Direction facing) {
 		if (capability != CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			return null;
 		}
 
-		if (facing == EnumFacing.UP || facing == null) {
+		if (facing == Direction.UP || facing == null) {
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(combined);
 		} else {
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(output);
@@ -151,7 +151,7 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 		if (!this.isBurning() && shouldConsumeFuel) {
 			ItemStack fuel = this.fuel.getStackInSlot(0);
 			if (!fuel.isEmpty()) {
-				int burnTime = TileEntityFurnace.getItemBurnTime(fuel);
+				int burnTime = FurnaceTileEntity.getItemBurnTime(fuel);
 				if (burnTime > 0) {
 					this.burnTime = burnTime;
 					this.burnTimeTotal = burnTime;
@@ -232,7 +232,7 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 
 	@Override
 	@Nonnull
-	public NBTTagCompound writeToNBT (NBTTagCompound compound) {
+	public CompoundNBT writeToNBT (CompoundNBT compound) {
 		super.writeToNBT(compound);
 		compound.setTag(Tags.OPTIONAL_UPGRADES, optionalUpgrades.serializeNBT());
 		compound.setTag(Tags.inventory, inventory.serializeNBT());
@@ -244,7 +244,7 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 	}
 
 	@Override
-	public void readFromNBT (NBTTagCompound compound) {
+	public void readFromNBT (CompoundNBT compound) {
 		super.readFromNBT(compound);
 		optionalUpgrades.deserializeNBT(compound.getCompoundTag(Tags.OPTIONAL_UPGRADES));
 		inventory.deserializeNBT(compound.getCompoundTag(Tags.inventory));

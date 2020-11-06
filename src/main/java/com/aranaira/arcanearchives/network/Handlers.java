@@ -6,7 +6,7 @@ import com.aranaira.arcanearchives.tilenetwork.NetworkAggregator;
 import com.aranaira.arcanearchives.tilenetwork.NetworkEntry;
 import com.aranaira.arcanearchives.tileentities.NetworkedBaseTile;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -42,7 +42,7 @@ public class Handlers {
     }
 
     default V getTile(T message, MessageContext ctx) {
-      EntityPlayerMP player = ctx.getServerHandler().player;
+      ServerPlayerEntity player = ctx.getServerHandler().player;
       if (player == null) {
         return null;
       }

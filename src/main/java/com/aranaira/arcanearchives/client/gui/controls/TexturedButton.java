@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.client.gui.controls;
 
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -10,8 +10,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 /**
- * A {@link GuiButton} with a texture from {@link #BUTTON_TEXTURES}
- */ public class TexturedButton extends GuiButton {
+ * A {@link Button} with a texture from {@link #BUTTON_TEXTURES}
+ */ public class TexturedButton extends Button {
   private static final ResourceLocation BUTTON_TEXTURES = new ResourceLocation("arcanearchives:textures/gui/buttons.png");
   private static final ResourceLocation BUTTON_TEXTURES_SIMPLE = new ResourceLocation("arcanearchives:textures/gui/simple/buttons.png");
   private static final int[] TEXTURE_X_START = new int[]{0};
@@ -23,9 +23,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
   private int mTextureId;
 
   /**
-   * Create a {@link GuiButton} with a texture from {@link #BUTTON_TEXTURES}
+   * Create a {@link Button} with a texture from {@link #BUTTON_TEXTURES}
    *
-   * @param buttonId  id for this {@link GuiButton}
+   * @param buttonId  id for this {@link Button}
    * @param textureId index (zero based) of texture in {@link #BUTTON_TEXTURES}
    * @param x         x position on screen to draw this button
    * @param y         y position on screen to draw this button

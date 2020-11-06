@@ -4,7 +4,7 @@ import com.aranaira.arcanearchives.types.ISerializePacketBuffer;
 import it.unimi.dsi.fastutil.ints.Int2LongOpenHashMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.RecipeItemHelper;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
 
@@ -14,7 +14,7 @@ import java.util.function.Predicate;
 
 public class IndexEntry implements Predicate<ItemStack>, ISerializePacketBuffer<IndexEntry> {
   private final ItemStack reference;
-  private final NBTTagCompound tag;
+  private final CompoundNBT tag;
   private final int dimension;
   private final BlockPos position;
   private final int packed;
@@ -56,13 +56,13 @@ public class IndexEntry implements Predicate<ItemStack>, ISerializePacketBuffer<
   }
 
   @Nullable
-  public NBTTagCompound getTag() {
+  public CompoundNBT getTag() {
     return tag;
   }
 
   @Override
   public boolean test(ItemStack stack) {
-    NBTTagCompound other = stack.getTagCompound();
+    CompoundNBT other = stack.getTagCompound();
     if (tag == null && other != null) {
       return false;
     }

@@ -16,19 +16,16 @@ import com.aranaira.enderio.core.client.render.BoundingBox;
 import epicsquid.mysticallib.util.Util;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.crafting.RecipeItemHelper;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemShulkerBox;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.util.*;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -46,7 +43,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 
 	private UUID lastUUID = null;
 	private long lastClick = -1;
-	private Map<EntityPlayer, ItemStack> playerToStackMap = new ConcurrentHashMap<>();
+	private Map<PlayerEntity, ItemStack> playerToStackMap = new ConcurrentHashMap<>();
 	private int radius = 150;
 	private boolean subnetworkOnly;
 	private FakeHandler fakeHandler = new FakeHandler();
@@ -110,7 +107,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 			return false;
 		}
 
-		NBTTagCompound tag = stack.getTagCompound();
+		CompoundNBT tag = stack.getTagCompound();
 		if (tag == null) {
 			return false;
 		}
@@ -119,13 +116,13 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 	}
 
 	@Override
-	public boolean hasCapability (Capability<?> capability, @Nullable EnumFacing facing) {
+	public boolean hasCapability (Capability<?> capability, @Nullable Direction facing) {
 		return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
 	}
 
 	@Nullable
 	@Override
-	public <T> T getCapability (Capability<T> capability, @Nullable EnumFacing facing) {
+	public <T> T getCapability (Capability<T> capability, @Nullable Direction facing) {
 		return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ? CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(fakeHandler) : null;
 	}
 
@@ -139,7 +136,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 	}
 
 	// Handle entities that hit
-	public void beginInsert (EntityItem item) {
+	public void beginInsert (ItemEntity item) {
 		if (item.world.isRemote) {
 			return;
 		}
@@ -169,7 +166,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 			return;
 		}
 
-		EntityItem item = new EntityItem(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, stack);
+		ItemEntity item = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, stack);
 		item.motionZ = Math.min(0.4f, Math.min((Util.rand.nextFloat() - 0.5f) * 0.6f, 0.2f));
 		item.motionX = Math.min(0.4f, Math.min((Util.rand.nextFloat() - 0.5f) * 0.6f, 0.2f));
 		item.setPickupDelay(20);
@@ -177,7 +174,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 		world.spawnEntity(item);
 	}
 
-	public boolean beginInsert (EntityPlayer player, EnumHand hand, EnumFacing facing, boolean simulate) {
+	public boolean beginInsert (PlayerEntity player, Hand hand, Direction facing, boolean simulate) {
 		// Test for double-click
 		boolean doubleClick = false;
 		long diff = System.currentTimeMillis() - lastClick;
@@ -214,7 +211,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 
 		List<ItemStack> toInsert = new ArrayList<>();
 
-		IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP); // We don't care about the off-hand
+		IItemHandler playerInventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP); // We don't care about the off-hand
 
 		IItemHandler cap = item.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 
@@ -225,7 +222,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 		boolean doShulkerThing = false;
 		NonNullList<ItemStack> itemList = NonNullList.withSize(999, ItemStack.EMPTY);
 		List<ItemStack> remainder = new ArrayList<>();
-		NBTTagCompound tag = ItemUtils.getOrCreateTagCompound(item);
+		CompoundNBT tag = ItemUtils.getOrCreateTagCompound(item);
 
 		if (item.getItem() instanceof ItemShulkerBox && cap == null && tag.hasKey("BlockEntityTag")) {
 			ItemStackHelper.loadAllItems(tag.getCompoundTag("BlockEntityTag"), itemList);
@@ -290,14 +287,14 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 			rejectItemStacks(toThrow, simulate);
 		}
 
-		PlayerUtil.Server.syncInventory((EntityPlayerMP) player);
+		PlayerUtil.Server.syncInventory((ServerPlayerEntity) player);
 
 		return true;
 	}
 
 	@Override
 	@Nonnull
-	public NBTTagCompound writeToNBT (NBTTagCompound compound) {
+	public CompoundNBT writeToNBT (CompoundNBT compound) {
 		super.writeToNBT(compound);
 		compound.setInteger(Tags.RANGE, radius);
 		compound.setBoolean(Tags.SUBNETWORK, subnetworkOnly);
@@ -305,7 +302,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 	}
 
 	@Override
-	public void readFromNBT (NBTTagCompound compound) {
+	public void readFromNBT (CompoundNBT compound) {
 		super.readFromNBT(compound);
 		if (compound.hasKey(Tags.RANGE)) {
 			radius = compound.getInteger(Tags.RANGE);
@@ -321,25 +318,25 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 
 	@Override
 	@Nonnull
-	public SPacketUpdateTileEntity getUpdatePacket () {
-		NBTTagCompound compound = writeToNBT(new NBTTagCompound());
+	public SUpdateTileEntityPacket getUpdatePacket () {
+		CompoundNBT compound = writeToNBT(new CompoundNBT());
 
-		return new SPacketUpdateTileEntity(pos, 0, compound);
+		return new SUpdateTileEntityPacket(pos, 0, compound);
 	}
 
 	@Override
-	public NBTTagCompound getUpdateTag () {
-		return writeToNBT(new NBTTagCompound());
+	public CompoundNBT getUpdateTag () {
+		return writeToNBT(new CompoundNBT());
 	}
 
 	@Override
-	public void onDataPacket (NetworkManager net, SPacketUpdateTileEntity pkt) {
+	public void onDataPacket (NetworkManager net, SUpdateTileEntityPacket pkt) {
 		readFromNBT(pkt.getNbtCompound());
 		super.onDataPacket(net, pkt);
 	}
 
 	@Override
-	public boolean handleManipulationInterface (EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public boolean handleManipulationInterface (PlayerEntity player, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
 		if (player.world.isRemote) {
 			return true;
 		}

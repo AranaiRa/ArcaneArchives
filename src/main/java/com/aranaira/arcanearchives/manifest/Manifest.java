@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.manifest;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
@@ -29,7 +29,7 @@ public class Manifest {
     private Int2ObjectOpenHashMap<List<IndexEntry>> entries = new Int2ObjectOpenHashMap<>();
     private Int2ObjectOpenHashMap<List<ItemStack>> indexes = new Int2ObjectOpenHashMap<>();
 
-    public Builder(EntityPlayer player, int maxDistance) {
+    public Builder(PlayerEntity player, int maxDistance) {
       this.dimension = player.world.provider.getDimension();
       this.max = maxDistance * maxDistance;
       this.pos = player.getPosition();

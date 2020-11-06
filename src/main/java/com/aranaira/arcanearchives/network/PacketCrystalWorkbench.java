@@ -11,7 +11,7 @@ import com.aranaira.arcanearchives.tileentities.CrystalWorkbenchTile;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
-import net.minecraft.inventory.Container;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -55,7 +55,7 @@ public class PacketCrystalWorkbench {
       public void processMessage(SetRecipeIndex message, MessageContext ctx, CrystalWorkbenchTile tile) {
         tile.setRecipe(message.recipeIndex);
 
-        Container container = ctx.getServerHandler().player.openContainer;
+        net.minecraft.inventory.container.Container container = ctx.getServerHandler().player.openContainer;
         if (container instanceof CrystalWorkbenchContainer) {
           ((CrystalWorkbenchContainer) container).updateRecipe();
         }

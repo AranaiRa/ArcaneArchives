@@ -13,11 +13,11 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 
@@ -52,12 +52,12 @@ public class CommandTiles extends CommandBase {
 
 	@Override
 	public void execute (MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-		if (sender instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) sender;
+		if (sender instanceof PlayerEntity) {
+			PlayerEntity player = (PlayerEntity) sender;
 			World world = player.world;
 			ServerNetwork network = DataHelper.getServerNetwork(player.getUniqueID());
 			if (network == null) {
-				player.sendMessage(new TextComponentString("Sorry, can't find a network for you?"));
+				player.sendMessage(new StringTextComponent("Sorry, can't find a network for you?"));
 				return;
 			}
 
@@ -65,19 +65,19 @@ public class CommandTiles extends CommandBase {
 
 			ITileList tiles;
 			if (args.length == 0) {
-				player.sendMessage(new TextComponentString("Automatically deciding what tiles to highlight."));
+				player.sendMessage(new StringTextComponent("Automatically deciding what tiles to highlight."));
 				if (network.isHiveMember()) {
-					player.sendMessage(new TextComponentString("You're part of a hive! Fetching every tile..."));
+					player.sendMessage(new StringTextComponent("You're part of a hive! Fetching every tile..."));
 					tiles = hive.getTiles();
 				} else {
-					player.sendMessage(new TextComponentString("You're not part of a hive! Just fetching your tiles."));
+					player.sendMessage(new StringTextComponent("You're not part of a hive! Just fetching your tiles."));
 					tiles = network.getTiles();
 				}
 			} else {
 				switch (args[0].toLowerCase()) {
 					case "hive":
 						if (!network.isHiveMember() || hive == null) {
-							player.sendMessage(new TextComponentString("You're not part of a hive!"));
+							player.sendMessage(new StringTextComponent("You're not part of a hive!"));
 							return;
 						}
 						tiles = hive.getTiles();
@@ -102,13 +102,13 @@ public class CommandTiles extends CommandBase {
 			TileListIterable iterable = null;
 
 			if (args.length > 0 && args[0].toLowerCase().equals("valid")) {
-				player.sendMessage(new TextComponentString("Filtering to valid tiles only, unsure of how many tiles total there are."));
+				player.sendMessage(new StringTextComponent("Filtering to valid tiles only, unsure of how many tiles total there are."));
 				iterable = TileUtils.filterValid(tiles);
 			} else if (args.length > 0 && args[0].toLowerCase().equals("manifest")) {
-				player.sendMessage(new TextComponentString("Filtering to manifest tiles only, unsure of how many tiles total there are."));
+				player.sendMessage(new StringTextComponent("Filtering to manifest tiles only, unsure of how many tiles total there are."));
 				iterable = TileUtils.filterAssignableClass(tiles, IManifestTileEntity.class);
 			} else {
-				player.sendMessage(new TextComponentString("There are " + tiles.getSize() + " in your network."));
+				player.sendMessage(new StringTextComponent("There are " + tiles.getSize() + " in your network."));
 				iterable = tiles.iterable();
 			}
 
@@ -143,12 +143,12 @@ public class CommandTiles extends CommandBase {
 						result += " which does not resolve";
 					}
 				}
-				player.sendMessage(new TextComponentString(result));
+				player.sendMessage(new StringTextComponent(result));
 			}
 
 			for (Entry<Integer, List<BlockPos>> entry : positions.entrySet()) {
 				TrackPositions packet = new TrackPositions(entry.getValue(), entry.getKey());
-				Networking.CHANNEL.sendTo(packet, (EntityPlayerMP) player);
+				Networking.CHANNEL.sendTo(packet, (ServerPlayerEntity) player);
 			}
 		}
 	}

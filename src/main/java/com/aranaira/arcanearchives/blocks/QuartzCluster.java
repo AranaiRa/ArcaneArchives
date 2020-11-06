@@ -6,10 +6,10 @@ import com.aranaira.arcanearchives.reference.Tags;
 import com.aranaira.arcanearchives.tileentities.StoredIdTile;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
@@ -28,7 +28,7 @@ public class QuartzCluster extends OmniTemplateBlock {
   }
 
   @Override
-  public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+  public boolean canSilkHarvest(World world, BlockPos pos, BlockState state, PlayerEntity player) {
     return true;
   }
 
@@ -39,7 +39,7 @@ public class QuartzCluster extends OmniTemplateBlock {
   }
 
   @Override
-  protected List<ItemStack> generateItemDrops(World world, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te, ItemStack harvestTool) {
+  protected List<ItemStack> generateItemDrops(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity te, ItemStack harvestTool) {
     // TODO: This idea sucks. Change my mind.
     if (!(te instanceof StoredIdTile)) {
       throw new IllegalStateException("Invalid tile entity found when breaking Quartz Cluster, got " + te.getClass() + " instead of StoredIdTile.");
@@ -50,13 +50,13 @@ public class QuartzCluster extends OmniTemplateBlock {
       throw new IllegalStateException("Invalid tile entity found when breaking Quartz Cluster. Has null network ID.");
     }
     ItemStack quartz = new ItemStack(ModItems.RadiantQuartz);
-    NBTTagCompound tag = ItemUtils.getOrCreateTagCompound(quartz);
+    CompoundNBT tag = ItemUtils.getOrCreateTagCompound(quartz);
     tag.setUniqueId(Tags.networkId, tile.getNetworkId());
     return Collections.singletonList(quartz);
   }
 
   @Override
-  protected List<ItemStack> generateSilkTouchDrops(World world, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te, ItemStack harvestTool) {
+  protected List<ItemStack> generateSilkTouchDrops(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity te, ItemStack harvestTool) {
     return super.generateSilkTouchDrops(world, player, pos, state, te, harvestTool);
   }
 }

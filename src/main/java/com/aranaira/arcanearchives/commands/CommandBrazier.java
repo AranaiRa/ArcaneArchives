@@ -9,12 +9,12 @@ import com.aranaira.arcanearchives.util.InventoryRoutingUtils.WeightedEntry;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 
 import java.util.Collections;
@@ -46,11 +46,11 @@ public class CommandBrazier extends CommandBase {
 
 	@Override
 	public void execute (MinecraftServer server, ICommandSender sender, String[] args) {
-		if (sender instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) sender;
+		if (sender instanceof PlayerEntity) {
+			PlayerEntity player = (PlayerEntity) sender;
 			ItemStack item = player.getHeldItemMainhand();
 			if (item.isEmpty()) {
-				player.sendMessage(new TextComponentString("Can't trace an empty hand."));
+				player.sendMessage(new StringTextComponent("Can't trace an empty hand."));
 				return;
 			}
 			BrazierTileEntity fake = new BrazierTileEntity(true);
@@ -58,13 +58,13 @@ public class CommandBrazier extends CommandBase {
 			fake.setNetworkId(player.getUniqueID());
 			fake.setPos(player.getPosition());
 			List<WeightedEntry<IBrazierRouting>> weights = InventoryRoutingUtils.buildNetworkWeights(fake, item, true);
-			player.sendMessage(new TextComponentString("Target is \"" + item.getTranslationKey() + "x" + item.getCount() + "\""));
-			player.sendMessage(new TextComponentString("Total number of potential targets: " + weights.size()));
+			player.sendMessage(new StringTextComponent("Target is \"" + item.getTranslationKey() + "x" + item.getCount() + "\""));
+			player.sendMessage(new StringTextComponent("Total number of potential targets: " + weights.size()));
 			int i = 1;
 			for (WeightedEntry<IBrazierRouting> entry : weights) {
 				ImmanenceTileEntity ite = (ImmanenceTileEntity) entry.entry;
 				String description = entry.entry.getClass().toString().replace("com.aranaira.arcanearchives.tileentities.", "");
-				player.sendMessage(new TextComponentString("Entry #" + i + " " + description + " weight: " + entry.weight + " pos: " + String.format("%d,%d,%d", ite.getPos().getX(), ite.getPos().getY(), ite.getPos().getZ())));
+				player.sendMessage(new StringTextComponent("Entry #" + i + " " + description + " weight: " + entry.weight + " pos: " + String.format("%d,%d,%d", ite.getPos().getX(), ite.getPos().getY(), ite.getPos().getZ())));
 				i++;
 				BlockPos pos = ite.getPos();
 				World world = ite.getWorld();

@@ -2,18 +2,13 @@ package com.aranaira.arcanearchives.inventory;
 
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.tileentities.RadiantFurnaceTileEntity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.Slot;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.container.Slot;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntityFurnace;
-import net.minecraft.util.EnumFacing;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraft.tileentity.FurnaceTileEntity;
+import net.minecraft.util.Direction;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
@@ -21,9 +16,9 @@ import javax.annotation.Nonnull;
 public class ContainerRadiantFurnace extends Container {
 
 	protected RadiantFurnaceTileEntity tile;
-	private final EntityPlayer player;
+	private final PlayerEntity player;
 
-	public ContainerRadiantFurnace (RadiantFurnaceTileEntity te, EntityPlayer player) {
+	public ContainerRadiantFurnace (RadiantFurnaceTileEntity te, PlayerEntity player) {
 		this.tile = te;
 		this.player = player;
 
@@ -38,7 +33,7 @@ public class ContainerRadiantFurnace extends Container {
 		this.addSlotToContainer(new SlotItemHandler(te.fuel, 0, 52, 27) {
 			@Override
 			public boolean isItemValid (@Nonnull ItemStack stack) {
-				int burnTime = TileEntityFurnace.getItemBurnTime(stack);
+				int burnTime = FurnaceTileEntity.getItemBurnTime(stack);
 				return burnTime > 0;
 			}
 		});
@@ -58,7 +53,7 @@ public class ContainerRadiantFurnace extends Container {
 		});
 	}
 
-	private void addPlayerSlots (InventoryPlayer inventoryPlayer) {
+	private void addPlayerSlots (PlayerInventory inventoryPlayer) {
 		int xOffset = 10;
 		int yOffset = 87;
 
@@ -78,7 +73,7 @@ public class ContainerRadiantFurnace extends Container {
 
 	@Override
 	@Nonnull
-	public ItemStack transferStackInSlot (EntityPlayer player, int index) {
+	public ItemStack transferStackInSlot (PlayerEntity player, int index) {
 		ItemStack slotStack = ItemStack.EMPTY;
 		Slot slot = inventorySlots.get(index);
 
@@ -86,7 +81,7 @@ public class ContainerRadiantFurnace extends Container {
 			ItemStack stack = slot.getStack();
 			slotStack = stack.copy();
 			if (index < 36) { //Player Inventory -> Socket
-				int burnTime = TileEntityFurnace.getItemBurnTime(stack);
+				int burnTime = FurnaceTileEntity.getItemBurnTime(stack);
 				if (burnTime > 0) {
 					if (!mergeItemStack(stack, 37, 38, false)) {
 						if (!mergeItemStack(stack, 36, 37, false)) {
@@ -116,12 +111,12 @@ public class ContainerRadiantFurnace extends Container {
 	}
 
 	@Override
-	public void onContainerClosed (EntityPlayer playerIn) {
+	public void onContainerClosed (PlayerEntity playerIn) {
 		super.onContainerClosed(playerIn);
 	}
 
 	@Override
-	public boolean canInteractWith (EntityPlayer playerIn) {
+	public boolean canInteractWith (PlayerEntity playerIn) {
 		return true;
 	}
 }

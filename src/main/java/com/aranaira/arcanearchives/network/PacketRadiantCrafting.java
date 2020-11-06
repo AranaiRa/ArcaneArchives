@@ -9,7 +9,7 @@ import com.aranaira.arcanearchives.util.ByteUtils;
 import com.aranaira.arcanearchives.util.PlayerUtil;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
-import net.minecraft.inventory.Container;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

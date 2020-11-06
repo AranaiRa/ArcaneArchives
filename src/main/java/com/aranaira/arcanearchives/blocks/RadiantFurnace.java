@@ -10,20 +10,17 @@ import com.aranaira.arcanearchives.tileentities.RadiantFurnaceTileEntity;
 import com.aranaira.arcanearchives.util.DropUtils;
 import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
@@ -41,7 +38,7 @@ public class RadiantFurnace extends DirectionalBlock {
 	public static final AxisAlignedBB BB_MAIN = new AxisAlignedBB(0, 0, 0, 1, 1, 1);
 	public static final AxisAlignedBB BB_ACCESSOR = new AxisAlignedBB(0, 0, 0, 1, 0.5, 1);
 	public static final PropertyEnum<AccessorType> ACCESSOR_TYPE = PropertyEnum.create("accessortype", AccessorType.class);
-	public static final PropertyEnum<EnumFacing> FURNACE_FACING = PropertyEnum.create("furnace_facing", EnumFacing.class, EnumFacing.HORIZONTALS);
+	public static final PropertyEnum<Direction> FURNACE_FACING = PropertyEnum.create("furnace_facing", Direction.class, Direction.HORIZONTALS);
 
 	public static final String name = "radiant_furnace";
 
@@ -55,7 +52,7 @@ public class RadiantFurnace extends DirectionalBlock {
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public AxisAlignedBB getBoundingBox (IBlockState state, IBlockAccess source, BlockPos pos) {
+	public AxisAlignedBB getBoundingBox (BlockState state, IBlockAccess source, BlockPos pos) {
 		AccessorType accessor = state.getValue(ACCESSOR_TYPE);
 		switch (accessor) {
 			case TOP:
@@ -69,12 +66,12 @@ public class RadiantFurnace extends DirectionalBlock {
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public IBlockState getStateFromMeta (int meta) {
-		return getDefaultState().withProperty(FURNACE_FACING, EnumFacing.byHorizontalIndex(meta >> 2)).withProperty(ACCESSOR_TYPE, AccessorType.byOrdinal(meta & 3));
+	public BlockState getStateFromMeta (int meta) {
+		return getDefaultState().withProperty(FURNACE_FACING, Direction.byHorizontalIndex(meta >> 2)).withProperty(ACCESSOR_TYPE, AccessorType.byOrdinal(meta & 3));
 	}
 
 	@Override
-	public int getMetaFromState (IBlockState state) {
+	public int getMetaFromState (BlockState state) {
 		return (state.getValue(FURNACE_FACING).getHorizontalIndex() << 2) ^ state.getValue(ACCESSOR_TYPE).ordinal();
 	}
 
@@ -84,7 +81,7 @@ public class RadiantFurnace extends DirectionalBlock {
 	}
 
 	@Override
-	public void breakBlock (World world, BlockPos pos, IBlockState state) {
+	public void breakBlock (World world, BlockPos pos, BlockState state) {
 		if (state.getValue(ACCESSOR_TYPE) != AccessorType.BASE) {
 			return;
 		}
@@ -107,13 +104,13 @@ public class RadiantFurnace extends DirectionalBlock {
 		super.breakBlock(world, pos, state);
 	}
 
-	public BlockPos getConnectedPos (BlockPos pos, IBlockState state) {
+	public BlockPos getConnectedPos (BlockPos pos, BlockState state) {
 		return pos.offset(state.getValue(FURNACE_FACING));
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public void neighborChanged (IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
+	public void neighborChanged (BlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
 		if (state.getValue(ACCESSOR_TYPE) == AccessorType.BOTTOM) {
 			if (world.isAirBlock(getConnectedPos(pos, state)) || world.isAirBlock(pos.up())) {
 				world.setBlockToAir(pos);
@@ -125,7 +122,7 @@ public class RadiantFurnace extends DirectionalBlock {
 				world.setBlockToAir(pos.down());
 			}
 		} else {
-			BlockPos thingy = pos.offset(EnumFacing.fromAngle(state.getValue(FURNACE_FACING).getHorizontalAngle() - 180));
+			BlockPos thingy = pos.offset(Direction.fromAngle(state.getValue(FURNACE_FACING).getHorizontalAngle() - 180));
 			if (world.isAirBlock(thingy) || world.isAirBlock(thingy.up())) {
 				// TODO: PARTICLES
 				this.breakBlock(world, pos, state);
@@ -137,8 +134,8 @@ public class RadiantFurnace extends DirectionalBlock {
 	}
 
 	@Override
-	public boolean onBlockActivated (World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		IBlockState stateUp = worldIn.getBlockState(pos.up());
+	public boolean onBlockActivated (World worldIn, BlockPos pos, BlockState state, PlayerEntity playerIn, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
+		BlockState stateUp = worldIn.getBlockState(pos.up());
 
 		AccessorType accessor = state.getValue(ACCESSOR_TYPE);
 		if (accessor == AccessorType.TOP) {
@@ -167,13 +164,13 @@ public class RadiantFurnace extends DirectionalBlock {
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean isFullCube (IBlockState state) {
+	public boolean isFullCube (BlockState state) {
 		return false;
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean isOpaqueCube (IBlockState state) {
+	public boolean isOpaqueCube (BlockState state) {
 		return false;
 	}
 
@@ -188,26 +185,26 @@ public class RadiantFurnace extends DirectionalBlock {
 	}
 
 	@Override
-	public boolean hasTileEntity (IBlockState state) {
+	public boolean hasTileEntity (BlockState state) {
 		return true;
 	}
 
 	@Nullable
 	@Override
-	public TileEntity createTileEntity (World world, IBlockState state) {
+	public TileEntity createTileEntity (World world, BlockState state) {
 		if (state.getValue(ACCESSOR_TYPE) == AccessorType.BASE) {
 			return new RadiantFurnaceTileEntity();
 		} else if (state.getValue(ACCESSOR_TYPE) == AccessorType.TOP) {
-			return new RadiantFurnaceAccessorTileEntity(EnumFacing.fromAngle(state.getValue(FURNACE_FACING).getHorizontalAngle() - 180), false);
+			return new RadiantFurnaceAccessorTileEntity(Direction.fromAngle(state.getValue(FURNACE_FACING).getHorizontalAngle() - 180), false);
 		} else {
-			return new RadiantFurnaceAccessorTileEntity(EnumFacing.fromAngle(state.getValue(FURNACE_FACING).getHorizontalAngle() - 180), true);
+			return new RadiantFurnaceAccessorTileEntity(Direction.fromAngle(state.getValue(FURNACE_FACING).getHorizontalAngle() - 180), true);
 		}
 	}
 
 	@Override
-	public void handleAccessors (World world, BlockPos pos, EntityLivingBase placer) {
-		EnumFacing facing = getFacing(world, pos);
-		EnumFacing curOffset = EnumFacing.fromAngle(facing.getHorizontalAngle() - 180);
+	public void handleAccessors (World world, BlockPos pos, LivingEntity placer) {
+		Direction facing = getFacing(world, pos);
+		Direction curOffset = Direction.fromAngle(facing.getHorizontalAngle() - 180);
 
 		BlockPos bottom = pos.offset(curOffset);
 		BlockPos top = bottom.up();
@@ -222,7 +219,7 @@ public class RadiantFurnace extends DirectionalBlock {
 	}
 
 	@Override
-	public PropertyEnum<EnumFacing> getFacingProperty () {
+	public PropertyEnum<Direction> getFacingProperty () {
 		return FURNACE_FACING;
 	}
 

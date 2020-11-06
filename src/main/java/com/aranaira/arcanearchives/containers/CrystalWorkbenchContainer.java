@@ -9,13 +9,13 @@ import com.aranaira.arcanearchives.inventories.InventoryWorkbenchCraftResult;
 import com.aranaira.arcanearchives.registry.CrystalWorkbenchRegistry;
 import com.aranaira.arcanearchives.tileentities.CrystalWorkbenchTile;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ClickType;
-import net.minecraft.inventory.Container;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.container.Slot;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -40,18 +40,18 @@ public class CrystalWorkbenchContainer extends Container {
   private final IItemHandlerModifiable combinedInventory;
   private final InventoryWorkbenchCraftResult result = new InventoryWorkbenchCraftResult();
   private final CrystalWorkbenchTile tile;
-  private final EntityPlayer player;
+  private final PlayerEntity player;
   private final World world;
   private Runnable updateRecipeGUI;
 
-  public CrystalWorkbenchContainer(IItemHandlerModifiable tileInventory, CrystalWorkbenchTile tile, EntityPlayer player) {
+  public CrystalWorkbenchContainer(IItemHandlerModifiable tileInventory, CrystalWorkbenchTile tile, PlayerEntity player) {
     this.tileInventory = tileInventory;
     this.tile = tile;
     this.playerInventory = player.inventory;
     this.player = player;
     this.world = player.world;
 
-    IItemHandler mainPlayerInv = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+    IItemHandler mainPlayerInv = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP);
     if (!(mainPlayerInv instanceof IItemHandlerModifiable)) {
       throw new IllegalStateException("Expected main player inventory to be modifiable");
     }
@@ -60,7 +60,7 @@ public class CrystalWorkbenchContainer extends Container {
     //Output Slot
     this.slotOutput = new SlotWorkbenchCrafting(player, getWorkbenchCrafting(), result, SLOT_OUTPUT, 95, 18) {
       @Override
-      public ItemStack onTake(EntityPlayer thePlayer, ItemStack stack) {
+      public ItemStack onTake(PlayerEntity thePlayer, ItemStack stack) {
         CrystalWorkbenchRecipe recipe = tile.getCurrentRecipe();
         if (recipe == null) {
           return ItemStack.EMPTY;
@@ -89,7 +89,7 @@ public class CrystalWorkbenchContainer extends Container {
       }
 
       @Override
-      public boolean canTakeStack(EntityPlayer player) {
+      public boolean canTakeStack(PlayerEntity player) {
         CrystalWorkbenchRecipe recipe = tile.getCurrentRecipe();
         if (recipe == null) {
           return false;
@@ -172,8 +172,8 @@ public class CrystalWorkbenchContainer extends Container {
 
   @Override
   @Nonnull
-  public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
-    Slot slot = this.inventorySlots.get(index);
+  public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+    net.minecraft.inventory.container.Slot slot = this.inventorySlots.get(index);
 
     if (slot == null || !slot.getHasStack()) {
       return ItemStack.EMPTY;
@@ -212,7 +212,7 @@ public class CrystalWorkbenchContainer extends Container {
 
   @Override
   @Nonnull
-  public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player) {
+  public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
     if (slotId >= 54 && slotId <= 68) {
       Slot baseSlot = getSlot(slotId);
       if (!(baseSlot instanceof SlotRecipeHandler)) {
@@ -230,7 +230,7 @@ public class CrystalWorkbenchContainer extends Container {
   }
 
   @Override
-  public boolean canInteractWith(@Nonnull EntityPlayer playerIn) {
+  public boolean canInteractWith(@Nonnull PlayerEntity playerIn) {
     return true;
   }
 

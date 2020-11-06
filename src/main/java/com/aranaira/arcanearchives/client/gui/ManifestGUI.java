@@ -14,19 +14,19 @@ import com.aranaira.arcanearchives.containers.ManifestContainer;
 import com.aranaira.arcanearchives.manifest.ManifestEntry;
 import com.aranaira.arcanearchives.types.ManifestList;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.gui.GuiPageButtonList;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ClickType;
-import net.minecraft.inventory.Slot;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.container.Slot;
+import net.minecraft.inventory.container.ClickType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.client.CPacketCloseWindow;
+import net.minecraft.network.play.client.CCloseWindowPacket;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.client.config.GuiConfig;
@@ -46,7 +46,7 @@ public class ManifestGUI extends LayeredGuiContainer implements GuiPageButtonLis
   private static final ResourceLocation GUIForegroundTextures = new ResourceLocation("arcanearchives:textures/gui/manifest_overlay.png");
   private static final ResourceLocation GUIForegroundTexturesSimple = new ResourceLocation("arcanearchives:textures/gui/simple/manifest_overlay.png");
   private static final float mGUIForegroundTexturesSize = 256;
-  private final EntityPlayer player;
+  private final PlayerEntity player;
   private ManifestContainer container;
   private ScrollEventManager scrollEventManager;
   // offset and size of search box
@@ -95,15 +95,15 @@ public class ManifestGUI extends LayeredGuiContainer implements GuiPageButtonLis
 
   private ManifestSearchField searchBox;
   private ScrollBar mScrollBar;
-  private GuiButton mEndTrackButton;
-  private GuiButton mRefreashButton;
-  private GuiButton mConfigButton;
-  private GuiButton mAlphaQuantButton;
-  private GuiButton mAscDescButton;
-  private GuiButton mJEIsync;
+  private Button mEndTrackButton;
+  private Button mRefreashButton;
+  private Button mConfigButton;
+  private Button mAlphaQuantButton;
+  private Button mAscDescButton;
+  private Button mJEIsync;
   private String storedJEI = "";
 
-  public ManifestGUI(EntityPlayer player, ManifestContainer container) {
+  public ManifestGUI(PlayerEntity player, ManifestContainer container) {
     super(container);
 
     this.scrollEventManager = new ScrollEventManager();
@@ -246,7 +246,7 @@ public class ManifestGUI extends LayeredGuiContainer implements GuiPageButtonLis
   }
 
   @Override
-  public void drawSlot(Slot slot) {
+  public void drawSlot(net.minecraft.inventory.container.Slot slot) {
     if (slot.isEnabled()) {
       ItemStack stack = slot.getStack();
       if (!stack.isEmpty()) {
@@ -330,7 +330,7 @@ public class ManifestGUI extends LayeredGuiContainer implements GuiPageButtonLis
   }
 
   @Override
-  protected void actionPerformed(GuiButton button) throws IOException {
+  protected void actionPerformed(Button button) throws IOException {
     if (button.id == mEndTrackButton.id) {
       LineHandler.clearChests(player.dimension);
     } else if (button.id == mRefreashButton.id) {
@@ -371,7 +371,7 @@ public class ManifestGUI extends LayeredGuiContainer implements GuiPageButtonLis
   }
 
   @Override
-  protected void handleMouseClick(Slot slotIn, int slotId, int mouseButton, ClickType type) {
+  protected void handleMouseClick(net.minecraft.inventory.container.Slot slotIn, int slotId, int mouseButton, ClickType type) {
     container.slotClick(slotId, mouseButton, type, player);
   }
 
@@ -405,7 +405,7 @@ public class ManifestGUI extends LayeredGuiContainer implements GuiPageButtonLis
     switch (keyCode) {
       case Keyboard.KEY_ESCAPE: {
         maybeRestoreJEI();
-        mc.player.connection.sendPacket(new CPacketCloseWindow(mc.player.openContainer.windowId));
+        mc.player.connection.sendPacket(new CCloseWindowPacket(mc.player.openContainer.windowId));
         mc.player.openContainer = mc.player.inventoryContainer;
         mc.player.inventoryContainer.windowId = 0; // DON'T ASK ME I STOLE THIS FROM HELLFIRE				break;
       }
@@ -457,7 +457,7 @@ public class ManifestGUI extends LayeredGuiContainer implements GuiPageButtonLis
         tooltip.add("" + TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.manifest.clicktoshow", I18n.format("arcanearchives.text.manifest.endtrackingbutton")));
       }
       if (entry != null) {
-        if (GuiScreen.isShiftKeyDown()) {
+        if (Screen.isShiftKeyDown()) {
 /*          tooltip.add("");
           Long2ObjectOpenHashMap<IndexDescriptor> descriptors = entry.getDescriptorMap();
           int unnamed_count = 1;

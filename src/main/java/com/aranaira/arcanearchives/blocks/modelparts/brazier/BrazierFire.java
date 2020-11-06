@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.blocks.modelparts.brazier;
 
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.util.BlockRenderLayer;
 
 public class BrazierFire extends TemplateBlock implements IHasModel {
@@ -20,7 +20,7 @@ public class BrazierFire extends TemplateBlock implements IHasModel {
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean isOpaqueCube (IBlockState state) {
+	public boolean isOpaqueCube (BlockState state) {
 		return false;
 	}
 

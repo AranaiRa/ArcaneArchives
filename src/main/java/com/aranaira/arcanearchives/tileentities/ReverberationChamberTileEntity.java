@@ -6,8 +6,8 @@ import com.aranaira.arcanearchives.api.immanence.ImmanenceBonusType;
 import com.aranaira.arcanearchives.immanence.ImmanenceSource;
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -33,13 +33,13 @@ public class ReverberationChamberTileEntity extends ImmanenceTileEntity implemen
 	}
 
 	@Override
-	public boolean hasCapability (Capability<?> capability, @Nullable EnumFacing facing) {
+	public boolean hasCapability (Capability<?> capability, @Nullable Direction facing) {
 		return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
 	}
 
 	@Nullable
 	@Override
-	public <T> T getCapability (Capability<T> capability, @Nullable EnumFacing facing) {
+	public <T> T getCapability (Capability<T> capability, @Nullable Direction facing) {
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(inventory);
 		}
@@ -82,7 +82,7 @@ public class ReverberationChamberTileEntity extends ImmanenceTileEntity implemen
 
 	@Override
 	@Nonnull
-	public NBTTagCompound writeToNBT (NBTTagCompound compound) {
+	public CompoundNBT writeToNBT (CompoundNBT compound) {
 		super.writeToNBT(compound);
 		compound.setTag(Tags.inventory, inventory.serializeNBT());
 		compound.setInteger(Tags.BURN_TIME, burnTime);
@@ -91,7 +91,7 @@ public class ReverberationChamberTileEntity extends ImmanenceTileEntity implemen
 	}
 
 	@Override
-	public void readFromNBT (NBTTagCompound compound) {
+	public void readFromNBT (CompoundNBT compound) {
 		super.readFromNBT(compound);
 		inventory.deserializeNBT(compound.getCompoundTag(Tags.inventory));
 		burnTime = compound.getInteger(Tags.BURN_TIME);

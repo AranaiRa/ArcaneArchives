@@ -9,18 +9,15 @@ import com.aranaira.arcanearchives.tileentities.RadiantChestTile;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-
-import java.util.Random;
 
 @SuppressWarnings("deprecation")
 public class RadiantChestBlock extends TemplateBlock implements INetworkBlock {
@@ -32,18 +29,18 @@ public class RadiantChestBlock extends TemplateBlock implements INetworkBlock {
 
   @Override
   @SuppressWarnings("deprecation")
-  public boolean isFullCube(IBlockState state) {
+  public boolean isFullCube(BlockState state) {
     return false;
   }
 
   @Override
   @SuppressWarnings("deprecation")
-  public boolean isOpaqueCube(IBlockState state) {
+  public boolean isOpaqueCube(BlockState state) {
     return false;
   }
 
   @Override
-  public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+  public boolean onBlockActivated(World worldIn, BlockPos pos, BlockState state, PlayerEntity playerIn, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
     LineHandler.removeLine(pos, playerIn.dimension);
 
 
@@ -88,17 +85,17 @@ public class RadiantChestBlock extends TemplateBlock implements INetworkBlock {
   }
 
   @Override
-  public boolean hasTileEntity(IBlockState state) {
+  public boolean hasTileEntity(BlockState state) {
     return true;
   }
 
   @Override
-  public TileEntity createTileEntity(World world, IBlockState state) {
+  public TileEntity createTileEntity(World world, BlockState state) {
     return new RadiantChestTile();
   }
 
   @Override
-  public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+  public void breakBlock(World worldIn, BlockPos pos, BlockState state) {
     LineHandler.removeLine(pos, worldIn.provider.getDimension());
 
     if (!worldIn.isRemote) {
@@ -115,12 +112,12 @@ public class RadiantChestBlock extends TemplateBlock implements INetworkBlock {
   }
 
   @Override
-  public boolean hasComparatorInputOverride(IBlockState state) {
+  public boolean hasComparatorInputOverride(BlockState state) {
     return true;
   }
 
   @Override
-  public int getComparatorInputOverride(IBlockState blockState, World worldIn, BlockPos pos) {
+  public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
     RadiantChestTile te = WorldUtil.getTileEntity(RadiantChestTile.class, worldIn, pos);
     if (te != null) {
       return te.getInventory().calcRedstone();

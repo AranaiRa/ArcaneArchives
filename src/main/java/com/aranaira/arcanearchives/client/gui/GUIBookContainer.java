@@ -1,11 +1,11 @@
 package com.aranaira.arcanearchives.client.gui;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GUIBookContainer extends GuiContainer {
+public class GUIBookContainer extends ContainerScreen {
   private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/requisition_items.png");
   private final int ImageHeight = 256, ImageWidth = 256, ImageScale = 256;
   // TODO: This could cause problems if the class is ever loaded in a server context without the Minecraft class
@@ -44,7 +44,7 @@ public class GUIBookContainer extends GuiContainer {
   //The search bar's text used for filtering the list of items on the network.
   private String SearchText = "";
 
-  private Container container;
+  private net.minecraft.inventory.container.Container container;
 
   public GUIBookContainer(Container container) {
 
@@ -130,7 +130,7 @@ public class GUIBookContainer extends GuiContainer {
   @Override
   public void updateScreen() {
     //Sets the GUI Buttons to be usable.
-    for (GuiButton button : buttonList) {
+    for (Button button : buttonList) {
       button.visible = true;
     }
 
@@ -139,7 +139,7 @@ public class GUIBookContainer extends GuiContainer {
   }
 
   @SideOnly(Side.CLIENT)
-  static class GenericButton extends GuiButton {
+  static class GenericButton extends Button {
     public GenericButton(int x, int y, int width, int height, String text) {
       super(1, x, y, width, height, text);
     }

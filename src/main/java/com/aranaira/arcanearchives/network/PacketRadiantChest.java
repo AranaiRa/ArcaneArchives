@@ -4,20 +4,18 @@ import com.aranaira.arcanearchives.containers.RadiantChestContainer;
 import com.aranaira.arcanearchives.util.ByteUtils;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.inventory.ClickType;
-import net.minecraft.inventory.Container;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.container.ClickType;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.server.SPacketConfirmTransaction;
+import net.minecraft.network.play.server.SConfirmTransactionPacket;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.io.IOException;
 
 public class PacketRadiantChest {
 /*    public SetName(BlockPos pos, String name, int dimensionID) {
@@ -311,7 +309,7 @@ public class PacketRadiantChest {
     public static class Handler implements IMessageHandler<MessageClickWindowExtended, IMessage> {
       @Override
       public IMessage onMessage(final MessageClickWindowExtended message, final MessageContext ctx) {
-        EntityPlayerMP player = ctx.getServerHandler().player;
+        ServerPlayerEntity player = ctx.getServerHandler().player;
 
         if (player == null) {
           return null;
@@ -322,7 +320,7 @@ public class PacketRadiantChest {
         return null;
       }
 
-      public void processMessage(final MessageClickWindowExtended message, EntityPlayerMP player) {
+      public void processMessage(final MessageClickWindowExtended message, ServerPlayerEntity player) {
         player.markPlayerActive();
 
         Container container = player.openContainer;
@@ -342,7 +340,7 @@ public class PacketRadiantChest {
             ItemStack itemstack2 = container.slotClick(message.slot, message.mouseButton, message.mode, player);
 
             if (ItemStack.areItemStacksEqualUsingNBTShareTag(message.clickedItem, itemstack2)) {
-              player.connection.sendPacket(new SPacketConfirmTransaction(message.windowId, message.transactionId, true));
+              player.connection.sendPacket(new SConfirmTransactionPacket(message.windowId, message.transactionId, true));
               player.isChangingQuantityOnly = true;
               player.openContainer.detectAndSendChanges();
               player.updateHeldItem();
@@ -400,7 +398,7 @@ public class PacketRadiantChest {
       @Override
       public IMessage onMessage(final MessageSyncExtendedSlotContents message, final MessageContext ctx) {
         Minecraft mc = Minecraft.getMinecraft();
-        EntityPlayer player = mc.player;
+        PlayerEntity player = mc.player;
 
         if (player == null) {
           return null;
@@ -410,7 +408,7 @@ public class PacketRadiantChest {
         return null;
       }
 
-      public void processMessage(final MessageSyncExtendedSlotContents message, EntityPlayer player) {
+      public void processMessage(final MessageSyncExtendedSlotContents message, PlayerEntity player) {
         if (player.openContainer instanceof RadiantChestContainer && message.windowId == player.openContainer.windowId) {
           player.openContainer.inventorySlots.get(message.slot).putStack(message.stack);
         }

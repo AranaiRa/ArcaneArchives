@@ -6,21 +6,21 @@ import com.aranaira.arcanearchives.items.IUpgradeItem;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.interfaces.IUpgradeableStorage;
 import com.aranaira.arcanearchives.types.UpgradeType;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.Slot;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerUpgrades extends Container {
 	private IUpgradeableStorage storage;
 	private ImmanenceTileEntity tile;
-	private EntityPlayer player;
+	private PlayerEntity player;
 	private SizeUpgradeItemHandler sizeHandler;
 	private OptionalUpgradesHandler optionalHandler;
 
-	public ContainerUpgrades (EntityPlayer player, ImmanenceTileEntity tile) {
+	public ContainerUpgrades (PlayerEntity player, ImmanenceTileEntity tile) {
 		assert tile instanceof IUpgradeableStorage;
 		this.storage = (IUpgradeableStorage) tile;
 		this.tile = tile;
@@ -49,29 +49,29 @@ public class ContainerUpgrades extends Container {
 		}
 	}
 
-	private void createPlayerInventory (InventoryPlayer inventoryPlayer) {
+	private void createPlayerInventory (PlayerInventory inventoryPlayer) {
 		int xOffset = 10;
 		int yOffset = 80;
 
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 9; j++) {
-				addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9, xOffset + j * 18, yOffset + i * 18));
+				addSlotToContainer(new net.minecraft.inventory.container.Slot(inventoryPlayer, j + i * 9 + 9, xOffset + j * 18, yOffset + i * 18));
 			}
 		}
 		for (int i = 0; i < 9; i++) {
-			addSlotToContainer(new Slot(inventoryPlayer, i, xOffset + i * 18, yOffset + 58));
+			addSlotToContainer(new net.minecraft.inventory.container.Slot(inventoryPlayer, i, xOffset + i * 18, yOffset + 58));
 		}
 	}
 
 	@Override
-	public boolean canInteractWith (EntityPlayer playerIn) {
+	public boolean canInteractWith (PlayerEntity playerIn) {
 		return true;
 	}
 
 	@Override
-	public ItemStack transferStackInSlot (EntityPlayer playerIn, int index) {
+	public ItemStack transferStackInSlot (PlayerEntity playerIn, int index) {
 		if (index < 36) {
-			Slot slot = getSlot(index);
+			net.minecraft.inventory.container.Slot slot = getSlot(index);
 			if (slot != null && slot.getHasStack()) {
 				ItemStack stack = slot.getStack();
 				if (!mergeItemStack(stack, 0, 36, true)) return ItemStack.EMPTY;
@@ -89,7 +89,7 @@ public class ContainerUpgrades extends Container {
 				if (upgrade.getUpgradeType(stack) == UpgradeType.SIZE) {
 					int upSlot = upgrade.getSlotIsUpgradeFor(stack);
 					upgradeSlot += upSlot;
-					Slot target = getSlot(upgradeSlot);
+					net.minecraft.inventory.container.Slot target = getSlot(upgradeSlot);
 					switch (upSlot) {
 						case 0:
 							if (!target.getHasStack() && !mergeItemStack(stack, upgradeSlot, upgradeSlot + 1, false)) {

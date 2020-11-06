@@ -4,24 +4,22 @@ import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.templates.DirectionalBlock;
 import com.aranaira.arcanearchives.tileentities.MatrixCoreTileEntity;
-import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.Random;
 
@@ -45,24 +43,24 @@ public class MatrixCrystalCore extends DirectionalBlock {
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean causesSuffocation (IBlockState state) {
+	public boolean causesSuffocation (BlockState state) {
 		return false;
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean isFullCube (IBlockState state) {
+	public boolean isFullCube (BlockState state) {
 		return false;
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean isOpaqueCube (IBlockState state) {
+	public boolean isOpaqueCube (BlockState state) {
 		return false;
 	}
 
 	@Override
-	public void updateTick (World worldIn, BlockPos pos, IBlockState state, Random rand) {
+	public void updateTick (World worldIn, BlockPos pos, BlockState state, Random rand) {
 		super.updateTick(worldIn, pos, state, rand);
 	}
 
@@ -72,7 +70,7 @@ public class MatrixCrystalCore extends DirectionalBlock {
 	}
 
 	@Override
-	public boolean onBlockActivated (World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+	public boolean onBlockActivated (World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction side, float hitX, float hitY, float hitZ) {
 		return false;
 
 		TileEntity te = world.getTileEntity(pos);
@@ -92,12 +90,12 @@ public class MatrixCrystalCore extends DirectionalBlock {
 	}
 
 	@Override
-	public boolean hasTileEntity (IBlockState state) {
+	public boolean hasTileEntity (BlockState state) {
 		return true;
 	}
 
 	@Override
-	public TileEntity createTileEntity (World world, IBlockState state) {
+	public TileEntity createTileEntity (World world, BlockState state) {
 		return new MatrixCoreTileEntity();
 	}
 }

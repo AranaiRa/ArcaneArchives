@@ -10,9 +10,9 @@ import com.aranaira.arcanearchives.reference.Tags;
 import com.aranaira.arcanearchives.tilenetwork.Network;
 import com.aranaira.arcanearchives.types.MachineSound;
 import com.aranaira.arcanearchives.util.MathUtils;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.passive.EntityOcelot;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.passive.OcelotEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
@@ -54,8 +54,8 @@ public class RadiantResonatorTile extends NetworkedBaseTile implements ITickable
         world.setBlockState(pos.up(), ModBlocks.QuartzCluster.getDefaultState());
 
         BlockPos up = pos.up();
-        List<EntityOcelot> entities = world.getEntitiesWithinAABB(EntityOcelot.class, new AxisAlignedBB(up.getX() - 0.9, up.getY() - 0.9, up.getZ() - 0.9, up.getX() + 0.9, up.getY() + 0.9, up.getZ() + 0.9));
-        for (EntityOcelot ocelot : entities) {
+        List<OcelotEntity> entities = world.getEntitiesWithinAABB(OcelotEntity.class, new AxisAlignedBB(up.getX() - 0.9, up.getY() - 0.9, up.getZ() - 0.9, up.getX() + 0.9, up.getY() + 0.9, up.getZ() + 0.9));
+        for (OcelotEntity ocelot : entities) {
           ocelot.motionY += MathUtils.rand.nextFloat() * 5F;
           ocelot.motionX += (MathUtils.rand.nextFloat() - 0.5f) * 3F;
           ocelot.motionZ += (MathUtils.rand.nextFloat() - 0.5f) * 3F;
@@ -78,7 +78,7 @@ public class RadiantResonatorTile extends NetworkedBaseTile implements ITickable
 
   @Nonnull
   @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+  public CompoundNBT writeToNBT(CompoundNBT compound) {
     super.writeToNBT(compound);
 
     compound.setInteger(Tags.Resonator.growth, growth);
@@ -87,7 +87,7 @@ public class RadiantResonatorTile extends NetworkedBaseTile implements ITickable
   }
 
   @Override
-  public void readFromNBT(NBTTagCompound compound) {
+  public void readFromNBT(CompoundNBT compound) {
     super.readFromNBT(compound);
 
     if (compound.hasKey(Tags.Resonator.growth)) {
@@ -118,7 +118,7 @@ public class RadiantResonatorTile extends NetworkedBaseTile implements ITickable
     if (world.isAirBlock(pos.up())) {
       return TickResult.TICKING;
     } else {
-      IBlockState up = world.getBlockState(pos.up());
+      BlockState up = world.getBlockState(pos.up());
       if (up.getBlock() instanceof QuartzCluster) {
         return TickResult.HARVEST_WAITING;
       } else {

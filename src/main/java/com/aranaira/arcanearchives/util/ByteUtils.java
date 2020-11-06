@@ -10,7 +10,7 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTSizeTracker;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 
@@ -62,7 +62,7 @@ public class ByteUtils {
   }
 
   @Deprecated
-  public static void writeNBT(ByteBuf buf, @Nullable NBTTagCompound nbt) {
+  public static void writeNBT(ByteBuf buf, @Nullable CompoundNBT nbt) {
     if (nbt == null) {
       buf.writeByte(0);
     } else {
@@ -75,7 +75,7 @@ public class ByteUtils {
   }
 
   @Deprecated
-  public static NBTTagCompound readNBT(ByteBuf buf) {
+  public static CompoundNBT readNBT(ByteBuf buf) {
     int i = buf.readerIndex();
     byte b0 = buf.readByte();
 
@@ -98,7 +98,7 @@ public class ByteUtils {
       buf.writeShort(Item.getIdFromItem(stack.getItem()));
       buf.writeInt(stack.getCount());
       buf.writeShort(stack.getMetadata());
-      NBTTagCompound nbttagcompound = null;
+      CompoundNBT nbttagcompound = null;
 
       if (stack.getItem().isDamageable() || stack.getItem().getShareTag()) {
         nbttagcompound = stack.getItem().getNBTShareTag(stack);
@@ -115,7 +115,7 @@ public class ByteUtils {
       buf.writeShort(Item.getIdFromItem(stack.getItem()));
       buf.writeInt(stack.getCount());
       buf.writeShort(stack.getMetadata());
-      NBTTagCompound nbttagcompound = null;
+      CompoundNBT nbttagcompound = null;
 
       if (stack.getItem().isDamageable() || stack.getItem().getShareTag()) {
         nbttagcompound = stack.getItem().getNBTShareTag(stack);
@@ -132,7 +132,7 @@ public class ByteUtils {
       buf.writeShort(Item.getIdFromItem(stack.getItem()));
       buf.writeInt(stack.getCount());
       buf.writeShort(stack.getMetadata());
-      NBTTagCompound nbttagcompound = null;
+      CompoundNBT nbttagcompound = null;
 
       // TODO: Whoever wrote this didn't understand some vital concepts.
       if (stack.getItem().isDamageable() || stack.getItem().getShareTag()) {
@@ -150,7 +150,7 @@ public class ByteUtils {
       buf.writeShort(Item.getIdFromItem(stack.getItem()));
       buf.writeInt(stack.getCount());
       buf.writeShort(stack.getMetadata());
-      NBTTagCompound nbttagcompound = null;
+      CompoundNBT nbttagcompound = null;
 
       if (stack.getItem().isDamageable() || stack.getItem().getShareTag()) {
         nbttagcompound = stack.getTagCompound();

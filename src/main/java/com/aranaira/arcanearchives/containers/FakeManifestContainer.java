@@ -1,15 +1,18 @@
 package com.aranaira.arcanearchives.containers;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.*;
+import net.minecraft.inventory.container.ClickType;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
 
 public class FakeManifestContainer extends Container {
-  private EntityPlayer player;
+  private PlayerEntity player;
 
-  public FakeManifestContainer(EntityPlayer playerIn) {
+  public FakeManifestContainer(PlayerEntity playerIn) {
     this.player = playerIn;
 
     for (int i = 0; i < 81; i++) {
@@ -19,12 +22,12 @@ public class FakeManifestContainer extends Container {
 
   @Override
   @Nonnull
-  public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player) {
+  public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
     return ItemStack.EMPTY;
   }
 
   @Override
-  public boolean canInteractWith(@Nonnull EntityPlayer playerIn) {
+  public boolean canInteractWith(@Nonnull PlayerEntity playerIn) {
     return true;
   }
 
@@ -32,7 +35,7 @@ public class FakeManifestContainer extends Container {
   public void putStackInSlot(int slotID, ItemStack stack) {
   }
 
-  private static IInventory emptyInventory = new InventoryBasic("[Null]", true, 0);
+  private static IInventory emptyInventory = new Inventory("[Null]", true, 0);
 
   public static class UnusedSlot extends Slot {
     public UnusedSlot(int xPosition, int yPosition) {

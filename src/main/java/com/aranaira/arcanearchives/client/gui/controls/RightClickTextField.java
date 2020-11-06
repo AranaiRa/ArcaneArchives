@@ -1,9 +1,9 @@
 package com.aranaira.arcanearchives.client.gui.controls;
 
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.client.gui.widget.TextFieldWidget;
 
-public class RightClickTextField extends GuiTextField {
+public class RightClickTextField extends TextFieldWidget {
   private int id;
 
   public RightClickTextField(int componentId, FontRenderer fontrendererObj, int x, int y, int par5Width, int par6Height) {

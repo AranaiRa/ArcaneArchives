@@ -6,10 +6,10 @@ import com.aranaira.arcanearchives.blocks.templates.OmniTemplateBlock;
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import com.aranaira.arcanearchives.items.templates.NetworkItemBlockTemplate;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.item.BlockItem;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.TextFormatting;
@@ -50,7 +50,7 @@ public class ModBlocks {
   public static RadiantChestBlock RadiantChest = register("radiant_chest", RadiantChestBlock::new, Material.GLASS, (o) -> o.setHardness(3f).setResistance(6000).setHarvestTool("pickaxe", 0).setLightLevel(1).setTooltip("arcanearchives.tooltip.device.radiant_chest", TextFormatting.GOLD).storesId(), NetworkItemBlockTemplate::new);
 
   // Sorta temporary
-  public static OmniTemplateBlock QuartzCluster = register("quartz_cluster", OmniTemplateBlock::new, Material.ROCK, (o) -> o.setDefaultFacing(EnumFacing.UP).setHardness(1.4f).setTooltip("arcanearchives.tooltip.item.raw_quartz", TextFormatting.GOLD).setHarvestTool("pickaxe", 0).setLightLevel(1).setFullCube(false).setOpaqueCube(false).setBoundingBox(Boxes.QuartzCluster));
+  public static OmniTemplateBlock QuartzCluster = register("quartz_cluster", OmniTemplateBlock::new, Material.ROCK, (o) -> o.setDefaultFacing(Direction.UP).setHardness(1.4f).setTooltip("arcanearchives.tooltip.item.raw_quartz", TextFormatting.GOLD).setHarvestTool("pickaxe", 0).setLightLevel(1).setFullCube(false).setOpaqueCube(false).setBoundingBox(Boxes.QuartzCluster));
 
   public static <T extends Block> T register(String registryName, Supplier<T> supplier) {
     return register(registryName, o -> supplier.get(), Material.ROCK, null, null);
@@ -60,7 +60,7 @@ public class ModBlocks {
     return register(registryName, o -> supplier.get(), Material.ROCK, consumer, null);
   }
 
-  public static <T extends Block> T register(String registryName, Supplier<T> supplier, Function<T, ? extends ItemBlock> itemBlock) {
+  public static <T extends Block> T register(String registryName, Supplier<T> supplier, Function<T, ? extends BlockItem> itemBlock) {
     return register(registryName, o -> supplier.get(), Material.ROCK, null, itemBlock);
   }
 
@@ -88,7 +88,7 @@ public class ModBlocks {
     return register(registryName, supplier, Material.ROCK, null, itemBlock);
   }*/
 
-  public static <T extends Block> T register(String registryName, Function<Material, T> supplier, Material material, @Nullable Consumer<T> consumer, @Nullable Function<T, ? extends ItemBlock> itemBlock) {
+  public static <T extends Block> T register(String registryName, Function<Material, T> supplier, Material material, @Nullable Consumer<T> consumer, @Nullable Function<T, ? extends BlockItem> itemBlock) {
     T block = supplier.apply(material);
     block.setTranslationKey(registryName);
     block.setRegistryName(new ResourceLocation(ArcaneArchives.MODID, registryName));
@@ -96,11 +96,11 @@ public class ModBlocks {
     if (consumer != null) {
       consumer.accept(block);
     }
-    ItemBlock item;
+    BlockItem item;
     if (itemBlock != null) {
       item = itemBlock.apply(block);
     } else {
-      item = new ItemBlock(block);
+      item = new BlockItem(block);
     }
     if (item.getBlock() != Blocks.AIR) {
       item.setRegistryName(new ResourceLocation(ArcaneArchives.MODID, registryName));

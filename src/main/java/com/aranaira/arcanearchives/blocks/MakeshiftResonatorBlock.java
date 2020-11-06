@@ -2,19 +2,18 @@ package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import com.aranaira.arcanearchives.tileentities.MakeshiftResonatorTile;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.*;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
@@ -38,7 +37,7 @@ public class MakeshiftResonatorBlock extends TemplateBlock {
   }
 
   @Override
-  public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+  public boolean onBlockActivated(World worldIn, BlockPos pos, BlockState state, PlayerEntity playerIn, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
     if (!state.getValue(FILLED)) {
       if (!playerIn.capabilities.isCreativeMode) {
         ItemStack stack = playerIn.getHeldItem(hand);
@@ -77,18 +76,18 @@ public class MakeshiftResonatorBlock extends TemplateBlock {
   }
 
   @Override
-  public int damageDropped(IBlockState state) {
+  public int damageDropped(BlockState state) {
     return 0;
   }
 
   @Override
-  public int getMetaFromState(IBlockState state) {
+  public int getMetaFromState(BlockState state) {
     return state.getValue(FILLED) ? 1 : 0;
   }
 
   @SuppressWarnings("deprecation")
   @Override
-  public IBlockState getStateFromMeta(int meta) {
+  public BlockState getStateFromMeta(int meta) {
     return meta == 1 ? getDefaultState().withProperty(FILLED, true) : getDefaultState();
   }
 
@@ -100,19 +99,19 @@ public class MakeshiftResonatorBlock extends TemplateBlock {
 
   @Override
   @SuppressWarnings("deprecation")
-  public boolean causesSuffocation(IBlockState state) {
+  public boolean causesSuffocation(BlockState state) {
     return false;
   }
 
   @Override
   @SuppressWarnings("deprecation")
-  public boolean isFullCube(IBlockState state) {
+  public boolean isFullCube(BlockState state) {
     return false;
   }
 
   @Override
   @SuppressWarnings("deprecation")
-  public boolean isOpaqueCube(IBlockState state) {
+  public boolean isOpaqueCube(BlockState state) {
     return false;
   }
 
@@ -122,12 +121,12 @@ public class MakeshiftResonatorBlock extends TemplateBlock {
   }
 
   @Override
-  public boolean hasTileEntity(IBlockState state) {
+  public boolean hasTileEntity(BlockState state) {
     return true;
   }
 
   @Override
-  public TileEntity createTileEntity(World world, IBlockState state) {
+  public TileEntity createTileEntity(World world, BlockState state) {
     return new MakeshiftResonatorTile();
   }
 
@@ -138,7 +137,7 @@ public class MakeshiftResonatorBlock extends TemplateBlock {
 
   @Override
   public void fillWithRain(World worldIn, BlockPos pos) {
-    IBlockState state = worldIn.getBlockState(pos);
+    BlockState state = worldIn.getBlockState(pos);
     if (state.getBlock() != this || state.getValue(FILLED)) {
       return;
     }
@@ -146,11 +145,11 @@ public class MakeshiftResonatorBlock extends TemplateBlock {
   }
 
   @Override
-  public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
-    if (face == EnumFacing.UP) {
+  public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, BlockState state, BlockPos pos, Direction face) {
+    if (face == Direction.UP) {
       return BlockFaceShape.BOWL;
     } else {
-      return face == EnumFacing.DOWN ? BlockFaceShape.UNDEFINED : BlockFaceShape.SOLID;
+      return face == Direction.DOWN ? BlockFaceShape.UNDEFINED : BlockFaceShape.SOLID;
     }
   }
 }

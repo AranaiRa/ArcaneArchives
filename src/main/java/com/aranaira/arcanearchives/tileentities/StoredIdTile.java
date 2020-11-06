@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.reference.Tags;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 
 import java.util.UUID;
@@ -23,7 +23,7 @@ public class StoredIdTile extends TileEntity {
   }
 
   @Override
-  public void readFromNBT(NBTTagCompound compound) {
+  public void readFromNBT(CompoundNBT compound) {
     if (compound.hasUniqueId(Tags.networkId)) {
       this.networkId = compound.getUniqueId(Tags.networkId);
     }
@@ -31,7 +31,7 @@ public class StoredIdTile extends TileEntity {
   }
 
   @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+  public CompoundNBT writeToNBT(CompoundNBT compound) {
     if (networkId != null) {
       compound.setUniqueId(Tags.networkId, networkId);
     }

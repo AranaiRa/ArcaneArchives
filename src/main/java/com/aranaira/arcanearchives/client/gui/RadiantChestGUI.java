@@ -6,25 +6,23 @@ import com.aranaira.arcanearchives.client.render.RenderItemExtended;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.containers.RadiantChestContainer;
 import com.aranaira.arcanearchives.containers.slots.SlotExtended;
-import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTile;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.gui.GuiLabel;
 import net.minecraft.client.gui.GuiPageButtonList;
-import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ClickType;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.Slot;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.container.ClickType;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.GuiScreenEvent;
@@ -41,7 +39,7 @@ import java.util.List;
 //import vazkii.quark.api.IItemSearchBar;
 
 //@Optional.InterfaceList({@Optional.Interface(modid = "quark", iface = "vazkii.quark.api.IChestButtonCallback", striprefs = true), @Optional.Interface(modid = "quark", iface = "vazkii.quark.api.IItemSearchBar", striprefs = true)})
-public class RadiantChestGUI extends GuiContainer implements GuiPageButtonList.GuiResponder /*, IChestButtonCallback, IItemSearchBar*/ {
+public class RadiantChestGUI extends ContainerScreen implements GuiPageButtonList.GuiResponder /*, IChestButtonCallback, IItemSearchBar*/ {
   private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/radiantchest.png");
   private static final ResourceLocation GUITexturesSimple = new ResourceLocation("arcanearchives:textures/gui/simple/radiantchest.png");
   private final int MAIN_W = 192, MAIN_H = 253, CHECK_X = 234, CHECK_Y = 0, CHECK_S = 6, SLASH_X = 240, SLASH_Y = 0, SLASH_S = 16, ROUTING_TOOLTIP_X = 159, ROUTING_TOOLTIP_Y = 234, ROUTING_TOOLTIP_W = 33, ROUTING_TOOLTIP_H = 16, ImageScale = 256;
@@ -56,19 +54,19 @@ public class RadiantChestGUI extends GuiContainer implements GuiPageButtonList.G
   private Slot returningStackDestSlot;
   private long returningStackTime;
   private ItemStack returningStack = ItemStack.EMPTY;
-  private Slot currentDragTargetSlot;
+  private net.minecraft.inventory.container.Slot currentDragTargetSlot;
   private long dragItemDropDelay;
   private int dragSplittingLimit;
   private int dragSplittingButton;
   private boolean ignoreMouseUp;
   private int dragSplittingRemnant;
   private long lastClickTime;
-  private Slot lastClickSlot;
+  private net.minecraft.inventory.container.Slot lastClickSlot;
   private int lastClickButton;
   private boolean doubleClick;
   private ItemStack shiftClickedSlot = ItemStack.EMPTY;
   private RadiantChestTile tile;
-  private InventoryPlayer playerinventory;
+  private PlayerInventory playerinventory;
   private List<ItemStack> tracked;
   private RightClickTextField nameBox;
   private RadiantChestContainer container;
@@ -78,9 +76,9 @@ public class RadiantChestGUI extends GuiContainer implements GuiPageButtonList.G
   private int mNameTextWidth = 88;
   private int mNameTextHeight = 10;
 
-  private GuiButton toggleButton;
+  private Button toggleButton;
 
-  public RadiantChestGUI(EntityPlayer player, RadiantChestContainer container) {
+  public RadiantChestGUI(PlayerEntity player, RadiantChestContainer container) {
     super(container);
 
     this.container = container;
@@ -112,7 +110,7 @@ public class RadiantChestGUI extends GuiContainer implements GuiPageButtonList.G
   }
 
   @Override
-  protected void actionPerformed(GuiButton button) throws IOException {
+  protected void actionPerformed(Button button) throws IOException {
     if (button.id == 0) { //toggle button
       if (tile.getTileId() != null) {
         // TODO: Handle buttonm toggling
@@ -149,7 +147,7 @@ public class RadiantChestGUI extends GuiContainer implements GuiPageButtonList.G
     GlStateManager.disableLighting();
     GlStateManager.disableDepth();
 
-    for (GuiButton guiButton : this.buttonList) {
+    for (Button guiButton : this.buttonList) {
       guiButton.drawButton(this.mc, mouseX, mouseY, partialTicks);
     }
     for (GuiLabel guiLabel : this.labelList) {
@@ -190,7 +188,7 @@ public class RadiantChestGUI extends GuiContainer implements GuiPageButtonList.G
     this.drawGuiContainerForegroundLayer(mouseX, mouseY);
     RenderHelper.enableGUIStandardItemLighting();
     net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.GuiContainerEvent.DrawForeground(this, mouseX, mouseY));
-    InventoryPlayer inventoryplayer = this.mc.player.inventory;
+    PlayerInventory inventoryplayer = this.mc.player.inventory;
     ItemStack itemstack = this.draggedStack.isEmpty() ? inventoryplayer.getItemStack() : this.draggedStack;
 
     if (!itemstack.isEmpty()) {
@@ -279,7 +277,7 @@ public class RadiantChestGUI extends GuiContainer implements GuiPageButtonList.G
   }
 
   @Override
-  public void drawSlot(Slot slotIn) {
+  public void drawSlot(net.minecraft.inventory.container.Slot slotIn) {
     ItemStack stack = slotIn.getStack();
     if (!stack.isEmpty()) {
       // TODO: USE STANDARD GLOW SLOT METHOD
@@ -368,7 +366,7 @@ public class RadiantChestGUI extends GuiContainer implements GuiPageButtonList.G
       } else {
         this.dragSplittingRemnant = itemstack.getCount();
 
-        for (Slot slot : this.dragSplittingSlots) {
+        for (net.minecraft.inventory.container.Slot slot : this.dragSplittingSlots) {
           ItemStack itemstack1 = itemstack.copy();
           ItemStack itemstack2 = slot.getStack();
           int i = itemstack2.isEmpty() ? 0 : itemstack2.getCount();
@@ -386,9 +384,9 @@ public class RadiantChestGUI extends GuiContainer implements GuiPageButtonList.G
     }
   }
 
-  private Slot getSlotAtPosition(int x, int y) {
+  private net.minecraft.inventory.container.Slot getSlotAtPosition(int x, int y) {
     for (int i = 0; i < this.inventorySlots.inventorySlots.size(); ++i) {
-      Slot slot = this.inventorySlots.inventorySlots.get(i);
+      net.minecraft.inventory.container.Slot slot = this.inventorySlots.inventorySlots.get(i);
 
       if (this.isMouseOverSlot(slot, x, y) && slot.isEnabled()) {
         return slot;
@@ -402,7 +400,7 @@ public class RadiantChestGUI extends GuiContainer implements GuiPageButtonList.G
   protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
     if (mouseButton == 0) {
       for (int i = 0; i < this.buttonList.size(); ++i) {
-        GuiButton guibutton = this.buttonList.get(i);
+        Button guibutton = this.buttonList.get(i);
 
         if (guibutton.mousePressed(this.mc, mouseX, mouseY)) {
           GuiScreenEvent.ActionPerformedEvent.Pre event = new GuiScreenEvent.ActionPerformedEvent.Pre(this, guibutton, this.buttonList);
@@ -460,16 +458,16 @@ public class RadiantChestGUI extends GuiContainer implements GuiPageButtonList.G
         } else if (!this.dragSplitting) {
           if (this.mc.player.inventory.getItemStack().isEmpty()) {
             if (this.mc.gameSettings.keyBindPickBlock.isActiveAndMatches(mouseButton - 100)) {
-              this.handleMouseClick(slot, l, mouseButton, ClickType.CLONE);
+              this.handleMouseClick(slot, l, mouseButton, net.minecraft.inventory.container.ClickType.CLONE);
             } else {
               boolean flag2 = l != -999 && (Keyboard.isKeyDown(42) || Keyboard.isKeyDown(54));
               ClickType clicktype = ClickType.PICKUP;
 
               if (flag2) {
                 this.shiftClickedSlot = slot.getHasStack() ? slot.getStack().copy() : ItemStack.EMPTY;
-                clicktype = ClickType.QUICK_MOVE;
+                clicktype = net.minecraft.inventory.container.ClickType.QUICK_MOVE;
               } else if (l == -999) {
-                clicktype = ClickType.THROW;
+                clicktype = net.minecraft.inventory.container.ClickType.THROW;
               }
 
               this.handleMouseClick(slot, l, mouseButton, clicktype);
@@ -516,9 +514,9 @@ public class RadiantChestGUI extends GuiContainer implements GuiPageButtonList.G
 
           if (this.currentDragTargetSlot == slot) {
             if (i - this.dragItemDropDelay > 500L) {
-              this.handleMouseClick(this.clickedSlot, this.clickedSlot.slotNumber, 0, ClickType.PICKUP);
+              this.handleMouseClick(this.clickedSlot, this.clickedSlot.slotNumber, 0, net.minecraft.inventory.container.ClickType.PICKUP);
               this.handleMouseClick(slot, slot.slotNumber, 1, ClickType.PICKUP);
-              this.handleMouseClick(this.clickedSlot, this.clickedSlot.slotNumber, 0, ClickType.PICKUP);
+              this.handleMouseClick(this.clickedSlot, this.clickedSlot.slotNumber, 0, net.minecraft.inventory.container.ClickType.PICKUP);
               this.dragItemDropDelay = i + 750L;
               this.draggedStack.shrink(1);
             }
@@ -541,7 +539,7 @@ public class RadiantChestGUI extends GuiContainer implements GuiPageButtonList.G
       this.selectedButton = null;
     }
 
-    Slot slot = this.getSlotAtPosition(mouseX, mouseY);
+    net.minecraft.inventory.container.Slot slot = this.getSlotAtPosition(mouseX, mouseY);
     int i = this.guiLeft;
     int j = this.guiTop;
     boolean flag = this.hasClickedOutside(mouseX, mouseY, i, j);
@@ -561,14 +559,14 @@ public class RadiantChestGUI extends GuiContainer implements GuiPageButtonList.G
     if (this.doubleClick && slot != null && state == 0 && this.inventorySlots.canMergeSlot(ItemStack.EMPTY, slot)) {
       if (isShiftKeyDown()) {
         if (!this.shiftClickedSlot.isEmpty()) {
-          for (Slot slot2 : this.inventorySlots.inventorySlots) {
+          for (net.minecraft.inventory.container.Slot slot2 : this.inventorySlots.inventorySlots) {
             if (slot2 != null && slot2.canTakeStack(this.mc.player) && slot2.getHasStack() && slot2.isSameInventory(slot) && RadiantChestContainer.canAddItemToSlot(slot2, this.shiftClickedSlot, true)) {
-              this.handleMouseClick(slot2, slot2.slotNumber, state, ClickType.QUICK_MOVE);
+              this.handleMouseClick(slot2, slot2.slotNumber, state, net.minecraft.inventory.container.ClickType.QUICK_MOVE);
             }
           }
         }
       } else {
-        this.handleMouseClick(slot, k, state, ClickType.PICKUP_ALL);
+        this.handleMouseClick(slot, k, state, net.minecraft.inventory.container.ClickType.PICKUP_ALL);
       }
 
       this.doubleClick = false;
@@ -595,7 +593,7 @@ public class RadiantChestGUI extends GuiContainer implements GuiPageButtonList.G
           boolean flag2 = RadiantChestContainer.canAddItemToSlot(slot, this.draggedStack, false);
 
           if (k != -1 && !this.draggedStack.isEmpty() && flag2) {
-            this.handleMouseClick(this.clickedSlot, this.clickedSlot.slotNumber, state, ClickType.PICKUP);
+            this.handleMouseClick(this.clickedSlot, this.clickedSlot.slotNumber, state, net.minecraft.inventory.container.ClickType.PICKUP);
             this.handleMouseClick(slot, k, 0, ClickType.PICKUP);
 
             if (this.mc.player.inventory.getItemStack().isEmpty()) {
@@ -623,7 +621,7 @@ public class RadiantChestGUI extends GuiContainer implements GuiPageButtonList.G
         this.handleMouseClick(null, -999, Container.getQuickcraftMask(0, this.dragSplittingLimit), ClickType.QUICK_CRAFT);
 
         for (Slot slot1 : this.dragSplittingSlots) {
-          this.handleMouseClick(slot1, slot1.slotNumber, Container.getQuickcraftMask(1, this.dragSplittingLimit), ClickType.QUICK_CRAFT);
+          this.handleMouseClick(slot1, slot1.slotNumber, Container.getQuickcraftMask(1, this.dragSplittingLimit), net.minecraft.inventory.container.ClickType.QUICK_CRAFT);
         }
 
         this.handleMouseClick(null, -999, Container.getQuickcraftMask(2, this.dragSplittingLimit), ClickType.QUICK_CRAFT);
@@ -637,7 +635,7 @@ public class RadiantChestGUI extends GuiContainer implements GuiPageButtonList.G
             this.shiftClickedSlot = slot != null && slot.getHasStack() ? slot.getStack().copy() : ItemStack.EMPTY;
           }
 
-          this.handleMouseClick(slot, k, state, flag1 ? ClickType.QUICK_MOVE : ClickType.PICKUP);
+          this.handleMouseClick(slot, k, state, flag1 ? net.minecraft.inventory.container.ClickType.QUICK_MOVE : net.minecraft.inventory.container.ClickType.PICKUP);
         }
       }
     }
@@ -680,7 +678,7 @@ public class RadiantChestGUI extends GuiContainer implements GuiPageButtonList.G
     if (this.mc.player.inventory.getItemStack().isEmpty() && this.hoveredSlot != null) {
       for (int i = 0; i < 9; ++i) {
         if (this.mc.gameSettings.keyBindsHotbar[i].isActiveAndMatches(keyCode)) {
-          this.handleMouseClick(this.hoveredSlot, this.hoveredSlot.slotNumber, i, ClickType.SWAP);
+          this.handleMouseClick(this.hoveredSlot, this.hoveredSlot.slotNumber, i, net.minecraft.inventory.container.ClickType.SWAP);
           return true;
         }
       }
@@ -691,7 +689,7 @@ public class RadiantChestGUI extends GuiContainer implements GuiPageButtonList.G
 
   @Override
   @Nullable
-  public Slot getSlotUnderMouse() {
+  public net.minecraft.inventory.container.Slot getSlotUnderMouse() {
     return this.hoveredSlot;
   }
 

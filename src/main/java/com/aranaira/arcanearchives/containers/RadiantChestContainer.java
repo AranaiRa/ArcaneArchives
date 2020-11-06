@@ -6,12 +6,14 @@ import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketRadiantChest;
 import com.aranaira.arcanearchives.tileentities.RadiantChestTile;
 import com.google.common.collect.Sets;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.*;
+import net.minecraft.inventory.container.ClickType;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.IContainerListener;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.server.SPacketSetSlot;
+import net.minecraft.network.play.server.SSetSlotPacket;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
 import javax.annotation.Nullable;
@@ -28,7 +30,7 @@ public class RadiantChestContainer extends Container {
   private int dragEvent;
   private final Set<Slot> dragSlots = Sets.newHashSet();
 
-  public RadiantChestContainer(IItemHandlerModifiable inventory, RadiantChestTile te, EntityPlayer player) {
+  public RadiantChestContainer(IItemHandlerModifiable inventory, RadiantChestTile te, PlayerEntity player) {
     this.tile = te;
     this.inventory = inventory;
     addOwnSlots();
@@ -79,7 +81,7 @@ public class RadiantChestContainer extends Container {
   }
 
   @Override
-  public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
+  public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
     ItemStack inSlotCopy = ItemStack.EMPTY;
     Slot slot = this.inventorySlots.get(index);
 
@@ -106,9 +108,9 @@ public class RadiantChestContainer extends Container {
   }
 
   @Override
-  public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player) {
+  public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
     ItemStack itemstack = ItemStack.EMPTY;
-    InventoryPlayer inventoryplayer = player.inventory;
+    PlayerInventory inventoryplayer = player.inventory;
 
     if (clickTypeIn == ClickType.QUICK_CRAFT) {
       int drag = this.dragEvent;
@@ -394,7 +396,7 @@ public class RadiantChestContainer extends Container {
   }
 
   @Override
-  public boolean canInteractWith(EntityPlayer playerIn) {
+  public boolean canInteractWith(PlayerEntity playerIn) {
     return true;
   }
 
@@ -509,8 +511,8 @@ public class RadiantChestContainer extends Container {
         this.inventoryItemStacks.set(i, inventoryItem);
 
         for (IContainerListener listener : this.listeners) {
-          if (listener instanceof EntityPlayerMP) {
-            EntityPlayerMP player = (EntityPlayerMP) listener;
+          if (listener instanceof ServerPlayerEntity) {
+            ServerPlayerEntity player = (ServerPlayerEntity) listener;
 
             this.syncSlot(player, i, inventoryItem);
           } else {
@@ -527,8 +529,8 @@ public class RadiantChestContainer extends Container {
       throw new IllegalArgumentException("Listener already listening");
     } else {
       this.listeners.add(listener);
-      if (listener instanceof EntityPlayerMP) {
-        EntityPlayerMP player = (EntityPlayerMP) listener;
+      if (listener instanceof ServerPlayerEntity) {
+        ServerPlayerEntity player = (ServerPlayerEntity) listener;
 
         this.syncInventory(player);
       }
@@ -536,7 +538,7 @@ public class RadiantChestContainer extends Container {
     }
   }
 
-  public void syncInventory(EntityPlayerMP player) {
+  public void syncInventory(ServerPlayerEntity player) {
     for (int i = 0; i < this.inventorySlots.size(); i++) {
       if (this.inventorySlots.get(i) instanceof SlotExtended) {
         ItemStack stack = (this.inventorySlots.get(i)).getStack();
@@ -545,10 +547,10 @@ public class RadiantChestContainer extends Container {
       }
     }
 
-    player.connection.sendPacket(new SPacketSetSlot(-1, -1, player.inventory.getItemStack()));
+    player.connection.sendPacket(new SSetSlotPacket(-1, -1, player.inventory.getItemStack()));
   }
 
-  private void syncSlot(EntityPlayerMP player, int slot, ItemStack stack) {
+  private void syncSlot(ServerPlayerEntity player, int slot, ItemStack stack) {
     if (getSlot(slot) instanceof SlotExtended) {
       Networking.CHANNEL.sendTo(new PacketRadiantChest.MessageSyncExtendedSlotContents(this.windowId, slot, stack), player);
     }

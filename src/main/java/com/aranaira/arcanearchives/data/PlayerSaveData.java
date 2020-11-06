@@ -2,8 +2,8 @@ package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.reference.Tags;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.storage.WorldSavedData;
 
 public class PlayerSaveData extends WorldSavedData {
@@ -13,7 +13,7 @@ public class PlayerSaveData extends WorldSavedData {
 
   public boolean receivedBook = false;
 
-  public static String ID(EntityPlayer player) {
+  public static String ID(PlayerEntity player) {
     return PREFIX + player.getCachedUniqueIdString();
   }
 
@@ -26,7 +26,7 @@ public class PlayerSaveData extends WorldSavedData {
     this.id = string;
   }
 
-  public PlayerSaveData(EntityPlayer player) {
+  public PlayerSaveData(PlayerEntity player) {
     super(ID(player));
     this.id = ID(player);
   }
@@ -37,12 +37,12 @@ public class PlayerSaveData extends WorldSavedData {
   }
 
   @Override
-  public void readFromNBT(NBTTagCompound nbt) {
+  public void readFromNBT(CompoundNBT nbt) {
     this.receivedBook = nbt.getBoolean(Tags.PlayerSaveData.receivedBook);
   }
 
   @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+  public CompoundNBT writeToNBT(CompoundNBT compound) {
     compound.setBoolean(Tags.PlayerSaveData.receivedBook, receivedBook);
     return compound;
   }

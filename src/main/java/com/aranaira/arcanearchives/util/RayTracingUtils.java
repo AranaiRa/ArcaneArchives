@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.util;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.util.EntitySelectors;
+import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
@@ -28,7 +28,7 @@ public class RayTracingUtils {
     Entity hitEntity = null; // The closest entity that was hit
     double entityHitDistance = 0.0D; // The squared distance to the closest
     // entity that was hit
-    for (Entity entity : world.getEntitiesInAABBexcluding(exclude, entitySearchArea, EntitySelectors.NOT_SPECTATING)) {
+    for (Entity entity : world.getEntitiesInAABBexcluding(exclude, entitySearchArea, EntityPredicates.NOT_SPECTATING)) {
       // The collision AABB of the entity expanded by the collision border
       // size
       AxisAlignedBB collisionBB = entity.getEntityBoundingBox().grow(entity.getCollisionBorderSize());
@@ -60,7 +60,7 @@ public class RayTracingUtils {
     // Encloses the entire area where entities that could collide with this
     // ray exist
     AxisAlignedBB entitySearchArea = new AxisAlignedBB(startVec.x, startVec.y, startVec.z, endVec.x, endVec.y, endVec.z);
-    for (Entity entity : world.getEntitiesInAABBexcluding(exclude, entitySearchArea, EntitySelectors.NOT_SPECTATING)) {
+    for (Entity entity : world.getEntitiesInAABBexcluding(exclude, entitySearchArea, EntityPredicates.NOT_SPECTATING)) {
       // The collision AABB of the entity expanded by the collision border
       // size
       AxisAlignedBB collisionBB = entity.getEntityBoundingBox().grow(entity.getCollisionBorderSize());

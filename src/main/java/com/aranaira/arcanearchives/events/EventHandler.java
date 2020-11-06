@@ -3,7 +3,6 @@ package com.aranaira.arcanearchives.events;
 import com.aranaira.arcanearchives.client.render.RenderGemcasting;
 import com.aranaira.arcanearchives.client.render.RenderGemcasting.EnumGemGuiMode;
 import com.aranaira.arcanearchives.client.tracking.LineHandler;
-import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.config.ServerSideConfig;
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.PlayerSaveData;
@@ -32,58 +31,37 @@ import com.aranaira.arcanearchives.network.PacketConfig.RequestTrovesDispense;
 import com.aranaira.arcanearchives.network.PacketRadiantAmphora.Toggle;
 import com.aranaira.arcanearchives.types.SlotIterable;
 import com.aranaira.arcanearchives.util.ItemUtils;
-import com.aranaira.arcanearchives.util.WorldUtil;
 import epicsquid.mysticallib.util.Util;
 import gigaherz.lirelent.guidebook.client.BookRegistryEvent;
 import it.unimi.dsi.fastutil.objects.Object2LongOpenHashMap;
 import net.minecraft.block.BlockBookshelf;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.passive.EntityOcelot;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.MobEffects;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemPotion;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.potion.PotionType;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.LightningBoltEntity;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.OcelotEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.*;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
-import net.minecraftforge.event.entity.living.*;
-import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
-import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.Event;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
@@ -103,14 +81,14 @@ public class EventHandler {
   // TODO: Make into one packet
   @SubscribeEvent
   public static void onPlayerJoined(PlayerLoggedInEvent event) {
-    EntityPlayer player = event.player;
+    PlayerEntity player = event.player;
     if (!player.world.isRemote) {
       RequestMaxDistance packet = new RequestMaxDistance();
-      Networking.CHANNEL.sendTo(packet, (EntityPlayerMP) player);
+      Networking.CHANNEL.sendTo(packet, (ServerPlayerEntity) player);
       RequestDefaultRoutingType packet2 = new RequestDefaultRoutingType();
-      Networking.CHANNEL.sendTo(packet2, (EntityPlayerMP) player);
+      Networking.CHANNEL.sendTo(packet2, (ServerPlayerEntity) player);
       RequestTrovesDispense packet3 = new RequestTrovesDispense();
-      Networking.CHANNEL.sendTo(packet3, (EntityPlayerMP) player);
+      Networking.CHANNEL.sendTo(packet3, (ServerPlayerEntity) player);
     }
   }
 
@@ -157,7 +135,7 @@ public class EventHandler {
           num = rng.nextInt(16) + 8;
           ItemStack shards = new ItemStack(BlockRegistry.QUARTZ_SLIVER, num);
           Vec3d pos = event.getHitVec();
-          EntityItem ei = new EntityItem(event.getWorld(), pos.x, pos.y, pos.z, shards);
+          ItemEntity ei = new ItemEntity(event.getWorld(), pos.x, pos.y, pos.z, shards);
           ei.motionX = rng.nextFloat() * 0.4f - 0.2f;
           ei.motionZ = rng.nextFloat() * 0.4f - 0.2f;
           ei.motionY = rng.nextFloat() * 0.2f + 0.2f;
@@ -165,7 +143,7 @@ public class EventHandler {
         } else if (num == 1 || num == 2) {
           ItemStack shards = new ItemStack(BlockRegistry.QUARTZ_SLIVER, 1);
           Vec3d pos = event.getHitVec();
-          EntityItem ei = new EntityItem(event.getWorld(), pos.x, pos.y, pos.z, shards);
+          ItemEntity ei = new ItemEntity(event.getWorld(), pos.x, pos.y, pos.z, shards);
           ei.motionX = rng.nextFloat() * 0.4f - 0.2f;
           ei.motionZ = rng.nextFloat() * 0.4f - 0.2f;
           ei.motionY = rng.nextFloat() * 0.2f + 0.2f;
@@ -178,13 +156,13 @@ public class EventHandler {
   @SubscribeEvent
   public static void onEntityJoinedWorld(EntityJoinWorldEvent event) {
     Entity entity = event.getEntity();
-    if (entity instanceof EntityOcelot) {
-      EntityOcelot ocelot = (EntityOcelot) entity;
+    if (entity instanceof OcelotEntity) {
+      OcelotEntity ocelot = (OcelotEntity) entity;
       ocelot.tasks.addTask(6, new AIResonatorSit(ocelot, 0.8D));
     }
   }
 
-  private static void givePlayerBookMaybe(EntityPlayer player, World world, boolean bookshelf) {
+  private static void givePlayerBookMaybe(PlayerEntity player, World world, boolean bookshelf) {
     PlayerSaveData save = DataHelper.getPlayerData(player);
     if (save.receivedBook) {
       return;
@@ -192,15 +170,15 @@ public class EventHandler {
     save.receivedBook = true;
     save.markDirty();
     ItemStack tome = new ItemStack(ItemRegistry.TOME_OF_ARCANA);
-    NBTTagCompound tag = ItemUtils.getOrCreateTagCompound(tome);
+    CompoundNBT tag = ItemUtils.getOrCreateTagCompound(tome);
     tag.setString("Book", TomeOfArcanaItem.TOME_OF_ARCANA.toString());
     Objects.requireNonNull(world.getMapStorage()).saveAllData();
-    EntityItem tomeEntity = new EntityItem(world, player.posX, player.posY, player.posZ, tome);
+    ItemEntity tomeEntity = new ItemEntity(world, player.posX, player.posY, player.posZ, tome);
     tomeEntity.setPickupDelay(0);
     if (bookshelf) {
-      player.sendMessage(new TextComponentTranslation("arcanearchives.message.book_received.bookshelf").setStyle(new Style().setColor(TextFormatting.GOLD)));
+      player.sendMessage(new TranslationTextComponent("arcanearchives.message.book_received.bookshelf").setStyle(new Style().setColor(TextFormatting.GOLD)));
     } else {
-      player.sendMessage(new TextComponentTranslation("arcanearchives.message.book_received.resonator").setStyle(new Style().setColor(TextFormatting.GOLD)));
+      player.sendMessage(new TranslationTextComponent("arcanearchives.message.book_received.resonator").setStyle(new Style().setColor(TextFormatting.GOLD)));
     }
     world.spawnEntity(tomeEntity);
     world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.BLOCK_CLOTH_FALL, SoundCategory.PLAYERS, 1f, 1f);
@@ -217,11 +195,11 @@ public class EventHandler {
   public static void onPlayerCrafted(ItemCraftedEvent event) {
     if (!event.player.world.isRemote && ServerSideConfig.BookFromResonator) {
       Item item = event.crafting.getItem();
-      if (item instanceof ItemBlock && ((ItemBlock) item).getBlock() == BlockRegistry.RADIANT_RESONATOR) {
+      if (item instanceof BlockItem && ((BlockItem) item).getBlock() == BlockRegistry.RADIANT_RESONATOR) {
         givePlayerBookMaybe(event.player, event.player.world, false);
       } else if (item == ItemRegistry.TOME_OF_ARCANA) {
         World world = event.player.world;
-        EntityPlayer player = event.player;
+        PlayerEntity player = event.player;
         PlayerSaveData save = DataHelper.getPlayerData(player);
         save.receivedBook = true;
         save.markDirty();
@@ -230,14 +208,14 @@ public class EventHandler {
     }
   }
 
-  public static Object2LongOpenHashMap<EntityPlayer> shouldPlaySound = new Object2LongOpenHashMap<>();
+  public static Object2LongOpenHashMap<PlayerEntity> shouldPlaySound = new Object2LongOpenHashMap<>();
 
   @SubscribeEvent
   public static void onItemPickup(EntityItemPickupEvent event) {
     if (event.getEntityPlayer() != null) {
       ArrayList<ItemStack> devouringCharms = new ArrayList<>();
-      EntityPlayer player = event.getEntityPlayer();
-      IItemHandler cap = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+      PlayerEntity player = event.getEntityPlayer();
+      IItemHandler cap = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP);
       for (ItemStack stack : new SlotIterable(cap)) {
         if (stack.getItem() == ItemRegistry.DEVOURING_CHARM) {
           devouringCharms.add(stack);
@@ -249,7 +227,7 @@ public class EventHandler {
       if ((System.currentTimeMillis() - lastPlayed) < 500 && lastPlayed != -1) {
         playSound = false;
       }
-      EntityItem item = event.getItem();
+      ItemEntity item = event.getItem();
       ItemStack stack = item.getItem();
 
       for (ItemStack dCharm : devouringCharms) {
@@ -261,7 +239,7 @@ public class EventHandler {
           World world = event.getEntityPlayer().world;
 
           if (!world.isRemote && playSound) {
-            world.playSound(null, item.posX, item.posY, item.posZ, SoundEvents.ENTITY_GENERIC_EAT, SoundCategory.PLAYERS, 0.4f, 0.7f + Util.rand.nextFloat() * 0.6f);
+            world.playSound(null, item.posX, item.posY, item.posZ, net.minecraft.util.SoundEvents.ENTITY_GENERIC_EAT, SoundCategory.PLAYERS, 0.4f, 0.7f + Util.rand.nextFloat() * 0.6f);
             shouldPlaySound.put(player, System.currentTimeMillis());
           }
           break;

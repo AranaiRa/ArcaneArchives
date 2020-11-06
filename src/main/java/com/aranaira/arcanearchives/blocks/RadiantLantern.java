@@ -4,15 +4,12 @@ import com.aranaira.arcanearchives.blocks.templates.DirectionalBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
@@ -44,36 +41,36 @@ public class RadiantLantern extends DirectionalBlock {
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public IBlockState withRotation (IBlockState state, Rotation rot) {
+	public BlockState withRotation (BlockState state, Rotation rot) {
 		return state.withProperty(getFacingProperty(), rot.rotate(state.getValue(getFacingProperty())));
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public IBlockState withMirror (IBlockState state, Mirror mirrorIn) {
+	public BlockState withMirror (BlockState state, Mirror mirrorIn) {
 		return state.withProperty(getFacingProperty(), mirrorIn.mirror(state.getValue(getFacingProperty())));
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean isFullCube (IBlockState state) {
+	public boolean isFullCube (BlockState state) {
 		return false;
 	}
 
 	@Override
 	@Nonnull
 	@SuppressWarnings("deprecation")
-	public AxisAlignedBB getBoundingBox (IBlockState state, IBlockAccess source, BlockPos pos) {
-		EnumFacing facing = state.getValue(getFacingProperty());
-		if (facing == EnumFacing.UP) {
+	public AxisAlignedBB getBoundingBox (BlockState state, IBlockAccess source, BlockPos pos) {
+		Direction facing = state.getValue(getFacingProperty());
+		if (facing == Direction.UP) {
 			return new AxisAlignedBB(0.35, 0.0, 0.35, 0.65, 1.0, 0.65);
-		} else if (facing == EnumFacing.DOWN) {
+		} else if (facing == Direction.DOWN) {
 			return new AxisAlignedBB(0.35, 0.0, 0.35, 0.65, 1.0, 0.65);
-		} else if (facing == EnumFacing.SOUTH) {
+		} else if (facing == Direction.SOUTH) {
 			return new AxisAlignedBB(0.35, 0.35, 0.0, 0.65, 0.65, 1.0);
-		} else if (facing == EnumFacing.NORTH) {
+		} else if (facing == Direction.NORTH) {
 			return new AxisAlignedBB(0.35, 0.35, 0.0, 0.65, 0.65, 1.0);
-		} else if (facing == EnumFacing.EAST) {
+		} else if (facing == Direction.EAST) {
 			return new AxisAlignedBB(0.0, 0.35, 0.35, 1.0, 0.65, 0.65);
 		} else {
 			return new AxisAlignedBB(0.0, 0.35, 0.35, 1.0, 0.65, 0.65);
@@ -82,37 +79,37 @@ public class RadiantLantern extends DirectionalBlock {
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public BlockFaceShape getBlockFaceShape (IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+	public BlockFaceShape getBlockFaceShape (IBlockAccess worldIn, BlockState state, BlockPos pos, Direction face) {
 		return BlockFaceShape.UNDEFINED;
 	}
 
 	@Nullable
 	@Override
 	@SuppressWarnings("deprecation")
-	public AxisAlignedBB getCollisionBoundingBox (IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
+	public AxisAlignedBB getCollisionBoundingBox (BlockState blockState, IBlockAccess worldIn, BlockPos pos) {
 		return NULL_AABB;
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean isOpaqueCube (IBlockState state) {
+	public boolean isOpaqueCube (BlockState state) {
 		return false;
 	}
 
 	@Override
-	public IBlockState getStateForPlacement (World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
+	public BlockState getStateForPlacement (World world, BlockPos pos, Direction facing, float hitX, float hitY, float hitZ, int meta, LivingEntity placer, Hand hand) {
 		return this.getDefaultState().withProperty(getFacingProperty(), facing);
 	}
 
 	@Override
-	public int getMetaFromState (IBlockState state) {
+	public int getMetaFromState (BlockState state) {
 		return state.getValue(getFacingProperty()).getIndex();
 	}
 
 	@Override
-	public IBlockState getStateFromMeta (int meta) {
-		IBlockState iblockstate = this.getDefaultState();
-		iblockstate = iblockstate.withProperty(getFacingProperty(), EnumFacing.byIndex(meta));
+	public BlockState getStateFromMeta (int meta) {
+		BlockState iblockstate = this.getDefaultState();
+		iblockstate = iblockstate.withProperty(getFacingProperty(), Direction.byIndex(meta));
 		return iblockstate;
 	}
 

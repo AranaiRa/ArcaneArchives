@@ -3,11 +3,10 @@ package com.aranaira.arcanearchives.items;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.items.upgrades.IUpgrade;
 import com.aranaira.arcanearchives.types.UpgradeType;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.*;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -24,18 +23,18 @@ public class DevouringCharmItem extends ItemTemplate implements IUpgrade {
   }*/
 
   @Override
-  public boolean doesSneakBypassUse(ItemStack stack, IBlockAccess world, BlockPos pos, EntityPlayer player) {
+  public boolean doesSneakBypassUse(ItemStack stack, IBlockAccess world, BlockPos pos, PlayerEntity player) {
     return true;
   }
 
   @Override
   @Nonnull
-  public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, @Nonnull EnumHand hand) {
+  public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, @Nonnull Hand hand) {
     if (world.isRemote) {
-      return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+      return new ActionResult<>(ActionResultType.SUCCESS, player.getHeldItem(hand));
     }
     //player.openGui(ArcaneArchives.instance, AAGuiHandler.DEVOURING_CHARM, world, (int) player.posX, (int) player.posY, (int) player.posZ);
-    return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+    return new ActionResult<>(ActionResultType.SUCCESS, player.getHeldItem(hand));
   }
 
   @Override

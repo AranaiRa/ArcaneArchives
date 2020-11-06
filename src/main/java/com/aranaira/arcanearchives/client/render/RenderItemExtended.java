@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.client.render;
 
 import com.aranaira.arcanearchives.util.MathUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -85,7 +85,7 @@ public class RenderItemExtended {
         GlStateManager.enableBlend();
       }
 
-      EntityPlayerSP entityplayersp = Minecraft.getMinecraft().player;
+      ClientPlayerEntity entityplayersp = Minecraft.getMinecraft().player;
       float f3 = entityplayersp == null ? 0.0F : entityplayersp.getCooldownTracker().getCooldown(stack.getItem(), Minecraft.getMinecraft().getRenderPartialTicks());
 
       if (f3 > 0.0F) {

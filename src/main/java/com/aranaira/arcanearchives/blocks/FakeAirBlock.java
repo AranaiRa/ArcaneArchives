@@ -3,13 +3,13 @@ package com.aranaira.arcanearchives.blocks;
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import com.aranaira.arcanearchives.tileentities.FakeAirTileEntity;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.init.Items;
+import net.minecraft.item.Items;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -31,27 +31,27 @@ public class FakeAirBlock extends TemplateBlock {
 
 
 	@Override
-	public AxisAlignedBB getBoundingBox (IBlockState state, IBlockAccess source, BlockPos pos) {
+	public AxisAlignedBB getBoundingBox (BlockState state, IBlockAccess source, BlockPos pos) {
 		return AABB;
 	}
 
 	@Override
-	public boolean isNormalCube (IBlockState state, IBlockAccess world, BlockPos pos) {
+	public boolean isNormalCube (BlockState state, IBlockAccess world, BlockPos pos) {
 		return false;
 	}
 
 	@Override
-	public boolean isOpaqueCube (IBlockState state) {
+	public boolean isOpaqueCube (BlockState state) {
 		return false;
 	}
 
 	@Override
-	public boolean isFullCube (IBlockState state) {
+	public boolean isFullCube (BlockState state) {
 		return false;
 	}
 
 	@Override
-	public boolean causesSuffocation (IBlockState state) {
+	public boolean causesSuffocation (BlockState state) {
 		return false;
 	}
 
@@ -62,27 +62,27 @@ public class FakeAirBlock extends TemplateBlock {
 	}
 
 	@Override
-	public EnumBlockRenderType getRenderType (IBlockState state) {
-		return EnumBlockRenderType.INVISIBLE;
+	public BlockRenderType getRenderType (BlockState state) {
+		return BlockRenderType.INVISIBLE;
 		//return super.getRenderType(state);
 	}
 
 	@Override
-	public void addCollisionBoxToList (IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean isActualState) {
+	public void addCollisionBoxToList (BlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean isActualState) {
 	}
 
 	@Override
-	public Item getItemDropped (IBlockState state, Random rand, int fortune) {
+	public Item getItemDropped (BlockState state, Random rand, int fortune) {
 		return Items.AIR;
 	}
 
 	@Override
-	public boolean isAir (IBlockState state, IBlockAccess world, BlockPos pos) {
+	public boolean isAir (BlockState state, IBlockAccess world, BlockPos pos) {
 		return true;
 	}
 
 	@Override
-	public boolean hasTileEntity (IBlockState state) {
+	public boolean hasTileEntity (BlockState state) {
 		return true;
 	}
 
@@ -93,7 +93,7 @@ public class FakeAirBlock extends TemplateBlock {
 
 	@Nullable
 	@Override
-	public TileEntity createTileEntity (World world, IBlockState state) {
+	public TileEntity createTileEntity (World world, BlockState state) {
 		return new FakeAirTileEntity();
 	}
 }

@@ -1,14 +1,13 @@
 package com.aranaira.arcanearchives.client.gui;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerRadiantFurnace;
 import com.aranaira.arcanearchives.tileentities.RadiantFurnaceTileEntity;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 
-public class GUIRadiantFurnace extends GuiContainer {
+public class GUIRadiantFurnace extends ContainerScreen {
 	private static final ResourceLocation TEXTURE_RADIANTFURNACE = new ResourceLocation("arcanearchives:textures/gui/radiant_furnace.png");
 	private static final ResourceLocation TEXTURE_RADIANTFURNACE_SIMPLE = new ResourceLocation("arcanearchives:textures/gui/simple/radiant_furnace.png");
 	private static final ResourceLocation TEXTURE_PLAYERINV = new ResourceLocation("arcanearchives:textures/gui/player_inv.png");
@@ -37,10 +36,10 @@ public class GUIRadiantFurnace extends GuiContainer {
 	private static final int ImageScale = 256;
 
 	private ContainerRadiantFurnace container;
-	private InventoryPlayer playerinventory;
+	private PlayerInventory playerinventory;
 	private RadiantFurnaceTileEntity tile;
 
-	public GUIRadiantFurnace(ContainerRadiantFurnace container, InventoryPlayer playerinventory) {
+	public GUIRadiantFurnace(ContainerRadiantFurnace container, PlayerInventory playerinventory) {
 		super(container);
 
 		this.container = container;

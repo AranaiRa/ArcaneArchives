@@ -5,19 +5,16 @@ import com.aranaira.arcanearchives.tileentities.StoredIdTile;
 import com.aranaira.arcanearchives.util.NetworkItemUtil;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.*;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.stats.StatList;
+import net.minecraft.stats.Stats;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -32,7 +29,7 @@ import java.util.*;
 
 @SuppressWarnings({"UnusedReturnValue", "WeakerAccess", "NullableProblems", "unchecked", "deprecation", "DeprecatedIsStillUsed"})
 public class TemplateBlock extends Block {
-  protected ItemBlock itemBlock = null;
+  protected BlockItem itemBlock = null;
   protected String tooltip = null;
   protected String formatting = "";
   protected boolean isOpaqueCube = true;
@@ -44,7 +41,7 @@ public class TemplateBlock extends Block {
     super(materialIn);
   }
 
-  public ItemBlock getItemBlock() {
+  public BlockItem getItemBlock() {
     return itemBlock;
   }
 
@@ -65,16 +62,16 @@ public class TemplateBlock extends Block {
 
   // TODO: Oh god, I've turned into elulib
   @Override
-  public boolean isFullCube(IBlockState state) {
+  public boolean isFullCube(BlockState state) {
     return isFullCube;
   }
 
   @Override
-  public boolean isOpaqueCube(IBlockState state) {
+  public boolean isOpaqueCube(BlockState state) {
     return isOpaqueCube;
   }
 
-  public TemplateBlock setItemBlock(ItemBlock itemBlock) {
+  public TemplateBlock setItemBlock(BlockItem itemBlock) {
     this.itemBlock = itemBlock;
     return this;
   }
@@ -153,7 +150,7 @@ public class TemplateBlock extends Block {
     return (TemplateBlock) super.setCreativeTab(tab);
   }
 
-  public TemplateBlock setDefault(IBlockState state) {
+  public TemplateBlock setDefault(BlockState state) {
     setDefaultState(state);
     return this;
   }
@@ -174,7 +171,7 @@ public class TemplateBlock extends Block {
     return this;
   }
 
-  public TemplateBlock setHarvestTool(String toolClass, int level, IBlockState state) {
+  public TemplateBlock setHarvestTool(String toolClass, int level, BlockState state) {
     setHarvestLevel(toolClass, level, state);
     return this;
   }
@@ -187,12 +184,12 @@ public class TemplateBlock extends Block {
 
   @Override
   @Deprecated
-  public void setHarvestLevel(String toolClass, int level, IBlockState state) {
+  public void setHarvestLevel(String toolClass, int level, BlockState state) {
     super.setHarvestLevel(toolClass, level, state);
   }
 
   @Override
-  public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+  public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos) {
     if (axis != null) {
       return axis;
     }
@@ -205,20 +202,20 @@ public class TemplateBlock extends Block {
     return true;
   }
 
-  protected List<ItemStack> generateItemDrops(World world, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te, ItemStack harvestTool) {
+  protected List<ItemStack> generateItemDrops(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity te, ItemStack harvestTool) {
     return Collections.emptyList();
   }
 
-  protected List<ItemStack> generateSilkTouchDrops(World world, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te, ItemStack harvestTool) {
+  protected List<ItemStack> generateSilkTouchDrops(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity te, ItemStack harvestTool) {
     return Collections.emptyList();
   }
 
   @Override
-  public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack) {
+  public void harvestBlock(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {
     if (!storesId) {
       super.harvestBlock(worldIn, player, pos, state, te, stack);
     } else {
-      player.addStat(Objects.requireNonNull(StatList.getBlockStats(this)));
+      player.addStat(Objects.requireNonNull(Stats.getBlockStats(this)));
       player.addExhaustion(0.005F);
 
       if (worldIn.isRemote) {
@@ -255,7 +252,7 @@ public class TemplateBlock extends Block {
   }
 
   @Override
-  public void getDrops(@Nonnull NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, @Nonnull IBlockState state, int fortune) {
+  public void getDrops(@Nonnull NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, @Nonnull BlockState state, int fortune) {
     if (!storesId) {
       super.getDrops(drops, world, pos, state, fortune);
     } else {
@@ -264,7 +261,7 @@ public class TemplateBlock extends Block {
   }
 
   @Override
-  public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+  public Item getItemDropped(BlockState state, Random rand, int fortune) {
     if (storesId) {
       return Items.AIR;
     }
@@ -273,7 +270,7 @@ public class TemplateBlock extends Block {
   }
 
   @Override
-  public boolean hasTileEntity(IBlockState state) {
+  public boolean hasTileEntity(BlockState state) {
     if (storesId) {
       return true;
     }
@@ -283,7 +280,7 @@ public class TemplateBlock extends Block {
 
   @Nullable
   @Override
-  public TileEntity createTileEntity(World world, IBlockState state) {
+  public TileEntity createTileEntity(World world, BlockState state) {
     if (storesId) {
       return new StoredIdTile();
     }
@@ -292,7 +289,7 @@ public class TemplateBlock extends Block {
   }
 
   @Override
-  public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+  public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
     super.onBlockPlacedBy(world, pos, state, placer, stack);
 
     if (stack.hasTagCompound()) {

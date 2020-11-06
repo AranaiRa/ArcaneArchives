@@ -7,11 +7,11 @@ import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.PlayerProfileCache;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.world.WorldServer;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.ServerWorld;
 import net.minecraftforge.common.DimensionManager;
 
 import java.util.Collections;
@@ -44,29 +44,29 @@ public class CommandRebuild extends CommandBase {
 
 	@Override
 	public void execute (MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-		if (sender instanceof EntityPlayer) {
+		if (sender instanceof PlayerEntity) {
 			PlayerProfileCache cache = server.getPlayerProfileCache();
-			EntityPlayer player = (EntityPlayer) sender;
+			PlayerEntity player = (PlayerEntity) sender;
 			ServerNetwork network = DataHelper.getServerNetwork(player.getUniqueID());
 			if (network == null) {
-				player.sendMessage(new TextComponentString("Sorry, can't find a network for you?"));
+				player.sendMessage(new StringTextComponent("Sorry, can't find a network for you?"));
 				return;
 			}
 
 			HiveNetwork hive = network.getHiveNetwork();
 			if (hive != null) {
 				hive.clearTiles();
-				player.sendMessage(new TextComponentString("Cleared your and your hive member network tiles"));
+				player.sendMessage(new StringTextComponent("Cleared your and your hive member network tiles"));
 			} else {
 				network.clearTiles();
-				player.sendMessage(new TextComponentString("Cleared all your network tiles."));
+				player.sendMessage(new StringTextComponent("Cleared all your network tiles."));
 			}
 
 			AtomicInteger tileCount = new AtomicInteger();
 			tileCount.set(0);
 			Integer[] ids = DimensionManager.getIDs();
 			for (int w : ids) {
-				WorldServer world = DimensionManager.getWorld(w);
+				ServerWorld world = DimensionManager.getWorld(w);
 				world.loadedTileEntityList.forEach((o) -> {
 					if (o instanceof ImmanenceTileEntity) {
 						ServerTickHandler.incomingITE((ImmanenceTileEntity) o);
@@ -75,7 +75,7 @@ public class CommandRebuild extends CommandBase {
 				});
 			}
 
-			player.sendMessage(new TextComponentString("Placed " + tileCount.get() + " Immanence Tile Entities back into the incoming queue."));
+			player.sendMessage(new StringTextComponent("Placed " + tileCount.get() + " Immanence Tile Entities back into the incoming queue."));
 		}
 	}
 }

@@ -7,17 +7,17 @@ import com.aranaira.arcanearchives.tileentities.RadiantFurnaceTileEntity;
 import com.aranaira.arcanearchives.types.UpgradeType;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
@@ -46,13 +46,13 @@ public class BrazierBlock extends TemplateBlock implements IInfusionStabiliserEx
 	@Override
 	@Nonnull
 	@SuppressWarnings("deprecation")
-	public AxisAlignedBB getBoundingBox (IBlockState state, IBlockAccess source, BlockPos pos) {
+	public AxisAlignedBB getBoundingBox (BlockState state, IBlockAccess source, BlockPos pos) {
 		return BOUNDING_BOX;
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean isOpaqueCube (IBlockState state) {
+	public boolean isOpaqueCube (BlockState state) {
 		return false;
 	}
 
@@ -68,8 +68,8 @@ public class BrazierBlock extends TemplateBlock implements IInfusionStabiliserEx
 	}
 
 	@Override
-	public boolean onBlockActivated (World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (hand == EnumHand.MAIN_HAND && !worldIn.isRemote) {
+	public boolean onBlockActivated (World worldIn, BlockPos pos, BlockState state, PlayerEntity playerIn, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
+		if (hand == Hand.MAIN_HAND && !worldIn.isRemote) {
 			BrazierTileEntity te = WorldUtil.getTileEntity(BrazierTileEntity.class, playerIn.dimension, pos);
 			if (te != null) {
 				te.beginInsert(playerIn, hand, facing, false);
@@ -80,22 +80,22 @@ public class BrazierBlock extends TemplateBlock implements IInfusionStabiliserEx
 	}
 
 	@Override
-	public void onEntityCollision (World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
-		if (entityIn instanceof EntityItem) {
+	public void onEntityCollision (World worldIn, BlockPos pos, BlockState state, Entity entityIn) {
+		if (entityIn instanceof ItemEntity) {
 			BrazierTileEntity te = WorldUtil.getTileEntity(BrazierTileEntity.class, worldIn, pos);
 			if (te != null) {
-				te.beginInsert((EntityItem) entityIn);
+				te.beginInsert((ItemEntity) entityIn);
 			}
 		}
 	}
 
 	@Override
-	public boolean hasTileEntity (IBlockState state) {
+	public boolean hasTileEntity (BlockState state) {
 		return true;
 	}
 
 	@Override
-	public TileEntity createTileEntity (World world, IBlockState state) {
+	public TileEntity createTileEntity (World world, BlockState state) {
 		return new BrazierTileEntity();
 	}
 
@@ -133,7 +133,7 @@ public class BrazierBlock extends TemplateBlock implements IInfusionStabiliserEx
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public boolean causesSuffocation (IBlockState state) {
+	public boolean causesSuffocation (BlockState state) {
 		return false;
 	}
 }

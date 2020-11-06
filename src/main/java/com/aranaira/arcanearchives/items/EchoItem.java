@@ -6,7 +6,7 @@ import com.aranaira.arcanearchives.util.ItemUtils;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -38,7 +38,7 @@ public class EchoItem extends ItemTemplate {
 		copy.setCount(1);
 
 		ItemStack echo = new ItemStack(ItemRegistry.ECHO);
-		NBTTagCompound tag = ItemUtils.getOrCreateTagCompound(echo);
+		CompoundNBT tag = ItemUtils.getOrCreateTagCompound(echo);
 		tag.setTag("source", copy.serializeNBT());
 		return echo;
 	}
@@ -46,7 +46,7 @@ public class EchoItem extends ItemTemplate {
 	// Does not outgoing the echo, that is presumed to be done
 	// after this item stack is created.
 	public static ItemStack itemFromEcho (ItemStack echo) {
-		NBTTagCompound tag = ItemUtils.getOrCreateTagCompound(echo);
+		CompoundNBT tag = ItemUtils.getOrCreateTagCompound(echo);
 		if (!tag.hasKey("source")) {
 			return ItemStack.EMPTY;
 		}

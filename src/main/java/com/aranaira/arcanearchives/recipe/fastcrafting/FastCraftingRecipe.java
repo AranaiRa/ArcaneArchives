@@ -9,8 +9,10 @@ import com.aranaira.arcanearchives.api.cwb.WorkbenchCrafting;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.*;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.CraftingResultSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
@@ -55,7 +57,7 @@ public class FastCraftingRecipe implements IArcaneArchivesRecipe {
     ingredients.addAll(ingredientMap.values());
   }
 
-  private InventoryCrafting createMatrix(@Nonnull WorkbenchCrafting inv, boolean simulate) {
+  private CraftingInventory createMatrix(@Nonnull WorkbenchCrafting inv, boolean simulate) {
     MatchResult matcher = new MatchResult(this, inv);
     Int2IntOpenHashMap matchingSlots = matcher.getSlotMap();
 
@@ -66,7 +68,7 @@ public class FastCraftingRecipe implements IArcaneArchivesRecipe {
       }
     }
 
-    InventoryCrafting matrix = new InventoryCrafting(fakeContainer, minSize, minSize);
+    CraftingInventory matrix = new CraftingInventory(fakeContainer, minSize, minSize);
 
     List<ItemStack> temp = new ArrayList<>();
     for (Int2IntMap.Entry slot : matchingSlots.int2IntEntrySet()) {
@@ -136,7 +138,7 @@ public class FastCraftingRecipe implements IArcaneArchivesRecipe {
   }
 
   @Override
-  public NonNullList<ItemStack> getRemainingIngredients(WorkbenchCrafting inventory, @Nullable EntityPlayer player) {
+  public NonNullList<ItemStack> getRemainingIngredients(WorkbenchCrafting inventory, @Nullable PlayerEntity player) {
     return NonNullList.create();
   }
 
@@ -144,11 +146,11 @@ public class FastCraftingRecipe implements IArcaneArchivesRecipe {
     return returned;
   }
 
-  public void consumeAndHandleInventory(IArcaneArchivesRecipe recipe, WorkbenchCrafting inventory, EntityPlayer player, @Nullable TileEntity tile, @Nullable Runnable callback, @Nullable Runnable finalCallback) {
-    InventoryCrafting matrix = createMatrix(inventory, false);
+  public void consumeAndHandleInventory(IArcaneArchivesRecipe recipe, WorkbenchCrafting inventory, PlayerEntity player, @Nullable TileEntity tile, @Nullable Runnable callback, @Nullable Runnable finalCallback) {
+    CraftingInventory matrix = createMatrix(inventory, false);
 
-    InventoryCraftResult craftResult = new InventoryCraftResult();
-    SlotCrafting slot = new SlotCrafting(player, matrix, craftResult, 0, 0, 0);
+    CraftResultInventory craftResult = new CraftResultInventory();
+    CraftingResultSlot slot = new CraftingResultSlot(player, matrix, craftResult, 0, 0, 0);
     craftResult.setRecipeUsed(originalRecipe);
     craftResult.setInventorySlotContents(0, originalRecipe.getCraftingResult(matrix));
     ItemStack result = slot.onTake(player, craftResult.getStackInSlot(0));
@@ -174,7 +176,7 @@ public class FastCraftingRecipe implements IArcaneArchivesRecipe {
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer playerIn) {
+    public boolean canInteractWith(PlayerEntity playerIn) {
       return false;
     }
   }

@@ -6,12 +6,12 @@ import com.aranaira.arcanearchives.inventories.OptionalUpgradesHandler;
 import com.aranaira.arcanearchives.inventories.SizeUpgradeItemHandler;
 import com.aranaira.arcanearchives.inventories.TankUpgradeItemHandler;
 import com.aranaira.arcanearchives.types.UpgradeType;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -61,14 +61,14 @@ public class RadiantTankTileEntity extends NetworkedBaseTile implements com.aran
 
 	@Override
 	@Nonnull
-	public NBTTagCompound writeToNBT (NBTTagCompound compound) {
+	public CompoundNBT writeToNBT (CompoundNBT compound) {
 		super.writeToNBT(compound);
 		serializeStack(compound);
 		return compound;
 	}
 
 	@Override
-	public void readFromNBT (NBTTagCompound compound) {
+	public void readFromNBT (CompoundNBT compound) {
 		super.readFromNBT(compound);
 		this.deserializeStack(compound);
 	}
@@ -79,9 +79,9 @@ public class RadiantTankTileEntity extends NetworkedBaseTile implements com.aran
 		}
 	}
 
-	public NBTTagCompound serializeStack (NBTTagCompound tag) {
+	public CompoundNBT serializeStack (CompoundNBT tag) {
 		if (inventory.getFluid() != null) {
-			tag.setTag(FluidHandlerItemStack.FLUID_NBT_KEY, inventory.writeToNBT(new NBTTagCompound()));
+			tag.setTag(FluidHandlerItemStack.FLUID_NBT_KEY, inventory.writeToNBT(new CompoundNBT()));
 		}
 		tag.setInteger(Tags.UPGRADE_COUNT, sizeUpgrades.getUpgradesCount());
 		tag.setInteger(Tags.MAXIMUM_CAPACITY, getCapacity());
@@ -96,13 +96,13 @@ public class RadiantTankTileEntity extends NetworkedBaseTile implements com.aran
 
 	@Override
 	@Nonnull
-	public SPacketUpdateTileEntity getUpdatePacket () {
-		NBTTagCompound compound = writeToNBT(new NBTTagCompound());
+	public SUpdateTileEntityPacket getUpdatePacket () {
+		CompoundNBT compound = writeToNBT(new CompoundNBT());
 
-		return new SPacketUpdateTileEntity(pos, 0, compound);
+		return new SUpdateTileEntityPacket(pos, 0, compound);
 	}
 
-	public void deserializeStack (NBTTagCompound tag) {
+	public void deserializeStack (CompoundNBT tag) {
 		this.sizeUpgrades.deserializeNBT(tag.getCompoundTag(Tags.SIZE_UPGRADES));
 		this.optionalUpgrades.deserializeNBT(tag.getCompoundTag(Tags.OPTIONAL_UPGRADES));
 		this.validateCapacity();
@@ -111,18 +111,18 @@ public class RadiantTankTileEntity extends NetworkedBaseTile implements com.aran
 	}
 
 	@Override
-	public NBTTagCompound getUpdateTag () {
-		return writeToNBT(new NBTTagCompound());
+	public CompoundNBT getUpdateTag () {
+		return writeToNBT(new CompoundNBT());
 	}
 
 	@Override
-	public void onDataPacket (NetworkManager net, SPacketUpdateTileEntity pkt) {
+	public void onDataPacket (NetworkManager net, SUpdateTileEntityPacket pkt) {
 		readFromNBT(pkt.getNbtCompound());
 		super.onDataPacket(net, pkt);
 	}
 
 	@Override
-	public boolean hasCapability (@Nonnull Capability<?> capability, EnumFacing facing) {
+	public boolean hasCapability (@Nonnull Capability<?> capability, Direction facing) {
 		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
 			return true;
 		}
@@ -130,7 +130,7 @@ public class RadiantTankTileEntity extends NetworkedBaseTile implements com.aran
 	}
 
 	@Override
-	public <T> T getCapability (@Nonnull Capability<T> capability, EnumFacing facing) {
+	public <T> T getCapability (@Nonnull Capability<T> capability, Direction facing) {
 		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
 			return CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY.cast(inventory);
 		}
@@ -148,7 +148,7 @@ public class RadiantTankTileEntity extends NetworkedBaseTile implements com.aran
 	}
 
 	@Override
-	public boolean handleManipulationInterface (EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public boolean handleManipulationInterface (PlayerEntity player, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
 		if (player.world.isRemote) {
 			return true;
 		}

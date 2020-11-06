@@ -3,14 +3,14 @@ package com.aranaira.arcanearchives.tileentities;
 import com.aranaira.arcanearchives.init.ModBlocks;
 import com.aranaira.arcanearchives.reference.Tags;
 import com.aranaira.arcanearchives.tilenetwork.Network;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.init.Items;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -46,7 +46,7 @@ public class MandalicKeystoneTile extends NetworkedBaseTile implements ITickable
   @Override
   public void update() {
     if (!world.isRemote && world.getTotalWorldTime() % 40 == 0) {
-      List<EntityItem> items = getItems();
+      List<ItemEntity> items = getItems();
       if (!items.isEmpty()) {
         ItemStack testItem = items.get(0).getItem();
 
@@ -77,7 +77,7 @@ public class MandalicKeystoneTile extends NetworkedBaseTile implements ITickable
 
   @Nonnull
   @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+  public CompoundNBT writeToNBT(CompoundNBT compound) {
     super.writeToNBT(compound);
 
     compound.setInteger(Tags.MakeshiftResonator.currentTick, progress);
@@ -86,7 +86,7 @@ public class MandalicKeystoneTile extends NetworkedBaseTile implements ITickable
   }
 
   @Override
-  public void readFromNBT(NBTTagCompound compound) {
+  public void readFromNBT(CompoundNBT compound) {
     super.readFromNBT(compound);
 
     if (compound.hasKey(Tags.MakeshiftResonator.currentTick)) {
@@ -94,9 +94,9 @@ public class MandalicKeystoneTile extends NetworkedBaseTile implements ITickable
     }
   }
 
-  private List<EntityItem> getItems() {
-    List<EntityItem> result = new ArrayList<>();
-    for (EntityItem item : world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(pos.up()))) {
+  private List<ItemEntity> getItems() {
+    List<ItemEntity> result = new ArrayList<>();
+    for (ItemEntity item : world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(pos.up()))) {
       ItemStack inSlot = item.getItem();
       if (WOOD.test(inSlot) || STONE.test(inSlot) || GRAVEL.test(inSlot)) {
         result.add(item);
@@ -108,19 +108,19 @@ public class MandalicKeystoneTile extends NetworkedBaseTile implements ITickable
 
   @Override
   @Nonnull
-  public SPacketUpdateTileEntity getUpdatePacket() {
-    NBTTagCompound compound = writeToNBT(new NBTTagCompound());
+  public SUpdateTileEntityPacket getUpdatePacket() {
+    CompoundNBT compound = writeToNBT(new CompoundNBT());
 
-    return new SPacketUpdateTileEntity(pos, 0, compound);
+    return new SUpdateTileEntityPacket(pos, 0, compound);
   }
 
   @Override
-  public NBTTagCompound getUpdateTag() {
-    return writeToNBT(new NBTTagCompound());
+  public CompoundNBT getUpdateTag() {
+    return writeToNBT(new CompoundNBT());
   }
 
   @Override
-  public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+  public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
     readFromNBT(pkt.getNbtCompound());
     super.onDataPacket(net, pkt);
   }
@@ -130,7 +130,7 @@ public class MandalicKeystoneTile extends NetworkedBaseTile implements ITickable
   }
 
   @Override
-  public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
+  public boolean shouldRefresh(World world, BlockPos pos, BlockState oldState, BlockState newSate) {
     return (oldState.getBlock() != newSate.getBlock());
   }
 }

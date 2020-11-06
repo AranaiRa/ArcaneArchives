@@ -15,11 +15,11 @@ import com.aranaira.arcanearchives.types.SlotIterable;
 import io.netty.buffer.ByteBuf;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.item.crafting.RecipeItemHelper;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.items.IItemHandler;
 
@@ -41,7 +41,7 @@ public class ManifestUtils {
     }
   }
 
-  public static List<CollatedEntry> parsePreManifest(Map<Integer, List<ItemEntry>> preManifest, Network network, EntityPlayer player) {
+  public static List<CollatedEntry> parsePreManifest(Map<Integer, List<ItemEntry>> preManifest, Network network, PlayerEntity player) {
     // We need to collate all of these entries into the following:
     // Unique entries should be collapsed (along with positions & descriptions)
     // Out of range entries should be collapsed (etc)
@@ -115,7 +115,7 @@ public class ManifestUtils {
     return phase2;
   }
 
-  public static Map<Integer, List<ItemEntry>> buildItemEntryList(Network network, EntityPlayer player) {
+  public static Map<Integer, List<ItemEntry>> buildItemEntryList(Network network, PlayerEntity player) {
     List<NetworkEntry> tiles = network.getTrackedInventories();
 
     Int2ObjectOpenHashMap<List<ItemEntry>> preManifest = new Int2ObjectOpenHashMap<>();
@@ -154,7 +154,7 @@ public class ManifestUtils {
 
         if (done.contains(target)) {
           if (player != null) {
-            player.sendMessage(new TextComponentTranslation("arcanearchives.error.monitoring_crystal", target.getX(), target.getY(), target.getZ(), target.dimension));
+            player.sendMessage(new TranslationTextComponent("arcanearchives.error.monitoring_crystal", target.getX(), target.getY(), target.getZ(), target.dimension));
           } else {
             ArcaneArchives.logger.error("Multiple Monitoring Crystals were found for network " + network.getNetworkId().toString() + " targetgeting " + String.format("%d/%d/%d in dimension %d", target.getX(), target.getY(), target.getZ(), target.dimension));
           }
@@ -187,7 +187,7 @@ public class ManifestUtils {
     return preManifest;
   }
 
-  public static List<ItemEntry> getEntryList(Int2ObjectOpenHashMap<List<ItemEntry>> map, int packed, EntityPlayer player) {
+  public static List<ItemEntry> getEntryList(Int2ObjectOpenHashMap<List<ItemEntry>> map, int packed, PlayerEntity player) {
     List<ItemEntry> list = map.get(packed);
     if (list == null) {
       list = new ArrayList<>();

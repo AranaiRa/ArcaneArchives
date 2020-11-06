@@ -3,16 +3,16 @@ package com.aranaira.arcanearchives.client.render;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.util.ColorUtils;
 import com.aranaira.arcanearchives.util.ColorUtils.Color;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
@@ -73,7 +73,7 @@ public class RenderUtils {
   }
 
   // TODO: Not use
-  public static void renderFullbrightBlockModel(World world, BlockPos pos, IBlockState state, boolean translateToOrigin) {
+  public static void renderFullbrightBlockModel(World world, BlockPos pos, BlockState state, boolean translateToOrigin) {
     GlStateManager.pushMatrix();
     BufferBuilder buffer = Tessellator.getInstance().getBuffer();
     buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
@@ -85,7 +85,7 @@ public class RenderUtils {
     BlockModelShapes shapes = dispatcher.getBlockModelShapes();
     IBakedModel thisBlock = shapes.getModelForState(state);
 
-    mc.renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+    mc.renderEngine.bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
     long rand = MathHelper.getPositionRandom(pos);
 
     for (BlockRenderLayer layer : BlockRenderLayer.values()) {
@@ -117,7 +117,7 @@ public class RenderUtils {
     bufferBuilder.pos(pos.x, pos.y, pos.z).color(color.red, color.green, color.blue, color.alpha).endVertex();
   }
 
-  public static Vec3d getPlayerPosAdjusted(EntityPlayer e, float partialTicks) {
+  public static Vec3d getPlayerPosAdjusted(PlayerEntity e, float partialTicks) {
     double iPX = e.prevPosX + (e.posX - e.prevPosX) * partialTicks;
     double iPY = e.prevPosY + (e.posY - e.prevPosY) * partialTicks;
     double iPZ = e.prevPosZ + (e.posZ - e.prevPosZ) * partialTicks;
@@ -132,7 +132,7 @@ public class RenderUtils {
     final float maxV = whiteTexture.getMaxV();
     final BufferBuilder tes = Tessellator.getInstance().getBuffer();
     tes.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
-    for (EnumFacing e : EnumFacing.values()) {
+    for (Direction e : Direction.values()) {
       for (Vertex v : getCornersWithUvForFace(bb, e, minU, maxU, minV, maxV)) {
         tes.pos(v.x(), v.y(), v.z()).tex(v.u(), v.v()).color(color.x, color.y, color.z, color.w).endVertex();
       }
@@ -140,7 +140,7 @@ public class RenderUtils {
     Tessellator.getInstance().draw();
   }
 
-  private static List<Vertex> getCornersWithUvForFace(@Nonnull AxisAlignedBB bb, @Nonnull EnumFacing face, float minU, float maxU, float minV, float maxV) {
+  private static List<Vertex> getCornersWithUvForFace(@Nonnull AxisAlignedBB bb, @Nonnull Direction face, float minU, float maxU, float minV, float maxV) {
     List<Vertex> result = new ArrayList<>();
     switch (face) {
       case NORTH:
@@ -186,7 +186,7 @@ public class RenderUtils {
 
   @SubscribeEvent
   public static void onIconLoad(TextureStitchEvent.Pre event) {
-    final TextureMap map = event.getMap();
+    final AtlasTexture map = event.getMap();
     if (map != null) {
       whiteTexture = map.registerSprite(new ResourceLocation(ArcaneArchives.MODID, "white"));
     }

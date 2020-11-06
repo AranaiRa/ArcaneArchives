@@ -7,8 +7,8 @@ import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItem
 import com.aranaira.arcanearchives.types.UpgradeType;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -31,7 +31,7 @@ public class TroveItemBlockItemHandler implements com.aranaira.arcanearchives.in
 
   public int getUpgrades() {
     if (this.upgrades == null) {
-      NBTTagCompound tag = container.getTagCompound();
+      CompoundNBT tag = container.getTagCompound();
       if (tag == null || !tag.hasKey(RadiantTroveTileEntity.Tags.SIZE_UPGRADES)) {
         return 0;
       }
@@ -53,13 +53,13 @@ public class TroveItemBlockItemHandler implements com.aranaira.arcanearchives.in
   }
 
   @Override
-  public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
+  public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable Direction facing) {
     return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
   }
 
   @Nullable
   @Override
-  public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
+  public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
     if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
       return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(this);
     } else {
@@ -70,12 +70,12 @@ public class TroveItemBlockItemHandler implements com.aranaira.arcanearchives.in
   @Override
   public ItemStack getReference() {
     if (reference == null) {
-      NBTTagCompound tag = container.getTagCompound();
+      CompoundNBT tag = container.getTagCompound();
       if (tag == null || !tag.hasKey(RadiantTroveTileEntity.Tags.HANDLER_ITEM)) {
         return ItemStack.EMPTY;
       }
 
-      NBTTagCompound incoming = tag.getCompoundTag(RadiantTroveTileEntity.Tags.HANDLER_ITEM);
+      CompoundNBT incoming = tag.getCompoundTag(RadiantTroveTileEntity.Tags.HANDLER_ITEM);
       this.reference = new ItemStack(incoming.getCompoundTag(Tags.REFERENCE));
     }
     return this.reference;
@@ -84,12 +84,12 @@ public class TroveItemBlockItemHandler implements com.aranaira.arcanearchives.in
   @Override
   public int getCount() {
     if (count == -1) {
-      NBTTagCompound tag = container.getTagCompound();
+      CompoundNBT tag = container.getTagCompound();
       if (tag == null || !tag.hasKey(RadiantTroveTileEntity.Tags.HANDLER_ITEM)) {
         return 0;
       }
 
-      NBTTagCompound incoming = tag.getCompoundTag(RadiantTroveTileEntity.Tags.HANDLER_ITEM);
+      CompoundNBT incoming = tag.getCompoundTag(RadiantTroveTileEntity.Tags.HANDLER_ITEM);
       this.count = incoming.getInteger(Tags.COUNT);
     }
     return count;
@@ -108,7 +108,7 @@ public class TroveItemBlockItemHandler implements com.aranaira.arcanearchives.in
 
   private OptionalUpgradesHandler getOptionals() {
     if (optionals == null) {
-      NBTTagCompound tag = container.getTagCompound();
+      CompoundNBT tag = container.getTagCompound();
       if (tag == null || !tag.hasKey(RadiantTroveTileEntity.Tags.OPTIONAL_UPGRADES)) {
         return null;
       }
@@ -168,8 +168,8 @@ public class TroveItemBlockItemHandler implements com.aranaira.arcanearchives.in
   }
 
   public void saveToStack() {
-    NBTTagCompound tag = ItemUtils.getOrCreateTagCompound(container);
-    NBTTagCompound result = new NBTTagCompound();
+    CompoundNBT tag = ItemUtils.getOrCreateTagCompound(container);
+    CompoundNBT result = new CompoundNBT();
     if (this.count != -1) {
       result.setInteger(Tags.COUNT, this.count);
     }

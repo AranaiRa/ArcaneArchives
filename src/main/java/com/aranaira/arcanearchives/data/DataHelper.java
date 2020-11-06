@@ -1,13 +1,11 @@
 package com.aranaira.arcanearchives.data;
 
-import com.aranaira.arcanearchives.data.client.ClientNameData;
-import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketNetwork;
 import com.aranaira.arcanearchives.tilenetwork.Network;
 import com.aranaira.arcanearchives.tilenetwork.NetworkName;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.world.WorldServer;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.world.ServerWorld;
 import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
@@ -17,16 +15,16 @@ import java.util.UUID;
 import java.util.function.Function;
 
 public class DataHelper {
-  public static WorldServer getWorld() {
+  public static ServerWorld getWorld() {
     return FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(0);
   }
 
   private static void save() {
-    WorldServer world = getWorld();
+    ServerWorld world = getWorld();
     Objects.requireNonNull(world.getMapStorage()).saveAllData();
   }
 
-  private static PlayerSaveData getPlayerData(EntityPlayer player) {
+  private static PlayerSaveData getPlayerData(PlayerEntity player) {
     return getData(PlayerSaveData.class, PlayerSaveData::new, player, PlayerSaveData::ID);
   }
 
@@ -47,7 +45,7 @@ public class DataHelper {
   }
 
   private static <T extends WorldSavedData, U> T getData(Class<T> clazz, Function<U, T> provider, U value, Function<U, String> conversion) {
-    WorldServer world = getWorld();
+    ServerWorld world = getWorld();
     @SuppressWarnings("unchecked") T saveData = (T) Objects.requireNonNull(world.getMapStorage()).getOrLoadData(clazz, conversion.apply(value));
     if (saveData == null) {
       saveData = provider.apply(value);

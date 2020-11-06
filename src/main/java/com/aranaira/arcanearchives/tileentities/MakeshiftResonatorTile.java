@@ -5,14 +5,14 @@ import com.aranaira.arcanearchives.blocks.MakeshiftResonatorBlock;
 import com.aranaira.arcanearchives.init.ModItems;
 import com.aranaira.arcanearchives.reference.Tags;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
@@ -37,7 +37,7 @@ public class MakeshiftResonatorTile extends BaseTile implements ITickable {
     if (world == null) {
       return;
     }
-    IBlockState state = world.getBlockState(pos);
+    BlockState state = world.getBlockState(pos);
     if (!state.getValue(MakeshiftResonatorBlock.FILLED)) {
       return;
     }
@@ -79,7 +79,7 @@ public class MakeshiftResonatorTile extends BaseTile implements ITickable {
 
   @Nonnull
   @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+  public CompoundNBT writeToNBT(CompoundNBT compound) {
     super.writeToNBT(compound);
 
     compound.setInteger(Tags.MakeshiftResonator.currentTick, growth);
@@ -88,7 +88,7 @@ public class MakeshiftResonatorTile extends BaseTile implements ITickable {
   }
 
   @Override
-  public void readFromNBT(NBTTagCompound compound) {
+  public void readFromNBT(CompoundNBT compound) {
     super.readFromNBT(compound);
 
     if (compound.hasKey(Tags.MakeshiftResonator.currentTick)) {
@@ -102,25 +102,25 @@ public class MakeshiftResonatorTile extends BaseTile implements ITickable {
 
   @Override
   @Nonnull
-  public SPacketUpdateTileEntity getUpdatePacket() {
-    NBTTagCompound compound = writeToNBT(new NBTTagCompound());
+  public SUpdateTileEntityPacket getUpdatePacket() {
+    CompoundNBT compound = writeToNBT(new CompoundNBT());
 
-    return new SPacketUpdateTileEntity(pos, 0, compound);
+    return new SUpdateTileEntityPacket(pos, 0, compound);
   }
 
   @Override
-  public NBTTagCompound getUpdateTag() {
-    return writeToNBT(new NBTTagCompound());
+  public CompoundNBT getUpdateTag() {
+    return writeToNBT(new CompoundNBT());
   }
 
   @Override
-  public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+  public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
     readFromNBT(pkt.getNbtCompound());
     super.onDataPacket(net, pkt);
   }
 
   @Override
-  public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
+  public boolean shouldRefresh(World world, BlockPos pos, BlockState oldState, BlockState newSate) {
     return (oldState.getBlock() != newSate.getBlock());
   }
 }

@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.api.cwb;
 
 import com.aranaira.arcanearchives.api.crafting.IngredientStack;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 
@@ -21,11 +21,11 @@ public interface IArcaneArchivesRecipe {
   List<IngredientTransformer> getIngredientTransformers();
 
   // TODO
-  NonNullList<ItemStack> getRemainingIngredients(WorkbenchCrafting inventory, @Nullable EntityPlayer player);
+  NonNullList<ItemStack> getRemainingIngredients(WorkbenchCrafting inventory, @Nullable PlayerEntity player);
 
   List<IngredientStack> getIngredients();
 
-  default ItemStack onCrafted (EntityPlayer player, ItemStack stack) {
+  default ItemStack onCrafted (PlayerEntity player, ItemStack stack) {
     return stack;
   }
 }

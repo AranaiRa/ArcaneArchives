@@ -1,15 +1,15 @@
 package com.aranaira.arcanearchives.client.gui.framework;
 
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.Slot;
 
 /**
- * There are "fun" things about the way {@link net.minecraft.client.gui.inventory.GuiContainer}
+ * There are "fun" things about the way {@link ContainerScreen}
  * and {@link ItemRenderer} do things where they render items with
  * a crazy high z level GL transform matrix. So we have to one up the crazy in order to have
  * a real foreground that is on top of rendered {@link net.minecraft.item.ItemStack}s. This
@@ -19,12 +19,12 @@ import net.minecraft.inventory.Slot;
  * The end effect is that what shows up on screen from back to front is
  * <ol>
  * <li> {@link #drawBackgroundContents(int, int)} </li>
- * <li> {@link #inventorySlots} which are populated via {@link Container#addSlotToContainer(Slot)} </li>
+ * <li> {@link #inventorySlots} which are populated via {@link Container#addSlotToContainer(net.minecraft.inventory.container.Slot)} </li>
  * <li> {@link #drawForegroundContents(int, int)} </li>
  * <li> {@link #drawTopLevelElements(int, int)} </li>
  * </ol>
  */
-public abstract class LayeredGuiContainer extends GuiContainer {
+public abstract class LayeredGuiContainer extends ContainerScreen {
   /**
    * at what Z level to render {@link #drawForegroundContents(int, int)} relative to {@link @START_Z}
    */
@@ -40,12 +40,12 @@ public abstract class LayeredGuiContainer extends GuiContainer {
   /**
    * at what Z level to render {@link #drawTopLevelElements(int, int)} relative to z level
    * when {@link #drawScreen(int, int, float)} is called which is where the "fog" in front of the view
-   * of the world is drawn via {@link GuiScreen#drawDefaultBackground()}
+   * of the world is drawn via {@link Screen#drawDefaultBackground()}
    */
   public static float TOP_Z = 400f;
 
   /**
-   * @param inventorySlotsIn a {@link Container} that contains the {@link net.minecraft.inventory.Slot}s
+   * @param inventorySlotsIn a {@link Container} that contains the {@link net.minecraft.inventory.container.Slot}s
    *                         that this GUI needs to render
    */
   public LayeredGuiContainer(Container inventorySlotsIn) {
@@ -53,7 +53,7 @@ public abstract class LayeredGuiContainer extends GuiContainer {
   }
 
   /**
-   * Stuff drawn here will be drawn behind the {@link net.minecraft.inventory.Slot}s
+   * Stuff drawn here will be drawn behind the {@link Slot}s
    *
    * @param mouseX current mouse X position
    * @param mouseY current mouse Y position
@@ -62,7 +62,7 @@ public abstract class LayeredGuiContainer extends GuiContainer {
   }
 
   /**
-   * Stuff drawn here will be drawn in front of the {@link net.minecraft.inventory.Slot}s
+   * Stuff drawn here will be drawn in front of the {@link net.minecraft.inventory.container.Slot}s
    *
    * @param mouseX current mouse X position
    * @param mouseY current mouse Y position
@@ -83,10 +83,10 @@ public abstract class LayeredGuiContainer extends GuiContainer {
    * Use this method to add buttons to this {@link LayeredGuiContainer} so that they will end up
    * on the correct layer
    *
-   * @param buttonIn {@link GuiButton} to add
+   * @param buttonIn {@link Button} to add
    */
   @Override
-  protected <T extends GuiButton> T addButton(T buttonIn) {
+  protected <T extends Button> T addButton(T buttonIn) {
     super.addButton(new LayeredButton(buttonIn));
     return buttonIn;
   }

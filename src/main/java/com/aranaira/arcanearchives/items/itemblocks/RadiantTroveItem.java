@@ -9,9 +9,9 @@ import com.aranaira.arcanearchives.util.ItemUtils;
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -21,23 +21,23 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class RadiantTroveItem extends ItemBlock {
+public class RadiantTroveItem extends BlockItem {
 	public RadiantTroveItem (Block block) {
 		super(block);
 	}
 
 	@Nullable
 	@Override
-	public ICapabilityProvider initCapabilities (ItemStack stack, @Nullable NBTTagCompound nbt) {
+	public ICapabilityProvider initCapabilities (ItemStack stack, @Nullable CompoundNBT nbt) {
 		return new TroveItemBlockItemHandler(stack);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		NBTTagCompound tag = ItemUtils.getOrCreateTagCompound(stack);
+		CompoundNBT tag = ItemUtils.getOrCreateTagCompound(stack);
 		if (tag.hasKey(RadiantTroveTileEntity.Tags.HANDLER_ITEM)) {
-			NBTTagCompound incoming = tag.getCompoundTag(RadiantTroveTileEntity.Tags.HANDLER_ITEM);
+			CompoundNBT incoming = tag.getCompoundTag(RadiantTroveTileEntity.Tags.HANDLER_ITEM);
 			int count = incoming.getInteger(Tags.COUNT);
 			ItemStack stored = new ItemStack(incoming.getCompoundTag(Tags.REFERENCE));
 			int maxCapacity = (incoming.getInteger(Tags.UPGRADES) + 1) * RadiantTroveTileEntity.BASE_COUNT;

@@ -4,7 +4,7 @@ import com.aranaira.arcanearchives.data.client.ClientNetworkData;
 import com.aranaira.arcanearchives.reference.Tags;
 import com.aranaira.arcanearchives.tilenetwork.Network;
 import com.aranaira.arcanearchives.types.ISerializePacketBuffer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.world.storage.WorldSavedData;
 
@@ -60,12 +60,12 @@ public class ServerNetworkData extends WorldSavedData implements ISerializePacke
   }
 
   @Override
-  public void readFromNBT(NBTTagCompound nbt) {
+  public void readFromNBT(CompoundNBT nbt) {
     this.networkId = nbt.getUniqueId(Tags.networkId);
   }
 
   @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+  public CompoundNBT writeToNBT(CompoundNBT compound) {
     compound.setUniqueId(Tags.networkId, this.networkId);
     return compound;
   }

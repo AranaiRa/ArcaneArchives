@@ -16,15 +16,15 @@ import com.aranaira.arcanearchives.util.ItemUtils;
 import com.aranaira.arcanearchives.util.PlayerUtil;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Items;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.RecipeItemHelper;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -78,7 +78,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 		super("radianttrove");
 	}
 
-	public void onRightClickTrove (EntityPlayer player) {
+	public void onRightClickTrove (PlayerEntity player) {
 		ItemStack mainhand = player.getHeldItemMainhand();
 
 		boolean fakeHand = false;
@@ -126,7 +126,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 			result = inventory.insertItem(0, mainhand, false);
 
 			if (!result.isEmpty()) {
-				player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.trove_insertion_failed.full"), true);
+				player.sendStatusMessage(new TranslationTextComponent("arcanearchives.error.trove_insertion_failed.full"), true);
 				mainhand.setCount(result.getCount());
 				return;
 			} else {
@@ -135,7 +135,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 		}
 
 		if (doubleClick) {
-			IItemHandler playerMain = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+			IItemHandler playerMain = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP);
 			if (playerMain != null) {
 				for (int i = 0; i < playerMain.getSlots(); i++) {
 					ItemStack inSlot = playerMain.getStackInSlot(i);
@@ -144,7 +144,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 						if (!result.isEmpty()) {
 							int diff = inSlot.getCount() - result.getCount();
 							inventory.insertItem(0, playerMain.extractItem(i, diff, false), false);
-							player.sendStatusMessage(new TextComponentTranslation("arcanearchives.error.trove_insertion_failed.full"), true);
+							player.sendStatusMessage(new TranslationTextComponent("arcanearchives.error.trove_insertion_failed.full"), true);
 							this.markDirty();
 							return;
 						} else {
@@ -156,14 +156,14 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 			}
 		}
 
-		PlayerUtil.Server.syncInventory((EntityPlayerMP) player);
+		PlayerUtil.Server.syncInventory((ServerPlayerEntity) player);
 	}
 
 	public boolean isEmpty () {
 		return inventory.isEmpty();
 	}
 
-	public void onLeftClickTrove (EntityPlayer player) {
+	public void onLeftClickTrove (PlayerEntity player) {
 		if (world.isRemote) {
 			return;
 		}
@@ -191,7 +191,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 
 		stack = inventory.extractItem(0, count, false);
 
-		IItemHandler inventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+		IItemHandler inventory = player.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.UP);
 		ItemStack result = ItemHandlerHelper.insertItemStacked(inventory, stack, false);
 		if (!result.isEmpty()) {
 			Block.spawnAsEntity(world, player.getPosition(), result);
@@ -200,32 +200,32 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 
 	@Override
 	@Nonnull
-	public NBTTagCompound writeToNBT (NBTTagCompound compound) {
+	public CompoundNBT writeToNBT (CompoundNBT compound) {
 		super.writeToNBT(compound);
 		return this.serializeStack(compound);
 	}
 
 	@Override
-	public void readFromNBT (NBTTagCompound compound) {
+	public void readFromNBT (CompoundNBT compound) {
 		super.readFromNBT(compound);
 		this.deserializeStack(compound);
 	}
 
-	public NBTTagCompound serializeStack (NBTTagCompound compound) {
+	public CompoundNBT serializeStack (CompoundNBT compound) {
 		compound.setTag(Tags.HANDLER_ITEM, this.inventory.serializeNBT());
 		compound.setTag(Tags.SIZE_UPGRADES, this.sizeUpgrades.serializeNBT());
 		compound.setTag(Tags.OPTIONAL_UPGRADES, this.optionalUpgrades.serializeNBT());
 		return compound;
 	}
 
-	public void deserializeStack (NBTTagCompound compound) {
+	public void deserializeStack (CompoundNBT compound) {
 		this.inventory.deserializeNBT(compound.getCompoundTag(Tags.HANDLER_ITEM));
 		this.sizeUpgrades.deserializeNBT(compound.getCompoundTag(Tags.SIZE_UPGRADES));
 		this.optionalUpgrades.deserializeNBT(compound.getCompoundTag(Tags.OPTIONAL_UPGRADES));
 	}
 
 	@Override
-	public boolean hasCapability (@Nonnull Capability<?> capability, EnumFacing facing) {
+	public boolean hasCapability (@Nonnull Capability<?> capability, Direction facing) {
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			return true;
 		}
@@ -233,7 +233,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 	}
 
 	@Override
-	public <T> T getCapability (@Nonnull Capability<T> capability, EnumFacing facing) {
+	public <T> T getCapability (@Nonnull Capability<T> capability, Direction facing) {
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(inventory);
 		}
@@ -287,7 +287,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 	}
 
 	@Override
-	public boolean handleManipulationInterface (EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public boolean handleManipulationInterface (PlayerEntity player, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
 		if (player.world.isRemote) {
 			return true;
 		}
@@ -367,7 +367,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 		}
 	}
 
-	public class TroveItemHandler implements ITroveItemHandler, INBTSerializable<NBTTagCompound> {
+	public class TroveItemHandler implements ITroveItemHandler, INBTSerializable<CompoundNBT> {
 
 		private int upgrades = 0;
 		private int count = 0;
@@ -476,8 +476,8 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 		}
 
 		@Override
-		public NBTTagCompound serializeNBT () {
-			NBTTagCompound result = new NBTTagCompound();
+		public CompoundNBT serializeNBT () {
+			CompoundNBT result = new CompoundNBT();
 			result.setInteger(Tags.COUNT, this.count);
 			result.setTag(Tags.REFERENCE, this.reference.serializeNBT());
 			result.setInteger(Tags.UPGRADES, this.upgrades);
@@ -485,7 +485,7 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 		}
 
 		@Override
-		public void deserializeNBT (NBTTagCompound nbt) {
+		public void deserializeNBT (CompoundNBT nbt) {
 			this.count = nbt.getInteger(Tags.COUNT);
 			this.reference = new ItemStack(nbt.getCompoundTag(Tags.REFERENCE));
 			this.upgrades = nbt.getInteger(Tags.UPGRADES);

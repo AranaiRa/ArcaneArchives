@@ -10,12 +10,12 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fluids.FluidStack;
@@ -95,7 +95,7 @@ public class RadiantTankTESR extends TileEntityRenderer<RadiantTankTileEntity> {
 			}
 
 			buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
-			mc.renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+			mc.renderEngine.bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
 
 			GlStateManager.translate(orig.x, orig.y, orig.z);
 
@@ -220,7 +220,7 @@ public class RadiantTankTESR extends TileEntityRenderer<RadiantTankTileEntity> {
 				this.setRendererDispatcher(TileEntityRendererDispatcher.instance);
 			}
 
-			NBTTagCompound tag = stack.getTagCompound();
+			CompoundNBT tag = stack.getTagCompound();
 			FluidHandlerItemStack handler = (FluidHandlerItemStack) stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
 			int maximumCapacity = 16000;
 			if (tag.hasKey(Tags.MAXIMUM_CAPACITY)) {

@@ -7,14 +7,14 @@ import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.model.BakedQuad;
+import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.item.crafting.RecipeItemHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -96,7 +96,7 @@ public class TintUtils {
       IBakedModel model = renderItem.getItemModelWithOverrides(result, null, null);
       BakedQuad quad = null;
       for (BakedQuad q : model.getQuads(null, null, 0)) {
-        if (q.getFace() == EnumFacing.SOUTH) {
+        if (q.getFace() == Direction.SOUTH) {
           quad = q;
           break;
         }

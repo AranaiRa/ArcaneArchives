@@ -5,14 +5,14 @@ import com.aranaira.arcanearchives.inventory.slots.SlotCraftingFastWorkbench;
 import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketRadiantCrafting;
 import com.aranaira.arcanearchives.tileentities.RadiantCraftingTableTileEntity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.*;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.network.play.server.SPacketSetSlot;
+import net.minecraft.network.play.server.SSetSlotPacket;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -28,13 +28,13 @@ import java.util.List;
 // nearly the same as ContainerWorkbench but uses the TileEntities inventory
 @Mod.EventBusSubscriber
 public class ContainerRadiantCraftingTable extends Container {
-	public static IInventory emptyInventory = new InventoryBasic("[Null]", true, 0);
+	public static IInventory emptyInventory = new Inventory("[Null]", true, 0);
 	public final BlockPos pos;
 	protected final World world;
 	private final ItemStackHandler itemHandler;
-	private final EntityPlayer player;
+	private final PlayerEntity player;
 	private final InventoryCraftingPersistent craftMatrix;
-	private final InventoryCraftResult craftResult;
+	private final CraftResultInventory craftResult;
 	private IRecipe lastRecipe;
 	private IRecipe lastLastRecipe;
 	private List<SlotIRecipe> recipeSlots = Arrays.asList(new SlotIRecipe[3]);
@@ -51,7 +51,7 @@ public class ContainerRadiantCraftingTable extends Container {
 
 	public RadiantCraftingTableTileEntity tile;
 
-	public ContainerRadiantCraftingTable (RadiantCraftingTableTileEntity tile, EntityPlayer player, InventoryPlayer playerInventory) {
+	public ContainerRadiantCraftingTable (RadiantCraftingTableTileEntity tile, PlayerEntity player, PlayerInventory playerInventory) {
 		super();
 
 		this.tile = tile;
@@ -60,7 +60,7 @@ public class ContainerRadiantCraftingTable extends Container {
 		this.pos = tile.getPos();
 		this.itemHandler = tile.getInventory();
 
-		craftResult = new InventoryCraftResult();
+		craftResult = new CraftResultInventory();
 		craftMatrix = new InventoryCraftingPersistent(this, itemHandler, tile, 3, 3);
 		this.player = player;
 
@@ -116,7 +116,7 @@ public class ContainerRadiantCraftingTable extends Container {
 
 	@Nonnull
 	@Override
-	public ItemStack transferStackInSlot (EntityPlayer playerIn, int index) {
+	public ItemStack transferStackInSlot (PlayerEntity playerIn, int index) {
 		Slot slot = this.inventorySlots.get(index);
 
 		if (slot == null || !slot.getHasStack()) {
@@ -276,7 +276,7 @@ public class ContainerRadiantCraftingTable extends Container {
 	}
 
 	@Override
-	public boolean canInteractWith (EntityPlayer playerIn) {
+	public boolean canInteractWith (PlayerEntity playerIn) {
 		return true;
 	}
 
@@ -291,7 +291,7 @@ public class ContainerRadiantCraftingTable extends Container {
 	}
 
 	@Override
-	protected void slotChangedCraftingGrid (World world, EntityPlayer player, InventoryCrafting inv, InventoryCraftResult result) {
+	protected void slotChangedCraftingGrid (World world, PlayerEntity player, CraftingInventory inv, CraftResultInventory result) {
 		ItemStack itemstack = ItemStack.EMPTY;
 
 		if (lastRecipe == null || !lastRecipe.matches(inv, world)) {
@@ -304,8 +304,8 @@ public class ContainerRadiantCraftingTable extends Container {
 
 		if (!world.isRemote) {
 			result.setInventorySlotContents(0, itemstack);
-			EntityPlayerMP entityplayermp = (EntityPlayerMP) player;
-			entityplayermp.connection.sendPacket(new SPacketSetSlot(this.windowId, 0, itemstack));
+			ServerPlayerEntity entityplayermp = (ServerPlayerEntity) player;
+			entityplayermp.connection.sendPacket(new SSetSlotPacket(this.windowId, 0, itemstack));
 			Networking.CHANNEL.sendTo(new PacketRadiantCrafting.LastRecipe(lastRecipe), entityplayermp);
 		}
 
@@ -316,7 +316,7 @@ public class ContainerRadiantCraftingTable extends Container {
  * @return the starting slot for the player inventory. Present for usage in the JEI crafting station support
 
 
-	public InventoryCrafting getCraftMatrix () {
+	public CraftingInventory getCraftMatrix () {
 		return craftMatrix;
 	}
 
@@ -378,7 +378,7 @@ public class ContainerRadiantCraftingTable extends Container {
 		}
 
 		@Override
-		public boolean canTakeStack (EntityPlayer playerIn) {
+		public boolean canTakeStack (PlayerEntity playerIn) {
 			return false;
 		}
 	}

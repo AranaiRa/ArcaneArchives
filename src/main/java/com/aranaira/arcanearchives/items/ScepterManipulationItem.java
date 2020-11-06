@@ -6,11 +6,9 @@ import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
@@ -36,22 +34,22 @@ public class ScepterManipulationItem extends ItemTemplate implements IItemScepte
 	}
 
 	@Override
-	public boolean doesSneakBypassUse (ItemStack stack, IBlockAccess world, BlockPos pos, EntityPlayer player) {
+	public boolean doesSneakBypassUse (ItemStack stack, IBlockAccess world, BlockPos pos, PlayerEntity player) {
 		return true;
 	}
 
 	@Override
-	public EnumActionResult onItemUseFirst (EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
+	public ActionResultType onItemUseFirst (PlayerEntity player, World world, BlockPos pos, Direction side, float hitX, float hitY, float hitZ, Hand hand) {
 		ImmanenceTileEntity te = WorldUtil.getTileEntity(ImmanenceTileEntity.class, world, pos);
 		if (te != null) {
 			player.swingArm(hand);
 
 			if (!world.isRemote) {
 				if (te.handleManipulationInterface(player, hand, side, hitX, hitY, hitZ)) {
-					return EnumActionResult.SUCCESS;
+					return ActionResultType.SUCCESS;
 				}
 			}
 		}
-		return EnumActionResult.PASS;
+		return ActionResultType.PASS;
 	}
 }

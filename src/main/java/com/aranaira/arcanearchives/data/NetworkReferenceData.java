@@ -3,9 +3,8 @@ package com.aranaira.arcanearchives.data;
 import com.aranaira.arcanearchives.reference.Tags;
 import com.aranaira.arcanearchives.tilenetwork.Network;
 import com.google.common.collect.ImmutableSet;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.nbt.NBTUtil;
+import net.minecraft.nbt.*;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.common.util.Constants;
 
@@ -50,17 +49,17 @@ public class NetworkReferenceData extends WorldSavedData {
   }
 
   @Override
-  public void readFromNBT(NBTTagCompound nbt) {
+  public void readFromNBT(CompoundNBT nbt) {
     networkIds.clear();
-    NBTTagList ids = nbt.getTagList(Tags.NetworkReference.networkIds, Constants.NBT.TAG_COMPOUND);
+    ListNBT ids = nbt.getTagList(Tags.NetworkReference.networkIds, Constants.NBT.TAG_COMPOUND);
     for (int i = 0; i < ids.tagCount(); i++) {
       networkIds.add(NBTUtil.getUUIDFromTag(ids.getCompoundTagAt(i)));
     }
   }
 
   @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-    NBTTagList ids = new NBTTagList();
+  public CompoundNBT writeToNBT(CompoundNBT compound) {
+    ListNBT ids = new ListNBT();
     for (UUID uuid : networkIds) {
       ids.appendTag(NBTUtil.createUUIDTag(uuid));
     }

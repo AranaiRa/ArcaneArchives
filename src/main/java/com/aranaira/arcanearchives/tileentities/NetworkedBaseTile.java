@@ -4,9 +4,9 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.reference.Tags;
 import com.aranaira.arcanearchives.tilenetwork.Network;
 import com.aranaira.arcanearchives.tilenetwork.NetworkAggregator;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
@@ -62,7 +62,7 @@ public abstract class NetworkedBaseTile extends BaseTile {
   }
 
   @Override
-  public void readFromNBT(NBTTagCompound compound) {
+  public void readFromNBT(CompoundNBT compound) {
     if (compound.hasUniqueId(Tags.networkId)) {
       networkId = compound.getUniqueId(Tags.networkId);
     }
@@ -70,7 +70,7 @@ public abstract class NetworkedBaseTile extends BaseTile {
   }
 
   @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+  public CompoundNBT writeToNBT(CompoundNBT compound) {
     if (networkId != null) {
       compound.setUniqueId(Tags.networkId, networkId);
     }
@@ -97,17 +97,17 @@ public abstract class NetworkedBaseTile extends BaseTile {
 
   @Nullable
   @Override
-  public SPacketUpdateTileEntity getUpdatePacket() {
-    return new SPacketUpdateTileEntity(pos, 0, getUpdateTag());
+  public SUpdateTileEntityPacket getUpdatePacket() {
+    return new SUpdateTileEntityPacket(pos, 0, getUpdateTag());
   }
 
   @Override
-  public NBTTagCompound getUpdateTag() {
-    return writeToNBT(new NBTTagCompound());
+  public CompoundNBT getUpdateTag() {
+    return writeToNBT(new CompoundNBT());
   }
 
   @Override
-  public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+  public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
     readFromNBT(pkt.getNbtCompound());
     super.onDataPacket(net, pkt);
   }

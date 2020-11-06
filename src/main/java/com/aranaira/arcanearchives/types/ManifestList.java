@@ -4,7 +4,6 @@ import com.aranaira.arcanearchives.containers.ManifestContainer;
 import com.aranaira.arcanearchives.manifest.ManifestEntry;
 import com.aranaira.arcanearchives.util.ItemUtils;
 import com.google.common.collect.ForwardingList;
-import io.netty.buffer.ByteBuf;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;

@@ -1,12 +1,9 @@
 package com.aranaira.arcanearchives.api.cwb;
 
 import com.aranaira.arcanearchives.api.crafting.IngredientStack;
-import com.aranaira.arcanearchives.items.templates.NetworkItemTemplate;
-import com.aranaira.arcanearchives.reference.Tags;
-import com.aranaira.arcanearchives.util.ItemUtils;
 import com.aranaira.arcanearchives.util.NetworkItemUtil;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import java.util.ArrayList;

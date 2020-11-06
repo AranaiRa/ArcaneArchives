@@ -3,11 +3,11 @@ package com.aranaira.arcanearchives.inventory;
 import com.aranaira.arcanearchives.inventory.handlers.GemSocketHandler;
 import com.aranaira.arcanearchives.items.GemSocket;
 import com.aranaira.arcanearchives.items.gems.ArcaneGemItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ClickType;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.Slot;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.ClickType;
+import net.minecraft.inventory.container.Slot;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -16,10 +16,10 @@ import javax.annotation.Nonnull;
 public class ContainerGemSocket extends Container {
 
 	private GemSocketHandler handler;
-	private EntityPlayer player;
+	private PlayerEntity player;
 	private ItemStack socket;
 
-	public ContainerGemSocket (EntityPlayer player) {
+	public ContainerGemSocket (PlayerEntity player) {
 		//ArcaneArchives.logger.info("CONTAINER CLASS INSTANTIATED");
 		this.player = player;
 		socket = GemSocketHandler.findSocket(player);
@@ -31,7 +31,7 @@ public class ContainerGemSocket extends Container {
 	}
 
 	@Override
-	public boolean canInteractWith (EntityPlayer playerIn) {
+	public boolean canInteractWith (PlayerEntity playerIn) {
 		return true;
 	}
 
@@ -41,7 +41,7 @@ public class ContainerGemSocket extends Container {
 		addSlotToContainer(new SlotItemHandler(handler.getInventory(), 0, xOffset, yOffset));
 	}
 
-	private void createPlayerInventory (InventoryPlayer inventoryPlayer) {
+	private void createPlayerInventory (PlayerInventory inventoryPlayer) {
 		int xOffset = 10;
 		int yOffset = 57;
 
@@ -51,19 +51,19 @@ public class ContainerGemSocket extends Container {
 			}
 		}
 		for (int i = 0; i < 9; i++) {
-			addSlotToContainer(new Slot(inventoryPlayer, i, xOffset + i * 18, yOffset + 58));
+			addSlotToContainer(new net.minecraft.inventory.container.Slot(inventoryPlayer, i, xOffset + i * 18, yOffset + 58));
 		}
 	}
 
-	private void createPlayerOffhand (InventoryPlayer inventoryPlayer) {
+	private void createPlayerOffhand (PlayerInventory inventoryPlayer) {
 		addSlotToContainer(new Slot(inventoryPlayer, 40, -23, 115));
 	}
 
 	@Override
 	@Nonnull
-	public ItemStack transferStackInSlot (EntityPlayer player, int index) {
+	public ItemStack transferStackInSlot (PlayerEntity player, int index) {
 		ItemStack slotStack = ItemStack.EMPTY;
-		Slot slot = inventorySlots.get(index);
+		net.minecraft.inventory.container.Slot slot = inventorySlots.get(index);
 
 		if (slot != null && slot.getHasStack()) {
 			ItemStack stack = slot.getStack();
@@ -116,7 +116,7 @@ public class ContainerGemSocket extends Container {
 
 	@Override
 	@Nonnull
-	public ItemStack slotClick (int slotID, int dragType, ClickType clickType, EntityPlayer player) {
+	public ItemStack slotClick (int slotID, int dragType, ClickType clickType, PlayerEntity player) {
 		if (slotID >= 0) {
 			ItemStack stack = getSlot(slotID).getStack();
 			if (stack.getItem() instanceof GemSocket) {

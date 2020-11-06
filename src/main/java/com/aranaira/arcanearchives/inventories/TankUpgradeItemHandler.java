@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.inventories;
 
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 
 public class TankUpgradeItemHandler extends SizeUpgradeItemHandler {
   @Override

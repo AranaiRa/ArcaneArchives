@@ -3,15 +3,15 @@ package com.aranaira.arcanearchives.client.gui;
 import com.aranaira.arcanearchives.client.gui.controls.InvisibleButton;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerDevouringCharm;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
 
-public class GUIDevouringCharm extends GuiContainer {
+public class GUIDevouringCharm extends ContainerScreen {
 
 	private static final ResourceLocation TEXTURE_PLAYERINV = new ResourceLocation("arcanearchives:textures/gui/player_inv.png");
 	private static final ResourceLocation TEXTURE_PLAYERINV_SIMPLE = new ResourceLocation("arcanearchives:textures/gui/simple/player_inv.png");
@@ -25,7 +25,7 @@ public class GUIDevouringCharm extends GuiContainer {
 
 	private boolean FLIPPED = false;
 
-	private GuiButton flipButton;
+	private Button flipButton;
 
 	private ContainerDevouringCharm container;
 
@@ -57,7 +57,7 @@ public class GUIDevouringCharm extends GuiContainer {
 	}
 
 	@Override
-	protected void actionPerformed (GuiButton button) throws IOException {
+	protected void actionPerformed (Button button) throws IOException {
 		if (button.id == 0) { //flip button
 			FLIPPED = !FLIPPED;
 			this.container.FLIPPED = FLIPPED;

@@ -2,17 +2,17 @@ package com.aranaira.arcanearchives.containers.slots;
 
 import com.aranaira.arcanearchives.client.gui.framework.ICustomCountSlot;
 import com.aranaira.arcanearchives.inventories.ExtendedHandler;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryBasic;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
 
 public class SlotExtended extends Slot implements ICustomCountSlot {
 
-  private static IInventory emptyInventory = new InventoryBasic("[Null]", true, 0);
+  private static IInventory emptyInventory = new Inventory("[Null]", true, 0);
   private final ExtendedHandler itemHandler;
   private final int index;
 
@@ -64,7 +64,7 @@ public class SlotExtended extends Slot implements ICustomCountSlot {
   }
 
   @Override
-  public boolean canTakeStack(EntityPlayer playerIn) {
+  public boolean canTakeStack(PlayerEntity playerIn) {
     return !itemHandler.extractItem(index, 1, true).isEmpty();
   }
 
@@ -79,7 +79,7 @@ public class SlotExtended extends Slot implements ICustomCountSlot {
   }
 
   @Override
-  public boolean isSameInventory(Slot other) {
+  public boolean isSameInventory(net.minecraft.inventory.container.Slot other) {
     return other instanceof SlotExtended && ((SlotExtended) other).getItemHandler() == this.itemHandler;
   }
 

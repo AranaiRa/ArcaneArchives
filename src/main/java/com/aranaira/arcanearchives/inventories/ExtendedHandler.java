@@ -2,9 +2,8 @@ package com.aranaira.arcanearchives.inventories;
 
 import com.aranaira.arcanearchives.config.ServerSideConfig;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.NonNullList;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -73,38 +72,38 @@ public class ExtendedHandler extends ItemStackHandler {
   }
 
   @Override
-  public NBTTagCompound serializeNBT() {
-    NBTTagList nbtTagList = new NBTTagList();
+  public CompoundNBT serializeNBT() {
+    ListNBT nbtTagList = new ListNBT();
     for (int i = 0; i < stacks.size(); i++) {
       if (!stacks.get(i).isEmpty()) {
         short realCount = (short) Math.min(Short.MAX_VALUE, stacks.get(i).getCount());
-        NBTTagCompound itemTag = new NBTTagCompound();
+        CompoundNBT itemTag = new CompoundNBT();
         itemTag.setInteger("Slot", i);
         stacks.get(i).writeToNBT(itemTag);
         itemTag.setShort("ExtendedCount", realCount);
         nbtTagList.appendTag(itemTag);
       }
     }
-    NBTTagCompound nbt = new NBTTagCompound();
+    CompoundNBT nbt = new CompoundNBT();
     nbt.setTag("Items", nbtTagList);
     nbt.setInteger("Size", stacks.size());
     return nbt;
   }
 
   @Override
-  public void deserializeNBT(NBTTagCompound nbt) {
+  public void deserializeNBT(CompoundNBT nbt) {
     setSize(nbt.hasKey("Size", Constants.NBT.TAG_INT) ? nbt.getInteger("Size") : stacks.size());
-    NBTTagList tagList = nbt.getTagList("Items", Constants.NBT.TAG_COMPOUND);
+    ListNBT tagList = nbt.getTagList("Items", Constants.NBT.TAG_COMPOUND);
     for (int i = 0; i < tagList.tagCount(); i++) {
-      NBTTagCompound itemTags = tagList.getCompoundTagAt(i);
+      CompoundNBT itemTags = tagList.getCompoundTagAt(i);
       int slot = itemTags.getInteger("Slot");
 
       if (slot >= 0 && slot < stacks.size()) {
         if (itemTags.hasKey("StackList", Constants.NBT.TAG_LIST)) { // migrate from old ExtendedItemStack system
           ItemStack stack = ItemStack.EMPTY;
-          NBTTagList stackTagList = itemTags.getTagList("StackList", Constants.NBT.TAG_COMPOUND);
+          ListNBT stackTagList = itemTags.getTagList("StackList", Constants.NBT.TAG_COMPOUND);
           for (int j = 0; j < stackTagList.tagCount(); j++) {
-            NBTTagCompound itemTag = stackTagList.getCompoundTagAt(j);
+            CompoundNBT itemTag = stackTagList.getCompoundTagAt(j);
             ItemStack temp = new ItemStack(itemTag);
             if (!temp.isEmpty()) {
               if (stack.isEmpty()) {

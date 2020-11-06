@@ -4,11 +4,11 @@ import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerUpgrades;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
 import com.aranaira.arcanearchives.tileentities.interfaces.IUpgradeableStorage;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 
-public class GUIUpgrades extends GuiContainer {
+public class GUIUpgrades extends ContainerScreen {
 	private static final ResourceLocation TEXTURE_PLAYERINV = new ResourceLocation("arcanearchives:textures/gui/player_inv.png");
 	private static final ResourceLocation TEXTURE_PLAYERINV_SIMPLE = new ResourceLocation("arcanearchives:textures/gui/simple/player_inv.png");
 	private static final ResourceLocation TEXTURE_UPGRADES = new ResourceLocation("arcanearchives:textures/gui/radiant_upgrades.png");
@@ -24,11 +24,11 @@ public class GUIUpgrades extends GuiContainer {
 	private static final int STORAGEUPGRADES_V1 = 96;
 
 	private ContainerUpgrades container;
-	private EntityPlayer player;
+	private PlayerEntity player;
 	private ImmanenceTileEntity tile;
 	private IUpgradeableStorage storage;
 
-	public GUIUpgrades (ContainerUpgrades container, EntityPlayer player, ImmanenceTileEntity tile) {
+	public GUIUpgrades (ContainerUpgrades container, PlayerEntity player, ImmanenceTileEntity tile) {
 		super(container);
 
 		assert tile instanceof IUpgradeableStorage;
