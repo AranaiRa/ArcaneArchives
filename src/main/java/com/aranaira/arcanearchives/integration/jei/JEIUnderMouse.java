@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.integration.jei;
+package com.aranaira.arcanearchives.integration.jei;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Loader;
@@ -27,4 +27,4 @@ public class JEIUnderMouse {
 
 		return null;
 	}
-}*/
+}

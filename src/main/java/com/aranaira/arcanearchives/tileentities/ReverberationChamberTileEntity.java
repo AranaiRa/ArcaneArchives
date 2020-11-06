@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.tileentities;
+package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.api.immanence.IImmanenceGenerator;
 import com.aranaira.arcanearchives.api.immanence.IImmanenceSource;
@@ -115,4 +115,4 @@ public class ReverberationChamberTileEntity extends ImmanenceTileEntity implemen
 
 		public Tags () {}
 	}
-}*/
+}

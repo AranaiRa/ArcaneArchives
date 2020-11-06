@@ -5,7 +5,7 @@ import com.aranaira.arcanearchives.init.ModItems;
 import com.aranaira.arcanearchives.init.ModRecipes;
 import com.aranaira.arcanearchives.init.ModTiles;
 import com.aranaira.arcanearchives.proxy.CommonProxy;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
@@ -22,7 +22,7 @@ public class ArcaneArchives {
   public static final String MODID = "arcanearchives";
   public static final String NAME = "Arcane Archives";
   public static final String VERSION = "GRADLE:VERSION";
-  public static final CreativeTabs TAB = new CreativeTabs(MODID) {
+  public static final ItemGroup TAB = new ItemGroup(MODID) {
     @Override
     public ItemStack createIcon() {
       return ItemStack.EMPTY;

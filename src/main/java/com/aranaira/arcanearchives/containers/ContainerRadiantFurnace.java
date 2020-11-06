@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.inventory;
+package com.aranaira.arcanearchives.inventory;
 
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.tileentities.RadiantFurnaceTileEntity;
@@ -124,4 +124,4 @@ public class ContainerRadiantFurnace extends Container {
 	public boolean canInteractWith (EntityPlayer playerIn) {
 		return true;
 	}
-}*/
+}

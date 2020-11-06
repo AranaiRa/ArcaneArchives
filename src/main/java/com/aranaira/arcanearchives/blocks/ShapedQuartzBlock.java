@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.blocks;
+package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import net.minecraft.block.material.Material;
@@ -28,4 +28,4 @@ public class ShapedQuartzBlock extends TemplateBlock {
 	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.storage_shaped_quartz"));
 	}
-}*/
+}

@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.integration.hwyla.providers;
+package com.aranaira.arcanearchives.integration.hwyla.providers;
 
 import com.aranaira.arcanearchives.tileentities.RadiantChestTileEntity;
 import mcp.mobius.waila.api.IWailaConfigHandler;
@@ -23,4 +23,4 @@ public class ProviderRadiantChest implements IWailaDataProvider {
 
 		return tooltip;
 	}
-}*/
+}

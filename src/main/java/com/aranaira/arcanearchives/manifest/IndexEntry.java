@@ -2,8 +2,8 @@ package com.aranaira.arcanearchives.manifest;
 
 import com.aranaira.arcanearchives.types.ISerializePacketBuffer;
 import it.unimi.dsi.fastutil.ints.Int2LongOpenHashMap;
-import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.RecipeItemHelper;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
@@ -36,7 +36,7 @@ public class IndexEntry implements Predicate<ItemStack>, ISerializePacketBuffer<
   protected IndexEntry(ItemStack reference, long quantity, BlockPos position, int dimension, IndexDescriptor descriptor) {
     this.reference = reference;
     this.tag = reference.getTagCompound();
-    this.packed = RecipeItemHelper.pack(reference);
+    this.packed = net.minecraft.item.crafting.RecipeItemHelper.pack(reference);
     this.quantity = quantity;
     this.dimension = dimension;
     this.position = position;

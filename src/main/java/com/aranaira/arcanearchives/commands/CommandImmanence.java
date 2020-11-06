@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.commands;
+package com.aranaira.arcanearchives.commands;
 
 import com.aranaira.arcanearchives.api.immanence.IImmanenceBus;
 import com.aranaira.arcanearchives.data.DataHelper;
@@ -57,4 +57,4 @@ public class CommandImmanence extends CommandBase {
 			player.sendMessage(new TextComponentString("Current base immanence is " + bus.getBaseImmanence() + ", multiplier " + bus.getMultiplier() + " for a total of " + bus.getTotalImmanence() + ". The last tick was " + diff + " seconds ago, and " + bus.getLeftoverImmanence() + " of the total remains."));
 		}
 	}
-}*/
+}

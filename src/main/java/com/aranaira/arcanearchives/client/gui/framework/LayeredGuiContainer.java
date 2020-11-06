@@ -4,12 +4,13 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 
 /**
  * There are "fun" things about the way {@link net.minecraft.client.gui.inventory.GuiContainer}
- * and {@link net.minecraft.client.renderer.RenderItem} do things where they render items with
+ * and {@link ItemRenderer} do things where they render items with
  * a crazy high z level GL transform matrix. So we have to one up the crazy in order to have
  * a real foreground that is on top of rendered {@link net.minecraft.item.ItemStack}s. This
  * provides a utility class around allowing truly layered GUIs, hiding away the dirty hacks

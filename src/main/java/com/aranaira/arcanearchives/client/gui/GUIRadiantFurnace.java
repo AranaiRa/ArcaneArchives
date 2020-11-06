@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.client.gui;
+package com.aranaira.arcanearchives.client.gui;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.config.ConfigHandler;
@@ -95,9 +95,9 @@ public class GUIRadiantFurnace extends GuiContainer {
 	@Override
 	public void drawScreen (int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
-		*//*int i = this.guiLeft;
+		int i = this.guiLeft;
 		int j = this.guiTop;
-		this.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);*//*
+		this.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
 
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		this.renderHoveredToolTip(mouseX, mouseY);
@@ -107,4 +107,4 @@ public class GUIRadiantFurnace extends GuiContainer {
 	protected void renderHoveredToolTip (int mouseX, int mouseY) {
 		super.renderHoveredToolTip(mouseX, mouseY);
 	}
-}*/
+}

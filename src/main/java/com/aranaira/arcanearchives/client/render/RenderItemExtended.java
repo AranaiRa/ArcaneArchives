@@ -4,10 +4,7 @@ import com.aranaira.arcanearchives.util.MathUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderItem;
-import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
@@ -18,7 +15,7 @@ import javax.annotation.Nullable;
 
 @SideOnly(Side.CLIENT)
 public class RenderItemExtended {
-  private static RenderItem itemRender = Minecraft.getMinecraft().getRenderItem();
+  private static ItemRenderer itemRender = Minecraft.getMinecraft().getRenderItem();
 
   // TODO: Are these really needed any more?
   @Deprecated

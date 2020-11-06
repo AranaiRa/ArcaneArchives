@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.items.itemblocks;
+package com.aranaira.arcanearchives.items.itemblocks;
 
 import com.aranaira.arcanearchives.inventory.handlers.OptionalUpgradesHandler;
 import com.aranaira.arcanearchives.inventory.handlers.TroveItemBlockItemHandler;
@@ -57,4 +57,4 @@ public class RadiantTroveItem extends ItemBlock {
 
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
-}*/
+}

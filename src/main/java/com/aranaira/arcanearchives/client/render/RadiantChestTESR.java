@@ -1,17 +1,18 @@
-/*package com.aranaira.arcanearchives.client.render;
+package com.aranaira.arcanearchives.client.render;
 
+import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.tiles.RadiantChestTileEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.Vec3d;
 import org.lwjgl.opengl.GL11;
 
-public class RadiantChestTESR extends TileEntitySpecialRenderer<RadiantChestTileEntity> {
+public class RadiantChestTESR extends TileEntityRenderer<RadiantChestTileEntity> {
   @Override
   public void render(RadiantChestTileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
     EnumFacing facing = te.getDisplayFacing();
@@ -38,7 +39,7 @@ public class RadiantChestTESR extends TileEntitySpecialRenderer<RadiantChestTile
       GlStateManager.popMatrix();
     }
 
-    if (false*//*te.isBeingTracked() && ConfigHandler.nonModTrackingConfig.chestsGlow*//*) { //TODO: uncomment this when overlays are added
+    if (falsete.isBeingTracked() && ConfigHandler.nonModTrackingConfig.chestsGlow) { //TODO: uncomment this when overlays are added
       GlStateManager.pushMatrix();
       GL11.glTranslated(x, y, z);
       boolean wasLighting = GL11.glIsEnabled(GL11.GL_LIGHTING);
@@ -85,4 +86,4 @@ public class RadiantChestTESR extends TileEntitySpecialRenderer<RadiantChestTile
         return 0;
     }
   }
-}*/
+}

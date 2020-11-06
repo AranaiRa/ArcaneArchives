@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.client.render;
+package com.aranaira.arcanearchives.client.render;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import net.minecraft.client.Minecraft;
@@ -28,4 +28,4 @@ public class RadiantTankTEISR extends TileEntityItemStackRenderer {
 			this.coreRenderer.render(stack);
 		}
 	}
-}*/
+}

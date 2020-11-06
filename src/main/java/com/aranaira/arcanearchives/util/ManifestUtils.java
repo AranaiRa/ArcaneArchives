@@ -1,4 +1,4 @@
-/*// TODO: This
+// TODO: This
 
 package com.aranaira.arcanearchives.util;
 
@@ -14,7 +14,7 @@ import com.aranaira.arcanearchives.types.ISerializeByteBuf;
 import com.aranaira.arcanearchives.types.SlotIterable;
 import io.netty.buffer.ByteBuf;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
-import net.minecraft.client.util.RecipeItemHelper;
+import net.minecraft.item.crafting.RecipeItemHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -141,7 +141,7 @@ public class ManifestUtils {
       if (ite.isSingleItemInventory()) {
         ItemStack stack = ite.getSingleItemReference();
 
-        List<ItemEntry> entry = getEntryList(preManifest, RecipeItemHelper.pack(stack), player);
+        List<ItemEntry> entry = getEntryList(preManifest, net.minecraft.item.crafting.RecipeItemHelper.pack(stack), player);
         entry.add(new ItemEntry(stack, ite.getPos(), ite.getDimension(), ite.getDescriptor()));
         done.add(BlockPosDimension.fromTile(ite));
       } else if (ite instanceof MonitoringCrystalTile) {
@@ -165,7 +165,7 @@ public class ManifestUtils {
           for (SlotIterable.SlotIterator.SlotStack ss : new SlotIterable(handler)) {
             ItemStack is = ss.getStack();
             if (!is.isEmpty()) {
-              List<ItemEntry> entries = getEntryList(preManifest, RecipeItemHelper.pack(is), player);
+              List<ItemEntry> entries = getEntryList(preManifest, net.minecraft.item.crafting.RecipeItemHelper.pack(is), player);
               entries.add(new ItemEntry(is, target.pos, target.dimension, mce.getDescriptor()));
             }
           }
@@ -331,4 +331,4 @@ public class ManifestUtils {
       return count;
     }
   }
-}*/
+}

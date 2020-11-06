@@ -1,4 +1,3 @@
-/*
 package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
@@ -25,7 +24,7 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.DimensionType;
+import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.capabilities.Capability;
@@ -457,9 +456,8 @@ public class RadiantAmphoraItem extends ItemTemplate {
 
 			return tank.getTankProperties();
 
-			*/
-/*IFluidTankProperties[] props = tank.getTankProperties();
-			return new IFluidTankProperties[]{new FluidTankPropWrapper(props[0].getContents(), props[0].getCapacity(), util)};*//*
+IFluidTankProperties[] props = tank.getTankProperties();
+			return new IFluidTankProperties[]{new FluidTankPropWrapper(props[0].getContents(), props[0].getCapacity(), util)};
 
 		}
 
@@ -467,8 +465,8 @@ public class RadiantAmphoraItem extends ItemTemplate {
 		public int fill (FluidStack resource, boolean doFill) {
 			IFluidHandler tank = util.getCapability();
 
-			if (tank == null*/
-/* || util.getMode() == TankMode.DRAIN*//*
+			if (tank == null
+ || util.getMode() == TankMode.DRAIN
 ) {
 				return 0;
 			}
@@ -486,8 +484,8 @@ public class RadiantAmphoraItem extends ItemTemplate {
 		public FluidStack drain (FluidStack resource, boolean doDrain) {
 			IFluidHandler tank = util.getCapability();
 
-			if (tank == null*/
-/* || util.getMode() == TankMode.FILL*//*
+			if (tank == null
+ || util.getMode() == TankMode.FILL
 ) {
 				return null;
 			}
@@ -500,13 +498,12 @@ public class RadiantAmphoraItem extends ItemTemplate {
 		public FluidStack drain (int maxDrain, boolean doDrain) {
 			IFluidHandler tank = util.getCapability();
 
-			if (tank == null*/
-/* || util.getMode() == TankMode.FILL*//*
+			if (tank == null
+ || util.getMode() == TankMode.FILL
 ) {
-				*/
-/*if (!doDrain && maxDrain == Integer.MAX_VALUE) {
+if (!doDrain && maxDrain == Integer.MAX_VALUE) {
 					return tank.drain(maxDrain, false);
-				}*//*
+				}
 
 				return null;
 			}
@@ -549,4 +546,4 @@ public class RadiantAmphoraItem extends ItemTemplate {
 		}
 	}
 
-}*/
+}

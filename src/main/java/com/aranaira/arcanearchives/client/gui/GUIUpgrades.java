@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.client.gui;
+package com.aranaira.arcanearchives.client.gui;
 
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerUpgrades;
@@ -66,4 +66,4 @@ public class GUIUpgrades extends GuiContainer {
 		}
 		this.drawTexturedModalRect(i, j + 67, 0, 0, INVENTORY_W, INVENTORY_H);
 	}
-}*/
+}

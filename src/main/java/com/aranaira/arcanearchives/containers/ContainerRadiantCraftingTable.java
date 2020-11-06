@@ -1,4 +1,3 @@
-/*
 package com.aranaira.arcanearchives.inventory;
 
 import com.aranaira.arcanearchives.inventory.handlers.InventoryCraftingPersistent;
@@ -313,10 +312,9 @@ public class ContainerRadiantCraftingTable extends Container {
 		lastLastRecipe = lastRecipe;
 	}
 
-	*/
-/**
+*
  * @return the starting slot for the player inventory. Present for usage in the JEI crafting station support
- *//*
+
 
 	public InventoryCrafting getCraftMatrix () {
 		return craftMatrix;
@@ -385,5 +383,4 @@ public class ContainerRadiantCraftingTable extends Container {
 		}
 	}
 }
-*/
 

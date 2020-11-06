@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.blocks;
+package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
@@ -104,4 +104,4 @@ public class LecternManifest extends DirectionalBlock {
 		return new BlockStateContainer(this, getFacingProperty(), ACCESSOR);
 	}
 
-}*/
+}

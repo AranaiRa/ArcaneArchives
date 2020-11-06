@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.commands;
+package com.aranaira.arcanearchives.commands;
 
 import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketClipboard.CopyToClipboard;
@@ -42,4 +42,4 @@ public class CommandCopy extends CommandBase {
 			sender.sendMessage(new TextComponentString("Copied to the clipboard."));
 		}
 	}
-}*/
+}

@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.inventories;
 
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
-import net.minecraft.client.util.RecipeItemHelper;
+import net.minecraft.item.crafting.RecipeItemHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
 

@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.tileentities;
+package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
@@ -21,7 +21,7 @@ import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 
 import javax.annotation.Nonnull;
 
-public class RadiantTankTileEntity extends NetworkedBaseTile implements IUpgradeableStorage {
+public class RadiantTankTileEntity extends NetworkedBaseTile implements com.aranaira.arcanearchives.tileentities.interfaces.IUpgradeableStorage {
 	public static final int BASE_CAPACITY = Fluid.BUCKET_VOLUME * 16;
 	private final VoidingFluidTank inventory = new VoidingFluidTank(BASE_CAPACITY);
 
@@ -227,4 +227,4 @@ public class RadiantTankTileEntity extends NetworkedBaseTile implements IUpgrade
 			return result;
 		}
 	}
-}*/
+}

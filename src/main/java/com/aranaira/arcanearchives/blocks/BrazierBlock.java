@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.blocks;
+package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import com.aranaira.arcanearchives.items.IUpgradeItem;
@@ -136,4 +136,4 @@ public class BrazierBlock extends TemplateBlock implements IInfusionStabiliserEx
 	public boolean causesSuffocation (IBlockState state) {
 		return false;
 	}
-}*/
+}

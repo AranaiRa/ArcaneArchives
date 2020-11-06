@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.client.render;
+package com.aranaira.arcanearchives.client.render;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.BlockRegistry;
@@ -97,4 +97,4 @@ public class RenderHUD {
 
 		GlStateManager.color(1f, 1f, 1f);
 	}
-}*/
+}

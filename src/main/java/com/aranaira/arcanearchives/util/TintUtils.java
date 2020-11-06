@@ -6,12 +6,12 @@ import it.unimi.dsi.fastutil.ints.Int2IntMap.Entry;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderItem;
+import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.IResourceManager;
-import net.minecraft.client.util.RecipeItemHelper;
+import net.minecraft.item.crafting.RecipeItemHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.util.EnumFacing;
@@ -48,7 +48,7 @@ public class TintUtils {
   }
 
   public static int getColor(ItemStack stack) {
-    return CACHE.get(RecipeItemHelper.pack(stack));
+    return CACHE.get(net.minecraft.item.crafting.RecipeItemHelper.pack(stack));
   }
 
   public static boolean readData() {
@@ -87,7 +87,7 @@ public class TintUtils {
   }
 
   public static void generate() {
-    RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
+    ItemRenderer renderItem = Minecraft.getMinecraft().getRenderItem();
     IResourceManager manager = Minecraft.getMinecraft().getResourceManager();
 
     for (ItemStack toDuplicate : DuplicationUtils.getOresToDuplicate()) {

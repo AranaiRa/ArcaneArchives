@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.tileentities;
+package com.aranaira.arcanearchives.tileentities;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.state.IBlockState;
@@ -34,4 +34,4 @@ public class MatrixStorageTileEntity extends ImmanenceTileEntity {
 	public boolean shouldRefresh (World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
 		return (oldState.getBlock() != newSate.getBlock());
 	}
-}*/
+}

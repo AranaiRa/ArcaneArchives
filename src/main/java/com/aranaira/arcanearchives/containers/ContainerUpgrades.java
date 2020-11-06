@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.inventory;
+package com.aranaira.arcanearchives.inventory;
 
 import com.aranaira.arcanearchives.inventory.handlers.OptionalUpgradesHandler;
 import com.aranaira.arcanearchives.inventory.handlers.SizeUpgradeItemHandler;
@@ -70,7 +70,7 @@ public class ContainerUpgrades extends Container {
 
 	@Override
 	public ItemStack transferStackInSlot (EntityPlayer playerIn, int index) {
-		*//*if (index < 36) {
+		if (index < 36) {
 			Slot slot = getSlot(index);
 			if (slot != null && slot.getHasStack()) {
 				ItemStack stack = slot.getStack();
@@ -78,7 +78,7 @@ public class ContainerUpgrades extends Container {
 			}
 		}
 
-		return ItemStack.EMPTY;*//*
+		return ItemStack.EMPTY;
 		Slot slot = getSlot(index);
 		if (slot != null && slot.getHasStack()) {
 			ItemStack stack = slot.getStack();
@@ -139,4 +139,4 @@ public class ContainerUpgrades extends Container {
 
 		return ItemStack.EMPTY;
 	}
-}*/
+}

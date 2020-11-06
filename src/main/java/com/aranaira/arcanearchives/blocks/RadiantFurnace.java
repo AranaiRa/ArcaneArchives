@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.blocks;
+package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
@@ -258,4 +258,4 @@ public class RadiantFurnace extends DirectionalBlock {
 			return BASE;
 		}
 	}
-}*/
+}

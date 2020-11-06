@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.tileentities;
+package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
@@ -16,11 +16,11 @@ import com.aranaira.arcanearchives.util.ItemUtils;
 import com.aranaira.arcanearchives.util.PlayerUtil;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.block.Block;
-import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.RecipeItemHelper;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -406,11 +406,11 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 			return upgrades;
 		}
 
-		*//**
+		*
  * Returns the actual number of upgrades, rather than their upgrade potency values.
  *
  * @return X is the number of storage upgrades, Y the number of optional upgrades
- *//*
+
 		public Point getTotalUpgradesCount () {
 			return new Point(sizeUpgrades.getTotalUpgradesQuantity(), optionalUpgrades.getTotalUpgradesQuantity());
 		}
@@ -500,4 +500,4 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 			}
 		}
 	}
-}*/
+}

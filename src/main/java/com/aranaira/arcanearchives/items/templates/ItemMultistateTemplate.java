@@ -1,7 +1,7 @@
-/*package com.aranaira.arcanearchives.items.templates;
+package com.aranaira.arcanearchives.items.templates;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.client.model.ModelLoader;
@@ -36,7 +36,7 @@ public class ItemMultistateTemplate extends ItemTemplate {
 	}
 
 	@Override
-	public void getSubItems (CreativeTabs tab, NonNullList<ItemStack> items) {
+	public void getSubItems (ItemGroup tab, NonNullList<ItemStack> items) {
 		if (isInCreativeTab(tab)) {
 			for (int metadata : itemMap.keySet()) {
 				items.add(new ItemStack(this, 1, metadata));
@@ -60,4 +60,4 @@ public class ItemMultistateTemplate extends ItemTemplate {
 			ModelLoader.setCustomModelResourceLocation(this, entry.getKey(), new ModelResourceLocation(getRegistryName(), "type=" + entry.getValue()));
 		}
 	}
-}*/
+}

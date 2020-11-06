@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.network;
+package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.network.Handlers.TileHandlerServer;
 import com.aranaira.arcanearchives.network.Messages.EmptyTileMessageServer;
@@ -106,4 +106,4 @@ public class PacketBrazier {
 			tile.defaultServerSideUpdate();
 		}
 	}
-}*/
+}

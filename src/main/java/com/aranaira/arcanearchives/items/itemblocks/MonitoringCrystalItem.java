@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.items.itemblocks;
+package com.aranaira.arcanearchives.items.itemblocks;
 
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import com.aranaira.arcanearchives.tileentities.ImmanenceTileEntity;
@@ -42,4 +42,4 @@ public class MonitoringCrystalItem extends ItemBlockTemplate {
 		tooltip.add(TextFormatting.GOLD + "Placed on inventories to relay their contents to a manifest.");
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
-}*/
+}

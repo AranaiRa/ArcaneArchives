@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.tileentities;
+package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
@@ -16,13 +16,14 @@ import com.aranaira.enderio.core.client.render.BoundingBox;
 import epicsquid.mysticallib.util.Util;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.util.RecipeItemHelper;
+import net.minecraft.item.crafting.RecipeItemHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.ItemStackHelper;
+import net.minecraft.item.ItemShulkerBox;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -221,18 +222,18 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 			toInsert.add(Objects.requireNonNull(playerInventory).extractItem(player.inventory.currentItem, item.getCount(), false));
 		}
 
-		*//*boolean doShulkerThing = false;
-		NonNullList<ItemStack> itemList = NonNullList.withSize(999, ItemStack.EMPTY);*//*
+		boolean doShulkerThing = false;
+		NonNullList<ItemStack> itemList = NonNullList.withSize(999, ItemStack.EMPTY);
 		List<ItemStack> remainder = new ArrayList<>();
 		NBTTagCompound tag = ItemUtils.getOrCreateTagCompound(item);
 
-		*//*if (item.getItem() instanceof ItemShulkerBox && cap == null && tag.hasKey("BlockEntityTag")) {
+		if (item.getItem() instanceof ItemShulkerBox && cap == null && tag.hasKey("BlockEntityTag")) {
 			ItemStackHelper.loadAllItems(tag.getCompoundTag("BlockEntityTag"), itemList);
 			cap = new ShulkerItemHandler(itemList);
 			doShulkerThing = true;
-		}*//*
+		}
 
- *//*if (cap != null) {
+ if (cap != null) {
 			for (int i = 0; i < cap.getSlots(); i++) {
 				ItemStack inSlot = cap.getStackInSlot(i);
 				int count = inSlot.getCount();
@@ -249,8 +250,8 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 				ItemStackHelper.saveAllItems(tag.getCompoundTag("BlockEntityTag"), ((ShulkerItemHandler) cap).getStacks(), false);
 				item.setTagCompound(tag);
 				remainder.add(item);
-			}*//*
- *//*} else {*//*
+			}
+ } else {
 
 		if (!doubleClick) {
 			playerToStackMap.put(player, item.copy());
@@ -387,7 +388,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 		int packed = RecipeItemHelper.pack(stack);
 		ItemCache existing = itemCache.get(packed);
 		if (existing == null || !existing.valid()) {
-			itemCache.put(RecipeItemHelper.pack(stack), new ItemCache(route, tileId));
+			itemCache.put(net.minecraft.item.crafting.RecipeItemHelper.pack(stack), new ItemCache(route, tileId));
 		} else {
 			existing.refresh();
 		}
@@ -498,4 +499,4 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 			return this.stacks;
 		}
 	}
-}*/
+}

@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.commands;
+package com.aranaira.arcanearchives.commands;
 
 import com.aranaira.arcanearchives.entity.EntityWeight;
 import com.aranaira.arcanearchives.tileentities.BrazierTileEntity;
@@ -76,4 +76,4 @@ public class CommandBrazier extends CommandBase {
 			}
 		}
 	}
-}*/
+}

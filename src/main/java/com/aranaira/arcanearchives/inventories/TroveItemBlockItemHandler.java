@@ -1,5 +1,7 @@
-/*package com.aranaira.arcanearchives.inventory.handlers;
+package com.aranaira.arcanearchives.inventory.handlers;
 
+import com.aranaira.arcanearchives.inventories.OptionalUpgradesHandler;
+import com.aranaira.arcanearchives.inventories.TroveUpgradeItemHandler;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity;
 import com.aranaira.arcanearchives.tileentities.RadiantTroveTileEntity.TroveItemHandler.Tags;
 import com.aranaira.arcanearchives.types.UpgradeType;
@@ -14,7 +16,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class TroveItemBlockItemHandler implements ITroveItemHandler, ICapabilityProvider {
+public class TroveItemBlockItemHandler implements com.aranaira.arcanearchives.inventory.handlers.ITroveItemHandler, ICapabilityProvider {
   private TroveUpgradeItemHandler upgrades = null;
   private OptionalUpgradesHandler optionals = null;
   private ItemStack container;
@@ -179,4 +181,4 @@ public class TroveItemBlockItemHandler implements ITroveItemHandler, ICapability
     }
     tag.setTag(RadiantTroveTileEntity.Tags.HANDLER_ITEM, result);
   }
-}*/
+}

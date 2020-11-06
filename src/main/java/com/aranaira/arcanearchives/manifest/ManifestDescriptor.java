@@ -1,12 +1,12 @@
 package com.aranaira.arcanearchives.manifest;
 
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.DimensionType;
+import net.minecraft.world.dimension.DimensionType;
 
 import javax.annotation.Nullable;
 
 public class ManifestDescriptor extends IndexDescriptor {
-  private final DimensionType dimension;
+  private final net.minecraft.world.dimension.DimensionType dimension;
   private final BlockPos position;
   private final double distance;
 
@@ -15,7 +15,7 @@ public class ManifestDescriptor extends IndexDescriptor {
     BlockPos position = entry.getPosition();
     int dimension = entry.getDimension();
     double distance = player.distanceSq(position.getX(), position.getY(), position.getZ());
-    return new ManifestDescriptor(DimensionType.getById(dimension), position, distance, parent.getType(), parent.getDescription());
+    return new ManifestDescriptor(net.minecraft.world.dimension.DimensionType.getById(dimension), position, distance, parent.getType(), parent.getDescription());
   }
 
   protected ManifestDescriptor(DimensionType dimension, BlockPos position, double distance, IndexType type, @Nullable String description) {
@@ -25,7 +25,7 @@ public class ManifestDescriptor extends IndexDescriptor {
     this.distance = distance;
   }
 
-  public DimensionType getDimension() {
+  public net.minecraft.world.dimension.DimensionType getDimension() {
     return dimension;
   }
 

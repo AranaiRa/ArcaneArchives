@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.integration.jei.gct;
+package com.aranaira.arcanearchives.integration.jei.gct;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.integration.jei.JEIPlugin;
@@ -53,4 +53,4 @@ public class GCTCategory implements IRecipeCategory<GCTWrapper> {
 			group.set(8, recipe.getRecipeOutput());
 		}
 	}
-}*/
+}

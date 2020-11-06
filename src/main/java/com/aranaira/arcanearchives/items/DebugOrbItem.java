@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.items;
+package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.RadiantChestBlock;
@@ -299,4 +299,4 @@ public class DebugOrbItem extends ItemTemplate {
 			}
 		}
 	}
-}*/
+}

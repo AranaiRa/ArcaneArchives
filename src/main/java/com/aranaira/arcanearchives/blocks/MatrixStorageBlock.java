@@ -1,5 +1,7 @@
-/*package com.aranaira.arcanearchives.blocks;
+package com.aranaira.arcanearchives.blocks;
 
+import com.aranaira.arcanearchives.AAGuiHandler;
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import com.aranaira.arcanearchives.tileentities.MatrixStorageTileEntity;
 import net.minecraft.block.material.Material;
@@ -43,11 +45,11 @@ public class MatrixStorageBlock extends TemplateBlock {
 	@Override
 	public boolean onBlockActivated (World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		return false;
-		*//*RadiantChest.RemoveChestLines(pos);
+		RadiantChest.RemoveChestLines(pos);
 
 		playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.MATRIX_STORAGE, worldIn, pos.getX(), pos.getY(), pos.getZ());
 
-		return true;*//*
+		return true;
 	}
 
 	@Override
@@ -66,4 +68,4 @@ public class MatrixStorageBlock extends TemplateBlock {
 	public TileEntity createTileEntity (World world, IBlockState state) {
 		return new MatrixStorageTileEntity();
 	}
-}*/
+}

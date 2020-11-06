@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.tileentities;
+package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.inventory.ContainerRadiantCraftingTable;
 import com.aranaira.arcanearchives.recipe.fastcrafting.FastCraftingRecipe;
@@ -188,4 +188,4 @@ public class RadiantCraftingTableTileEntity extends ImmanenceTileEntity implemen
 			}
 		}
 	}
-}*/
+}

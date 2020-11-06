@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.client.render;
+package com.aranaira.arcanearchives.client.render;
 
 import com.aranaira.arcanearchives.init.BlockRegistry;
 import com.aranaira.arcanearchives.tileentities.RadiantTankTileEntity;
@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -27,7 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
-public class RadiantTankTESR extends TileEntitySpecialRenderer<RadiantTankTileEntity> {
+public class RadiantTankTESR extends TileEntityRenderer<RadiantTankTileEntity> {
 	private static Vec3d orig = new Vec3d(0.08d, 0.05d, 0.08d);
 	private static Vec3d other = new Vec3d(0.76d, 0d, 0.76d);
 
@@ -240,4 +240,4 @@ public class RadiantTankTESR extends TileEntitySpecialRenderer<RadiantTankTileEn
 			}
 		}
 	}
-}*/
+}

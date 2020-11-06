@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.inventory.slots;
+package com.aranaira.arcanearchives.inventory.slots;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -13,4 +13,4 @@ public class SlotImmutable extends Slot {
 	public boolean canTakeStack (EntityPlayer playerIn) {
 		return false;
 	}
-}*/
+}

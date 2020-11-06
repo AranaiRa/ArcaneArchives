@@ -5,8 +5,8 @@ import com.aranaira.arcanearchives.items.upgrades.UpgradeInfo;
 import com.aranaira.arcanearchives.types.UpgradeType;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.text.TextFormatting;
@@ -94,7 +94,7 @@ public class ItemTemplate extends Item implements IUpgrade {
   }
 
   @Override
-  public ItemTemplate setCreativeTab(CreativeTabs tab) {
+  public ItemTemplate setCreativeTab(ItemGroup tab) {
     return (ItemTemplate) super.setCreativeTab(tab);
   }
 

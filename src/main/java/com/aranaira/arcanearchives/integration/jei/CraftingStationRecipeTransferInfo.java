@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.integration.jei;
+package com.aranaira.arcanearchives.integration.jei;
 
 import com.aranaira.arcanearchives.inventory.ContainerRadiantCraftingTable;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
@@ -9,9 +9,6 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-*//**
- * @author shadowfacts
- *//*
 public class CraftingStationRecipeTransferInfo implements IRecipeTransferInfo<ContainerRadiantCraftingTable> {
 
 	@Nonnull
@@ -52,4 +49,4 @@ public class CraftingStationRecipeTransferInfo implements IRecipeTransferInfo<Co
 		}
 		return slots;
 	}
-}*/
+}

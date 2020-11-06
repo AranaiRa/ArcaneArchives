@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.tileentities;
+package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.inventory.handlers.ItemStackWrapper;
@@ -87,11 +87,11 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 		if (isBurning()) {
 			// Burn is reduced no matter what
 			this.burnTime--;
-			*//*if (this.burnTime % 20 == 0) {
+			if (this.burnTime % 20 == 0) {
 				ArcaneArchives.logger.info("Burn time: " + this.burnTime);
 				ArcaneArchives.logger.info("Cook time: " + this.cookTime);
 				ArcaneArchives.logger.info("Cook time total: " + this.cookTimeTotal);
-			}*//*
+			}
 		}
 
 		boolean shouldConsumeFuel = false;
@@ -265,4 +265,4 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 
 		public Tags () {}
 	}
-}*/
+}

@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.integration.jei.quartz;
+package com.aranaira.arcanearchives.integration.jei.quartz;
 
 import com.aranaira.arcanearchives.config.ServerSideConfig;
 import com.aranaira.arcanearchives.init.ItemRegistry;
@@ -33,4 +33,4 @@ public class QuartzWrapper implements IRecipeWrapper {
 	}
 
 	public static class FakeQuartzRecipe {}
-}*/
+}

@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.items;
+package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.items.templates.IItemScepter;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
@@ -34,4 +34,4 @@ public class ScepterTranslocation extends ItemTemplate implements IItemScepter {
 	public boolean doesSneakBypassUse (ItemStack stack, IBlockAccess world, BlockPos pos, EntityPlayer player) {
 		return true;
 	}
-}*/
+}

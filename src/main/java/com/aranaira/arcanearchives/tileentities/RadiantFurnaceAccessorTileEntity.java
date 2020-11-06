@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.tileentities;
+package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.tileentities.interfaces.IDirectionalTileEntity;
 import com.aranaira.arcanearchives.tileentities.interfaces.INamedTileEntity;
@@ -98,4 +98,4 @@ public class RadiantFurnaceAccessorTileEntity extends TileEntity implements INam
 		public Tags () {}
 	}
 
-}*/
+}

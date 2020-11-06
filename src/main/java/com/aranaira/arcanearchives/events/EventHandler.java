@@ -1,4 +1,4 @@
-/*package com.aranaira.arcanearchives.events;
+package com.aranaira.arcanearchives.events;
 
 import com.aranaira.arcanearchives.client.render.RenderGemcasting;
 import com.aranaira.arcanearchives.client.render.RenderGemcasting.EnumGemGuiMode;
@@ -269,4 +269,4 @@ public class EventHandler {
       }
     }
   }
-}*/
+}
