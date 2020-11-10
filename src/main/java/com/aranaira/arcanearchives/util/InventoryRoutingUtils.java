@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.util;
+/*package com.aranaira.arcanearchives.util;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.types.ServerNetwork;
@@ -21,10 +21,6 @@ import java.util.ListIterator;
 import java.util.stream.Collectors;
 
 public class InventoryRoutingUtils {
-
- * Returns whether or not this inventory can *probably* contain an item. NBT checking
- * is not performed at this stage.
-
 	public static int calculateWeight (IBrazierRouting inventory, ItemStack stack) {
 		Int2IntOpenHashMap packedMap = inventory.getOrCalculateReference();
 		BrazierRoutingType type = inventory.getRoutingType();
@@ -110,11 +106,6 @@ public class InventoryRoutingUtils {
 		return buildNetworkWeights(brazier, stack, simulate).stream().filter(r -> r.weight >= 0).map(r -> r.entry).collect(Collectors.toList());
 	}
 
-	*
- * @param brazier The TileEntity of the brazier currently requesting information.
- * @param inputs
- * @return
-
 	public static List<ItemStack> tryInsertItems (BrazierTileEntity brazier, ItemStack reference, List<ItemStack> inputs, boolean simulate) {
 		// Considered the cached value in the brazier
 		ItemCache cached = brazier.getCachedEntry(reference);
@@ -178,4 +169,4 @@ public class InventoryRoutingUtils {
 			this.weight = weight;
 		}
 	}
-}
+}*/

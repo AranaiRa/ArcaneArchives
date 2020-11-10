@@ -7,7 +7,6 @@ import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
@@ -19,30 +18,27 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.util.text.*;
+import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.function.Consumer;
 
 @SuppressWarnings({"UnusedReturnValue", "WeakerAccess", "NullableProblems", "unchecked", "deprecation", "DeprecatedIsStillUsed"})
 public class TemplateBlock extends Block {
-  protected BlockItem itemBlock = null;
   protected String tooltip = null;
-  protected String formatting = "";
-  protected boolean isOpaqueCube = true;
-  protected boolean isFullCube = true;
+  protected Consumer<IFormattableTextComponent> formatting = null;
+/*  protected boolean isOpaqueCube = true;
+  protected boolean isFullCube = true;*/
   protected AxisAlignedBB axis = null;
   protected boolean storesId = false;
 
-  public TemplateBlock(Material materialIn) {
-    super(materialIn);
-  }
-
-  public BlockItem getItemBlock() {
-    return itemBlock;
+  public TemplateBlock(Block.Properties properties) {
+    super(properties);
   }
 
   public TemplateBlock setBoundingBox(AxisAlignedBB bb) {
@@ -50,7 +46,7 @@ public class TemplateBlock extends Block {
     return this;
   }
 
-  public TemplateBlock setFullCube(boolean cube) {
+/*  public TemplateBlock setFullCube(boolean cube) {
     isFullCube = cube;
     return this;
   }
@@ -58,10 +54,9 @@ public class TemplateBlock extends Block {
   public TemplateBlock setOpaqueCube(boolean cube) {
     isOpaqueCube = cube;
     return this;
-  }
+  }*/
 
-  // TODO: Oh god, I've turned into elulib
-  @Override
+/*  @Override
   public boolean isFullCube(BlockState state) {
     return isFullCube;
   }
@@ -69,24 +64,15 @@ public class TemplateBlock extends Block {
   @Override
   public boolean isOpaqueCube(BlockState state) {
     return isOpaqueCube;
-  }
-
-  public TemplateBlock setItemBlock(BlockItem itemBlock) {
-    this.itemBlock = itemBlock;
-    return this;
-  }
+  }*/
 
   public TemplateBlock setTooltip(String text) {
-    return setTooltip(text, "");
+    return setTooltip(text, null);
   }
 
-  public TemplateBlock setTooltip(String text, TextFormatting formatting) {
-    return setTooltip(text, "" + formatting);
-  }
-
-  public TemplateBlock setTooltip(String text, String formatting) {
+  public TemplateBlock setTooltip(String text, Consumer<IFormattableTextComponent> consumer) {
     this.tooltip = text;
-    this.formatting = formatting;
+    this.formatting = consumer;
     return this;
   }
 
@@ -96,16 +82,20 @@ public class TemplateBlock extends Block {
   }
 
   @Override
-  public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+  public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
     super.addInformation(stack, worldIn, tooltip, flagIn);
 
     if (tooltip != null) {
-      tooltip.add("");
-      tooltip.add(formatting + I18n.format(this.tooltip));
+      tooltip.add(new StringTextComponent(""));
+      IFormattableTextComponent component = new TranslationTextComponent(this.tooltip);
+      if (formatting != null) {
+        formatting.accept(component);
+      }
+      tooltip.add(component);
     }
   }
 
-  @Override
+/*  @Override
   protected TemplateBlock setSoundType(SoundType sound) {
     return (TemplateBlock) super.setSoundType(sound);
   }
@@ -118,9 +108,9 @@ public class TemplateBlock extends Block {
   @Override
   public TemplateBlock setLightLevel(float value) {
     return (TemplateBlock) super.setLightLevel(value);
-  }
+  }*/
 
-  @Override
+/*  @Override
   public TemplateBlock setResistance(float resistance) {
     return (TemplateBlock) super.setResistance(resistance);
   }
@@ -128,9 +118,9 @@ public class TemplateBlock extends Block {
   @Override
   public TemplateBlock setHardness(float hardness) {
     return (TemplateBlock) super.setHardness(hardness);
-  }
+  }*/
 
-  @Override
+/*  @Override
   public TemplateBlock setBlockUnbreakable() {
     return (TemplateBlock) super.setBlockUnbreakable();
   }
@@ -148,14 +138,14 @@ public class TemplateBlock extends Block {
   @Override
   public TemplateBlock setCreativeTab(ItemGroup tab) {
     return (TemplateBlock) super.setCreativeTab(tab);
-  }
+  }*/
 
   public TemplateBlock setDefault(BlockState state) {
     setDefaultState(state);
     return this;
   }
 
-  public TemplateBlock setSlipperiness(float s) {
+/*  public TemplateBlock setSlipperiness(float s) {
     this.setDefaultSlipperiness(s);
     return this;
   }
@@ -186,9 +176,9 @@ public class TemplateBlock extends Block {
   @Deprecated
   public void setHarvestLevel(String toolClass, int level, BlockState state) {
     super.setHarvestLevel(toolClass, level, state);
-  }
+  }*/
 
-  @Override
+/*  @Override
   public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos) {
     if (axis != null) {
       return axis;
@@ -200,9 +190,9 @@ public class TemplateBlock extends Block {
   @Override
   public boolean canSilkHarvest() {
     return true;
-  }
+  }*/
 
-  protected List<ItemStack> generateItemDrops(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity te, ItemStack harvestTool) {
+/*  protected List<ItemStack> generateItemDrops(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity te, ItemStack harvestTool) {
     return Collections.emptyList();
   }
 
@@ -231,9 +221,9 @@ public class TemplateBlock extends Block {
       }
       harvesters.set(null);
     }
-  }
+  }*/
 
-  public ItemStack generateStack(TileEntity te, IBlockAccess world, BlockPos pos) {
+/*  public ItemStack generateStack(TileEntity te, IReadAccess world, BlockPos pos) {
     if (te instanceof NetworkedBaseTile) {
       return generateStack((NetworkedBaseTile) te, world, pos);
     }
@@ -267,7 +257,7 @@ public class TemplateBlock extends Block {
     }
 
     return super.getItemDropped(state, rand, fortune);
-  }
+  }*/
 
   @Override
   public boolean hasTileEntity(BlockState state) {
@@ -280,19 +270,19 @@ public class TemplateBlock extends Block {
 
   @Nullable
   @Override
-  public TileEntity createTileEntity(World world, BlockState state) {
+  public TileEntity createTileEntity(BlockState state, IBlockReader reader) {
     if (storesId) {
       return new StoredIdTile();
     }
 
-    return super.createTileEntity(world, state);
+    return super.createTileEntity(state, reader);
   }
 
   @Override
   public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
     super.onBlockPlacedBy(world, pos, state, placer, stack);
 
-    if (stack.hasTagCompound()) {
+    if (stack.hasTag()) {
       UUID id = NetworkItemUtil.getNetworkId(stack);
 
       NetworkedBaseTile te = WorldUtil.getTileEntity(NetworkedBaseTile.class, world, pos);

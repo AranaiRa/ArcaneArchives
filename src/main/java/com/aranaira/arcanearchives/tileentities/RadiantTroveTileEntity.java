@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tileentities;
+/*package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
@@ -500,4 +500,4 @@ public class RadiantTroveTileEntity extends ImmanenceTileEntity implements IMani
 			}
 		}
 	}
-}
+}*/

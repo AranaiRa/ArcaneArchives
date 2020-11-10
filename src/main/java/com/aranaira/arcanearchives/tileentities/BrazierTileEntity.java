@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tileentities;
+/*package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
@@ -496,4 +496,4 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 			return this.stacks;
 		}
 	}
-}
+}*/

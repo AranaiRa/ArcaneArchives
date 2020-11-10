@@ -1,3 +1,4 @@
+/*
 package com.aranaira.arcanearchives.inventory;
 
 import com.aranaira.arcanearchives.inventory.handlers.InventoryCraftingPersistent;
@@ -6,6 +7,8 @@ import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.PacketRadiantCrafting;
 import com.aranaira.arcanearchives.tileentities.RadiantCraftingTableTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.*;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
@@ -28,7 +31,7 @@ import java.util.List;
 // nearly the same as ContainerWorkbench but uses the TileEntities inventory
 @Mod.EventBusSubscriber
 public class ContainerRadiantCraftingTable extends Container {
-	public static IInventory emptyInventory = new Inventory("[Null]", true, 0);
+	public static IInventory emptyInventory = new Inventory(0);
 	public final BlockPos pos;
 	protected final World world;
 	private final ItemStackHandler itemHandler;
@@ -383,4 +386,5 @@ public class ContainerRadiantCraftingTable extends Container {
 		}
 	}
 }
+*/
 
