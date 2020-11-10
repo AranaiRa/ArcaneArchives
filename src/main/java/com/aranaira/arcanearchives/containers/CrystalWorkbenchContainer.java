@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.containers;
+/*package com.aranaira.arcanearchives.containers;
 
 import com.aranaira.arcanearchives.api.cwb.CrystalWorkbenchRecipe;
 import com.aranaira.arcanearchives.api.cwb.MatchResult;
@@ -27,9 +27,9 @@ import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 
-/*import invtweaks.api.container.ContainerSection;
+*//*import invtweaks.api.container.ContainerSection;
 import invtweaks.api.container.ContainerSectionCallback;
-import invtweaks.api.container.InventoryContainer;*/
+import invtweaks.api.container.InventoryContainer;*//*
 
 //@InventoryContainer
 public class CrystalWorkbenchContainer extends Container {
@@ -261,15 +261,15 @@ public class CrystalWorkbenchContainer extends Container {
   }
 
   // Slot range INCLUDES startSlot EXCLUDES stopSlot
-/*  public List<Slot> getSlotRange(int startSlot, int stopSlot) {
+*//*  public List<Slot> getSlotRange(int startSlot, int stopSlot) {
     List<Slot> output = new ArrayList<>();
     for (int i = startSlot; i < stopSlot; i++) {
       output.add(getSlot(i));
     }
     return output;
-  }*/
+  }*//*
 
-/*	public Map<ContainerSection, List<Slot>> map = null;
+*//*	public Map<ContainerSection, List<Slot>> map = null;
 
 	@ContainerSectionCallback
 	public Map<ContainerSection, List<Slot>> containerSectionListMap () {
@@ -281,5 +281,5 @@ public class CrystalWorkbenchContainer extends Container {
 		}
 
 		return map;
-	}*/
-}
+	}*//*
+}*/

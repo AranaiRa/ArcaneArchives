@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.blocks;
+/*package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
@@ -17,6 +17,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -35,7 +37,7 @@ public class RadiantCraftingTableBlock extends TemplateBlock {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.device.radiant_crafting_table"));
 	}
@@ -83,4 +85,4 @@ public class RadiantCraftingTableBlock extends TemplateBlock {
 		}
 		super.breakBlock(world, pos, state);
 	}
-}
+}*/

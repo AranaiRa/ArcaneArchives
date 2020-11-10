@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.util;
+/*package com.aranaira.arcanearchives.util;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufInputStream;
@@ -136,7 +136,7 @@ public class ByteUtils {
 
       // TODO: Whoever wrote this didn't understand some vital concepts.
       if (stack.getItem().isDamageable() || stack.getItem().getShareTag()) {
-        nbttagcompound = stack.getTagCompound();
+        nbttagcompound = stack.getTag();
       }
 
       writeNBT(buf, nbttagcompound);
@@ -153,7 +153,7 @@ public class ByteUtils {
       CompoundNBT nbttagcompound = null;
 
       if (stack.getItem().isDamageable() || stack.getItem().getShareTag()) {
-        nbttagcompound = stack.getTagCompound();
+        nbttagcompound = stack.getTag();
       }
 
       buf.writeCompoundTag(nbttagcompound);
@@ -187,4 +187,4 @@ public class ByteUtils {
       return itemstack;
     }
   }
-}
+}*/

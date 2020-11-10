@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.network;
+/*package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.tilenetwork.Network;
@@ -10,6 +10,8 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -28,7 +30,7 @@ public class Handlers {
   public interface ServerHandler<T extends IMessage> extends BaseHandler<T> {
     @Override
     default IMessage onMessage(T message, MessageContext ctx) {
-      FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> processMessage(message, ctx));
+      FMLCommonHandler.instance().getInstanceServerInstance().addScheduledTask(() -> processMessage(message, ctx));
 
       return null;
     }
@@ -79,7 +81,7 @@ public class Handlers {
   @SuppressWarnings("unchecked")
   public interface TileHandlerClient<T extends Messages.TileMessage, V extends NetworkedBaseTile> extends ClientHandler<T> {
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     default void processMessage(T message, MessageContext ctx) {
       V tileEntity = getTile(message, ctx);
       if (tileEntity != null) {
@@ -90,9 +92,9 @@ public class Handlers {
     }
 
     @Nullable
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     default V getTile(T message, MessageContext ctx) {
-      Minecraft mc = Minecraft.getMinecraft();
+      Minecraft mc = Minecraft.getInstance();
       World world = mc.world;
 
       BlockPos pos = message.getPos();
@@ -118,7 +120,7 @@ public class Handlers {
       }
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     void processMessage(T message, MessageContext ctx, @Nullable V tile);
   }
-}
+}*/

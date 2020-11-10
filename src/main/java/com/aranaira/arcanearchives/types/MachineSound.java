@@ -1,31 +1,31 @@
 package com.aranaira.arcanearchives.types;
 
-import net.minecraft.client.audio.LocatableSound;
 import net.minecraft.client.audio.ITickableSound;
+import net.minecraft.client.audio.LocatableSound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
 
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class MachineSound extends LocatableSound implements ITickableSound {
 
   private boolean donePlaying;
 
   public MachineSound(@Nonnull ResourceLocation sound, float x, float y, float z, float volume, float pitch) {
     super(sound, SoundCategory.BLOCKS);
-    this.xPosF = x;
-    this.yPosF = y;
-    this.zPosF = z;
+    this.x = x;
+    this.y = y;
+    this.z = z;
     this.volume = volume;
     this.pitch = pitch;
     this.repeat = true;
   }
 
   @Override
-  public void update() {
+  public void tick() {
   }
 
   @Override

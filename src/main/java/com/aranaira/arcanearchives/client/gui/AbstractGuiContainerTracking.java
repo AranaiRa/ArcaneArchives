@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.client.gui;
+/*package com.aranaira.arcanearchives.client.gui;
 
 import com.aranaira.arcanearchives.util.ColorUtils;
 import com.aranaira.arcanearchives.util.ColorUtils.Color;
@@ -19,4 +19,4 @@ public abstract class AbstractGuiContainerTracking extends ContainerScreen {
     ContainerScreen.drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, c.toInteger());
     GlStateManager.enableDepth();
   }
-}
+}*/

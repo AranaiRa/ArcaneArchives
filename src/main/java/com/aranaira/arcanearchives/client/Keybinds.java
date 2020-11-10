@@ -1,10 +1,11 @@
-package com.aranaira.arcanearchives.client;
+/*package com.aranaira.arcanearchives.client;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -34,10 +35,10 @@ public class Keybinds {
     }
   }
 
-  @SideOnly(Side.CLIENT)
+  @OnlyIn(Dist.CLIENT)
   @Nullable
   private static ItemStack underMouse(Minecraft mc) {
-/*		ItemStack jei = JEIUnderMouse.underMouse();
+*//*		ItemStack jei = JEIUnderMouse.underMouse();
 		if (jei != null) {
 			return jei;
 		}
@@ -50,14 +51,14 @@ public class Keybinds {
 			}
 		}
 
-		return null;*/
+		return null;*//*
     return null;
   }
 
   @SubscribeEvent
-  @SideOnly(Side.CLIENT)
+  @OnlyIn(Dist.CLIENT)
   public static void onKeyInputManifest(InputEvent.KeyInputEvent event) {
-/*		Minecraft mc = Minecraft.getMinecraft();
+*//*		Minecraft mc = Minecraft.getInstance();
 		if (manifestKey.isKeyDown() && mc.inGameHasFocus) {
 			boolean foundManifest = false;
 			if (ManifestConfig.ManifestPresence) {
@@ -82,14 +83,14 @@ public class Keybinds {
 		} else if (socketKey != null && socketKey.isKeyDown() && mc.inGameHasFocus) {
 			OpenSocket packet = new OpenSocket();
 			Networking.CHANNEL.sendToServer(packet);
-		}*/
+		}*//*
   }
 
   @SubscribeEvent
-  @SideOnly(Side.CLIENT)
+  @OnlyIn(Dist.CLIENT)
   public static void onKeypress(GuiScreenEvent.KeyboardInputEvent.Pre event) {
-/*		if (Keyboard.getEventKeyState() && manifestKey.isActiveAndMatches(Keyboard.getEventKey())) {
-			Minecraft mc = Minecraft.getMinecraft();
+*//*		if (Keyboard.getEventKeyState() && manifestKey.isActiveAndMatches(Keyboard.getEventKey())) {
+			Minecraft mc = Minecraft.getInstance();
 			if (mc.currentScreen != null) {
 				ItemStack stack = underMouse(mc);
 				if (stack != null && !stack.isEmpty()) {
@@ -103,7 +104,7 @@ public class Keybinds {
 								continue;
 							}
 
-							//List<Vec3d> visPositions = entry.getVecPositions();
+							//List<Vector3d> visPositions = entry.getVecPositions();
 							//isPositions.forEach(l -> LineHandler.addLine(l, mc.player.dimension));
 							ManifestTrackingUtils.add(entry);
 
@@ -115,6 +116,6 @@ public class Keybinds {
 					});
 				}
 			}
-		}*/
+		}*//*
   }
-}
+}*/

@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.commands;
+/*package com.aranaira.arcanearchives.commands;
 
 import com.aranaira.arcanearchives.data.DataHelper;
 import com.aranaira.arcanearchives.data.types.ServerNetwork;
@@ -78,4 +78,4 @@ public class CommandRebuild extends CommandBase {
 			player.sendMessage(new StringTextComponent("Placed " + tileCount.get() + " Immanence Tile Entities back into the incoming queue."));
 		}
 	}
-}
+}*/

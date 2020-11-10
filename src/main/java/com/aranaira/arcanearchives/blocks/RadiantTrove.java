@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.blocks;
+/*package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.DirectionalBlock;
 import com.aranaira.arcanearchives.client.tracking.LineHandler;
@@ -30,6 +30,8 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.IItemHandler;
@@ -53,7 +55,7 @@ public class RadiantTrove extends DirectionalBlock {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.device.radiant_trove"));
 	}
@@ -194,7 +196,7 @@ public class RadiantTrove extends DirectionalBlock {
 
 		if (state.getBlock() == BlockRegistry.RADIANT_TROVE) {
 			if (!world.isRemote) {
-				Direction facing = Direction.fromAngle(state.getValue(getFacingProperty()).getHorizontalAngle() - 90.0);
+				Direction facing = Direction.fromAngle(state.get(getFacingProperty()).getHorizontalAngle() - 90.0);
 				RayTraceResult rayResult = net.minecraftforge.common.ForgeHooks.rayTraceEyes(player, ((ServerPlayerEntity) player).interactionManager.getBlockReachDistance() + 1);
 				if (rayResult == null) {
 					return;
@@ -259,7 +261,7 @@ public class RadiantTrove extends DirectionalBlock {
 		if (stack.hasTagCompound()) {
 			RadiantTroveTileEntity te = WorldUtil.getTileEntity(RadiantTroveTileEntity.class, world, pos);
 			if (te != null) {
-				te.deserializeStack(stack.getTagCompound());
+				te.deserializeStack(stack.getTag());
 				te.markDirty();
 				te.defaultServerSideUpdate();
 			}
@@ -276,4 +278,4 @@ public class RadiantTrove extends DirectionalBlock {
 		}
 		return super.getPlayerRelativeBlockHardness(state, player, worldIn, pos);
 	}
-}
+}*/

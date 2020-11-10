@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items;
+/*package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.client.Keybinds;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
@@ -11,6 +11,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -30,7 +31,7 @@ public class ManifestItem extends ItemTemplate {
   }
 
   public static void openManifest(World worldIn, PlayerEntity playerIn) {
-/*    if (playerIn.isSneaking()) {
+*//*    if (playerIn.isSneaking()) {
       ManifestTrackingUtils.clear();
     } else {
       ClientNetwork network = DataHelper.getClientNetwork(playerIn.getUniqueID());
@@ -38,11 +39,11 @@ public class ManifestItem extends ItemTemplate {
       network.synchroniseManifest();
 
       playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.MANIFEST, worldIn, (int) playerIn.posX, (int) playerIn.posY, (int) playerIn.posZ);
-    }*/
+    }*//*
   }
 
   @Override
-  @SideOnly(Side.CLIENT)
+  @OnlyIn(Dist.CLIENT)
   public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
     tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.manifest1"));
 
@@ -54,4 +55,4 @@ public class ManifestItem extends ItemTemplate {
       tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.manifest3", TextFormatting.BOLD + I18n.format("arcanearchives.tooltip.item.manifest3.main_key") + TextFormatting.RESET + TextFormatting.GOLD));
     }
   }
-}
+}*/

@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.api.cwb;
+/*package com.aranaira.arcanearchives.api.cwb;
 
 import net.minecraftforge.fml.common.eventhandler.Event;
 
@@ -12,4 +12,4 @@ public class CrystalWorkbenchRegisterEvent extends Event {
   public ICrystalWorkbenchRegistry getRegistry() {
     return registry;
   }
-}
+}*/

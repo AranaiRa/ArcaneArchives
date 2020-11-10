@@ -1,20 +1,20 @@
 package com.aranaira.arcanearchives.tileentities;
 
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
 
 public interface IRanged {
 
-  @SideOnly(Side.CLIENT)
+  @OnlyIn(Dist.CLIENT)
   boolean isShowingRange();
 
-  @SideOnly(Side.CLIENT)
+  @OnlyIn(Dist.CLIENT)
   void toggleShowRange();
 
-  @SideOnly(Side.CLIENT)
+  @OnlyIn(Dist.CLIENT)
   void setShowingRange(boolean showingRange);
 
   @Nonnull

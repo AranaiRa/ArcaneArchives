@@ -1,4 +1,4 @@
-// TODO: This
+/*// TODO: This
 
 package com.aranaira.arcanearchives.util;
 
@@ -18,7 +18,7 @@ import net.minecraft.item.crafting.RecipeItemHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.items.IItemHandler;
@@ -274,7 +274,7 @@ public class ManifestUtils {
     }
 
     // TODO: This is never used?
-    public List<Vec3d> getVecPositions() {
+    public List<Vector3d> getVecPositions() {
       return descriptions.stream().map(EntryDescriptor::vec3d).collect(Collectors.toList());
     }
 
@@ -322,8 +322,8 @@ public class ManifestUtils {
       buf.writeInt(dimension);
     }
 
-    public Vec3d vec3d() {
-      return new Vec3d(pos.getX(), pos.getY(), pos.getZ());
+    public Vector3d vec3d() {
+      return new Vector3d(pos.getX(), pos.getY(), pos.getZ());
     }
 
     // TODO: Never used
@@ -331,4 +331,4 @@ public class ManifestUtils {
       return count;
     }
   }
-}
+}*/

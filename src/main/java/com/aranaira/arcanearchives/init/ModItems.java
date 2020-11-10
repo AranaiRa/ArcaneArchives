@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.init;
+/*package com.aranaira.arcanearchives.init;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.items.ManifestItem;
@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent.Register;
@@ -34,7 +35,7 @@ public class ModItems {
   public static final ItemTemplate ContainmentField = register("containment_field", ItemTemplate::new, (o) -> o.setTooltip("arcanearchives.tooltip.item.containment_field", TextFormatting.GOLD).setUpgradeInfo(ModUpgrades.CONTAINMENT_FIELD));
   public static final ItemTemplate MaterialInterface = register("material_interface", ItemTemplate::new, (o) -> o.setTooltip("arcanearchives.tooltip.item.material_interface", TextFormatting.GOLD).setUpgradeInfo(ModUpgrades.MATERIAL_INTERFACE));
   public static final ItemTemplate RadiantKey = register("radiant_key", ItemTemplate::new, (o) -> o.setTooltip("arcanearchives.tooltip.item.radiant_key", TextFormatting.GOLD).setUpgradeInfo(ModUpgrades.RADIANT_KEY));
-  //public static final ItemTemplate SerenityCharm = register("serenity_charm", ItemTemplate::new, (o) -> o/*.setTooltip("", TextFormatting.GOLD)*/.setUpgradeInfo(ModUpgrades.SERENITY_CHARM));
+  //public static final ItemTemplate SerenityCharm = register("serenity_charm", ItemTemplate::new, (o) -> o/.setTooltip("", TextFormatting.GOLD).setUpgradeInfo(ModUpgrades.SERENITY_CHARM));
 
   public static final ItemTemplate Manifest = register("manifest", ManifestItem::new);
 
@@ -46,7 +47,7 @@ public class ModItems {
   }
 
   @SubscribeEvent
-  @SideOnly(Side.CLIENT)
+  @OnlyIn(Dist.CLIENT)
   public static void onModelRegister(ModelRegistryEvent event) {
     REGISTRY.forEach(o -> ModelLoader.setCustomModelResourceLocation(o, 0, new ModelResourceLocation(Objects.requireNonNull(o.getRegistryName()), "inventory")));
   }
@@ -73,4 +74,4 @@ public class ModItems {
 
   public static void load() {
   }
-}
+}*/

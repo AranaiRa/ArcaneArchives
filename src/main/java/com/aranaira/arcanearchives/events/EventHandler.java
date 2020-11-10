@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.events;
+/*package com.aranaira.arcanearchives.events;
 
 import com.aranaira.arcanearchives.client.render.RenderGemcasting;
 import com.aranaira.arcanearchives.client.render.RenderGemcasting.EnumGemGuiMode;
@@ -51,11 +51,12 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vector3d;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -100,7 +101,7 @@ public class EventHandler {
 
   // TODO: AAAA
   @SubscribeEvent
-  @SideOnly(Side.CLIENT)
+  @OnlyIn(Dist.CLIENT)
   public static void onLeftClickEmpty(PlayerInteractEvent.LeftClickEmpty event) {
     Item item = event.getEntityPlayer().inventory.getCurrentItem().getItem();
     if (item == ItemRegistry.RADIANT_AMPHORA) {
@@ -134,7 +135,7 @@ public class EventHandler {
           stack.shrink(1);
           num = rng.nextInt(16) + 8;
           ItemStack shards = new ItemStack(BlockRegistry.QUARTZ_SLIVER, num);
-          Vec3d pos = event.getHitVec();
+          Vector3d pos = event.getHitVec();
           ItemEntity ei = new ItemEntity(event.getWorld(), pos.x, pos.y, pos.z, shards);
           ei.motionX = rng.nextFloat() * 0.4f - 0.2f;
           ei.motionZ = rng.nextFloat() * 0.4f - 0.2f;
@@ -142,7 +143,7 @@ public class EventHandler {
           event.getWorld().spawnEntity(ei);
         } else if (num == 1 || num == 2) {
           ItemStack shards = new ItemStack(BlockRegistry.QUARTZ_SLIVER, 1);
-          Vec3d pos = event.getHitVec();
+          Vector3d pos = event.getHitVec();
           ItemEntity ei = new ItemEntity(event.getWorld(), pos.x, pos.y, pos.z, shards);
           ei.motionX = rng.nextFloat() * 0.4f - 0.2f;
           ei.motionZ = rng.nextFloat() * 0.4f - 0.2f;
@@ -247,4 +248,4 @@ public class EventHandler {
       }
     }
   }
-}
+}*/

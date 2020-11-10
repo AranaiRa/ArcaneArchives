@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.containers.slots;
 
 import com.aranaira.arcanearchives.client.gui.framework.ICustomCountSlot;
-import com.aranaira.arcanearchives.inventories.ExtendedHandler;
+/*import com.aranaira.arcanearchives.inventories.ExtendedHandler;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Inventory;
@@ -97,4 +97,4 @@ public class SlotExtended extends Slot implements ICustomCountSlot {
   public ItemStack getItemStack() {
     return getStack();
   }
-}
+}*/

@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.blocks;
+/*package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import com.aranaira.arcanearchives.client.tracking.LineHandler;
@@ -25,6 +25,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -50,7 +52,7 @@ public class RadiantTankBlock extends TemplateBlock {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.device.radiant_tank"));
 	}
@@ -183,7 +185,7 @@ public class RadiantTankBlock extends TemplateBlock {
 		if (stack.hasTagCompound()) {
 			RadiantTankTileEntity te = WorldUtil.getTileEntity(RadiantTankTileEntity.class, world, pos);
 			if (te != null) {
-				te.deserializeStack(stack.getTagCompound());
+				te.deserializeStack(stack.getTag());
 				te.markDirty();
 				te.defaultServerSideUpdate();
 			}
@@ -199,4 +201,4 @@ public class RadiantTankBlock extends TemplateBlock {
 	public int getComparatorInputOverride (BlockState blockState, World worldIn, BlockPos pos) {
 		return ItemUtils.calculateRedstoneFromTileEntity(worldIn.getTileEntity(pos));
 	}
-}
+}*/

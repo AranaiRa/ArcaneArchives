@@ -1,7 +1,6 @@
-package com.aranaira.arcanearchives.containers.slots;
+/*package com.aranaira.arcanearchives.containers.slots;
 
 import com.aranaira.arcanearchives.api.cwb.CrystalWorkbenchRecipe;
-import com.aranaira.arcanearchives.registry.CrystalWorkbenchRegistry;
 import com.aranaira.arcanearchives.tileentities.CrystalWorkbenchTile;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
@@ -12,7 +11,7 @@ import net.minecraft.item.ItemStack;
 import javax.annotation.Nullable;
 
 public class SlotRecipeHandler extends Slot {
-  private static IInventory emptyInventory = new Inventory("[Null]", true, 0);
+  private static IInventory emptyInventory = new Inventory(0);
   private final int index;
   private final CrystalWorkbenchTile tile;
 
@@ -109,4 +108,4 @@ public class SlotRecipeHandler extends Slot {
   public boolean isSameInventory(net.minecraft.inventory.container.Slot other) {
     return false;
   }
-}
+}*/

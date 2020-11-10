@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.client.gui;
+/*package com.aranaira.arcanearchives.client.gui;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.gui.controls.InvisibleButton;
@@ -109,9 +109,9 @@ public class ManifestGUI extends LayeredGuiContainer implements GuiPageButtonLis
     this.scrollEventManager = new ScrollEventManager();
     this.container = container;
 
-/*    ClientNetwork network = DataHelper.getClientNetwork(player.getUniqueID());
+*//*    ClientNetwork network = DataHelper.getClientNetwork(player.getUniqueID());
     network.manifestItems.setListener(container);
-    container.setScrollEventManager(scrollEventManager);*/
+    container.setScrollEventManager(scrollEventManager);*//*
 
     this.xSize = 200;
     this.ySize = 224;
@@ -250,13 +250,13 @@ public class ManifestGUI extends LayeredGuiContainer implements GuiPageButtonLis
     if (slot.isEnabled()) {
       ItemStack stack = slot.getStack();
       if (!stack.isEmpty()) {
-/*        if (ManifestTrackingUtils.matches(stack)) {
+*//*        if (ManifestTrackingUtils.matches(stack)) {
           GlStateManager.disableDepth();
           long worldTime = mc.player.world.getWorldTime();
           Color c = ColorUtils.getColorFromTime(worldTime);
           GuiContainer.drawRect(slot.xPos, slot.yPos, slot.xPos + 16, slot.yPos + 16, c.toInteger());
           GlStateManager.enableDepth();
-        }*/
+        }*//*
       }
 
       super.drawSlot(slot);
@@ -325,8 +325,8 @@ public class ManifestGUI extends LayeredGuiContainer implements GuiPageButtonLis
 
   public void doRefresh() {
     // TODO:
-/*    ClientNetwork network = DataHelper.getClientNetwork(player.getUniqueID());
-    network.synchroniseManifest();*/
+*//*    ClientNetwork network = DataHelper.getClientNetwork(player.getUniqueID());
+    network.synchroniseManifest();*//*
   }
 
   @Override
@@ -352,9 +352,9 @@ public class ManifestGUI extends LayeredGuiContainer implements GuiPageButtonLis
       }
     } else if (button.id == mJEIsync.id) {
       // TODO
-/*      if (!doJEIsync) {
+*//*      if (!doJEIsync) {
         this.searchBox.syncToJEI(true);
-      }*/
+      }*//*
       this.toggleJEISync();
     }
 
@@ -391,7 +391,7 @@ public class ManifestGUI extends LayeredGuiContainer implements GuiPageButtonLis
   public void maybeRestoreJEI() {
     if (Loader.isModLoaded("jei") && ManifestGUI.doJEIsync) {
       if (!storedJEI.isEmpty()) {
-        /*        JEIPlugin.runtime.getIngredientFilter().setFilterText(storedJEI);*/
+        *//*        JEIPlugin.runtime.getIngredientFilter().setFilterText(storedJEI);*//*
       }
     }
   }
@@ -450,15 +450,15 @@ public class ManifestGUI extends LayeredGuiContainer implements GuiPageButtonLis
     if (slot != null) {
       ManifestEntry entry = container.getEntry(slot.slotNumber);
       if (entry != null && entry.isWrongDimension()) {
-/*        tooltip.add("");
-        tooltip.add("" + TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.manifest.inanotherdim"));*/
+*//*        tooltip.add("");
+        tooltip.add("" + TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.manifest.inanotherdim"));*//*
       } else if (entry != null) {
         tooltip.add("");
         tooltip.add("" + TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.manifest.clicktoshow", I18n.format("arcanearchives.text.manifest.endtrackingbutton")));
       }
       if (entry != null) {
         if (Screen.isShiftKeyDown()) {
-/*          tooltip.add("");
+*//*          tooltip.add("");
           Long2ObjectOpenHashMap<IndexDescriptor> descriptors = entry.getDescriptorMap();
           int unnamed_count = 1;
           int limit = Math.min(10, descriptors.size());
@@ -470,11 +470,11 @@ public class ManifestGUI extends LayeredGuiContainer implements GuiPageButtonLis
             if (chestName == null || chestName.isEmpty()) {
               chestName = String.format("%s %d", I18n.format("arcanearchives.text.radiantchest.unnamed_chest"), unnamed_count++);
             }
-            tooltip.add(TextFormatting.GRAY + I18n.format("arcanearchives.tooltip.manifest.entry", chestName, pos.getX(), pos.getY(), pos.getZ(), thisEntry.getItemCount()));*/
+            tooltip.add(TextFormatting.GRAY + I18n.format("arcanearchives.tooltip.manifest.entry", chestName, pos.getX(), pos.getY(), pos.getZ(), thisEntry.getItemCount()));*//*
         }
-/*        if (diff > 0) {
+*//*        if (diff > 0) {
           tooltip.add(I18n.format("arcanearchives.tooltip.manifest.andmore", diff));
-        }*/
+        }*//*
       } else {
         tooltip.add("" + TextFormatting.DARK_GRAY + I18n.format("arcanearchives.tooltip.manifest.chestsneak"));
       }
@@ -505,4 +505,4 @@ public class ManifestGUI extends LayeredGuiContainer implements GuiPageButtonLis
   public void onGuiClosed() {
     maybeRestoreJEI();
   }
-}
+}*/

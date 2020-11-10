@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.integration.jei;
+/*package com.aranaira.arcanearchives.integration.jei;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import mezz.jei.api.*;
@@ -27,7 +27,7 @@ public class JEIPlugin implements IModPlugin {
   @Override
   public void registerCategories(IRecipeCategoryRegistration registry) {
     IGuiHelper helper = registry.getJeiHelpers().getGuiHelper();
-    /*    registry.addRecipeCategories(new GCTCategory(helper), new QuartzCategory(helper));*/
+    *//*    registry.addRecipeCategories(new GCTCategory(helper), new QuartzCategory(helper));*//*
   }
 
   @Override
@@ -39,7 +39,7 @@ public class JEIPlugin implements IModPlugin {
 
     // crafting helper used by the shaped table wrapper
     craftingGridHelper = guiHelper.createCraftingGridHelper(craftInputSlot1, craftOutputSlot);
-/*
+*//*
     registry.getRecipeTransferRegistry().addRecipeTransferHandler(new CraftingStationRecipeTransferInfo());
     registry.addRecipeCatalyst(new ItemStack(BlockRegistry.RADIANT_CRAFTING_TABLE, 1, 0), VanillaRecipeCategoryUid.CRAFTING);
 
@@ -49,7 +49,7 @@ public class JEIPlugin implements IModPlugin {
 
     registry.handleRecipes(FakeQuartzRecipe.class, QuartzWrapper::new, RADIANT_RESONATOR);
     registry.addRecipes(Collections.singletonList(new FakeQuartzRecipe()), RADIANT_RESONATOR);
-    registry.addRecipeCatalyst(new ItemStack(BlockRegistry.RADIANT_RESONATOR), RADIANT_RESONATOR);*/
+    registry.addRecipeCatalyst(new ItemStack(BlockRegistry.RADIANT_RESONATOR), RADIANT_RESONATOR);*//*
 
   }
 
@@ -59,10 +59,10 @@ public class JEIPlugin implements IModPlugin {
     recipeRegistry = jeiRuntime.getRecipeRegistry();
 
     NonNullList<ItemStack> ignores = NonNullList.create();
-/*    ItemRegistry.CHROMATIC_POWDER.getSubItems(CreativeTabs.SEARCH, ignores);
+*//*    ItemRegistry.CHROMATIC_POWDER.getSubItems(CreativeTabs.SEARCH, ignores);
     ignores.add(new ItemStack(ItemRegistry.CHROMATIC_POWDER));
-    ignores.add(new ItemStack(ItemRegistry.RAINBOW_CHROMATIC_POWDER));*/
+    ignores.add(new ItemStack(ItemRegistry.RAINBOW_CHROMATIC_POWDER));*//*
 
     //itemRegistry.removeIngredientsAtRuntime(VanillaTypes.ITEM, ignores);
   }
-}
+}*/

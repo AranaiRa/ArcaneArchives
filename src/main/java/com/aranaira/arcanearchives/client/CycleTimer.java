@@ -9,13 +9,13 @@
 package com.aranaira.arcanearchives.client;
 
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class CycleTimer {
   /* the amount of time in ms to display one thing before cycling to the next one */
   private static final int cycleTime = 1000;
@@ -42,7 +42,7 @@ public class CycleTimer {
   }
 
   public void onDraw() {
-    if (!Screen.isShiftKeyDown()) {
+    if (!Screen.hasShiftDown()) {
       if (pausedDuration > 0) {
         startTime += pausedDuration;
         pausedDuration = 0;

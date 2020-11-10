@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.inventory.handlers;
+/*package com.aranaira.arcanearchives.inventory.handlers;
 
 import com.aranaira.arcanearchives.inventories.OptionalUpgradesHandler;
 import com.aranaira.arcanearchives.inventories.TroveUpgradeItemHandler;
@@ -31,7 +31,7 @@ public class TroveItemBlockItemHandler implements com.aranaira.arcanearchives.in
 
   public int getUpgrades() {
     if (this.upgrades == null) {
-      CompoundNBT tag = container.getTagCompound();
+      CompoundNBT tag = container.getTag();
       if (tag == null || !tag.hasKey(RadiantTroveTileEntity.Tags.SIZE_UPGRADES)) {
         return 0;
       }
@@ -70,7 +70,7 @@ public class TroveItemBlockItemHandler implements com.aranaira.arcanearchives.in
   @Override
   public ItemStack getReference() {
     if (reference == null) {
-      CompoundNBT tag = container.getTagCompound();
+      CompoundNBT tag = container.getTag();
       if (tag == null || !tag.hasKey(RadiantTroveTileEntity.Tags.HANDLER_ITEM)) {
         return ItemStack.EMPTY;
       }
@@ -84,7 +84,7 @@ public class TroveItemBlockItemHandler implements com.aranaira.arcanearchives.in
   @Override
   public int getCount() {
     if (count == -1) {
-      CompoundNBT tag = container.getTagCompound();
+      CompoundNBT tag = container.getTag();
       if (tag == null || !tag.hasKey(RadiantTroveTileEntity.Tags.HANDLER_ITEM)) {
         return 0;
       }
@@ -108,7 +108,7 @@ public class TroveItemBlockItemHandler implements com.aranaira.arcanearchives.in
 
   private OptionalUpgradesHandler getOptionals() {
     if (optionals == null) {
-      CompoundNBT tag = container.getTagCompound();
+      CompoundNBT tag = container.getTag();
       if (tag == null || !tag.hasKey(RadiantTroveTileEntity.Tags.OPTIONAL_UPGRADES)) {
         return null;
       }
@@ -181,4 +181,4 @@ public class TroveItemBlockItemHandler implements com.aranaira.arcanearchives.in
     }
     tag.setTag(RadiantTroveTileEntity.Tags.HANDLER_ITEM, result);
   }
-}
+}*/

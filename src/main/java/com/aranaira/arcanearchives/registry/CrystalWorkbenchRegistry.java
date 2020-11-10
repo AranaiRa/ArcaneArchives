@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.registry;
+/*package com.aranaira.arcanearchives.registry;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.api.cwb.*;
@@ -147,4 +147,4 @@ public class CrystalWorkbenchRegistry extends ForwardingMap<ResourceLocation, Cr
   public static void onRecipeRegistration(RegistryEvent.Register<IRecipe> recipes) {
     MinecraftForge.EVENT_BUS.post(new CrystalWorkbenchRegisterEvent(getRegistry()));
   }
-}
+}*/

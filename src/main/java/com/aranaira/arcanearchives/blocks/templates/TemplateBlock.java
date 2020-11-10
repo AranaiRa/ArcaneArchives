@@ -1,39 +1,30 @@
 package com.aranaira.arcanearchives.blocks.templates;
 
-import com.aranaira.arcanearchives.tileentities.NetworkedBaseTile;
-import com.aranaira.arcanearchives.tileentities.StoredIdTile;
-import com.aranaira.arcanearchives.util.NetworkItemUtil;
-import com.aranaira.arcanearchives.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.stats.Stats;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.*;
+import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.List;
 import java.util.function.Consumer;
 
 @SuppressWarnings({"UnusedReturnValue", "WeakerAccess", "NullableProblems", "unchecked", "deprecation", "DeprecatedIsStillUsed"})
 public class TemplateBlock extends Block {
   protected String tooltip = null;
   protected Consumer<IFormattableTextComponent> formatting = null;
-/*  protected boolean isOpaqueCube = true;
-  protected boolean isFullCube = true;*/
+  /*  protected boolean isOpaqueCube = true;
+    protected boolean isFullCube = true;*/
   protected AxisAlignedBB axis = null;
   protected boolean storesId = false;
 
@@ -268,7 +259,7 @@ public class TemplateBlock extends Block {
     return super.hasTileEntity(state);
   }
 
-  @Nullable
+/*  @Nullable
   @Override
   public TileEntity createTileEntity(BlockState state, IBlockReader reader) {
     if (storesId) {
@@ -276,13 +267,13 @@ public class TemplateBlock extends Block {
     }
 
     return super.createTileEntity(state, reader);
-  }
+  }*/
 
   @Override
   public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
     super.onBlockPlacedBy(world, pos, state, placer, stack);
 
-    if (stack.hasTag()) {
+/*    if (stack.hasTag()) {
       UUID id = NetworkItemUtil.getNetworkId(stack);
 
       NetworkedBaseTile te = WorldUtil.getTileEntity(NetworkedBaseTile.class, world, pos);
@@ -293,7 +284,7 @@ public class TemplateBlock extends Block {
           te.stateUpdate();
         }
       }
-    }
+    }*/
   }
 }
 

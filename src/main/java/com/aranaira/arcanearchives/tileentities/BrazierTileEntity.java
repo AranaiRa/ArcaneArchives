@@ -64,12 +64,12 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 		itemCache.defaultReturnValue(null);
 	}
 
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	public void addUpdateHook (Runnable hook) {
 		clientHooks.add(hook);
 	}
 
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	public void removeUpdateHook (Runnable hook) {
 		clientHooks.remove(hook);
 	}
@@ -107,7 +107,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 			return false;
 		}
 
-		CompoundNBT tag = stack.getTagCompound();
+		CompoundNBT tag = stack.getTag();
 		if (tag == null) {
 			return false;
 		}
@@ -345,23 +345,23 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	public boolean isShowingRange () {
 		return showingRange;
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	public void toggleShowRange () {
 		setShowingRange(!isShowingRange());
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	public void setShowingRange (boolean showingRange) {
 		this.showingRange = showingRange;
 		if (showingRange) {
-			Minecraft.getMinecraft().effectRenderer.addEffect(new RangeParticle<BrazierTileEntity>(this));
+			Minecraft.getInstance().effectRenderer.addEffect(new RangeParticle<BrazierTileEntity>(this));
 		}
 	}
 

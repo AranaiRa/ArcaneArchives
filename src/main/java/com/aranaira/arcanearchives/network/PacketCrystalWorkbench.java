@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.network;
+/*package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.api.cwb.CrystalWorkbenchRecipe;
 import com.aranaira.arcanearchives.containers.CrystalWorkbenchContainer;
@@ -127,11 +127,11 @@ public class PacketCrystalWorkbench {
     public static class Handler implements ClientHandler<LastRecipe> {
       @Override
       public void processMessage(LastRecipe message, MessageContext ctx) {
-        Container container = Minecraft.getMinecraft().player.openContainer;
+        Container container = Minecraft.getInstance().player.openContainer;
         if (container instanceof CrystalWorkbenchContainer) {
           ((CrystalWorkbenchContainer) container).updateLastRecipeFromServer(message.recipe);
         }
       }
     }
   }
-}
+}*/

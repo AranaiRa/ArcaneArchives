@@ -3,15 +3,15 @@ package com.aranaira.arcanearchives.tilenetwork;
 import com.aranaira.arcanearchives.types.ISerializeByteBuf;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.resources.I18n;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 @SuppressWarnings("WeakerAccess")
 public class NetworkName implements ISerializeByteBuf<NetworkName> {
-  @SideOnly(Side.CLIENT)
+  @OnlyIn(Dist.CLIENT)
   private static String[] FIELDS = null;
 
-  @SideOnly(Side.CLIENT)
+  @OnlyIn(Dist.CLIENT)
   private String calculated;
 
   private int field1;
@@ -44,7 +44,7 @@ public class NetworkName implements ISerializeByteBuf<NetworkName> {
     return field3;
   }
 
-  @SideOnly(Side.CLIENT)
+  @OnlyIn(Dist.CLIENT)
   public String getName() {
     if (FIELDS == null) {
       FIELDS = I18n.format("arcanearchives.network.name").split(",");

@@ -3,16 +3,11 @@ package com.aranaira.arcanearchives.items.templates;
 import com.aranaira.arcanearchives.items.upgrades.IUpgrade;
 import com.aranaira.arcanearchives.items.upgrades.UpgradeInfo;
 import com.aranaira.arcanearchives.types.UpgradeType;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,7 +16,8 @@ public class ItemTemplate extends Item implements IUpgrade {
   protected String formatting = "";
   protected UpgradeInfo upgradeInfo = null;
 
-  public ItemTemplate() {
+  public ItemTemplate(Item.Properties properties) {
+    super(properties);
   }
 
   public ItemTemplate setTooltip(String text) {
@@ -52,7 +48,7 @@ public class ItemTemplate extends Item implements IUpgrade {
     return this;
   }
 
-  @Override
+/*  @Override
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
     super.addInformation(stack, worldIn, tooltip, flagIn);
 
@@ -66,42 +62,7 @@ public class ItemTemplate extends Item implements IUpgrade {
         }
       }
     }
-  }
-
-  @Override
-  public ItemTemplate setMaxStackSize(int maxStackSize) {
-    return (ItemTemplate) super.setMaxStackSize(maxStackSize);
-  }
-
-  @Override
-  public ItemTemplate setHasSubtypes(boolean hasSubtypes) {
-    return (ItemTemplate) super.setHasSubtypes(hasSubtypes);
-  }
-
-  @Override
-  public ItemTemplate setMaxDamage(int maxDamageIn) {
-    return (ItemTemplate) super.setMaxDamage(maxDamageIn);
-  }
-
-  @Override
-  public ItemTemplate setTranslationKey(String key) {
-    return (ItemTemplate) super.setTranslationKey(key);
-  }
-
-  @Override
-  public ItemTemplate setContainerItem(Item containerItemTemplate) {
-    return (ItemTemplate) super.setContainerItem(containerItemTemplate);
-  }
-
-  @Override
-  public ItemTemplate setCreativeTab(ItemGroup tab) {
-    return (ItemTemplate) super.setCreativeTab(tab);
-  }
-
-  @Override
-  public ItemTemplate setNoRepair() {
-    return (ItemTemplate) super.setNoRepair();
-  }
+  }*/
 
   public ItemTemplate setUpgradeInfo(UpgradeInfo info) {
     this.upgradeInfo = info;

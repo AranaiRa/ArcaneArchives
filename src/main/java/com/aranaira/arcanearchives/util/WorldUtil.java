@@ -2,28 +2,28 @@ package com.aranaira.arcanearchives.util;
 
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
 import javax.annotation.Nullable;
 
 public class WorldUtil {
   @Nullable
-  public static <T> T getTileEntity(Class<T> clazz, int dimension, BlockPos pos) {
-    return getTileEntity(clazz, dimension, pos, false);
+  public static <T> T getTileEntity(Class<T> clazz, RegistryKey<World> key, BlockPos pos) {
+    return getTileEntity(clazz, key, pos, false);
   }
 
   @Nullable
-  public static <T> T getTileEntity(Class<T> clazz, int dimension, BlockPos pos, boolean forceChunkLoad) {
-    MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+  public static <T> T getTileEntity(Class<T> clazz, RegistryKey<World> key, BlockPos pos, boolean forceChunkLoad) {
+    MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
     if (server == null) {
       return null;
     }
 
-    World world = DimensionManager.getWorld(dimension);
+    World world = server.getWorld(key);
 
     if (world == null) {
       return null;
@@ -34,7 +34,7 @@ public class WorldUtil {
 
   @Nullable
   @SuppressWarnings("unchecked")
-  public static <T> T getTileEntity(Class<T> clazz, IBlockAccess world, BlockPos pos, boolean forceChunkLoad) {
+  public static <T> T getTileEntity(Class<T> clazz, IWorld world, BlockPos pos, boolean forceChunkLoad) {
     if (world == null || pos == null) {
       return null;
     }
@@ -59,7 +59,7 @@ public class WorldUtil {
   }
 
   @Nullable
-  public static <T> T getTileEntity(Class<T> clazz, IBlockAccess world, BlockPos pos) {
+  public static <T> T getTileEntity(Class<T> clazz, IWorld world, BlockPos pos) {
     return getTileEntity(clazz, world, pos, false);
   }
 

@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items;
+/*package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.RadiantChestBlock;
@@ -30,11 +30,14 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.*;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.LeftClickBlock;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.Mod;
@@ -56,7 +59,7 @@ public class DebugOrbItem extends ItemTemplate {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.debugorb"));
 		tooltip.add(TextFormatting.RED + I18n.format("arcanearchives.tooltip.creativeonly"));
@@ -294,4 +297,4 @@ public class DebugOrbItem extends ItemTemplate {
 			}
 		}
 	}
-}
+}*/

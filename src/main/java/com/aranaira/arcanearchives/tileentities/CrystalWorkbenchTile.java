@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tileentities;
+/*package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.api.cwb.CrystalWorkbenchRecipe;
 import com.aranaira.arcanearchives.data.DataHelper;
@@ -80,8 +80,8 @@ public class CrystalWorkbenchTile extends NetworkedBaseTile {
 
     // TODO: Sent packet
 
-/*    PacketGemCutters.ChangeRecipe packet = new PacketGemCutters.ChangeRecipe(loc, getPos(), world.provider.getDimension());
-    Networking.CHANNEL.sendToServer(packet);*/
+*//*    PacketGemCutters.ChangeRecipe packet = new PacketGemCutters.ChangeRecipe(loc, getPos(), world.provider.getDimension());
+    Networking.CHANNEL.sendToServer(packet);*//*
   }
 
   @Override
@@ -197,4 +197,4 @@ public class CrystalWorkbenchTile extends NetworkedBaseTile {
       DataHelper.NetworkReference.addNetwork(this.networkId);
     }
   }
-}
+}*/

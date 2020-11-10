@@ -9,8 +9,8 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-public abstract class CrystalWorkbenchRecipe extends IForgeRegistryEntry.Impl<CrystalWorkbenchRecipe> implements ICrystalWorkbenchRecipe {
+// TODO: Replace
+public abstract class CrystalWorkbenchRecipe /*extends IForgeRegistryEntry.Impl<CrystalWorkbenchRecipe>*/ implements ICrystalWorkbenchRecipe {
   protected List<IngredientStack> inputs;
   protected List<IngredientTransformer> transformers = new ArrayList<>();
   protected ItemStack output;

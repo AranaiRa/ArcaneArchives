@@ -8,7 +8,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.Nullable;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber(modid = ArcaneArchives.MODID)
 public class ManifestTracking {
-  private static Int2ObjectOpenHashMap<Set<Vec3d>> positionsByDimension = new Int2ObjectOpenHashMap<>();
+  private static Int2ObjectOpenHashMap<Set<Vector3d>> positionsByDimension = new Int2ObjectOpenHashMap<>();
   private static Int2ObjectOpenHashMap<Long2ObjectOpenHashMap<List<ItemStack>>> reference = new Int2ObjectOpenHashMap<>();
   private static Set<ItemStack> allTracked = new HashSet<>();
 
@@ -70,11 +70,11 @@ public class ManifestTracking {
     return reference.computeIfAbsent(dimension, k -> new Long2ObjectOpenHashMap<>());
   }
 
-  private static Set<Vec3d> getDimensionPositions(int dimension) {
+  private static Set<Vector3d> getDimensionPositions(int dimension) {
     if (positionsByDimension == null) {
       positionsByDimension = new Int2ObjectOpenHashMap<>();
       for (Entry<Long2ObjectOpenHashMap<List<ItemStack>>> entry : reference.int2ObjectEntrySet()) {
-        Set<Vec3d> positions = entry.getValue().entrySet().stream().filter(t -> !t.getValue().isEmpty()).map(b -> MathUtils.vec3dFromLong(b.getKey())).collect(Collectors.toSet());
+        Set<Vector3d> positions = entry.getValue().entrySet().stream().filter(t -> !t.getValue().isEmpty()).map(b -> MathUtils.vec3dFromLong(b.getKey())).collect(Collectors.toSet());
         positionsByDimension.put(entry.getIntKey(), positions);
       }
     }
@@ -130,7 +130,7 @@ public class ManifestTracking {
     return false;
   }
 
-  public static Set<Vec3d> getPositions(int dimension) {
+  public static Set<Vector3d> getPositions(int dimension) {
     return getDimensionPositions(dimension);
   }
 }

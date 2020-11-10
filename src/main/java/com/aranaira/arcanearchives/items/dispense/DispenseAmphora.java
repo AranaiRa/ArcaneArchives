@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items.dispense;
+/*package com.aranaira.arcanearchives.items.dispense;
 
 import com.aranaira.arcanearchives.items.RadiantAmphoraItem.AmphoraUtil;
 import com.aranaira.arcanearchives.items.RadiantAmphoraItem.TankMode;
@@ -90,4 +90,4 @@ public class DispenseAmphora implements IDispenseItemBehavior {
   private int getWorldEventDataFrom(Direction facingIn) {
     return facingIn.getXOffset() + 1 + (facingIn.getZOffset() + 1) * 3;
   }
-}
+}*/

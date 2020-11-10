@@ -28,7 +28,7 @@ public class NBTUtils {
       return defaultInt;
     }
 
-    CompoundNBT tag = stack.getTagCompound();
+    CompoundNBT tag = stack.getTag();
     if (!tag.hasKey(key)) {
       return defaultInt;
     }

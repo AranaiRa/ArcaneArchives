@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.config;
+/*package com.aranaira.arcanearchives.config;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import net.minecraftforge.common.config.Config;
@@ -23,4 +23,4 @@ public class ServerSideConfig {
   @Config.Comment("Whether or not players should be granted the book for crafting their first Resonator")
   @Config.Name("Book from Radiant Resonator")
   public static boolean BookFromResonator = true;
-}
+}*/

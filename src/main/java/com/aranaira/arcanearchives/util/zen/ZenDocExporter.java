@@ -2,7 +2,6 @@ package com.aranaira.arcanearchives.util.zen;
 
 import com.aranaira.arcanearchives.util.StringHelper;
 import org.apache.commons.lang3.StringUtils;
-import stanhebben.zenscript.annotations.Optional;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -175,9 +174,9 @@ public class ZenDocExporter {
 
       for (Annotation parameterAnnotation : parameterAnnotations[k]) {
 
-        if (parameterAnnotation instanceof Optional) {
-          optional = true;
-        }
+//        if (parameterAnnotation instanceof Optional) {
+//          optional = true;
+//        }
 
         if (parameterAnnotation instanceof ZenDocNullable) {
           nullable = true;

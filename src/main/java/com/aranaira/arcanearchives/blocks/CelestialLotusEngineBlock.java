@@ -26,7 +26,7 @@ public class CelestialLotusEngineBlock extends TemplateBlock {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.device.celestial_lotus_engine"));
 	}

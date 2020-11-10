@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.client.gui;
+/*package com.aranaira.arcanearchives.client.gui;
 
 import com.aranaira.arcanearchives.client.gui.controls.InvisibleButton;
 import com.aranaira.arcanearchives.client.gui.controls.RightClickTextField;
@@ -226,4 +226,4 @@ public class GUIBrazier extends ContainerScreen implements GuiPageButtonList.Gui
 			}
 		}
 	}
-}
+}*/

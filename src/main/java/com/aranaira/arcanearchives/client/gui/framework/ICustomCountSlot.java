@@ -1,7 +1,6 @@
 package com.aranaira.arcanearchives.client.gui.framework;
 
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 
 public interface ICustomCountSlot {
@@ -34,7 +33,9 @@ public interface ICustomCountSlot {
       }
     }
 
-    GlStateManager.disableLighting();
+    // TODO: FIX THIS
+
+/*    GlStateManager.disableLighting();
     GlStateManager.disableDepth();
     GlStateManager.disableBlend();
     GlStateManager.pushMatrix();
@@ -44,6 +45,6 @@ public interface ICustomCountSlot {
     GlStateManager.popMatrix();
     GlStateManager.enableLighting();
     GlStateManager.enableDepth();
-    GlStateManager.enableBlend();
+    GlStateManager.enableBlend();*/
   }
 }

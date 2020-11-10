@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.util;
 
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 
 import java.text.DecimalFormat;
 import java.util.Random;
@@ -51,14 +51,14 @@ public class MathUtils {
     return ((a + (b - 1)) / b);
   }
 
-  public static Vec3d vec3dFromLong(long serialized) {
+  public static Vector3d vec3dFromLong(long serialized) {
     int i = (int) (serialized << 64 - X_SHIFT - NUM_X_BITS >> 64 - NUM_X_BITS);
     int j = (int) (serialized << 64 - Y_SHIFT - NUM_Y_BITS >> 64 - NUM_Y_BITS);
     int k = (int) (serialized << 64 - NUM_Z_BITS >> 64 - NUM_Z_BITS);
-    return new Vec3d(i, j, k);
+    return new Vector3d(i, j, k);
   }
 
-  public static long vec3dToLong(Vec3d pos) {
+  public static long vec3dToLong(Vector3d pos) {
     return ((long) pos.x & X_MASK) << X_SHIFT | ((long) pos.y & Y_MASK) << Y_SHIFT | ((long) pos.z & Z_MASK);
   }
 }

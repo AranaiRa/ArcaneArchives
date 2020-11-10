@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.client.gui.controls;
+/*package com.aranaira.arcanearchives.client.gui.controls;
 
 import com.aranaira.arcanearchives.client.gui.framework.IScrollabe;
 import com.aranaira.arcanearchives.client.gui.framework.IScrollableContainer;
@@ -12,23 +12,23 @@ import java.util.List;
 public class ScrollBar extends InvisibleButton implements IScrollableContainer {
   private class ScrollBarNub extends TexturedButton implements IScrollabe {
 
-    /**
+    *//**
      * Create a {@link Button} with a texture from {@link TexturedButton#BUTTON_TEXTURES}
      *
      * @param buttonId  id for this {@link Button}
      * @param textureId index (zero based) of texture in {@link TexturedButton#BUTTON_TEXTURES}
      * @param x         x position on screen to draw this button
      * @param y         y position on screen to draw this button
-     */
+     *//*
     public ScrollBarNub(int buttonId, int textureId, int x, int y) {
       super(buttonId, textureId, x, y);
 
       this.isBeingDragged = false;
     }
 
-    /**
+    *//**
      * true iff this button is currently being dragged
-     */
+     *//*
     private boolean isBeingDragged;
 
     @Override
@@ -36,12 +36,12 @@ public class ScrollBar extends InvisibleButton implements IScrollableContainer {
       y = ScrollBar.this.y + yOffset;
     }
 
-    /**
+    *//**
      * Computer scrollPercent based on arbitrary y position from mouse
      *
      * @param mouseY
      * @return percent from top that mouseY is
-     */
+     *//*
     private float getScrollPercent(int mouseY) {
       return (mouseY - (this.height / 2) - ScrollBar.this.y) / (float) ScrollBar.this.getMaxYOffset();
     }
@@ -75,15 +75,15 @@ public class ScrollBar extends InvisibleButton implements IScrollableContainer {
     }
   }
 
-  /**
+  *//**
    * The nubbin in the scroll bar
-   */
+   *//*
   public ScrollBarNub mNub;
 
-  /**
+  *//**
    * no matter the number of steps, this is the max top offset for the nub, aka when it's at the bottom of the
    * scroll bar
-   */
+   *//*
   private int maxNubTopOffset;
 
   private ScrollEventManager scrollEventManager;
@@ -130,4 +130,4 @@ public class ScrollBar extends InvisibleButton implements IScrollableContainer {
 
     return interacted;
   }
-}
+}*/

@@ -1,13 +1,12 @@
 package com.aranaira.arcanearchives.data;
 
-import com.aranaira.arcanearchives.network.PacketNetwork;
 import com.aranaira.arcanearchives.tilenetwork.Network;
 import com.aranaira.arcanearchives.tilenetwork.NetworkName;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.world.ServerWorld;
+import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.WorldSavedData;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
 import java.util.Objects;
 import java.util.Set;
@@ -16,23 +15,23 @@ import java.util.function.Function;
 
 public class DataHelper {
   public static ServerWorld getWorld() {
-    return FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(0);
+    return ServerLifecycleHooks.getCurrentServer().getWorld(World.OVERWORLD);
   }
 
   private static void save() {
     ServerWorld world = getWorld();
-    Objects.requireNonNull(world.getMapStorage()).saveAllData();
+    Objects.requireNonNull(world.getSavedData()).save();
   }
 
   private static PlayerSaveData getPlayerData(PlayerEntity player) {
     return getData(PlayerSaveData.class, PlayerSaveData::new, player, PlayerSaveData::ID);
   }
 
-  private static ServerNetworkData getServerNetworkData (Network network) {
+  private static ServerNetworkData getServerNetworkData(Network network) {
     return getData(ServerNetworkData.class, ServerNetworkData::new, network, ServerNetworkData::ID);
   }
 
-  private static ServerNetworkData getServerNetworkData (UUID network) {
+  private static ServerNetworkData getServerNetworkData(UUID network) {
     return getData(ServerNetworkData.class, ServerNetworkData::new, network, ServerNetworkData::ID);
   }
 
@@ -45,18 +44,21 @@ public class DataHelper {
   }
 
   private static <T extends WorldSavedData, U> T getData(Class<T> clazz, Function<U, T> provider, U value, Function<U, String> conversion) {
-    ServerWorld world = getWorld();
-    @SuppressWarnings("unchecked") T saveData = (T) Objects.requireNonNull(world.getMapStorage()).getOrLoadData(clazz, conversion.apply(value));
+    // TODO: Fix this
+    return null;
+/*    ServerWorld world = getWorld();
+    @SuppressWarnings("unchecked") T saveData = (T) Objects.requireNonNull(world.getSavedData()).getOrCreate(() -> provider.apply(value), clazz);
+, conversion.apply(value));
     if (saveData == null) {
       saveData = provider.apply(value);
       world.getMapStorage().setData(conversion.apply(value), saveData);
     }
 
-    return saveData;
+    return saveData;*/
   }
 
   public static class Names {
-    public static void generate () {
+    public static void generate() {
       getNameData().generateNames();
       save();
     }
@@ -71,7 +73,7 @@ public class DataHelper {
   }
 
   public static class NetworkReference {
-    public static Set<UUID> getAllNetworks () {
+    public static Set<UUID> getAllNetworks() {
       return getNetworkReferenceData().getAllNetworks();
     }
 
@@ -88,7 +90,7 @@ public class DataHelper {
       save();
     }
 
-    public static void addNetwork (UUID uuid) {
+    public static void addNetwork(UUID uuid) {
       addNetwork(uuid, true);
     }
 
@@ -96,7 +98,7 @@ public class DataHelper {
       getNetworkReferenceData().addNetwork(uuid);
       save();
       if (notify) {
-        PacketNetwork.NameMessage.sendToAll();
+        /*        PacketNetwork.NameMessage.sendToAll();*/
       }
     }
   }

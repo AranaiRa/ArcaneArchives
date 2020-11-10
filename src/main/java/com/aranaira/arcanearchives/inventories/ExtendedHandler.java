@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.inventories;
+/*package com.aranaira.arcanearchives.inventories;
 
 import com.aranaira.arcanearchives.config.ServerSideConfig;
 import net.minecraft.item.ItemStack;
@@ -149,4 +149,4 @@ public class ExtendedHandler extends ItemStackHandler {
     return MathHelper.floor(f * 14F) + (numStacks > 0 ? 1 : 0);
   }
 
-}
+}*/

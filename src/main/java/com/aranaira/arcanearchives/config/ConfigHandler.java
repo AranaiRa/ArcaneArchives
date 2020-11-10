@@ -1,6 +1,8 @@
-package com.aranaira.arcanearchives.config;
+/*package com.aranaira.arcanearchives.config;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.network.Networking;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.Config.RequiresMcRestart;
 import net.minecraftforge.common.config.ConfigManager;
@@ -23,9 +25,9 @@ public class ConfigHandler {
   }
 
   @SubscribeEvent(priority = EventPriority.LOWEST)
-  @SideOnly(Side.CLIENT)
+  @OnlyIn(Dist.CLIENT)
   public static void onClientConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
-/*		if (event.getModID().equals(ArcaneArchives.MODID)) {
+		if (event.getModID().equals(ArcaneArchives.MODID)) {
 			MaxDistance packet = new MaxDistance(com.aranaira.arcanearchives.config.ManifestConfig.MaxDistance);
 			Networking.CHANNEL.sendToServer(packet);
 
@@ -35,11 +37,11 @@ public class ConfigHandler {
 			TrovesDispense packet3 = new TrovesDispense(trovesDispense);
 			Networking.CHANNEL.sendToServer(packet3);
 
-			Minecraft minecraft = Minecraft.getMinecraft();
+			Minecraft minecraft = Minecraft.getInstance();
 			if (minecraft.currentScreen instanceof GUIManifest) {
 				((GUIManifest) minecraft.currentScreen).doRefresh();
 			}
-		}*/
+		}
   }
 
   @Config.Comment("Disable to use default Minecraft-style GUI elements. (Client Only)")
@@ -100,4 +102,4 @@ public class ConfigHandler {
     @Config.Name("Use Sounds")
     public boolean useSounds = true;
   }
-}
+}*/

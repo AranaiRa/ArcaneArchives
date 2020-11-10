@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tileentities;
+/*package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.reference.Tags;
 import net.minecraft.nbt.CompoundNBT;
@@ -37,4 +37,4 @@ public class StoredIdTile extends TileEntity {
     }
     return super.writeToNBT(compound);
   }
-}
+}*/

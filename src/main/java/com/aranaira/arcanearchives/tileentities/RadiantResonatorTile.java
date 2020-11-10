@@ -144,7 +144,7 @@ public class RadiantResonatorTile extends NetworkedBaseTile implements ITickable
     return ConfigHandler.soundConfig.resonatorVolume;
   }
 
-  @SideOnly(Side.CLIENT)
+  @OnlyIn(Dist.CLIENT)
   private MachineSound sound;
 
   @Nullable

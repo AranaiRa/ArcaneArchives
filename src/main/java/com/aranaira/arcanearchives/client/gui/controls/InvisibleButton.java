@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.client.gui.controls;
+/*package com.aranaira.arcanearchives.client.gui.controls;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -11,19 +11,19 @@ import java.awt.*;
 
 public class InvisibleButton extends Button {
 
-  /**
+  *//**
    * Draw shaded box where this invisible button is to aid in debugging placement
-   */
+   *//*
   public static boolean DEBUG_LOCATION = false;
 
   public InvisibleButton(int buttonId, int x, int y, int widthIn, int heightIn, @Nonnull String buttonText) {
     super(buttonId, x, y, widthIn, heightIn, buttonText);
   }
 
-  /**
+  *//**
    * Draws this button text (if set) to the screen. Mostly a copy paste
    * of {@link Button#drawButton(Minecraft, int, int, float)}
-   */
+   *//*
   @Override
   public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
     if (this.visible) {
@@ -65,4 +65,4 @@ public class InvisibleButton extends Button {
       }
     }
   }
-}
+}*/

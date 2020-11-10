@@ -2,9 +2,9 @@ package com.aranaira.arcanearchives.util.ticker;
 
 import com.aranaira.arcanearchives.tileentities.NetworkedBaseTile;
 import net.minecraft.server.MinecraftServer;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.fml.LogicalSide;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -24,7 +24,7 @@ public class Ticker {
   private static ServerType serverType = ServerType.UNKNOWN;
 
   public static void tick(TickEvent event) {
-    if (event.side == Side.CLIENT && event.phase == TickEvent.Phase.END && event.type == TickEvent.Type.CLIENT) {
+    if (event.side == LogicalSide.CLIENT && event.phase == TickEvent.Phase.END && event.type == TickEvent.Type.CLIENT) {
       if (serverType == ServerType.DEDICATED || serverType == ServerType.UNKNOWN) {
         synchronized (listLock) {
           listTicking = true;
@@ -32,14 +32,15 @@ public class Ticker {
           listTicking = false;
         }
       }
-    } else if (event.side == Side.SERVER && event.phase == TickEvent.Phase.END && event.type == TickEvent.Type.SERVER) {
-      if (serverType == ServerType.UNKNOWN) {
-        if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+    } else if (event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.END && event.type == TickEvent.Type.SERVER) {
+      // TODO: Check how Lootr did this
+/*      if (serverType == ServerType.UNKNOWN) {
+        if (FMLCommonHandler.instance().getSide() == LogicalSide.CLIENT) {
           serverType = ServerType.INTEGRATED;
         } else {
           serverType = ServerType.DEDICATED;
         }
-      }
+      }*/
 
       Set<ITicker<MinecraftServer, NetworkedBaseTile>> listCopy;
       Set<ITicker<MinecraftServer, NetworkedBaseTile>> removed = new HashSet<>();
@@ -49,7 +50,7 @@ public class Ticker {
         listTicking = false;
       }
 
-      MinecraftServer type = FMLCommonHandler.instance().getMinecraftServerInstance();
+      MinecraftServer type = ServerLifecycleHooks.getCurrentServer();
 
       synchronized (writeLock) {
         for (ITicker<MinecraftServer, NetworkedBaseTile> ticker : listCopy) {

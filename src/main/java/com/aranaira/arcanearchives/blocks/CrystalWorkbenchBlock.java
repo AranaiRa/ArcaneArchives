@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.blocks;
+/*package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
@@ -25,12 +25,12 @@ public class CrystalWorkbenchBlock extends HorizontalSingleAccessorTemplateBlock
 
   @Override
   public void breakBlock(World world, BlockPos pos, BlockState state) {
-    if (state.getValue(ACCESSOR)) {
+    if (state.get(ACCESSOR)) {
       super.breakBlock(world, pos, state);
       return;
     }
 
-    /*		LineHandler.removeLine(pos, world.provider.getDimension());*/
+    *//*		LineHandler.removeLine(pos, world.provider.getDimension());*//*
 
     TileEntity te = world.getTileEntity(pos);
     if (te instanceof CrystalWorkbenchTile) {
@@ -66,7 +66,7 @@ public class CrystalWorkbenchBlock extends HorizontalSingleAccessorTemplateBlock
 
   @Override
   public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity playerIn, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
-    if (state.getBlock() == this && state.getValue(ACCESSOR)) {
+    if (state.getBlock() == this && state.get(ACCESSOR)) {
       BlockPos origin = findBody(state, world, new BlockPos(hitX, hitY, hitZ));
       if (!origin.equals(pos)) {
         BlockState originState = world.getBlockState(origin);
@@ -76,7 +76,7 @@ public class CrystalWorkbenchBlock extends HorizontalSingleAccessorTemplateBlock
       }
     }
 
-    /*		LineHandler.removeLine(pos, playerIn.dimension);*/
+    *//*		LineHandler.removeLine(pos, playerIn.dimension);*//*
 
     if (world.isRemote) {
       return true;
@@ -89,13 +89,13 @@ public class CrystalWorkbenchBlock extends HorizontalSingleAccessorTemplateBlock
 
   @Override
   public boolean hasTileEntity(BlockState state) {
-    return !state.getValue(ACCESSOR);
+    return !state.get(ACCESSOR);
   }
 
   @Override
   @Nullable
   public TileEntity createTileEntity(World world, BlockState state) {
-    if (state.getValue(ACCESSOR)) {
+    if (state.get(ACCESSOR)) {
       return null;
     }
 
@@ -112,4 +112,4 @@ public class CrystalWorkbenchBlock extends HorizontalSingleAccessorTemplateBlock
     return Rotation.CLOCKWISE_90;
   }
   // TODO: Handle tile network ID transfer to itemblock upon destruction/breaking
-}
+}*/

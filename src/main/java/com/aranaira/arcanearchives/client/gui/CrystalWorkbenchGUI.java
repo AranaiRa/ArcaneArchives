@@ -1,3 +1,4 @@
+/*
 package com.aranaira.arcanearchives.client.gui;
 
 import com.aranaira.arcanearchives.api.crafting.IngredientStack;
@@ -119,9 +120,11 @@ public class CrystalWorkbenchGUI extends AbstractGuiContainerTracking {
 
     ItemStack stack = slot.getStack();
     if (!stack.isEmpty()) {
+*/
 /*			if (((tracked != null && !tracked.isEmpty() && ManifestTrackingUtils.matches(stack, tracked)) && !recipeSlot) || (recipeSlot && ManifestTrackingUtils.matches(stack) && (recipeStatus.getBoolean(recipe) && recipe.craftable(player, tile)))) {
 				glowSlot(slot);
-			}*/
+			}*//*
+
     }
 
     super.drawSlot(slot);
@@ -232,4 +235,5 @@ public class CrystalWorkbenchGUI extends AbstractGuiContainerTracking {
     super.actionPerformed(button);
   }
 }
+*/
 

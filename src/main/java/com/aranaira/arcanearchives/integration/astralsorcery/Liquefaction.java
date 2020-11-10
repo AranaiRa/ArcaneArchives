@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.integration.astralsorcery;
+/*package com.aranaira.arcanearchives.integration.astralsorcery;
 
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import hellfirepvp.astralsorcery.common.base.WellLiquefaction;
@@ -15,4 +15,4 @@ public class Liquefaction {
 		WellLiquefaction.registerLiquefaction(new ItemStack(ItemRegistry.RIVERTEAR), FluidRegistry.WATER, 16384.0f, 2000000, new Color(0x37, 0x75, 0xC7));
 		WellLiquefaction.registerLiquefaction(new ItemStack(ItemRegistry.MOUNTAINTEAR), FluidRegistry.LAVA, 2.0f, 2000000, new Color(0xE7, 0xC5, 0x44));
 	}
-}
+}*/

@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.containers;
+/*package com.aranaira.arcanearchives.containers;
 
 import com.aranaira.arcanearchives.client.gui.framework.CustomCountSlot;
 import com.aranaira.arcanearchives.client.gui.framework.IScrollabe;
@@ -16,6 +16,7 @@ import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.IItemHandler;
@@ -56,7 +57,7 @@ public class ManifestContainer extends Container implements IScrollableContainer
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public boolean isEnabled() {
       if (getStack().isEmpty()) {
         return false;
@@ -79,7 +80,7 @@ public class ManifestContainer extends Container implements IScrollableContainer
     this.scrollEventManager = null;
     this.manifestItemSlots = new ArrayList<>();
 
-/*    if (ServerSide) {
+*//*    if (ServerSide) {
       serverNetwork = NetworkHelper.getServerNetwork(playerIn.getUniqueID(), playerIn.world);
       if (serverNetwork == null) {
         handler = new ManifestItemHandler(new ManifestList());
@@ -89,7 +90,7 @@ public class ManifestContainer extends Container implements IScrollableContainer
     } else {
       clientNetwork = DataHelper.getClientNetwork(this.player.getUniqueID());
       handler = clientNetwork.getManifestHandler();
-    }*/
+    }*//*
   }
 
   public void setScrollEventManager(ScrollEventManager scrollEventManager) {
@@ -166,18 +167,18 @@ public class ManifestContainer extends Container implements IScrollableContainer
       return ItemStack.EMPTY;
     }
 
-    //List<Vec3d> visPositions = entry.getVecPositions();
+    //List<Vector3d> visPositions = entry.getVecPositions();
     //visPositions.forEach(k -> LineHandler.addLine(k, player.dimension));
 
     // TODO: Handle tracking
-/*    if (dragType == 0) {
+*//*    if (dragType == 0) {
       ManifestTrackingUtils.add(entry);
     } else if (dragType == 1) {
       ManifestTrackingUtils.remove(entry);
-    }*/
+    }*//*
 
     if ((ManifestConfig.holdShift && !Screen.isShiftKeyDown() && dragType == 0) || (!ManifestConfig.holdShift && Screen.isShiftKeyDown() && dragType == 0)) {
-      Minecraft mc = Minecraft.getMinecraft();
+      Minecraft mc = Minecraft.getInstance();
       mc.player.closeScreen();
     }
 
@@ -237,4 +238,4 @@ public class ManifestContainer extends Container implements IScrollableContainer
       return null;
     }
   }
-}
+}*/

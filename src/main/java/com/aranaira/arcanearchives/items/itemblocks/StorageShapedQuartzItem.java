@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items.itemblocks;
+/*package com.aranaira.arcanearchives.items.itemblocks;
 
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import com.aranaira.arcanearchives.items.IUpgradeItem;
@@ -8,6 +8,8 @@ import com.aranaira.arcanearchives.types.UpgradeType;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -22,7 +24,7 @@ public class StorageShapedQuartzItem extends ItemBlockTemplate implements IUpgra
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
@@ -48,4 +50,4 @@ public class StorageShapedQuartzItem extends ItemBlockTemplate implements IUpgra
 	public List<Class<?>> upgradeFor () {
 		return UPGRADE_FOR;
 	}
-}
+}*/

@@ -1,7 +1,5 @@
 package com.aranaira.arcanearchives.client.gui.framework;
 
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -23,18 +21,18 @@ public class CustomCountSlot extends SlotItemHandler implements ICustomCountSlot
     return stack;
   }
 
-	@Override
-	public int getX() {
-		return xPos;
-	}
+  @Override
+  public int getX() {
+    return xPos;
+  }
 
-	@Override
-	public int getY() {
-		return yPos;
-	}
+  @Override
+  public int getY() {
+    return yPos;
+  }
 
-	@Override
-	public ItemStack getItemStack() {
-		return super.getStack();
-	}
+  @Override
+  public ItemStack getItemStack() {
+    return super.getStack();
+  }
 }

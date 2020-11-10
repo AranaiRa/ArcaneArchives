@@ -1,10 +1,10 @@
 package com.aranaira.arcanearchives.data.storage;
 
-import com.aranaira.arcanearchives.tilenetwork.NetworkName;
 import com.aranaira.arcanearchives.data.client.ClientNameData;
+import com.aranaira.arcanearchives.tilenetwork.NetworkName;
 import net.minecraft.client.resources.I18n;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
@@ -22,18 +22,18 @@ public class ClientDataStorage {
   }
 
   @Nullable
-  public static NetworkName getNameFor (UUID uuid) {
+  public static NetworkName getNameFor(UUID uuid) {
     if (nameData == null) {
       return null;
     }
     return nameData.getNameFor(uuid);
   }
 
-  @SideOnly(Side.CLIENT)
+  @OnlyIn(Dist.CLIENT)
   public static String invalidName = null;
 
-  @SideOnly(Side.CLIENT)
-  public static String getStringFor (UUID uuid) {
+  @OnlyIn(Dist.CLIENT)
+  public static String getStringFor(UUID uuid) {
     NetworkName name = getNameFor(uuid);
     if (name == null) {
       if (invalidName == null) {

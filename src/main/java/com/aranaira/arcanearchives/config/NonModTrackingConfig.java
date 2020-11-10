@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.config;
+/*package com.aranaira.arcanearchives.config;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -42,4 +42,4 @@ public class NonModTrackingConfig {
 
   @Config.LangKey("arcanearchives.config.non_mod_tracking.disable")
   public static boolean DisableMixinHighlight = false;
-}
+}*/

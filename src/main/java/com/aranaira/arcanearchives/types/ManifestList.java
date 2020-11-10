@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.types;
+/*package com.aranaira.arcanearchives.types;
 
 import com.aranaira.arcanearchives.containers.ManifestContainer;
 import com.aranaira.arcanearchives.manifest.ManifestEntry;
@@ -7,6 +7,7 @@ import com.google.common.collect.ForwardingList;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.ModContainer;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 
@@ -45,10 +46,10 @@ public class ManifestList extends ForwardingList<ManifestEntry> {
     this.filterText = filterText;
   }
 
-/*  public static ManifestList deserialize(ByteBuf buf) {
+*//*  public static ManifestList deserialize(ByteBuf buf) {
     ManifestList list = new ManifestList();
     return list.fromBytes(buf);
-  }*/
+  }*//*
 
   private static Map<String, ModContainer> getModList() {
     if (modList == null) {
@@ -56,7 +57,7 @@ public class ManifestList extends ForwardingList<ManifestEntry> {
     }
     return modList;
   }
-
+*//*
   @Nullable
   private static String getModName(ItemStack stack) {
     if (!stack.isEmpty()) {
@@ -130,17 +131,17 @@ public class ManifestList extends ForwardingList<ManifestEntry> {
     };
   }
 
-/*  // TODO: MAY OR MAY NOT WORK
+*//**//*  // TODO: MAY OR MAY NOT WORK
   public ManifestListIterable filtered() {
     return new ManifestListIterable(new ManifestIterator(Iterators.filter(super.iterator(), filter())));
-  }*/
- /*    }).collect(Collectors.toCollection(ManifestList::new));
+  }*//**//*
+ *//**//*    }).collect(Collectors.toCollection(ManifestList::new));
     filtered.sortingDirection = sortingDirection;
     filtered.sortingType = sortingType;
     filtered.searchItem = searchItem;
     filtered.filterText = filterText;
     return filtered;
-  }*/
+  }*//**//*
 
   @Override
   @Nonnull
@@ -286,4 +287,4 @@ public class ManifestList extends ForwardingList<ManifestEntry> {
   public enum SortingType {
     NAME, QUANTITY
   }
-}
+}*/

@@ -19,7 +19,7 @@ public class GUIBookContainer extends ContainerScreen {
   private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/requisition_items.png");
   private final int ImageHeight = 256, ImageWidth = 256, ImageScale = 256;
   // TODO: This could cause problems if the class is ever loaded in a server context without the Minecraft class
-  Minecraft mc = Minecraft.getMinecraft();
+  Minecraft mc = Minecraft.getInstance();
   //Buttons to switch interface.
   private GenericButton Tab1;
   private GenericButton Tab2;
@@ -138,7 +138,7 @@ public class GUIBookContainer extends ContainerScreen {
     super.updateScreen();
   }
 
-  @SideOnly(Side.CLIENT)
+  @OnlyIn(Dist.CLIENT)
   static class GenericButton extends Button {
     public GenericButton(int x, int y, int width, int height, String text) {
       super(1, x, y, width, height, text);

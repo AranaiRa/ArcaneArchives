@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives;
+/*package com.aranaira.arcanearchives;
 
 import com.aranaira.arcanearchives.client.gui.CrystalWorkbenchGUI;
 import com.aranaira.arcanearchives.client.gui.ManifestGUI;
@@ -106,4 +106,4 @@ public class AAGuiHandler implements IGuiHandler {
         return null;
     }
   }
-}
+}*/

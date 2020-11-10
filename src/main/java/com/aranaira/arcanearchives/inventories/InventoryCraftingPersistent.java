@@ -1,3 +1,4 @@
+/*
 package com.aranaira.arcanearchives.inventory.handlers;
 
 import com.aranaira.arcanearchives.tileentities.RadiantCraftingTableTileEntity;
@@ -9,4 +10,5 @@ public class InventoryCraftingPersistent extends InventoryCraftingItemHandler<Ra
 		super(eventHandler, parent, tile, width, height);
 	}
 }
+*/
 

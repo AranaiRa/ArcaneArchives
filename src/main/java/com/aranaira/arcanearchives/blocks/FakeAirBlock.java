@@ -55,7 +55,7 @@ public class FakeAirBlock extends TemplateBlock {
 		return false;
 	}
 
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	@Override
 	public BlockRenderLayer getRenderLayer () {
 		return BlockRenderLayer.TRANSLUCENT;

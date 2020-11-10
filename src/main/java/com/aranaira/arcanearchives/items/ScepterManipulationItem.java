@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items;
+/*package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.items.templates.IItemScepter;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
@@ -9,6 +9,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
@@ -28,7 +29,7 @@ public class ScepterManipulationItem extends ItemTemplate implements IItemScepte
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.scepter_manipulation"));
 	}
@@ -52,4 +53,4 @@ public class ScepterManipulationItem extends ItemTemplate implements IItemScepte
 		}
 		return ActionResultType.PASS;
 	}
-}
+}*/

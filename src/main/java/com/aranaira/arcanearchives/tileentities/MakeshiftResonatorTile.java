@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tileentities;
+/*package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.MakeshiftResonatorBlock;
@@ -7,15 +7,15 @@ import com.aranaira.arcanearchives.reference.Tags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.item.ItemStack;
 import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class MakeshiftResonatorTile extends BaseTile implements ITickable {
+public class MakeshiftResonatorTile extends BaseTile implements ITickableTileEntity {
   public static Random rand = new Random();
 
   private int growth = 0;
@@ -33,12 +33,12 @@ public class MakeshiftResonatorTile extends BaseTile implements ITickable {
   }
 
   @Override
-  public void update() {
+  public void tick() {
     if (world == null) {
       return;
     }
     BlockState state = world.getBlockState(pos);
-    if (!state.getValue(MakeshiftResonatorBlock.FILLED)) {
+    if (!state.get(MakeshiftResonatorBlock.FILLED)) {
       return;
     }
     int ticksRequired = 100; // ServerSideConfig.ResonatorTickTime;
@@ -96,9 +96,9 @@ public class MakeshiftResonatorTile extends BaseTile implements ITickable {
     }
   }
 
-/*	public int getPercentageComplete () {
+*//*	public int getPercentageComplete () {
 		return (int) Math.floor(growth / (double) ServerSideConfig.ResonatorTickTime * 100D);
-	}*/
+	}*//*
 
   @Override
   @Nonnull
@@ -123,4 +123,4 @@ public class MakeshiftResonatorTile extends BaseTile implements ITickable {
   public boolean shouldRefresh(World world, BlockPos pos, BlockState oldState, BlockState newSate) {
     return (oldState.getBlock() != newSate.getBlock());
   }
-}
+}*/

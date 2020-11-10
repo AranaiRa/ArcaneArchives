@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.integration.jei.gct;
+/*package com.aranaira.arcanearchives.integration.jei.gct;
 
 import com.aranaira.arcanearchives.api.crafting.IngredientStack;
 import com.aranaira.arcanearchives.recipe.gct.GCTRecipe;
@@ -34,4 +34,4 @@ public class GCTWrapper implements IRecipeWrapper {
 			ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
 		}
 	}
-}
+}*/

@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items;
+/*package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
 import com.aranaira.arcanearchives.items.upgrades.IUpgrade;
@@ -15,12 +15,7 @@ import javax.annotation.Nonnull;
 
 public class DevouringCharmItem extends ItemTemplate implements IUpgrade {
 
-  // TODO: Becomes part of the registration
-/*  @Override
-  @SideOnly(Side.CLIENT)
-  public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-    tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.devouring_charm"));
-  }*/
+
 
   @Override
   public boolean doesSneakBypassUse(ItemStack stack, IBlockAccess world, BlockPos pos, PlayerEntity player) {
@@ -49,8 +44,8 @@ public class DevouringCharmItem extends ItemTemplate implements IUpgrade {
 
   //public static List<Class<?>> UPGRADE_FOR = Arrays.asList(RadiantTankTileEntity.class, RadiantTroveTileEntity.class);
 
-/*  @Override
+*//*  @Override
   public List<Class<?>> upgradeFor() {
     return UPGRADE_FOR;
-  }*/
-}
+  }*//*
+}*/

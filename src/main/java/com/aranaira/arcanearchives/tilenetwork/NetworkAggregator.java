@@ -6,10 +6,10 @@ import com.aranaira.arcanearchives.immanence.ImmanenceGlobal;
 import com.aranaira.arcanearchives.tileentities.NetworkedBaseTile;
 import com.aranaira.arcanearchives.util.ticker.Ticker;
 import com.aranaira.arcanearchives.util.ticker.TileTicker;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
 import java.util.*;
 
@@ -57,7 +57,7 @@ public class NetworkAggregator {
       rebuildBySet(DataHelper.NetworkReference.getAllNetworks());
       loaded = true;
 
-      int tick = FMLCommonHandler.instance().getMinecraftServerInstance().getTickCounter();
+      int tick = ServerLifecycleHooks.getCurrentServer().getTickCounter();
       if (tick % ImmanenceGlobal.immanenceTick == 0) {
         ImmanenceGlobal.tickImmanence(tick / ImmanenceGlobal.immanenceTick);
       }

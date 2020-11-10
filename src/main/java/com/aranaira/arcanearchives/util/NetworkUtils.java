@@ -88,7 +88,7 @@ public class NetworkUtils {
       CompoundNBT nbttagcompound = null;
 
       if (stack.getItem().isDamageable() || stack.getItem().getShareTag()) {
-        nbttagcompound = stack.getTagCompound();
+        nbttagcompound = stack.getTag();
       }
 
       writeNBT(buf, nbttagcompound);
@@ -105,7 +105,7 @@ public class NetworkUtils {
       CompoundNBT nbttagcompound = null;
 
       if (stack.getItem().isDamageable() || stack.getItem().getShareTag()) {
-        nbttagcompound = stack.getTagCompound();
+        nbttagcompound = stack.getTag();
       }
 
       buf.writeCompoundTag(nbttagcompound);

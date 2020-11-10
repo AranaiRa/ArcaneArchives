@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.network;
+/*package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.network.Handlers.BaseHandler;
 import com.aranaira.arcanearchives.network.Handlers.ClientHandler;
@@ -99,4 +99,4 @@ public class Messages {
       super(networkId, tileId);
     }
   }
-}
+}*/

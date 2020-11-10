@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items.itemblocks;
+/*package com.aranaira.arcanearchives.items.itemblocks;
 
 import com.aranaira.arcanearchives.inventory.handlers.OptionalUpgradesHandler;
 import com.aranaira.arcanearchives.inventory.handlers.TroveItemBlockItemHandler;
@@ -14,6 +14,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -33,7 +35,7 @@ public class RadiantTroveItem extends BlockItem {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		CompoundNBT tag = ItemUtils.getOrCreateTagCompound(stack);
 		if (tag.hasKey(RadiantTroveTileEntity.Tags.HANDLER_ITEM)) {
@@ -57,4 +59,4 @@ public class RadiantTroveItem extends BlockItem {
 
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
-}
+}*/

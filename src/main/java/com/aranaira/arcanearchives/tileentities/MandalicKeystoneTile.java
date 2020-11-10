@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tileentities;
+/*package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.init.ModBlocks;
 import com.aranaira.arcanearchives.reference.Tags;
@@ -11,7 +11,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.util.ITickable;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class MandalicKeystoneTile extends NetworkedBaseTile implements ITickable {
+public class MandalicKeystoneTile extends NetworkedBaseTile implements ITickableTileEntity {
   public static Random rand = new Random();
 
   private static Ingredient WOOD = null;
@@ -44,7 +44,7 @@ public class MandalicKeystoneTile extends NetworkedBaseTile implements ITickable
   }
 
   @Override
-  public void update() {
+  public void tick() {
     if (!world.isRemote && world.getTotalWorldTime() % 40 == 0) {
       List<ItemEntity> items = getItems();
       if (!items.isEmpty()) {
@@ -133,4 +133,4 @@ public class MandalicKeystoneTile extends NetworkedBaseTile implements ITickable
   public boolean shouldRefresh(World world, BlockPos pos, BlockState oldState, BlockState newSate) {
     return (oldState.getBlock() != newSate.getBlock());
   }
-}
+}*/

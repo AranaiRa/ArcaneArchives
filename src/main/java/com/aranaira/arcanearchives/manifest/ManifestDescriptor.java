@@ -1,32 +1,33 @@
 package com.aranaira.arcanearchives.manifest;
 
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
 public class ManifestDescriptor extends IndexDescriptor {
-  private final net.minecraft.world.dimension.DimensionType dimension;
+  private final RegistryKey<World> key;
   private final BlockPos position;
   private final double distance;
 
-  public static ManifestDescriptor fromEntry(BlockPos player, IndexEntry entry) {
+  public static ManifestDescriptor fromEntry(RegistryKey<World> key, BlockPos player, IndexEntry entry) {
     IndexDescriptor parent = entry.getDescriptor();
     BlockPos position = entry.getPosition();
     int dimension = entry.getDimension();
-    double distance = player.distanceSq(position.getX(), position.getY(), position.getZ());
-    return new ManifestDescriptor(net.minecraft.world.dimension.DimensionType.getById(dimension), position, distance, parent.getType(), parent.getDescription());
+    double distance = player.distanceSq(position); //.getX(), position.getY(), position.getZ());
+    return new ManifestDescriptor(key, position, distance, parent.getType(), parent.getDescription());
   }
 
-  protected ManifestDescriptor(DimensionType dimension, BlockPos position, double distance, IndexType type, @Nullable String description) {
+  protected ManifestDescriptor(RegistryKey<World> key, BlockPos position, double distance, IndexType type, @Nullable String description) {
     super(type, description);
-    this.dimension = dimension;
+    this.key = key;
     this.position = position;
     this.distance = distance;
   }
 
-  public net.minecraft.world.dimension.DimensionType getDimension() {
-    return dimension;
+  public RegistryKey<World> getDimension() {
+    return key;
   }
 
   public BlockPos getPosition() {

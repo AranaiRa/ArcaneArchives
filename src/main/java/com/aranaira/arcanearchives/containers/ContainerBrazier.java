@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.inventory;
+/*package com.aranaira.arcanearchives.inventory;
 
 import com.aranaira.arcanearchives.tileentities.BrazierTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -25,4 +25,4 @@ public class ContainerBrazier extends Container {
 	public boolean canInteractWith (PlayerEntity playerIn) {
 		return true;
 	}
-}
+}*/

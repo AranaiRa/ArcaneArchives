@@ -71,7 +71,7 @@ public class MonitoringCrystalTile extends TrackingNetworkedBaseTile<MonitoringW
     if (target == null) {
       BlockState state = world.getBlockState(getPos());
       OmniTemplateBlock omni = (OmniTemplateBlock) state.getBlock();
-      target = getPos().offset(state.getValue(omni.getFacingProperty()).getOpposite());
+      target = getPos().offset(state.get(omni.getFacingProperty()).getOpposite());
     }
 
     return target;

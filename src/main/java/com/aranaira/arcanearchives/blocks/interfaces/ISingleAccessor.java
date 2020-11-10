@@ -13,14 +13,14 @@ public interface ISingleAccessor extends IAccessor, IFacingBlock {
 
   default Direction findFacing(BlockState state, World world, BlockPos origin) {
     if (state.getPropertyKeys().contains(getFacingProperty())) {
-      return state.getValue(getFacingProperty());
+      return state.get(getFacingProperty());
     }
 
     return Direction.NORTH;
   }
 
   default BlockPos findAccessor(BlockState state, World world, BlockPos origin) {
-    if (state.getValue(getAccessorProperty())) {
+    if (state.get(getAccessorProperty())) {
       return origin;
     }
 
@@ -30,7 +30,7 @@ public interface ISingleAccessor extends IAccessor, IFacingBlock {
   }
 
   default BlockPos findBody(BlockState state, World world, BlockPos origin) {
-    if (!state.getValue(getAccessorProperty())) {
+    if (!state.get(getAccessorProperty())) {
       return origin;
     }
 
@@ -40,14 +40,14 @@ public interface ISingleAccessor extends IAccessor, IFacingBlock {
   }
 
   default boolean createAccessor(BlockState state, World world, BlockPos origin) {
-    if (state.getValue(getAccessorProperty())) {
+    if (state.get(getAccessorProperty())) {
       return true;
     }
 
     BlockPos accessor = findAccessor(state, world, origin);
     BlockState accessorState = world.getBlockState(accessor);
     if (world.isAirBlock(accessor) || accessorState.getBlock().isReplaceable(world, accessor)) {
-      world.setBlockState(accessor, state.withProperty(getAccessorProperty(), true), 3);
+      world.setBlockState(accessor, state.with(getAccessorProperty(), true), 3);
       return true;
     } else {
       return false;

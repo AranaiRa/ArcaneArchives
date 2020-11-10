@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.blocks;
+/*package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.OmniTemplateBlock;
 import com.aranaira.arcanearchives.tileentities.MonitoringCrystalTile;
@@ -31,7 +31,7 @@ public class MonitoringCrystalBlock extends OmniTemplateBlock {
   @Override
   @Nonnull
   public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos) {
-    Direction facing = state.getValue(getFacingProperty());
+    Direction facing = state.get(getFacingProperty());
     if (facing == Direction.UP) {
       return new AxisAlignedBB(0.37, -0.1, 0.35, 0.61, 0.04, 0.64);
     } else if (facing == Direction.DOWN) {
@@ -75,6 +75,6 @@ public class MonitoringCrystalBlock extends OmniTemplateBlock {
 
   @Override
   public BlockState getStateForPlacement(World world, BlockPos pos, Direction facing, float hitX, float hitY, float hitZ, int meta, LivingEntity placer, Hand hand) {
-    return this.getDefaultState().withProperty(getFacingProperty(), facing);
+    return this.getDefaultState().with(getFacingProperty(), facing);
   }
-}
+}*/

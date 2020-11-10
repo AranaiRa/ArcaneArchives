@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.inventory;
+/*package com.aranaira.arcanearchives.inventory;
 
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.inventory.handlers.DevouringCharmHandler;
@@ -250,4 +250,4 @@ public class ContainerDevouringCharm extends Container {
 			return 1;
 		}
 	}
-}
+}*/

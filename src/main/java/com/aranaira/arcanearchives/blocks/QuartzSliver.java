@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.blocks;
+/*package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.HorizontalTemplateBlock;
 import net.minecraft.block.material.Material;
@@ -16,6 +16,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -32,7 +33,7 @@ public class QuartzSliver extends HorizontalTemplateBlock {
     setLightLevel(16 / 16f);
     setHardness(0.0f);
     setTickRandomly(true);
-    setDefaultState(this.getDefaultState().withProperty(getFacingProperty(), Direction.DOWN));
+    setDefaultState(this.getDefaultState().with(getFacingProperty(), Direction.DOWN));
   }
 
   @Override
@@ -46,7 +47,7 @@ public class QuartzSliver extends HorizontalTemplateBlock {
   }
 
   @Override
-  @SideOnly(Side.CLIENT)
+  @OnlyIn(Dist.CLIENT)
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
     tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.quartz_sliver"));
   }
@@ -54,13 +55,13 @@ public class QuartzSliver extends HorizontalTemplateBlock {
   @Override
   @SuppressWarnings("deprecation")
   public BlockState withRotation(BlockState state, Rotation rot) {
-    return state.withProperty(getFacingProperty(), rot.rotate(state.getValue(getFacingProperty())));
+    return state.with(getFacingProperty(), rot.rotate(state.get(getFacingProperty())));
   }
 
   @Override
   @SuppressWarnings("deprecation")
   public BlockState withMirror(BlockState state, Mirror mirrorIn) {
-    return state.withProperty(getFacingProperty(), mirrorIn.mirror(state.getValue(getFacingProperty())));
+    return state.with(getFacingProperty(), mirrorIn.mirror(state.get(getFacingProperty())));
   }
 
   @Override
@@ -72,7 +73,7 @@ public class QuartzSliver extends HorizontalTemplateBlock {
 	@Override
 	public void onNeighborChange (IBlockAccess world, BlockPos pos, BlockPos neighbor) {
 		BlockState state = world.getBlockState(pos);
-		Direction facing = state.getValue(getFacingProperty()).getOpposite();
+		Direction facing = state.get(getFacingProperty()).getOpposite();
 		if (pos.offset(facing).equals(neighbor) && (world.isAirBlock(neighbor))) {
 			((World) world).setBlockToAir(pos);
 			this.dropBlockAsItem((World) world, pos, state, 0);
@@ -83,7 +84,7 @@ public class QuartzSliver extends HorizontalTemplateBlock {
   @Nonnull
   @SuppressWarnings("deprecation")
   public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos) {
-    Direction facing = state.getValue(getFacingProperty());
+    Direction facing = state.get(getFacingProperty());
     if (facing == Direction.UP) {
       return new AxisAlignedBB(0.4, 0.0, 0.4, 0.6, 0.5, 0.6);
     } else if (facing == Direction.DOWN) {
@@ -120,21 +121,21 @@ public class QuartzSliver extends HorizontalTemplateBlock {
 
   @Override
   public BlockState getStateForPlacement(World world, BlockPos pos, Direction facing, float hitX, float hitY, float hitZ, int meta, LivingEntity placer, Hand hand) {
-    return this.getDefaultState().withProperty(getFacingProperty(), facing);
+    return this.getDefaultState().with(getFacingProperty(), facing);
   }
 
   @Override
   public int getMetaFromState(BlockState state) {
-    return state.getValue(getFacingProperty()).getIndex();
+    return state.get(getFacingProperty()).getIndex();
   }
 
   @Override
   public BlockState getStateFromMeta(int meta) {
-    return getDefaultState().withProperty(getFacingProperty(), Direction.byIndex(meta));
+    return getDefaultState().with(getFacingProperty(), Direction.byIndex(meta));
   }
 
   @Override
   protected BlockStateContainer createBlockState() {
     return new BlockStateContainer(this, getFacingProperty());
   }
-}
+}*/

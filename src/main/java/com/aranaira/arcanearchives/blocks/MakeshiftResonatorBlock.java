@@ -1,45 +1,38 @@
 package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
-import com.aranaira.arcanearchives.tileentities.MakeshiftResonatorTile;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.state.BlockFaceShape;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
-import net.minecraft.util.Direction;
+import net.minecraft.state.BooleanProperty;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandlerItem;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 public class MakeshiftResonatorBlock extends TemplateBlock {
-  public static PropertyBool FILLED = PropertyBool.create("filled");
+  public static BooleanProperty FILLED = BooleanProperty.create("filled");
 
-  public MakeshiftResonatorBlock(Material material) {
-    super(material);
-    setDefaultState(getDefaultState().withProperty(FILLED, false));
+  public MakeshiftResonatorBlock(Block.Properties properties) {
+    super(properties);
+    setDefaultState(getDefaultState().with(FILLED, false));
   }
 
+
   @Override
-  public boolean onBlockActivated(World worldIn, BlockPos pos, BlockState state, PlayerEntity playerIn, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
-    if (!state.getValue(FILLED)) {
-      if (!playerIn.capabilities.isCreativeMode) {
+  public ActionResultType onBlockActivated(BlockState state, World p_225533_2_, BlockPos p_225533_3_, PlayerEntity p_225533_4_, Hand p_225533_5_, BlockRayTraceResult p_225533_6_) {
+    //if (!state.get(FILLED)) {
+/*      if (!playerIn.capabilities.isCreativeMode) {
         ItemStack stack = playerIn.getHeldItem(hand);
         IFluidHandlerItem cap = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
         if (cap != null) {
@@ -53,12 +46,12 @@ public class MakeshiftResonatorBlock extends TemplateBlock {
                   }
                   cap.drain(1000, true);
                   playerIn.setHeldItem(hand, stack.getItem().getContainerItem(stack));
-                  worldIn.setBlockState(pos, state.withProperty(FILLED, true));
+                  worldIn.setBlockState(pos, state.with(FILLED, true));
                   return true;
                 } else if (contents.amount > 1000) {
                   if (!worldIn.isRemote) {
                     cap.drain(1000, true);
-                    worldIn.setBlockState(pos, state.withProperty(FILLED, true));
+                    worldIn.setBlockState(pos, state.with(FILLED, true));
                   }
 
                   return true;
@@ -68,64 +61,32 @@ public class MakeshiftResonatorBlock extends TemplateBlock {
           }
         }
       } else {
-        worldIn.setBlockState(pos, state.withProperty(FILLED, true));
+        worldIn.setBlockState(pos, state.with(FILLED, true));
         return true;
       }
-    }
-    return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+    }*/
+    return super.onBlockActivated(state, p_225533_2_, p_225533_3_, p_225533_4_, p_225533_5_, p_225533_6_);
   }
 
-  @Override
-  public int damageDropped(BlockState state) {
-    return 0;
-  }
-
-  @Override
-  public int getMetaFromState(BlockState state) {
-    return state.getValue(FILLED) ? 1 : 0;
-  }
-
-  @SuppressWarnings("deprecation")
-  @Override
-  public BlockState getStateFromMeta(int meta) {
-    return meta == 1 ? getDefaultState().withProperty(FILLED, true) : getDefaultState();
-  }
-
-  @Override
-  @SideOnly(Side.CLIENT)
+  // TODO: Fix
+  //@Override
+  @OnlyIn(Dist.CLIENT)
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
     tooltip.add(TextFormatting.GOLD + I18n.format(""));
   }
 
-  @Override
-  @SuppressWarnings("deprecation")
-  public boolean causesSuffocation(BlockState state) {
-    return false;
-  }
-
-  @Override
-  @SuppressWarnings("deprecation")
-  public boolean isFullCube(BlockState state) {
-    return false;
-  }
-
-  @Override
-  @SuppressWarnings("deprecation")
-  public boolean isOpaqueCube(BlockState state) {
-    return false;
-  }
-
-  @Override
+  // TODO: Move to Registry
+/*  @Override
   public BlockRenderLayer getRenderLayer() {
     return BlockRenderLayer.CUTOUT;
-  }
+  }*/
 
   @Override
   public boolean hasTileEntity(BlockState state) {
     return true;
   }
 
-  @Override
+/*  @Override
   public TileEntity createTileEntity(World world, BlockState state) {
     return new MakeshiftResonatorTile();
   }
@@ -133,23 +94,23 @@ public class MakeshiftResonatorBlock extends TemplateBlock {
   @Override
   protected BlockStateContainer createBlockState() {
     return new BlockStateContainer(this, FILLED);
-  }
+  }*/
 
   @Override
   public void fillWithRain(World worldIn, BlockPos pos) {
     BlockState state = worldIn.getBlockState(pos);
-    if (state.getBlock() != this || state.getValue(FILLED)) {
+    if (state.getBlock() != this || state.get(FILLED)) {
       return;
     }
-    worldIn.setBlockState(pos, state.withProperty(FILLED, true));
+    worldIn.setBlockState(pos, state.with(FILLED, true));
   }
 
-  @Override
+/*  @Override
   public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, BlockState state, BlockPos pos, Direction face) {
     if (face == Direction.UP) {
       return BlockFaceShape.BOWL;
     } else {
       return face == Direction.DOWN ? BlockFaceShape.UNDEFINED : BlockFaceShape.SOLID;
     }
-  }
+  }*/
 }

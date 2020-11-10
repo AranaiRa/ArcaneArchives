@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items;
+/*package com.aranaira.arcanearchives.items;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -10,6 +10,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -31,7 +33,7 @@ public class ScepterRevelationItem extends Item {
 
   @Override
   public ActionResultType onItemUseFirst(PlayerEntity player, World world, BlockPos pos, Direction facing, float hitX, float hitY, float hitZ, Hand hand) {
-/*
+*//*
 
 		if (hand != EnumHand.MAIN_HAND) {
 			return EnumActionResult.SUCCESS;
@@ -157,17 +159,17 @@ public class ScepterRevelationItem extends Item {
 				return EnumActionResult.SUCCESS;
 			}
 
-			EnumFacing te_facing = state.getValue(((HorizontalTemplateBlock) state.getBlock()).getFacingProperty()).getOpposite();
+			EnumFacing te_facing = state.get(((HorizontalTemplateBlock) state.getBlock()).getFacingProperty()).getOpposite();
 			player.sendMessage(new TextComponentTranslation("arcanearchives.data.scepter.monitoring_crystal.facing", te_facing.getName()).setStyle(def));
 		}
-*/
+*//*
 
     return ActionResultType.SUCCESS;
   }
 
   @Override
-  @SideOnly(Side.CLIENT)
+  @OnlyIn(Dist.CLIENT)
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
     tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.scepter_revelation"));
   }
-}
+}*/

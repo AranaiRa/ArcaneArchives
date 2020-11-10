@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items;
+/*package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.init.BlockRegistry;
@@ -86,7 +86,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.radiant_amphora"));
 		AmphoraUtil util = new AmphoraUtil(stack);
@@ -260,13 +260,13 @@ public class RadiantAmphoraItem extends ItemTemplate {
 			}
 		}
 
-		@SideOnly(Side.CLIENT)
+		@OnlyIn(Dist.CLIENT)
 		private World getClientWorld () {
-			return Minecraft.getMinecraft().world;
+			return Minecraft.getInstance().world;
 		}
 
 		private World getServerWorld (int dimension) {
-			MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+			MinecraftServer server = FMLCommonHandler.instance().getInstanceServerInstance();
 			return server.getWorld(dimension);
 		}
 
@@ -275,7 +275,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 		}
 
 		public CompoundNBT getTag () {
-			return stack.getTagCompound();
+			return stack.getTag();
 		}
 
 		public boolean isRemote () {
@@ -334,7 +334,7 @@ public class RadiantAmphoraItem extends ItemTemplate {
 			return getTag().hasKey("homeTank") && getTag().hasKey("homeTankDim");
 		}
 
-		@SideOnly(Side.CLIENT)
+		@OnlyIn(Dist.CLIENT)
 		@SuppressWarnings("deprecation")
 		public String getFluidType () {
 			IFluidHandler handler = getCapability();
@@ -545,4 +545,4 @@ if (!doDrain && maxDrain == Integer.MAX_VALUE) {
 		}
 	}
 
-}
+}*/

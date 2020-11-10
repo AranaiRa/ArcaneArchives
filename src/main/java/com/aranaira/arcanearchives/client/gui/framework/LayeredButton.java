@@ -1,19 +1,19 @@
-package com.aranaira.arcanearchives.client.gui.framework;
+/*package com.aranaira.arcanearchives.client.gui.framework;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.renderer.GlStateManager;
 
-/**
+*//**
  * Wrapper around {@link Button} that does the appropriate translations to the GL matrix to make the
  * {@link LayeredGuiContainer} work correctly
- */
+ *//*
 public class LayeredButton extends Button {
 
-  /**
+  *//**
    * wrapped {@link Button}
-   */
+   *//*
   private Button wrapped;
 
   public LayeredButton(Button wrapped) {
@@ -71,4 +71,4 @@ public class LayeredButton extends Button {
   public void setWidth(int width) {
     wrapped.setWidth(width);
   }
-}
+}*/

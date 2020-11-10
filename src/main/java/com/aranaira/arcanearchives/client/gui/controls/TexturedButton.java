@@ -1,17 +1,19 @@
-package com.aranaira.arcanearchives.client.gui.controls;
+/*package com.aranaira.arcanearchives.client.gui.controls;
 
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@SideOnly(Side.CLIENT)
-/**
+@OnlyIn(Dist.CLIENT)
+*//**
  * A {@link Button} with a texture from {@link #BUTTON_TEXTURES}
- */ public class TexturedButton extends Button {
+ *//* public class TexturedButton extends Button {
   private static final ResourceLocation BUTTON_TEXTURES = new ResourceLocation("arcanearchives:textures/gui/buttons.png");
   private static final ResourceLocation BUTTON_TEXTURES_SIMPLE = new ResourceLocation("arcanearchives:textures/gui/simple/buttons.png");
   private static final int[] TEXTURE_X_START = new int[]{0};
@@ -22,14 +24,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
   private int mTextureId;
 
-  /**
+  *//**
    * Create a {@link Button} with a texture from {@link #BUTTON_TEXTURES}
    *
    * @param buttonId  id for this {@link Button}
    * @param textureId index (zero based) of texture in {@link #BUTTON_TEXTURES}
    * @param x         x position on screen to draw this button
    * @param y         y position on screen to draw this button
-   */
+   *//*
   public TexturedButton(int buttonId, int textureId, int x, int y) {
     super(buttonId, x, y, TEXTURE_WIDTH[textureId], TEXTURE_HEIGHT[textureId], "");
 
@@ -54,13 +56,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
     }
   }
 
-  /**
+  *//**
    * Get width of given texture in pixels
    *
    * @param textureId index (zero based) of texture in {@link #BUTTON_TEXTURES}
    * @return width in pixels
-   */
+   *//*
   static public int getWidth(int textureId) {
     return TEXTURE_WIDTH[textureId];
   }
-}
+}*/

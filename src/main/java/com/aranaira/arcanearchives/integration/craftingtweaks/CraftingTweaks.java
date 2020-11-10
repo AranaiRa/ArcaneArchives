@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.integration.craftingtweaks;
+/*package com.aranaira.arcanearchives.integration.craftingtweaks;
 
 import com.aranaira.arcanearchives.inventory.ContainerRadiantCraftingTable;
 import net.minecraft.nbt.CompoundNBT;
@@ -14,4 +14,4 @@ public class CraftingTweaks {
 			FMLInterModComms.sendMessage("craftingtweaks", "RegisterProvider", tag);
 		}
 	}
-}
+}*/

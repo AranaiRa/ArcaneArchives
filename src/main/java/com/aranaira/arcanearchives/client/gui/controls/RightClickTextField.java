@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.client.gui.controls;
+/*package com.aranaira.arcanearchives.client.gui.controls;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.widget.TextFieldWidget;
@@ -22,4 +22,4 @@ public class RightClickTextField extends TextFieldWidget {
 
     return super.mouseClicked(mouseX, mouseY, mouseButton);
   }
-}
+}*/

@@ -1,3 +1,4 @@
+/*
 package com.aranaira.arcanearchives.inventory.slots;
 
 import com.aranaira.arcanearchives.inventory.ContainerRadiantCraftingTable;
@@ -77,4 +78,5 @@ public class SlotCraftingFastWorkbench extends CraftingResultSlot {
 		return stack;
 	}
 }
+*/
 

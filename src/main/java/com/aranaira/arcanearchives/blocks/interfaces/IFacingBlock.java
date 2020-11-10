@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.blocks.interfaces;
 
-import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.state.DirectionProperty;
 
 public interface IFacingBlock {
-  PropertyDirection getFacingProperty();
+  DirectionProperty getFacingProperty();
 }

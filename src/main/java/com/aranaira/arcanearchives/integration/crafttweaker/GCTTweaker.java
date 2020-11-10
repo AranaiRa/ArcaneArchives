@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.integration.crafttweaker;
+/*package com.aranaira.arcanearchives.integration.crafttweaker;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.api.gct.CrystalWorkbenchRecipe;
@@ -106,4 +106,4 @@ public class GCTTweaker {
 			return "Adding GCT recipe for " + output.toString();
 		}
 	}
-}
+}*/

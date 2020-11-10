@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items;
+/*package com.aranaira.arcanearchives.items;
 
 import com.aranaira.arcanearchives.items.templates.IItemScepter;
 import com.aranaira.arcanearchives.items.templates.ItemTemplate;
@@ -10,6 +10,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -25,7 +27,7 @@ public class ScepterTranslocation extends ItemTemplate implements IItemScepter {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.item.scepter_translocation"));
 	}
@@ -34,4 +36,4 @@ public class ScepterTranslocation extends ItemTemplate implements IItemScepter {
 	public boolean doesSneakBypassUse (ItemStack stack, IBlockAccess world, BlockPos pos, PlayerEntity player) {
 		return true;
 	}
-}
+}*/

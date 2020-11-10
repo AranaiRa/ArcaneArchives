@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.registry;
+/*package com.aranaira.arcanearchives.registry;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.api.crafting.IngredientStack;
@@ -56,4 +56,4 @@ public class MandalicKeystoneRegistry {
   public static MandalicKeystoneRecipe getRecipe(ResourceLocation loc) {
     return TRANSFORMATION_RECIPES.get(loc);
   }
-}
+}*/

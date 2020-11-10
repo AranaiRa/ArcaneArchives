@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.util;
+/*package com.aranaira.arcanearchives.util;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.util.ColorUtils.Color;
@@ -14,8 +14,10 @@ import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.item.crafting.RecipeItemHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.datafix.fixes.FurnaceRecipes;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -32,7 +34,6 @@ import java.util.List;
 
 // TODO: Replace with JEI colour utility WHICH ACTUALLY WORKS
 
-@SideOnly(Side.CLIENT)
 public class TintUtils {
   public static Path FILE_PATH;
   public static Int2IntOpenHashMap CACHE = null;
@@ -87,8 +88,8 @@ public class TintUtils {
   }
 
   public static void generate() {
-    ItemRenderer renderItem = Minecraft.getMinecraft().getRenderItem();
-    IResourceManager manager = Minecraft.getMinecraft().getResourceManager();
+    ItemRenderer renderItem = Minecraft.getInstance().getItemRenderer();
+    IResourceManager manager = Minecraft.getInstance().getResourceManager();
 
     for (ItemStack toDuplicate : DuplicationUtils.getOresToDuplicate()) {
       ItemStack result = FurnaceRecipes.instance().getSmeltingResult(toDuplicate);
@@ -166,4 +167,4 @@ public class TintUtils {
       CACHE.put(packed, c.toInteger());
     }
   }
-}
+}*/

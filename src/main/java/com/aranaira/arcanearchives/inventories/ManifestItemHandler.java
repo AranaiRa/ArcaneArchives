@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.inventories;
 
-import com.aranaira.arcanearchives.manifest.ManifestEntry;
+/*import com.aranaira.arcanearchives.manifest.ManifestEntry;
 import com.aranaira.arcanearchives.types.ManifestList;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -115,4 +115,4 @@ public class ManifestItemHandler implements IItemHandlerModifiable {
     manifestBase.setSortingType(sortingType);
     manifestActive = manifestBase.sortAndFilterMaybe();
   }
-}
+}*/

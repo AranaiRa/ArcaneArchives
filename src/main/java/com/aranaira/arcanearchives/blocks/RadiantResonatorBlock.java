@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.blocks;
+/*package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import net.minecraft.block.material.Material;
@@ -10,6 +10,8 @@ import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -23,14 +25,14 @@ public class RadiantResonatorBlock extends TemplateBlock {
 
   public RadiantResonatorBlock() {
     super(Material.IRON);
-/*		setPlaceLimit(ServerSideConfig.ResonatorLimit);
+*//*		setPlaceLimit(ServerSideConfig.ResonatorLimit);
 		setHardness(3f);
 		setHarvestLevel("pickaxe", 0);
-		setEntityClass(RadiantResonatorTileEntity.class);*/
+		setEntityClass(RadiantResonatorTileEntity.class);*//*
   }
 
   @Override
-  @SideOnly(Side.CLIENT)
+  @OnlyIn(Dist.CLIENT)
   public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
     tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.device.radiant_resonator"));
   }
@@ -63,7 +65,7 @@ public class RadiantResonatorBlock extends TemplateBlock {
     return BlockRenderLayer.CUTOUT;
   }
 
-/*	@Override
+*//*	@Override
 	@SuppressWarnings("deprecation")
 	public boolean hasComparatorInputOverride (IBlockState state) {
 		return true;
@@ -88,9 +90,9 @@ public class RadiantResonatorBlock extends TemplateBlock {
 		}
 
 		return Math.max(1, Math.min((int) Math.floor(te.getPercentageComplete() / 7.14) + 1, 14));
-	}*/
+	}*//*
 
-/*	@Override
+*//*	@Override
 	public boolean hasTileEntity (IBlockState state) {
 		return true;
 	}
@@ -98,15 +100,15 @@ public class RadiantResonatorBlock extends TemplateBlock {
 	@Override
 	public TileEntity createTileEntity (World world, IBlockState state) {
 		return new RadiantResonatorTileEntity();
-	}*/
+	}*//*
 
   @Override
   public void breakBlock(World world, BlockPos pos, BlockState state) {
-/*		TileEntity te = world.getTileEntity(pos);
+*//*		TileEntity te = world.getTileEntity(pos);
 		if (te instanceof RadiantResonatorTileEntity) {
 			((RadiantResonatorTileEntity) te).breakBlock(state, true);
 		}
 
-		super.breakBlock(world, pos, state);*/
+		super.breakBlock(world, pos, state);*//*
   }
-}
+}*/

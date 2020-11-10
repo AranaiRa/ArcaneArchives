@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items.itemblocks;
+/*package com.aranaira.arcanearchives.items.itemblocks;
 
 import com.aranaira.arcanearchives.init.ItemRegistry;
 import com.aranaira.arcanearchives.inventory.handlers.TankItemFluidHandler;
@@ -10,6 +10,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -34,12 +35,12 @@ public class RadiantTankItem extends BlockItem {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		FluidStack fluid;
 
 		if (stack.hasTagCompound()) {
-			CompoundNBT tag = stack.getTagCompound();
+			CompoundNBT tag = stack.getTag();
 			IFluidHandlerItem handler = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
 			if (handler instanceof FluidHandlerItemStack) {
 				FluidHandlerItemStack tank = (FluidHandlerItemStack) handler;
@@ -63,4 +64,4 @@ public class RadiantTankItem extends BlockItem {
 
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
-}
+}*/

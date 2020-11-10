@@ -3,7 +3,9 @@ package com.aranaira.arcanearchives.manifest;
 import it.unimi.dsi.fastutil.longs.Long2LongOpenHashMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -40,11 +42,11 @@ public class ManifestEntry {
     return wrongDimension;
   }
 
-  public void accept (BlockPos player, IndexEntry entry) {
+  public void accept (RegistryKey<World> key, BlockPos player, IndexEntry entry) {
     quantity += entry.getQuantity();
     long pos = entry.getPosition().toLong();
     descriptorMap.put(pos, entry.getDescriptor());
-    descriptors.add(ManifestDescriptor.fromEntry(player, entry));
+    descriptors.add(ManifestDescriptor.fromEntry(key, player, entry));
     quantities.put(pos, entry.getQuantity());
   }
 

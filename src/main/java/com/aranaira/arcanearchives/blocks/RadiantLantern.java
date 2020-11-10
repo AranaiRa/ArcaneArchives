@@ -34,7 +34,7 @@ public class RadiantLantern extends DirectionalBlock {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	public void addInformation (ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.device.radiant_lantern"));
 	}
@@ -42,13 +42,13 @@ public class RadiantLantern extends DirectionalBlock {
 	@Override
 	@SuppressWarnings("deprecation")
 	public BlockState withRotation (BlockState state, Rotation rot) {
-		return state.withProperty(getFacingProperty(), rot.rotate(state.getValue(getFacingProperty())));
+		return state.with(getFacingProperty(), rot.rotate(state.get(getFacingProperty())));
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
 	public BlockState withMirror (BlockState state, Mirror mirrorIn) {
-		return state.withProperty(getFacingProperty(), mirrorIn.mirror(state.getValue(getFacingProperty())));
+		return state.with(getFacingProperty(), mirrorIn.mirror(state.get(getFacingProperty())));
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class RadiantLantern extends DirectionalBlock {
 	@Nonnull
 	@SuppressWarnings("deprecation")
 	public AxisAlignedBB getBoundingBox (BlockState state, IBlockAccess source, BlockPos pos) {
-		Direction facing = state.getValue(getFacingProperty());
+		Direction facing = state.get(getFacingProperty());
 		if (facing == Direction.UP) {
 			return new AxisAlignedBB(0.35, 0.0, 0.35, 0.65, 1.0, 0.65);
 		} else if (facing == Direction.DOWN) {
@@ -98,18 +98,18 @@ public class RadiantLantern extends DirectionalBlock {
 
 	@Override
 	public BlockState getStateForPlacement (World world, BlockPos pos, Direction facing, float hitX, float hitY, float hitZ, int meta, LivingEntity placer, Hand hand) {
-		return this.getDefaultState().withProperty(getFacingProperty(), facing);
+		return this.getDefaultState().with(getFacingProperty(), facing);
 	}
 
 	@Override
 	public int getMetaFromState (BlockState state) {
-		return state.getValue(getFacingProperty()).getIndex();
+		return state.get(getFacingProperty()).getIndex();
 	}
 
 	@Override
 	public BlockState getStateFromMeta (int meta) {
 		BlockState iblockstate = this.getDefaultState();
-		iblockstate = iblockstate.withProperty(getFacingProperty(), Direction.byIndex(meta));
+		iblockstate = iblockstate.with(getFacingProperty(), Direction.byIndex(meta));
 		return iblockstate;
 	}
 

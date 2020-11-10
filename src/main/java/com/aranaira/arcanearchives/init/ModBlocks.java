@@ -35,7 +35,7 @@ public class ModBlocks {
 
   public static CrystalWorkbenchBlock CrystalWorkbench = register("crystal_workbench", CrystalWorkbenchBlock::new, Material.IRON, (o) -> o.setHardness(3f).setLightLevel(16f / 16f).setHarvestTool("axe", 0).setTooltip("arcanearchives.tooltip.device.gemcutters_table", TextFormatting.GOLD).storesId(), NetworkItemBlockTemplate::new);
 
-  public static MakeshiftResonatorBlock MakeshiftResonator = register("makeshift_resonator", MakeshiftResonatorBlock::new, Material.IRON, (o) -> o.setHardness(3f).setLightLevel(6f / 16f).setHarvestTool("pickaxe", 0).setTooltip("arcanearchives.tooltip.device.wonky_resonator", TextFormatting.GOLD).setDefault(o.getDefaultState().withProperty(MakeshiftResonatorBlock.FILLED, false)));
+  public static MakeshiftResonatorBlock MakeshiftResonator = register("makeshift_resonator", MakeshiftResonatorBlock::new, Material.IRON, (o) -> o.setHardness(3f).setLightLevel(6f / 16f).setHarvestTool("pickaxe", 0).setTooltip("arcanearchives.tooltip.device.wonky_resonator", TextFormatting.GOLD).setDefault(o.getDefaultState().with(MakeshiftResonatorBlock.FILLED, false)));
 
   public static MandalicKeystoneBlock MandalicKeystone = register("mandalic_keystone", MandalicKeystoneBlock::new, (o) -> o.setHardness(1.7f).setHarvestTool("pickaxe", 0).setTooltip("arcanearchives.tooltip.item.mandalic_keystone", TextFormatting.GOLD));
 

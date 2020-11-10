@@ -6,7 +6,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraftforge.oredict.OreIngredient;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -16,13 +15,12 @@ public class IngredientStack {
   private final Ingredient ingredient;
   private int count;
 
-  @Nullable
   private final CompoundNBT nbt;
 
   public IngredientStack(ItemStack stack) {
     this.ingredient = Ingredient.fromStacks(stack);
     this.count = stack.getCount();
-    this.nbt = stack.getTagCompound();
+    this.nbt = stack.getTag();
   }
 
   public IngredientStack(Item item, int count) {
@@ -30,7 +28,7 @@ public class IngredientStack {
   }
 
   public IngredientStack(Item item, int count, CompoundNBT nbt) {
-    this.ingredient = Ingredient.fromItem(item);
+    this.ingredient = Ingredient.fromItems(item);
     this.count = count;
     this.nbt = nbt;
   }
@@ -39,7 +37,8 @@ public class IngredientStack {
     this(item, 1, null);
   }
 
-  public IngredientStack(String item, int count) {
+  // TODO: Replace with Tag
+/*  public IngredientStack(String item, int count) {
     this(item, count, null);
   }
 
@@ -51,7 +50,7 @@ public class IngredientStack {
 
   public IngredientStack(String item) {
     this(item, 1, null);
-  }
+  }*/
 
   public IngredientStack(Ingredient ingredient, int count) {
     this(ingredient, count, null);
@@ -72,7 +71,7 @@ public class IngredientStack {
   }
 
   public IngredientStack(Block block, int count, CompoundNBT nbt) {
-    this.ingredient = Ingredient.fromItem(Item.getItemFromBlock(block));
+    this.ingredient = Ingredient.fromItems(block);
     this.count = count;
     this.nbt = nbt;
   }
@@ -86,9 +85,9 @@ public class IngredientStack {
   }
 
   public boolean apply(@Nullable ItemStack p_apply_1_) {
-    boolean res = ingredient.apply(p_apply_1_);
+    boolean res = ingredient.test(p_apply_1_);
     if (nbt != null && p_apply_1_ != null) {
-      return res && nbt.equals(p_apply_1_.getTagCompound());
+      return res && nbt.equals(p_apply_1_.getTag());
     }
 
     return res;

@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.proxy;
+/*package com.aranaira.arcanearchives.proxy;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
@@ -29,9 +29,9 @@ public class CommonProxy {
   public void init(FMLInitializationEvent event) {
     MandalicKeystoneRegistry.initializeRecipes();
 
-		/*CraftingTweaks.init();
+		*//*CraftingTweaks.init();
 
-		FMLInterModComms.sendFunctionMessage("theoneprobe", "getTheOneProbe", "com.aranaira.arcanearchives.integration.top.TOPPlugin");*/
+		FMLInterModComms.sendFunctionMessage("theoneprobe", "getTheOneProbe", "com.aranaira.arcanearchives.integration.top.TOPPlugin");*//*
   }
 
   public void postInit(FMLPostInitializationEvent event) {
@@ -44,12 +44,12 @@ public class CommonProxy {
   }
 
   public void serverStarting(FMLServerStartingEvent event) {
-/*		event.registerServerCommand(new CommandHive());
+*//*		event.registerServerCommand(new CommandHive());
 		event.registerServerCommand(new CommandBrazier());
 		event.registerServerCommand(new CommandCopy());
 		event.registerServerCommand(new CommandTiles());
 		event.registerServerCommand(new CommandImmanence());
-		event.registerServerCommand(new CommandRebuild());*/
+		event.registerServerCommand(new CommandRebuild());*//*
   }
 
   public void serverStarted(FMLServerStartedEvent event) {
@@ -72,9 +72,9 @@ public class CommonProxy {
         ClientTickHandler.addRunnable(runnable, delay);
         break;
       case SERVER:
-        //FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(runnable);
+        //FMLCommonHandler.instance().getInstanceServerInstance().addScheduledTask(runnable);
         ServerTickHandler.addRunnable(runnable, delay);
         break;
     }
   }
-}
+}*/

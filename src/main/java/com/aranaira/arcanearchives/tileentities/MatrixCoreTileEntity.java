@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tileentities;
+/*package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.api.immanence.IImmanenceGenerator;
 import com.aranaira.arcanearchives.api.immanence.IImmanenceSource;
@@ -19,4 +19,4 @@ public class MatrixCoreTileEntity extends ImmanenceTileEntity implements IImmane
 	public IImmanenceSource generateImmanence () {
 		return new ImmanenceSource("matrix_core", 1000.0f, ImmanenceBonusType.ADDITIVE);
 	}
-}
+}*/

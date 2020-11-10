@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.init;
+/*package com.aranaira.arcanearchives.init;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.api.crafting.IngredientStack;
@@ -92,4 +92,4 @@ public class ModRecipes {
       return recipe;
     }
   }
-}
+}*/

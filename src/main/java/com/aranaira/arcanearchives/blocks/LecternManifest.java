@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.blocks;
+/*package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.AAGuiHandler;
 import com.aranaira.arcanearchives.ArcaneArchives;
@@ -18,6 +18,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -33,7 +34,7 @@ public class LecternManifest extends DirectionalBlock {
 		this.setHardness(1.5f);
 		setSize(1, 2, 1);
 		setLightLevel(16f / 16f);
-		this.setDefaultState(this.getDefaultState().withProperty(ACCESSOR, false));
+		this.setDefaultState(this.getDefaultState().with(ACCESSOR, false));
 	}
 
 	@Override
@@ -48,7 +49,7 @@ public class LecternManifest extends DirectionalBlock {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	public void addInformation (ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.tooltip.device.lectern_manifest"));
 	}
@@ -73,18 +74,18 @@ public class LecternManifest extends DirectionalBlock {
 	@Override
 	@SuppressWarnings("deprecation")
 	public BlockState getStateFromMeta (int meta) {
-		return getDefaultState().withProperty(getFacingProperty(), Direction.byIndex(meta >> 1)).withProperty(ACCESSOR, (meta & 1) != 0);
+		return getDefaultState().with(getFacingProperty(), Direction.byIndex(meta >> 1)).with(ACCESSOR, (meta & 1) != 0);
 	}
 
 	@Override
 	public int getMetaFromState (BlockState state) {
-		return state.getValue(getFacingProperty()).getIndex() << 1 ^ (state.getValue(ACCESSOR) ? 1 : 0);
+		return state.get(getFacingProperty()).getIndex() << 1 ^ (state.get(ACCESSOR) ? 1 : 0);
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
 	public void neighborChanged (BlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
-		if (state.getValue(ACCESSOR)) {
+		if (state.get(ACCESSOR)) {
 			if (world.isAirBlock(pos.down())) {
 				world.setBlockToAir(pos);
 			}
@@ -103,4 +104,4 @@ public class LecternManifest extends DirectionalBlock {
 		return new BlockStateContainer(this, getFacingProperty(), ACCESSOR);
 	}
 
-}
+}*/

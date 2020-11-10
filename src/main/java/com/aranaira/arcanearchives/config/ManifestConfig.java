@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.config;
+/*package com.aranaira.arcanearchives.config;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import net.minecraftforge.common.config.Config;
@@ -25,4 +25,4 @@ public class ManifestConfig {
   @Config.Comment("Set to true to require holding shift to *close* the manifest after clicking on an item. Otherwise, holding shift will keep the manifest open.")
   @Config.Name("Hold Shift To Keep Manifest Open")
   public static boolean holdShift = true;
-}
+}*/

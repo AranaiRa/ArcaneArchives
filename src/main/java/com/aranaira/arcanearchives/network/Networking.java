@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.network;
+/*package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.network.Handlers.BaseHandler;
@@ -19,19 +19,19 @@ public class Networking {
 
   public static void registerPackets() {
     // TODO
-/*		registerPacks(PacketRadiantChest.SetName.Handler.class, PacketRadiantChest.SetName.class, Side.SERVER);
+*//*		registerPacks(PacketRadiantChest.SetName.Handler.class, PacketRadiantChest.SetName.class, Side.SERVER);
 		registerPacks(PacketRadiantChest.UnsetName.Handler.class, PacketRadiantChest.UnsetName.class, Side.SERVER);
 		registerPacks(PacketRadiantChest.SetItemAndFacing.Handler.class, PacketRadiantChest.SetItemAndFacing.class, Side.SERVER);
 		registerPacks(PacketRadiantChest.SyncChestDisplay.Handler.class, SyncChestDisplay.class, Side.CLIENT);
 		registerPacks(SyncChestName.Handler.class, SyncChestName.class, Side.CLIENT);
-		registerPacks(UnsetItem.Handler.class, UnsetItem.class, Side.SERVER);*/
+		registerPacks(UnsetItem.Handler.class, UnsetItem.class, Side.SERVER);*//*
 
-		/*registerPacks(PacketNetworks.HiveResponse.Handler.class, PacketNetworks.HiveResponse.class, Side.CLIENT);
+		*//*registerPacks(PacketNetworks.HiveResponse.Handler.class, PacketNetworks.HiveResponse.class, Side.CLIENT);
 		registerPacks(PacketNetworks.DataResponse.Handler.class, PacketNetworks.DataResponse.class, Side.CLIENT);
 		registerPacks(PacketNetworks.ManifestResponse.Handler.class, PacketNetworks.ManifestResponse.class, Side.CLIENT);
 		registerPacks(PacketNetworks.Request.Handler.class, PacketNetworks.Request.class, Side.SERVER);
 		registerPacks(PacketRadiantCrafting.LastRecipe.Handler.class, PacketRadiantCrafting.LastRecipe.class, Side.CLIENT);
-		registerPacks(PacketRadiantAmphora.Toggle.class, Side.SERVER);*/
+		registerPacks(PacketRadiantAmphora.Toggle.class, Side.SERVER);*//*
     registerPacks(PacketRadiantChest.MessageClickWindowExtended.Handler.class, PacketRadiantChest.MessageClickWindowExtended.class, Side.CLIENT);
     registerPacks(PacketRadiantChest.MessageSyncExtendedSlotContents.Handler.class, PacketRadiantChest.MessageSyncExtendedSlotContents.class, Side.CLIENT);
     registerPacks(PacketNetwork.NameMessage.Handler.class, PacketNetwork.NameMessage.class, Side.CLIENT);
@@ -40,7 +40,7 @@ public class Networking {
     // TODO
     //registerPacks(PacketRadiantChest.ToggleBrazier.Handler.class, PacketRadiantChest.ToggleBrazier.class, Side.SERVER);
 
-		/*registerPacks(PacketClipboard.CopyToClipboard.Handler.class, PacketClipboard.CopyToClipboard.class, Side.CLIENT);
+		*//*registerPacks(PacketClipboard.CopyToClipboard.Handler.class, PacketClipboard.CopyToClipboard.class, Side.CLIENT);
 		registerPacks(PacketBrazier.SetRadius.Handler.class, PacketBrazier.SetRadius.class, Side.SERVER);
 		registerPacks(PacketBrazier.SetSubnetworkMode.Handler.class, PacketBrazier.SetSubnetworkMode.class, Side.SERVER);
 		registerPacks(PacketBrazier.IncrementRadius.class, Side.SERVER);
@@ -48,7 +48,7 @@ public class Networking {
 		registerPacks(PacketDebug.TrackPositions.Handler.class, PacketDebug.TrackPositions.class, Side.CLIENT);
 		registerPacks(PacketRadiantCrafting.SetRecipe.Handler.class, PacketRadiantCrafting.SetRecipe.class, Side.SERVER);
 		registerPacks(PacketRadiantCrafting.UnsetRecipe.Handler.class, PacketRadiantCrafting.UnsetRecipe.class, Side.SERVER);
-		registerPacks(PacketRadiantCrafting.TryCraftRecipe.Handler.class, PacketRadiantCrafting.TryCraftRecipe.class, Side.SERVER);*/
+		registerPacks(PacketRadiantCrafting.TryCraftRecipe.Handler.class, PacketRadiantCrafting.TryCraftRecipe.class, Side.SERVER);*//*
     registerPacks(PacketCrystalWorkbench.ChangeRecipe.Handler.class, PacketCrystalWorkbench.ChangeRecipe.class, Side.SERVER);
     registerPacks(PacketCrystalWorkbench.LastRecipe.Handler.class, PacketCrystalWorkbench.LastRecipe.class, Side.CLIENT);
     registerPacks(PacketCrystalWorkbench.SetRecipeIndex.Handler.class, PacketCrystalWorkbench.SetRecipeIndex.class, Side.SERVER);
@@ -76,4 +76,4 @@ public class Networking {
   public static void sendToAllTracking(IMessage message, Entity entity) {
     CHANNEL.sendToAllTracking(message, entity);
   }
-}
+}*/

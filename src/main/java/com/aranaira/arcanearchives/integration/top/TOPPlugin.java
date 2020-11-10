@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.integration.top;
+/*package com.aranaira.arcanearchives.integration.top;
 
 import com.aranaira.arcanearchives.blocks.RadiantChestBlock;
 import com.aranaira.arcanearchives.blocks.RadiantResonatorBlock;
@@ -58,4 +58,4 @@ public class TOPPlugin implements Function<ITheOneProbe, Void>, IProbeInfoProvid
 	public void init (ITheOneProbe top) {
 		top.registerProvider(this);
 	}
-}
+}*/

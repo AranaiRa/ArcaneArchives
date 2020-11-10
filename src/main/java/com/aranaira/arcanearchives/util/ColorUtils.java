@@ -1,8 +1,6 @@
 package com.aranaira.arcanearchives.util;
 
 import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ColorUtils {
   public static Color COLORSTEP_0 = new Color(1.00f, 0.50f, 0.50f, 1.0f);    //Red
@@ -90,7 +88,6 @@ public class ColorUtils {
     return new float[]{colour >> 24 & 0xFF, colour >> 16 & 0xFF, colour >> 8 & 0xFF, colour & 0xFF};
   }
 
-  @SideOnly(Side.CLIENT)
   public static class Color {
     public float red;
     public float green;
@@ -125,7 +122,7 @@ public class ColorUtils {
       return lerped;
     }
 
-    public static String FormatForLogger(Color c, boolean includeAlpha) {
+    public static String formatForLogger(Color c, boolean includeAlpha) {
       String str = "";
       str += "<R:" + c.red;
       str += "  G:" + c.green;

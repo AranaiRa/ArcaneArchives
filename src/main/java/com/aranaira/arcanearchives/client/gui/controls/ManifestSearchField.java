@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.client.gui.controls;
+/*package com.aranaira.arcanearchives.client.gui.controls;
 
 import com.aranaira.arcanearchives.client.gui.ManifestGUI;
 import com.aranaira.arcanearchives.integration.jei.JEIPlugin;
@@ -67,4 +67,4 @@ public class ManifestSearchField extends RightClickTextField {
     super.setResponderEntryValue(idIn, textIn);
     syncToJEI();
   }
-}
+}*/

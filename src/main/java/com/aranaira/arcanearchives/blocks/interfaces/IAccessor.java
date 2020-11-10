@@ -1,11 +1,11 @@
 package com.aranaira.arcanearchives.blocks.interfaces;
 
-import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.state.BooleanProperty;
 
 public interface IAccessor {
-  PropertyBool ACCESSOR = PropertyBool.create("accessor");
+  BooleanProperty ACCESSOR = BooleanProperty.create("accessor");
 
-  default PropertyBool getAccessorProperty() {
+  default BooleanProperty getAccessorProperty() {
     return ACCESSOR;
   }
 }

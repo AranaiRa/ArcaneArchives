@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tileentities;
+/*package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.inventory.handlers.ItemStackWrapper;
@@ -265,4 +265,4 @@ public class RadiantFurnaceTileEntity extends ImmanenceTileEntity implements IUp
 
 		public Tags () {}
 	}
-}
+}*/

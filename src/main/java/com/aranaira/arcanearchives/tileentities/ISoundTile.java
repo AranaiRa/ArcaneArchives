@@ -1,12 +1,11 @@
 package com.aranaira.arcanearchives.tileentities;
 
-import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.types.MachineSound;
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.client.FMLClientHandler;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 
@@ -15,7 +14,7 @@ public interface ISoundTile {
     return hasSound() && isTileValid();
   }
 
-  boolean isTileValid ();
+  boolean isTileValid();
 
   default boolean hasSound() {
     return false;
@@ -40,19 +39,18 @@ public interface ISoundTile {
   MachineSound getMachineSound();
 
   @SuppressWarnings("ConstantConditions")
-  @SideOnly(Side.CLIENT)
+  @OnlyIn(Dist.CLIENT)
   default void updateSound(BlockPos pos) {
-    if (ConfigHandler.soundConfig.useSounds) {
-      final ResourceLocation soundRL = getSound();
-      MachineSound sound = getMachineSound();
-      if (shouldPlaySound() && soundRL != null) {
-        if (sound == null) {
-          FMLClientHandler.instance().getClient().getSoundHandler().playSound(setMachineSound(new MachineSound(soundRL, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, getVolume(), getPitch())));
-        }
-      } else if (sound != null) {
-        sound.endPlaying();
-        setMachineSound(null);
+    /*    if (ConfigHandler.soundConfig.useSounds) {*/
+    final ResourceLocation soundRL = getSound();
+    MachineSound sound = getMachineSound();
+    if (shouldPlaySound() && soundRL != null) {
+      if (sound == null) {
+        Minecraft.getInstance().getSoundHandler().play(setMachineSound(new MachineSound(soundRL, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, getVolume(), getPitch())));
       }
+    } else if (sound != null) {
+      sound.endPlaying();
+      setMachineSound(null);
     }
   }
 }

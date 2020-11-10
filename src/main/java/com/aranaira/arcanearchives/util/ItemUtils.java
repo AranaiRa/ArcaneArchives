@@ -60,7 +60,7 @@ public class ItemUtils {
   }
 
   public static CompoundNBT getOrCreateTagCompound(ItemStack stack) {
-    CompoundNBT tagCompound = stack.getTagCompound();
+    CompoundNBT tagCompound = stack.getTag();
     if (tagCompound == null) {
       tagCompound = new CompoundNBT();
       stack.setTagCompound(tagCompound);

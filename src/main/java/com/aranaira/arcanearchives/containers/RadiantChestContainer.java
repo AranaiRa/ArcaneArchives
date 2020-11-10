@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.containers;
+/*package com.aranaira.arcanearchives.containers;
 
 import com.aranaira.arcanearchives.containers.slots.SlotExtended;
 import com.aranaira.arcanearchives.inventories.TrackingExtendedHandler;
@@ -555,4 +555,4 @@ public class RadiantChestContainer extends Container {
       Networking.CHANNEL.sendTo(new PacketRadiantChest.MessageSyncExtendedSlotContents(this.windowId, slot, stack), player);
     }
   }
-}
+}*/

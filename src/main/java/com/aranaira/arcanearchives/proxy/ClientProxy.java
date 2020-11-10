@@ -1,10 +1,12 @@
-package com.aranaira.arcanearchives.proxy;
+/*package com.aranaira.arcanearchives.proxy;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.Keybinds;
 import com.aranaira.arcanearchives.client.render.entity.RenderWeight;
 import com.aranaira.arcanearchives.entity.EntityWeight;
 import net.minecraft.item.Item;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -20,28 +22,27 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 
 @SuppressWarnings("unused")
-@Mod.EventBusSubscriber(modid = ArcaneArchives.MODID, value = Side.CLIENT)
 public class ClientProxy extends CommonProxy {
-/*	@SideOnly(Side.CLIENT)
+*//*	@OnlyIn(Dist.CLIENT)
 	public static RadiantTankTESR tankTESR;
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	public static RadiantTankTEISR itemTESR;
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	public static RadiantChestTESR chestTESR;
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	public static RadiantTroveTESR troveTESR;
-	@SideOnly(Side.CLIENT)
-	public static BrazierTESR brazierTESR;*/
+	@OnlyIn(Dist.CLIENT)
+	public static BrazierTESR brazierTESR;*//*
 
   @SubscribeEvent
   public static void playerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
-    /*		DataHelper.clearClientCache();*/
+    *//*		DataHelper.clearClientCache();*//*
   }
 
   @SubscribeEvent
-  @SideOnly(Side.CLIENT)
+  @OnlyIn(Dist.CLIENT)
   public static void modelRegister(ModelRegistryEvent event) {
-/*		tankTESR = new RadiantTankTESR();
+*//*		tankTESR = new RadiantTankTESR();
 		ClientRegistry.bindTileEntitySpecialRenderer(RadiantTankTileEntity.class, tankTESR);
 		//
 		RadiantTankItem item = (RadiantTankItem) BlockRegistry.RADIANT_TANK.getItemBlock();
@@ -57,7 +58,7 @@ public class ClientProxy extends CommonProxy {
 		//ClientRegistry.bindTileEntitySpecialRenderer(RadiantTroveTileEntity.class, troveTESR);
 		//
 		brazierTESR = new BrazierTESR();
-		ClientRegistry.bindTileEntitySpecialRenderer(BrazierTileEntity.class, brazierTESR);*/
+		ClientRegistry.bindTileEntitySpecialRenderer(BrazierTileEntity.class, brazierTESR);*//*
   }
 
   @Override
@@ -73,7 +74,7 @@ public class ClientProxy extends CommonProxy {
   public void init(FMLInitializationEvent event) {
     super.init(event);
 
-/*		ItemColors colours = Minecraft.getMinecraft().getItemColors();
+*//*		ItemColors colours = Minecraft.getInstance().getItemColors();
 
 		colours.registerItemColorHandler((stack, tintIndex) -> {
 			if (tintIndex != 1) {
@@ -93,7 +94,7 @@ public class ClientProxy extends CommonProxy {
 			}
 
 			return TintUtils.getColor(contained);
-		}, ItemRegistry.ECHO);*/
+		}, ItemRegistry.ECHO);*//*
   }
 
   @Override
@@ -105,4 +106,4 @@ public class ClientProxy extends CommonProxy {
   @Override
   public void registerItemRenderer(@Nonnull Item item, int meta, String id) {
   }
-}
+}*/

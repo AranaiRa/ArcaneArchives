@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.client.tracking;
+/*package com.aranaira.arcanearchives.client.tracking;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.client.render.RenderUtils;
@@ -11,8 +11,13 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vector3d;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
@@ -27,8 +32,8 @@ import java.util.Set;
 public class LineHandler {
   public static boolean mIsDrawingLine;
 
-  @SideOnly(Side.CLIENT)
-  public static void drawRays(long worldTime, Vec3d adjustedPlayerPos, Set<Vec3d> target_pos) {
+  @OnlyIn(Dist.CLIENT)
+  public static void drawRays(long worldTime, Vector3d adjustedPlayerPos, Set<Vector3d> target_pos) {
     GlStateManager.pushMatrix();
     GlStateManager.disableCull();
     GlStateManager.disableLighting();
@@ -43,9 +48,9 @@ public class LineHandler {
     GlStateManager.color(c.red, c.green, c.blue, c.alpha);
     GlStateManager.depthMask(false);
 
-    Vec3d scale = RenderUtils.ONE.scale(0.5);
+    Vector3d scale = RenderUtils.ONE.scale(0.5);
 
-    for (Vec3d vec : target_pos) {
+    for (Vector3d vec : target_pos) {
       Tessellator tessellator = Tessellator.getInstance();
       BufferBuilder bufferBuilder = tessellator.getBuffer();
       bufferBuilder.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_COLOR);
@@ -67,22 +72,22 @@ public class LineHandler {
   }
 
   @SubscribeEvent
-  @SideOnly(Side.CLIENT)
+  @OnlyIn(Dist.CLIENT)
   public static void renderOverlay(RenderWorldLastEvent event) {
-    Set<Vec3d> positions = ManifestTracking.getPositions(Minecraft.getMinecraft().player.dimension);
+    Set<Vector3d> positions = ManifestTracking.getPositions(Minecraft.getInstance().player.dimension);
 
     if (!positions.isEmpty()) {
-      drawRays(Minecraft.getMinecraft().player.world.getTotalWorldTime(), RenderUtils.getPlayerPosAdjusted(Minecraft.getMinecraft().player, event.getPartialTicks()), ImmutableSet.copyOf(positions));
+      drawRays(Minecraft.getInstance().player.world.getTotalWorldTime(), RenderUtils.getPlayerPosAdjusted(Minecraft.getInstance().player, event.getPartialTicks()), ImmutableSet.copyOf(positions));
     }
   }
 
-  public static void addLine(Vec3d line, int dimension) {
-    Set<Vec3d> positions = ManifestTracking.getPositions(dimension);
+  public static void addLine(Vector3d line, int dimension) {
+    Set<Vector3d> positions = ManifestTracking.getPositions(dimension);
     positions.add(line);
   }
 
   public static void addLine(BlockPos pos, int dimension) {
-    addLine(new Vec3d(pos.getX(), pos.getY(), pos.getZ()), dimension);
+    addLine(new Vector3d(pos.getX(), pos.getY(), pos.getZ()), dimension);
   }
 
   public static void addLines(List<BlockPos> positions, int dimension) {
@@ -90,12 +95,12 @@ public class LineHandler {
   }
 
   public static void removeLine(BlockPos pos, int dimension) {
-    Vec3d bpos = new Vec3d(pos.getX(), pos.getY(), pos.getZ());
+    Vector3d bpos = new Vector3d(pos.getX(), pos.getY(), pos.getZ());
     removeLine(bpos, dimension);
   }
 
-  public static void removeLine(Vec3d line, int dimension) {
-    Set<Vec3d> positions = ManifestTracking.getPositions(dimension);
+  public static void removeLine(Vector3d line, int dimension) {
+    Set<Vector3d> positions = ManifestTracking.getPositions(dimension);
     positions.remove(line);
   }
 
@@ -106,16 +111,16 @@ public class LineHandler {
   }
 
   @SubscribeEvent
-  public static void playerLoggedIn(PlayerLoggedInEvent event) {
+  public static void playerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
     mIsDrawingLine = false;
   }
 
   public static void clearChests(int dimension) {
-    Set<Vec3d> positions = ManifestTracking.getPositions(dimension);
-    for (Vec3d pos : positions) {
+    Set<Vector3d> positions = ManifestTracking.getPositions(dimension);
+    for (Vector3d pos : positions) {
       ManifestTracking.remove(dimension, MathUtils.vec3dToLong(pos));
     }
     positions.clear();
   }
 
-}
+}*/

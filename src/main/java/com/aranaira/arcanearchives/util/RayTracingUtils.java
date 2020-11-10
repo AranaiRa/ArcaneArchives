@@ -1,10 +1,10 @@
-package com.aranaira.arcanearchives.util;
+/*package com.aranaira.arcanearchives.util;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -14,7 +14,7 @@ import java.util.List;
 public class RayTracingUtils {
   //Written by Daomephsta; Used with permission
   // TODO: Find original source file & license to link back to
-  public static RayTraceResult raytraceClosestObject(World world, @Nullable Entity exclude, Vec3d startVec, Vec3d endVec) {
+  public static RayTraceResult raytraceClosestObject(World world, @Nullable Entity exclude, Vector3d startVec, Vector3d endVec) {
     RayTraceResult result = world.rayTraceBlocks(startVec, endVec);
     double blockHitDistance = 0.0D; // The distance to the block that was
     // hit
@@ -51,7 +51,7 @@ public class RayTracingUtils {
   }
 
   //Written by Daomephsta; Used with permission
-  public static void raytraceAll(List<RayTraceResult> results, World world, @Nullable Entity exclude, Vec3d startVec, Vec3d endVec) {
+  public static void raytraceAll(List<RayTraceResult> results, World world, @Nullable Entity exclude, Vector3d startVec, Vector3d endVec) {
     RayTraceResult blockRaytrace = world.rayTraceBlocks(startVec, endVec);
     if (blockRaytrace != null) {
       results.add(blockRaytrace);
@@ -70,4 +70,4 @@ public class RayTracingUtils {
       }
     }
   }
-}
+}*/

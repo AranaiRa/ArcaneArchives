@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.inventory;
+/*package com.aranaira.arcanearchives.inventory;
 
 import com.aranaira.arcanearchives.inventory.handlers.OptionalUpgradesHandler;
 import com.aranaira.arcanearchives.inventory.handlers.SizeUpgradeItemHandler;
@@ -139,4 +139,4 @@ public class ContainerUpgrades extends Container {
 
 		return ItemStack.EMPTY;
 	}
-}
+}*/
