@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tilenetwork;
+/*package com.aranaira.arcanearchives.tilenetwork;
 
 import com.aranaira.arcanearchives.api.immanence.IImmanenceSubscriber;
 import com.aranaira.arcanearchives.immanence.ImmanenceBus;
@@ -86,4 +86,4 @@ public class Network extends ForwardingMap<UUID, NetworkEntry> {
   protected Map<UUID, NetworkEntry> delegate() {
     return entries;
   }
-}
+}*/

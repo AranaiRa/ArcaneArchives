@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.immanence;
+/*package com.aranaira.arcanearchives.immanence;
 
 import com.aranaira.arcanearchives.api.immanence.*;
 import com.aranaira.arcanearchives.tilenetwork.Network;
@@ -111,4 +111,4 @@ public class ImmanenceBus implements IImmanenceBus {
   public long getLastTickTime() {
     return lastTickTime;
   }
-}
+}*/

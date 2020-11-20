@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.util;
+/*package com.aranaira.arcanearchives.util;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufInputStream;
@@ -121,7 +121,7 @@ public class NetworkUtils {
       int j = buf.readInt();
       int k = buf.readShort();
       ItemStack itemstack = new ItemStack(Item.getItemById(i), j, k);
-      itemstack.setTagCompound(readNBT(buf));
+      itemstack.setTag(readNBT(buf));
       return itemstack;
     }
   }
@@ -135,9 +135,9 @@ public class NetworkUtils {
       int j = buf.readInt();
       int k = buf.readShort();
       ItemStack itemstack = new ItemStack(Item.getItemById(i), j, k);
-      itemstack.setTagCompound(buf.readCompoundTag());
+      itemstack.setTag(buf.readCompoundTag());
       return itemstack;
     }
   }
 
-}
+}*/

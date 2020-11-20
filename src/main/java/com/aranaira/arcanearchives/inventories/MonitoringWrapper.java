@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.inventories;
+/*package com.aranaira.arcanearchives.inventories;
 
 import com.aranaira.arcanearchives.tileentities.NetworkedBaseTile;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
@@ -56,14 +56,14 @@ public class MonitoringWrapper implements ITrackingHandler, INBTSerializable<Com
   public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
     throw new IllegalStateException("MonitoringWrapper::insertItem is not supported.");
 
-/*    if (!simulate) {
+*//*    if (!simulate) {
       invalidate();
     }
     ItemStack result = this.internal.insertItem(slot, stack, simulate);
     if (!simulate && (result.isEmpty() || result.getCount() != stack.getCount())) {
       parent.markDirty();
     }
-    return result;*/
+    return result;*//*
   }
 
   @Nonnull
@@ -92,4 +92,4 @@ public class MonitoringWrapper implements ITrackingHandler, INBTSerializable<Com
   @Override
   public void deserializeNBT(CompoundNBT nbt) {
   }
-}
+}*/

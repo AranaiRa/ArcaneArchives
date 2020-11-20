@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.util.ticker;
+/*package com.aranaira.arcanearchives.util.ticker;
 
 import com.aranaira.arcanearchives.tileentities.NetworkedBaseTile;
 import com.aranaira.arcanearchives.tilenetwork.Network;
@@ -75,4 +75,4 @@ public class TileTicker implements ITicker<MinecraftServer, NetworkedBaseTile> {
   public NetworkedBaseTile getInternal() {
     return tile;
   }
-}
+}*/

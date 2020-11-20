@@ -106,7 +106,7 @@ public class RadiantTankBlock extends TemplateBlock {
 		te.serializeStack(tag);
 
 		ItemStack stack = new ItemStack(BlockRegistry.RADIANT_TANK.getItemBlock());
-		stack.setTagCompound(tag);
+		stack.setTag(tag);
 
 		return stack;
 	}

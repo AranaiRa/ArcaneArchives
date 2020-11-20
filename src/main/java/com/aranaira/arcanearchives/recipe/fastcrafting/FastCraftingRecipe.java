@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.recipe.fastcrafting;
+/*package com.aranaira.arcanearchives.recipe.fastcrafting;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.api.crafting.IngredientStack;
@@ -180,4 +180,4 @@ public class FastCraftingRecipe implements IArcaneArchivesRecipe {
       return false;
     }
   }
-}
+}*/

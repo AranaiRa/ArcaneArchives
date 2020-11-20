@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.blocks.interfaces;
+/*package com.aranaira.arcanearchives.blocks.interfaces;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.util.Direction;
@@ -53,4 +53,4 @@ public interface ISingleAccessor extends IAccessor, IFacingBlock {
       return false;
     }
   }
-}
+}*/

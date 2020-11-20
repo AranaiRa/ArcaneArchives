@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.util;
+/*package com.aranaira.arcanearchives.util;
 
 import com.aranaira.arcanearchives.reference.Tags;
 import net.minecraft.item.ItemStack;
@@ -27,4 +27,4 @@ public class NetworkItemUtil {
     tag.setUniqueId(Tags.networkId, uuid);
     return true;
   }
-}
+}*/

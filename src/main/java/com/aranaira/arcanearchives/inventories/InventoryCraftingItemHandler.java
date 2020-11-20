@@ -1,3 +1,4 @@
+/*
 package com.aranaira.arcanearchives.inventories;
 
 import net.minecraft.inventory.container.Container;
@@ -115,4 +116,5 @@ public abstract class InventoryCraftingItemHandler<T extends TileEntity, V exten
     }
   }
 }
+*/
 

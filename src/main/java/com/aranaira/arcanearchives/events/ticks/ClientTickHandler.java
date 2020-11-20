@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.events.ticks;
+/*package com.aranaira.arcanearchives.events.ticks;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import net.minecraftforge.event.TickEvent;
@@ -24,4 +24,4 @@ public class ClientTickHandler extends TickHandler {
   public static void addRunnable(Runnable runnable, int delay) {
     INSTANCE.addRunnableToQueue(runnable, delay);
   }
-}
+}*/

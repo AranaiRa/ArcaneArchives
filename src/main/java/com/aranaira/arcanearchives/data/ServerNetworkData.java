@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.data;
+/*package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.data.client.ClientNetworkData;
 import com.aranaira.arcanearchives.reference.Tags;
@@ -74,4 +74,4 @@ public class ServerNetworkData extends WorldSavedData implements ISerializePacke
   public void toPacket(PacketBuffer buf) {
     ClientNetworkData.fromServer(this).toPacket(buf);
   }
-}
+}*/

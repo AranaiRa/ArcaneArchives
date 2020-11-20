@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.data;
+/*package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.client.ClientNameData;
@@ -86,4 +86,4 @@ public class NameData extends WorldSavedData implements ISerializePacketBuffer<C
   public void toPacket(PacketBuffer buf) {
     ClientNameData.fromServer(this).toPacket(buf);
   }
-}
+}*/

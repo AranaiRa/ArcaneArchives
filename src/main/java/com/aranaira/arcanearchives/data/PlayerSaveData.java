@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.data;
+/*package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.reference.Tags;
@@ -46,4 +46,4 @@ public class PlayerSaveData extends WorldSavedData {
     compound.setBoolean(Tags.PlayerSaveData.receivedBook, receivedBook);
     return compound;
   }
-}
+}*/

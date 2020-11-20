@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.client.gui;
+/*package com.aranaira.arcanearchives.client.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -144,4 +144,4 @@ public class GUIBookContainer extends ContainerScreen {
       super(1, x, y, width, height, text);
     }
   }
-}
+}*/

@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.manifest;
+/*package com.aranaira.arcanearchives.manifest;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.entity.player.PlayerEntity;
@@ -78,4 +78,4 @@ public class Manifest {
       return manifest;
     }
   }
-}
+}*/

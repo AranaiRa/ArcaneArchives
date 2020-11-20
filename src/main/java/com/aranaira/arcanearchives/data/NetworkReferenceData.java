@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.data;
+/*package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.reference.Tags;
 import com.aranaira.arcanearchives.tilenetwork.Network;
@@ -66,4 +66,4 @@ public class NetworkReferenceData extends WorldSavedData {
     compound.setTag(Tags.NetworkReference.networkIds, ids);
     return compound;
   }
-}
+}*/

@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.init;
+/*package com.aranaira.arcanearchives.init;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.*;
@@ -72,9 +72,9 @@ public class ModBlocks {
     return register(registryName, supplier, mat, consumer, null);
   }
 
-/*  public static <T extends Block> T register(String registryName, Function<Material, T> supplier, Material mat, Function<T, ? extends ItemBlock> itemBlock) {
+*//*  public static <T extends Block> T register(String registryName, Function<Material, T> supplier, Material mat, Function<T, ? extends ItemBlock> itemBlock) {
     return register(registryName, supplier, mat, null, itemBlock);
-  }*/
+  }*//*
 
   public static <T extends Block> T register(String registryName, Function<Material, T> supplier) {
     return register(registryName, supplier, Material.ROCK, null, null);
@@ -84,9 +84,9 @@ public class ModBlocks {
     return register(registryName, supplier, Material.ROCK, consumer, null);
   }
 
-/*  public static <T extends Block> T register(String registryName, Function<Material, T> supplier, Function<T, ? extends ItemBlock> itemBlock) {
+*//*  public static <T extends Block> T register(String registryName, Function<Material, T> supplier, Function<T, ? extends ItemBlock> itemBlock) {
     return register(registryName, supplier, Material.ROCK, null, itemBlock);
-  }*/
+  }*//*
 
   public static <T extends Block> T register(String registryName, Function<Material, T> supplier, Material material, @Nullable Consumer<T> consumer, @Nullable Function<T, ? extends BlockItem> itemBlock) {
     T block = supplier.apply(material);
@@ -120,4 +120,4 @@ public class ModBlocks {
   public static class Boxes {
     public static AxisAlignedBB QuartzCluster = new AxisAlignedBB(0.2, 0.0, 0.2, 0.8, 1.0, 0.8);
   }
-}
+}*/

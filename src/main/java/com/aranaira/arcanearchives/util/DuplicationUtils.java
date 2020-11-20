@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.util;
+/*package com.aranaira.arcanearchives.util;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.google.common.reflect.TypeToken;
@@ -125,4 +125,4 @@ public class DuplicationUtils {
       ArcaneArchives.logger.error("Unable to write ore information to configuration!");
     }
   }
-}
+}*/

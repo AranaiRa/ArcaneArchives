@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.recipe.cw;
+/*package com.aranaira.arcanearchives.recipe.cw;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.api.crafting.IngredientStack;
@@ -43,4 +43,4 @@ public class CrystalRecipeImpl extends CrystalWorkbenchRecipe {
     }
     return result;
   }
-}
+}*/

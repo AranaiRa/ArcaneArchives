@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.blocks.templates;
+/*package com.aranaira.arcanearchives.blocks.templates;
 
 import com.aranaira.arcanearchives.blocks.interfaces.ISingleAccessor;
 import net.minecraft.block.Block;
@@ -10,12 +10,12 @@ public abstract class HorizontalSingleAccessorTemplateBlock extends HorizontalTe
     setDefaultState(getDefaultState().with(getFacingProperty(), Direction.NORTH).with(getAccessorProperty(), false));
   }
 
-/*  @Override
+*//*  @Override
   protected BlockStateContainer createBlockState() {
     return new BlockStateContainer(this, getFacingProperty(), getAccessorProperty());
-  }*/
+  }*//*
 
-/*  @Override
+*//*  @Override
   public void breakBlock(World world, BlockPos pos, BlockState state) {
     super.breakBlock(world, pos, state);
     if (state.get(getAccessorProperty())) {
@@ -53,5 +53,5 @@ public abstract class HorizontalSingleAccessorTemplateBlock extends HorizontalTe
     if (!createAccessor(state, world, pos)) {
       ArcaneArchives.logger.error("Unable to create accessor for " + state.getBlock().getRegistryName().toString() + " at " + accessor.toString() + " (origin: " + pos.toString() + ")");
     }
-  }*/
-}
+  }*//*
+}*/

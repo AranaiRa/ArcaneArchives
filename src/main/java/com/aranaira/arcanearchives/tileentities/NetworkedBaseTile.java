@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tileentities;
+/*package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.reference.Tags;
@@ -122,4 +122,4 @@ public abstract class NetworkedBaseTile extends BaseTile {
   public void generateNetworkId() {
     throw new IllegalStateException("This tile uses the default implementation of NetworkedBaseTile::generateNetworkId and should never have been called. " + this);
   }
-}
+}*/

@@ -245,7 +245,7 @@ public class BrazierTileEntity extends ImmanenceTileEntity implements IRanged {
 			if (doShulkerThing) {
 				tag.getCompoundTag("BlockEntityTag").removeTag("Items");
 				ItemStackHelper.saveAllItems(tag.getCompoundTag("BlockEntityTag"), ((ShulkerItemHandler) cap).getStacks(), false);
-				item.setTagCompound(tag);
+				item.setTag(tag);
 				remainder.add(item);
 			}
  } else {

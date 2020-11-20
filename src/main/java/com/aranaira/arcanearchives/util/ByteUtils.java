@@ -169,7 +169,7 @@ public class ByteUtils {
       int j = buf.readShort();
       int k = buf.readInt();
       ItemStack itemstack = new ItemStack(Item.getItemById(i), j, k);
-      itemstack.setTagCompound(readNBT(buf));
+      itemstack.setTag(readNBT(buf));
       return itemstack;
     }
   }
@@ -183,7 +183,7 @@ public class ByteUtils {
       int j = buf.readShort();
       int k = buf.readInt();
       ItemStack itemstack = new ItemStack(Item.getItemById(i), j, k);
-      itemstack.setTagCompound(buf.readCompoundTag());
+      itemstack.setTag(buf.readCompoundTag());
       return itemstack;
     }
   }

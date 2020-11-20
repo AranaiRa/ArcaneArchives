@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tileentities;
+/*package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.inventories.TrackingExtendedHandler;
 import com.aranaira.arcanearchives.reference.Tags;
@@ -86,4 +86,4 @@ public class RadiantChestTile extends TrackingNetworkedBaseTile<TrackingExtended
   public String getDescriptor() {
     return "arcanearchives.tiles.tracking_descriptors.chest";
   }
-}
+}*/

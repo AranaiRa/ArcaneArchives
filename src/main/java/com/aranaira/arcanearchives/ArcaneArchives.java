@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives;
+/*package com.aranaira.arcanearchives;
 
 import com.aranaira.arcanearchives.init.ModBlocks;
 import com.aranaira.arcanearchives.init.ModTiles;
@@ -27,4 +27,4 @@ public class ArcaneArchives {
 
   public ArcaneArchives() {
   }
-}
+}*/

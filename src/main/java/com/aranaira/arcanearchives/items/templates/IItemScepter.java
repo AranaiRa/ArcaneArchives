@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items.templates;
+/*package com.aranaira.arcanearchives.items.templates;
 
 import net.minecraft.item.ItemStack;
 
@@ -10,4 +10,4 @@ public interface IItemScepter {
 		}
 		return super.getDestroySpeed(stack, state);
 	}
-}
+}*/

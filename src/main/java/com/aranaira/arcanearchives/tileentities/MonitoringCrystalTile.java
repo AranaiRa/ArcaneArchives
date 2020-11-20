@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tileentities;
+/*package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.blocks.templates.OmniTemplateBlock;
 import com.aranaira.arcanearchives.inventories.MonitoringWrapper;
@@ -76,4 +76,4 @@ public class MonitoringCrystalTile extends TrackingNetworkedBaseTile<MonitoringW
 
     return target;
   }
-}
+}*/

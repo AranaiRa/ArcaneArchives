@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.client.gui;
+/*package com.aranaira.arcanearchives.client.gui;
 
 import com.aranaira.arcanearchives.client.gui.controls.InvisibleButton;
 import com.aranaira.arcanearchives.config.ConfigHandler;
@@ -91,4 +91,4 @@ public class GUIDevouringCharm extends ContainerScreen {
 		}
 		this.drawTexturedModalRect(i, j + 22 + DEVOURINGCHARM_H, 0, 0, INVENTORY_W, INVENTORY_H);
 	}
-}
+}*/

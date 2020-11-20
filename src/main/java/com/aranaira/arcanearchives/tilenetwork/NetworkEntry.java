@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tilenetwork;
+/*package com.aranaira.arcanearchives.tilenetwork;
 
 import com.aranaira.arcanearchives.tileentities.NetworkedBaseTile;
 import com.aranaira.arcanearchives.util.WorldUtil;
@@ -31,4 +31,4 @@ public class NetworkEntry {
   public <T extends NetworkedBaseTile> T getTile() {
     return (T) WorldUtil.getTileEntity(this.clazz, this.dimension, this.position);
   }
-}
+}*/

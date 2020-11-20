@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.init;
+/*package com.aranaira.arcanearchives.init;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.tileentities.*;
@@ -19,7 +19,7 @@ public class ModTiles {
 
   @SubscribeEvent
   public static void onRegister(Register<Block> event) {
-    /*    REGISTRY.forEach((key, value) -> GameRegistry.registerTileEntity(value, key));*/
+    *//*    REGISTRY.forEach((key, value) -> GameRegistry.registerTileEntity(value, key));*//*
   }
 
   static {
@@ -41,4 +41,4 @@ public class ModTiles {
 
   public static void load() {
   }
-}
+}*/

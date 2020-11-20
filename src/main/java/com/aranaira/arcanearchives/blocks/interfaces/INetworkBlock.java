@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.blocks.interfaces;
+/*package com.aranaira.arcanearchives.blocks.interfaces;
 
 import com.aranaira.arcanearchives.tileentities.NetworkedBaseTile;
 import com.aranaira.arcanearchives.util.WorldUtil;
@@ -28,4 +28,4 @@ public interface INetworkBlock {
 
     return false;
   }
-}
+}*/

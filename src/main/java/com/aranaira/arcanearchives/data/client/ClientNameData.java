@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.data.client;
+/*package com.aranaira.arcanearchives.data.client;
 
 import com.aranaira.arcanearchives.data.NameData;
 import com.aranaira.arcanearchives.tilenetwork.NetworkName;
@@ -46,4 +46,4 @@ public class ClientNameData implements ISerializePacketBuffer<ClientNameData> {
       entry.getValue().toBytes(buf);
     }
   }
-}
+}*/

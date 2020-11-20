@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.data.client;
+/*package com.aranaira.arcanearchives.data.client;
 
 import com.aranaira.arcanearchives.data.ServerNetworkData;
 import com.aranaira.arcanearchives.types.ISerializePacketBuffer;
@@ -36,4 +36,4 @@ public class ClientNetworkData implements ISerializePacketBuffer<ClientNetworkDa
   public void toPacket(PacketBuffer buf) {
     buf.writeUniqueId(networkId);
   }
-}
+}*/

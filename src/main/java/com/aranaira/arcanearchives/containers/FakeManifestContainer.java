@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.containers;
+/*package com.aranaira.arcanearchives.containers;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.*;
@@ -42,4 +42,4 @@ public class FakeManifestContainer extends Container {
       super(emptyInventory, 0, xPosition, yPosition);
     }
   }
-}
+}*/

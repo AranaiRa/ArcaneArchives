@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.util;
+/*package com.aranaira.arcanearchives.util;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
@@ -13,13 +13,13 @@ import javax.annotation.Nullable;
 
 public class ItemUtils {
   public static boolean areStacksEqualIgnoreSize(ItemStack stackA, ItemStack stackB) {
-		/*if (stackA.getItem() instanceof ItemBlock && stackB.getItem() instanceof ItemBlock) {
+		*//*if (stackA.getItem() instanceof ItemBlock && stackB.getItem() instanceof ItemBlock) {
 			return ItemStack.areItemsEqual(stackA, stackB);
-		}*/
+		}*//*
     return ItemStack.areItemsEqual(stackA, stackB) && ItemStack.areItemStackTagsEqual(stackA, stackB);
   }
 
-/*	public static int calculateRedstoneFromTileEntity (@Nullable TileEntity te) {
+*//*	public static int calculateRedstoneFromTileEntity (@Nullable TileEntity te) {
 		if (te instanceof RadiantChestTileEntity) {
 			return calculateRedstoneFromItemHandler(te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null));
 		} else if (te instanceof RadiantTroveTileEntity) {
@@ -34,7 +34,7 @@ public class ItemUtils {
 			return MathHelper.floor(f * 14.0F) + (amount > 0 ? 1 : 0);
 		}
 		return 0;
-	}*/
+	}*//*
 
   // TODO: This exists in ItemHandlerHelper btw
   public static int calculateRedstoneFromItemHandler(@Nullable IItemHandler handler) {
@@ -63,7 +63,7 @@ public class ItemUtils {
     CompoundNBT tagCompound = stack.getTag();
     if (tagCompound == null) {
       tagCompound = new CompoundNBT();
-      stack.setTagCompound(tagCompound);
+      stack.setTag(tagCompound);
     }
     return tagCompound;
   }
@@ -123,4 +123,4 @@ public class ItemUtils {
       }
     }
   }
-}
+}*/

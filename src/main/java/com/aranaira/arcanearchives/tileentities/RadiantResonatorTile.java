@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tileentities;
+/*package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.blocks.QuartzCluster;
@@ -99,7 +99,7 @@ public class RadiantResonatorTile extends NetworkedBaseTile implements ITickable
     return (int) Math.floor(growth / (double) ServerSideConfig.ResonatorTickTime * 100D);
   }
 
-/*  @Override
+*//*  @Override
   public void breakBlock(@Nullable IBlockState state, boolean harvest) {
     super.breakBlock(state, harvest);
 
@@ -112,7 +112,7 @@ public class RadiantResonatorTile extends NetworkedBaseTile implements ITickable
     if (network != null) {
       network.removeTile(this);
     }
-  }*/
+  }*//*
 
   public TickResult canTick() {
     if (world.isAirBlock(pos.up())) {
@@ -188,4 +188,4 @@ public class RadiantResonatorTile extends NetworkedBaseTile implements ITickable
       return format;
     }
   }
-}
+}*/

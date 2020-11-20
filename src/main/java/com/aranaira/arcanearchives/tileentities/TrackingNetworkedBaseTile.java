@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tileentities;
+/*package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.inventories.ITrackingHandler;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
@@ -27,4 +27,4 @@ public abstract class TrackingNetworkedBaseTile<T extends IItemHandler & INBTSer
   }
 
   public abstract String getDescriptor ();
-}
+}*/

@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.util;
+/*package com.aranaira.arcanearchives.util;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
 
@@ -14,4 +14,4 @@ public class PlayerUtil {
       mpPlayer.sendAllContents(mpPlayer.openContainer, mpPlayer.openContainer.getInventory());
     }
   }
-}
+}*/

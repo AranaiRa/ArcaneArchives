@@ -1,3 +1,4 @@
+/*
 package com.aranaira.arcanearchives.inventories;
 
 
@@ -117,4 +118,5 @@ public class InventoryWorkbenchCraftResult implements IInventory {
     return this.recipeUsed;
   }
 }
+*/
 

@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.client.tracking;
+/*package com.aranaira.arcanearchives.client.tracking;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.util.ItemUtils;
@@ -22,10 +22,10 @@ public class ManifestTracking {
   private static Set<ItemStack> allTracked = new HashSet<>();
 
   // TODO: Only fired on the server
-/*  @SubscribeEvent
+*//*  @SubscribeEvent
   public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
     clear();
-  }*/
+  }*//*
 
   public static void clear() {
     reference.clear();
@@ -33,7 +33,7 @@ public class ManifestTracking {
     positionsByDimension = null;
   }
 
-/*  public static void add(CollatedEntry entry) {
+*//*  public static void add(CollatedEntry entry) {
     for (EntryDescriptor innerEntry : entry.descriptions) {
       add(entry.getStack(), innerEntry.dimension, innerEntry.pos);
     }
@@ -43,7 +43,7 @@ public class ManifestTracking {
     for (EntryDescriptor innerEntry : entry.descriptions) {
       remove(entry.getStack(), innerEntry.dimension, innerEntry.pos);
     }
-  }*/
+  }*//*
 
   public static void add(ItemStack stack, int dimension, BlockPos pos) {
     List<ItemStack> dim = getDimension(dimension).getOrDefault(pos.toLong(), null);
@@ -133,4 +133,4 @@ public class ManifestTracking {
   public static Set<Vector3d> getPositions(int dimension) {
     return getDimensionPositions(dimension);
   }
-}
+}*/

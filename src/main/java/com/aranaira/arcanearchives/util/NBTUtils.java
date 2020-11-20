@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.util;
+/*package com.aranaira.arcanearchives.util;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -43,4 +43,4 @@ public class NBTUtils {
 
     return tag.getInteger(key);
   }
-}
+}*/

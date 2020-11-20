@@ -14,7 +14,6 @@ public class ManifestDescriptor extends IndexDescriptor {
   public static ManifestDescriptor fromEntry(RegistryKey<World> key, BlockPos player, IndexEntry entry) {
     IndexDescriptor parent = entry.getDescriptor();
     BlockPos position = entry.getPosition();
-    int dimension = entry.getDimension();
     double distance = player.distanceSq(position); //.getX(), position.getY(), position.getZ());
     return new ManifestDescriptor(key, position, distance, parent.getType(), parent.getDescription());
   }

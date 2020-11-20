@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.util.ticker;
+/*package com.aranaira.arcanearchives.util.ticker;
 
 import com.aranaira.arcanearchives.tileentities.NetworkedBaseTile;
 import net.minecraft.server.MinecraftServer;
@@ -34,13 +34,13 @@ public class Ticker {
       }
     } else if (event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.END && event.type == TickEvent.Type.SERVER) {
       // TODO: Check how Lootr did this
-/*      if (serverType == ServerType.UNKNOWN) {
+*//*      if (serverType == ServerType.UNKNOWN) {
         if (FMLCommonHandler.instance().getSide() == LogicalSide.CLIENT) {
           serverType = ServerType.INTEGRATED;
         } else {
           serverType = ServerType.DEDICATED;
         }
-      }*/
+      }*//*
 
       Set<ITicker<MinecraftServer, NetworkedBaseTile>> listCopy;
       Set<ITicker<MinecraftServer, NetworkedBaseTile>> removed = new HashSet<>();
@@ -94,4 +94,4 @@ public class Ticker {
       }
     }
   }
-}
+}*/

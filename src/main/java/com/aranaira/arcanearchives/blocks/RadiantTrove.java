@@ -153,7 +153,7 @@ public class RadiantTrove extends DirectionalBlock {
 		te.serializeStack(tag);
 
 		ItemStack stack = new ItemStack(BlockRegistry.RADIANT_TROVE.getItemBlock());
-		stack.setTagCompound(tag);
+		stack.setTag(tag);
 
 		return stack;
 	}

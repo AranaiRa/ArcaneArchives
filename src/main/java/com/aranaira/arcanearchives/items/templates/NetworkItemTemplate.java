@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.items.templates;
+/*package com.aranaira.arcanearchives.items.templates;
 
 import com.aranaira.arcanearchives.data.storage.ClientDataStorage;
 import com.aranaira.arcanearchives.util.NetworkItemUtil;
@@ -26,4 +26,4 @@ public class NetworkItemTemplate extends ItemTemplate {
     tooltip.add("");
     tooltip.add(TextFormatting.GOLD + I18n.format("arcanearchives.network.name.network", ClientDataStorage.getStringFor(network)));
   }
-}
+}*/

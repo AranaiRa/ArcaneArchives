@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.api.cwb;
+/*package com.aranaira.arcanearchives.api.cwb;
 
 import net.minecraft.util.ResourceLocation;
 
@@ -44,4 +44,4 @@ public interface ICrystalWorkbenchRegistry {
 
   @Nonnull
   Set<Map.Entry<ResourceLocation, CrystalWorkbenchRecipe>> getEntries();
-}
+}*/

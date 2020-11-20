@@ -1,15 +1,15 @@
-package com.aranaira.arcanearchives.types;
+/*package com.aranaira.arcanearchives.types;
 
 import com.aranaira.arcanearchives.tileentities.BaseTile;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.Objects;
 
-/**
+*//**
  * Specifically pairing a block position with a dimension in order to
  * track the unique whereabouts of a tile or other block without running
  * into cross-dimensional conflicts.
- */
+ *//*
 public class BlockPosDimension {
   public BlockPos pos;
   public int dimension;
@@ -51,4 +51,4 @@ public class BlockPosDimension {
   public static BlockPosDimension fromTile (BaseTile tile) {
     return new BlockPosDimension(tile.getPos(), tile.getWorld().provider.getDimension());
   }
-}
+}*/

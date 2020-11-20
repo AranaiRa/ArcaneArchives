@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.inventory.handlers;
+/*package com.aranaira.arcanearchives.inventory.handlers;
 
 import com.aranaira.arcanearchives.util.ItemUtils;
 import net.minecraft.item.ItemStack;
@@ -140,4 +140,4 @@ public interface ITroveItemHandler extends IItemHandler {
 
 		return result;
 	}
-}
+}*/

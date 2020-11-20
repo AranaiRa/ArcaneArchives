@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.inventories;
+/*package com.aranaira.arcanearchives.inventories;
 
 import com.aranaira.arcanearchives.items.upgrades.IUpgrade;
 import net.minecraft.item.Item;
@@ -195,4 +195,4 @@ public abstract class SizeUpgradeItemHandler implements IItemHandler, IItemHandl
 
   public void onContentsChanged() {
   }
-}
+}*/

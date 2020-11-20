@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.client.gui;
+/*package com.aranaira.arcanearchives.client.gui;
 
 import com.aranaira.arcanearchives.config.ConfigHandler;
 import com.aranaira.arcanearchives.inventory.ContainerRadiantFurnace;
@@ -106,4 +106,4 @@ public class GUIRadiantFurnace extends ContainerScreen {
 	protected void renderHoveredToolTip (int mouseX, int mouseY) {
 		super.renderHoveredToolTip(mouseX, mouseY);
 	}
-}
+}*/

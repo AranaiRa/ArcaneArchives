@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.data;
+/*package com.aranaira.arcanearchives.data;
 
 import com.aranaira.arcanearchives.tilenetwork.Network;
 import com.aranaira.arcanearchives.tilenetwork.NetworkName;
@@ -46,7 +46,7 @@ public class DataHelper {
   private static <T extends WorldSavedData, U> T getData(Class<T> clazz, Function<U, T> provider, U value, Function<U, String> conversion) {
     // TODO: Fix this
     return null;
-/*    ServerWorld world = getWorld();
+*//*    ServerWorld world = getWorld();
     @SuppressWarnings("unchecked") T saveData = (T) Objects.requireNonNull(world.getSavedData()).getOrCreate(() -> provider.apply(value), clazz);
 , conversion.apply(value));
     if (saveData == null) {
@@ -54,7 +54,7 @@ public class DataHelper {
       world.getMapStorage().setData(conversion.apply(value), saveData);
     }
 
-    return saveData;*/
+    return saveData;*//*
   }
 
   public static class Names {
@@ -98,8 +98,8 @@ public class DataHelper {
       getNetworkReferenceData().addNetwork(uuid);
       save();
       if (notify) {
-        /*        PacketNetwork.NameMessage.sendToAll();*/
+        *//*        PacketNetwork.NameMessage.sendToAll();*//*
       }
     }
   }
-}
+}*/

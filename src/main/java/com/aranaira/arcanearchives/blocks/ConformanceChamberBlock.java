@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.blocks;
+/*package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
 import net.minecraft.block.BlockState;
@@ -45,4 +45,4 @@ public class ConformanceChamberBlock extends TemplateBlock {
 	public boolean isOpaqueCube (BlockState state) {
 		return false;
 	}
-}
+}*/

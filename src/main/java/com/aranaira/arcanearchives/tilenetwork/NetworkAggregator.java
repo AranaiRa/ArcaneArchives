@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tilenetwork;
+/*package com.aranaira.arcanearchives.tilenetwork;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.data.DataHelper;
@@ -65,4 +65,4 @@ public class NetworkAggregator {
 
     Ticker.tick(event);
   }
-}
+}*/

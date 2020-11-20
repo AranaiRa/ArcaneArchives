@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.client.gui;
+/*package com.aranaira.arcanearchives.client.gui;
 
 import com.aranaira.arcanearchives.client.gui.controls.InvisibleButton;
 import com.aranaira.arcanearchives.client.gui.controls.RightClickTextField;
@@ -39,7 +39,7 @@ import java.util.List;
 //import vazkii.quark.api.IItemSearchBar;
 
 //@Optional.InterfaceList({@Optional.Interface(modid = "quark", iface = "vazkii.quark.api.IChestButtonCallback", striprefs = true), @Optional.Interface(modid = "quark", iface = "vazkii.quark.api.IItemSearchBar", striprefs = true)})
-public class RadiantChestGUI extends ContainerScreen implements GuiPageButtonList.GuiResponder /*, IChestButtonCallback, IItemSearchBar*/ {
+public class RadiantChestGUI extends ContainerScreen implements GuiPageButtonList.GuiResponder *//*, IChestButtonCallback, IItemSearchBar*//* {
   private static final ResourceLocation GUITextures = new ResourceLocation("arcanearchives:textures/gui/radiantchest.png");
   private static final ResourceLocation GUITexturesSimple = new ResourceLocation("arcanearchives:textures/gui/simple/radiantchest.png");
   private final int MAIN_W = 192, MAIN_H = 253, CHECK_X = 234, CHECK_Y = 0, CHECK_S = 6, SLASH_X = 240, SLASH_Y = 0, SLASH_S = 16, ROUTING_TOOLTIP_X = 159, ROUTING_TOOLTIP_Y = 234, ROUTING_TOOLTIP_W = 33, ROUTING_TOOLTIP_H = 16, ImageScale = 256;
@@ -114,8 +114,8 @@ public class RadiantChestGUI extends ContainerScreen implements GuiPageButtonLis
     if (button.id == 0) { //toggle button
       if (tile.getTileId() != null) {
         // TODO: Handle buttonm toggling
-/*                ToggleBrazier packet = new ToggleBrazier(mc.player.getUniqueID(), tile.getUuid());
-                Networking.CHANNEL.sendToServer(packet);*/
+*//*                ToggleBrazier packet = new ToggleBrazier(mc.player.getUniqueID(), tile.getUuid());
+                Networking.CHANNEL.sendToServer(packet);*//*
       }
     }
   }
@@ -130,10 +130,10 @@ public class RadiantChestGUI extends ContainerScreen implements GuiPageButtonLis
     drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, MAIN_W, MAIN_H, ImageScale, ImageScale);
 
     // TODO: Handle routing
-/*    if (container.getTile().getRoutingType() == IBrazierRouting.BrazierRoutingType.NO_NEW_STACKS) {
+*//*    if (container.getTile().getRoutingType() == IBrazierRouting.BrazierRoutingType.NO_NEW_STACKS) {
       this.drawTexturedModalRect(guiLeft + 164, guiTop + 239, CHECK_X, CHECK_Y, CHECK_S, CHECK_S);
       this.drawTexturedModalRect(guiLeft + 176, guiTop + 234, SLASH_X, SLASH_Y, SLASH_S, SLASH_S);
-    }*/
+    }*//*
   }
 
   @Override
@@ -242,13 +242,13 @@ public class RadiantChestGUI extends ContainerScreen implements GuiPageButtonLis
       if (mouseX >= guiLeft + ROUTING_TOOLTIP_X && mouseX <= guiLeft + ROUTING_TOOLTIP_X + ROUTING_TOOLTIP_W) {
         List<String> tooltip = new ArrayList<>();
         // TODO: Handle
-/*        if (container.getTile().getRoutingType() == IBrazierRouting.BrazierRoutingType.NO_NEW_STACKS) {
+*//*        if (container.getTile().getRoutingType() == IBrazierRouting.BrazierRoutingType.NO_NEW_STACKS) {
           tooltip.add(I18n.format("arcanearchives.tooltip.radiantchest.routingmode.nonewitems1"));
           tooltip.add(I18n.format("arcanearchives.tooltip.radiantchest.routingmode.nonewitems2"));
         } else {
           tooltip.add(I18n.format("arcanearchives.tooltip.radiantchest.routingmode.any1"));
           tooltip.add(I18n.format("arcanearchives.tooltip.radiantchest.routingmode.any2"));
-        }*/
+        }*//*
         this.drawHoveringText(tooltip, mouseX, mouseY);
         return;
       }
@@ -281,13 +281,13 @@ public class RadiantChestGUI extends ContainerScreen implements GuiPageButtonLis
     ItemStack stack = slotIn.getStack();
     if (!stack.isEmpty()) {
       // TODO: USE STANDARD GLOW SLOT METHOD
-/*      if (tracked != null && !tracked.isEmpty() && ManifestTrackingUtils.matches(stack, tracked)) {
+*//*      if (tracked != null && !tracked.isEmpty() && ManifestTrackingUtils.matches(stack, tracked)) {
         GlStateManager.disableDepth();
         long worldTime = this.mc.player.world.getWorldTime();
         Color c = ColorUtils.getColorFromTime(worldTime);
         GuiContainer.drawRect(slotIn.xPos, slotIn.yPos, slotIn.xPos + 16, slotIn.yPos + 16, c.toInteger());
         GlStateManager.enableDepth();
-      }*/
+      }*//*
     }
 
     int i = slotIn.xPos;
@@ -697,12 +697,12 @@ public class RadiantChestGUI extends ContainerScreen implements GuiPageButtonLis
   public void onGuiClosed() {
     super.onGuiClosed();
 
-/*    if (tracked != null) {
+*//*    if (tracked != null) {
       ManifestTrackingUtils.remove(dimension, pos);
-    }*/
+    }*//*
   }
 
-/*  @Optional.Method(modid = "quark")
+*//*  @Optional.Method(modid = "quark")
   @Override
   public boolean onAddChestButton(GuiButton button, int buttonType) {
     return true;
@@ -713,7 +713,7 @@ public class RadiantChestGUI extends ContainerScreen implements GuiPageButtonLis
   public void onSearchBarAdded(GuiTextField bar) {
     bar.y = (height / 2) + 2;
     bar.x = (width / 2) - bar.width / 2;
-  }*/
+  }*//*
 
   @Override
   public void setEntryValue(int id, boolean value) {
@@ -728,13 +728,13 @@ public class RadiantChestGUI extends ContainerScreen implements GuiPageButtonLis
   @Override
   public void setEntryValue(int id, String value) {
     // TODO: Support set/unsest name
-/*    if (lastValue != null && !lastValue.isEmpty() && value.isEmpty()) {
+*//*    if (lastValue != null && !lastValue.isEmpty() && value.isEmpty()) {
       UnsetName packet = new UnsetName(tile.getPos(), tile.dimension);
       Networking.CHANNEL.sendToServer(packet);
     } else if (lastValue == null || !lastValue.equals(value)) {
       SetName packet = new SetName(tile.getPos(), value, tile.dimension);
       Networking.CHANNEL.sendToServer(packet);
     }
-    lastValue = value;*/
+    lastValue = value;*//*
   }
-}
+}*/

@@ -6,20 +6,24 @@ import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import net.minecraft.item.crafting.RecipeItemHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Index implements ISerializePacketBuffer<Index> {
-  private final Int2ObjectOpenHashMap<Long2ObjectOpenHashMap<Int2ObjectOpenHashMap<IndexSection>>> storage = new Int2ObjectOpenHashMap<>();
+  private final Map<RegistryKey<World>, Long2ObjectOpenHashMap<Long2ObjectOpenHashMap<Int2ObjectOpenHashMap<IndexSection>>>> storage = new HashMap<>();
 
   public Index() {
   }
 
-  private IndexSection resolveSection(int dimension, BlockPos position, int packed, ItemStack reference, IndexDescriptor descriptor) {
+  private IndexSection resolveSection(RegistryKey<World> key, BlockPos position, int packed, ItemStack reference, IndexDescriptor descriptor) {
     long pos = position.toLong();
-    Long2ObjectOpenHashMap<Int2ObjectOpenHashMap<IndexSection>> dimData = storage.computeIfAbsent(dimension, p -> new Long2ObjectOpenHashMap<>());
+    Long2ObjectOpenHashMap<Int2ObjectOpenHashMap<IndexSection>> dimData = storage.computeIfAbsent(key, p -> new Long2ObjectOpenHashMap<>());
     Int2ObjectOpenHashMap<IndexSection> posData = dimData.computeIfAbsent(pos, p -> new Int2ObjectOpenHashMap<>());
     return posData.computeIfAbsent(packed, p -> new IndexSection(reference, position, dimension, descriptor));
   }

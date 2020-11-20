@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.api.cwb;
+/*package com.aranaira.arcanearchives.api.cwb;
 
 import com.aranaira.arcanearchives.api.crafting.IngredientStack;
 import com.aranaira.arcanearchives.util.NetworkItemUtil;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 // TODO: Replace
-public abstract class CrystalWorkbenchRecipe /*extends IForgeRegistryEntry.Impl<CrystalWorkbenchRecipe>*/ implements ICrystalWorkbenchRecipe {
+public abstract class CrystalWorkbenchRecipe *//*extends IForgeRegistryEntry.Impl<CrystalWorkbenchRecipe>*//* implements ICrystalWorkbenchRecipe {
   protected List<IngredientStack> inputs;
   protected List<IngredientTransformer> transformers = new ArrayList<>();
   protected ItemStack output;
@@ -71,4 +71,4 @@ public abstract class CrystalWorkbenchRecipe /*extends IForgeRegistryEntry.Impl<
   public void setIndex(int index) {
     this.index = index;
   }
-}
+}*/

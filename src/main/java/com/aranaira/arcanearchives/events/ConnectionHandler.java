@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.events;
+/*package com.aranaira.arcanearchives.events;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.events.ticks.ClientTickHandler;
@@ -26,4 +26,4 @@ public class ConnectionHandler {
   public static void onClientConnectedServer(FMLNetworkEvent.ServerConnectionFromClientEvent event) {
     ServerTickHandler.addRunnable(PacketNetwork.NameMessage::sendToAll, 60);
   }
-}
+}*/

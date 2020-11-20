@@ -1,3 +1,4 @@
+/*
 package com.aranaira.arcanearchives.containers.slots;
 
 
@@ -60,4 +61,5 @@ public class SlotWorkbenchCrafting extends Slot {
     }
   }
 }
+*/
 

@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.blocks;
+/*package com.aranaira.arcanearchives.blocks;
 
 import com.aranaira.arcanearchives.blocks.interfaces.INetworkBlock;
 import com.aranaira.arcanearchives.blocks.templates.TemplateBlock;
@@ -18,14 +18,14 @@ public class RadiantChestBlock extends TemplateBlock implements INetworkBlock {
     super(properties);
   }
 
-/*
+*//*
   @Override
   public boolean onBlockActivated(World worldIn, BlockPos pos, BlockState state, PlayerEntity playerIn, Hand hand, Direction facing, float hitX, float hitY, float hitZ) {
     LineHandler.removeLine(pos, playerIn.dimension);
 
-*/
+*//*
 
-/*    ItemStack mainHand = playerIn.getHeldItemMainhand();
+*//*    ItemStack mainHand = playerIn.getHeldItemMainhand();
     ItemStack offHand = playerIn.getHeldItemOffhand();
     ItemStack displayStack = ItemStack.EMPTY;
 
@@ -40,13 +40,13 @@ public class RadiantChestBlock extends TemplateBlock implements INetworkBlock {
 
     if ((mainHand.getItem() == ItemRegistry.SCEPTER_MANIPULATION && offHand.isEmpty() || offHand.getItem() == ItemRegistry.SCEPTER_MANIPULATION && mainHand.isEmpty()) && playerIn.isSneaking()) {
       clearDisplayed = true;
-    }*/
+    }*//*
 
 
   //int dimension = worldIn.provider.getDimension();
 
   //if (false) { //!displayStack.isEmpty() || clearDisplayed) {
-/*      if (worldIn.isRemote) {
+*//*      if (worldIn.isRemote) {
         if (clearDisplayed) {
           UnsetItem packet = new UnsetItem(pos, dimension);
           Networking.CHANNEL.sendToServer(packet);
@@ -55,11 +55,11 @@ public class RadiantChestBlock extends TemplateBlock implements INetworkBlock {
           Networking.CHANNEL.sendToServer(packet);
         }
 
-      }*/
+      }*//*
   //} else {
-/*      if (!worldIn.isRemote) {
+*//*      if (!worldIn.isRemote) {
         playerIn.openGui(ArcaneArchives.instance, AAGuiHandler.GuiType.RadiantChest.ordinal(), worldIn, pos.getX(), pos.getY(), pos.getZ());
-      }*/
+      }*//*
   //}
 
 //    return true;
@@ -75,7 +75,7 @@ public class RadiantChestBlock extends TemplateBlock implements INetworkBlock {
     return new RadiantChestTile();
   }
 
-/*  @Override
+*//*  @Override
   public void breakBlock(World worldIn, BlockPos pos, BlockState state) {
     LineHandler.removeLine(pos, worldIn.provider.getDimension());
 
@@ -90,7 +90,7 @@ public class RadiantChestBlock extends TemplateBlock implements INetworkBlock {
 
     worldIn.updateComparatorOutputLevel(pos, this);
     super.breakBlock(worldIn, pos, state);
-  }*/
+  }*//*
 
   @Override
   public boolean hasComparatorInputOverride(BlockState state) {
@@ -99,10 +99,10 @@ public class RadiantChestBlock extends TemplateBlock implements INetworkBlock {
 
   @Override
   public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) {
-/*    RadiantChestTile te = WorldUtil.getTileEntity(RadiantChestTile.class, worldIn, pos);
+*//*    RadiantChestTile te = WorldUtil.getTileEntity(RadiantChestTile.class, worldIn, pos);
     if (te != null) {
       return te.getInventory().calcRedstone();
-    }*/
+    }*//*
     return 0;
   }
-}
+}*/

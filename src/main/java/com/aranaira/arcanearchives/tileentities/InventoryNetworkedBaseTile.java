@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.tileentities;
+/*package com.aranaira.arcanearchives.tileentities;
 
 import com.aranaira.arcanearchives.reference.Tags;
 import net.minecraft.nbt.CompoundNBT;
@@ -72,4 +72,4 @@ public abstract class InventoryNetworkedBaseTile<I extends IItemHandler & INBTSe
     }
     return tag;
   }
-}
+}*/

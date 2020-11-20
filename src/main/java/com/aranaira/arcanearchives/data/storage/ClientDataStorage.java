@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.data.storage;
+/*package com.aranaira.arcanearchives.data.storage;
 
 import com.aranaira.arcanearchives.data.client.ClientNameData;
 import com.aranaira.arcanearchives.tilenetwork.NetworkName;
@@ -45,4 +45,4 @@ public class ClientDataStorage {
       return name.getName();
     }
   }
-}
+}*/
