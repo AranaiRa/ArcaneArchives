@@ -1,0 +1,27 @@
+modLoader="javafml"
+loaderVersion="[35,)"
+issueTrackerURL="https://github.com/aranaira/arcanearchives/issues"
+license="https://github.com/AranaiRa/ArcaneArchives/blob/1.16.4/LICENSE"
+[[mods]]
+modId="arcanearchives"
+version="${file.jarVersion}"
+displayName="Arcane Archives"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/arcane-archives"
+#logoFile="logo.png"
+authors="Noobanidus, AranaiRa"
+description='''
+Magical storage that's truly magical!
+'''
+[[dependencies.ArcaneArchives]]
+    modId="forge"
+    mandatory=true
+    versionRange="[35,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.ArcaneArchives]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.4,)"
+    ordering="NONE"
+    side="BOTH"
+

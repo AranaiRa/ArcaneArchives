@@ -1,8 +1,0 @@
-# Blender MTL File: 'revebchamber.blend'
-# Material Count: 2
-
-newmtl Main
-map_Kd arcanearchives:blocks/echoing_reverberation_chamber
-
-newmtl GlassEdge
-map_Kd arcanearchives:blocks/glass_edge

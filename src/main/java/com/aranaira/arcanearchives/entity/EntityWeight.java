@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.entity;
+/*package com.aranaira.arcanearchives.entity;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundNBT;
@@ -92,4 +92,4 @@ public class EntityWeight extends Entity {
 
     }
   }
-}
+}*/

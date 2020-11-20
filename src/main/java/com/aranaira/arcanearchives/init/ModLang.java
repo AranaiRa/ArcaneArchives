@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.init;
 
-public class ModRecipes {
+public class ModLang {
   public static void load () {
 
   }
