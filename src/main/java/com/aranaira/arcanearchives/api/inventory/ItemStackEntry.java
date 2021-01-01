@@ -41,16 +41,20 @@ class ItemStackEntry {
   }
 
   public ItemStack extract (int count) {
-    if (count < this.count) {
+    if (count > this.count) {
       count = (int) this.count;
     }
     // TODO: IS THIS SANE?
     if (stack.getCount() == count) {
-      return stack;
+      this.count = 0;
+      ItemStack result = this.stack;
+      this.stack = ItemStack.EMPTY;
+      return result;
     }
 
     ItemStack copy = getStackCopy();
     copy.setCount(count);
+    this.count -= count;
     return copy;
   }
 
