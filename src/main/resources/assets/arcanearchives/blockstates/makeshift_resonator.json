@@ -1,6 +1,9 @@
 {
   "variants": {
-    "": {
+    "filled=false": {
+      "model": "arcanearchives:block/makeshift_resonator_dry"
+    },
+    "filled=true": {
       "model": "arcanearchives:block/makeshift_resonator"
     }
   }

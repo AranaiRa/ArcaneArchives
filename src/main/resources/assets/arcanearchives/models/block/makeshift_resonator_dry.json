@@ -1,0 +1,10 @@
+{
+  "parent": "block/block",
+  "loader": "forge:obj",
+  "flip-v": true,
+  "model": "arcanearchives:models/block/makeshift_resonator_dry.obj",
+  "textures": {
+    "default": "arcanearchives:block/radiant_resonator",
+    "particle": "#default"
+  }
+}
