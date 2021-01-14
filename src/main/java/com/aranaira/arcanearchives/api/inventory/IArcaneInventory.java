@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.api.inventory;
 
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
 public interface IArcaneInventory extends IItemHandlerModifiable {
@@ -11,5 +12,9 @@ public interface IArcaneInventory extends IItemHandlerModifiable {
 
   long getCountInSlot(int slot);
 
-  boolean dynamicallySized();
+  void enlarge(int size);
+
+  CompoundNBT serialize();
+
+  void deserialize(CompoundNBT result);
 }

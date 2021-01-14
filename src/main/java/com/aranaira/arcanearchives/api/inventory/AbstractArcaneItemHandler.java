@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.api.inventory;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.items.ItemHandlerHelper;
 
@@ -22,7 +23,18 @@ public abstract class AbstractArcaneItemHandler implements IArcaneInventory {
     this.stacks = stacks;
   }
 
-  public abstract boolean dynamicallySized();
+  @Override
+  public void enlarge (int size) {
+    if (size <= stacks.size()) {
+      throw new RuntimeException("Cannot reduce the size of an ArcaneItemHandler, currently contains: " + stacks.size() + " slots, cannot reduce to " + size + " slots");
+    } else {
+      NonNullList<ItemStackEntry> newList = NonNullList.withSize(size, ItemStackEntry.EMPTY);
+      for (int i = 0; i < stacks.size(); i++) {
+        newList.set(i, stacks.get(i));
+      }
+      this.stacks = newList;
+    }
+  }
 
   public abstract int getSlotLimit(int slot);
 
@@ -49,7 +61,7 @@ public abstract class AbstractArcaneItemHandler implements IArcaneInventory {
   }
 
   @Override
-  public long getCountInSlot (int slot) {
+  public long getCountInSlot(int slot) {
     validateSlotIndex(slot);
     return stacks.get(slot).getCount();
   }
@@ -153,4 +165,19 @@ public abstract class AbstractArcaneItemHandler implements IArcaneInventory {
 
   protected void onContentsChanged(int slot) {
   }
+
+  @Override
+  public CompoundNBT serialize() {
+    CompoundNBT result = new CompoundNBT();
+    result.putInt("slots", size());
+    for (int i = 0; i < size(); i++) {
+      ItemStackEntry entry = stacks.get(i);
+      if (!entry.isEmpty()) {
+        result.put("" + i, entry.serialize());
+      }
+    }
+    return result;
+  }
+
+
 }
