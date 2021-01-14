@@ -8,6 +8,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import javax.annotation.Nonnull;
 
 public abstract class AbstractArcaneItemHandler implements IArcaneInventory {
+  // TODO: THIS
   // TODO: Potentially separate slot info metadata from stacks
   protected NonNullList<ItemStackEntry> stacks;
 
@@ -25,8 +26,10 @@ public abstract class AbstractArcaneItemHandler implements IArcaneInventory {
 
   @Override
   public void enlarge (int size) {
-    if (size <= stacks.size()) {
+    if (size < stacks.size()) {
       throw new RuntimeException("Cannot reduce the size of an ArcaneItemHandler, currently contains: " + stacks.size() + " slots, cannot reduce to " + size + " slots");
+    } else if (size == stacks.size()) {
+      return;
     } else {
       NonNullList<ItemStackEntry> newList = NonNullList.withSize(size, ItemStackEntry.EMPTY);
       for (int i = 0; i < stacks.size(); i++) {

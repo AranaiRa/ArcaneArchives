@@ -17,4 +17,11 @@ public interface IArcaneInventory extends IItemHandlerModifiable {
   CompoundNBT serialize();
 
   void deserialize(CompoundNBT result);
+
+  Builder getBuilder ();
+
+  @FunctionalInterface
+  public interface Builder {
+    IArcaneInventory build (CompoundNBT input);
+  }
 }
