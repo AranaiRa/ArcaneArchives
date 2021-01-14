@@ -1,15 +1,18 @@
 package com.aranaira.arcanearchives.api.inventory;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.api.inventory.data.SlotInfoTable;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
+import net.minecraft.nbt.NBTDynamicOps;
 import net.minecraft.util.registry.Registry;
 
 import java.util.Optional;
 
-class ItemStackEntry {
+public class ItemStackEntry {
   public static Codec<ItemStackEntry> CODEC = RecordCodecBuilder.create((instance) -> instance.group(ItemStack.CODEC.fieldOf("item").forGetter(o -> o.stack), Codec.LONG.fieldOf("count").forGetter(o -> o.count), SlotInfoTable.CODEC.optionalFieldOf("info").forGetter(o -> o.info.isEmpty() ? Optional.empty() : Optional.of(o.info))).apply(instance, (a, b, c) -> new ItemStackEntry(a, b, c.orElse(new SlotInfoTable()))));
 
   public static ItemStackEntry EMPTY = new ItemStackEntry(ItemStack.EMPTY);
@@ -87,5 +90,15 @@ class ItemStackEntry {
     }
 
     return count == 0 && info.isEmpty();
+  }
+
+  // TODO: CHECK THE PARTIAL BOOLEAN VALUE
+  public INBT serialize () {
+    return NBTDynamicOps.INSTANCE.withEncoder(CODEC).apply(this).getOrThrow(false, ArcaneArchives.LOG::error);
+  }
+
+  // TODO: CHECK THE PARTIAL BOOLEAN VALUE
+  public static ItemStackEntry deserialize (INBT tag) {
+    return CODEC.parse(NBTDynamicOps.INSTANCE, tag).getOrThrow(false, ArcaneArchives.LOG::error);
   }
 }

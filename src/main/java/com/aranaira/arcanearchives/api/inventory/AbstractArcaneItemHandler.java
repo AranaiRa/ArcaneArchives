@@ -44,7 +44,14 @@ public abstract class AbstractArcaneItemHandler implements IArcaneInventory {
   @Nonnull
   @Override
   public ItemStack getStackInSlot(int slot) {
+    validateSlotIndex(slot);
     return stacks.get(slot).getStackOriginal();
+  }
+
+  @Override
+  public long getCountInSlot (int slot) {
+    validateSlotIndex(slot);
+    return stacks.get(slot).getCount();
   }
 
   @Nonnull
