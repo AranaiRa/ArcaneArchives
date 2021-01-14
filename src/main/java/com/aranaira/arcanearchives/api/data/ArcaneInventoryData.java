@@ -15,10 +15,6 @@ public class ArcaneInventoryData extends WorldSavedData {
     return "ArcaneArchives-Inventory-" + id.toString();
   }
 
-  public static ArcaneInventoryData supplier (UUID id) {
-    return new ArcaneInventoryData(id);
-  }
-
   // TODO: GENERICS????????????
   public ArcaneInventoryData(UUID id, IArcaneInventory inventory) {
     super(ID(id));
