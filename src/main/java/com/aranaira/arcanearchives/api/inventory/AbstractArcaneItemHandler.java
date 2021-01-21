@@ -182,5 +182,13 @@ public abstract class AbstractArcaneItemHandler implements IArcaneInventory {
     return result;
   }
 
-
+  @Override
+  public void deserialize(CompoundNBT result) {
+    int size = result.getInt("slots");
+    enlarge(size);
+    for (int i = 0; i < size; i++) {
+      ItemStackEntry entry = ItemStackEntry.deserialize(result.get("" + i));
+      stacks.set(i, entry);
+    }
+  }
 }

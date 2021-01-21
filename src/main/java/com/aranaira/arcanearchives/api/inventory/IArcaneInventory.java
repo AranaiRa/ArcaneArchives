@@ -3,7 +3,7 @@ package com.aranaira.arcanearchives.api.inventory;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
-public interface IArcaneInventory extends IItemHandlerModifiable {
+public interface IArcaneInventory<T extends IArcaneInventory> extends IItemHandlerModifiable {
   default int getSlots() {
     return this.size();
   }
@@ -17,11 +17,4 @@ public interface IArcaneInventory extends IItemHandlerModifiable {
   CompoundNBT serialize();
 
   void deserialize(CompoundNBT result);
-
-  Builder getBuilder ();
-
-  @FunctionalInterface
-  public interface Builder {
-    IArcaneInventory build (CompoundNBT input);
-  }
 }
