@@ -16,6 +16,8 @@ public interface ICrystalWorkbenchRecipe<C extends Container & IPlayerContainer,
 
   NonNullList<IngredientStack> getIngredientStacks();
 
+  List<IngredientInfo> getIngredientInfo (C container);
+
   @Override
   default boolean canFit(int width, int height) {
     return true;
