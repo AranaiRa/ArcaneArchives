@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.api.crafting;
 
-import com.aranaira.arcanearchives.api.IArcaneArchivesTile;
+import com.aranaira.arcanearchives.api.tiles.IArcaneArchivesTile;
 import com.aranaira.arcanearchives.api.inventory.IArcaneInventory;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Container;

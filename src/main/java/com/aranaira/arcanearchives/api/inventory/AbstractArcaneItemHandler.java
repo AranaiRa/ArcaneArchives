@@ -7,7 +7,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
 
-public abstract class AbstractArcaneItemHandler implements IArcaneInventory {
+public abstract class AbstractArcaneItemHandler<T extends AbstractArcaneItemHandler<T>> implements IArcaneInventory<T> {
   // TODO: THIS
   // TODO: Potentially separate slot info metadata from stacks
   protected NonNullList<ItemStackEntry> stacks;
