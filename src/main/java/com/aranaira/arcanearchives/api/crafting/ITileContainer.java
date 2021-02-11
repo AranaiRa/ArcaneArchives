@@ -6,7 +6,7 @@ import com.aranaira.arcanearchives.api.tiles.IInventoryTile;
 public interface ITileContainer<V extends IArcaneInventory<V>, T extends IInventoryTile<V>> {
   T getTile();
 
-  default V getInventory() {
+  default V getTileInventory() {
     return getTile().getTileInventory();
   }
 }

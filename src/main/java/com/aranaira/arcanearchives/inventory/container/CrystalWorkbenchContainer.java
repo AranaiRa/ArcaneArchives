@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.api.inventory.container;
+package com.aranaira.arcanearchives.inventory.container;
 
 import com.aranaira.arcanearchives.api.crafting.IPlayerContainer;
 import com.aranaira.arcanearchives.tiles.CrystalWorkbenchTile;

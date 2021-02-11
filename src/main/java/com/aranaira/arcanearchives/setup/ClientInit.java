@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.init;
+package com.aranaira.arcanearchives.setup;
 
 import com.aranaira.arcanearchives.setup.ClientSetup;
 import net.minecraftforge.eventbus.api.IEventBus;

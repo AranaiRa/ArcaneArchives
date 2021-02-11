@@ -1,9 +1,10 @@
-package com.aranaira.arcanearchives.api.inventory.container;
+package com.aranaira.arcanearchives.inventory.container;
 
 import com.aranaira.arcanearchives.api.crafting.IPlayerContainer;
+import com.aranaira.arcanearchives.api.crafting.ITileContainer;
 import com.aranaira.arcanearchives.api.inventory.slot.CappedSlot;
 import com.aranaira.arcanearchives.api.inventory.slot.RadiantChestSlot;
-import com.aranaira.arcanearchives.api.tiles.IInventoryTile;
+import com.aranaira.arcanearchives.init.ModContainers;
 import com.aranaira.arcanearchives.inventory.RadiantChestInventory;
 import com.aranaira.arcanearchives.network.ExtendedSlotContentsPacket;
 import com.aranaira.arcanearchives.network.Networking;
@@ -11,26 +12,31 @@ import com.aranaira.arcanearchives.tiles.RadiantChestTile;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.*;
+import net.minecraft.inventory.container.ClickType;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.IContainerListener;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.SSetSlotPacket;
 import net.minecraft.util.IntReferenceHolder;
 import net.minecraftforge.fml.network.NetworkDirection;
 
-import javax.annotation.Nullable;
-
 /* Contains some code taken from Dank Storage by tfarecnim
 Licensed under a CC0 license but used with permission
 https://github.com/Tfarcenim/Dank-Storage/blob/1.16.x/src/main/java/tfar/dankstorage/inventory/DankSlot.java
  */
-public class RadiantChestContainer extends Container implements IPlayerContainer, IInventoryTile<RadiantChestInventory> {
+public class RadiantChestContainer extends Container implements IPlayerContainer, ITileContainer<RadiantChestInventory, RadiantChestTile> {
   private final PlayerInventory player;
   private final RadiantChestTile tile;
 
   private final int rows = 9;
 
-  public RadiantChestContainer(@Nullable ContainerType<?> type, int id, PlayerInventory playerInventory, RadiantChestTile tile) {
-    super(type, id);
+  public RadiantChestContainer(int id, PlayerInventory inventory) {
+    this(id, inventory, null);
+  }
+
+  public RadiantChestContainer(int id, PlayerInventory playerInventory, RadiantChestTile tile) {
+    super(ModContainers.RADIANT_CHEST.get(), id);
     this.player = playerInventory;
     this.tile = tile;
     createInventorySlots();
@@ -74,11 +80,6 @@ public class RadiantChestContainer extends Container implements IPlayerContainer
   public boolean canInteractWith(PlayerEntity playerIn) {
     // TODO
     return true;
-  }
-
-  @Override
-  public RadiantChestInventory getTileInventory() {
-    return tile.getTileInventory();
   }
 
   @Override
@@ -456,5 +457,10 @@ public class RadiantChestContainer extends Container implements IPlayerContainer
 
   public void syncSlot(ServerPlayerEntity player, int slot, ItemStack stack) {
     Networking.INSTANCE.HANDLER.sendTo(new ExtendedSlotContentsPacket(this.windowId, slot, stack), player.connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
+  }
+
+  @Override
+  public RadiantChestTile getTile() {
+    return tile;
   }
 }

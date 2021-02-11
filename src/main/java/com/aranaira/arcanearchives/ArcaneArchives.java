@@ -2,8 +2,8 @@ package com.aranaira.arcanearchives;
 
 import com.aranaira.arcanearchives.config.ConfigManager;
 import com.aranaira.arcanearchives.init.*;
+import com.aranaira.arcanearchives.setup.ClientInit;
 import com.aranaira.arcanearchives.setup.CommonSetup;
-import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -18,8 +18,6 @@ import net.minecraftforge.fml.loading.FMLPaths;
 import noobanidus.libs.noobutil.registrate.CustomRegistrate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.io.File;
 
 @Mod("arcanearchives")
 public class ArcaneArchives {
@@ -55,5 +53,6 @@ public class ArcaneArchives {
     ModTiles.load();
     ModItems.load();
     ModEffects.load();
+    ModContainers.load();
   }
 }

@@ -8,7 +8,10 @@ import net.minecraft.util.NonNullList;
 import javax.annotation.Nonnull;
 
 public class RadiantChestInventory extends AbstractArcaneItemHandler<RadiantChestInventory> {
+  public static final RadiantChestInventory EMPTY = new RadiantChestInventory();
+
   public RadiantChestInventory() {
+    this(0);
   }
 
   public RadiantChestInventory(int size) {

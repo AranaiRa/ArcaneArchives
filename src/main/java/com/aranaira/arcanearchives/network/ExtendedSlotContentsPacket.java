@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.network;
 
-import com.aranaira.arcanearchives.api.inventory.container.RadiantChestContainer;
+import com.aranaira.arcanearchives.inventory.container.RadiantChestContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
