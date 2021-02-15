@@ -6,11 +6,13 @@ import net.minecraft.util.NonNullList;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
+import java.util.function.IntConsumer;
 
-public abstract class AbstractArcaneItemHandler<T extends AbstractArcaneItemHandler<T>> implements IArcaneInventory<T> {
+public abstract class AbstractArcaneItemHandler implements IArcaneInventory {
   // TODO: THIS
   // TODO: Potentially separate slot info metadata from stacks
   protected NonNullList<ItemStackEntry> stacks;
+  protected IntConsumer changeCallback;
 
   public AbstractArcaneItemHandler() {
     this(1);
@@ -166,7 +168,14 @@ public abstract class AbstractArcaneItemHandler<T extends AbstractArcaneItemHand
       throw new RuntimeException("Slot " + slot + " not in valid range - [0," + stacks.size() + ")");
   }
 
-  protected void onContentsChanged(int slot) {
+  public void onContentsChanged(int slot) {
+    if (changeCallback != null) {
+      changeCallback.accept(slot);
+    }
+  }
+
+  public void setChangeCallback(IntConsumer changeCallback) {
+    this.changeCallback = changeCallback;
   }
 
   @Override

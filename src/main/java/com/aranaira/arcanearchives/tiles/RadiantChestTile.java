@@ -4,7 +4,6 @@ import com.aranaira.arcanearchives.api.data.StoredInventory;
 import com.aranaira.arcanearchives.api.tiles.IInventoryTile;
 import com.aranaira.arcanearchives.inventory.RadiantChestInventory;
 import com.aranaira.arcanearchives.inventory.container.RadiantChestContainer;
-import com.aranaira.arcanearchives.reference.Identifiers;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -28,27 +27,18 @@ public class RadiantChestTile extends ArcaneArchivesIdentifiedTile implements II
   public RadiantChestInventory getTileInventory() {
     RadiantChestInventory result = inventory.getInventory(this.world);
     if (result == null) {
-      return RadiantChestInventory.EMPTY;
+      return RadiantChestInventory.getEmpty();
     }
     return result;
   }
 
   @Override
   public CompoundNBT write(CompoundNBT compound) {
-    if (getTileInventory() != null) {
-      compound.put(Identifiers.inventory, getTileInventory().serialize());
-    }
     return super.write(compound);
   }
 
   @Override
   public void read(BlockState state, CompoundNBT compound) {
-    if (compound.contains(Identifiers.inventory)) {
-      if (getTileInventory() != null) {
-        getTileInventory().deserialize(compound.getCompound(Identifiers.inventory));
-      }
-    }
-
     super.read(state, compound);
   }
 

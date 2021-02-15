@@ -1,9 +1,14 @@
 package com.aranaira.arcanearchives.api.inventory;
 
+import com.aranaira.arcanearchives.api.data.ArcaneInventoryData;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
-public interface IArcaneInventory<T extends IArcaneInventory> extends IItemHandlerModifiable {
+import javax.annotation.Nullable;
+
+public interface IArcaneInventory extends IItemHandlerModifiable {
   default int getSlots() {
     return this.size();
   }
@@ -17,4 +22,19 @@ public interface IArcaneInventory<T extends IArcaneInventory> extends IItemHandl
   CompoundNBT serialize();
 
   void deserialize(CompoundNBT result);
+
+  default void setInventoryData(ArcaneInventoryData<?> data) {
+  }
+
+  @Nullable
+  default ArcaneInventoryData<?> getInventoryData() {
+    return null;
+  }
+
+  default void markDirty() {
+    ArcaneInventoryData<?> data = getInventoryData();
+    if (data != null) {
+      data.markDirty();
+    }
+  }
 }

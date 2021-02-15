@@ -4,7 +4,7 @@ import com.aranaira.arcanearchives.api.inventory.IArcaneInventory;
 
 import javax.annotation.Nullable;
 
-public interface IInventoryTile<T extends IArcaneInventory<T>> extends IArcaneArchivesTile {
+public interface IInventoryTile<T extends IArcaneInventory> extends IArcaneArchivesTile {
   @Nullable
   T getTileInventory();
 }

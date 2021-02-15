@@ -8,6 +8,7 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.network.NetworkEvent;
+import noobanidus.libs.noobutil.getter.Getter;
 import noobanidus.libs.noobutil.types.ExtendedItemStackPacketBuffer;
 
 import java.util.function.Supplier;
@@ -40,7 +41,7 @@ public class ExtendedSlotContentsPacket {
   }
 
     public void handle(Supplier<NetworkEvent.Context> ctx) {
-      PlayerEntity player = DistExecutor.callWhenOn(Dist.CLIENT, () -> () -> Minecraft.getInstance().player);
+      PlayerEntity player = Getter.getPlayer();
       if (player == null) return;
 
       ctx.get().enqueueWork(() -> {

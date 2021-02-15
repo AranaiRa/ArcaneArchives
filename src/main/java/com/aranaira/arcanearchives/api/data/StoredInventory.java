@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.api.data;
 
-import com.aranaira.arcanearchives.api.inventory.IArcaneInventory;
+import com.aranaira.arcanearchives.api.inventory.AbstractArcaneItemHandler;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -8,7 +8,7 @@ import java.util.UUID;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class StoredInventory<I extends IArcaneInventory<I>> {
+public class StoredInventory<I extends AbstractArcaneItemHandler> {
   protected final Supplier<UUID> uuidSupplier;
   protected final Function<Integer, I> builder;
   protected final int size;
@@ -37,6 +37,8 @@ public class StoredInventory<I extends IArcaneInventory<I>> {
 
     ArcaneInventoryData<I> inventoryData = DataStorage.getInventory(id, size, builder);
     this.inventory = inventoryData.getInventory();
+    this.inventory.setInventoryData(inventoryData);
+    this.inventory.setChangeCallback((o) -> inventoryData.markDirty());
 
     return this.inventory;
   }

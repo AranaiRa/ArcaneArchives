@@ -5,10 +5,11 @@ import com.aranaira.arcanearchives.api.tiles.IArcaneArchivesTile;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.storage.WorldSavedData;
 
+import java.io.File;
 import java.util.UUID;
 import java.util.function.Function;
 
-public class ArcaneInventoryData<T extends IArcaneInventory<T>> extends WorldSavedData {
+public class ArcaneInventoryData<T extends IArcaneInventory> extends WorldSavedData {
   private UUID id;
   private T inventory;
   private int size;
@@ -52,5 +53,15 @@ public class ArcaneInventoryData<T extends IArcaneInventory<T>> extends WorldSav
       compound.put("inventory", this.inventory.serialize());
     }
     return compound;
+  }
+
+  @Override
+  public void save(File fileIn) {
+    super.save(fileIn);
+  }
+
+  @Override
+  public void markDirty() {
+    super.markDirty();
   }
 }

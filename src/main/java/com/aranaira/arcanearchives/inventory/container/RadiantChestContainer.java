@@ -3,7 +3,7 @@ package com.aranaira.arcanearchives.inventory.container;
 import com.aranaira.arcanearchives.api.crafting.IPlayerContainer;
 import com.aranaira.arcanearchives.api.crafting.ITileContainer;
 import com.aranaira.arcanearchives.api.inventory.slot.CappedSlot;
-import com.aranaira.arcanearchives.api.inventory.slot.RadiantChestSlot;
+import com.aranaira.arcanearchives.inventory.RadiantChestSlot;
 import com.aranaira.arcanearchives.init.ModContainers;
 import com.aranaira.arcanearchives.inventory.RadiantChestInventory;
 import com.aranaira.arcanearchives.network.ExtendedSlotContentsPacket;
@@ -19,7 +19,6 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.SSetSlotPacket;
 import net.minecraft.util.IntReferenceHolder;
-import net.minecraftforge.fml.network.NetworkDirection;
 
 /* Contains some code taken from Dank Storage by tfarecnim
 Licensed under a CC0 license but used with permission
@@ -28,7 +27,9 @@ https://github.com/Tfarcenim/Dank-Storage/blob/1.16.x/src/main/java/tfar/danksto
 public class RadiantChestContainer extends Container implements IPlayerContainer, ITileContainer<RadiantChestInventory, RadiantChestTile> {
   private final PlayerInventory player;
   private final RadiantChestTile tile;
+  private RadiantChestInventory inventory;
 
+  @SuppressWarnings("FieldCanBeLocal")
   private final int rows = 9;
 
   public RadiantChestContainer(int id, PlayerInventory inventory) {
@@ -450,17 +451,28 @@ public class RadiantChestContainer extends Container implements IPlayerContainer
   public void syncInventory(ServerPlayerEntity player) {
     for (int i = 0; i < this.inventorySlots.size(); i++) {
       ItemStack stack = (this.inventorySlots.get(i)).getStack();
-      Networking.INSTANCE.HANDLER.sendTo(new ExtendedSlotContentsPacket(this.windowId, i, stack), player.connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
+      Networking.sendTo(new ExtendedSlotContentsPacket(this.windowId, i, stack), player);
     }
     player.connection.sendPacket(new SSetSlotPacket(-1, -1, player.inventory.getItemStack()));
   }
 
   public void syncSlot(ServerPlayerEntity player, int slot, ItemStack stack) {
-    Networking.INSTANCE.HANDLER.sendTo(new ExtendedSlotContentsPacket(this.windowId, slot, stack), player.connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
+    Networking.sendTo(new ExtendedSlotContentsPacket(this.windowId, slot, stack), player);
   }
 
   @Override
   public RadiantChestTile getTile() {
     return tile;
+  }
+
+  @Override
+  public RadiantChestInventory getTileInventory() {
+    if (inventory == null) {
+      inventory = ITileContainer.super.getTileInventory();
+      if (inventory == null) {
+        inventory = RadiantChestInventory.getEmpty();
+      }
+    }
+    return inventory;
   }
 }

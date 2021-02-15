@@ -45,4 +45,6 @@ public class RadiantChestBlock extends Block {
       return ActionResultType.CONSUME;
     }
   }
+
+
 }

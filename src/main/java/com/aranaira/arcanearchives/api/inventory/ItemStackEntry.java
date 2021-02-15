@@ -13,7 +13,7 @@ import net.minecraft.util.registry.Registry;
 import java.util.Optional;
 
 public class ItemStackEntry {
-  public static Codec<ItemStackEntry> CODEC = RecordCodecBuilder.create((instance) -> instance.group(ItemStack.CODEC.fieldOf("item").forGetter(o -> o.stack), Codec.LONG.fieldOf("count").forGetter(o -> o.count), SlotInfoTable.CODEC.optionalFieldOf("info").forGetter(o -> o.info.isEmpty() ? Optional.empty() : Optional.of(o.info))).apply(instance, (a, b, c) -> new ItemStackEntry(a, b, c.orElse(new SlotInfoTable()))));
+  public static Codec<ItemStackEntry> CODEC = RecordCodecBuilder.create((instance) -> instance.group(ItemStack.CODEC.fieldOf("item").forGetter(o -> o.stack), Codec.LONG.fieldOf("count").forGetter(o -> o.count), SlotInfoTable.CODEC.optionalFieldOf("info").forGetter(o -> o.info == null || o.info.isEmpty() ? Optional.empty() : Optional.of(o.info))).apply(instance, (a, b, c) -> new ItemStackEntry(a, b, c.orElse(new SlotInfoTable()))));
 
   public static ItemStackEntry EMPTY = new ItemStackEntry(ItemStack.EMPTY);
 
@@ -99,6 +99,9 @@ public class ItemStackEntry {
 
   // TODO: CHECK THE PARTIAL BOOLEAN VALUE
   public static ItemStackEntry deserialize (INBT tag) {
+    if (tag == null) {
+      return EMPTY;
+    }
     return CODEC.parse(NBTDynamicOps.INSTANCE, tag).getOrThrow(false, ArcaneArchives.LOG::error);
   }
 }

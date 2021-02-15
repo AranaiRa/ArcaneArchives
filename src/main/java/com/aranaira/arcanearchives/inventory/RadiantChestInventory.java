@@ -7,8 +7,13 @@ import net.minecraft.util.NonNullList;
 
 import javax.annotation.Nonnull;
 
-public class RadiantChestInventory extends AbstractArcaneItemHandler<RadiantChestInventory> {
-  public static final RadiantChestInventory EMPTY = new RadiantChestInventory();
+// TODO: LOTS OF MARKING DIRTY
+// LET'S GET SUPER DIRTY
+// AND SAVING THE WORLD DATA ON CLOSING
+public class RadiantChestInventory extends AbstractArcaneItemHandler {
+  public static EmptyRadiantChestInventory getEmpty() {
+    return new EmptyRadiantChestInventory(54);
+  }
 
   public RadiantChestInventory() {
     this(0);
@@ -32,5 +37,18 @@ public class RadiantChestInventory extends AbstractArcaneItemHandler<RadiantChes
   public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
     // TODO
     return true;
+  }
+
+  public static class EmptyRadiantChestInventory extends RadiantChestInventory {
+    public EmptyRadiantChestInventory() {
+    }
+
+    public EmptyRadiantChestInventory(int size) {
+      super(size);
+    }
+
+    public EmptyRadiantChestInventory(NonNullList<ItemStackEntry> stacks) {
+      super(stacks);
+    }
   }
 }

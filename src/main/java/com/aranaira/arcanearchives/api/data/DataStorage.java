@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 
 public class DataStorage {
   @SuppressWarnings("ConstantConditions")
-  public static <T extends IArcaneInventory<T>> ArcaneInventoryData<T> getInventory (UUID id, int size, Function<Integer, T> builder) {
+  public static <T extends IArcaneInventory> ArcaneInventoryData<T> getInventory (UUID id, int size, Function<Integer, T> builder) {
     DimensionSavedDataManager manager = ServerLifecycleHooks.getCurrentServer().getWorld(World.OVERWORLD).getSavedData();
     return manager.getOrCreate(() -> new ArcaneInventoryData<>(id, size, builder), ArcaneInventoryData.ID(id));
   }

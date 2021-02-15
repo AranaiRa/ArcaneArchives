@@ -38,6 +38,9 @@ public abstract class ArcaneArchivesIdentifiedTile extends TileEntity implements
 
   @Override
   public UUID getTileId() {
+    if (this.uuid == null) {
+      this.uuid = UUID.randomUUID();
+    }
     return uuid;
   }
 }
