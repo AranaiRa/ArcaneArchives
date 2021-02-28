@@ -1,8 +1,8 @@
 package com.aranaira.arcanearchives.api.crafting;
 
-import com.aranaira.arcanearchives.api.tiles.IArcaneArchivesTile;
 import com.aranaira.arcanearchives.api.crafting.processors.IIngredientProcessor;
 import com.aranaira.arcanearchives.api.inventory.ArcaneItemHandler;
+import com.aranaira.arcanearchives.api.tiles.IArcaneArchivesTile;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;

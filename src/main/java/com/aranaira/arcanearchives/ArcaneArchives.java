@@ -1,8 +1,8 @@
 package com.aranaira.arcanearchives;
 
+import com.aranaira.arcanearchives.client.setup.ClientInit;
 import com.aranaira.arcanearchives.core.config.ConfigManager;
 import com.aranaira.arcanearchives.core.init.*;
-import com.aranaira.arcanearchives.client.setup.ClientInit;
 import com.aranaira.arcanearchives.core.setup.CommonSetup;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;

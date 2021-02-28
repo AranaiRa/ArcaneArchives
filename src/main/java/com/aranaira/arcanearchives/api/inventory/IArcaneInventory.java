@@ -1,9 +1,7 @@
 package com.aranaira.arcanearchives.api.inventory;
 
 import com.aranaira.arcanearchives.api.data.ArcaneInventoryData;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
 import javax.annotation.Nullable;

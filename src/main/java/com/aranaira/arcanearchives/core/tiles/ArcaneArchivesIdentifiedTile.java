@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.core.tiles;
 
-import com.aranaira.arcanearchives.api.tiles.IArcaneArchivesTile;
 import com.aranaira.arcanearchives.api.reference.Identifiers;
+import com.aranaira.arcanearchives.api.tiles.IArcaneArchivesTile;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;

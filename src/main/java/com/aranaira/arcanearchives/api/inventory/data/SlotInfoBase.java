@@ -1,10 +1,7 @@
 package com.aranaira.arcanearchives.api.inventory.data;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.StringNBT;
 import net.minecraftforge.common.util.Constants;
 
 public abstract class SlotInfoBase<V> {

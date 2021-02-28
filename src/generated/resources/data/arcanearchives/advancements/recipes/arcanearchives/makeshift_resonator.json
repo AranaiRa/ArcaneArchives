@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "arcanearchives:makeshift_resonator"
+    ]
+  },
+  "criteria": {
+    "has_gold_nugget": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:nuggets/gold"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "arcanearchives:makeshift_resonator"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_gold_nugget",
+      "has_the_recipe"
+    ]
+  ]
+}

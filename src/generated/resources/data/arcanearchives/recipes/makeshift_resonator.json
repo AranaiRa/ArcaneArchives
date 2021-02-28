@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SGS",
+    "KTK",
+    "K K"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:stone_slab"
+    },
+    "G": {
+      "tag": "forge:nuggets/gold"
+    },
+    "K": {
+      "tag": "forge:rods/wooden"
+    },
+    "T": {
+      "tag": "forge:string"
+    }
+  },
+  "result": {
+    "item": "arcanearchives:makeshift_resonator"
+  }
+}

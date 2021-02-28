@@ -1,7 +1,6 @@
 package com.aranaira.arcanearchives.api.data;
 
 import com.aranaira.arcanearchives.api.inventory.IArcaneInventory;
-import com.aranaira.arcanearchives.api.tiles.IArcaneArchivesTile;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.storage.WorldSavedData;
 

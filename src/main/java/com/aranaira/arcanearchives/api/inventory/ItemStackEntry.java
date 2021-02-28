@@ -5,10 +5,8 @@ import com.aranaira.arcanearchives.api.inventory.data.SlotInfoTable;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.NBTDynamicOps;
-import net.minecraft.util.registry.Registry;
 
 import java.util.Optional;
 
