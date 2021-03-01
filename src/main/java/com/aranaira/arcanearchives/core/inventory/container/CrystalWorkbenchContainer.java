@@ -1,31 +1,34 @@
 package com.aranaira.arcanearchives.core.inventory.container;
 
-import com.aranaira.arcanearchives.api.crafting.IPlayerContainer;
+import com.aranaira.arcanearchives.core.init.ModContainers;
+import com.aranaira.arcanearchives.core.inventory.handlers.CrystalWorkbenchInventory;
+import com.aranaira.arcanearchives.core.inventory.slot.RadiantChestSlot;
+import com.aranaira.arcanearchives.core.inventory.slot.RecipeHandlerSlot;
 import com.aranaira.arcanearchives.core.tiles.CrystalWorkbenchTile;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
 
-import javax.annotation.Nullable;
-
-public class CrystalWorkbenchContainer extends Container implements IPlayerContainer {
-  private final PlayerInventory playerInventory;
-  private final CrystalWorkbenchTile tile;
-
-  protected CrystalWorkbenchContainer(@Nullable ContainerType<?> type, int id, PlayerInventory inventory, CrystalWorkbenchTile tile) {
-    super(type, id);
-    this.playerInventory = inventory;
-    this.tile = tile;
+public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWorkbenchInventory, CrystalWorkbenchTile> {
+  public CrystalWorkbenchContainer(int id, PlayerInventory inventory) {
+    this(id, inventory, null);
   }
 
-  @Override
-  public PlayerEntity getPlayer() {
-    return null;
+  public CrystalWorkbenchContainer(int id, PlayerInventory playerInventory, CrystalWorkbenchTile tile) {
+    super(ModContainers.CRYSTAL_WORKBENCH.get(), id, 2, playerInventory, tile);
   }
 
-  @Override
-  public boolean canInteractWith(PlayerEntity playerIn) {
-    return false;
+  protected void createInventorySlots() {
+    int slotIndex = 0;
+    for (int col = 6; col > -1; col--) {
+      this.addSlot(new RecipeHandlerSlot(slotIndex, col * 18 + 41, 70, getTile()));
+      slotIndex++;
+    }
+    for (int row = 0; row < 2; ++row) {
+      for (int col = 0; col < 9; ++col) {
+        int x = 23 + col * 18;
+        int y = 105 + row * 18;
+        this.addSlot(new RadiantChestSlot(this.getTileInventory(), slotIndex, x, y));
+        slotIndex++;
+      }
+    }
   }
 }

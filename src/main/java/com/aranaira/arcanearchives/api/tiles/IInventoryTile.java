@@ -7,4 +7,6 @@ import javax.annotation.Nullable;
 public interface IInventoryTile<T extends IArcaneInventory> extends IArcaneArchivesTile {
   @Nullable
   T getTileInventory();
+
+  T getEmptyInventory();
 }

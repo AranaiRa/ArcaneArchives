@@ -1,6 +1,7 @@
-package com.aranaira.arcanearchives.core.inventory;
+package com.aranaira.arcanearchives.core.inventory.slot;
 
 import com.aranaira.arcanearchives.api.inventory.IArcaneInventory;
+import com.aranaira.arcanearchives.core.inventory.handlers.RadiantChestInventory;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;

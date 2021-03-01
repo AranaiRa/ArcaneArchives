@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.core.inventory;
+package com.aranaira.arcanearchives.core.inventory.handlers;
 
 import com.aranaira.arcanearchives.api.inventory.AbstractArcaneItemHandler;
 import com.aranaira.arcanearchives.api.inventory.ItemStackEntry;

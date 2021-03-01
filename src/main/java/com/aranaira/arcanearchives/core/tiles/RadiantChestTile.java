@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.core.tiles;
 
 import com.aranaira.arcanearchives.api.data.StoredInventory;
 import com.aranaira.arcanearchives.api.tiles.IInventoryTile;
-import com.aranaira.arcanearchives.core.inventory.RadiantChestInventory;
+import com.aranaira.arcanearchives.core.inventory.handlers.RadiantChestInventory;
 import com.aranaira.arcanearchives.core.inventory.container.RadiantChestContainer;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,7 +17,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import javax.annotation.Nullable;
 
 public class RadiantChestTile extends ArcaneArchivesIdentifiedTile implements IInventoryTile<RadiantChestInventory>, INamedContainerProvider {
-  private final StoredInventory<RadiantChestInventory> inventory = new StoredInventory<>(this::getTileId, RadiantChestInventory::new, 54);
+  private final StoredInventory<RadiantChestInventory> inventory = new StoredInventory<>(this::getTileId, RadiantChestInventory::new, RadiantChestInventory.EmptyRadiantChestInventory::new, 54);
 
   public RadiantChestTile(TileEntityType<?> tileEntityTypeIn) {
     super(tileEntityTypeIn);
@@ -27,9 +27,14 @@ public class RadiantChestTile extends ArcaneArchivesIdentifiedTile implements II
   public RadiantChestInventory getTileInventory() {
     RadiantChestInventory result = inventory.getInventory(this.world);
     if (result == null) {
-      return RadiantChestInventory.getEmpty();
+      return getEmptyInventory();
     }
     return result;
+  }
+
+  @Override
+  public RadiantChestInventory getEmptyInventory() {
+    return inventory.getEmpty();
   }
 
   @Override

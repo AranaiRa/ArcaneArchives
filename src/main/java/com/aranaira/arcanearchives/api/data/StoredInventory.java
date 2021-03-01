@@ -11,11 +11,14 @@ import java.util.function.Supplier;
 public class StoredInventory<I extends AbstractArcaneItemHandler> {
   protected final Supplier<UUID> uuidSupplier;
   protected final Function<Integer, I> builder;
+  protected final Supplier<I> emptyBuilder;
   protected final int size;
   protected I inventory = null;
+  protected I empty = null;
 
-  public StoredInventory(Supplier<UUID> uuidSupplier, Function<Integer, I> builder, int size) {
+  public StoredInventory(Supplier<UUID> uuidSupplier, Function<Integer, I> builder, Supplier<I> empty, int size) {
     this.builder = builder;
+    this.emptyBuilder = empty;
     this.uuidSupplier = uuidSupplier;
     this.size = size;
   }
@@ -41,5 +44,12 @@ public class StoredInventory<I extends AbstractArcaneItemHandler> {
     this.inventory.setChangeCallback((o) -> inventoryData.markDirty());
 
     return this.inventory;
+  }
+
+  public I getEmpty () {
+    if (this.empty == null) {
+      this.empty = this.emptyBuilder.get();
+    }
+    return this.empty;
   }
 }

@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.core.init;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.core.blocks.CrystalWorkbenchBlock;
 import com.aranaira.arcanearchives.core.blocks.MakeshiftResonatorBlock;
 import com.aranaira.arcanearchives.core.blocks.RadiantChestBlock;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
@@ -15,7 +16,15 @@ import net.minecraftforge.common.Tags;
 import static com.aranaira.arcanearchives.ArcaneArchives.REGISTRATE;
 
 public class ModBlocks {
-  public static final RegistryEntry<RadiantChestBlock> RADIANT_CHEST = REGISTRATE.block("radiant_chest", RadiantChestBlock::new)
+  public static final RegistryEntry<CrystalWorkbenchBlock> CRYSTAL_WORKBENCH = REGISTRATE.block("crystal_workbench", Material.GLASS, CrystalWorkbenchBlock::new)
+      .properties(o -> o.notSolid())
+      .blockstate(NonNullBiConsumer.noop())
+      .item()
+      .model((ctx, p) -> p.blockItem(ctx::getEntry))
+      .build()
+      .register();
+
+  public static final RegistryEntry<RadiantChestBlock> RADIANT_CHEST = REGISTRATE.block("radiant_chest", Material.WOOD, RadiantChestBlock::new)
       .properties(o -> o.notSolid())
       .blockstate(NonNullBiConsumer.noop())
       .item()
