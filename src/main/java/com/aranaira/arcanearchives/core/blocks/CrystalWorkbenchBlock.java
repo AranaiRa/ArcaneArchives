@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.core.blocks;
 
+import com.aranaira.arcanearchives.core.blocks.templates.SingleAccessorBlock;
 import com.aranaira.arcanearchives.core.init.ModTiles;
 import com.aranaira.arcanearchives.core.tiles.CrystalWorkbenchTile;
 import com.aranaira.arcanearchives.core.tiles.RadiantChestTile;
@@ -21,23 +22,25 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class CrystalWorkbenchBlock extends Block {
-  public static DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
-  public static BooleanProperty ACCESSOR = BooleanProperty.create("accessor");
+public class CrystalWorkbenchBlock extends SingleAccessorBlock {
+
 
   public CrystalWorkbenchBlock(Properties properties) {
-    super(properties);
+    super(properties, Direction.EAST);
     this.setDefaultState(this.getDefaultState().with(ACCESSOR, false).with(FACING, Direction.NORTH));
   }
 
   @Override
   public boolean hasTileEntity(BlockState state) {
-    return true;
+    return !state.get(ACCESSOR);
   }
 
   @Nullable
   @Override
   public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+    if (state.get(ACCESSOR)) {
+      return null;
+    }
     return new CrystalWorkbenchTile(ModTiles.CRYSTAL_WORKBENCH.get());
   }
 
@@ -58,8 +61,5 @@ public class CrystalWorkbenchBlock extends Block {
 
   // TODO: PLACEEEEEEEEEMENT!!!!!!!!!!!!!!!
 
-  @Override
-  protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-    builder.add(FACING, ACCESSOR);
-  }
+
 }
