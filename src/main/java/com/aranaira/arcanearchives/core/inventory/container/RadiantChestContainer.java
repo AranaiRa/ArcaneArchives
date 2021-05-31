@@ -6,6 +6,8 @@ import com.aranaira.arcanearchives.core.inventory.slot.RadiantChestSlot;
 import com.aranaira.arcanearchives.core.tiles.RadiantChestTile;
 import net.minecraft.entity.player.PlayerInventory;
 
+import javax.annotation.Nullable;
+
 public class RadiantChestContainer extends AbstractLargeContainer<RadiantChestInventory, RadiantChestTile> {
   public RadiantChestContainer(int id, PlayerInventory inventory) {
     this(id, inventory, null);
@@ -13,6 +15,8 @@ public class RadiantChestContainer extends AbstractLargeContainer<RadiantChestIn
 
   public RadiantChestContainer(int id, PlayerInventory playerInventory, RadiantChestTile tile) {
     super(ModContainers.RADIANT_CHEST.get(), id, 9, playerInventory, tile);
+    createInventorySlots();
+    createPlayerSlots(142, 200, 16);
   }
 
   protected void createInventorySlots() {
@@ -25,5 +29,11 @@ public class RadiantChestContainer extends AbstractLargeContainer<RadiantChestIn
         slotIndex++;
       }
     }
+  }
+
+  @Nullable
+  @Override
+  public RadiantChestInventory getEmptyInventory() {
+    return RadiantChestInventory.getEmpty();
   }
 }

@@ -4,7 +4,6 @@ import com.aranaira.arcanearchives.core.tiles.CrystalWorkbenchTile;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Slot;
-import net.minecraftforge.items.SlotItemHandler;
 
 public class RecipeHandlerSlot extends Slot {
   private static IInventory emptyInventory = new Inventory(0);

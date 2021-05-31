@@ -50,6 +50,9 @@ public class StoredInventory<I extends AbstractArcaneItemHandler> {
     if (this.empty == null) {
       this.empty = this.emptyBuilder.get();
     }
+    if (this.empty == null) {
+      System.out.println("ARGH IT'S NULL");
+    }
     return this.empty;
   }
 }

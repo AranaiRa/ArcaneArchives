@@ -1,0 +1,20 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 10.10.2018 20:41:05
+
+newmtl mat_arcanearchives_master
+map_Kd arcanearchives:block/arcane_archives_master
+
+newmtl mat_gemcutterstable
+map_Kd arcanearchives:block/crystal_workbench
+
+newmtl mat_lensglass
+map_Kd arcanearchives:block/lens_glass
+
+newmtl mat_gemcutterstable_tools
+map_Kd arcanearchives:block/crystal_workbench_tools
+
+newmtl mat_gemcutterstable_scroll
+map_Kd arcanearchives:block/crystal_workbench_scroll
+
+newmtl mat_minecraft_diorite
+map_Kd minecraft:block/diorite

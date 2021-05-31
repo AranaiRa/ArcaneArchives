@@ -4,7 +4,7 @@
   "flip-v": true,
   "model": "arcanearchives:models/block/radiant_chest.obj",
   "textures": {
-    "default": "arcanearchives:block/block_arcanearchives_master",
+    "default": "arcanearchives:block/arcane_archives_master",
     "particle": "#default"
   }
 }

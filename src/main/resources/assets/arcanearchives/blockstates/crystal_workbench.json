@@ -1,0 +1,32 @@
+{
+  "variants": {
+    "facing=north,accessor=false": {
+      "model": "arcanearchives:block/crystal_workbench",
+      "y": 180
+    },
+    "facing=north,accessor=true": {
+      "model": "arcanearchives:block/accessor"
+    },
+    "facing=south,accessor=false": {
+      "model": "arcanearchives:block/crystal_workbench",
+      "y": 0
+    },
+    "facing=south,accessor=true": {
+      "model": "arcanearchives:block/accessor"
+    },
+    "facing=west,accessor=false": {
+      "model": "arcanearchives:block/crystal_workbench",
+      "y": -90
+    },
+    "facing=west,accessor=true": {
+      "model": "arcanearchives:block/accessor"
+    },
+    "facing=east,accessor=false": {
+      "model": "arcanearchives:block/crystal_workbench",
+      "y": 90
+    },
+    "facing=east,accessor=true": {
+      "model": "arcanearchives:block/accessor"
+    }
+  }
+}

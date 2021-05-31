@@ -18,10 +18,5 @@ public interface ITileContainer<V extends IArcaneInventory, T extends IInventory
   }
 
   @Nullable
-  default V getEmptyInventory () {
-    if (getTile() == null) {
-      return null;
-    }
-    return getTile().getEmptyInventory();
-  }
+  V getEmptyInventory ();
 }

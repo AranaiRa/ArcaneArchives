@@ -23,6 +23,8 @@ import net.minecraft.util.IntReferenceHolder;
 Licensed under a CC0 license but used with permission
 https://github.com/Tfarcenim/Dank-Storage/blob/1.16.x/src/main/java/tfar/dankstorage/inventory/DankSlot.java
  */
+// TODO:
+// - Add slots to ignore for transfer stack in slot
 public abstract class AbstractLargeContainer<V extends IArcaneInventory, T extends IInventoryTile<V>> extends Container implements IPlayerContainer, ITileContainer<V, T> {
   protected final PlayerInventory player;
   protected final T tile;
@@ -38,23 +40,21 @@ public abstract class AbstractLargeContainer<V extends IArcaneInventory, T exten
     this.player = playerInventory;
     this.tile = tile;
     this.rows = rows;
-    createInventorySlots();
-    createPlayerSlots(142, 200);
   }
 
   // SHOULD BE OVERRIDDEN
   // BECAUSE I DON'T KNOW HOW OFFSETS WORK
-  protected void createPlayerSlots(int yOffset1, int yOffset2) {
+  protected void createPlayerSlots(int yOffset1, int yOffset2, int xOffset1) {
     for (int row = 0; row < 3; ++row) {
       for (int col = 0; col < 9; ++col) {
-        int x = 16 + col * 18;
+        int x = xOffset1 + col * 18;
         int y = row * 18 + yOffset1;
         this.addSlot(new CappedSlot(this.player, col + row * 9 + 9, x, y));
       }
     }
 
     for (int row = 0; row < 9; ++row) {
-      int x = 16 + row * 18;
+      int x = xOffset1 + row * 18;
       int y = yOffset2;
       this.addSlot(new CappedSlot(this.player, row, x, y));
     }
@@ -377,7 +377,11 @@ public abstract class AbstractLargeContainer<V extends IArcaneInventory, T exten
 
         if (itemstack1.isEmpty() && slot1.isItemValid(stack)) {
           if (stack.getCount() > slot1.getItemStackLimit(stack)) {
-            slot1.putStack(stack.split(slot1.getItemStackLimit(stack)));
+            try {
+              slot1.putStack(stack.split(slot1.getItemStackLimit(stack)));
+            } catch (ArrayIndexOutOfBoundsException e) {
+              throw e;
+            }
           } else {
             slot1.putStack(stack.split(stack.getCount()));
           }
@@ -460,7 +464,7 @@ public abstract class AbstractLargeContainer<V extends IArcaneInventory, T exten
     if (inventory == null) {
       inventory = ITileContainer.super.getTileInventory();
       if (inventory == null) {
-        inventory = ITileContainer.super.getEmptyInventory();
+        inventory = getEmptyInventory();
       }
     }
     return inventory;

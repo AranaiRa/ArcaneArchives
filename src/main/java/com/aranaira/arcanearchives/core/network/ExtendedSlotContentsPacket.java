@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.core.network;
 
+import com.aranaira.arcanearchives.core.inventory.container.AbstractLargeContainer;
 import com.aranaira.arcanearchives.core.inventory.container.RadiantChestContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -42,7 +43,7 @@ public class ExtendedSlotContentsPacket {
       if (player == null) return;
 
       ctx.get().enqueueWork(() -> {
-        if (player.openContainer instanceof RadiantChestContainer && windowId == player.openContainer.windowId) {
+        if (player.openContainer instanceof AbstractLargeContainer && windowId == player.openContainer.windowId) {
           player.openContainer.inventorySlots.get(slot).putStack(stack);
         }
       });

@@ -5,9 +5,14 @@ import com.aranaira.arcanearchives.core.tiles.CrystalWorkbenchTile;
 import com.aranaira.arcanearchives.core.tiles.RadiantChestTile;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.HorizontalBlock;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -17,8 +22,12 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 
 public class CrystalWorkbenchBlock extends Block {
+  public static DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
+  public static BooleanProperty ACCESSOR = BooleanProperty.create("accessor");
+
   public CrystalWorkbenchBlock(Properties properties) {
     super(properties);
+    this.setDefaultState(this.getDefaultState().with(ACCESSOR, false).with(FACING, Direction.NORTH));
   }
 
   @Override
@@ -47,5 +56,10 @@ public class CrystalWorkbenchBlock extends Block {
     }
   }
 
+  // TODO: PLACEEEEEEEEEMENT!!!!!!!!!!!!!!!
 
+  @Override
+  protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    builder.add(FACING, ACCESSOR);
+  }
 }
