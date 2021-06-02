@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.core.blocks.templates;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
+import net.minecraft.client.gui.screen.inventory.CreativeScreen;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
