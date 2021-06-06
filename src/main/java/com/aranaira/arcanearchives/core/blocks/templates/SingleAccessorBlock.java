@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.stats.Stats;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Rotation;
@@ -67,6 +68,9 @@ public abstract class SingleAccessorBlock extends Block {
   public void harvestBlock(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {
     if (state.get(ACCESSOR)) {
       worldIn.destroyBlock(calculateOrigin(pos, state), true);
+      player.addStat(Stats.BLOCK_MINED.get(this));
+      player.addExhaustion(0.005F);
+      return;
     } else {
       worldIn.destroyBlock(calculateAccessor(pos, state), false);
     }
