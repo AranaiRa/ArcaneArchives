@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.core.blocks;
 
+import com.aranaira.arcanearchives.api.RelativeSide;
 import com.aranaira.arcanearchives.core.blocks.templates.SingleAccessorBlock;
 import com.aranaira.arcanearchives.core.init.ModTiles;
 import com.aranaira.arcanearchives.core.tiles.CrystalWorkbenchTile;
@@ -7,7 +8,9 @@ import com.aranaira.arcanearchives.core.tiles.RadiantChestTile;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
@@ -26,7 +29,7 @@ public class CrystalWorkbenchBlock extends SingleAccessorBlock {
 
 
   public CrystalWorkbenchBlock(Properties properties) {
-    super(properties, Direction.EAST);
+    super(properties, RelativeSide.RIGHT);
     this.setDefaultState(this.getDefaultState().with(ACCESSOR, false).with(FACING, Direction.NORTH));
   }
 
@@ -59,7 +62,9 @@ public class CrystalWorkbenchBlock extends SingleAccessorBlock {
     }
   }
 
-  // TODO: PLACEEEEEEEEEMENT!!!!!!!!!!!!!!!
+
+
+// TODO: PLACEEEEEEEEEMENT!!!!!!!!!!!!!!!
 
 
 }

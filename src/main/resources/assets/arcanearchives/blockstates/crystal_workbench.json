@@ -16,14 +16,14 @@
     },
     "facing=west,accessor=false": {
       "model": "arcanearchives:block/crystal_workbench",
-      "y": -90
+      "y": 90
     },
     "facing=west,accessor=true": {
       "model": "arcanearchives:block/accessor"
     },
     "facing=east,accessor=false": {
       "model": "arcanearchives:block/crystal_workbench",
-      "y": 90
+      "y": -90
     },
     "facing=east,accessor=true": {
       "model": "arcanearchives:block/accessor"
