@@ -26,8 +26,6 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 
 public class CrystalWorkbenchBlock extends SingleAccessorBlock {
-
-
   public CrystalWorkbenchBlock(Properties properties) {
     super(properties, RelativeSide.RIGHT);
     this.setDefaultState(this.getDefaultState().with(ACCESSOR, false).with(FACING, Direction.NORTH));
@@ -47,24 +45,17 @@ public class CrystalWorkbenchBlock extends SingleAccessorBlock {
     return new CrystalWorkbenchTile(ModTiles.CRYSTAL_WORKBENCH.get());
   }
 
-  @SuppressWarnings("deprecation")
   @Override
-  public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-    if (worldIn.isRemote) {
+  public ActionResultType blockActivate(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray, BlockPos origin) {
+    if (world.isRemote) {
       return ActionResultType.SUCCESS;
     } else {
       // TODO: Tile entity library?
-      TileEntity te = worldIn.getTileEntity(pos);
+      TileEntity te = world.getTileEntity(pos);
       if (te instanceof CrystalWorkbenchTile) {
         player.openContainer((CrystalWorkbenchTile) te);
       }
       return ActionResultType.CONSUME;
     }
   }
-
-
-
-// TODO: PLACEEEEEEEEEMENT!!!!!!!!!!!!!!!
-
-
 }

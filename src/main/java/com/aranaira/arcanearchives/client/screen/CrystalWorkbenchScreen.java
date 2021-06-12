@@ -2,7 +2,6 @@ package com.aranaira.arcanearchives.client.screen;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.core.inventory.container.CrystalWorkbenchContainer;
-import com.aranaira.arcanearchives.core.inventory.container.RadiantChestContainer;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -41,5 +40,9 @@ public class CrystalWorkbenchScreen extends ContainerScreen<CrystalWorkbenchCont
     super.render(matrixStack, mouseX, mouseY, partialTicks);
     RenderSystem.disableBlend();
     this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
+  }
+
+  @Override
+  protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) {
   }
 }

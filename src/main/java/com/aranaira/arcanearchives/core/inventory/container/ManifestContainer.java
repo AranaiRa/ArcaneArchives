@@ -1,10 +1,10 @@
 package com.aranaira.arcanearchives.core.inventory.container;
 
+import com.aranaira.arcanearchives.client.screen.ManifestScreen;
 import com.aranaira.arcanearchives.core.inventory.slot.LockedSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;

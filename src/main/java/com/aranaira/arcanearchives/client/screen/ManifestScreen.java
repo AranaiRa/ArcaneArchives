@@ -22,7 +22,7 @@ import java.util.Objects;
 
 @SuppressWarnings("ConstantConditions")
 public class ManifestScreen extends ContainerScreen<ManifestContainer> {
-  private static final Inventory TMP_INVENTORY = new Inventory(45);
+  public static final Inventory TMP_INVENTORY = new Inventory(45);
   private float currentScroll;
   private boolean isScrolling;
   private TextFieldWidget searchField;
