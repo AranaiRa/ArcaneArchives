@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.api.crafting;
+package com.aranaira.arcanearchives.api.container;
 
 import net.minecraft.entity.player.PlayerEntity;
 

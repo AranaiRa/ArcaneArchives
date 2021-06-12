@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.api.crafting;
 
+import com.aranaira.arcanearchives.api.container.IPlayerContainer;
 import com.aranaira.arcanearchives.api.crafting.processors.IIngredientProcessor;
 import com.aranaira.arcanearchives.api.inventory.ArcaneItemHandler;
 import com.aranaira.arcanearchives.api.tiles.IArcaneArchivesTile;

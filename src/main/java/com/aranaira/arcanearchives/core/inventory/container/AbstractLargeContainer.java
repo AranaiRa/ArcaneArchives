@@ -1,16 +1,13 @@
 package com.aranaira.arcanearchives.core.inventory.container;
 
-import com.aranaira.arcanearchives.api.crafting.IPlayerContainer;
-import com.aranaira.arcanearchives.api.crafting.ITileContainer;
+import com.aranaira.arcanearchives.api.container.IPlayerContainer;
+import com.aranaira.arcanearchives.api.container.ITileContainer;
 import com.aranaira.arcanearchives.api.inventory.IArcaneInventory;
 import com.aranaira.arcanearchives.api.inventory.slot.CappedSlot;
 import com.aranaira.arcanearchives.api.tiles.IInventoryTile;
-import com.aranaira.arcanearchives.core.init.ModContainers;
-import com.aranaira.arcanearchives.core.inventory.handlers.RadiantChestInventory;
 import com.aranaira.arcanearchives.core.inventory.slot.RadiantChestSlot;
 import com.aranaira.arcanearchives.core.network.ExtendedSlotContentsPacket;
 import com.aranaira.arcanearchives.core.network.Networking;
-import com.aranaira.arcanearchives.core.tiles.RadiantChestTile;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;

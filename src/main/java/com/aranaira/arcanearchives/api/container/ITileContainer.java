@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.api.crafting;
+package com.aranaira.arcanearchives.api.container;
 
 import com.aranaira.arcanearchives.api.inventory.IArcaneInventory;
 import com.aranaira.arcanearchives.api.tiles.IInventoryTile;
