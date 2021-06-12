@@ -1,13 +1,16 @@
 package com.aranaira.arcanearchives.core.recipes;
 
 import com.aranaira.arcanearchives.api.crafting.IngredientStack;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.data.IFinishedRecipe;
+import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -64,10 +67,21 @@ public class CrystalWorkbenchRecipeBuilder {
       this.ingredients = ingredients;
     }
 
-    // TODO
     @Override
     public void serialize(JsonObject json) {
+      JsonArray array = new JsonArray();
 
+      for (IngredientStack ingredient : this.ingredients) {
+        array.add(ingredient.serialize());
+      }
+
+      json.add("ingredients", array);
+      JsonObject item = new JsonObject();
+      item.addProperty("item", ForgeRegistries.ITEMS.getKey(this.result).toString());
+      if (count > 1) {
+        item.addProperty("count", count);
+      }
+      json.add("result", item);
     }
 
     @Override
