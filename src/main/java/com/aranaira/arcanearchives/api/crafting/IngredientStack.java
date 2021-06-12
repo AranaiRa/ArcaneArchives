@@ -1,56 +1,54 @@
 package com.aranaira.arcanearchives.api.crafting;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.mojang.serialization.DynamicOps;
+import com.mojang.serialization.JsonOps;
 import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.NBTDynamicOps;
+import net.minecraft.tags.ITag;
+import net.minecraft.util.IItemProvider;
+import net.minecraftforge.common.Tags;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class IngredientStack {
-  private final Ingredient ingredient;
-  private int count;
+  public static final IngredientStack EMPTY = new IngredientStack(Ingredient.EMPTY, 0, null);
 
+  private final Ingredient ingredient;
+  // TODO: Consider finality of this field
+  private int count;
   private final CompoundNBT nbt;
 
   public IngredientStack(ItemStack stack) {
-    this.ingredient = Ingredient.fromStacks(stack);
-    this.count = stack.getCount();
-    this.nbt = stack.getTag();
+    this(stack.getItem(), stack.getCount(), stack.getTag());
   }
 
-  public IngredientStack(Item item, int count) {
+  public IngredientStack(IItemProvider item) {
+    this(item, 1);
+  }
+
+  public IngredientStack(IItemProvider item, int count) {
     this(item, count, null);
   }
 
-  public IngredientStack(Item item, int count, CompoundNBT nbt) {
-    this.ingredient = Ingredient.fromItems(item);
+  public IngredientStack(IItemProvider item, int count, CompoundNBT nbt) {
+    this.ingredient = Ingredient.fromItems(item.asItem());
     this.count = count;
     this.nbt = nbt;
   }
 
-  public IngredientStack(Item item) {
-    this(item, 1, null);
+  public IngredientStack(Ingredient ingredient) {
+    this(ingredient, 1);
   }
-
-  // TODO: Replace with Tag
-/*  public IngredientStack(String item, int count) {
-    this(item, count, null);
-  }
-
-  public IngredientStack(String item, int count, CompoundNBT nbt) {
-    this.ingredient = new OreIngredient(item);
-    this.count = count;
-    this.nbt = nbt;
-  }
-
-  public IngredientStack(String item) {
-    this(item, 1, null);
-  }*/
 
   public IngredientStack(Ingredient ingredient, int count) {
     this(ingredient, count, null);
@@ -62,23 +60,20 @@ public class IngredientStack {
     this.nbt = nbt;
   }
 
-  public IngredientStack(Ingredient ingredient) {
-    this(ingredient, 1, null);
+  public IngredientStack (ITag<Item> tag) {
+    this(tag, 1);
   }
 
-  public IngredientStack(Block item, int count) {
-    this(item, count, null);
+  public IngredientStack (ITag<Item> tag, int count) {
+    this(tag, count, null);
   }
 
-  public IngredientStack(Block block, int count, CompoundNBT nbt) {
-    this.ingredient = Ingredient.fromItems(block);
+  public IngredientStack (ITag<Item> tag, int count, CompoundNBT nbt) {
+    this.ingredient = Ingredient.fromTag(tag);
     this.count = count;
     this.nbt = nbt;
   }
 
-  public IngredientStack(Block item) {
-    this(item, 1, null);
-  }
 
   public ItemStack[] getMatchingStacks() {
     return ingredient.getMatchingStacks();
@@ -126,7 +121,7 @@ public class IngredientStack {
   }
 
   public boolean isEmpty() {
-    return this.ingredient == Ingredient.EMPTY;
+    return this == EMPTY;
   }
 
   @Nullable
@@ -142,5 +137,25 @@ public class IngredientStack {
       result.add(copy);
     }
     return result;
+  }
+
+  public JsonObject serialize () {
+    JsonObject result = new JsonObject();
+    result.add("ingredient", ingredient.serialize());
+    result.addProperty("count", this.count);
+    CompoundNBT.CODEC.encodeStart(JsonOps.INSTANCE, this.nbt).resultOrPartial(ArcaneArchives.LOG::error).ifPresent((i) -> result.add("nbt", i));
+    return result;
+  }
+
+  public static IngredientStack deserialize (@Nullable JsonObject object) {
+    if (object == null || object.isJsonNull()) {
+      // TODO: Null or empty?
+      return EMPTY;
+    }
+
+    Ingredient ing = Ingredient.deserialize(object.getAsJsonObject("ingredient"));
+    int count = object.get("count").getAsInt();
+    CompoundNBT tag = object.has("nbt") ? CompoundNBT.CODEC.parse(JsonOps.INSTANCE, object.getAsJsonObject("tag")).resultOrPartial(ArcaneArchives.LOG::error).orElse(null) : null;
+    return new IngredientStack(ing, count, tag);
   }
 }
