@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.client.setup.ClientInit;
 import com.aranaira.arcanearchives.core.config.ConfigManager;
 import com.aranaira.arcanearchives.core.init.*;
 import com.aranaira.arcanearchives.core.setup.CommonSetup;
+import com.aranaira.arcanearchives.core.init.Registries;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -54,5 +55,8 @@ public class ArcaneArchives {
     ModItems.load();
     ModEffects.load();
     ModContainers.load();
+
+    Registries.initRegistries();
+    Registries.initDefaults();
   }
 }

@@ -7,7 +7,6 @@ public class CommonSetup {
   public static void setup (FMLCommonSetupEvent event) {
     Networking.register();
     event.enqueueWork(() -> {
-
     });
   }
 }

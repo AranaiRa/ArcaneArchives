@@ -1,10 +1,9 @@
 package com.aranaira.arcanearchives.core.recipes;
 
-import com.aranaira.arcanearchives.api.crafting.IngredientStack;
+import com.aranaira.arcanearchives.api.crafting.ingredients.IngredientStack;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;

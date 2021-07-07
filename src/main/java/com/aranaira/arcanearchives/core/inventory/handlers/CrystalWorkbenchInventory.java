@@ -1,13 +1,14 @@
 package com.aranaira.arcanearchives.core.inventory.handlers;
 
 import com.aranaira.arcanearchives.api.inventory.AbstractArcaneItemHandler;
+import com.aranaira.arcanearchives.api.inventory.ArcaneItemHandler;
 import com.aranaira.arcanearchives.api.inventory.ItemStackEntry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 
 import javax.annotation.Nonnull;
 
-public class CrystalWorkbenchInventory extends AbstractArcaneItemHandler {
+public class CrystalWorkbenchInventory extends ArcaneItemHandler {
   public static EmptyArcaneWorkbenchInventory getEmpty() {
     return new EmptyArcaneWorkbenchInventory(18);
   }

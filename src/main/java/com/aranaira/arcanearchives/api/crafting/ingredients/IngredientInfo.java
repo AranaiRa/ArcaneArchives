@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.api.crafting;
+package com.aranaira.arcanearchives.api.crafting.ingredients;
 
 import com.aranaira.arcanearchives.api.network.AbstractNetworkObject;
 import io.netty.buffer.ByteBuf;
