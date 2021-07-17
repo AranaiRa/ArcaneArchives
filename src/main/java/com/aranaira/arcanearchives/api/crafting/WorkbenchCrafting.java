@@ -6,9 +6,13 @@ import com.aranaira.arcanearchives.api.tiles.IArcaneArchivesTile;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.tileentity.TileEntity;
+import noobanidus.libs.noobutil.types.IIInvWrapper;
 import noobanidus.libs.noobutil.types.IInvWrapper;
 
-public class WorkbenchCrafting<H extends IArcaneInventory, C extends Container & IPlayerContainer, T extends TileEntity & IArcaneArchivesTile> extends IInvWrapper<H> {
+import javax.annotation.Nullable;
+import java.util.UUID;
+
+public class WorkbenchCrafting<H extends IArcaneInventory, C extends Container & IPlayerContainer, T extends TileEntity & IArcaneArchivesTile> extends IInvWrapper<H> implements ICrafter<H, C, T> {
   private final C container;
   private final T tile;
 
@@ -18,14 +22,23 @@ public class WorkbenchCrafting<H extends IArcaneInventory, C extends Container &
     this.tile = tile;
   }
 
+  @Override
   public C getContainer() {
     return container;
   }
 
+  @Override
   public T getTile() {
     return tile;
   }
 
+  @Override
+  @Nullable
+  public UUID getTileId() {
+    return getTile().getTileId();
+  }
+
+  @Override
   public PlayerEntity getPlayer () {
     return container.getPlayer();
   }

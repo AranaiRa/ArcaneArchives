@@ -3,7 +3,7 @@ package com.aranaira.arcanearchives.core.recipes;
 import com.aranaira.arcanearchives.api.crafting.WorkbenchCrafting;
 import com.aranaira.arcanearchives.api.crafting.ingredients.IngredientInfo;
 import com.aranaira.arcanearchives.api.crafting.ingredients.IngredientStack;
-import com.aranaira.arcanearchives.api.crafting.processors.IngredientProcessor;
+import com.aranaira.arcanearchives.api.crafting.processors.Processor;
 import com.aranaira.arcanearchives.api.crafting.recipes.ICrystalWorkbenchRecipe;
 import com.aranaira.arcanearchives.core.inventory.container.CrystalWorkbenchContainer;
 import com.aranaira.arcanearchives.core.inventory.handlers.CrystalWorkbenchInventory;
@@ -20,7 +20,7 @@ import java.util.List;
 public class CrystalWorkbenchRecipe implements ICrystalWorkbenchRecipe<CrystalWorkbenchInventory, CrystalWorkbenchContainer, CrystalWorkbenchTile> {
 
   @Override
-  public List<IngredientProcessor<CrystalWorkbenchInventory, CrystalWorkbenchContainer, CrystalWorkbenchTile>> getProcessors() {
+  public List<Processor<CrystalWorkbenchInventory, CrystalWorkbenchContainer, CrystalWorkbenchTile>> getProcessors() {
     return null;
   }
 

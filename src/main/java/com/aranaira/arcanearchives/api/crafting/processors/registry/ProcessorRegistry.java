@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.api.crafting.processors.registry;
 
 import com.aranaira.arcanearchives.api.IResourceLocation;
 import com.aranaira.arcanearchives.api.container.IPlayerContainer;
-import com.aranaira.arcanearchives.api.crafting.processors.IngredientProcessor;
+import com.aranaira.arcanearchives.api.crafting.processors.Processor;
 import com.aranaira.arcanearchives.api.inventory.IArcaneInventory;
 import com.aranaira.arcanearchives.api.tiles.IArcaneArchivesTile;
 import net.minecraft.inventory.container.Container;
@@ -17,22 +17,22 @@ import java.util.HashMap;
 public class ProcessorRegistry<H extends IArcaneInventory, C extends Container & IPlayerContainer, T extends TileEntity & IArcaneArchivesTile> implements IResourceLocation {
   private ResourceLocation resourceLocation;
 
-  private final HashMap<ResourceLocation, IngredientProcessor<H, C, T>> registry = new HashMap<>();
+  private final HashMap<ResourceLocation, Processor<H, C, T>> registry = new HashMap<>();
 
   public ProcessorRegistry(ResourceLocation location) {
     this.setResourceLocation(location);
   }
 
-  public Collection<IngredientProcessor<H, C, T>> getProcessors() {
+  public Collection<Processor<H, C, T>> getProcessors() {
     return registry.values();
   }
 
   @Nullable
-  public IngredientProcessor<H, C, T> getValue(ResourceLocation key) {
+  public Processor<H, C, T> getValue(ResourceLocation key) {
     return registry.get(key);
   }
 
-  public void register(IngredientProcessor<H, C, T> processor) {
+  public void register(Processor<H, C, T> processor) {
     if (processor.getResourceLocation() == null) {
       throw new IllegalArgumentException("Invalid processor for processor registry: '" + this.getResourceLocation() + "', ResourceLocation is null");
     }
