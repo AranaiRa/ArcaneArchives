@@ -12,11 +12,11 @@ import noobanidus.libs.noobutil.types.IInvWrapper;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public class WorkbenchCrafting<H extends IArcaneInventory, C extends Container & IPlayerContainer, T extends TileEntity & IArcaneArchivesTile> extends IInvWrapper<H> implements ICrafter<H, C, T> {
+public class ArcaneCrafting<H extends IArcaneInventory, C extends Container & IPlayerContainer, T extends TileEntity & IArcaneArchivesTile> extends IInvWrapper<H> implements ICrafter<H, C, T> {
   private final C container;
   private final T tile;
 
-  public WorkbenchCrafting(C container, T tile, H handler) {
+  public ArcaneCrafting(C container, T tile, H handler) {
     super(handler);
     this.container = container;
     this.tile = tile;

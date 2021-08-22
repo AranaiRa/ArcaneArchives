@@ -4,7 +4,7 @@ issueTrackerURL="https://github.com/aranaira/arcanearchives/issues"
 license="https://github.com/AranaiRa/ArcaneArchives/blob/1.16.4/LICENSE"
 [[mods]]
 modId="arcanearchives"
-version="${file.jarVersion}"
+version="${version}"
 displayName="Arcane Archives"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/arcane-archives"
 #logoFile="logo.png"
