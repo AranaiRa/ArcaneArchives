@@ -21,23 +21,13 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public interface ICrystalWorkbenchRecipe<H extends ArcaneItemHandler, C extends Container & IPlayerContainer, T extends TileEntity & IArcaneArchivesTile, W extends ArcaneCrafting<H, C, T>> extends IRecipe<W> {
-  List<Processor<W>> getProcessors ();
-
-  void addProcessor (Processor<W> processor);
-
-  void skipDefaultProcessor (ResourceLocation rl);
-
-  void skipDefaultProcessor (Processor<W> processor);
-
-  boolean shouldSkipProcessor (Processor<W> processor);
-
+public interface ICrystalWorkbenchRecipe<H extends ArcaneItemHandler, C extends Container & IPlayerContainer, T extends TileEntity & IArcaneArchivesTile, W extends ArcaneCrafting<H, C, T>> extends IArcaneRecipe<H, C, T, W> {
   NonNullList<IngredientStack> getIngredientStacks();
 
   List<IngredientInfo> getIngredientInfo (C container);
 
   @Override
-  default boolean canFit(int width, int height) {
+  default boolean canCraftInDimensions(int width, int height) {
     return true;
   }
 }

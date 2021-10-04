@@ -1,6 +1,9 @@
 package com.aranaira.arcanearchives.core.recipes;
 
 import com.aranaira.arcanearchives.api.crafting.ingredients.IngredientStack;
+import com.aranaira.arcanearchives.api.crafting.processors.Processor;
+import com.aranaira.arcanearchives.core.init.ModRecipes;
+import com.aranaira.arcanearchives.core.recipes.inventory.CrystalWorkbenchCrafting;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.data.IFinishedRecipe;
@@ -12,14 +15,14 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.function.Consumer;
 
 public class CrystalWorkbenchRecipeBuilder {
   private final Item result;
   private final int count;
   private final List<IngredientStack> ingredients = new ArrayList<>();
+  private final List<Processor<CrystalWorkbenchCrafting>> processors = new ArrayList<>();
 
   protected CrystalWorkbenchRecipeBuilder(IItemProvider result, int count) {
     this.result = result.asItem();
@@ -44,13 +47,23 @@ public class CrystalWorkbenchRecipeBuilder {
     return this;
   }
 
+  public CrystalWorkbenchRecipeBuilder addIngredient (IItemProvider item, int count) {
+    addIngredient(new IngredientStack(Ingredient.fromItems(item), count));
+    return this;
+  }
+
   public CrystalWorkbenchRecipeBuilder addIngredient(IngredientStack ingredientStack) {
     this.ingredients.add(ingredientStack);
     return this;
   }
 
+  public CrystalWorkbenchRecipeBuilder addProcessor (Processor<CrystalWorkbenchCrafting> processor) {
+    this.processors.add(processor);
+    return this;
+  }
+
   public void build(Consumer<IFinishedRecipe> consumer, ResourceLocation recipeName) {
-    consumer.accept(new Result(recipeName, result, count, ingredients));
+    consumer.accept(new Result(recipeName, result, count, ingredients, processors));
   }
 
   public static class Result implements IFinishedRecipe {
@@ -58,12 +71,14 @@ public class CrystalWorkbenchRecipeBuilder {
     private final Item result;
     private final int count;
     private final List<IngredientStack> ingredients;
+    private final List<Processor<CrystalWorkbenchCrafting>> processors;
 
-    public Result(ResourceLocation id, Item result, int count, List<IngredientStack> ingredients) {
+    public Result(ResourceLocation id, Item result, int count, List<IngredientStack> ingredients, List<Processor<CrystalWorkbenchCrafting>> processors) {
       this.id = id;
       this.result = result;
       this.count = count;
       this.ingredients = ingredients;
+      this.processors = processors;
     }
 
     @Override
@@ -81,6 +96,12 @@ public class CrystalWorkbenchRecipeBuilder {
         item.addProperty("count", count);
       }
       json.add("result", item);
+
+      JsonArray processors = new JsonArray();
+      for (Processor<CrystalWorkbenchCrafting> processor : this.processors) {
+        processors.add(Objects.requireNonNull(processor.getRegistryName()).toString());
+      }
+      json.add("processors", processors);
     }
 
     @Override
@@ -88,10 +109,9 @@ public class CrystalWorkbenchRecipeBuilder {
       return id;
     }
 
-    // TODO
     @Override
     public IRecipeSerializer<?> getSerializer() {
-      return null;
+      return ModRecipes.CRYSTAL_WORKBENCH.get();
     }
 
     @Nullable

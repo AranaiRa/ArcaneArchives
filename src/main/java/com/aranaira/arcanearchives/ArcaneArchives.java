@@ -1,7 +1,11 @@
 package com.aranaira.arcanearchives;
 
+import com.aranaira.arcanearchives.api.ArcaneArchivesAPI;
+import com.aranaira.arcanearchives.api.crafting.registry.IRecipeManagerAccessor;
+import com.aranaira.arcanearchives.client.impl.ClientRecipeAccessor;
 import com.aranaira.arcanearchives.client.setup.ClientInit;
 import com.aranaira.arcanearchives.core.config.ConfigManager;
+import com.aranaira.arcanearchives.core.impl.ServerRecipeAccessor;
 import com.aranaira.arcanearchives.core.init.*;
 import com.aranaira.arcanearchives.core.setup.CommonSetup;
 import net.minecraft.item.ItemGroup;
@@ -19,10 +23,10 @@ import noobanidus.libs.noobutil.registrate.CustomRegistrate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod("arcanearchives")
+@Mod(ArcaneArchives.MODID)
 public class ArcaneArchives {
   public static final Logger LOG = LogManager.getLogger();
-  public static final String MODID = "arcanearchives";
+  public static final String MODID = ArcaneArchivesAPI.MODID;
   public static CustomRegistrate REGISTRATE;
 
   public static ItemGroup GROUP = new ItemGroup(MODID) {
@@ -41,18 +45,28 @@ public class ArcaneArchives {
     modBus.addListener(ConfigManager::configReloaded);
 
     DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ClientInit::init);
+    ArcaneArchivesAPI.INSTANCE = new ArcaneArchivesAPI() {
+      private final IRecipeManagerAccessor accessor = DistExecutor.safeRunForDist(() -> ClientRecipeAccessor::new, () -> ServerRecipeAccessor::new);
+
+      @Override
+      public IRecipeManagerAccessor getRecipeAccessor() {
+        return accessor;
+      }
+    };
 
     REGISTRATE = CustomRegistrate.create(MODID);
     REGISTRATE.itemGroup(() -> GROUP);
 
-    ModEntities.load();
-    ModLang.load();
-    ModSounds.load();
-    ModRecipes.load();
     ModBlocks.load();
-    ModTiles.load();
-    ModItems.load();
-    ModEffects.load();
     ModContainers.load();
+    ModEffects.load();
+    ModEntities.load();
+    ModItems.load();
+    ModLang.load();
+    ModProcessors.load();
+    ModRecipes.load();
+    ModRegistries.load();
+    ModSounds.load();
+    ModTiles.load();
   }
 }

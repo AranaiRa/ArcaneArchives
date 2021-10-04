@@ -8,7 +8,7 @@ import net.minecraft.item.crafting.Ingredient;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CrystalWorkbenchContainerProcessor extends Processor<CrystalWorkbenchCrafting> {
+public class CrystalWorkbenchContainerProcessor extends CrystalWorkbenchProcessor {
   public CrystalWorkbenchContainerProcessor() {
     super();
   }

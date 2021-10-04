@@ -1,10 +1,10 @@
 package com.aranaira.arcanearchives.core.network;
 
-import com.aranaira.arcanearchives.client.render.BoltEffect;
-import com.aranaira.arcanearchives.client.render.RenderTickHandler;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.fml.network.NetworkEvent;
+import noobanidus.libs.particleslib.client.effects.BoltEffect;
+import noobanidus.libs.particleslib.client.events.RenderTickHandler;
 
 import java.util.function.Supplier;
 

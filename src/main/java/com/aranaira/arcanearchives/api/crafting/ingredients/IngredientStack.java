@@ -148,9 +148,20 @@ public class IngredientStack {
       return EMPTY;
     }
 
-    Ingredient ing = Ingredient.deserialize(object.getAsJsonObject("ingredient"));
+    Ingredient ing = Ingredient.fromJson(object.getAsJsonObject("ingredient"));
     int count = object.get("count").getAsInt();
     CompoundNBT tag = object.has("nbt") ? CompoundNBT.CODEC.parse(JsonOps.INSTANCE, object.getAsJsonObject("tag")).resultOrPartial(ArcaneArchives.LOG::error).orElse(null) : null;
     return new IngredientStack(ing, count, tag);
+  }
+
+  public void write (PacketBuffer buffer) {
+    buffer.writeVarInt(count);
+    ingredient.toNetwork(buffer);
+  }
+
+  public static IngredientStack read (PacketBuffer buffer) {
+    int count = buffer.readVarInt();
+    Ingredient ingredient = Ingredient.fromNetwork(buffer);
+    return new IngredientStack(ingredient, count);
   }
 }
