@@ -31,7 +31,7 @@ public class ArcaneArchives {
 
   public static ItemGroup GROUP = new ItemGroup(MODID) {
     @Override
-    public ItemStack createIcon() {
+    public ItemStack makeIcon() {
       return new ItemStack(Items.ACACIA_BUTTON);
     }
   };

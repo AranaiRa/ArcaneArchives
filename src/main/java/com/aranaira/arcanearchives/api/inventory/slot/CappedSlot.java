@@ -14,7 +14,7 @@ public class CappedSlot extends Slot {
   }
 
   @Override
-  public int getItemStackLimit(ItemStack stack) {
-    return Math.min(getSlotStackLimit(), stack.getMaxStackSize());
+  public int getMaxStackSize(ItemStack stack) {
+    return Math.min(getMaxStackSize(), stack.getMaxStackSize());
   }
 }

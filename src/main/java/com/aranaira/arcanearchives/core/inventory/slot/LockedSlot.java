@@ -9,7 +9,7 @@ public class LockedSlot extends Slot {
     super(inventoryIn, index, xPosition, yPosition);
   }
 
-  public boolean canTakeStack(PlayerEntity playerIn) {
+  public boolean mayPickup(PlayerEntity playerIn) {
     return false;
   }
 }

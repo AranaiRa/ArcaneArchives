@@ -25,21 +25,23 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class CrystalWorkbenchBlock extends SingleAccessorBlock {
   public CrystalWorkbenchBlock(Properties properties) {
     super(properties, RelativeSide.RIGHT);
-    this.setDefaultState(this.getDefaultState().with(ACCESSOR, false).with(FACING, Direction.NORTH));
+    this.registerDefaultState(this.defaultBlockState().setValue(ACCESSOR, false).setValue(FACING, Direction.NORTH));
   }
 
   @Override
   public boolean hasTileEntity(BlockState state) {
-    return !state.get(ACCESSOR);
+    return !state.getValue(ACCESSOR);
   }
 
   @Nullable
   @Override
   public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-    if (state.get(ACCESSOR)) {
+    if (state.getValue(ACCESSOR)) {
       return null;
     }
     return new CrystalWorkbenchTile(ModTiles.CRYSTAL_WORKBENCH.get());
@@ -47,13 +49,13 @@ public class CrystalWorkbenchBlock extends SingleAccessorBlock {
 
   @Override
   public ActionResultType blockActivate(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray, BlockPos origin) {
-    if (world.isRemote) {
+    if (world.isClientSide) {
       return ActionResultType.SUCCESS;
     } else {
       // TODO: Tile entity library?
-      TileEntity te = world.getTileEntity(pos);
+      TileEntity te = world.getBlockEntity(pos);
       if (te instanceof CrystalWorkbenchTile) {
-        player.openContainer((CrystalWorkbenchTile) te);
+        player.openMenu((CrystalWorkbenchTile) te);
       }
       return ActionResultType.CONSUME;
     }

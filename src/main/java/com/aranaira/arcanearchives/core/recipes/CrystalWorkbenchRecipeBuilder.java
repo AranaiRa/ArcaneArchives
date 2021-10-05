@@ -48,7 +48,7 @@ public class CrystalWorkbenchRecipeBuilder {
   }
 
   public CrystalWorkbenchRecipeBuilder addIngredient (IItemProvider item, int count) {
-    addIngredient(new IngredientStack(Ingredient.fromItems(item), count));
+    addIngredient(new IngredientStack(Ingredient.of(item), count));
     return this;
   }
 
@@ -82,7 +82,7 @@ public class CrystalWorkbenchRecipeBuilder {
     }
 
     @Override
-    public void serialize(JsonObject json) {
+    public void serializeRecipeData(JsonObject json) {
       JsonArray array = new JsonArray();
 
       for (IngredientStack ingredient : this.ingredients) {
@@ -105,24 +105,24 @@ public class CrystalWorkbenchRecipeBuilder {
     }
 
     @Override
-    public ResourceLocation getID() {
+    public ResourceLocation getId() {
       return id;
     }
 
     @Override
-    public IRecipeSerializer<?> getSerializer() {
+    public IRecipeSerializer<?> getType() {
       return ModRecipes.CRYSTAL_WORKBENCH.get();
     }
 
     @Nullable
     @Override
-    public JsonObject getAdvancementJson() {
+    public JsonObject serializeAdvancement() {
       return null;
     }
 
     @Nullable
     @Override
-    public ResourceLocation getAdvancementID() {
+    public ResourceLocation getAdvancementId() {
       return null;
     }
   }

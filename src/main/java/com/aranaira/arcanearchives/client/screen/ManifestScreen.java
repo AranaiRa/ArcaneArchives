@@ -31,10 +31,10 @@ public class ManifestScreen extends ContainerScreen<ManifestContainer> {
 
   public ManifestScreen(PlayerEntity player) {
     super(new ManifestContainer(player), player.inventory, StringTextComponent.EMPTY);
-    player.openContainer = this.container;
+    player.containerMenu = this.menu;
     this.passEvents = true;
-    this.ySize = 136;
-    this.xSize = 195;
+    this.imageHeight = 136;
+    this.imageWidth = 195;
   }
 
   @Override
@@ -46,43 +46,43 @@ public class ManifestScreen extends ContainerScreen<ManifestContainer> {
    * Called when the mouse is clicked over a slot or outside the gui.
    */
   @Override
-  protected void handleMouseClick(@Nullable Slot slotIn, int slotId, int mouseButton, ClickType type) {
+  protected void slotClicked(@Nullable Slot slotIn, int slotId, int mouseButton, ClickType type) {
   }
 
   @Override
   protected void init() {
     super.init();
-    this.minecraft.keyboardListener.enableRepeatEvents(true);
-    this.searchField = new TextFieldWidget(this.font, this.guiLeft + 82, this.guiTop + 6, 80, 9, new TranslationTextComponent("itemGroup.search"));
-    this.searchField.setMaxStringLength(50);
-    this.searchField.setEnableBackgroundDrawing(false);
+    this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
+    this.searchField = new TextFieldWidget(this.font, this.leftPos + 82, this.topPos + 6, 80, 9, new TranslationTextComponent("itemGroup.search"));
+    this.searchField.setMaxLength(50);
+    this.searchField.setBordered(false);
     this.searchField.setVisible(false);
     this.searchField.setTextColor(16777215);
     this.children.add(this.searchField);
-    this.minecraft.player.container.removeListener(this.listener);
+    this.minecraft.player.inventoryMenu.removeSlotListener(this.listener);
     this.listener = new CreativeCraftingListener(this.minecraft);
-    this.minecraft.player.container.addListener(this.listener);
+    this.minecraft.player.inventoryMenu.addSlotListener(this.listener);
   }
 
   @Override
   public void resize(Minecraft minecraft, int width, int height) {
-    String s = this.searchField.getText();
+    String s = this.searchField.getValue();
     this.init(minecraft, width, height);
-    this.searchField.setText(s);
-    if (!this.searchField.getText().isEmpty()) {
+    this.searchField.setValue(s);
+    if (!this.searchField.getValue().isEmpty()) {
       this.updateCreativeSearch();
     }
 
   }
 
   @Override
-  public void onClose() {
-    super.onClose();
+  public void removed() {
+    super.removed();
     if (this.minecraft.player != null && this.minecraft.player.inventory != null) {
-      this.minecraft.player.container.removeListener(this.listener);
+      this.minecraft.player.inventoryMenu.removeSlotListener(this.listener);
     }
 
-    this.minecraft.keyboardListener.enableRepeatEvents(false);
+    this.minecraft.keyboardHandler.setSendRepeatsToGui(false);
   }
 
   @Override
@@ -90,9 +90,9 @@ public class ManifestScreen extends ContainerScreen<ManifestContainer> {
     if (this.ignoreTextInput) {
       return false;
     } else {
-      String s = this.searchField.getText();
+      String s = this.searchField.getValue();
       if (this.searchField.charTyped(codePoint, modifiers)) {
-        if (!Objects.equals(s, this.searchField.getText())) {
+        if (!Objects.equals(s, this.searchField.getValue())) {
           this.updateCreativeSearch();
         }
 
@@ -106,21 +106,21 @@ public class ManifestScreen extends ContainerScreen<ManifestContainer> {
   @Override
   public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
     this.ignoreTextInput = false;
-    boolean flag = this.hoveredSlot.getHasStack();
-    boolean flag1 = InputMappings.getInputByCode(keyCode, scanCode).func_241552_e_().isPresent();
-    if (flag && flag1 && this.itemStackMoved(keyCode, scanCode)) {
+    boolean flag = this.hoveredSlot.hasItem();
+    boolean flag1 = InputMappings.getKey(keyCode, scanCode).getNumericKeyValue().isPresent();
+    if (flag && flag1 && this.checkHotbarKeyPressed(keyCode, scanCode)) {
       this.ignoreTextInput = true;
       return true;
     } else {
-      String s = this.searchField.getText();
+      String s = this.searchField.getValue();
       if (this.searchField.keyPressed(keyCode, scanCode, modifiers)) {
-        if (!Objects.equals(s, this.searchField.getText())) {
+        if (!Objects.equals(s, this.searchField.getValue())) {
           this.updateCreativeSearch();
         }
 
         return true;
       } else {
-        return this.searchField.isFocused() && this.searchField.getVisible() && keyCode != 256 || super.keyPressed(keyCode, scanCode, modifiers);
+        return this.searchField.isFocused() && this.searchField.isVisible() && keyCode != 256 || super.keyPressed(keyCode, scanCode, modifiers);
       }
     }
   }
@@ -201,29 +201,29 @@ public class ManifestScreen extends ContainerScreen<ManifestContainer> {
    * Sets the current creative tab, restructuring the GUI as needed.
    */
   private void reset() {
-    this.dragSplittingSlots.clear();
-    (this.container).itemList.clear();
+    this.quickCraftSlots.clear();
+    (this.menu).itemList.clear();
     //tab.fill((this.container).itemList);
 
     if (this.searchField != null) {
       if (true) {
         this.searchField.setVisible(true);
         this.searchField.setCanLoseFocus(false);
-        this.searchField.setFocused2(true);
-        this.searchField.setText("");
+        this.searchField.setFocus(true);
+        this.searchField.setValue("");
         this.searchField.setWidth(32); // find significant default
-        this.searchField.x = this.guiLeft + (82 /*default left*/ + 89 /*default width*/) - this.searchField.getWidth();
+        this.searchField.x = this.leftPos + (82 /*default left*/ + 89 /*default width*/) - this.searchField.getWidth();
         this.updateCreativeSearch();
       } else {
         this.searchField.setVisible(false);
         this.searchField.setCanLoseFocus(true);
-        this.searchField.setFocused2(false);
-        this.searchField.setText("");
+        this.searchField.setFocus(false);
+        this.searchField.setValue("");
       }
     }
 
     this.currentScroll = 0.0F;
-    this.container.scrollTo(0.0F);
+    this.menu.scrollTo(0.0F);
   }
 
   @Override
@@ -231,27 +231,27 @@ public class ManifestScreen extends ContainerScreen<ManifestContainer> {
     if (!this.needsScrollBars()) {
       return false;
     } else {
-      int i = ((this.container).itemList.size() + 9 - 1) / 9 - 5;
+      int i = ((this.menu).itemList.size() + 9 - 1) / 9 - 5;
       this.currentScroll = (float) ((double) this.currentScroll - delta / (double) i);
       this.currentScroll = MathHelper.clamp(this.currentScroll, 0.0F, 1.0F);
-      this.container.scrollTo(this.currentScroll);
+      this.menu.scrollTo(this.currentScroll);
       return true;
     }
   }
 
   @Override
   protected boolean hasClickedOutside(double mouseX, double mouseY, int guiLeftIn, int guiTopIn, int mouseButton) {
-    return mouseX < (double) guiLeftIn || mouseY < (double) guiTopIn || mouseX >= (double) (guiLeftIn + this.xSize) || mouseY >= (double) (guiTopIn + this.ySize);
+    return mouseX < (double) guiLeftIn || mouseY < (double) guiTopIn || mouseX >= (double) (guiLeftIn + this.imageWidth) || mouseY >= (double) (guiTopIn + this.imageHeight);
   }
 
   @Override
   public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
     if (this.isScrolling) {
-      int i = this.guiTop + 18;
+      int i = this.topPos + 18;
       int j = i + 112;
       this.currentScroll = ((float) mouseY - (float) i - 7.5F) / ((float) (j - i) - 15.0F);
       this.currentScroll = MathHelper.clamp(this.currentScroll, 0.0F, 1.0F);
-      this.container.scrollTo(this.currentScroll);
+      this.menu.scrollTo(this.currentScroll);
       return true;
     } else {
       return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
@@ -262,7 +262,7 @@ public class ManifestScreen extends ContainerScreen<ManifestContainer> {
   public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(matrixStack);
     super.render(matrixStack, mouseX, mouseY, partialTicks);
-    this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
+    this.renderTooltip(matrixStack, mouseX, mouseY);
   }
 
   @Override
@@ -271,17 +271,17 @@ public class ManifestScreen extends ContainerScreen<ManifestContainer> {
   }
 
   @Override
-  protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
+  protected void renderBg(MatrixStack matrixStack, float partialTicks, int x, int y) {
     RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
     this.searchField.render(matrixStack, x, y, partialTicks);
     RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-    int i = this.guiLeft + 175;
-    int j = this.guiTop + 18;
+    int i = this.leftPos + 175;
+    int j = this.topPos + 18;
     int k = j + 112;
     // TODO: FIX THIS
     // SEARCH BAR NUBBIN
-    this.minecraft.getTextureManager().bindTexture(null);
+    this.minecraft.getTextureManager().bind(null);
     if (true) {
       this.blit(matrixStack, i, j + (int) ((float) (k - j - 17) * this.currentScroll), 232 + (this.needsScrollBars() ? 0 : 12), 0, 12, 15);
     }

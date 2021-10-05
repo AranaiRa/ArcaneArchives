@@ -26,6 +26,8 @@ import noobanidus.libs.noobutil.util.VoxelUtil;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 @SuppressWarnings("deprecation")
 public class MakeshiftResonatorBlock extends Block {
   public static BooleanProperty FILLED = BooleanProperty.create("filled");
@@ -33,7 +35,7 @@ public class MakeshiftResonatorBlock extends Block {
 
   public MakeshiftResonatorBlock(Properties properties) {
     super(properties);
-    this.setDefaultState(this.getDefaultState().with(FILLED, false));
+    this.registerDefaultState(this.defaultBlockState().setValue(FILLED, false));
   }
 
   @Override
@@ -42,13 +44,13 @@ public class MakeshiftResonatorBlock extends Block {
   }
 
   @Override
-  public void fillWithRain(World world, BlockPos pos) {
-    if (!world.isRemote) {
-      BlockState stateAt = world.getBlockState(pos).with(FILLED, true);
-      if (!stateAt.get(FILLED)) {
-        world.setBlockState(pos, stateAt.with(FILLED, true));
+  public void handleRain(World world, BlockPos pos) {
+    if (!world.isClientSide) {
+      BlockState stateAt = world.getBlockState(pos).setValue(FILLED, true);
+      if (!stateAt.getValue(FILLED)) {
+        world.setBlockAndUpdate(pos, stateAt.setValue(FILLED, true));
       }
-      TileEntity te = world.getTileEntity(pos);
+      TileEntity te = world.getBlockEntity(pos);
       if (te instanceof MakeshiftResonatorTile) {
         ((MakeshiftResonatorTile) te).setFilled();
       }
@@ -56,21 +58,21 @@ public class MakeshiftResonatorBlock extends Block {
   }
 
   @Override
-  public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray) {
-    if (state.get(FILLED)) {
+  public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray) {
+    if (state.getValue(FILLED)) {
       return ActionResultType.PASS;
     }
 
     if (player.isCreative()) {
-      world.setBlockState(pos, state.with(FILLED, true));
-      TileEntity te = world.getTileEntity(pos);
+      world.setBlockAndUpdate(pos, state.setValue(FILLED, true));
+      TileEntity te = world.getBlockEntity(pos);
       if (te instanceof MakeshiftResonatorTile) {
         ((MakeshiftResonatorTile) te).setFilled();
       }
       return ActionResultType.SUCCESS;
     }
 
-    ItemStack heldItem = player.getHeldItem(hand);
+    ItemStack heldItem = player.getItemInHand(hand);
     //noinspection ConstantConditions
     IFluidHandlerItem cap = heldItem.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY).orElse(null);
     //noinspection ConstantConditions
@@ -86,10 +88,10 @@ public class MakeshiftResonatorBlock extends Block {
             }
             cap.drain(1000, IFluidHandler.FluidAction.EXECUTE);
             if (replace) {
-              player.setHeldItem(hand, cap.getContainer());
+              player.setItemInHand(hand, cap.getContainer());
             }
-            world.setBlockState(pos, state.with(FILLED, true));
-            TileEntity te = world.getTileEntity(pos);
+            world.setBlockAndUpdate(pos, state.setValue(FILLED, true));
+            TileEntity te = world.getBlockEntity(pos);
             if (te instanceof MakeshiftResonatorTile) {
               ((MakeshiftResonatorTile) te).setFilled();
             }
@@ -99,11 +101,11 @@ public class MakeshiftResonatorBlock extends Block {
       }
     }
 
-    return super.onBlockActivated(state, world, pos, player, hand, ray);
+    return super.use(state, world, pos, player, hand, ray);
   }
 
   @Override
-  protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+  protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
     builder.add(FILLED);
   }
 

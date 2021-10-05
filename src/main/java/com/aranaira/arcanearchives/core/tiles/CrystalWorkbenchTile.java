@@ -24,7 +24,7 @@ public class CrystalWorkbenchTile extends ArcaneArchivesIdentifiedTile implement
   @Nullable
   @Override
   public CrystalWorkbenchInventory getTileInventory() {
-    CrystalWorkbenchInventory result = inventory.getInventory(this.world);
+    CrystalWorkbenchInventory result = inventory.getInventory(this.level);
     if (result == null) {
       return inventory.getEmpty();
     }

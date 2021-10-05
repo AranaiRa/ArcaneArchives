@@ -345,7 +345,7 @@ public class ManifestScreen extends DisplayEffectsScreen<ManifestScreen.Manifest
       }
     } else {
       boolean flag = !this.hasTmpInventory(this.hoveredSlot) || this.hoveredSlot.getHasStack();
-      boolean flag1 = InputMappings.getInputByCode(keyCode, scanCode).func_241552_e_().isPresent();
+      boolean flag1 = InputMappings.getInputByCode(keyCode, scanCode).getNumericKeyValue().isPresent();
       if (flag && flag1 && this.itemStackMoved(keyCode, scanCode)) {
         this.maybeSearching = true;
         return true;
@@ -442,7 +442,7 @@ public class ManifestScreen extends DisplayEffectsScreen<ManifestScreen.Manifest
     ItemGroup itemgroup = ItemGroup.GROUPS[selectedTabIndex];
     if (itemgroup != null && itemgroup.drawInForegroundOfTab()) {
       RenderSystem.disableBlend();
-      this.font.func_243248_b(matrixStack, itemgroup.getGroupName(), 8.0F, 6.0F, itemgroup.getLabelColor());
+      this.font.draw(matrixStack, itemgroup.getGroupName(), 8.0F, 6.0F, itemgroup.getLabelColor());
     }
 
   }
@@ -515,8 +515,8 @@ public class ManifestScreen extends DisplayEffectsScreen<ManifestScreen.Manifest
             if (k == j) {
               ItemStack itemstack = new ItemStack(Items.PAPER);
               itemstack.getOrCreateChildTag("CustomManifestLock");
-              ITextComponent itextcomponent = this.minecraft.gameSettings.keyBindsHotbar[j].func_238171_j_();
-              ITextComponent itextcomponent1 = this.minecraft.gameSettings.keyBindSaveToolbar.func_238171_j_();
+              ITextComponent itextcomponent = this.minecraft.gameSettings.keyBindsHotbar[j].getTranslatedKeyMessage();
+              ITextComponent itextcomponent1 = this.minecraft.gameSettings.keyBindSaveToolbar.getTranslatedKeyMessage();
               itemstack.setDisplayName(new TranslationTextComponent("inventory.hotbarInfo", itextcomponent1, itextcomponent));
               (this.container).itemList.add(itemstack);
             } else {
@@ -622,14 +622,14 @@ public class ManifestScreen extends DisplayEffectsScreen<ManifestScreen.Manifest
     return this.clickedOutside;
   }
 
-  private boolean maybeOverScrollbars(double p_195376_1_, double p_195376_3_) {
+  private boolean maybeOverScrollbars(double pMouseX, double pMouseY) {
     int i = this.guiLeft;
     int j = this.guiTop;
     int k = i + 175;
     int l = j + 18;
     int i1 = k + 14;
     int j1 = l + 112;
-    return p_195376_1_ >= (double) k && p_195376_3_ >= (double) l && p_195376_1_ < (double) i1 && p_195376_3_ < (double) j1;
+    return pMouseX >= (double) k && pMouseY >= (double) l && pMouseX < (double) i1 && pMouseY < (double) j1;
   }
 
   @Override
@@ -658,13 +658,13 @@ public class ManifestScreen extends DisplayEffectsScreen<ManifestScreen.Manifest
 
     for (int x = start; x < end; x++) {
       ItemGroup itemgroup = ItemGroup.GROUPS[x];
-      if (itemgroup != null && this.func_238809_a_(matrixStack, itemgroup, mouseX, mouseY)) {
+      if (itemgroup != null && this.checkTabHovering(matrixStack, itemgroup, mouseX, mouseY)) {
         rendered = true;
         break;
       }
     }
-    if (!rendered && !this.func_238809_a_(matrixStack, ItemGroup.SEARCH, mouseX, mouseY))
-      this.func_238809_a_(matrixStack, ItemGroup.INVENTORY, mouseX, mouseY);
+    if (!rendered && !this.checkTabHovering(matrixStack, ItemGroup.SEARCH, mouseX, mouseY))
+      this.checkTabHovering(matrixStack, ItemGroup.INVENTORY, mouseX, mouseY);
 
     if (this.destroyItemSlot != null && selectedTabIndex == ItemGroup.INVENTORY.getIndex() && this.isPointInRegion(this.destroyItemSlot.xPos, this.destroyItemSlot.yPos, 16, 16, (double) mouseX, (double) mouseY)) {
       this.renderTooltip(matrixStack, BIN_SLOT_TEXT, mouseX, mouseY);
@@ -675,7 +675,7 @@ public class ManifestScreen extends DisplayEffectsScreen<ManifestScreen.Manifest
       RenderSystem.disableLighting();
       this.setBlitOffset(300);
       this.itemRenderer.zLevel = 300.0F;
-      font.func_238407_a_(matrixStack, page.func_241878_f(), guiLeft + (xSize / 2.0f) - (font.getStringPropertyWidth(page) / 2.0f), guiTop - 44, -1);
+      font.drawShadow(matrixStack, page.getVisualOrderText(), guiLeft + (xSize / 2.0f) - (font.getStringPropertyWidth(page) / 2.0f), guiTop - 44, -1);
       this.setBlitOffset(0);
       this.itemRenderer.zLevel = 0.0F;
     }
@@ -740,18 +740,18 @@ public class ManifestScreen extends DisplayEffectsScreen<ManifestScreen.Manifest
       ItemGroup itemgroup1 = ItemGroup.GROUPS[idx];
       if (itemgroup1 != null && itemgroup1.getIndex() != selectedTabIndex) {
         this.minecraft.getTextureManager().bindTexture(itemgroup1.getTabsImage());
-        this.func_238808_a_(matrixStack, itemgroup1);
+        this.renderTabButton(matrixStack, itemgroup1);
       }
     }
 
     if (tabPage != 0) {
       if (itemgroup != ItemGroup.SEARCH) {
         this.minecraft.getTextureManager().bindTexture(ItemGroup.SEARCH.getTabsImage());
-        func_238808_a_(matrixStack, ItemGroup.SEARCH);
+        renderTabButton(matrixStack, ItemGroup.SEARCH);
       }
       if (itemgroup != ItemGroup.INVENTORY) {
         this.minecraft.getTextureManager().bindTexture(ItemGroup.INVENTORY.getTabsImage());
-        func_238808_a_(matrixStack, ItemGroup.INVENTORY);
+        renderTabButton(matrixStack, ItemGroup.INVENTORY);
       }
     }
 
@@ -770,62 +770,62 @@ public class ManifestScreen extends DisplayEffectsScreen<ManifestScreen.Manifest
     if ((itemgroup == null || itemgroup.getTabPage() != tabPage) && (itemgroup != ItemGroup.SEARCH && itemgroup != ItemGroup.INVENTORY))
       return;
 
-    this.func_238808_a_(matrixStack, itemgroup);
+    this.renderTabButton(matrixStack, itemgroup);
     if (itemgroup == ItemGroup.INVENTORY) {
       InventoryScreen.drawEntityOnScreen(this.guiLeft + 88, this.guiTop + 45, 20, (float) (this.guiLeft + 88 - x), (float) (this.guiTop + 45 - 30 - y), this.minecraft.player);
     }
 
   }
 
-  private boolean isMouseOverGroup(ItemGroup p_195375_1_, double p_195375_2_, double p_195375_4_) {
-    if (p_195375_1_.getTabPage() != tabPage && p_195375_1_ != ItemGroup.SEARCH && p_195375_1_ != ItemGroup.INVENTORY)
+  private boolean isMouseOverGroup(ItemGroup pCreativeModeTab, double pRelativeMouseX, double pRelativeMouseY) {
+    if (pCreativeModeTab.getTabPage() != tabPage && pCreativeModeTab != ItemGroup.SEARCH && pCreativeModeTab != ItemGroup.INVENTORY)
       return false;
-    int i = p_195375_1_.getColumn();
+    int i = pCreativeModeTab.getColumn();
     int j = 28 * i;
     int k = 0;
-    if (p_195375_1_.isAlignedRight()) {
+    if (pCreativeModeTab.isAlignedRight()) {
       j = this.xSize - 28 * (6 - i) + 2;
     } else if (i > 0) {
       j += i;
     }
 
-    if (p_195375_1_.isOnTopRow()) {
+    if (pCreativeModeTab.isOnTopRow()) {
       k = k - 32;
     } else {
       k = k + this.ySize;
     }
 
-    return p_195375_2_ >= (double) j && p_195375_2_ <= (double) (j + 28) && p_195375_4_ >= (double) k && p_195375_4_ <= (double) (k + 32);
+    return pRelativeMouseX >= (double) j && pRelativeMouseX <= (double) (j + 28) && pRelativeMouseY >= (double) k && pRelativeMouseY <= (double) (k + 32);
   }
 
-  private boolean func_238809_a_(MatrixStack p_238809_1_, ItemGroup p_238809_2_, int p_238809_3_, int p_238809_4_) {
-    int i = p_238809_2_.getColumn();
+  private boolean checkTabHovering(MatrixStack pPoseStack, ItemGroup pCreativeModeTab, int pMouseX, int pMouseY) {
+    int i = pCreativeModeTab.getColumn();
     int j = 28 * i;
     int k = 0;
-    if (p_238809_2_.isAlignedRight()) {
+    if (pCreativeModeTab.isAlignedRight()) {
       j = this.xSize - 28 * (6 - i) + 2;
     } else if (i > 0) {
       j += i;
     }
 
-    if (p_238809_2_.isOnTopRow()) {
+    if (pCreativeModeTab.isOnTopRow()) {
       k = k - 32;
     } else {
       k = k + this.ySize;
     }
 
-    if (this.isPointInRegion(j + 3, k + 3, 23, 27, (double) p_238809_3_, (double) p_238809_4_)) {
-      this.renderTooltip(p_238809_1_, p_238809_2_.getGroupName(), p_238809_3_, p_238809_4_);
+    if (this.isPointInRegion(j + 3, k + 3, 23, 27, (double) pMouseX, (double) pMouseY)) {
+      this.renderTooltip(pPoseStack, pCreativeModeTab.getGroupName(), pMouseX, pMouseY);
       return true;
     } else {
       return false;
     }
   }
 
-  private void func_238808_a_(MatrixStack p_238808_1_, ItemGroup p_238808_2_) {
-    boolean flag = p_238808_2_.getIndex() == selectedTabIndex;
-    boolean flag1 = p_238808_2_.isOnTopRow();
-    int i = p_238808_2_.getColumn();
+  private void renderTabButton(MatrixStack pPoseStack, ItemGroup pCreativeModeTab) {
+    boolean flag = pCreativeModeTab.getIndex() == selectedTabIndex;
+    boolean flag1 = pCreativeModeTab.isOnTopRow();
+    int i = pCreativeModeTab.getColumn();
     int j = i * 28;
     int k = 0;
     int l = this.guiLeft + 28 * i;
@@ -835,7 +835,7 @@ public class ManifestScreen extends DisplayEffectsScreen<ManifestScreen.Manifest
       k += 32;
     }
 
-    if (p_238808_2_.isAlignedRight()) {
+    if (pCreativeModeTab.isAlignedRight()) {
       l = this.guiLeft + this.xSize - 28 * (6 - i);
     } else if (i > 0) {
       l += i;
@@ -850,12 +850,12 @@ public class ManifestScreen extends DisplayEffectsScreen<ManifestScreen.Manifest
 
     RenderSystem.color3f(1F, 1F, 1F); //Forge: Reset color in case Items change it.
     RenderSystem.enableBlend(); //Forge: Make sure blend is enabled else tabs show a white border.
-    this.blit(p_238808_1_, l, i1, j, k, 28, 32);
+    this.blit(pPoseStack, l, i1, j, k, 28, 32);
     this.itemRenderer.zLevel = 100.0F;
     l = l + 6;
     i1 = i1 + 8 + (flag1 ? 1 : -1);
     RenderSystem.enableRescaleNormal();
-    ItemStack itemstack = p_238808_2_.getIcon();
+    ItemStack itemstack = pCreativeModeTab.getIcon();
     this.itemRenderer.renderItemAndEffectIntoGUI(itemstack, l, i1);
     this.itemRenderer.renderItemOverlays(this.font, itemstack, l, i1);
     this.itemRenderer.zLevel = 0.0F;
@@ -886,8 +886,8 @@ public class ManifestScreen extends DisplayEffectsScreen<ManifestScreen.Manifest
         hotbarsnapshot.set(j, clientplayerentity.inventory.getStackInSlot(j).copy());
       }
 
-      ITextComponent itextcomponent = client.gameSettings.keyBindsHotbar[index].func_238171_j_();
-      ITextComponent itextcomponent1 = client.gameSettings.keyBindLoadToolbar.func_238171_j_();
+      ITextComponent itextcomponent = client.gameSettings.keyBindsHotbar[index].getTranslatedKeyMessage();
+      ITextComponent itextcomponent1 = client.gameSettings.keyBindLoadToolbar.getTranslatedKeyMessage();
       client.ingameGUI.setOverlayMessage(new TranslationTextComponent("inventory.hotbarSaved", itextcomponent1, itextcomponent), false);
       creativesettings.save();
     }
@@ -995,9 +995,9 @@ public class ManifestScreen extends DisplayEffectsScreen<ManifestScreen.Manifest
   static class ManifestSlot extends Slot {
     private final Slot slot;
 
-    public ManifestSlot(Slot p_i229959_1_, int p_i229959_2_, int p_i229959_3_, int p_i229959_4_) {
-      super(p_i229959_1_.inventory, p_i229959_2_, p_i229959_3_, p_i229959_4_);
-      this.slot = p_i229959_1_;
+    public ManifestSlot(Slot pSlot, int pIndex, int pX, int pY) {
+      super(pSlot.inventory, pIndex, pX, pY);
+      this.slot = pSlot;
     }
 
     @Override

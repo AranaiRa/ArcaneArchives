@@ -32,7 +32,7 @@ public interface IArcaneInventory extends IItemHandlerModifiable {
   default void markDirty() {
     ArcaneInventoryData<?> data = getInventoryData();
     if (data != null) {
-      data.markDirty();
+      data.setDirty();
     }
   }
 }

@@ -49,7 +49,7 @@ public class IngredientInfo extends AbstractNetworkObject<ByteBuf> implements IN
 
   @Override
   public void deserializeNBT(IntArrayNBT nbt) {
-    int[] info = nbt.getIntArray();
+    int[] info = nbt.getAsIntArray();
     this.slot = info[0];
     this.found = info[1];
     this.remaining = info[2];

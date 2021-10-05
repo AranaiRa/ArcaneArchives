@@ -39,12 +39,12 @@ public enum RelativeSide {
             if (facing == Direction.DOWN || facing == Direction.UP) {
                 return Direction.EAST;
             }
-            return facing.rotateYCCW();
+            return facing.getCounterClockWise();
         } else if (this == RIGHT) {
             if (facing == Direction.DOWN || facing == Direction.UP) {
                 return Direction.WEST;
             }
-            return facing.rotateY();
+            return facing.getClockWise();
         } else if (this == TOP) {
             if (facing == Direction.DOWN) {
                 return Direction.NORTH;
@@ -93,9 +93,9 @@ public enum RelativeSide {
             return BOTTOM;
         } else if (side == Direction.UP) {
             return TOP;
-        } else if (side == facing.rotateYCCW()) {
+        } else if (side == facing.getCounterClockWise()) {
             return RIGHT;
-        } else if (side == facing.rotateY()) {
+        } else if (side == facing.getClockWise()) {
             return LEFT;
         }
         //Fall back to front, should never get here

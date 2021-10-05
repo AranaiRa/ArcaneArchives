@@ -17,23 +17,23 @@ public abstract class ArcaneArchivesIdentifiedTile extends TileEntity implements
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT compound) {
+  public CompoundNBT save(CompoundNBT compound) {
     if (uuid != null) {
-      compound.putUniqueId(Identifiers.tileId, uuid);
+      compound.putUUID(Identifiers.tileId, uuid);
     }
-    return super.write(compound);
+    return super.save(compound);
   }
 
   @Override
-  public void read(BlockState state, CompoundNBT compound) {
-    if (compound.hasUniqueId(Identifiers.tileId)) {
-      this.uuid = compound.getUniqueId(Identifiers.tileId);
+  public void load(BlockState state, CompoundNBT compound) {
+    if (compound.hasUUID(Identifiers.tileId)) {
+      this.uuid = compound.getUUID(Identifiers.tileId);
     } else {
       // TODO: Should we be generating a unique ID here?
       this.uuid = UUID.randomUUID();
     }
 
-    super.read(state, compound);
+    super.load(state, compound);
   }
 
   @Override

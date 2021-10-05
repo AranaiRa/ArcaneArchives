@@ -37,16 +37,16 @@ public class ArcaneInventoryData<T extends IArcaneInventory> extends WorldSavedD
   }
 
   @Override
-  public void read(CompoundNBT nbt) {
-    this.id = nbt.getUniqueId("id");
+  public void load(CompoundNBT nbt) {
+    this.id = nbt.getUUID("id");
     this.size = nbt.getInt("size");
     this.inventory.deserialize(nbt.getCompound("inventory"));
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT compound) {
+  public CompoundNBT save(CompoundNBT compound) {
     compound.putInt("size", this.size);
-    compound.putUniqueId("id", this.id);
+    compound.putUUID("id", this.id);
     // TODO: Handle null
     if (this.inventory != null) {
       compound.put("inventory", this.inventory.serialize());
@@ -60,7 +60,7 @@ public class ArcaneInventoryData<T extends IArcaneInventory> extends WorldSavedD
   }
 
   @Override
-  public void markDirty() {
-    super.markDirty();
+  public void setDirty() {
+    super.setDirty();
   }
 }

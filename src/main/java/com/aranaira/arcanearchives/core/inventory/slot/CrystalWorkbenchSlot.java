@@ -25,13 +25,13 @@ public class CrystalWorkbenchSlot extends SlotItemHandler {
   }
 
   @Override
-  public boolean canTakeStack(PlayerEntity playerIn) {
+  public boolean mayPickup(PlayerEntity playerIn) {
     // TODO: Is this necessary? I forget how containers and slots work.
     return true;
   }
 
   @Override
-  public int getItemStackLimit(@Nonnull ItemStack stack) {
+  public int getMaxStackSize(@Nonnull ItemStack stack) {
     return ((CrystalWorkbenchInventory) this.getItemHandler()).getSlotLimit(this.index, stack);
   }
 
@@ -41,13 +41,13 @@ public class CrystalWorkbenchSlot extends SlotItemHandler {
   }
 
   @Override
-  public void onSlotChange(@Nonnull ItemStack oldStackIn, @Nonnull ItemStack newStackIn) {
-    super.onSlotChange(oldStackIn, newStackIn);
-    onSlotChanged();
+  public void onQuickCraft(@Nonnull ItemStack oldStackIn, @Nonnull ItemStack newStackIn) {
+    super.onQuickCraft(oldStackIn, newStackIn);
+    setChanged();
   }
 
   @Override
-  public void onSlotChanged() {
+  public void setChanged() {
     this.inventory.markDirty();
   }
 }

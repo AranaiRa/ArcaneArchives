@@ -49,12 +49,12 @@ public class Networking extends PacketHandler {
   }
 
   public static <MSG> void sendToAllTracking (MSG msg, TileEntity tile) {
-    sendToAllTracking(msg, tile.getWorld(), tile.getPos());
+    sendToAllTracking(msg, tile.getLevel(), tile.getBlockPos());
   }
 
   public static <MSG> void sendToAllTracking (MSG msg, World world, BlockPos pos) {
     if (world instanceof ServerWorld) {
-      ((ServerWorld) world).getChunkProvider().chunkManager.getTrackingPlayers(new ChunkPos(pos), false).forEach(p -> sendTo(msg, p));
+      ((ServerWorld) world).getChunkSource().chunkMap.getPlayers(new ChunkPos(pos), false).forEach(p -> sendTo(msg, p));
     } else {
       send(PacketDistributor.TRACKING_CHUNK.with(() -> world.getChunkAt(pos)), msg);
     }

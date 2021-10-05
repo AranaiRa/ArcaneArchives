@@ -14,8 +14,8 @@ public class RadiantChestScreen extends ContainerScreen<RadiantChestContainer> {
 
   public RadiantChestScreen(RadiantChestContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);
-    xSize = 192;
-    ySize = 253;
+    imageWidth = 192;
+    imageHeight = 253;
   }
 
   @Override
@@ -25,13 +25,13 @@ public class RadiantChestScreen extends ContainerScreen<RadiantChestContainer> {
 
   @SuppressWarnings("deprecation")
   @Override
-  protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
+  protected void renderBg(MatrixStack matrixStack, float partialTicks, int x, int y) {
     RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
     RenderSystem.enableBlend();
-    this.minecraft.getTextureManager().bindTexture(background);
-    int i = this.guiLeft;
-    int j = this.guiTop;
-    blit(matrixStack, i, j, 0, 0, xSize, ySize, 256, 256);
+    this.minecraft.getTextureManager().bind(background);
+    int i = this.leftPos;
+    int j = this.topPos;
+    blit(matrixStack, i, j, 0, 0, imageWidth, imageHeight, 256, 256);
   }
 
   @Override
@@ -39,6 +39,6 @@ public class RadiantChestScreen extends ContainerScreen<RadiantChestContainer> {
     this.renderBackground(matrixStack);
     super.render(matrixStack, mouseX, mouseY, partialTicks);
     RenderSystem.disableBlend();
-    this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
+    this.renderTooltip(matrixStack, mouseX, mouseY);
   }
 }

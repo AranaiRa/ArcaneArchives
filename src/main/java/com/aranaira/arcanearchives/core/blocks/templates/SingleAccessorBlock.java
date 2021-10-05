@@ -24,9 +24,11 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 @SuppressWarnings("deprecation")
 public abstract class SingleAccessorBlock extends Block {
-  public static DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
+  public static DirectionProperty FACING = HorizontalBlock.FACING;
   public static BooleanProperty ACCESSOR = BooleanProperty.create("accessor");
 
   private final RelativeSide offset;
@@ -37,96 +39,96 @@ public abstract class SingleAccessorBlock extends Block {
   }
 
   @Override
-  protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-    super.fillStateContainer(builder);
+  protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+    super.createBlockStateDefinition(builder);
     builder.add(FACING, ACCESSOR);
   }
 
   public BlockPos calculateOrigin (BlockPos position, BlockState state) {
-    if (!state.get(ACCESSOR)) {
+    if (!state.getValue(ACCESSOR)) {
       return position;
     }
 
-    Direction facing = state.get(FACING);
-    return position.offset(offset.getDirection(facing));
+    Direction facing = state.getValue(FACING);
+    return position.relative(offset.getDirection(facing));
   }
 
   public BlockPos calculateAccessor (BlockPos position, BlockState state) {
-    if (state.get(ACCESSOR)) {
+    if (state.getValue(ACCESSOR)) {
       return position;
     }
 
-    Direction facing = state.get(FACING);
-    return position.offset(offset.getDirection(facing).getOpposite());
+    Direction facing = state.getValue(FACING);
+    return position.relative(offset.getDirection(facing).getOpposite());
   }
 
   @Nullable
   @Override
   public BlockState getStateForPlacement(BlockItemUseContext context) {
-    Direction facing = context.getPlayer() == null ? Direction.NORTH : Direction.fromAngle(context.getPlayer().rotationYaw).getOpposite();
-    return getDefaultState().with(FACING, facing);
+    Direction facing = context.getPlayer() == null ? Direction.NORTH : Direction.fromYRot(context.getPlayer().yRot).getOpposite();
+    return defaultBlockState().setValue(FACING, facing);
   }
 
   @Override
-  public void harvestBlock(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {
-    if (!worldIn.isRemote) {
-      if (state.get(ACCESSOR)) {
+  public void playerDestroy(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {
+    if (!worldIn.isClientSide) {
+      if (state.getValue(ACCESSOR)) {
         worldIn.destroyBlock(calculateOrigin(pos, state), true);
-        player.addStat(Stats.BLOCK_MINED.get(this));
-        player.addExhaustion(0.005F);
+        player.awardStat(Stats.BLOCK_MINED.get(this));
+        player.causeFoodExhaustion(0.005F);
         return;
       } else {
         worldIn.destroyBlock(calculateAccessor(pos, state), false);
       }
     }
-    super.harvestBlock(worldIn, player, pos, state, te, stack);
+    super.playerDestroy(worldIn, player, pos, state, te, stack);
   }
 
   @Override
-  public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
-    if (state.get(ACCESSOR) || worldIn.isRemote) {
+  public void onPlace(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
+    if (state.getValue(ACCESSOR) || worldIn.isClientSide) {
       return;
     }
 
     BlockPos accessor = calculateAccessor(pos, state);
-    worldIn.setBlockState(accessor, state.with(ACCESSOR, true));
-    super.onBlockAdded(state, worldIn, pos, oldState, isMoving);
+    worldIn.setBlockAndUpdate(accessor, state.setValue(ACCESSOR, true));
+    super.onPlace(state, worldIn, pos, oldState, isMoving);
   }
 
   @Override
   public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
     super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);
-    if (!worldIn.isRemote) {
+    if (!worldIn.isClientSide) {
       BlockPos check;
-      if (state.get(ACCESSOR)) {
+      if (state.getValue(ACCESSOR)) {
         check = calculateOrigin(pos, state);
       } else {
         check = calculateAccessor(pos, state);
       }
       BlockState other = worldIn.getBlockState(check);
       if (other.getBlock() != this) {
-        worldIn.destroyBlock(pos, !state.get(ACCESSOR));
+        worldIn.destroyBlock(pos, !state.getValue(ACCESSOR));
       }
     }
   }
 
   @Override
-  public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+  public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
     if (state.getBlock() == this) {
       return;
     }
-    if (state.get(ACCESSOR)) {
+    if (state.getValue(ACCESSOR)) {
       worldIn.destroyBlock(calculateOrigin(pos, state), true);
     } else {
       worldIn.destroyBlock(calculateAccessor(pos, state), false);
     }
-    super.onReplaced(state, worldIn, pos, newState, isMoving);
+    super.onRemove(state, worldIn, pos, newState, isMoving);
   }
 
   @Override
-  public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+  public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
     BlockPos actual = pos;
-    if (state.get(ACCESSOR)) {
+    if (state.getValue(ACCESSOR)) {
       actual = calculateOrigin(pos, state);
     }
     return blockActivate(state, worldIn, actual, player, handIn, hit, pos);

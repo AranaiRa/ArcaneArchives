@@ -35,7 +35,7 @@ public class ManifestContainer extends Container {
   /**
    * Determines whether supplied player can use this container
    */
-  public boolean canInteractWith(PlayerEntity playerIn) {
+  public boolean stillValid(PlayerEntity playerIn) {
     return true;
   }
 
@@ -53,9 +53,9 @@ public class ManifestContainer extends Container {
       for (int l = 0; l < 9; ++l) {
         int i1 = l + (k + j) * 9;
         if (i1 >= 0 && i1 < this.itemList.size()) {
-          ManifestScreen.TMP_INVENTORY.setInventorySlotContents(l + k * 9, this.itemList.get(i1));
+          ManifestScreen.TMP_INVENTORY.setItem(l + k * 9, this.itemList.get(i1));
         } else {
-          ManifestScreen.TMP_INVENTORY.setInventorySlotContents(l + k * 9, ItemStack.EMPTY);
+          ManifestScreen.TMP_INVENTORY.setItem(l + k * 9, ItemStack.EMPTY);
         }
       }
     }
@@ -70,11 +70,11 @@ public class ManifestContainer extends Container {
    * Handle when the stack in slot {@code index} is shift-clicked. Normally this moves the stack between the player
    * inventory and the other inventory(s).
    */
-  public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
-    if (index >= this.inventorySlots.size() - 9 && index < this.inventorySlots.size()) {
-      Slot slot = this.inventorySlots.get(index);
-      if (slot != null && slot.getHasStack()) {
-        slot.putStack(ItemStack.EMPTY);
+  public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+    if (index >= this.slots.size() - 9 && index < this.slots.size()) {
+      Slot slot = this.slots.get(index);
+      if (slot != null && slot.hasItem()) {
+        slot.set(ItemStack.EMPTY);
       }
     }
 
@@ -85,15 +85,15 @@ public class ManifestContainer extends Container {
    * Called to determine if the current slot is valid for the stack merging (double-click) code. The stack passed in
    * is null for the initial slot that was double-clicked.
    */
-  public boolean canMergeSlot(ItemStack stack, Slot slotIn) {
-    return slotIn.inventory != ManifestScreen.TMP_INVENTORY;
+  public boolean canTakeItemForPickAll(ItemStack stack, Slot slotIn) {
+    return slotIn.container != ManifestScreen.TMP_INVENTORY;
   }
 
   /**
    * Returns true if the player can "drag-spilt" items into this slot,. returns true by default. Called to check if
    * the slot can be added to a list of Slots to split the held ItemStack across.
    */
-  public boolean canDragIntoSlot(Slot slotIn) {
-    return slotIn.inventory != ManifestScreen.TMP_INVENTORY;
+  public boolean canDragTo(Slot slotIn) {
+    return slotIn.container != ManifestScreen.TMP_INVENTORY;
   }
 }

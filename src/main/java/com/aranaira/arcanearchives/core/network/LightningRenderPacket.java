@@ -30,7 +30,7 @@ public class LightningRenderPacket {
   }
 
   public static void encode(LightningRenderPacket pkt, PacketBuffer buf) {
-    buf.writeEnumValue(pkt.preset);
+    buf.writeEnum(pkt.preset);
     buf.writeVarInt(pkt.renderer);
     buf.writeDouble(pkt.start.x);
     buf.writeDouble(pkt.start.y);
@@ -42,7 +42,7 @@ public class LightningRenderPacket {
   }
 
   public static LightningRenderPacket decode(PacketBuffer buf) {
-    LightningPreset preset = buf.readEnumValue(LightningPreset.class);
+    LightningPreset preset = buf.readEnum(LightningPreset.class);
     int renderer = buf.readVarInt();
 
     Vector3d start = new Vector3d(buf.readDouble(), buf.readDouble(), buf.readDouble());

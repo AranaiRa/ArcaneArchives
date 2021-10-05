@@ -17,7 +17,7 @@ import static com.aranaira.arcanearchives.ArcaneArchives.REGISTRATE;
 
 public class ModBlocks {
   public static final RegistryEntry<CrystalWorkbenchBlock> CRYSTAL_WORKBENCH = REGISTRATE.block("crystal_workbench", Material.GLASS, CrystalWorkbenchBlock::new)
-      .properties(o -> o.notSolid())
+      .properties(o -> o.noOcclusion())
       .blockstate(NonNullBiConsumer.noop())
       .item()
       .model((ctx, p) -> p.blockItem(ctx::getEntry))
@@ -25,7 +25,7 @@ public class ModBlocks {
       .register();
 
   public static final RegistryEntry<RadiantChestBlock> RADIANT_CHEST = REGISTRATE.block("radiant_chest", Material.WOOD, RadiantChestBlock::new)
-      .properties(o -> o.notSolid())
+      .properties(o -> o.noOcclusion())
       .blockstate(NonNullBiConsumer.noop())
       .item()
       .model((ctx, p) -> p.blockItem(ctx::getEntry))
@@ -33,20 +33,20 @@ public class ModBlocks {
       .register();
 
   public static final RegistryEntry<MakeshiftResonatorBlock> MAKESHIFT_RESONATOR = REGISTRATE.block("makeshift_resonator", Material.WOOD, MakeshiftResonatorBlock::new)
-      .properties(o -> o.notSolid()/*.setOpaque((x, y, z) -> false)*/)
+      .properties(o -> o.noOcclusion()/*.setOpaque((x, y, z) -> false)*/)
       .blockstate(NonNullBiConsumer.noop())
       .item()
       .model((ctx, p) -> p.blockItem(ctx::getEntry))
       .build()
-      .recipe((ctx, p) -> ShapedRecipeBuilder.shapedRecipe(ctx.getEntry(), 1)
-          .patternLine("SGS")
-            .patternLine("KTK")
-          .patternLine("K K")
-          .key('S', Items.STONE_SLAB)
-          .key('G', Tags.Items.NUGGETS_GOLD)
-          .key('K', Tags.Items.RODS_WOODEN)
-          .key('T', Tags.Items.STRING)
-          .addCriterion("has_gold_nugget", RegistrateRecipeProvider.hasItem(Tags.Items.NUGGETS_GOLD)).build(p, new ResourceLocation(ArcaneArchives.MODID, "makeshift_resonator")))
+      .recipe((ctx, p) -> ShapedRecipeBuilder.shaped(ctx.getEntry(), 1)
+          .pattern("SGS")
+            .pattern("KTK")
+          .pattern("K K")
+          .define('S', Items.STONE_SLAB)
+          .define('G', Tags.Items.NUGGETS_GOLD)
+          .define('K', Tags.Items.RODS_WOODEN)
+          .define('T', Tags.Items.STRING)
+          .unlockedBy("has_gold_nugget", RegistrateRecipeProvider.hasItem(Tags.Items.NUGGETS_GOLD)).save(p, new ResourceLocation(ArcaneArchives.MODID, "makeshift_resonator")))
       .register();
 
   public static void load() {

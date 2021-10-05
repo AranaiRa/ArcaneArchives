@@ -29,7 +29,7 @@ public class StoredInventory<I extends AbstractArcaneItemHandler> {
       return inventory;
     }
 
-    if (world == null || world.isRemote) {
+    if (world == null || world.isClientSide) {
       return null;
     }
 
@@ -41,7 +41,7 @@ public class StoredInventory<I extends AbstractArcaneItemHandler> {
     ArcaneInventoryData<I> inventoryData = DataStorage.getInventory(id, size, builder);
     this.inventory = inventoryData.getInventory();
     this.inventory.setInventoryData(inventoryData);
-    this.inventory.setChangeCallback((o) -> inventoryData.markDirty());
+    this.inventory.setChangeCallback((o) -> inventoryData.setDirty());
 
     return this.inventory;
   }

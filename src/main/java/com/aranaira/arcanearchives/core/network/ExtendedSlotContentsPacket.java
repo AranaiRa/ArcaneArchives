@@ -43,8 +43,8 @@ public class ExtendedSlotContentsPacket {
       if (player == null) return;
 
       ctx.get().enqueueWork(() -> {
-        if (player.openContainer instanceof AbstractLargeContainer && windowId == player.openContainer.windowId) {
-          player.openContainer.inventorySlots.get(slot).putStack(stack);
+        if (player.containerMenu instanceof AbstractLargeContainer && windowId == player.containerMenu.containerId) {
+          player.containerMenu.slots.get(slot).set(stack);
         }
       });
 

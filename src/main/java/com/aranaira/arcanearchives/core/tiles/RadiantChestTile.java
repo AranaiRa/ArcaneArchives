@@ -25,7 +25,7 @@ public class RadiantChestTile extends ArcaneArchivesIdentifiedTile implements II
 
   @Override
   public RadiantChestInventory getTileInventory() {
-    RadiantChestInventory result = inventory.getInventory(this.world);
+    RadiantChestInventory result = inventory.getInventory(this.level);
     if (result == null) {
       return getEmptyInventory();
     }
@@ -38,13 +38,13 @@ public class RadiantChestTile extends ArcaneArchivesIdentifiedTile implements II
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT compound) {
-    return super.write(compound);
+  public CompoundNBT save(CompoundNBT compound) {
+    return super.save(compound);
   }
 
   @Override
-  public void read(BlockState state, CompoundNBT compound) {
-    super.read(state, compound);
+  public void load(BlockState state, CompoundNBT compound) {
+    super.load(state, compound);
   }
 
   @Override

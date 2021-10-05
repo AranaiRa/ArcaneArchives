@@ -8,6 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.tags.ITag;
 import net.minecraft.util.IItemProvider;
 
@@ -36,7 +37,7 @@ public class IngredientStack {
   }
 
   public IngredientStack(IItemProvider item, int count, CompoundNBT nbt) {
-    this.ingredient = Ingredient.fromItems(item.asItem());
+    this.ingredient = Ingredient.of(item.asItem());
     this.count = count;
     this.nbt = nbt;
   }
@@ -64,14 +65,14 @@ public class IngredientStack {
   }
 
   public IngredientStack (ITag<Item> tag, int count, CompoundNBT nbt) {
-    this.ingredient = Ingredient.fromTag(tag);
+    this.ingredient = Ingredient.of(tag);
     this.count = count;
     this.nbt = nbt;
   }
 
 
   public ItemStack[] getMatchingStacks() {
-    return ingredient.getMatchingStacks();
+    return ingredient.getItems();
   }
 
   public boolean apply(@Nullable ItemStack p_apply_1_) {
@@ -84,7 +85,7 @@ public class IngredientStack {
   }
 
   public IntList getValidItemStacksPacked() {
-    return ingredient.getValidItemStacksPacked();
+    return ingredient.getStackingIds();
   }
 
   public boolean isSimple() {
@@ -136,7 +137,7 @@ public class IngredientStack {
 
   public JsonObject serialize () {
     JsonObject result = new JsonObject();
-    result.add("ingredient", ingredient.serialize());
+    result.add("ingredient", ingredient.toJson());
     result.addProperty("count", this.count);
     CompoundNBT.CODEC.encodeStart(JsonOps.INSTANCE, this.nbt).resultOrPartial(ArcaneArchives.LOG::error).ifPresent((i) -> result.add("nbt", i));
     return result;

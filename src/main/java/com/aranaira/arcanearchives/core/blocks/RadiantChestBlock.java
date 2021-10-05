@@ -15,6 +15,8 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class RadiantChestBlock extends Block {
   public RadiantChestBlock(Properties properties) {
     super(properties);
@@ -33,14 +35,14 @@ public class RadiantChestBlock extends Block {
 
   @SuppressWarnings("deprecation")
   @Override
-  public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-    if (worldIn.isRemote) {
+  public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    if (worldIn.isClientSide) {
       return ActionResultType.SUCCESS;
     } else {
       // TODO: Tile entity library?
-      TileEntity te = worldIn.getTileEntity(pos);
+      TileEntity te = worldIn.getBlockEntity(pos);
       if (te instanceof RadiantChestTile) {
-        player.openContainer((RadiantChestTile) te);
+        player.openMenu((RadiantChestTile) te);
       }
       return ActionResultType.CONSUME;
     }

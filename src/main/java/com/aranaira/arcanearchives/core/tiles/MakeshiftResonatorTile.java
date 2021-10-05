@@ -44,68 +44,68 @@ public class MakeshiftResonatorTile extends TileEntity implements IArcaneArchive
 
   @Override
   public void tick() {
-    Vector3d start = Vector3d.copy(getPos());
+    Vector3d start = Vector3d.atLowerCornerOf(getBlockPos());
     Vector3d start_sw = start.add(0, 0.9, 0);
     Vector3d start_ne = start.add(0.9, 0.95, 0.9);
     Vector3d start_nw = start.add(0, 0.9, 0.9);
     Vector3d start_se = start.add(0.9, 0.95, 0.9);
     List<Vector3d> starts = Arrays.asList(start_sw, start_ne, start_nw, start_se);
 
-    if (world != null && !world.isRemote && filled) {
+    if (level != null && !level.isClientSide && filled) {
       if (countdown > 0) {
         countdown--;
         if (countdown > 7) {
           double log = Math.log10(100D - countdown) - 1;
-          if (world.rand.nextFloat() < log) {
-            int i = world.rand.nextInt(starts.size());
+          if (level.random.nextFloat() < log) {
+            int i = level.random.nextInt(starts.size());
             int x = i;
             while (x == i) {
-              x = world.rand.nextInt(starts.size());
+              x = level.random.nextInt(starts.size());
             }
             Vector3d a = starts.get(i);
             Vector3d b = starts.get(x);
             if (countdown > 45) {
-              if (world.rand.nextInt(4) == 0) {
+              if (level.random.nextInt(4) == 0) {
                 b = b.subtract(0, 0.65, 0);
               }
             } else {
-              if (world.rand.nextInt(5) == 0) {
+              if (level.random.nextInt(5) == 0) {
                 b = start.add(0.5, 1.65, 0.5);
               }
             }
-            Networking.sendToAllTracking(new LightningRenderPacket(LightningRenderPacket.LightningPreset.TOOL_AOE, Objects.hash(getPos()), a, b, 10), this);
+            Networking.sendToAllTracking(new LightningRenderPacket(LightningRenderPacket.LightningPreset.TOOL_AOE, Objects.hash(getBlockPos()), a, b, 10), this);
           }
         }
       } else {
         List<ItemStack> spawn = new ArrayList<>();
-        spawn.add(new ItemStack(Items.STICK, 2 + world.rand.nextInt(3)));
-        spawn.add(new ItemStack(ModItems.RADIANT_DUST.get(), 2 + world.rand.nextInt(1)));
-        if (world.rand.nextInt(4) == 0) {
-          spawn.add(new ItemStack(Items.GOLD_NUGGET, 1 + world.rand.nextInt(2)));
+        spawn.add(new ItemStack(Items.STICK, 2 + level.random.nextInt(3)));
+        spawn.add(new ItemStack(ModItems.RADIANT_DUST.get(), 2 + level.random.nextInt(1)));
+        if (level.random.nextInt(4) == 0) {
+          spawn.add(new ItemStack(Items.GOLD_NUGGET, 1 + level.random.nextInt(2)));
         }
-        if (world.rand.nextBoolean()) {
+        if (level.random.nextBoolean()) {
           spawn.add(new ItemStack(Blocks.STONE_SLAB, 1));
         }
-        if (world.rand.nextBoolean()) {
+        if (level.random.nextBoolean()) {
           spawn.add(new ItemStack(Blocks.STONE_SLAB, 1));
         }
-        world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0f, (1.0F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F) * 0.7F);
-        world.addParticle(ParticleTypes.EXPLOSION, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 0, 0, 0);
+        level.playSound(null, worldPosition.getX() + 0.5, worldPosition.getY() + 0.5, worldPosition.getZ() + 0.5, SoundEvents.GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0f, (1.0F + (level.random.nextFloat() - level.random.nextFloat()) * 0.2F) * 0.7F);
+        level.addParticle(ParticleTypes.EXPLOSION, worldPosition.getX() + 0.5, worldPosition.getY() + 0.5, worldPosition.getZ() + 0.5, 0, 0, 0);
         for (ItemStack stack : spawn) {
-          int x = pos.getX() + world.rand.nextInt(1) - 1;
-          int z = pos.getZ() + world.rand.nextInt(1) - 1;
-          Block.spawnAsEntity(world, new BlockPos(x, pos.getY(), z), stack);
+          int x = worldPosition.getX() + level.random.nextInt(1) - 1;
+          int z = worldPosition.getZ() + level.random.nextInt(1) - 1;
+          Block.popResource(level, new BlockPos(x, worldPosition.getY(), z), stack);
         }
-        world.destroyBlock(getPos(), false);
+        level.destroyBlock(getBlockPos(), false);
       }
     }
   }
 
   @Override
-  public void read(BlockState state, CompoundNBT nbt) {
-    super.read(state, nbt);
-    if (world != null && !world.isRemote && state.getBlock() == ModBlocks.MAKESHIFT_RESONATOR.get()) {
-      if (state.get(MakeshiftResonatorBlock.FILLED)) {
+  public void load(BlockState state, CompoundNBT nbt) {
+    super.load(state, nbt);
+    if (level != null && !level.isClientSide && state.getBlock() == ModBlocks.MAKESHIFT_RESONATOR.get()) {
+      if (state.getValue(MakeshiftResonatorBlock.FILLED)) {
         this.filled = true;
       } else {
         this.filled = false;
@@ -117,9 +117,9 @@ public class MakeshiftResonatorTile extends TileEntity implements IArcaneArchive
   }
 
   @Override
-  public CompoundNBT write(CompoundNBT compound) {
+  public CompoundNBT save(CompoundNBT compound) {
     compound.putInt("countdown", countdown);
     compound.putBoolean("filled", filled);
-    return super.write(compound);
+    return super.save(compound);
   }
 }

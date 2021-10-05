@@ -23,7 +23,7 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
   }
 
   protected void createRecipeSlots () {
-    int slotIndex = inventorySlots.size();
+    int slotIndex = slots.size();
     for (int col = 6; col > -1; col--) {
       this.addSlot(new RecipeHandlerSlot(slotIndex, col * 18 + 41, 70, getTile()));
       slotIndex++;
