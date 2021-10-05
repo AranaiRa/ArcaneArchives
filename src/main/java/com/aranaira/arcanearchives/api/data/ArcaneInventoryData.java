@@ -10,7 +10,7 @@ import java.util.function.Function;
 
 public class ArcaneInventoryData<T extends IArcaneInventory> extends WorldSavedData {
   private UUID id;
-  private T inventory;
+  private final T inventory;
   private int size;
 
   public static String ID(UUID id) {
@@ -32,7 +32,7 @@ public class ArcaneInventoryData<T extends IArcaneInventory> extends WorldSavedD
     return inventory;
   }
 
-  public UUID getId() {
+  public UUID getUUID() {
     return id;
   }
 
