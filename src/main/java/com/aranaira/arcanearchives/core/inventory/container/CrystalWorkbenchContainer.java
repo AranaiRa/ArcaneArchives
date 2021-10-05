@@ -7,8 +7,10 @@ import com.aranaira.arcanearchives.core.inventory.slot.RadiantChestSlot;
 import com.aranaira.arcanearchives.core.inventory.slot.RecipeHandlerSlot;
 import com.aranaira.arcanearchives.core.tiles.CrystalWorkbenchTile;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Slot;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWorkbenchInventory, CrystalWorkbenchTile> {
   public CrystalWorkbenchContainer(int id, PlayerInventory inventory) {
@@ -46,5 +48,11 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
   @Override
   public CrystalWorkbenchInventory getEmptyInventory() {
     return CrystalWorkbenchInventory.getEmpty();
+  }
+
+  @Override
+  // TODO:
+  public List<Slot> getIngredientSlots() {
+    return null;
   }
 }

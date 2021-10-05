@@ -5,8 +5,11 @@ import com.aranaira.arcanearchives.core.inventory.handlers.RadiantChestInventory
 import com.aranaira.arcanearchives.core.inventory.slot.RadiantChestSlot;
 import com.aranaira.arcanearchives.core.tiles.RadiantChestTile;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Slot;
 
 import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.List;
 
 public class RadiantChestContainer extends AbstractLargeContainer<RadiantChestInventory, RadiantChestTile> {
   public RadiantChestContainer(int id, PlayerInventory inventory) {
@@ -35,5 +38,10 @@ public class RadiantChestContainer extends AbstractLargeContainer<RadiantChestIn
   @Override
   public RadiantChestInventory getEmptyInventory() {
     return RadiantChestInventory.getEmpty();
+  }
+
+  @Override
+  public List<Slot> getIngredientSlots() {
+    return Collections.emptyList();
   }
 }

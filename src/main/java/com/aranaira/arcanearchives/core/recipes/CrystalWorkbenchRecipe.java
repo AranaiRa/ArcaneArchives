@@ -15,6 +15,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -29,9 +30,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class CrystalWorkbenchRecipe implements ICrystalWorkbenchRecipe<CrystalWorkbenchInventory, CrystalWorkbenchContainer, CrystalWorkbenchTile, CrystalWorkbenchCrafting> {
   private final List<Processor<CrystalWorkbenchCrafting>> processors = new ArrayList<>();
@@ -61,8 +60,8 @@ public class CrystalWorkbenchRecipe implements ICrystalWorkbenchRecipe<CrystalWo
   }
 
   @Override
-  public List<IngredientInfo> getIngredientInfo(CrystalWorkbenchContainer container) {
-    return null;
+  public List<IngredientInfo> getIngredientInfo(CrystalWorkbenchCrafting container) {
+    return container.getIngredientInfo(this);
   }
 
   @Override

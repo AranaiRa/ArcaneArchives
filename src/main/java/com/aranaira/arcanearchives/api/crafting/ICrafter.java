@@ -1,6 +1,9 @@
 package com.aranaira.arcanearchives.api.crafting;
 
+import com.aranaira.arcanearchives.api.container.IPartitionedPlayerContainer;
 import com.aranaira.arcanearchives.api.container.IPlayerContainer;
+import com.aranaira.arcanearchives.api.crafting.ingredients.IngredientInfo;
+import com.aranaira.arcanearchives.api.crafting.ingredients.IngredientStack;
 import com.aranaira.arcanearchives.api.inventory.IArcaneInventory;
 import com.aranaira.arcanearchives.api.tiles.IArcaneArchivesTile;
 import net.minecraft.entity.player.PlayerEntity;
@@ -10,10 +13,12 @@ import net.minecraft.tileentity.TileEntity;
 import noobanidus.libs.noobutil.types.IIInvWrapper;
 
 import javax.annotation.Nullable;
-import java.awt.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
-public interface ICrafter<H extends IArcaneInventory, C extends Container & IPlayerContainer, T extends TileEntity & IArcaneArchivesTile> extends IInventory, IIInvWrapper<H> {
+public interface ICrafter<H extends IArcaneInventory, C extends Container & IPartitionedPlayerContainer, T extends TileEntity & IArcaneArchivesTile> extends IInventory, IIInvWrapper<H> {
 
   C getContainer();
   T getTile();

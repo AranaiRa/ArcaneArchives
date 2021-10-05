@@ -7,19 +7,19 @@ import net.minecraftforge.common.util.INBTSerializable;
 
 public class IngredientInfo extends AbstractNetworkObject<ByteBuf> implements INBTSerializable<IntArrayNBT> {
   private int slot;
+  private int index;
   private int found;
-  private int remaining;
 
   public IngredientInfo(ByteBuf incoming) {
     this.slot = incoming.readInt();
+    this.index = incoming.readInt();
     this.found = incoming.readInt();
-    this.remaining = incoming.readInt();
   }
 
-  public IngredientInfo(int slot, int found, int remaining) {
+  public IngredientInfo(int slot, int index, int found) {
     this.slot = slot;
+    this.index = index;
     this.found = found;
-    this.remaining = remaining;
   }
 
   public int getSlot() {
@@ -30,36 +30,28 @@ public class IngredientInfo extends AbstractNetworkObject<ByteBuf> implements IN
     return found;
   }
 
-  public int getRemaining() {
-    return remaining;
-  }
-
-  public int getNeeded() {
-    return getFound() + getRemaining();
-  }
-
-  public boolean isComplete() {
-    return getRemaining() == 0 && getFound() == getNeeded();
+  public int getIndex() {
+    return index;
   }
 
   @Override
   public IntArrayNBT serializeNBT() {
-    return new IntArrayNBT(new int[]{slot, found, remaining});
+    return new IntArrayNBT(new int[]{slot, index, found});
   }
 
   @Override
   public void deserializeNBT(IntArrayNBT nbt) {
     int[] info = nbt.getAsIntArray();
     this.slot = info[0];
-    this.found = info[1];
-    this.remaining = info[2];
+    this.index = info[1];
+    this.found = info[2];
   }
 
   @Override
   public void serialize(ByteBuf buffer) {
     buffer.writeInt(slot);
+    buffer.writeInt(index);
     buffer.writeInt(found);
-    buffer.writeInt(remaining);
   }
 
   public static IngredientInfo deserialize (ByteBuf buf) {

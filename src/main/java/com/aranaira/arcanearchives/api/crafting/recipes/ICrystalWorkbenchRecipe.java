@@ -1,30 +1,24 @@
 package com.aranaira.arcanearchives.api.crafting.recipes;
 
+import com.aranaira.arcanearchives.api.container.IPartitionedPlayerContainer;
 import com.aranaira.arcanearchives.api.container.IPlayerContainer;
-import com.aranaira.arcanearchives.api.crafting.ICrafter;
 import com.aranaira.arcanearchives.api.crafting.ingredients.IngredientInfo;
 import com.aranaira.arcanearchives.api.crafting.ingredients.IngredientStack;
 import com.aranaira.arcanearchives.api.crafting.ArcaneCrafting;
-import com.aranaira.arcanearchives.api.crafting.processors.Processor;
 import com.aranaira.arcanearchives.api.inventory.ArcaneItemHandler;
 import com.aranaira.arcanearchives.api.tiles.IArcaneArchivesTile;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.Map;
 
-public interface ICrystalWorkbenchRecipe<H extends ArcaneItemHandler, C extends Container & IPlayerContainer, T extends TileEntity & IArcaneArchivesTile, W extends ArcaneCrafting<H, C, T>> extends IArcaneRecipe<H, C, T, W> {
+public interface ICrystalWorkbenchRecipe<H extends ArcaneItemHandler, C extends Container & IPartitionedPlayerContainer, T extends TileEntity & IArcaneArchivesTile, W extends ArcaneCrafting<H, C, T>> extends IArcaneRecipe<H, C, T, W> {
   NonNullList<IngredientStack> getIngredientStacks();
 
-  List<IngredientInfo> getIngredientInfo (C container);
+  List<IngredientInfo> getIngredientInfo (W crafting);
 
   @Override
   default boolean canCraftInDimensions(int width, int height) {
