@@ -10,9 +10,12 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Slot;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWorkbenchInventory, CrystalWorkbenchTile> {
+  private final List<Slot> ingredientSlots = new ArrayList<>();
+
   public CrystalWorkbenchContainer(int id, PlayerInventory inventory) {
     this(id, inventory, null);
   }
@@ -38,7 +41,9 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
       for (int col = 0; col < 9; ++col) {
         int x = 23 + col * 18;
         int y = 105 + row * 18;
-        this.addSlot(new CrystalWorkbenchSlot(this.getTileInventory(), slotIndex, x, y));
+        Slot slot = new CrystalWorkbenchSlot(this.getTileInventory(), slotIndex, x, y);
+        ingredientSlots.add(slot);
+        this.addSlot(slot);
         slotIndex++;
       }
     }
@@ -51,8 +56,7 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
   }
 
   @Override
-  // TODO:
   public List<Slot> getIngredientSlots() {
-    return null;
+    return ingredientSlots;
   }
 }

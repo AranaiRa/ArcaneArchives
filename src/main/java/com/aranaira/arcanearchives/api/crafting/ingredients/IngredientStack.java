@@ -166,5 +166,7 @@ public class IngredientStack {
     return new IngredientStack(ingredient, count);
   }
 
-
+  public CountableIngredientStack countable () {
+    return new CountableIngredientStack(this);
+  }
 }
