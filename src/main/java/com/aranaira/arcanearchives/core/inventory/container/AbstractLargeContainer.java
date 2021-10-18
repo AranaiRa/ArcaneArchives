@@ -1,11 +1,10 @@
 package com.aranaira.arcanearchives.core.inventory.container;
 
 import com.aranaira.arcanearchives.api.container.IPartitionedPlayerContainer;
-import com.aranaira.arcanearchives.api.container.IPlayerContainer;
-import com.aranaira.arcanearchives.api.container.ITileContainer;
+import com.aranaira.arcanearchives.api.container.IBlockEntityContainer;
 import com.aranaira.arcanearchives.api.inventory.IArcaneInventory;
 import com.aranaira.arcanearchives.api.inventory.slot.CappedSlot;
-import com.aranaira.arcanearchives.api.tiles.IInventoryTile;
+import com.aranaira.arcanearchives.api.blockentities.IInventoryBlockEntity;
 import com.aranaira.arcanearchives.core.inventory.slot.RadiantChestSlot;
 import com.aranaira.arcanearchives.core.network.ExtendedSlotContentsPacket;
 import com.aranaira.arcanearchives.core.network.Networking;
@@ -23,7 +22,7 @@ https://github.com/Tfarcenim/Dank-Storage/blob/1.16.x/src/main/java/tfar/danksto
  */
 // TODO:
 // - Add slots to ignore for transfer stack in slot
-public abstract class AbstractLargeContainer<V extends IArcaneInventory, T extends IInventoryTile<V>> extends Container implements IPartitionedPlayerContainer, ITileContainer<V, T> {
+public abstract class AbstractLargeContainer<V extends IArcaneInventory, T extends IInventoryBlockEntity<V>> extends Container implements IPartitionedPlayerContainer, IBlockEntityContainer<V, T> {
   protected final PlayerInventory player;
   protected final T tile;
   protected V inventory;
@@ -460,7 +459,7 @@ public abstract class AbstractLargeContainer<V extends IArcaneInventory, T exten
   @Override
   public V getTileInventory() {
     if (inventory == null) {
-      inventory = ITileContainer.super.getTileInventory();
+      inventory = IBlockEntityContainer.super.getTileInventory();
       if (inventory == null) {
         inventory = getEmptyInventory();
       }

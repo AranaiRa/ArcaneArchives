@@ -10,12 +10,11 @@ import com.aranaira.arcanearchives.core.init.ModRegistries;
 import com.aranaira.arcanearchives.core.inventory.container.CrystalWorkbenchContainer;
 import com.aranaira.arcanearchives.core.inventory.handlers.CrystalWorkbenchInventory;
 import com.aranaira.arcanearchives.core.recipes.inventory.CrystalWorkbenchCrafting;
-import com.aranaira.arcanearchives.core.tiles.CrystalWorkbenchTile;
+import com.aranaira.arcanearchives.core.blocks.entities.CrystalWorkbenchBlockEntity;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -32,7 +31,7 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 import javax.annotation.Nullable;
 import java.util.*;
 
-public class CrystalWorkbenchRecipe implements ICrystalWorkbenchRecipe<CrystalWorkbenchInventory, CrystalWorkbenchContainer, CrystalWorkbenchTile, CrystalWorkbenchCrafting> {
+public class CrystalWorkbenchRecipe implements ICrystalWorkbenchRecipe<CrystalWorkbenchInventory, CrystalWorkbenchContainer, CrystalWorkbenchBlockEntity, CrystalWorkbenchCrafting> {
   private final List<Processor<CrystalWorkbenchCrafting>> processors = new ArrayList<>();
   private final NonNullList<IngredientStack> ingredientStacks;
   private final ItemStack result;
@@ -98,10 +97,14 @@ public class CrystalWorkbenchRecipe implements ICrystalWorkbenchRecipe<CrystalWo
 
     @Override
     public CrystalWorkbenchRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-      NonNullList<IngredientStack> ingredients = NonNullList.of(IngredientStack.EMPTY);
-      for (JsonElement ing : JSONUtils.getAsJsonArray(json, "ingredients")) {
+      JsonArray incoming = JSONUtils.getAsJsonArray(json, "ingredients");
+      NonNullList<IngredientStack> ingredients = NonNullList.withSize(incoming.size(), IngredientStack.EMPTY);
+      for (int i = 0; i < incoming.size(); i++) {
+        JsonElement ing = incoming.get(i);
         if (ing.isJsonObject()) {
-          ingredients.add(IngredientStack.deserialize(ing.getAsJsonObject()));
+          ingredients.set(i, IngredientStack.deserialize(ing.getAsJsonObject()));
+        } else {
+          throw new JsonSyntaxException("Invalid ingredient: " + ing);
         }
       }
 

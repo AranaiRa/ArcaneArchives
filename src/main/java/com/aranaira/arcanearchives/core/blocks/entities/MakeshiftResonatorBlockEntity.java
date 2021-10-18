@@ -1,6 +1,6 @@
-package com.aranaira.arcanearchives.core.tiles;
+package com.aranaira.arcanearchives.core.blocks.entities;
 
-import com.aranaira.arcanearchives.api.tiles.IArcaneArchivesTile;
+import com.aranaira.arcanearchives.api.blockentities.IArcaneArchivesBlockEntity;
 import com.aranaira.arcanearchives.core.blocks.MakeshiftResonatorBlock;
 import com.aranaira.arcanearchives.core.init.ModBlocks;
 import com.aranaira.arcanearchives.core.init.ModItems;
@@ -24,11 +24,11 @@ import net.minecraft.util.math.vector.Vector3d;
 import javax.annotation.Nullable;
 import java.util.*;
 
-public class MakeshiftResonatorTile extends TileEntity implements IArcaneArchivesTile, ITickableTileEntity {
+public class MakeshiftResonatorBlockEntity extends TileEntity implements IArcaneArchivesBlockEntity, ITickableTileEntity {
   private boolean filled = false;
   private int countdown = 100;
 
-  public MakeshiftResonatorTile(TileEntityType<?> tileEntityTypeIn) {
+  public MakeshiftResonatorBlockEntity(TileEntityType<?> tileEntityTypeIn) {
     super(tileEntityTypeIn);
   }
 

@@ -1,19 +1,17 @@
 package com.aranaira.arcanearchives.api.crafting;
 
 import com.aranaira.arcanearchives.api.container.IPartitionedPlayerContainer;
-import com.aranaira.arcanearchives.api.container.IPlayerContainer;
 import com.aranaira.arcanearchives.api.inventory.IArcaneInventory;
-import com.aranaira.arcanearchives.api.tiles.IArcaneArchivesTile;
+import com.aranaira.arcanearchives.api.blockentities.IArcaneArchivesBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.tileentity.TileEntity;
-import noobanidus.libs.noobutil.types.IIInvWrapper;
 import noobanidus.libs.noobutil.types.IInvWrapper;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public abstract class ArcaneCrafting<H extends IArcaneInventory, C extends Container & IPartitionedPlayerContainer, T extends TileEntity & IArcaneArchivesTile> extends IInvWrapper<H> implements ICrafter<H, C, T> {
+public abstract class ArcaneCrafting<H extends IArcaneInventory, C extends Container & IPartitionedPlayerContainer, T extends TileEntity & IArcaneArchivesBlockEntity> extends IInvWrapper<H> implements ICrafter<H, C, T> {
   private final C container;
   private final T tile;
 

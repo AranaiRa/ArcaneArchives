@@ -3,9 +3,8 @@ package com.aranaira.arcanearchives.core.inventory.container;
 import com.aranaira.arcanearchives.core.init.ModContainers;
 import com.aranaira.arcanearchives.core.inventory.handlers.CrystalWorkbenchInventory;
 import com.aranaira.arcanearchives.core.inventory.slot.CrystalWorkbenchSlot;
-import com.aranaira.arcanearchives.core.inventory.slot.RadiantChestSlot;
 import com.aranaira.arcanearchives.core.inventory.slot.RecipeHandlerSlot;
-import com.aranaira.arcanearchives.core.tiles.CrystalWorkbenchTile;
+import com.aranaira.arcanearchives.core.blocks.entities.CrystalWorkbenchBlockEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Slot;
 
@@ -13,14 +12,14 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWorkbenchInventory, CrystalWorkbenchTile> {
+public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWorkbenchInventory, CrystalWorkbenchBlockEntity> {
   private final List<Slot> ingredientSlots = new ArrayList<>();
 
   public CrystalWorkbenchContainer(int id, PlayerInventory inventory) {
     this(id, inventory, null);
   }
 
-  public CrystalWorkbenchContainer(int id, PlayerInventory playerInventory, CrystalWorkbenchTile tile) {
+  public CrystalWorkbenchContainer(int id, PlayerInventory playerInventory, CrystalWorkbenchBlockEntity tile) {
     super(ModContainers.CRYSTAL_WORKBENCH.get(), id, 2, playerInventory, tile);
     createInventorySlots();
 /*    createRecipeSlots();*/

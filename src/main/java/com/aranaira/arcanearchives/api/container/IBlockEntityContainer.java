@@ -1,11 +1,11 @@
 package com.aranaira.arcanearchives.api.container;
 
 import com.aranaira.arcanearchives.api.inventory.IArcaneInventory;
-import com.aranaira.arcanearchives.api.tiles.IInventoryTile;
+import com.aranaira.arcanearchives.api.blockentities.IInventoryBlockEntity;
 
 import javax.annotation.Nullable;
 
-public interface ITileContainer<V extends IArcaneInventory, T extends IInventoryTile<V>> {
+public interface IBlockEntityContainer<V extends IArcaneInventory, T extends IInventoryBlockEntity<V>> {
   @Nullable
   T getTile();
 
@@ -14,7 +14,7 @@ public interface ITileContainer<V extends IArcaneInventory, T extends IInventory
     if (getTile() == null) {
       return null;
     }
-    return getTile().getTileInventory();
+    return getTile().getBlockEntityInventory();
   }
 
   @Nullable

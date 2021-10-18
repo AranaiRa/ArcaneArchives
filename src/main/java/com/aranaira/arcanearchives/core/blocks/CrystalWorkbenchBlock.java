@@ -2,18 +2,10 @@ package com.aranaira.arcanearchives.core.blocks;
 
 import com.aranaira.arcanearchives.api.RelativeSide;
 import com.aranaira.arcanearchives.core.blocks.templates.SingleAccessorBlock;
-import com.aranaira.arcanearchives.core.init.ModTiles;
-import com.aranaira.arcanearchives.core.tiles.CrystalWorkbenchTile;
-import com.aranaira.arcanearchives.core.tiles.RadiantChestTile;
-import net.minecraft.block.Block;
+import com.aranaira.arcanearchives.core.init.ModblockEntities;
+import com.aranaira.arcanearchives.core.blocks.entities.CrystalWorkbenchBlockEntity;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
@@ -24,8 +16,6 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
-
-import net.minecraft.block.AbstractBlock.Properties;
 
 public class CrystalWorkbenchBlock extends SingleAccessorBlock {
   public CrystalWorkbenchBlock(Properties properties) {
@@ -44,7 +34,7 @@ public class CrystalWorkbenchBlock extends SingleAccessorBlock {
     if (state.getValue(ACCESSOR)) {
       return null;
     }
-    return new CrystalWorkbenchTile(ModTiles.CRYSTAL_WORKBENCH.get());
+    return new CrystalWorkbenchBlockEntity(ModblockEntities.CRYSTAL_WORKBENCH.get());
   }
 
   @Override
@@ -54,8 +44,8 @@ public class CrystalWorkbenchBlock extends SingleAccessorBlock {
     } else {
       // TODO: Tile entity library?
       TileEntity te = world.getBlockEntity(pos);
-      if (te instanceof CrystalWorkbenchTile) {
-        player.openMenu((CrystalWorkbenchTile) te);
+      if (te instanceof CrystalWorkbenchBlockEntity) {
+        player.openMenu((CrystalWorkbenchBlockEntity) te);
       }
       return ActionResultType.CONSUME;
     }

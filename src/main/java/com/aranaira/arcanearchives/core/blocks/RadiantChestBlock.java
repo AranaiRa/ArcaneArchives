@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.core.blocks;
 
-import com.aranaira.arcanearchives.core.init.ModTiles;
-import com.aranaira.arcanearchives.core.tiles.RadiantChestTile;
+import com.aranaira.arcanearchives.core.init.ModblockEntities;
+import com.aranaira.arcanearchives.core.blocks.entities.RadiantChestBlockEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,8 +14,6 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
-
-import net.minecraft.block.AbstractBlock.Properties;
 
 public class RadiantChestBlock extends Block {
   public RadiantChestBlock(Properties properties) {
@@ -30,7 +28,7 @@ public class RadiantChestBlock extends Block {
   @Nullable
   @Override
   public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-    return new RadiantChestTile(ModTiles.RADIANT_CHEST.get());
+    return new RadiantChestBlockEntity(ModblockEntities.RADIANT_CHEST.get());
   }
 
   @SuppressWarnings("deprecation")
@@ -41,8 +39,8 @@ public class RadiantChestBlock extends Block {
     } else {
       // TODO: Tile entity library?
       TileEntity te = worldIn.getBlockEntity(pos);
-      if (te instanceof RadiantChestTile) {
-        player.openMenu((RadiantChestTile) te);
+      if (te instanceof RadiantChestBlockEntity) {
+        player.openMenu((RadiantChestBlockEntity) te);
       }
       return ActionResultType.CONSUME;
     }

@@ -1,7 +1,7 @@
-package com.aranaira.arcanearchives.core.tiles;
+package com.aranaira.arcanearchives.core.blocks.entities;
 
 import com.aranaira.arcanearchives.api.data.StoredInventory;
-import com.aranaira.arcanearchives.api.tiles.IInventoryTile;
+import com.aranaira.arcanearchives.api.blockentities.IInventoryBlockEntity;
 import com.aranaira.arcanearchives.core.inventory.handlers.RadiantChestInventory;
 import com.aranaira.arcanearchives.core.inventory.container.RadiantChestContainer;
 import net.minecraft.block.BlockState;
@@ -16,15 +16,15 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 import javax.annotation.Nullable;
 
-public class RadiantChestTile extends ArcaneArchivesIdentifiedTile implements IInventoryTile<RadiantChestInventory>, INamedContainerProvider {
+public class RadiantChestBlockEntity extends ArcaneArchivesIdentifiedBlockEntity implements IInventoryBlockEntity<RadiantChestInventory>, INamedContainerProvider {
   private final StoredInventory<RadiantChestInventory> inventory = new StoredInventory<>(this::getTileId, RadiantChestInventory::new, RadiantChestInventory.EmptyRadiantChestInventory::new, 54);
 
-  public RadiantChestTile(TileEntityType<?> tileEntityTypeIn) {
+  public RadiantChestBlockEntity(TileEntityType<?> tileEntityTypeIn) {
     super(tileEntityTypeIn);
   }
 
   @Override
-  public RadiantChestInventory getTileInventory() {
+  public RadiantChestInventory getBlockEntityInventory() {
     RadiantChestInventory result = inventory.getInventory(this.level);
     if (result == null) {
       return getEmptyInventory();

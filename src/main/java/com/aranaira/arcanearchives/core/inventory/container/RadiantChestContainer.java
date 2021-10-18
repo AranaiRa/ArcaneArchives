@@ -3,7 +3,7 @@ package com.aranaira.arcanearchives.core.inventory.container;
 import com.aranaira.arcanearchives.core.init.ModContainers;
 import com.aranaira.arcanearchives.core.inventory.handlers.RadiantChestInventory;
 import com.aranaira.arcanearchives.core.inventory.slot.RadiantChestSlot;
-import com.aranaira.arcanearchives.core.tiles.RadiantChestTile;
+import com.aranaira.arcanearchives.core.blocks.entities.RadiantChestBlockEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Slot;
 
@@ -11,12 +11,12 @@ import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 
-public class RadiantChestContainer extends AbstractLargeContainer<RadiantChestInventory, RadiantChestTile> {
+public class RadiantChestContainer extends AbstractLargeContainer<RadiantChestInventory, RadiantChestBlockEntity> {
   public RadiantChestContainer(int id, PlayerInventory inventory) {
     this(id, inventory, null);
   }
 
-  public RadiantChestContainer(int id, PlayerInventory playerInventory, RadiantChestTile tile) {
+  public RadiantChestContainer(int id, PlayerInventory playerInventory, RadiantChestBlockEntity tile) {
     super(ModContainers.RADIANT_CHEST.get(), id, 9, playerInventory, tile);
     createInventorySlots();
     createPlayerSlots(142, 200, 16);

@@ -67,6 +67,6 @@ public class ArcaneArchives {
     ModRecipes.load();
     ModRegistries.load();
     ModSounds.load();
-    ModTiles.load();
+    ModblockEntities.load();
   }
 }

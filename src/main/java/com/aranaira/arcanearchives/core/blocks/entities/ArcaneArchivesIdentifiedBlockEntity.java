@@ -1,7 +1,7 @@
-package com.aranaira.arcanearchives.core.tiles;
+package com.aranaira.arcanearchives.core.blocks.entities;
 
 import com.aranaira.arcanearchives.api.reference.Identifiers;
-import com.aranaira.arcanearchives.api.tiles.IArcaneArchivesTile;
+import com.aranaira.arcanearchives.api.blockentities.IArcaneArchivesBlockEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
@@ -9,10 +9,10 @@ import net.minecraft.tileentity.TileEntityType;
 
 import java.util.UUID;
 
-public abstract class ArcaneArchivesIdentifiedTile extends TileEntity implements IArcaneArchivesTile {
+public abstract class ArcaneArchivesIdentifiedBlockEntity extends TileEntity implements IArcaneArchivesBlockEntity {
   protected UUID uuid = null;
 
-  public ArcaneArchivesIdentifiedTile(TileEntityType<?> tileEntityTypeIn) {
+  public ArcaneArchivesIdentifiedBlockEntity(TileEntityType<?> tileEntityTypeIn) {
     super(tileEntityTypeIn);
   }
 

@@ -1,7 +1,7 @@
-package com.aranaira.arcanearchives.core.tiles;
+package com.aranaira.arcanearchives.core.blocks.entities;
 
 import com.aranaira.arcanearchives.api.data.StoredInventory;
-import com.aranaira.arcanearchives.api.tiles.IInventoryTile;
+import com.aranaira.arcanearchives.api.blockentities.IInventoryBlockEntity;
 import com.aranaira.arcanearchives.core.inventory.container.CrystalWorkbenchContainer;
 import com.aranaira.arcanearchives.core.inventory.handlers.CrystalWorkbenchInventory;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,16 +14,16 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 import javax.annotation.Nullable;
 
-public class CrystalWorkbenchTile extends ArcaneArchivesIdentifiedTile implements IInventoryTile<CrystalWorkbenchInventory>, INamedContainerProvider {
+public class CrystalWorkbenchBlockEntity extends ArcaneArchivesIdentifiedBlockEntity implements IInventoryBlockEntity<CrystalWorkbenchInventory>, INamedContainerProvider {
   private final StoredInventory<CrystalWorkbenchInventory> inventory = new StoredInventory<>(this::getTileId, CrystalWorkbenchInventory::new, CrystalWorkbenchInventory.EmptyArcaneWorkbenchInventory::new, 18);
 
-  public CrystalWorkbenchTile(TileEntityType<?> tileEntityTypeIn) {
+  public CrystalWorkbenchBlockEntity(TileEntityType<?> tileEntityTypeIn) {
     super(tileEntityTypeIn);
   }
 
   @Nullable
   @Override
-  public CrystalWorkbenchInventory getTileInventory() {
+  public CrystalWorkbenchInventory getBlockEntityInventory() {
     CrystalWorkbenchInventory result = inventory.getInventory(this.level);
     if (result == null) {
       return inventory.getEmpty();

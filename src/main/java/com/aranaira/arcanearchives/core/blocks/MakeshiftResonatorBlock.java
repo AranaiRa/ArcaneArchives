@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.core.blocks;
 
-import com.aranaira.arcanearchives.core.init.ModTiles;
-import com.aranaira.arcanearchives.core.tiles.MakeshiftResonatorTile;
+import com.aranaira.arcanearchives.core.init.ModblockEntities;
+import com.aranaira.arcanearchives.core.blocks.entities.MakeshiftResonatorBlockEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -26,8 +26,6 @@ import noobanidus.libs.noobutil.util.VoxelUtil;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.AbstractBlock.Properties;
-
 @SuppressWarnings("deprecation")
 public class MakeshiftResonatorBlock extends Block {
   public static BooleanProperty FILLED = BooleanProperty.create("filled");
@@ -51,8 +49,8 @@ public class MakeshiftResonatorBlock extends Block {
         world.setBlockAndUpdate(pos, stateAt.setValue(FILLED, true));
       }
       TileEntity te = world.getBlockEntity(pos);
-      if (te instanceof MakeshiftResonatorTile) {
-        ((MakeshiftResonatorTile) te).setFilled();
+      if (te instanceof MakeshiftResonatorBlockEntity) {
+        ((MakeshiftResonatorBlockEntity) te).setFilled();
       }
     }
   }
@@ -66,8 +64,8 @@ public class MakeshiftResonatorBlock extends Block {
     if (player.isCreative()) {
       world.setBlockAndUpdate(pos, state.setValue(FILLED, true));
       TileEntity te = world.getBlockEntity(pos);
-      if (te instanceof MakeshiftResonatorTile) {
-        ((MakeshiftResonatorTile) te).setFilled();
+      if (te instanceof MakeshiftResonatorBlockEntity) {
+        ((MakeshiftResonatorBlockEntity) te).setFilled();
       }
       return ActionResultType.SUCCESS;
     }
@@ -92,8 +90,8 @@ public class MakeshiftResonatorBlock extends Block {
             }
             world.setBlockAndUpdate(pos, state.setValue(FILLED, true));
             TileEntity te = world.getBlockEntity(pos);
-            if (te instanceof MakeshiftResonatorTile) {
-              ((MakeshiftResonatorTile) te).setFilled();
+            if (te instanceof MakeshiftResonatorBlockEntity) {
+              ((MakeshiftResonatorBlockEntity) te).setFilled();
             }
             return ActionResultType.SUCCESS;
           }
@@ -117,6 +115,6 @@ public class MakeshiftResonatorBlock extends Block {
   @Nullable
   @Override
   public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-    return new MakeshiftResonatorTile(ModTiles.MAKESHIFT_RESONATOR.get());
+    return new MakeshiftResonatorBlockEntity(ModblockEntities.MAKESHIFT_RESONATOR.get());
   }
 }
