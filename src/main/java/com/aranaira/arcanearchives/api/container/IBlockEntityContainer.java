@@ -10,7 +10,7 @@ public interface IBlockEntityContainer<V extends IArcaneInventory, T extends IIn
   T getTile();
 
   @Nullable
-  default V getTileInventory() {
+  default V getBlockEntityInventory() {
     if (getTile() == null) {
       return null;
     }

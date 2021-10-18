@@ -40,7 +40,7 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
       for (int col = 0; col < 9; ++col) {
         int x = 23 + col * 18;
         int y = 105 + row * 18;
-        Slot slot = new CrystalWorkbenchSlot(this.getTileInventory(), slotIndex, x, y);
+        Slot slot = new CrystalWorkbenchSlot(this.getBlockEntityInventory(), slotIndex, x, y);
         ingredientSlots.add(slot);
         this.addSlot(slot);
         slotIndex++;

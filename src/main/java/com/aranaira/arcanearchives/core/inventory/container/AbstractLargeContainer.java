@@ -457,9 +457,9 @@ public abstract class AbstractLargeContainer<V extends IArcaneInventory, T exten
   }
 
   @Override
-  public V getTileInventory() {
+  public V getBlockEntityInventory() {
     if (inventory == null) {
-      inventory = IBlockEntityContainer.super.getTileInventory();
+      inventory = IBlockEntityContainer.super.getBlockEntityInventory();
       if (inventory == null) {
         inventory = getEmptyInventory();
       }

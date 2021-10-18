@@ -37,7 +37,7 @@ public abstract class ArcaneArchivesIdentifiedBlockEntity extends TileEntity imp
   }
 
   @Override
-  public UUID getTileId() {
+  public UUID getEntityId() {
     if (this.uuid == null) {
       this.uuid = UUID.randomUUID();
     }

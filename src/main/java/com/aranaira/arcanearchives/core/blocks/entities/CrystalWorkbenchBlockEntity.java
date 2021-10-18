@@ -15,7 +15,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import javax.annotation.Nullable;
 
 public class CrystalWorkbenchBlockEntity extends ArcaneArchivesIdentifiedBlockEntity implements IInventoryBlockEntity<CrystalWorkbenchInventory>, INamedContainerProvider {
-  private final StoredInventory<CrystalWorkbenchInventory> inventory = new StoredInventory<>(this::getTileId, CrystalWorkbenchInventory::new, CrystalWorkbenchInventory.EmptyArcaneWorkbenchInventory::new, 18);
+  private final StoredInventory<CrystalWorkbenchInventory> inventory = new StoredInventory<>(this::getEntityId, CrystalWorkbenchInventory::new, CrystalWorkbenchInventory.EmptyArcaneWorkbenchInventory::new, 18);
 
   public CrystalWorkbenchBlockEntity(TileEntityType<?> tileEntityTypeIn) {
     super(tileEntityTypeIn);

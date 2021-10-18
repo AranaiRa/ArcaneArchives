@@ -17,7 +17,7 @@ public class CrystalWorkbenchUUIDProcessor extends CrystalWorkbenchProcessor {
     CompoundNBT tag = result.getOrCreateTag();
     if (!tag.hasUUID(Identifiers.networkId)) {
       if (crafter.getTileId() == null) {
-        throw new IllegalArgumentException("tile id for crafter tile is null: " + crafter.getTile());
+        throw new IllegalArgumentException("tile id for crafter tile is null: " + crafter.getBlockEntity());
       }
       tag.putUUID(Identifiers.networkId, crafter.getTileId());
     }

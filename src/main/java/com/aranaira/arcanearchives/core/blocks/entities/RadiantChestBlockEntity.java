@@ -17,7 +17,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import javax.annotation.Nullable;
 
 public class RadiantChestBlockEntity extends ArcaneArchivesIdentifiedBlockEntity implements IInventoryBlockEntity<RadiantChestInventory>, INamedContainerProvider {
-  private final StoredInventory<RadiantChestInventory> inventory = new StoredInventory<>(this::getTileId, RadiantChestInventory::new, RadiantChestInventory.EmptyRadiantChestInventory::new, 54);
+  private final StoredInventory<RadiantChestInventory> inventory = new StoredInventory<>(this::getEntityId, RadiantChestInventory::new, RadiantChestInventory.EmptyRadiantChestInventory::new, 54);
 
   public RadiantChestBlockEntity(TileEntityType<?> tileEntityTypeIn) {
     super(tileEntityTypeIn);

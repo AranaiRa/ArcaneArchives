@@ -13,12 +13,12 @@ import java.util.UUID;
 
 public abstract class ArcaneCrafting<H extends IArcaneInventory, C extends Container & IPartitionedPlayerContainer, T extends TileEntity & IArcaneArchivesBlockEntity> extends IInvWrapper<H> implements ICrafter<H, C, T> {
   private final C container;
-  private final T tile;
+  private final T blockentity;
 
-  public ArcaneCrafting(C container, T tile, H handler) {
+  public ArcaneCrafting(C container, T blockentity, H handler) {
     super(handler);
     this.container = container;
-    this.tile = tile;
+    this.blockentity = blockentity;
   }
 
   @Override
@@ -27,14 +27,14 @@ public abstract class ArcaneCrafting<H extends IArcaneInventory, C extends Conta
   }
 
   @Override
-  public T getTile() {
-    return tile;
+  public T getBlockEntity() {
+    return blockentity;
   }
 
   @Override
   @Nullable
   public UUID getTileId() {
-    return getTile().getTileId();
+    return getBlockEntity().getEntityId();
   }
 
   @Override

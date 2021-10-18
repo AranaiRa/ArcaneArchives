@@ -14,7 +14,7 @@ import java.util.UUID;
 public interface ICrafter<H extends IArcaneInventory, C extends Container & IPartitionedPlayerContainer, T extends TileEntity & IArcaneArchivesBlockEntity> extends IInventory, IIInvWrapper<H> {
 
   C getContainer();
-  T getTile();
+  T getBlockEntity();
   UUID getTileId();
   PlayerEntity getPlayer();
   @Override

@@ -28,7 +28,7 @@ public class RadiantChestContainer extends AbstractLargeContainer<RadiantChestIn
       for (int col = 0; col < 9; ++col) {
         int x = 16 + col * 18;
         int y = row * 18 + 16;
-        this.addSlot(new RadiantChestSlot(this.getTileInventory(), slotIndex, x, y));
+        this.addSlot(new RadiantChestSlot(this.getBlockEntityInventory(), slotIndex, x, y));
         slotIndex++;
       }
     }

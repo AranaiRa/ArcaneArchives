@@ -6,11 +6,11 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Slot;
 
 public class RecipeHandlerSlot extends Slot {
-  private static IInventory emptyInventory = new Inventory(0);
-  private final CrystalWorkbenchBlockEntity tile;
+  private static final IInventory emptyInventory = new Inventory(0);
+  private final CrystalWorkbenchBlockEntity blockentity;
 
-  public RecipeHandlerSlot(int index, int xPosition, int yPosition, CrystalWorkbenchBlockEntity tile) {
+  public RecipeHandlerSlot(int index, int xPosition, int yPosition, CrystalWorkbenchBlockEntity blockentity) {
     super(emptyInventory, index, xPosition, yPosition);
-    this.tile = tile;
+    this.blockentity = blockentity;
   }
 }

@@ -6,5 +6,5 @@ import java.util.UUID;
 public interface IArcaneArchivesBlockEntity {
   // TODO: Move this out of IArcaneArchivesTile
   @Nullable
-  UUID getTileId ();
+  UUID getEntityId();
 }

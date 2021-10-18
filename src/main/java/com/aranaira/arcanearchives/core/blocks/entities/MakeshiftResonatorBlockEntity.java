@@ -34,7 +34,7 @@ public class MakeshiftResonatorBlockEntity extends TileEntity implements IArcane
 
   @Nullable
   @Override
-  public UUID getTileId() {
+  public UUID getEntityId() {
     return null;
   }
 
