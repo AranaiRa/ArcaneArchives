@@ -29,11 +29,11 @@ public class CrystalWorkbenchRecipeBuilder {
     this.count = count;
   }
 
-  public static CrystalWorkbenchRecipeBuilder builder(IItemProvider result, int count) {
+  public static CrystalWorkbenchRecipeBuilder crystalWorkbenchRecipe(IItemProvider result, int count) {
     return new CrystalWorkbenchRecipeBuilder(result, count);
   }
 
-  public static CrystalWorkbenchRecipeBuilder builder(IItemProvider result) {
+  public static CrystalWorkbenchRecipeBuilder crystalWorkbenchRecipe(IItemProvider result) {
     return new CrystalWorkbenchRecipeBuilder(result, 1);
   }
 

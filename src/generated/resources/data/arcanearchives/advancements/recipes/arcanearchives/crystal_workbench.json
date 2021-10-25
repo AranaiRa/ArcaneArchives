@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "arcanearchives:crystal_workbench"
+    ]
+  },
+  "criteria": {
+    "has_radiant_dust": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "arcanearchives:radiant_dust"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "arcanearchives:crystal_workbench"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_radiant_dust",
+      "has_the_recipe"
+    ]
+  ]
+}

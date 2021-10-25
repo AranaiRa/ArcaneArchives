@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.core.blocks;
 
-import com.aranaira.arcanearchives.core.init.ModblockEntities;
+import com.aranaira.arcanearchives.core.init.ModBlockEntities;
 import com.aranaira.arcanearchives.core.blocks.entities.MakeshiftResonatorBlockEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -115,6 +115,6 @@ public class MakeshiftResonatorBlock extends Block {
   @Nullable
   @Override
   public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-    return new MakeshiftResonatorBlockEntity(ModblockEntities.MAKESHIFT_RESONATOR.get());
+    return new MakeshiftResonatorBlockEntity(ModBlockEntities.MAKESHIFT_RESONATOR.get());
   }
 }

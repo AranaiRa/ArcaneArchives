@@ -27,7 +27,7 @@ public interface Identifiers {
   }
 
   interface Resonator {
-    String growth = "Grow";
+    String progress = "Prog";
   }
 
   interface NetworkReference {

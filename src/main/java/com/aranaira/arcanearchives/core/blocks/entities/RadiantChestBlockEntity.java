@@ -1,9 +1,9 @@
 package com.aranaira.arcanearchives.core.blocks.entities;
 
-import com.aranaira.arcanearchives.api.data.StoredInventory;
 import com.aranaira.arcanearchives.api.blockentities.IInventoryBlockEntity;
-import com.aranaira.arcanearchives.core.inventory.handlers.RadiantChestInventory;
+import com.aranaira.arcanearchives.api.data.StoredInventory;
 import com.aranaira.arcanearchives.core.inventory.container.RadiantChestContainer;
+import com.aranaira.arcanearchives.core.inventory.handlers.RadiantChestInventory;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;

@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DGP",
+    "WCW",
+    "QWQ"
+  ],
+  "key": {
+    "D": {
+      "tag": "forge:stone"
+    },
+    "G": {
+      "tag": "forge:glass_panes"
+    },
+    "P": {
+      "item": "minecraft:paper"
+    },
+    "C": {
+      "item": "minecraft:crafting_table"
+    },
+    "Q": {
+      "item": "arcanearchives:radiant_dust"
+    },
+    "W": {
+      "tag": "minecraft:logs"
+    }
+  },
+  "result": {
+    "item": "arcanearchives:crystal_workbench"
+  }
+}

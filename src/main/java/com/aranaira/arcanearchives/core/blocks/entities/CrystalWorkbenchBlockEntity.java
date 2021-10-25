@@ -1,18 +1,23 @@
 package com.aranaira.arcanearchives.core.blocks.entities;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.api.data.StoredInventory;
 import com.aranaira.arcanearchives.api.blockentities.IInventoryBlockEntity;
+import com.aranaira.arcanearchives.api.reference.Identifiers;
 import com.aranaira.arcanearchives.core.inventory.container.CrystalWorkbenchContainer;
 import com.aranaira.arcanearchives.core.inventory.handlers.CrystalWorkbenchInventory;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
 import javax.annotation.Nullable;
+import java.util.UUID;
 
 public class CrystalWorkbenchBlockEntity extends ArcaneArchivesIdentifiedBlockEntity implements IInventoryBlockEntity<CrystalWorkbenchInventory>, INamedContainerProvider {
   private final StoredInventory<CrystalWorkbenchInventory> inventory = new StoredInventory<>(this::getEntityId, CrystalWorkbenchInventory::new, CrystalWorkbenchInventory.EmptyArcaneWorkbenchInventory::new, 18);
@@ -44,6 +49,7 @@ public class CrystalWorkbenchBlockEntity extends ArcaneArchivesIdentifiedBlockEn
   @Nullable
   @Override
   public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
+    ArcaneArchives.LOG.info("Identifier: " + getEntityId());
     return new CrystalWorkbenchContainer(windowId, playerInventory, this);
   }
 }

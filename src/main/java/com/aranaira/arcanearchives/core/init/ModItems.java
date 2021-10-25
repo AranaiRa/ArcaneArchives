@@ -16,7 +16,7 @@ public class ModItems {
   public static final ItemEntry<Item> RADIANT_DUST = REGISTRATE.item("radiant_dust", Item::new)
       .properties(o -> o)
       .recipe((ctx, p) -> {
-        CrystalWorkbenchRecipeBuilder.builder(ctx.getEntry(), 2)
+        CrystalWorkbenchRecipeBuilder.crystalWorkbenchRecipe(ctx.getEntry(), 2)
             .addIngredient(RADIANT_QUARTZ.get(), 1)
             .addProcessor(ModProcessors.CRYSTAL_WORKBENCH_UUID_PROCESSOR.get())
             .addProcessor(ModProcessors.CRYSTAL_WORKBENCH_CONTAINER_PROCESSOR.get())

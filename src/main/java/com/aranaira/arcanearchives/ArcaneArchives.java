@@ -3,7 +3,6 @@ package com.aranaira.arcanearchives;
 import com.aranaira.arcanearchives.api.ArcaneArchivesAPI;
 import com.aranaira.arcanearchives.api.crafting.registry.IRecipeManagerAccessor;
 import com.aranaira.arcanearchives.client.impl.ClientRecipeAccessor;
-import com.aranaira.arcanearchives.client.setup.ClientInit;
 import com.aranaira.arcanearchives.core.config.ConfigManager;
 import com.aranaira.arcanearchives.core.impl.ServerRecipeAccessor;
 import com.aranaira.arcanearchives.core.init.*;
@@ -41,10 +40,8 @@ public class ArcaneArchives {
     ConfigManager.loadConfig(ConfigManager.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve(MODID + "-common.toml"));
 
     IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
-    modBus.addListener(CommonSetup::setup);
     modBus.addListener(ConfigManager::configReloaded);
 
-    DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ClientInit::init);
     ArcaneArchivesAPI.INSTANCE = new ArcaneArchivesAPI() {
       private final IRecipeManagerAccessor accessor = DistExecutor.safeRunForDist(() -> ClientRecipeAccessor::new, () -> ServerRecipeAccessor::new);
 
@@ -67,6 +64,6 @@ public class ArcaneArchives {
     ModRecipes.load();
     ModRegistries.load();
     ModSounds.load();
-    ModblockEntities.load();
+    ModBlockEntities.load();
   }
 }

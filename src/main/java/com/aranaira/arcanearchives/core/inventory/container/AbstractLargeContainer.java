@@ -14,7 +14,9 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.SSetSlotPacket;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IntReferenceHolder;
+import net.minecraft.util.math.BlockPos;
 
 /* Contains some code taken from Dank Storage by tfarecnim
 Licensed under a CC0 license but used with permission
@@ -24,20 +26,32 @@ https://github.com/Tfarcenim/Dank-Storage/blob/1.16.x/src/main/java/tfar/danksto
 // - Add slots to ignore for transfer stack in slot
 public abstract class AbstractLargeContainer<V extends IArcaneInventory, T extends IInventoryBlockEntity<V>> extends Container implements IPartitionedPlayerContainer, IBlockEntityContainer<V, T> {
   protected final PlayerInventory player;
-  protected final T tile;
+  protected final T blockEntity;
   protected V inventory;
   protected final int rows;
+  protected final boolean clientSide;
 
-  public AbstractLargeContainer(ContainerType<?> container, int id, int rows, PlayerInventory inventory) {
-    this(container, id, rows, inventory, null);
-  }
-
-  public AbstractLargeContainer(ContainerType<?> container, int id, int rows, PlayerInventory playerInventory, T tile) {
+  public AbstractLargeContainer(ContainerType<?> container, int id, int rows, PlayerInventory playerInventory, T blockEntity) {
     super(container, id);
     this.player = playerInventory;
-    this.tile = tile;
+    this.blockEntity = blockEntity;
     this.rows = rows;
+    this.clientSide = false;
   }
+
+  public AbstractLargeContainer(ContainerType<?> container, int id, int rows, PlayerInventory playerInventory, BlockPos position) {
+    super(container, id);
+    this.blockEntity = resolveBlockEntity(playerInventory.player.level.getBlockEntity(position));
+    this.player = playerInventory;
+    this.rows = rows;
+    this.clientSide = true;
+  }
+
+  public boolean isClientSide() {
+    return clientSide;
+  }
+
+  protected abstract T resolveBlockEntity (TileEntity be);
 
   // SHOULD BE OVERRIDDEN
   // BECAUSE I DON'T KNOW HOW OFFSETS WORK
@@ -395,10 +409,21 @@ public abstract class AbstractLargeContainer<V extends IArcaneInventory, T exten
     return flag;
   }
 
+  protected boolean skipSlot (int i) {
+    return skipSlot(this.slots.get(i));
+  }
+
+  protected boolean skipSlot (Slot slot) {
+    return false;
+  }
+
   //need to override
   @Override
   public void broadcastChanges() {
     for (int i = 0; i < this.slots.size(); ++i) {
+      if (skipSlot(i)) {
+        continue;
+      }
       ItemStack itemstack = (this.slots.get(i)).getItem();
       ItemStack itemstack1 = this.lastSlots.get(i);
 
@@ -452,8 +477,8 @@ public abstract class AbstractLargeContainer<V extends IArcaneInventory, T exten
   }
 
   @Override
-  public T getTile() {
-    return tile;
+  public T getBlockEntity() {
+    return blockEntity;
   }
 
   @Override

@@ -7,14 +7,14 @@ import javax.annotation.Nullable;
 
 public interface IBlockEntityContainer<V extends IArcaneInventory, T extends IInventoryBlockEntity<V>> {
   @Nullable
-  T getTile();
+  T getBlockEntity();
 
   @Nullable
   default V getBlockEntityInventory() {
-    if (getTile() == null) {
+    if (getBlockEntity() == null) {
       return null;
     }
-    return getTile().getBlockEntityInventory();
+    return getBlockEntity().getBlockEntityInventory();
   }
 
   @Nullable

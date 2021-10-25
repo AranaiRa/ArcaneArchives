@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.core.blocks;
 
-import com.aranaira.arcanearchives.core.init.ModblockEntities;
+import com.aranaira.arcanearchives.core.init.ModBlockEntities;
 import com.aranaira.arcanearchives.core.blocks.entities.RadiantChestBlockEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -28,7 +28,7 @@ public class RadiantChestBlock extends Block {
   @Nullable
   @Override
   public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-    return new RadiantChestBlockEntity(ModblockEntities.RADIANT_CHEST.get());
+    return new RadiantChestBlockEntity(ModBlockEntities.RADIANT_CHEST.get());
   }
 
   @SuppressWarnings("deprecation")

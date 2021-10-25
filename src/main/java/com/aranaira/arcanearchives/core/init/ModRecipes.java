@@ -1,12 +1,17 @@
 package com.aranaira.arcanearchives.core.init;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.api.ArcaneArchivesAPI;
 import com.aranaira.arcanearchives.core.recipes.CrystalWorkbenchRecipe;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
+
+import java.util.Collections;
+import java.util.List;
 
 import static com.aranaira.arcanearchives.ArcaneArchives.REGISTRATE;
 
@@ -27,6 +32,19 @@ public class ModRecipes {
         }
       });
     }
+  }
+
+  public static List<CrystalWorkbenchRecipe> getCrystalWorkbenchRecipes () {
+    if (!ArcaneArchivesAPI.isPresent()) {
+      throw new IllegalStateException("attempted to access crystal workbench recipes before API is available");
+    }
+
+    RecipeManager manager = ArcaneArchivesAPI.getInstance().getRecipeManager();
+    if (manager == null) {
+      throw new NullPointerException("recipe manager not accessible via API");
+    }
+
+    return manager.getAllRecipesFor(Types.CRYSTAL_WORKBENCH);
   }
 
   public static void load() {
