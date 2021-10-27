@@ -30,7 +30,7 @@ import static com.aranaira.arcanearchives.ArcaneArchives.REGISTRATE;
 
 public class ModBlocks {
   public static final RegistryEntry<CrystalWorkbenchBlock> CRYSTAL_WORKBENCH = REGISTRATE.block("crystal_workbench", Material.GLASS, CrystalWorkbenchBlock::new)
-      .properties(AbstractBlock.Properties::noOcclusion)
+      .properties(o -> o.noOcclusion())
       .blockstate(NonNullBiConsumer.noop())
       .recipe((ctx, p) ->
           ShapedRecipeBuilder.shaped(ctx.getEntry(), 1)
