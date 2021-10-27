@@ -11,6 +11,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import static com.aranaira.arcanearchives.ArcaneArchives.REGISTRATE;
@@ -44,7 +45,11 @@ public class ModRecipes {
       throw new NullPointerException("recipe manager not accessible via API");
     }
 
-    return manager.getAllRecipesFor(Types.CRYSTAL_WORKBENCH);
+    List<CrystalWorkbenchRecipe> recipesUnsorted = manager.getAllRecipesFor(Types.CRYSTAL_WORKBENCH);
+
+    recipesUnsorted.sort(Comparator.comparing(o -> o.getId().getPath()));
+
+    return recipesUnsorted;
   }
 
   public static void load() {
