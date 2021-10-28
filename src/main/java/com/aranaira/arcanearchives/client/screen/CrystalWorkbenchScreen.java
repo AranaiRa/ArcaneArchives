@@ -47,7 +47,7 @@ public class CrystalWorkbenchScreen extends ContainerScreen<CrystalWorkbenchCont
 
   @Override
   protected void renderLabels(MatrixStack matrixStack, int x, int y) {
-    super.renderLabels(matrixStack, x, y);
+    //super.renderLabels(matrixStack, x, y);
 
     CrystalWorkbenchBlockEntity entity = this.menu.getBlockEntity();
     if (entity == null) {
