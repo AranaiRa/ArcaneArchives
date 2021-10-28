@@ -2,15 +2,17 @@ package com.aranaira.arcanearchives.core.inventory.container;
 
 import com.aranaira.arcanearchives.core.init.ModContainers;
 import com.aranaira.arcanearchives.core.inventory.handlers.CrystalWorkbenchInventory;
+import com.aranaira.arcanearchives.core.inventory.slot.ClientCrystalWorkbenchRecipeSlot;
 import com.aranaira.arcanearchives.core.inventory.slot.CrystalWorkbenchSlot;
-import com.aranaira.arcanearchives.core.inventory.slot.RecipeHandlerSlot;
+import com.aranaira.arcanearchives.core.inventory.slot.CrystalWorkbenchRecipeSlot;
 import com.aranaira.arcanearchives.core.blocks.entities.CrystalWorkbenchBlockEntity;
+import com.aranaira.arcanearchives.core.inventory.slot.IRecipeSlot;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.IIntArray;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -19,24 +21,72 @@ import java.util.List;
 public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWorkbenchInventory, CrystalWorkbenchBlockEntity> {
   private final List<Slot> ingredientSlots = new ArrayList<>();
 
+  private int attuneProgress = 0;
+  private int deattuneProgress = 0;
+
+  private final IIntArray data = new IIntArray() {
+    @Override
+    public int get(int pIndex) {
+      if (pIndex < 7) {
+        return RECIPE_SLOTS.get(pIndex).getOffset();
+      } else if (pIndex == 7) {
+        return attuneProgress;
+      } else if (pIndex == 8) {
+        return deattuneProgress;
+      }
+
+      return -1;
+    }
+
+    @Override
+    public void set(int pIndex, int pValue) {
+      if (pIndex < 7) {
+        CLIENT_RECIPE_SLOTS.get(pIndex).setOffset(pValue);
+      } else if (pIndex == 7) {
+        attuneProgress = pValue;
+      } else if (pIndex == 8) {
+        deattuneProgress = pValue;
+      }
+    }
+
+    @Override
+    public int getCount() {
+      return 9;
+    }
+  };
+  private final List<CrystalWorkbenchRecipeSlot> RECIPE_SLOTS = new ArrayList<>();
+  private final List<ClientCrystalWorkbenchRecipeSlot> CLIENT_RECIPE_SLOTS = new ArrayList<>();
+
   public CrystalWorkbenchContainer(ContainerType<? extends CrystalWorkbenchContainer> type, int id, PlayerInventory inventory, PacketBuffer buffer) {
     super(type, id, 2, inventory, buffer.readBlockPos());
-    createInventorySlots();
-    /*    createRecipeSlots();*/
-    createPlayerSlots(166, 224, 23);
+    construct();
+    this.addDataSlots(data);
   }
 
   public CrystalWorkbenchContainer(int id, PlayerInventory playerInventory, CrystalWorkbenchBlockEntity tile) {
     super(ModContainers.CRYSTAL_WORKBENCH.get(), id, 2, playerInventory, tile);
+    construct();
+    this.addDataSlots(data);
+  }
+
+  protected void construct () {
     createInventorySlots();
-/*    createRecipeSlots();*/
     createPlayerSlots(166, 224, 23);
+    createRecipeSlots();
   }
 
   protected void createRecipeSlots () {
-    int slotIndex = slots.size();
-    for (int col = 6; col > -1; col--) {
-      this.addSlot(new RecipeHandlerSlot(slotIndex, col * 18 + 41, 70, getBlockEntity()));
+    int slotIndex = 0;
+    for (int col = 0; col < 7; col++) {
+      if (isClientSide()) {
+        ClientCrystalWorkbenchRecipeSlot slot = new ClientCrystalWorkbenchRecipeSlot(slotIndex, col * 18 + 41, 70);
+        CLIENT_RECIPE_SLOTS.add(slot);
+        this.addSlot(slot);
+      } else {
+        CrystalWorkbenchRecipeSlot slot = new CrystalWorkbenchRecipeSlot(slotIndex, col * 18 + 41, 70);
+        RECIPE_SLOTS.add(slot);
+        this.addSlot(slot);
+      }
       slotIndex++;
     }
   }
@@ -82,6 +132,6 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
 
   @Override
   protected boolean skipSlot(Slot slot) {
-    return slot instanceof RecipeHandlerSlot;
+    return slot instanceof IRecipeSlot;
   }
 }

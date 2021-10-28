@@ -85,7 +85,7 @@ public class CrystalWorkbenchRecipe implements ICrystalWorkbenchRecipe<CrystalWo
 
   @Override
   public IRecipeSerializer<?> getSerializer() {
-    return ModRecipes.CRYSTAL_WORKBENCH.get();
+    return ModRecipes.Serializers.CRYSTAL_WORKBENCH.get();
   }
 
   @Override

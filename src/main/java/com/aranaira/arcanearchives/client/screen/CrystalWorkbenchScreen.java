@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.client.screen;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.api.ArcaneArchivesAPI;
 import com.aranaira.arcanearchives.core.blocks.entities.CrystalWorkbenchBlockEntity;
 import com.aranaira.arcanearchives.core.inventory.container.CrystalWorkbenchContainer;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -13,7 +13,7 @@ import net.minecraft.util.text.ITextComponent;
 import java.util.UUID;
 
 public class CrystalWorkbenchScreen extends ContainerScreen<CrystalWorkbenchContainer> {
-  private final static ResourceLocation background = new ResourceLocation(ArcaneArchives.MODID, "textures/gui/crystal_workbench.png");
+  private final static ResourceLocation background = new ResourceLocation(ArcaneArchivesAPI.MODID, "textures/gui/crystal_workbench.png");
 
   public CrystalWorkbenchScreen(CrystalWorkbenchContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);

@@ -111,7 +111,7 @@ public class CrystalWorkbenchRecipeBuilder {
 
     @Override
     public IRecipeSerializer<?> getType() {
-      return ModRecipes.CRYSTAL_WORKBENCH.get();
+      return ModRecipes.Serializers.CRYSTAL_WORKBENCH.get();
     }
 
     @Nullable

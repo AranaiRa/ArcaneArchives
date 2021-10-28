@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.core.init;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.api.ArcaneArchivesAPI;
 import com.aranaira.arcanearchives.api.reference.Identifiers;
 import com.aranaira.arcanearchives.core.blocks.CrystalWorkbenchBlock;
 import com.aranaira.arcanearchives.core.blocks.MakeshiftResonatorBlock;
@@ -67,7 +67,7 @@ public class ModBlocks {
       .build()
       .recipe((ctx, p) -> {
         CrystalWorkbenchRecipeBuilder.crystalWorkbenchRecipe(ctx.getEntry(), 1)
-            .build(p, new ResourceLocation(ArcaneArchives.MODID, "radiant_chest"));
+            .build(p, new ResourceLocation(ArcaneArchivesAPI.MODID, "radiant_chest"));
       })
       .loot((ctx, p) -> {
         ctx.add(p, LootTable.lootTable().withPool(RegistrateBlockLootTables.withExplosionDecay(p, LootPool.lootPool().setRolls(ConstantRange.exactly(1)).add(ItemLootEntry.lootTableItem(p).apply(CopyName.copyName(CopyName.Source.BLOCK_ENTITY)).apply(CopyNbt.copyData(CopyNbt.Source.BLOCK_ENTITY).copy(Identifiers.tileId, "BlockEntityTag." + Identifiers.tileId))))));
@@ -88,7 +88,7 @@ public class ModBlocks {
           .define('G', Tags.Items.NUGGETS_GOLD)
           .define('K', Tags.Items.RODS_WOODEN)
           .define('T', Tags.Items.STRING)
-          .unlockedBy("has_gold_nugget", RegistrateRecipeProvider.hasItem(Tags.Items.NUGGETS_GOLD)).save(p, new ResourceLocation(ArcaneArchives.MODID, "makeshift_resonator")))
+          .unlockedBy("has_gold_nugget", RegistrateRecipeProvider.hasItem(Tags.Items.NUGGETS_GOLD)).save(p, new ResourceLocation(ArcaneArchivesAPI.MODID, "makeshift_resonator")))
       .register();
 
   public static final RegistryEntry<RadiantResonatorBlock> RADIANT_RESONATOR = REGISTRATE.block("radiant_resonator", Material.WOOD, RadiantResonatorBlock::new)
@@ -99,7 +99,7 @@ public class ModBlocks {
       .build()
       .recipe((ctx, p) -> {
         CrystalWorkbenchRecipeBuilder.crystalWorkbenchRecipe(ctx.getEntry(), 1)
-            .build(p, new ResourceLocation(ArcaneArchives.MODID, "radiant_resonator"));
+            .build(p, new ResourceLocation(ArcaneArchivesAPI.MODID, "radiant_resonator"));
       })
       .loot((ctx, p) -> {
         ctx.add(p, LootTable.lootTable().withPool(RegistrateBlockLootTables.withExplosionDecay(p, LootPool.lootPool().setRolls(ConstantRange.exactly(1)).add(ItemLootEntry.lootTableItem(p).apply(CopyName.copyName(CopyName.Source.BLOCK_ENTITY)).apply(CopyNbt.copyData(CopyNbt.Source.BLOCK_ENTITY).copy(Identifiers.tileId, "BlockEntityTag." + Identifiers.tileId))))));

@@ -9,7 +9,6 @@ import com.aranaira.arcanearchives.core.init.*;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -21,13 +20,12 @@ import noobanidus.libs.noobutil.registrate.CustomRegistrate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod(ArcaneArchives.MODID)
+@Mod(ArcaneArchivesAPI.MODID)
 public class ArcaneArchives {
   public static final Logger LOG = LogManager.getLogger();
-  public static final String MODID = ArcaneArchivesAPI.MODID;
   public static CustomRegistrate REGISTRATE;
 
-  public static ItemGroup GROUP = new ItemGroup(MODID) {
+  public static ItemGroup GROUP = new ItemGroup(ArcaneArchivesAPI.MODID) {
     @Override
     public ItemStack makeIcon() {
       return new ItemStack(Items.ACACIA_BUTTON);
@@ -36,7 +34,7 @@ public class ArcaneArchives {
 
   public ArcaneArchives() {
     ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigManager.COMMON_CONFIG);
-    ConfigManager.loadConfig(ConfigManager.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve(MODID + "-common.toml"));
+    ConfigManager.loadConfig(ConfigManager.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve(ArcaneArchivesAPI.MODID + "-common.toml"));
 
     IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
     modBus.addListener(ConfigManager::configReloaded);
@@ -50,7 +48,7 @@ public class ArcaneArchives {
       }
     };
 
-    REGISTRATE = CustomRegistrate.create(MODID);
+    REGISTRATE = CustomRegistrate.create(ArcaneArchivesAPI.MODID);
     REGISTRATE.itemGroup(() -> GROUP);
 
     ModBlocks.load();

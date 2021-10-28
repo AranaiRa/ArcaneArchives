@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.core.network;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.api.ArcaneArchivesAPI;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -15,7 +15,7 @@ public class Networking extends PacketHandler {
   public static Networking INSTANCE = new Networking();
 
   public Networking() {
-    super(ArcaneArchives.MODID);
+    super(ArcaneArchivesAPI.MODID);
   }
 
   @Override

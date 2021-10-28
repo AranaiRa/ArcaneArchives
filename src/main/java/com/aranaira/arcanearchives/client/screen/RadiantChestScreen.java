@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.client.screen;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.api.ArcaneArchivesAPI;
 import com.aranaira.arcanearchives.core.inventory.container.RadiantChestContainer;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
 public class RadiantChestScreen extends ContainerScreen<RadiantChestContainer> {
-  private final static ResourceLocation background = new ResourceLocation(ArcaneArchives.MODID, "textures/gui/radiantchest.png");
+  private final static ResourceLocation background = new ResourceLocation(ArcaneArchivesAPI.MODID, "textures/gui/radiantchest.png");
 
   public RadiantChestScreen(RadiantChestContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
     super(screenContainer, inv, titleIn);

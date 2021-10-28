@@ -466,6 +466,9 @@ public abstract class AbstractLargeContainer<V extends IArcaneInventory, T exten
 
   public void syncInventory(ServerPlayerEntity player) {
     for (int i = 0; i < this.slots.size(); i++) {
+      if (skipSlot(i)) {
+        continue;
+      }
       ItemStack stack = (this.slots.get(i)).getItem();
       Networking.sendTo(new ExtendedSlotContentsPacket(this.containerId, i, stack), player);
     }
@@ -473,7 +476,9 @@ public abstract class AbstractLargeContainer<V extends IArcaneInventory, T exten
   }
 
   public void syncSlot(ServerPlayerEntity player, int slot, ItemStack stack) {
-    Networking.sendTo(new ExtendedSlotContentsPacket(this.containerId, slot, stack), player);
+    if (!skipSlot(slot)) {
+      Networking.sendTo(new ExtendedSlotContentsPacket(this.containerId, slot, stack), player);
+    }
   }
 
   @Override

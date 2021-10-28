@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.core.event;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.api.ArcaneArchivesAPI;
 import com.aranaira.arcanearchives.api.crafting.processors.IProcessor;
 import com.aranaira.arcanearchives.core.init.ModRegistries;
 import net.minecraft.util.ResourceLocation;
@@ -11,9 +12,9 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 import net.minecraftforge.registries.RegistryBuilder;
 import net.minecraftforge.registries.RegistryManager;
 
-@Mod.EventBusSubscriber(modid = ArcaneArchives.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = ArcaneArchivesAPI.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class RegistryHandler {
-  public static ResourceLocation PROCESSOR_KEY = new ResourceLocation(ArcaneArchives.MODID, "processor");
+  public static ResourceLocation PROCESSOR_KEY = new ResourceLocation(ArcaneArchivesAPI.MODID, "processor");
 
   @SubscribeEvent
   public static void onNewRegistry(RegistryEvent.NewRegistry event) {

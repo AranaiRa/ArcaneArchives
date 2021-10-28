@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.core.init;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.api.ArcaneArchivesAPI;
 import com.aranaira.arcanearchives.core.recipes.CrystalWorkbenchRecipeBuilder;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.item.Item;
@@ -20,7 +20,7 @@ public class ModItems {
             .addIngredient(RADIANT_QUARTZ.get(), 1)
             .addProcessor(ModProcessors.CRYSTAL_WORKBENCH_UUID_PROCESSOR.get())
             .addProcessor(ModProcessors.CRYSTAL_WORKBENCH_CONTAINER_PROCESSOR.get())
-            .build(p, new ResourceLocation(ArcaneArchives.MODID, "radiant_dust_from_raw_radiant_quartz"));
+            .build(p, new ResourceLocation(ArcaneArchivesAPI.MODID, "radiant_dust_from_raw_radiant_quartz"));
       })
       .register();
 
