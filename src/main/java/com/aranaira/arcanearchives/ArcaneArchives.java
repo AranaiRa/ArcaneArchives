@@ -6,7 +6,6 @@ import com.aranaira.arcanearchives.client.impl.ClientRecipeAccessor;
 import com.aranaira.arcanearchives.core.config.ConfigManager;
 import com.aranaira.arcanearchives.core.impl.ServerRecipeAccessor;
 import com.aranaira.arcanearchives.core.init.*;
-import com.aranaira.arcanearchives.core.setup.CommonSetup;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
