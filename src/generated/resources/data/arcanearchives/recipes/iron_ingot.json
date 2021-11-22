@@ -1,0 +1,16 @@
+{
+  "type": "arcanearchives:crystal_workbench",
+  "ingredients": [
+    {
+      "ingredient": {
+        "tag": "forge:ores/iron"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "item": "minecraft:iron_ingot",
+    "count": 4
+  },
+  "processors": []
+}

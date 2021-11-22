@@ -1,0 +1,15 @@
+{
+  "type": "arcanearchives:crystal_workbench",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "minecraft:iron_block"
+      },
+      "count": 3
+    }
+  ],
+  "result": {
+    "item": "minecraft:anvil"
+  },
+  "processors": []
+}

@@ -68,6 +68,24 @@ public class ModBlocks {
       .recipe((ctx, p) -> {
         CrystalWorkbenchRecipeBuilder.crystalWorkbenchRecipe(ctx.getEntry(), 1)
             .build(p, new ResourceLocation(ArcaneArchivesAPI.MODID, "radiant_chest"));
+        CrystalWorkbenchRecipeBuilder.crystalWorkbenchRecipe(Blocks.MAGMA_BLOCK, 2)
+            .addIngredient(Items.MAGMA_CREAM, 4)
+            .build(p, new ResourceLocation(ArcaneArchivesAPI.MODID, "magma_block"));
+        CrystalWorkbenchRecipeBuilder.crystalWorkbenchRecipe(Blocks.OBSIDIAN, 4)
+            .addIngredient(Items.LAVA_BUCKET)
+            .build(p, new ResourceLocation(ArcaneArchivesAPI.MODID, "obsidian"));
+        CrystalWorkbenchRecipeBuilder.crystalWorkbenchRecipe(Blocks.CRAFTING_TABLE, 4)
+            .addIngredient(Blocks.CRAFTING_TABLE)
+            .build(p, new ResourceLocation(ArcaneArchivesAPI.MODID, "crafting_table"));
+        CrystalWorkbenchRecipeBuilder.crystalWorkbenchRecipe(Blocks.ANVIL, 1)
+            .addIngredient(Blocks.IRON_BLOCK, 3)
+            .build(p, new ResourceLocation(ArcaneArchivesAPI.MODID, "anvil"));
+        CrystalWorkbenchRecipeBuilder.crystalWorkbenchRecipe(Blocks.ZOMBIE_HEAD, 2)
+            .addIngredient(Blocks.SKELETON_SKULL)
+            .build(p, new ResourceLocation(ArcaneArchivesAPI.MODID, "zombie_head"));
+        CrystalWorkbenchRecipeBuilder.crystalWorkbenchRecipe(Items.IRON_INGOT, 4)
+            .addIngredient(Tags.Items.ORES_IRON)
+            .build(p, new ResourceLocation(ArcaneArchivesAPI.MODID, "iron_ingot"));
       })
       .loot((ctx, p) -> {
         ctx.add(p, LootTable.lootTable().withPool(RegistrateBlockLootTables.withExplosionDecay(p, LootPool.lootPool().setRolls(ConstantRange.exactly(1)).add(ItemLootEntry.lootTableItem(p).apply(CopyName.copyName(CopyName.Source.BLOCK_ENTITY)).apply(CopyNbt.copyData(CopyNbt.Source.BLOCK_ENTITY).copy(Identifiers.tileId, "BlockEntityTag." + Identifiers.tileId))))));

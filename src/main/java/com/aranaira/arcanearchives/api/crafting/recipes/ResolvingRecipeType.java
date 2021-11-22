@@ -38,6 +38,10 @@ public class ResolvingRecipeType<C extends IInventory, T extends IRecipe<C>> ext
     return cache;
   }
 
+  public int size () {
+    return getRecipes().size();
+  }
+
   public T getRecipe(int index) {
     if (index < 0 || index >= getRecipes().size()) {
       throw new RuntimeException("Index " + index + " not in valid range for recipe type " + type + " [0," + getRecipes().size() + ")");

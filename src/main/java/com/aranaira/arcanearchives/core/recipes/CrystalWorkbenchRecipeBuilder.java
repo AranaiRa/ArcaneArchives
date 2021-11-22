@@ -10,6 +10,7 @@ import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.tags.ITag;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -37,6 +38,16 @@ public class CrystalWorkbenchRecipeBuilder {
     return new CrystalWorkbenchRecipeBuilder(result, 1);
   }
 
+  public CrystalWorkbenchRecipeBuilder addIngredient (ITag<Item> ingredient) {
+    addIngredient(ingredient, 1);
+    return this;
+  }
+
+  public CrystalWorkbenchRecipeBuilder addIngredient (ITag<Item> ingredient, int count) {
+    addIngredient(Ingredient.of(ingredient), count);
+    return this;
+  }
+
   public CrystalWorkbenchRecipeBuilder addIngredient(Ingredient ingredient) {
     addIngredient(ingredient, 1);
     return this;
@@ -44,6 +55,11 @@ public class CrystalWorkbenchRecipeBuilder {
 
   public CrystalWorkbenchRecipeBuilder addIngredient(Ingredient ingredient, int count) {
     addIngredient(new IngredientStack(ingredient, count));
+    return this;
+  }
+
+  public CrystalWorkbenchRecipeBuilder addIngredient (IItemProvider item) {
+    addIngredient(item, 1);
     return this;
   }
 

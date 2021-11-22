@@ -1,12 +1,14 @@
 package com.aranaira.arcanearchives.core.inventory.container;
 
+import com.aranaira.arcanearchives.core.blocks.entities.CrystalWorkbenchBlockEntity;
 import com.aranaira.arcanearchives.core.init.ModContainers;
+import com.aranaira.arcanearchives.core.init.ResolvingRecipes;
 import com.aranaira.arcanearchives.core.inventory.handlers.CrystalWorkbenchInventory;
 import com.aranaira.arcanearchives.core.inventory.slot.ClientCrystalWorkbenchRecipeSlot;
-import com.aranaira.arcanearchives.core.inventory.slot.CrystalWorkbenchSlot;
 import com.aranaira.arcanearchives.core.inventory.slot.CrystalWorkbenchRecipeSlot;
-import com.aranaira.arcanearchives.core.blocks.entities.CrystalWorkbenchBlockEntity;
+import com.aranaira.arcanearchives.core.inventory.slot.CrystalWorkbenchSlot;
 import com.aranaira.arcanearchives.core.inventory.slot.IRecipeSlot;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
@@ -23,16 +25,20 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
 
   private int attuneProgress = 0;
   private int deattuneProgress = 0;
+  private int selectedSlot = -1;
+  private int slotOffset = 0;
 
   private final IIntArray data = new IIntArray() {
     @Override
     public int get(int pIndex) {
-      if (pIndex < 7) {
-        return RECIPE_SLOTS.get(pIndex).getOffset();
-      } else if (pIndex == 7) {
+      if (pIndex == 0) {
+        return slotOffset;
+      } else if (pIndex == 1) {
         return attuneProgress;
-      } else if (pIndex == 8) {
+      } else if (pIndex == 2) {
         return deattuneProgress;
+      } else if (pIndex == 3) {
+        return selectedSlot;
       }
 
       return -1;
@@ -40,20 +46,37 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
 
     @Override
     public void set(int pIndex, int pValue) {
-      if (pIndex < 7) {
-        CLIENT_RECIPE_SLOTS.get(pIndex).setOffset(pValue);
-      } else if (pIndex == 7) {
+      if (pIndex == 0) {
+        setSlotOffset(pValue);
+      } else if (pIndex == 1) {
         attuneProgress = pValue;
-      } else if (pIndex == 8) {
+      } else if (pIndex == 2) {
         deattuneProgress = pValue;
+      } else if (pIndex == 3) {
+        selectedSlot = pValue;
       }
     }
 
     @Override
     public int getCount() {
-      return 9;
+      return 4;
     }
   };
+
+  private void setSlotOffset(int pValue) {
+    this.slotOffset = pValue;
+    this.selectedSlot = -1;
+    if (!isClientSide()) {
+      for (CrystalWorkbenchRecipeSlot slot : RECIPE_SLOTS) {
+        slot.setOffset(pValue);
+      }
+    } else {
+      for (ClientCrystalWorkbenchRecipeSlot slot : CLIENT_RECIPE_SLOTS) {
+        slot.setOffset(pValue);
+      }
+    }
+  }
+
   private final List<CrystalWorkbenchRecipeSlot> RECIPE_SLOTS = new ArrayList<>();
   private final List<ClientCrystalWorkbenchRecipeSlot> CLIENT_RECIPE_SLOTS = new ArrayList<>();
 
@@ -69,13 +92,13 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
     this.addDataSlots(data);
   }
 
-  protected void construct () {
+  protected void construct() {
     createInventorySlots();
     createPlayerSlots(166, 224, 23);
     createRecipeSlots();
   }
 
-  protected void createRecipeSlots () {
+  protected void createRecipeSlots() {
     int slotIndex = 0;
     for (int col = 0; col < 7; col++) {
       if (isClientSide()) {
@@ -133,5 +156,33 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
   @Override
   protected boolean skipSlot(Slot slot) {
     return slot instanceof IRecipeSlot;
+  }
+
+  @Override
+  // Only ever called on the server
+  public boolean clickMenuButton(PlayerEntity player, int slot) {
+    if (slot == 1 || slot == 2) {
+      int size = ResolvingRecipes.CRYSTAL_WORKBENCH.size();
+      int displayed = IRecipeSlot.getRecipeCount();
+      int count = size / displayed + ((size % displayed == 0) ? 1 : 0);
+      if (slot == 1) {
+        if (slotOffset - 1 < 0) {
+          // wrap around
+          setSlotOffset(count);
+        } else {
+          setSlotOffset(--slotOffset);
+        }
+      } else {
+        if (slotOffset + 1 > count) {
+          setSlotOffset(0);
+        } else {
+          setSlotOffset(++slotOffset);
+        }
+      }
+      setData(0, slotOffset);
+      setData(3, selectedSlot);
+    }
+
+    return false;
   }
 }

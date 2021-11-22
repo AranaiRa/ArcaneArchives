@@ -1,0 +1,16 @@
+{
+  "type": "arcanearchives:crystal_workbench",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "minecraft:crafting_table"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "item": "minecraft:crafting_table",
+    "count": 4
+  },
+  "processors": []
+}

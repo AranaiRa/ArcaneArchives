@@ -1,0 +1,16 @@
+{
+  "type": "arcanearchives:crystal_workbench",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "minecraft:magma_cream"
+      },
+      "count": 4
+    }
+  ],
+  "result": {
+    "item": "minecraft:magma_block",
+    "count": 2
+  },
+  "processors": []
+}

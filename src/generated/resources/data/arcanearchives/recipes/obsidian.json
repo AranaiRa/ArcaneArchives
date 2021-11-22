@@ -1,0 +1,16 @@
+{
+  "type": "arcanearchives:crystal_workbench",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "minecraft:lava_bucket"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "item": "minecraft:obsidian",
+    "count": 4
+  },
+  "processors": []
+}

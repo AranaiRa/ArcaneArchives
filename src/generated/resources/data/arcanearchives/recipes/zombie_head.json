@@ -1,0 +1,16 @@
+{
+  "type": "arcanearchives:crystal_workbench",
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "minecraft:skeleton_skull"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "item": "minecraft:zombie_head",
+    "count": 2
+  },
+  "processors": []
+}

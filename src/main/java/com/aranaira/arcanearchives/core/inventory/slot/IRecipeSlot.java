@@ -16,7 +16,7 @@ public interface IRecipeSlot<T extends IRecipe<?>> {
 
   int getIndex ();
 
-  default int getRecipeCount () {
+  static int getRecipeCount () {
     return 7;
   }
 

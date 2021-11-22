@@ -1,15 +1,22 @@
 package com.aranaira.arcanearchives.client.screen;
 
 import com.aranaira.arcanearchives.api.ArcaneArchivesAPI;
+import com.aranaira.arcanearchives.client.impl.InvisibleButton;
 import com.aranaira.arcanearchives.core.blocks.entities.CrystalWorkbenchBlockEntity;
 import com.aranaira.arcanearchives.core.inventory.container.CrystalWorkbenchContainer;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.client.gui.widget.Widget;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class CrystalWorkbenchScreen extends ContainerScreen<CrystalWorkbenchContainer> {
@@ -21,8 +28,15 @@ public class CrystalWorkbenchScreen extends ContainerScreen<CrystalWorkbenchCont
     imageHeight = 254;
   }
 
+  @SuppressWarnings("ConstantConditions")
+  protected void sendButtonClick (int index) {
+    this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, index);
+  }
+
   @Override
   protected void init() {
+    this.addButton(new InvisibleButton(width / 2 - 80, height / 2 - 59, 15, 21, (val) -> sendButtonClick(1)));
+    this.addButton(new InvisibleButton(width / 2 + 65, height / 2 - 59, 15, 21, (val) -> sendButtonClick(2)));
     super.init();
   }
 
@@ -49,13 +63,20 @@ public class CrystalWorkbenchScreen extends ContainerScreen<CrystalWorkbenchCont
   protected void renderLabels(MatrixStack matrixStack, int x, int y) {
     //super.renderLabels(matrixStack, x, y);
 
+    for(Widget widget : this.buttons) {
+      if (widget.isHovered()) {
+        widget.renderToolTip(matrixStack, x - this.leftPos, y- this.topPos);
+        break;
+      }
+    }
+
     CrystalWorkbenchBlockEntity entity = this.menu.getBlockEntity();
     if (entity == null) {
       return;
     }
-    UUID id = entity.getEntityId();
+/*    UUID id = entity.getEntityId();
     if (id != null) {
-        this.font.draw(matrixStack, id.toString(), 1, 1, 0x000000);
-    }
+      this.font.draw(matrixStack, id.toString(), 1, 1, 0x000000);
+    }*/
   }
 }
