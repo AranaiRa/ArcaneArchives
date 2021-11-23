@@ -10,8 +10,10 @@ import com.aranaira.arcanearchives.core.inventory.slot.CrystalWorkbenchSlot;
 import com.aranaira.arcanearchives.core.inventory.slot.IRecipeSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIntArray;
@@ -159,6 +161,21 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
   }
 
   @Override
+  public ItemStack clicked(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
+    if (slotId >= 0) {
+      Slot slot = getSlot(slotId);
+      if (slot instanceof IRecipeSlot) {
+        IRecipeSlot<?> recipeSlot = (IRecipeSlot<?>) slot;
+        if (slot.hasItem()) {
+          setData(3, recipeSlot.getIndex());
+        }
+      }
+    }
+
+    return super.clicked(slotId, dragType, clickTypeIn, player);
+  }
+
+  @Override
   // Only ever called on the server
   public boolean clickMenuButton(PlayerEntity player, int slot) {
     if (slot == 1 || slot == 2) {
@@ -184,5 +201,9 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
     }
 
     return false;
+  }
+
+  public int getSelectedSlot() {
+    return selectedSlot;
   }
 }

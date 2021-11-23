@@ -4,20 +4,15 @@ import com.aranaira.arcanearchives.api.ArcaneArchivesAPI;
 import com.aranaira.arcanearchives.client.impl.InvisibleButton;
 import com.aranaira.arcanearchives.core.blocks.entities.CrystalWorkbenchBlockEntity;
 import com.aranaira.arcanearchives.core.inventory.container.CrystalWorkbenchContainer;
+import com.aranaira.arcanearchives.core.inventory.slot.IRecipeSlot;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.Widget;
-import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 public class CrystalWorkbenchScreen extends ContainerScreen<CrystalWorkbenchContainer> {
   private final static ResourceLocation background = new ResourceLocation(ArcaneArchivesAPI.MODID, "textures/gui/crystal_workbench.png");
@@ -57,6 +52,22 @@ public class CrystalWorkbenchScreen extends ContainerScreen<CrystalWorkbenchCont
     super.render(matrixStack, mouseX, mouseY, partialTicks);
     RenderSystem.disableBlend();
     this.renderTooltip(matrixStack, mouseX, mouseY);
+  }
+
+  @Override
+  public void renderSlot(MatrixStack stack, Slot slot) {
+    super.renderSlot(stack, slot);
+
+    if (menu.getSelectedSlot() != -1) {
+      if (slot instanceof IRecipeSlot) {
+        IRecipeSlot<?> recipeSlot = (IRecipeSlot<?>) slot;
+
+        if (recipeSlot.getIndex() == menu.getSelectedSlot()) {
+          this.minecraft.getTextureManager().bind(background);
+          blit(stack, slot.x - 2, slot.y - 2, 206, 0, 20, 20);
+        }
+      }
+    }
   }
 
   @Override
