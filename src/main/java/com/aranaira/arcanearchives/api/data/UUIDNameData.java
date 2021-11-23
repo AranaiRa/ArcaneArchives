@@ -13,6 +13,7 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.INBTSerializable;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class UUIDNameData extends WorldSavedData {
   public static final Random random = new Random();
@@ -67,6 +68,9 @@ public class UUIDNameData extends WorldSavedData {
   protected Name generate(UUID id) {
     int tries = 10000;
     byte[] potential = generate();
+    if (USED_NAMES == null) {
+      USED_NAMES = new HashSet<>(NAME_MAP.values().stream().map(Name::getVal).collect(Collectors.toSet()));
+    }
     while (USED_NAMES.contains(potential)) {
       potential = generate();
       if (--tries <= 0) {
