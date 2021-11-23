@@ -5,7 +5,13 @@ public interface Identifiers {
   String inventory = "Inv";
   String inventoryName = "InvName";
   String tileId = "TileId";
+  String tileName = "TileName";
   String networkId = "NetId";
+  String networkName = "NetworkName";
+
+  interface Data {
+    String uniqueNames = "UniqueNames";
+  }
 
   interface CrystalWorkbench {
     String inputInventory = "InvIn";

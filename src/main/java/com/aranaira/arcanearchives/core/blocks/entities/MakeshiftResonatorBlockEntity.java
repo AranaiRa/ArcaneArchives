@@ -32,12 +32,6 @@ public class MakeshiftResonatorBlockEntity extends TileEntity implements IArcane
     super(tileEntityTypeIn);
   }
 
-  @Nullable
-  @Override
-  public UUID getEntityId() {
-    return null;
-  }
-
   public void setFilled() {
     this.filled = true;
   }
@@ -121,5 +115,10 @@ public class MakeshiftResonatorBlockEntity extends TileEntity implements IArcane
     compound.putInt("countdown", countdown);
     compound.putBoolean("filled", filled);
     return super.save(compound);
+  }
+
+  @Override
+  public TileEntity getTile() {
+    return this;
   }
 }

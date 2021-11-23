@@ -6,7 +6,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 
-public class RadiantResonatorBlockEntity extends ArcaneArchivesIdentifiedBlockEntity implements ITickableTileEntity {
+public class RadiantResonatorBlockEntity extends NetworkIdentifiedBlockEntity implements ITickableTileEntity {
   // TODO: Config
   public static final int TIMER = 90;
   protected int progress = 0;
