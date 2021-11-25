@@ -76,12 +76,11 @@ public abstract class SingleAccessorBlock extends Block {
         worldIn.destroyBlock(calculateOrigin(pos, state), true);
         player.awardStat(Stats.BLOCK_MINED.get(this));
         player.causeFoodExhaustion(0.005F);
-        return;
       } else {
         worldIn.destroyBlock(calculateAccessor(pos, state), false);
       }
+      return;
     }
-    super.playerDestroy(worldIn, player, pos, state, te, stack);
   }
 
   @Override
@@ -114,7 +113,7 @@ public abstract class SingleAccessorBlock extends Block {
 
   @Override
   public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-    if (state.getBlock() == this) {
+    if (newState.getBlock() == this) {
       return;
     }
     if (state.getValue(ACCESSOR)) {

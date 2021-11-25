@@ -34,13 +34,21 @@ public abstract class IdentifiedBlockEntity extends TileEntity implements IIdent
     return super.save(compound);
   }
 
+  public UUID getUuid() {
+    return uuid;
+  }
+
+  public void setUuid(UUID uuid) {
+    this.uuid = uuid;
+  }
+
   @Override
   public void load(BlockState state, CompoundNBT compound) {
     if (compound.hasUUID(Identifiers.tileId)) {
-      this.uuid = compound.getUUID(Identifiers.tileId);
+      setUuid(compound.getUUID(Identifiers.tileId));
     } else {
       // TODO: Should we be generating a unique ID here?
-      this.uuid = UNKNOWN;
+      setUuid(UNKNOWN);
     }
 
     super.load(state, compound);
@@ -49,7 +57,7 @@ public abstract class IdentifiedBlockEntity extends TileEntity implements IIdent
   @Override
   public UUID getEntityId() {
     if (this.uuid == null || this.uuid == UNKNOWN) {
-      this.uuid = UUID.randomUUID();
+      setUuid(UUID.randomUUID());
     }
     return uuid;
   }
@@ -79,7 +87,7 @@ public abstract class IdentifiedBlockEntity extends TileEntity implements IIdent
     if (pkt.getType() == 9) {
       CompoundNBT tag = pkt.getTag();
       if (tag.hasUUID(Identifiers.tileId)) {
-        this.uuid = pkt.getTag().getUUID(Identifiers.tileId);
+        setUuid(pkt.getTag().getUUID(Identifiers.tileId));
       }
       if (tag.contains(Identifiers.tileName)) {
         this.tileName = UUIDNameData.Name.fromNBT(tag.getCompound(Identifiers.tileName));
