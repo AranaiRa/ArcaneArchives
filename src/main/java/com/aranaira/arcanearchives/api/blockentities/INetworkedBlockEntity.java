@@ -11,4 +11,8 @@ public interface INetworkedBlockEntity extends IIdentifiedBlockEntity {
 
   @Nullable
   UUIDNameData.Name getNetworkName ();
+
+  default boolean isNetworkUnknown() {
+    return getNetworkId() == null || getNetworkId() == UNKNOWN;
+  }
 }
