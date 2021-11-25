@@ -97,4 +97,9 @@ public abstract class NetworkIdentifiedBlockEntity extends IdentifiedBlockEntity
 
     return networkName;
   }
+
+  @Override
+  public boolean isNetworkUnknown() {
+    return uuid == null || uuid == UNKNOWN;
+  }
 }

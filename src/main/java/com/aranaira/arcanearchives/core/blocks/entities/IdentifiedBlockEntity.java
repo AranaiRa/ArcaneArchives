@@ -109,4 +109,9 @@ public abstract class IdentifiedBlockEntity extends TileEntity implements IIdent
 
     return tileName;
   }
+
+  @Override
+  public boolean isBlockUnknown() {
+    return uuid == null || uuid == UNKNOWN;
+  }
 }

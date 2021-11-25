@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.core.inventory.container;
 
+import com.aranaira.arcanearchives.api.data.DataStorage;
 import com.aranaira.arcanearchives.core.blocks.entities.CrystalWorkbenchBlockEntity;
 import com.aranaira.arcanearchives.core.init.ModContainers;
 import com.aranaira.arcanearchives.core.init.ResolvingRecipes;
@@ -84,20 +85,24 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
 
   public CrystalWorkbenchContainer(ContainerType<? extends CrystalWorkbenchContainer> type, int id, PlayerInventory inventory, PacketBuffer buffer) {
     super(type, id, 2, inventory, buffer.readBlockPos());
-    construct();
     this.addDataSlots(data);
+    construct();
   }
 
   public CrystalWorkbenchContainer(int id, PlayerInventory playerInventory, CrystalWorkbenchBlockEntity tile) {
     super(ModContainers.CRYSTAL_WORKBENCH.get(), id, 2, playerInventory, tile);
-    construct();
     this.addDataSlots(data);
+    construct();
   }
 
   protected void construct() {
     createInventorySlots();
     createPlayerSlots(166, 224, 23);
     createRecipeSlots();
+    if (!isClientSide() && getBlockEntity() != null) {
+      setData(3, DataStorage.getSelectedSlot(getPlayer().getUUID(), getBlockEntity().getEntityId()));
+      setData
+    }
   }
 
   protected void createRecipeSlots() {
@@ -205,5 +210,14 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
 
   public int getSelectedSlot() {
     return selectedSlot;
+  }
+
+  @Override
+  public void removed(PlayerEntity player) {
+    if (!isClientSide() && getBlockEntity() != null) {
+      DataStorage.setSelectedSlot(player.getUUID(), getBlockEntity().getEntityId(), selectedSlot);
+      DataStorage.setOffset(player.getUUID(), getBlockEntity().getEntityId(), slotOffset);
+    }
+    super.removed(player);
   }
 }

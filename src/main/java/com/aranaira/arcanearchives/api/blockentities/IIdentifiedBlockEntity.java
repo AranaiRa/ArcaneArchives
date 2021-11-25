@@ -13,8 +13,6 @@ public interface IIdentifiedBlockEntity extends IArcaneArchivesBlockEntity {
 
   UUIDNameData.Name getEntityName();
 
-  default boolean isBlockUnknown () {
-    UUID id = getEntityId();
-    return id == null || id == UNKNOWN;
-  }
+  boolean isBlockUnknown ();
+
 }

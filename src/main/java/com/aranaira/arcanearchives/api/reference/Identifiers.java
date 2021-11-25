@@ -11,6 +11,10 @@ public interface Identifiers {
 
   interface Data {
     String uniqueNames = "UniqueNames";
+    String slotDataList = "SlotData";
+    String slotUUID = "SlotUUID";
+    String slotValue = "SlotValue";
+    String slotPlayerId = "SlotPlayerUUID";
   }
 
   interface CrystalWorkbench {
