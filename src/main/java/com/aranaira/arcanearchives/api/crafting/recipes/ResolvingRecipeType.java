@@ -4,6 +4,8 @@ import com.aranaira.arcanearchives.api.ArcaneArchivesAPI;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
+import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.client.resources.JsonReloadListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.crafting.IRecipe;
@@ -22,6 +24,7 @@ public class ResolvingRecipeType<C extends IInventory, T extends IRecipe<C>> ext
   private final Supplier<IRecipeType<T>> type;
   private List<T> cache = null;
   private final Comparator<? super T> comparator;
+  private final Object2IntOpenHashMap<ResourceLocation> reverseLookup = new Object2IntOpenHashMap<>();
 
   public ResolvingRecipeType(Supplier<IRecipeType<T>> type, Comparator<? super T> comparator) {
     super(GSON, "recipes");
@@ -33,6 +36,10 @@ public class ResolvingRecipeType<C extends IInventory, T extends IRecipe<C>> ext
     if (cache == null) {
       cache = ArcaneArchivesAPI.getInstance().getRecipeManager().getAllRecipesFor(type.get());
       cache.sort(comparator);
+      reverseLookup.clear();
+      for (int i = 0; i < cache.size(); i++) {
+        reverseLookup.put(cache.get(i).getId(), i);
+      }
     }
 
     return cache;
@@ -57,5 +64,10 @@ public class ResolvingRecipeType<C extends IInventory, T extends IRecipe<C>> ext
   @Override
   protected void apply(Map<ResourceLocation, JsonElement> pObject, IResourceManager pResourceManager, IProfiler pProfiler) {
     this.cache = null;
+  }
+
+  public int lookup (ResourceLocation recipeId) {
+    getRecipes();
+    return reverseLookup.getOrDefault(recipeId, -1);
   }
 }

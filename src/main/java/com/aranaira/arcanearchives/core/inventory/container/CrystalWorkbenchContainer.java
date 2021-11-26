@@ -9,6 +9,7 @@ import com.aranaira.arcanearchives.core.inventory.slot.ClientCrystalWorkbenchRec
 import com.aranaira.arcanearchives.core.inventory.slot.CrystalWorkbenchRecipeSlot;
 import com.aranaira.arcanearchives.core.inventory.slot.CrystalWorkbenchSlot;
 import com.aranaira.arcanearchives.core.inventory.slot.IRecipeSlot;
+import com.aranaira.arcanearchives.core.recipes.CrystalWorkbenchRecipe;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ClickType;
@@ -18,6 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIntArray;
+import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -100,8 +102,16 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
     createPlayerSlots(166, 224, 23);
     createRecipeSlots();
     if (!isClientSide() && getBlockEntity() != null) {
-      setData(3, DataStorage.getSelectedSlot(getPlayer().getUUID(), getBlockEntity().getEntityId()));
-      setData
+      ResourceLocation recipe = DataStorage.getSelectedRecipe(getPlayer().getUUID(), getBlockEntity().getEntityId());
+      if (recipe != null) {
+        int index = ResolvingRecipes.CRYSTAL_WORKBENCH.lookup(recipe);
+        if (index != -1) {
+          int mod = index % IRecipeSlot.getRecipeCount();
+          int page = (index / IRecipeSlot.getRecipeCount());
+          setData(0, page);
+          setData(3, mod);
+        }
+      }
     }
   }
 
@@ -212,11 +222,26 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
     return selectedSlot;
   }
 
+  @Nullable
+  public IRecipeSlot<?> getSelectedRecipeSlot () {
+    if (selectedSlot < 0) {
+      return null;
+    }
+
+    if (isClientSide()) {
+      return CLIENT_RECIPE_SLOTS.get(selectedSlot);
+    } else {
+      return RECIPE_SLOTS.get(selectedSlot);
+    }
+  }
+
   @Override
   public void removed(PlayerEntity player) {
     if (!isClientSide() && getBlockEntity() != null) {
-      DataStorage.setSelectedSlot(player.getUUID(), getBlockEntity().getEntityId(), selectedSlot);
-      DataStorage.setOffset(player.getUUID(), getBlockEntity().getEntityId(), slotOffset);
+      IRecipeSlot<?> slot = getSelectedRecipeSlot();
+      if (slot != null) {
+        DataStorage.setSelectedRecipe(player.getUUID(), getBlockEntity().getEntityId(), slot.getRegistryName());
+      }
     }
     super.removed(player);
   }

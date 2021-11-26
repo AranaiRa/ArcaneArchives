@@ -5,6 +5,7 @@ import com.aranaira.arcanearchives.core.recipes.CrystalWorkbenchRecipe;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
 

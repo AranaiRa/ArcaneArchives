@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.api.data;
 
 import com.aranaira.arcanearchives.api.inventory.IArcaneInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.DimensionSavedDataManager;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
@@ -28,33 +28,18 @@ public class DataStorage {
     return data.getOrGenerate(tileId);
   }
 
-  public static final String SLOT_DATA = "ArcaneArchives-SlotData";
-  public static final String OFFSET_DATA = "ArcaneArchives-OffsetData";
+  public static final String RECIPE_SELECTION = "ArcaneArchives-RecipeSelection";
 
-  public static int getSelectedSlot (UUID player, UUID tileId) {
+  public static ResourceLocation getSelectedRecipe (UUID player, UUID tileId) {
     DimensionSavedDataManager manager = ServerLifecycleHooks.getCurrentServer().getLevel(World.OVERWORLD).getDataStorage();
-    UUIDIntegerData data = manager.computeIfAbsent(() -> new UUIDIntegerData(SLOT_DATA), SLOT_DATA);
+    UUIDPlayerRLData data = manager.computeIfAbsent(() -> new UUIDPlayerRLData(RECIPE_SELECTION), RECIPE_SELECTION);
     return data.get(player, tileId);
   }
 
-  public static void setSelectedSlot (UUID player, UUID tileId, int slot) {
+  public static void setSelectedRecipe (UUID player, UUID tileId, ResourceLocation rl) {
     DimensionSavedDataManager manager = ServerLifecycleHooks.getCurrentServer().getLevel(World.OVERWORLD).getDataStorage();
-    UUIDIntegerData data = manager.computeIfAbsent(() -> new UUIDIntegerData(SLOT_DATA), SLOT_DATA);
-    data.set(player, tileId, slot);
-    data.setDirty();
-    manager.save();
-  }
-
-  public static int getOffset (UUID player, UUID tileId) {
-    DimensionSavedDataManager manager = ServerLifecycleHooks.getCurrentServer().getLevel(World.OVERWORLD).getDataStorage();
-    UUIDIntegerData data = manager.computeIfAbsent(() -> new UUIDIntegerData(OFFSET_DATA), OFFSET_DATA);
-    return data.get(player, tileId);
-  }
-
-  public static void setOffset (UUID player, UUID tileId, int slot) {
-    DimensionSavedDataManager manager = ServerLifecycleHooks.getCurrentServer().getLevel(World.OVERWORLD).getDataStorage();
-    UUIDIntegerData data = manager.computeIfAbsent(() -> new UUIDIntegerData(OFFSET_DATA), OFFSET_DATA);
-    data.set(player, tileId, slot);
+    UUIDPlayerRLData data = manager.computeIfAbsent(() -> new UUIDPlayerRLData(RECIPE_SELECTION), RECIPE_SELECTION);
+    data.set(player, tileId, rl);
     data.setDirty();
     manager.save();
   }
