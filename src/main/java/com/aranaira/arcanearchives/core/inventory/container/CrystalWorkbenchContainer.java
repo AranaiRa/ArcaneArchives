@@ -59,6 +59,7 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
         deattuneProgress = pValue;
       } else if (pIndex == 3) {
         selectedSlot = pValue;
+        refreshRecipeSlot();
       }
     }
 
@@ -67,6 +68,14 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
       return 4;
     }
   };
+
+  private void refreshRecipeSlot () {
+    // TODO:
+    // 1. Create the actual recipe output slot.
+    // 2. Refresh its contents whenever the slot is changed.
+    // 3. Handle on-take recipe matching.
+    // 4. Additionally, dim slots that you don't have the ingredients to craft.
+  }
 
   private void setSlotOffset(int pValue) {
     this.slotOffset = pValue;
