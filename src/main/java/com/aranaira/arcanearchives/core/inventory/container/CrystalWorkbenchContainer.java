@@ -1,15 +1,15 @@
 package com.aranaira.arcanearchives.core.inventory.container;
 
 import com.aranaira.arcanearchives.api.data.DataStorage;
+import com.aranaira.arcanearchives.api.reference.Constants;
 import com.aranaira.arcanearchives.core.blocks.entities.CrystalWorkbenchBlockEntity;
 import com.aranaira.arcanearchives.core.init.ModContainers;
 import com.aranaira.arcanearchives.core.init.ResolvingRecipes;
 import com.aranaira.arcanearchives.core.inventory.handlers.CrystalWorkbenchInventory;
-import com.aranaira.arcanearchives.core.inventory.slot.ClientCrystalWorkbenchRecipeSlot;
+import com.aranaira.arcanearchives.core.inventory.slot.ClientCrystalWorkbenchRecipeRecipeSlot;
 import com.aranaira.arcanearchives.core.inventory.slot.CrystalWorkbenchRecipeSlot;
 import com.aranaira.arcanearchives.core.inventory.slot.CrystalWorkbenchSlot;
-import com.aranaira.arcanearchives.core.inventory.slot.IRecipeSlot;
-import com.aranaira.arcanearchives.core.recipes.CrystalWorkbenchRecipe;
+import com.aranaira.arcanearchives.api.inventory.slot.IRecipeSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ClickType;
@@ -85,14 +85,14 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
         slot.setOffset(pValue);
       }
     } else {
-      for (ClientCrystalWorkbenchRecipeSlot slot : CLIENT_RECIPE_SLOTS) {
+      for (ClientCrystalWorkbenchRecipeRecipeSlot slot : CLIENT_RECIPE_SLOTS) {
         slot.setOffset(pValue);
       }
     }
   }
 
   private final List<CrystalWorkbenchRecipeSlot> RECIPE_SLOTS = new ArrayList<>();
-  private final List<ClientCrystalWorkbenchRecipeSlot> CLIENT_RECIPE_SLOTS = new ArrayList<>();
+  private final List<ClientCrystalWorkbenchRecipeRecipeSlot> CLIENT_RECIPE_SLOTS = new ArrayList<>();
 
   public CrystalWorkbenchContainer(ContainerType<? extends CrystalWorkbenchContainer> type, int id, PlayerInventory inventory, PacketBuffer buffer) {
     super(type, id, 2, inventory, buffer.readBlockPos());
@@ -115,8 +115,8 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
       if (recipe != null) {
         int index = ResolvingRecipes.CRYSTAL_WORKBENCH.lookup(recipe);
         if (index != -1) {
-          int mod = index % IRecipeSlot.getRecipeCount();
-          int page = (index / IRecipeSlot.getRecipeCount());
+          int mod = index % Constants.CrystalWorkbench.RecipeSlots;
+          int page = (index / Constants.CrystalWorkbench.RecipeSlots);
           setData(0, page);
           setData(3, mod);
         }
@@ -128,7 +128,7 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
     int slotIndex = 0;
     for (int col = 0; col < 7; col++) {
       if (isClientSide()) {
-        ClientCrystalWorkbenchRecipeSlot slot = new ClientCrystalWorkbenchRecipeSlot(slotIndex, col * 18 + 41, 70);
+        ClientCrystalWorkbenchRecipeRecipeSlot slot = new ClientCrystalWorkbenchRecipeRecipeSlot(slotIndex, col * 18 + 41, 70);
         CLIENT_RECIPE_SLOTS.add(slot);
         this.addSlot(slot);
       } else {
@@ -204,7 +204,7 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
   public boolean clickMenuButton(PlayerEntity player, int slot) {
     if (slot == 1 || slot == 2) {
       int size = ResolvingRecipes.CRYSTAL_WORKBENCH.size();
-      int displayed = IRecipeSlot.getRecipeCount();
+      int displayed = Constants.CrystalWorkbench.RecipeSlots;
       int count = size / displayed + ((size % displayed == 0) ? 1 : 0);
       if (slot == 1) {
         if (slotOffset - 1 < 0) {

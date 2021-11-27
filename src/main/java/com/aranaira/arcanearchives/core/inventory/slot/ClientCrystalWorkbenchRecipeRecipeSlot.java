@@ -1,5 +1,7 @@
 package com.aranaira.arcanearchives.core.inventory.slot;
 
+import com.aranaira.arcanearchives.api.inventory.slot.ICrystalWorkbenchRecipeSlot;
+import com.aranaira.arcanearchives.api.inventory.slot.IRecipeSlot;
 import com.aranaira.arcanearchives.core.init.ResolvingRecipes;
 import com.aranaira.arcanearchives.core.recipes.CrystalWorkbenchRecipe;
 import net.minecraft.entity.player.PlayerEntity;
@@ -8,11 +10,11 @@ import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nullable;
 
-public class ClientCrystalWorkbenchRecipeSlot extends Slot implements IRecipeSlot<CrystalWorkbenchRecipe> {
+public class ClientCrystalWorkbenchRecipeRecipeSlot extends Slot implements ICrystalWorkbenchRecipeSlot<CrystalWorkbenchRecipe> {
   private int offset;
   private final int index;
 
-  public ClientCrystalWorkbenchRecipeSlot(int index, int xPosition, int yPosition) {
+  public ClientCrystalWorkbenchRecipeRecipeSlot(int index, int xPosition, int yPosition) {
     super(IRecipeSlot.emptyInventory, index, xPosition, yPosition);
     this.index = index;
   }

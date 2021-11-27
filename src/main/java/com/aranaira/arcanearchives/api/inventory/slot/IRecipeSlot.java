@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.core.inventory.slot;
+package com.aranaira.arcanearchives.api.inventory.slot;
 
 import com.aranaira.arcanearchives.core.recipes.CrystalWorkbenchRecipe;
 import net.minecraft.inventory.IInventory;
@@ -25,14 +25,6 @@ public interface IRecipeSlot<T extends IRecipe<?>> {
     }
 
     return recipe.getId();
-  }
-
-  static int getRecipeCount () {
-    return 7;
-  }
-
-  default int getRecipeIndex () {
-    return getRecipeCount() * getOffset() + getIndex();
   }
 
   @Nullable
