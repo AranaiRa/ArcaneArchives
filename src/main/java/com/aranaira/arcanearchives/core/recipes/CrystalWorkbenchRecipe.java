@@ -11,10 +11,12 @@ import com.aranaira.arcanearchives.core.inventory.container.CrystalWorkbenchCont
 import com.aranaira.arcanearchives.core.inventory.handlers.CrystalWorkbenchInventory;
 import com.aranaira.arcanearchives.core.recipes.inventory.CrystalWorkbenchCrafting;
 import com.aranaira.arcanearchives.core.blocks.entities.CrystalWorkbenchBlockEntity;
+import com.aranaira.arcanearchives.core.util.ArcaneRecipeUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -65,17 +67,19 @@ public class CrystalWorkbenchRecipe implements ICrystalWorkbenchRecipe<CrystalWo
 
   @Override
   public boolean matches(CrystalWorkbenchCrafting inv, @Nullable World worldIn) {
-    List<IngredientInfo> info = getIngredientInfo(inv);
-
-    if (info.isEmpty()) {
-      return false;
-    }
+    List<IngredientInfo> info = ArcaneRecipeUtil.getCollatedIngredientInfo(this, inv);
 
     for (IngredientInfo part : info) {
-      System.out.println("hm");
+      if (part.getType() == IngredientInfo.SlotType.NOT_FOUND) {
+        return false;
+      }
+
+      if (part.getFound() < part.getRequired()) {
+        return false;
+      }
     }
 
-    return false;
+    return true;
   }
 
   @Override
