@@ -86,7 +86,6 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
     // 1. Create the actual recipe output slot.
     // 2. Refresh its contents whenever the slot is changed.
     // 3. Handle on-take recipe matching.
-    // 4. Additionally, dim slots that you don't have the ingredients to craft.
     if (refreshDim) {
       List<? extends IRecipeSlot<CrystalWorkbenchRecipe>> recipes = isClientSide() ? CLIENT_RECIPE_SLOTS : RECIPE_SLOTS;
       for (IRecipeSlot<CrystalWorkbenchRecipe> slot : recipes) {
@@ -99,7 +98,7 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
           continue;
         }
 
-        slot.setDimmed(recipe.matches(getWorkbench(), getPlayerWorld()));
+        slot.setDimmed(!recipe.matches(getWorkbench(), getPlayerWorld()));
       }
 
       refreshDim = false;
@@ -234,6 +233,7 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
         IRecipeSlot<?> recipeSlot = (IRecipeSlot<?>) slot;
         if (slot.hasItem()) {
           setData(DataArray.SlotSelected, recipeSlot.getIndex());
+          this.refreshDim = true;
         }
       }
     }
@@ -245,6 +245,7 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
   // Only ever called on the server
   public boolean clickMenuButton(PlayerEntity player, int slot) {
     if (slot == 1 || slot == 2) {
+      this.refreshDim = true;
       int size = ResolvingRecipes.CRYSTAL_WORKBENCH.size();
       int displayed = Constants.CrystalWorkbench.RecipeSlots;
       int count = size / displayed + ((size % displayed == 0) ? 1 : 0);
@@ -300,11 +301,13 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
   protected class RefreshContainerListener implements IContainerListener {
     @Override
     public void refreshContainer(Container pContainerToSend, NonNullList<ItemStack> pItemsList) {
+      CrystalWorkbenchContainer.this.refreshDim = true;
       CrystalWorkbenchContainer.this.refreshRecipeSlot();
     }
 
     @Override
     public void slotChanged(Container pContainerToSend, int pSlotInd, ItemStack pStack) {
+      CrystalWorkbenchContainer.this.refreshDim = true;
       CrystalWorkbenchContainer.this.refreshRecipeSlot();
     }
 
