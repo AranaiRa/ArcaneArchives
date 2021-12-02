@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.core.network;
+package com.aranaira.arcanearchives.core.network.packets;
 
 import com.aranaira.arcanearchives.core.inventory.container.AbstractLargeContainer;
 import com.aranaira.arcanearchives.core.inventory.container.RadiantChestContainer;

@@ -65,6 +65,16 @@ public class CrystalWorkbenchRecipe implements ICrystalWorkbenchRecipe<CrystalWo
 
   @Override
   public boolean matches(CrystalWorkbenchCrafting inv, World worldIn) {
+    List<IngredientInfo> info = getIngredientInfo(inv);
+
+    if (info.isEmpty()) {
+      return false;
+    }
+
+    for (IngredientInfo part : info) {
+      System.out.println("hm");
+    }
+
     return false;
   }
 

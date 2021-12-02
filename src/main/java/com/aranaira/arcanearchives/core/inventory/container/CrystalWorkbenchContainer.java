@@ -14,13 +14,12 @@ import com.aranaira.arcanearchives.core.recipes.CrystalWorkbenchRecipe;
 import com.aranaira.arcanearchives.core.recipes.inventory.CrystalWorkbenchCrafting;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.ClickType;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.Slot;
+import net.minecraft.inventory.container.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIntArray;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
@@ -37,7 +36,6 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
   private int deattuneProgress = 0;
   private int selectedSlot = -1;
   private int slotOffset = 0;
-  private final boolean[] dimSlots = new boolean[]{false, false, false, false, false, false, false};
 
   private final IIntArray data = new IIntArray() {
     @Override
@@ -51,10 +49,6 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
           return attuneProgress;
         case DataArray.DeattuneProgress:
           return deattuneProgress;
-      }
-
-      if (pIndex >= DataArray.DimSlotStart && pIndex <= DataArray.DimSlotStop) {
-        return dimSlots[pIndex - DataArray.DimSlotStart] ? 1 : 0;
       }
 
       return -1;
@@ -77,10 +71,6 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
           deattuneProgress = pValue;
           break;
       }
-
-      if (pIndex >= DataArray.DimSlotStart && pIndex <= DataArray.DimSlotStop) {
-        dimSlots[pIndex - DataArray.DimSlotStart] = pValue == 1;
-      }
     }
 
     @Override
@@ -95,6 +85,7 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
     // 2. Refresh its contents whenever the slot is changed.
     // 3. Handle on-take recipe matching.
     // 4. Additionally, dim slots that you don't have the ingredients to craft.
+
     if (!isClientSide()) {
       for (int i = 0; i < RECIPE_SLOTS.size(); i++) {
         CrystalWorkbenchRecipeSlot slot = RECIPE_SLOTS.get(i);
@@ -109,11 +100,7 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
 
         int slotId = DataArray.DimSlotStart + i - 1;
 
-        if (recipe.matches(getWorkbench(), getPlayer().level)) {
-          setData(slotId, 0);
-        } else {
-          setData(slotId, 1);
-        }
+        setData(slotId, recipe.matches(getWorkbench(), getPlayer().level) ? 0 : 1);
       }
     }
   }
@@ -129,14 +116,6 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
       for (ClientCrystalWorkbenchRecipeRecipeSlot slot : CLIENT_RECIPE_SLOTS) {
         slot.setOffset(pValue);
       }
-    }
-  }
-
-  public boolean isSlotDimmed (int slot) {
-    if (slot >= 0 && slot < DataArray.Count) {
-      return dimSlots[slot];
-    } else {
-      return false;
     }
   }
 
@@ -174,12 +153,12 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
         if (index != -1) {
           int mod = index % Constants.CrystalWorkbench.RecipeSlots;
           int page = (index / Constants.CrystalWorkbench.RecipeSlots);
-          setData(0, page);
-          setData(3, mod);
+          setData(DataArray.SlotOffset, page);
+          setData(DataArray.SlotSelected, mod);
         }
       }
+      addSlotListener(new RefreshContainerListener());
     }
-    refreshRecipeSlot();
   }
 
   protected void createRecipeSlots() {
@@ -248,12 +227,12 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
 
   @Override
   public ItemStack clicked(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
-    if (slotId >= 0) {
+    if (!isClientSide() && slotId >= 0) {
       Slot slot = getSlot(slotId);
       if (slot instanceof IRecipeSlot) {
         IRecipeSlot<?> recipeSlot = (IRecipeSlot<?>) slot;
         if (slot.hasItem()) {
-          setData(3, recipeSlot.getIndex());
+          setData(DataArray.SlotSelected, recipeSlot.getIndex());
         }
       }
     }
@@ -282,8 +261,8 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
           setSlotOffset(++slotOffset);
         }
       }
-      setData(0, slotOffset);
-      setData(3, selectedSlot);
+      setData(DataArray.SlotOffset, slotOffset);
+      setData(DataArray.SlotSelected, selectedSlot);
     }
 
     return false;
@@ -315,5 +294,21 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
       }
     }
     super.removed(player);
+  }
+
+  protected class RefreshContainerListener implements IContainerListener {
+    @Override
+    public void refreshContainer(Container pContainerToSend, NonNullList<ItemStack> pItemsList) {
+      CrystalWorkbenchContainer.this.refreshRecipeSlot();
+    }
+
+    @Override
+    public void slotChanged(Container pContainerToSend, int pSlotInd, ItemStack pStack) {
+      CrystalWorkbenchContainer.this.refreshRecipeSlot();
+    }
+
+    @Override
+    public void setContainerData(Container pContainer, int pVarToUpdate, int pNewValue) {
+    }
   }
 }

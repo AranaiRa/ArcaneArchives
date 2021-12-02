@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.core.network;
+package com.aranaira.arcanearchives.core.network.packets;
 
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.vector.Vector3d;

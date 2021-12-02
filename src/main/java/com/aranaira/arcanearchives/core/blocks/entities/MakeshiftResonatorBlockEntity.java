@@ -4,7 +4,7 @@ import com.aranaira.arcanearchives.api.blockentities.IArcaneArchivesBlockEntity;
 import com.aranaira.arcanearchives.core.blocks.MakeshiftResonatorBlock;
 import com.aranaira.arcanearchives.core.init.ModBlocks;
 import com.aranaira.arcanearchives.core.init.ModItems;
-import com.aranaira.arcanearchives.core.network.LightningRenderPacket;
+import com.aranaira.arcanearchives.core.network.packets.LightningRenderPacket;
 import com.aranaira.arcanearchives.core.network.Networking;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -21,7 +21,6 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 
-import javax.annotation.Nullable;
 import java.util.*;
 
 public class MakeshiftResonatorBlockEntity extends TileEntity implements IArcaneArchivesBlockEntity, ITickableTileEntity {

@@ -6,7 +6,7 @@ import com.aranaira.arcanearchives.api.inventory.IArcaneInventory;
 import com.aranaira.arcanearchives.api.inventory.slot.CappedSlot;
 import com.aranaira.arcanearchives.api.blockentities.IInventoryBlockEntity;
 import com.aranaira.arcanearchives.core.inventory.slot.RadiantChestSlot;
-import com.aranaira.arcanearchives.core.network.ExtendedSlotContentsPacket;
+import com.aranaira.arcanearchives.core.network.packets.ExtendedSlotContentsPacket;
 import com.aranaira.arcanearchives.core.network.Networking;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;

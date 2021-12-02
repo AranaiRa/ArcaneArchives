@@ -1,11 +1,13 @@
 package com.aranaira.arcanearchives.client.screen;
 
 import com.aranaira.arcanearchives.api.ArcaneArchivesAPI;
+import com.aranaira.arcanearchives.api.inventory.slot.IRecipeSlot;
 import com.aranaira.arcanearchives.api.reference.Constants;
 import com.aranaira.arcanearchives.client.impl.InvisibleButton;
 import com.aranaira.arcanearchives.core.blocks.entities.CrystalWorkbenchBlockEntity;
 import com.aranaira.arcanearchives.core.inventory.container.CrystalWorkbenchContainer;
-import com.aranaira.arcanearchives.api.inventory.slot.IRecipeSlot;
+import com.aranaira.arcanearchives.core.network.Networking;
+import com.aranaira.arcanearchives.core.network.packets.RequestSyncPacket;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -25,15 +27,16 @@ public class CrystalWorkbenchScreen extends ContainerScreen<CrystalWorkbenchCont
   }
 
   @SuppressWarnings("ConstantConditions")
-  protected void sendButtonClick (int index) {
+  protected void sendButtonClick(int index) {
     this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, index);
   }
 
   @Override
   protected void init() {
+    super.init();
     this.addButton(new InvisibleButton(width / 2 - 80, height / 2 - 59, 15, 21, (val) -> sendButtonClick(1)));
     this.addButton(new InvisibleButton(width / 2 + 65, height / 2 - 59, 15, 21, (val) -> sendButtonClick(2)));
-    super.init();
+    Networking.sendToServer(new RequestSyncPacket(this.menu.containerId));
   }
 
   @SuppressWarnings("deprecation")
@@ -59,29 +62,28 @@ public class CrystalWorkbenchScreen extends ContainerScreen<CrystalWorkbenchCont
   public void renderSlot(MatrixStack stack, Slot slot) {
     super.renderSlot(stack, slot);
 
-    if (menu.getSelectedSlot() != -1) {
-      if (slot instanceof IRecipeSlot) {
-        IRecipeSlot<?> recipeSlot = (IRecipeSlot<?>) slot;
+    if (slot instanceof IRecipeSlot) {
+      IRecipeSlot<?> recipeSlot = (IRecipeSlot<?>) slot;
 
-        if (recipeSlot.getIndex() == menu.getSelectedSlot() && !menu.isSlotDimmed(recipeSlot.getIndex())) {
-          this.minecraft.getTextureManager().bind(background);
-          blit(stack, slot.x - 2, slot.y - 2, 206, 0, 20, 20);
-        }
-        if (menu.isSlotDimmed(recipeSlot.getIndex())) {
-          this.minecraft.getTextureManager().bind(background);
-          fill(stack, slot.x, slot.y, slot.x + 16, slot.y + 16, Constants.CrystalWorkbench.UI.Overlay);
-        }
+      if (menu.isSlotDimmed(recipeSlot.getIndex())) {
+        this.minecraft.getTextureManager().bind(background);
+        fill(stack, slot.x, slot.y, slot.x + 16, slot.y + 16, Constants.CrystalWorkbench.UI.Overlay);
+      } else if (recipeSlot.getIndex() == menu.getSelectedSlot()) {
+        this.minecraft.getTextureManager().bind(background);
+        blit(stack, slot.x - 2, slot.y - 2, 206, 0, 20, 20);
       }
     }
   }
+
+
 
   @Override
   protected void renderLabels(MatrixStack matrixStack, int x, int y) {
     //super.renderLabels(matrixStack, x, y);
 
-    for(Widget widget : this.buttons) {
+    for (Widget widget : this.buttons) {
       if (widget.isHovered()) {
-        widget.renderToolTip(matrixStack, x - this.leftPos, y- this.topPos);
+        widget.renderToolTip(matrixStack, x - this.leftPos, y - this.topPos);
         break;
       }
     }
