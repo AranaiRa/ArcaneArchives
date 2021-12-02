@@ -13,6 +13,7 @@ import javax.annotation.Nullable;
 public class ClientCrystalWorkbenchRecipeRecipeSlot extends Slot implements ICrystalWorkbenchRecipeSlot<CrystalWorkbenchRecipe> {
   private int offset;
   private final int index;
+  private boolean dimmed = false;
 
   public ClientCrystalWorkbenchRecipeRecipeSlot(int index, int xPosition, int yPosition) {
     super(IRecipeSlot.emptyInventory, index, xPosition, yPosition);
@@ -32,6 +33,21 @@ public class ClientCrystalWorkbenchRecipeRecipeSlot extends Slot implements ICry
   @Override
   public int getIndex() {
     return index;
+  }
+
+  @Override
+  public boolean isDimmed() {
+    return dimmed;
+  }
+
+  @Override
+  public void setDimmed(boolean dimmed) {
+    this.dimmed = dimmed;
+  }
+
+  @Override
+  public Slot getSlot() {
+    return this;
   }
 
   @Nullable

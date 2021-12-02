@@ -65,7 +65,7 @@ public class CrystalWorkbenchScreen extends ContainerScreen<CrystalWorkbenchCont
     if (slot instanceof IRecipeSlot) {
       IRecipeSlot<?> recipeSlot = (IRecipeSlot<?>) slot;
 
-      if (menu.isSlotDimmed(recipeSlot.getIndex())) {
+      if (recipeSlot.isDimmed()) {
         this.minecraft.getTextureManager().bind(background);
         fill(stack, slot.x, slot.y, slot.x + 16, slot.y + 16, Constants.CrystalWorkbench.UI.Overlay);
       } else if (recipeSlot.getIndex() == menu.getSelectedSlot()) {

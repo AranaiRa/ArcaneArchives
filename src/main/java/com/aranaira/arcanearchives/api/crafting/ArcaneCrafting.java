@@ -7,6 +7,7 @@ import com.aranaira.arcanearchives.api.blockentities.IArcaneArchivesBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 import noobanidus.libs.noobutil.types.IInvWrapper;
 
 import javax.annotation.Nullable;

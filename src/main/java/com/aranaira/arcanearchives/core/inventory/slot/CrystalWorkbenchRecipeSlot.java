@@ -13,6 +13,7 @@ import javax.annotation.Nullable;
 public class CrystalWorkbenchRecipeSlot extends Slot implements ICrystalWorkbenchRecipeSlot<CrystalWorkbenchRecipe> {
   private final int index;
   private int offset;
+  private boolean dimmed;
 
   public CrystalWorkbenchRecipeSlot(int index, int xPosition, int yPosition) {
     super(IRecipeSlot.emptyInventory, index, xPosition, yPosition);
@@ -32,6 +33,11 @@ public class CrystalWorkbenchRecipeSlot extends Slot implements ICrystalWorkbenc
   @Override
   public int getIndex() {
     return index;
+  }
+
+  @Override
+  public Slot getSlot() {
+    return this;
   }
 
   @Nullable
@@ -64,5 +70,15 @@ public class CrystalWorkbenchRecipeSlot extends Slot implements ICrystalWorkbenc
   @Override
   public boolean mayPickup(PlayerEntity p_82869_1_) {
     return false;
+  }
+
+  @Override
+  public boolean isDimmed() {
+    return dimmed;
+  }
+
+  @Override
+  public void setDimmed(boolean dimmed) {
+    this.dimmed = dimmed;
   }
 }

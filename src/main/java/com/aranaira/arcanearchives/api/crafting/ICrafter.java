@@ -7,6 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 import noobanidus.libs.noobutil.types.IIInvWrapper;
 
 import java.util.UUID;

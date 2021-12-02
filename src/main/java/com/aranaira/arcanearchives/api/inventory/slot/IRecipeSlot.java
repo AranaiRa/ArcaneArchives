@@ -1,8 +1,8 @@
 package com.aranaira.arcanearchives.api.inventory.slot;
 
-import com.aranaira.arcanearchives.core.recipes.CrystalWorkbenchRecipe;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 
@@ -11,14 +11,18 @@ import javax.annotation.Nullable;
 public interface IRecipeSlot<T extends IRecipe<?>> {
   IInventory emptyInventory = new Inventory(0);
 
-  void setOffset (int offsetTimes);
+  void setOffset(int offsetTimes);
 
-  int getOffset ();
+  int getOffset();
 
-  int getIndex ();
+  int getIndex();
+
+  boolean isDimmed ();
+
+  void setDimmed (boolean dimmed);
 
   @Nullable
-  default ResourceLocation getRegistryName () {
+  default ResourceLocation getRegistryName() {
     T recipe = getRecipe();
     if (recipe == null) {
       return null;
@@ -27,6 +31,8 @@ public interface IRecipeSlot<T extends IRecipe<?>> {
     return recipe.getId();
   }
 
+  Slot getSlot();
+
   @Nullable
-  T getRecipe ();
+  T getRecipe();
 }

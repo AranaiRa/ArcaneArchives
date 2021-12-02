@@ -79,17 +79,18 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
     }
   };
 
+  private boolean refreshDim = true;
+
   private void refreshRecipeSlot() {
     // TODO:
     // 1. Create the actual recipe output slot.
     // 2. Refresh its contents whenever the slot is changed.
     // 3. Handle on-take recipe matching.
     // 4. Additionally, dim slots that you don't have the ingredients to craft.
-
-    if (!isClientSide()) {
-      for (int i = 0; i < RECIPE_SLOTS.size(); i++) {
-        CrystalWorkbenchRecipeSlot slot = RECIPE_SLOTS.get(i);
-        if (!slot.hasItem()) {
+    if (refreshDim) {
+      List<? extends IRecipeSlot<CrystalWorkbenchRecipe>> recipes = isClientSide() ? CLIENT_RECIPE_SLOTS : RECIPE_SLOTS;
+      for (IRecipeSlot<CrystalWorkbenchRecipe> slot : recipes) {
+        if (!slot.getSlot().hasItem()) {
           continue;
         }
 
@@ -98,10 +99,10 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
           continue;
         }
 
-        int slotId = DataArray.DimSlotStart + i - 1;
-
-        setData(slotId, recipe.matches(getWorkbench(), getPlayer().level) ? 0 : 1);
+        slot.setDimmed(recipe.matches(getWorkbench(), getPlayerWorld()));
       }
+
+      refreshDim = false;
     }
   }
 
@@ -157,8 +158,8 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
           setData(DataArray.SlotSelected, mod);
         }
       }
-      addSlotListener(new RefreshContainerListener());
     }
+    addSlotListener(new RefreshContainerListener());
   }
 
   protected void createRecipeSlots() {
@@ -309,6 +310,7 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
 
     @Override
     public void setContainerData(Container pContainer, int pVarToUpdate, int pNewValue) {
+      CrystalWorkbenchContainer.this.refreshRecipeSlot();
     }
   }
 }
