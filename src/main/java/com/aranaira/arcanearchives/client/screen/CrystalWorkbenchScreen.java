@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.client.screen;
 
 import com.aranaira.arcanearchives.api.ArcaneArchivesAPI;
+import com.aranaira.arcanearchives.api.reference.Constants;
 import com.aranaira.arcanearchives.client.impl.InvisibleButton;
 import com.aranaira.arcanearchives.core.blocks.entities.CrystalWorkbenchBlockEntity;
 import com.aranaira.arcanearchives.core.inventory.container.CrystalWorkbenchContainer;
@@ -62,9 +63,13 @@ public class CrystalWorkbenchScreen extends ContainerScreen<CrystalWorkbenchCont
       if (slot instanceof IRecipeSlot) {
         IRecipeSlot<?> recipeSlot = (IRecipeSlot<?>) slot;
 
-        if (recipeSlot.getIndex() == menu.getSelectedSlot()) {
+        if (recipeSlot.getIndex() == menu.getSelectedSlot() && !menu.isSlotDimmed(recipeSlot.getIndex())) {
           this.minecraft.getTextureManager().bind(background);
           blit(stack, slot.x - 2, slot.y - 2, 206, 0, 20, 20);
+        }
+        if (menu.isSlotDimmed(recipeSlot.getIndex())) {
+          this.minecraft.getTextureManager().bind(background);
+          fill(stack, slot.x, slot.y, slot.x + 16, slot.y + 16, Constants.CrystalWorkbench.UI.Overlay);
         }
       }
     }

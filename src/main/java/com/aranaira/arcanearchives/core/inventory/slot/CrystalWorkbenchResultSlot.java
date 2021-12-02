@@ -26,6 +26,20 @@ public class CrystalWorkbenchResultSlot extends Slot {
     this.craftSlots = pCraftSlots;
   }
 
+  @Override
+  public boolean hasItem() {
+    return recipe != null;
+  }
+
+  @Override
+  public ItemStack getItem() {
+    if (recipe == null) {
+      return ItemStack.EMPTY;
+    } else {
+      return recipe.getResultItem();
+    }
+  }
+
   public void setRecipe (CrystalWorkbenchRecipe recipe) {
     this.recipe = recipe;
   }
