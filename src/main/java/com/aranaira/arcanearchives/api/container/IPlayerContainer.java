@@ -19,8 +19,5 @@ public interface IPlayerContainer {
     return getPlayer().level;
   }
 
-  // TODO
-  default List<Slot> getPlayerSlots() {
-    return Collections.emptyList();
-  }
+  List<Slot> getPlayerSlots();
 }

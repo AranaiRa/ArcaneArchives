@@ -1,13 +1,13 @@
 package com.aranaira.arcanearchives.core.inventory.container;
 
-import com.aranaira.arcanearchives.api.container.IPartitionedPlayerContainer;
+import com.aranaira.arcanearchives.api.blockentities.IInventoryBlockEntity;
 import com.aranaira.arcanearchives.api.container.IBlockEntityContainer;
+import com.aranaira.arcanearchives.api.container.IPartitionedPlayerContainer;
 import com.aranaira.arcanearchives.api.inventory.IArcaneInventory;
 import com.aranaira.arcanearchives.api.inventory.slot.CappedSlot;
-import com.aranaira.arcanearchives.api.blockentities.IInventoryBlockEntity;
 import com.aranaira.arcanearchives.core.inventory.slot.RadiantChestSlot;
-import com.aranaira.arcanearchives.core.network.packets.ExtendedSlotContentsPacket;
 import com.aranaira.arcanearchives.core.network.Networking;
+import com.aranaira.arcanearchives.core.network.packets.ExtendedSlotContentsPacket;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -17,6 +17,9 @@ import net.minecraft.network.play.server.SSetSlotPacket;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.math.BlockPos;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 /* Contains some code taken from Dank Storage by tfarecnim
 Licensed under a CC0 license but used with permission
@@ -51,23 +54,35 @@ public abstract class AbstractLargeContainer<V extends IArcaneInventory, T exten
     return clientSide;
   }
 
-  protected abstract T resolveBlockEntity (TileEntity be);
+  protected abstract T resolveBlockEntity(TileEntity be);
 
   // SHOULD BE OVERRIDDEN
   // BECAUSE I DON'T KNOW HOW OFFSETS WORK
   protected void createPlayerSlots(int yOffset1, int yOffset2, int xOffset1) {
+    createPlayerSlots(yOffset1, yOffset2, xOffset1, null);
+  }
+
+  protected void createPlayerSlots(int yOffset1, int yOffset2, int xOffset1, @Nullable List<Slot> playerSlotStorage) {
     for (int row = 0; row < 3; ++row) {
       for (int col = 0; col < 9; ++col) {
         int x = xOffset1 + col * 18;
         int y = row * 18 + yOffset1;
-        this.addSlot(new CappedSlot(this.player, col + row * 9 + 9, x, y));
+        Slot slot = new CappedSlot(this.player, col + row * 9 + 9, x, y);
+        this.addSlot(slot);
+        if (playerSlotStorage != null) {
+          playerSlotStorage.add(slot);
+        }
       }
     }
 
     for (int row = 0; row < 9; ++row) {
       int x = xOffset1 + row * 18;
       int y = yOffset2;
-      this.addSlot(new CappedSlot(this.player, row, x, y));
+      Slot slot = new CappedSlot(this.player, row, x, y);
+      this.addSlot(slot);
+      if (playerSlotStorage != null) {
+        playerSlotStorage.add(slot);
+      }
     }
   }
 
@@ -409,11 +424,11 @@ public abstract class AbstractLargeContainer<V extends IArcaneInventory, T exten
     return flag;
   }
 
-  protected boolean skipSlot (int i) {
+  protected boolean skipSlot(int i) {
     return skipSlot(this.slots.get(i));
   }
 
-  protected boolean skipSlot (Slot slot) {
+  protected boolean skipSlot(Slot slot) {
     return false;
   }
 
@@ -421,30 +436,31 @@ public abstract class AbstractLargeContainer<V extends IArcaneInventory, T exten
   @Override
   public void broadcastChanges() {
     for (int i = 0; i < this.slots.size(); ++i) {
-      if (skipSlot(i)) {
-        continue;
-      }
-      ItemStack itemstack = (this.slots.get(i)).getItem();
-      ItemStack itemstack1 = this.lastSlots.get(i);
+      if (!skipSlot(i)) {
+        ItemStack itemstack = (this.slots.get(i)).getItem();
+        ItemStack itemstack1 = this.lastSlots.get(i);
 
-      if (!ItemStack.matches(itemstack1, itemstack)) {
-        itemstack1 = itemstack.isEmpty() ? ItemStack.EMPTY : itemstack.copy();
-        this.lastSlots.set(i, itemstack1);
+        if (!ItemStack.matches(itemstack1, itemstack)) {
+          itemstack1 = itemstack.isEmpty() ? ItemStack.EMPTY : itemstack.copy();
+          this.lastSlots.set(i, itemstack1);
 
-        for (IContainerListener listener : this.containerListeners) {
-          if (listener instanceof ServerPlayerEntity) {
-            ServerPlayerEntity player = (ServerPlayerEntity) listener;
-            this.syncSlot(player, i, itemstack1);
+          for (IContainerListener listener : this.containerListeners) {
+            if (listener instanceof ServerPlayerEntity) {
+              ServerPlayerEntity player = (ServerPlayerEntity) listener;
+              this.syncSlot(player, i, itemstack1);
+            } else {
+              listener.slotChanged(this, i, itemstack1);
+            }
           }
         }
       }
+    }
 
-      for (int j = 0; j < this.dataSlots.size(); ++j) {
-        IntReferenceHolder intreferenceholder = this.dataSlots.get(j);
-        if (intreferenceholder.checkAndClearUpdateFlag()) {
-          for (IContainerListener icontainerlistener1 : this.containerListeners) {
-            icontainerlistener1.setContainerData(this, j, intreferenceholder.get());
-          }
+    for (int j = 0; j < this.dataSlots.size(); ++j) {
+      IntReferenceHolder intreferenceholder = this.dataSlots.get(j);
+      if (intreferenceholder.checkAndClearUpdateFlag()) {
+        for (IContainerListener icontainerlistener1 : this.containerListeners) {
+          icontainerlistener1.setContainerData(this, j, intreferenceholder.get());
         }
       }
     }

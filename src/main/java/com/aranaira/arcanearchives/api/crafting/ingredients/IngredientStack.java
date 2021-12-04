@@ -75,6 +75,15 @@ public class IngredientStack {
     return ingredient.getItems();
   }
 
+  public ItemStack getFirstStack () {
+    ItemStack[] stacks = getMatchingStacks();
+    if (stacks.length > 0) {
+      return stacks[0];
+    } else {
+      return ItemStack.EMPTY;
+    }
+  }
+
   public boolean apply(@Nullable ItemStack p_apply_1_) {
     boolean res = ingredient.test(p_apply_1_);
     if (nbt != null && p_apply_1_ != null) {

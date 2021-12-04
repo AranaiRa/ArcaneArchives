@@ -6,13 +6,17 @@ import net.minecraft.util.NonNullList;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.function.IntConsumer;
 
 public abstract class AbstractArcaneItemHandler implements IArcaneInventory {
   // TODO: THIS
   // TODO: Potentially separate slot info metadata from stacks
   protected NonNullList<ItemStackEntry> stacks;
-  protected IntConsumer changeCallback;
+  protected Set<IInventoryListener<IArcaneInventory>> listeners = new HashSet<>();
 
   public AbstractArcaneItemHandler() {
     this(1);
@@ -169,13 +173,14 @@ public abstract class AbstractArcaneItemHandler implements IArcaneInventory {
   }
 
   public void onContentsChanged(int slot) {
-    if (changeCallback != null) {
-      changeCallback.accept(slot);
+    for (IInventoryListener<IArcaneInventory> listener : listeners) {
+      listener.inventoryChanged(this, slot);
     }
   }
 
-  public void setChangeCallback(IntConsumer changeCallback) {
-    this.changeCallback = changeCallback;
+  @Override
+  public void addListener(IInventoryListener<IArcaneInventory> listener) {
+    this.listeners.add(listener);
   }
 
   @Override

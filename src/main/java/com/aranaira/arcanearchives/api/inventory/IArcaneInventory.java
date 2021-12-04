@@ -35,4 +35,6 @@ public interface IArcaneInventory extends IItemHandlerModifiable {
       data.setDirty();
     }
   }
+
+  void addListener (IInventoryListener<IArcaneInventory> listener);
 }

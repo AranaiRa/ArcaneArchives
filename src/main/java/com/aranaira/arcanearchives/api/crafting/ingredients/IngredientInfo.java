@@ -14,7 +14,7 @@ public class IngredientInfo extends AbstractNetworkObject<PacketBuffer> implemen
     PLAYER_INVENTORY,
     PLAYER_OFFHAND,
     NOT_FOUND,
-    GENERIC
+    COLLATED
   }
 
   private int slot;

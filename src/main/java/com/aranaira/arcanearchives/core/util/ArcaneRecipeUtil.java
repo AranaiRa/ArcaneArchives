@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.core.util;
 
+import com.aranaira.arcanearchives.api.crafting.ingredients.CollatedInfoPair;
 import com.aranaira.arcanearchives.api.crafting.ingredients.IngredientInfo;
 import com.aranaira.arcanearchives.api.crafting.ingredients.IngredientStack;
 import com.aranaira.arcanearchives.core.recipes.CrystalWorkbenchRecipe;
@@ -7,6 +8,7 @@ import com.aranaira.arcanearchives.core.recipes.inventory.CrystalWorkbenchCrafti
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Slot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 
 import java.util.ArrayList;
@@ -23,10 +25,10 @@ public class ArcaneRecipeUtil {
   public static List<IngredientInfo> getIngredientInfo(CrystalWorkbenchRecipe recipe, CrystalWorkbenchCrafting crafting) {
     List<IngredientStack> ingredients = recipe.getIngredientStacks();
     List<IngredientInfo> result = new ArrayList<>();
-    PlayerEntity player = crafting.getPlayer();
     Set<Slot> parsedSlots = new HashSet<>();
     IntOpenHashSet parsedPlayerSlots = new IntOpenHashSet();
     IntOpenHashSet ingredientsChecked = new IntOpenHashSet();
+    List<Slot> playerSlots = crafting.getContainer().getPlayerSlots();
 
     for (int i = 0; i < ingredients.size(); i++) {
       IngredientStack stack = ingredients.get(i);
@@ -43,13 +45,15 @@ public class ArcaneRecipeUtil {
         }
       }
 
-      for (int o = 0; i < player.inventory.items.size(); i++) {
+      for (int o = 0; o < playerSlots.size(); o++) {
         if (parsedPlayerSlots.contains(o)) {
           continue;
         }
 
-        if (stack.apply(player.inventory.items.get(o))) {
-          result.add(new IngredientInfo(o, i, player.inventory.items.get(o).getCount(), stack.getCount(), IngredientInfo.SlotType.PLAYER_INVENTORY));
+        ItemStack inSlot = playerSlots.get(o).getItem();
+
+        if (stack.apply(inSlot)) {
+          result.add(new IngredientInfo(o, i, inSlot.getCount(), stack.getCount(), IngredientInfo.SlotType.PLAYER_INVENTORY));
           parsedPlayerSlots.add(o);
           ingredientsChecked.add(i);
         }
@@ -79,7 +83,7 @@ public class ArcaneRecipeUtil {
           foundTotal += info.getFound();
         }
       }
-      result.add(new IngredientInfo(-1, i, stack.getCount(), foundTotal, foundTotal == 0 ? IngredientInfo.SlotType.NOT_FOUND : IngredientInfo.SlotType.GENERIC));
+      result.add(new IngredientInfo(-1, i, stack.getCount(), foundTotal, foundTotal == 0 ? IngredientInfo.SlotType.NOT_FOUND : IngredientInfo.SlotType.COLLATED));
     }
     return result;
   }
@@ -87,4 +91,15 @@ public class ArcaneRecipeUtil {
   public static List<IngredientInfo> getCollatedIngredientInfo (CrystalWorkbenchRecipe recipe, CrystalWorkbenchCrafting crafting) {
     return getCollatedIngredientInfo(recipe, getIngredientInfo(recipe, crafting));
   }
+
+  public static List<CollatedInfoPair> getCollatedIngredientInfoPairs (CrystalWorkbenchRecipe recipe, CrystalWorkbenchCrafting crafting) {
+    List<IngredientInfo> info = getCollatedIngredientInfo(recipe, crafting);
+    List<IngredientStack> ingredients = recipe.getIngredientStacks();
+    List<CollatedInfoPair> result = new ArrayList<>();
+    for (IngredientInfo thisInfo : info) {
+      result.add(new CollatedInfoPair(ingredients.get(thisInfo.getIndex()), thisInfo));
+    }
+    return result;
+  }
+
 }

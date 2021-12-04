@@ -17,4 +17,10 @@ public interface Constants {
       int OverlaySimple = 0x80808080;
     }
   }
+
+  interface Interface {
+    static int getCycleTimer () {
+      return (int) ((Math.random() * 10000) % Integer.MAX_VALUE);
+    }
+  }
 }

@@ -95,6 +95,9 @@ public class CrystalWorkbenchRecipeBuilder {
       this.count = count;
       this.ingredients = ingredients;
       this.processors = processors;
+      if (this.ingredients.isEmpty()) {
+        throw new IllegalArgumentException("ingredients for recipe " + id + " cannot be empty");
+      }
     }
 
     @Override

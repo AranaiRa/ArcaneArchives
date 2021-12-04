@@ -5,6 +5,8 @@ import it.unimi.dsi.fastutil.ints.IntArrayList;
 
 import java.util.*;
 
+// TODO: I've kind of veered away from this but maybe it isn't a bad idea.
+@Deprecated
 public class IngredientSummary {
   private final IntArrayList slots;
   private final List<IngredientInfo.SlotType> slotTypes;

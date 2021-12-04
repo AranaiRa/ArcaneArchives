@@ -12,20 +12,23 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class RadiantChestContainer extends AbstractLargeContainer<RadiantChestInventory, RadiantChestBlockEntity> {
+  private final List<Slot> playerSlots = new ArrayList<>();
+
   public RadiantChestContainer(ContainerType<RadiantChestContainer> type, int id, PlayerInventory inventory, PacketBuffer buffer) {
     super(type, id, 9, inventory, buffer.readBlockPos());
     createInventorySlots();
-    createPlayerSlots(142, 200, 16);
+    createPlayerSlots(142, 200, 16, playerSlots);
   }
 
   public RadiantChestContainer(int id, PlayerInventory playerInventory, RadiantChestBlockEntity tile) {
     super(ModContainers.RADIANT_CHEST.get(), id, 9, playerInventory, tile);
     createInventorySlots();
-    createPlayerSlots(142, 200, 16);
+    createPlayerSlots(142, 200, 16, playerSlots);
   }
 
   @Override
@@ -58,5 +61,15 @@ public class RadiantChestContainer extends AbstractLargeContainer<RadiantChestIn
   @Override
   public List<Slot> getIngredientSlots() {
     return Collections.emptyList();
+  }
+
+  @Override
+  public List<Slot> getCombinedIngredientSlots() {
+    return getPlayerSlots();
+  }
+
+  @Override
+  public List<Slot> getPlayerSlots() {
+    return playerSlots;
   }
 }

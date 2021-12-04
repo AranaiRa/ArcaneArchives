@@ -16,6 +16,9 @@ public class ModLang {
         char c = NETWORK_SYMBOLS[i];
         ctx.add(UUIDNameData.Name.NAME_PREFIX + i, String.valueOf(c));
       }
+
+      ctx.add("arcanearchives.tooltip.crystal_workbench.more_info", "[Hold Shift to cycle eligible items.]");
+      ctx.add("arcanearchives.tooltip.crystal_workbench.info", "%s: %s/%s");
     });
   }
 

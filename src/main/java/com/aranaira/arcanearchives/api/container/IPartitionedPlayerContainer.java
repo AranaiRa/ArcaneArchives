@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface IPartitionedPlayerContainer extends IPlayerContainer {
   List<Slot> getIngredientSlots();
+  List<Slot> getCombinedIngredientSlots();
 }

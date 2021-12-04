@@ -6,11 +6,13 @@ import com.aranaira.arcanearchives.api.inventory.IArcaneInventory;
 import com.aranaira.arcanearchives.api.blockentities.IArcaneArchivesBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import noobanidus.libs.noobutil.types.IInvWrapper;
 
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.UUID;
 
 public abstract class ArcaneCrafting<H extends IArcaneInventory, C extends Container & IPartitionedPlayerContainer, T extends TileEntity & IIdentifiedBlockEntity> extends IInvWrapper<H> implements ICrafter<H, C, T> {
@@ -42,6 +44,11 @@ public abstract class ArcaneCrafting<H extends IArcaneInventory, C extends Conta
   @Override
   public PlayerEntity getPlayer () {
     return container.getPlayer();
+  }
+
+  @Override
+  public List<Slot> getCombinedIngredientSlots () {
+    return container.getCombinedIngredientSlots();
   }
 
   @Override
