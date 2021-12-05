@@ -163,10 +163,8 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
     } else if (this.getBlockEntityInventory() != null) {
       this.getBlockEntityInventory().addListener(CrystalWorkbenchContainer.this::inventoryChanged);
     }
-    if (isClientSide()) {
-      for (Slot slot : this.playerSlots) {
-        ((CappedSlot)slot).addListener(CrystalWorkbenchContainer.this::inventoryChanged);
-      }
+    for (Slot slot : this.playerSlots) {
+      ((CappedSlot) slot).addListener(CrystalWorkbenchContainer.this::inventoryChanged);
     }
     allSlots.addAll(ingredientSlots);
     allSlots.addAll(playerSlots);
