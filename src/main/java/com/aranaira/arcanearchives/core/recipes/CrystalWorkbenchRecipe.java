@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.core.recipes;
 
+import com.aranaira.arcanearchives.api.crafting.ingredients.CountableIngredientStack;
 import com.aranaira.arcanearchives.api.crafting.ingredients.IngredientInfo;
 import com.aranaira.arcanearchives.api.crafting.ingredients.IngredientStack;
 import com.aranaira.arcanearchives.api.crafting.processors.IProcessor;
@@ -17,6 +18,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -32,6 +34,7 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class CrystalWorkbenchRecipe implements ICrystalWorkbenchRecipe<CrystalWorkbenchInventory, CrystalWorkbenchContainer, CrystalWorkbenchBlockEntity, CrystalWorkbenchCrafting> {
   private final List<Processor<CrystalWorkbenchCrafting>> processors = new ArrayList<>();
@@ -67,14 +70,29 @@ public class CrystalWorkbenchRecipe implements ICrystalWorkbenchRecipe<CrystalWo
 
   @Override
   public boolean matches(CrystalWorkbenchCrafting inv, @Nullable World worldIn) {
-    List<IngredientInfo> info = ArcaneRecipeUtil.getCollatedIngredientInfo(this, inv);
+    if (this.ingredientStacks.isEmpty()) {
+      return false;
+    }
 
-    for (IngredientInfo part : info) {
-      if (part.getType() == IngredientInfo.SlotType.NOT_FOUND) {
-        return false;
+    List<CountableIngredientStack> ingredients = this.ingredientStacks.stream().map(CountableIngredientStack::new).collect(Collectors.toList());
+
+    outer: for (Slot slot : inv.getCombinedIngredientSlots()) {
+      if (!slot.hasItem()) {
+        continue;
       }
 
-      if (part.getFound() < part.getRequired()) {
+      ItemStack inSlot = slot.getItem();
+
+      for (CountableIngredientStack ingredient : ingredients) {
+        if (ingredient.apply(inSlot)) {
+          ingredient.supply(inSlot.getCount());
+          continue outer;
+        }
+      }
+    }
+
+    for (CountableIngredientStack ingredient : ingredients) {
+      if (!ingredient.filled()) {
         return false;
       }
     }

@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.core.inventory.container;
 
+import com.aranaira.arcanearchives.api.inventory.IArcaneInventory;
 import com.aranaira.arcanearchives.core.blocks.entities.RadiantChestBlockEntity;
 import com.aranaira.arcanearchives.core.init.ModContainers;
 import com.aranaira.arcanearchives.core.inventory.handlers.RadiantChestInventory;
@@ -56,6 +57,10 @@ public class RadiantChestContainer extends AbstractLargeContainer<RadiantChestIn
   @Override
   public RadiantChestInventory getEmptyInventory() {
     return RadiantChestInventory.getEmpty();
+  }
+
+  @Override
+  public void inventoryChanged(IArcaneInventory inventory, int slot) {
   }
 
   @Override

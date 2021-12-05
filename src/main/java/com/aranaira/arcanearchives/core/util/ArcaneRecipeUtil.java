@@ -26,7 +26,6 @@ public class ArcaneRecipeUtil {
     List<IngredientStack> ingredients = recipe.getIngredientStacks();
     List<IngredientInfo> result = new ArrayList<>();
     Set<Slot> parsedSlots = new HashSet<>();
-    IntOpenHashSet parsedPlayerSlots = new IntOpenHashSet();
     IntOpenHashSet ingredientsChecked = new IntOpenHashSet();
     List<Slot> playerSlots = crafting.getContainer().getPlayerSlots();
 
@@ -46,15 +45,16 @@ public class ArcaneRecipeUtil {
       }
 
       for (int o = 0; o < playerSlots.size(); o++) {
-        if (parsedPlayerSlots.contains(o)) {
+        Slot slot = playerSlots.get(o);
+        if (parsedSlots.contains(slot) || !slot.hasItem()) {
           continue;
         }
 
-        ItemStack inSlot = playerSlots.get(o).getItem();
+        ItemStack inSlot = slot.getItem();
 
         if (stack.apply(inSlot)) {
-          result.add(new IngredientInfo(o, i, inSlot.getCount(), stack.getCount(), IngredientInfo.SlotType.PLAYER_INVENTORY));
-          parsedPlayerSlots.add(o);
+          result.add(new IngredientInfo(o, i, stack.getCount(), inSlot.getCount(), IngredientInfo.SlotType.PLAYER_INVENTORY));
+          parsedSlots.add(slot);
           ingredientsChecked.add(i);
         }
       }

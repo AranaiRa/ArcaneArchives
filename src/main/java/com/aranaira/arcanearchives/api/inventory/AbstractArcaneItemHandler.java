@@ -16,7 +16,7 @@ public abstract class AbstractArcaneItemHandler implements IArcaneInventory {
   // TODO: THIS
   // TODO: Potentially separate slot info metadata from stacks
   protected NonNullList<ItemStackEntry> stacks;
-  protected Set<IInventoryListener<IArcaneInventory>> listeners = new HashSet<>();
+  protected Set<IInventoryListener> listeners = new HashSet<>();
 
   public AbstractArcaneItemHandler() {
     this(1);
@@ -173,13 +173,13 @@ public abstract class AbstractArcaneItemHandler implements IArcaneInventory {
   }
 
   public void onContentsChanged(int slot) {
-    for (IInventoryListener<IArcaneInventory> listener : listeners) {
+    for (IInventoryListener listener : listeners) {
       listener.inventoryChanged(this, slot);
     }
   }
 
   @Override
-  public void addListener(IInventoryListener<IArcaneInventory> listener) {
+  public void addListener(IInventoryListener listener) {
     this.listeners.add(listener);
   }
 

@@ -36,5 +36,5 @@ public interface IArcaneInventory extends IItemHandlerModifiable {
     }
   }
 
-  void addListener (IInventoryListener<IArcaneInventory> listener);
+  void addListener (IInventoryListener listener);
 }
