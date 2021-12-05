@@ -258,7 +258,7 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
       Slot slot = getSlot(slotId);
       if (slot instanceof IRecipeSlot) {
         IRecipeSlot<?> recipeSlot = (IRecipeSlot<?>) slot;
-        if (slot.hasItem()) {
+        if (slot.hasItem() && !recipeSlot.isDimmed()) {
           setData(DataArray.SlotSelected, recipeSlot.getIndex());
         }
       }
