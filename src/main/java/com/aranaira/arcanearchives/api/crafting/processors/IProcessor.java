@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.api.crafting.processors;
 
 import com.aranaira.arcanearchives.api.crafting.ArcaneCrafting;
 import com.aranaira.arcanearchives.api.crafting.ICrafter;
+import com.aranaira.arcanearchives.api.crafting.ingredients.IngredientStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.registries.IForgeRegistryEntry;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public interface IProcessor<T extends ArcaneCrafting<?, ?, ?>> extends IForgeRegistryEntry<IProcessor<?>> {
 
-  default List<List<ItemStack>> process(ItemStack incomingResult, List<Ingredient> ingredients, List<ItemStack> usedItems, T crafter) {
+  default List<List<ItemStack>> process(ItemStack incomingResult, List<IngredientStack> ingredients, List<ItemStack> usedItems, T crafter) {
     if (ingredients.size() != usedItems.size()) {
       throw new IllegalArgumentException("size of `ingredients` doesn't match `usedItems`: " + ingredients.size() + " ingredients vs " + usedItems.size() + " items");
     }
@@ -26,11 +27,11 @@ public interface IProcessor<T extends ArcaneCrafting<?, ?, ?>> extends IForgeReg
     return processing;
   }
 
-  default ItemStack processOutput(ItemStack result, List<Ingredient> ingredients, List<ItemStack> usedItems, T crafter) {
+  default ItemStack processOutput(ItemStack result, List<IngredientStack> ingredients, List<ItemStack> usedItems, T crafter) {
     return result;
   }
 
-  default List<ItemStack> processIngredient(ItemStack result, Ingredient ingredient, ItemStack usedItem, T crafter) {
+  default List<ItemStack> processIngredient(ItemStack result, IngredientStack ingredient, ItemStack usedItem, T crafter) {
     return Collections.singletonList(ItemStack.EMPTY);
   }
 }

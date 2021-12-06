@@ -1,26 +1,36 @@
 package com.aranaira.arcanearchives.core.inventory.slot;
 
+import com.aranaira.arcanearchives.api.crafting.ingredients.CountableIngredientStack;
+import com.aranaira.arcanearchives.api.crafting.processors.Processor;
 import com.aranaira.arcanearchives.api.reference.Constants;
+import com.aranaira.arcanearchives.core.inventory.container.CrystalWorkbenchContainer;
 import com.aranaira.arcanearchives.core.recipes.CrystalWorkbenchRecipe;
 import com.aranaira.arcanearchives.core.recipes.inventory.CrystalWorkbenchCrafting;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.IRecipeHolder;
+import net.minecraft.inventory.container.CraftingResultSlot;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.util.NonNullList;
 
 import javax.annotation.Nullable;
+import java.util.List;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+
+import static com.aranaira.arcanearchives.api.reference.Constants.CrystalWorkbench.DataArray.Count;
 
 public class CrystalWorkbenchResultSlot extends Slot {
-  private final CrystalWorkbenchCrafting craftSlots;
+  private final Supplier<CrystalWorkbenchCrafting> craftSlots;
   private final PlayerEntity player;
   @Nullable
   private CrystalWorkbenchRecipe recipe;
   private int removeCount;
 
-  public CrystalWorkbenchResultSlot(PlayerEntity pPlayer, CrystalWorkbenchCrafting pCraftSlots, IInventory pContainer, int pSlot, int pXPosition, int pYPosition) {
+  public CrystalWorkbenchResultSlot(PlayerEntity pPlayer, Supplier<CrystalWorkbenchCrafting> pCraftSlots, IInventory pContainer, int pSlot, int pXPosition, int pYPosition) {
     super(pContainer, pSlot, pXPosition, pYPosition);
     this.player = pPlayer;
     this.craftSlots = pCraftSlots;
@@ -77,7 +87,7 @@ public class CrystalWorkbenchResultSlot extends Slot {
   protected void checkTakeAchievements(ItemStack pStack) {
     if (this.removeCount > 0) {
       pStack.onCraftedBy(this.player.level, this.player, this.removeCount);
-      net.minecraftforge.fml.hooks.BasicEventHooks.firePlayerCraftingEvent(this.player, pStack, this.craftSlots);
+      net.minecraftforge.fml.hooks.BasicEventHooks.firePlayerCraftingEvent(this.player, pStack, this.craftSlots.get());
     }
   }
 
@@ -87,7 +97,7 @@ public class CrystalWorkbenchResultSlot extends Slot {
       return false;
     }
 
-    return recipe.matches(this.craftSlots, player.level);
+    return recipe.matches(this.craftSlots.get(), player.level);
   }
 
   @Override
@@ -97,30 +107,82 @@ public class CrystalWorkbenchResultSlot extends Slot {
       return ItemStack.EMPTY;
     }
     this.checkTakeAchievements(pStack);
-/*    net.minecraftforge.common.ForgeHooks.setCraftingPlayer(pPlayer);
-    NonNullList<ItemStack> nonnulllist = pPlayer.level.getRecipeManager().getRemainingItemsFor(IRecipeType.CRAFTING, this.craftSlots, pPlayer.level);
-    net.minecraftforge.common.ForgeHooks.setCraftingPlayer(null);
-    for (int i = 0; i < nonnulllist.size(); ++i) {
-      ItemStack itemstack = this.craftSlots.getItem(i);
-      ItemStack itemstack1 = nonnulllist.get(i);
-      if (!itemstack.isEmpty()) {
-        this.craftSlots.removeItem(i, 1);
-        itemstack = this.craftSlots.getItem(i);
+    CrystalWorkbenchCrafting crafting = craftSlots.get();
+    net.minecraftforge.common.ForgeHooks.setCraftingPlayer(pPlayer);
+    ItemStack result = recipe.assemble(crafting);
+    List<CountableIngredientStack> countableIngredientStackList = recipe.getIngredientStacks().stream().map(CountableIngredientStack::new).collect(Collectors.toList());
+    NonNullList<ItemStack> processedItems = NonNullList.of(ItemStack.EMPTY);
+    for (Slot ingredientSlot : crafting.getContainer().getIngredientSlots()) {
+      if (!ingredientSlot.hasItem()) {
+        continue;
       }
 
-      if (!itemstack1.isEmpty()) {
-        if (itemstack.isEmpty()) {
-          this.craftSlots.setItem(i, itemstack1);
-        } else if (ItemStack.isSame(itemstack, itemstack1) && ItemStack.tagMatches(itemstack, itemstack1)) {
-          itemstack1.grow(itemstack.getCount());
-          this.craftSlots.setItem(i, itemstack1);
-        } else if (!this.player.inventory.add(itemstack1)) {
-          this.player.drop(itemstack1, false);
+      ItemStack inSlot = ingredientSlot.getItem();
+      if (inSlot.isEmpty()) {
+        continue;
+      }
+      for (CountableIngredientStack ingredient : countableIngredientStackList) {
+        if (!ingredient.apply(inSlot) || ingredient.filled()) {
+          continue;
+        }
+
+        int toRemove = ingredient.subtract(inSlot.getCount());
+        if (toRemove > 0) {
+          ItemStack copy = inSlot.copy();
+          copy.shrink(toRemove);
+          for (Processor<CrystalWorkbenchCrafting> processors : recipe.getProcessors()) {
+            processedItems.addAll(processors.processIngredient(result, ingredient, copy, crafting));
+          }
+          crafting.removeItem(ingredientSlot.getSlotIndex(), toRemove);
+          break;
         }
       }
     }
+    PlayerInventory inventory = crafting.getPlayerInventory();
+    for (Slot playerSlot : crafting.getContainer().getPlayerSlots()) {
+      if (!playerSlot.hasItem()) {
+        continue;
+      }
 
-    return pStack;*/
-    return ItemStack.EMPTY;
+      ItemStack inSlot = playerSlot.getItem();
+      if (inSlot.isEmpty()) {
+        continue;
+      }
+      for (CountableIngredientStack ingredient : countableIngredientStackList) {
+        if (!ingredient.apply(inSlot) || ingredient.filled()) {
+          continue;
+        }
+
+        int toRemove = ingredient.subtract(inSlot.getCount());
+        if (toRemove > 0) {
+          ItemStack copy = inSlot.copy();
+          copy.shrink(toRemove);
+          for (Processor<CrystalWorkbenchCrafting> processors : recipe.getProcessors()) {
+            processedItems.addAll(processors.processIngredient(result, ingredient, copy, crafting));
+          }
+          inventory.removeItem(playerSlot.getSlotIndex(), toRemove);
+          // TODO: Handle post-processing here too.
+          break;
+        }
+      }
+    }
+    net.minecraftforge.common.ForgeHooks.setCraftingPlayer(null);
+    for (CountableIngredientStack ingredient : countableIngredientStackList) {
+      if (!ingredient.filled()) {
+        throw new IllegalStateException("invalid recipe state: ingredient " + ingredient.toString() + " is not filled");
+      }
+    }
+    PlayerEntity player = crafting.getPlayer();
+    for (ItemStack stack : processedItems) {
+      if (stack.isEmpty()) {
+        continue;
+      }
+
+      if (!player.inventory.add(stack)) {
+        crafting.getPlayer().drop(stack, false);
+      }
+    }
+
+    return result;
   }
 }

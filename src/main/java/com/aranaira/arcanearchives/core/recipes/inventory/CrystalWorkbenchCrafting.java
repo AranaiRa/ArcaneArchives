@@ -7,6 +7,7 @@ import com.aranaira.arcanearchives.core.inventory.handlers.CrystalWorkbenchInven
 import com.aranaira.arcanearchives.core.recipes.CrystalWorkbenchRecipe;
 import com.aranaira.arcanearchives.core.blocks.entities.CrystalWorkbenchBlockEntity;
 import com.aranaira.arcanearchives.core.util.ArcaneRecipeUtil;
+import net.minecraft.item.ItemStack;
 
 import java.util.List;
 
@@ -17,5 +18,20 @@ public class CrystalWorkbenchCrafting extends ArcaneCrafting<CrystalWorkbenchInv
 
   public List<IngredientInfo> getIngredientInfo(CrystalWorkbenchRecipe recipe) {
     return ArcaneRecipeUtil.getIngredientInfo(recipe, this);
+  }
+
+  @Override
+  public ItemStack removeItem(int index, int count) {
+    return super.removeItem(index, count);
+  }
+
+  @Override
+  public ItemStack removeItemNoUpdate(int index) {
+    return super.removeItemNoUpdate(index);
+  }
+
+  @Override
+  public void setItem(int index, ItemStack stack) {
+    super.setItem(index, stack);
   }
 }

@@ -4,10 +4,13 @@ import com.aranaira.arcanearchives.api.container.IPartitionedPlayerContainer;
 import com.aranaira.arcanearchives.api.inventory.IArcaneInventory;
 import com.aranaira.arcanearchives.api.blockentities.IArcaneArchivesBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import noobanidus.libs.noobutil.types.IIInvWrapper;
 
@@ -20,7 +23,19 @@ public interface ICrafter<H extends IArcaneInventory, C extends Container & IPar
   T getBlockEntity();
   UUID getTileId();
   PlayerEntity getPlayer();
+  default PlayerInventory getPlayerInventory() {
+    return getPlayer().inventory;
+  }
   @Override
   H getHandler();
   List<Slot> getCombinedIngredientSlots();
+  default NonNullList<ItemStack> getCombinedItems() {
+    NonNullList<ItemStack> result = NonNullList.of(ItemStack.EMPTY);
+    for (Slot slot : getCombinedIngredientSlots()) {
+      if (slot.hasItem()) {
+        result.add(slot.getItem());
+      }
+    }
+    return result;
+  }
 }

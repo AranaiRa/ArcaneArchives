@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.core.recipes.processors;
 
+import com.aranaira.arcanearchives.api.crafting.ingredients.IngredientStack;
 import com.aranaira.arcanearchives.api.reference.Identifiers;
 import com.aranaira.arcanearchives.core.recipes.inventory.CrystalWorkbenchCrafting;
 import net.minecraft.item.ItemStack;
@@ -13,7 +14,8 @@ public class CrystalWorkbenchUUIDProcessor extends CrystalWorkbenchProcessor {
     super();
   }
 
-  public ItemStack processOutput(ItemStack result, List<Ingredient> ingredients, List<ItemStack> incoming, CrystalWorkbenchCrafting crafter) {
+  @Override
+  public ItemStack processOutput(ItemStack result, List<IngredientStack> ingredients, List<ItemStack> incoming, CrystalWorkbenchCrafting crafter) {
     CompoundNBT tag = result.getOrCreateTag();
     if (!tag.hasUUID(Identifiers.networkId)) {
       if (crafter.getTileId() == null) {

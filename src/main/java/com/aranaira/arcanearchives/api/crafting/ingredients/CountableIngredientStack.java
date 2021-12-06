@@ -28,6 +28,15 @@ public class CountableIngredientStack extends IngredientStack {
     }
   }
 
+  /**
+   * @param amount The amount incoming.
+   * @return The amount to subtract from this stack.
+   */
+  public int subtract (int amount) {
+    int remainder = supply(amount);
+    return amount - remainder;
+  }
+
   public boolean filled () {
     return (getCount() - suppliedAmount) <= 0;
   }

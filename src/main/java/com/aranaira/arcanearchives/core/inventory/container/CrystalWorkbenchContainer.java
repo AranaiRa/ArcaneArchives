@@ -11,6 +11,7 @@ import com.aranaira.arcanearchives.core.init.ResolvingRecipes;
 import com.aranaira.arcanearchives.core.inventory.handlers.CrystalWorkbenchInventory;
 import com.aranaira.arcanearchives.core.inventory.slot.ClientCrystalWorkbenchRecipeRecipeSlot;
 import com.aranaira.arcanearchives.core.inventory.slot.CrystalWorkbenchRecipeSlot;
+import com.aranaira.arcanearchives.core.inventory.slot.CrystalWorkbenchResultSlot;
 import com.aranaira.arcanearchives.core.inventory.slot.CrystalWorkbenchSlot;
 import com.aranaira.arcanearchives.core.network.Networking;
 import com.aranaira.arcanearchives.core.network.packets.RecipeSyncPacket;
@@ -20,6 +21,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
@@ -40,6 +42,7 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
   private final List<Slot> playerSlots = new ArrayList<>();
   private final List<Slot> allSlots = new ArrayList<>();
   private CrystalWorkbenchCrafting workbench = null;
+  private CrystalWorkbenchResultSlot result = null;
 
   // Container Synchronized
   private int attuneProgress = 0;
@@ -85,11 +88,22 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
     }
   };
 
-  private void refreshDim() {
-    // TODO:
-    // 1. Create the actual recipe output slot.
-    // 2. Refresh its contents whenever the slot is changed.
-    // 3. Handle on-take recipe matching.
+  private final List<CrystalWorkbenchRecipeSlot> RECIPE_SLOTS = new ArrayList<>();
+  private final List<ClientCrystalWorkbenchRecipeRecipeSlot> CLIENT_RECIPE_SLOTS = new ArrayList<>();
+
+  public CrystalWorkbenchContainer(ContainerType<? extends CrystalWorkbenchContainer> type, int id, PlayerInventory inventory, PacketBuffer buffer) {
+    super(type, id, 2, inventory, buffer.readBlockPos());
+    this.addDataSlots(data);
+    construct();
+  }
+
+  public CrystalWorkbenchContainer(int id, PlayerInventory playerInventory, CrystalWorkbenchBlockEntity tile) {
+    super(ModContainers.CRYSTAL_WORKBENCH.get(), id, 2, playerInventory, tile);
+    this.addDataSlots(data);
+    construct();
+  }
+
+  private void refreshRecipesAndSlot() {
     List<? extends IRecipeSlot<CrystalWorkbenchRecipe>> recipes = isClientSide() ? CLIENT_RECIPE_SLOTS : RECIPE_SLOTS;
     for (IRecipeSlot<CrystalWorkbenchRecipe> slot : recipes) {
       if (!slot.getSlot().hasItem()) {
@@ -103,6 +117,12 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
 
       boolean matches = recipe.matches(getWorkbench(), getPlayerWorld());
       slot.setDimmed(!matches);
+
+      if (recipe.getId().equals(this.selectedRecipe) && result != null && matches) {
+        this.result.setRecipe(recipe);
+      } else if (result != null) {
+        this.result.setRecipe(null);
+      }
     }
   }
 
@@ -120,20 +140,6 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
     setSelectedSlotFromRecipe();
   }
 
-  private final List<CrystalWorkbenchRecipeSlot> RECIPE_SLOTS = new ArrayList<>();
-  private final List<ClientCrystalWorkbenchRecipeRecipeSlot> CLIENT_RECIPE_SLOTS = new ArrayList<>();
-
-  public CrystalWorkbenchContainer(ContainerType<? extends CrystalWorkbenchContainer> type, int id, PlayerInventory inventory, PacketBuffer buffer) {
-    super(type, id, 2, inventory, buffer.readBlockPos());
-    this.addDataSlots(data);
-    construct();
-  }
-
-  public CrystalWorkbenchContainer(int id, PlayerInventory playerInventory, CrystalWorkbenchBlockEntity tile) {
-    super(ModContainers.CRYSTAL_WORKBENCH.get(), id, 2, playerInventory, tile);
-    this.addDataSlots(data);
-    construct();
-  }
 
   public CrystalWorkbenchCrafting getWorkbench() {
     if (workbench == null) {
@@ -187,7 +193,14 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
   }
 
   protected void createOutputSlot() {
-
+    result = new CrystalWorkbenchResultSlot(getPlayer(), this::getWorkbench, new Inventory(1), 0, 95, 18) {
+      @Override
+      public ItemStack onTake(PlayerEntity pPlayer, ItemStack pStack) {
+        ItemStack result = super.onTake(pPlayer, pStack);
+        refreshRecipesAndSlot();
+        return result;
+      }
+    };
   }
 
   @Override
@@ -229,12 +242,12 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
 
   @Override
   public void inventoryChanged(IArcaneInventory inventory, int slot) {
-    refreshDim();
+    refreshRecipesAndSlot();
   }
 
   @Override
   public void inventoryChanged(IInventory inventory, int slot) {
-    refreshDim();
+    refreshRecipesAndSlot();
   }
 
   @Override
@@ -314,7 +327,7 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
       }
       setData(DataArray.SlotOffset, slotOffset);
       setSelectedSlotFromRecipe();
-      refreshDim();
+      refreshRecipesAndSlot();
     }
 
     return false;
