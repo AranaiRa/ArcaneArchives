@@ -12,10 +12,13 @@ import com.aranaira.arcanearchives.core.inventory.handlers.CrystalWorkbenchInven
 import com.aranaira.arcanearchives.core.inventory.slot.ClientCrystalWorkbenchRecipeRecipeSlot;
 import com.aranaira.arcanearchives.core.inventory.slot.CrystalWorkbenchRecipeSlot;
 import com.aranaira.arcanearchives.core.inventory.slot.CrystalWorkbenchSlot;
+import com.aranaira.arcanearchives.core.network.Networking;
+import com.aranaira.arcanearchives.core.network.packets.RecipeSyncPacket;
 import com.aranaira.arcanearchives.core.recipes.CrystalWorkbenchRecipe;
 import com.aranaira.arcanearchives.core.recipes.inventory.CrystalWorkbenchCrafting;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.ContainerType;
@@ -38,10 +41,13 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
   private final List<Slot> allSlots = new ArrayList<>();
   private CrystalWorkbenchCrafting workbench = null;
 
+  // Container Synchronized
   private int attuneProgress = 0;
   private int deattuneProgress = 0;
-  private int selectedSlot = -1;
   private int slotOffset = 0;
+  private int selectedSlot = -1;
+
+  private ResourceLocation selectedRecipe = Constants.Recipes.NoRecipe;
 
   private final IIntArray data = new IIntArray() {
     @Override
@@ -49,8 +55,6 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
       switch (pIndex) {
         case DataArray.SlotOffset:
           return slotOffset;
-        case DataArray.SlotSelected:
-          return selectedSlot;
         case DataArray.AttuneProgress:
           return attuneProgress;
         case DataArray.DeattuneProgress:
@@ -65,9 +69,6 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
       switch (pIndex) {
         case DataArray.SlotOffset:
           setSlotOffset(pValue);
-          break;
-        case DataArray.SlotSelected:
-          selectedSlot = pValue;
           break;
         case DataArray.AttuneProgress:
           attuneProgress = pValue;
@@ -107,7 +108,6 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
 
   private void setSlotOffset(int pValue) {
     this.slotOffset = pValue;
-    this.selectedSlot = -1;
     if (!isClientSide()) {
       for (CrystalWorkbenchRecipeSlot slot : RECIPE_SLOTS) {
         slot.setOffset(pValue);
@@ -117,6 +117,7 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
         slot.setOffset(pValue);
       }
     }
+    setSelectedSlotFromRecipe();
   }
 
   private final List<CrystalWorkbenchRecipeSlot> RECIPE_SLOTS = new ArrayList<>();
@@ -151,11 +152,10 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
       if (recipe != null) {
         int index = ResolvingRecipes.CRYSTAL_WORKBENCH.lookup(recipe);
         if (index != -1) {
-          int mod = index % Constants.CrystalWorkbench.RecipeSlots;
           int page = (index / Constants.CrystalWorkbench.RecipeSlots);
           setData(DataArray.SlotOffset, page);
-          setData(DataArray.SlotSelected, mod);
         }
+        setRecipe(recipe);
       }
     }
     if (isClientSide() && this.getEmptyInventory() != null) {
@@ -259,12 +259,36 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
       if (slot instanceof IRecipeSlot) {
         IRecipeSlot<?> recipeSlot = (IRecipeSlot<?>) slot;
         if (slot.hasItem() && !recipeSlot.isDimmed()) {
-          setData(DataArray.SlotSelected, recipeSlot.getIndex());
+          setRecipe(recipeSlot.getRegistryName());
         }
       }
     }
 
     return super.clicked(slotId, dragType, clickTypeIn, player);
+  }
+
+  public void setSelectedSlotFromRecipe() {
+    if (this.selectedRecipe == null || this.selectedRecipe == Constants.Recipes.NoRecipe) {
+      return;
+    }
+
+    boolean set = false;
+
+    for (IRecipeSlot<?> slot : isClientSide() ? CLIENT_RECIPE_SLOTS : RECIPE_SLOTS) {
+      if (!slot.getSlot().hasItem()) {
+        continue;
+      }
+
+      ResourceLocation inSlot = slot.getRegistryName();
+      if (this.selectedRecipe.equals(inSlot)) {
+        set = true;
+        selectedSlot = slot.getIndex();
+        break;
+      }
+    }
+    if (!set) {
+      selectedSlot = -1;
+    }
   }
 
   @Override
@@ -289,7 +313,7 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
         }
       }
       setData(DataArray.SlotOffset, slotOffset);
-      setData(DataArray.SlotSelected, selectedSlot);
+      setSelectedSlotFromRecipe();
       refreshDim();
     }
 
@@ -315,11 +339,8 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
 
   @Override
   public void removed(PlayerEntity player) {
-    if (!isClientSide() && getBlockEntity() != null) {
-      IRecipeSlot<?> slot = getSelectedRecipeSlot();
-      if (slot != null) {
-        DataStorage.setSelectedRecipe(player.getUUID(), getBlockEntity().getEntityId(), slot.getRegistryName());
-      }
+    if (!isClientSide() && getBlockEntity() != null && selectedRecipe != null && selectedRecipe != Constants.Recipes.NoRecipe) {
+      DataStorage.setSelectedRecipe(player.getUUID(), getBlockEntity().getEntityId(), selectedRecipe);
     }
     super.removed(player);
   }
@@ -327,5 +348,19 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
   @Override
   public List<Slot> getPlayerSlots() {
     return playerSlots;
+  }
+
+  public ResourceLocation getRecipe() {
+    return this.selectedRecipe;
+  }
+
+  public void setRecipe(ResourceLocation recipe) {
+    this.selectedRecipe = recipe;
+
+    if (!isClientSide()) {
+      Networking.sendTo(new RecipeSyncPacket(recipe, this.containerId), (ServerPlayerEntity) getPlayer());
+    }
+
+    setSelectedSlotFromRecipe();
   }
 }

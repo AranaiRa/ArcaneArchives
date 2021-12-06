@@ -10,6 +10,7 @@ import com.aranaira.arcanearchives.client.impl.InvisibleButton;
 import com.aranaira.arcanearchives.core.blocks.entities.CrystalWorkbenchBlockEntity;
 import com.aranaira.arcanearchives.core.inventory.container.CrystalWorkbenchContainer;
 import com.aranaira.arcanearchives.core.network.Networking;
+import com.aranaira.arcanearchives.core.network.packets.RequestSyncPacket;
 import com.aranaira.arcanearchives.core.recipes.CrystalWorkbenchRecipe;
 import com.aranaira.arcanearchives.core.util.ArcaneRecipeUtil;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -50,6 +51,7 @@ public class CrystalWorkbenchScreen extends ContainerScreen<CrystalWorkbenchCont
     super.init();
     this.addButton(new InvisibleButton(width / 2 - 80, height / 2 - 59, 15, 21, (val) -> sendButtonClick(1)));
     this.addButton(new InvisibleButton(width / 2 + 65, height / 2 - 59, 15, 21, (val) -> sendButtonClick(2)));
+    Networking.sendToServer(new RequestSyncPacket(this.menu.containerId));
   }
 
   @SuppressWarnings("deprecation")

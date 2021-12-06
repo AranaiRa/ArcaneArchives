@@ -1,7 +1,6 @@
 package com.aranaira.arcanearchives.core.network.packets;
 
 import com.aranaira.arcanearchives.core.inventory.container.AbstractLargeContainer;
-import com.aranaira.arcanearchives.core.inventory.container.RadiantChestContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
@@ -16,7 +15,8 @@ public class ExtendedSlotContentsPacket {
   private int slot = 0;
   private ItemStack stack = ItemStack.EMPTY;
 
-  public ExtendedSlotContentsPacket() {}
+  public ExtendedSlotContentsPacket() {
+  }
 
   public ExtendedSlotContentsPacket(int windowId, int slot, ItemStack stack) {
     this.windowId = windowId;
@@ -38,17 +38,17 @@ public class ExtendedSlotContentsPacket {
     ebuf.writeExtendedItemStack(stack);
   }
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-      PlayerEntity player = Getter.getPlayer();
-      if (player == null) return;
+  public void handle(Supplier<NetworkEvent.Context> ctx) {
+    PlayerEntity player = Getter.getPlayer();
+    if (player == null) return;
 
-      ctx.get().enqueueWork(() -> {
-        if (player.containerMenu instanceof AbstractLargeContainer && windowId == player.containerMenu.containerId) {
-          player.containerMenu.slots.get(slot).set(stack);
-        }
-      });
+    ctx.get().enqueueWork(() -> {
+      if (player.containerMenu instanceof AbstractLargeContainer && windowId == player.containerMenu.containerId) {
+        player.containerMenu.slots.get(slot).set(stack);
+      }
+    });
 
 
-      ctx.get().setPacketHandled(true);
-    }
+    ctx.get().setPacketHandled(true);
+  }
 }

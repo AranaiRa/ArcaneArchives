@@ -3,6 +3,8 @@ package com.aranaira.arcanearchives.core.network;
 import com.aranaira.arcanearchives.api.ArcaneArchivesAPI;
 import com.aranaira.arcanearchives.core.network.packets.ExtendedSlotContentsPacket;
 import com.aranaira.arcanearchives.core.network.packets.LightningRenderPacket;
+import com.aranaira.arcanearchives.core.network.packets.RecipeSyncPacket;
+import com.aranaira.arcanearchives.core.network.packets.RequestSyncPacket;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -24,6 +26,8 @@ public class Networking extends PacketHandler {
   public void registerMessages() {
     registerMessage(ExtendedSlotContentsPacket.class, ExtendedSlotContentsPacket::encode, ExtendedSlotContentsPacket::new, ExtendedSlotContentsPacket::handle);
     registerMessage(LightningRenderPacket.class, LightningRenderPacket::encode, LightningRenderPacket::decode, LightningRenderPacket::handle);
+    registerMessage(RecipeSyncPacket.class, RecipeSyncPacket::encode, RecipeSyncPacket::new, RecipeSyncPacket::handle);
+    registerMessage(RequestSyncPacket.class,  RequestSyncPacket::encode, RequestSyncPacket::new, RequestSyncPacket::handle);
   }
 
   public static void register () {

@@ -1,5 +1,8 @@
 package com.aranaira.arcanearchives.api.reference;
 
+import com.aranaira.arcanearchives.api.ArcaneArchivesAPI;
+import net.minecraft.util.ResourceLocation;
+
 public interface Constants {
   interface CrystalWorkbench {
     int RecipeSlots = 7;
@@ -16,6 +19,10 @@ public interface Constants {
       int Overlay = 0xaa1e3340;
       int OverlaySimple = 0x80808080;
     }
+  }
+
+  interface Recipes {
+    ResourceLocation NoRecipe = new ResourceLocation(ArcaneArchivesAPI.MODID, "no_recipe");
   }
 
   interface Interface {

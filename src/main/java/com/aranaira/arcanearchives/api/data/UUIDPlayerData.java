@@ -55,9 +55,10 @@ public abstract class UUIDPlayerData<T> extends WorldSavedData {
         }
 
         CompoundNBT tag = new CompoundNBT();
-        tag.putUUID(Identifiers.Data.slotUUID, entry.getKey());
+        tag.putUUID(Identifiers.Data.slotUUID, set.getKey());
         converter.put(tag, Identifiers.Data.slotValue, entry.getValue());
-        tag.putUUID(Identifiers.Data.slotPlayerId, set.getKey());
+        tag.putUUID(Identifiers.Data.slotPlayerId, entry.getKey());
+        pairs.add(tag);
       }
     }
     pCompound.put(Identifiers.Data.slotDataList, pairs);
