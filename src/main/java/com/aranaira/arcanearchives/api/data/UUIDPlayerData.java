@@ -1,8 +1,6 @@
 package com.aranaira.arcanearchives.api.data;
 
 import com.aranaira.arcanearchives.api.reference.Identifiers;
-import it.unimi.dsi.fastutil.objects.Object2IntMap;
-import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.world.storage.WorldSavedData;
@@ -15,12 +13,12 @@ import java.util.UUID;
 
 public abstract class UUIDPlayerData<T> extends WorldSavedData {
   private final Map<UUID, Map<UUID, T>> VALUE_MAP = new HashMap<>();
-  private final NBTConverter<T> converter;
+  private final NBTPutter<T> converter;
   private final NBTGetter<T> getter;
   @Nullable
   private final T defaultValue;
 
-  public UUIDPlayerData(String id, NBTConverter<T> converter, NBTGetter<T> getter, @Nullable T defaultValue) {
+  public UUIDPlayerData(String id, NBTPutter<T> converter, NBTGetter<T> getter, @Nullable T defaultValue) {
     super(id);
     this.converter = converter;
     this.getter = getter;
@@ -66,7 +64,7 @@ public abstract class UUIDPlayerData<T> extends WorldSavedData {
   }
 
   @FunctionalInterface
-  public interface NBTConverter<T> {
+  public interface NBTPutter<T> {
     void put(CompoundNBT nbt, String key, T value);
   }
 
