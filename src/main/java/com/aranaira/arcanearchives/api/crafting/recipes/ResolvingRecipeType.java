@@ -14,6 +14,7 @@ import net.minecraft.profiler.IProfiler;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
 
+import javax.annotation.Nullable;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +44,15 @@ public class ResolvingRecipeType<C extends IInventory, T extends IRecipe<C>> ext
     }
 
     return cache;
+  }
+
+  @Nullable
+  public T getRecipe (ResourceLocation location) {
+    int index = lookup(location);
+    if (index == -1) {
+      return null;
+    }
+    return getRecipe(index);
   }
 
   public int size () {

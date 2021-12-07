@@ -15,6 +15,7 @@ import com.aranaira.arcanearchives.core.inventory.slot.CrystalWorkbenchResultSlo
 import com.aranaira.arcanearchives.core.inventory.slot.CrystalWorkbenchSlot;
 import com.aranaira.arcanearchives.core.network.Networking;
 import com.aranaira.arcanearchives.core.network.packets.RecipeSyncPacket;
+import com.aranaira.arcanearchives.core.network.packets.RequestSyncPacket;
 import com.aranaira.arcanearchives.core.recipes.CrystalWorkbenchRecipe;
 import com.aranaira.arcanearchives.core.recipes.inventory.CrystalWorkbenchCrafting;
 import net.minecraft.entity.player.PlayerEntity;
@@ -160,6 +161,7 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
         if (index != -1) {
           int page = (index / Constants.CrystalWorkbench.RecipeSlots);
           setData(DataArray.SlotOffset, page);
+          result.setRecipe(ResolvingRecipes.CRYSTAL_WORKBENCH.getRecipe(index));
         }
         setRecipe(recipe);
       }
@@ -197,10 +199,13 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
       @Override
       public ItemStack onTake(PlayerEntity pPlayer, ItemStack pStack) {
         ItemStack result = super.onTake(pPlayer, pStack);
-        refreshRecipesAndSlot();
+        if (getRecipe() != null && getRecipe().matches(CrystalWorkbenchContainer.this.getWorkbench(), pPlayer.level)) {
+          setRecipe(getRecipe());
+        }
         return result;
       }
     };
+    this.addSlot(result);
   }
 
   @Override
@@ -265,14 +270,17 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
     return slot instanceof IRecipeSlot;
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public ItemStack clicked(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
     if (!isClientSide() && slotId >= 0) {
       Slot slot = getSlot(slotId);
       if (slot instanceof IRecipeSlot) {
-        IRecipeSlot<?> recipeSlot = (IRecipeSlot<?>) slot;
-        if (slot.hasItem() && !recipeSlot.isDimmed()) {
+        IRecipeSlot<CrystalWorkbenchRecipe> recipeSlot = (IRecipeSlot<CrystalWorkbenchRecipe>) slot;
+        if (recipeSlot.getIndex() != selectedSlot && slot.hasItem() && recipeSlot.getRecipe() != null && recipeSlot.getRecipe().matches(getWorkbench(), getPlayerWorld())) {
           setRecipe(recipeSlot.getRegistryName());
+          result.setRecipe(recipeSlot.getRecipe());
+          broadcastChanges();
         }
       }
     }
@@ -372,6 +380,8 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
 
     if (!isClientSide()) {
       Networking.sendTo(new RecipeSyncPacket(recipe, this.containerId), (ServerPlayerEntity) getPlayer());
+    } else {
+      this.result.setRecipe(ResolvingRecipes.CRYSTAL_WORKBENCH.getRecipe(recipe));
     }
 
     setSelectedSlotFromRecipe();

@@ -102,7 +102,7 @@ public class CrystalWorkbenchRecipe implements ICrystalWorkbenchRecipe<CrystalWo
 
   @Override
   public ItemStack assemble(CrystalWorkbenchCrafting inv) {
-    ItemStack resultCopy = result.copy();
+    ItemStack resultCopy = getResultItem();
     for (Processor<CrystalWorkbenchCrafting> processor : getProcessors()) {
       resultCopy = processor.processOutput(resultCopy, getIngredientStacks(), inv.getCombinedItems(), inv);
     }
@@ -111,7 +111,7 @@ public class CrystalWorkbenchRecipe implements ICrystalWorkbenchRecipe<CrystalWo
 
   @Override
   public ItemStack getResultItem() {
-    return result;
+    return result.copy();
   }
 
   @Override

@@ -31,6 +31,7 @@ public class RequestSyncPacket {
       ServerPlayerEntity player = ctx.get().getSender();
       if (player != null && player.containerMenu.containerId == this.containerId && player.containerMenu instanceof CrystalWorkbenchContainer) {
         Networking.sendTo(new RecipeSyncPacket(((CrystalWorkbenchContainer)player.containerMenu).getRecipe(), this.containerId), player);
+        player.containerMenu.broadcastChanges();
       }
     });
     ctx.get().setPacketHandled(true);
