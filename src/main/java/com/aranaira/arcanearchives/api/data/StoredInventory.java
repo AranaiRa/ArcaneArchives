@@ -15,13 +15,13 @@ import java.util.function.Supplier;
 
 public class StoredInventory<I extends AbstractArcaneItemHandler> {
   protected final Supplier<UUID> uuidSupplier;
-  protected final Function<Integer, I> builder;
+  protected final IntFunction<I> builder;
   protected final IntFunction<I> emptyBuilder;
   protected final int size;
   protected I inventory = null;
   protected I empty = null;
 
-  public StoredInventory(Supplier<UUID> uuidSupplier, Function<Integer, I> builder, IntFunction<I> empty, int size) {
+  public StoredInventory(Supplier<UUID> uuidSupplier, IntFunction<I> builder, IntFunction<I> empty, int size) {
     this.builder = builder;
     this.emptyBuilder = empty;
     this.uuidSupplier = uuidSupplier;

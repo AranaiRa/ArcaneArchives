@@ -6,7 +6,7 @@ import net.minecraft.world.storage.WorldSavedData;
 
 import java.io.File;
 import java.util.UUID;
-import java.util.function.Function;
+import java.util.function.IntFunction;
 
 public class ArcaneInventoryData<T extends IArcaneInventory> extends WorldSavedData {
   private UUID id;
@@ -17,16 +17,12 @@ public class ArcaneInventoryData<T extends IArcaneInventory> extends WorldSavedD
     return "ArcaneArchives-Inventory-" + id.toString();
   }
 
-  public ArcaneInventoryData(UUID id, int size, Function<Integer, T> builder) {
+  public ArcaneInventoryData(UUID id, int size, IntFunction<T> builder) {
     super(ID(id));
     this.id = id;
     this.size = size;
     this.inventory = builder.apply(this.size);
   }
-
-/*  public ArcaneInventoryData(UUID id, Supplier<T> builder) {
-    this(id, builder.get());
-  }*/
 
   public T getInventory() {
     return inventory;

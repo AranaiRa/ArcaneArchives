@@ -8,10 +8,11 @@ import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
 import java.util.UUID;
 import java.util.function.Function;
+import java.util.function.IntFunction;
 
 @SuppressWarnings("ConstantConditions")
 public class DataStorage {
-  public static <T extends IArcaneInventory> ArcaneInventoryData<T> getInventory (UUID id, int size, Function<Integer, T> builder) {
+  public static <T extends IArcaneInventory> ArcaneInventoryData<T> getInventory (UUID id, int size, IntFunction<T> builder) {
     DimensionSavedDataManager manager = ServerLifecycleHooks.getCurrentServer().getLevel(World.OVERWORLD).getDataStorage();
     return manager.computeIfAbsent(() -> new ArcaneInventoryData<>(id, size, builder), ArcaneInventoryData.ID(id));
   }

@@ -197,7 +197,8 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
   // TODO: Convert this to potential use CraftResultInventory, IWorldPosCallable
   // TODO: and WorkbenchContainer::slotChangedCraftingGrid
   protected void createOutputSlot() {
-    result = new CrystalWorkbenchResultSlot(getPlayer(), this::getWorkbench, new Inventory(1), 0, 95, 18) {
+    result = new CrystalWorkbenchResultSlot(getPlayer(), this::getWorkbench, new Inventory(1), 0, 95, 18);
+/*   {
       @Override
       public ItemStack onTake(PlayerEntity pPlayer, ItemStack pStack) {
         ItemStack result = super.onTake(pPlayer, pStack);
@@ -206,7 +207,7 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
         }
         return result;
       }
-    };
+    };*/
     this.addSlot(result);
   }
 
