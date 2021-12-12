@@ -17,10 +17,10 @@ public class CrystalWorkbenchUUIDProcessor extends CrystalWorkbenchProcessor {
   public ItemStack processOutput(ItemStack result, List<IngredientStack> ingredients, List<ItemStack> incoming, CrystalWorkbenchCrafting crafter) {
     CompoundNBT tag = result.getOrCreateTag();
     if (!tag.hasUUID(Identifiers.networkId)) {
-      if (crafter.getTileId() == null) {
+      if (crafter.getBlockEntity().getEntityId() == null) {
         throw new IllegalArgumentException("tile id for crafter tile is null: " + crafter.getBlockEntity());
       }
-      tag.putUUID(Identifiers.networkId, crafter.getTileId());
+      tag.putUUID(Identifiers.networkId, crafter.getBlockEntity().getEntityId());
     }
     return null;
   }

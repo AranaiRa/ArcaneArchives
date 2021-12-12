@@ -27,6 +27,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import noobanidus.libs.noobutil.ingredient.CountableIngredientStack;
 import noobanidus.libs.noobutil.ingredient.IngredientStack;
+import noobanidus.libs.noobutil.processor.IProcessor;
 import noobanidus.libs.noobutil.processor.Processor;
 
 import javax.annotation.Nullable;
