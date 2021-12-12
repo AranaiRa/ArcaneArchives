@@ -1,12 +1,11 @@
 package com.aranaira.arcanearchives.core.inventory.slot;
 
-import com.aranaira.arcanearchives.api.inventory.IArcaneInventory;
 import com.aranaira.arcanearchives.core.inventory.handlers.CrystalWorkbenchInventory;
-import com.aranaira.arcanearchives.core.inventory.handlers.RadiantChestInventory;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.SlotItemHandler;
+import noobanidus.libs.noobutil.inventory.ILargeInventory;
 
 import javax.annotation.Nonnull;
 
@@ -15,10 +14,10 @@ Licensed under a CC0 license but used with permission
 https://github.com/Tfarcenim/Dank-Storage/blob/1.16.x/src/main/java/tfar/dankstorage/inventory/DankSlot.java
  */
 public class CrystalWorkbenchSlot extends SlotItemHandler {
-  private final IArcaneInventory inventory;
+  private final ILargeInventory inventory;
   private final int index;
 
-  public CrystalWorkbenchSlot(IArcaneInventory itemHandler, int index, int xPosition, int yPosition) {
+  public CrystalWorkbenchSlot(ILargeInventory itemHandler, int index, int xPosition, int yPosition) {
     super(itemHandler, index, xPosition, yPosition);
     this.index = index;
     this.inventory = itemHandler;

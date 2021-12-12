@@ -1,5 +1,7 @@
 package com.aranaira.arcanearchives.api.crafting.ingredients;
 
+import noobanidus.libs.noobutil.ingredient.IngredientStack;
+
 public class CollatedInfoPair {
   private final IngredientStack ingredient;
   private final IngredientInfo info;

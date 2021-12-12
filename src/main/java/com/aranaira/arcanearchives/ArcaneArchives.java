@@ -16,12 +16,17 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
+import noobanidus.libs.noobutil.reference.ModData;
 import noobanidus.libs.noobutil.registrate.CustomRegistrate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @Mod(ArcaneArchivesAPI.MODID)
 public class ArcaneArchives {
+  static {
+    ModData.setIdAndIdentifier(ArcaneArchivesAPI.MODID, ArcaneArchivesAPI.MOD_IDENTIFIER);
+  }
+
   public static final Logger LOG = LogManager.getLogger();
   public static CustomRegistrate REGISTRATE;
 

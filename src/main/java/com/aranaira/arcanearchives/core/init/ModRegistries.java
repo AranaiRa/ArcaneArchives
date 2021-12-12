@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.core.init;
 
-import com.aranaira.arcanearchives.api.crafting.processors.IProcessor;
 import net.minecraftforge.registries.IForgeRegistry;
+import noobanidus.libs.noobutil.processor.IProcessor;
 
 public class ModRegistries {
   public static IForgeRegistry<IProcessor<?>> PROCESSOR_REGISTRY;

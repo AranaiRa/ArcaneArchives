@@ -1,7 +1,6 @@
 package com.aranaira.arcanearchives.core.inventory.container;
 
 import com.aranaira.arcanearchives.api.data.DataStorage;
-import com.aranaira.arcanearchives.api.inventory.IArcaneInventory;
 import com.aranaira.arcanearchives.api.inventory.slot.CappedSlot;
 import com.aranaira.arcanearchives.api.inventory.slot.IRecipeSlot;
 import com.aranaira.arcanearchives.api.reference.Constants;
@@ -15,7 +14,6 @@ import com.aranaira.arcanearchives.core.inventory.slot.CrystalWorkbenchResultSlo
 import com.aranaira.arcanearchives.core.inventory.slot.CrystalWorkbenchSlot;
 import com.aranaira.arcanearchives.core.network.Networking;
 import com.aranaira.arcanearchives.core.network.packets.RecipeSyncPacket;
-import com.aranaira.arcanearchives.core.network.packets.RequestSyncPacket;
 import com.aranaira.arcanearchives.core.recipes.CrystalWorkbenchRecipe;
 import com.aranaira.arcanearchives.core.recipes.inventory.CrystalWorkbenchCrafting;
 import net.minecraft.entity.player.PlayerEntity;
@@ -31,6 +29,7 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.ResourceLocation;
+import noobanidus.libs.noobutil.inventory.ILargeInventory;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -249,7 +248,7 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
   }
 
   @Override
-  public void inventoryChanged(IArcaneInventory inventory, int slot) {
+  public void inventoryChanged(ILargeInventory inventory, int slot) {
     refreshRecipesAndSlot();
   }
 

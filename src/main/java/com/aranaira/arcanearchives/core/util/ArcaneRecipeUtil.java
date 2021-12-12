@@ -2,14 +2,13 @@ package com.aranaira.arcanearchives.core.util;
 
 import com.aranaira.arcanearchives.api.crafting.ingredients.CollatedInfoPair;
 import com.aranaira.arcanearchives.api.crafting.ingredients.IngredientInfo;
-import com.aranaira.arcanearchives.api.crafting.ingredients.IngredientStack;
 import com.aranaira.arcanearchives.core.recipes.CrystalWorkbenchRecipe;
 import com.aranaira.arcanearchives.core.recipes.inventory.CrystalWorkbenchCrafting;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import noobanidus.libs.noobutil.ingredient.IngredientStack;
 
 import java.util.ArrayList;
 import java.util.HashSet;

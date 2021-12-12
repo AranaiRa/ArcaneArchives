@@ -1,14 +1,14 @@
 package com.aranaira.arcanearchives.api.crafting.registry;
 
-import com.aranaira.arcanearchives.api.crafting.ArcaneCrafting;
-import com.aranaira.arcanearchives.api.crafting.recipes.IArcaneRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import noobanidus.libs.noobutil.crafting.Crafting;
+import noobanidus.libs.noobutil.recipe.ILargeRecipe;
 
 import java.util.function.BiPredicate;
 
-public class ResolvingRecipeRegistry<W extends ArcaneCrafting<?, ?, ?>, R extends IArcaneRecipe<?, ?, ?, W>> {
+public class ResolvingRecipeRegistry<W extends Crafting<?, ?, ?>, R extends ILargeRecipe<?, ?, ?, W>> {
   private final ResourceLocation id;
   private final IRecipeType<R> type;
   private final Class<R> recipeClass;

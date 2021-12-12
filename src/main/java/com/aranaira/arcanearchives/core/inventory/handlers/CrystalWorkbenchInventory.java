@@ -1,14 +1,13 @@
 package com.aranaira.arcanearchives.core.inventory.handlers;
 
-import com.aranaira.arcanearchives.api.inventory.AbstractArcaneItemHandler;
-import com.aranaira.arcanearchives.api.inventory.ArcaneItemHandler;
-import com.aranaira.arcanearchives.api.inventory.ItemStackEntry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import noobanidus.libs.noobutil.recipe.LargeItemHandler;
+import noobanidus.libs.noobutil.type.ItemStackEntry;
 
 import javax.annotation.Nonnull;
 
-public class CrystalWorkbenchInventory extends ArcaneItemHandler {
+public class CrystalWorkbenchInventory extends LargeItemHandler {
   public static EmptyArcaneWorkbenchInventory getEmpty() {
     return new EmptyArcaneWorkbenchInventory(18);
   }

@@ -3,7 +3,6 @@ package com.aranaira.arcanearchives.client.screen;
 import com.aranaira.arcanearchives.api.ArcaneArchivesAPI;
 import com.aranaira.arcanearchives.api.crafting.ingredients.CollatedInfoPair;
 import com.aranaira.arcanearchives.api.crafting.ingredients.IngredientInfo;
-import com.aranaira.arcanearchives.api.crafting.ingredients.IngredientStack;
 import com.aranaira.arcanearchives.api.inventory.slot.IRecipeSlot;
 import com.aranaira.arcanearchives.api.reference.Constants;
 import com.aranaira.arcanearchives.client.impl.InvisibleButton;
@@ -19,13 +18,13 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.Widget;
-import net.minecraft.command.impl.LocateBiomeCommand;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.*;
 import noobanidus.libs.noobutil.client.CycleTimer;
+import noobanidus.libs.noobutil.ingredient.IngredientStack;
 
 import java.util.Arrays;
 import java.util.List;
@@ -77,7 +76,7 @@ public class CrystalWorkbenchScreen extends ContainerScreen<CrystalWorkbenchCont
   @Override
   protected void renderTooltip(MatrixStack pPoseStack, int pX, int pY) {
     if (this.minecraft.player.inventory.getCarried().isEmpty() && this.hoveredSlot != null && this.hoveredSlot.hasItem()) {
-      if (this.hoveredSlot instanceof IRecipeSlot && ((IRecipeSlot<CrystalWorkbenchRecipe>)this.hoveredSlot).getRecipe() != null) {
+      if (this.hoveredSlot instanceof IRecipeSlot && ((IRecipeSlot<CrystalWorkbenchRecipe>) this.hoveredSlot).getRecipe() != null) {
         this.renderRecipeTooltip(pPoseStack, (IRecipeSlot<CrystalWorkbenchRecipe>) this.hoveredSlot, pX, pY);
       } else {
         this.renderTooltip(pPoseStack, this.hoveredSlot.getItem(), pX, pY);
@@ -139,7 +138,6 @@ public class CrystalWorkbenchScreen extends ContainerScreen<CrystalWorkbenchCont
       }
     }
   }
-
 
 
   @Override

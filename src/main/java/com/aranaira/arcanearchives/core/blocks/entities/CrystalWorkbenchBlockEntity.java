@@ -1,9 +1,7 @@
 package com.aranaira.arcanearchives.core.blocks.entities;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.api.blockentities.INetworkedBlockEntity;
 import com.aranaira.arcanearchives.api.data.StoredInventory;
-import com.aranaira.arcanearchives.api.blockentities.IInventoryBlockEntity;
 import com.aranaira.arcanearchives.api.data.UUIDNameData;
 import com.aranaira.arcanearchives.core.inventory.container.CrystalWorkbenchContainer;
 import com.aranaira.arcanearchives.core.inventory.handlers.CrystalWorkbenchInventory;
@@ -14,6 +12,7 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import noobanidus.libs.noobutil.block.entities.IInventoryBlockEntity;
 
 import javax.annotation.Nullable;
 import java.util.UUID;

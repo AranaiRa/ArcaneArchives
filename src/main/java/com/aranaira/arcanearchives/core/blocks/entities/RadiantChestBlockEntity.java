@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.core.blocks.entities;
 
-import com.aranaira.arcanearchives.api.blockentities.IInventoryBlockEntity;
 import com.aranaira.arcanearchives.api.data.StoredInventory;
 import com.aranaira.arcanearchives.core.inventory.container.RadiantChestContainer;
 import com.aranaira.arcanearchives.core.inventory.handlers.RadiantChestInventory;
@@ -13,6 +12,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import noobanidus.libs.noobutil.block.entities.IInventoryBlockEntity;
 
 import javax.annotation.Nullable;
 

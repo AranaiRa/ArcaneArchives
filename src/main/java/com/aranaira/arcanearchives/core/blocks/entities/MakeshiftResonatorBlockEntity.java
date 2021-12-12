@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.core.blocks.entities;
 
-import com.aranaira.arcanearchives.api.blockentities.IArcaneArchivesBlockEntity;
 import com.aranaira.arcanearchives.core.blocks.MakeshiftResonatorBlock;
 import com.aranaira.arcanearchives.core.init.ModBlocks;
 import com.aranaira.arcanearchives.core.init.ModItems;
@@ -20,10 +19,11 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import noobanidus.libs.noobutil.block.entities.IReferentialBlockEntity;
 
 import java.util.*;
 
-public class MakeshiftResonatorBlockEntity extends TileEntity implements IArcaneArchivesBlockEntity, ITickableTileEntity {
+public class MakeshiftResonatorBlockEntity extends TileEntity implements IReferentialBlockEntity, ITickableTileEntity {
   private boolean filled = false;
   private int countdown = 100;
 
@@ -117,7 +117,7 @@ public class MakeshiftResonatorBlockEntity extends TileEntity implements IArcane
   }
 
   @Override
-  public TileEntity getTile() {
+  public TileEntity getBlockEntity() {
     return this;
   }
 }

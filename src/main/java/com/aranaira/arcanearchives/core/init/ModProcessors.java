@@ -1,9 +1,9 @@
 package com.aranaira.arcanearchives.core.init;
 
-import com.aranaira.arcanearchives.api.crafting.processors.IProcessor;
 import com.aranaira.arcanearchives.core.recipes.processors.CrystalWorkbenchContainerProcessor;
 import com.aranaira.arcanearchives.core.recipes.processors.CrystalWorkbenchUUIDProcessor;
 import com.tterrag.registrate.util.entry.RegistryEntry;
+import noobanidus.libs.noobutil.processor.IProcessor;
 
 import static com.aranaira.arcanearchives.ArcaneArchives.REGISTRATE;
 

@@ -1,19 +1,15 @@
 package com.aranaira.arcanearchives.api.data;
 
-import com.aranaira.arcanearchives.api.inventory.AbstractArcaneItemHandler;
-import com.aranaira.arcanearchives.api.inventory.IArcaneInventory;
-import com.aranaira.arcanearchives.api.inventory.IInventoryListener;
 import net.minecraft.world.World;
+import noobanidus.libs.noobutil.data.server.StoredInventoryData;
+import noobanidus.libs.noobutil.recipe.AbstractLargeItemHandler;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
-import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.function.Supplier;
 
-public class StoredInventory<I extends AbstractArcaneItemHandler> {
+public class StoredInventory<I extends AbstractLargeItemHandler> {
   protected final Supplier<UUID> uuidSupplier;
   protected final IntFunction<I> builder;
   protected final IntFunction<I> emptyBuilder;
@@ -43,7 +39,7 @@ public class StoredInventory<I extends AbstractArcaneItemHandler> {
       return null;
     }
 
-    ArcaneInventoryData<I> inventoryData = DataStorage.getInventory(id, size, builder);
+    StoredInventoryData<I> inventoryData = DataStorage.getInventory(id, size, builder);
     this.inventory = inventoryData.getInventory();
     this.inventory.setInventoryData(inventoryData);
     this.inventory.addListener((inventory, slot) -> inventoryData.setDirty());

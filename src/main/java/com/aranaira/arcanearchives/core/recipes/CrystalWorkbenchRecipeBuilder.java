@@ -1,7 +1,5 @@
 package com.aranaira.arcanearchives.core.recipes;
 
-import com.aranaira.arcanearchives.api.crafting.ingredients.IngredientStack;
-import com.aranaira.arcanearchives.api.crafting.processors.Processor;
 import com.aranaira.arcanearchives.core.init.ModRecipes;
 import com.aranaira.arcanearchives.core.recipes.inventory.CrystalWorkbenchCrafting;
 import com.google.gson.JsonArray;
@@ -14,6 +12,8 @@ import net.minecraft.tags.ITag;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
+import noobanidus.libs.noobutil.ingredient.IngredientStack;
+import noobanidus.libs.noobutil.processor.Processor;
 
 import javax.annotation.Nullable;
 import java.util.*;

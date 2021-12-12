@@ -2,7 +2,6 @@ package com.aranaira.arcanearchives.core.event;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.api.ArcaneArchivesAPI;
-import com.aranaira.arcanearchives.api.crafting.processors.IProcessor;
 import com.aranaira.arcanearchives.core.init.ModRegistries;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
@@ -11,6 +10,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import net.minecraftforge.registries.RegistryBuilder;
 import net.minecraftforge.registries.RegistryManager;
+import noobanidus.libs.noobutil.processor.IProcessor;
 
 @Mod.EventBusSubscriber(modid = ArcaneArchivesAPI.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class RegistryHandler {

@@ -10,6 +10,7 @@ import java.util.List;
 
 public abstract class ArcaneArchivesAPI {
   public static final String MODID = "arcanearchives";
+  public static final String MOD_IDENTIFIER = "ArcaneArchives";
 
   public static ArcaneArchivesAPI INSTANCE;
 

@@ -1,9 +1,9 @@
 package com.aranaira.arcanearchives.api.inventory.slot;
 
-import com.aranaira.arcanearchives.api.inventory.ISlotListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
+import noobanidus.libs.noobutil.inventory.ISlotListener;
 
 import java.util.ArrayList;
 import java.util.List;

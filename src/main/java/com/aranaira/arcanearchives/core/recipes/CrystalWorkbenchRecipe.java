@@ -1,10 +1,6 @@
 package com.aranaira.arcanearchives.core.recipes;
 
-import com.aranaira.arcanearchives.api.crafting.ingredients.CountableIngredientStack;
 import com.aranaira.arcanearchives.api.crafting.ingredients.IngredientInfo;
-import com.aranaira.arcanearchives.api.crafting.ingredients.IngredientStack;
-import com.aranaira.arcanearchives.api.crafting.processors.IProcessor;
-import com.aranaira.arcanearchives.api.crafting.processors.Processor;
 import com.aranaira.arcanearchives.api.crafting.recipes.ICrystalWorkbenchRecipe;
 import com.aranaira.arcanearchives.core.init.ModRecipes;
 import com.aranaira.arcanearchives.core.init.ModRegistries;
@@ -12,12 +8,10 @@ import com.aranaira.arcanearchives.core.inventory.container.CrystalWorkbenchCont
 import com.aranaira.arcanearchives.core.inventory.handlers.CrystalWorkbenchInventory;
 import com.aranaira.arcanearchives.core.recipes.inventory.CrystalWorkbenchCrafting;
 import com.aranaira.arcanearchives.core.blocks.entities.CrystalWorkbenchBlockEntity;
-import com.aranaira.arcanearchives.core.util.ArcaneRecipeUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -31,6 +25,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
+import noobanidus.libs.noobutil.ingredient.CountableIngredientStack;
+import noobanidus.libs.noobutil.ingredient.IngredientStack;
+import noobanidus.libs.noobutil.processor.Processor;
 
 import javax.annotation.Nullable;
 import java.util.*;

@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.core.inventory.container;
 
-import com.aranaira.arcanearchives.api.inventory.IArcaneInventory;
 import com.aranaira.arcanearchives.core.blocks.entities.RadiantChestBlockEntity;
 import com.aranaira.arcanearchives.core.init.ModContainers;
 import com.aranaira.arcanearchives.core.inventory.handlers.RadiantChestInventory;
@@ -10,7 +9,7 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
+import noobanidus.libs.noobutil.inventory.ILargeInventory;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -60,7 +59,7 @@ public class RadiantChestContainer extends AbstractLargeContainer<RadiantChestIn
   }
 
   @Override
-  public void inventoryChanged(IArcaneInventory inventory, int slot) {
+  public void inventoryChanged(ILargeInventory inventory, int slot) {
   }
 
   @Override

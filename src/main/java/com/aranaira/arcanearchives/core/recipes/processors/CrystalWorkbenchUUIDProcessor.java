@@ -1,11 +1,10 @@
 package com.aranaira.arcanearchives.core.recipes.processors;
 
-import com.aranaira.arcanearchives.api.crafting.ingredients.IngredientStack;
 import com.aranaira.arcanearchives.api.reference.Identifiers;
 import com.aranaira.arcanearchives.core.recipes.inventory.CrystalWorkbenchCrafting;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
+import noobanidus.libs.noobutil.ingredient.IngredientStack;
 
 import java.util.List;
 

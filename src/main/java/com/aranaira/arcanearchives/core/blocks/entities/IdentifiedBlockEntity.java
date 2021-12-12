@@ -4,7 +4,6 @@ import com.aranaira.arcanearchives.api.blockentities.IIdentifiedBlockEntity;
 import com.aranaira.arcanearchives.api.data.DataStorage;
 import com.aranaira.arcanearchives.api.data.UUIDNameData;
 import com.aranaira.arcanearchives.api.reference.Identifiers;
-import com.aranaira.arcanearchives.api.blockentities.IArcaneArchivesBlockEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
@@ -89,7 +88,7 @@ public abstract class IdentifiedBlockEntity extends TileEntity implements IIdent
   }
 
   @Override
-  public TileEntity getTile() {
+  public TileEntity getBlockEntity() {
     return this;
   }
 

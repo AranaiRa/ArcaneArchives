@@ -2,6 +2,7 @@ package com.aranaira.arcanearchives.api.crafting.ingredients;
 
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
+import noobanidus.libs.noobutil.ingredient.IngredientStack;
 
 import java.util.*;
 

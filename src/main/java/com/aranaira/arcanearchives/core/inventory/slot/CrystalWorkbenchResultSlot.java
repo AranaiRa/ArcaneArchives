@@ -1,15 +1,14 @@
 package com.aranaira.arcanearchives.core.inventory.slot;
 
-import com.aranaira.arcanearchives.api.crafting.ingredients.CountableIngredientStack;
-import com.aranaira.arcanearchives.api.crafting.processors.Processor;
 import com.aranaira.arcanearchives.core.recipes.CrystalWorkbenchRecipe;
 import com.aranaira.arcanearchives.core.recipes.inventory.CrystalWorkbenchCrafting;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import noobanidus.libs.noobutil.ingredient.CountableIngredientStack;
+import noobanidus.libs.noobutil.processor.Processor;
 
 import javax.annotation.Nullable;
 import java.util.List;

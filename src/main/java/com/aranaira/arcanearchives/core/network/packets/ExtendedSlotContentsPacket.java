@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 import noobanidus.libs.noobutil.getter.Getter;
-import noobanidus.libs.noobutil.types.ExtendedItemStackPacketBuffer;
+import noobanidus.libs.noobutil.network.ExtendedItemStackPacketBuffer;
 
 import java.util.function.Supplier;
 
