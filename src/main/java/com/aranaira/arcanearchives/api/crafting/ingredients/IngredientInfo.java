@@ -1,11 +1,11 @@
 package com.aranaira.arcanearchives.api.crafting.ingredients;
 
-import com.aranaira.arcanearchives.api.network.AbstractNetworkObject;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.IntArrayNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.util.INBTSerializable;
+import noobanidus.libs.noobutil.network.AbstractNetworkObject;
 import noobanidus.libs.noobutil.util.EnumUtil;
 
 public class IngredientInfo extends AbstractNetworkObject<PacketBuffer> implements INBTSerializable<IntArrayNBT> {

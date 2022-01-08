@@ -28,6 +28,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIntArray;
+import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.ResourceLocation;
 import noobanidus.libs.noobutil.inventory.ILargeInventory;
 
@@ -97,8 +98,8 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
     construct();
   }
 
-  public CrystalWorkbenchContainer(int id, PlayerInventory playerInventory, CrystalWorkbenchBlockEntity tile) {
-    super(ModContainers.CRYSTAL_WORKBENCH.get(), id, 2, playerInventory, tile);
+  public CrystalWorkbenchContainer(int id, PlayerInventory playerInventory, IWorldPosCallable access) {
+    super(ModContainers.CRYSTAL_WORKBENCH.get(), id, 2, playerInventory, access);
     this.addDataSlots(data);
     construct();
   }
@@ -120,7 +121,7 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
 
       if (recipe.getId().equals(this.selectedRecipe) && result != null && matches) {
         this.result.setRecipe(recipe);
-      } else if (result != null) {
+      } else if (result != null && matches) {
         this.result.setRecipe(null);
       }
     }
@@ -193,20 +194,8 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
     }
   }
 
-  // TODO: Convert this to potential use CraftResultInventory, IWorldPosCallable
-  // TODO: and WorkbenchContainer::slotChangedCraftingGrid
   protected void createOutputSlot() {
     result = new CrystalWorkbenchResultSlot(getPlayer(), this::getWorkbench, new Inventory(1), 0, 95, 18);
-/*   {
-      @Override
-      public ItemStack onTake(PlayerEntity pPlayer, ItemStack pStack) {
-        ItemStack result = super.onTake(pPlayer, pStack);
-        if (getRecipe() != null && getRecipe().matches(CrystalWorkbenchContainer.this.getWorkbench(), pPlayer.level)) {
-          setRecipe(getRecipe());
-        }
-        return result;
-      }
-    };*/
     this.addSlot(result);
   }
 

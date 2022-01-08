@@ -10,6 +10,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import noobanidus.libs.noobutil.block.entities.IInventoryBlockEntity;
@@ -48,7 +49,7 @@ public class CrystalWorkbenchBlockEntity extends NetworkIdentifiedBlockEntity im
   @Override
   public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
     ArcaneArchives.LOG.info("Identifier: " + getEntityId());
-    return new CrystalWorkbenchContainer(windowId, playerInventory, this);
+    return new CrystalWorkbenchContainer(windowId, playerInventory, IWorldPosCallable.create(player.level, getBlockPos()));
   }
 
   @Nullable

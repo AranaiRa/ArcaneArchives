@@ -43,11 +43,17 @@ public class CrystalWorkbenchResultSlot extends Slot {
   }
 
   public void setRecipe(CrystalWorkbenchRecipe recipe) {
-    this.recipe = recipe;
-    if (recipe != null) {
-      this.container.setItem(0, recipe.getResultItem());
-    } else {
-      this.container.setItem(0, ItemStack.EMPTY);
+    if (recipe != this.recipe) {
+      this.recipe = recipe;
+      if (recipe != null) {
+        this.container.setItem(0, recipe.getResultItem());
+      } else {
+        this.container.setItem(0, ItemStack.EMPTY);
+      }
+    } else if (recipe != null) {
+      if (this.container.getItem(0).isEmpty()) {
+        this.container.setItem(0, recipe.getResultItem());
+      }
     }
   }
 
@@ -126,6 +132,7 @@ public class CrystalWorkbenchResultSlot extends Slot {
           }
 
           int toRemove = ingredient.subtract(inSlot.getCount());
+
           if (toRemove > 0) {
             ItemStack copy = inSlot.copy();
             copy.shrink(toRemove);
@@ -133,6 +140,13 @@ public class CrystalWorkbenchResultSlot extends Slot {
               processedItems.addAll(processors.processIngredient(result, ingredient, copy, crafting));
             }
             ingredientSlot.remove(toRemove);
+            break;
+          } else {
+            ItemStack copy = inSlot.copy();
+            for (Processor<CrystalWorkbenchCrafting> processors : recipe.getProcessors()) {
+              processedItems.addAll(processors.processIngredient(result, ingredient, copy, crafting));
+            }
+            ingredientSlot.set(ItemStack.EMPTY);
             break;
           }
         }
@@ -159,6 +173,13 @@ public class CrystalWorkbenchResultSlot extends Slot {
               processedItems.addAll(processors.processIngredient(result, ingredient, copy, crafting));
             }
             playerSlot.remove(toRemove);
+            break;
+          } else {
+            ItemStack copy = inSlot.copy();
+            for (Processor<CrystalWorkbenchCrafting> processors : recipe.getProcessors()) {
+              processedItems.addAll(processors.processIngredient(result, ingredient, copy, crafting));
+            }
+            playerSlot.set(ItemStack.EMPTY);
             break;
           }
         }

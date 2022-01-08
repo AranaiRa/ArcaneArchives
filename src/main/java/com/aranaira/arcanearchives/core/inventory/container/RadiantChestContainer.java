@@ -9,6 +9,7 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.IWorldPosCallable;
 import noobanidus.libs.noobutil.inventory.ILargeInventory;
 
 import javax.annotation.Nullable;
@@ -25,8 +26,8 @@ public class RadiantChestContainer extends AbstractLargeContainer<RadiantChestIn
     createPlayerSlots(142, 200, 16, playerSlots);
   }
 
-  public RadiantChestContainer(int id, PlayerInventory playerInventory, RadiantChestBlockEntity tile) {
-    super(ModContainers.RADIANT_CHEST.get(), id, 9, playerInventory, tile);
+  public RadiantChestContainer(int id, PlayerInventory playerInventory, IWorldPosCallable access) {
+    super(ModContainers.RADIANT_CHEST.get(), id, 9, playerInventory, access);
     createInventorySlots();
     createPlayerSlots(142, 200, 16, playerSlots);
   }

@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.core.inventory.container;
 
 import com.aranaira.arcanearchives.api.inventory.slot.CappedSlot;
+import com.aranaira.arcanearchives.core.init.ModBlocks;
 import com.aranaira.arcanearchives.core.inventory.slot.RadiantChestSlot;
 import com.aranaira.arcanearchives.core.network.Networking;
 import com.aranaira.arcanearchives.core.network.packets.ExtendedSlotContentsPacket;
@@ -11,6 +12,7 @@ import net.minecraft.inventory.container.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.SSetSlotPacket;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.math.BlockPos;
 import noobanidus.libs.noobutil.block.entities.IInventoryBlockEntity;
@@ -29,25 +31,26 @@ https://github.com/Tfarcenim/Dank-Storage/blob/1.16.x/src/main/java/tfar/danksto
 // - Add slots to ignore for transfer stack in slot
 public abstract class AbstractLargeContainer<V extends ILargeInventory, T extends IInventoryBlockEntity<V>> extends Container implements IPartitionedPlayerContainer, IBlockEntityContainer<V, T> {
   protected final PlayerInventory player;
-  protected final T blockEntity;
+  protected T blockEntity;
   protected V inventory;
   protected final int rows;
   protected final boolean clientSide;
+  protected IWorldPosCallable access;
 
-  public AbstractLargeContainer(ContainerType<?> container, int id, int rows, PlayerInventory playerInventory, T blockEntity) {
+  public AbstractLargeContainer(ContainerType<?> container, int id, int rows, PlayerInventory playerInventory, IWorldPosCallable access) {
     super(container, id);
     this.player = playerInventory;
-    this.blockEntity = blockEntity;
     this.rows = rows;
     this.clientSide = false;
+    this.access = access;
   }
 
   public AbstractLargeContainer(ContainerType<?> container, int id, int rows, PlayerInventory playerInventory, BlockPos position) {
     super(container, id);
-    this.blockEntity = resolveBlockEntity(playerInventory.player.level.getBlockEntity(position));
     this.player = playerInventory;
     this.rows = rows;
     this.clientSide = true;
+    this.access = IWorldPosCallable.create(playerInventory.player.level, position);
   }
 
   public boolean isClientSide() {
@@ -95,8 +98,7 @@ public abstract class AbstractLargeContainer<V extends ILargeInventory, T extend
 
   @Override
   public boolean stillValid(PlayerEntity playerIn) {
-    // TODO
-    return true;
+    return stillValid(this.access, playerIn, ModBlocks.CRYSTAL_WORKBENCH.get());
   }
 
   @Override
@@ -497,8 +499,14 @@ public abstract class AbstractLargeContainer<V extends ILargeInventory, T extend
     }
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public T getBlockEntity() {
+    if (blockEntity == null) {
+      this.access.execute((level, pos) -> {
+        blockEntity = (T) level.getBlockEntity(pos);
+      });
+    }
     return blockEntity;
   }
 

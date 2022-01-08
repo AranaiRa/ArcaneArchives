@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.api.data;
 
-import com.aranaira.arcanearchives.api.network.AbstractNetworkObject;
 import com.aranaira.arcanearchives.api.reference.Identifiers;
 import com.google.common.base.Preconditions;
 import net.minecraft.nbt.CompoundNBT;
@@ -11,6 +10,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.INBTSerializable;
+import noobanidus.libs.noobutil.network.AbstractNetworkObject;
 
 import java.util.*;
 import java.util.stream.Collectors;

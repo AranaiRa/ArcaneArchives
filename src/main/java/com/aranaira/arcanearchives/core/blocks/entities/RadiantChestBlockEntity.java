@@ -10,6 +10,7 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import noobanidus.libs.noobutil.block.entities.IInventoryBlockEntity;
@@ -55,6 +56,6 @@ public class RadiantChestBlockEntity extends NetworkIdentifiedBlockEntity implem
   @Nullable
   @Override
   public Container createMenu(int windowId, PlayerInventory playerInventory, PlayerEntity player) {
-    return new RadiantChestContainer(windowId, playerInventory, this);
+    return new RadiantChestContainer(windowId, playerInventory, IWorldPosCallable.create(player.level, getBlockPos()));
   }
 }
