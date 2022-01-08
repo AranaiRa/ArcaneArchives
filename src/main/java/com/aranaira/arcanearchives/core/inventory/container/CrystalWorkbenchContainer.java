@@ -282,6 +282,33 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
     return super.clicked(slotId, dragType, clickTypeIn, player);
   }
 
+  @Override
+  public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+    ItemStack itemstack = ItemStack.EMPTY;
+    Slot slot = this.slots.get(index);
+    if (slot != null && slot.hasItem()) {
+      ItemStack itemstack1 = slot.getItem();
+      itemstack = itemstack1.copy();
+
+      if (index < rows * 9) {
+        if (!this.moveItemStackTo(itemstack1, rows * 9, 54, true)) {
+          return ItemStack.EMPTY;
+        }
+      } else if (!this.moveItemStackTo(itemstack1, 0, rows * 9, false)) {
+        return ItemStack.EMPTY;
+      }
+
+      if (itemstack1.isEmpty()) {
+        slot.set(ItemStack.EMPTY);
+      } else {
+        slot.setChanged();
+      }
+
+      slot.onTake(playerIn, itemstack1);
+    }
+    return itemstack;
+  }
+
   public void setSelectedSlotFromRecipe() {
     if (this.selectedRecipe == null || this.selectedRecipe == Constants.Recipes.NoRecipe) {
       return;

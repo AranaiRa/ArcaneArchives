@@ -122,6 +122,8 @@ public abstract class AbstractLargeContainer<V extends ILargeInventory, T extend
       } else {
         slot.setChanged();
       }
+
+      slot.onTake(playerIn, itemstack1);
     }
     return itemstack;
   }
