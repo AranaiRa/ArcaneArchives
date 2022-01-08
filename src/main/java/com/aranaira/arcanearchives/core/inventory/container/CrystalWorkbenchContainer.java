@@ -38,6 +38,7 @@ import java.util.List;
 
 import static com.aranaira.arcanearchives.api.reference.Constants.CrystalWorkbench.DataArray;
 
+// TODO: Shift-clicking into recipe slots, result slot; shift-clicking out of the result slot
 public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWorkbenchInventory, CrystalWorkbenchBlockEntity> {
   private final List<Slot> ingredientSlots = new ArrayList<>();
   private final List<Slot> playerSlots = new ArrayList<>();
@@ -119,10 +120,12 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
       boolean matches = recipe.matches(getWorkbench(), getPlayerWorld());
       slot.setDimmed(!matches);
 
-      if (recipe.getId().equals(this.selectedRecipe) && result != null && matches) {
-        this.result.setRecipe(recipe);
-      } else if (result != null && matches) {
-        this.result.setRecipe(null);
+      if (recipe.getId().equals(this.selectedRecipe) && result != null) {
+        if (matches) {
+          this.result.setRecipe(recipe);
+        } else {
+          this.result.setRecipe(null);
+        }
       }
     }
   }
