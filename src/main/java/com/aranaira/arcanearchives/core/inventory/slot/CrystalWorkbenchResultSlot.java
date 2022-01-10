@@ -114,83 +114,89 @@ public class CrystalWorkbenchResultSlot extends Slot {
     net.minecraftforge.common.ForgeHooks.setCraftingPlayer(pPlayer);
     ItemStack result = recipe.assemble(crafting);
     net.minecraftforge.common.ForgeHooks.setCraftingPlayer(null);
-    if (!pPlayer.level.isClientSide()) {
-      List<CountableIngredientStack> countableIngredientStackList = recipe.getIngredientStacks().stream().map(CountableIngredientStack::new).collect(Collectors.toList());
-      NonNullList<ItemStack> processedItems = NonNullList.of(ItemStack.EMPTY);
-      for (Slot ingredientSlot : crafting.getContainer().getIngredientSlots()) {
-        if (!ingredientSlot.hasItem()) {
-          continue;
-        }
-
-        ItemStack inSlot = ingredientSlot.getItem();
-        if (inSlot.isEmpty()) {
-          continue;
-        }
-        for (CountableIngredientStack ingredient : countableIngredientStackList) {
-          if (!ingredient.apply(inSlot) || ingredient.filled()) {
-            continue;
-          }
-
-          int toRemove = ingredient.subtract(inSlot.getCount());
-
-          if (toRemove > 0) {
-            ItemStack copy = inSlot.copy();
-            copy.shrink(toRemove);
-            for (Processor<CrystalWorkbenchCrafting> processors : recipe.getProcessors()) {
-              processedItems.addAll(processors.processIngredient(result, ingredient, copy, crafting));
-            }
-            ingredientSlot.remove(toRemove);
-            break;
-          } else {
-            ItemStack copy = inSlot.copy();
-            for (Processor<CrystalWorkbenchCrafting> processors : recipe.getProcessors()) {
-              processedItems.addAll(processors.processIngredient(result, ingredient, copy, crafting));
-            }
-            ingredientSlot.set(ItemStack.EMPTY);
-            break;
-          }
-        }
-      }
-      for (Slot playerSlot : crafting.getContainer().getPlayerSlots()) {
-        if (!playerSlot.hasItem()) {
-          continue;
-        }
-
-        ItemStack inSlot = playerSlot.getItem();
-        if (inSlot.isEmpty()) {
-          continue;
-        }
-        for (CountableIngredientStack ingredient : countableIngredientStackList) {
-          if (!ingredient.apply(inSlot) || ingredient.filled()) {
-            continue;
-          }
-
-          int toRemove = ingredient.subtract(inSlot.getCount());
-          if (toRemove > 0) {
-            ItemStack copy = inSlot.copy();
-            copy.shrink(toRemove);
-            for (Processor<CrystalWorkbenchCrafting> processors : recipe.getProcessors()) {
-              processedItems.addAll(processors.processIngredient(result, ingredient, copy, crafting));
-            }
-            playerSlot.remove(toRemove);
-            break;
-          } else {
-            ItemStack copy = inSlot.copy();
-            for (Processor<CrystalWorkbenchCrafting> processors : recipe.getProcessors()) {
-              processedItems.addAll(processors.processIngredient(result, ingredient, copy, crafting));
-            }
-            playerSlot.set(ItemStack.EMPTY);
-            break;
-          }
-        }
+    List<CountableIngredientStack> countableIngredientStackList = recipe.getIngredientStacks().stream().map(CountableIngredientStack::new).collect(Collectors.toList());
+    NonNullList<ItemStack> processedItems = NonNullList.of(ItemStack.EMPTY);
+    for (Slot ingredientSlot : crafting.getContainer().getIngredientSlots()) {
+      if (!ingredientSlot.hasItem()) {
+        continue;
       }
 
+      ItemStack inSlot = ingredientSlot.getItem();
+      if (inSlot.isEmpty()) {
+        continue;
+      }
       for (CountableIngredientStack ingredient : countableIngredientStackList) {
-        if (!ingredient.filled()) {
-          throw new IllegalStateException("invalid recipe state: ingredient " + ingredient.toString() + " is not filled");
+        if (!ingredient.apply(inSlot) || ingredient.filled()) {
+          continue;
+        }
+
+        int toRemove = ingredient.subtract(inSlot.getCount());
+
+        if (toRemove > 0) {
+          if (!player.level.isClientSide()) {
+            ItemStack copy = inSlot.copy();
+            for (Processor<CrystalWorkbenchCrafting> processors : recipe.getProcessors()) {
+              processedItems.addAll(processors.processIngredient(result, ingredient, copy, crafting));
+            }
+          }
+          ingredientSlot.remove(toRemove);
+          break;
+        } else {
+          if (!player.level.isClientSide()) {
+            ItemStack copy = inSlot.copy();
+            for (Processor<CrystalWorkbenchCrafting> processors : recipe.getProcessors()) {
+              processedItems.addAll(processors.processIngredient(result, ingredient, copy, crafting));
+            }
+          }
+          ingredientSlot.set(ItemStack.EMPTY);
+          break;
         }
       }
-      PlayerEntity player = crafting.getPlayer();
+    }
+    for (Slot playerSlot : crafting.getContainer().getPlayerSlots()) {
+      if (!playerSlot.hasItem()) {
+        continue;
+      }
+
+      ItemStack inSlot = playerSlot.getItem();
+      if (inSlot.isEmpty()) {
+        continue;
+      }
+      for (CountableIngredientStack ingredient : countableIngredientStackList) {
+        if (!ingredient.apply(inSlot) || ingredient.filled()) {
+          continue;
+        }
+
+        int toRemove = ingredient.subtract(inSlot.getCount());
+        if (toRemove > 0) {
+          if (!player.level.isClientSide()) {
+            ItemStack copy = inSlot.copy();
+            for (Processor<CrystalWorkbenchCrafting> processors : recipe.getProcessors()) {
+              processedItems.addAll(processors.processIngredient(result, ingredient, copy, crafting));
+            }
+          }
+          playerSlot.remove(toRemove);
+          break;
+        } else {
+          if (!player.level.isClientSide()) {
+            ItemStack copy = inSlot.copy();
+            for (Processor<CrystalWorkbenchCrafting> processors : recipe.getProcessors()) {
+              processedItems.addAll(processors.processIngredient(result, ingredient, copy, crafting));
+            }
+          }
+          playerSlot.set(ItemStack.EMPTY);
+          break;
+        }
+      }
+    }
+
+    for (CountableIngredientStack ingredient : countableIngredientStackList) {
+      if (!ingredient.filled()) {
+        throw new IllegalStateException("invalid recipe state: ingredient " + ingredient.toString() + " is not filled");
+      }
+    }
+    PlayerEntity player = crafting.getPlayer();
+    if (!player.level.isClientSide()) {
       for (ItemStack stack : processedItems) {
         if (stack.isEmpty()) {
           continue;
@@ -201,7 +207,6 @@ public class CrystalWorkbenchResultSlot extends Slot {
         }
       }
     }
-
     return result;
   }
 }

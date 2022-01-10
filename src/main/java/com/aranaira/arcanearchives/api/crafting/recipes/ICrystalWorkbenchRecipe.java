@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.api.crafting.recipes;
 
-import com.aranaira.arcanearchives.api.blockentities.IIdentifiedBlockEntity;
+import com.aranaira.arcanearchives.api.block.entity.IIdentifiedBlockEntity;
 import com.aranaira.arcanearchives.api.crafting.ingredients.IngredientInfo;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.tileentity.TileEntity;

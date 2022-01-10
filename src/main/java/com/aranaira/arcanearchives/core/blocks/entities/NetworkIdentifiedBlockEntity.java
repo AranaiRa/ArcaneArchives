@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.core.blocks.entities;
 
-import com.aranaira.arcanearchives.api.blockentities.INetworkedBlockEntity;
+import com.aranaira.arcanearchives.api.block.entity.INetworkedBlockEntity;
 import com.aranaira.arcanearchives.api.data.DataStorage;
 import com.aranaira.arcanearchives.api.data.UUIDNameData;
 import com.aranaira.arcanearchives.api.reference.Identifiers;

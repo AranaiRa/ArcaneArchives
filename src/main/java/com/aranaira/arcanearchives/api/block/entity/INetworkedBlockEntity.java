@@ -1,4 +1,4 @@
-package com.aranaira.arcanearchives.api.blockentities;
+package com.aranaira.arcanearchives.api.block.entity;
 
 import com.aranaira.arcanearchives.api.data.UUIDNameData;
 

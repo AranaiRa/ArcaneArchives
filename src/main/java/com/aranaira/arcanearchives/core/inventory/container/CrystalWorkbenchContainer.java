@@ -286,6 +286,9 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
   public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
     ItemStack itemstack = ItemStack.EMPTY;
     Slot slot = this.slots.get(index);
+    if (slot != null && skipSlot(slot)) {
+      return itemstack;
+    }
     if (slot != null && slot.hasItem()) {
       ItemStack itemstack1 = slot.getItem();
       itemstack = itemstack1.copy();
