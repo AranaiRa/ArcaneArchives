@@ -19,6 +19,8 @@ public class ModLang {
 
       ctx.add("arcanearchives.tooltip.crystal_workbench.more_info", "[Hold Shift to cycle eligible items.]");
       ctx.add("arcanearchives.tooltip.crystal_workbench.info", "%s: %s/%s");
+
+      ctx.add("arcanearchives.message.item_attuned", "%s was attuned to the network, %s.");
     });
   }
 

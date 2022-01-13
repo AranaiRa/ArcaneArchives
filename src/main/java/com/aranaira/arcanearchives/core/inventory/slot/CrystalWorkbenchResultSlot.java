@@ -54,6 +54,8 @@ public class CrystalWorkbenchResultSlot extends Slot {
       if (this.container.getItem(0).isEmpty()) {
         this.container.setItem(0, recipe.getResultItem());
       }
+    } else {
+      this.container.setItem(0, ItemStack.EMPTY);
     }
   }
 

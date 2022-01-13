@@ -1,4 +1,5 @@
 {
+  "arcanearchives.message.item_attuned": "%s was attuned to the network, %s.",
   "arcanearchives.network.id.part.0": "C",
   "arcanearchives.network.id.part.1": "D",
   "arcanearchives.network.id.part.10": "P",
@@ -25,6 +26,7 @@
   "block.arcanearchives.crystal_workbench": "Crystal Workbench",
   "block.arcanearchives.makeshift_resonator": "Makeshift Resonator",
   "block.arcanearchives.radiant_chest": "Radiant Chest",
+  "block.arcanearchives.radiant_crystal": "Radiant Crystal",
   "block.arcanearchives.radiant_resonator": "Radiant Resonator",
   "item.arcanearchives.radiant_dust": "Radiant Dust",
   "item.arcanearchives.radiant_quartz": "Radiant Quartz"

@@ -9,21 +9,14 @@ public interface Identifiers {
   String networkId = "NetId";
   String networkName = "NetworkName";
 
+  String BlockEntityTag = "BlockEntityTag";
+
   interface Data {
     String uniqueNames = "UniqueNames";
     String slotDataList = "SlotData";
     String slotUUID = "SlotUUID";
     String slotValue = "SlotValue";
     String slotPlayerId = "SlotPlayerUUID";
-  }
-
-  interface CrystalWorkbench {
-    String inputInventory = "InvIn";
-    String outputInventory = "InvOut";
-  }
-
-  interface MakeshiftResonator {
-    String currentTick = "CurTick";
   }
 
   interface PlayerSaveData {
@@ -37,10 +30,18 @@ public interface Identifiers {
   }
 
   interface Resonator {
-    String progress = "Prog";
+    String countdown = "Countdown";
+  }
+
+  interface MakeshiftResonator extends Resonator{
+    String filled = "Filled";
   }
 
   interface NetworkReference {
     String networkIds = "NetIds";
+  }
+
+  static String blockEntityTag (String tag) {
+    return BlockEntityTag + "." + tag;
   }
 }

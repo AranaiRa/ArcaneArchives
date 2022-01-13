@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.core.blocks.entities;
 
+import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.api.block.entity.INetworkedBlockEntity;
 import com.aranaira.arcanearchives.api.data.DataStorage;
 import com.aranaira.arcanearchives.api.data.UUIDNameData;
@@ -24,6 +25,19 @@ public abstract class NetworkIdentifiedBlockEntity extends IdentifiedBlockEntity
   }
 
   @Override
+  public void onLoad() {
+    if (getLevel() == null) {
+     throw new IllegalStateException("level should never be null in `TileEntity::onLoad`");
+    }
+    if (!getLevel().isClientSide()) {
+      if (getNetworkId() == null) {
+        // Schedule for break
+        ArcaneArchives.LOG.error("Breaking tile " + this + " at " + getBlockPos() + " because it has no network ID!");
+      }
+    }
+  }
+
+  @Override
   public CompoundNBT save(CompoundNBT compound) {
     if (getNetworkId() != null && networkId != UNKNOWN) {
       compound.putUUID(Identifiers.networkId, getNetworkId());
@@ -37,6 +51,7 @@ public abstract class NetworkIdentifiedBlockEntity extends IdentifiedBlockEntity
       this.networkId = compound.getUUID(Identifiers.networkId);
     }
     super.load(state, compound);
+    ArcaneArchives.LOG.info("Tile entity info loaded for " + this + " at " + getBlockPos());
   }
 
   @Override

@@ -164,7 +164,10 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
         if (index != -1) {
           int page = (index / Constants.CrystalWorkbench.RecipeSlots);
           setData(DataArray.SlotOffset, page);
-          result.setRecipe(ResolvingRecipes.CRYSTAL_WORKBENCH.getRecipe(index));
+          CrystalWorkbenchRecipe rec = ResolvingRecipes.CRYSTAL_WORKBENCH.getRecipe(index);
+          if (rec.matches(getWorkbench(), getPlayerWorld())) {
+            result.setRecipe(rec);
+          }
         }
         setRecipe(recipe);
       }

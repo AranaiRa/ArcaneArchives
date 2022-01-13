@@ -1,4 +1,5 @@
 {
+  "arcanearchives.message.item_attuned": "\u02D9%s '\u029E\u0279o\u028D\u0287\u01DDu \u01DD\u0265\u0287 o\u0287 p\u01DDun\u0287\u0287\u0250 s\u0250\u028D %s",
   "arcanearchives.network.id.part.0": "\u0186",
   "arcanearchives.network.id.part.1": "\u15E1",
   "arcanearchives.network.id.part.10": "\u0500",
@@ -25,6 +26,7 @@
   "block.arcanearchives.crystal_workbench": "\u0265\u0254u\u01DDq\u029E\u0279oM \u05DF\u0250\u0287s\u028E\u0279\u0186",
   "block.arcanearchives.makeshift_resonator": "\u0279o\u0287\u0250uos\u01DD\u1D1A \u0287\u025F\u0131\u0265s\u01DD\u029E\u0250W",
   "block.arcanearchives.radiant_chest": "\u0287s\u01DD\u0265\u0186 \u0287u\u0250\u0131p\u0250\u1D1A",
+  "block.arcanearchives.radiant_crystal": "\u05DF\u0250\u0287s\u028E\u0279\u0186 \u0287u\u0250\u0131p\u0250\u1D1A",
   "block.arcanearchives.radiant_resonator": "\u0279o\u0287\u0250uos\u01DD\u1D1A \u0287u\u0250\u0131p\u0250\u1D1A",
   "item.arcanearchives.radiant_dust": "\u0287sn\u15E1 \u0287u\u0250\u0131p\u0250\u1D1A",
   "item.arcanearchives.radiant_quartz": "z\u0287\u0279\u0250n\u1F49 \u0287u\u0250\u0131p\u0250\u1D1A"

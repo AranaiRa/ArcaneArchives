@@ -1,0 +1,10 @@
+{
+  "parent": "block/block",
+  "loader": "forge:obj",
+  "flip-v": true,
+  "model": "arcanearchives:models/block/radiant_crystal.obj",
+  "textures": {
+    "default": "arcanearchives:block/block_storage_rawquartz",
+    "particle": "#default"
+  }
+}

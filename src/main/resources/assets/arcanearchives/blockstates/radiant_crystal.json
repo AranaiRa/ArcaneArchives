@@ -1,0 +1,31 @@
+{
+  "variants": {
+   "facing=up": {
+     "model": "arcanearchives:block/radiant_crystal"
+    },
+    "facing=down": {
+      "model": "arcanearchives:block/radiant_crystal",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "arcanearchives:block/radiant_crystal",
+      "y": 90,
+      "x": 90
+    },
+    "facing=north": {
+      "model": "arcanearchives:block/radiant_crystal",
+      "y": 180,
+      "x": 90
+    },
+    "facing=west": {
+      "model": "arcanearchives:block/radiant_crystal",
+      "y": 270,
+      "x": 90
+    },
+    "facing=south": {
+      "model": "arcanearchives:block/radiant_crystal",
+      "y": 0,
+      "x": 90
+    }
+  }
+}

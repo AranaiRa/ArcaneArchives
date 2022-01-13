@@ -16,6 +16,17 @@
               "source": "block_entity",
               "ops": [
                 {
+                  "source": "NetId",
+                  "target": "BlockEntityTag.NetId",
+                  "op": "replace"
+                }
+              ]
+            },
+            {
+              "function": "minecraft:copy_nbt",
+              "source": "block_entity",
+              "ops": [
+                {
                   "source": "TileId",
                   "target": "BlockEntityTag.TileId",
                   "op": "replace"

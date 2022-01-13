@@ -1,6 +1,19 @@
 {
   "type": "arcanearchives:crystal_workbench",
-  "ingredients": [],
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "arcanearchives:radiant_dust"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "tag": "forge:chests/wooden"
+      },
+      "count": 1
+    }
+  ],
   "result": {
     "item": "arcanearchives:radiant_chest"
   },

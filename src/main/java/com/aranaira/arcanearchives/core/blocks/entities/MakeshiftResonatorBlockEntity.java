@@ -1,5 +1,6 @@
 package com.aranaira.arcanearchives.core.blocks.entities;
 
+import com.aranaira.arcanearchives.api.reference.Identifiers;
 import com.aranaira.arcanearchives.core.blocks.MakeshiftResonatorBlock;
 import com.aranaira.arcanearchives.core.init.ModBlocks;
 import com.aranaira.arcanearchives.core.init.ModItems;
@@ -104,15 +105,15 @@ public class MakeshiftResonatorBlockEntity extends TileEntity implements IRefere
         this.filled = false;
       }
     } else {
-      this.filled = nbt.getBoolean("filled");
+      this.filled = nbt.getBoolean(Identifiers.MakeshiftResonator.filled);
     }
-    this.countdown = nbt.getInt("countdown");
+    this.countdown = nbt.getInt(Identifiers.MakeshiftResonator.countdown);
   }
 
   @Override
   public CompoundNBT save(CompoundNBT compound) {
-    compound.putInt("countdown", countdown);
-    compound.putBoolean("filled", filled);
+    compound.putInt(Identifiers.MakeshiftResonator.countdown, countdown);
+    compound.putBoolean(Identifiers.MakeshiftResonator.filled, filled);
     return super.save(compound);
   }
 

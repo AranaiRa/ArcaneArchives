@@ -1,10 +1,13 @@
 package com.aranaira.arcanearchives.core.blocks.entities;
 
 import com.aranaira.arcanearchives.api.reference.Identifiers;
+import com.aranaira.arcanearchives.core.blocks.RadiantCrystalBlock;
+import com.aranaira.arcanearchives.core.init.ModBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.Direction;
 
 public class RadiantResonatorBlockEntity extends NetworkIdentifiedBlockEntity implements ITickableTileEntity {
   // TODO: Config
@@ -44,19 +47,20 @@ public class RadiantResonatorBlockEntity extends NetworkIdentifiedBlockEntity im
     if (progress-- <= 0) {
       progress = TIMER;
       // TODO: Create block
+      getLevel().setBlock(getBlockPos().above(), ModBlocks.RADIANT_CRYSTAL.get().defaultBlockState().setValue(RadiantCrystalBlock.FACING, Direction.UP), 3);
     }
   }
 
   @Override
   public CompoundNBT save(CompoundNBT compound) {
     compound = super.save(compound);
-    compound.putInt(Identifiers.Resonator.progress, progress);
+    compound.putInt(Identifiers.Resonator.countdown, progress);
     return compound;
   }
 
   @Override
   public void load(BlockState state, CompoundNBT compound) {
     super.load(state, compound);
-    this.progress = compound.getInt(Identifiers.Resonator.progress);
+    this.progress = compound.getInt(Identifiers.Resonator.countdown);
   }
 }

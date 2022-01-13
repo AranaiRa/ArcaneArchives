@@ -21,6 +21,7 @@ public class RadiantChestContainer extends AbstractLargeContainer<RadiantChestIn
   private final List<Slot> playerSlots = new ArrayList<>();
 
   public RadiantChestContainer(ContainerType<RadiantChestContainer> type, int id, PlayerInventory inventory, PacketBuffer buffer) {
+    // TODO: FIX THIS
     super(type, id, 9, inventory, buffer.readBlockPos());
     createInventorySlots();
     createPlayerSlots(142, 200, 16, playerSlots);
