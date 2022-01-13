@@ -32,10 +32,10 @@ import java.util.function.ToIntFunction;
 import static com.aranaira.arcanearchives.ArcaneArchives.REGISTRATE;
 
 public class ModBlocks {
-  private static final ToIntFunction<BlockState> lightFunction = value -> 16;
+  private static final ToIntFunction<BlockState> lightFunction = value -> 15;
 
   public static final RegistryEntry<CrystalWorkbenchBlock> CRYSTAL_WORKBENCH = REGISTRATE.block("crystal_workbench", Material.GLASS, CrystalWorkbenchBlock::new)
-      .properties(o -> o.noOcclusion().lightLevel(lightFunction).strength(3f).harvestTool(ToolType.AXE))
+      .properties(o -> o.noOcclusion().lightLevel(lightFunction).strength(3f).harvestTool(ToolType.PICKAXE))
       .blockstate(NonNullBiConsumer.noop())
       .recipe((ctx, p) ->
           ShapedRecipeBuilder.shaped(ctx.getEntry(), 1)
@@ -65,7 +65,7 @@ public class ModBlocks {
       .register();
 
   public static final RegistryEntry<RadiantChestBlock> RADIANT_CHEST = REGISTRATE.block("radiant_chest", Material.WOOD, RadiantChestBlock::new)
-      .properties(o -> o.noOcclusion().lightLevel(lightFunction).strength(3f).harvestTool(ToolType.PICKAXE))
+      .properties(o -> o.noOcclusion().lightLevel(lightFunction).strength(3f).harvestTool(ToolType.AXE))
       .blockstate(NonNullBiConsumer.noop())
       .item(NetworkedBlockItem::new)
       .model((ctx, p) -> p.blockItem(ctx::getEntry))
