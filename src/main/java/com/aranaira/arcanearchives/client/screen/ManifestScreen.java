@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.client.screen;
 
-import com.aranaira.arcanearchives.core.inventory.container.ManifestContainer;
+import com.aranaira.arcanearchives.inventory.container.ManifestContainer;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;

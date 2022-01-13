@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.client.screen;
 
 import com.aranaira.arcanearchives.api.ArcaneArchivesAPI;
-import com.aranaira.arcanearchives.core.inventory.container.RadiantChestContainer;
+import com.aranaira.arcanearchives.inventory.container.RadiantChestContainer;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
