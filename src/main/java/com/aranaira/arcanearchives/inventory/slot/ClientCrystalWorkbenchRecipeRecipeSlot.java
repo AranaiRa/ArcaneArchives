@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.inventory.slot;
 
 import com.aranaira.arcanearchives.api.inventory.slot.ICrystalWorkbenchRecipeSlot;
 import com.aranaira.arcanearchives.api.inventory.slot.IRecipeSlot;
-import com.aranaira.arcanearchives.init.ResolvingRecipes;
+import com.aranaira.arcanearchives.init.ResolvedRecipes;
 import com.aranaira.arcanearchives.recipe.CrystalWorkbenchRecipe;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Slot;
@@ -54,8 +54,8 @@ public class ClientCrystalWorkbenchRecipeRecipeSlot extends Slot implements ICry
   @Override
   public CrystalWorkbenchRecipe getRecipe() {
     int index = getRecipeIndex();
-    if (ResolvingRecipes.CRYSTAL_WORKBENCH.hasRecipe(index)) {
-      return ResolvingRecipes.CRYSTAL_WORKBENCH.getRecipe(index);
+    if (ResolvedRecipes.CRYSTAL_WORKBENCH.hasRecipe(index)) {
+      return ResolvedRecipes.CRYSTAL_WORKBENCH.getRecipe(index);
     }
 
     return null;
@@ -73,7 +73,7 @@ public class ClientCrystalWorkbenchRecipeRecipeSlot extends Slot implements ICry
 
   @Override
   public boolean hasItem() {
-    return ResolvingRecipes.CRYSTAL_WORKBENCH.hasRecipe(getRecipeIndex());
+    return ResolvedRecipes.CRYSTAL_WORKBENCH.hasRecipe(getRecipeIndex());
   }
 
   @Override

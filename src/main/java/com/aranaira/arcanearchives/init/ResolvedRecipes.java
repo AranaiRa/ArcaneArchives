@@ -11,7 +11,7 @@ import noobanidus.libs.noobutil.type.LazySupplier;
 
 import java.util.Comparator;
 @Mod.EventBusSubscriber(modid= ArcaneArchivesAPI.MODID)
-public class ResolvingRecipes {
+public class ResolvedRecipes {
   public static final ResolvingRecipeType<CrystalWorkbenchCrafting, CrystalWorkbenchRecipe> CRYSTAL_WORKBENCH = new ResolvingRecipeType<>(new LazySupplier<>(() -> ModRecipes.Types.CRYSTAL_WORKBENCH), Comparator.comparing(o -> o.getId().getPath()));
 
   @SubscribeEvent

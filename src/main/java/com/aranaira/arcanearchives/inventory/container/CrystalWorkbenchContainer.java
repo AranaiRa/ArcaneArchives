@@ -5,15 +5,16 @@ import com.aranaira.arcanearchives.api.inventory.slot.CappedSlot;
 import com.aranaira.arcanearchives.api.inventory.slot.IRecipeSlot;
 import com.aranaira.arcanearchives.api.reference.Constants;
 import com.aranaira.arcanearchives.block.entity.CrystalWorkbenchBlockEntity;
+import com.aranaira.arcanearchives.init.ModBlocks;
 import com.aranaira.arcanearchives.init.ModContainers;
-import com.aranaira.arcanearchives.init.ResolvingRecipes;
+import com.aranaira.arcanearchives.init.ResolvedRecipes;
 import com.aranaira.arcanearchives.inventory.handlers.CrystalWorkbenchInventory;
 import com.aranaira.arcanearchives.inventory.slot.ClientCrystalWorkbenchRecipeRecipeSlot;
 import com.aranaira.arcanearchives.inventory.slot.CrystalWorkbenchRecipeSlot;
 import com.aranaira.arcanearchives.inventory.slot.CrystalWorkbenchResultSlot;
 import com.aranaira.arcanearchives.inventory.slot.CrystalWorkbenchSlot;
 import com.aranaira.arcanearchives.network.Networking;
-import com.aranaira.arcanearchives.network.packets.RecipeSyncPacket;
+import com.aranaira.arcanearchives.network.packets.server.RecipeSyncPacket;
 import com.aranaira.arcanearchives.recipe.CrystalWorkbenchRecipe;
 import com.aranaira.arcanearchives.recipe.inventory.CrystalWorkbenchCrafting;
 import net.minecraft.entity.player.PlayerEntity;
@@ -160,11 +161,11 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
     if (!isClientSide() && getBlockEntity() != null) {
       ResourceLocation recipe = DataStorage.getSelectedRecipe(getPlayer().getUUID(), getBlockEntity().getEntityId());
       if (recipe != null) {
-        int index = ResolvingRecipes.CRYSTAL_WORKBENCH.lookup(recipe);
+        int index = ResolvedRecipes.CRYSTAL_WORKBENCH.lookup(recipe);
         if (index != -1) {
           int page = (index / Constants.CrystalWorkbench.RecipeSlots);
           setData(DataArray.SlotOffset, page);
-          CrystalWorkbenchRecipe rec = ResolvingRecipes.CRYSTAL_WORKBENCH.getRecipe(index);
+          CrystalWorkbenchRecipe rec = ResolvedRecipes.CRYSTAL_WORKBENCH.getRecipe(index);
           if (rec.matches(getWorkbench(), getPlayerWorld())) {
             result.setRecipe(rec);
           }
@@ -343,7 +344,7 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
   // Only ever called on the server
   public boolean clickMenuButton(PlayerEntity player, int slot) {
     if (slot == 1 || slot == 2) {
-      int size = ResolvingRecipes.CRYSTAL_WORKBENCH.size();
+      int size = ResolvedRecipes.CRYSTAL_WORKBENCH.size();
       int displayed = Constants.CrystalWorkbench.RecipeSlots;
       int count = size / displayed + ((size % displayed == 0) ? 1 : 0);
       if (slot == 1) {
@@ -408,9 +409,14 @@ public class CrystalWorkbenchContainer extends AbstractLargeContainer<CrystalWor
     if (!isClientSide()) {
       Networking.sendTo(new RecipeSyncPacket(recipe, this.containerId), (ServerPlayerEntity) getPlayer());
     } else {
-      this.result.setRecipe(ResolvingRecipes.CRYSTAL_WORKBENCH.getRecipe(recipe));
+      this.result.setRecipe(ResolvedRecipes.CRYSTAL_WORKBENCH.getRecipe(recipe));
     }
 
     setSelectedSlotFromRecipe();
+  }
+
+  @Override
+  public boolean stillValid(PlayerEntity playerIn) {
+    return stillValid(this.access, playerIn, ModBlocks.CRYSTAL_WORKBENCH.get());
   }
 }

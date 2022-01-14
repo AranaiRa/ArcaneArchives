@@ -20,6 +20,11 @@ public class ModLang {
       ctx.add("arcanearchives.tooltip.crystal_workbench.more_info", "[Hold Shift to cycle eligible items.]");
       ctx.add("arcanearchives.tooltip.crystal_workbench.info", "%s: %s/%s");
 
+      ctx.add("arcanearchives.tooltip.network_item.has_network", "[This is attuned to the network %s.]");
+      ctx.add("arcanearchives.tooltip.network_item.no_network", "[This item must be attuned before being placed.]");
+      ctx.add("arcanearchives.tooltip.network_item.howto", "[%s this item against a Crystal Workbench to attune it to that network.]");
+      ctx.add("arcanearchives.tooltip.network_item.sneak", "Sneak-Right-Click");
+
       ctx.add("arcanearchives.message.item_attuned", "%s was attuned to the network, %s.");
     });
   }

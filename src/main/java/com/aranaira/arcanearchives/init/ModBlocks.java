@@ -4,7 +4,8 @@ import com.aranaira.arcanearchives.AATags;
 import com.aranaira.arcanearchives.api.ArcaneArchivesAPI;
 import com.aranaira.arcanearchives.api.reference.Identifiers;
 import com.aranaira.arcanearchives.block.*;
-import com.aranaira.arcanearchives.item.block.NetworkedBlockItem;
+import com.aranaira.arcanearchives.item.block.AdjustableAbstractNetworkedBlockItem;
+import com.aranaira.arcanearchives.item.block.CrystalWorkbenchBlockItem;
 import com.aranaira.arcanearchives.recipe.CrystalWorkbenchRecipeBuilder;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
@@ -55,7 +56,7 @@ public class ModBlocks {
               .unlockedBy("has_radiant_dust", RegistrateRecipeProvider.hasItem(ModItems.RADIANT_DUST.get()))
               .save(p)
       )
-      .item()
+      .item(CrystalWorkbenchBlockItem::new)
       .tag(AATags.Items.CRYSTAL_WORKBENCH)
       .model((ctx, p) -> p.blockItem(ctx::getEntry))
       .build()
@@ -66,7 +67,7 @@ public class ModBlocks {
   public static final RegistryEntry<RadiantChestBlock> RADIANT_CHEST = REGISTRATE.block("radiant_chest", Material.WOOD, RadiantChestBlock::new)
       .properties(o -> o.noOcclusion().lightLevel(lightFunction).strength(3f).harvestTool(ToolType.AXE))
       .blockstate(NonNullBiConsumer.noop())
-      .item(NetworkedBlockItem::new)
+      .item(AdjustableAbstractNetworkedBlockItem::new)
       .model((ctx, p) -> p.blockItem(ctx::getEntry))
       .build()
       .recipe((ctx, p) -> {
@@ -116,7 +117,7 @@ public class ModBlocks {
   public static final RegistryEntry<RadiantResonatorBlock> RADIANT_RESONATOR = REGISTRATE.block("radiant_resonator", Material.WOOD, RadiantResonatorBlock::new)
       .properties(o -> o.noOcclusion().lightLevel(lightFunction).strength(3f).harvestTool(ToolType.PICKAXE))
       .blockstate(NonNullBiConsumer.noop())
-      .item(NetworkedBlockItem::new)
+      .item(AdjustableAbstractNetworkedBlockItem::new)
       .model((ctx, p) -> p.blockItem(ctx::getEntry))
       .build()
       .recipe((ctx, p) -> {

@@ -9,7 +9,7 @@ import com.aranaira.arcanearchives.client.impl.InvisibleButton;
 import com.aranaira.arcanearchives.block.entity.CrystalWorkbenchBlockEntity;
 import com.aranaira.arcanearchives.inventory.container.CrystalWorkbenchContainer;
 import com.aranaira.arcanearchives.network.Networking;
-import com.aranaira.arcanearchives.network.packets.RequestSyncPacket;
+import com.aranaira.arcanearchives.network.packets.client.RequestSyncPacket;
 import com.aranaira.arcanearchives.recipe.CrystalWorkbenchRecipe;
 import com.aranaira.arcanearchives.util.ArcaneRecipeUtil;
 import com.mojang.blaze3d.matrix.MatrixStack;

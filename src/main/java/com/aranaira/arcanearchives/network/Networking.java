@@ -1,10 +1,11 @@
 package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.api.ArcaneArchivesAPI;
-import com.aranaira.arcanearchives.network.packets.ExtendedSlotContentsPacket;
-import com.aranaira.arcanearchives.network.packets.LightningRenderPacket;
-import com.aranaira.arcanearchives.network.packets.RecipeSyncPacket;
-import com.aranaira.arcanearchives.network.packets.RequestSyncPacket;
+import com.aranaira.arcanearchives.api.network.IPacket;
+import com.aranaira.arcanearchives.network.packets.server.ExtendedSlotContentsPacket;
+import com.aranaira.arcanearchives.network.packets.server.LightningRenderPacket;
+import com.aranaira.arcanearchives.network.packets.server.RecipeSyncPacket;
+import com.aranaira.arcanearchives.network.packets.client.RequestSyncPacket;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -12,8 +13,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.network.PacketDistributor;
 import noobanidus.libs.noobutil.network.PacketHandler;
+
+import java.util.function.Supplier;
 
 public class Networking extends PacketHandler {
   public static Networking INSTANCE = new Networking();
@@ -24,10 +28,18 @@ public class Networking extends PacketHandler {
 
   @Override
   public void registerMessages() {
-    registerMessage(ExtendedSlotContentsPacket.class, ExtendedSlotContentsPacket::encode, ExtendedSlotContentsPacket::new, ExtendedSlotContentsPacket::handle);
-    registerMessage(LightningRenderPacket.class, LightningRenderPacket::encode, LightningRenderPacket::decode, LightningRenderPacket::handle);
-    registerMessage(RecipeSyncPacket.class, RecipeSyncPacket::encode, RecipeSyncPacket::new, RecipeSyncPacket::handle);
-    registerMessage(RequestSyncPacket.class,  RequestSyncPacket::encode, RequestSyncPacket::new, RequestSyncPacket::handle);
+    registerMessage(ExtendedSlotContentsPacket.class, ExtendedSlotContentsPacket::encode, ExtendedSlotContentsPacket::new, Networking::handlePacket);
+    registerMessage(LightningRenderPacket.class, LightningRenderPacket::encode, LightningRenderPacket::new, Networking::handlePacket);
+    registerMessage(RecipeSyncPacket.class, RecipeSyncPacket::encode, RecipeSyncPacket::new, Networking::handlePacket);
+    registerMessage(RequestSyncPacket.class,  RequestSyncPacket::encode, RequestSyncPacket::new, Networking::handlePacket);
+  }
+
+  public static <P extends IPacket> void handlePacket (P packet, Supplier<NetworkEvent.Context> context) {
+    if (packet != null) {
+      NetworkEvent.Context ctx = context.get();
+      ctx.enqueueWork(() -> packet.handle(ctx));
+      ctx.setPacketHandled(true);
+    }
   }
 
   public static void register () {

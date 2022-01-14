@@ -7,6 +7,7 @@ import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import noobanidus.libs.noobutil.data.server.StoredInventoryData;
 import noobanidus.libs.noobutil.inventory.ILargeInventory;
 
+import java.util.Map;
 import java.util.UUID;
 import java.util.function.IntFunction;
 
@@ -21,6 +22,12 @@ public class DataStorage {
     DimensionSavedDataManager manager = ServerLifecycleHooks.getCurrentServer().getLevel(World.OVERWORLD).getDataStorage();
     UUIDNameData data = manager.computeIfAbsent(() -> new UUIDNameData(UUIDNameData.NETWORK_ID), UUIDNameData.NETWORK_ID);
     return data.getOrGenerate(networkId);
+  }
+
+  public static Map<UUID, UUIDNameData.Name> getNetworkNames () {
+    DimensionSavedDataManager manager = ServerLifecycleHooks.getCurrentServer().getLevel(World.OVERWORLD).getDataStorage();
+    UUIDNameData data = manager.computeIfAbsent(() -> new UUIDNameData(UUIDNameData.NETWORK_ID), UUIDNameData.NETWORK_ID);
+    return data.getNames();
   }
 
   public static UUIDNameData.Name getTileName (UUID tileId) {

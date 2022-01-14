@@ -7,7 +7,6 @@ import com.aranaira.arcanearchives.block.entity.CrystalWorkbenchBlockEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
@@ -15,14 +14,18 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 
 import java.util.UUID;
 
-public class NetworkedBlockItem extends BlockItem {
-  public NetworkedBlockItem(Block pBlock, Properties pProperties) {
+public class AdjustableAbstractNetworkedBlockItem extends AbstractNetworkedBlockItem {
+  public AdjustableAbstractNetworkedBlockItem(Block pBlock, Properties pProperties) {
     super(pBlock, pProperties);
+  }
+
+  protected String getNetworkTag () {
+    return Identifiers.networkId;
   }
 
   @Override

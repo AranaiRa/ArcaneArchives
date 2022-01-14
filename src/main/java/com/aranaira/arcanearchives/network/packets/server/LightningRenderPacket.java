@@ -1,5 +1,6 @@
-package com.aranaira.arcanearchives.network.packets;
+package com.aranaira.arcanearchives.network.packets.server;
 
+import com.aranaira.arcanearchives.api.network.IPacket;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.fml.network.NetworkEvent;
@@ -8,7 +9,7 @@ import noobanidus.libs.particleslib.client.events.RenderTickHandler;
 
 import java.util.function.Supplier;
 
-public class LightningRenderPacket {
+public class LightningRenderPacket implements IPacket {
   private final LightningPreset preset;
   private final Vector3d start;
   private final Vector3d end;
@@ -23,32 +24,28 @@ public class LightningRenderPacket {
     this.segments = segments;
   }
 
-  public static void handle(LightningRenderPacket message, Supplier<NetworkEvent.Context> context) {
-    NetworkEvent.Context ctx = context.get();
-    ctx.enqueueWork(() -> RenderTickHandler.renderBolt(message.renderer, message.preset.boltCreator.create(message.start, message.end, message.segments)));
-    ctx.setPacketHandled(true);
+  public LightningRenderPacket(PacketBuffer buf) {
+    this.preset = buf.readEnum(LightningPreset.class);
+    this.renderer = buf.readVarInt();
+    this.start = new Vector3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
+    this.end = new Vector3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
+    this.segments = buf.readVarInt();
   }
 
-  public static void encode(LightningRenderPacket pkt, PacketBuffer buf) {
-    buf.writeEnum(pkt.preset);
-    buf.writeVarInt(pkt.renderer);
-    buf.writeDouble(pkt.start.x);
-    buf.writeDouble(pkt.start.y);
-    buf.writeDouble(pkt.start.z);
-    buf.writeDouble(pkt.end.x);
-    buf.writeDouble(pkt.end.y);
-    buf.writeDouble(pkt.end.z);
-    buf.writeVarInt(pkt.segments);
+  public void handle(NetworkEvent.Context context) {
+    RenderTickHandler.renderBolt(this.renderer, this.preset.boltCreator.create(this.start, this.end, this.segments));
   }
 
-  public static LightningRenderPacket decode(PacketBuffer buf) {
-    LightningPreset preset = buf.readEnum(LightningPreset.class);
-    int renderer = buf.readVarInt();
-
-    Vector3d start = new Vector3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
-    Vector3d end = new Vector3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
-    int segments = buf.readVarInt();
-    return new LightningRenderPacket(preset, renderer, start, end, segments);
+  public void encode(PacketBuffer buf) {
+    buf.writeEnum(this.preset);
+    buf.writeVarInt(this.renderer);
+    buf.writeDouble(this.start.x);
+    buf.writeDouble(this.start.y);
+    buf.writeDouble(this.start.z);
+    buf.writeDouble(this.end.x);
+    buf.writeDouble(this.end.y);
+    buf.writeDouble(this.end.z);
+    buf.writeVarInt(this.segments);
   }
 
   @FunctionalInterface

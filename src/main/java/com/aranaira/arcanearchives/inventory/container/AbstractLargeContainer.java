@@ -1,10 +1,9 @@
 package com.aranaira.arcanearchives.inventory.container;
 
 import com.aranaira.arcanearchives.api.inventory.slot.CappedSlot;
-import com.aranaira.arcanearchives.init.ModBlocks;
 import com.aranaira.arcanearchives.inventory.slot.RadiantChestSlot;
 import com.aranaira.arcanearchives.network.Networking;
-import com.aranaira.arcanearchives.network.packets.ExtendedSlotContentsPacket;
+import com.aranaira.arcanearchives.network.packets.server.ExtendedSlotContentsPacket;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -97,9 +96,7 @@ public abstract class AbstractLargeContainer<V extends ILargeInventory, T extend
   }
 
   @Override
-  public boolean stillValid(PlayerEntity playerIn) {
-    return stillValid(this.access, playerIn, ModBlocks.CRYSTAL_WORKBENCH.get());
-  }
+  public abstract boolean stillValid(PlayerEntity playerIn);
 
   @Override
   public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {

@@ -1,5 +1,6 @@
-package com.aranaira.arcanearchives.network.packets;
+package com.aranaira.arcanearchives.network.packets.server;
 
+import com.aranaira.arcanearchives.api.network.IPacket;
 import com.aranaira.arcanearchives.inventory.container.AbstractLargeContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -8,9 +9,7 @@ import net.minecraftforge.fml.network.NetworkEvent;
 import noobanidus.libs.noobutil.getter.Getter;
 import noobanidus.libs.noobutil.network.ExtendedItemStackPacketBuffer;
 
-import java.util.function.Supplier;
-
-public class ExtendedSlotContentsPacket {
+public class ExtendedSlotContentsPacket implements IPacket {
   private int windowId = 0;
   private int slot = 0;
   private ItemStack stack = ItemStack.EMPTY;
@@ -38,17 +37,12 @@ public class ExtendedSlotContentsPacket {
     ebuf.writeExtendedItemStack(stack);
   }
 
-  public void handle(Supplier<NetworkEvent.Context> ctx) {
+  public void handle(NetworkEvent.Context ctx) {
     PlayerEntity player = Getter.getPlayer();
     if (player == null) return;
 
-    ctx.get().enqueueWork(() -> {
-      if (player.containerMenu instanceof AbstractLargeContainer && windowId == player.containerMenu.containerId) {
-        player.containerMenu.slots.get(slot).set(stack);
-      }
-    });
-
-
-    ctx.get().setPacketHandled(true);
+    if (player.containerMenu instanceof AbstractLargeContainer && windowId == player.containerMenu.containerId) {
+      player.containerMenu.slots.get(slot).set(stack);
+    }
   }
 }

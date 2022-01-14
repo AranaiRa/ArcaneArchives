@@ -28,6 +28,10 @@ public class UUIDNameData extends WorldSavedData {
     super(id);
   }
 
+  public Map<UUID, Name> getNames() {
+    return NAME_MAP;
+  }
+
   @Override
   public void load(CompoundNBT tag) {
     ListNBT names = tag.getList(Identifiers.Data.uniqueNames, Constants.NBT.TAG_COMPOUND);

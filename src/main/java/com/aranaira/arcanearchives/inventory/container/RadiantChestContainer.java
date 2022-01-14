@@ -1,9 +1,11 @@
 package com.aranaira.arcanearchives.inventory.container;
 
 import com.aranaira.arcanearchives.block.entity.RadiantChestBlockEntity;
+import com.aranaira.arcanearchives.init.ModBlocks;
 import com.aranaira.arcanearchives.init.ModContainers;
 import com.aranaira.arcanearchives.inventory.handlers.RadiantChestInventory;
 import com.aranaira.arcanearchives.inventory.slot.RadiantChestSlot;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
@@ -77,5 +79,10 @@ public class RadiantChestContainer extends AbstractLargeContainer<RadiantChestIn
   @Override
   public List<Slot> getPlayerSlots() {
     return playerSlots;
+  }
+
+  @Override
+  public boolean stillValid(PlayerEntity playerIn) {
+    return stillValid(this.access, playerIn, ModBlocks.RADIANT_CHEST.get());
   }
 }

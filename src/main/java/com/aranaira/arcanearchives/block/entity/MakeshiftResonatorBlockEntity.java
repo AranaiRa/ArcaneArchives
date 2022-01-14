@@ -4,7 +4,7 @@ import com.aranaira.arcanearchives.api.reference.Identifiers;
 import com.aranaira.arcanearchives.block.MakeshiftResonatorBlock;
 import com.aranaira.arcanearchives.init.ModBlocks;
 import com.aranaira.arcanearchives.init.ModItems;
-import com.aranaira.arcanearchives.network.packets.LightningRenderPacket;
+import com.aranaira.arcanearchives.network.packets.server.LightningRenderPacket;
 import com.aranaira.arcanearchives.network.Networking;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
