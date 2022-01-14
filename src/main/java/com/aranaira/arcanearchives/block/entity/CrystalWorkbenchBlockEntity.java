@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.block.entity;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
-import com.aranaira.arcanearchives.api.data.StoredInventory;
+import com.aranaira.arcanearchives.api.inventory.StoredInventory;
 import com.aranaira.arcanearchives.api.data.UUIDNameData;
 import com.aranaira.arcanearchives.inventory.container.CrystalWorkbenchContainer;
 import com.aranaira.arcanearchives.inventory.handlers.CrystalWorkbenchInventory;

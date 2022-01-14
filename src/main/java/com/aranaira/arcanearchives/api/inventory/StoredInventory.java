@@ -1,5 +1,6 @@
-package com.aranaira.arcanearchives.api.data;
+package com.aranaira.arcanearchives.api.inventory;
 
+import com.aranaira.arcanearchives.api.data.DataStorage;
 import net.minecraft.world.World;
 import noobanidus.libs.noobutil.data.server.StoredInventoryData;
 import noobanidus.libs.noobutil.recipe.AbstractLargeItemHandler;
