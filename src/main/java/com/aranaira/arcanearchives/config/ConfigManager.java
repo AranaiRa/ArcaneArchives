@@ -1,13 +1,17 @@
 package com.aranaira.arcanearchives.config;
 
 import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.api.ArcaneArchivesAPI;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 
 import java.nio.file.Path;
 
+@Mod.EventBusSubscriber(modid= ArcaneArchivesAPI.MODID, bus= Mod.EventBusSubscriber.Bus.MOD)
 public class ConfigManager {
   private static final ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
 
@@ -25,6 +29,7 @@ public class ConfigManager {
     spec.setConfig(configData);
   }
 
+  @SubscribeEvent
   public static void configReloaded(ModConfig.Reloading event) {
     if (event.getConfig().getType() == ModConfig.Type.COMMON) {
       COMMON_CONFIG.setConfig(event.getConfig().getConfigData());

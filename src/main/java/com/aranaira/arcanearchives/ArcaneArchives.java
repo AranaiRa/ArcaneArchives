@@ -3,12 +3,15 @@ package com.aranaira.arcanearchives;
 import com.aranaira.arcanearchives.api.ArcaneArchivesAPI;
 import com.aranaira.arcanearchives.api.crafting.registry.IRecipeManagerAccessor;
 import com.aranaira.arcanearchives.client.impl.ClientRecipeAccessor;
+import com.aranaira.arcanearchives.command.CommandArcaneArchives;
 import com.aranaira.arcanearchives.config.ConfigManager;
 import com.aranaira.arcanearchives.impl.ServerRecipeAccessor;
 import com.aranaira.arcanearchives.init.*;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -41,9 +44,6 @@ public class ArcaneArchives {
     ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigManager.COMMON_CONFIG);
     ConfigManager.loadConfig(ConfigManager.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve(ArcaneArchivesAPI.MODID + "-common.toml"));
 
-    IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
-    modBus.addListener(ConfigManager::configReloaded);
-
     ArcaneArchivesAPI.INSTANCE = new ArcaneArchivesAPI() {
       private final IRecipeManagerAccessor accessor = DistExecutor.safeRunForDist(() -> ClientRecipeAccessor::new, () -> ServerRecipeAccessor::new);
 
@@ -52,6 +52,8 @@ public class ArcaneArchives {
         return accessor;
       }
     };
+
+    MinecraftForge.EVENT_BUS.addListener(this::onCommand);
 
     REGISTRATE = CustomRegistrate.create(ArcaneArchivesAPI.MODID);
     REGISTRATE.itemGroup(() -> GROUP);
@@ -67,5 +69,9 @@ public class ArcaneArchives {
     ModRegistries.load();
     ModSounds.load();
     ModBlockEntities.load();
+  }
+
+  public void onCommand (RegisterCommandsEvent event) {
+    CommandArcaneArchives.register(event.getDispatcher());
   }
 }

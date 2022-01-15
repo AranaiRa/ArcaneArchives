@@ -24,18 +24,14 @@ public class DomainManager {
   public static Set<RegistryKey<World>> WORLDS = null;
   private static volatile boolean forceRefresh = false;
 
-  private static final Map<UUID, Domain> domainMap = new LinkedHashMap<>();
-  private static final Set<DomainEntry> pendingEntries = new LinkedHashSet<>();
-  private static volatile boolean editingDomainMap;
-  private static final Object domainTickLock = new Object();
-  private static final Object domainWriteLock = new Object();
+  private static final Map<UUID, Domain> domainMap = Collections.synchronizedMap(new HashMap<>());
 
-  // TODO: Is this superfluous?
-  private static final Set<UnknownEntry> unknownTiles = new LinkedHashSet<>();
-  private static final Set<UnknownEntry> pendingUnknownTiles = new LinkedHashSet<>();
-  private static volatile boolean tickingUnknown;
+
+  private static final Set<UnknownEntry> unknownEntities = Collections.synchronizedSet(new HashSet<>());
+  private static final Set<UnknownEntry> pendingUnknownEntities = Collections.synchronizedSet(new HashSet<>());
   private static final Object unknownTickLock = new Object();
   private static final Object unknownWriteLock = new Object();
+  private static volatile boolean tickingUnknown = false;
 
   @SubscribeEvent
   public static void onServerStarted(FMLServerStartedEvent event) {
@@ -51,9 +47,53 @@ public class DomainManager {
   }
 
   @SubscribeEvent
-  public static void serverTick (TickEvent.ServerTickEvent event) {
+  public static void serverTick(TickEvent.ServerTickEvent event) {
     if (event.phase != TickEvent.Phase.END) {
       return;
+    }
+
+    MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
+
+    Set<UnknownEntry> toRemove = new HashSet<>();
+    Set<UnknownEntry> copy;
+    synchronized (unknownTickLock) {
+      tickingUnknown = true;
+      copy = new HashSet<>(unknownEntities);
+      tickingUnknown = false;
+    }
+    if (!copy.isEmpty()) {
+      synchronized (unknownWriteLock) {
+        for (UnknownEntry entry : copy) {
+          ServerWorld level = server.getLevel(entry.getDimension());
+          if (level == null || !level.isAreaLoaded(entry.getPosition(), 1)) {
+            toRemove.add(entry);
+            continue;
+          }
+          TileEntity tileAt = level.getBlockEntity(entry.getPosition());
+          if (tileAt == null) {
+            toRemove.add(entry);
+            continue;
+          }
+          if (tileAt instanceof INetworkedBlockEntity) {
+            toRemove.add(entry);
+            INetworkedBlockEntity ine = (INetworkedBlockEntity) tileAt;
+            if (ine.getNetworkId() != null) {
+              getDomain(ine.getNetworkId()).getEntries().add(new DomainEntry(entry.getPosition(), entry.getDimension(), ine.getNetworkId(), ine.getClass()));
+            } else {
+              level.destroyBlock(entry.getPosition(), true);
+            }
+          } else {
+            toRemove.add(entry);
+          }
+        }
+      }
+    }
+    synchronized (unknownTickLock) {
+      tickingUnknown = true;
+      unknownEntities.removeAll(toRemove);
+      unknownEntities.addAll(pendingUnknownEntities);
+      tickingUnknown = false;
+      pendingUnknownEntities.clear();
     }
 
     if (WORLDS == null) {
@@ -66,9 +106,7 @@ public class DomainManager {
 
     forceRefresh = false;
 
-    MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
-
-    Map<UUID, List<INetworkedBlockEntity>> networkMap = new HashMap<>();
+    Map<UUID, List<DomainEntry>> networkMap = new HashMap<>();
 
     for (RegistryKey<World> key : WORLDS) {
       ServerWorld world = server.getLevel(key);
@@ -78,8 +116,10 @@ public class DomainManager {
             INetworkedBlockEntity ine = (INetworkedBlockEntity) te;
             if (ine.getNetworkId() == null) {
               // handle a null entity?
+              UnknownEntry entry = new UnknownEntry(te.getBlockPos(), key);
             } else {
-              networkMap.computeIfAbsent(ine.getNetworkId(), k -> new ArrayList<>()).add(ine);
+              DomainEntry entry = new DomainEntry(te.getBlockPos(), key, ine.getNetworkId(), ine.getClass());
+              networkMap.computeIfAbsent(ine.getNetworkId(), k -> new ArrayList<>()).add(entry);
             }
           }
         }
@@ -87,15 +127,35 @@ public class DomainManager {
     }
   }
 
-  public static void forceRefresh () {
+  public static void forceRefresh() {
     forceRefresh = true;
   }
 
-  public static Domain getDomain (UUID domainId) {
-    return domainMap.computeIfAbsent(domainId, k -> new Domain());
+  public static Domain getDomain(UUID domainId) {
+    return domainMap.computeIfAbsent(domainId, Domain::new);
   }
 
-  public static void register (INetworkedBlockEntity entity) {
+  public static boolean register(INetworkedBlockEntity entity) {
+    UUID id = entity.getNetworkId();
+    TileEntity te = entity.getBlockEntity();
+    if (te.getLevel() == null) {
+      return false;
+    }
+    if (id == null) {
+      addUnknownEntry(new UnknownEntry(te.getBlockPos(), te.getLevel().dimension()));
+    } else {
+      getDomain(id).getEntries().add(new DomainEntry(te.getBlockPos(), te.getLevel().dimension(), id, entity.getClass()));
+    }
+    return true;
+  }
 
+  public static void addUnknownEntry(UnknownEntry entry) {
+    synchronized (unknownTickLock) {
+      if (tickingUnknown) {
+        pendingUnknownEntities.add(entry);
+      } else {
+        unknownEntities.add(entry);
+      }
+    }
   }
 }

@@ -24,9 +24,10 @@ public class DataStorage {
     return data.getOrGenerate(networkId);
   }
 
-  public static Map<UUID, UUIDNameData.Name> getNetworkNames () {
+  public static Map<UUID, UUIDNameData.Name> getNetworkNames (UUID incomingId) {
     DimensionSavedDataManager manager = ServerLifecycleHooks.getCurrentServer().getLevel(World.OVERWORLD).getDataStorage();
     UUIDNameData data = manager.computeIfAbsent(() -> new UUIDNameData(UUIDNameData.NETWORK_ID), UUIDNameData.NETWORK_ID);
+    data.getOrGenerate(incomingId);
     return data.getNames();
   }
 

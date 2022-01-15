@@ -4,6 +4,7 @@ import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.api.block.entity.INetworkedBlockEntity;
 import com.aranaira.arcanearchives.api.data.DataStorage;
 import com.aranaira.arcanearchives.api.data.UUIDNameData;
+import com.aranaira.arcanearchives.api.domain.DomainManager;
 import com.aranaira.arcanearchives.api.reference.Identifiers;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
@@ -29,12 +30,7 @@ public abstract class NetworkIdentifiedBlockEntity extends IdentifiedBlockEntity
     if (getLevel() == null) {
      throw new IllegalStateException("level should never be null in `TileEntity::onLoad`");
     }
-    if (!getLevel().isClientSide()) {
-      if (getNetworkId() == null) {
-        // Schedule for break
-        ArcaneArchives.LOG.error("Breaking tile " + this + " at " + getBlockPos() + " because it has no network ID!");
-      }
-    }
+    DomainManager.register(this);
   }
 
   @Override

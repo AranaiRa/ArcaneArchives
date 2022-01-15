@@ -19,6 +19,14 @@ public class UnknownEntry {
     this.dimension = dimension;
   }
 
+  public BlockPos getPosition() {
+    return position;
+  }
+
+  public RegistryKey<World> getDimension() {
+    return dimension;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;

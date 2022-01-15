@@ -38,8 +38,7 @@ public abstract class AbstractNetworkedBlockItem extends BlockItem {
       UUID networkId = tag.getUUID(getNetworkTag());
       UUIDNameData.Name name = NameStorage.getName(networkId);
       if (name == null) {
-        // TODO: Introduce some sort of delay to prevent per-tick packet spam
-        Networking.sendToServer(new RequestNetworkNamesPacket());
+        NameStorage.update(networkId);
       } else {
         pTooltip.add(new TranslationTextComponent("arcanearchives.tooltip.network_item.has_network", name.component()));
       }
