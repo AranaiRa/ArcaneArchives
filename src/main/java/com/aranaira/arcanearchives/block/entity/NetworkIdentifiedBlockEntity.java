@@ -28,7 +28,10 @@ public abstract class NetworkIdentifiedBlockEntity extends IdentifiedBlockEntity
   @Override
   public void onLoad() {
     if (getLevel() == null) {
-     throw new IllegalStateException("level should never be null in `TileEntity::onLoad`");
+      throw new IllegalStateException("level should never be null in `TileEntity::onLoad`");
+    }
+    if (getLevel().isClientSide()) {
+      return;
     }
     DomainManager.register(this);
   }

@@ -39,11 +39,13 @@ public class DomainManager {
     opRg.ifPresent(reg -> {
       WORLDS = reg.keySet().stream().map(o -> RegistryKey.create(Registry.DIMENSION_REGISTRY, o)).collect(Collectors.toSet());
     });
+    domainMap.clear();
   }
 
   @SubscribeEvent
   public static void onServerStopped(FMLServerStoppedEvent event) {
     WORLDS = null;
+    domainMap.clear();
   }
 
   @SubscribeEvent

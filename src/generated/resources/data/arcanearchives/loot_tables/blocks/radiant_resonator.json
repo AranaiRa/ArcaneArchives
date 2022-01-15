@@ -21,17 +21,6 @@
                   "op": "replace"
                 }
               ]
-            },
-            {
-              "function": "minecraft:copy_nbt",
-              "source": "block_entity",
-              "ops": [
-                {
-                  "source": "TileId",
-                  "target": "BlockEntityTag.TileId",
-                  "op": "replace"
-                }
-              ]
             }
           ],
           "name": "arcanearchives:radiant_resonator"

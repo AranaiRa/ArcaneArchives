@@ -2,8 +2,10 @@ package com.aranaira.arcanearchives.network;
 
 import com.aranaira.arcanearchives.api.ArcaneArchivesAPI;
 import com.aranaira.arcanearchives.api.network.IPacket;
+import com.aranaira.arcanearchives.network.packets.client.RequestNetworkNamesPacket;
 import com.aranaira.arcanearchives.network.packets.server.ExtendedSlotContentsPacket;
 import com.aranaira.arcanearchives.network.packets.server.LightningRenderPacket;
+import com.aranaira.arcanearchives.network.packets.server.NetworkNamesSyncPacket;
 import com.aranaira.arcanearchives.network.packets.server.RecipeSyncPacket;
 import com.aranaira.arcanearchives.network.packets.client.RequestSyncPacket;
 import net.minecraft.entity.Entity;
@@ -32,6 +34,8 @@ public class Networking extends PacketHandler {
     registerMessage(LightningRenderPacket.class, LightningRenderPacket::encode, LightningRenderPacket::new, Networking::handlePacket);
     registerMessage(RecipeSyncPacket.class, RecipeSyncPacket::encode, RecipeSyncPacket::new, Networking::handlePacket);
     registerMessage(RequestSyncPacket.class,  RequestSyncPacket::encode, RequestSyncPacket::new, Networking::handlePacket);
+    registerMessage(RequestNetworkNamesPacket.class, RequestNetworkNamesPacket::encode, RequestNetworkNamesPacket::new, Networking::handlePacket);
+    registerMessage(NetworkNamesSyncPacket.class, NetworkNamesSyncPacket::encode, NetworkNamesSyncPacket::new, Networking::handlePacket);
   }
 
   public static <P extends IPacket> void handlePacket (P packet, Supplier<NetworkEvent.Context> context) {

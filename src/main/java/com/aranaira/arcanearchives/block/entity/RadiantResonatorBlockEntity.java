@@ -12,7 +12,7 @@ import net.minecraft.util.Direction;
 public class RadiantResonatorBlockEntity extends NetworkIdentifiedBlockEntity implements ITickableTileEntity {
   // TODO: Config
   public static final int TIMER = 90;
-  protected int progress = 0;
+  protected int progress = -1;
 
   public RadiantResonatorBlockEntity(TileEntityType<?> tileEntityTypeIn) {
     super(tileEntityTypeIn);
@@ -21,6 +21,10 @@ public class RadiantResonatorBlockEntity extends NetworkIdentifiedBlockEntity im
   // Should only be called server side
   protected boolean isBlocked() {
     if (getLevel() == null) {
+      return true;
+    }
+
+    if (getNetworkId() == null) {
       return true;
     }
 
@@ -37,6 +41,11 @@ public class RadiantResonatorBlockEntity extends NetworkIdentifiedBlockEntity im
     // null check is handled in isBlocked()
     //noinspection ConstantConditions
     if (getLevel().isClientSide()) {
+      return;
+    }
+
+    if (progress == -1) {
+      progress = TIMER;
       return;
     }
 

@@ -94,7 +94,7 @@ public class ModBlocks {
             .addIngredient(Tags.Items.ORES_IRON)
             .build(p, new ResourceLocation(ArcaneArchivesAPI.MODID, "iron_ingot"));
       })
-      .loot(withTileAndNetworkId())
+      .loot(withNetworkId())
       .register();
 
   public static final RegistryEntry<MakeshiftResonatorBlock> MAKESHIFT_RESONATOR = REGISTRATE.block("makeshift_resonator", Material.WOOD, MakeshiftResonatorBlock::new)
@@ -125,7 +125,7 @@ public class ModBlocks {
             .addIngredient(Items.GOLD_INGOT, 4)
             .build(p, new ResourceLocation(ArcaneArchivesAPI.MODID, "radiant_resonator"));
       })
-      .loot(withTileAndNetworkId())
+      .loot(withNetworkId())
       .register();
 
   public static final RegistryEntry<RadiantCrystalBlock> RADIANT_CRYSTAL = REGISTRATE.block("radiant_crystal", Material.GLASS, RadiantCrystalBlock::new)
