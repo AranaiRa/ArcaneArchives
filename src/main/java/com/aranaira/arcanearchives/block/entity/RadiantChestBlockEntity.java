@@ -1,6 +1,7 @@
 package com.aranaira.arcanearchives.block.entity;
 
 import com.aranaira.arcanearchives.api.inventory.StoredInventory;
+import com.aranaira.arcanearchives.api.reference.Constants;
 import com.aranaira.arcanearchives.inventory.container.RadiantChestContainer;
 import com.aranaira.arcanearchives.inventory.handlers.RadiantChestInventory;
 import net.minecraft.block.BlockState;
@@ -18,7 +19,7 @@ import noobanidus.libs.noobutil.block.entities.IInventoryBlockEntity;
 import javax.annotation.Nullable;
 
 public class RadiantChestBlockEntity extends DomainIdentifiedBlockEntity implements IInventoryBlockEntity<RadiantChestInventory>, INamedContainerProvider {
-  private final StoredInventory<RadiantChestInventory> inventory = new StoredInventory<>(this::getEntityId, RadiantChestInventory::new, RadiantChestInventory.EmptyRadiantChestInventory::new, 54);
+  private final StoredInventory<RadiantChestInventory> inventory = new StoredInventory<>(this::getEntityId, RadiantChestInventory::new, RadiantChestInventory.EmptyRadiantChestInventory::new, Constants.RadiantChest.InventorySlots);
 
   public RadiantChestBlockEntity(TileEntityType<?> tileEntityTypeIn) {
     super(tileEntityTypeIn);

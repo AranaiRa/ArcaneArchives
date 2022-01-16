@@ -7,6 +7,7 @@ import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import noobanidus.libs.noobutil.data.server.StoredInventoryData;
 import noobanidus.libs.noobutil.inventory.ILargeInventory;
 
+import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.UUID;
 import java.util.function.IntFunction;

@@ -1,21 +1,27 @@
 package com.aranaira.arcanearchives.api.domain;
 
 import com.aranaira.arcanearchives.api.block.entity.IDomainBlockEntity;
+import com.aranaira.arcanearchives.api.inventory.RemoteInventory;
+import com.aranaira.arcanearchives.api.reference.InventoryInfo;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import noobanidus.libs.noobutil.recipe.AbstractLargeItemHandler;
+import noobanidus.libs.noobutil.tracking.ItemTracking;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
+import java.util.function.IntFunction;
 
 public class DomainEntry<T extends IDomainBlockEntity> {
   private final BlockPos position;
   private final RegistryKey<World> dimension;
   private final UUID networkId;
-  private UUID entityId;
+  private final RemoteInventory inventory;
+  private final UUID entityId;
   private final Class<T> clazz;
   private int priority;
 
@@ -25,6 +31,12 @@ public class DomainEntry<T extends IDomainBlockEntity> {
     this.networkId = networkId;
     this.clazz = clazz;
     this.entityId = entityId;
+    IntFunction<? extends AbstractLargeItemHandler> builder = InventoryInfo.inventoryBuilder(clazz);
+    if (builder == null) {
+      this.inventory = null;
+    } else {
+      this.inventory = new RemoteInventory(this.entityId, InventoryInfo.sizeFor(clazz), builder);
+    }
   }
 
   public BlockPos getPosition() {
@@ -49,6 +61,22 @@ public class DomainEntry<T extends IDomainBlockEntity> {
 
   public int getPriority() {
     return priority;
+  }
+
+  public void setPriority (int priority) {
+    this.priority = priority;
+  }
+
+  public RemoteInventory getInventory() {
+    return inventory;
+  }
+
+  public boolean hasInventory () {
+    return inventory != null;
+  }
+
+  public boolean hasTracking () {
+    return inventory != null && inventory.hasTracking();
   }
 
   @Nullable

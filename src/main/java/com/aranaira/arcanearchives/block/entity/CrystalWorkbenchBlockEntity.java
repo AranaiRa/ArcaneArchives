@@ -3,6 +3,7 @@ package com.aranaira.arcanearchives.block.entity;
 import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.api.inventory.StoredInventory;
 import com.aranaira.arcanearchives.api.data.UUIDNameData;
+import com.aranaira.arcanearchives.api.reference.Constants;
 import com.aranaira.arcanearchives.inventory.container.CrystalWorkbenchContainer;
 import com.aranaira.arcanearchives.inventory.handlers.CrystalWorkbenchInventory;
 import net.minecraft.entity.player.PlayerEntity;
@@ -19,7 +20,7 @@ import javax.annotation.Nullable;
 import java.util.UUID;
 
 public class CrystalWorkbenchBlockEntity extends DomainIdentifiedBlockEntity implements IInventoryBlockEntity<CrystalWorkbenchInventory>, INamedContainerProvider {
-  private final StoredInventory<CrystalWorkbenchInventory> inventory = new StoredInventory<>(this::getEntityId, CrystalWorkbenchInventory::new, CrystalWorkbenchInventory.EmptyArcaneWorkbenchInventory::new, 18);
+  private final StoredInventory<CrystalWorkbenchInventory> inventory = new StoredInventory<>(this::getEntityId, CrystalWorkbenchInventory::new, CrystalWorkbenchInventory.EmptyArcaneWorkbenchInventory::new, Constants.CrystalWorkbench.InventorySlots);
 
   public CrystalWorkbenchBlockEntity(TileEntityType<?> tileEntityTypeIn) {
     super(tileEntityTypeIn);

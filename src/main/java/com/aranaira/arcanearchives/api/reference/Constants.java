@@ -6,6 +6,7 @@ import net.minecraft.util.ResourceLocation;
 public interface Constants {
   interface CrystalWorkbench {
     int RecipeSlots = 7;
+    int InventorySlots = 18;
 
     interface DataArray {
       int SlotOffset = 0;
@@ -19,6 +20,10 @@ public interface Constants {
       int Overlay = 0xaa1e3340;
       int OverlaySimple = 0x80808080;
     }
+  }
+
+  interface RadiantChest {
+    int InventorySlots = 54;
   }
 
   interface Recipes {

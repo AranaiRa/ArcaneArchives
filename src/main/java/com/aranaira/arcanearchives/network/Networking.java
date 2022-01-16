@@ -3,10 +3,8 @@ package com.aranaira.arcanearchives.network;
 import com.aranaira.arcanearchives.api.ArcaneArchivesAPI;
 import com.aranaira.arcanearchives.api.network.IPacket;
 import com.aranaira.arcanearchives.network.packets.client.RequestDomainNamesPacket;
-import com.aranaira.arcanearchives.network.packets.server.ExtendedSlotContentsPacket;
-import com.aranaira.arcanearchives.network.packets.server.LightningRenderPacket;
-import com.aranaira.arcanearchives.network.packets.server.DomainNamesSyncPacket;
-import com.aranaira.arcanearchives.network.packets.server.RecipeSyncPacket;
+import com.aranaira.arcanearchives.network.packets.client.RequestManifestSyncPacket;
+import com.aranaira.arcanearchives.network.packets.server.*;
 import com.aranaira.arcanearchives.network.packets.client.RequestSyncPacket;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -36,6 +34,8 @@ public class Networking extends PacketHandler {
     registerMessage(RequestSyncPacket.class,  RequestSyncPacket::encode, RequestSyncPacket::new, Networking::handlePacket);
     registerMessage(RequestDomainNamesPacket.class, RequestDomainNamesPacket::encode, RequestDomainNamesPacket::new, Networking::handlePacket);
     registerMessage(DomainNamesSyncPacket.class, DomainNamesSyncPacket::encode, DomainNamesSyncPacket::new, Networking::handlePacket);
+    registerMessage(RequestManifestSyncPacket.class, RequestManifestSyncPacket::encode, RequestManifestSyncPacket::new, Networking::handlePacket);
+    registerMessage(ManifestSyncPacket.class, ManifestSyncPacket::encode, ManifestSyncPacket::new, Networking::handlePacket);
   }
 
   public static <P extends IPacket> void handlePacket (P packet, Supplier<NetworkEvent.Context> context) {
