@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.client;
 
 import com.aranaira.arcanearchives.api.data.UUIDNameData;
 import com.aranaira.arcanearchives.network.Networking;
-import com.aranaira.arcanearchives.network.packets.client.RequestNetworkNamesPacket;
+import com.aranaira.arcanearchives.network.packets.client.RequestDomainNamesPacket;
 import net.minecraft.client.Minecraft;
 
 import javax.annotation.Nullable;
@@ -36,6 +36,6 @@ public class NameStorage {
     if ((time - lastUpdated) < 35) {
       return;
     }
-    Networking.sendToServer(new RequestNetworkNamesPacket(wantedId));
+    Networking.sendToServer(new RequestDomainNamesPacket(wantedId));
   }
 }

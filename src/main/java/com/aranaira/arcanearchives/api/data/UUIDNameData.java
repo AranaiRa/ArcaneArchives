@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 
 public class UUIDNameData extends WorldSavedData {
   public static final Random random = new Random();
-  public static final String NETWORK_ID = "ArcaneArchives-Network-Names";
-  public static final String TILE_ID = "ArcaneArchives-Tile-Names";
+  public static final String DOMAIN_ID = "ArcaneArchives-Domain-Names";
+  public static final String ENLISTED_ID = "ArcaneArchives-Enlisted-Names";
 
   private Set<byte[]> USED_NAMES = null;
 
@@ -87,7 +87,7 @@ public class UUIDNameData extends WorldSavedData {
   }
 
   public static class Name extends AbstractNetworkObject<PacketBuffer> implements INBTSerializable<CompoundNBT> {
-    public static final String NAME_PREFIX = "arcanearchives.network.id.part.";
+    public static final String NAME_PREFIX = "arcanearchives.domain.id.part.";
     public static final UUID EMPTY_NAME = UUID.fromString("ccb71e56-6c95-4e02-9766-eaf75f39d37d");
 
     public static final Name EMPTY = new Name((byte)20, (byte)20, (byte)20, EMPTY_NAME);

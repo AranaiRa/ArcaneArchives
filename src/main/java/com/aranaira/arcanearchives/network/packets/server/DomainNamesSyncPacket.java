@@ -10,14 +10,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class NetworkNamesSyncPacket implements IPacket {
+public class DomainNamesSyncPacket implements IPacket {
   private final Map<UUID, UUIDNameData.Name> nameData;
 
-  public NetworkNamesSyncPacket(Map<UUID, UUIDNameData.Name> nameData) {
+  public DomainNamesSyncPacket(Map<UUID, UUIDNameData.Name> nameData) {
     this.nameData = nameData;
   }
 
-  public NetworkNamesSyncPacket(PacketBuffer buf) {
+  public DomainNamesSyncPacket(PacketBuffer buf) {
     int count = buf.readVarInt();
     nameData = new HashMap<>();
     for (int i = 0; i < count; i++) {

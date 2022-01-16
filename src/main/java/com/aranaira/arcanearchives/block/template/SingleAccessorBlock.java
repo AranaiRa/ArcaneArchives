@@ -65,68 +65,67 @@ public abstract class SingleAccessorBlock extends Block {
   }
 
   @Override
-  public void playerDestroy(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {
-    if (!worldIn.isClientSide) {
+  public void playerDestroy(World level, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {
+    if (!level.isClientSide) {
       if (state.getValue(ACCESSOR)) {
-        worldIn.destroyBlock(calculateOrigin(pos, state), true);
+        level.destroyBlock(calculateOrigin(pos, state), true);
         player.awardStat(Stats.BLOCK_MINED.get(this));
         player.causeFoodExhaustion(0.005F);
       } else {
-        worldIn.destroyBlock(calculateAccessor(pos, state), false);
+        level.destroyBlock(calculateAccessor(pos, state), false);
       }
-      return;
     }
   }
 
   @Override
-  public void onPlace(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
-    if (state.getValue(ACCESSOR) || worldIn.isClientSide) {
+  public void onPlace(BlockState state, World level, BlockPos pos, BlockState oldState, boolean isMoving) {
+    if (state.getValue(ACCESSOR) || level.isClientSide) {
       return;
     }
 
     BlockPos accessor = calculateAccessor(pos, state);
-    worldIn.setBlockAndUpdate(accessor, state.setValue(ACCESSOR, true));
-    super.onPlace(state, worldIn, pos, oldState, isMoving);
+    level.setBlockAndUpdate(accessor, state.setValue(ACCESSOR, true));
+    super.onPlace(state, level, pos, oldState, isMoving);
   }
 
   @Override
-  public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
-    super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);
-    if (!worldIn.isClientSide) {
+  public void neighborChanged(BlockState state, World level, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+    super.neighborChanged(state, level, pos, blockIn, fromPos, isMoving);
+    if (!level.isClientSide) {
       BlockPos check;
       if (state.getValue(ACCESSOR)) {
         check = calculateOrigin(pos, state);
       } else {
         check = calculateAccessor(pos, state);
       }
-      BlockState other = worldIn.getBlockState(check);
+      BlockState other = level.getBlockState(check);
       if (other.getBlock() != this) {
-        worldIn.destroyBlock(pos, !state.getValue(ACCESSOR));
+        level.destroyBlock(pos, !state.getValue(ACCESSOR));
       }
     }
   }
 
   @Override
-  public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+  public void onRemove(BlockState state, World level, BlockPos pos, BlockState newState, boolean isMoving) {
     if (newState.getBlock() == this) {
       return;
     }
     if (state.getValue(ACCESSOR)) {
-      worldIn.destroyBlock(calculateOrigin(pos, state), true);
+      level.destroyBlock(calculateOrigin(pos, state), true);
     } else {
-      worldIn.destroyBlock(calculateAccessor(pos, state), false);
+      level.destroyBlock(calculateAccessor(pos, state), false);
     }
-    super.onRemove(state, worldIn, pos, newState, isMoving);
+    super.onRemove(state, level, pos, newState, isMoving);
   }
 
   @Override
-  public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+  public ActionResultType use(BlockState state, World level, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
     BlockPos actual = pos;
     if (state.getValue(ACCESSOR)) {
       actual = calculateOrigin(pos, state);
     }
-    return blockActivate(state, worldIn, actual, player, handIn, hit, pos);
+    return blockActivate(state, level, actual, player, handIn, hit, pos);
   }
 
-  public abstract ActionResultType blockActivate (BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray, BlockPos origin);
+  public abstract ActionResultType blockActivate (BlockState state, World level, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray, BlockPos origin);
 }

@@ -5,12 +5,12 @@ import com.aranaira.arcanearchives.api.data.UUIDNameData;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public interface INetworkedBlockEntity extends IIdentifiedBlockEntity {
+public interface IDomainBlockEntity extends IIdentifiedBlockEntity {
   @Nullable
-  UUID getNetworkId ();
+  UUID getDomainId();
 
   @Nullable
-  UUIDNameData.Name getNetworkName ();
+  UUIDNameData.Name getDomainName();
 
-  boolean isNetworkUnknown();
+  boolean isDomainUnknown();
 }

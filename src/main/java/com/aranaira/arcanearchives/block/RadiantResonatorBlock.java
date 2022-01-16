@@ -21,7 +21,7 @@ public class RadiantResonatorBlock extends Block {
 
   @Nullable
   @Override
-  public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+  public TileEntity createTileEntity(BlockState state, IBlockReader level) {
     return new RadiantResonatorBlockEntity(ModBlockEntities.RADIANT_RESONATOR.get());
   }
 }

@@ -32,7 +32,7 @@ public class CrystalWorkbenchBlock extends SingleAccessorBlock {
 
   @Nullable
   @Override
-  public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+  public TileEntity createTileEntity(BlockState state, IBlockReader level) {
     if (state.getValue(ACCESSOR)) {
       return null;
     }
@@ -40,12 +40,12 @@ public class CrystalWorkbenchBlock extends SingleAccessorBlock {
   }
 
   @Override
-  public ActionResultType blockActivate(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray, BlockPos origin) {
-    if (world.isClientSide) {
+  public ActionResultType blockActivate(BlockState state, World level, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray, BlockPos origin) {
+    if (level.isClientSide) {
       return ActionResultType.SUCCESS;
     } else {
       // TODO: Tile entity library?
-      TileEntity te = world.getBlockEntity(pos);
+      TileEntity te = level.getBlockEntity(pos);
       if (te instanceof CrystalWorkbenchBlockEntity) {
         NetworkHooks.openGui((ServerPlayerEntity) player, (CrystalWorkbenchBlockEntity) te, pos);
       }

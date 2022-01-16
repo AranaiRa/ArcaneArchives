@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.block;
 
-import com.aranaira.arcanearchives.block.entity.CrystalWorkbenchBlockEntity;
 import com.aranaira.arcanearchives.init.ModBlockEntities;
 import com.aranaira.arcanearchives.block.entity.RadiantChestBlockEntity;
 import net.minecraft.block.Block;
@@ -30,18 +29,18 @@ public class RadiantChestBlock extends Block {
 
   @Nullable
   @Override
-  public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+  public TileEntity createTileEntity(BlockState state, IBlockReader level) {
     return new RadiantChestBlockEntity(ModBlockEntities.RADIANT_CHEST.get());
   }
 
   @SuppressWarnings("deprecation")
   @Override
-  public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-    if (worldIn.isClientSide) {
+  public ActionResultType use(BlockState state, World level, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    if (level.isClientSide) {
       return ActionResultType.SUCCESS;
     } else {
       // TODO: Tile entity library?
-      TileEntity te = worldIn.getBlockEntity(pos);
+      TileEntity te = level.getBlockEntity(pos);
       if (te instanceof RadiantChestBlockEntity) {
         NetworkHooks.openGui((ServerPlayerEntity) player, (RadiantChestBlockEntity) te, pos);
       }

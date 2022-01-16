@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.api.domain;
 
 import com.aranaira.arcanearchives.api.ArcaneArchivesAPI;
-import com.aranaira.arcanearchives.api.block.entity.INetworkedBlockEntity;
+import com.aranaira.arcanearchives.api.block.entity.IDomainBlockEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.RegistryKey;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber(modid = ArcaneArchivesAPI.MODID)
 public class DomainManager {
-  public static Set<RegistryKey<World>> WORLDS = null;
+  public static Set<RegistryKey<World>> LEVELS = null;
   private static volatile boolean forceRefresh = false;
 
   private static final Map<UUID, Domain> domainMap = Collections.synchronizedMap(new HashMap<>());
@@ -36,15 +36,13 @@ public class DomainManager {
   @SubscribeEvent
   public static void onServerStarted(FMLServerStartedEvent event) {
     Optional<MutableRegistry<World>> opRg = event.getServer().registryAccess().registry(Registry.DIMENSION_REGISTRY);
-    opRg.ifPresent(reg -> {
-      WORLDS = reg.keySet().stream().map(o -> RegistryKey.create(Registry.DIMENSION_REGISTRY, o)).collect(Collectors.toSet());
-    });
+    opRg.ifPresent(reg -> LEVELS = reg.keySet().stream().map(o -> RegistryKey.create(Registry.DIMENSION_REGISTRY, o)).collect(Collectors.toSet()));
     domainMap.clear();
   }
 
   @SubscribeEvent
   public static void onServerStopped(FMLServerStoppedEvent event) {
-    WORLDS = null;
+    LEVELS = null;
     domainMap.clear();
   }
 
@@ -71,16 +69,16 @@ public class DomainManager {
             toRemove.add(entry);
             continue;
           }
-          TileEntity tileAt = level.getBlockEntity(entry.getPosition());
-          if (tileAt == null) {
+          TileEntity be = level.getBlockEntity(entry.getPosition());
+          if (be == null) {
             toRemove.add(entry);
             continue;
           }
-          if (tileAt instanceof INetworkedBlockEntity) {
+          if (be instanceof IDomainBlockEntity) {
             toRemove.add(entry);
-            INetworkedBlockEntity ine = (INetworkedBlockEntity) tileAt;
-            if (ine.getNetworkId() != null) {
-              getDomain(ine.getNetworkId()).getEntries().add(new DomainEntry(entry.getPosition(), entry.getDimension(), ine.getNetworkId(), ine.getClass()));
+            IDomainBlockEntity ine = (IDomainBlockEntity) be;
+            if (ine.getDomainId() != null) {
+              getDomain(ine.getDomainId()).getEntries().add(new DomainEntry<>(entry.getPosition(), entry.getDimension(), ine.getDomainId(), ine.getEntityId(), ine.getClass()));
             } else {
               level.destroyBlock(entry.getPosition(), true);
             }
@@ -98,7 +96,7 @@ public class DomainManager {
       pendingUnknownEntities.clear();
     }
 
-    if (WORLDS == null) {
+    if (LEVELS == null) {
       return;
     }
 
@@ -108,20 +106,20 @@ public class DomainManager {
 
     forceRefresh = false;
 
-    Map<UUID, List<DomainEntry>> networkMap = new HashMap<>();
+    Map<UUID, List<DomainEntry<?>>> networkMap = new HashMap<>();
 
-    for (RegistryKey<World> key : WORLDS) {
-      ServerWorld world = server.getLevel(key);
-      if (world != null) {
-        for (TileEntity te : world.blockEntityList) {
-          if (te instanceof INetworkedBlockEntity) {
-            INetworkedBlockEntity ine = (INetworkedBlockEntity) te;
-            if (ine.getNetworkId() == null) {
+    for (RegistryKey<World> key : LEVELS) {
+      ServerWorld level = server.getLevel(key);
+      if (level != null) {
+        for (TileEntity te : level.blockEntityList) {
+          if (te instanceof IDomainBlockEntity) {
+            IDomainBlockEntity ine = (IDomainBlockEntity) te;
+            if (ine.getDomainId() == null) {
               // handle a null entity?
-              UnknownEntry entry = new UnknownEntry(te.getBlockPos(), key);
+              addUnknownEntry(new UnknownEntry(te.getBlockPos(), key));
             } else {
-              DomainEntry entry = new DomainEntry(te.getBlockPos(), key, ine.getNetworkId(), ine.getClass());
-              networkMap.computeIfAbsent(ine.getNetworkId(), k -> new ArrayList<>()).add(entry);
+              DomainEntry<?> entry = new DomainEntry<>(te.getBlockPos(), key, ine.getDomainId(), ine.getEntityId(), ine.getClass());
+              networkMap.computeIfAbsent(ine.getDomainId(), k -> new ArrayList<>()).add(entry);
             }
           }
         }
@@ -137,8 +135,8 @@ public class DomainManager {
     return domainMap.computeIfAbsent(domainId, Domain::new);
   }
 
-  public static boolean register(INetworkedBlockEntity entity) {
-    UUID id = entity.getNetworkId();
+  public static boolean register(IDomainBlockEntity entity) {
+    UUID id = entity.getDomainId();
     TileEntity te = entity.getBlockEntity();
     if (te.getLevel() == null) {
       return false;
@@ -146,7 +144,7 @@ public class DomainManager {
     if (id == null) {
       addUnknownEntry(new UnknownEntry(te.getBlockPos(), te.getLevel().dimension()));
     } else {
-      getDomain(id).getEntries().add(new DomainEntry(te.getBlockPos(), te.getLevel().dimension(), id, entity.getClass()));
+      getDomain(id).getEntries().add(new DomainEntry<>(te.getBlockPos(), te.getLevel().dimension(), id, entity.getEntityId(), entity.getClass()));
     }
     return true;
   }

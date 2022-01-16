@@ -18,37 +18,37 @@ public class DataStorage {
     return manager.computeIfAbsent(() -> new StoredInventoryData<>(id, size, builder), StoredInventoryData.ID(id));
   }
 
-  public static UUIDNameData.Name getNetworkName (UUID networkId) {
+  public static UUIDNameData.Name getDomainName(UUID networkId) {
     DimensionSavedDataManager manager = ServerLifecycleHooks.getCurrentServer().getLevel(World.OVERWORLD).getDataStorage();
-    UUIDNameData data = manager.computeIfAbsent(() -> new UUIDNameData(UUIDNameData.NETWORK_ID), UUIDNameData.NETWORK_ID);
+    UUIDNameData data = manager.computeIfAbsent(() -> new UUIDNameData(UUIDNameData.DOMAIN_ID), UUIDNameData.DOMAIN_ID);
     return data.getOrGenerate(networkId);
   }
 
-  public static Map<UUID, UUIDNameData.Name> getNetworkNames (UUID incomingId) {
+  public static Map<UUID, UUIDNameData.Name> getDomainNames(UUID incomingId) {
     DimensionSavedDataManager manager = ServerLifecycleHooks.getCurrentServer().getLevel(World.OVERWORLD).getDataStorage();
-    UUIDNameData data = manager.computeIfAbsent(() -> new UUIDNameData(UUIDNameData.NETWORK_ID), UUIDNameData.NETWORK_ID);
+    UUIDNameData data = manager.computeIfAbsent(() -> new UUIDNameData(UUIDNameData.DOMAIN_ID), UUIDNameData.DOMAIN_ID);
     data.getOrGenerate(incomingId);
     return data.getNames();
   }
 
-  public static UUIDNameData.Name getTileName (UUID tileId) {
+  public static UUIDNameData.Name getEntityName(UUID entityId) {
     DimensionSavedDataManager manager = ServerLifecycleHooks.getCurrentServer().getLevel(World.OVERWORLD).getDataStorage();
-    UUIDNameData data = manager.computeIfAbsent(() -> new UUIDNameData(UUIDNameData.TILE_ID), UUIDNameData.NETWORK_ID);
-    return data.getOrGenerate(tileId);
+    UUIDNameData data = manager.computeIfAbsent(() -> new UUIDNameData(UUIDNameData.ENLISTED_ID), UUIDNameData.DOMAIN_ID);
+    return data.getOrGenerate(entityId);
   }
 
   public static final String RECIPE_SELECTION = "ArcaneArchives-RecipeSelection";
 
-  public static ResourceLocation getSelectedRecipe (UUID player, UUID tileId) {
+  public static ResourceLocation getSelectedRecipe (UUID player, UUID entityId) {
     DimensionSavedDataManager manager = ServerLifecycleHooks.getCurrentServer().getLevel(World.OVERWORLD).getDataStorage();
     UUIDPlayerRLData data = manager.computeIfAbsent(() -> new UUIDPlayerRLData(RECIPE_SELECTION), RECIPE_SELECTION);
-    return data.get(player, tileId);
+    return data.get(player, entityId);
   }
 
-  public static void setSelectedRecipe (UUID player, UUID tileId, ResourceLocation rl) {
+  public static void setSelectedRecipe (UUID player, UUID entityId, ResourceLocation rl) {
     DimensionSavedDataManager manager = ServerLifecycleHooks.getCurrentServer().getLevel(World.OVERWORLD).getDataStorage();
     UUIDPlayerRLData data = manager.computeIfAbsent(() -> new UUIDPlayerRLData(RECIPE_SELECTION), RECIPE_SELECTION);
-    data.set(player, tileId, rl);
+    data.set(player, entityId, rl);
     data.setDirty();
     manager.save();
   }

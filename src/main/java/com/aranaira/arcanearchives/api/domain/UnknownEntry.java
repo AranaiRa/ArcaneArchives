@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.api.domain;
 
-import com.aranaira.arcanearchives.api.block.entity.INetworkedBlockEntity;
+import com.aranaira.arcanearchives.api.block.entity.IDomainBlockEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.RegistryKey;
@@ -46,17 +46,17 @@ public class UnknownEntry {
   }
 
   @Nullable
-  public INetworkedBlockEntity resolve (MinecraftServer server) {
-    ServerWorld world = server.getLevel(dimension);
-    if (world == null) {
+  public IDomainBlockEntity resolve (MinecraftServer server) {
+    ServerWorld level = server.getLevel(dimension);
+    if (level == null) {
       return null;
     }
-    if (!world.isAreaLoaded(position, 1)) {
+    if (!level.isAreaLoaded(position, 1)) {
       return null;
     }
-    TileEntity tileAt = world.getBlockEntity(position);
-    if (tileAt instanceof INetworkedBlockEntity) {
-      return (INetworkedBlockEntity) tileAt;
+    TileEntity be = level.getBlockEntity(position);
+    if (be instanceof IDomainBlockEntity) {
+      return (IDomainBlockEntity) be;
     }
 
     return null;

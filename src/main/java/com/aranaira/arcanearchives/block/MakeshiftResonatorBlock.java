@@ -42,13 +42,13 @@ public class MakeshiftResonatorBlock extends Block {
   }
 
   @Override
-  public void handleRain(World world, BlockPos pos) {
-    if (!world.isClientSide) {
-      BlockState stateAt = world.getBlockState(pos).setValue(FILLED, true);
+  public void handleRain(World level, BlockPos pos) {
+    if (!level.isClientSide) {
+      BlockState stateAt = level.getBlockState(pos).setValue(FILLED, true);
       if (!stateAt.getValue(FILLED)) {
-        world.setBlockAndUpdate(pos, stateAt.setValue(FILLED, true));
+        level.setBlockAndUpdate(pos, stateAt.setValue(FILLED, true));
       }
-      TileEntity te = world.getBlockEntity(pos);
+      TileEntity te = level.getBlockEntity(pos);
       if (te instanceof MakeshiftResonatorBlockEntity) {
         ((MakeshiftResonatorBlockEntity) te).setFilled();
       }
@@ -56,14 +56,14 @@ public class MakeshiftResonatorBlock extends Block {
   }
 
   @Override
-  public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray) {
+  public ActionResultType use(BlockState state, World level, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray) {
     if (state.getValue(FILLED)) {
       return ActionResultType.PASS;
     }
 
     if (player.isCreative()) {
-      world.setBlockAndUpdate(pos, state.setValue(FILLED, true));
-      TileEntity te = world.getBlockEntity(pos);
+      level.setBlockAndUpdate(pos, state.setValue(FILLED, true));
+      TileEntity te = level.getBlockEntity(pos);
       if (te instanceof MakeshiftResonatorBlockEntity) {
         ((MakeshiftResonatorBlockEntity) te).setFilled();
       }
@@ -88,8 +88,8 @@ public class MakeshiftResonatorBlock extends Block {
             if (replace) {
               player.setItemInHand(hand, cap.getContainer());
             }
-            world.setBlockAndUpdate(pos, state.setValue(FILLED, true));
-            TileEntity te = world.getBlockEntity(pos);
+            level.setBlockAndUpdate(pos, state.setValue(FILLED, true));
+            TileEntity te = level.getBlockEntity(pos);
             if (te instanceof MakeshiftResonatorBlockEntity) {
               ((MakeshiftResonatorBlockEntity) te).setFilled();
             }
@@ -99,7 +99,7 @@ public class MakeshiftResonatorBlock extends Block {
       }
     }
 
-    return super.use(state, world, pos, player, hand, ray);
+    return super.use(state, level, pos, player, hand, ray);
   }
 
   @Override
@@ -114,7 +114,7 @@ public class MakeshiftResonatorBlock extends Block {
 
   @Nullable
   @Override
-  public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+  public TileEntity createTileEntity(BlockState state, IBlockReader level) {
     return new MakeshiftResonatorBlockEntity(ModBlockEntities.MAKESHIFT_RESONATOR.get());
   }
 }

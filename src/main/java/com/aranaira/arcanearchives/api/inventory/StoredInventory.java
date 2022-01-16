@@ -26,12 +26,12 @@ public class StoredInventory<I extends AbstractLargeItemHandler> {
   }
 
   @Nullable
-  public I getInventory(World world) {
+  public I getInventory(World level) {
     if (inventory != null) {
       return inventory;
     }
 
-    if (world == null || world.isClientSide) {
+    if (level == null || level.isClientSide) {
       return null;
     }
 

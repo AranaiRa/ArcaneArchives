@@ -1,25 +1,83 @@
 package com.aranaira.arcanearchives.api.domain;
 
-import com.aranaira.arcanearchives.api.block.entity.INetworkedBlockEntity;
+import com.aranaira.arcanearchives.api.block.entity.IDomainBlockEntity;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
+import javax.annotation.Nullable;
 import java.util.UUID;
 
-public class DomainEntry {
+public class DomainEntry<T extends IDomainBlockEntity> {
   private final BlockPos position;
   private final RegistryKey<World> dimension;
   private final UUID networkId;
   private UUID entityId;
-  private final Class<? extends INetworkedBlockEntity> clazz;
+  private final Class<T> clazz;
   private int priority;
 
-  public DomainEntry(BlockPos position, RegistryKey<World> dimension, UUID networkId, Class<? extends INetworkedBlockEntity> clazz) {
+  public DomainEntry(BlockPos position, RegistryKey<World> dimension, UUID networkId, UUID entityId, Class<T> clazz) {
     this.position = position;
     this.dimension = dimension;
     this.networkId = networkId;
     this.clazz = clazz;
+    this.entityId = entityId;
+  }
+
+  public BlockPos getPosition() {
+    return position;
+  }
+
+  public RegistryKey<World> getDimension() {
+    return dimension;
+  }
+
+  public UUID getNetworkId() {
+    return networkId;
+  }
+
+  public UUID getEntityId() {
+    return entityId;
+  }
+
+  public Class<T> getClazz() {
+    return clazz;
+  }
+
+  public int getPriority() {
+    return priority;
+  }
+
+  @Nullable
+  public T getEntity (MinecraftServer server, Class<T> clazz, boolean forceLoad) {
+    ServerWorld level = server.getLevel(dimension);
+    if (level == null) {
+      return null;
+    }
+
+    if (!forceLoad && !level.isAreaLoaded(position, 1)) {
+      return null;
+    }
+
+    TileEntity te = level.getBlockEntity(position);
+    if (te == null) {
+      return null;
+    }
+
+    if (clazz.isAssignableFrom(te.getClass())) {
+      //noinspection unchecked
+      return (T) te;
+    }
+
+    return null;
+  }
+
+  @Nullable
+  public T getEntity (MinecraftServer server) {
+    return getEntity(server, this.clazz, false);
   }
 
   @Override
@@ -27,7 +85,7 @@ public class DomainEntry {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
-    DomainEntry that = (DomainEntry) o;
+    DomainEntry<?> that = (DomainEntry<?>) o;
 
     if (priority != that.priority) return false;
     if (position != null ? !position.equals(that.position) : that.position != null) return false;

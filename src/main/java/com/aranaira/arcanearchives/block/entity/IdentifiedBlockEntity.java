@@ -17,8 +17,8 @@ import javax.annotation.Nullable;
 import java.util.UUID;
 
 public abstract class IdentifiedBlockEntity extends TileEntity implements IIdentifiedBlockEntity {
-  protected UUID uuid = null;
-  protected UUIDNameData.Name tileName = null;
+  protected UUID entityId = null;
+  protected UUIDNameData.Name entityName = null;
 
   public IdentifiedBlockEntity(TileEntityType<?> tileEntityTypeIn) {
     super(tileEntityTypeIn);
@@ -26,19 +26,19 @@ public abstract class IdentifiedBlockEntity extends TileEntity implements IIdent
 
   @Override
   public CompoundNBT save(CompoundNBT compound) {
-    if (uuid != null) {
-      compound.putUUID(Identifiers.tileId, uuid);
+    if (entityId != null) {
+      compound.putUUID(Identifiers.entityId, entityId);
     }
     return super.save(compound);
   }
 
   @Override
   public void load(BlockState state, CompoundNBT compound) {
-    if (compound.hasUUID(Identifiers.tileId)) {
-      this.uuid = compound.getUUID(Identifiers.tileId);
+    if (compound.hasUUID(Identifiers.entityId)) {
+      this.entityId = compound.getUUID(Identifiers.entityId);
     } else {
       // TODO: Should we be generating a unique ID here?
-      this.uuid = UNKNOWN;
+      this.entityId = UNKNOWN;
     }
 
     super.load(state, compound);
@@ -47,9 +47,9 @@ public abstract class IdentifiedBlockEntity extends TileEntity implements IIdent
   @Override
   public UUID getEntityId() {
     if (isBlockUnknown()) {
-      this.uuid = UUID.randomUUID();
+      this.entityId = UUID.randomUUID();
     }
-    return uuid;
+    return entityId;
   }
 
   @Nullable
@@ -63,10 +63,10 @@ public abstract class IdentifiedBlockEntity extends TileEntity implements IIdent
     CompoundNBT data = super.getUpdateTag();
     UUID id = getEntityId();
     if (id != null) {
-      data.putUUID(Identifiers.tileId, id);
+      data.putUUID(Identifiers.entityId, id);
       UUIDNameData.Name name = getEntityName();
       if (!name.isEmpty()) {
-        data.put(Identifiers.tileName, name.serializeNBT());
+        data.put(Identifiers.entityName, name.serializeNBT());
       }
     }
     return data;
@@ -76,11 +76,11 @@ public abstract class IdentifiedBlockEntity extends TileEntity implements IIdent
   public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
     if (pkt.getType() == 9) {
       CompoundNBT tag = pkt.getTag();
-      if (tag.hasUUID(Identifiers.tileId)) {
-        uuid = pkt.getTag().getUUID(Identifiers.tileId);
+      if (tag.hasUUID(Identifiers.entityId)) {
+        entityId = pkt.getTag().getUUID(Identifiers.entityId);
       }
-      if (tag.contains(Identifiers.tileName)) {
-        this.tileName = UUIDNameData.Name.fromNBT(tag.getCompound(Identifiers.tileName));
+      if (tag.contains(Identifiers.entityName)) {
+        this.entityName = UUIDNameData.Name.fromNBT(tag.getCompound(Identifiers.entityName));
       }
     }
 
@@ -94,7 +94,7 @@ public abstract class IdentifiedBlockEntity extends TileEntity implements IIdent
 
   @Override
   public UUIDNameData.Name getEntityName() {
-    if (tileName == null) {
+    if (entityName == null) {
       LogicalSide side = EffectiveSide.get();
       if (side.isClient()) {
         return UUIDNameData.Name.EMPTY;
@@ -102,15 +102,15 @@ public abstract class IdentifiedBlockEntity extends TileEntity implements IIdent
         if (getEntityId() == null) {
           return UUIDNameData.Name.EMPTY;
         }
-        tileName = DataStorage.getTileName(getEntityId());
+        entityName = DataStorage.getEntityName(getEntityId());
       }
     }
 
-    return tileName;
+    return entityName;
   }
 
   @Override
   public boolean isBlockUnknown() {
-    return uuid == null || uuid == UNKNOWN;
+    return entityId == null || entityId == UNKNOWN;
   }
 }

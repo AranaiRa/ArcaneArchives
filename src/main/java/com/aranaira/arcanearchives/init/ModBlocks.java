@@ -4,7 +4,7 @@ import com.aranaira.arcanearchives.AATags;
 import com.aranaira.arcanearchives.api.ArcaneArchivesAPI;
 import com.aranaira.arcanearchives.api.reference.Identifiers;
 import com.aranaira.arcanearchives.block.*;
-import com.aranaira.arcanearchives.item.block.AdjustableAbstractNetworkedBlockItem;
+import com.aranaira.arcanearchives.item.block.AdjustableDomainBlockItem;
 import com.aranaira.arcanearchives.item.block.CrystalWorkbenchBlockItem;
 import com.aranaira.arcanearchives.recipe.CrystalWorkbenchRecipeBuilder;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
@@ -67,7 +67,7 @@ public class ModBlocks {
   public static final RegistryEntry<RadiantChestBlock> RADIANT_CHEST = REGISTRATE.block("radiant_chest", Material.WOOD, RadiantChestBlock::new)
       .properties(o -> o.noOcclusion().lightLevel(lightFunction).strength(3f).harvestTool(ToolType.AXE))
       .blockstate(NonNullBiConsumer.noop())
-      .item(AdjustableAbstractNetworkedBlockItem::new)
+      .item(AdjustableDomainBlockItem::new)
       .model((ctx, p) -> p.blockItem(ctx::getEntry))
       .build()
       .recipe((ctx, p) -> {
@@ -117,7 +117,7 @@ public class ModBlocks {
   public static final RegistryEntry<RadiantResonatorBlock> RADIANT_RESONATOR = REGISTRATE.block("radiant_resonator", Material.WOOD, RadiantResonatorBlock::new)
       .properties(o -> o.noOcclusion().lightLevel(lightFunction).strength(3f).harvestTool(ToolType.PICKAXE))
       .blockstate(NonNullBiConsumer.noop())
-      .item(AdjustableAbstractNetworkedBlockItem::new)
+      .item(AdjustableDomainBlockItem::new)
       .model((ctx, p) -> p.blockItem(ctx::getEntry))
       .build()
       .recipe((ctx, p) -> {
@@ -141,13 +141,13 @@ public class ModBlocks {
 
   private static <T extends Block> NonNullBiConsumer<RegistrateBlockLootTables, T> withTileId() {
     return (ctx, p) -> {
-      ctx.add(p, LootTable.lootTable().withPool(RegistrateBlockLootTables.withExplosionDecay(p, LootPool.lootPool().setRolls(ConstantRange.exactly(1)).add(ItemLootEntry.lootTableItem(p).apply(CopyName.copyName(CopyName.Source.BLOCK_ENTITY)).apply(CopyNbt.copyData(CopyNbt.Source.BLOCK_ENTITY).copy(Identifiers.tileId, Identifiers.blockEntityTag(Identifiers.tileId)))))));
+      ctx.add(p, LootTable.lootTable().withPool(RegistrateBlockLootTables.withExplosionDecay(p, LootPool.lootPool().setRolls(ConstantRange.exactly(1)).add(ItemLootEntry.lootTableItem(p).apply(CopyName.copyName(CopyName.Source.BLOCK_ENTITY)).apply(CopyNbt.copyData(CopyNbt.Source.BLOCK_ENTITY).copy(Identifiers.entityId, Identifiers.blockEntityTag(Identifiers.entityId)))))));
     };
   }
 
   private static <T extends Block> NonNullBiConsumer<RegistrateBlockLootTables, T> withNetworkId() {
     return (ctx, p) -> {
-      ctx.add(p, LootTable.lootTable().withPool(RegistrateBlockLootTables.withExplosionDecay(p, LootPool.lootPool().setRolls(ConstantRange.exactly(1)).add(ItemLootEntry.lootTableItem(p).apply(CopyName.copyName(CopyName.Source.BLOCK_ENTITY)).apply(CopyNbt.copyData(CopyNbt.Source.BLOCK_ENTITY).copy(Identifiers.networkId, Identifiers.blockEntityTag(Identifiers.networkId)))))));
+      ctx.add(p, LootTable.lootTable().withPool(RegistrateBlockLootTables.withExplosionDecay(p, LootPool.lootPool().setRolls(ConstantRange.exactly(1)).add(ItemLootEntry.lootTableItem(p).apply(CopyName.copyName(CopyName.Source.BLOCK_ENTITY)).apply(CopyNbt.copyData(CopyNbt.Source.BLOCK_ENTITY).copy(Identifiers.domainId, Identifiers.blockEntityTag(Identifiers.domainId)))))));
     };
   }
 
@@ -180,8 +180,8 @@ public class ModBlocks {
                                                   CopyNbt.Source.BLOCK_ENTITY
                                               )
                                               .copy(
-                                                  Identifiers.networkId,
-                                                  Identifiers.blockEntityTag(Identifiers.networkId))
+                                                  Identifiers.domainId,
+                                                  Identifiers.blockEntityTag(Identifiers.domainId))
                                       )
                                       .apply(
                                           CopyNbt
@@ -189,8 +189,8 @@ public class ModBlocks {
                                                   CopyNbt.Source.BLOCK_ENTITY
                                               )
                                               .copy(
-                                                  Identifiers.tileId,
-                                                  Identifiers.blockEntityTag(Identifiers.tileId))
+                                                  Identifiers.entityId,
+                                                  Identifiers.blockEntityTag(Identifiers.entityId))
                                       )
                               )
                       )

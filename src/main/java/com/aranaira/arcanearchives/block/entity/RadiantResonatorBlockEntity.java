@@ -9,7 +9,7 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 
-public class RadiantResonatorBlockEntity extends NetworkIdentifiedBlockEntity implements ITickableTileEntity {
+public class RadiantResonatorBlockEntity extends DomainIdentifiedBlockEntity implements ITickableTileEntity {
   // TODO: Config
   public static final int TIMER = 90;
   protected int progress = -1;
@@ -24,7 +24,7 @@ public class RadiantResonatorBlockEntity extends NetworkIdentifiedBlockEntity im
       return true;
     }
 
-    if (getNetworkId() == null) {
+    if (getDomainId() == null) {
       return true;
     }
 

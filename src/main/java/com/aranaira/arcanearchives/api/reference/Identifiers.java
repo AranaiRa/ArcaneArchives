@@ -4,10 +4,10 @@ public interface Identifiers {
   String recipe = "Rec";
   String inventory = "Inv";
   String inventoryName = "InvName";
-  String tileId = "TileId";
-  String tileName = "TileName";
-  String networkId = "NetId";
-  String networkName = "NetworkName";
+  String entityId = "EntId";
+  String entityName = "EntName";
+  String domainId = "DomId";
+  String domainName = "DomName";
 
   String BlockEntityTag = "BlockEntityTag";
 
@@ -37,8 +37,8 @@ public interface Identifiers {
     String filled = "Filled";
   }
 
-  interface NetworkReference {
-    String networkIds = "NetIds";
+  interface DomainReference {
+    String domainIds = "DomIds";
   }
 
   static String blockEntityTag (String tag) {

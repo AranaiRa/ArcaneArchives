@@ -18,7 +18,7 @@ import noobanidus.libs.noobutil.block.entities.IInventoryBlockEntity;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public class CrystalWorkbenchBlockEntity extends NetworkIdentifiedBlockEntity implements IInventoryBlockEntity<CrystalWorkbenchInventory>, INamedContainerProvider {
+public class CrystalWorkbenchBlockEntity extends DomainIdentifiedBlockEntity implements IInventoryBlockEntity<CrystalWorkbenchInventory>, INamedContainerProvider {
   private final StoredInventory<CrystalWorkbenchInventory> inventory = new StoredInventory<>(this::getEntityId, CrystalWorkbenchInventory::new, CrystalWorkbenchInventory.EmptyArcaneWorkbenchInventory::new, 18);
 
   public CrystalWorkbenchBlockEntity(TileEntityType<?> tileEntityTypeIn) {
@@ -54,12 +54,12 @@ public class CrystalWorkbenchBlockEntity extends NetworkIdentifiedBlockEntity im
 
   @Nullable
   @Override
-  public UUID getNetworkId() {
+  public UUID getDomainId() {
     return getEntityId();
   }
 
   @Override
-  public UUIDNameData.Name getNetworkName() {
+  public UUIDNameData.Name getDomainName() {
     return getEntityName();
   }
 }
