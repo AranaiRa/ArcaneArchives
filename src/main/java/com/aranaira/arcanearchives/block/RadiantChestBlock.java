@@ -36,7 +36,7 @@ public class RadiantChestBlock extends Block {
   @SuppressWarnings("deprecation")
   @Override
   public ActionResultType use(BlockState state, World level, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-    if (level.isClientSide) {
+    if (level.isClientSide()) {
       return ActionResultType.SUCCESS;
     } else {
       // TODO: Tile entity library?

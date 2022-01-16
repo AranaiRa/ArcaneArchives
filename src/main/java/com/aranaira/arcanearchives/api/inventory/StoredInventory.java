@@ -31,7 +31,7 @@ public class StoredInventory<I extends AbstractLargeItemHandler> {
       return inventory;
     }
 
-    if (level == null || level.isClientSide) {
+    if (level == null || level.isClientSide()) {
       return null;
     }
 

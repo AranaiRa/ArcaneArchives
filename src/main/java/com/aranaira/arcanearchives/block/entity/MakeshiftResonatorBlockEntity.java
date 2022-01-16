@@ -45,7 +45,7 @@ public class MakeshiftResonatorBlockEntity extends TileEntity implements IRefere
     Vector3d start_se = start.add(0.9, 0.95, 0.9);
     List<Vector3d> starts = Arrays.asList(start_sw, start_ne, start_nw, start_se);
 
-    if (level != null && !level.isClientSide && filled) {
+    if (level != null && !level.isClientSide() && filled) {
       if (countdown > 0) {
         countdown--;
         if (countdown > 7) {

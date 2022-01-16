@@ -41,7 +41,7 @@ public class CrystalWorkbenchBlock extends SingleAccessorBlock {
 
   @Override
   public ActionResultType blockActivate(BlockState state, World level, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray, BlockPos origin) {
-    if (level.isClientSide) {
+    if (level.isClientSide()) {
       return ActionResultType.SUCCESS;
     } else {
       // TODO: Tile entity library?

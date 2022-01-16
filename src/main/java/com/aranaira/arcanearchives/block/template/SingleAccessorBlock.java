@@ -66,7 +66,7 @@ public abstract class SingleAccessorBlock extends Block {
 
   @Override
   public void playerDestroy(World level, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {
-    if (!level.isClientSide) {
+    if (!level.isClientSide()) {
       if (state.getValue(ACCESSOR)) {
         level.destroyBlock(calculateOrigin(pos, state), true);
         player.awardStat(Stats.BLOCK_MINED.get(this));
@@ -79,7 +79,7 @@ public abstract class SingleAccessorBlock extends Block {
 
   @Override
   public void onPlace(BlockState state, World level, BlockPos pos, BlockState oldState, boolean isMoving) {
-    if (state.getValue(ACCESSOR) || level.isClientSide) {
+    if (state.getValue(ACCESSOR) || level.isClientSide(){
       return;
     }
 
@@ -91,7 +91,7 @@ public abstract class SingleAccessorBlock extends Block {
   @Override
   public void neighborChanged(BlockState state, World level, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
     super.neighborChanged(state, level, pos, blockIn, fromPos, isMoving);
-    if (!level.isClientSide) {
+    if (!level.isClientSide()) {
       BlockPos check;
       if (state.getValue(ACCESSOR)) {
         check = calculateOrigin(pos, state);

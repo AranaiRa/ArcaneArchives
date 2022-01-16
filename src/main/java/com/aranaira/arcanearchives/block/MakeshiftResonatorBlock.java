@@ -43,7 +43,7 @@ public class MakeshiftResonatorBlock extends Block {
 
   @Override
   public void handleRain(World level, BlockPos pos) {
-    if (!level.isClientSide) {
+    if (!level.isClientSide()) {
       BlockState stateAt = level.getBlockState(pos).setValue(FILLED, true);
       if (!stateAt.getValue(FILLED)) {
         level.setBlockAndUpdate(pos, stateAt.setValue(FILLED, true));
