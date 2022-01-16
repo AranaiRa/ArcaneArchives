@@ -79,7 +79,7 @@ public abstract class SingleAccessorBlock extends Block {
 
   @Override
   public void onPlace(BlockState state, World level, BlockPos pos, BlockState oldState, boolean isMoving) {
-    if (state.getValue(ACCESSOR) || level.isClientSide(){
+    if (state.getValue(ACCESSOR) || level.isClientSide()) {
       return;
     }
 
