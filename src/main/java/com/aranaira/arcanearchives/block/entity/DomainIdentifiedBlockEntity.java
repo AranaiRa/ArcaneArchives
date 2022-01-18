@@ -33,7 +33,7 @@ public abstract class DomainIdentifiedBlockEntity extends IdentifiedBlockEntity 
     if (getLevel().isClientSide()) {
       return;
     }
-    DomainManager.register(this);
+    DomainManager.enlist(this);
   }
 
   @Override

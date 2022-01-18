@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.block.template;
 
-import com.aranaira.arcanearchives.api.RelativeSide;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;

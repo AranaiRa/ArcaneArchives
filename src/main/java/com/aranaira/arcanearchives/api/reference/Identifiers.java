@@ -17,6 +17,11 @@ public interface Identifiers {
     String slotUUID = "SlotUUID";
     String slotValue = "SlotValue";
     String slotPlayerId = "SlotPlayerUUID";
+    String position = "Pos";
+    String dimension = "Dim";
+    String priority = "Prio";
+    String lastUpdated = "LastU";
+    String clazz = "Clz";
   }
 
   interface PlayerSaveData {
@@ -39,6 +44,10 @@ public interface Identifiers {
 
   interface DomainReference {
     String domainIds = "DomIds";
+  }
+
+  interface DomainEntryData {
+    String domainEntries = "DomEntries";
   }
 
   static String blockEntityTag (String tag) {

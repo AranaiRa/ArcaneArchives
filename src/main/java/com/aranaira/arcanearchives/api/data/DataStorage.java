@@ -6,6 +6,7 @@ import net.minecraft.world.storage.DimensionSavedDataManager;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import noobanidus.libs.noobutil.data.server.StoredInventoryData;
 import noobanidus.libs.noobutil.inventory.ILargeInventory;
+import org.lwjgl.system.CallbackI;
 
 import javax.annotation.Nullable;
 import java.util.Map;
@@ -14,6 +15,11 @@ import java.util.function.IntFunction;
 
 @SuppressWarnings("ConstantConditions")
 public class DataStorage {
+  public static DomainEntryData getDomainEntries () {
+    DimensionSavedDataManager manager = ServerLifecycleHooks.getCurrentServer().getLevel(World.OVERWORLD).getDataStorage();
+    return manager.computeIfAbsent(() -> new DomainEntryData(DomainEntryData.ID), DomainEntryData.ID);
+  }
+
   public static <T extends ILargeInventory> StoredInventoryData<T> getInventory (UUID id, int size, IntFunction<T> builder) {
     DimensionSavedDataManager manager = ServerLifecycleHooks.getCurrentServer().getLevel(World.OVERWORLD).getDataStorage();
     return manager.computeIfAbsent(() -> new StoredInventoryData<>(id, size, builder), StoredInventoryData.ID(id));

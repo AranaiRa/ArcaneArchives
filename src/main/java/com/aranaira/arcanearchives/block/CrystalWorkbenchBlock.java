@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.block;
 
-import com.aranaira.arcanearchives.api.RelativeSide;
 import com.aranaira.arcanearchives.block.template.SingleAccessorBlock;
 import com.aranaira.arcanearchives.init.ModBlockEntities;
 import com.aranaira.arcanearchives.block.entity.CrystalWorkbenchBlockEntity;

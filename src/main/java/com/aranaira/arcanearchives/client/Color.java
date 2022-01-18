@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.client;
 
-import com.aranaira.arcanearchives.api.StatUtils;
 import com.google.common.base.Objects;
 
 /*

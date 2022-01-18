@@ -78,7 +78,7 @@ public class DomainManager {
             toRemove.add(entry);
             IDomainBlockEntity ine = (IDomainBlockEntity) be;
             if (ine.getDomainId() != null) {
-              getDomain(ine.getDomainId()).getEntries().add(new DomainEntry<>(entry.getPosition(), entry.getDimension(), ine.getDomainId(), ine.getEntityId(), ine.getClass()));
+              //getDomain(ine.getDomainId()).getEntries().add(new DomainEntry<>(entry.getPosition(), entry.getDimension(), ine.getDomainId(), ine.getEntityId(), ine.getClass()));
             } else {
               level.destroyBlock(entry.getPosition(), true);
             }
@@ -106,7 +106,7 @@ public class DomainManager {
 
     forceRefresh = false;
 
-    Map<UUID, List<DomainEntry<?>>> networkMap = new HashMap<>();
+    Map<UUID, List<DomainEntry>> networkMap = new HashMap<>();
 
     for (RegistryKey<World> key : LEVELS) {
       ServerWorld level = server.getLevel(key);
@@ -118,8 +118,8 @@ public class DomainManager {
               // handle a null entity?
               addUnknownEntry(new UnknownEntry(te.getBlockPos(), key));
             } else {
-              DomainEntry<?> entry = new DomainEntry<>(te.getBlockPos(), key, ine.getDomainId(), ine.getEntityId(), ine.getClass());
-              networkMap.computeIfAbsent(ine.getDomainId(), k -> new ArrayList<>()).add(entry);
+              //DomainEntry<?> entry = new DomainEntry<>(te.getBlockPos(), key, ine.getDomainId(), ine.getEntityId(), ine.getClass());
+              //networkMap.computeIfAbsent(ine.getDomainId(), k -> new ArrayList<>()).add(entry);
             }
           }
         }
@@ -135,7 +135,7 @@ public class DomainManager {
     return domainMap.computeIfAbsent(domainId, Domain::new);
   }
 
-  public static boolean register(IDomainBlockEntity entity) {
+  public static boolean enlist(IDomainBlockEntity entity) {
     UUID id = entity.getDomainId();
     TileEntity te = entity.getBlockEntity();
     if (te.getLevel() == null) {
@@ -144,7 +144,7 @@ public class DomainManager {
     if (id == null) {
       addUnknownEntry(new UnknownEntry(te.getBlockPos(), te.getLevel().dimension()));
     } else {
-      getDomain(id).getEntries().add(new DomainEntry<>(te.getBlockPos(), te.getLevel().dimension(), id, entity.getEntityId(), entity.getClass()));
+      //getDomain(id).getEntries().add(new DomainEntry<>(te.getBlockPos(), te.getLevel().dimension(), id, entity.getEntityId(), entity.getClass()));
     }
     return true;
   }
