@@ -1,6 +1,6 @@
+/*
 package com.aranaira.arcanearchives.api.domain;
 
-import com.aranaira.arcanearchives.api.data.DataStorage;
 import com.aranaira.arcanearchives.api.inventory.RemoteInventory;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
@@ -8,14 +8,14 @@ import noobanidus.libs.noobutil.tracking.ItemTracking;
 
 import java.util.*;
 
-public class Domain implements Iterable<DomainEntry> {
+public class OldDomain implements Iterable<OldDomainEntry> {
   private final UUID domainId;
   private long lastUpdated = -1;
   private ItemTracking tracking = null;
 
-  private final Map<UUID, DomainEntry> entryMap = new HashMap<>();
+  private final Map<UUID, OldDomainReferenceEntry> entryMap = new HashMap<>();
 
-  public Domain(UUID domainId) {
+  public OldDomain(UUID domainId) {
     this.domainId = domainId;
   }
 
@@ -32,15 +32,15 @@ public class Domain implements Iterable<DomainEntry> {
   }
 
   @Override
-  public Iterator<DomainEntry> iterator() {
-    return entryMap.values().iterator();
+  public Iterator<OldDomainEntry> iterator() {
+    return entryMap.values().stream().map(OldDomainReferenceEntry::getEntry).iterator();
   }
 
-  public Map<UUID, DomainEntry> getEntries() {
+  public Map<UUID, OldDomainReferenceEntry> getEntries() {
     return entryMap;
   }
 
-  public boolean unenlist (DomainEntry entry) {
+  public boolean unenlist (OldDomainEntry entry) {
     return unenlist(entry.getEntityId());
   }
 
@@ -48,8 +48,13 @@ public class Domain implements Iterable<DomainEntry> {
     return entryMap.remove(entryId) == null;
   }
 
-  public void addOrUpdateEntry (DomainEntry entry) {
-    DomainEntry existing = entryMap.get(entry.getEntityId());
+  public void addOrUpdateEntry (OldDomainEntry entry) {
+    OldDomainReferenceEntry existing = entryMap.get(entry.getEntityId());
+    OldDomainEntry actualEntry;
+    if (existing != null) {
+      actualEntry = existing.getEntry();
+
+    }
     boolean changed;
     if (existing != null) {
       changed = existing.updateFrom(entry);
@@ -64,7 +69,7 @@ public class Domain implements Iterable<DomainEntry> {
 
   private void rebuildTracking() {
     tracking = new ItemTracking();
-    for (DomainEntry entry : this) {
+    for (OldDomainEntry entry : this) {
       if (!entry.hasInventory()) {
         continue;
       }
@@ -80,7 +85,7 @@ public class Domain implements Iterable<DomainEntry> {
     if (lastUpdated == -1) {
       tracking = null;
     } else {
-      for (DomainEntry entry : this) {
+      for (OldDomainEntry entry : this) {
         if (entry.hasInventory() && !entry.hasTracking()) {
           tracking = null;
           break;
@@ -95,29 +100,5 @@ public class Domain implements Iterable<DomainEntry> {
     return tracking;
   }
 
-  public static class DomainReferenceEntry {
-    private final UUID domainId;
-    private final UUID entryId;
-
-    public DomainReferenceEntry(UUID domainId, UUID entryId) {
-      this.domainId = domainId;
-      this.entryId = entryId;
-    }
-
-    public UUID getDomainId() {
-      return domainId;
-    }
-
-    public UUID getEntryId() {
-      return entryId;
-    }
-
-    public DomainEntry getEntry () {
-      return DataStorage.getDomainEntries().getEntry(entryId);
-    }
-
-    public boolean valid () {
-      return getEntry() != null;
-    }
-  }
 }
+*/

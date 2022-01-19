@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.api.data;
 
-import com.aranaira.arcanearchives.api.domain.DomainEntry;
+import com.aranaira.arcanearchives.api.domain.impl.DomainEntryImpl;
 import com.aranaira.arcanearchives.api.reference.Identifiers;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
@@ -15,7 +15,7 @@ import java.util.UUID;
 public class DomainEntryData extends WorldSavedData {
   public static final String ID = "ArcaneArchives-DomainEntries";
 
-  private final Map<UUID, DomainEntry> domainData = new HashMap<>();
+  private final Map<UUID, DomainEntryImpl> domainData = new HashMap<>();
 
   public DomainEntryData () {
     this(ID);
@@ -26,7 +26,7 @@ public class DomainEntryData extends WorldSavedData {
   }
 
   @Nullable
-  public DomainEntry getEntry (UUID id) {
+  public DomainEntryImpl getEntry (UUID id) {
     return domainData.get(id);
   }
 
@@ -36,7 +36,7 @@ public class DomainEntryData extends WorldSavedData {
     ListNBT tags = tag.getList(Identifiers.DomainEntryData.domainEntries, Constants.NBT.TAG_COMPOUND);
     for (int i = 0; i < tags.size(); i++) {
       CompoundNBT domainTag = tags.getCompound(i);
-      DomainEntry result = DomainEntry.fromNBT(domainTag);
+      DomainEntryImpl result = DomainEntryImpl.fromNBT(domainTag);
       domainData.put(result.getEntityId(), result);
     }
   }
@@ -44,7 +44,7 @@ public class DomainEntryData extends WorldSavedData {
   @Override
   public CompoundNBT save(CompoundNBT pCompound) {
     ListNBT result = new ListNBT();
-    for (DomainEntry entry : domainData.values()) {
+    for (DomainEntryImpl entry : domainData.values()) {
       result.add(entry.serializeNBT());
     }
     pCompound.put(Identifiers.DomainEntryData.domainEntries, result);

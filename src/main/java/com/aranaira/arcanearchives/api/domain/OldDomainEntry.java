@@ -1,12 +1,10 @@
+/*
 package com.aranaira.arcanearchives.api.domain;
 
 import com.aranaira.arcanearchives.api.block.entity.IDomainBlockEntity;
 import com.aranaira.arcanearchives.api.inventory.RemoteInventory;
 import com.aranaira.arcanearchives.api.reference.Identifiers;
 import com.aranaira.arcanearchives.api.reference.InventoryInfo;
-import com.aranaira.arcanearchives.block.entity.CrystalWorkbenchBlockEntity;
-import com.aranaira.arcanearchives.block.entity.RadiantChestBlockEntity;
-import com.aranaira.arcanearchives.block.entity.RadiantResonatorBlockEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.server.MinecraftServer;
@@ -22,21 +20,10 @@ import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import noobanidus.libs.noobutil.recipe.AbstractLargeItemHandler;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 import java.util.function.IntFunction;
 
-public class DomainEntry implements INBTSerializable<CompoundNBT> {
-  // TODO: Move this somewhere useful
-  private static final Map<String, Class<? extends IDomainBlockEntity>> CLASS_LOOKUP = new HashMap<>();
-
-  static {
-    CLASS_LOOKUP.put(RadiantChestBlockEntity.class.getName(), RadiantChestBlockEntity.class);
-    CLASS_LOOKUP.put(CrystalWorkbenchBlockEntity.class.getName(), CrystalWorkbenchBlockEntity.class);
-    CLASS_LOOKUP.put(RadiantResonatorBlockEntity.class.getName(), RadiantResonatorBlockEntity.class);
-  }
-
+public class OldDomainEntry implements INBTSerializable<CompoundNBT> {
   private BlockPos position;
   private RegistryKey<World> dimension;
   private UUID domainId;
@@ -46,10 +33,10 @@ public class DomainEntry implements INBTSerializable<CompoundNBT> {
   private int priority;
   private long lastUpdated = -1;
 
-  protected DomainEntry() {
+  protected OldDomainEntry() {
   }
 
-  public DomainEntry(BlockPos position, RegistryKey<World> dimension, UUID domainId, UUID entityId, Class<? extends IDomainBlockEntity> clazz) {
+  public OldDomainEntry(BlockPos position, RegistryKey<World> dimension, UUID domainId, UUID entityId, Class<? extends IDomainBlockEntity> clazz) {
     this.position = position;
     this.dimension = dimension;
     this.domainId = domainId;
@@ -63,7 +50,7 @@ public class DomainEntry implements INBTSerializable<CompoundNBT> {
     }
   }
 
-  public boolean updateFrom(DomainEntry other) {
+  public boolean updateFrom(OldDomainEntry other) {
     boolean changed = false;
     if (!this.position.equals(other.position)) {
       this.position = other.position;
@@ -201,9 +188,10 @@ public class DomainEntry implements INBTSerializable<CompoundNBT> {
     }
   }
 
-  public static DomainEntry fromNBT(CompoundNBT tag) {
-    DomainEntry result = new DomainEntry();
+  public static OldDomainEntry fromNBT(CompoundNBT tag) {
+    OldDomainEntry result = new OldDomainEntry();
     result.deserializeNBT(tag);
     return result;
   }
 }
+*/

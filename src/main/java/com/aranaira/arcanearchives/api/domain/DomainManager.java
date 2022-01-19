@@ -2,6 +2,8 @@ package com.aranaira.arcanearchives.api.domain;
 
 import com.aranaira.arcanearchives.api.ArcaneArchivesAPI;
 import com.aranaira.arcanearchives.api.block.entity.IDomainBlockEntity;
+import com.aranaira.arcanearchives.api.domain.impl.Domain;
+import com.aranaira.arcanearchives.api.domain.impl.DomainEntryImpl;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.RegistryKey;
@@ -106,7 +108,7 @@ public class DomainManager {
 
     forceRefresh = false;
 
-    Map<UUID, List<DomainEntry>> networkMap = new HashMap<>();
+    Map<UUID, List<DomainEntryImpl>> networkMap = new HashMap<>();
 
     for (RegistryKey<World> key : LEVELS) {
       ServerWorld level = server.getLevel(key);

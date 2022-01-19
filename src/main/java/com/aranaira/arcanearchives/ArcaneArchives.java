@@ -30,7 +30,6 @@ public class ArcaneArchives {
     ModData.setIdAndIdentifier(ArcaneArchivesAPI.MODID, ArcaneArchivesAPI.MOD_IDENTIFIER);
   }
 
-  public static final Logger LOG = LogManager.getLogger();
   public static CustomRegistrate REGISTRATE;
 
   public static ItemGroup GROUP = new ItemGroup(ArcaneArchivesAPI.MODID) {

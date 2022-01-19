@@ -19,7 +19,9 @@ import noobanidus.libs.noobutil.block.entities.IInventoryBlockEntity;
 import javax.annotation.Nullable;
 
 public class RadiantChestBlockEntity extends DomainIdentifiedBlockEntity implements IInventoryBlockEntity<RadiantChestInventory>, INamedContainerProvider {
-  private final StoredInventory<RadiantChestInventory> inventory = new StoredInventory<>(this::getEntityId, RadiantChestInventory::new, RadiantChestInventory.EmptyRadiantChestInventory::new, Constants.RadiantChest.InventorySlots);
+  public static final int INVENTORY_SLOTS = 54;
+
+  private final StoredInventory<RadiantChestInventory> inventory = new StoredInventory<>(this::getEntityId, RadiantChestInventory::new, RadiantChestInventory.EmptyRadiantChestInventory::new, INVENTORY_SLOTS);
 
   public RadiantChestBlockEntity(TileEntityType<?> tileEntityTypeIn) {
     super(tileEntityTypeIn);

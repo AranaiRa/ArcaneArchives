@@ -4,6 +4,8 @@ import com.aranaira.arcanearchives.api.crafting.registry.IRecipeManagerAccessor;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.RecipeManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Collections;
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.List;
 public abstract class ArcaneArchivesAPI {
   public static final String MODID = "arcanearchives";
   public static final String MOD_IDENTIFIER = "ArcaneArchives";
+  public static final Logger LOG = LogManager.getLogger();
 
   public static ArcaneArchivesAPI INSTANCE;
 

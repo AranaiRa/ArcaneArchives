@@ -6,6 +6,7 @@ public interface Identifiers {
   String inventoryName = "InvName";
   String entityId = "EntId";
   String entityName = "EntName";
+  String entityType = "EntType";
   String domainId = "DomId";
   String domainName = "DomName";
 

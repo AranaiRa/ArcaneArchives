@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.network.packets.client;
 
-import com.aranaira.arcanearchives.api.domain.Domain;
 import com.aranaira.arcanearchives.api.domain.DomainManager;
+import com.aranaira.arcanearchives.api.domain.impl.Domain;
 import com.aranaira.arcanearchives.api.network.IPacket;
 import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.packets.server.ManifestSyncPacket;

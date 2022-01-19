@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.event;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.api.ArcaneArchivesAPI;
 import com.aranaira.arcanearchives.init.ModRegistries;
 import net.minecraft.util.ResourceLocation;
@@ -18,7 +17,7 @@ public class RegistryHandler {
 
   @SubscribeEvent
   public static void onNewRegistry(RegistryEvent.NewRegistry event) {
-    ArcaneArchives.LOG.info("Creating Processor registry");
+    ArcaneArchivesAPI.LOG.info("Creating Processor registry");
     makeRegistry(PROCESSOR_KEY, IProcessor.class).create();
     ModRegistries.PROCESSOR_REGISTRY = RegistryManager.ACTIVE.getRegistry(IProcessor.class);
   }

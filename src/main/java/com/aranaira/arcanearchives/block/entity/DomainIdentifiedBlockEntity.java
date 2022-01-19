@@ -1,6 +1,6 @@
 package com.aranaira.arcanearchives.block.entity;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
+import com.aranaira.arcanearchives.api.ArcaneArchivesAPI;
 import com.aranaira.arcanearchives.api.block.entity.IDomainBlockEntity;
 import com.aranaira.arcanearchives.api.data.DataStorage;
 import com.aranaira.arcanearchives.api.data.UUIDNameData;
@@ -50,7 +50,7 @@ public abstract class DomainIdentifiedBlockEntity extends IdentifiedBlockEntity 
       this.domainId = compound.getUUID(Identifiers.domainId);
     }
     super.load(state, compound);
-    ArcaneArchives.LOG.info("Tile entity info loaded for " + this + " at " + getBlockPos());
+    ArcaneArchivesAPI.LOG.info("Tile entity info loaded for " + this + " at " + getBlockPos());
   }
 
   @Override

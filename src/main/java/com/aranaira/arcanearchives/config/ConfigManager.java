@@ -1,6 +1,5 @@
 package com.aranaira.arcanearchives.config;
 
-import com.aranaira.arcanearchives.ArcaneArchives;
 import com.aranaira.arcanearchives.api.ArcaneArchivesAPI;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
@@ -33,7 +32,7 @@ public class ConfigManager {
   public static void configReloaded(ModConfig.Reloading event) {
     if (event.getConfig().getType() == ModConfig.Type.COMMON) {
       COMMON_CONFIG.setConfig(event.getConfig().getConfigData());
-      ArcaneArchives.LOG.info("ArcaneArchives configuration reloaded");
+      ArcaneArchivesAPI.LOG.info("ArcaneArchives configuration reloaded");
     }
   }
 }
