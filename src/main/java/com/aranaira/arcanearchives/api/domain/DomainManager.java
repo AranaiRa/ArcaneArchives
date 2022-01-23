@@ -2,7 +2,7 @@ package com.aranaira.arcanearchives.api.domain;
 
 import com.aranaira.arcanearchives.api.ArcaneArchivesAPI;
 import com.aranaira.arcanearchives.api.block.entity.IDomainBlockEntity;
-import com.aranaira.arcanearchives.api.domain.impl.Domain;
+import com.aranaira.arcanearchives.api.domain.impl.DomainImpl;
 import com.aranaira.arcanearchives.api.domain.impl.DomainEntryImpl;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
@@ -26,7 +26,7 @@ public class DomainManager {
   public static Set<RegistryKey<World>> LEVELS = null;
   private static volatile boolean forceRefresh = false;
 
-  private static final Map<UUID, Domain> domainMap = Collections.synchronizedMap(new HashMap<>());
+  private static final Map<UUID, DomainImpl> domainMap = Collections.synchronizedMap(new HashMap<>());
 
 
   private static final Set<UnknownEntry> unknownEntities = Collections.synchronizedSet(new HashSet<>());
@@ -133,8 +133,8 @@ public class DomainManager {
     forceRefresh = true;
   }
 
-  public static Domain getDomain(UUID domainId) {
-    return domainMap.computeIfAbsent(domainId, Domain::new);
+  public static DomainImpl getDomain(UUID domainId) {
+    return domainMap.computeIfAbsent(domainId, DomainImpl::new);
   }
 
   public static boolean enlist(IDomainBlockEntity entity) {

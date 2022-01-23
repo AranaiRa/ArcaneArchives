@@ -1,7 +1,7 @@
 package com.aranaira.arcanearchives.network.packets.client;
 
 import com.aranaira.arcanearchives.api.domain.DomainManager;
-import com.aranaira.arcanearchives.api.domain.impl.Domain;
+import com.aranaira.arcanearchives.api.domain.impl.DomainImpl;
 import com.aranaira.arcanearchives.api.network.IPacket;
 import com.aranaira.arcanearchives.network.Networking;
 import com.aranaira.arcanearchives.network.packets.server.ManifestSyncPacket;
@@ -27,7 +27,7 @@ public class RequestManifestSyncPacket implements IPacket {
 
   @Override
   public void handle(NetworkEvent.Context context) {
-    Domain domain = DomainManager.getDomain(domainId);
+    DomainImpl domain = DomainManager.getDomain(domainId);
     if (lastUpdate == -1 || lastUpdate != domain.getLastUpdated()) {
       ServerPlayerEntity player = context.getSender();
       ManifestSyncPacket packet = new ManifestSyncPacket(domain);

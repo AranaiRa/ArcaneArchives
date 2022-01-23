@@ -6,6 +6,7 @@ import com.aranaira.arcanearchives.api.inventory.RemoteInventory;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import noobanidus.libs.noobutil.tracking.ItemTracking;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
@@ -26,6 +27,8 @@ public interface IDomainEntry {
   default boolean hasInventory () {
     return getType().hasInventory();
   }
+  boolean hasTracking();
+  ItemTracking getTracking();
 
   @Nullable
   RemoteInventory getInventory();
@@ -34,5 +37,5 @@ public interface IDomainEntry {
 
   IDomainEntry getEntry();
 
-  
+  UpdateResult updateFrom (IDomainEntry other);
 }

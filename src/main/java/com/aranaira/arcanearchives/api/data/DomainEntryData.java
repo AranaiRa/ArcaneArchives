@@ -25,6 +25,7 @@ public class DomainEntryData extends WorldSavedData {
     super(p_i2141_1_);
   }
 
+  // TODO: getOrCreateEntry
   @Nullable
   public DomainEntryImpl getEntry (UUID id) {
     return domainData.get(id);

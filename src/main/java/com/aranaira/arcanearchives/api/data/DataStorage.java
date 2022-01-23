@@ -15,6 +15,11 @@ import java.util.function.IntFunction;
 
 @SuppressWarnings("ConstantConditions")
 public class DataStorage {
+  public static DomainData getDomainData () {
+    DimensionSavedDataManager manager = ServerLifecycleHooks.getCurrentServer().getLevel(World.OVERWORLD).getDataStorage();
+    return manager.computeIfAbsent(() -> new DomainData(DomainData.ID), DomainData.ID);
+  }
+
   public static DomainEntryData getDomainEntries () {
     DimensionSavedDataManager manager = ServerLifecycleHooks.getCurrentServer().getLevel(World.OVERWORLD).getDataStorage();
     return manager.computeIfAbsent(() -> new DomainEntryData(DomainEntryData.ID), DomainEntryData.ID);

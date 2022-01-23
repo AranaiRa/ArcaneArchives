@@ -4,6 +4,8 @@ import com.aranaira.arcanearchives.api.block.entity.IDomainEntityType;
 import com.aranaira.arcanearchives.api.data.DataStorage;
 import com.aranaira.arcanearchives.api.data.UUIDNameData;
 import com.aranaira.arcanearchives.api.domain.IDomainEntry;
+import com.aranaira.arcanearchives.api.domain.UpdateResult;
+import com.aranaira.arcanearchives.api.domain.reference.DomainEntryReference;
 import com.aranaira.arcanearchives.api.inventory.RemoteInventory;
 import com.aranaira.arcanearchives.api.reference.Identifiers;
 import com.aranaira.arcanearchives.block.entity.DomainEntityType;
@@ -15,6 +17,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
+import noobanidus.libs.noobutil.tracking.ItemTracking;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
@@ -33,7 +37,7 @@ public class DomainEntryImpl implements IDomainEntry, INBTSerializable<CompoundN
 
   private RemoteInventory inventory = null;
 
-  protected DomainEntryImpl () {
+  protected DomainEntryImpl() {
   }
 
   public DomainEntryImpl(IDomainEntityType type, UUID domainId, UUID entityId, BlockPos position, RegistryKey<World> dimension) {
@@ -96,6 +100,20 @@ public class DomainEntryImpl implements IDomainEntry, INBTSerializable<CompoundN
     return dimension;
   }
 
+  @Override
+  public boolean hasTracking() {
+    return inventory != null && inventory.hasTracking();
+  }
+
+  @Override
+  @Nullable
+  public ItemTracking getTracking() {
+    if (inventory == null) {
+      return null;
+    }
+    return inventory.getTracking();
+  }
+
   @Nullable
   @Override
   public RemoteInventory getInventory() {
@@ -108,8 +126,49 @@ public class DomainEntryImpl implements IDomainEntry, INBTSerializable<CompoundN
   }
 
   @Override
-  public IDomainEntry getEntry() {
+  public DomainEntryImpl getEntry() {
     return this;
+  }
+
+  @Override
+  public UpdateResult updateFrom(IDomainEntry other) {
+    if (!other.getEntityId().equals(this.entityId) || !other.getType().equals(this.type)) {
+      return UpdateResult.INVALID;
+    }
+
+    boolean changed = false;
+
+    if (!other.getDomainId().equals(this.domainId)) {
+      this.domainId = other.getDomainId();
+      changed = true;
+    }
+    if (!other.getPosition().equals(this.position)) {
+      this.position = other.getPosition();
+      changed = true;
+    }
+    if (!other.getDimension().equals(this.dimension)) {
+      this.dimension = other.getDimension();
+      changed = true;
+    }
+    if (this.entityName == null) {
+      if (other.getEntityName() != null) {
+        this.entityName = other.getEntityName();
+      } else {
+        this.entityName = DataStorage.getEntityName(entityId);
+      }
+      changed = true;
+    }
+    if (other.getPriority() != this.priority) {
+      this.priority = other.getPriority();
+      changed = true;
+    }
+
+    if (changed) {
+      update();
+      return UpdateResult.UPDATED;
+    }
+
+    return UpdateResult.NO_CHANGE;
   }
 
   @Override
@@ -137,9 +196,21 @@ public class DomainEntryImpl implements IDomainEntry, INBTSerializable<CompoundN
     this.position = NBTUtil.readBlockPos(nbt.getCompound(Identifiers.Data.position));
   }
 
-  public static DomainEntryImpl fromNBT (CompoundNBT nbt) {
+  private void update () {
+    this.lastUpdated = ServerLifecycleHooks.getCurrentServer().getLevel(World.OVERWORLD).getGameTime();
+  }
+
+  public static DomainEntryImpl fromNBT(CompoundNBT nbt) {
     DomainEntryImpl result = new DomainEntryImpl();
     result.deserializeNBT(nbt);
     return result;
+  }
+
+  public CompoundNBT asReference () {
+    CompoundNBT nbt = new CompoundNBT();
+    nbt.putInt(Identifiers.entityType, type.getOrdinal());
+    nbt.putUUID(Identifiers.domainId, domainId);
+    nbt.putUUID(Identifiers.entityId, entityId);
+    return nbt;
   }
 }

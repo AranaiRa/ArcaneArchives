@@ -51,6 +51,10 @@ public interface Identifiers {
     String domainEntries = "DomEntries";
   }
 
+  interface DomainData {
+    String domainData = "DomData";
+  }
+
   static String blockEntityTag (String tag) {
     return BlockEntityTag + "." + tag;
   }
